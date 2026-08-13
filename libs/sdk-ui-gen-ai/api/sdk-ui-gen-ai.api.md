@@ -23,6 +23,7 @@ import { IChatSuggestions } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboard } from '@gooddata/sdk-model';
 import type { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
+import { IGenAIUserContext } from '@gooddata/sdk-model';
 import type { IGenAIVisualization } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import type { ISemanticSearchRelationship } from '@gooddata/sdk-model';
@@ -79,6 +80,14 @@ export type ChatAssistantMessageEvent = BaseEvent & {
 // @public
 export type ChatClosedEvent = BaseEvent & {
     type: "chatClosed";
+};
+
+// @public
+export type ChatContextChangeEvent = BaseEvent & {
+    type: "onContextChange";
+    contextType: "ambient" | "user";
+    userContext?: IGenAIUserContext;
+    replaceUserContext?: boolean;
 };
 
 // @public
@@ -156,11 +165,12 @@ export type ChatDefinitionReceivedEvent = BaseEvent & {
     conversationId: string;
     interactionId?: string;
     dashboard?: IDashboard;
+    insights?: IInsight[];
     visualization?: NonNullable<IChatConversationVisualisationContent["visualization"]>;
 };
 
 // @public
-export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatModeChangeEvent | ChatConversationPinnedEvent | ChatConversationPinErrorEvent | ChatConversationDeleteEvent | ChatConversationDeletedSuccessEvent | ChatConversationDeletedErrorEvent | ChatConversationRenameEvent | ChatConversationRenamedSuccessEvent | ChatConversationRenamedErrorEvent | ChatUserMessageEvent | ChatAgentChangeEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent | ChatConversationChangedEvent | ChatDefinitionReceivedEvent;
+export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatModeChangeEvent | ChatConversationPinnedEvent | ChatConversationPinErrorEvent | ChatConversationDeleteEvent | ChatConversationDeletedSuccessEvent | ChatConversationDeletedErrorEvent | ChatConversationRenameEvent | ChatConversationRenamedSuccessEvent | ChatConversationRenamedErrorEvent | ChatUserMessageEvent | ChatAgentChangeEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatContextChangeEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent | ChatConversationChangedEvent | ChatDefinitionReceivedEvent;
 
 // @public
 export type ChatEventHandler<TEvent extends ChatEvent = any> = {
@@ -407,6 +417,9 @@ export const isChatAssistantMessageEvent: (event: ChatEvent) => event is ChatAss
 export const isChatClosedEvent: (event: ChatEvent) => event is ChatClosedEvent;
 
 // @public
+export const isChatContextChangeEvent: (event: ChatEvent) => event is ChatContextChangeEvent;
+
+// @public
 export const isChatConversationChangedEvent: (event: ChatEvent) => event is ChatConversationChangedEvent;
 
 // @public
@@ -547,6 +560,11 @@ export type SemanticSearchContents = {
 };
 
 // @public (undocumented)
+export const setAmbientUserContextAction: ActionCreatorWithPayload<    {
+userContext?: IGenAIUserContext | undefined;
+}, "chatWindow/setAmbientUserContextAction">;
+
+// @public (undocumented)
 export const setCurrentConversationAction: ActionCreatorWithPayload<    {
 conversation: IChatConversationLocal;
 }, "messages/setCurrentConversationAction">;
@@ -562,6 +580,12 @@ agentId: string | undefined;
 previousAgentId?: string | undefined;
 showChangeEvent?: boolean | undefined;
 }, "messages/setSelectedAgentAction">;
+
+// @public (undocumented)
+export const setUserContextAction: ActionCreatorWithPayload<    {
+userContext?: IGenAIUserContext | undefined;
+replaceUserContext?: boolean | undefined;
+}, "chatWindow/setUserContextAction">;
 
 // @public (undocumented)
 export const startNewConversationAction: ActionCreatorWithoutPayload<"messages/startNewConversationAction">;

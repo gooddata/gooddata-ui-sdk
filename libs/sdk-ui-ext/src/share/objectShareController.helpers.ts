@@ -156,27 +156,138 @@ export function levelsBelow(level: ObjectSharePermissionLevel): ObjectSharePermi
     return LEVELS_STRONGEST_FIRST.filter((l) => LEVEL_RANK[l] < LEVEL_RANK[level]);
 }
 
-/**
- * The effective permission to surface as a warning, or undefined when the direct
- * grant already covers it. Set only when the grantee *inherits* a level (e.g. via
- * a group) above the directly-granted one — i.e. the effective access is higher
- * than what the row's permission control shows.
- */
-export function effectivePermissionAbove(
-    direct: ObjectSharePermissionLevel,
-    inheritedLevel: ObjectSharePermissionLevel | undefined,
+/** The stronger of two levels; undefined only when both are. */
+export function maxLevel(
+    a: ObjectSharePermissionLevel | undefined,
+    b: ObjectSharePermissionLevel | undefined,
 ): ObjectSharePermissionLevel | undefined {
-    return inheritedLevel && LEVEL_RANK[inheritedLevel] > LEVEL_RANK[direct] ? inheritedLevel : undefined;
+    if (a === undefined) {
+        return b;
+    }
+    if (b === undefined) {
+        return a;
+    }
+    return LEVEL_RANK[a] >= LEVEL_RANK[b] ? a : b;
 }
 
-/** The permission-derived fields shared by every grantee row, regardless of kind. */
+/**
+ * The inherited permission to surface as a warning, or undefined when the direct
+ * grant already covers it. Set when the grantee *inherits* a level (via a group or
+ * a parent workspace) that the direct grant does not reach — including the
+ * inherited-only case (`direct` undefined), where the whole displayed level comes
+ * from inheritance.
+ */
+export function effectivePermissionAbove(
+    direct: ObjectSharePermissionLevel | undefined,
+    inheritedLevel: ObjectSharePermissionLevel | undefined,
+): ObjectSharePermissionLevel | undefined {
+    if (!inheritedLevel) {
+        return undefined;
+    }
+    return direct === undefined || LEVEL_RANK[inheritedLevel] > LEVEL_RANK[direct]
+        ? inheritedLevel
+        : undefined;
+}
+
+/**
+ * The permission-derived fields of a grantee row, given the raw direct and
+ * inherited permission sets.
+ *
+ * The displayed `level` is the EFFECTIVE one — the stronger of the direct grant and
+ * anything inherited (from a group, or from a parent workspace in a hierarchy) —
+ * so a grantee who only inherits EDIT reads as "Can edit & share" rather than
+ * falling back to VIEW. `directLevel` keeps what THIS workspace grants (undefined
+ * when the access is inherited-only): it is what writes re-grade and what decides
+ * whether there is anything here to remove.
+ */
 function granteeAccess(permissions: readonly string[], inheritedPermissions: readonly string[]) {
-    const level = directLevel(permissions);
+    const direct = strongestLevel(permissions);
     const inheritedLevel = strongestLevel(inheritedPermissions);
+    // A listed grantee with NEITHER set is a revoked-but-still-listed entry. VIEW is the
+    // historical placeholder for its level, and it counts as the DIRECT one: leaving
+    // `directLevel` undefined would classify the row as inherited-only, disabling Remove
+    // and claiming inherited access that does not exist.
+    const directLevel = direct ?? (inheritedLevel === undefined ? "VIEW" : undefined);
     return {
-        level,
-        effectivePermission: effectivePermissionAbove(level, inheritedLevel),
+        level: maxLevel(directLevel, inheritedLevel) ?? "VIEW",
+        directLevel,
+        effectivePermission: effectivePermissionAbove(direct, inheritedLevel),
         inheritedLevel,
+    };
+}
+
+/**
+ * Whether picking `level` for this grantee would change the level they EFFECTIVELY hold.
+ *
+ * The permission menu shows the effective level, so a pick is only meaningful if it moves
+ * that: under an inherited EDIT, picking SHARE or VIEW cannot lower anything, it would just
+ * rewrite the grant made here where nobody can see it. Conversely a direct EDIT under an
+ * inherited SHARE CAN be lowered to VIEW, because the effective level then drops to SHARE.
+ *
+ * The single source of this rule. Everything that reacts to a pick must agree: the
+ * controller refuses a pick that changes nothing, so any confirm staged for one would ask
+ * the user to approve a change that then silently does not happen.
+ *
+ * @internal
+ */
+export function changesEffectiveLevel(
+    grantee: Pick<IObjectShareGrantee, "level" | "inheritedLevel">,
+    level: ObjectSharePermissionLevel,
+): boolean {
+    return maxLevel(level, grantee.inheritedLevel) !== grantee.level;
+}
+
+/**
+ * Whether revoking this grantee's direct grant would change the level they EFFECTIVELY
+ * hold. False when inheritance alone already covers the displayed level: the revoke still
+ * removes the local grant, but restricts nothing the grantee can do — so no
+ * "Restrict your access?" confirm may be staged for it ({@link changesEffectiveLevel}'s
+ * rule, applied to removal).
+ *
+ * @internal
+ */
+export function removalChangesEffectiveLevel(
+    grantee: Pick<IObjectShareGrantee, "level" | "inheritedLevel">,
+): boolean {
+    return grantee.inheritedLevel !== grantee.level;
+}
+
+/**
+ * The row fields to apply when THIS workspace's direct grant moves to `direct`:
+ * the displayed level recomposes against whatever is inherited, so a re-grade below
+ * an inherited level cannot make the row understate the grantee's real access.
+ *
+ * @internal
+ */
+export function withDirectLevel(
+    grantee: IObjectShareGrantee,
+    direct: ObjectSharePermissionLevel,
+): IObjectShareGrantee {
+    return {
+        ...grantee,
+        level: maxLevel(direct, grantee.inheritedLevel) ?? direct,
+        directLevel: direct,
+        effectivePermission: effectivePermissionAbove(direct, grantee.inheritedLevel),
+    };
+}
+
+/**
+ * The row a grantee falls back to once their direct grant is revoked but inherited
+ * access remains — the row survives the removal as inherited-only rather than
+ * disappearing and reappearing on the next load.
+ *
+ * @internal
+ */
+export function withoutDirectGrant(
+    grantee: IObjectShareGrantee,
+    inheritedLevel: ObjectSharePermissionLevel,
+): IObjectShareGrantee {
+    return {
+        ...grantee,
+        level: inheritedLevel,
+        directLevel: undefined,
+        effectivePermission: inheritedLevel,
+        pending: undefined,
     };
 }
 
@@ -220,7 +331,14 @@ export function granteesFromAccessList(list: IObjectAccessList | undefined): IOb
 export type GranteeEdit =
     | { kind: "level"; level: ObjectSharePermissionLevel; pending: boolean; settled?: GranteeEdit }
     | { kind: "added"; grantee: IObjectShareGrantee; pending: boolean; settled?: GranteeEdit }
-    | { kind: "removed"; pending: boolean; settled?: GranteeEdit };
+    | { kind: "removed"; pending: boolean; settled?: GranteeEdit }
+    /**
+     * Pending marker only — the row renders exactly as it stands. For a write that
+     * locks the row without changing its access (a label-scope edit), so nothing has
+     * to invent a level: reusing the `level` overlay would record the DISPLAYED level
+     * as the direct grant, and that level is the effective one.
+     */
+    | { kind: "locked"; pending: boolean; settled?: GranteeEdit };
 
 /**
  * Transient edit of the all-workspace-users rule (general access + its level),
@@ -269,11 +387,7 @@ export function mergeGrantees(
             return settled.grantee;
         }
         if (g && settled?.kind === "level") {
-            return {
-                ...g,
-                level: settled.level,
-                effectivePermission: effectivePermissionAbove(settled.level, g.inheritedLevel),
-            };
+            return withDirectLevel(g, settled.level);
         }
         return g;
     };
@@ -290,19 +404,29 @@ export function mergeGrantees(
         }
         if (edit.kind === "removed") {
             // Visible (muted, at its last committed state) only while the revoke is
-            // in flight; a settled removal renders nothing — its entry persists to
-            // keep the base row hidden.
+            // in flight.
             const committed = edit.pending ? committedRow(g, edit.settled) : undefined;
-            return committed ? { ...committed, pending: "removing" } : undefined;
+            if (committed) {
+                return { ...committed, pending: "removing" };
+            }
+            // A settled removal revokes only what THIS workspace granted. When the
+            // grantee still inherits access (a group, a parent workspace), the row
+            // survives as inherited-only — dropping it would claim the removal took
+            // away access it cannot reach. With nothing inherited the row is gone and
+            // the entry persists to keep the base row hidden.
+            return g?.inheritedLevel ? withoutDirectGrant(g, g.inheritedLevel) : undefined;
+        }
+        if (edit.kind === "locked") {
+            // Access unchanged: render whatever the row had COMMITTED and add the saving
+            // marker. Rendering the fetched row instead would undo the committed state
+            // for the duration of the write — a removal survivor would reappear with the
+            // direct grant it just lost.
+            const committed = edit.settled ? renderEntry(g, { ...edit.settled, pending: false }) : g;
+            return committed ? { ...committed, pending: edit.pending ? "saving" : undefined } : undefined;
         }
         if (edit.kind === "level") {
             return g
-                ? {
-                      ...g,
-                      level: edit.level,
-                      effectivePermission: effectivePermissionAbove(edit.level, g.inheritedLevel),
-                      pending: edit.pending ? "saving" : undefined,
-                  }
+                ? { ...withDirectLevel(g, edit.level), pending: edit.pending ? "saving" : undefined }
                 : undefined;
         }
         return { ...edit.grantee, pending: edit.pending ? "saving" : undefined };
@@ -350,10 +474,15 @@ export function toGranularGrantee(
 /**
  * The principal a label-scope reconcile applies to: a named user/group, or the
  * implicit all-workspace-users rule (general access).
+ *
+ * `level` is the permission a label GRANT carries, so a label mirrors the level
+ * held on the object rather than always landing on VIEW. Defaults to VIEW when
+ * omitted; irrelevant for revokes, which write an empty permission set.
  */
-export type LabelScopePrincipal =
+export type LabelScopePrincipal = (
     | { kind: "user" | "group"; granteeRef: ObjRef }
-    | { allWorkspaceUsers: true };
+    | { allWorkspaceUsers: true }
+) & { level?: ObjectSharePermissionLevel };
 
 export function granularGranteeFor(
     principal: LabelScopePrincipal,
@@ -387,27 +516,78 @@ export function buildLabelMutations(
         if (wanted === had) {
             continue;
         }
-        writes.push({ ref: label.ref, grantee: granularGranteeFor(principal, wanted ? "VIEW" : "none") });
+        writes.push({
+            ref: label.ref,
+            grantee: granularGranteeFor(principal, wanted ? (principal.level ?? "VIEW") : "none"),
+        });
     }
     return writes;
 }
 
 /**
- * Multi-principal variant of {@link buildLabelMutations}: groups the per-label
- * writes so each label is one write carrying every principal that changes on it.
- * Keys on `label.id`, not the raw `ObjRef` — a Map keyed on ObjRef would key on
- * object identity and fail to merge equal-but-distinct refs.
+ * Pure: the per-label writes that re-grade `principal`'s EXISTING label scope to
+ * `principal.level`. Unlike {@link buildLabelMutations} this is not a set diff —
+ * the scope is unchanged and every in-scope label is rewritten — so it is what a
+ * permission-level change on the object needs to keep its labels in step. `labels` is
+ * the permissionable set, so every write targets a label that can take a grant.
+ *
+ * The primary label is deliberately EXCLUDED. Its access is implicit — {@link
+ * buildLabelMutations} never grants or revokes it — so a grant written here would be
+ * one nothing can take away: a later removal diffs the primary as unchanged and leaves
+ * the grantee holding the primary label after their object access is gone.
  */
-export function buildLabelMutationsForPrincipals(
+export function buildLabelRegrades(
     principals: LabelScopePrincipal[],
-    desiredLabelIds: ReadonlySet<string>,
-    currentLabelIds: ReadonlySet<string>,
+    scopeLabelIds: ReadonlySet<string>,
+    labels: IObjectShareLabel[],
+): Array<{ id: string; ref: ObjRef; grantees: IGranularAccessGrantee[] }> {
+    const writes: Array<{ id: string; ref: ObjRef; grantees: IGranularAccessGrantee[] }> = [];
+    for (const label of labels) {
+        if (label.isPrimary || !scopeLabelIds.has(label.id)) {
+            continue;
+        }
+        writes.push({
+            id: label.id,
+            ref: label.ref,
+            grantees: principals.map((p) => granularGranteeFor(p, p.level ?? "VIEW")),
+        });
+    }
+    return writes;
+}
+
+/**
+ * One principal's label-scope move. Held per principal because grantees added in
+ * a single step each pick their own scope, so one desired set can't stand for the
+ * whole batch.
+ *
+ * @internal
+ */
+export interface ILabelScopeChange {
+    principal: LabelScopePrincipal;
+    desiredLabelIds: ReadonlySet<string>;
+    currentLabelIds: ReadonlySet<string>;
+}
+
+/**
+ * Multi-principal variant of {@link buildLabelMutations}, each principal moving its
+ * own scope: groups the per-label writes so each label is one write carrying every
+ * principal that changes on it. Keys on `label.id`, not the raw `ObjRef` — a Map
+ * keyed on ObjRef would key on object identity and fail to merge
+ * equal-but-distinct refs.
+ */
+export function buildLabelMutationsForScopes(
+    changes: readonly ILabelScopeChange[],
     labels: IObjectShareLabel[],
 ): Array<{ id: string; ref: ObjRef; grantees: IGranularAccessGrantee[] }> {
     const byLabel = new Map<string, { id: string; ref: ObjRef; grantees: IGranularAccessGrantee[] }>();
     for (const label of labels) {
-        for (const principal of principals) {
-            const writes = buildLabelMutations(principal, desiredLabelIds, currentLabelIds, [label]);
+        for (const change of changes) {
+            const writes = buildLabelMutations(
+                change.principal,
+                change.desiredLabelIds,
+                change.currentLabelIds,
+                [label],
+            );
             if (writes.length === 0) {
                 continue;
             }
@@ -426,20 +606,33 @@ export const NO_LABELS: IObjectShareLabel[] = [];
 export const EMPTY_IDS: ReadonlySet<string> = new Set<string>();
 
 /**
- * Whether a fetched grant for `granteeId` exists with a non-empty permission set.
- * Inspects the raw grants rather than `granteesFromAccessList`, which normalizes
- * every listed user/group to a VIEW level even when its `permissions` are empty —
- * so a revoked-but-still-listed entry would otherwise read as granted, mis-scoping
- * a per-label checkbox to a label the grantee can't actually access.
+ * Where `granteeId`'s access to this object comes from, or `undefined` when they hold it
+ * at all. The two flags are INDEPENDENT: a grantee can hold a grant made here *and*
+ * inherit one from a group or a parent workspace, and both facts matter — `direct` says
+ * there is something here to revoke, `inherited` says access survives revoking it.
+ * Collapsing them to a single winner is what made a dual-granted label read as
+ * inaccessible once its local grant was revoked.
+ *
+ * Inspects the raw grants rather than `granteesFromAccessList`, which normalizes every
+ * listed user/group to a VIEW level even when it carries no permissions — so a
+ * revoked-but-still-listed entry would otherwise read as granted, mis-scoping a per-label
+ * checkbox to a label the grantee can't actually access.
  */
-export function isGranteeGrantedIn(list: IObjectAccessList, id: string): boolean {
-    return list.grants.some((g) => {
-        if (isGranularUserAccess(g)) {
-            return id === granteeId("user", g.user.ref) && g.permissions.length > 0;
+export function granteeGrantIn(
+    list: IObjectAccessList,
+    id: string,
+): { direct: boolean; inherited: boolean } | undefined {
+    const sourceOf = (permissions: readonly string[], inherited: readonly string[]) =>
+        permissions.length > 0 || inherited.length > 0
+            ? { direct: permissions.length > 0, inherited: inherited.length > 0 }
+            : undefined;
+    for (const g of list.grants) {
+        if (isGranularUserAccess(g) && id === granteeId("user", g.user.ref)) {
+            return sourceOf(g.permissions, g.inheritedPermissions);
         }
-        if (isGranularUserGroupAccess(g)) {
-            return id === granteeId("group", g.userGroup.ref) && g.permissions.length > 0;
+        if (isGranularUserGroupAccess(g) && id === granteeId("group", g.userGroup.ref)) {
+            return sourceOf(g.permissions, g.inheritedPermissions);
         }
-        return false;
-    });
+    }
+    return undefined;
 }

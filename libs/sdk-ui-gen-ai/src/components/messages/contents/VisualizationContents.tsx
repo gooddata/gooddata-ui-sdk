@@ -172,9 +172,9 @@ function VisualizationContentsComponentCore({
     const visualization = content.createdVisualizations?.[0];
     const { metrics, dimensions, filters, sorts } = useExecution(visualization);
     const config = useConfig();
-    const useHostedAnalyticalDesigner = Boolean(
-        useSelector(settingsSelector)?.enableShellApplication_analyticalDesigner,
-    );
+    const settings = useSelector(settingsSelector);
+    const useHostedAnalyticalDesigner = Boolean(settings?.enableShellApplication_analyticalDesigner);
+    const enableSecondGranularities = Boolean(settings?.enableSecondGranularities);
     const [saveDialogOpen, setSaveDialogOpen] = useState<"save" | "explore" | null>(null);
     const [hasVisError, setHasVisError] = useState(false);
     const [visLoading, setVisLoading] = useState(true);
@@ -370,22 +370,26 @@ function VisualizationContentsComponentCore({
         keyDriverData: IDashboardKeyDriverCombinationItem[];
         event: IDrillEvent;
     } | null>(null);
-    const handlerDrill = useCallback((event: IDrillEvent) => {
-        storeKdaReturnFocusFromDrillContext(event.drillContext);
-        const keyDriverData = getKdaKeyDriverCombinations(
-            {
-                type: "keyDriveAnalysis",
-                transition: "in-place",
-                origin: {} as IDrillOrigin,
-            } as IKeyDriveAnalysis,
-            event,
-        );
-        if (keyDriverData.length === 0) {
-            setDrillState(null);
-        } else {
-            setDrillState({ keyDriverData, event });
-        }
-    }, []);
+    const handlerDrill = useCallback(
+        (event: IDrillEvent) => {
+            storeKdaReturnFocusFromDrillContext(event.drillContext);
+            const keyDriverData = getKdaKeyDriverCombinations(
+                {
+                    type: "keyDriveAnalysis",
+                    transition: "in-place",
+                    origin: {} as IDrillOrigin,
+                } as IKeyDriveAnalysis,
+                event,
+                enableSecondGranularities,
+            );
+            if (keyDriverData.length === 0) {
+                setDrillState(null);
+            } else {
+                setDrillState({ keyDriverData, event });
+            }
+        },
+        [enableSecondGranularities],
+    );
 
     const handleSdkError = useCallback(
         (error: GoodDataSdkError) => {

@@ -220,6 +220,12 @@ describe("createSorts", () => {
                 expect(createSorts("table", insightWithSingleMeasureAndViewByAndStack, {})).toEqual([]);
             });
         });
+
+        describe("mekko", () => {
+            it("should return empty array without insight sorts", () => {
+                expect(createSorts("mekko", insightWithSingleMeasureAndViewByAndStack, {})).toEqual([]);
+            });
+        });
     });
 });
 

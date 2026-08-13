@@ -7,6 +7,9 @@
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 
 // @public
+export const clearCaches: () => Promise<void>;
+
+// @public
 export type CustomElementContext = {
     backend: IAnalyticalBackend;
     workspaceId?: string;

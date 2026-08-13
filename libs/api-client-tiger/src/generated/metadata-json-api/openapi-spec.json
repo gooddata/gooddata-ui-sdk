@@ -21314,7 +21314,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "User data filters successfully set."
+                        "description": "User data filters successfully set.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -21393,7 +21394,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "Workspace permissions successfully set."
+                        "description": "Workspace permissions successfully set.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -21480,7 +21482,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "Logical model successfully set."
+                        "description": "Logical model successfully set.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -21580,7 +21583,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "FilterViews successfully set."
+                        "description": "FilterViews successfully set.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -21680,7 +21684,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "Automations successfully set."
+                        "description": "Automations successfully set.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -21774,7 +21779,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "Analytics model successfully set."
+                        "description": "Analytics model successfully set.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -21868,7 +21874,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "The model of the workspace was set."
+                        "description": "The model of the workspace was set.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -21944,7 +21951,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "All workspaces layout set."
+                        "description": "All workspaces layout set.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -22003,7 +22011,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "All workspace data filters set."
+                        "description": "All workspace data filters set.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -22062,7 +22071,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "Defined all users and user groups."
+                        "description": "Defined all users and user groups.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -22141,7 +22151,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "User permissions successfully set."
+                        "description": "User permissions successfully set.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -22200,7 +22211,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "Defined all users."
+                        "description": "Defined all users.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -22279,7 +22291,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "User-group permissions successfully set."
+                        "description": "User-group permissions successfully set.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -22338,7 +22351,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "Defined all user groups."
+                        "description": "Defined all user groups.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -22404,7 +22418,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "Organization permissions set."
+                        "description": "Organization permissions set.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -22480,7 +22495,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "Defined all parts of an organization."
+                        "description": "Defined all parts of an organization.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -22539,7 +22555,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "All notification channels set."
+                        "description": "All notification channels set.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -22604,7 +22621,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "All identity providers set."
+                        "description": "All identity providers set.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -22663,7 +22681,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "All export templates set."
+                        "description": "All export templates set.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -22758,7 +22777,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "Statistics stored successfully."
+                        "description": "Statistics stored successfully.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -22788,7 +22808,8 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Statistics deleted."
+                        "description": "Statistics deleted.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -22867,7 +22888,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -22926,7 +22948,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "Defined all data sources."
+                        "description": "Defined all data sources.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -22985,7 +23008,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "All custom geo collections set."
+                        "description": "All custom geo collections set.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -23044,7 +23068,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "All AI agent configurations set."
+                        "description": "All AI agent configurations set.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -23210,7 +23235,8 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "An upload notification has been successfully registered."
+                        "description": "An upload notification has been successfully registered.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -23252,7 +23278,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "Translations were successfully set."
+                        "description": "Translations were successfully set.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -23343,7 +23370,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "Translations were successfully removed."
+                        "description": "Translations were successfully removed.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -23385,7 +23413,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -23543,7 +23572,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -23597,7 +23627,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -23651,7 +23682,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -23828,7 +23860,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             },
@@ -23851,7 +23884,8 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -23886,7 +23920,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -23921,7 +23956,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -23956,7 +23992,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -24010,7 +24047,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -24064,7 +24102,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -24137,7 +24176,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -24170,7 +24210,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -24243,7 +24284,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -24276,7 +24318,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -24299,7 +24342,8 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "content": {}
                     }
                 }
             }
@@ -24325,7 +24369,8 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "content": {}
                     }
                 }
             }
@@ -24348,7 +24393,8 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "content": {}
                     }
                 }
             }
@@ -24530,7 +24576,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -24546,7 +24593,8 @@
                 "operationId": "reloadObservabilityLayout",
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -24582,7 +24630,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -24607,7 +24656,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             },
@@ -24620,7 +24670,8 @@
                 "operationId": "unsubscribeAllAutomations",
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -24645,7 +24696,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -24670,7 +24722,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -24695,7 +24748,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -24730,7 +24784,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -24765,7 +24820,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -24791,7 +24847,8 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "An upload notification has been successfully registered."
+                        "description": "An upload notification has been successfully registered.",
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -24838,7 +24895,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -25140,7 +25198,7 @@
                     {
                         "name": "name",
                         "in": "query",
-                        "description": "Filter by user name. Note that user name is case insensitive.",
+                        "description": "Filter by user name, email or login (user ID). Note that the filter is case insensitive.",
                         "required": false,
                         "style": "form",
                         "schema": {
@@ -25896,7 +25954,8 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -26874,7 +26933,8 @@
                 },
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -27054,6 +27114,29 @@
                         "VIEW"
                     ],
                     "description": "Contains minimal permission level required to view this object type."
+                }
+            }
+        },
+        "/api/v1/actions/organization/syncMetadata": {
+            "post": {
+                "tags": [
+                    "Metadata Synchronization",
+                    "actions"
+                ],
+                "summary": "Trigger metadata synchronization",
+                "description": "Enqueues an organization-scoped metadata resync, fanning out the organization's current metadata to GenAI, GW Forge, and Automations. Requires organization MANAGE permission. Requests are deduplicated while a resync session is pending for the organization.",
+                "operationId": "syncMetadata",
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "content": {}
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Minimal permission required to use this endpoint."
                 }
             }
         }
@@ -27309,8 +27392,8 @@
                 "properties": {
                     "identifier": {
                         "required": [
-                            "type",
-                            "id"
+                            "id",
+                            "type"
                         ],
                         "type": "object",
                         "properties": {
@@ -27438,8 +27521,8 @@
                 "properties": {
                     "identifier": {
                         "required": [
-                            "type",
-                            "id"
+                            "id",
+                            "type"
                         ],
                         "type": "object",
                         "properties": {
@@ -28142,20 +28225,7 @@
                 "type": "object",
                 "properties": {
                     "condition": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/AnomalyDetectionWrapper"
-                            },
-                            {
-                                "$ref": "#/components/schemas/ComparisonWrapper"
-                            },
-                            {
-                                "$ref": "#/components/schemas/RangeWrapper"
-                            },
-                            {
-                                "$ref": "#/components/schemas/RelativeWrapper"
-                            }
-                        ]
+                        "$ref": "#/components/schemas/AlertCondition"
                     },
                     "execution": {
                         "$ref": "#/components/schemas/AlertAfm"
@@ -28912,7 +28982,6 @@
                 "properties": {
                     "compoundMeasureValueFilter": {
                         "required": [
-                            "conditions",
                             "measure"
                         ],
                         "type": "object",
@@ -28993,9 +29062,18 @@
             },
             "CustomCalendarDefinition": {
                 "required": [
-                    "dataSourceTables"
+                    "dataSourceTables",
+                    "type"
                 ],
                 "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "custom"
+                        ]
+                    }
+                },
                 "description": "Calendar backed by custom fiscal calendar tables defined per data source.",
                 "allOf": [
                     {
@@ -29497,7 +29575,6 @@
                 "properties": {
                     "dashboardMeasureValueFilter": {
                         "required": [
-                            "conditions",
                             "measure"
                         ],
                         "type": "object",
@@ -29662,6 +29739,9 @@
                             }
                         },
                         "description": "Map of tab-specific parameter overrides. Key is tabId, value is a list of (id, value, title) entries that override the dashboard-level parameters for that tab only. Mirrors dashboardTabsFiltersOverrides. When a tab is present in this map, its entries take precedence over dashboardParametersOverride for that tab's executions and info-sheet display."
+                    },
+                    "executionSettings": {
+                        "$ref": "#/components/schemas/ExecutionSettings"
                     },
                     "fileName": {
                         "type": "string",
@@ -30704,14 +30784,7 @@
                 "type": "object",
                 "properties": {
                     "definition": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/CustomCalendarDefinition"
-                            },
-                            {
-                                "$ref": "#/components/schemas/FiscalYearCalendarDefinition"
-                            }
-                        ]
+                        "$ref": "#/components/schemas/CalendarDefinition"
                     },
                     "description": {
                         "maxLength": 10000,
@@ -31000,17 +31073,7 @@
                         ]
                     },
                     "cacheRetention": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/IndefiniteCacheRetention"
-                            },
-                            {
-                                "$ref": "#/components/schemas/ScheduleCacheRetention"
-                            },
-                            {
-                                "$ref": "#/components/schemas/ValidityPeriodCacheRetention"
-                            }
-                        ]
+                        "$ref": "#/components/schemas/CacheRetention"
                     },
                     "cacheStrategy": {
                         "type": "string",
@@ -31114,6 +31177,7 @@
                             "MSSQL",
                             "PRESTO",
                             "DREMIO",
+                            "DRILL",
                             "AZURESQL",
                             "SYNAPSESQL",
                             "DATABRICKS",
@@ -31490,14 +31554,7 @@
                         "$ref": "#/components/schemas/DeclarativeUserIdentifier"
                     },
                     "requestPayload": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/TabularExportRequest"
-                            },
-                            {
-                                "$ref": "#/components/schemas/VisualExportRequest"
-                            }
-                        ]
+                        "$ref": "#/components/schemas/ExportRequest"
                     },
                     "tags": {
                         "uniqueItems": true,
@@ -32340,20 +32397,7 @@
                         "example": "This is a channel"
                     },
                     "destination": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/DefaultSmtp"
-                            },
-                            {
-                                "$ref": "#/components/schemas/InPlatform"
-                            },
-                            {
-                                "$ref": "#/components/schemas/Smtp"
-                            },
-                            {
-                                "$ref": "#/components/schemas/Webhook"
-                            }
-                        ]
+                        "$ref": "#/components/schemas/NotificationChannelDestination"
                     },
                     "destinationType": {
                         "type": "string",
@@ -32637,21 +32681,7 @@
                 "type": "object",
                 "properties": {
                     "content": {
-                        "discriminator": {
-                            "propertyName": "type",
-                            "mapping": {
-                                "NUMBER": "#/components/schemas/NumberParameterDefinition",
-                                "STRING": "#/components/schemas/StringParameterDefinition"
-                            }
-                        },
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/NumberParameterDefinition"
-                            },
-                            {
-                                "$ref": "#/components/schemas/StringParameterDefinition"
-                            }
-                        ]
+                        "$ref": "#/components/schemas/ParameterDefinition"
                     },
                     "createdAt": {
                         "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}",
@@ -34333,19 +34363,28 @@
                     },
                     "canResegment": {
                         "type": "string",
+                        "xml": {
+                            "attribute": true
+                        },
                         "enum": [
                             "YES",
                             "NO"
                         ]
                     },
                     "id": {
-                        "type": "string"
+                        "type": "string",
+                        "xml": {
+                            "attribute": true
+                        }
                     },
                     "notes": {
                         "$ref": "#/components/schemas/Notes"
                     },
                     "original": {
-                        "type": "string"
+                        "type": "string",
+                        "xml": {
+                            "attribute": true
+                        }
                     },
                     "otherAttributes": {
                         "type": "object",
@@ -34357,10 +34396,17 @@
                         "$ref": "#/components/schemas/Skeleton"
                     },
                     "space": {
-                        "type": "string"
+                        "type": "string",
+                        "xml": {
+                            "namespace": "http://www.w3.org/XML/1998/namespace",
+                            "attribute": true
+                        }
                     },
                     "srcDir": {
                         "type": "string",
+                        "xml": {
+                            "attribute": true
+                        },
                         "enum": [
                             "LTR",
                             "RTL",
@@ -34369,6 +34415,9 @@
                     },
                     "translate": {
                         "type": "string",
+                        "xml": {
+                            "attribute": true
+                        },
                         "enum": [
                             "YES",
                             "NO"
@@ -34376,6 +34425,9 @@
                     },
                     "trgDir": {
                         "type": "string",
+                        "xml": {
+                            "attribute": true
+                        },
                         "enum": [
                             "LTR",
                             "RTL",
@@ -34388,6 +34440,10 @@
                             "type": "object"
                         }
                     }
+                },
+                "xml": {
+                    "name": "file",
+                    "namespace": "urn:oasis:names:tc:xliff:document:2.0"
                 }
             },
             "FilterDefinition": {
@@ -34446,9 +34502,18 @@
             },
             "FiscalYearCalendarDefinition": {
                 "required": [
-                    "monthOffset"
+                    "monthOffset",
+                    "type"
                 ],
                 "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "fiscalYear"
+                        ]
+                    }
+                },
                 "description": "Algorithmic fiscal calendar derived by shifting the Gregorian year start.",
                 "allOf": [
                     {
@@ -34744,6 +34809,9 @@
                 "description": "Contains information about conflicting IDs in workspace hierarchy"
             },
             "IdentifierRef": {
+                "required": [
+                    "identifier"
+                ],
                 "type": "object",
                 "properties": {
                     "identifier": {
@@ -34823,6 +34891,12 @@
                     },
                     "metadata": {
                         "$ref": "#/components/schemas/JsonNode"
+                    },
+                    "timezoneId": {
+                        "type": "string",
+                        "description": "Time zone the export should be rendered in, as an IANA identifier (e.g. 'Asia/Kolkata') or a GMT offset (e.g. 'GMT+01:00'). When omitted, the workspace time zone setting is used.",
+                        "nullable": true,
+                        "example": "Asia/Kolkata"
                     },
                     "widgetIds": {
                         "maxItems": 1,
@@ -40123,6 +40197,7 @@
                                     "MSSQL",
                                     "PRESTO",
                                     "DREMIO",
+                                    "DRILL",
                                     "AZURESQL",
                                     "SYNAPSESQL",
                                     "DATABRICKS",
@@ -40376,6 +40451,7 @@
                                     "MSSQL",
                                     "PRESTO",
                                     "DREMIO",
+                                    "DRILL",
                                     "AZURESQL",
                                     "SYNAPSESQL",
                                     "DATABRICKS",
@@ -40579,6 +40655,7 @@
                                     "MSSQL",
                                     "PRESTO",
                                     "DREMIO",
+                                    "DRILL",
                                     "AZURESQL",
                                     "SYNAPSESQL",
                                     "DATABRICKS",
@@ -40839,6 +40916,7 @@
                                     "MSSQL",
                                     "PRESTO",
                                     "DREMIO",
+                                    "DRILL",
                                     "AZURESQL",
                                     "SYNAPSESQL",
                                     "DATABRICKS",
@@ -54740,17 +54818,6 @@
                     }
                 ]
             },
-            "LlmProviderAuth": {
-                "required": [
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string"
-                    }
-                }
-            },
             "LocalIdentifier": {
                 "required": [
                     "localIdentifier"
@@ -55079,19 +55146,28 @@
                 "properties": {
                     "appliesTo": {
                         "type": "string",
+                        "xml": {
+                            "attribute": true
+                        },
                         "enum": [
                             "SOURCE",
                             "TARGET"
                         ]
                     },
                     "category": {
-                        "type": "string"
+                        "type": "string",
+                        "xml": {
+                            "attribute": true
+                        }
                     },
                     "content": {
                         "type": "string"
                     },
                     "id": {
-                        "type": "string"
+                        "type": "string",
+                        "xml": {
+                            "attribute": true
+                        }
                     },
                     "otherAttributes": {
                         "type": "object",
@@ -55101,11 +55177,21 @@
                     },
                     "priority": {
                         "type": "integer",
-                        "format": "int32"
+                        "format": "int32",
+                        "xml": {
+                            "attribute": true
+                        }
                     }
+                },
+                "xml": {
+                    "name": "note",
+                    "namespace": "urn:oasis:names:tc:xliff:document:2.0"
                 }
             },
             "Notes": {
+                "required": [
+                    "note"
+                ],
                 "type": "object",
                 "properties": {
                     "note": {
@@ -55114,6 +55200,10 @@
                             "$ref": "#/components/schemas/Note"
                         }
                     }
+                },
+                "xml": {
+                    "name": "notes",
+                    "namespace": "urn:oasis:names:tc:xliff:document:2.0"
                 }
             },
             "NotificationChannelDestination": {
@@ -55553,6 +55643,7 @@
                 "type": "object",
                 "properties": {
                     "assignees": {
+                        "minItems": 1,
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/AssigneeIdentifier"
@@ -56533,6 +56624,7 @@
                     },
                     "kid": {
                         "maxLength": 255,
+                        "minLength": 0,
                         "pattern": "^[^.]",
                         "type": "string"
                     },
@@ -56829,8 +56921,15 @@
                         }
                     },
                     "href": {
-                        "type": "string"
+                        "type": "string",
+                        "xml": {
+                            "attribute": true
+                        }
                     }
+                },
+                "xml": {
+                    "name": "skeleton",
+                    "namespace": "urn:oasis:names:tc:xliff:document:2.0"
                 }
             },
             "SlidesExportRequest": {
@@ -56867,6 +56966,12 @@
                         "type": "string",
                         "description": "Export template identifier.",
                         "nullable": true
+                    },
+                    "timezoneId": {
+                        "type": "string",
+                        "description": "Time zone the export should be rendered in, as an IANA identifier (e.g. 'Asia/Kolkata') or a GMT offset (e.g. 'GMT+01:00'). When omitted, the workspace time zone setting is used.",
+                        "nullable": true,
+                        "example": "Asia/Kolkata"
                     },
                     "visualizationIds": {
                         "maxItems": 1,
@@ -57198,6 +57303,9 @@
                         "type": "string",
                         "description": "Execution result identifier.",
                         "example": "ff483727196c9dc862c7fd3a5a84df55c96d61a4"
+                    },
+                    "executionSettings": {
+                        "$ref": "#/components/schemas/ExecutionSettings"
                     },
                     "executions": {
                         "type": "array",
@@ -57782,6 +57890,12 @@
                         "type": "object",
                         "description": "Metadata definition in free-form JSON format.",
                         "example": "{}"
+                    },
+                    "timezoneId": {
+                        "type": "string",
+                        "description": "Time zone the export should be rendered in, as an IANA identifier (e.g. 'Asia/Kolkata') or a GMT offset (e.g. 'GMT+01:00'). When omitted, the workspace time zone setting is used.",
+                        "nullable": true,
+                        "example": "Asia/Kolkata"
                     }
                 },
                 "description": "Export request object describing the export properties and metadata for dashboard PDF exports."
@@ -58143,6 +58257,9 @@
                 "nullable": true
             },
             "Xliff": {
+                "required": [
+                    "file"
+                ],
                 "type": "object",
                 "properties": {
                     "file": {
@@ -58158,17 +58275,34 @@
                         }
                     },
                     "space": {
-                        "type": "string"
+                        "type": "string",
+                        "xml": {
+                            "namespace": "http://www.w3.org/XML/1998/namespace",
+                            "attribute": true
+                        }
                     },
                     "srcLang": {
-                        "type": "string"
+                        "type": "string",
+                        "xml": {
+                            "attribute": true
+                        }
                     },
                     "trgLang": {
-                        "type": "string"
+                        "type": "string",
+                        "xml": {
+                            "attribute": true
+                        }
                     },
                     "version": {
-                        "type": "string"
+                        "type": "string",
+                        "xml": {
+                            "attribute": true
+                        }
                     }
+                },
+                "xml": {
+                    "name": "xliff",
+                    "namespace": "urn:oasis:names:tc:xliff:document:2.0"
                 }
             }
         },

@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     type AutomationAlertDescription as AlertDescription,
@@ -97,6 +97,7 @@ function convertWebhookMessageData(
         slidesExports: data.slidesExports,
         alert: data.alert ? convertAlertDescription(data.alert) : undefined,
         filters: data.filters,
+        parameters: data.parameters,
     };
 }
 

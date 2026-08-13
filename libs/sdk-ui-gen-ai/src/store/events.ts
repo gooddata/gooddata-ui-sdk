@@ -4,7 +4,7 @@ import {
     type IChatConversation,
     type IChatConversationVisualisationContent,
 } from "@gooddata/sdk-backend-spi";
-import { type IDashboard } from "@gooddata/sdk-model";
+import { type IDashboard, type IGenAIUserContext, type IInsight } from "@gooddata/sdk-model";
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
 import { type GenAIAssistantMode } from "../components/ConfigContext.js";
@@ -392,6 +392,7 @@ export type ChatDefinitionReceivedEvent = BaseEvent & {
     conversationId: string;
     interactionId?: string;
     dashboard?: IDashboard;
+    insights?: IInsight[];
     visualization?: NonNullable<IChatConversationVisualisationContent["visualization"]>;
 };
 
@@ -439,6 +440,25 @@ export const isChatAgentChangeEvent = (event: ChatEvent): event is ChatAgentChan
 };
 
 /**
+ * A chat context change event.
+ * @public
+ */
+export type ChatContextChangeEvent = BaseEvent & {
+    type: "onContextChange";
+    contextType: "ambient" | "user";
+    userContext?: IGenAIUserContext;
+    replaceUserContext?: boolean;
+};
+
+/**
+ * Type guard for the ChatContextChangeEvent.
+ * @public
+ */
+export const isChatContextChangeEvent = (event: ChatEvent): event is ChatContextChangeEvent => {
+    return event.type === "onContextChange";
+};
+
+/**
  * A union type for all chat events.
  * @public
  */
@@ -460,6 +480,7 @@ export type ChatEvent =
     | ChatAssistantMessageEvent
     | ChatFeedbackEvent
     | ChatFeedbackErrorEvent
+    | ChatContextChangeEvent
     | ChatCopyToClipboardEvent
     | ChatVisualizationErrorEvent
     | ChatSaveVisualizationErrorEvent

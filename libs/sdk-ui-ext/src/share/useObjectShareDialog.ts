@@ -2,8 +2,12 @@
 
 import { useCallback, useEffect, useState } from "react";
 
+import { useIntl } from "react-intl";
+
 import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
 
+import { objectShareMessages } from "./messages.js";
+import { changesEffectiveLevel, removalChangesEffectiveLevel } from "./objectShareController.helpers.js";
 import {
     type IObjectShareControllerActions,
     type IObjectShareControllerState,
@@ -68,6 +72,13 @@ export interface IObjectShareDialogViewModel {
      * for the signed-in user's own sole grant, undefined for every other row.
      */
     rowDisabledLevels: (grantee: IObjectShareGrantee) => ObjectSharePermissionLevel[] | undefined;
+    /**
+     * Whether Remove access must render disabled: the grantee holds no grant in this
+     * workspace, so there is nothing here to revoke (their access is inherited).
+     */
+    isRowRemoveDisabled: (grantee: IObjectShareGrantee) => boolean;
+    /** Tooltip explaining why Remove access is disabled on this row. */
+    rowRemoveDisabledTooltip: string;
 
     /** Close the whole dialog, discarding any staged self-restriction. */
     onClose: () => void;
@@ -120,6 +131,7 @@ export function useObjectShareDialog({
     labelsLoading,
     labelsError,
 }: IUseObjectShareDialogParams): IObjectShareDialogViewModel {
+    const intl = useIntl();
     const { state, actions } = useObjectShareController(target, { labels, labelsError, labelsLoading });
 
     const [pendingSelfChange, setPendingSelfChange] = useState<IPendingSelfChange | undefined>(undefined);
@@ -145,7 +157,12 @@ export function useObjectShareDialog({
     const onRowPermissionChange = useCallback(
         (grantee: IObjectShareGrantee, level: ObjectSharePermissionLevel) => {
             if (state.selfManagedGranteeId === grantee.id) {
-                if (level !== grantee.level) {
+                // Stage the confirm only for a pick that would really move the level the
+                // user effectively holds. Comparing against the displayed level instead
+                // opened "Restrict your access?" for a pick under an inherited floor, which
+                // the controller then refuses — the user would confirm a restriction that
+                // never happens. Same predicate the controller applies.
+                if (changesEffectiveLevel(grantee, level)) {
                     setPendingSelfChange({ granteeId: grantee.id, level });
                 }
                 return;
@@ -157,7 +174,11 @@ export function useObjectShareDialog({
 
     const onRowRemove = useCallback(
         (grantee: IObjectShareGrantee) => {
-            if (state.selfManagedGranteeId === grantee.id) {
+            // Stage the confirm only when the removal can lower the level the user
+            // effectively holds — under an inherited floor the revoke removes the local
+            // grant but restricts nothing, so the "Restrict your access?" warning would
+            // promise a restriction that never happens. Same policy as the picks above.
+            if (state.selfManagedGranteeId === grantee.id && removalChangesEffectiveLevel(grantee)) {
                 setPendingSelfChange({ granteeId: grantee.id, level: "none" });
                 return;
             }
@@ -187,6 +208,15 @@ export function useObjectShareDialog({
         [state.selfManagedGranteeId, state.selfManagedDisabledLevels],
     );
 
+    // Levels below an inherited one are deliberately NOT disabled: lowering the
+    // direct grant still reduces the effective level whenever it sits above what is
+    // inherited (direct EDIT under an inherited SHARE → picking VIEW yields SHARE).
+    // The row's warning badge is what explains the inherited floor.
+    const isRowRemoveDisabled = useCallback(
+        (grantee: IObjectShareGrantee) => grantee.directLevel === undefined,
+        [],
+    );
+
     const isMutable = state.status === "success" && state.labelsResolved;
     const isLoading = state.status === "loading" || state.labelsInitializing;
 
@@ -201,6 +231,8 @@ export function useObjectShareDialog({
         isLoading,
         workspaceDisabledLevels: state.workspaceDisabledLevels,
         rowDisabledLevels,
+        isRowRemoveDisabled,
+        rowRemoveDisabledTooltip: intl.formatMessage(objectShareMessages.granteeRemoveInherited),
         onClose,
         onRowPermissionChange,
         onRowRemove,

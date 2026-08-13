@@ -227,6 +227,7 @@ const chatWindowSlice = createSlice({
                 itemId: string;
                 interactionId?: string;
                 dashboard?: IDashboard;
+                insights?: IInsight[];
                 visualization?: IInsight;
             }>,
         ) => state,

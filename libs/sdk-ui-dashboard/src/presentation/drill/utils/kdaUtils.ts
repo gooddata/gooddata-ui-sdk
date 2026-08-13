@@ -9,6 +9,7 @@ import {
     isAttributeDescriptor,
     isMeasureDescriptor,
     isMeasureGroupDescriptor,
+    isYearGranularity,
 } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
@@ -31,10 +32,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import type { IDashboardKeyDriverCombinationItem } from "../../../model/events/drill.js";
-import {
-    keyDriverAnalysisSupportedStringGranularities,
-    keyDriverYearGranularity,
-} from "../../../model/store/keyDriverAnalysis/const.js";
+import { getKeyDriverAnalysisSupportedStringGranularities } from "../../../model/store/keyDriverAnalysis/const.js";
 
 /**
  * @internal
@@ -42,6 +40,7 @@ import {
 export function getKdaKeyDriverCombinations(
     drillDefinition: IKeyDriveAnalysis,
     drillEvent: IDrillEvent,
+    enableSecondGranularities = false,
 ): IDashboardKeyDriverCombinationItem[] {
     //TODO: Special implementation for headline
     const dv = DataViewFacade.for(drillEvent.dataView);
@@ -53,7 +52,9 @@ export function getKdaKeyDriverCombinations(
     }
 
     //Find granularity
-    const validGranularity = keyDriverAnalysisSupportedStringGranularities.includes(
+    const supportedStringGranularities =
+        getKeyDriverAnalysisSupportedStringGranularities(enableSecondGranularities);
+    const validGranularity = supportedStringGranularities.includes(
         combinations.dateHeader.attributeHeader.granularity ?? "",
     );
     if (!validGranularity) {
@@ -397,7 +398,7 @@ function createYearToYear(
 
     const attribute = current.scope.descriptor.attributeHeader;
     const attributeItem = current.scope.header.attributeHeaderItem;
-    const isYear = keyDriverYearGranularity.includes(attribute.granularity ?? "");
+    const isYear = isYearGranularity(attribute.granularity);
 
     // Year to year is not available for year granularity, it not makes sense
     if (isYear) {

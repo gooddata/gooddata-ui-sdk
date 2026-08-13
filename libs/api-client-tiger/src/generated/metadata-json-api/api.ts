@@ -491,7 +491,7 @@ export interface AttributeItem {
 }
 
 export interface AutomationAlert {
-    'condition': AutomationAlertCondition;
+    'condition': AlertCondition;
     'execution': AlertAfm;
     /**
      * Date granularity for the interval of ONCE_PER_INTERVAL trigger. Supported granularities: DAY, WEEK, MONTH, QUARTER, YEAR.
@@ -505,11 +505,6 @@ export interface AutomationAlert {
 
 export type AutomationAlertIntervalEnum = 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR';
 export type AutomationAlertTriggerEnum = 'ALWAYS' | 'ONCE' | 'ONCE_PER_INTERVAL';
-
-/**
- * @type AutomationAlertCondition
- */
-export type AutomationAlertCondition = AnomalyDetectionWrapper | ComparisonWrapper | RangeWrapper | RelativeWrapper;
 
 export interface AutomationDashboardTabularExport {
     'requestPayload': DashboardTabularExportRequestV2;
@@ -838,7 +833,7 @@ export interface CompoundMeasureValueFilterCompoundMeasureValueFilter {
     /**
      * List of conditions to apply. Conditions are combined with OR logic. Each condition can be either a comparison (e.g., > 100) or a range (e.g., BETWEEN 10 AND 50). If empty, no filtering is applied and all rows are returned.
      */
-    'conditions': Array<MeasureValueCondition>;
+    'conditions'?: Array<MeasureValueCondition>;
     /**
      * References to the attributes to be used when filtering.
      */
@@ -877,11 +872,14 @@ export interface CoverSlideTemplate {
  * Calendar backed by custom fiscal calendar tables defined per data source.
  */
 export interface CustomCalendarDefinition {
+    'type': CustomCalendarDefinitionTypeEnum;
     /**
      * Custom fiscal calendar table per data source ID.
      */
     'dataSourceTables': { [key: string]: CalendarTableReference; };
 }
+
+export type CustomCalendarDefinitionTypeEnum = 'custom';
 
 /**
  * Custom label object override.
@@ -1065,7 +1063,7 @@ export interface DashboardMeasureValueFilter {
 }
 
 export interface DashboardMeasureValueFilterDashboardMeasureValueFilter {
-    'conditions': Array<DashboardCompoundConditionItem>;
+    'conditions'?: Array<DashboardCompoundConditionItem>;
     'dimensionality'?: Array<IdentifierRef>;
     'localIdentifier'?: string;
     'measure': IdentifierRef;
@@ -1136,6 +1134,7 @@ export interface DashboardTabularExportRequestV2 {
      * Map of tab-specific parameter overrides. Key is tabId, value is a list of (id, value, title) entries that override the dashboard-level parameters for that tab only. Mirrors dashboardTabsFiltersOverrides. When a tab is present in this map, its entries take precedence over dashboardParametersOverride for that tab\'s executions and info-sheet display.
      */
     'dashboardTabsParametersOverrides'?: { [key: string]: Array<ParameterValue>; };
+    'executionSettings'?: ExecutionSettings;
     /**
      * Filename of downloaded file without extension.
      */
@@ -1667,7 +1666,7 @@ export type DeclarativeAutomationStateEnum = 'ACTIVE' | 'PAUSED';
  * A custom fiscal calendar definition.
  */
 export interface DeclarativeCalendar {
-    'definition': DeclarativeCalendarDefinition;
+    'definition': CalendarDefinition;
     /**
      * Calendar description.
      */
@@ -1681,11 +1680,6 @@ export interface DeclarativeCalendar {
      */
     'name': string;
 }
-
-/**
- * @type DeclarativeCalendarDefinition
- */
-export type DeclarativeCalendarDefinition = CustomCalendarDefinition | FiscalYearCalendarDefinition;
 
 /**
  * Color palette and its properties.
@@ -1832,7 +1826,7 @@ export interface DeclarativeDataSource {
      * Type of authentication used to connect to the database.
      */
     'authenticationType'?: DeclarativeDataSourceAuthenticationTypeEnum | null;
-    'cacheRetention'?: DeclarativeDataSourceCacheRetention;
+    'cacheRetention'?: CacheRetention | null;
     /**
      * Determines how the results coming from a particular datasource should be cached. - ALWAYS: The results from the datasource should be cached normally (the default). - NEVER: The results from the datasource should never be cached.
      */
@@ -1897,12 +1891,7 @@ export interface DeclarativeDataSource {
 export type DeclarativeDataSourceAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 export type DeclarativeDataSourceCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type DeclarativeDataSourceDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
-export type DeclarativeDataSourceTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
-
-/**
- * @type DeclarativeDataSourceCacheRetention
- */
-export type DeclarativeDataSourceCacheRetention = IndefiniteCacheRetention | ScheduleCacheRetention | ValidityPeriodCacheRetention;
+export type DeclarativeDataSourceTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 export interface DeclarativeDataSourcePermission {
     'assignee': AssigneeIdentifier;
@@ -2066,7 +2055,7 @@ export interface DeclarativeExportDefinition {
      */
     'modifiedAt'?: string | null;
     'modifiedBy'?: DeclarativeUserIdentifier;
-    'requestPayload'?: DeclarativeExportDefinitionRequestPayload;
+    'requestPayload'?: ExportRequest;
     /**
      * A list of tags.
      */
@@ -2092,11 +2081,6 @@ export interface DeclarativeExportDefinitionIdentifier {
 }
 
 export type DeclarativeExportDefinitionIdentifierTypeEnum = 'exportDefinition';
-
-/**
- * @type DeclarativeExportDefinitionRequestPayload
- */
-export type DeclarativeExportDefinitionRequestPayload = TabularExportRequest | VisualExportRequest;
 
 /**
  * A declarative form of a particular export template.
@@ -2537,7 +2521,7 @@ export interface DeclarativeNotificationChannel {
      * Description of a notification channel.
      */
     'description'?: string;
-    'destination'?: DeclarativeNotificationChannelDestination;
+    'destination'?: NotificationChannelDestination;
     'destinationType'?: DeclarativeNotificationChannelDestinationTypeEnum | null;
     /**
      * Identifier of a notification channel
@@ -2561,11 +2545,6 @@ export type DeclarativeNotificationChannelAllowedRecipientsEnum = 'CREATOR' | 'I
 export type DeclarativeNotificationChannelDashboardLinkVisibilityEnum = 'HIDDEN' | 'INTERNAL_ONLY' | 'ALL';
 export type DeclarativeNotificationChannelDestinationTypeEnum = 'WEBHOOK' | 'SMTP' | 'DEFAULT_SMTP' | 'IN_PLATFORM';
 export type DeclarativeNotificationChannelInPlatformNotificationEnum = 'DISABLED' | 'ENABLED';
-
-/**
- * @type DeclarativeNotificationChannelDestination
- */
-export type DeclarativeNotificationChannelDestination = DefaultSmtp | InPlatform | Smtp | Webhook;
 
 /**
  * A notification channel identifier.
@@ -2669,7 +2648,7 @@ export interface DeclarativeOrganizationPermission {
 export type DeclarativeOrganizationPermissionNameEnum = 'MANAGE' | 'SELF_CREATE_TOKEN' | 'BASE_UI_ACCESS';
 
 export interface DeclarativeParameter {
-    'content': DeclarativeParameterContent;
+    'content': ParameterDefinition;
     /**
      * Time of the entity creation.
      */
@@ -2697,11 +2676,6 @@ export interface DeclarativeParameter {
      */
     'title': string;
 }
-
-/**
- * @type DeclarativeParameterContent
- */
-export type DeclarativeParameterContent = { type: 'NUMBER' } & NumberParameterDefinition | { type: 'STRING' } & StringParameterDefinition;
 
 /**
  * A dataset reference.
@@ -3513,11 +3487,14 @@ export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
  * Algorithmic fiscal calendar derived by shifting the Gregorian year start.
  */
 export interface FiscalYearCalendarDefinition {
+    'type': FiscalYearCalendarDefinitionTypeEnum;
     /**
      * Number of months the fiscal year start is shifted relative to the Gregorian year.
      */
     'monthOffset': number;
 }
+
+export type FiscalYearCalendarDefinitionTypeEnum = 'fiscalYear';
 
 /**
  * A request containing all information needed for generation of logical model.
@@ -3690,7 +3667,7 @@ export interface IdentifierDuplications {
 export type IdentifierDuplicationsTypeEnum = 'analyticalDashboard' | 'attribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceDataFilter' | 'workspaceDataFilterSettings';
 
 export interface IdentifierRef {
-    'identifier'?: IdentifierRefIdentifier;
+    'identifier': IdentifierRefIdentifier;
 }
 
 export interface IdentifierRefIdentifier {
@@ -3720,6 +3697,10 @@ export interface ImageExportRequest {
      * Free-form JSON object
      */
     'metadata'?: object | null;
+    /**
+     * Time zone the export should be rendered in, as an IANA identifier (e.g. \'Asia/Kolkata\') or a GMT offset (e.g. \'GMT+01:00\'). When omitted, the workspace time zone setting is used.
+     */
+    'timezoneId'?: string | null;
     /**
      * List of widget identifiers to be exported. Note that only one widget is currently supported.
      */
@@ -6533,7 +6514,7 @@ export interface JsonApiDataSourceIdentifierOutAttributes {
     'type': JsonApiDataSourceIdentifierOutAttributesTypeEnum;
 }
 
-export type JsonApiDataSourceIdentifierOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourceIdentifierOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 export interface JsonApiDataSourceIdentifierOutDocument {
     'data': JsonApiDataSourceIdentifierOut;
@@ -6666,7 +6647,7 @@ export interface JsonApiDataSourceInAttributes {
 export type JsonApiDataSourceInAttributesAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 export type JsonApiDataSourceInAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type JsonApiDataSourceInAttributesDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
-export type JsonApiDataSourceInAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourceInAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 /**
  * @type JsonApiDataSourceInAttributesCacheRetention
@@ -6760,7 +6741,7 @@ export interface JsonApiDataSourceOutAttributes {
 export type JsonApiDataSourceOutAttributesAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 export type JsonApiDataSourceOutAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type JsonApiDataSourceOutAttributesDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
-export type JsonApiDataSourceOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourceOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 /**
  * @type JsonApiDataSourceOutAttributesCacheRetention
@@ -6909,7 +6890,7 @@ export interface JsonApiDataSourcePatchAttributes {
 export type JsonApiDataSourcePatchAttributesAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 export type JsonApiDataSourcePatchAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type JsonApiDataSourcePatchAttributesDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
-export type JsonApiDataSourcePatchAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourcePatchAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 /**
  * @type JsonApiDataSourcePatchAttributesCacheRetention
@@ -14250,10 +14231,6 @@ export interface LiveFeatures {
     'configuration': LiveFeatureFlagConfiguration;
 }
 
-export interface LlmProviderAuth {
-    'type': string;
-}
-
 export interface LocalIdentifier {
     /**
      * Metric format.
@@ -14481,7 +14458,7 @@ export interface Note {
 export type NoteAppliesToEnum = 'SOURCE' | 'TARGET';
 
 export interface Notes {
-    'note'?: Array<Note>;
+    'note': Array<Note>;
 }
 
 /**
@@ -15321,6 +15298,10 @@ export interface SlidesExportRequest {
      */
     'templateId'?: string | null;
     /**
+     * Time zone the export should be rendered in, as an IANA identifier (e.g. \'Asia/Kolkata\') or a GMT offset (e.g. \'GMT+01:00\'). When omitted, the workspace time zone setting is used.
+     */
+    'timezoneId'?: string | null;
+    /**
      * List of visualization ids to be exported. Note that only one visualization is currently supported.
      */
     'visualizationIds'?: Array<string>;
@@ -15494,6 +15475,7 @@ export interface TabularExportRequest {
      * Execution result identifier.
      */
     'executionResult'?: string;
+    'executionSettings'?: ExecutionSettings;
     /**
      * Pre-executed layers for multi-layer geo visualizations. When provided, this is the canonical source of the exported layers and takes precedence over the top-level executionResult and customOverride, which are ignored. Index 0 is the main layer; each layer carries its own executionResult and customOverride.
      */
@@ -15799,6 +15781,10 @@ export interface VisualExportRequest {
      * Metadata definition in free-form JSON format.
      */
     'metadata'?: object;
+    /**
+     * Time zone the export should be rendered in, as an IANA identifier (e.g. \'Asia/Kolkata\') or a GMT offset (e.g. \'GMT+01:00\'). When omitted, the workspace time zone setting is used.
+     */
+    'timezoneId'?: string | null;
 }
 
 /**
@@ -15968,7 +15954,7 @@ export interface WorkspaceWidgetSlidesTemplate {
 export type WorkspaceWidgetSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
 
 export interface Xliff {
-    'file'?: Array<any>;
+    'file': Array<any>;
     'otherAttributes'?: { [key: string]: string; };
     'space'?: string;
     'srcLang'?: string;
@@ -21655,7 +21641,7 @@ export async function ActionsApiAxiosParamCreator_ListWorkspaceUserGroups(
  * @param {string} workspaceId 
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned.
- * @param {string} [name] Filter by user name. Note that user name is case insensitive.
+ * @param {string} [name] Filter by user name, email or login (user ID). Note that the filter is case insensitive.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
@@ -23129,6 +23115,47 @@ export async function ActionsApiAxiosParamCreator_SwitchActiveIdentityProvider(
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(switchIdentityProviderRequest !== undefined ? switchIdentityProviderRequest : {})
         : switchIdentityProviderRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Enqueues an organization-scoped metadata resync, fanning out the organization\'s current metadata to GenAI, GW Forge, and Automations. Requires organization MANAGE permission. Requests are deduplicated while a resync session is pending for the organization.
+ * @summary Trigger metadata synchronization
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_SyncMetadata(
+    
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/actions/organization/syncMetadata`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
 
     return {
         url: toPathString(localVarUrlObj),
@@ -24842,6 +24869,31 @@ export async function ActionsApi_SwitchActiveIdentityProvider(
 
 // ActionsApi Api FP
 /**
+ * Enqueues an organization-scoped metadata resync, fanning out the organization\'s current metadata to GenAI, GW Forge, and Automations. Requires organization MANAGE permission. Requests are deduplicated while a resync session is pending for the organization.
+ * @summary Trigger metadata synchronization
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_SyncMetadata(
+    axios: AxiosInstance, basePath: string,
+    
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_SyncMetadata(
+        
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Returns a list of tags for this workspace
  * @summary Get Analytics Catalog Tags
  * @param {AxiosInstance} axios Axios instance.
@@ -25551,6 +25603,15 @@ export interface ActionsApiInterface {
     switchActiveIdentityProvider(requestParameters: ActionsApiSwitchActiveIdentityProviderRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
+     * Enqueues an organization-scoped metadata resync, fanning out the organization\'s current metadata to GenAI, GW Forge, and Automations. Requires organization MANAGE permission. Requests are deduplicated while a resync session is pending for the organization.
+     * @summary Trigger metadata synchronization
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    syncMetadata(options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
      * Returns a list of tags for this workspace
      * @summary Get Analytics Catalog Tags
      * @param {ActionsApiTagsRequest} requestParameters Request parameters.
@@ -26029,7 +26090,7 @@ export interface ActionsApiListWorkspaceUsersRequest {
     readonly size?: number
 
     /**
-     * Filter by user name. Note that user name is case insensitive.
+     * Filter by user name, email or login (user ID). Note that the filter is case insensitive.
      * @type {string}
      * @memberof ActionsApiListWorkspaceUsers
      */
@@ -27199,6 +27260,17 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public switchActiveIdentityProvider(requestParameters: ActionsApiSwitchActiveIdentityProviderRequest, options?: AxiosRequestConfig) {
         return ActionsApi_SwitchActiveIdentityProvider(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Enqueues an organization-scoped metadata resync, fanning out the organization\'s current metadata to GenAI, GW Forge, and Automations. Requires organization MANAGE permission. Requests are deduplicated while a resync session is pending for the organization.
+     * @summary Trigger metadata synchronization
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public syncMetadata(options?: AxiosRequestConfig) {
+        return ActionsApi_SyncMetadata(this.axios, this.basePath, options, this.configuration);
     }
 
     /**
@@ -134638,6 +134710,110 @@ export class MemoryItemControllerApi extends BaseAPI implements MemoryItemContro
 }
 
 
+// MetadataSynchronizationApi FP - MetadataSynchronizationApiAxiosParamCreator
+/**
+ * Enqueues an organization-scoped metadata resync, fanning out the organization\'s current metadata to GenAI, GW Forge, and Automations. Requires organization MANAGE permission. Requests are deduplicated while a resync session is pending for the organization.
+ * @summary Trigger metadata synchronization
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MetadataSynchronizationApiAxiosParamCreator_SyncMetadata(
+    
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/actions/organization/syncMetadata`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// MetadataSynchronizationApi Api FP
+/**
+ * Enqueues an organization-scoped metadata resync, fanning out the organization\'s current metadata to GenAI, GW Forge, and Automations. Requires organization MANAGE permission. Requests are deduplicated while a resync session is pending for the organization.
+ * @summary Trigger metadata synchronization
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MetadataSynchronizationApi_SyncMetadata(
+    axios: AxiosInstance, basePath: string,
+    
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await MetadataSynchronizationApiAxiosParamCreator_SyncMetadata(
+        
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * MetadataSynchronizationApi - interface
+ * @export
+ * @interface MetadataSynchronizationApi
+ */
+export interface MetadataSynchronizationApiInterface {
+    /**
+     * Enqueues an organization-scoped metadata resync, fanning out the organization\'s current metadata to GenAI, GW Forge, and Automations. Requires organization MANAGE permission. Requests are deduplicated while a resync session is pending for the organization.
+     * @summary Trigger metadata synchronization
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MetadataSynchronizationApiInterface
+     */
+    syncMetadata(options?: AxiosRequestConfig): AxiosPromise<void>;
+
+}
+
+/**
+ * MetadataSynchronizationApi - object-oriented interface
+ * @export
+ * @class MetadataSynchronizationApi
+ * @extends {BaseAPI}
+ */
+export class MetadataSynchronizationApi extends BaseAPI implements MetadataSynchronizationApiInterface {
+    /**
+     * Enqueues an organization-scoped metadata resync, fanning out the organization\'s current metadata to GenAI, GW Forge, and Automations. Requires organization MANAGE permission. Requests are deduplicated while a resync session is pending for the organization.
+     * @summary Trigger metadata synchronization
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MetadataSynchronizationApi
+     */
+    public syncMetadata(options?: AxiosRequestConfig) {
+        return MetadataSynchronizationApi_SyncMetadata(this.axios, this.basePath, options, this.configuration);
+    }
+}
+
+
 // MetricControllerApi FP - MetricControllerApiAxiosParamCreator
 /**
  * 
@@ -158600,7 +158776,7 @@ export async function UserManagementApiAxiosParamCreator_ListWorkspaceUserGroups
  * @param {string} workspaceId 
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned.
- * @param {string} [name] Filter by user name. Note that user name is case insensitive.
+ * @param {string} [name] Filter by user name, email or login (user ID). Note that the filter is case insensitive.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
@@ -159680,7 +159856,7 @@ export interface UserManagementApiListWorkspaceUsersRequest {
     readonly size?: number
 
     /**
-     * Filter by user name. Note that user name is case insensitive.
+     * Filter by user name, email or login (user ID). Note that the filter is case insensitive.
      * @type {string}
      * @memberof UserManagementApiListWorkspaceUsers
      */

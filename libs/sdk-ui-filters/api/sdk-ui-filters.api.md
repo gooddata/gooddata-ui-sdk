@@ -1020,6 +1020,8 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     customFilterName?: string;
     // @alpha
     customIcon?: IFilterButtonCustomIcon;
+    // @alpha
+    customRangeHint?: ReactNode;
     // (undocumented)
     dateFilterMode: VisibilityMode;
     // (undocumented)

@@ -68,6 +68,14 @@ export interface IUiPermissionMenuProps {
     onLabelsChange?: (selectedIds: string[]) => void;
     /** Fires when the user picks Remove access. */
     onRemoveAccess?: () => void;
+    /**
+     * Renders Remove access disabled (`aria-disabled`, click blocked) instead of
+     * hiding it — e.g. for a grantee whose access is inherited, so there is nothing
+     * to remove here. Pair with `removeDisabledTooltip` to say why.
+     */
+    isRemoveDisabled?: boolean;
+    /** Tooltip shown on Remove access while it is disabled. */
+    removeDisabledTooltip?: string;
     /** Test id forwarded to the menu body. */
     dataTestId?: string;
 }
@@ -111,6 +119,8 @@ export function UiPermissionMenu({
     selectedLabelIds,
     onLabelsChange,
     onRemoveAccess,
+    isRemoveDisabled,
+    removeDisabledTooltip,
     dataTestId,
 }: IUiPermissionMenuProps) {
     const hasLabels = (labels?.length ?? 0) > 0;
@@ -129,6 +139,8 @@ export function UiPermissionMenu({
                     selectedLabelIds={selectedLabelIds}
                     onLabelsChange={onLabelsChange}
                     onRemoveAccess={onRemoveAccess}
+                    isRemoveDisabled={isRemoveDisabled}
+                    removeDisabledTooltip={removeDisabledTooltip}
                     onClose={onClose}
                     dataTestId={dataTestId}
                 />
@@ -146,6 +158,8 @@ interface IMenuBodyProps {
     selectedLabelIds?: ReadonlyArray<string>;
     onLabelsChange?: (selectedIds: string[]) => void;
     onRemoveAccess?: () => void;
+    isRemoveDisabled?: boolean;
+    removeDisabledTooltip?: string;
     onClose: () => void;
     dataTestId?: string;
 }
@@ -159,6 +173,8 @@ function MenuBody({
     selectedLabelIds,
     onLabelsChange,
     onRemoveAccess,
+    isRemoveDisabled,
+    removeDisabledTooltip,
     onClose,
     dataTestId,
 }: IMenuBodyProps) {
@@ -223,11 +239,15 @@ function MenuBody({
         });
     }
     if (onRemoveAccess) {
+        // Offered disabled rather than hidden when there is nothing to remove, so the
+        // row can explain why instead of the action silently going missing.
         actionItems.push({
             key: "remove",
             label: intl.formatMessage(olpPermissionMessages.removeAccess),
             icon: "trash",
-            onClick: choose(onRemoveAccess),
+            tooltip: isRemoveDisabled ? removeDisabledTooltip : undefined,
+            disabled: isRemoveDisabled,
+            onClick: isRemoveDisabled ? () => {} : choose(onRemoveAccess),
         });
     }
 

@@ -48,6 +48,7 @@ export function* notifyDefinitionReceived(
                     itemId: item.id,
                     definitionType: "dashboard",
                     dashboard: multipartContent.dashboard,
+                    insights: multipartContent.insights ?? [],
                 }),
             );
         } else if (

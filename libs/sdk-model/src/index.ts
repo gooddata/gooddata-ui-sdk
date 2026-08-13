@@ -40,6 +40,13 @@ export {
     getChronologicalOrigin,
 } from "./base/granularityRegistry.js";
 export {
+    type KdaGranularitySupport,
+    KDA_GRANULARITY_SUPPORT,
+    getKdaSupportedGranularities,
+    getKdaSupportedStringGranularities,
+    isYearGranularity,
+} from "./base/keyDriverAnalysisGranularities.js";
+export {
     type IAuditable,
     type IAuditableDates,
     type IAuditableUsers,
@@ -121,6 +128,7 @@ export {
     type NotificationType,
     type WebhookRecipient,
     type AlertFilters,
+    type AlertParameter,
     isAlertNotification,
     isScheduleNotification,
     isTestNotification,

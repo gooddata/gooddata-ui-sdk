@@ -34,6 +34,7 @@ import { type ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectAccessibleDashboards } from "../../../model/store/accessibleDashboards/accessibleDashboardsSelectors.js";
 import { selectCatalogAttributeDisplayFormsById } from "../../../model/store/catalog/catalogSelectors.js";
+import { selectEnableSecondGranularities } from "../../../model/store/config/configSelectors.js";
 import { selectInsightsMap } from "../../../model/store/insights/insightsSelectors.js";
 import { selectDashboardTitle } from "../../../model/store/meta/metaSelectors.js";
 import { selectWidgetByRef } from "../../../model/store/tabs/layout/layoutSelectors.js";
@@ -76,6 +77,7 @@ export function DrillSelectDropdown({
     const insights = useDashboardSelector(selectInsightsMap);
     const widget = useDashboardSelector(selectWidgetByRef(drillEvent.widgetRef));
     const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);
+    const enableSecondGranularities = useDashboardSelector(selectEnableSecondGranularities);
 
     const stopPropagation = useCallback((e: UIEvent<HTMLDivElement>) => {
         e.stopPropagation();
@@ -142,6 +144,7 @@ export function DrillSelectDropdown({
                 attributeDisplayForms,
                 intl,
                 widget: widget as IWidget,
+                enableSecondGranularities,
             }),
         [
             drillDefinitions,
@@ -152,6 +155,7 @@ export function DrillSelectDropdown({
             intl,
             widget,
             attributeDisplayForms,
+            enableSecondGranularities,
         ],
     );
 
@@ -329,6 +333,7 @@ export const createDrillSelectItems = ({
     intl,
     widget,
     attributeDisplayForms,
+    enableSecondGranularities = false,
 }: {
     drillDefinitions: DashboardDrillDefinition[];
     drillEvent: IDrillEvent;
@@ -338,6 +343,7 @@ export const createDrillSelectItems = ({
     intl: IntlShape;
     widget?: IWidget;
     attributeDisplayForms: Record<string, IAttributeDisplayFormMetadataObject>;
+    enableSecondGranularities?: boolean;
 }): IDrillSelectItem[] => {
     const totalDrillToUrls = getTotalDrillToUrlCount(drillDefinitions);
 
@@ -460,7 +466,7 @@ export const createDrillSelectItems = ({
         }
 
         if (isKeyDriveAnalysis(drillDefinition)) {
-            const items = getKdaKeyDriverCombinations(drillDefinition, drillEvent);
+            const items = getKdaKeyDriverCombinations(drillDefinition, drillEvent, enableSecondGranularities);
             return items.map((item) => {
                 return {
                     name: getKeyDriverCombinationItemTitle(intl, item),

@@ -31,6 +31,8 @@ export interface IUseGranteeSelectionResult {
     select: (option: IUiGranteeAsyncOption) => void;
     /** Change a row's permission level. */
     changePermission: (grantee: IUiPickedGrantee, next: PermissionMenuLevel) => void;
+    /** Change a row's label scope. */
+    changeLabels: (grantee: IUiPickedGrantee, selectedLabelIds: string[]) => void;
     /** Remove a row. */
     remove: (grantee: IUiPickedGrantee) => void;
 }
@@ -71,6 +73,15 @@ export function useGranteeSelection({
         [selectedGrantees, onSelectedGranteesChange],
     );
 
+    const changeLabels = useCallback(
+        (grantee: IUiPickedGrantee, selectedLabelIds: string[]) => {
+            onSelectedGranteesChange(
+                selectedGrantees.map((g) => (g.id === grantee.id ? { ...g, labelIds: selectedLabelIds } : g)),
+            );
+        },
+        [selectedGrantees, onSelectedGranteesChange],
+    );
+
     const remove = useCallback(
         (grantee: IUiPickedGrantee) => {
             onSelectedGranteesChange(selectedGrantees.filter((g) => g.id !== grantee.id));
@@ -78,5 +89,5 @@ export function useGranteeSelection({
         [selectedGrantees, onSelectedGranteesChange],
     );
 
-    return { select, changePermission, remove };
+    return { select, changePermission, changeLabels, remove };
 }

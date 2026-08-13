@@ -1,6 +1,12 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type IColor, type IColorPalette, type ISeparators, type Identifier } from "@gooddata/sdk-model";
+import {
+    type IColor,
+    type IColorPalette,
+    type ISeparators,
+    type ISortItem,
+    type Identifier,
+} from "@gooddata/sdk-model";
 import { type IDrillEventIntersectionElement, type VisType } from "@gooddata/sdk-ui";
 import {
     type IChartFillConfig,
@@ -239,6 +245,17 @@ export interface IChartConfig {
      *
      */
     enableChartSorting?: boolean;
+
+    /**
+     * Sort items to apply on the client where the backend cannot.
+     *
+     * @remarks
+     * Used by the stacked Mekko chart to order its columns by a single measure: such a measure
+     * sort is not expressible in the execution (it would target the stack dimension), so it is
+     * kept out of the execution and the chart reorders the columns from this config instead.
+     * Other chart types ignore this property.
+     */
+    sortBy?: ISortItem[];
 
     /**
      * Enables change order of stacked items in bar chart.

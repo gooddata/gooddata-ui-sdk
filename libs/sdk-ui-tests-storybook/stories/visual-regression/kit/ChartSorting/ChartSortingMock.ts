@@ -2,11 +2,11 @@
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { attributeLocalId, localIdRef, measureLocalId } from "@gooddata/sdk-model";
-import { type IChartSortingOwnProps } from "@gooddata/sdk-ui-kit";
+import { type IChartSortingProps } from "@gooddata/sdk-ui-kit";
 
 type SortingPropsMock = {
-    currentSort: IChartSortingOwnProps["currentSort"];
-    availableSorts: IChartSortingOwnProps["availableSorts"];
+    currentSort: IChartSortingProps["currentSort"];
+    availableSorts: IChartSortingProps["availableSorts"];
 };
 
 export const singleAttributeSortConfig: SortingPropsMock = {

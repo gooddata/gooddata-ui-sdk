@@ -9,6 +9,7 @@ import {
     type PinnedRowDataChangedEvent,
     type SortChangedEvent,
 } from "ag-grid-community";
+import { type IntlShape } from "react-intl";
 
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
@@ -30,6 +31,7 @@ import {
     type ColumnHeadersPosition,
     type ColumnResizedCallback,
     type DefaultColumnWidth,
+    type ICorePivotTableProps,
     type IMenu,
     type MeasureGroupDimension,
 } from "../publicTypes.js";
@@ -51,6 +53,14 @@ export type OnTransformedExecutionFailed = () => void;
  * The types defined in this file are used internally thorough different components. They are never intended
  * for public exports.
  */
+
+/**
+ * Core pivot table props as seen by the impl layer. On top of the public props, these always carry the `intl`
+ * that the component obtains from the `useIntl` hook and injects into the props threaded down to the impl.
+ */
+export interface ICorePivotTableInternalProps extends ICorePivotTableProps {
+    intl: IntlShape;
+}
 
 export type TableLegacyCallbacks = {
     pushData: (data: IPushData) => void;

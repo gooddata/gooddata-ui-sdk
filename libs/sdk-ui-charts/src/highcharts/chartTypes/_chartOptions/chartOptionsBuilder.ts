@@ -62,6 +62,7 @@ import {
     getMekkoWidthOnlyYAxisProps,
     isMekkoPercentBlockedByNegatives,
     isMekkoWidthOnly,
+    sortMekkoColumnsByMeasure,
 } from "../mekko/mekkoChartOptions.js";
 import {
     buildWaterfallChartSeries,
@@ -851,10 +852,19 @@ export function getChartOptions(
     // apply distinct point shapes configuration if enabled
     const finalSeries = setupDistinctPointShapesToSeries(type, series, config, measureGroup);
 
-    // Mekko: drop zero-width columns (Width/point.z of 0) from series + categories in lockstep.
-    const { series: outSeries, categories: outCategories } = isMekko(type)
-        ? dropZeroWidthMekkoColumns(finalSeries, categories)
-        : { series: finalSeries, categories };
+    // Mekko: drop zero-width columns, then order columns by the config-fed measure sort
+    let mekkoData = { series: finalSeries, categories };
+    if (isMekko(type)) {
+        mekkoData = dropZeroWidthMekkoColumns(finalSeries, categories);
+        mekkoData = sortMekkoColumnsByMeasure(
+            mekkoData.series,
+            mekkoData.categories,
+            config,
+            dv,
+            measureGroup,
+        );
+    }
+    const { series: outSeries, categories: outCategories } = mekkoData;
 
     // Mekko: fall back to absolute stacking for negative Height. The stackMeasuresToPercent property
     // is preserved so 100% re-enables once the data is cleaned. Computed once here and exposed on the

@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 47f80eb639d11cce66768ffb9de4c10096abb9ade60d47e9d72e5086efc0bcc3
+# schema-hash: 6d258038480244954ee4211084799c8c3e64052909ba7723baa65ccc70cc0de1
 
 from __future__ import annotations
 
@@ -1178,6 +1178,7 @@ class DashboardFiltersNoGroups4(BaseModel):
 
 
 class DateFilterGranularity(Enum):
+    SECOND = 'SECOND'
     MINUTE = 'MINUTE'
     HOUR = 'HOUR'
     DAY = 'DAY'
@@ -3269,7 +3270,7 @@ class Value1(BaseModel):
     )
     absolute: Absolute = Field(
         ...,
-        description='Static period, snapped to the target date attribute\'s granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.',
+        description='Static period, snapped to the target date attribute\'s granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.',
     )
 
 
@@ -3394,11 +3395,24 @@ class DashboardFilters9(BaseModel):
     type: Type85
     title: str | None = Field(None, description='Optional title of the filter')
     granularity: DateFilterGranularity | None = None
-    from_: constr(pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})$') | None = Field(
-        None, alias='from', description='A period start date as YYYY-MM-DD'
+    from_: (
+        constr(
+            pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$'
+        )
+        | None
+    ) = Field(
+        None,
+        alias='from',
+        description='A period start as YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities',
     )
-    to: constr(pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})$') | None = Field(
-        None, description='A period end date as YYYY-MM-DD'
+    to: (
+        constr(
+            pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$'
+        )
+        | None
+    ) = Field(
+        None,
+        description='A period end as YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities',
     )
     mode: Mode13 | None = Field(
         None,
@@ -4985,11 +4999,24 @@ class DashboardFilters(BaseModel):
     type: Type9
     title: str | None = Field(None, description='Optional title of the filter')
     granularity: DateFilterGranularity | None = None
-    from_: constr(pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})$') | None = Field(
-        None, alias='from', description='A period start date as YYYY-MM-DD'
+    from_: (
+        constr(
+            pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$'
+        )
+        | None
+    ) = Field(
+        None,
+        alias='from',
+        description='A period start as YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities',
     )
-    to: constr(pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})$') | None = Field(
-        None, description='A period end date as YYYY-MM-DD'
+    to: (
+        constr(
+            pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$'
+        )
+        | None
+    ) = Field(
+        None,
+        description='A period end as YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities',
     )
     mode: Mode | None = Field(
         None,
@@ -5053,11 +5080,24 @@ class DashboardAbsoluteDateFilter(BaseModel):
     title: str | None = Field(None, description='Optional title of the filter')
     type: Type17
     granularity: DateFilterGranularity | None = None
-    from_: constr(pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})$') | None = Field(
-        None, alias='from', description='A period start date as YYYY-MM-DD'
+    from_: (
+        constr(
+            pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$'
+        )
+        | None
+    ) = Field(
+        None,
+        alias='from',
+        description='A period start as YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities',
     )
-    to: constr(pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})$') | None = Field(
-        None, description='A period end date as YYYY-MM-DD'
+    to: (
+        constr(
+            pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$'
+        )
+        | None
+    ) = Field(
+        None,
+        description='A period end as YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities',
     )
     mode: Mode6 | None = Field(
         None,
@@ -5220,15 +5260,24 @@ class QueryDateFilter2(BaseModel):
         None, description='A granularity to use in relative date filter'
     )
     from_: (
-        constr(pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2}))?$')
+        constr(
+            pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$'
+        )
         | None
     ) = Field(
-        None, alias='from', description='A date from which the filter will be applied.'
+        None,
+        alias='from',
+        description='A date from which the filter will be applied. YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities.',
     )
     to: (
-        constr(pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2}))?$')
+        constr(
+            pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$'
+        )
         | None
-    ) = Field(None, description='A date to which the filter will be applied.')
+    ) = Field(
+        None,
+        description='A date to which the filter will be applied. YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities.',
+    )
     with_: (
         dict[constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'), QueryAttributeFilter]
         | None
@@ -7828,7 +7877,7 @@ class Visualisation(
 
 
 class Metadata7(BaseModel):
-    type: Type
+    type: Type = Field(..., description='Type of visualisation.')
 
 
 class Dashboard1(BaseModel):

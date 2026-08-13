@@ -135,6 +135,8 @@ function ObjectShareDialogSession({
         isLoading,
         workspaceDisabledLevels,
         rowDisabledLevels,
+        isRowRemoveDisabled,
+        rowRemoveDisabledTooltip,
         onClose: closeDialog,
         onRowPermissionChange,
         onRowRemove,
@@ -157,10 +159,26 @@ function ObjectShareDialogSession({
         locked: l.isPrimary,
     }));
 
+    // Per row: a label the grantee only inherits is locked too. It is in their scope
+    // (so it shows checked, as the granting workspace shows it) but this workspace
+    // holds no grant on it to revoke — the same rule that disables Remove access for a
+    // grantee whose object access is inherited-only.
+    const rowLabelItems = (granteeId: string) => {
+        const inherited = state.inheritedLabelIdsByGrantee[granteeId];
+        if (!inherited?.length) {
+            return labelItems;
+        }
+        return labelItems.map((item) =>
+            item.locked || !inherited.includes(item.id) ? item : { ...item, locked: true },
+        );
+    };
+
     const toGranteeRow = (g: IObjectShareGrantee): IUiObjectShareDialogGrantee => {
         const display = granteeDisplayPair(g);
-        // Levels come back only for the signed-in user's own sole grant (you can't
-        // raise yourself); the confirm-vs-direct routing lives in the hook too.
+        // Row policy — levels the caller may not pick (their own sole grant, or a
+        // level an inherited grant already exceeds) and whether there is a grant in
+        // this workspace to remove — is decided in the hook, with the matching
+        // tooltips; this only renders it.
         const disabledLevels = rowDisabledLevels(g);
 
         return {
@@ -173,7 +191,7 @@ function ObjectShareDialogSession({
             isPending: g.pending !== undefined,
             controls: (
                 <UiGranteeRowControls
-                    labels={labelItems}
+                    labels={rowLabelItems(g.id)}
                     selectedLabelIds={state.selectedLabelIdsByGrantee[g.id] ?? state.labels.map((l) => l.id)}
                     permissionLevel={g.level}
                     effectivePermission={g.effectivePermission}
@@ -183,6 +201,8 @@ function ObjectShareDialogSession({
                             ? intl.formatMessage(objectShareMessages.selfRestrictWarning)
                             : undefined
                     }
+                    isRemoveDisabled={isRowRemoveDisabled(g)}
+                    removeDisabledTooltip={rowRemoveDisabledTooltip}
                     // Disabled while the row's own write is saving, while mutations are
                     // gated (unresolved label scope would orphan real per-label grants),
                     // and while a sole row's self identity is unknown.
@@ -280,6 +300,9 @@ function ObjectShareDialogSession({
                 loadOptions={actions.loadOptions}
                 selectedGrantees={state.pendingGrantees}
                 onSelectedGranteesChange={actions.setPendingGrantees}
+                // Same checklist the grantee rows use, so a label scope can be narrowed
+                // while adding instead of only after the grant landed.
+                labels={labelItems}
                 onBack={actions.closeAddGrantee}
                 onClose={closeDialog}
                 onCancel={actions.closeAddGrantee}

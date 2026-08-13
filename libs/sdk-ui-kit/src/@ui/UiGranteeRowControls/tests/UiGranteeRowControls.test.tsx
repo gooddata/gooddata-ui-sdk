@@ -83,7 +83,7 @@ describe("UiGranteeRowControls", () => {
     it("shows the effective-permission warning badge only when the inherited level is higher", () => {
         const { rerender } = renderControls({ permissionLevel: "VIEW" });
         // No badge when the assigned permission is already effective.
-        expect(screen.queryByRole("img", { name: /effective permission/i })).not.toBeInTheDocument();
+        expect(screen.queryByRole("img", { name: /permission is inherited/i })).not.toBeInTheDocument();
 
         rerender(
             <IntlProvider locale={DEFAULT_LANGUAGE} messages={DEFAULT_MESSAGES[DEFAULT_LANGUAGE]}>
@@ -97,20 +97,30 @@ describe("UiGranteeRowControls", () => {
                 />
             </IntlProvider>,
         );
-        expect(screen.getByRole("img", { name: /effective permission/i })).toBeInTheDocument();
+        expect(screen.getByRole("img", { name: /permission is inherited/i })).toBeInTheDocument();
     });
 
     it("shows the badge for an inherited EDIT above a direct SHARE grant", () => {
         renderControls({ permissionLevel: "SHARE", effectivePermission: "EDIT", selectedLabelIds: ["id"] });
-        expect(screen.getByRole("img", { name: /effective permission/i })).toBeInTheDocument();
+        expect(screen.getByRole("img", { name: /permission is inherited/i })).toBeInTheDocument();
     });
 
     it("trusts the effectivePermission contract instead of re-deriving the level ordering", () => {
-        // The prop's contract says it is set only when it outranks the assigned
-        // level (the ext side owns that comparison) — the control renders the badge
-        // whenever set, even for input that violates the contract.
+        // Inheritance can decide the row without outranking anything: an inherited-only
+        // grantee's whole level is inherited, so the caller sets the prop equal to the
+        // displayed level and the control renders the badge without re-comparing.
         renderControls({ permissionLevel: "SHARE", effectivePermission: "SHARE", selectedLabelIds: ["id"] });
-        expect(screen.getByRole("img", { name: /effective permission/i })).toBeInTheDocument();
+        expect(screen.getByRole("img", { name: /permission is inherited/i })).toBeInTheDocument();
+    });
+
+    it("badges an inherited-only VIEW row, which has no higher level to report", () => {
+        // VIEW had no tooltip copy, so these rows silently rendered no badge at all while
+        // inherited-only EDIT/SHARE rows got one.
+        renderControls({ permissionLevel: "VIEW", effectivePermission: "VIEW", selectedLabelIds: ["id"] });
+        // The accessible name must not claim the inherited level is HIGHER: here it is
+        // equal, and the badge is shared by every inherited row.
+        expect(screen.getByRole("img", { name: "Permission is inherited" })).toBeInTheDocument();
+        expect(screen.queryByRole("img", { name: /higher than/i })).not.toBeInTheDocument();
     });
 
     it("does not render the labels picker until the menu Label access row is clicked", () => {

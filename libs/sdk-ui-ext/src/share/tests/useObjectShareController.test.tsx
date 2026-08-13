@@ -166,6 +166,58 @@ function makeLabelAwareService(
     };
 }
 
+/**
+ * Mock service for the child-workspace shape: u1 holds the object and `lbl.name`
+ * directly, while `lbl.email` reports them with permissions [] and inheritedPermissions
+ * ["EDIT","VIEW"] — a grant that lives in a parent workspace (source "indirect").
+ */
+function makeInheritedLabelService(): IMockService {
+    const INHERITED_GRANT = {
+        ...USER_GRANT,
+        permissions: [],
+        inheritedPermissions: ["EDIT", "VIEW"],
+    } as unknown as AccessGranteeDetail;
+    return {
+        getAccessList: vi.fn(async (t: IObjectPermissionsObject) => {
+            const id = (t.ref as { identifier: string }).identifier;
+            if (id === "lbl.email") {
+                return { grants: [INHERITED_GRANT] };
+            }
+            return {
+                grants: ["label.country", "lbl.primary", "lbl.name"].includes(id) ? [USER_GRANT] : [],
+            };
+        }),
+        manageObjectPermissions: vi.fn(async () => undefined),
+        getAvailableAssignees: vi.fn(async () => ASSIGNEES),
+    };
+}
+
+/**
+ * Mock service where `lbl.name` carries BOTH a grant made here and an inherited one —
+ * the shape that made a dual-granted label read as inaccessible once the local grant was
+ * revoked.
+ */
+function makeDualGrantLabelService(): IMockService {
+    const DUAL_GRANT = {
+        ...USER_GRANT,
+        permissions: ["VIEW"],
+        inheritedPermissions: ["EDIT", "VIEW"],
+    } as unknown as AccessGranteeDetail;
+    return {
+        getAccessList: vi.fn(async (t: IObjectPermissionsObject) => {
+            const id = (t.ref as { identifier: string }).identifier;
+            if (id === "lbl.name") {
+                return { grants: [DUAL_GRANT] };
+            }
+            return {
+                grants: ["label.country", "lbl.primary"].includes(id) ? [USER_GRANT] : [],
+            };
+        }),
+        manageObjectPermissions: vi.fn(async () => undefined),
+        getAvailableAssignees: vi.fn(async () => ASSIGNEES),
+    };
+}
+
 describe("useObjectShareController", () => {
     beforeEach(() => {
         addSuccess.mockClear();
@@ -248,8 +300,91 @@ describe("useObjectShareController", () => {
         await waitFor(() => expect(result.current.state.status).toBe("success"));
 
         const row = result.current.state.grantees.find((g) => g.id === "user:u1");
-        expect(row?.level).toBe("VIEW");
+        // The row shows the EFFECTIVE level, not the direct grant — an inherited
+        // permission must never be understated (F1-2723). `directLevel` keeps what
+        // this workspace granted, and the badge marks the level as inherited.
+        expect(row?.level).toBe("SHARE");
+        expect(row?.directLevel).toBe("VIEW");
         expect(row?.effectivePermission).toBe("SHARE");
+    });
+
+    it("shows an inherited-only grantee at the inherited level instead of falling back to VIEW", async () => {
+        // The child-workspace case: no grant here, EDIT inherited from the parent.
+        // Falling back to VIEW is what F1-2723 reported.
+        const INHERITED_ONLY: AccessGranteeDetail = {
+            type: "granularUser",
+            user: {
+                ref: idRef("u1"),
+                uri: "/u1",
+                login: "jane",
+                email: "jane@example.com",
+                fullName: "Jane Good",
+            },
+            permissions: [],
+            inheritedPermissions: ["EDIT", "VIEW"],
+        } as AccessGranteeDetail;
+        const { result } = renderController(makeService([INHERITED_ONLY]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        const row = result.current.state.grantees.find((g) => g.id === "user:u1");
+        expect(row?.level).toBe("EDIT");
+        expect(row?.directLevel).toBeUndefined();
+        expect(row?.effectivePermission).toBe("EDIT");
+    });
+
+    it("refuses to remove a grantee whose access is inherited-only", async () => {
+        // Nothing was granted here, so there is nothing to revoke: the write would be
+        // an empty-permissions no-op that the row then reported as removed (F1-2726).
+        const INHERITED_ONLY: AccessGranteeDetail = {
+            type: "granularUser",
+            user: {
+                ref: idRef("u1"),
+                uri: "/u1",
+                login: "jane",
+                email: "jane@example.com",
+                fullName: "Jane Good",
+            },
+            permissions: [],
+            inheritedPermissions: ["VIEW"],
+        } as AccessGranteeDetail;
+        const svc = makeService([INHERITED_ONLY]);
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u1");
+        });
+        expect(svc.manageObjectPermissions).not.toHaveBeenCalled();
+        expect(result.current.state.grantees.map((g) => g.id)).toEqual(["user:u1"]);
+    });
+
+    it("removes the direct grant of a grantee who also inherits, keeping the row inherited-only", async () => {
+        // A user present in the parent workspace's list must still be removable here —
+        // the removal takes the local grant away and the inherited access remains
+        // (F1-2726).
+        const DIRECT_AND_INHERITED: AccessGranteeDetail = {
+            type: "granularUser",
+            user: {
+                ref: idRef("u1"),
+                uri: "/u1",
+                login: "jane",
+                email: "jane@example.com",
+                fullName: "Jane Good",
+            },
+            permissions: ["EDIT", "VIEW"],
+            inheritedPermissions: ["VIEW"],
+        } as AccessGranteeDetail;
+        const svc = makeService([DIRECT_AND_INHERITED]);
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(result.current.state.grantees[0]?.level).toBe("EDIT");
+
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u1");
+        });
+        expect(svc.manageObjectPermissions).toHaveBeenCalled();
+        const row = result.current.state.grantees.find((g) => g.id === "user:u1");
+        expect(row).toMatchObject({ level: "VIEW", directLevel: undefined });
     });
 
     it("leaves effectivePermission unset when the direct grant already covers it", async () => {
@@ -259,10 +394,45 @@ describe("useObjectShareController", () => {
         expect(result.current.state.grantees[0]?.effectivePermission).toBeUndefined();
     });
 
-    it("recomputes the effectivePermission badge when the direct level changes", async () => {
-        // u1 inherits SHARE but is directly granted VIEW → badge shows SHARE. Raising
-        // the direct grant to SHARE makes the inherited SHARE no longer "above" it, so
-        // the badge must clear (there's no refetch to recompute it).
+    it("recomposes the displayed level and badge when the direct level changes", async () => {
+        // u1 is directly granted EDIT and inherits SHARE → EDIT covers the inherited
+        // level, so no badge. Lowering the direct grant to VIEW still reduces the
+        // effective level, but only down to the inherited SHARE floor — and the badge
+        // returns to say the remaining level is inherited. No refetch recomputes this.
+        const INHERITED: AccessGranteeDetail = {
+            type: "granularUser",
+            user: {
+                ref: idRef("u1"),
+                uri: "/u1",
+                login: "jane",
+                email: "jane@example.com",
+                fullName: "Jane Good",
+            },
+            permissions: ["EDIT", "VIEW"],
+            inheritedPermissions: ["SHARE", "VIEW"],
+        } as AccessGranteeDetail;
+        const { result } = renderController(makeService([INHERITED]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(result.current.state.grantees[0]).toMatchObject({
+            level: "EDIT",
+            directLevel: "EDIT",
+            effectivePermission: undefined,
+        });
+
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "VIEW");
+        });
+        expect(result.current.state.grantees[0]).toMatchObject({
+            level: "SHARE",
+            directLevel: "VIEW",
+            effectivePermission: "SHARE",
+        });
+    });
+
+    it("ignores picking the level the row already displays because of inheritance", async () => {
+        // Direct VIEW under an inherited SHARE displays SHARE. Picking SHARE is the
+        // displayed value, so it must not silently escalate the persisted direct grant
+        // — the same rule the workspace rule follows.
         const INHERITED: AccessGranteeDetail = {
             type: "granularUser",
             user: {
@@ -275,21 +445,18 @@ describe("useObjectShareController", () => {
             permissions: ["VIEW"],
             inheritedPermissions: ["SHARE", "VIEW"],
         } as AccessGranteeDetail;
-        const { result } = renderController(makeService([INHERITED]), TARGET);
+        const svc = makeService([INHERITED]);
+        const { result } = renderController(svc, TARGET);
         await waitFor(() => expect(result.current.state.status).toBe("success"));
-        expect(result.current.state.grantees[0]?.effectivePermission).toBe("SHARE");
 
         await act(async () => {
             await result.current.actions.changePermissionLevel("user:u1", "SHARE");
         });
-        // Direct grant now equals the inherited level → no "effective above" badge.
-        expect(result.current.state.grantees[0]?.effectivePermission).toBeUndefined();
-
-        // Lowering it back to VIEW surfaces the inherited-SHARE warning again.
-        await act(async () => {
-            await result.current.actions.changePermissionLevel("user:u1", "VIEW");
+        expect(svc.manageObjectPermissions).not.toHaveBeenCalled();
+        expect(result.current.state.grantees[0]).toMatchObject({
+            level: "SHARE",
+            directLevel: "VIEW",
         });
-        expect(result.current.state.grantees[0]?.effectivePermission).toBe("SHARE");
     });
 
     it("does not fetch and stays idle when there is no target", async () => {
@@ -612,6 +779,81 @@ describe("useObjectShareController", () => {
             expect.objectContaining({ type: "granularUser", permissions: ["EDIT", "VIEW"] }),
         ]);
         expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.level).toBe("EDIT");
+    });
+
+    it("re-grades the grantee's in-scope labels to the new level", async () => {
+        // A label grant carries its own level, so re-grading the object alone left the
+        // labels at the level they were granted at (F1-2623). Raising the object to
+        // EDIT must rewrite every in-scope label at EDIT too.
+        const svc = makeLabelAwareService();
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.labelsResolved).toBe(true));
+
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "EDIT");
+        });
+
+        const written = svc.manageObjectPermissions.mock.calls.map(
+            ([t, grantees]) =>
+                [
+                    (t as IObjectPermissionsObject & { ref: { identifier: string } }).ref.identifier,
+                    (grantees as IGranularAccessGrantee[])[0]!.permissions,
+                ] as const,
+        );
+        // The object grant, then each in-scope NON-PRIMARY label at the same level.
+        expect(written).toEqual(
+            expect.arrayContaining([
+                ["label.country", ["EDIT", "VIEW"]],
+                ["lbl.name", ["EDIT", "VIEW"]],
+                ["lbl.email", ["EDIT", "VIEW"]],
+            ]),
+        );
+        // The primary label is left alone: its access is implicit and the removal diff
+        // never revokes it, so a grant written here would outlive the grantee's access.
+        expect(written.map(([id]) => id)).not.toContain("lbl.primary");
+    });
+
+    it("lowers the labels before the object so a label grant is never left above it", async () => {
+        // Order matters on a downgrade: writing the object first would leave the
+        // labels transiently broader than the object they belong to.
+        const svc = makeLabelAwareService();
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.labelsResolved).toBe(true));
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "EDIT");
+        });
+        svc.manageObjectPermissions.mockClear();
+
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "VIEW");
+        });
+        const targets = svc.manageObjectPermissions.mock.calls.map(
+            ([t]) => (t as IObjectPermissionsObject & { ref: { identifier: string } }).ref.identifier,
+        );
+        // Every label precedes the object write.
+        expect(targets.indexOf("label.country")).toBe(targets.length - 1);
+    });
+
+    it("grants a newly scoped label at the level the grantee holds on the object", async () => {
+        // The labels picker adds a label: its grant must mirror the object level
+        // rather than always landing on VIEW.
+        const svc = makeLabelAwareService(["lbl.primary"]);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.labelsResolved).toBe(true));
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "SHARE");
+        });
+        svc.manageObjectPermissions.mockClear();
+
+        await act(async () => {
+            await result.current.actions.changeGranteeLabels("user:u1", ["lbl.primary", "lbl.name"]);
+        });
+        const [target, grantees] = svc.manageObjectPermissions.mock.calls[0] as [
+            IObjectPermissionsObject & { ref: { identifier: string } },
+            IGranularAccessGrantee[],
+        ];
+        expect(target.ref.identifier).toBe("lbl.name");
+        expect(grantees[0]!.permissions).toEqual(["SHARE", "VIEW"]);
     });
 
     it("settles the row from local state after a write (no refetch)", async () => {
@@ -1494,6 +1736,448 @@ describe("useObjectShareController", () => {
         ]);
     });
 
+    it("does not lower the object when a label downgrade fails, and puts the labels back", async () => {
+        // Lowering writes labels first precisely so a label can never sit above the
+        // object. A partial label failure must therefore abort the whole change, not
+        // proceed and warn — otherwise the failed label keeps EDIT while the object
+        // drops to VIEW.
+        const svc = makeLabelAwareService();
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "EDIT");
+        });
+        svc.manageObjectPermissions.mockClear();
+        addError.mockClear();
+
+        // Now lower EDIT → VIEW with one label write failing.
+        svc.manageObjectPermissions.mockImplementation(async (t: IObjectPermissionsObject) => {
+            if ((t.ref as { identifier: string }).identifier === "lbl.email") {
+                throw new Error("label write failed");
+            }
+            return undefined;
+        });
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "VIEW");
+        });
+
+        const targets = (
+            svc.manageObjectPermissions.mock.calls as Array<[IObjectPermissionsObject, unknown]>
+        ).map(([t]) => (t.ref as { identifier: string }).identifier);
+        // The object was never written, so label access cannot exceed it.
+        expect(targets).not.toContain("label.country");
+        // The labels that did land were restored to the previous level.
+        const restored = (
+            svc.manageObjectPermissions.mock.calls as Array<
+                [IObjectPermissionsObject, IGranularAccessGrantee[]]
+            >
+        ).filter(([t]) => (t.ref as { identifier: string }).identifier === "lbl.name");
+        expect(restored.at(-1)![1][0]!.permissions).toEqual(["EDIT", "VIEW"]);
+        expect(addError).toHaveBeenCalled();
+        // The row keeps the level it actually holds.
+        expect(result.current.state.grantees.find((g) => g.id === "user:u1")!.level).toBe("EDIT");
+    });
+
+    it("re-grants labels at the grantee's own level when the object revoke fails", async () => {
+        // The compensation must not default to VIEW: that would silently downgrade an
+        // EDIT grantee we just failed to remove.
+        const svc = makeLabelAwareService();
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "EDIT");
+        });
+        svc.manageObjectPermissions.mockClear();
+        // Label revokes succeed; the object revoke fails.
+        svc.manageObjectPermissions.mockImplementation(async (t: IObjectPermissionsObject) => {
+            if ((t.ref as { identifier: string }).identifier === "label.country") {
+                throw new Error("object revoke failed");
+            }
+            return undefined;
+        });
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u1");
+        });
+
+        const nameWrites = (
+            svc.manageObjectPermissions.mock.calls as Array<
+                [IObjectPermissionsObject, IGranularAccessGrantee[]]
+            >
+        ).filter(([t]) => (t.ref as { identifier: string }).identifier === "lbl.name");
+        // Revoked, then re-granted at EDIT — not at the VIEW default.
+        expect(nameWrites[0]![1][0]!.permissions).toEqual([]);
+        expect(nameWrites.at(-1)![1][0]!.permissions).toEqual(["EDIT", "VIEW"]);
+        expect(result.current.state.grantees.find((g) => g.id === "user:u1")).toBeDefined();
+    });
+
+    it("counts a label the grantee only inherits as in scope, and reports it as inherited", async () => {
+        // Verified against staging: a label's access list reports a parent-workspace
+        // grantee with source "indirect", i.e. permissions [] + inheritedPermissions
+        // ["EDIT","VIEW"]. Reading only the direct array showed every non-primary label
+        // unchecked in a child workspace while the parent showed them checked.
+        const svc = makeInheritedLabelService();
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
+
+        // In scope: primary + the directly granted name + the inherited email.
+        expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]!.sort()).toEqual([
+            "lbl.email",
+            "lbl.name",
+            "lbl.primary",
+        ]);
+        // Only the inherited one is flagged, so the row can lock just that checkbox.
+        expect(result.current.state.inheritedLabelIdsByGrantee["user:u1"]).toEqual(["lbl.email"]);
+    });
+
+    it("keeps a surviving inherited-only row scoped to what the removal could not revoke", async () => {
+        // The row survives a removal when access is also inherited. Dropping its scope
+        // would fall back to "all labels" (the probe does not re-run for grantee changes),
+        // and a later level change would then grant labels the grantee never held.
+        // The OBJECT is both granted here and inherited (so the row survives the
+        // removal); lbl.name is granted here only, lbl.email is inherited only.
+        const OBJECT_DUAL = {
+            ...USER_GRANT,
+            permissions: ["VIEW"],
+            inheritedPermissions: ["SHARE", "VIEW"],
+        } as unknown as AccessGranteeDetail;
+        const LABEL_INHERITED = {
+            ...USER_GRANT,
+            permissions: [],
+            inheritedPermissions: ["SHARE", "VIEW"],
+        } as unknown as AccessGranteeDetail;
+        const svc: IMockService = {
+            getAccessList: vi.fn(async (t: IObjectPermissionsObject) => {
+                const id = (t.ref as { identifier: string }).identifier;
+                if (id === "label.country") return { grants: [OBJECT_DUAL] };
+                if (id === "lbl.email") return { grants: [LABEL_INHERITED] };
+                return { grants: ["lbl.primary", "lbl.name"].includes(id) ? [USER_GRANT] : [] };
+            }),
+            manageObjectPermissions: vi.fn(async () => undefined),
+            getAvailableAssignees: vi.fn(async () => ASSIGNEES),
+        };
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
+
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u1");
+        });
+
+        // Still listed — the inherited grant remains.
+        expect(result.current.state.grantees.find((g) => g.id === "user:u1")).toBeDefined();
+        // Scope narrowed to primary + the inherited label; the directly-granted lbl.name is gone.
+        expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]!.sort()).toEqual([
+            "lbl.email",
+            "lbl.primary",
+        ]);
+    });
+
+    it("keeps a removal survivor inherited-only while its labels are being written", async () => {
+        // Sequence: remove a grantee who also inherits (row survives as inherited-only),
+        // then edit that row's labels. The lock must not re-arm the settled removal — that
+        // read as a revoke in flight and rendered the row as removing at its pre-removal
+        // direct level, resurrecting access it had just lost.
+        const OBJECT_DUAL = {
+            ...USER_GRANT,
+            permissions: ["EDIT", "VIEW"],
+            inheritedPermissions: ["SHARE", "VIEW"],
+        } as unknown as AccessGranteeDetail;
+        const svc: IMockService = {
+            getAccessList: vi.fn(async (t: IObjectPermissionsObject) => {
+                const id = (t.ref as { identifier: string }).identifier;
+                if (id === "label.country") return { grants: [OBJECT_DUAL] };
+                return { grants: ["lbl.primary"].includes(id) ? [USER_GRANT] : [] };
+            }),
+            manageObjectPermissions: vi.fn(async () => undefined),
+            getAvailableAssignees: vi.fn(async () => ASSIGNEES),
+        };
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
+
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u1");
+        });
+        const survivor = result.current.state.grantees.find((g) => g.id === "user:u1")!;
+        expect(survivor.directLevel).toBeUndefined(); // inherited-only
+        expect(survivor.level).toBe("SHARE");
+
+        // Hold the label write open so the locked row can be inspected mid-flight.
+        let release: () => void = () => {};
+        svc.manageObjectPermissions.mockImplementation(
+            () => new Promise<void>((resolve) => (release = () => resolve())),
+        );
+        let pendingEdit: Promise<void> = Promise.resolve();
+        await act(async () => {
+            pendingEdit = result.current.actions.changeGranteeLabels("user:u1", ["lbl.primary", "lbl.name"]);
+        });
+
+        const locked = result.current.state.grantees.find((g) => g.id === "user:u1")!;
+        expect(locked.pending).toBe("saving"); // not "removing"
+        expect(locked.directLevel).toBeUndefined(); // still inherited-only
+        expect(locked.level).toBe("SHARE");
+
+        await act(async () => {
+            release();
+            await pendingEdit;
+        });
+
+        // Settling the lock unwraps to the committed removal — the row stays a survivor.
+        const settled = result.current.state.grantees.find((g) => g.id === "user:u1")!;
+        expect(settled.pending).toBeUndefined();
+        expect(settled.directLevel).toBeUndefined();
+        expect(settled.level).toBe("SHARE");
+    });
+
+    it("does not turn the effective level into a direct grant when editing labels", async () => {
+        // The row lock must not reuse the level overlay: `level` is the EFFECTIVE level, so
+        // settling it would record an inherited EDIT as this workspace's own grant — the
+        // badge would vanish and later writes would use the wrong level.
+        const OBJECT_INHERITED_HIGHER = {
+            ...USER_GRANT,
+            permissions: ["VIEW"],
+            inheritedPermissions: ["EDIT", "VIEW"],
+        } as unknown as AccessGranteeDetail;
+        const svc: IMockService = {
+            getAccessList: vi.fn(async (t: IObjectPermissionsObject) => {
+                const id = (t.ref as { identifier: string }).identifier;
+                if (id === "label.country") return { grants: [OBJECT_INHERITED_HIGHER] };
+                return { grants: ["lbl.primary"].includes(id) ? [USER_GRANT] : [] };
+            }),
+            manageObjectPermissions: vi.fn(async () => undefined),
+            getAvailableAssignees: vi.fn(async () => ASSIGNEES),
+        };
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
+        const before = result.current.state.grantees.find((g) => g.id === "user:u1")!;
+        expect(before.level).toBe("EDIT"); // effective
+        expect(before.directLevel).toBe("VIEW"); // granted here
+
+        await act(async () => {
+            await result.current.actions.changeGranteeLabels("user:u1", ["lbl.primary", "lbl.name"]);
+        });
+
+        const after = result.current.state.grantees.find((g) => g.id === "user:u1")!;
+        expect(after.directLevel).toBe("VIEW"); // unchanged by a label edit
+        expect(after.level).toBe("EDIT");
+        expect(after.effectivePermission).toBe("EDIT"); // badge survives
+        expect(after.pending).toBeUndefined();
+    });
+
+    it("refuses a level pick that cannot move the effective level", async () => {
+        // Direct VIEW under inherited EDIT: picking SHARE reads as lowering but would
+        // silently strengthen the local grant, with the row still showing EDIT.
+        const OBJECT_INHERITED_HIGHER = {
+            ...USER_GRANT,
+            permissions: ["VIEW"],
+            inheritedPermissions: ["EDIT", "VIEW"],
+        } as unknown as AccessGranteeDetail;
+        const svc = makeService([OBJECT_INHERITED_HIGHER]);
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        svc.manageObjectPermissions.mockClear();
+
+        // With EDIT inherited, NO pick can change what the grantee effectively has, so
+        // every one is refused rather than quietly rewriting the local grant.
+        for (const level of ["SHARE", "EDIT", "VIEW"] as const) {
+            await act(async () => {
+                await result.current.actions.changePermissionLevel("user:u1", level);
+            });
+        }
+        expect(svc.manageObjectPermissions).not.toHaveBeenCalled();
+        expect(result.current.state.grantees[0]!.directLevel).toBe("VIEW");
+    });
+
+    it("still allows a reduction that does move the effective level", async () => {
+        // Direct EDIT under inherited SHARE: picking VIEW drops the effective level from
+        // EDIT to SHARE, so it must go through — this is why levels below an inherited one
+        // are not simply disabled.
+        const DIRECT_ABOVE_INHERITED = {
+            ...USER_GRANT,
+            permissions: ["EDIT", "VIEW"],
+            inheritedPermissions: ["SHARE", "VIEW"],
+        } as unknown as AccessGranteeDetail;
+        const svc = makeService([DIRECT_ABOVE_INHERITED]);
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        svc.manageObjectPermissions.mockClear();
+
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "VIEW");
+        });
+
+        expect(svc.manageObjectPermissions).toHaveBeenCalled();
+        const row = result.current.state.grantees[0]!;
+        expect(row.directLevel).toBe("VIEW");
+        expect(row.level).toBe("SHARE"); // recomposed against the inherited grant
+    });
+
+    it("keeps a revoked-but-still-listed grantee removable, without claiming inheritance", async () => {
+        // Neither permissions nor inheritedPermissions: the historical VIEW placeholder is
+        // a DIRECT level, or the row would read as inherited-only and refuse removal.
+        const EMPTY_GRANT = {
+            ...USER_GRANT,
+            permissions: [],
+            inheritedPermissions: [],
+        } as unknown as AccessGranteeDetail;
+        const svc = makeService([EMPTY_GRANT]);
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        const row = result.current.state.grantees[0]!;
+        expect(row.level).toBe("VIEW");
+        expect(row.directLevel).toBe("VIEW");
+        expect(row.inheritedLevel).toBeUndefined();
+        expect(row.effectivePermission).toBeUndefined(); // no badge — nothing is inherited
+
+        // And the removal is not refused by the controller.
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u1");
+        });
+        expect(svc.manageObjectPermissions).toHaveBeenCalled();
+        expect(result.current.state.grantees).toHaveLength(0);
+    });
+
+    it("still revokes the local grant on a dual-granted label when removing the grantee", async () => {
+        // Locking the checkbox and skipping the write are different things. A label that is
+        // both granted here and inherited must still have ITS OWN grant revoked, or the
+        // stale local permission becomes effective the moment the inherited one goes away.
+        const svc = makeDualGrantLabelService();
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
+        svc.manageObjectPermissions.mockClear();
+
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u1");
+        });
+
+        const revoked = (
+            svc.manageObjectPermissions.mock.calls as Array<
+                [IObjectPermissionsObject, IGranularAccessGrantee[]]
+            >
+        ).filter(([, g]) => g[0]!.permissions.length === 0);
+        const revokedIds = revoked.map(([t]) => (t.ref as { identifier: string }).identifier);
+        expect(revokedIds).toContain("lbl.name"); // dual-granted — the local grant still goes
+        expect(revokedIds).toContain("label.country"); // the object
+    });
+
+    it("re-grades a dual-granted label when the grantee's level changes", async () => {
+        const svc = makeDualGrantLabelService();
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
+        svc.manageObjectPermissions.mockClear();
+
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "EDIT");
+        });
+
+        const targets = (
+            svc.manageObjectPermissions.mock.calls as Array<[IObjectPermissionsObject, unknown]>
+        ).map(([t]) => (t.ref as { identifier: string }).identifier);
+        // Its local grant is ours to keep in step with the object.
+        expect(targets).toContain("lbl.name");
+    });
+
+    it("keeps a label whose revoke failed in a surviving row's scope", async () => {
+        // The row survives (access is also inherited) and the backend still grants the
+        // label whose revoke failed — so the scope must keep it, or the checklist would
+        // show it unchecked and a later deselection would diff against a lie.
+        const OBJECT_DUAL = {
+            ...USER_GRANT,
+            permissions: ["VIEW"],
+            inheritedPermissions: ["SHARE", "VIEW"],
+        } as unknown as AccessGranteeDetail;
+        const svc: IMockService = {
+            getAccessList: vi.fn(async (t: IObjectPermissionsObject) => {
+                const id = (t.ref as { identifier: string }).identifier;
+                if (id === "label.country") return { grants: [OBJECT_DUAL] };
+                return { grants: ["lbl.primary", "lbl.name"].includes(id) ? [USER_GRANT] : [] };
+            }),
+            // Only the lbl.name revoke fails; the object revoke lands.
+            manageObjectPermissions: vi.fn(async (t: IObjectPermissionsObject) => {
+                if ((t.ref as { identifier: string }).identifier === "lbl.name") {
+                    throw new Error("label revoke failed");
+                }
+                return undefined;
+            }),
+            getAvailableAssignees: vi.fn(async () => ASSIGNEES),
+        };
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
+
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u1");
+        });
+
+        expect(result.current.state.grantees.find((g) => g.id === "user:u1")).toBeDefined();
+        expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]!.sort()).toEqual([
+            "lbl.name", // revoke failed — still granted, so still in scope
+            "lbl.primary",
+        ]);
+        expect(addWarning).toHaveBeenCalled();
+    });
+
+    it("keeps a dual-granted label in scope after its local grant is revoked", async () => {
+        // A label can be granted here AND inherited. Reporting only "direct" made the
+        // checklist show it unchecked once the local grant went, claiming the grantee lost
+        // access they still have.
+        const svc = makeDualGrantLabelService();
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
+
+        // lbl.name carries both a local and an inherited grant, so it counts as inherited:
+        // in scope, and locked because revoking the local grant changes nothing.
+        expect(result.current.state.inheritedLabelIdsByGrantee["user:u1"]).toContain("lbl.name");
+        expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toContain("lbl.name");
+    });
+
+    it("keeps an inherited label out of every write when removing the grantee", async () => {
+        // Revoking a label the grantee only inherits is a no-op the failure
+        // compensation would then "restore" as a real local grant.
+        const svc = makeInheritedLabelService();
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
+        svc.manageObjectPermissions.mockClear();
+
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u1");
+        });
+
+        const targets = (
+            svc.manageObjectPermissions.mock.calls as Array<[IObjectPermissionsObject, unknown]>
+        ).map(([t]) => (t.ref as { identifier: string }).identifier);
+        expect(targets).toContain("label.country"); // the object revoke
+        expect(targets).toContain("lbl.name"); // the direct label grant is revoked
+        expect(targets).not.toContain("lbl.email"); // inherited — nothing here to revoke
+    });
+
+    it("keeps an inherited label out of a permission-level re-grade", async () => {
+        const svc = makeInheritedLabelService();
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
+        svc.manageObjectPermissions.mockClear();
+
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "EDIT");
+        });
+
+        const targets = (
+            svc.manageObjectPermissions.mock.calls as Array<[IObjectPermissionsObject, unknown]>
+        ).map(([t]) => (t.ref as { identifier: string }).identifier);
+        expect(targets).toContain("label.country");
+        expect(targets).toContain("lbl.name");
+        // Re-grading an inherited label would invent a local grant that never existed.
+        expect(targets).not.toContain("lbl.email");
+    });
+
     it("changeGranteeLabels grants/revokes only the changed labels (primary always kept)", async () => {
         // Currently scoped to primary + name; request primary + email.
         const svc = makeLabelAwareService(["lbl.primary", "lbl.name"]);
@@ -1960,6 +2644,110 @@ describe("useObjectShareController", () => {
         ]);
         expect(result.current.state.selectedLabelIdsByGrantee["group:g1"]!.sort()).toEqual([
             "lbl.email",
+            "lbl.name",
+            "lbl.primary",
+        ]);
+    });
+
+    it("grants only the labels picked for the grantee in the add dialog", async () => {
+        const svc = makeLabelAwareService();
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        svc.manageObjectPermissions.mockClear();
+
+        act(() => result.current.actions.openAddGrantee());
+        act(() =>
+            result.current.actions.setPendingGrantees([
+                {
+                    id: "user:u2",
+                    ref: idRef("u2"),
+                    kind: "user",
+                    name: "New User",
+                    permissionLevel: "VIEW",
+                    // Scope narrowed in the add dialog — email left out.
+                    labelIds: ["lbl.name"],
+                },
+            ]),
+        );
+        await act(async () => {
+            await result.current.actions.confirmAddGrantees();
+        });
+
+        const calls = svc.manageObjectPermissions.mock.calls as Array<
+            [IObjectPermissionsObject, IGranularAccessGrantee[]]
+        >;
+        const byTarget = new Map(
+            calls.map(([t, g]) => [(t.ref as { identifier: string }).identifier, g[0]!]),
+        );
+        expect(byTarget.get("label.country")).toBeDefined();
+        expect(byTarget.get("lbl.name")?.permissions).toEqual(["VIEW"]);
+        // The label left out of the scope is never granted...
+        expect(byTarget.has("lbl.email")).toBe(false);
+        // ...and the primary label needs no write (always in scope).
+        expect(byTarget.has("lbl.primary")).toBe(false);
+        // The optimistic scope is the picked one plus the forced primary.
+        expect(result.current.state.selectedLabelIdsByGrantee["user:u2"]!.sort()).toEqual([
+            "lbl.name",
+            "lbl.primary",
+        ]);
+    });
+
+    it("adds grantees with different label scopes, still one write per label", async () => {
+        const svc = makeLabelAwareService();
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        svc.manageObjectPermissions.mockClear();
+
+        act(() => result.current.actions.openAddGrantee());
+        act(() =>
+            result.current.actions.setPendingGrantees([
+                {
+                    id: "user:u2",
+                    ref: idRef("u2"),
+                    kind: "user",
+                    name: "Marek",
+                    permissionLevel: "VIEW",
+                    labelIds: ["lbl.name", "lbl.email"],
+                },
+                {
+                    id: "group:g1",
+                    ref: idRef("g1"),
+                    kind: "group",
+                    name: "Marketing",
+                    permissionLevel: "EDIT",
+                    labelIds: ["lbl.name"],
+                },
+            ]),
+        );
+        await act(async () => {
+            await result.current.actions.confirmAddGrantees();
+        });
+
+        const calls = svc.manageObjectPermissions.mock.calls as Array<
+            [IObjectPermissionsObject, IGranularAccessGrantee[]]
+        >;
+        const idOf = (t: IObjectPermissionsObject) => (t.ref as { identifier: string }).identifier;
+        const byLabel = new Map(
+            calls.filter(([t]) => idOf(t).startsWith("lbl.")).map(([t, g]) => [idOf(t), g]),
+        );
+        expect([...byLabel.keys()].sort()).toEqual(["lbl.email", "lbl.name"]);
+        // A label both scopes cover stays a single write carrying both principals,
+        // each at its own level.
+        const nameGrantees = byLabel.get("lbl.name")!;
+        expect(nameGrantees).toHaveLength(2);
+        expect(nameGrantees.find((g) => g.type === "granularUser")!.permissions).toEqual(["VIEW"]);
+        expect(nameGrantees.find((g) => g.type === "granularGroup")!.permissions).toEqual(["EDIT", "VIEW"]);
+        // A label only one scope covers carries only that principal.
+        const emailGrantees = byLabel.get("lbl.email")!;
+        expect(emailGrantees).toHaveLength(1);
+        expect(emailGrantees[0]!.type).toBe("granularUser");
+
+        expect(result.current.state.selectedLabelIdsByGrantee["user:u2"]!.sort()).toEqual([
+            "lbl.email",
+            "lbl.name",
+            "lbl.primary",
+        ]);
+        expect(result.current.state.selectedLabelIdsByGrantee["group:g1"]!.sort()).toEqual([
             "lbl.name",
             "lbl.primary",
         ]);
@@ -2487,5 +3275,174 @@ describe("useObjectShareController row classification", () => {
 
         expect(result.current.state.grantees).toEqual([]);
         expect(result.current.state.adminSelfRow).toEqual({ name: "self" });
+    });
+});
+
+describe("useObjectShareController write-path scope integrity", () => {
+    beforeEach(() => {
+        addSuccess.mockClear();
+        addError.mockClear();
+        addWarning.mockClear();
+    });
+
+    it("does not grant an inherited label when a fresh add's checklist is applied unchanged", async () => {
+        // u2 holds no object grant (so they are addable) but inherits lbl.email. The
+        // add-path scope seed cannot know that yet — inheritance resolves only once the
+        // row is committed — so the label diff must count inherited labels as already
+        // current, or an untouched Apply (the checklist always reports locked ids as
+        // selected) would mint a local grant on a label this workspace never granted.
+        const U2_INHERITED: AccessGranteeDetail = {
+            type: "granularUser",
+            user: {
+                ref: idRef("u2"),
+                uri: "/u2",
+                login: "marek",
+                email: "marek@example.com",
+                fullName: "Marek",
+            },
+            permissions: [],
+            inheritedPermissions: ["VIEW"],
+        };
+        const svc: IMockService = {
+            getAccessList: vi.fn(async (t: IObjectPermissionsObject) => {
+                const id = (t.ref as { identifier: string }).identifier;
+                if (id === "lbl.email") return { grants: [U2_INHERITED] };
+                return { grants: id === "label.country" ? [USER_GRANT] : [] };
+            }),
+            manageObjectPermissions: vi.fn(async () => undefined),
+            getAvailableAssignees: vi.fn(async () => ASSIGNEES),
+        };
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.labelsResolved).toBe(true));
+
+        act(() => result.current.actions.openAddGrantee());
+        act(() =>
+            result.current.actions.setPendingGrantees([
+                {
+                    id: "user:u2",
+                    ref: idRef("u2"),
+                    kind: "user",
+                    name: "Marek",
+                    permissionLevel: "VIEW",
+                    labelIds: ["lbl.name"],
+                },
+            ]),
+        );
+        await act(async () => {
+            await result.current.actions.confirmAddGrantees();
+        });
+        // Inheritance for the new row resolves from the cached probe once committed.
+        await waitFor(() =>
+            expect(result.current.state.inheritedLabelIdsByGrantee["user:u2"]).toContain("lbl.email"),
+        );
+        svc.manageObjectPermissions.mockClear();
+
+        // Apply with nothing changed: the checklist reports the picked label plus the
+        // locked primary and inherited ones.
+        await act(async () => {
+            await result.current.actions.changeGranteeLabels("user:u2", [
+                "lbl.primary",
+                "lbl.name",
+                "lbl.email",
+            ]);
+        });
+
+        // A full no-op — in particular no write on lbl.email, which would be a real
+        // local grant on a label u2 only inherits.
+        expect(svc.manageObjectPermissions).not.toHaveBeenCalled();
+    });
+
+    it("revokes a label whose earlier revoke failed when the grantee is removed after a re-add", async () => {
+        // Remove u1: the object revoke lands but the lbl.name revoke fails — the direct
+        // set is then the ONLY record that the label is still granted, and it must
+        // survive the removal's bookkeeping cleanup. Re-add u1 WITHOUT lbl.name in
+        // scope and remove them again: the second removal must revoke the leftover
+        // grant, or it outlives the grantee's object access for good.
+        let nameRevokeFailed = false;
+        const svc: IMockService = {
+            getAccessList: vi.fn(async (t: IObjectPermissionsObject) => {
+                const id = (t.ref as { identifier: string }).identifier;
+                return {
+                    grants: ["label.country", "lbl.primary", "lbl.name"].includes(id) ? [USER_GRANT] : [],
+                };
+            }),
+            manageObjectPermissions: vi.fn(async (t: IObjectPermissionsObject) => {
+                const id = (t.ref as { identifier: string }).identifier;
+                if (id === "lbl.name" && !nameRevokeFailed) {
+                    nameRevokeFailed = true;
+                    throw new Error("label revoke failed");
+                }
+                return undefined;
+            }),
+            getAvailableAssignees: vi.fn(async () => ASSIGNEES),
+        };
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
+
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u1");
+        });
+        expect(addWarning).toHaveBeenCalled(); // partial: lbl.name is still granted
+
+        act(() => result.current.actions.openAddGrantee());
+        act(() =>
+            result.current.actions.setPendingGrantees([
+                {
+                    id: "user:u1",
+                    ref: idRef("u1"),
+                    kind: "user",
+                    name: "Jane Good",
+                    permissionLevel: "VIEW",
+                    labelIds: ["lbl.email"],
+                },
+            ]),
+        );
+        await act(async () => {
+            await result.current.actions.confirmAddGrantees();
+        });
+        svc.manageObjectPermissions.mockClear();
+
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u1");
+        });
+
+        const byTarget = new Map(
+            (
+                svc.manageObjectPermissions.mock.calls as Array<
+                    [IObjectPermissionsObject, IGranularAccessGrantee[]]
+                >
+            ).map(([t, g]) => [(t.ref as { identifier: string }).identifier, g[0]!.permissions]),
+        );
+        expect(byTarget.get("lbl.name")).toEqual([]); // the leftover grant is revoked
+        expect(byTarget.get("lbl.email")).toEqual([]); // the re-add's grant too
+        expect(byTarget.has("lbl.primary")).toBe(false); // primary stays implicit
+    });
+
+    it("refuses level changes and removals while the label scope is unresolved", async () => {
+        // Before the per-label probe settles, the direct scope falls back to "all
+        // labels" — a write would re-grade or revoke grants that never existed. The UI
+        // disables the controls (isMutable); the controller must refuse on its own.
+        const svc = makeLabelAwareService();
+        svc.getAccessList.mockImplementation(async (t: IObjectPermissionsObject) => {
+            const id = (t.ref as { identifier: string }).identifier;
+            if (id === "label.country") return { grants: [USER_GRANT] };
+            return new Promise(() => {}); // label probe never settles
+        });
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(result.current.state.labelsResolved).toBe(false);
+        svc.manageObjectPermissions.mockClear();
+
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "EDIT");
+        });
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u1");
+        });
+
+        expect(svc.manageObjectPermissions).not.toHaveBeenCalled();
+        // No optimistic edit was applied either — the rows stayed untouched.
+        expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.level).toBe("VIEW");
     });
 });

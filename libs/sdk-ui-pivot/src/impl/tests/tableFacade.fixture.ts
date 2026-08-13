@@ -1,11 +1,11 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES, type DataViewFacade, getIntl } from "@gooddata/sdk-ui";
 
-import { type ICorePivotTableProps } from "../../publicTypes.js";
 import {
+    type ICorePivotTableInternalProps,
     type TableConfigAccessors,
     type TableDataCallbacks,
     type TableLegacyCallbacks,
@@ -50,7 +50,7 @@ function createTestConfigAccessors(dv: DataViewFacade): TableConfigAccessors {
     } as unknown as TableConfigAccessors;
 }
 
-function createTestPivotTableProps(dv: DataViewFacade): ICorePivotTableProps {
+function createTestPivotTableProps(dv: DataViewFacade): ICorePivotTableInternalProps {
     return {
         execution: dv.result().transform(),
         intl: getIntl(DEFAULT_LANGUAGE, DEFAULT_MESSAGES[DEFAULT_LANGUAGE]),
@@ -66,7 +66,7 @@ function createTestPivotTableProps(dv: DataViewFacade): ICorePivotTableProps {
 
 export async function createTestTableFacade(
     dv: DataViewFacade,
-): Promise<[TableFacade, Readonly<ICorePivotTableProps>]> {
+): Promise<[TableFacade, Readonly<ICorePivotTableInternalProps>]> {
     const testTableMethods: TableDataCallbacks & TableConfigAccessors & TableLegacyCallbacks = {
         ...TestTableDataCallbacks,
         ...TestTableLegacyCallbacks,

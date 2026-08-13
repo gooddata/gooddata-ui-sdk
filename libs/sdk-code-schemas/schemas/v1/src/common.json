@@ -401,13 +401,13 @@
                 },
                 "from": {
                     "type": "string",
-                    "pattern": "^([0-9]{4})-([0-9]{2})-([0-9]{2})$",
-                    "description": "A period start date as YYYY-MM-DD"
+                    "pattern": "^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$",
+                    "description": "A period start as YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities"
                 },
                 "to": {
                     "type": "string",
-                    "pattern": "^([0-9]{4})-([0-9]{2})-([0-9]{2})$",
-                    "description": "A period end date as YYYY-MM-DD"
+                    "pattern": "^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$",
+                    "description": "A period end as YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities"
                 },
                 "mode": {
                     "type": "string",
@@ -1141,6 +1141,7 @@
         "dateFilterGranularity": {
             "type": "string",
             "enum": [
+                "SECOND",
                 "MINUTE",
                 "HOUR",
                 "DAY",
@@ -1488,13 +1489,13 @@
                             },
                             "from": {
                                 "type": "string",
-                                "pattern": "^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2}))?$",
-                                "description": "A date from which the filter will be applied."
+                                "pattern": "^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$",
+                                "description": "A date from which the filter will be applied. YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities."
                             },
                             "to": {
                                 "type": "string",
-                                "pattern": "^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2}))?$",
-                                "description": "A date to which the filter will be applied."
+                                "pattern": "^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$",
+                                "description": "A date to which the filter will be applied. YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities."
                             },
                             "with": {
                                 "type": "object",

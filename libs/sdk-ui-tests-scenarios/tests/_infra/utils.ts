@@ -7,7 +7,7 @@ import { type IGeoChartInnerProps } from "@gooddata/sdk-ui-geo";
 import { type ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
 
 const InsignificantCoreChartProps: Array<keyof ICoreChartProps> = ["execution", "onError"];
-const InsignificantCorePivotProps: Array<keyof ICorePivotTableProps> = ["execution", "intl", "onError"];
+const InsignificantCorePivotProps: Array<keyof ICorePivotTableProps> = ["execution", "onError"];
 const InsignificantCoreGeoProps: Array<keyof IGeoChartInnerProps> = [
     "execution",
     "dataView",

@@ -821,6 +821,21 @@ describe("date conditions (attribute wire labels)", () => {
         expect(paintsCell(after, "2023-09")).toBe(false);
     });
 
+    it("Is on or before / Is on or after include the period's own boundary", () => {
+        const value: ConditionalFormattingValue = {
+            kind: "absoluteDate",
+            from: "2023-10-01",
+            to: "2023-12-31",
+        };
+        const onOrBefore = dateConfig("LESS_THAN_OR_EQUAL_TO", value);
+        expect(paintsCell(onOrBefore, "2023-10")).toBe(true); // LESS_THAN returns false here
+        expect(paintsCell(onOrBefore, "2024-01")).toBe(false);
+
+        const onOrAfter = dateConfig("GREATER_THAN_OR_EQUAL_TO", value);
+        expect(paintsCell(onOrAfter, "2023-12")).toBe(true); // GREATER_THAN returns false here
+        expect(paintsCell(onOrAfter, "2023-09")).toBe(false);
+    });
+
     it("Is not on (NOT_EQUAL_TO) paints only cells outside the period", () => {
         const config = dateConfig("NOT_EQUAL_TO", {
             kind: "absoluteDate",

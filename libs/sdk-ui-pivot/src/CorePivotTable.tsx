@@ -25,7 +25,7 @@ import {
 import { AgGridReact } from "ag-grid-react";
 import cx from "classnames";
 import { cloneDeep, isEqual } from "lodash-es";
-import { injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 import { v4 as uuidv4 } from "uuid";
 
@@ -61,6 +61,7 @@ import { createGridOptions } from "./impl/gridOptions.js";
 import { HeightCalculationManager } from "./impl/height/heightCalculationManager.js";
 import {
     type ColumnResizingConfig,
+    type ICorePivotTableInternalProps,
     type IMenuAggregationClickConfig,
     type TableAgGridCallbacks,
     type TableMethods,
@@ -257,7 +258,9 @@ function stopEventWhenResizeHeader(e: ReactMouseEvent): void {
  * @internal
  */
 export function CorePivotTableAgImpl(props: ICorePivotTableProps) {
-    const resolvedProps = resolveDefaultProps(props);
+    const intl = useIntl();
+
+    const resolvedProps: ICorePivotTableInternalProps = { ...resolveDefaultProps(props), intl };
 
     /*
      * Vast majority of the code below runs outside of the React rendering (ag-grid callbacks, timeouts, promise
@@ -1243,7 +1246,7 @@ export function CorePivotTableAgImpl(props: ICorePivotTableProps) {
     );
 }
 
-const CorePivotTableWithIntl = injectIntl(withTheme(CorePivotTableAgImpl));
+const CorePivotTableWithIntl = withTheme(CorePivotTableAgImpl);
 
 /**
  * @internal

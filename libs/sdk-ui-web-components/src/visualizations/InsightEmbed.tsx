@@ -4,7 +4,7 @@ import { type ComponentProps } from "react";
 
 import { invariant } from "ts-invariant";
 
-import { type IFilter, type IInsight } from "@gooddata/sdk-model";
+import { type IFilter, type IInsight, type ObjRef, idRef } from "@gooddata/sdk-model";
 import {
     type GoodDataSdkError,
     type IDrillEvent,
@@ -88,25 +88,70 @@ export class InsightEmbed extends CustomElementAdapter<IInsightView> {
             return this.inFlightRefresh;
         }
 
-        this.inFlightRefresh = new Promise<void>((resolve, reject) => {
-            this.resolveRefresh = () => {
-                this.resolveRefresh = undefined;
-                this.rejectRefresh = undefined;
-                this.inFlightRefresh = undefined;
-                resolve();
-            };
-            this.rejectRefresh = (error) => {
-                this.resolveRefresh = undefined;
-                this.rejectRefresh = undefined;
-                this.inFlightRefresh = undefined;
-                reject(error);
-            };
+        // `resolve`/`reject` publish to `this.resolveRefresh`/`this.rejectRefresh` only after
+        // invalidation succeeds and the pre-refresh view is unmounted, right before scheduling
+        // the new render. Until then they're `undefined`, so the pre-refresh view's still-firing
+        // callbacks (and resetRenderRoot()'s force-flush of them) are no-ops instead of settling
+        // this promise early. That covers the old tree's *synchronous* teardown; a pre-refresh
+        // fetch that completes later, after these handlers are published, is stopped instead by
+        // the render-generation guard in GET_COMPONENT. `this.inFlightRefresh` is set
+        // synchronously below, before any `await`, so concurrent refresh() calls keep sharing it
+        // regardless.
+        let resolve!: () => void;
+        let reject!: (error: Error) => void;
+        const refreshPromise = new Promise<void>((res, rej) => {
+            resolve = res;
+            reject = rej;
         });
+        this.inFlightRefresh = refreshPromise;
+
+        try {
+            await this.invalidateCachedInsight();
+        } catch (error) {
+            this.inFlightRefresh = undefined;
+            reject(error instanceof Error ? error : new Error(String(error)));
+            return refreshPromise;
+        }
 
         this.refreshSequence += 1;
         this.resetRenderRoot();
+
+        this.resolveRefresh = () => {
+            this.resolveRefresh = undefined;
+            this.rejectRefresh = undefined;
+            this.inFlightRefresh = undefined;
+            resolve();
+        };
+        this.rejectRefresh = (error) => {
+            this.resolveRefresh = undefined;
+            this.rejectRefresh = undefined;
+            this.inFlightRefresh = undefined;
+            reject(error);
+        };
+
         this.requestRender();
-        return this.inFlightRefresh;
+        return refreshPromise;
+    }
+
+    /**
+     * @remarks
+     * Evicts the cached insight definition so the remounted `InsightView` refetches it
+     * instead of reading the same cached promise. Skips silently when the workspace or the
+     * insight input cannot be resolved yet; remount still proceeds without invalidation.
+     *
+     * @internal
+     */
+    private async invalidateCachedInsight(): Promise<void> {
+        const workspace = this.getResolvedContext()?.workspaceId;
+        const insight = this.getResolvedInputValue<string | ObjRef>("insight");
+        if (!workspace || !insight) {
+            return;
+        }
+
+        // Resolve the ref exactly the way InsightView does, so the cache keys match.
+        const ref = typeof insight === "string" ? idRef(insight, "insight") : insight;
+        const { clearInsightViewCacheForInsight } = await import("@gooddata/sdk-ui-ext");
+        clearInsightViewCacheForInsight(workspace, ref);
     }
 
     override [GET_COMPONENT](
@@ -116,6 +161,15 @@ export class InsightEmbed extends CustomElementAdapter<IInsightView> {
         // Ensure mandatory property is provided
         const insight = this.getResolvedInputValue<string>("insight");
         invariant(insight, '"insight" is a mandatory attribute and it cannot be empty');
+
+        // The refresh generation this render belongs to. A pre-refresh view keeps its callback
+        // closures after `resetRenderRoot()`, and its in-flight fetch can complete *after*
+        // refresh() has published the new handlers - `InsightView` calls `onInsightLoaded` from
+        // inside the fetch promise body, which is not cancellation-gated. Every settle below is
+        // therefore gated on this generation, so only the remounted view can settle the refresh
+        // it belongs to. Event dispatch stays ungated: hosts should still hear from a view that
+        // is on screen.
+        const renderSequence = this.refreshSequence;
 
         const extraProps: Partial<ComponentProps<typeof Component>> = {};
         const config = this.getResolvedInsightConfig({ mapboxToken, agGridToken });
@@ -140,7 +194,7 @@ export class InsightEmbed extends CustomElementAdapter<IInsightView> {
 
         return (
             <Component
-                key={`${insight}:${this.refreshSequence}`}
+                key={`${insight}:${renderSequence}`}
                 backend={backend}
                 workspace={workspaceId}
                 insight={insight}
@@ -160,18 +214,22 @@ export class InsightEmbed extends CustomElementAdapter<IInsightView> {
                             composed: false,
                         }),
                     );
-                    this.rejectRefresh?.(error);
+                    if (renderSequence === this.refreshSequence) {
+                        this.rejectRefresh?.(error);
+                    }
                 }}
                 onExportReady={this[EVENT_HANDLER]<IExportFunction>("exportReady")}
                 onLoadingChanged={(loadingState) => {
                     this[EVENT_HANDLER]<ILoadingState>("loadingChanged")(loadingState);
-                    if (!loadingState.isLoading) {
+                    if (!loadingState.isLoading && renderSequence === this.refreshSequence) {
                         this.resolveRefresh?.();
                     }
                 }}
                 onInsightLoaded={(loadedInsight) => {
                     this[EVENT_HANDLER]<IInsight>("insightLoaded")(loadedInsight);
-                    this.resolveRefresh?.();
+                    if (renderSequence === this.refreshSequence) {
+                        this.resolveRefresh?.();
+                    }
                 }}
                 {...extraProps}
             />

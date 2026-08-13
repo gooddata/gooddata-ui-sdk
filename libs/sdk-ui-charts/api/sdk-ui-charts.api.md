@@ -403,6 +403,7 @@ export interface IChartConfig {
     // @internal
     selectedPoints?: IDrillEventIntersectionElement[][];
     separators?: ISeparators;
+    sortBy?: ISortItem[];
     // @internal
     stacking?: boolean;
     stackMeasures?: boolean;

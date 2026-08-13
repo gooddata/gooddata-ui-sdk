@@ -4,7 +4,6 @@ import { type CSSProperties, memo, useCallback, useEffect, useRef, useState } fr
 
 import { isEqual } from "lodash-es";
 import { type Root, createRoot } from "react-dom/client";
-import { type WrappedComponentProps, injectIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -78,7 +77,7 @@ export interface IInsightRendererProps extends Omit<
     widget?: IInsightWidget;
 }
 
-type InsightRendererCoreProps = IInsightRendererProps & WrappedComponentProps & { messages: ITranslations };
+type InsightRendererCoreProps = IInsightRendererProps & { messages: ITranslations };
 
 /**
  * Props of the core renderer with all the defaults applied.
@@ -421,7 +420,7 @@ const InsightRendererCore = memo(function InsightRendererCore(props: InsightRend
     );
 });
 
-export const IntlInsightRenderer = injectIntl(withTheme(withContexts(InsightRendererCore)));
+export const IntlInsightRenderer = withTheme(withContexts(InsightRendererCore));
 
 /**
  * Updated callback (callback with a different reference) is not properly propagated to the "visualization" instance

@@ -178,6 +178,14 @@ function getFormatByGranularity(granularity: DateAttributeGranularity) {
             return "M/d/y, h:mm a";
         case "GDC.time.minute_in_hour":
             return "m";
+        case "GDC.time.minute_in_day":
+            return "h:mm a";
+        case "GDC.time.second":
+            return "M/d/y, h:mm:ss a";
+        case "GDC.time.second_in_minute":
+            return "s";
+        case "GDC.time.second_in_day":
+            return "h:mm:ss a";
         case "GDC.time.month":
             return "MMM y";
         case "GDC.time.month_in_year":

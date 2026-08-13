@@ -1,6 +1,6 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
-import { type ComponentType } from "react";
+import { type ComponentType, type ReactNode } from "react";
 
 import { type DateFilterGranularity, type IDashboardDateFilter } from "@gooddata/sdk-model";
 import { type IDateFilterButtonProps, type IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
@@ -102,6 +102,14 @@ export interface IDashboardDateFilterProps {
      * @internal
      */
     tabId?: string;
+
+    /**
+     * Custom content rendered at the end of the hint area of the static period (absolute range) form,
+     * after the default date/time format hints.
+     *
+     * @alpha
+     */
+    customRangeHint?: ReactNode;
 }
 
 /**

@@ -18,11 +18,13 @@ import { UiTooltip } from "../UiTooltip/UiTooltip.js";
 
 const { b, e } = bem("gd-ui-kit-grantee-row-controls");
 
-// The warning badge names an inherited EDIT or SHARE. VIEW can never be the
-// higher level and has no entry — an absent entry means "no badge".
-const EFFECTIVE_PERMISSION_TOOLTIP: Partial<Record<AccessGranularPermission, MessageDescriptor>> = {
+// The warning badge names the inherited level. VIEW is here because an inherited-only
+// grantee's whole level comes from inheritance, so it needs the badge at any level —
+// including VIEW, where nothing is "higher" but the access is still not ours to change.
+const EFFECTIVE_PERMISSION_TOOLTIP: Record<AccessGranularPermission, MessageDescriptor> = {
     EDIT: olpPermissionMessages.effectivePermissionTooltipEdit,
     SHARE: olpPermissionMessages.effectivePermissionTooltipShare,
+    VIEW: olpPermissionMessages.effectivePermissionTooltipView,
 };
 
 /**
@@ -35,10 +37,12 @@ export interface IUiGranteeRowControlsProps {
     /** The grantee's current permission level — anchors the permission menu. */
     permissionLevel: AccessGranularPermission;
     /**
-     * CONTRACT: set only when the grantee inherits a higher permission than
-     * `permissionLevel` (e.g. via a group) — the control renders the warning badge
-     * whenever this is set and does not re-check the ordering. Undefined when the
-     * assigned level already is the effective one.
+     * CONTRACT: set to the INHERITED level whenever inheritance — from a group or a
+     * parent workspace — is what decides this row's level: either it outranks the grant
+     * made here, or there is no local grant at all and the whole level is inherited (then
+     * it equals `permissionLevel`, VIEW included). The control renders the warning badge
+     * whenever this is set and does not re-check the ordering. Undefined when the level
+     * granted here already is the effective one.
      */
     effectivePermission?: AccessGranularPermission;
     /** Levels rendered disabled in the permission menu — see {@link UiPermissionMenu}. */
@@ -48,6 +52,13 @@ export interface IUiGranteeRowControlsProps {
     onLabelsChange: (selectedIds: string[]) => void;
     onPermissionChange: (level: PermissionMenuLevel) => void;
     onRemoveAccess?: () => void;
+    /**
+     * Renders Remove access disabled instead of hiding it — e.g. for a grantee whose
+     * access is inherited, so there is no grant here to revoke.
+     */
+    isRemoveDisabled?: boolean;
+    /** Tooltip shown on Remove access while it is disabled. */
+    removeDisabledTooltip?: string;
     /** Disables the permission trigger, e.g. while the row's change is saving. */
     isDisabled?: boolean;
     dataTestId?: string;
@@ -70,6 +81,8 @@ export function UiGranteeRowControls({
     onLabelsChange,
     onPermissionChange,
     onRemoveAccess,
+    isRemoveDisabled,
+    removeDisabledTooltip,
     isDisabled,
     dataTestId,
 }: IUiGranteeRowControlsProps) {
@@ -77,9 +90,8 @@ export function UiGranteeRowControls({
 
     const hasLabels = labels.length > 0;
 
-    // The caller sets `effectivePermission` only when it outranks the assigned level
-    // (the ext side owns that comparison) — render the badge whenever it is set and
-    // has tooltip copy, without re-deriving the level ordering here.
+    // The caller decides when inheritance drives the row (see the prop's contract) —
+    // render the badge whenever it is set, without re-deriving the level ordering here.
     const inheritedTooltipMessage =
         effectivePermission === undefined ? undefined : EFFECTIVE_PERMISSION_TOOLTIP[effectivePermission];
     const effectiveTooltip = inheritedTooltipMessage
@@ -124,6 +136,8 @@ export function UiGranteeRowControls({
                 selectedLabelIds={selectedLabelIds}
                 onLabelsChange={onLabelsChange}
                 onRemoveAccess={onRemoveAccess}
+                isRemoveDisabled={isRemoveDisabled}
+                removeDisabledTooltip={removeDisabledTooltip}
             />
         </div>
     );

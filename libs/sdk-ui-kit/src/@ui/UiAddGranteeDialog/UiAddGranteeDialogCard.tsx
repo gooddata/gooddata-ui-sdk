@@ -15,6 +15,7 @@ import {
     UiGranteeAsyncPicker,
 } from "../UiGranteeAsyncPicker/UiGranteeAsyncPicker.js";
 import { UiIconButton } from "../UiIconButton/UiIconButton.js";
+import { type IUiLabelsChecklistItem } from "../UiLabelsChecklist/UiLabelsChecklist.js";
 import { UiDialogFooter } from "../UiModalDialog/UiDialogFooter.js";
 import { UiDialogHeader } from "../UiModalDialog/UiDialogHeader.js";
 import { type PermissionMenuLevel } from "../UiPermissionMenu/UiPermissionMenu.js";
@@ -49,6 +50,12 @@ export interface IUiAddGranteeDialogCardProps {
      * "SHARE" for owners) override here.
      */
     initialPermissionLevel?: PermissionMenuLevel;
+    /**
+     * Labels the picked grantees can be scoped to. Non-empty adds a Label access
+     * drill-in to each row's permission menu, so the scope is picked in the same
+     * step as the grant rather than after it. Omit for objects without labels.
+     */
+    labels?: ReadonlyArray<IUiLabelsChecklistItem>;
 
     /** Fires when the user clicks the header back-arrow button. */
     onBack: () => void;
@@ -85,6 +92,7 @@ export function UiAddGranteeDialogCard({
     selectedGrantees,
     onSelectedGranteesChange,
     initialPermissionLevel = "VIEW",
+    labels,
     onBack,
     onClose,
     onCancel,
@@ -103,7 +111,7 @@ export function UiAddGranteeDialogCard({
         />
     );
 
-    const { select, changePermission, remove } = useGranteeSelection({
+    const { select, changePermission, changeLabels, remove } = useGranteeSelection({
         selectedGrantees,
         onSelectedGranteesChange,
         initialPermissionLevel,
@@ -118,6 +126,8 @@ export function UiAddGranteeDialogCard({
                 selectedGrantees={selectedGrantees}
                 onSelect={select}
                 onPermissionChange={changePermission}
+                labels={labels}
+                onLabelsChange={changeLabels}
                 onRemove={remove}
             />
 

@@ -260,7 +260,10 @@ export default {
                 "The whole scheduledEmail tree must not import from src/model/ or from the heavy " +
                 "presentation subtrees (dashboard, dashboardContexts, filterBar, topBar, widget). " +
                 "Only the connectors layer may cross those boundaries. DashboardComponentsContext is " +
-                "allowed (slot resolution). model/store/filtering/types.ts is allowed (IAutomationFiltersTab " +
+                "allowed (slot resolution): the lookup stays in this tree by design, because " +
+                "ScheduledEmailDialog wraps the component it resolves in " +
+                "ScheduledEmailDialogStateProvider, so the dialog's state model mounts above any " +
+                "replacement for the slot. model/store/filtering/types.ts is allowed (IAutomationFiltersTab " +
                 "pure-data type). GDP-3167: covers the entire scheduledEmail/ tree (create/edit and management).",
             severity: "error",
             from: { path: "^src/presentation/automations/scheduledEmail/" },

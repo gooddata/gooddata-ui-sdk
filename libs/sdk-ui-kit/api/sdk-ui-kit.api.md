@@ -102,8 +102,6 @@ import { Strategy } from '@floating-ui/react';
 import { SyntheticEvent } from 'react';
 import { VirtualElement } from '@floating-ui/react';
 import { WeekStart } from '@gooddata/sdk-model';
-import { WithIntlProps } from 'react-intl';
-import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
 export function accessibilityConfigToAttributes(accessibilityConfig?: IAccessibilityConfigBase): HTMLAttributes<HTMLElement>;
@@ -253,12 +251,7 @@ export type CatalogItemPickerSelectionMode = "single" | "multiple";
 export type CatalogItemPickerType = "metric" | "attribute" | "date";
 
 // @internal (undocumented)
-export function ChartSortingDialog(props: IChartSortingOwnProps): JSX.Element;
-
-// @internal (undocumented)
-export const ChartSortingWithIntl: FC<WithIntlProps<IChartSortingProps>> & {
-    WrappedComponent: ComponentType<IChartSortingProps>;
-};
+export function ChartSortingDialog(props: IChartSortingProps): JSX.Element;
 
 // @internal (undocumented)
 export const Checkbox: NamedExoticComponent<ICheckboxProps>;
@@ -371,7 +364,7 @@ export const DATE_DATASET_LIST_ITEM_CLASSNAME = "gd-list-item gd-list-item-short
 export function DateDatasetsListItem(input: IDateDatasetsListItemProps): JSX.Element;
 
 // @internal (undocumented)
-export class Datepicker extends PureComponent<IDatePickerOwnProps> {
+export class Datepicker extends PureComponent<IDatePickerProps> {
     // (undocumented)
     render(): JSX.Element;
 }
@@ -1404,7 +1397,7 @@ export interface ICatalogItemPickerProps<TAttributePayload = unknown, TMetricPay
 }
 
 // @internal (undocumented)
-export interface IChartSortingOwnProps {
+export interface IChartSortingProps {
     // (undocumented)
     availableSorts: IAvailableSortsGroup[];
     // (undocumented)
@@ -1419,10 +1412,6 @@ export interface IChartSortingOwnProps {
     onApply: (sortItems: ISortItem[]) => void;
     // (undocumented)
     onCancel: () => void;
-}
-
-// @internal (undocumented)
-export interface IChartSortingProps extends IChartSortingOwnProps, WrappedComponentProps {
 }
 
 // @internal (undocumented)
@@ -2055,7 +2044,7 @@ export interface IDateDatasetsListItemProps {
 }
 
 // @internal (undocumented)
-export interface IDatePickerOwnProps {
+export interface IDatePickerProps {
     // (undocumented)
     accessibilityConfig?: IAccessibilityConfigBase;
     // (undocumented)
@@ -5867,6 +5856,7 @@ export interface ITypographyProps {
 export interface IUiAddGranteeDialogCardProps {
     dataTestId?: string;
     initialPermissionLevel?: PermissionMenuLevel;
+    labels?: ReadonlyArray<IUiLabelsChecklistItem>;
     loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
     objectTitle: string;
     onBack: () => void;
@@ -6814,7 +6804,9 @@ export interface IUiGranteeAsyncOptions {
 // @internal (undocumented)
 export interface IUiGranteeAsyncPickerProps {
     dataTestId?: string;
+    labels?: ReadonlyArray<IUiLabelsChecklistItem>;
     loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
+    onLabelsChange?: (grantee: IUiPickedGrantee, selectedLabelIds: string[]) => void;
     onPermissionChange?: (grantee: IUiPickedGrantee, next: PermissionMenuLevel) => void;
     onRemove?: (grantee: IUiPickedGrantee) => void;
     onSelect: (option: IUiGranteeAsyncOption) => void;
@@ -6836,6 +6828,7 @@ export interface IUiGranteeRowControlsProps {
     disabledTooltip?: string;
     effectivePermission?: AccessGranularPermission;
     isDisabled?: boolean;
+    isRemoveDisabled?: boolean;
     labels: ReadonlyArray<IUiLabelsChecklistItem>;
     // (undocumented)
     onLabelsChange: (selectedIds: string[]) => void;
@@ -6844,6 +6837,7 @@ export interface IUiGranteeRowControlsProps {
     // (undocumented)
     onRemoveAccess?: () => void;
     permissionLevel: AccessGranularPermission;
+    removeDisabledTooltip?: string;
     // (undocumented)
     selectedLabelIds: ReadonlyArray<string>;
 }
@@ -7581,16 +7575,19 @@ export interface IUiPermissionMenuProps {
     dataTestId?: string;
     disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
     disabledTooltip?: string;
+    isRemoveDisabled?: boolean;
     labels?: ReadonlyArray<IUiLabelsChecklistItem>;
     onLabelsChange?: (selectedIds: string[]) => void;
     onPermissionChange: (level: PermissionMenuLevel) => void;
     onRemoveAccess?: () => void;
+    removeDisabledTooltip?: string;
     selectedLabelIds?: ReadonlyArray<string>;
     selectedLevel?: PermissionMenuLevel;
 }
 
 // @internal
 export interface IUiPickedGrantee extends IUiGranteeAsyncOption {
+    labelIds?: ReadonlyArray<string>;
     permissionLevel: PermissionMenuLevel;
 }
 

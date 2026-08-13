@@ -11,11 +11,10 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { DataViewFacade, convertError } from "@gooddata/sdk-ui";
 
-import { type ICorePivotTableProps } from "../publicTypes.js";
-
 import { COLS_PER_PAGE } from "./base/constants.js";
 import { getAvailableDrillTargets } from "./drilling/drillTargets.js";
 import {
+    type ICorePivotTableInternalProps,
     type TableConfigAccessors,
     type TableDataCallbacks,
     type TableLegacyCallbacks,
@@ -33,7 +32,7 @@ export class TableFacadeInitializer {
     constructor(
         private readonly execution: IPreparedExecution,
         private readonly tableMethods: TableDataCallbacks & TableLegacyCallbacks & TableConfigAccessors,
-        private readonly props: Readonly<ICorePivotTableProps>,
+        private readonly props: Readonly<ICorePivotTableInternalProps>,
         private readonly getCurrentAbortController: () => AbortController | undefined,
     ) {}
 

@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IMeasureDescriptor, type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
+import { type IMeasureDescriptor, type IMeasureGroupDescriptor, newMeasureSort } from "@gooddata/sdk-model";
 import { BucketNames, type DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { type IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
@@ -14,6 +14,7 @@ import {
     getMekkoMeasures,
     getMekkoWidthOnlyYAxisProps,
     isMekkoPercentBlockedByNegatives,
+    sortMekkoColumnsByMeasure,
 } from "../mekkoChartOptions.js";
 
 const series = (points: Array<{ y?: number; z?: number }>): ISeriesItem =>
@@ -181,6 +182,144 @@ describe("dropZeroWidthMekkoColumns", () => {
         const categories: string[] = [];
 
         const result = dropZeroWidthMekkoColumns(input, categories);
+
+        expect(result.series).toBe(input);
+        expect(result.categories).toBe(categories);
+    });
+});
+
+describe("sortMekkoColumnsByMeasure", () => {
+    // measureGroup("Width", "Height") -> width localIdentifier m0, height m1
+    const twoMeasures = measureGroup("Width", "Height");
+    const stackedDv = dvWithEmptyBuckets([]);
+    const mekkoConfig = (measureId: string, direction: "asc" | "desc") => ({
+        type: VisualizationTypes.MEKKO,
+        sortBy: [newMeasureSort(measureId, direction)],
+    });
+
+    it("orders columns of every series and the categories by Width (point.z) in lockstep", () => {
+        const input = [
+            series([
+                { y: 1, z: 2 },
+                { y: 2, z: 5 },
+                { y: 3, z: 3 },
+            ]),
+            series([
+                { y: 9, z: 2 },
+                { y: 8, z: 5 },
+                { y: 7, z: 3 },
+            ]),
+        ];
+        const categories = ["a", "b", "c"];
+
+        const result = sortMekkoColumnsByMeasure(
+            input,
+            categories,
+            mekkoConfig("m0", "desc"),
+            stackedDv,
+            twoMeasures,
+        );
+
+        expect(result.categories).toEqual(["b", "c", "a"]);
+        expect(result.series.map((seriesItem) => seriesItem.data?.map((point) => point.z))).toEqual([
+            [5, 3, 2],
+            [5, 3, 2],
+        ]);
+        expect(result.series[1].data?.map((point) => point.y)).toEqual([8, 7, 9]);
+    });
+
+    it("orders columns by the Height totals summed across the stack", () => {
+        const input = [
+            series([
+                { y: 1, z: 9 },
+                { y: 5, z: 9 },
+            ]),
+            series([
+                { y: 3, z: 9 },
+                { y: 1, z: 9 },
+            ]),
+        ];
+        const categories = ["a", "b"];
+
+        const result = sortMekkoColumnsByMeasure(
+            input,
+            categories,
+            mekkoConfig("m1", "asc"),
+            stackedDv,
+            twoMeasures,
+        );
+
+        // column totals: a = 1 + 3 = 4, b = 5 + 1 = 6
+        expect(result.categories).toEqual(["a", "b"]);
+
+        const descending = sortMekkoColumnsByMeasure(
+            input,
+            categories,
+            mekkoConfig("m1", "desc"),
+            stackedDv,
+            twoMeasures,
+        );
+        expect(descending.categories).toEqual(["b", "a"]);
+    });
+
+    it("keeps the backend order for ties", () => {
+        const input = [series([{ z: 3 }, { z: 3 }, { z: 1 }])];
+        const categories = ["a", "b", "c"];
+
+        const result = sortMekkoColumnsByMeasure(
+            input,
+            categories,
+            mekkoConfig("m0", "desc"),
+            stackedDv,
+            twoMeasures,
+        );
+
+        expect(result.categories).toEqual(["a", "b", "c"]);
+    });
+
+    it("returns inputs unchanged without a Stack By bucket (the backend sorts those executions)", () => {
+        const input = [series([{ z: 1 }, { z: 5 }])];
+        const categories = ["a", "b"];
+
+        const result = sortMekkoColumnsByMeasure(
+            input,
+            categories,
+            mekkoConfig("m0", "desc"),
+            dvWithEmptyBuckets([BucketNames.STACK]),
+            twoMeasures,
+        );
+
+        expect(result.series).toBe(input);
+        expect(result.categories).toBe(categories);
+    });
+
+    it("returns inputs unchanged without a measure sort in the config", () => {
+        const input = [series([{ z: 1 }, { z: 5 }])];
+        const categories = ["a", "b"];
+
+        const result = sortMekkoColumnsByMeasure(
+            input,
+            categories,
+            { type: VisualizationTypes.MEKKO },
+            stackedDv,
+            twoMeasures,
+        );
+
+        expect(result.series).toBe(input);
+        expect(result.categories).toBe(categories);
+    });
+
+    it("returns inputs unchanged when the sorted measure is no longer in the buckets", () => {
+        const input = [series([{ z: 1 }, { z: 5 }])];
+        const categories = ["a", "b"];
+
+        const result = sortMekkoColumnsByMeasure(
+            input,
+            categories,
+            mekkoConfig("m_removed", "desc"),
+            stackedDv,
+            twoMeasures,
+        );
 
         expect(result.series).toBe(input);
         expect(result.categories).toBe(categories);

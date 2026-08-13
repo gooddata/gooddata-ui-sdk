@@ -17,7 +17,7 @@ import {
 // vi.mocked() after the import statements.
 // ---------------------------------------------------------------------------
 
-vi.mock("../useScheduleValidation.js", () => ({
+vi.mock("../../DefaultScheduledEmailDialog/hooks/useScheduleValidation.js", () => ({
     useScheduleValidation: vi.fn(),
 }));
 
@@ -35,12 +35,12 @@ vi.mock("react-intl", async () => {
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
 // ---------------------------------------------------------------------------
 
-import { IntlWrapper } from "../../../../../localization/IntlWrapper.js";
+import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
+import * as useScheduleValidationModule from "../../DefaultScheduledEmailDialog/hooks/useScheduleValidation.js";
 import {
     useScheduledEmailFormValidity,
     type IUseScheduledEmailFormValidityProps,
 } from "../useScheduledEmailFormValidity.js";
-import * as useScheduleValidationModule from "../useScheduleValidation.js";
 
 // ---------------------------------------------------------------------------
 // Typed spy references (resolved after import)

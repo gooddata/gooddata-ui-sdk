@@ -95,4 +95,33 @@ describe("UiAddGranteeDialogCard", () => {
         renderWithIntl(<UiAddGranteeDialogCard {...baseProps} dataTestId="add-dialog" />);
         expect(screen.getByTestId("add-dialog")).toBeInTheDocument();
     });
+
+    it("stores a narrowed label scope on the picked grantee it belongs to", () => {
+        const onSelectedGranteesChange = vi.fn();
+        renderWithIntl(
+            <UiAddGranteeDialogCard
+                {...baseProps}
+                labels={[
+                    { id: "lbl.primary", label: "Country", kind: "primary", locked: true },
+                    { id: "lbl.name", label: "Name" },
+                ]}
+                selectedGrantees={[
+                    { id: "u1", ref: idRef("u1"), kind: "user", name: "Jane", permissionLevel: "VIEW" },
+                    { id: "u2", ref: idRef("u2"), kind: "user", name: "Joe", permissionLevel: "EDIT" },
+                ]}
+                onSelectedGranteesChange={onSelectedGranteesChange}
+            />,
+        );
+
+        fireEvent.click(screen.getByRole("button", { name: /^Can view$/ }));
+        fireEvent.click(screen.getByRole("menuitem", { name: /label access/i }));
+        fireEvent.click(screen.getByRole("checkbox", { name: /Name/ }));
+        fireEvent.click(screen.getByRole("button", { name: "Apply" }));
+
+        // Only Jane's row is re-scoped; Joe keeps the untouched default (undefined = all).
+        expect(onSelectedGranteesChange).toHaveBeenCalledTimes(1);
+        const next = onSelectedGranteesChange.mock.calls[0][0];
+        expect(next[0].labelIds).toEqual(["lbl.primary"]);
+        expect(next[1].labelIds).toBeUndefined();
+    });
 });

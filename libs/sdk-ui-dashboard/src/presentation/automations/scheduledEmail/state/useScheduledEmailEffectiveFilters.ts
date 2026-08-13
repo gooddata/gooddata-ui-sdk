@@ -11,15 +11,15 @@ import {
     type IWidget,
 } from "@gooddata/sdk-model";
 
-import type { IAutomationFiltersTab } from "../../../../../model/store/filtering/types.js";
-import { useScheduledEmailDialogContext } from "../../../contexts/ScheduledEmailDialogContext.js";
-import { shouldStoreExportParameters } from "../../../shared/automationFilters/automationParameters.js";
+import type { IAutomationFiltersTab } from "../../../../model/store/filtering/types.js";
+import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
+import { shouldStoreExportParameters } from "../../shared/automationFilters/automationParameters.js";
 import {
     getAppliedDashboardFilters,
     getAppliedWidgetFilters,
     getVisibleFiltersByFilters,
     getVisibleFiltersByFiltersByTab,
-} from "../../../shared/filters/index.js";
+} from "../../shared/filters/index.js";
 
 export interface IUseScheduledEmailEffectiveFiltersProps {
     widget?: IWidget;
@@ -39,7 +39,7 @@ export interface IUseScheduledEmailEffectiveFiltersProps {
  *
  * This has to run before the draft exists, because `useScheduledEmailFormState` and
  * `useScheduledEmailExportSettings` consume these values while initializing it. The handlers that
- * *change* filters live in {@link useScheduledEmailFilters} and necessarily run later — they write
+ * *change* filters live in {@link useScheduledEmailFiltersModel} and necessarily run later — they write
  * through the draft's setter. That ordering is why reading and writing filters are two hooks rather
  * than one.
  *

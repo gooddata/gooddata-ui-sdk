@@ -48,6 +48,53 @@ If you want to customize the authentication flow, you'll need to provide the aut
 </script>
 ```
 
+## Cache invalidation
+
+The bundle carries its own copy of the GoodData.UI runtime, including the insight cache
+that `gd-insight-embed` and `gd-insight` read through. Call the module-level `clearCaches()`
+export to clear it - for example after an insight has been edited elsewhere, or when
+switching users:
+
+```html
+<script type="module">
+    import { clearCaches } from "https://example.gooddata.com/components/my-workspace.js";
+
+    await clearCaches();
+</script>
+```
+
+**The `await` must complete before any GoodData web component mounts or re-mounts.**
+`clearCaches()` clears the cache asynchronously; if a component mounts before the promise
+settles, it can still read the stale cached insight. `clearCaches()` can also reject (for
+example if its dynamic chunk fails to load), so consider wrapping the `await` in
+`try/catch` if your host needs to handle that.
+
+For the common customer scenario - a user edits an insight in the insight editor, then
+returns to a page that renders a gallery of `gd-insight-embed` elements for that
+workspace - the recommended recipe is to `await clearCaches()` **before** rendering the
+gallery:
+
+```html
+<script type="module">
+    import { clearCaches } from "https://example.gooddata.com/components/my-workspace.js";
+
+    await clearCaches();
+    renderInsightGallery(); // mount your gd-insight-embed elements only after this
+</script>
+```
+
+Calling `refresh()` on each already-mounted `gd-insight-embed` element instead is a
+weaker remedy for this scenario: `refresh()` runs _after_ the element has already
+mounted and rendered with the stale cached insight, so the user briefly sees the stale
+content before it flashes to the refreshed one, and the insight is fetched twice (once
+stale, once fresh). Prefer clearing the cache before mounting when you control the
+mount timing, and reserve per-element `refresh()` for elements that are already on the
+page and cannot be remounted.
+
+Importing `clearInsightViewCaches` from your own application's `@gooddata/sdk-ui-ext`
+dependency will not do this - it clears a different copy of the cache than the one the
+bundle uses internally, so it has no effect on the embedded components.
+
 ## Embedding
 
 Once authentication is set up and ready, you can embed a Dashboard, single visualization, or AI Assistant as follows:
@@ -211,7 +258,7 @@ To do this:
 
 - Live properties: `context`, `config`, `insight`, `filters`, `title`
 - Bootstrap attributes: `insight`, `workspace`, `locale`, `title`, `mapbox`, `agGrid`, `filters`
-- Methods: `refresh(): Promise<void>`
+- Methods: `refresh(): Promise<void>` - drops the element's cached insight definition and remounts the visualization; the returned promise resolves once loading finishes, and rejects if the insight fails to load or if the cache eviction itself fails. The eviction happens only once both the workspace and the `insight` input resolve; until then it is skipped and the visualization is remounted without it
 - `insight` identity is immutable after the first successful render
 
 ```html

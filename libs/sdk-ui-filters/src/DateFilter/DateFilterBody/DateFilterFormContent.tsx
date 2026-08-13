@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type KeyboardEvent, useCallback, useRef } from "react";
+import { type KeyboardEvent, type ReactNode, useCallback, useRef } from "react";
 
 import { isEmpty } from "lodash-es";
 import { useIntl } from "react-intl";
@@ -48,6 +48,7 @@ export interface IDateFilterFormContentProps {
     isMobile: boolean;
     withoutApply?: boolean;
     enableEmptyDateValues?: boolean;
+    customRangeHint?: ReactNode;
 
     activeForm: DateFilterRoute;
     onBackNavigation: () => void;
@@ -75,6 +76,7 @@ export function DateFilterFormContent({
     isMobile,
     withoutApply,
     enableEmptyDateValues,
+    customRangeHint,
     activeForm,
     onBackNavigation,
     onClose,
@@ -144,6 +146,7 @@ export function DateFilterFormContent({
                             weekStart={weekStart}
                             submitForm={submitForm}
                             withoutApply={withoutApply}
+                            customRangeHint={customRangeHint}
                         />
                         {shouldRenderEmptyValuesHandling ? (
                             <EmptyValuesHandlingToggle

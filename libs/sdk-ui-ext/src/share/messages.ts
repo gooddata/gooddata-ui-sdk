@@ -28,6 +28,11 @@ export const objectShareMessages = defineMessages({
      * below an inherited workspace-wide grant, which they could never lower.
      */
     workspaceLevelInherited: { id: "objectShare.workspaceLevel.inherited" },
+    /**
+     * Disabled-action tooltip on a grantee row's Remove access, for a grantee whose
+     * access is inherited only — there is no grant in this workspace to revoke.
+     */
+    granteeRemoveInherited: { id: "objectShare.granteeRemove.inherited" },
     granteeYou: { id: "objectShare.grantee.you" },
     adminTagLabel: { id: "objectShare.adminTag.label" },
     adminTagTooltip: { id: "objectShare.adminTag.tooltip" },

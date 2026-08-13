@@ -1244,6 +1244,7 @@
                             "MSSQL",
                             "PRESTO",
                             "DREMIO",
+                            "DRILL",
                             "AZURESQL",
                             "SYNAPSESQL",
                             "DATABRICKS",

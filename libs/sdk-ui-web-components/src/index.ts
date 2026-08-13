@@ -24,6 +24,7 @@ if (window && typeof w.__GD_ASSET_PATH__ === "string") {
 
 // oxlint-disable-next-line import/no-unassigned-import
 import "./autoAuth.js";
+import { clearCaches } from "./clearCaches.js";
 import { type CustomElementContext, getContext, setContext } from "./context.js";
 import { GenAIAssistant } from "./gen-ai/GenAiAssistant.js";
 import { GenAIConversations } from "./gen-ai/GenAiConversations.js";
@@ -67,4 +68,4 @@ defineCustomElement("gd-ai-provider", GenAiProvider);
 // Expose context accessors in case user wants to configure custom
 //  authentication flow
 export type { CustomElementContext };
-export { getContext, setContext };
+export { getContext, setContext, clearCaches };

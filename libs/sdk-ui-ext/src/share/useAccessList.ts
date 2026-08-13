@@ -31,12 +31,12 @@ import {
     type IRuleEdit,
     assigneeIdentityFacts,
     assigneeMatchesQuery,
-    effectivePermissionAbove,
     granteeId,
     granteesFromAccessList,
     mergeGrantees,
     userDisplayPair,
     userIdentityFacts,
+    withDirectLevel,
 } from "./objectShareController.helpers.js";
 import type {
     IObjectShareControllerState,
@@ -106,6 +106,12 @@ export interface IAccessList {
      * plain level entry would drop the row from the merged view.
      */
     applyGranteeLevel: (id: string, level: ObjectSharePermissionLevel) => void;
+    /**
+     * Lock a row for a write that leaves its access unchanged (a label-scope edit):
+     * adds the pending marker only. Use this rather than re-applying the displayed
+     * level, which would persist the EFFECTIVE level as the row's direct grant.
+     */
+    applyGranteeLock: (id: string) => void;
     /** Overlay a pending removal; the row renders muted until the write settles. */
     applyGranteeRemove: (id: string) => void;
     /** Commit the pending edit for `id` after a successful write. */
@@ -335,14 +341,24 @@ export function useAccessList(target: IObjectPermissionsObject | undefined): IAc
             const settled = current ? { ...current, settled: undefined } : undefined;
             if (current?.kind === "added") {
                 // Overlay-born row: stay an `added` entry, or the merge would drop it.
-                const grantee = {
-                    ...current.grantee,
-                    level,
-                    effectivePermission: effectivePermissionAbove(level, current.grantee.inheritedLevel),
-                };
+                const grantee = withDirectLevel(current.grantee, level);
                 return { ...prev, [id]: { kind: "added", grantee, pending: true, settled } };
             }
             return { ...prev, [id]: { kind: "level", level, pending: true, settled } };
+        });
+    }, []);
+
+    // Lock a row for a write that does NOT change its access (a label-scope edit). The
+    // lock WRAPS whatever the row committed rather than modifying it: reusing the
+    // existing entry and flipping `pending` would re-arm it, and `pending` means
+    // something different per kind — a settled removal would read as a revoke in flight
+    // and render the row as removing at its pre-removal level. Both settling and failing
+    // unwrap back to the entry underneath, because a label write changes neither.
+    const applyGranteeLock = useCallback((id: string) => {
+        setGranteeEdits((prev) => {
+            const current = prev[id];
+            const settled = current ? { ...current, settled: undefined } : undefined;
+            return { ...prev, [id]: { kind: "locked", pending: true, settled } };
         });
     }, []);
 
@@ -359,6 +375,16 @@ export function useAccessList(target: IObjectPermissionsObject | undefined): IAc
             const current = prev[id];
             if (!current) {
                 return prev;
+            }
+            // A lock is a wrapper over the row's committed state, so settling it unwraps —
+            // same as failing. Keeping a settled `locked` entry would discard the entry it
+            // wrapped and drop the row back to its fetched state.
+            if (current.kind === "locked") {
+                if (!current.settled) {
+                    const { [id]: _omit, ...rest } = prev;
+                    return rest;
+                }
+                return { ...prev, [id]: current.settled };
             }
             // A settled removal always keeps its entry: for a base row (including a
             // removed re-added one) it is what keeps the row hidden; for an
@@ -415,6 +441,7 @@ export function useAccessList(target: IObjectPermissionsObject | undefined): IAc
         loadOptions,
         applyGranteeAdd,
         applyGranteeLevel,
+        applyGranteeLock,
         applyGranteeRemove,
         settleGranteeEdit,
         failGranteeEdit,

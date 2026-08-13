@@ -209,6 +209,7 @@ import { ParameterValue } from '@gooddata/sdk-model';
 import { Patch } from 'immer';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { PlatformEdition } from '@gooddata/sdk-model';
+import { Provider } from 'react';
 import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
@@ -288,6 +289,14 @@ export function addVisualizationToSwitcherWidgetContent(ref: ObjRef, visualizati
 
 // @internal
 export function AlertingDialog(props: IAlertingDialogProps): ReactElement;
+
+// @alpha
+export const AlertingDialogContextProvider: Provider<IAlertingDialogContextValue | undefined>;
+
+// @alpha
+export function AlertingDialogStateProvider(input: {
+    children: ReactNode;
+}): JSX.Element;
 
 // @internal (undocumented)
 export type AlertingDisabledReason = "noDestinations" | "oldWidget" | "disabledOnInsight";
@@ -2037,7 +2046,13 @@ export function getDrillDownTitle(drillDefinition: IDrillDownDefinition, drillEv
 export function getFilterIdentifier(filter: FilterContextItem): string;
 
 // @internal (undocumented)
-export function getKdaKeyDriverCombinations(drillDefinition: IKeyDriveAnalysis, drillEvent: IDrillEvent): IDashboardKeyDriverCombinationItem[];
+export function getKdaKeyDriverCombinations(drillDefinition: IKeyDriveAnalysis, drillEvent: IDrillEvent, enableSecondGranularities?: boolean): IDashboardKeyDriverCombinationItem[];
+
+// @internal
+export function getKeyDriverAnalysisSupportedGranularities(enableSecondGranularities?: boolean): DateAttributeGranularity[];
+
+// @internal
+export function getKeyDriverAnalysisSupportedStringGranularities(enableSecondGranularities?: boolean): string[];
 
 // @internal (undocumented)
 export function getKeyDriverCombinationItemTitle(intl: IntlShape, item: IDashboardKeyDriverCombinationItem): string;
@@ -2360,6 +2375,7 @@ export interface IAlertingDialogContextValue {
 export interface IAlertingDialogProps {
     // @deprecated
     alertToEdit?: IAutomationMetadataObject;
+    bottomContent?: ReactNode;
     // @deprecated
     insight?: IInsight;
     // @deprecated
@@ -2373,6 +2389,7 @@ export interface IAlertingDialogProps {
     onSaveError?: (error: GoodDataSdkError) => void;
     onSaveSuccess?: (alert: IAutomationMetadataObject) => void;
     onSuccess?: (alertDefinition: IAutomationMetadataObject) => void;
+    topContent?: ReactNode;
     // @deprecated
     widget?: IWidget;
 }
@@ -3689,6 +3706,8 @@ export interface IDashboardDateFilterProps {
     // @alpha
     ButtonComponent?: ComponentType<IDateFilterButtonProps>;
     config: IDashboardDateFilterConfig;
+    // @alpha
+    customRangeHint?: ReactNode;
     filter: IDashboardDateFilter | undefined;
     isDraggable?: boolean;
     onFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string, isWorkingSelectionChange?: boolean) => void;
@@ -7882,6 +7901,7 @@ export interface IScheduledEmailDialogContextValue {
 
 // @alpha (undocumented)
 export interface IScheduledEmailDialogProps {
+    bottomContent?: ReactNode;
     // @deprecated
     dashboardFilters?: FilterContextItem[];
     // @deprecated
@@ -7902,6 +7922,7 @@ export interface IScheduledEmailDialogProps {
     onSuccess?: (scheduledEmailDefinition: IAutomationMetadataObject) => void;
     // @deprecated
     scheduledExportToEdit?: IAutomationMetadataObject;
+    topContent?: ReactNode;
     // @deprecated
     widget?: IWidget;
     // @deprecated
@@ -9693,15 +9714,6 @@ export type KeyboardNavigationConfig = {
 export function keyDriverAnalysis(drillDefinition: IKeyDriveAnalysis, drillEvent: IDashboardDrillEvent, filters: FilterContextItem[], keyDriveItem: IDashboardKeyDriverCombinationItem, correlationId?: string): IKeyDriverAnalysis;
 
 // @internal (undocumented)
-export const keyDriverAnalysisSupportedGranularities: DateAttributeGranularity[];
-
-// @internal (undocumented)
-export const keyDriverAnalysisSupportedStringGranularities: string[];
-
-// @internal (undocumented)
-export const keyDriverYearGranularity: string[];
-
-// @internal (undocumented)
 export const KPI_PLACEHOLDER_WIDGET_ID = "__kpiPlaceholder__";
 
 // @beta (undocumented)
@@ -10543,8 +10555,11 @@ export type SavingState = {
     error?: Error;
 };
 
-// @internal (undocumented)
+// @internal
 export function ScheduledEmailDialog(props: IScheduledEmailDialogProps): ReactElement;
+
+// @alpha
+export const ScheduledEmailDialogContextProvider: Provider<IScheduledEmailDialogContextValue | undefined>;
 
 // @internal (undocumented)
 export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementDialogProps): ReactElement;
@@ -11167,6 +11182,9 @@ export const selectEnableParameters: DashboardSelector<boolean>;
 
 // @alpha
 export const selectEnableRichTextWidgetFilterConfiguration: DashboardSelector<boolean>;
+
+// @alpha
+export const selectEnableSecondGranularities: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectEnableSlideshowExports: DashboardSelector<boolean>;

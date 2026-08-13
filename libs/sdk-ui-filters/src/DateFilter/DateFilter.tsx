@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type ComponentType, PureComponent } from "react";
+import { type ComponentType, PureComponent, type ReactNode } from "react";
 
 import { isEmpty, isEqual } from "lodash-es";
 
@@ -154,6 +154,19 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
      * @alpha
      */
     activeCalendars?: IActiveCalendars;
+
+    /**
+     * Custom content rendered at the end of the hint area of the static period (absolute range) form,
+     * after the default date/time format hints.
+     *
+     * @remarks
+     * Use this to surface an application-specific note about the selected range (e.g. that the whole
+     * period is always applied). The content is appended after the built-in hints, so their
+     * accessibility wiring (`aria-describedby` of the range inputs) is preserved.
+     *
+     * @alpha
+     */
+    customRangeHint?: ReactNode;
 }
 
 /**
@@ -331,6 +344,7 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
             overlayPositionType,
             activeCalendars,
             enableEmptyDateValues,
+            customRangeHint,
         } = this.props;
         const { excludeCurrentPeriod, selectedFilterOption, isExcludeCurrentPeriodEnabled } = this.state;
         return dateFilterMode === "hidden" ? null : (
@@ -366,6 +380,7 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
                 overlayPositionType={overlayPositionType}
                 activeCalendars={activeCalendars}
                 enableEmptyDateValues={enableEmptyDateValues}
+                customRangeHint={customRangeHint}
             />
         );
     }

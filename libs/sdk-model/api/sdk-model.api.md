@@ -33,6 +33,13 @@ export type AlertFilters = {
 };
 
 // @public
+export type AlertParameter = {
+    id: string;
+    title?: string;
+    value: string;
+};
+
+// @public
 export type AllTimeGranularity = "ALL_TIME_GRANULARITY";
 
 // @public
@@ -483,7 +490,7 @@ export const DataSourceAccessSourceValue: {
 };
 
 // @alpha (undocumented)
-export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "CRATEDB" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "DENODO" | "STARROCKS" | "ATHENA" | "SINGLESTORE" | "MOTHERDUCK" | "MONGODB" | "FLEXCONNECT" | "AILAKEHOUSE";
+export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "CRATEDB" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "DENODO" | "STARROCKS" | "ATHENA" | "SINGLESTORE" | "MOTHERDUCK" | "MONGODB" | "FLEXCONNECT" | "AILAKEHOUSE" | "DRILL";
 
 // @public
 export type DataValue = null | string | number;
@@ -872,6 +879,12 @@ export const getHierarchyRef: (hierarchy: ICatalogAttributeHierarchy | ICatalogD
 
 // @internal (undocumented)
 export const getHierarchyTitle: (hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => string;
+
+// @internal
+export function getKdaSupportedGranularities(enableSecondGranularities?: boolean): DateAttributeGranularity[];
+
+// @internal
+export function getKdaSupportedStringGranularities(enableSecondGranularities?: boolean): string[];
 
 // @alpha
 export function getParameterAllowedValueTitle(allowedValue: IParameterAllowedValue): string;
@@ -2776,6 +2789,7 @@ export interface IFeatureFlags {
     enableAnomalyDetectionAlert?: boolean;
     enableAnomalyDetectionVisualization?: boolean;
     enableAutomationTrigger?: boolean;
+    enableCacheRetentionPolicy?: boolean;
     enableCatalogSmartSearchResults?: boolean;
     enableCatalogTrendingObjects?: boolean;
     enableCertification?: boolean;
@@ -3209,6 +3223,7 @@ export interface IGranularityDescriptor {
     counterpart?: DateAttributeGranularity;
     family: GranularityFamily;
     granularity: DateAttributeGranularity;
+    headerTokens: readonly string[];
     offeredByDefault: boolean;
     order: number;
     timeScale: boolean;
@@ -5610,6 +5625,9 @@ export function isWidgetDefinition(obj: unknown): obj is IWidgetDefinition;
 // @alpha
 export function isWidgetWithFilterSettings(widget: unknown): widget is IWidget;
 
+// @internal
+export function isYearGranularity(value: string | undefined): boolean;
+
 // @public
 export type ItemInDimension = {
     dim: IDimension;
@@ -6231,6 +6249,7 @@ export interface IWebhookMessageDataBase {
     details?: IAutomationDetails;
     filters?: AlertFilters[];
     imageExports?: IExportResult[];
+    parameters?: AlertParameter[];
     rawExports?: IExportResult[];
     recipients?: WebhookRecipient[];
     remainingActionCount?: number;
@@ -6396,6 +6415,14 @@ export interface IWorkspaceUserGroup {
     name?: string;
     ref: ObjRef;
 }
+
+// @internal
+export const KDA_GRANULARITY_SUPPORT: Record<DateAttributeGranularity, KdaGranularitySupport>;
+
+// @internal
+export type KdaGranularitySupport = boolean | {
+    featureFlag: "enableSecondGranularities";
+};
 
 // @public
 export type KpiDrillDefinition = IDrillToLegacyDashboard;

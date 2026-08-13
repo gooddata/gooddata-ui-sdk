@@ -35,7 +35,7 @@ export interface AutomationAFM {
     /**
      * Various filter types to filter the execution result.
      */
-    'filters': Array<AutomationAFMFiltersInner>;
+    'filters': Array<AutomationFilterDefinition>;
     /**
      * (EXPERIMENTAL) Override definitions of catalog metrics for this request. Allows substituting a catalog metric\'s MAQL definition without modifying the stored definition.
      */
@@ -49,11 +49,6 @@ export interface AutomationAFM {
      */
     'parameters'?: Array<AutomationParameterItem>;
 }
-
-/**
- * @type AutomationAFMFiltersInner
- */
-export type AutomationAFMFiltersInner = AutomationAbstractMeasureValueFilter | AutomationFilterDefinitionForSimpleMeasure | AutomationInlineFilterDefinition;
 
 /**
  * A datetime filter specifying exact from and to values.
@@ -427,7 +422,7 @@ export interface AutomationAttributeItem {
 }
 
 export interface AutomationAutomationAlert {
-    'condition': AutomationAutomationAlertCondition;
+    'condition': AutomationAlertCondition;
     'execution': AutomationAlertAfm;
     /**
      * Date granularity for the interval of ONCE_PER_INTERVAL trigger. Supported granularities: DAY, WEEK, MONTH, QUARTER, YEAR.
@@ -441,11 +436,6 @@ export interface AutomationAutomationAlert {
 
 export type AutomationAutomationAlertIntervalEnum = 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR';
 export type AutomationAutomationAlertTriggerEnum = 'ALWAYS' | 'ONCE' | 'ONCE_PER_INTERVAL';
-
-/**
- * @type AutomationAutomationAlertCondition
- */
-export type AutomationAutomationAlertCondition = AutomationAnomalyDetectionWrapper | AutomationComparisonWrapper | AutomationRangeWrapper | AutomationRelativeWrapper;
 
 export interface AutomationAutomationDashboardTabularExport {
     'requestPayload': AutomationDashboardTabularExportRequestV2;
@@ -473,8 +463,11 @@ export interface AutomationAutomationMetadata {
 }
 
 export interface AutomationAutomationNotification extends AutomationNotificationContent {
+    'type': AutomationAutomationNotificationTypeEnum;
     'content': AutomationWebhookMessage;
 }
+
+export type AutomationAutomationNotificationTypeEnum = 'AUTOMATION';
 
 export interface AutomationAutomationRawExport {
     'requestPayload': AutomationRawExportAutomationRequest;
@@ -575,7 +568,7 @@ export interface AutomationCompoundMeasureValueFilterCompoundMeasureValueFilter 
     /**
      * List of conditions to apply. Conditions are combined with OR logic. Each condition can be either a comparison (e.g., > 100) or a range (e.g., BETWEEN 10 AND 50). If empty, no filtering is applied and all rows are returned.
      */
-    'conditions': Array<AutomationMeasureValueCondition>;
+    'conditions'?: Array<AutomationMeasureValueCondition>;
     /**
      * References to the attributes to be used when filtering.
      */
@@ -770,7 +763,7 @@ export interface AutomationDashboardMeasureValueFilter {
 }
 
 export interface AutomationDashboardMeasureValueFilterDashboardMeasureValueFilter {
-    'conditions': Array<AutomationDashboardCompoundConditionItem>;
+    'conditions'?: Array<AutomationDashboardCompoundConditionItem>;
     'dimensionality'?: Array<AutomationIdentifierRef>;
     'localIdentifier'?: string;
     'measure': AutomationIdentifierRef;
@@ -801,6 +794,7 @@ export interface AutomationDashboardTabularExportRequestV2 {
      * Map of tab-specific parameter overrides. Key is tabId, value is a list of (id, value, title) entries that override the dashboard-level parameters for that tab only. Mirrors dashboardTabsFiltersOverrides. When a tab is present in this map, its entries take precedence over dashboardParametersOverride for that tab\'s executions and info-sheet display.
      */
     'dashboardTabsParametersOverrides'?: { [key: string]: Array<AutomationParameterValue>; };
+    'executionSettings'?: AutomationExecutionSettings;
     /**
      * Filename of downloaded file without extension.
      */
@@ -942,7 +936,7 @@ export type AutomationFilterDefinition = AutomationAbsoluteDateFilter | Automati
 export type AutomationFilterDefinitionForSimpleMeasure = AutomationAttributeFilter | AutomationDateFilter;
 
 export interface AutomationIdentifierRef {
-    'identifier'?: AutomationIdentifierRefIdentifier;
+    'identifier': AutomationIdentifierRefIdentifier;
 }
 
 export interface AutomationIdentifierRefIdentifier {
@@ -972,6 +966,10 @@ export interface AutomationImageExportRequest {
      * Metadata definition in free-form JSON format.
      */
     'metadata'?: object | null;
+    /**
+     * Time zone the export should be rendered in, as an IANA identifier (e.g. \'Asia/Kolkata\') or a GMT offset (e.g. \'GMT+01:00\'). When omitted, the workspace time zone setting is used.
+     */
+    'timezoneId'?: string | null;
     /**
      * List of widget identifiers to be exported. Note that only one widget is currently supported.
      */
@@ -1078,17 +1076,12 @@ export type AutomationMeasureDefinition = AutomationArithmeticMeasureDefinition 
  * Metric is a quantity that is calculated from the data.
  */
 export interface AutomationMeasureItem {
-    'definition': AutomationMeasureItemDefinition;
+    'definition': AutomationMeasureDefinition;
     /**
      * Local identifier of the metric. This can be used to reference the metric in other parts of the execution definition.
      */
     'localIdentifier': string;
 }
-
-/**
- * @type AutomationMeasureItemDefinition
- */
-export type AutomationMeasureItemDefinition = AutomationArithmeticMeasureDefinition | AutomationInlineMeasureDefinition | AutomationPopDatasetMeasureDefinition | AutomationPopDateMeasureDefinition | AutomationPopMeasureDefinition | AutomationSimpleMeasureDefinition;
 
 /**
  * @type AutomationMeasureValueCondition
@@ -1159,6 +1152,12 @@ export type AutomationNotificationData = AutomationAutomationNotification | Auto
 export interface AutomationNotificationFilter {
     'filter': string;
     'title': string;
+}
+
+export interface AutomationNotificationParameter {
+    'id': string;
+    'title'?: string;
+    'value': string;
 }
 
 export interface AutomationNotifications {
@@ -1629,6 +1628,10 @@ export interface AutomationSlidesExportRequest {
      */
     'templateId'?: string | null;
     /**
+     * Time zone the export should be rendered in, as an IANA identifier (e.g. \'Asia/Kolkata\') or a GMT offset (e.g. \'GMT+01:00\'). When omitted, the workspace time zone setting is used.
+     */
+    'timezoneId'?: string | null;
+    /**
      * List of visualization ids to be exported. Note that only one visualization is currently supported.
      */
     'visualizationIds'?: Array<string>;
@@ -1701,6 +1704,7 @@ export interface AutomationTabularExportRequest {
      * Execution result identifier.
      */
     'executionResult'?: string;
+    'executionSettings'?: AutomationExecutionSettings;
     /**
      * Pre-executed layers for multi-layer geo visualizations. When provided, this is the canonical source of the exported layers and takes precedence over the top-level executionResult and customOverride, which are ignored. Index 0 is the main layer; each layer carries its own executionResult and customOverride.
      */
@@ -1742,21 +1746,19 @@ export type AutomationTabularExportRequestFormatEnum = 'CSV' | 'XLSX' | 'HTML' |
  * Request body with notification channel destination to test.
  */
 export interface AutomationTestDestinationRequest {
-    'destination': AutomationTestDestinationRequestDestination;
+    'destination': AutomationNotificationChannelDestination;
     /**
      * External recipients of the test result.
      */
     'externalRecipients'?: Array<AutomationAutomationExternalRecipient> | null;
 }
 
-/**
- * @type AutomationTestDestinationRequestDestination
- */
-export type AutomationTestDestinationRequestDestination = AutomationDefaultSmtp | AutomationInPlatform | AutomationSmtp | AutomationWebhook;
-
 export interface AutomationTestNotification extends AutomationNotificationContent {
+    'type': AutomationTestNotificationTypeEnum;
     'message': string;
 }
+
+export type AutomationTestNotificationTypeEnum = 'TEST';
 
 /**
  * Response from notification channel testing.
@@ -1808,6 +1810,10 @@ export interface AutomationVisualExportRequest {
      * Metadata definition in free-form JSON format.
      */
     'metadata'?: object;
+    /**
+     * Time zone the export should be rendered in, as an IANA identifier (e.g. \'Asia/Kolkata\') or a GMT offset (e.g. \'GMT+01:00\'). When omitted, the workspace time zone setting is used.
+     */
+    'timezoneId'?: string | null;
 }
 
 /**
@@ -1866,6 +1872,7 @@ export interface AutomationWebhookMessageData {
     'filters'?: Array<AutomationNotificationFilter>;
     'imageExports'?: Array<AutomationExportResult>;
     'notificationSource'?: string;
+    'parameters'?: Array<AutomationNotificationParameter>;
     'rawExports'?: Array<AutomationExportResult>;
     'recipients'?: Array<AutomationWebhookRecipient>;
     'remainingActionCount'?: number;

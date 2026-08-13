@@ -20,7 +20,7 @@ import {
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 
-import type { IAutomationFiltersTab } from "../../../../../../model/store/filtering/types.js";
+import type { IAutomationFiltersTab } from "../../../../../model/store/filtering/types.js";
 
 // ---------------------------------------------------------------------------
 // Mocks — vi.mock calls are hoisted; factories must not reference top-level
@@ -32,30 +32,30 @@ const { mockUseScheduledEmailDialogContext } = vi.hoisted(() => ({
     mockUseScheduledEmailDialogContext: vi.fn(),
 }));
 
-vi.mock("../../../../contexts/ScheduledEmailDialogContext.js", () => ({
+vi.mock("../../../contexts/ScheduledEmailDialogContext.js", () => ({
     useScheduledEmailDialogContext: mockUseScheduledEmailDialogContext,
 }));
 
-vi.mock("../../../../shared/filters/index.js", () => ({
+vi.mock("../../../shared/filters/index.js", () => ({
     getAppliedDashboardFilters: vi.fn(),
     getAppliedWidgetFilters: vi.fn(),
     getVisibleFiltersByFilters: vi.fn(),
     getVisibleFiltersByFiltersByTab: vi.fn(),
 }));
 
-vi.mock("../../../../shared/automationFilters/useAutomationFiltersSelect.js", () => ({
+vi.mock("../../../shared/automationFilters/useAutomationFiltersSelect.js", () => ({
     getDefaultSelectedFiltersFromFiltersByTab: vi.fn(),
 }));
 
 // `useValidateExistingAutomationFilters` and `useAutomationExportParameters` are the two
-// store-backed hooks `useScheduledEmailFilters` now calls directly. Both reach into the dashboard
+// store-backed hooks `useScheduledEmailFiltersModel` now calls directly. Both reach into the dashboard
 // Redux store via `useDashboardSelector`, which has no provider in this unit test, so they are
 // mocked the same way alerting's `useAlertFiltersModel.test.tsx` mocks the first of the two.
-vi.mock("../../../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js", () => ({
+vi.mock("../../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js", () => ({
     useValidateExistingAutomationFilters: vi.fn(),
 }));
 
-vi.mock("../../../../shared/automationFilters/useAutomationExportParameters.js", () => ({
+vi.mock("../../../shared/automationFilters/useAutomationExportParameters.js", () => ({
     useAutomationExportParameters: vi.fn(),
 }));
 
@@ -63,19 +63,19 @@ vi.mock("../../../../shared/automationFilters/useAutomationExportParameters.js",
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
 // ---------------------------------------------------------------------------
 
-import * as validateExistingAutomationFiltersModule from "../../../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
-import * as automationExportParametersModule from "../../../../shared/automationFilters/useAutomationExportParameters.js";
-import { getDefaultSelectedFiltersFromFiltersByTab } from "../../../../shared/automationFilters/useAutomationFiltersSelect.js";
+import * as validateExistingAutomationFiltersModule from "../../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
+import * as automationExportParametersModule from "../../../shared/automationFilters/useAutomationExportParameters.js";
+import { getDefaultSelectedFiltersFromFiltersByTab } from "../../../shared/automationFilters/useAutomationFiltersSelect.js";
 import {
     getAppliedDashboardFilters,
     getAppliedWidgetFilters,
     getVisibleFiltersByFilters,
     getVisibleFiltersByFiltersByTab,
-} from "../../../../shared/filters/index.js";
+} from "../../../shared/filters/index.js";
 import {
-    type IUseScheduledEmailFiltersProps,
-    useScheduledEmailFilters,
-} from "../useScheduledEmailFilters.js";
+    type IUseScheduledEmailFiltersModelProps,
+    useScheduledEmailFiltersModel,
+} from "../useScheduledEmailFiltersModel.js";
 
 // ---------------------------------------------------------------------------
 // Typed spy references (resolved after import)
@@ -281,7 +281,7 @@ const SENTINEL_PARAMETERS_RESULT = {
     onStoreParametersChange: vi.fn(),
 };
 
-const BASE_PROPS: IUseScheduledEmailFiltersProps = {
+const BASE_PROPS: IUseScheduledEmailFiltersModelProps = {
     setEditedAutomation: vi.fn(),
     scheduledExportToEdit: undefined,
     widget: undefined,
@@ -326,13 +326,13 @@ beforeEach(() => {
 // Helper
 // ---------------------------------------------------------------------------
 
-function renderFiltersHook(overrides: Partial<IUseScheduledEmailFiltersProps> = {}) {
+function renderFiltersHook(overrides: Partial<IUseScheduledEmailFiltersModelProps> = {}) {
     const setEditedAutomation = vi.fn<Dispatch<SetStateAction<IAutomationMetadataObjectDefinition>>>();
     const setEditedAutomationFilters = vi.fn<(filters: FilterContextItem[]) => void>();
     const setEditedAutomationFiltersByTab = vi.fn<(filters: Record<string, FilterContextItem[]>) => void>();
     const setStoreFilters = vi.fn<(storeFilters: boolean) => void>();
 
-    const props: IUseScheduledEmailFiltersProps = {
+    const props: IUseScheduledEmailFiltersModelProps = {
         ...BASE_PROPS,
         setEditedAutomation,
         setEditedAutomationFilters,
@@ -341,7 +341,7 @@ function renderFiltersHook(overrides: Partial<IUseScheduledEmailFiltersProps> = 
         ...overrides,
     };
     const { result, rerender } = renderHook(
-        (p: IUseScheduledEmailFiltersProps) => useScheduledEmailFilters(p),
+        (p: IUseScheduledEmailFiltersModelProps) => useScheduledEmailFiltersModel(p),
         {
             initialProps: props,
         },
@@ -361,7 +361,7 @@ function renderFiltersHook(overrides: Partial<IUseScheduledEmailFiltersProps> = 
 // Case 1: onFiltersChange — widget guard
 // ---------------------------------------------------------------------------
 
-describe("useScheduledEmailFilters — onFiltersChange widget guard", () => {
+describe("useScheduledEmailFiltersModel — onFiltersChange widget guard", () => {
     it("returns early without calling setEditedAutomation when isWidget is true but widget is not an insight widget", () => {
         const { result, setEditedAutomation, setEditedAutomationFilters } = renderFiltersHook({
             widget: nonInsightWidget,
@@ -381,7 +381,7 @@ describe("useScheduledEmailFilters — onFiltersChange widget guard", () => {
 // Case 2: onFiltersChange — widget branch format routing
 // ---------------------------------------------------------------------------
 
-describe("useScheduledEmailFilters — onFiltersChange widget branch format routing", () => {
+describe("useScheduledEmailFiltersModel — onFiltersChange widget branch format routing", () => {
     it("routes CSV to widget filters with insight, CSV_RAW to widget filters without insight, and any other format to applied dashboard filters", () => {
         const { result, setEditedAutomation } = renderFiltersHook({ widget, insight });
 
@@ -413,7 +413,7 @@ describe("useScheduledEmailFilters — onFiltersChange widget branch format rout
 // Case 3: onFiltersChange — non-matching payload shapes pass through untouched
 // ---------------------------------------------------------------------------
 
-describe("useScheduledEmailFilters — onFiltersChange passthrough for non-matching payload shapes", () => {
+describe("useScheduledEmailFiltersModel — onFiltersChange passthrough for non-matching payload shapes", () => {
     it("widget branch: leaves a non-visualizationObject export definition untouched", () => {
         const { result, setEditedAutomation } = renderFiltersHook({ widget, insight });
         const dashboardDef = makeDashboardExportDefinition("PDF");
@@ -445,7 +445,7 @@ describe("useScheduledEmailFilters — onFiltersChange passthrough for non-match
 // Case 4: onFiltersChange — storeFiltersParam override (dashboard branch)
 // ---------------------------------------------------------------------------
 
-describe("useScheduledEmailFilters — onFiltersChange storeFiltersParam override (dashboard branch)", () => {
+describe("useScheduledEmailFiltersModel — onFiltersChange storeFiltersParam override (dashboard branch)", () => {
     it("an explicit false overrides a truthy storeFilters prop", () => {
         const { result, setEditedAutomation } = renderFiltersHook({
             widget: undefined,
@@ -475,7 +475,7 @@ describe("useScheduledEmailFilters — onFiltersChange storeFiltersParam overrid
 // Case 5: onFiltersByTabChange
 // ---------------------------------------------------------------------------
 
-describe("useScheduledEmailFilters — onFiltersByTabChange", () => {
+describe("useScheduledEmailFiltersModel — onFiltersByTabChange", () => {
     it("shouldStoreFilters=false sets filtersByTab to undefined and computes visibleFiltersByTab with false", () => {
         const { result, setEditedAutomation, setEditedAutomationFiltersByTab } = renderFiltersHook({
             storeFilters: true,
@@ -534,7 +534,7 @@ describe("useScheduledEmailFilters — onFiltersByTabChange", () => {
 // Case 6: onApplyCurrentFilters routing
 // ---------------------------------------------------------------------------
 
-describe("useScheduledEmailFilters — onApplyCurrentFilters routing", () => {
+describe("useScheduledEmailFiltersModel — onApplyCurrentFilters routing", () => {
     it("widget present: never routes per-tab; applies the new automation's filters via onFiltersChange", () => {
         const filtersForNewAutomation = [fakeFilterContextItem("new-1")];
         const { result, setEditedAutomation, setEditedAutomationFilters, setEditedAutomationFiltersByTab } =
@@ -615,7 +615,7 @@ describe("useScheduledEmailFilters — onApplyCurrentFilters routing", () => {
 // Case 7: onStoreFiltersChange fan-out
 // ---------------------------------------------------------------------------
 
-describe("useScheduledEmailFilters — onStoreFiltersChange fan-out", () => {
+describe("useScheduledEmailFiltersModel — onStoreFiltersChange fan-out", () => {
     it("calls setStoreFilters and fires both handlers — filtersByTab first — when both are supplied", () => {
         const { result, setStoreFilters, setEditedAutomationFiltersByTab, setEditedAutomationFilters } =
             renderFiltersHook({});
@@ -693,7 +693,7 @@ describe("useScheduledEmailFilters — onStoreFiltersChange fan-out", () => {
 // Case 8: rerender / stale-closure guard
 // ---------------------------------------------------------------------------
 
-describe("useScheduledEmailFilters — rerender / stale-closure guard", () => {
+describe("useScheduledEmailFiltersModel — rerender / stale-closure guard", () => {
     it("onFiltersChange picks up a changed storeFilters prop across a rerender", () => {
         const { result, rerender, props, setEditedAutomation } = renderFiltersHook({
             widget: undefined,
@@ -725,9 +725,9 @@ describe("useScheduledEmailFilters — rerender / stale-closure guard", () => {
 // Case 9: model shape
 // ---------------------------------------------------------------------------
 
-describe("useScheduledEmailFilters — model shape", () => {
+describe("useScheduledEmailFiltersModel — model shape", () => {
     it("exposes the filter model and leaks no other representation", () => {
-        const { result } = renderHook(() => useScheduledEmailFilters(BASE_PROPS));
+        const { result } = renderHook(() => useScheduledEmailFiltersModel(BASE_PROPS));
 
         const keys = Object.keys(result.current);
         expect(keys).toContain("selectedFilters");
@@ -765,5 +765,40 @@ describe("useScheduledEmailFilters — model shape", () => {
                 "onStoreParametersChange",
             ].sort(),
         );
+    });
+});
+
+// ---------------------------------------------------------------------------
+// Object identity — the whole return is the filter context's value, so consumers observe it
+// ---------------------------------------------------------------------------
+
+describe("useScheduledEmailFiltersModel — return identity", () => {
+    it("returns the same object across a rerender that changes no input", () => {
+        const { result, rerender, props } = renderFiltersHook();
+        const first = result.current;
+
+        rerender(props);
+
+        expect(result.current).toBe(first);
+    });
+
+    it("returns a new object when the selection changes, so the change still propagates", () => {
+        const { result, rerender, props } = renderFiltersHook();
+        const first = result.current;
+
+        rerender({ ...props, editedAutomationFilters: [fakeFilterContextItem("changed")] });
+
+        expect(result.current).not.toBe(first);
+        expect(result.current.selectedFilters).toHaveLength(1);
+    });
+
+    it("returns a new object when the store-filters toggle changes", () => {
+        const { result, rerender, props } = renderFiltersHook({ storeFilters: false });
+        const first = result.current;
+
+        rerender({ ...props, storeFilters: true });
+
+        expect(result.current).not.toBe(first);
+        expect(result.current.storeFilters).toBe(true);
     });
 });

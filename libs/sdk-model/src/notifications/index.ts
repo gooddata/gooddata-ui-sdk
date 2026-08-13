@@ -1,4 +1,5 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { type IAutomationDetails } from "../automations/index.js";
@@ -181,6 +182,11 @@ export interface IWebhookMessageDataBase {
      * Visible filters applied to the alert.
      */
     filters?: AlertFilters[];
+
+    /**
+     * Visible parameters applied to the alert.
+     */
+    parameters?: AlertParameter[];
 
     /**
      * Automation details.
@@ -421,6 +427,28 @@ export type AlertFilters = {
      * Filter values.
      */
     filter: string;
+};
+
+/**
+ * Visible parameters applied.
+ *
+ * @public
+ */
+export type AlertParameter = {
+    /**
+     * Parameter identifier.
+     */
+    id: string;
+
+    /**
+     * Parameter name.
+     */
+    title?: string;
+
+    /**
+     * Parameter value.
+     */
+    value: string;
 };
 
 /**

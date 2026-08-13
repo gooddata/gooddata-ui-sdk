@@ -14,7 +14,7 @@ import {
     insightProperties,
 } from "@gooddata/sdk-model";
 
-import { setExportParametersByTab } from "../../../../../_staging/automation/index.js";
+import { setExportParametersByTab } from "../../../../_staging/automation/index.js";
 
 /**
  * Rebuilds the export definitions and re-applies the parameter wire (fresh definitions carry no

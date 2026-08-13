@@ -222,6 +222,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableCacheRetentionPolicy,
+            "enableCacheRetentionPolicy",
+            "BOOLEAN",
+            FeatureFlagsValues.enableCacheRetentionPolicy,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableOidcAuth,
             "enableOidcAuth",
             "BOOLEAN",

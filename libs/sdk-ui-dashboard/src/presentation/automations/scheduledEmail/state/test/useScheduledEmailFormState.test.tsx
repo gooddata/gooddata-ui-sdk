@@ -28,15 +28,15 @@ const { mockUseAutomationsContext, mockUseScheduledEmailDialogContext } = vi.hoi
     mockUseScheduledEmailDialogContext: vi.fn(),
 }));
 
-vi.mock("../../../../contexts/AutomationsContext.js", () => ({
+vi.mock("../../../contexts/AutomationsContext.js", () => ({
     useAutomationsContext: mockUseAutomationsContext,
 }));
 
-vi.mock("../../../../contexts/ScheduledEmailDialogContext.js", () => ({
+vi.mock("../../../contexts/ScheduledEmailDialogContext.js", () => ({
     useScheduledEmailDialogContext: mockUseScheduledEmailDialogContext,
 }));
 
-vi.mock("../../../utils/date.js", async (importOriginal: () => Promise<Record<string, unknown>>) => {
+vi.mock("../../utils/date.js", async (importOriginal: () => Promise<Record<string, unknown>>) => {
     const actual = await importOriginal();
     return {
         ...actual,
@@ -46,7 +46,7 @@ vi.mock("../../../utils/date.js", async (importOriginal: () => Promise<Record<st
 });
 
 vi.mock(
-    "../../../../shared/utils/automationUtils.js",
+    "../../../shared/utils/automationUtils.js",
     async (importOriginal: () => Promise<Record<string, unknown>>) => {
         const actual = await importOriginal();
         return {
@@ -57,12 +57,12 @@ vi.mock(
     },
 );
 
-vi.mock("../../utils/exportDefinitions.js", () => ({
+vi.mock("../exportDefinitions.js", () => ({
     newDashboardExportDefinitionMetadataObjectDefinition: vi.fn(),
     newWidgetExportDefinitionMetadataObjectDefinition: vi.fn(),
 }));
 
-vi.mock("../../../../../../_staging/automation/index.js", () => ({
+vi.mock("../../../../../_staging/automation/index.js", () => ({
     setExportParametersByTab: vi.fn(),
 }));
 
@@ -70,16 +70,16 @@ vi.mock("../../../../../../_staging/automation/index.js", () => ({
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
 // ---------------------------------------------------------------------------
 
-import { setExportParametersByTab } from "../../../../../../_staging/automation/index.js";
+import { setExportParametersByTab } from "../../../../../_staging/automation/index.js";
 import {
     convertExternalRecipientToAutomationRecipient,
     convertUserToAutomationRecipient,
-} from "../../../../shared/utils/automationUtils.js";
-import * as dateModule from "../../../utils/date.js";
+} from "../../../shared/utils/automationUtils.js";
+import * as dateModule from "../../utils/date.js";
 import {
     newDashboardExportDefinitionMetadataObjectDefinition,
     newWidgetExportDefinitionMetadataObjectDefinition,
-} from "../../utils/exportDefinitions.js";
+} from "../exportDefinitions.js";
 import {
     useScheduledEmailFormState,
     type IUseScheduledEmailFormStateProps,
@@ -809,5 +809,73 @@ describe("useScheduledEmailFormState — defaults", () => {
 
         expect(newWidgetExportDefinitionMetadataObjectDefinitionSpy).not.toHaveBeenCalled();
         expect(newDashboardExportDefinitionMetadataObjectDefinitionSpy).toHaveBeenCalled();
+    });
+});
+
+// ---------------------------------------------------------------------------
+// Referential stability
+// ---------------------------------------------------------------------------
+
+describe("useScheduledEmailFormState — referential stability", () => {
+    beforeEach(() => {
+        // A fresh object per call, as the real converters return. The shared sentinel the other
+        // cases use would make the identity assertions below hold with no memoization at all.
+        convertUserToAutomationRecipientSpy.mockImplementation(() => ({ ...SENTINEL_CONVERTED_RECIPIENT }));
+        convertExternalRecipientToAutomationRecipientSpy.mockImplementation(() => ({
+            ...SENTINEL_EXTERNAL_RECIPIENT,
+        }));
+    });
+
+    it("keeps defaultUser and defaultRecipient identical across a rerender", () => {
+        const { result, rerender } = renderFormStateHook();
+        const firstUser = result.current.defaultUser;
+        const firstRecipient = result.current.defaultRecipient;
+
+        rerender();
+
+        expect(result.current.defaultUser).toBe(firstUser);
+        expect(result.current.defaultRecipient).toBe(firstRecipient);
+    });
+
+    it("keeps defaultRecipient distinct from defaultUser under an external recipient override", () => {
+        const { result } = renderFormStateHook({ externalRecipientOverride: "ext@example.com" });
+
+        expect(result.current.defaultRecipient).not.toBe(result.current.defaultUser);
+        expect(result.current.defaultRecipient.type).toBe("externalUser");
+    });
+
+    it("keeps every draft mutator identical across a rerender", () => {
+        const { result, rerender } = renderFormStateHook();
+        const before = {
+            onTitleChange: result.current.onTitleChange,
+            onRecurrenceChange: result.current.onRecurrenceChange,
+            onEvaluationModeChange: result.current.onEvaluationModeChange,
+            onDestinationChange: result.current.onDestinationChange,
+            onRecipientsChange: result.current.onRecipientsChange,
+            onSubjectChange: result.current.onSubjectChange,
+            onMessageChange: result.current.onMessageChange,
+        };
+
+        rerender();
+
+        expect(result.current.onTitleChange).toBe(before.onTitleChange);
+        expect(result.current.onRecurrenceChange).toBe(before.onRecurrenceChange);
+        expect(result.current.onEvaluationModeChange).toBe(before.onEvaluationModeChange);
+        expect(result.current.onDestinationChange).toBe(before.onDestinationChange);
+        expect(result.current.onRecipientsChange).toBe(before.onRecipientsChange);
+        expect(result.current.onSubjectChange).toBe(before.onSubjectChange);
+        expect(result.current.onMessageChange).toBe(before.onMessageChange);
+    });
+
+    it("keeps the mutators identical across a draft edit, so a keystroke does not rebuild them", () => {
+        const { result } = renderFormStateHook();
+        const firstOnTitleChange = result.current.onTitleChange;
+
+        act(() => {
+            result.current.onTitleChange("typed", true);
+        });
+
+        expect(result.current.editedAutomation.title).toBe("typed");
+        expect(result.current.onTitleChange).toBe(firstOnTitleChange);
     });
 });

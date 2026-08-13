@@ -13,10 +13,9 @@ import {
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
 
-import { areAutomationsEqual } from "../../../shared/utils/automationUtils.js";
-import { isEmail } from "../../utils/validate.js";
-
-import { useScheduleValidation } from "./useScheduleValidation.js";
+import { areAutomationsEqual } from "../../shared/utils/automationUtils.js";
+import { useScheduleValidation } from "../DefaultScheduledEmailDialog/hooks/useScheduleValidation.js";
+import { isEmail } from "../utils/validate.js";
 
 export interface IUseScheduledEmailFormValidityProps {
     editedAutomation: IAutomationMetadataObjectDefinition;
@@ -34,7 +33,7 @@ export interface IUseScheduledEmailFormValidityProps {
 export function useScheduledEmailFormValidity(props: IUseScheduledEmailFormValidityProps): {
     // `scheduledExportToEdit && areAutomationsEqual(...)` short-circuits to `undefined` (not `false`)
     // when `scheduledExportToEdit` is unset (new-schedule mode) — this is the verbatim, pre-existing
-    // expression from `useEditScheduledEmail`, preserved as-is; consumers treat it via truthiness.
+    // expression, preserved as-is; consumers treat it via truthiness.
     isSubmitDisabled: boolean | undefined;
     validationErrorMessage: string | undefined;
     isParentValid: boolean;
