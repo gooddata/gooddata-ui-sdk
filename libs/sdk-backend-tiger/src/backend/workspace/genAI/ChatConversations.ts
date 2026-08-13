@@ -2,7 +2,11 @@
 
 import { type EventSourceMessage, EventSourceParserStream } from "eventsource-parser/stream";
 
-import { type AiConversationItemResponse, type AiSendMessageRequest } from "@gooddata/api-client-tiger";
+import {
+    type AiConversationItemResponse,
+    type AiInteractionStepResponse,
+    type AiSendMessageRequest,
+} from "@gooddata/api-client-tiger";
 import {
     GenAiApi_DeleteConversation,
     GenAiApi_GetConversation,
@@ -22,6 +26,7 @@ import {
     type IChatConversation,
     type IChatConversationCreateOptions,
     type IChatConversationError,
+    type IChatConversationInteractionStep,
     type IChatConversationItem,
     type IChatConversationItemsQuery,
     type IChatConversationItemsQueryResult,
@@ -43,6 +48,7 @@ import type { DateNormalizer } from "../../../convertors/fromBackend/dateFormatt
 import {
     convertChatConversationErrorFromBackend,
     convertChatConversationFromBackend,
+    convertChatConversationInteractionStepFromBackend,
     convertChatConversationItemFromBackend,
     convertChatConversationItemsFromBackend,
 } from "../../../convertors/fromBackend/genAIConvertor.js";
@@ -396,7 +402,9 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
             effort,
         });
     }
-    stream(): ReadableStream<IChatConversationItem | IChatConversationError> {
+    stream(): ReadableStream<
+        IChatConversationItem | IChatConversationError | IChatConversationInteractionStep
+    > {
         // We are using Axios <1.7, which does not support streaming,
         // as it can't use fetch API instead of XHR.
         // This method can be simplified once we upgrade to Axios >=1.7.
@@ -488,12 +496,18 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
  */
 class ServerSentEventsDataParser extends TransformStream<
     EventSourceMessage,
-    { type: "item" | "error" | "response_ended"; data: object }
+    { type: "item" | "error" | "response_started" | "response_ended" | "interaction_step"; data: object }
 > {
     constructor() {
         super({
             transform(event, controller) {
-                if (event.event === "item" || event.event === "error" || event.event === "response_ended") {
+                if (
+                    event.event === "item" ||
+                    event.event === "error" ||
+                    event.event === "response_started" ||
+                    event.event === "response_ended" ||
+                    event.event === "interaction_step"
+                ) {
                     controller.enqueue({
                         type: event.event,
                         data: JSON.parse(event.data),
@@ -509,8 +523,8 @@ class ServerSentEventsDataParser extends TransformStream<
  * @internal
  */
 class ServerSentEventsDataConverter extends TransformStream<
-    { type: "item" | "error" | "response_ended"; data: object },
-    IChatConversationItem | IChatConversationError
+    { type: "item" | "error" | "response_started" | "response_ended" | "interaction_step"; data: object },
+    IChatConversationItem | IChatConversationError | IChatConversationInteractionStep
 > {
     constructor(
         dateNormalizer: DateNormalizer,
@@ -537,6 +551,13 @@ class ServerSentEventsDataConverter extends TransformStream<
                     if (item) {
                         controller.enqueue(item);
                     }
+                } else if (event.type === "interaction_step" && "step" in event.data) {
+                    controller.enqueue(
+                        convertChatConversationInteractionStepFromBackend(
+                            event.data.step as AiInteractionStepResponse,
+                            traceIdProvider(),
+                        ),
+                    );
                 }
             },
         });

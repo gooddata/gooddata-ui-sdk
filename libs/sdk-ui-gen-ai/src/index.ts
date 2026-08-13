@@ -113,6 +113,14 @@ export {
 export { type LinkHandlerEvent, type GenAIAssistantMode } from "./components/ConfigContext.js";
 export { useGenAiChatAvailability } from "./hooks/useGenAiChatAvailability.js";
 
+//interaction intelligence
+
+export {
+    GenAiInteractionIntelligence,
+    type IGenAiInteractionIntelligenceProps,
+} from "./components/intelligence/GenAiInteractionIntelligence.js";
+export { type InteractionIntelligenceMode } from "./components/intelligence/data/types.js";
+
 //customization
 
 export { DefaultLandingScreen, type LandingScreenProps } from "./components/customized/LandingScreen.js";

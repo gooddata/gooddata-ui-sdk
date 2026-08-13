@@ -108,6 +108,7 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
         includeTags,
         excludeTags,
         isPreview,
+        allowInteractionIntelligence,
         providedStore,
         onDispatcher,
         onLinkClick,
@@ -134,6 +135,7 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
                 excludeTags={excludeTags}
                 catalogItems={catalogItems}
                 isPreview={isPreview}
+                allowInteractionIntelligence={allowInteractionIntelligence}
                 providedStore={providedStore}
             >
                 <BackendProvider backend={effectiveBackend}>

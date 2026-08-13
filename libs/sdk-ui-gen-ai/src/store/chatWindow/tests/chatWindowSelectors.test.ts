@@ -9,7 +9,9 @@ import { messagesSliceReducer } from "../../messages/messagesSlice.js";
 import { type RootState } from "../../types.js";
 import {
     agentSwitchingActiveSelector,
+    allowInteractionIntelligenceSelector,
     hasPinnedContextSelector,
+    interactionIntelligenceEnabledSelector,
     isPreviewSelector,
     userContextSelector,
 } from "../chatWindowSelectors.js";
@@ -44,6 +46,62 @@ describe("chatWindowSelectors", () => {
 
     it("should keep agent switching active outside of preview mode", () => {
         expect(agentSwitchingActiveSelector(makeState(false))).toBe(true);
+    });
+});
+
+describe("interactionIntelligenceEnabledSelector", () => {
+    const stateWith = (
+        allowInteractionIntelligence: boolean | undefined,
+        settings: IUserWorkspaceSettings,
+    ): RootState => ({
+        messages: messagesSliceReducer(undefined, { type: "test/init" }),
+        // The prop seeds the store at creation rather than being dispatched — it is a mount-time
+        // switch between two usages of the assistant, not something that changes.
+        [chatWindowSliceName]: {
+            ...getInitialChatWindowState({ allowInteractionIntelligence }),
+            settings,
+        },
+    });
+
+    it("should be disabled when the prop is off and the flag is on", () => {
+        const state = stateWith(false, {
+            enableGenAiInteractionIntelligence: true,
+        } as IUserWorkspaceSettings);
+
+        expect(allowInteractionIntelligenceSelector(state)).toBe(false);
+        expect(interactionIntelligenceEnabledSelector(state)).toBe(false);
+    });
+
+    it("should be disabled when the prop is on and the flag is off", () => {
+        const state = stateWith(true, {
+            enableGenAiInteractionIntelligence: false,
+        } as IUserWorkspaceSettings);
+
+        expect(allowInteractionIntelligenceSelector(state)).toBe(true);
+        expect(interactionIntelligenceEnabledSelector(state)).toBe(false);
+    });
+
+    it("should be disabled when both the prop and the flag are off", () => {
+        const state = stateWith(false, {
+            enableGenAiInteractionIntelligence: false,
+        } as IUserWorkspaceSettings);
+
+        expect(interactionIntelligenceEnabledSelector(state)).toBe(false);
+    });
+
+    it("should be enabled only when both the prop and the flag are on", () => {
+        const state = stateWith(true, { enableGenAiInteractionIntelligence: true } as IUserWorkspaceSettings);
+
+        expect(interactionIntelligenceEnabledSelector(state)).toBe(true);
+    });
+
+    it("should treat an unset prop as disabled", () => {
+        const state = stateWith(undefined, {
+            enableGenAiInteractionIntelligence: true,
+        } as IUserWorkspaceSettings);
+
+        expect(allowInteractionIntelligenceSelector(state)).toBe(false);
+        expect(interactionIntelligenceEnabledSelector(state)).toBe(false);
     });
 });
 

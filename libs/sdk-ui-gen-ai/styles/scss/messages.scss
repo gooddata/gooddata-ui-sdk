@@ -1513,7 +1513,6 @@
 .gd-gen-ai-chat__conversation__item__feedback {
     display: flex;
     flex-direction: row;
-    height: 20px;
 
     svg {
         opacity: 0;
@@ -1527,6 +1526,16 @@
             opacity: 1;
         }
     }
+}
+
+// Row holding the feedback thumbs plus any other per-message actions (e.g. the Interaction
+// Intelligence trigger). Not nested under .conversation__item__feedback, since those actions
+// aren't feedback and shouldn't share its hover/focus reveal behavior.
+.gd-gen-ai-chat__conversation__item__actions {
+    display: flex;
+    align-items: center;
+    // No gap: each icon button is a fixed-size box (like .conversation__item__feedback's
+    // thumbs), so they should sit edge-to-edge, not with extra space between groups.
 }
 
 .gd-gen-ai-chat__conversation__visualization {

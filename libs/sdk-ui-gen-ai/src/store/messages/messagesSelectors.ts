@@ -6,6 +6,7 @@ import { type GenAIChatEffort } from "@gooddata/sdk-model";
 
 import { DEFAULT_EFFORT } from "../../components/utils/effortSelection.js";
 import { type IChatConversationLocal, type IChatConversationLocalItem, type Message } from "../../model.js";
+import { type IChatConversationResponseTrace } from "../../types.js";
 import { type RootState } from "../types.js";
 
 import { messagesSliceName } from "./messagesSlice.js";
@@ -90,6 +91,23 @@ export const conversationMessagesByIdSelector: (
         }
 
         return data.order.map((id) => data.items[id]);
+    },
+);
+
+const EMPTY_TRACE: IChatConversationResponseTrace = { steps: [], detailsByStepId: {} };
+
+/**
+ * The "Interaction Intelligence" trace of one response of the current conversation. Empty until the
+ * turn's steps have streamed in.
+ */
+export const interactionTraceByResponseIdSelector: (
+    state: RootState,
+    responseId: string,
+) => IChatConversationResponseTrace = createSelector(
+    [messagesSliceSelector, (_state: RootState, responseId: string) => responseId],
+    (state, responseId) => {
+        const data = state.conversationsData[state.currentConversation?.localId ?? ""];
+        return data?.interactionTrace?.[responseId] ?? EMPTY_TRACE;
     },
 );
 

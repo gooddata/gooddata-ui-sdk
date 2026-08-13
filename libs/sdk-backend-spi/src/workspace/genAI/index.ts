@@ -956,6 +956,14 @@ export type IChatConversationItem = {
     content: IChatConversationContent;
     feedback?: IChatConversationFeedback;
     /**
+     * Id of the interaction step this item belongs to.
+     */
+    stepId?: string;
+    /**
+     * Details of the item's action.
+     */
+    detail?: IChatConversationItemDetail;
+    /**
      * Id of the agent the conversation was switched to. Only set on system items
      * that represent an agent-switch event.
      */
@@ -976,6 +984,181 @@ export type IChatConversationItem = {
  */
 export function isChatConversationItem(item: unknown): item is IChatConversationItem {
     return typeof item === "object" && item !== null && "type" in item && item.type === "item";
+}
+
+/**
+ * Category of an interaction step.
+ * @internal
+ */
+export type GenAIInteractionStepCategory =
+    | "applyMemory"
+    | "skillRouting"
+    | "knowledgeSearch"
+    | "catalogSearch"
+    | "metricQuery"
+    | "composeAnswer";
+
+/**
+ * Token usage of an interaction step.
+ * @internal
+ */
+export type IChatConversationInteractionStepTokens = {
+    input?: number;
+    output?: number;
+    total?: number;
+};
+
+/**
+ * A single interaction step of a conversation turn. Conversation items link to it via `stepId`.
+ * @internal
+ */
+export type IChatConversationInteractionStep = {
+    /** Discriminator for the message stream. */
+    type: "interaction_step";
+    stepId: string;
+    conversationId: string;
+    responseId: string;
+    /** Zero-based step order within the turn. */
+    stepIndex: number;
+    /** Duration of the step. */
+    durationMs: number;
+    tokens: IChatConversationInteractionStepTokens;
+    /** Step start timestamp. */
+    createdAt: number;
+    /** Backend trace id of the response this step belongs to, for support/debugging. */
+    traceId?: string;
+};
+
+/**
+ * Is chat conversation interaction step
+ * @internal
+ */
+export function isChatConversationInteractionStep(item: unknown): item is IChatConversationInteractionStep {
+    return typeof item === "object" && item !== null && "type" in item && item.type === "interaction_step";
+}
+
+/**
+ * Best-matching catalog object of a single object type.
+ * @internal
+ */
+export type IChatConversationCatalogSearchMatch = {
+    objectType: string;
+    title: string;
+    score: number;
+};
+
+/**
+ * Catalog search results of a single object type.
+ * @internal
+ */
+export type IChatConversationSearchedGroup = {
+    objectType: string;
+    titles: string[];
+};
+
+/**
+ * Details of a `catalogSearch` action.
+ * @internal
+ */
+export type IChatConversationCatalogSearchDetail = {
+    category: "catalogSearch";
+    /** Keywords the search looked for. */
+    query: string[];
+    /** Catalog types the search asked for. */
+    requestedTypes: string[];
+    /** Titles the search returned, grouped by object type. */
+    found: IChatConversationSearchedGroup[];
+    /** Best-matching object per type. Empty when the search does not rank results. */
+    used: IChatConversationCatalogSearchMatch[];
+};
+
+/**
+ * Type of the output the turn produced.
+ * @internal
+ */
+export type GenAIAnswerOutput =
+    | "text"
+    | "visualization"
+    | "dashboard"
+    | "keyDriverAnalysis"
+    | "whatIf"
+    | "searchResults"
+    | "alertProposal";
+
+/**
+ * Details of a `composeAnswer` action.
+ * @internal
+ */
+export type IChatConversationComposeAnswerDetail = {
+    category: "composeAnswer";
+    /** Model that generated the answer. */
+    modelId?: string;
+    /** Number of follow-up actions the answer offered. */
+    suggestedActions?: number;
+    /** Type of the output the turn produced. */
+    output?: GenAIAnswerOutput;
+};
+
+/**
+ * A knowledge document reached by an action.
+ * @internal
+ */
+export type IChatConversationKnowledgeSearchDocument = {
+    /** Document title, or its filename when it has none. */
+    title: string;
+    /** Relevance score of the document. */
+    score?: number;
+};
+
+/**
+ * Details of a `knowledgeSearch` action.
+ * @internal
+ */
+export type IChatConversationKnowledgeSearchDetail = {
+    category: "knowledgeSearch";
+    /** What the action searched for. */
+    query?: string;
+    /** Documents the action reached, best-scoring first. */
+    documents: IChatConversationKnowledgeSearchDocument[];
+    /** Title of the highest-scoring document. */
+    bestMatch?: string;
+};
+
+/**
+ * Details of a `skillRouting` action.
+ * @internal
+ */
+export type IChatConversationSkillRoutingDetail = {
+    category: "skillRouting";
+    /** Titles of the skills the model could choose from. */
+    available: string[];
+    /** Titles of the skills the action activated. */
+    activated: string[];
+};
+
+/**
+ * Details of a conversation item's action, discriminated by `category`.
+ * @internal
+ */
+export type IChatConversationItemDetail =
+    | IChatConversationCatalogSearchDetail
+    | IChatConversationComposeAnswerDetail
+    | IChatConversationKnowledgeSearchDetail
+    | IChatConversationSkillRoutingDetail;
+
+/**
+ * Is chat conversation catalog search detail
+ * @internal
+ */
+export function isChatConversationCatalogSearchDetail(
+    detail: unknown,
+): detail is IChatConversationCatalogSearchDetail {
+    return (
+        typeof detail === "object" &&
+        detail !== null &&
+        "category" in detail &&
+        detail.category === "catalogSearch"
+    );
 }
 
 /**
@@ -1450,5 +1633,7 @@ export interface IChatConversationThreadQuery {
     /**
      * Execute the chat thread and stream the results.
      */
-    stream(): ReadableStream<IChatConversationItem | IChatConversationError>;
+    stream(): ReadableStream<
+        IChatConversationItem | IChatConversationError | IChatConversationInteractionStep
+    >;
 }

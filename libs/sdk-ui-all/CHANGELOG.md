@@ -1,6 +1,54 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Fri, 07 Aug 2026 07:40:30 GMT and should not be manually modified.
+This log was last generated on Thu, 13 Aug 2026 06:46:34 GMT and should not be manually modified.
+
+## 11.52.0
+
+Thu, 13 Aug 2026 06:46:34 GMT
+
+### Minor changes
+
+- Add parameters field to alert notifications, displayed alongside filters in the notification detail dialog.
+
+### Updates
+
+- sdk-backend-tiger: Fix workspace users query `withOptions` to merge all provided options
+- sdk-ui-dashboard: Search automation recipients server-side; remove `loadAllWorkspaceUsers` command, users store slice and related deprecated props
+- sdk-model: Remove `DRILL` from the `DataSourceType` union; Drill is no longer a supported data source type
+- api-client-tiger: Remove `DRILL` from the generated data source type enums
+- sdk-model: Remove `GREENPLUM` from the `DataSourceType` union; Greenplum is no longer a supported data source type
+- api-client-tiger: Remove `GREENPLUM` from the generated data source type enums
+- sdk-ui-all: Find the colors a theme palette leaves out but has to define, and show them in the styling editor without blocking Save
+- sdk-ui-ext: per-label grants in the object share dialog now carry the permission level held on the object instead of always landing on VIEW, and changing a grantee's level re-grades the labels in their scope so the two no longer drift apart.
+- sdk-ui-catalog: the catalog detail Share button now waits for the object's access list instead of appearing and then disappearing again for a user who may only view the object.
+- sdk-ui-ext: the object share dialog now shows a grantee's effective permission level, so a level inherited from a group or a parent workspace is no longer understated as "Can view"; Remove access is offered disabled, with an explanation, for a grantee who holds no grant in the current workspace.
+- sdk-ui-kit: Split UiButton's shared badge margin override into separate **badge-number and **badge-text modifiers so text badges (e.g. the reasoning effort badge in the AI assistant agent dropdown) can be spaced 10px from the label instead of inheriting the 2.5px pull-in tuned for parenthesised numeric badges. They previously sat 2.5px apart, which was hard to distinguish, especially with high-contrast theming where the color difference between them is replaced by a single system color.
+- sdk-ui-ext / sdk-ui-web-components: Fix stale insight caching so edits made in the /analyze iframe are reflected when navigating back in-app to a gallery of `<gd-insight-embed>` elements, instead of the pre-edit version persisting until a full page reload. `gd-insight-embed.refresh()` now evicts the element's cached insight definition for its resolved workspace and insight ref before remounting the visualization, instead of only replacing the React tree (which re-read the same cached, un-evicted promise and so could never clear a stale insight). The sdk-ui-web-components bundle now also exports `clearCaches()`, since it inlines its own copy of the GoodData.UI runtime and a host application calling `clearInsightViewCaches()` from its own `@gooddata/sdk-ui-ext` dependency cleared a different cache instance and had no effect. Finally, sdk-ui-ext gains a new `clearInsightViewCacheForInsight(workspace, ref)` public API to evict a single insight's cached definition, where previously only the all-or-nothing `clearInsightViewCaches()` existed.
+- sdk-ui-all: Include conditional formatting in the generated React embed code for the new pivot table
+- sdk-ui-all: Show an inline "Value cannot be empty" error in the conditional formatting rule dialog.
+- sdk-ui-all: Numeric inputs accept any finite value, scientific notation included, instead of capping at 10^15 and rounding to 6 decimal places.
+- sdk-backend-tiger: Register `enableDonutDataLabels` as a FeatureHub feature flag
+- sdk-ui-kit: Fix focus jumping to the top of the page after closing a dialog opened from a UiAsyncTable row actions menu. The menu now restores focus to the grid synchronously as it closes, so a dialog opened in the same tick captures the grid as its return target instead of the document body.
+- sdk-ui-kit: Fix DropdownButton dropping aria-expanded and aria-controls whenever no dropdownId prop was passed, which affected most dropdown triggers built on it across the SDK. The combobox trigger now always exposes its expanded state, derived from isOpen when aria-expanded is not given, along with any controlled id, so screen readers can tell whether the dropdown is open and what it controls.
+- fix(sdk-ui-ext): allow ranking filter on bucket metric in insights with no attributes
+- sdk-ui-ext: the object share dialog now shows a label the grantee only inherits as in scope, matching the workspace the grant came from, and locks it because there is no local grant to revoke.
+- sdk-ui-ext: the object share dialog now offers label access while adding a user or group, so a new grantee's label scope is picked in the same step as their permission level instead of only after they were granted every label.
+- sdk-ui-dashboard: remove the dead uriRef branch from the insight attribute filter placeholder rule in CustomUrlEditor; those filters are always sanitized to identifier refs.
+- sdk-ui-dashboard: fix visualization switcher widget accessibility - the figure role and accessible name now live on the inner widget container labelled by the active visualization title, mirroring single-visualization widgets
+- sdk-ui-filters: show full attribute filter element value in a native tooltip on row hover
+- sdk-ui-charts: fix mekko rendering with only the width metric — widths stay proportional to the metric instead of equal-width columns with the width metric driving the height
+- sdk-ui-charts, sdk-ui-ext: fix mekko chart not offering metrics as the sort criterion for Smallest to largest / Largest to smallest — stacked mekko columns are now ordered by the chosen metric on the client, since the stacked execution cannot express that sort
+- sdk-ui-dashboard: Add second granularities to Key Driver Analysis, behind feature flag `enableSecondGranularities`.
+- sdk-ui-gen-ai: Add second granularities to Key Driver Analysis, behind feature flag `enableSecondGranularities`.
+- sdk-ui-pluggable-host: preload application bundles on hover intent and sync assets only, so a slow connection no longer floods the console with "Failed to preload remote" errors
+- sdk-ui-dashboard: Export AlertingDialogContextProvider and ScheduledEmailDialogContextProvider so custom dialog components can decorate the dialog context.
+- sdk-ui-filters: Add `customRangeHint` prop to DateFilter, appending custom content to the static period form hint area
+- sdk-ui-dashboard: Add `customRangeHint` prop to the dashboard date filter and `topContent`/`bottomContent` slots to the alerting and scheduled email dialogs
+- sdk-ui-gen-ai: Keep the AI chat reasoning-effort mode with the conversation it was picked in. Reopening a conversation resumes on the mode it was last using.
+- sdk-ui-gen-ai, sdk-ui-dashboard: Add handling for AI-assisted dashboard drafts and builder mode.
+- sdk-ui-gen-ai: Add support for agent change events in GenAI.
+- sdk-ui-gen-ai, sdk-ui-dashboard: Add support to store selected widget in switcher
+- sdk-ui-gen-ai: Add support for assistant context change events
 
 ## 11.51.0
 

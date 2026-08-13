@@ -28,6 +28,7 @@ import {
     type JsonApiCustomApplicationSettingOut,
     type JsonApiDataSourceIdentifierOutDocument,
     type JsonApiDataSourceIdentifierOutWithLinks,
+    type JsonApiDataSourceInAttributesCacheRetention,
     type JsonApiDataSourceInAttributesCacheStrategyEnum,
     type JsonApiDataSourceInAttributesDateTimeSemanticsEnum,
     type JsonApiDataSourceInAttributesTypeEnum,
@@ -191,6 +192,19 @@ export type IDataSourceType = JsonApiDataSourceInAttributesTypeEnum;
 export type IDataSourceCacheStrategy = JsonApiDataSourceInAttributesCacheStrategyEnum;
 
 /**
+ * Determines when the cached results coming from a data source expire. It is a discriminated union,
+ * narrow it by the `type` property:
+ *
+ * - `INDEFINITE` – the cache never expires on its own, equivalent to no policy at all,
+ * - `SCHEDULE` – the cache expires according to the cron expression in `schedule`,
+ * - `VALIDITY_PERIOD` – the cache expires once the `validityPeriod` elapses. The value is an
+ *   ISO-8601 duration string that is passed through as-is, parsing and formatting is up to the caller.
+ *
+ * @internal
+ */
+export type IDataSourceCacheRetention = JsonApiDataSourceInAttributesCacheRetention;
+
+/**
  * @internal
  */
 export type IDataSourceDateTimeSemantics = JsonApiDataSourceInAttributesDateTimeSemanticsEnum;
@@ -215,6 +229,7 @@ export interface IDataSourceConnectionInfo {
     parameters?: Array<DataSourceParameter> | null;
     decodedParameters?: Array<DataSourceParameter> | null;
     cacheStrategy?: IDataSourceCacheStrategy | null;
+    cacheRetention?: IDataSourceCacheRetention | null;
     authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum | null;
     dateTimeSemantics?: IDataSourceDateTimeSemantics | null;
 }
@@ -241,6 +256,10 @@ export interface IDataSourceUpsertRequest {
     username?: string;
     parameters?: Array<DataSourceParameter>;
     cacheStrategy?: IDataSourceCacheStrategy;
+    /**
+     * Pass `null` to remove any cache retention policy the data source may have.
+     */
+    cacheRetention?: IDataSourceCacheRetention | null;
     privateKey?: string;
     privateKeyPassphrase?: string;
     clientId?: string;
@@ -263,6 +282,11 @@ export interface IDataSourcePatchRequest {
     username?: string;
     parameters?: Array<DataSourceParameter>;
     cacheStrategy?: IDataSourceCacheStrategy;
+    /**
+     * Leave `undefined` to keep the currently persisted cache retention policy,
+     * pass `null` to remove it.
+     */
+    cacheRetention?: IDataSourceCacheRetention | null;
     privateKey?: string | null;
     privateKeyPassphrase?: string | null;
     clientId?: string | null;
@@ -674,6 +698,7 @@ const dataSourceResponseAsDataSourceConnectionInfo = (
         parameters,
         decodedParameters,
         cacheStrategy,
+        cacheRetention,
         authenticationType,
         clientId,
         dateTimeSemantics,
@@ -690,6 +715,7 @@ const dataSourceResponseAsDataSourceConnectionInfo = (
         parameters,
         decodedParameters,
         cacheStrategy,
+        cacheRetention,
         authenticationType,
         dateTimeSemantics,
     };
@@ -1190,6 +1216,7 @@ export const buildTigerSpecificFunctions = (
             username,
             parameters,
             cacheStrategy,
+            cacheRetention,
             privateKey,
             privateKeyPassphrase,
             clientId,
@@ -1212,6 +1239,7 @@ export const buildTigerSpecificFunctions = (
                                 username,
                                 parameters,
                                 cacheStrategy,
+                                cacheRetention,
                                 privateKey,
                                 privateKeyPassphrase,
                                 clientId,
@@ -1243,6 +1271,7 @@ export const buildTigerSpecificFunctions = (
             username,
             parameters,
             cacheStrategy,
+            cacheRetention,
             privateKey,
             privateKeyPassphrase,
             clientId,
@@ -1266,6 +1295,7 @@ export const buildTigerSpecificFunctions = (
                                 username,
                                 parameters,
                                 cacheStrategy,
+                                cacheRetention,
                                 privateKey,
                                 privateKeyPassphrase,
                                 clientId,
@@ -1297,6 +1327,7 @@ export const buildTigerSpecificFunctions = (
             username,
             parameters,
             cacheStrategy,
+            cacheRetention,
             privateKey,
             privateKeyPassphrase,
             clientId,
@@ -1320,6 +1351,7 @@ export const buildTigerSpecificFunctions = (
                                 username,
                                 parameters,
                                 cacheStrategy,
+                                cacheRetention,
                                 privateKey,
                                 privateKeyPassphrase,
                                 clientId,

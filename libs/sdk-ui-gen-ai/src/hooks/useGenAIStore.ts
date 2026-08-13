@@ -33,6 +33,7 @@ export const useGenAIStore = (
         excludeTags?: string[];
         catalogItems?: CatalogItem[];
         isPreview?: boolean;
+        allowInteractionIntelligence?: boolean;
         onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
         allowNativeLinks?: boolean;
         mode?: GenAIAssistantMode;
@@ -47,6 +48,7 @@ export const useGenAIStore = (
         excludeTags,
         catalogItems,
         isPreview,
+        allowInteractionIntelligence,
         onLinkClick,
         allowNativeLinks,
         mode,
@@ -62,8 +64,15 @@ export const useGenAIStore = (
     // Initialize new Redux Store for each instance of GenAI Chat
     // It OK to discard the store when backend or workspace changes
     const store = useMemo(() => {
-        return getStore(backend, workspace, eventDispatcher, optionsDispatcher, isPreview);
-    }, [backend, workspace, eventDispatcher, optionsDispatcher, isPreview]);
+        return getStore(
+            backend,
+            workspace,
+            eventDispatcher,
+            optionsDispatcher,
+            isPreview,
+            allowInteractionIntelligence,
+        );
+    }, [backend, workspace, eventDispatcher, optionsDispatcher, isPreview, allowInteractionIntelligence]);
 
     useEffect(() => {
         if (colorPalette) {
