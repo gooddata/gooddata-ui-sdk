@@ -137,7 +137,7 @@ export type {
     IButtonProps,
 } from "./Button/typings.js";
 export { Button } from "./Button/Button.js";
-export { Datepicker, type IDatePickerOwnProps } from "./Datepicker/Datepicker.js";
+export { Datepicker, type IDatePickerProps } from "./Datepicker/Datepicker.js";
 export type { Separators, LabelSize } from "./Form/typings.js";
 export { Input, type IInputState } from "./Form/Input.js";
 export { InputPure, type IInputPureProps, type IInputPureAccessibilityConfig } from "./Form/InputPure.js";
@@ -738,12 +738,7 @@ export type {
 export type { IMenuStateProps, IMenuStateConfig } from "./Menu/MenuState.js";
 export type { IScrollGradientProps } from "./ScrollGradient/typings.js";
 export { ScrollGradient } from "./ScrollGradient/ScrollGradient.js";
-export {
-    ChartSortingDialog,
-    ChartSortingWithIntl,
-    type IChartSortingOwnProps,
-    type IChartSortingProps,
-} from "./ChartSorting/ChartSorting.js";
+export { ChartSortingDialog, type IChartSortingProps } from "./ChartSorting/ChartSorting.js";
 export {
     SORT_TARGET_TYPE,
     type IAvailableSortsGroup,

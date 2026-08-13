@@ -109,6 +109,7 @@ export const olpPermissionMessages = defineMessages({
     removeAccess: { id: "shareDialog.olp.permission.removeAccess" },
     menuLabel: { id: "shareDialog.olp.permission.menuLabel" },
     moreInfoAriaLabel: { id: "shareDialog.olp.permission.moreInfoAriaLabel" },
+    effectivePermissionTooltipView: { id: "shareDialog.olp.permission.effective.tooltip.view" },
     effectivePermissionTooltipShare: { id: "shareDialog.olp.permission.effective.tooltip.share" },
     effectivePermissionTooltipEdit: { id: "shareDialog.olp.permission.effective.tooltip.edit" },
     effectivePermissionAriaLabel: { id: "shareDialog.olp.permission.effective.ariaLabel" },

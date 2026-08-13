@@ -3,6 +3,13 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import {
+    type IInsightDefinition,
+    type ISortItem,
+    isMeasureLocator,
+    newAttributeSort,
+    newMeasureSort,
+} from "@gooddata/sdk-model";
 
 import { type IReferencePoint, type IVisConstruct } from "../../../../interfaces/Visualization.js";
 import {
@@ -11,7 +18,11 @@ import {
     emptyReferencePoint,
     masterMeasureItems,
 } from "../../../../tests/mocks/referencePointMocks.js";
-import { insightWithSingleMeasure } from "../../../../tests/mocks/testMocks.js";
+import {
+    insightWithSingleMeasure,
+    insightWithSingleMeasureAndViewBy,
+    insightWithSingleMeasureAndViewByAndStack,
+} from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableMekko } from "../PluggableMekko.js";
@@ -20,10 +31,16 @@ const emptyFilters = { localIdentifier: "filters", items: [] as any[] };
 
 // Build a Mekko-shaped reference point: Width -> measures, Height -> secondary_measures,
 // viewBy -> view, stackBy -> stack.
-function referencePoint(buckets: { measures?: any[]; view?: any[]; stack?: any[] }): IReferencePoint {
+function referencePoint(buckets: {
+    measures?: any[];
+    secondaryMeasures?: any[];
+    view?: any[];
+    stack?: any[];
+}): IReferencePoint {
     return {
         buckets: [
             { localIdentifier: "measures", items: buckets.measures ?? [] },
+            { localIdentifier: "secondary_measures", items: buckets.secondaryMeasures ?? [] },
             { localIdentifier: "view", items: buckets.view ?? [] },
             { localIdentifier: "stack", items: buckets.stack ?? [] },
         ],
@@ -181,7 +198,7 @@ describe("PluggableMekko", () => {
             expect(sortConfig.availableSorts[0].metricSorts).toHaveLength(1);
         });
 
-        it("should enable area sort and drop measure sorts when a stackBy attribute is present", async () => {
+        it("should enable area sort and keep measure sorts when a stackBy attribute is present", async () => {
             const sortConfig = await createComponent().getSortConfig(
                 referencePoint({
                     measures: [masterMeasureItems[0]],
@@ -191,7 +208,52 @@ describe("PluggableMekko", () => {
             );
 
             expect(sortConfig.availableSorts[0].attributeSort!.areaSortEnabled).toBe(true);
-            expect(sortConfig.availableSorts[0].metricSorts).toBeUndefined();
+            expect(sortConfig.availableSorts[0].metricSorts).toHaveLength(1);
+        });
+
+        it("should offer a measure sort per metric bucket item when stacked", async () => {
+            const sortConfig = await createComponent().getSortConfig(
+                referencePoint({
+                    measures: [masterMeasureItems[0]],
+                    secondaryMeasures: [masterMeasureItems[1]],
+                    view: [attributeItems[0]],
+                    stack: [attributeItems[1]],
+                }),
+            );
+
+            expect(
+                sortConfig.availableSorts[0].metricSorts?.map(
+                    (metricSort) =>
+                        metricSort.locators.find(isMeasureLocator)?.measureLocatorItem.measureIdentifier,
+                ),
+            ).toEqual([masterMeasureItems[0].localIdentifier, masterMeasureItems[1].localIdentifier]);
+        });
+    });
+
+    describe("getExecution", () => {
+        const insightSortItems: ISortItem[] = [newAttributeSort("a1", "asc"), newMeasureSort("m1", "desc")];
+        const withSorts = (insight: IInsightDefinition, sorts: ISortItem[]): IInsightDefinition => ({
+            insight: { ...insight.insight, sorts },
+        });
+
+        it("should strip measure sorts from the stacked execution (they apply client-side)", () => {
+            const execution = createComponent().getExecution(
+                { messages },
+                withSorts(insightWithSingleMeasureAndViewByAndStack, insightSortItems),
+                executionFactory,
+            );
+
+            expect(execution.definition.sortBy).toEqual([newAttributeSort("a1", "asc")]);
+        });
+
+        it("should keep measure sorts in the execution without a stackBy attribute", () => {
+            const execution = createComponent().getExecution(
+                { messages },
+                withSorts(insightWithSingleMeasureAndViewBy, insightSortItems),
+                executionFactory,
+            );
+
+            expect(execution.definition.sortBy).toEqual(insightSortItems);
         });
     });
 

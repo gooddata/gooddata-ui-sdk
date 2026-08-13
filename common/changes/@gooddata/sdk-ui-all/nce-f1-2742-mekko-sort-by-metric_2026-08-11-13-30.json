@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-charts, sdk-ui-ext: fix mekko chart not offering metrics as the sort criterion for Smallest to largest / Largest to smallest — stacked mekko columns are now ordered by the chosen metric on the client, since the stacked execution cannot express that sort",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "nikola.cech@gooddata.com"
+}

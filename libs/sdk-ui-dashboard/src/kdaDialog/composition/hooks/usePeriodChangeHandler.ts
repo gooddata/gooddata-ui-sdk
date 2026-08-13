@@ -135,6 +135,11 @@ function updateDateBy(date: string, granularity: DateAttributeGranularity) {
             current.setMinutes(current.getMinutes() - 1);
             return current;
         }
+        case "GDC.time.second": {
+            const current = new Date(date);
+            current.setSeconds(current.getSeconds() - 1);
+            return current;
+        }
         default:
             return new Date(date);
     }

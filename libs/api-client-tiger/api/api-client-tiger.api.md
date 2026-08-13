@@ -129,6 +129,7 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     setCertification(requestParameters: ActionsApiSetCertificationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setTranslations(requestParameters: ActionsApiSetTranslationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     switchActiveIdentityProvider(requestParameters: ActionsApiSwitchActiveIdentityProviderRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    syncMetadata(options?: AxiosRequestConfig): AxiosPromise<void>;
     tags(requestParameters: ActionsApiTagsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogTags>;
     unpauseOrganizationAutomations(requestParameters: ActionsApiUnpauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unpauseWorkspaceAutomations(requestParameters: ActionsApiUnpauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -786,6 +787,7 @@ export interface ActionsApiInterface {
     setCertification(requestParameters: ActionsApiSetCertificationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setTranslations(requestParameters: ActionsApiSetTranslationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     switchActiveIdentityProvider(requestParameters: ActionsApiSwitchActiveIdentityProviderRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    syncMetadata(options?: AxiosRequestConfig): AxiosPromise<void>;
     tags(requestParameters: ActionsApiTagsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogTags>;
     unpauseOrganizationAutomations(requestParameters: ActionsApiUnpauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unpauseWorkspaceAutomations(requestParameters: ActionsApiUnpauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -1855,7 +1857,7 @@ export interface AfmChangeAnalysisRequest {
     // (undocumented)
     'dateAttribute': AfmAttributeItem;
     'excludeTags'?: Array<string>;
-    'filters'?: Array<ChangeAnalysisRequestFiltersInner>;
+    'filters'?: Array<AfmFilterDefinition>;
     'includeTags'?: Array<string>;
     // (undocumented)
     'measure': AfmMeasureItem;
@@ -1915,7 +1917,7 @@ export interface AfmCompoundMeasureValueFilter {
 export interface AfmCompoundMeasureValueFilterCompoundMeasureValueFilter {
     // (undocumented)
     'applyOnResult'?: boolean;
-    'conditions': Array<AfmMeasureValueCondition>;
+    'conditions'?: Array<AfmMeasureValueCondition>;
     'dimensionality'?: Array<AfmModelIdentifier>;
     // (undocumented)
     'localIdentifier'?: string;
@@ -5822,7 +5824,9 @@ export interface AlertAfm {
 }
 
 // @public
-export type AlertCondition = AnomalyDetectionWrapper | ComparisonWrapper | RangeWrapper | RelativeWrapper;
+type AlertCondition = AnomalyDetectionWrapper | ComparisonWrapper | RangeWrapper | RelativeWrapper;
+export { AlertCondition }
+export { AlertCondition as MdAutomationAlertCondition }
 
 // @public
 export type AlertConditionOperand = LocalIdentifier | Value;
@@ -7373,14 +7377,11 @@ export interface AutomationAdHocAutomation {
 export interface AutomationAFM {
     'attributes': Array<AutomationAttributeItem>;
     'auxMeasures'?: Array<AutomationMeasureItem>;
-    'filters': Array<AutomationAFMFiltersInner>;
+    'filters': Array<AutomationFilterDefinition>;
     'measureDefinitionOverrides'?: Array<AutomationMetricDefinitionOverride>;
     'measures': Array<AutomationMeasureItem>;
     'parameters'?: Array<AutomationParameterItem>;
 }
-
-// @public
-export type AutomationAFMFiltersInner = AutomationAbstractMeasureValueFilter | AutomationFilterDefinitionForSimpleMeasure | AutomationInlineFilterDefinition;
 
 // @public
 export type AutomationAfmIdentifier = AutomationAfmLocalIdentifier | AutomationAfmObjectIdentifier;
@@ -7496,7 +7497,7 @@ export type AutomationAfmObjectIdentifierParameterIdentifierTypeEnum = 'paramete
 // @public (undocumented)
 export interface AutomationAlert {
     // (undocumented)
-    'condition': MdAutomationAlertCondition;
+    'condition': AlertCondition;
     // (undocumented)
     'execution': AlertAfm;
     'interval'?: AutomationAlertIntervalEnum;
@@ -7694,15 +7695,12 @@ export interface AutomationAttributeItem {
 // @public (undocumented)
 export interface AutomationAutomationAlert {
     // (undocumented)
-    'condition': AutomationAutomationAlertCondition;
+    'condition': AutomationAlertCondition;
     // (undocumented)
     'execution': AutomationAlertAfm;
     'interval'?: AutomationAutomationAlertIntervalEnum;
     'trigger'?: AutomationAutomationAlertTriggerEnum;
 }
-
-// @public
-export type AutomationAutomationAlertCondition = AutomationAnomalyDetectionWrapper | AutomationComparisonWrapper | AutomationRangeWrapper | AutomationRelativeWrapper;
 
 // @public (undocumented)
 export type AutomationAutomationAlertIntervalEnum = 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR';
@@ -7741,7 +7739,12 @@ export interface AutomationAutomationMetadata {
 export interface AutomationAutomationNotification extends AutomationNotificationContent {
     // (undocumented)
     'content': AutomationWebhookMessage;
+    // (undocumented)
+    'type': AutomationAutomationNotificationTypeEnum;
 }
+
+// @public (undocumented)
+export type AutomationAutomationNotificationTypeEnum = 'AUTOMATION';
 
 // @public (undocumented)
 export interface AutomationAutomationRawExport {
@@ -7859,7 +7862,7 @@ export interface AutomationCompoundMeasureValueFilter {
 export interface AutomationCompoundMeasureValueFilterCompoundMeasureValueFilter {
     // (undocumented)
     'applyOnResult'?: boolean;
-    'conditions': Array<AutomationMeasureValueCondition>;
+    'conditions'?: Array<AutomationMeasureValueCondition>;
     'dimensionality'?: Array<AutomationAfmIdentifier>;
     // (undocumented)
     'localIdentifier'?: string;
@@ -8246,7 +8249,7 @@ export interface AutomationDashboardMeasureValueFilter {
 // @public (undocumented)
 export interface AutomationDashboardMeasureValueFilterDashboardMeasureValueFilter {
     // (undocumented)
-    'conditions': Array<AutomationDashboardCompoundConditionItem>;
+    'conditions'?: Array<AutomationDashboardCompoundConditionItem>;
     // (undocumented)
     'dimensionality'?: Array<AutomationIdentifierRef>;
     // (undocumented)
@@ -8274,6 +8277,8 @@ export interface AutomationDashboardTabularExportRequestV2 {
     'dashboardTabsParametersOverrides'?: {
         [key: string]: Array<AutomationParameterValue>;
     };
+    // (undocumented)
+    'executionSettings'?: AutomationExecutionSettings;
     'fileName': string;
     'format': AutomationDashboardTabularExportRequestV2FormatEnum;
     // (undocumented)
@@ -8378,7 +8383,7 @@ export type AutomationFilterDefinitionForSimpleMeasure = AutomationAttributeFilt
 // @public (undocumented)
 export interface AutomationIdentifierRef {
     // (undocumented)
-    'identifier'?: AutomationIdentifierRefIdentifier;
+    'identifier': AutomationIdentifierRefIdentifier;
 }
 
 // @public (undocumented)
@@ -8404,6 +8409,7 @@ export interface AutomationImageExportRequest {
     'fileName': string;
     'format': AutomationImageExportRequestFormatEnum;
     'metadata'?: object | null;
+    'timezoneId'?: string | null;
     'widgetIds': Array<string>;
 }
 
@@ -8480,12 +8486,9 @@ export type AutomationMeasureDefinition = AutomationArithmeticMeasureDefinition 
 // @public
 export interface AutomationMeasureItem {
     // (undocumented)
-    'definition': AutomationMeasureItemDefinition;
+    'definition': AutomationMeasureDefinition;
     'localIdentifier': string;
 }
-
-// @public
-export type AutomationMeasureItemDefinition = AutomationArithmeticMeasureDefinition | AutomationInlineMeasureDefinition | AutomationPopDatasetMeasureDefinition | AutomationPopDateMeasureDefinition | AutomationPopMeasureDefinition | AutomationSimpleMeasureDefinition;
 
 // @public
 export type AutomationMeasureValueCondition = AutomationComparisonCondition | AutomationRangeCondition;
@@ -8572,6 +8575,16 @@ export interface AutomationNotificationFilter {
     'filter': string;
     // (undocumented)
     'title': string;
+}
+
+// @public (undocumented)
+export interface AutomationNotificationParameter {
+    // (undocumented)
+    'id': string;
+    // (undocumented)
+    'title'?: string;
+    // (undocumented)
+    'value': string;
 }
 
 // @public (undocumented)
@@ -9367,6 +9380,7 @@ export interface AutomationSlidesExportRequest {
     'format': AutomationSlidesExportRequestFormatEnum;
     'metadata'?: object | null;
     'templateId'?: string | null;
+    'timezoneId'?: string | null;
     'visualizationIds'?: Array<string>;
     'widgetIds'?: Array<string>;
 }
@@ -9411,6 +9425,8 @@ export interface AutomationTabularExportRequest {
     'customOverride'?: AutomationCustomOverride;
     'executionResult'?: string;
     'executions'?: Array<AutomationTabularExportExecution>;
+    // (undocumented)
+    'executionSettings'?: AutomationExecutionSettings;
     'fileName': string;
     'format': AutomationTabularExportRequestFormatEnum;
     'metadata'?: object | null;
@@ -9428,18 +9444,20 @@ export type AutomationTabularExportRequestFormatEnum = 'CSV' | 'XLSX' | 'HTML' |
 // @public
 export interface AutomationTestDestinationRequest {
     // (undocumented)
-    'destination': AutomationTestDestinationRequestDestination;
+    'destination': AutomationNotificationChannelDestination;
     'externalRecipients'?: Array<AutomationAutomationExternalRecipient> | null;
 }
-
-// @public
-export type AutomationTestDestinationRequestDestination = AutomationDefaultSmtp | AutomationInPlatform | AutomationSmtp | AutomationWebhook;
 
 // @public (undocumented)
 export interface AutomationTestNotification extends AutomationNotificationContent {
     // (undocumented)
     'message': string;
+    // (undocumented)
+    'type': AutomationTestNotificationTypeEnum;
 }
+
+// @public (undocumented)
+export type AutomationTestNotificationTypeEnum = 'TEST';
 
 // @public
 export interface AutomationTestResponse {
@@ -9478,6 +9496,7 @@ export interface AutomationVisualExportRequest {
     'dashboardId': string;
     'fileName': string;
     'metadata'?: object;
+    'timezoneId'?: string | null;
 }
 
 // @public
@@ -9532,6 +9551,8 @@ export interface AutomationWebhookMessageData {
     'imageExports'?: Array<AutomationExportResult>;
     // (undocumented)
     'notificationSource'?: string;
+    // (undocumented)
+    'parameters'?: Array<AutomationNotificationParameter>;
     // (undocumented)
     'rawExports'?: Array<AutomationExportResult>;
     // (undocumented)
@@ -9648,6 +9669,9 @@ export interface CacheRemovalInterval {
 }
 
 // @public
+export type CacheRetention = IndefiniteCacheRetention | ScheduleCacheRetention | ValidityPeriodCacheRetention;
+
+// @public
 export interface CacheRetentionSchedule {
     'cron': string;
     'timezone'?: string | null;
@@ -9661,6 +9685,13 @@ export interface CacheUsageData {
         [key: string]: WorkspaceCacheUsage;
     };
 }
+
+// @public
+export type CalendarDefinition = ({
+    type: 'custom';
+} & CustomCalendarDefinition) | ({
+    type: 'fiscalYear';
+} & FiscalYearCalendarDefinition);
 
 // @public
 export interface CalendarGranularity {
@@ -9711,19 +9742,13 @@ export interface ChangeAnalysisParams {
     'attributes': Array<AfmAttributeItem>;
     // (undocumented)
     'dateAttribute': AfmAttributeItem;
-    'filters': Array<ChangeAnalysisParamsFiltersInner>;
+    'filters': Array<AfmFilterDefinition>;
     // (undocumented)
     'measure': AfmMeasureItem;
     'measureTitle': string;
     'referencePeriod': string;
     'useSmartAttributeSelection': boolean;
 }
-
-// @public
-export type ChangeAnalysisParamsFiltersInner = AbstractMeasureValueFilter | AfmFilterDefinitionForSimpleMeasure | AfmInlineFilterDefinition;
-
-// @public
-export type ChangeAnalysisRequestFiltersInner = AbstractMeasureValueFilter | AfmFilterDefinitionForSimpleMeasure | AfmInlineFilterDefinition;
 
 // @public
 export interface ChangeAnalysisResponse {
@@ -9981,6 +10006,9 @@ export type ColumnOverrideLabelTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LO
 export type ColumnOverrideLdmTypeOverrideEnum = 'FACT' | 'LABEL';
 
 // @public (undocumented)
+export type ColumnPartitionConfigTypeEnum = 'column';
+
+// @public (undocumented)
 export interface ColumnStatistic {
     // (undocumented)
     'type': ColumnStatisticTypeEnum;
@@ -10119,7 +10147,7 @@ export interface CompoundMeasureValueFilter {
 export interface CompoundMeasureValueFilterCompoundMeasureValueFilter {
     // (undocumented)
     'applyOnResult'?: boolean;
-    'conditions': Array<MeasureValueCondition>;
+    'conditions'?: Array<MeasureValueCondition>;
     'dimensionality'?: Array<AfmIdentifier>;
     // (undocumented)
     'localIdentifier'?: string;
@@ -10451,11 +10479,12 @@ export interface CreatedVisualization {
 }
 
 // @public
-export type CreatedVisualizationFiltersInner = AttributeNegativeFilter | AttributePositiveFilter | DateAbsoluteFilter | DateRelativeFilter | AfmRankingFilter;
+export type CreatedVisualizationFiltersInner = AttributeNegativeFilter | AttributePositiveFilter | DateAbsoluteFilter | DateRelativeFilter | GenAiRankingFilter;
 
 // @public
 export interface CreatedVisualizations {
     'objects': Array<CreatedVisualization>;
+    // @deprecated
     'reasoning': string;
     'suggestions': Array<ChatSuggestion>;
 }
@@ -10839,7 +10868,12 @@ export interface CustomCalendarDefinition {
     'dataSourceTables': {
         [key: string]: CalendarTableReference;
     };
+    // (undocumented)
+    'type': CustomCalendarDefinitionTypeEnum;
 }
+
+// @public (undocumented)
+export type CustomCalendarDefinitionTypeEnum = 'custom';
 
 // @public
 export class CustomGeoCollectionControllerApi extends MetadataBaseApi implements CustomGeoCollectionControllerApiInterface {
@@ -11159,7 +11193,7 @@ export interface DashboardMeasureValueFilter {
 // @public (undocumented)
 export interface DashboardMeasureValueFilterDashboardMeasureValueFilter {
     // (undocumented)
-    'conditions': Array<DashboardCompoundConditionItem>;
+    'conditions'?: Array<DashboardCompoundConditionItem>;
     // (undocumented)
     'dimensionality'?: Array<IdentifierRef>;
     // (undocumented)
@@ -11523,6 +11557,8 @@ export interface DashboardTabularExportRequestV2 {
     'dashboardTabsParametersOverrides'?: {
         [key: string]: Array<ParameterValue>;
     };
+    // (undocumented)
+    'executionSettings'?: ExecutionSettings;
     'fileName': string;
     'format': DashboardTabularExportRequestV2FormatEnum;
     // (undocumented)
@@ -12790,14 +12826,11 @@ export type DeclarativeAutomationStateEnum = 'ACTIVE' | 'PAUSED';
 // @public
 export interface DeclarativeCalendar {
     // (undocumented)
-    'definition': DeclarativeCalendarDefinition;
+    'definition': CalendarDefinition;
     'description'?: string;
     'enabledGranularities': Array<CalendarGranularity>;
     'name': string;
 }
-
-// @public
-export type DeclarativeCalendarDefinition = CustomCalendarDefinition | FiscalYearCalendarDefinition;
 
 // @public
 export interface DeclarativeColorPalette {
@@ -12907,7 +12940,7 @@ export interface DeclarativeDataSource {
     'alternativeDataSourceId'?: string | null;
     'authenticationType'?: DeclarativeDataSourceAuthenticationTypeEnum | null;
     // (undocumented)
-    'cacheRetention'?: DeclarativeDataSourceCacheRetention;
+    'cacheRetention'?: CacheRetention | null;
     'cacheStrategy'?: DeclarativeDataSourceCacheStrategyEnum;
     'clientId'?: string;
     'clientSecret'?: string;
@@ -12932,9 +12965,6 @@ export interface DeclarativeDataSource {
 
 // @public (undocumented)
 export type DeclarativeDataSourceAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
-
-// @public
-export type DeclarativeDataSourceCacheRetention = IndefiniteCacheRetention | ScheduleCacheRetention | ValidityPeriodCacheRetention;
 
 // @public (undocumented)
 export type DeclarativeDataSourceCacheStrategyEnum = 'ALWAYS' | 'NEVER';
@@ -12965,7 +12995,7 @@ export interface DeclarativeDataSources {
 }
 
 // @public (undocumented)
-export type DeclarativeDataSourceTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type DeclarativeDataSourceTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 // @public
 export interface DeclarativeDateDataset {
@@ -12992,7 +13022,7 @@ export interface DeclarativeExportDefinition {
     // (undocumented)
     'modifiedBy'?: DeclarativeUserIdentifier;
     // (undocumented)
-    'requestPayload'?: DeclarativeExportDefinitionRequestPayload;
+    'requestPayload'?: ExportRequest;
     'tags'?: Array<string>;
     'title': string;
 }
@@ -13005,9 +13035,6 @@ export interface DeclarativeExportDefinitionIdentifier {
 
 // @public (undocumented)
 export type DeclarativeExportDefinitionIdentifierTypeEnum = 'exportDefinition';
-
-// @public
-export type DeclarativeExportDefinitionRequestPayload = TabularExportRequest | VisualExportRequest;
 
 // @public
 export interface DeclarativeExportTemplate {
@@ -13213,7 +13240,7 @@ export interface DeclarativeNotificationChannel {
     'dashboardLinkVisibility'?: DeclarativeNotificationChannelDashboardLinkVisibilityEnum;
     'description'?: string;
     // (undocumented)
-    'destination'?: DeclarativeNotificationChannelDestination;
+    'destination'?: NotificationChannelDestination;
     // (undocumented)
     'destinationType'?: DeclarativeNotificationChannelDestinationTypeEnum | null;
     'id': string;
@@ -13227,9 +13254,6 @@ export type DeclarativeNotificationChannelAllowedRecipientsEnum = 'CREATOR' | 'I
 
 // @public (undocumented)
 export type DeclarativeNotificationChannelDashboardLinkVisibilityEnum = 'HIDDEN' | 'INTERNAL_ONLY' | 'ALL';
-
-// @public
-export type DeclarativeNotificationChannelDestination = DefaultSmtp | InPlatform | Smtp | Webhook;
 
 // @public (undocumented)
 export type DeclarativeNotificationChannelDestinationTypeEnum = 'WEBHOOK' | 'SMTP' | 'DEFAULT_SMTP' | 'IN_PLATFORM';
@@ -13315,7 +13339,7 @@ export type DeclarativeOrganizationPermissionNameEnum = 'MANAGE' | 'SELF_CREATE_
 // @public (undocumented)
 export interface DeclarativeParameter {
     // (undocumented)
-    'content': DeclarativeParameterContent;
+    'content': ParameterDefinition;
     'createdAt'?: string | null;
     // (undocumented)
     'createdBy'?: DeclarativeUserIdentifier;
@@ -13327,13 +13351,6 @@ export interface DeclarativeParameter {
     'tags'?: Array<string>;
     'title': string;
 }
-
-// @public
-export type DeclarativeParameterContent = ({
-    type: 'NUMBER';
-} & NumberParameterDefinition) | ({
-    type: 'STRING';
-} & StringParameterDefinition);
 
 // @public
 export interface DeclarativeReference {
@@ -19023,7 +19040,7 @@ export interface ExportCompoundMeasureValueFilter {
 export interface ExportCompoundMeasureValueFilterCompoundMeasureValueFilter {
     // (undocumented)
     'applyOnResult'?: boolean;
-    'conditions': Array<ExportMeasureValueCondition>;
+    'conditions'?: Array<ExportMeasureValueCondition>;
     'dimensionality'?: Array<ExportAfmIdentifier>;
     // (undocumented)
     'localIdentifier'?: string;
@@ -19283,7 +19300,7 @@ export interface ExportDashboardMeasureValueFilter {
 // @public (undocumented)
 export interface ExportDashboardMeasureValueFilterDashboardMeasureValueFilter {
     // (undocumented)
-    'conditions': Array<ExportDashboardCompoundConditionItem>;
+    'conditions'?: Array<ExportDashboardCompoundConditionItem>;
     // (undocumented)
     'dimensionality'?: Array<ExportIdentifierRef>;
     // (undocumented)
@@ -19304,6 +19321,8 @@ export interface ExportDashboardTabularExportRequest {
     'dashboardTabsParametersOverrides'?: {
         [key: string]: Array<ExportParameterValue>;
     };
+    // (undocumented)
+    'executionSettings'?: ExportExecutionSettings;
     'fileName': string;
     'format': ExportDashboardTabularExportRequestFormatEnum;
     // (undocumented)
@@ -19659,7 +19678,7 @@ export interface ExportGetSlidesExport202ResponseInner1 {
 // @public (undocumented)
 export interface ExportIdentifierRef {
     // (undocumented)
-    'identifier'?: ExportIdentifierRefIdentifier;
+    'identifier': ExportIdentifierRefIdentifier;
 }
 
 // @public (undocumented)
@@ -19679,6 +19698,7 @@ export interface ExportImageExportRequest {
     'fileName': string;
     'format': ExportImageExportRequestFormatEnum;
     'metadata'?: object | null;
+    'timezoneId'?: string | null;
     'widgetIds': Array<string>;
 }
 
@@ -20085,6 +20105,7 @@ export interface ExportSlidesExportRequest {
     'format': ExportSlidesExportRequestFormatEnum;
     'metadata'?: object | null;
     'templateId'?: string | null;
+    'timezoneId'?: string | null;
     'visualizationIds'?: Array<string>;
     'widgetIds'?: Array<string>;
 }
@@ -20106,6 +20127,8 @@ export interface ExportTabularExportRequest {
     'customOverride'?: ExportCustomOverride;
     'executionResult'?: string;
     'executions'?: Array<ExportTabularExportExecution>;
+    // (undocumented)
+    'executionSettings'?: ExportExecutionSettings;
     'fileName': string;
     'format': ExportTabularExportRequestFormatEnum;
     'metadata'?: object | null;
@@ -20377,6 +20400,7 @@ export interface ExportVisualExportRequest {
     'dashboardId': string;
     'fileName': string;
     'metadata'?: object;
+    'timezoneId'?: string | null;
 }
 
 // @public
@@ -21163,7 +21187,12 @@ export interface FilterViewsApiUpdateEntityFilterViewsRequest {
 // @public
 export interface FiscalYearCalendarDefinition {
     'monthOffset': number;
+    // (undocumented)
+    'type': FiscalYearCalendarDefinitionTypeEnum;
 }
+
+// @public (undocumented)
+export type FiscalYearCalendarDefinitionTypeEnum = 'fiscalYear';
 
 // @public
 export interface ForecastConfig {
@@ -21196,6 +21225,7 @@ export interface ForecastResult {
 // @public
 export interface FoundObjects {
     'objects': Array<SearchResultObject>;
+    // @deprecated
     'reasoning': string;
 }
 
@@ -21278,6 +21308,21 @@ export function GenAiApi_ValidateLLMEndpointById(axios: AxiosInstance, basePath:
 export type GenAiApiTrendingObjectsRequest = {
     readonly workspaceId: string;
 };
+
+// @public (undocumented)
+export interface GenAiRankingFilter {
+    // (undocumented)
+    'dimensionality'?: Array<string>;
+    // (undocumented)
+    'measures': Array<string>;
+    // (undocumented)
+    'operator': GenAiRankingFilterOperatorEnum;
+    // (undocumented)
+    'value': number;
+}
+
+// @public (undocumented)
+export type GenAiRankingFilterOperatorEnum = 'TOP' | 'BOTTOM';
 
 // @public (undocumented)
 export interface GenerateDescriptionRequest {
@@ -21801,7 +21846,7 @@ export type IdentifierDuplicationsTypeEnum = 'analyticalDashboard' | 'attribute'
 // @public (undocumented)
 export interface IdentifierRef {
     // (undocumented)
-    'identifier'?: IdentifierRefIdentifier;
+    'identifier': IdentifierRefIdentifier;
 }
 
 // @public (undocumented)
@@ -22154,6 +22199,7 @@ export interface ImageExportRequest {
     'fileName': string;
     'format': ImageExportRequestFormatEnum;
     'metadata'?: object | null;
+    'timezoneId'?: string | null;
     'widgetIds': Array<string>;
 }
 
@@ -26187,7 +26233,7 @@ export interface JsonApiDataSourceIdentifierOutAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiDataSourceIdentifierOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourceIdentifierOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 // @public (undocumented)
 export interface JsonApiDataSourceIdentifierOutDocument {
@@ -26290,7 +26336,7 @@ export interface JsonApiDataSourceInAttributesParametersInner {
 }
 
 // @public (undocumented)
-export type JsonApiDataSourceInAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourceInAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 // @public (undocumented)
 export interface JsonApiDataSourceInDocument {
@@ -26359,7 +26405,7 @@ export interface JsonApiDataSourceOutAttributesParametersInner {
 }
 
 // @public (undocumented)
-export type JsonApiDataSourceOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourceOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 // @public (undocumented)
 export interface JsonApiDataSourceOutDocument {
@@ -26462,7 +26508,7 @@ export interface JsonApiDataSourcePatchAttributesParametersInner {
 }
 
 // @public (undocumented)
-export type JsonApiDataSourcePatchAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourcePatchAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 // @public (undocumented)
 export interface JsonApiDataSourcePatchDocument {
@@ -34598,11 +34644,8 @@ export interface ListLinks {
 // @public (undocumented)
 export interface ListLlmProviderModelsRequest {
     // (undocumented)
-    'providerConfig': ListLlmProviderModelsRequestProviderConfig;
+    'providerConfig': LlmProviderConfig;
 }
-
-// @public
-export type ListLlmProviderModelsRequestProviderConfig = AfmAnthropicProviderConfig | AfmAwsBedrockProviderConfig | AfmAzureFoundryProviderConfig | AfmOpenAIProviderConfig;
 
 // @public (undocumented)
 export interface ListLlmProviderModelsResponse {
@@ -34672,11 +34715,8 @@ export interface LlmModel {
 // @public (undocumented)
 export type LlmModelFamilyEnum = 'OPENAI' | 'ANTHROPIC' | 'META' | 'MISTRAL' | 'AMAZON' | 'GOOGLE' | 'COHERE' | 'UNKNOWN';
 
-// @public (undocumented)
-export interface LlmProviderAuth {
-    // (undocumented)
-    'type': string;
-}
+// @public
+export type LlmProviderConfig = AfmAnthropicProviderConfig | AfmAwsBedrockProviderConfig | AfmAzureFoundryProviderConfig | AfmOpenAIProviderConfig;
 
 // @public
 export class LlmProviderControllerApi extends MetadataBaseApi implements LlmProviderControllerApiInterface {
@@ -34976,9 +35016,6 @@ export interface MatchAttributeFilterMatchAttributeFilter {
 
 // @public (undocumented)
 export type MatchAttributeFilterMatchAttributeFilterMatchTypeEnum = 'STARTS_WITH' | 'ENDS_WITH' | 'CONTAINS';
-
-// @public
-export type MdAutomationAlertCondition = AnomalyDetectionWrapper | ComparisonWrapper | RangeWrapper | RelativeWrapper;
 
 // @public
 export type MeasureDefinition = ArithmeticMeasureDefinition | InlineMeasureDefinition | PopMeasureDefinition | SimpleMeasureDefinition;
@@ -35694,7 +35731,7 @@ export type NoteAppliesToEnum = 'SOURCE' | 'TARGET';
 // @public (undocumented)
 export interface Notes {
     // (undocumented)
-    'note'?: Array<Note>;
+    'note': Array<Note>;
 }
 
 // @public
@@ -36673,15 +36710,12 @@ export class OrganizationUtilities {
 export interface OutlierDetectionRequest {
     'attributes': Array<AfmAttributeItem>;
     'auxMeasures'?: Array<AfmMeasureItem>;
-    'filters': Array<OutlierDetectionRequestFiltersInner>;
+    'filters'?: Array<AfmFilterDefinition>;
     'granularity': OutlierDetectionRequestGranularityEnum;
     // (undocumented)
     'measures': Array<AfmMeasureItem>;
     'sensitivity': OutlierDetectionRequestSensitivityEnum;
 }
-
-// @public
-export type OutlierDetectionRequestFiltersInner = AbstractMeasureValueFilter | AfmFilterDefinitionForSimpleMeasure | AfmInlineFilterDefinition;
 
 // @public (undocumented)
 export type OutlierDetectionRequestGranularityEnum = 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR';
@@ -36859,6 +36893,13 @@ export interface ParameterControllerApiUpdateEntityParametersRequest {
     readonly objectId: string;
     readonly workspaceId: string;
 }
+
+// @public
+export type ParameterDefinition = ({
+    type: 'NUMBER';
+} & NumberParameterDefinition) | ({
+    type: 'STRING';
+} & StringParameterDefinition);
 
 // @public
 export interface ParameterItem {
@@ -38280,6 +38321,7 @@ export type SearchRequestObjectTypesEnum = 'attribute' | 'metric' | 'fact' | 'la
 export interface SearchResult {
     // (undocumented)
     'error'?: SearchErrorInfo;
+    // @deprecated
     'reasoning': string;
     // (undocumented)
     'relationships': Array<SearchRelationshipObject>;
@@ -38450,6 +38492,7 @@ export interface SlidesExportRequest {
     'format': SlidesExportRequestFormatEnum;
     'metadata'?: object | null;
     'templateId'?: string | null;
+    'timezoneId'?: string | null;
     'visualizationIds'?: Array<string>;
     'widgetIds'?: Array<string>;
 }
@@ -38745,6 +38788,8 @@ export interface TabularExportRequest {
     'customOverride'?: CustomOverride;
     'executionResult'?: string;
     'executions'?: Array<TabularExportExecution>;
+    // (undocumented)
+    'executionSettings'?: ExecutionSettings;
     'fileName': string;
     'format': TabularExportRequestFormatEnum;
     'metadata'?: object | null;
@@ -38780,27 +38825,21 @@ export interface TestDefinitionRequest {
 export type TestDefinitionRequestAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 
 // @public (undocumented)
-export type TestDefinitionRequestTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type TestDefinitionRequestTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 // @public (undocumented)
 export interface TestLlmProviderByIdRequest {
     'models'?: Array<LlmModel>;
     // (undocumented)
-    'providerConfig'?: TestLlmProviderByIdRequestProviderConfig;
+    'providerConfig'?: LlmProviderConfig;
 }
-
-// @public
-export type TestLlmProviderByIdRequestProviderConfig = AfmAnthropicProviderConfig | AfmAwsBedrockProviderConfig | AfmAzureFoundryProviderConfig | AfmOpenAIProviderConfig;
 
 // @public (undocumented)
 export interface TestLlmProviderDefinitionRequest {
     'models'?: Array<LlmModel>;
     // (undocumented)
-    'providerConfig': TestLlmProviderDefinitionRequestProviderConfig;
+    'providerConfig': LlmProviderConfig;
 }
-
-// @public
-export type TestLlmProviderDefinitionRequestProviderConfig = AfmAnthropicProviderConfig | AfmAwsBedrockProviderConfig | AfmAzureFoundryProviderConfig | AfmOpenAIProviderConfig;
 
 // @public (undocumented)
 export interface TestLlmProviderResponse {
@@ -40600,6 +40639,7 @@ export interface VisualExportRequest {
     'dashboardId': string;
     'fileName': string;
     'metadata'?: object;
+    'timezoneId'?: string | null;
 }
 
 // @public
@@ -40961,7 +41001,7 @@ export interface WhatIfScenarioItem {
 // @public
 export interface WidgetDescriptor {
     // (undocumented)
-    'filters'?: Array<WidgetDescriptorFiltersInner>;
+    'filters'?: Array<AfmFilterDefinition>;
     // (undocumented)
     'title': string;
     // (undocumented)
@@ -40969,9 +41009,6 @@ export interface WidgetDescriptor {
     // (undocumented)
     'widgetType': string;
 }
-
-// @public
-export type WidgetDescriptorFiltersInner = AbstractMeasureValueFilter | AfmFilterDefinitionForSimpleMeasure | AfmInlineFilterDefinition;
 
 // @public
 export interface WidgetSlidesTemplate {
@@ -42265,7 +42302,7 @@ export type WorkspaceWidgetSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
 // @public (undocumented)
 export interface Xliff {
     // (undocumented)
-    'file'?: Array<any>;
+    'file': Array<any>;
     // (undocumented)
     'otherAttributes'?: {
         [key: string]: string;

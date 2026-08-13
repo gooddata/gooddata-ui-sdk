@@ -38,9 +38,14 @@ import { ApplyCurrentFiltersConfirmDialog } from "../../shared/automationFilters
 import { AutomationFiltersSelect } from "../../shared/automationFilters/components/AutomationFiltersSelect.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
+import { useScheduledExportActions } from "../state/ScheduledExportActionsContext.js";
+import { useScheduledExportData } from "../state/ScheduledExportDataContext.js";
+import { useScheduledExportDraft } from "../state/ScheduledExportDraftContext.js";
+import { useScheduledExportFilters } from "../state/ScheduledExportFiltersContext.js";
+import { useScheduledExportAttachments } from "../state/useScheduledExportAttachments.js";
+import { useScheduledExportDialogValidity } from "../state/useScheduledExportDialogValidity.js";
 import { type IScheduledEmailDialogProps } from "../types.js";
 import { getDefaultCronExpression } from "../utils/cron.js";
-import { getDefaultPdfPageSize } from "../utils/pdfPageSize.js";
 import { isMobileView } from "../utils/responsive.js";
 import { TIMEZONE_DEFAULT } from "../utils/timezone.js";
 
@@ -54,7 +59,6 @@ import { RecipientsSelect } from "./components/RecipientsSelect/RecipientsSelect
 import { SubjectForm } from "./components/SubjectForm/SubjectForm.js";
 import { SCHEDULED_EMAIL_DIALOG_ID } from "./constants.js";
 import { DefaultLoadingScheduledEmailDialog } from "./DefaultLoadingScheduledEmailDialog.js";
-import { useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
 import { useElementHeightSnapshot } from "./hooks/useElementHeightSnapshot.js";
 import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToBackend.js";
 
@@ -112,6 +116,8 @@ export function ScheduledMailDialogRenderer({
     onSaveSuccess,
     onSubmit,
     onSuccess,
+    topContent,
+    bottomContent,
 }: IScheduledEmailDialogProps) {
     const intl = useIntl();
 
@@ -131,8 +137,14 @@ export function ScheduledMailDialogRenderer({
         isSecondaryTitleVisible,
         tabIds,
     } = useAutomationsContext();
-    const { exportTemplates, widgetTitle, scheduledExportToEdit, widget, dashboardFilters } =
-        useScheduledEmailDialogContext();
+    const {
+        exportTemplates,
+        widgetTitle,
+        scheduledExportToEdit,
+        widget,
+        dashboardFilters,
+        notificationChannels,
+    } = useScheduledEmailDialogContext();
 
     const handleScheduleDeleteSuccess = () => {
         onDeleteSuccess?.();
@@ -150,50 +162,37 @@ export function ScheduledMailDialogRenderer({
         isExecutionTimestampMode,
         isSlidesExportEnabled,
         isAccessibilityModeEnabled,
-        defaultPdfPageSize,
+        enableAutomationEvaluationMode,
     } = useDefaultScheduledEmailDialogData();
 
+    const { editedAutomation, originalAutomation, startDate } = useScheduledExportDraft();
     const {
-        defaultUser,
-        editedAutomation,
-        originalAutomation,
-        isSubmitDisabled,
-        xlsxSettings,
-        pdfSettings,
-        csvSettings,
-        csvRawSettings,
-        startDate,
-        allowExternalRecipients,
-        allowOnlyLoggedUserRecipients,
-        validationErrorMessage,
-        selectedAttachments,
-        isParentValid,
+        onTitleChange,
+        onRecurrenceChange,
+        onEvaluationModeChange,
+        onDestinationChange,
+        onRecipientsChange,
+        onSubjectChange,
+        onMessageChange,
         onDashboardAttachmentsChange,
         onWidgetAttachmentsChange,
         onXlsxSettingsChange,
         onPdfSettingsChange,
         onCsvSettingsChange,
         onCsvRawSettingsChange,
-        slidesTemplateIds,
         onSlidesTemplateIdChange,
-        onDestinationChange,
-        onMessageChange,
-        onRecipientsChange,
-        onRecurrenceChange,
-        onEvaluationModeChange,
-        onSubjectChange,
-        onTitleChange,
-        onFiltersChange,
-        onApplyCurrentFilters,
-        onStoreFiltersChange,
-        onFiltersByTabChange,
-        enableAutomationEvaluationMode,
-        notificationChannels,
+    } = useScheduledExportActions();
+    const { defaultUser } = useScheduledExportData();
+    const {
         selectedFilters,
         availableFilters,
         storeFilters,
         filtersByTab,
         editedFiltersByTab,
+        onFiltersChange,
+        onFiltersByTabChange,
+        onApplyCurrentFilters,
+        onStoreFiltersChange,
         automationIsValid,
         parametersEnabled,
         visibleParametersByTab,
@@ -206,11 +205,16 @@ export function ScheduledMailDialogRenderer({
         onParameterChangeByTab,
         onParameterDeleteByTab,
         applyLatest: applyLatestParameters,
-    } = useEditScheduledEmail({
-        maxAutomationsRecipients,
-        externalRecipientOverride,
-        defaultPdfPageSize,
-    });
+    } = useScheduledExportFilters();
+    const { selectedAttachments, xlsxSettings, pdfSettings, csvSettings, csvRawSettings, slidesTemplateIds } =
+        useScheduledExportAttachments();
+    const {
+        isSubmitDisabled,
+        validationErrorMessage,
+        isParentValid,
+        allowExternalRecipients,
+        allowOnlyLoggedUserRecipients,
+    } = useScheduledExportDialogValidity();
 
     const [isApplyCurrentFiltersDialogOpen, setIsApplyCurrentFiltersDialogOpen] =
         useState(!automationIsValid);
@@ -429,6 +433,7 @@ export function ScheduledMailDialogRenderer({
                                     "gd-notification-channel-dialog-with-tabs": tabs.length > 1,
                                 })}
                             >
+                                {topContent}
                                 <div className="gd-divider-with-margin" />
                                 {selectedTabId === "filters" ? (
                                     <div
@@ -614,6 +619,7 @@ export function ScheduledMailDialogRenderer({
                                             ))}
                                     </div>
                                 )}
+                                {bottomContent}
                             </ScrollablePanel>
                         </ConfirmDialogBase>
                     </ValidationContextStore>
@@ -666,12 +672,9 @@ function useDefaultScheduledEmailDialogData() {
         maxAutomationsRecipients,
         allowHourlyRecurrence,
         isExecutionTimestampMode,
-        features: { enableSlideshowExports },
+        features: { enableSlideshowExports, enableAutomationEvaluationMode },
     } = useAutomationsContext();
     const { dashboardTitle, dateFormat, isCrossFiltering } = useScheduledEmailDialogContext();
-    const formatLocale = settings?.formatLocale;
-
-    const defaultPdfPageSize = getDefaultPdfPageSize(formatLocale);
 
     return {
         locale,
@@ -684,6 +687,6 @@ function useDefaultScheduledEmailDialogData() {
         isExecutionTimestampMode,
         isSlidesExportEnabled: enableSlideshowExports,
         isAccessibilityModeEnabled: settings?.enableAccessibilityMode === true,
-        defaultPdfPageSize,
+        enableAutomationEvaluationMode,
     };
 }

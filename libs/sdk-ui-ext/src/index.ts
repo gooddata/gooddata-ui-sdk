@@ -57,7 +57,7 @@ import {
     isVisualizationDefaultSizeInfo,
 } from "./internal/index.js";
 
-export { clearInsightViewCaches } from "./dataLoaders/index.js";
+export { clearInsightViewCaches, clearInsightViewCacheForInsight } from "./dataLoaders/index.js";
 export { InsightView } from "./insightView/InsightView.js";
 export { InsightError, type IInsightErrorProps } from "./insightView/InsightError.js";
 export { InsightRenderer, type IInsightRendererProps } from "./insightView/InsightRenderer.js";

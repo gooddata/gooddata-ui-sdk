@@ -89,13 +89,7 @@
                                 "example": "e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
                             }
                         },
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Unit"
-                                }
-                            }
-                        }
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -178,13 +172,7 @@
                                 "example": "e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
                             }
                         },
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Unit"
-                                }
-                            }
-                        }
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -222,9 +210,10 @@
                         "required": false,
                         "schema": {
                             "minimum": 0,
-                            "type": "string",
+                            "type": "integer",
                             "description": "Zero-based page number.",
-                            "default": "0"
+                            "format": "int32",
+                            "default": 0
                         }
                     },
                     {
@@ -235,9 +224,10 @@
                         "schema": {
                             "maximum": 500,
                             "minimum": 1,
-                            "type": "string",
+                            "type": "integer",
                             "description": "Number of items per page.",
-                            "default": "50"
+                            "format": "int32",
+                            "default": 50
                         }
                     },
                     {
@@ -333,13 +323,7 @@
                                 "example": "e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
                             }
                         },
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Unit"
-                                }
-                            }
-                        }
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -377,9 +361,10 @@
                         "required": false,
                         "schema": {
                             "minimum": 0,
-                            "type": "string",
+                            "type": "integer",
                             "description": "Zero-based page number.",
-                            "default": "0"
+                            "format": "int32",
+                            "default": 0
                         }
                     },
                     {
@@ -390,9 +375,10 @@
                         "schema": {
                             "maximum": 500,
                             "minimum": 1,
-                            "type": "string",
+                            "type": "integer",
                             "description": "Number of items per page.",
-                            "default": "50"
+                            "format": "int32",
+                            "default": 50
                         }
                     },
                     {
@@ -528,13 +514,7 @@
                                 }
                             }
                         },
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Unit"
-                                }
-                            }
-                        }
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -562,9 +542,10 @@
                         "required": false,
                         "schema": {
                             "minimum": 0,
-                            "type": "string",
+                            "type": "integer",
                             "description": "Zero-based page number.",
-                            "default": "0"
+                            "format": "int32",
+                            "default": 0
                         }
                     },
                     {
@@ -575,9 +556,10 @@
                         "schema": {
                             "maximum": 500,
                             "minimum": 1,
-                            "type": "string",
+                            "type": "integer",
                             "description": "Number of items per page.",
-                            "default": "50"
+                            "format": "int32",
+                            "default": 50
                         }
                     },
                     {
@@ -663,13 +645,7 @@
                                 "example": "e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
                             }
                         },
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Unit"
-                                }
-                            }
-                        }
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -2245,7 +2221,8 @@
                 ],
                 "responses": {
                     "410": {
-                        "description": "Gone"
+                        "description": "Gone",
+                        "content": {}
                     }
                 },
                 "deprecated": true
@@ -2262,7 +2239,8 @@
                 "operationId": "validateLLMEndpoint",
                 "responses": {
                     "410": {
-                        "description": "Gone"
+                        "description": "Gone",
+                        "content": {}
                     }
                 },
                 "deprecated": true
@@ -2375,9 +2353,10 @@
                         "required": false,
                         "schema": {
                             "minimum": 0,
-                            "type": "string",
+                            "type": "integer",
                             "description": "Zero-based page number.",
-                            "default": "0"
+                            "format": "int32",
+                            "default": 0
                         }
                     },
                     {
@@ -2388,9 +2367,10 @@
                         "schema": {
                             "maximum": 500,
                             "minimum": 1,
-                            "type": "string",
+                            "type": "integer",
                             "description": "Number of items per page.",
-                            "default": "50"
+                            "format": "int32",
+                            "default": 50
                         }
                     },
                     {
@@ -2494,9 +2474,10 @@
                         "required": false,
                         "schema": {
                             "minimum": 0,
-                            "type": "string",
+                            "type": "integer",
                             "description": "Zero-based page number.",
-                            "default": "0"
+                            "format": "int32",
+                            "default": 0
                         }
                     },
                     {
@@ -2507,9 +2488,10 @@
                         "schema": {
                             "maximum": 500,
                             "minimum": 1,
-                            "type": "string",
+                            "type": "integer",
                             "description": "Number of items per page.",
-                            "default": "50"
+                            "format": "int32",
+                            "default": 50
                         }
                     },
                     {
@@ -2656,13 +2638,7 @@
                                 "example": "e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
                             }
                         },
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Unit"
-                                }
-                            }
-                        }
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -2764,13 +2740,7 @@
                                 "example": "e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
                             }
                         },
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Unit"
-                                }
-                            }
-                        }
+                        "content": {}
                     }
                 },
                 "x-gdc-security-info": {
@@ -3476,7 +3446,8 @@
                 ],
                 "responses": {
                     "410": {
-                        "description": "Gone"
+                        "description": "Gone",
+                        "content": {}
                     }
                 },
                 "deprecated": true
@@ -4106,8 +4077,8 @@
                 "properties": {
                     "identifier": {
                         "required": [
-                            "type",
-                            "id"
+                            "id",
+                            "type"
                         ],
                         "type": "object",
                         "properties": {
@@ -4235,8 +4206,8 @@
                 "properties": {
                     "identifier": {
                         "required": [
-                            "type",
-                            "id"
+                            "id",
+                            "type"
                         ],
                         "type": "object",
                         "properties": {
@@ -4363,6 +4334,9 @@
                 "description": "All objects of specified types valid with respect to given AFM."
             },
             "AggregateKeyConfig": {
+                "required": [
+                    "type"
+                ],
                 "type": "object",
                 "properties": {
                     "columns": {
@@ -4372,6 +4346,12 @@
                             "type": "string",
                             "description": "Key columns. Defaults to first inferred column."
                         }
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "aggregate"
+                        ]
                     }
                 },
                 "description": "Aggregate key model — pre-aggregates rows sharing the same key columns."
@@ -5235,17 +5215,7 @@
                         "type": "array",
                         "description": "Optional filters to apply",
                         "items": {
-                            "oneOf": [
-                                {
-                                    "$ref": "#/components/schemas/AbstractMeasureValueFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/FilterDefinitionForSimpleMeasure"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/InlineFilterDefinition"
-                                }
-                            ]
+                            "$ref": "#/components/schemas/FilterDefinition"
                         }
                     },
                     "measure": {
@@ -5308,17 +5278,7 @@
                         "type": "array",
                         "description": "Optional filters to apply.",
                         "items": {
-                            "oneOf": [
-                                {
-                                    "$ref": "#/components/schemas/AbstractMeasureValueFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/FilterDefinitionForSimpleMeasure"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/InlineFilterDefinition"
-                                }
-                            ]
+                            "$ref": "#/components/schemas/FilterDefinition"
                         }
                     },
                     "includeTags": {
@@ -5798,7 +5758,8 @@
             },
             "ColumnPartitionConfig": {
                 "required": [
-                    "columns"
+                    "columns",
+                    "type"
                 ],
                 "type": "object",
                 "properties": {
@@ -5809,6 +5770,12 @@
                             "type": "string",
                             "description": "Columns to partition by."
                         }
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "column"
+                        ]
                     }
                 },
                 "description": "Partition by column expression."
@@ -5911,7 +5878,6 @@
                 "properties": {
                     "compoundMeasureValueFilter": {
                         "required": [
-                            "conditions",
                             "measure"
                         ],
                         "type": "object",
@@ -5981,10 +5947,30 @@
                         "description": "Override inferred column types. Maps column names to SQL type strings (e.g. {\"year\": \"INT\", \"event_date\": \"DATE\"}). Applied after parquet schema inference."
                     },
                     "distributionConfig": {
-                        "$ref": "#/components/schemas/DistributionConfig"
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/HashDistributionConfig"
+                            },
+                            {
+                                "$ref": "#/components/schemas/RandomDistributionConfig"
+                            }
+                        ]
                     },
                     "keyConfig": {
-                        "$ref": "#/components/schemas/KeyConfig"
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/AggregateKeyConfig"
+                            },
+                            {
+                                "$ref": "#/components/schemas/DuplicateKeyConfig"
+                            },
+                            {
+                                "$ref": "#/components/schemas/PrimaryKeyConfig"
+                            },
+                            {
+                                "$ref": "#/components/schemas/UniqueKeyConfig"
+                            }
+                        ]
                     },
                     "maxVarcharLength": {
                         "type": "integer",
@@ -5992,7 +5978,17 @@
                         "format": "int32"
                     },
                     "partitionConfig": {
-                        "$ref": "#/components/schemas/PartitionConfig"
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/ColumnPartitionConfig"
+                            },
+                            {
+                                "$ref": "#/components/schemas/DateTruncPartitionConfig"
+                            },
+                            {
+                                "$ref": "#/components/schemas/TimeSlicePartitionConfig"
+                            }
+                        ]
                     },
                     "pathPrefix": {
                         "type": "string",
@@ -6062,7 +6058,7 @@
                                     "$ref": "#/components/schemas/DateRelativeFilter"
                                 },
                                 {
-                                    "$ref": "#/components/schemas/RankingFilter"
+                                    "$ref": "#/components/schemas/GenAiRankingFilter"
                                 }
                             ]
                         }
@@ -6129,7 +6125,8 @@
                     },
                     "reasoning": {
                         "type": "string",
-                        "description": "DEPRECATED: Use top-level reasoning.steps instead. Reasoning from LLM. Description of how and why the answer was generated."
+                        "description": "DEPRECATED: Use top-level reasoning.steps instead. Reasoning from LLM. Description of how and why the answer was generated.",
+                        "deprecated": true
                     },
                     "suggestions": {
                         "type": "array",
@@ -6449,6 +6446,7 @@
             "DateTruncPartitionConfig": {
                 "required": [
                     "column",
+                    "type",
                     "unit"
                 ],
                 "type": "object",
@@ -6456,6 +6454,12 @@
                     "column": {
                         "type": "string",
                         "description": "Column to partition on."
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "dateTrunc"
+                        ]
                     },
                     "unit": {
                         "type": "string",
@@ -6652,6 +6656,9 @@
                 }
             },
             "DuplicateKeyConfig": {
+                "required": [
+                    "type"
+                ],
                 "type": "object",
                 "properties": {
                     "columns": {
@@ -6661,6 +6668,12 @@
                             "type": "string",
                             "description": "Key columns. Defaults to first inferred column."
                         }
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "duplicate"
+                        ]
                     }
                 },
                 "description": "Duplicate key model — allows duplicate rows for the given key columns."
@@ -7160,9 +7173,18 @@
                 "required": [
                     "error",
                     "id",
-                    "kind"
+                    "kind",
+                    "status"
                 ],
                 "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "failed"
+                        ]
+                    }
+                },
                 "description": "Operation that has failed",
                 "allOf": [
                     {
@@ -7381,10 +7403,52 @@
                     },
                     "reasoning": {
                         "type": "string",
-                        "description": "DEPRECATED: Use top-level reasoning.steps instead. Reasoning from LLM. Description of how and why the answer was generated."
+                        "description": "DEPRECATED: Use top-level reasoning.steps instead. Reasoning from LLM. Description of how and why the answer was generated.",
+                        "deprecated": true
                     }
                 },
                 "description": "List of objects found by similarity search and post-processed by LLM."
+            },
+            "GenAiRankingFilter": {
+                "required": [
+                    "measures",
+                    "operator",
+                    "value"
+                ],
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Filter"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "dimensionality": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "measures": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "operator": {
+                                "type": "string",
+                                "enum": [
+                                    "TOP",
+                                    "BOTTOM"
+                                ]
+                            },
+                            "value": {
+                                "type": "integer",
+                                "format": "int32"
+                            }
+                        }
+                    }
+                ]
             },
             "GenerateDescriptionRequest": {
                 "required": [
@@ -7540,6 +7604,9 @@
                 "description": "Status of an AI Lake service"
             },
             "HashDistributionConfig": {
+                "required": [
+                    "type"
+                ],
                 "type": "object",
                 "properties": {
                     "buckets": {
@@ -7555,6 +7622,12 @@
                             "type": "string",
                             "description": "Columns to distribute by. Defaults to first column."
                         }
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "hash"
+                        ]
                     }
                 },
                 "description": "Hash-based distribution across buckets."
@@ -7627,7 +7700,8 @@
                 "required": [
                     "title",
                     "visualizationId",
-                    "widgetId"
+                    "widgetId",
+                    "widgetType"
                 ],
                 "type": "object",
                 "properties": {
@@ -7653,6 +7727,12 @@
                     "widgetId": {
                         "type": "string",
                         "description": "Widget object ID."
+                    },
+                    "widgetType": {
+                        "type": "string",
+                        "enum": [
+                            "insight"
+                        ]
                     }
                 },
                 "description": "Insight widget displaying a visualization."
@@ -8256,20 +8336,7 @@
                 "type": "object",
                 "properties": {
                     "providerConfig": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/AnthropicProviderConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/AwsBedrockProviderConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/AzureFoundryProviderConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/OpenAIProviderConfig"
-                            }
-                        ]
+                        "$ref": "#/components/schemas/LlmProviderConfig"
                     }
                 }
             },
@@ -8956,7 +9023,6 @@
             "OutlierDetectionRequest": {
                 "required": [
                     "attributes",
-                    "filters",
                     "granularity",
                     "measures",
                     "sensitivity"
@@ -8981,17 +9047,7 @@
                         "type": "array",
                         "description": "Various filter types to filter the execution result.",
                         "items": {
-                            "oneOf": [
-                                {
-                                    "$ref": "#/components/schemas/AbstractMeasureValueFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/FilterDefinitionForSimpleMeasure"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/InlineFilterDefinition"
-                                }
-                            ]
+                            "$ref": "#/components/schemas/FilterDefinition"
                         }
                     },
                     "granularity": {
@@ -9142,9 +9198,18 @@
             "PendingOperation": {
                 "required": [
                     "id",
-                    "kind"
+                    "kind",
+                    "status"
                 ],
                 "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "pending"
+                        ]
+                    }
+                },
                 "description": "Operation that is still pending",
                 "allOf": [
                     {
@@ -9429,6 +9494,9 @@
                 "description": "Filter able to limit element values by label and related selected elements."
             },
             "PrimaryKeyConfig": {
+                "required": [
+                    "type"
+                ],
                 "type": "object",
                 "properties": {
                     "columns": {
@@ -9438,6 +9506,12 @@
                             "type": "string",
                             "description": "Key columns. Defaults to first inferred column."
                         }
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "primary"
+                        ]
                     }
                 },
                 "description": "Primary key model — enforces uniqueness, replaces on conflict."
@@ -9583,6 +9657,9 @@
                 }
             },
             "RandomDistributionConfig": {
+                "required": [
+                    "type"
+                ],
                 "type": "object",
                 "properties": {
                     "buckets": {
@@ -9590,6 +9667,12 @@
                         "type": "integer",
                         "description": "Number of random distribution buckets. Defaults to 1.",
                         "format": "int32"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "random"
+                        ]
                     }
                 },
                 "description": "Random distribution across buckets."
@@ -10077,7 +10160,8 @@
             "RichTextWidgetDescriptor": {
                 "required": [
                     "title",
-                    "widgetId"
+                    "widgetId",
+                    "widgetType"
                 ],
                 "type": "object",
                 "properties": {
@@ -10099,6 +10183,12 @@
                     "widgetId": {
                         "type": "string",
                         "description": "Widget object ID."
+                    },
+                    "widgetType": {
+                        "type": "string",
+                        "enum": [
+                            "richText"
+                        ]
                     }
                 },
                 "description": "Rich text widget displaying static content. Has no execution result."
@@ -10315,7 +10405,8 @@
                     },
                     "reasoning": {
                         "type": "string",
-                        "description": "DEPRECATED: Use top-level reasoning.steps instead. If something is not working properly this field will contain explanation."
+                        "description": "DEPRECATED: Use top-level reasoning.steps instead. If something is not working properly this field will contain explanation.",
+                        "deprecated": true
                     },
                     "relationships": {
                         "type": "array",
@@ -10609,9 +10700,18 @@
             "SucceededOperation": {
                 "required": [
                     "id",
-                    "kind"
+                    "kind",
+                    "status"
                 ],
                 "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "succeeded"
+                        ]
+                    }
+                },
                 "description": "Operation that has succeeded",
                 "allOf": [
                     {
@@ -10657,20 +10757,7 @@
                         }
                     },
                     "providerConfig": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/AnthropicProviderConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/AwsBedrockProviderConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/AzureFoundryProviderConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/OpenAIProviderConfig"
-                            }
-                        ]
+                        "$ref": "#/components/schemas/LlmProviderConfig"
                     }
                 }
             },
@@ -10688,20 +10775,7 @@
                         }
                     },
                     "providerConfig": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/AnthropicProviderConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/AwsBedrockProviderConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/AzureFoundryProviderConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/OpenAIProviderConfig"
-                            }
-                        ]
+                        "$ref": "#/components/schemas/LlmProviderConfig"
                     }
                 }
             },
@@ -10747,6 +10821,7 @@
                 "required": [
                     "column",
                     "slices",
+                    "type",
                     "unit"
                 ],
                 "type": "object",
@@ -10760,6 +10835,12 @@
                         "type": "integer",
                         "description": "How many units per slice.",
                         "format": "int32"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "timeSlice"
+                        ]
                     },
                     "unit": {
                         "type": "string",
@@ -11010,6 +11091,9 @@
                 "description": "Ambient UI state: what the user is currently looking at (dashboard, visible widgets)."
             },
             "UniqueKeyConfig": {
+                "required": [
+                    "type"
+                ],
                 "type": "object",
                 "properties": {
                     "columns": {
@@ -11019,12 +11103,15 @@
                             "type": "string",
                             "description": "Key columns. Defaults to first inferred column."
                         }
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "unique"
+                        ]
                     }
                 },
                 "description": "Unique key model — enforces uniqueness, replaces on conflict."
-            },
-            "Unit": {
-                "type": "object"
             },
             "UpdateDatabaseDataSourceRequest": {
                 "required": [
@@ -11142,7 +11229,8 @@
                     "activeVisualizationId",
                     "title",
                     "visualizationIds",
-                    "widgetId"
+                    "widgetId",
+                    "widgetType"
                 ],
                 "type": "object",
                 "properties": {
@@ -11175,6 +11263,12 @@
                     "widgetId": {
                         "type": "string",
                         "description": "Widget object ID."
+                    },
+                    "widgetType": {
+                        "type": "string",
+                        "enum": [
+                            "visualizationSwitcher"
+                        ]
                     }
                 },
                 "description": "Visualization switcher widget allowing users to toggle between multiple visualizations."
@@ -11255,17 +11349,7 @@
                     "filters": {
                         "type": "array",
                         "items": {
-                            "oneOf": [
-                                {
-                                    "$ref": "#/components/schemas/AbstractMeasureValueFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/FilterDefinitionForSimpleMeasure"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/InlineFilterDefinition"
-                                }
-                            ]
+                            "$ref": "#/components/schemas/FilterDefinition"
                         }
                     },
                     "title": {

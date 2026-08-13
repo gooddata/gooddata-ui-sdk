@@ -6,9 +6,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
     type DashboardAttachmentType,
     type IAutomationMetadataObjectDefinition,
-    type IExportDefinitionDashboardRequestPayload,
     type IExportDefinitionMetadataObjectDefinition,
-    type IExportDefinitionVisualizationObjectRequestPayload,
     type IExportDefinitionVisualizationObjectSettings,
     type IInsight,
     type IWidget,
@@ -27,21 +25,21 @@ const { mockUseAutomationsContext, mockUseScheduledEmailDialogContext } = vi.hoi
     mockUseScheduledEmailDialogContext: vi.fn(),
 }));
 
-vi.mock("../../../../contexts/AutomationsContext.js", () => ({
+vi.mock("../../../contexts/AutomationsContext.js", () => ({
     useAutomationsContext: mockUseAutomationsContext,
 }));
 
-vi.mock("../../../../contexts/ScheduledEmailDialogContext.js", () => ({
+vi.mock("../../../contexts/ScheduledEmailDialogContext.js", () => ({
     useScheduledEmailDialogContext: mockUseScheduledEmailDialogContext,
 }));
 
-vi.mock("../../utils/exportDefinitions.js", () => ({
+vi.mock("../exportDefinitions.js", () => ({
     withRebuiltExportDefinitions: vi.fn(),
     newDashboardExportDefinitionMetadataObjectDefinition: vi.fn(),
     newWidgetExportDefinitionMetadataObjectDefinition: vi.fn(),
 }));
 
-vi.mock("../../../../../../_staging/automation/index.js", () => ({
+vi.mock("../../../../../_staging/automation/index.js", () => ({
     getAutomationExportParametersByTab: vi.fn(),
     setExportParametersByTab: vi.fn(),
 }));
@@ -50,12 +48,14 @@ vi.mock("../../../../../../_staging/automation/index.js", () => ({
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
 // ---------------------------------------------------------------------------
 
-import * as stagingAutomationModule from "../../../../../../_staging/automation/index.js";
-import * as exportDefinitionsUtilsModule from "../../utils/exportDefinitions.js";
+import * as stagingAutomationModule from "../../../../../_staging/automation/index.js";
+import * as exportDefinitionsUtilsModule from "../exportDefinitions.js";
 import {
     type IUseScheduledEmailExportSettingsProps,
     useScheduledEmailExportSettings,
 } from "../useScheduledEmailExportSettings.js";
+
+import { makeAutomation, makeDashboardExportDefinition, makeWidgetExportDefinition } from "./fixtures.js";
 
 // ---------------------------------------------------------------------------
 // Typed spy references (resolved after import)
@@ -76,8 +76,6 @@ const setExportParametersByTabSpy = vi.mocked(stagingAutomationModule.setExportP
 // ---------------------------------------------------------------------------
 // Fixtures
 // ---------------------------------------------------------------------------
-
-type ExportDefinition = NonNullable<IAutomationMetadataObjectDefinition["exportDefinitions"]>[number];
 
 const widget: IWidget = {
     type: "insight",
@@ -105,47 +103,6 @@ const insight: IInsight = {
         properties: {},
     },
 };
-
-const makeDashboardExportDefinition = (
-    format: DashboardAttachmentType,
-    requestPayloadOverrides: Partial<IExportDefinitionDashboardRequestPayload> = {},
-): ExportDefinition => ({
-    type: "exportDefinition",
-    title: "Dashboard export",
-    requestPayload: {
-        type: "dashboard",
-        fileName: "Dashboard",
-        format,
-        content: { dashboard: "dashboard-1" },
-        ...requestPayloadOverrides,
-    },
-});
-
-const makeWidgetExportDefinition = (
-    format: WidgetAttachmentType,
-    requestPayloadOverrides: Partial<IExportDefinitionVisualizationObjectRequestPayload> = {},
-): ExportDefinition => ({
-    type: "exportDefinition",
-    title: "Widget export",
-    requestPayload: {
-        type: "visualizationObject",
-        fileName: "Widget",
-        format,
-        content: { visualizationObject: "insight-1", widget: "w1", dashboard: "dashboard-1" },
-        ...requestPayloadOverrides,
-    },
-});
-
-const makeAutomation = (
-    overrides: Partial<IAutomationMetadataObjectDefinition> = {},
-): IAutomationMetadataObjectDefinition => ({
-    type: "automation",
-    title: "Test Scheduled Email",
-    notificationChannel: "channel-1",
-    recipients: [],
-    exportDefinitions: [],
-    ...overrides,
-});
 
 const BASE_PROPS: IUseScheduledEmailExportSettingsProps = {
     editedAutomation: makeAutomation(),
@@ -226,86 +183,6 @@ function renderExportSettingsHook(overrides: Partial<IUseScheduledEmailExportSet
 // ---------------------------------------------------------------------------
 // Case 1: derivations read the right thing from exportDefinitions
 // ---------------------------------------------------------------------------
-
-describe("useScheduledEmailExportSettings — derivations", () => {
-    it("selectedAttachments lists the formats of every export definition", () => {
-        const { result } = renderExportSettingsHook({
-            editedAutomation: makeAutomation({
-                exportDefinitions: [makeDashboardExportDefinition("PDF"), makeWidgetExportDefinition("XLSX")],
-            }),
-        });
-
-        expect(result.current.selectedAttachments).toEqual(["PDF", "XLSX"]);
-    });
-
-    it("isXlsxExportSelected/isCsvExportSelected true only when the matching widget format is present", () => {
-        const { result } = renderExportSettingsHook({
-            editedAutomation: makeAutomation({
-                exportDefinitions: [makeWidgetExportDefinition("XLSX")],
-            }),
-        });
-
-        expect(result.current.isXlsxExportSelected).toBe(true);
-        expect(result.current.isCsvExportSelected).toBe(false);
-    });
-
-    it("isDashboardExportSelected defaults to true when exportDefinitions is undefined", () => {
-        const { result } = renderExportSettingsHook({
-            editedAutomation: makeAutomation({ exportDefinitions: undefined }),
-        });
-
-        expect(result.current.isDashboardExportSelected).toBe(true);
-    });
-
-    it("xlsxSettings falls back to defaults when no XLSX definition is present", () => {
-        const { result } = renderExportSettingsHook({
-            editedAutomation: makeAutomation({ exportDefinitions: [] }),
-        });
-
-        expect(result.current.xlsxSettings).toEqual({ mergeHeaders: true, exportInfo: true });
-    });
-
-    it("xlsxSettings reads settings off the present XLSX definition", () => {
-        const { result } = renderExportSettingsHook({
-            editedAutomation: makeAutomation({
-                exportDefinitions: [
-                    makeWidgetExportDefinition("XLSX", {
-                        settings: { mergeHeaders: false, exportInfo: false },
-                    }),
-                ],
-            }),
-        });
-
-        expect(result.current.xlsxSettings).toEqual({ mergeHeaders: false, exportInfo: false });
-    });
-
-    it("csvSettings falls back to resolvedDefaultCsvDelimiter when absent", () => {
-        mockUseAutomationsContext.mockReturnValue({ settings: { exportCsvCustomDelimiter: ";" } });
-        const { result } = renderExportSettingsHook({
-            editedAutomation: makeAutomation({ exportDefinitions: [] }),
-        });
-
-        expect(result.current.csvSettings).toEqual({ delimiter: ";" });
-    });
-
-    it("slidesTemplateIds reads per-format templateId, scoped to dashboard mode when no widget", () => {
-        const { result } = renderExportSettingsHook({
-            editedAutomation: makeAutomation({
-                exportDefinitions: [
-                    makeDashboardExportDefinition("PPTX", { templateId: "tpl-pptx" }),
-                    // Same format on a visualizationObject payload must NOT match in dashboard mode.
-                    makeWidgetExportDefinition("PDF", { templateId: "tpl-pdf-widget" }),
-                ],
-            }),
-        });
-
-        expect(result.current.slidesTemplateIds).toEqual({
-            PPTX: "tpl-pptx",
-            PDF_SLIDES: undefined,
-            PDF: undefined,
-        });
-    });
-});
 
 // ---------------------------------------------------------------------------
 // Case 2: attachment setters call withRebuiltExportDefinitions with correct rebuilt defs
@@ -618,14 +495,6 @@ describe("useScheduledEmailExportSettings — setParametersWire (F1-2594)", () =
 // ---------------------------------------------------------------------------
 
 describe("useScheduledEmailExportSettings — undefined/empty exportDefinitions guards", () => {
-    it("selectedAttachments is [] when exportDefinitions is undefined", () => {
-        const { result } = renderExportSettingsHook({
-            editedAutomation: makeAutomation({ exportDefinitions: undefined }),
-        });
-
-        expect(result.current.selectedAttachments).toEqual([]);
-    });
-
     it("settings setters do not throw when exportDefinitions is undefined", () => {
         const { result, setEditedAutomation } = renderExportSettingsHook();
 

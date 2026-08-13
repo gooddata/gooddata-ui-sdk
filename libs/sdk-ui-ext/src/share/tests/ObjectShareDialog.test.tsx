@@ -9,6 +9,7 @@ import { type IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import type {
+    IUiAddGranteeDialogProps,
     IUiConfirmDialogProps,
     IUiGranteeRowControlsProps,
     IUiObjectShareDialogProps,
@@ -50,6 +51,7 @@ const captured = vi.hoisted(() => ({
     isLoading: [] as Array<boolean | undefined>,
     rows: [] as Array<{ id: string; name: string; email?: string }>,
     controls: [] as Array<Partial<IUiGranteeRowControlsProps>>,
+    addGrantee: [] as Array<Partial<IUiAddGranteeDialogProps>>,
     confirms: [] as Array<{
         title: string;
         isOpen: boolean | undefined;
@@ -89,7 +91,10 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
             captured.controls.push(props);
             return null;
         },
-        UiAddGranteeDialog: () => null,
+        UiAddGranteeDialog: (props: IUiAddGranteeDialogProps) => {
+            captured.addGrantee.push(props);
+            return null;
+        },
         UiConfirmDialog: (props: IUiConfirmDialogProps) => {
             captured.confirms.push({
                 title: props.title,
@@ -158,6 +163,7 @@ function makeController(stateOverrides: Partial<IObjectShareControllerState>): I
         labelsResolved: true,
         labelsInitializing: false,
         selectedLabelIdsByGrantee: {},
+        inheritedLabelIdsByGrantee: {},
         pendingGrantees: [],
         ...stateOverrides,
     };
@@ -170,6 +176,7 @@ function renderDialog(controller: IObjectShareController, onSummaryChange?: (sum
     captured.rows.length = 0;
     captured.controls.length = 0;
     captured.confirms.length = 0;
+    captured.addGrantee.length = 0;
     injected.controller = controller;
     return render(
         <IntlProvider locale="en-US" messages={MESSAGES}>
@@ -229,6 +236,49 @@ describe("ObjectShareDialog gating", () => {
 
         expect(captured.addDisabled.at(-1)).toBe(false);
         expect(captured.controls.at(-1)?.isDisabled).toBe(false);
+    });
+
+    it("offers the add step the same label checklist the grantee rows use", () => {
+        // Without this the add step has no label picker at all, so a new grantee can
+        // only be scoped after the grant already landed on every label.
+        const labels = [
+            { ref: idRef("lbl.primary"), id: "lbl.primary", title: "Id", isPrimary: true, isDefault: false },
+            { ref: idRef("lbl.name"), id: "lbl.name", title: "Name", isPrimary: false, isDefault: true },
+        ];
+        renderDialog(makeController({ labels }));
+
+        expect(captured.addGrantee.at(-1)?.labels).toEqual(captured.controls.at(-1)?.labels);
+        expect(captured.addGrantee.at(-1)?.labels).toEqual([
+            { id: "lbl.primary", label: "Id", kind: "primary", locked: true },
+            { id: "lbl.name", label: "Name", kind: undefined, locked: false },
+        ]);
+    });
+
+    it("locks a label the grantee only inherits, leaving the rest editable", () => {
+        // The label is in scope (checked, as the granting workspace shows it) but this
+        // workspace holds no grant on it — unchecking it could only pretend to revoke.
+        const labels = [
+            { ref: idRef("lbl.primary"), id: "lbl.primary", title: "Id", isPrimary: true, isDefault: false },
+            { ref: idRef("lbl.name"), id: "lbl.name", title: "Name", isPrimary: false, isDefault: true },
+            {
+                ref: idRef("lbl.email"),
+                id: "lbl.email",
+                title: "Email",
+                isPrimary: false,
+                isDefault: false,
+            },
+        ];
+        renderDialog(
+            makeController({
+                labels,
+                inheritedLabelIdsByGrantee: { "user:u1": ["lbl.email"] },
+            }),
+        );
+
+        const rendered = captured.controls.at(-1)?.labels;
+        expect(rendered?.find((l) => l.id === "lbl.email")?.locked).toBe(true);
+        expect(rendered?.find((l) => l.id === "lbl.name")?.locked).toBe(false);
+        expect(rendered?.find((l) => l.id === "lbl.primary")?.locked).toBe(true);
     });
 
     it("stands skeletons in until the list AND the first label resolution load", () => {
@@ -317,6 +367,61 @@ describe("ObjectShareDialog self row", () => {
         expect(lastSelfConfirm()?.isOpen).toBe(false);
     });
 
+    it("stages no self-restrict confirm for a pick an inherited floor makes a no-op", () => {
+        // Own grant VIEW under an inherited EDIT: the row displays EDIT, and no pick can
+        // lower what the user effectively holds. Comparing the pick against the DISPLAYED
+        // level opened "Restrict your access?" anyway, and the controller then refused the
+        // write — the user confirmed a restriction that never happened.
+        const controller = makeController({
+            grantees: [
+                {
+                    ...SELF_GRANTEE,
+                    level: "EDIT" as const,
+                    directLevel: "VIEW" as const,
+                    inheritedLevel: "EDIT" as const,
+                },
+            ],
+            selfManagedGranteeId: SELF_GRANTEE.id,
+        });
+        renderDialog(controller);
+        const controls = captured.controls.at(-1)!;
+
+        // Neither a "lower" pick nor the weakest one can move the effective level.
+        for (const level of ["SHARE", "VIEW"] as const) {
+            act(() => {
+                controls.onPermissionChange!(level);
+            });
+            expect(lastSelfConfirm()?.isOpen).toBe(false);
+        }
+        expect(controller.actions.changePermissionLevel).not.toHaveBeenCalled();
+    });
+
+    it("still confirms a self-restriction that does move the effective level", () => {
+        // Own grant EDIT under an inherited SHARE: dropping to VIEW lowers the effective
+        // level from EDIT to SHARE, so it is a real restriction and must be confirmed.
+        const controller = makeController({
+            grantees: [
+                {
+                    ...SELF_GRANTEE,
+                    level: "EDIT" as const,
+                    directLevel: "EDIT" as const,
+                    inheritedLevel: "SHARE" as const,
+                },
+            ],
+            selfManagedGranteeId: SELF_GRANTEE.id,
+        });
+        renderDialog(controller);
+
+        act(() => {
+            captured.controls.at(-1)!.onPermissionChange!("VIEW");
+        });
+        expect(lastSelfConfirm()?.isOpen).toBe(true);
+        act(() => {
+            lastSelfConfirm()!.onConfirm();
+        });
+        expect(controller.actions.changePermissionLevel).toHaveBeenCalledWith("user:self", "VIEW");
+    });
+
     it("discards the staged self-restriction on cancel", () => {
         const controller = makeController({
             grantees: [{ ...SELF_GRANTEE, level: "SHARE" as const }],
@@ -352,6 +457,32 @@ describe("ObjectShareDialog self row", () => {
         act(() => {
             lastSelfConfirm()!.onConfirm();
         });
+        expect(controller.actions.removeGrantee).toHaveBeenCalledWith("user:self");
+    });
+
+    it("skips the confirm for a self-removal an inherited floor makes a no-restriction", () => {
+        // Own grant VIEW under an inherited EDIT: the revoke removes the local grant
+        // but the effective level stays EDIT — "Restrict your access?" would promise
+        // a restriction that never happens (the rule the level picks above follow).
+        // The removal itself still runs: the local grant is real and revocable.
+        const controller = makeController({
+            grantees: [
+                {
+                    ...SELF_GRANTEE,
+                    level: "EDIT" as const,
+                    directLevel: "VIEW" as const,
+                    inheritedLevel: "EDIT" as const,
+                },
+            ],
+            selfManagedGranteeId: SELF_GRANTEE.id,
+        });
+        renderDialog(controller);
+
+        act(() => {
+            captured.controls.at(-1)!.onRemoveAccess!();
+        });
+
+        expect(lastSelfConfirm()?.isOpen).toBe(false);
         expect(controller.actions.removeGrantee).toHaveBeenCalledWith("user:self");
     });
 });

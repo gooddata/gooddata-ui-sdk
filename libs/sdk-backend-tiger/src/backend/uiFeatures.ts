@@ -35,6 +35,7 @@ export enum TigerFeaturesNames {
     EnableDataProfiling = "enableDataProfiling",
     EnableExperimentalFeaturesUI = "enableExperimentalFeaturesUI",
     EnableSingleStoreDataSource = "enableSingleStoreDataSource",
+    EnableCacheRetentionPolicy = "enableCacheRetentionPolicy",
     EnableOidcAuth = "enableOidcAuth",
     EnableSemanticSearch = "enableSemanticSearch",
     EnableCatalogSmartSearchResults = "enableCatalogSmartSearchResults",
@@ -162,6 +163,7 @@ export type ITigerFeatureFlags = {
     enableDataProfiling: (typeof FeatureFlagsValues)["enableDataProfiling"][number];
     enableExperimentalFeaturesUI: (typeof FeatureFlagsValues)["enableExperimentalFeaturesUI"][number];
     enableSingleStoreDataSource: (typeof FeatureFlagsValues)["enableSingleStoreDataSource"][number];
+    enableCacheRetentionPolicy: (typeof FeatureFlagsValues)["enableCacheRetentionPolicy"][number];
     enableOidcAuth: (typeof FeatureFlagsValues)["enableOidcAuth"][number];
     enableSemanticSearch: (typeof FeatureFlagsValues)["enableSemanticSearch"][number];
     enableCatalogSmartSearchResults: (typeof FeatureFlagsValues)["enableCatalogSmartSearchResults"][number];
@@ -287,6 +289,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDataProfiling: false,
     enableExperimentalFeaturesUI: false,
     enableSingleStoreDataSource: false,
+    enableCacheRetentionPolicy: false,
     enableOidcAuth: true,
     enableSemanticSearch: false,
     enableCatalogSmartSearchResults: true,
@@ -412,6 +415,7 @@ export const FeatureFlagsValues = {
     enableDataProfiling: [true, false] as const,
     enableExperimentalFeaturesUI: [true, false] as const,
     enableSingleStoreDataSource: [true, false] as const,
+    enableCacheRetentionPolicy: [true, false] as const,
     enableOidcAuth: [true, false] as const,
     enableSemanticSearch: [true, false] as const,
     enableCatalogSmartSearchResults: [true, false] as const,

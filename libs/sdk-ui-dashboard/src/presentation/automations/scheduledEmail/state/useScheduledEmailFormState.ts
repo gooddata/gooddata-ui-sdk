@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import {
     type AutomationEvaluationMode,
@@ -19,23 +19,24 @@ import {
     type IWidget,
 } from "@gooddata/sdk-model";
 
-import { setExportParametersByTab } from "../../../../../_staging/automation/index.js";
-import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
-import { useScheduledEmailDialogContext } from "../../../contexts/ScheduledEmailDialogContext.js";
+import { setExportParametersByTab } from "../../../../_staging/automation/index.js";
+import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
+import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
 import {
     convertExternalRecipientToAutomationRecipient,
     convertUserToAutomationRecipient,
-} from "../../../shared/utils/automationUtils.js";
+} from "../../shared/utils/automationUtils.js";
 import {
     toModifiedISOStringToTimezone,
     toNormalizedFirstRunAndCron,
     toNormalizedStartDate,
-} from "../../utils/date.js";
-import { getUserTimezone } from "../../utils/timezone.js";
+} from "../utils/date.js";
+import { getUserTimezone } from "../utils/timezone.js";
+
 import {
     newDashboardExportDefinitionMetadataObjectDefinition,
     newWidgetExportDefinitionMetadataObjectDefinition,
-} from "../utils/exportDefinitions.js";
+} from "./exportDefinitions.js";
 
 export interface IUseScheduledEmailFormStateProps {
     scheduledExportToEdit?: IAutomationMetadataObject;
@@ -92,11 +93,15 @@ export function useScheduledEmailFormState({
     // Determine target tab ID if widget is present
     const targetTabId = widget?.localIdentifier ? widgetTabMap[widget.localIdentifier] : undefined;
 
-    const defaultUser = convertUserToAutomationRecipient(currentUser);
+    const defaultUser = useMemo(() => convertUserToAutomationRecipient(currentUser), [currentUser]);
 
-    const defaultRecipient = externalRecipientOverride
-        ? convertExternalRecipientToAutomationRecipient(externalRecipientOverride)
-        : convertUserToAutomationRecipient(currentUser);
+    const defaultRecipient = useMemo(
+        () =>
+            externalRecipientOverride
+                ? convertExternalRecipientToAutomationRecipient(externalRecipientOverride)
+                : convertUserToAutomationRecipient(currentUser),
+        [externalRecipientOverride, currentUser],
+    );
 
     const firstChannel = notificationChannels[0]?.id;
 
@@ -150,45 +155,48 @@ export function useScheduledEmailFormState({
     const [isSubjectValid, setIsSubjectValid] = useState(true);
     const [isOnMessageValid, setIsOnMessageValid] = useState(true);
 
-    const onTitleChange = (value: string, isValid: boolean) => {
+    const onTitleChange = useCallback((value: string, isValid: boolean) => {
         setIsTitleValid(isValid);
         setEditedAutomation((s) => ({ ...s, title: value }));
-    };
+    }, []);
 
-    const onRecurrenceChange = (cronExpression: string, startDate: Date | null, isValid: boolean) => {
-        setIsCronValid(isValid);
-        setEditedAutomation((s) => ({
-            ...s,
-            schedule: {
-                ...s.schedule,
-                cron: cronExpression,
-                firstRun: toModifiedISOStringToTimezone(startDate ?? new Date(), timezone).iso,
-            },
-        }));
-    };
+    const onRecurrenceChange = useCallback(
+        (cronExpression: string, startDate: Date | null, isValid: boolean) => {
+            setIsCronValid(isValid);
+            setEditedAutomation((s) => ({
+                ...s,
+                schedule: {
+                    ...s.schedule,
+                    cron: cronExpression,
+                    firstRun: toModifiedISOStringToTimezone(startDate ?? new Date(), timezone).iso,
+                },
+            }));
+        },
+        [timezone],
+    );
 
-    const onEvaluationModeChange = (isShared: boolean) => {
+    const onEvaluationModeChange = useCallback((isShared: boolean) => {
         setEditedAutomation((s) => ({
             ...s,
             evaluationMode: isShared ? "SHARED" : "PER_RECIPIENT",
         }));
-    };
+    }, []);
 
-    const onDestinationChange = (notificationChannelId: string): void => {
+    const onDestinationChange = useCallback((notificationChannelId: string): void => {
         setEditedAutomation((s) => ({
             ...s,
             notificationChannel: notificationChannelId,
         }));
-    };
+    }, []);
 
-    const onRecipientsChange = (updatedRecipients: IAutomationRecipient[]): void => {
+    const onRecipientsChange = useCallback((updatedRecipients: IAutomationRecipient[]): void => {
         setEditedAutomation((s) => ({
             ...s,
             recipients: updatedRecipients,
         }));
-    };
+    }, []);
 
-    const onSubjectChange = (value: string | number, isValid: boolean): void => {
+    const onSubjectChange = useCallback((value: string | number, isValid: boolean): void => {
         setIsSubjectValid(isValid);
         setEditedAutomation((s) => ({
             ...s,
@@ -197,9 +205,9 @@ export function useScheduledEmailFormState({
                 subject: value as string,
             },
         }));
-    };
+    }, []);
 
-    const onMessageChange = (value: string, isValid: boolean): void => {
+    const onMessageChange = useCallback((value: string, isValid: boolean): void => {
         setIsOnMessageValid(isValid);
         setEditedAutomation((s) => ({
             ...s,
@@ -208,7 +216,7 @@ export function useScheduledEmailFormState({
                 message: value,
             },
         }));
-    };
+    }, []);
 
     return {
         editedAutomation,

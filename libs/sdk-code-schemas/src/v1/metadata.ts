@@ -613,11 +613,11 @@ export type DateFilter2 = {
      */
     using: string;
     /**
-     * A date from which the filter will be applied.
+     * A date from which the filter will be applied. YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities.
      */
     from?: string;
     /**
-     * A date to which the filter will be applied.
+     * A date to which the filter will be applied. YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities.
      */
     to?: string;
     /**
@@ -3347,7 +3347,7 @@ export interface VisualisationConfig {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -3805,7 +3805,7 @@ export interface VisualisationConfig1 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -4184,7 +4184,7 @@ export interface VisualisationConfig2 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -4563,7 +4563,7 @@ export interface VisualisationConfig3 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -4942,7 +4942,7 @@ export interface VisualisationConfig4 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -5321,7 +5321,7 @@ export interface VisualisationConfig5 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -5700,7 +5700,7 @@ export interface VisualisationConfig6 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -6075,7 +6075,7 @@ export interface VisualisationConfig7 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -6450,7 +6450,7 @@ export interface VisualisationConfig8 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -6825,7 +6825,7 @@ export interface VisualisationConfig9 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -7200,7 +7200,7 @@ export interface VisualisationConfig10 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -7575,7 +7575,7 @@ export interface VisualisationConfig11 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -7958,7 +7958,7 @@ export interface VisualisationConfig12 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -8333,7 +8333,7 @@ export interface VisualisationConfig13 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -8708,7 +8708,7 @@ export interface VisualisationConfig14 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -9085,7 +9085,7 @@ export interface VisualisationConfig15 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -9462,7 +9462,7 @@ export interface VisualisationConfig16 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -9837,7 +9837,7 @@ export interface VisualisationConfig17 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -10212,7 +10212,7 @@ export interface VisualisationConfig18 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -10591,7 +10591,7 @@ export interface VisualisationConfig19 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -10943,7 +10943,7 @@ export interface VisualisationConfig20 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -11322,7 +11322,7 @@ export interface VisualisationConfig21 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -11705,7 +11705,7 @@ export interface VisualisationConfig22 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;
@@ -12080,7 +12080,7 @@ export interface VisualisationConfig23 {
                       }
                     | {
                           /**
-                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute, or "YYYY-MM-DD HH:mm:ss" for hour/minute/second granularities.
                            */
                           absolute: {
                               from: string;

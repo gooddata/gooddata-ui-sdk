@@ -159,6 +159,9 @@ export type AutomationsType = Extract<AutomationType, "alert" | "schedule">;
 export { ChartInlineVisualizationType }
 
 // @public
+export function clearInsightViewCacheForInsight(workspace: string, ref: ObjRef): void;
+
+// @public
 export function clearInsightViewCaches(): void;
 
 // @internal

@@ -168,6 +168,12 @@ export function CatalogItemShareProvider({
     const accessUnavailable = status === "error" && isPermissionsNotAvailable(error);
     const active = Boolean(shareableItem) && !accessUnavailable;
     const summaryError = status === "error" && !accessUnavailable;
+    // Whether the access list has come back at all. Read off the summary rather than
+    // the fetch status, which returns to idle once the summary is known (the promise
+    // is armed only while it is unknown) and would read as unresolved again. An item
+    // change clears the summary, so the next item is unresolved until its own fetch
+    // lands.
+    const accessResolved = summary !== undefined || status === "error";
 
     const isOpen = dialogFor !== undefined && dialogFor === itemKey;
     const open = useCallback(() => setDialogFor(itemKey), [itemKey]);
@@ -189,9 +195,25 @@ export function CatalogItemShareProvider({
         [active, shareableItem, summary, summaryError, target, isOpen, labels],
     );
 
+    // The Share button waits for the access list; the inline row does not. Sharing is
+    // hidden for a caller the manage-gated endpoint 404s, but that verdict only
+    // arrives with the response — offering the button optimistically made it appear
+    // and then vanish for a view-only user. The row instead shows its skeleton while
+    // the fetch is in flight, which is why only the actions gate on resolution.
+    // `onSummaryChange` stays live even while sharing is not offered: it is a state
+    // channel, not a capability, and an open dialog's report must still win over a
+    // page fetch that lands later (the summary is seed-only). Memoized separately so
+    // the inactive value keeps one identity across renders.
+    const inactiveActions = useMemo<ICatalogItemShareActions>(
+        () => ({ ...INACTIVE_ACTIONS, onSummaryChange: setSummary }),
+        [],
+    );
     const actions = useMemo<ICatalogItemShareActions>(
-        () => (active ? { active: true, open, close, onSummaryChange: setSummary } : INACTIVE_ACTIONS),
-        [active, open, close],
+        () =>
+            active && accessResolved
+                ? { active: true, open, close, onSummaryChange: setSummary }
+                : inactiveActions,
+        [active, accessResolved, open, close, inactiveActions],
     );
 
     return (

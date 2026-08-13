@@ -19,8 +19,10 @@ import {
 import {
     copyToClipboardAction,
     onDefinitionReceivedAction,
+    setAmbientUserContextAction,
     setFullscreenAction,
     setOpenAction,
+    setUserContextAction,
 } from "../chatWindow/chatWindowSlice.js";
 import { type EventDispatcher } from "../events.js";
 import { clearCachedMessages, saveMessages, setIsOpened } from "../localStorage.js";
@@ -79,6 +81,8 @@ export function* onEvent() {
     yield takeEvery(renameConversationFailureAction.type, onConversationRenamedError);
     yield takeEvery(setCurrentConversationAction.type, onConversationChanged);
     yield takeEvery(loadConversationSuccessAction.type, onConversationLoaded);
+    yield takeEvery(setAmbientUserContextAction.type, onAmbientUserContextChanged);
+    yield takeEvery(setUserContextAction.type, onUserContextChanged);
 }
 
 function* onConversationPinUpdated({
@@ -520,4 +524,28 @@ function convertMessageTypeTo(
         default:
             return "GENERAL";
     }
+}
+
+function* onAmbientUserContextChanged({ payload }: ReturnType<typeof setAmbientUserContextAction>) {
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "onContextChange",
+        threadId,
+        contextType: "ambient",
+        ...payload,
+    });
+}
+
+function* onUserContextChanged({ payload }: ReturnType<typeof setUserContextAction>) {
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "onContextChange",
+        threadId,
+        contextType: "user",
+        ...payload,
+    });
 }

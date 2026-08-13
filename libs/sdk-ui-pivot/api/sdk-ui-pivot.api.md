@@ -28,7 +28,6 @@ import { RangeConditionOperator } from '@gooddata/sdk-model';
 import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
 import { TotalsOrPlaceholders } from '@gooddata/sdk-ui';
 import { TotalType } from '@gooddata/sdk-model';
-import { WrappedComponentProps } from 'react-intl';
 
 // @public (undocumented)
 export type ColumnHeadersPosition = "top" | "left";
@@ -282,7 +281,7 @@ export interface IConditionalFormattingRule {
 }
 
 // @internal (undocumented)
-export interface ICorePivotTableProps extends IPivotTableBaseProps, WrappedComponentProps {
+export interface ICorePivotTableProps extends IPivotTableBaseProps {
     // (undocumented)
     execution: IPreparedExecution;
     // (undocumented)

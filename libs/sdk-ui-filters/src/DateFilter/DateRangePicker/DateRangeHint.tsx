@@ -1,5 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { type ReactNode } from "react";
+
 import { type IntlShape, defineMessages } from "react-intl";
 
 import { getLocalizedDateFormat } from "../utils/FormattingUtils.js";
@@ -16,6 +18,7 @@ export function DateRangeHint({
     isSecondsEnabled = false,
     dateHintId,
     timeHintId,
+    customRangeHint,
     intl,
 }: {
     dateFormat: string;
@@ -23,6 +26,7 @@ export function DateRangeHint({
     isSecondsEnabled?: boolean;
     dateHintId: string;
     timeHintId: string;
+    customRangeHint?: ReactNode;
     intl: IntlShape;
 }) {
     return (
@@ -39,6 +43,7 @@ export function DateRangeHint({
                     )}
                 </div>
             ) : null}
+            {customRangeHint}
         </div>
     );
 }

@@ -408,7 +408,7 @@
                                                     "properties": {
                                                         "absolute": {
                                                             "type": "object",
-                                                            "description": "Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: \"YYYY-MM-DD\", or \"YYYY-MM-DD HH:mm\" for hour/minute granularities.",
+                                                            "description": "Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: \"YYYY-MM-DD\", or \"YYYY-MM-DD HH:mm\" for hour/minute, or \"YYYY-MM-DD HH:mm:ss\" for hour/minute/second granularities.",
                                                             "additionalProperties": false,
                                                             "required": ["from", "to"],
                                                             "properties": {

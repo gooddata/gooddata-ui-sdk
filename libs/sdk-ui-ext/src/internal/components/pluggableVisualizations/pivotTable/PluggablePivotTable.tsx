@@ -370,7 +370,6 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
     private createCorePivotTableProps = () => {
         return {
-            intl: this.intl,
             ErrorComponent: null as any,
             LoadingComponent: null as any,
 

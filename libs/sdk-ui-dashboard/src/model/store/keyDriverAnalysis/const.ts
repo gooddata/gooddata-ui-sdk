@@ -1,37 +1,29 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type DateAttributeGranularity } from "@gooddata/sdk-model";
-
-/**
- * @internal
- */
-export const keyDriverAnalysisSupportedGranularities = [
-    "GDC.time.year",
-    "GDC.time.week_us",
-    "GDC.time.week",
-    "GDC.time.quarter",
-    "GDC.time.month",
-    "GDC.time.date",
-    "GDC.time.hour",
-    "GDC.time.minute",
-] as DateAttributeGranularity[];
+import {
+    type DateAttributeGranularity,
+    getKdaSupportedGranularities,
+    getKdaSupportedStringGranularities,
+} from "@gooddata/sdk-model";
 
 /**
+ * Returns KDA-supported date granularities, including second when the feature flag is on.
+ *
  * @internal
  */
-export const keyDriverAnalysisSupportedStringGranularities = [
-    "YEAR",
-    "WEEK_US",
-    "WEEK",
-    "QUARTER",
-    "MONTH",
-    "DATE",
-    "DAY",
-    "HOUR",
-    "MINUTE",
-];
+export function getKeyDriverAnalysisSupportedGranularities(
+    enableSecondGranularities = false,
+): DateAttributeGranularity[] {
+    return getKdaSupportedGranularities(enableSecondGranularities);
+}
 
 /**
+ * Returns KDA-supported string granularities, including second when the feature flag is on.
+ *
  * @internal
  */
-export const keyDriverYearGranularity = ["GDC.time.year", "YEAR"];
+export function getKeyDriverAnalysisSupportedStringGranularities(
+    enableSecondGranularities = false,
+): string[] {
+    return getKdaSupportedStringGranularities(enableSecondGranularities);
+}

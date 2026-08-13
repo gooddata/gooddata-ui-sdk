@@ -30,7 +30,8 @@ export type DataSourceType =
     | "MOTHERDUCK"
     | "MONGODB"
     | "FLEXCONNECT"
-    | "AILAKEHOUSE";
+    | "AILAKEHOUSE"
+    | "DRILL";
 
 /**
  * @alpha

@@ -276,6 +276,7 @@ Here is a list of the relevant events:
 | `ChatConversationChangedEvent`        | `isChatConversationChangedEvent`        | Active conversation changed                    |
 | `ChatModeChangeEvent`                 | `isChatModeChangeEvent`                 | Assistant display mode changed                 |
 | `ChatAgentChangeEvent`                | `isChatAgentChangeEvent`                | Assistant agent changed                        |
+| `ChatContextChangeEvent`              | `isChatContextChangeEvent`              | Assistant context changed                      |
 | `ChatDefinitionReceivedEvent`         | `isChatDefinitionReceivedEvent`         | Dashboard or visualization definition received |
 
 #### onLinkClick
@@ -329,6 +330,17 @@ This event is triggered whenever the assistant agent is changed.
 | previousAgentId | `string`                | (Optional) The ID of the previous agent. |
 | agentId         | `string`                | (Optional) The ID of the new agent.      |
 
+#### onContextChange
+
+This event is triggered whenever the assistant context is changed.
+
+| Property           | Type                  | Description                                                 |
+| ------------------ | --------------------- | ----------------------------------------------------------- |
+| type               | `onContextChange`     | Event type identifier.                                      |
+| contextType        | `"ambient" \| "user"` | The type of context that was changed.                       |
+| userContext        | `IGenAIUserContext`   | (Optional) The user context that was set.                   |
+| replaceUserContext | `boolean`             | (Optional) Whether the user context was replaced or merged. |
+
 Example usage:
 
 ```tsx
@@ -338,6 +350,21 @@ Example usage:
             eval: isChatAgentChangeEvent,
             handler: (event: ChatAgentChangeEvent) => {
                 console.log(`Agent changed from ${event.previousAgentId} to ${event.agentId}`);
+            },
+        },
+    ]}
+/>
+```
+
+Example usage:
+
+```tsx
+<GenAIAssistant
+    eventHandlers={[
+        {
+            eval: isChatContextChangeEvent,
+            handler: (event: ChatContextChangeEvent) => {
+                console.log(`Context changed: ${event.contextType}`);
             },
         },
     ]}
@@ -495,6 +522,8 @@ dispatcher(clearThreadAction());
 - `startNewConversationAction` - start a new conversation
 - `setCurrentConversationAction` - set active conversation in the chat
 - `setSelectedAgentAction` - change the assistant agent
+- `setAmbientUserContextAction` - set the ambient user context
+- `setUserContextAction` - set or merge the user context
 - `setFullscreenAction` - switch the assistant between the docked and the fullscreen layout
 - `newMessageAction` - add message to the stack and get response from the assistant
 - `pinConversationAction` - pin or unpin a conversation
@@ -513,6 +542,8 @@ import {
     pinConversationAction,
     renameConversationAction,
     deleteConversationAction,
+    setAmbientUserContextAction,
+    setUserContextAction,
     makeUserItem,
     makeUserMessage,
     makeTextContents,
@@ -543,6 +574,12 @@ dispatcher(deleteConversationAction({ conversation }));
 
 // Change assistant agent
 dispatcher(setSelectedAgentAction({ agentId: "new-agent-id", showChangeEvent: true }));
+
+// Set ambient user context
+dispatcher(setAmbientUserContextAction({ userContext }));
+
+// Set or merge user context
+dispatcher(setUserContextAction({ userContext, replaceUserContext: true }));
 ```
 
 [ai assistant]: https://www.gooddata.ai/platform/artificial-intelligence/

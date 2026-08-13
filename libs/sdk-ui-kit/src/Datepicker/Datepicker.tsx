@@ -44,7 +44,7 @@ import {
 } from "date-fns/locale";
 import { debounce } from "lodash-es";
 import { type ClassNames, type DayEventHandler, DayPicker, type DayPickerProps } from "react-day-picker";
-import { type WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
 import { type WeekStart } from "@gooddata/sdk-model";
@@ -62,7 +62,7 @@ const DATEPICKER_OUTSIDE_DAY_SELECTOR = "rdp-outside";
 /**
  * @internal
  */
-export interface IDatePickerOwnProps {
+export interface IDatePickerProps {
     accessibilityConfig?: IAccessibilityConfigBase;
     date?: Date; // date value used to initialize date picker
     className?: string; // optional css applied to outer div
@@ -80,8 +80,6 @@ export interface IDatePickerOwnProps {
     weekStart?: WeekStart;
     onDateInputKeyDown?: (e: ReactKeyboardEvent<HTMLInputElement>) => void;
 }
-
-export type DatePickerProps = IDatePickerOwnProps & WrappedComponentProps;
 
 const convertedLocales: Record<string, Locale> = {
     "en-US": enUS,
@@ -186,8 +184,9 @@ function WrappedDatePickerCore({
     dateFormat: dateFormatProp,
     weekStart: weekStartProp,
     onDateInputKeyDown,
-    intl,
-}: DatePickerProps) {
+}: IDatePickerProps) {
+    const intl = useIntl();
+
     // these props are nullable at runtime (untyped callers do pass null explicitly), so plain default
     // values are not enough - the class component guarded every usage with `||`, `??` or optional calls
     const date = dateProp || DEFAULT_DATE;
@@ -453,16 +452,14 @@ function WrappedDatePickerCore({
 export const WrappedDatePicker = memo(WrappedDatePickerCore);
 WrappedDatePicker.displayName = "WrappedDatePicker";
 
-const DatePickerWithIntl = injectIntl(WrappedDatePicker);
-
 /**
  * @internal
  */
-export class Datepicker extends PureComponent<IDatePickerOwnProps> {
+export class Datepicker extends PureComponent<IDatePickerProps> {
     public override render() {
         return (
             <IntlWrapper locale={this.props.locale}>
-                <DatePickerWithIntl {...this.props} />
+                <WrappedDatePicker {...this.props} />
             </IntlWrapper>
         );
     }

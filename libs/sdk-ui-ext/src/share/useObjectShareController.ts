@@ -12,6 +12,7 @@ import {
     EMPTY_IDS,
     type LabelScopePrincipal,
     NO_LABELS,
+    changesEffectiveLevel,
     granularGranteeFor,
     levelsAbove,
     levelsBelow,
@@ -83,6 +84,7 @@ export function useObjectShareController(
         loadOptions,
         applyGranteeAdd,
         applyGranteeLevel,
+        applyGranteeLock,
         applyGranteeRemove,
         settleGranteeEdit,
         failGranteeEdit,
@@ -110,8 +112,28 @@ export function useObjectShareController(
         labelsInitializing,
         selectedLabelIdsByGrantee,
         setSelectedLabelIdsByGrantee,
+        inheritedLabelIdsByGrantee,
+        directLabelIdsByGrantee,
+        recordDirectLabelWrites,
+        forgetGranteeLabels,
         reconcileLabelScope,
+        reconcileLabelScopes,
+        regradeLabelScope,
     } = useLabelScope(target, labels, hasList, committedGranteeIds, labelsError, labelsLoading);
+
+    // The labels THIS workspace granted — the only ones a write may touch. Read straight
+    // from the tracked direct set rather than subtracting "inherited" from the scope: the
+    // subtraction relied on the probe still describing our own grants, and after a revoke it
+    // did not, so a later re-grade re-created access that had just been removed. A label
+    // held by inheritance ALONE is absent here, so no write can reach it: revoking one is a
+    // no-op whose compensation could mint a real grant, and re-grading one would invent one.
+    // A dual-granted label IS here — its local grant is ours to revoke and re-grade, or it
+    // would outlive the inherited grant hiding it.
+    const directLabelScopeOf = useCallback(
+        (granteeId: string): ReadonlySet<string> =>
+            new Set(directLabelIdsByGrantee[granteeId] ?? effectiveLabels.map((l) => l.id)),
+        [directLabelIdsByGrantee, effectiveLabels],
+    );
 
     // Effective access: the direct state composed with inherited rule access.
     // Also pins the level to VIEW while restricted, so the (hidden) dropdown
@@ -152,14 +174,18 @@ export function useObjectShareController(
             labelDesired: ReadonlySet<string>;
             labelCurrent: ReadonlySet<string>;
             abortIfLabelsFail: boolean;
-        }): Promise<{ ok: boolean; labelsOk: boolean }> => {
+        }): Promise<{ ok: boolean; labelsOk: boolean; failedLabelIds: string[] }> => {
             const { principal, objectMutation, successMessage, labelDesired, labelCurrent } = params;
-            const { ok: labelsOk } = await reconcileLabelScope([principal], labelDesired, labelCurrent);
+            const { ok: labelsOk, failedLabelIds } = await reconcileLabelScope(
+                [principal],
+                labelDesired,
+                labelCurrent,
+            );
             if (!labelsOk && params.abortIfLabelsFail) {
                 // Don't write the object on a half-applied label scope: undo whatever
                 // mirrored and surface the failure to the caller.
                 await reconcileLabelScope([principal], labelCurrent, labelDesired);
-                return { ok: false, labelsOk: false };
+                return { ok: false, labelsOk: false, failedLabelIds };
             }
             const ok = await commit([objectMutation], successMessage);
             if (!ok) {
@@ -167,7 +193,10 @@ export function useObjectShareController(
                 // don't drift.
                 await reconcileLabelScope([principal], labelCurrent, labelDesired);
             }
-            return { ok, labelsOk };
+            // The failed ids are reported, not just counted: a caller that keeps the row
+            // must keep those labels in its scope, or the local state would claim access
+            // the backend still grants and a later edit would diff against a lie.
+            return { ok, labelsOk, failedLabelIds };
         },
         [commit, reconcileLabelScope],
     );
@@ -190,19 +219,36 @@ export function useObjectShareController(
                 name: g.name,
                 email: g.email,
                 level: g.permissionLevel,
+                // The add writes a grant in THIS workspace, so the new row holds a
+                // direct grant at the picked level — without it the row would read as
+                // inherited-only and its Remove would be (correctly) refused.
+                directLevel: g.permissionLevel,
             }),
         );
         const mutations = pendingGrantees.map((g) => toGranularGrantee(g.kind, g.ref, g.permissionLevel));
-        // Default each new grantee to ALL labels (the picker's Add is gated until
-        // labels have loaded, so the set is known here). Reflect the full scope
-        // before the writes so the row shows it immediately.
+        // Each grantee is granted the label scope picked in the add dialog; an
+        // untouched picker leaves it undefined, which means ALL labels (the picker's
+        // Add is gated until labels have loaded, so the set is known here). The
+        // primary label is always in scope, exactly as `changeGranteeLabels` keeps it.
+        // Reflect each scope before the writes so the rows show them immediately.
         const allLabelIds = effectiveLabels.map((l) => l.id);
-        const allLabelIdSet = new Set(allLabelIds);
+        const primaryLabelIds = effectiveLabels.filter((l) => l.isPrimary).map((l) => l.id);
+        const scopeById = new Map(
+            pendingGrantees.map(
+                (g) =>
+                    [
+                        g.id,
+                        g.labelIds === undefined
+                            ? allLabelIds
+                            : Array.from(new Set([...g.labelIds, ...primaryLabelIds])),
+                    ] as const,
+            ),
+        );
         addedRows.forEach(applyGranteeAdd);
         setSelectedLabelIdsByGrantee((prev) => {
             const next = { ...prev };
             for (const id of addedIds) {
-                next[id] = allLabelIds;
+                next[id] = scopeById.get(id)!;
             }
             return next;
         });
@@ -221,25 +267,36 @@ export function useObjectShareController(
             });
             return;
         }
-        // One label write per label carrying all added grantees, not one per grantee.
-        const principals = pendingGrantees.map(
-            (g): LabelScopePrincipal => ({ kind: g.kind, granteeRef: g.ref }),
+        // One label write per label carrying all added grantees, not one per grantee —
+        // even when their scopes differ, so a shared label stays a single call. Each
+        // label grant carries that grantee's picked level, so the label mirrors the
+        // object grant instead of landing on VIEW.
+        const { ok: labelsOk, failedLabelIds } = await reconcileLabelScopes(
+            pendingGrantees.map((g) => ({
+                principal: { kind: g.kind, granteeRef: g.ref, level: g.permissionLevel },
+                desiredLabelIds: new Set(scopeById.get(g.id)!),
+                currentLabelIds: EMPTY_IDS,
+            })),
         );
-        const { ok: labelsOk, failedLabelIds } = await reconcileLabelScope(
-            principals,
-            allLabelIdSet,
-            EMPTY_IDS,
-        );
+        const failed = new Set(failedLabelIds);
+        // Every label grant that landed is now a grant of OURS — record it, or a later
+        // removal would not know to revoke it.
+        for (const id of addedIds) {
+            recordDirectLabelWrites(
+                id,
+                scopeById.get(id)!.filter((labelId) => !failed.has(labelId)),
+                [],
+            );
+        }
         if (!labelsOk) {
             toast.addWarning(objectShareMessages.toastLabelScopePartial);
-            // Drop only the failed labels, keeping those that landed — otherwise local
-            // scope under-reports and changeGranteeLabels later skips their revokes.
-            const failed = new Set(failedLabelIds);
-            const survived = allLabelIds.filter((id) => !failed.has(id));
+            // Drop only the failed labels from each grantee's own scope, keeping those
+            // that landed — otherwise local scope under-reports and changeGranteeLabels
+            // later skips their revokes.
             setSelectedLabelIdsByGrantee((prev) => {
                 const next = { ...prev };
                 for (const id of addedIds) {
-                    next[id] = survived;
+                    next[id] = scopeById.get(id)!.filter((labelId) => !failed.has(labelId));
                 }
                 return next;
             });
@@ -254,7 +311,8 @@ export function useObjectShareController(
         commit,
         closeAddGrantee,
         effectiveLabels,
-        reconcileLabelScope,
+        reconcileLabelScopes,
+        recordDirectLabelWrites,
         toast,
         applyGranteeAdd,
         settleGranteeEdit,
@@ -265,29 +323,92 @@ export function useObjectShareController(
     const changePermissionLevel = useCallback(
         async (granteeId: string, level: ObjectSharePermissionLevel): Promise<void> => {
             const grantee = grantees.find((g) => g.id === granteeId);
-            if (!grantee || grantee.level === level || grantee.pending) {
+            // A pick that cannot move the effective level is refused rather than quietly
+            // strengthening the grant made here — the rule lives in `changesEffectiveLevel`
+            // so every reaction to a pick agrees, and no confirm is staged for a no-op.
+            // Also refused before the label scope resolves: the re-grade below would run
+            // over the assumed-all fallback and mint grants the grantee never held. The
+            // UI gates on the same fact (isMutable); the controller stays authoritative.
+            if (!grantee || grantee.pending || !labelsResolved || !changesEffectiveLevel(grantee, level)) {
                 return;
             }
             applyGranteeLevel(granteeId, level);
+            // A label grant is an independent access-list entry carrying its own
+            // level, so re-grading the object alone would leave the grantee's labels
+            // at the level they were granted at.
+            //
+            // Order so a label grant is never left above the object grant: lower the
+            // labels BEFORE lowering the object, and raise the object BEFORE raising
+            // the labels. Either way a failure leaves labels no broader than the
+            // object, and a failed object write puts the labels back.
+            const previousLevel = grantee.directLevel ?? grantee.level;
+            const lowering = levelsBelow(previousLevel).includes(level);
+            const scope = directLabelScopeOf(granteeId);
+            const regradeLabels = (to: ObjectSharePermissionLevel) =>
+                regradeLabelScope([{ kind: grantee.kind, granteeRef: grantee.granteeRef, level: to }], scope);
+
+            let labelsOk = true;
+            if (lowering) {
+                labelsOk = (await regradeLabels(level)).ok;
+                if (!labelsOk) {
+                    // A label that kept the old, HIGHER level while the object dropped
+                    // would leave label access above object access — the one state this
+                    // ordering exists to prevent. So abort: put every in-scope label back
+                    // and leave the object alone. Same all-or-nothing policy the
+                    // general-access change applies to its label mirror.
+                    await regradeLabels(previousLevel);
+                    failGranteeEdit(granteeId);
+                    toast.addError(objectShareMessages.toastError);
+                    return;
+                }
+            }
             const ok = await commit(
                 [toGranularGrantee(grantee.kind, grantee.granteeRef, level)],
                 objectShareMessages.toastAccessUpdated,
             );
             // The settled entry persists on success (base still holds the old level);
             // failure restores the last committed entry, or the fetched row.
-            if (ok) {
-                settleGranteeEdit(granteeId);
-            } else {
+            if (!ok) {
+                if (lowering) {
+                    await regradeLabels(previousLevel);
+                }
                 failGranteeEdit(granteeId);
+                return;
+            }
+            if (!lowering) {
+                labelsOk = (await regradeLabels(level)).ok;
+            }
+            settleGranteeEdit(granteeId);
+            if (!labelsOk) {
+                // The object level changed but some labels kept the old one — warn so
+                // the partial state isn't mistaken for success.
+                toast.addWarning(objectShareMessages.toastLabelScopePartial);
             }
         },
-        [grantees, commit, applyGranteeLevel, settleGranteeEdit, failGranteeEdit],
+        [
+            grantees,
+            labelsResolved,
+            commit,
+            directLabelScopeOf,
+            regradeLabelScope,
+            toast,
+            applyGranteeLevel,
+            settleGranteeEdit,
+            failGranteeEdit,
+        ],
     );
 
     const removeGrantee = useCallback(
         async (granteeId: string): Promise<void> => {
             const grantee = grantees.find((g) => g.id === granteeId);
-            if (!grantee || grantee.pending) {
+            // Only a grant made in THIS workspace can be revoked here. With access
+            // inherited-only (a group, or a parent workspace) there is nothing local
+            // to revoke: the write would be an empty-permissions no-op that the row
+            // then reported as removed. The menu also disables Remove in that case;
+            // this keeps the controller — not the UI — authoritative. Same for an
+            // unresolved label scope: the revoke below would run over the assumed-all
+            // fallback and revoke (then compensate with) grants that never existed.
+            if (!grantee || grantee.pending || !labelsResolved || grantee.directLevel === undefined) {
                 return;
             }
             // Mark the row removed but keep it visible (muted) until the write lands.
@@ -299,14 +420,20 @@ export function useObjectShareController(
             // the grantee didn't hold. The object revoke is what matters; a label
             // revoke that fails is non-fatal (surfaced as a warning), so don't abort
             // on it.
-            const { ok, labelsOk } = await applyAccessChange({
-                principal: { kind: grantee.kind, granteeRef: grantee.granteeRef },
+            const { ok, labelsOk, failedLabelIds } = await applyAccessChange({
+                // The level matters only for the compensating re-grant if the object
+                // revoke fails: without it the labels would come back at the default
+                // VIEW, quietly downgrading an EDIT/SHARE grantee we just failed to
+                // remove.
+                principal: {
+                    kind: grantee.kind,
+                    granteeRef: grantee.granteeRef,
+                    level: grantee.directLevel,
+                },
                 objectMutation: toGranularGrantee(grantee.kind, grantee.granteeRef, "none"),
                 successMessage: objectShareMessages.toastAccessUpdated,
                 labelDesired: EMPTY_IDS,
-                labelCurrent: new Set(
-                    selectedLabelIdsByGrantee[granteeId] ?? effectiveLabels.map((l) => l.id),
-                ),
+                labelCurrent: directLabelScopeOf(granteeId),
                 abortIfLabelsFail: false,
             });
             if (!ok) {
@@ -318,10 +445,38 @@ export function useObjectShareController(
             // Object revoke landed. For a fetched row the settled `removed` entry
             // persists to keep it hidden; a revoked overlay-born row drops entirely.
             settleGranteeEdit(granteeId);
-            setSelectedLabelIdsByGrantee((prev) => {
-                const { [granteeId]: _omit, ...rest } = prev;
-                return rest;
-            });
+            // Every local label grant is gone except the ones whose revoke failed — record
+            // that, so a later write on a surviving row cannot act on grants we removed.
+            const revokedIds = [...directLabelScopeOf(granteeId)].filter(
+                (id) => !failedLabelIds.includes(id),
+            );
+            recordDirectLabelWrites(granteeId, [], revokedIds);
+            if (grantee.inheritedLevel === undefined) {
+                // Row is gone for good; drop its bookkeeping — unless a label revoke
+                // failed. The direct set is then the ONLY record that the label is still
+                // granted (the probe never re-runs), and forgetting it would let the
+                // grant outlive a same-session re-add: reseeded from the new writes
+                // alone, no later diff would ever revoke it.
+                if (failedLabelIds.length === 0) {
+                    forgetGranteeLabels(granteeId);
+                }
+            } else {
+                // A grantee who also inherits survives as an inherited-only row, so its
+                // scope must survive too — narrowed to what the removal could not take away.
+                // Dropping the entry would fall back to "all labels" (the probe does not
+                // re-run for grantee changes) and overstate what they can reach. Any label
+                // whose revoke FAILED stays in: the backend still grants it.
+                setSelectedLabelIdsByGrantee((prev) => {
+                    const keep = new Set([
+                        ...(inheritedLabelIdsByGrantee[granteeId] ?? []),
+                        ...failedLabelIds,
+                    ]);
+                    const survivingIds = effectiveLabels
+                        .filter((l) => l.isPrimary || keep.has(l.id))
+                        .map((l) => l.id);
+                    return { ...prev, [granteeId]: survivingIds };
+                });
+            }
             if (!labelsOk) {
                 // Object access is gone but some per-label grants couldn't be
                 // revoked — warn so the leftover scope isn't mistaken for success.
@@ -330,9 +485,13 @@ export function useObjectShareController(
         },
         [
             grantees,
+            labelsResolved,
             applyAccessChange,
+            directLabelScopeOf,
+            recordDirectLabelWrites,
+            forgetGranteeLabels,
             effectiveLabels,
-            selectedLabelIdsByGrantee,
+            inheritedLabelIdsByGrantee,
             toast,
             applyGranteeRemove,
             settleGranteeEdit,
@@ -344,15 +503,25 @@ export function useObjectShareController(
     const changeGranteeLabels = useCallback(
         async (granteeId: string, requested: string[]): Promise<void> => {
             const grantee = grantees.find((g) => g.id === granteeId);
-            if (!grantee || grantee.pending || !target) {
+            // Refused before the label scope resolves — the diff below would otherwise
+            // run against the assumed-all fallback (the UI gates on the same fact via
+            // `isMutable`; the controller stays authoritative).
+            if (!grantee || grantee.pending || !labelsResolved || !target) {
                 return;
             }
-            // Primary label is always in scope; never let it be dropped.
+            // The primary label is always in scope, and so is a label the grantee only
+            // inherits: there is no local grant to revoke, so dropping it would report
+            // access removed that this workspace cannot reach. The checklist locks both;
+            // this keeps the controller — not the UI — authoritative.
             const primaryIds = effectiveLabels.filter((l) => l.isPrimary).map((l) => l.id);
-            const nextScope = Array.from(new Set([...requested, ...primaryIds]));
+            const inheritedIds = inheritedLabelIdsByGrantee[granteeId] ?? [];
+            const nextScope = Array.from(new Set([...requested, ...primaryIds, ...inheritedIds]));
             const currentScope = selectedLabelIdsByGrantee[granteeId] ?? effectiveLabels.map((l) => l.id);
             const desired = new Set(nextScope);
-            const current = new Set(currentScope);
+            // Inherited labels join the CURRENT side too: an add-path scope is seeded
+            // before inheritance is known for the new row, so without this an untouched
+            // Apply would diff an inherited label as newly checked and grant it locally.
+            const current = new Set([...currentScope, ...inheritedIds]);
             // Applying the checklist unchanged is a no-op — don't lock the row or
             // toast success over zero writes.
             if (desired.size === current.size && nextScope.every((id) => current.has(id))) {
@@ -360,16 +529,37 @@ export function useObjectShareController(
             }
 
             // Reflect the new scope immediately and lock the row until the writes
-            // settle — an overlapping label edit or removal would race these writes
-            // on the same labels. The lock reuses the level overlay at the unchanged
-            // level; pending is the only fact it adds.
-            applyGranteeLevel(granteeId, grantee.level);
+            // settle — an overlapping label edit or removal would race these writes on
+            // the same labels. A lock-only overlay, because this changes no object
+            // access: re-applying the displayed level would persist the EFFECTIVE level
+            // as this row's direct grant, so an inherited EDIT over a direct VIEW would
+            // become a local EDIT after any label edit.
+            applyGranteeLock(granteeId);
             setSelectedLabelIdsByGrantee((prev) => ({ ...prev, [granteeId]: nextScope }));
 
+            // Labels newly brought into scope are granted at the level the grantee
+            // holds on the object — with no grant of their own here (inherited-only
+            // access) there is no level to mirror, so VIEW stands.
             const { ok, failedLabelIds } = await reconcileLabelScope(
-                [{ kind: grantee.kind, granteeRef: grantee.granteeRef }],
+                [
+                    {
+                        kind: grantee.kind,
+                        granteeRef: grantee.granteeRef,
+                        level: grantee.directLevel ?? "VIEW",
+                    },
+                ],
                 desired,
                 current,
+            );
+            // Record what the writes actually did to OUR grants: a label brought into scope
+            // gains one, a label dropped loses one. Only over the labels this workspace could
+            // write — an inherited-only label is absent from the diff either way.
+            const failedIds = new Set(failedLabelIds);
+            const writable = directLabelScopeOf(granteeId);
+            recordDirectLabelWrites(
+                granteeId,
+                nextScope.filter((id) => !current.has(id) && !failedIds.has(id)),
+                currentScope.filter((id) => writable.has(id) && !desired.has(id) && !failedIds.has(id)),
             );
             if (ok) {
                 settleGranteeEdit(granteeId);
@@ -397,11 +587,15 @@ export function useObjectShareController(
         [
             grantees,
             target,
+            labelsResolved,
             effectiveLabels,
             selectedLabelIdsByGrantee,
+            inheritedLabelIdsByGrantee,
+            directLabelScopeOf,
+            recordDirectLabelWrites,
             reconcileLabelScope,
             toast,
-            applyGranteeLevel,
+            applyGranteeLock,
             settleGranteeEdit,
             failGranteeEdit,
             setSelectedLabelIdsByGrantee,
@@ -620,6 +814,7 @@ export function useObjectShareController(
             labelsResolved,
             labelsInitializing,
             selectedLabelIdsByGrantee,
+            inheritedLabelIdsByGrantee,
             pendingGeneralAccess,
             pendingGrantees,
         };
@@ -641,6 +836,7 @@ export function useObjectShareController(
         labelsResolved,
         labelsInitializing,
         selectedLabelIdsByGrantee,
+        inheritedLabelIdsByGrantee,
         pendingGeneralAccess,
         pendingGrantees,
     ]);

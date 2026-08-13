@@ -71,6 +71,7 @@ export {
     type ChatDefinitionReceivedEvent,
     type ChatModeChangeEvent,
     type ChatAgentChangeEvent,
+    type ChatContextChangeEvent,
     isChatAssistantMessageEvent,
     isChatUserMessageEvent,
     isChatClosedEvent,
@@ -94,6 +95,7 @@ export {
     isChatDefinitionReceivedEvent,
     isChatModeChangeEvent,
     isChatAgentChangeEvent,
+    isChatContextChangeEvent,
 } from "./store/events.js";
 
 export {
@@ -103,7 +105,11 @@ export {
     setCurrentConversationAction,
     setSelectedAgentAction,
 } from "./store/messages/messagesSlice.js";
-export { setFullscreenAction } from "./store/chatWindow/chatWindowSlice.js";
+export {
+    setFullscreenAction,
+    setUserContextAction,
+    setAmbientUserContextAction,
+} from "./store/chatWindow/chatWindowSlice.js";
 export { type LinkHandlerEvent, type GenAIAssistantMode } from "./components/ConfigContext.js";
 export { useGenAiChatAvailability } from "./hooks/useGenAiChatAvailability.js";
 

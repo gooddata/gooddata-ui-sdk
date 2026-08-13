@@ -3,7 +3,7 @@
 import { useCallback, useMemo, useState } from "react";
 
 import { isEqual } from "lodash-es";
-import { FormattedMessage, type WrappedComponentProps, injectIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { type ISortItem } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
@@ -17,7 +17,7 @@ import { type IAvailableSortsGroup, type IBucketItemDescriptors } from "./types.
 /**
  * @internal
  */
-export interface IChartSortingOwnProps {
+export interface IChartSortingProps {
     currentSort: ISortItem[];
     availableSorts: IAvailableSortsGroup[];
     bucketItems: IBucketItemDescriptors;
@@ -27,20 +27,16 @@ export interface IChartSortingOwnProps {
     locale?: string;
 }
 
-/**
- * @internal
- */
-export interface IChartSortingProps extends IChartSortingOwnProps, WrappedComponentProps {}
-
 function ChartSorting({
     currentSort,
     availableSorts,
-    intl,
     bucketItems,
     buttonNode,
     onCancel,
     onApply,
 }: IChartSortingProps) {
+    const intl = useIntl();
+
     const [currentSelectedSort, setCurrentSort] = useState<ISortItem[]>(currentSort);
 
     const handleApply = useCallback(() => {
@@ -88,15 +84,10 @@ function ChartSorting({
 /**
  * @internal
  */
-export const ChartSortingWithIntl = injectIntl(ChartSorting);
-
-/**
- * @internal
- */
-export function ChartSortingDialog(props: IChartSortingOwnProps) {
+export function ChartSortingDialog(props: IChartSortingProps) {
     return (
         <IntlWrapper locale={props.locale}>
-            <ChartSortingWithIntl {...props} />
+            <ChartSorting {...props} />
         </IntlWrapper>
     );
 }

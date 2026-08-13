@@ -371,7 +371,7 @@ export interface ExportCompoundMeasureValueFilterCompoundMeasureValueFilter {
     /**
      * List of conditions to apply. Conditions are combined with OR logic. Each condition can be either a comparison (e.g., > 100) or a range (e.g., BETWEEN 10 AND 50). If empty, no filtering is applied and all rows are returned.
      */
-    'conditions': Array<ExportMeasureValueCondition>;
+    'conditions'?: Array<ExportMeasureValueCondition>;
     /**
      * References to the attributes to be used when filtering.
      */
@@ -566,7 +566,7 @@ export interface ExportDashboardMeasureValueFilter {
 }
 
 export interface ExportDashboardMeasureValueFilterDashboardMeasureValueFilter {
-    'conditions': Array<ExportDashboardCompoundConditionItem>;
+    'conditions'?: Array<ExportDashboardCompoundConditionItem>;
     'dimensionality'?: Array<ExportIdentifierRef>;
     'localIdentifier'?: string;
     'measure': ExportIdentifierRef;
@@ -593,6 +593,7 @@ export interface ExportDashboardTabularExportRequest {
      * Map of tab-specific parameter overrides. Key is tabId, value is a list of (id, value, title) entries that override the dashboard-level parameters for that tab only. Mirrors dashboardTabsFiltersOverrides. When a tab is present in this map, its entries take precedence over dashboardParametersOverride for that tab\'s executions and info-sheet display.
      */
     'dashboardTabsParametersOverrides'?: { [key: string]: Array<ExportParameterValue>; };
+    'executionSettings'?: ExportExecutionSettings;
     /**
      * Filename of downloaded file without extension.
      */
@@ -688,7 +689,7 @@ export interface ExportGetSlidesExport202ResponseInner1 {
 }
 
 export interface ExportIdentifierRef {
-    'identifier'?: ExportIdentifierRefIdentifier;
+    'identifier': ExportIdentifierRefIdentifier;
 }
 
 export interface ExportIdentifierRefIdentifier {
@@ -718,6 +719,10 @@ export interface ExportImageExportRequest {
      * Metadata definition in free-form JSON format.
      */
     'metadata'?: object | null;
+    /**
+     * Time zone the export should be rendered in, as an IANA identifier (e.g. \'Asia/Kolkata\') or a GMT offset (e.g. \'GMT+01:00\'). When omitted, the workspace time zone setting is used.
+     */
+    'timezoneId'?: string | null;
     /**
      * List of widget identifiers to be exported. Note that only one widget is currently supported.
      */
@@ -1264,6 +1269,10 @@ export interface ExportSlidesExportRequest {
      */
     'templateId'?: string | null;
     /**
+     * Time zone the export should be rendered in, as an IANA identifier (e.g. \'Asia/Kolkata\') or a GMT offset (e.g. \'GMT+01:00\'). When omitted, the workspace time zone setting is used.
+     */
+    'timezoneId'?: string | null;
+    /**
      * List of visualization ids to be exported. Note that only one visualization is currently supported.
      */
     'visualizationIds'?: Array<string>;
@@ -1299,6 +1308,7 @@ export interface ExportTabularExportRequest {
      * Execution result identifier.
      */
     'executionResult'?: string;
+    'executionSettings'?: ExportExecutionSettings;
     /**
      * Pre-executed layers for multi-layer geo visualizations. When provided, this is the canonical source of the exported layers and takes precedence over the top-level executionResult and customOverride, which are ignored. Index 0 is the main layer; each layer carries its own executionResult and customOverride.
      */
@@ -1352,6 +1362,10 @@ export interface ExportVisualExportRequest {
      * Metadata definition in free-form JSON format.
      */
     'metadata'?: object;
+    /**
+     * Time zone the export should be rendered in, as an IANA identifier (e.g. \'Asia/Kolkata\') or a GMT offset (e.g. \'GMT+01:00\'). When omitted, the workspace time zone setting is used.
+     */
+    'timezoneId'?: string | null;
 }
 
 

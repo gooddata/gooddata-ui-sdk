@@ -24,8 +24,6 @@ import {
 } from "@gooddata/sdk-model";
 import {
     BucketNames,
-    type ITranslationsComponentProps,
-    IntlTranslationsProvider,
     IntlWrapper,
     type Subtract,
     useResolveValuesWithPlaceholders,
@@ -150,19 +148,12 @@ function RenderPivotTable(props: IPivotTableProps) {
 
     return (
         <IntlWrapper locale={props.locale}>
-            <IntlTranslationsProvider>
-                {(translationProps: ITranslationsComponentProps) => {
-                    return (
-                        <CorePivotTableAgImpl
-                            {...corePivotProps}
-                            config={pivotTableConfig}
-                            intl={translationProps.intl}
-                            execution={execution}
-                            exportTitle={exportTitle || "PivotTable"}
-                        />
-                    );
-                }}
-            </IntlTranslationsProvider>
+            <CorePivotTableAgImpl
+                {...corePivotProps}
+                config={pivotTableConfig}
+                execution={execution}
+                exportTitle={exportTitle || "PivotTable"}
+            />
         </IntlWrapper>
     );
 }

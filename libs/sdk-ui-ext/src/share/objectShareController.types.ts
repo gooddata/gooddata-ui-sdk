@@ -53,18 +53,31 @@ export interface IObjectShareGrantee extends IGranteeIdentityFacts {
      * profile, so it holds for rows of any origin (fetched or optimistic).
      */
     isSelf?: boolean;
+    /**
+     * EFFECTIVE permission level shown on the row — the stronger of {@link directLevel}
+     * and {@link inheritedLevel}, so a grantee who only inherits a level is not
+     * understated as VIEW.
+     */
     level: ObjectSharePermissionLevel;
     /**
-     * Effective permission when it is *higher* than the directly-granted `level`
-     * because the grantee inherits a stronger permission (e.g. via a group).
-     * Undefined when the direct grant already is the effective permission. Drives
-     * the row's "effective permission" warning badge.
+     * Permission level granted by THIS workspace, or undefined when the grantee's
+     * access is inherited-only (a group, or a parent workspace in a hierarchy).
+     * This — not {@link level} — is what a re-grade writes and what decides whether
+     * there is a grant here to remove: inherited access cannot be revoked from here.
+     */
+    directLevel?: ObjectSharePermissionLevel;
+    /**
+     * Inherited permission to surface as a warning: set when inheritance carries the
+     * grantee above their direct grant (including inherited-only, where the whole
+     * displayed level is inherited). Undefined when the direct grant already covers
+     * the effective permission. Drives the row's warning badge.
      */
     effectivePermission?: ObjectSharePermissionLevel;
     /**
-     * Strongest permission the grantee inherits (e.g. via a group), regardless of
-     * the current direct `level`. Retained from the fetch so `effectivePermission`
-     * can be recomputed locally when the direct level changes (no refetch).
+     * Strongest permission the grantee inherits (via a group, or a parent workspace),
+     * regardless of the current direct level. Retained from the fetch so the
+     * displayed level and badge can be recomposed locally when the direct level
+     * changes (no refetch).
      */
     inheritedLevel?: ObjectSharePermissionLevel;
     /**
@@ -170,11 +183,22 @@ export interface IObjectShareControllerState {
      */
     labelsInitializing: boolean;
     /**
-     * Per-grantee label scope: grantee id → the label ids that grantee can access.
-     * The primary label is always included. Empty entry means "all labels" has not
-     * yet been resolved; consumers should treat a missing entry as all-selected.
+     * Per-grantee label scope: grantee id → the label ids that grantee can access,
+     * whether granted here or inherited. The primary label is always included.
+     *
+     * A MISSING entry means the scope is not resolved for that grantee — only then may a
+     * consumer fall back to all labels, and only once {@link labelsResolved}. An entry
+     * that is an EMPTY array is a resolved answer: no non-primary label is in scope.
      */
     selectedLabelIdsByGrantee: Record<string, string[]>;
+    /**
+     * The subset of {@link selectedLabelIdsByGrantee} a grantee only INHERITS (from a
+     * group, or a parent workspace) with no grant on the label in this workspace.
+     * Those labels are in scope but cannot be re-scoped here: there is nothing local
+     * to revoke, so consumers render them locked. Same rule as a grantee row whose
+     * object access is inherited-only, which cannot be removed either.
+     */
+    inheritedLabelIdsByGrantee: Record<string, string[]>;
 
     /** Pending confirm — when set, the confirm dialog is visible. */
     pendingGeneralAccess?: GeneralAccessValue;

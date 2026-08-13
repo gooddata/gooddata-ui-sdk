@@ -1,7 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type WrappedComponentProps } from "react-intl";
-
 import { type IAnalyticalBackend, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { type IExecutionConfig, type ISeparators, type ITheme, type TotalType } from "@gooddata/sdk-model";
 import {
@@ -263,7 +261,7 @@ export interface IPivotTableBucketProps {
 /**
  * @internal
  */
-export interface ICorePivotTableProps extends IPivotTableBaseProps, WrappedComponentProps {
+export interface ICorePivotTableProps extends IPivotTableBaseProps {
     execution: IPreparedExecution;
     theme?: ITheme;
 }

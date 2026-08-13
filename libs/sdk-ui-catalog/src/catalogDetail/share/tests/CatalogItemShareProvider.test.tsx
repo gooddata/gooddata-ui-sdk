@@ -132,6 +132,76 @@ describe("CatalogItemShareProvider", () => {
         expect(getAccessList).toHaveBeenCalledTimes(1); // no refetch
     });
 
+    it("offers sharing only once the access list has come back", async () => {
+        // The manage-gated endpoint's verdict arrives with the response, so offering
+        // the Share button while the fetch is in flight made it appear and then vanish
+        // for a view-only user (F1-2730). The inline access row is unaffected — it
+        // shows its skeleton meanwhile — so only the actions wait.
+        let release: (list: { grants: AccessGranteeDetail[] }) => void = () => {};
+        const backend = makeBackend(
+            vi.fn(
+                () =>
+                    new Promise<{ grants: AccessGranteeDetail[] }>((resolve) => {
+                        release = resolve;
+                    }),
+            ),
+        );
+        let canShare = false;
+        let rowActive = false;
+        function Probe() {
+            canShare = useCatalogItemShareActions().active;
+            rowActive = useCatalogItemShareState().active;
+            return null;
+        }
+
+        renderProvider(backend, <Probe />);
+        // In flight: no Share button yet, but the row is already rendering.
+        expect(canShare).toBe(false);
+        expect(rowActive).toBe(true);
+
+        await act(async () => {
+            release({ grants: [USER_GRANT] });
+        });
+        await waitFor(() => expect(canShare).toBe(true));
+    });
+
+    it("never offers sharing when the access list is not permissionable", async () => {
+        // The rejection is deferred and released inside `act`, so the assertions bracket a
+        // known state transition. Asserting `canShare === false` against an immediate
+        // rejection would pass before the 404 was ever processed — it is false while the
+        // fetch is still in flight, so the test would prove nothing.
+        let reject: (error: unknown) => void = () => {};
+        const backend = makeBackend(
+            vi.fn(
+                () =>
+                    new Promise<{ grants: AccessGranteeDetail[] }>((_resolve, r) => {
+                        reject = r;
+                    }),
+            ),
+        );
+        let canShare = false;
+        let rowActive = false;
+        function Probe() {
+            canShare = useCatalogItemShareActions().active;
+            rowActive = useCatalogItemShareState().active;
+            return null;
+        }
+
+        renderProvider(backend, <Probe />);
+        // In flight: sharing not offered yet, but the access row is still rendering.
+        expect(canShare).toBe(false);
+        expect(rowActive).toBe(true);
+
+        await act(async () => {
+            reject(notFound());
+        });
+
+        // The 404 landed — provably, because the row turned inactive — and sharing was
+        // never offered on the way there.
+        expect(rowActive).toBe(false);
+        expect(canShare).toBe(false);
+    });
+
     it("keeps a dialog-provided summary over a later page-fetch result (seed only)", async () => {
         let release: (list: { grants: AccessGranteeDetail[] }) => void = () => {};
         const backend = makeBackend(

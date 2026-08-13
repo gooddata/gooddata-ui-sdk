@@ -44,7 +44,7 @@ export interface IScheduledEmailDialogContextValue {
     commonDateFilterId?: string;
     /**
      * Effective export parameter overrides keyed by tab, scoped to the dialog's widget when present.
-     * Replaces the direct selectExportEffectiveParameters read in useEditScheduledEmail.
+     * Hydrated by the connector, so the dialog tree reads no store selector for them.
      */
     exportParametersByTab: Record<string, IDashboardExportParameter[]>;
     /**
@@ -76,6 +76,15 @@ export interface IScheduledEmailDialogContextValue {
 
 const ScheduledEmailDialogContext = createContext<IScheduledEmailDialogContextValue | undefined>(undefined);
 
+/**
+ * Provider for {@link IScheduledEmailDialogContextValue}.
+ *
+ * Besides the connector's own use, a custom `ScheduledEmailDialogComponent` can decorate the context for
+ * the default dialog: read the value via {@link useScheduledEmailDialogContext}, adjust it, and
+ * re-provide it around `DefaultScheduledEmailDialog`.
+ *
+ * @alpha
+ */
 export const ScheduledEmailDialogContextProvider = ScheduledEmailDialogContext.Provider;
 
 /**

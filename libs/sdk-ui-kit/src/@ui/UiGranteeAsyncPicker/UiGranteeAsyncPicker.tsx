@@ -13,6 +13,7 @@ import { UiAutocomplete } from "../UiAutocomplete/UiAutocomplete.js";
 import { UiButton } from "../UiButton/UiButton.js";
 import { type GranteeAvatarKind } from "../UiGranteeAvatar/UiGranteeAvatar.js";
 import { UiGranteeRow } from "../UiGranteeRow/UiGranteeRow.js";
+import { type IUiLabelsChecklistItem } from "../UiLabelsChecklist/UiLabelsChecklist.js";
 import {
     type PermissionMenuLevel,
     UiPermissionMenu,
@@ -49,6 +50,12 @@ export interface IUiGranteeAsyncOption {
 export interface IUiPickedGrantee extends IUiGranteeAsyncOption {
     /** Permission level chosen for this grantee. Drives the row's permission menu trigger label. */
     permissionLevel: PermissionMenuLevel;
+    /**
+     * Label scope chosen for this grantee, as ids of the picker's `labels`.
+     * `undefined` means every label — the untouched default, so a consumer that
+     * offers no label picker never has to populate it.
+     */
+    labelIds?: ReadonlyArray<string>;
 }
 
 /**
@@ -85,6 +92,16 @@ export interface IUiGranteeAsyncPickerProps {
     onPermissionChange?: (grantee: IUiPickedGrantee, next: PermissionMenuLevel) => void;
     /** Fires when the user picks Remove access in the row's permission menu. */
     onRemove?: (grantee: IUiPickedGrantee) => void;
+    /**
+     * Labels the picked grantees can be scoped to. Non-empty adds a Label access
+     * drill-in to each row's permission menu, so a scope can be narrowed before the
+     * grantee is granted anything. The row renders `grantee.labelIds`, which the consumer
+     * owns. Requires `onLabelsChange`: without somewhere to put the pick, the drill-in
+     * stays hidden rather than offering an Apply that discards it.
+     */
+    labels?: ReadonlyArray<IUiLabelsChecklistItem>;
+    /** Fires with the applied label scope of a picked row. Enables `labels`. */
+    onLabelsChange?: (grantee: IUiPickedGrantee, selectedLabelIds: string[]) => void;
     /** Test id forwarded to the root element. */
     dataTestId?: string;
 }
@@ -109,6 +126,8 @@ export function UiGranteeAsyncPicker({
     onSelect,
     onPermissionChange,
     onRemove,
+    labels,
+    onLabelsChange,
     dataTestId,
 }: IUiGranteeAsyncPickerProps) {
     const intl = useIntl();
@@ -166,6 +185,12 @@ export function UiGranteeAsyncPicker({
 
     const fieldLabel = intl.formatMessage(olpAddGranteeDialogMessages.userOrGroup);
 
+    // A row with no scope of its own covers every label (see `labelIds`). The drill-in is
+    // offered only when the pick has somewhere to go — otherwise Apply would silently
+    // discard it.
+    const scopeLabels = onLabelsChange ? labels : undefined;
+    const allLabelIds = useMemo(() => (scopeLabels ?? []).map((l) => l.id), [scopeLabels]);
+
     return (
         <div className={b()} data-testid={dataTestId}>
             <div className={e("field")}>
@@ -201,6 +226,9 @@ export function UiGranteeAsyncPicker({
                                         <UiPermissionMenu
                                             selectedLevel={g.permissionLevel}
                                             onPermissionChange={(next) => onPermissionChange?.(g, next)}
+                                            labels={scopeLabels}
+                                            selectedLabelIds={g.labelIds ?? allLabelIds}
+                                            onLabelsChange={(ids) => onLabelsChange?.(g, ids)}
                                             onRemoveAccess={onRemove ? () => onRemove(g) : undefined}
                                             anchor={
                                                 <UiButton

@@ -4,6 +4,7 @@ import {
     type ComponentType,
     type KeyboardEvent,
     type MutableRefObject,
+    type ReactNode,
     useCallback,
     useMemo,
     useRef,
@@ -118,6 +119,13 @@ export interface IDateFilterCoreProps {
      * @alpha
      */
     enableEmptyDateValues?: boolean;
+
+    /**
+     * Custom content rendered at the end of the static period form hint area.
+     *
+     * @alpha
+     */
+    customRangeHint?: ReactNode;
 }
 
 export const verifyDateFormat = (dateFormat: string): string => {

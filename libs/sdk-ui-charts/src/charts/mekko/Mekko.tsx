@@ -5,6 +5,7 @@ import {
     type IMeasure,
     type INullableFilter,
     type ISortItem,
+    isMeasureSort,
     newBucket,
 } from "@gooddata/sdk-model";
 import {
@@ -44,16 +45,25 @@ const mekkoDefinition: IChartDefinition<IMekkoBucketProps, IMekkoProps> = {
         const { backend, workspace, execConfig } = props;
 
         const sortBy = (props.sortBy as ISortItem[]) ?? [];
+        // stacked executions cannot express a measure sort of the columns — it applies client-side
+        const executionSortBy = props.stackBy ? sortBy.filter((sort) => !isMeasureSort(sort)) : sortBy;
 
         return backend!
             .withTelemetry("Mekko", props)
             .workspace(workspace!)
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
-            .withSorting(...sortBy)
+            .withSorting(...executionSortBy)
             .withDimensions(stackedChartDimensions)
             .withExecConfig(execConfig!);
     },
+    propOverridesFactory: (props) => ({
+        config: {
+            ...props.config,
+            // the sortBy prop wins over config.sortBy; keep a user-set config value otherwise
+            ...(props.sortBy ? { sortBy: props.sortBy as ISortItem[] } : {}),
+        },
+    }),
 };
 
 //

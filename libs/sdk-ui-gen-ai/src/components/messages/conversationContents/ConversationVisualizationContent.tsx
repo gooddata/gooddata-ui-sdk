@@ -105,6 +105,9 @@ export function ConversationVisualizationContent({
     const enableChangeAnalysis = useSelector(
         (state: RootState) => settingsSelector(state)?.enableChangeAnalysis,
     );
+    const enableSecondGranularities = useSelector(
+        (state: RootState) => settingsSelector(state)?.enableSecondGranularities,
+    );
 
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -191,6 +194,7 @@ export function ConversationVisualizationContent({
                         agGridToken={agGridToken}
                         execConfig={scenario?.execConfig}
                         enableChangeAnalysis={enableChangeAnalysis}
+                        enableSecondGranularities={!!enableSecondGranularities}
                         enableNewPivotTable={enableNewPivotTable}
                         enableAccessibleChartTooltip={enableAccessibleChartTooltip}
                         enableDrilling={!scenario || scenario.isBaseline}

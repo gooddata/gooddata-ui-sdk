@@ -81,8 +81,11 @@ export function Notification({
 
     const notificationTitle = getNotificationTitle(notification);
 
-    const filters = notification.details.data.filters;
-    const hasFilters = !!filters?.length;
+    const filterItems = [
+        ...(notification.details.data.filters ?? []).map(({ title, filter }) => ({ title, value: filter })),
+        ...(notification.details.data.parameters ?? []),
+    ];
+    const hasFiltersOrParameters = filterItems.length > 0;
 
     const isAlertNotification = notification.notificationType === "alertNotification";
     const isScheduleNotification = notification.notificationType === "scheduleNotification";
@@ -107,7 +110,7 @@ export function Notification({
     const { isError, errorTitle, errorMessage, traceId } = getNotificationErrorInfo(notification, exports);
 
     const actions = compact([
-        hasFilters && isAlertNotification && <NotificationFiltersDetail filters={filters} />,
+        hasFiltersOrParameters && isAlertNotification && <NotificationFiltersDetail items={filterItems} />,
         hasTriggers && isSliced && <NotificationTriggerDetail notification={notification} />,
         hasExports && <FileLink notification={notification} />,
         hasExports && fileExpiresAt && <FileExpiration fileExpiresAt={fileExpiresAt} isExpired={isExpired} />,

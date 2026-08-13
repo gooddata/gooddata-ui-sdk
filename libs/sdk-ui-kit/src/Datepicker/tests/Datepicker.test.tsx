@@ -3,12 +3,13 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { parse } from "date-fns";
+import { type IntlShape, RawIntlProvider } from "react-intl";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
 import { type ITranslations, createIntlMock, resolveMessages } from "@gooddata/sdk-ui";
 import { suppressConsole } from "@gooddata/util";
 
-import { type DatePickerProps, WrappedDatePicker } from "../Datepicker.js";
+import { type IDatePickerProps, WrappedDatePicker } from "../Datepicker.js";
 
 const defaultDateFormat = "MM/dd/yyyy";
 
@@ -19,16 +20,20 @@ describe("DatePicker", () => {
     });
     const defaultProps = {
         align: "tr tl",
-        intl: createIntlMock(),
         dateFormat: defaultDateFormat,
     };
 
-    function createComponent(customProps: Partial<DatePickerProps> = {}) {
+    function createComponent(customProps: Partial<IDatePickerProps> & { intl?: IntlShape } = {}) {
+        const { intl = createIntlMock(), ...ownProps } = customProps;
         const props = {
             ...defaultProps,
-            ...customProps,
+            ...ownProps,
         };
-        return render(<WrappedDatePicker {...props} />);
+        return render(
+            <RawIntlProvider value={intl}>
+                <WrappedDatePicker {...props} />
+            </RawIntlProvider>,
+        );
     }
 
     const openCalendar = async () => {

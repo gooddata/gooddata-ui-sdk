@@ -821,6 +821,18 @@ export const selectEnableFiscalCalendars: DashboardSelector<boolean> = createSel
 );
 
 /**
+ * Returns whether second-level date granularities are enabled.
+ *
+ * @alpha
+ */
+export const selectEnableSecondGranularities: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableSecondGranularities ?? false;
+    },
+);
+
+/**
  * Returns the active calendars configuration from workspace settings.
  * Controls which calendar types (standard/fiscal) are available.
  *

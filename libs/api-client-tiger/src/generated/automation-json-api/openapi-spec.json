@@ -109,7 +109,8 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -137,7 +138,8 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "No Content"
+                        "description": "No Content",
+                        "content": {}
                     }
                 }
             }
@@ -364,17 +366,7 @@
                         "type": "array",
                         "description": "Various filter types to filter the execution result.",
                         "items": {
-                            "oneOf": [
-                                {
-                                    "$ref": "#/components/schemas/AbstractMeasureValueFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/FilterDefinitionForSimpleMeasure"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/InlineFilterDefinition"
-                                }
-                            ]
+                            "$ref": "#/components/schemas/FilterDefinition"
                         }
                     },
                     "measureDefinitionOverrides": {
@@ -701,8 +693,8 @@
                 "properties": {
                     "identifier": {
                         "required": [
-                            "type",
-                            "id"
+                            "id",
+                            "type"
                         ],
                         "type": "object",
                         "properties": {
@@ -830,8 +822,8 @@
                 "properties": {
                     "identifier": {
                         "required": [
-                            "type",
-                            "id"
+                            "id",
+                            "type"
                         ],
                         "type": "object",
                         "properties": {
@@ -1378,20 +1370,7 @@
                 "type": "object",
                 "properties": {
                     "condition": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/AnomalyDetectionWrapper"
-                            },
-                            {
-                                "$ref": "#/components/schemas/ComparisonWrapper"
-                            },
-                            {
-                                "$ref": "#/components/schemas/RangeWrapper"
-                            },
-                            {
-                                "$ref": "#/components/schemas/RelativeWrapper"
-                            }
-                        ]
+                        "$ref": "#/components/schemas/AlertCondition"
                     },
                     "execution": {
                         "$ref": "#/components/schemas/AlertAfm"
@@ -1474,9 +1453,18 @@
             },
             "AutomationNotification": {
                 "required": [
-                    "content"
+                    "content",
+                    "type"
                 ],
                 "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "AUTOMATION"
+                        ]
+                    }
+                },
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/NotificationContent"
@@ -1741,7 +1729,6 @@
                 "properties": {
                     "compoundMeasureValueFilter": {
                         "required": [
-                            "conditions",
                             "measure"
                         ],
                         "type": "object",
@@ -2255,7 +2242,6 @@
                 "properties": {
                     "dashboardMeasureValueFilter": {
                         "required": [
-                            "conditions",
                             "measure"
                         ],
                         "type": "object",
@@ -2331,6 +2317,9 @@
                             }
                         },
                         "description": "Map of tab-specific parameter overrides. Key is tabId, value is a list of (id, value, title) entries that override the dashboard-level parameters for that tab only. Mirrors dashboardTabsFiltersOverrides. When a tab is present in this map, its entries take precedence over dashboardParametersOverride for that tab's executions and info-sheet display."
+                    },
+                    "executionSettings": {
+                        "$ref": "#/components/schemas/ExecutionSettings"
                     },
                     "fileName": {
                         "type": "string",
@@ -2619,6 +2608,9 @@
                 ]
             },
             "IdentifierRef": {
+                "required": [
+                    "identifier"
+                ],
                 "type": "object",
                 "properties": {
                     "identifier": {
@@ -2698,6 +2690,12 @@
                     },
                     "metadata": {
                         "$ref": "#/components/schemas/JsonNode"
+                    },
+                    "timezoneId": {
+                        "type": "string",
+                        "description": "Time zone the export should be rendered in, as an IANA identifier (e.g. 'Asia/Kolkata') or a GMT offset (e.g. 'GMT+01:00'). When omitted, the workspace time zone setting is used.",
+                        "nullable": true,
+                        "example": "Asia/Kolkata"
                     },
                     "widgetIds": {
                         "maxItems": 1,
@@ -2891,26 +2889,7 @@
                 "type": "object",
                 "properties": {
                     "definition": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/ArithmeticMeasureDefinition"
-                            },
-                            {
-                                "$ref": "#/components/schemas/InlineMeasureDefinition"
-                            },
-                            {
-                                "$ref": "#/components/schemas/PopDatasetMeasureDefinition"
-                            },
-                            {
-                                "$ref": "#/components/schemas/PopDateMeasureDefinition"
-                            },
-                            {
-                                "$ref": "#/components/schemas/PopMeasureDefinition"
-                            },
-                            {
-                                "$ref": "#/components/schemas/SimpleMeasureDefinition"
-                            }
-                        ]
+                        "$ref": "#/components/schemas/MeasureDefinition"
                     },
                     "localIdentifier": {
                         "pattern": "^[.a-zA-Z0-9_-]+$",
@@ -3096,6 +3075,24 @@
                         "type": "string"
                     },
                     "title": {
+                        "type": "string"
+                    }
+                }
+            },
+            "NotificationParameter": {
+                "required": [
+                    "id",
+                    "value"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "value": {
                         "type": "string"
                     }
                 }
@@ -4053,6 +4050,12 @@
                         "description": "Export template identifier.",
                         "nullable": true
                     },
+                    "timezoneId": {
+                        "type": "string",
+                        "description": "Time zone the export should be rendered in, as an IANA identifier (e.g. 'Asia/Kolkata') or a GMT offset (e.g. 'GMT+01:00'). When omitted, the workspace time zone setting is used.",
+                        "nullable": true,
+                        "example": "Asia/Kolkata"
+                    },
                     "visualizationIds": {
                         "maxItems": 1,
                         "uniqueItems": true,
@@ -4166,6 +4169,9 @@
                         "description": "Execution result identifier.",
                         "example": "ff483727196c9dc862c7fd3a5a84df55c96d61a4"
                     },
+                    "executionSettings": {
+                        "$ref": "#/components/schemas/ExecutionSettings"
+                    },
                     "executions": {
                         "type": "array",
                         "description": "Pre-executed layers for multi-layer geo visualizations. When provided, this is the canonical source of the exported layers and takes precedence over the top-level executionResult and customOverride, which are ignored. Index 0 is the main layer; each layer carries its own executionResult and customOverride.",
@@ -4230,20 +4236,7 @@
                 "type": "object",
                 "properties": {
                     "destination": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/DefaultSmtp"
-                            },
-                            {
-                                "$ref": "#/components/schemas/InPlatform"
-                            },
-                            {
-                                "$ref": "#/components/schemas/Smtp"
-                            },
-                            {
-                                "$ref": "#/components/schemas/Webhook"
-                            }
-                        ]
+                        "$ref": "#/components/schemas/NotificationChannelDestination"
                     },
                     "externalRecipients": {
                         "maxItems": 1,
@@ -4260,9 +4253,18 @@
             },
             "TestNotification": {
                 "required": [
-                    "message"
+                    "message",
+                    "type"
                 ],
                 "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "TEST"
+                        ]
+                    }
+                },
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/NotificationContent"
@@ -4357,6 +4359,12 @@
                         "type": "object",
                         "description": "Metadata definition in free-form JSON format.",
                         "example": "{}"
+                    },
+                    "timezoneId": {
+                        "type": "string",
+                        "description": "Time zone the export should be rendered in, as an IANA identifier (e.g. 'Asia/Kolkata') or a GMT offset (e.g. 'GMT+01:00'). When omitted, the workspace time zone setting is used.",
+                        "nullable": true,
+                        "example": "Asia/Kolkata"
                     }
                 },
                 "description": "Export request object describing the export properties and metadata for dashboard PDF exports."
@@ -4501,6 +4509,12 @@
                     },
                     "notificationSource": {
                         "type": "string"
+                    },
+                    "parameters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/NotificationParameter"
+                        }
                     },
                     "rawExports": {
                         "type": "array",

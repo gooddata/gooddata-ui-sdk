@@ -59,16 +59,27 @@ export interface IGranularityDescriptor {
      * {@link getGranularities} output unless explicitly requested.
      */
     offeredByDefault: boolean;
+    /**
+     * Uppercase tokens that may appear on execution attribute headers for this granularity
+     * (`IAttributeDescriptorBody.granularity`). Catalog/filter paths convert via `toSdkGranularity`;
+     * headers often keep the raw backend token — include every accepted alias (e.g. `"DATE"` and `"DAY"`).
+     * Empty when the backend does not emit a header token for this granularity.
+     */
+    headerTokens: readonly string[];
 }
+
+type DescriptorExtras = Partial<
+    Pick<IGranularityDescriptor, "timeScale" | "chronologicalOrigin" | "counterpart" | "offeredByDefault">
+> & {
+    headerTokens: readonly string[];
+};
 
 const makeDescriptor = (
     granularity: DateAttributeGranularity,
     family: GranularityFamily,
     affinity: CalendarAffinity,
     order: number,
-    extra: Partial<
-        Pick<IGranularityDescriptor, "timeScale" | "chronologicalOrigin" | "counterpart" | "offeredByDefault">
-    > = {},
+    extra: DescriptorExtras,
 ): IGranularityDescriptor => ({
     granularity,
     family,
@@ -78,6 +89,7 @@ const makeDescriptor = (
     chronologicalOrigin: extra.chronologicalOrigin,
     counterpart: extra.counterpart,
     offeredByDefault: extra.offeredByDefault ?? true,
+    headerTokens: extra.headerTokens,
 });
 
 /**
@@ -93,91 +105,128 @@ export const GRANULARITY_DESCRIPTORS: Record<DateAttributeGranularity, IGranular
     // chronological — standard / fiscal pairs (fiscal ranked right after its standard sibling)
     "GDC.time.year": makeDescriptor("GDC.time.year", "chronological", "standard", 10, {
         counterpart: "GDC.time.fiscal_year",
+        headerTokens: ["YEAR"],
     }),
     "GDC.time.fiscal_year": makeDescriptor("GDC.time.fiscal_year", "chronological", "fiscal", 11, {
         counterpart: "GDC.time.year",
+        headerTokens: ["FISCAL_YEAR"],
     }),
     "GDC.time.quarter": makeDescriptor("GDC.time.quarter", "chronological", "standard", 20, {
         counterpart: "GDC.time.fiscal_quarter",
+        headerTokens: ["QUARTER"],
     }),
     "GDC.time.fiscal_quarter": makeDescriptor("GDC.time.fiscal_quarter", "chronological", "fiscal", 21, {
         counterpart: "GDC.time.quarter",
+        headerTokens: ["FISCAL_QUARTER"],
     }),
     "GDC.time.month": makeDescriptor("GDC.time.month", "chronological", "standard", 30, {
         counterpart: "GDC.time.fiscal_month",
+        headerTokens: ["MONTH"],
     }),
     "GDC.time.fiscal_month": makeDescriptor("GDC.time.fiscal_month", "chronological", "fiscal", 31, {
         counterpart: "GDC.time.month",
+        headerTokens: ["FISCAL_MONTH"],
     }),
     // chronological — shared
-    "GDC.time.week_us": makeDescriptor("GDC.time.week_us", "chronological", "shared", 40),
+    "GDC.time.week_us": makeDescriptor("GDC.time.week_us", "chronological", "shared", 40, {
+        headerTokens: ["WEEK_US"],
+    }),
     "GDC.time.week": makeDescriptor("GDC.time.week", "chronological", "shared", 41, {
         offeredByDefault: false,
+        headerTokens: ["WEEK"],
     }),
-    "GDC.time.date": makeDescriptor("GDC.time.date", "chronological", "shared", 50),
-    "GDC.time.hour": makeDescriptor("GDC.time.hour", "chronological", "shared", 60, { timeScale: true }),
-    "GDC.time.minute": makeDescriptor("GDC.time.minute", "chronological", "shared", 70, { timeScale: true }),
-    "GDC.time.second": makeDescriptor("GDC.time.second", "chronological", "shared", 80, { timeScale: true }),
+    "GDC.time.date": makeDescriptor("GDC.time.date", "chronological", "shared", 50, {
+        headerTokens: ["DAY"],
+    }),
+    "GDC.time.hour": makeDescriptor("GDC.time.hour", "chronological", "shared", 60, {
+        timeScale: true,
+        headerTokens: ["HOUR"],
+    }),
+    "GDC.time.minute": makeDescriptor("GDC.time.minute", "chronological", "shared", 70, {
+        timeScale: true,
+        headerTokens: ["MINUTE"],
+    }),
+    "GDC.time.second": makeDescriptor("GDC.time.second", "chronological", "shared", 80, {
+        timeScale: true,
+        headerTokens: ["SECOND"],
+    }),
 
     // generic ("X of Y") — shared / standard-derived
     "GDC.time.quarter_in_year": makeDescriptor("GDC.time.quarter_in_year", "generic", "shared", 22, {
         chronologicalOrigin: "GDC.time.quarter",
+        headerTokens: ["QUARTER_OF_YEAR"],
     }),
     "GDC.time.month_in_quarter": makeDescriptor("GDC.time.month_in_quarter", "generic", "shared", 32, {
         chronologicalOrigin: "GDC.time.month",
+        headerTokens: [],
     }),
     "GDC.time.month_in_year": makeDescriptor("GDC.time.month_in_year", "generic", "shared", 33, {
         chronologicalOrigin: "GDC.time.month",
+        headerTokens: ["MONTH_OF_YEAR"],
     }),
     "GDC.time.week_in_quarter": makeDescriptor("GDC.time.week_in_quarter", "generic", "shared", 42, {
         chronologicalOrigin: "GDC.time.week_us",
+        headerTokens: [],
     }),
     "GDC.time.week_in_year": makeDescriptor("GDC.time.week_in_year", "generic", "shared", 43, {
         chronologicalOrigin: "GDC.time.week_us",
+        headerTokens: ["WEEK_OF_YEAR"],
     }),
     "GDC.time.euweek_in_quarter": makeDescriptor("GDC.time.euweek_in_quarter", "generic", "shared", 44, {
         chronologicalOrigin: "GDC.time.week",
         offeredByDefault: false,
+        headerTokens: [],
     }),
     "GDC.time.euweek_in_year": makeDescriptor("GDC.time.euweek_in_year", "generic", "shared", 45, {
         chronologicalOrigin: "GDC.time.week",
         offeredByDefault: false,
+        headerTokens: [],
     }),
     "GDC.time.day_in_week": makeDescriptor("GDC.time.day_in_week", "generic", "shared", 51, {
         chronologicalOrigin: "GDC.time.date",
+        headerTokens: ["DAY_OF_WEEK"],
     }),
     "GDC.time.day_in_month": makeDescriptor("GDC.time.day_in_month", "generic", "shared", 52, {
         chronologicalOrigin: "GDC.time.date",
+        headerTokens: ["DAY_OF_MONTH"],
     }),
     "GDC.time.day_in_quarter": makeDescriptor("GDC.time.day_in_quarter", "generic", "shared", 53, {
         chronologicalOrigin: "GDC.time.date",
+        headerTokens: ["DAY_OF_QUARTER"],
     }),
     "GDC.time.day_in_year": makeDescriptor("GDC.time.day_in_year", "generic", "shared", 54, {
         chronologicalOrigin: "GDC.time.date",
+        headerTokens: ["DAY_OF_YEAR"],
     }),
     "GDC.time.day_in_euweek": makeDescriptor("GDC.time.day_in_euweek", "generic", "shared", 55, {
         chronologicalOrigin: "GDC.time.date",
         offeredByDefault: false,
+        headerTokens: [],
     }),
     "GDC.time.hour_in_day": makeDescriptor("GDC.time.hour_in_day", "generic", "shared", 61, {
         chronologicalOrigin: "GDC.time.hour",
         timeScale: true,
+        headerTokens: ["HOUR_OF_DAY"],
     }),
     "GDC.time.minute_in_hour": makeDescriptor("GDC.time.minute_in_hour", "generic", "shared", 71, {
         chronologicalOrigin: "GDC.time.minute",
         timeScale: true,
+        headerTokens: ["MINUTE_OF_HOUR"],
     }),
     "GDC.time.minute_in_day": makeDescriptor("GDC.time.minute_in_day", "generic", "shared", 72, {
         chronologicalOrigin: "GDC.time.minute",
         timeScale: true,
+        headerTokens: ["MINUTE_OF_DAY"],
     }),
     "GDC.time.second_in_minute": makeDescriptor("GDC.time.second_in_minute", "generic", "shared", 81, {
         chronologicalOrigin: "GDC.time.second",
         timeScale: true,
+        headerTokens: ["SECOND_OF_MINUTE"],
     }),
     "GDC.time.second_in_day": makeDescriptor("GDC.time.second_in_day", "generic", "shared", 82, {
         chronologicalOrigin: "GDC.time.second",
         timeScale: true,
+        headerTokens: ["SECOND_OF_DAY"],
     }),
 };
 

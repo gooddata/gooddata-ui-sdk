@@ -3047,17 +3047,21 @@
         "text": "More information about {label}",
         "crowdinContext": "Accessibility label for the info-circle next to a permission level row in the OLP permission menu. {label} is the permission level name (e.g. 'Can view'). Sentence case."
     },
+    "shareDialog.olp.permission.effective.tooltip.view": {
+        "text": "Can view is inherited from a group or a parent workspace. Changing or removing the permission granted here does not take that access away.",
+        "crowdinContext": "Tooltip on the warning badge on a grantee row whose view permission comes from inheritance rather than a grant made in this workspace. The API does not say whether the source is a group or a parent workspace, so the copy must name both."
+    },
     "shareDialog.olp.permission.effective.tooltip.share": {
-        "text": "This user inherits a higher permission from a group. Effective permission: Can view & share.",
-        "crowdinContext": "Tooltip on the warning badge shown when a grantee's directly-assigned permission is lower than the permission they inherit (e.g. from a group). Explains that the effective access is higher than the row's selected level."
+        "text": "Can view & share is inherited from a group or a parent workspace. Changing or removing the permission granted here does not take that access away.",
+        "crowdinContext": "Tooltip on the warning badge on a grantee row whose share permission comes from inheritance rather than a grant made in this workspace. The API does not say whether the source is a group or a parent workspace, so the copy must name both."
     },
     "shareDialog.olp.permission.effective.tooltip.edit": {
-        "text": "This user inherits a higher permission from a group. Effective permission: Can edit & share.",
-        "crowdinContext": "Tooltip on the warning badge shown when a grantee's directly-assigned permission is lower than the edit permission they inherit (e.g. from a group). Explains that the effective access is higher than the row's selected level."
+        "text": "Can edit & share is inherited from a group or a parent workspace. Changing or removing the permission granted here does not take that access away.",
+        "crowdinContext": "Tooltip on the warning badge on a grantee row whose edit permission comes from inheritance rather than a grant made in this workspace. The API does not say whether the source is a group or a parent workspace, so the copy must name both."
     },
     "shareDialog.olp.permission.effective.ariaLabel": {
-        "text": "Effective permission is higher than the assigned permission",
-        "crowdinContext": "Accessibility label for the warning badge on a grantee row whose inherited permission exceeds the directly-assigned one. Sentence case."
+        "text": "Permission is inherited",
+        "crowdinContext": "Accessibility label for the warning badge on a grantee row whose permission comes from inheritance — either exceeding the level granted in this workspace, or being the only source of access. Must stay level-agnostic: the badge's tooltip names the level. Sentence case."
     },
     "shareDialog.olp.permission.tooltip.edit": {
         "text": "Grantee can edit this object and share it with others.",

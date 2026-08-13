@@ -4,6 +4,7 @@ import {
     type CSSProperties,
     type KeyboardEvent,
     type ReactElement,
+    type ReactNode,
     forwardRef,
     useEffect,
     useRef,
@@ -103,6 +104,13 @@ export interface IDateFilterBodyProps {
      * @alpha
      */
     enableEmptyDateValues?: boolean;
+
+    /**
+     * Custom content rendered at the end of the static period form hint area.
+     *
+     * @alpha
+     */
+    customRangeHint?: ReactNode;
 }
 
 export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((props, ref) => {
@@ -367,6 +375,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
                         isMobile={isMobile}
                         withoutApply={withoutApply}
                         enableEmptyDateValues={props.enableEmptyDateValues}
+                        customRangeHint={props.customRangeHint}
                         activeForm={route}
                         onBackNavigation={handleBackNavigation}
                         onClose={closeDropdown}

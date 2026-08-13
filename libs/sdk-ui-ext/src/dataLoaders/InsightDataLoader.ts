@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { LRUCache } from "lru-cache";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -17,6 +18,13 @@ export interface IInsightDataLoader {
      * @param ref - the ref of the insight to obtain
      */
     getInsight(backend: IAnalyticalBackend, ref: ObjRef): Promise<IInsight>;
+
+    /**
+     * Removes the cached insight for the given ref, so that the next getInsight call
+     * fetches it from the backend again.
+     * @param ref - the ref of the insight to invalidate
+     */
+    invalidateInsight(ref: ObjRef): void;
 }
 
 class InsightDataLoader implements IInsightDataLoader {
@@ -42,6 +50,10 @@ class InsightDataLoader implements IInsightDataLoader {
         }
 
         return insight;
+    }
+
+    public invalidateInsight(ref: ObjRef): void {
+        this.insightCache.delete(objRefToString(ref));
     }
 }
 

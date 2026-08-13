@@ -4,13 +4,21 @@ import { type ReactElement } from "react";
 
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
+import { ScheduledEmailDialogStateProvider } from "./state/ScheduledEmailDialogStateProvider.js";
 import { type IScheduledEmailDialogProps } from "./types.js";
 
 /**
+ * Resolves the dialog component from DashboardComponentsContext and mounts it under the
+ * scheduled-export dialog's state contexts.
+ *
  * @internal
  */
 export function ScheduledEmailDialog(props: IScheduledEmailDialogProps): ReactElement {
     const { ScheduledEmailDialogComponent } = useDashboardComponentsContext();
 
-    return <ScheduledEmailDialogComponent {...props} />;
+    return (
+        <ScheduledEmailDialogStateProvider>
+            <ScheduledEmailDialogComponent {...props} />
+        </ScheduledEmailDialogStateProvider>
+    );
 }

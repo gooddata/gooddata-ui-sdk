@@ -101,6 +101,26 @@ describe("DateRangePicker", () => {
         });
     });
 
+    describe("custom range hint", () => {
+        it("should render custom content inside the hint area after the default format hint", () => {
+            renderComponent({ customRangeHint: <div className="s-custom-range-hint">Custom hint</div> });
+
+            const hintArea = document.querySelector(".gd-date-range__hint");
+            expect(hintArea).toBeInTheDocument();
+            expect(hintArea!.querySelector(".s-custom-range-hint")).toBeInTheDocument();
+            expect(hintArea!.lastElementChild).toHaveClass("s-custom-range-hint");
+        });
+
+        it("should not render custom content on mobile where the hint area is not rendered", () => {
+            renderComponent({
+                isMobile: true,
+                customRangeHint: <div className="s-custom-range-hint">Custom hint</div>,
+            });
+
+            expect(document.querySelector(".s-custom-range-hint")).not.toBeInTheDocument();
+        });
+    });
+
     describe("time enabled", () => {
         it("should call the appropriate callback when FROM time configured to 11", () => {
             const onRangeChange = vi.fn();

@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type Dispatch, type SetStateAction, useCallback } from "react";
+import { type Dispatch, type SetStateAction, useCallback, useRef } from "react";
 
 import {
     type FilterContextItem,
@@ -14,23 +14,24 @@ import {
     isExportDefinitionVisualizationObjectRequestPayload,
     isInsightWidget,
 } from "@gooddata/sdk-model";
+import { shallowEqualObjects } from "@gooddata/util";
 
-import type { IAutomationFiltersTab } from "../../../../../model/store/filtering/types.js";
-import { useScheduledEmailDialogContext } from "../../../contexts/ScheduledEmailDialogContext.js";
-import { useValidateExistingAutomationFilters } from "../../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
+import type { IAutomationFiltersTab } from "../../../../model/store/filtering/types.js";
+import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
+import { useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import {
     type IUseAutomationExportParameters,
     useAutomationExportParameters,
-} from "../../../shared/automationFilters/useAutomationExportParameters.js";
-import { getDefaultSelectedFiltersFromFiltersByTab } from "../../../shared/automationFilters/useAutomationFiltersSelect.js";
+} from "../../shared/automationFilters/useAutomationExportParameters.js";
+import { getDefaultSelectedFiltersFromFiltersByTab } from "../../shared/automationFilters/useAutomationFiltersSelect.js";
 import {
     getAppliedDashboardFilters,
     getAppliedWidgetFilters,
     getVisibleFiltersByFilters,
     getVisibleFiltersByFiltersByTab,
-} from "../../../shared/filters/index.js";
+} from "../../shared/filters/index.js";
 
-export interface IUseScheduledEmailFiltersProps {
+export interface IUseScheduledEmailFiltersModelProps {
     setEditedAutomation: Dispatch<SetStateAction<IAutomationMetadataObjectDefinition>>;
     scheduledExportToEdit?: IAutomationMetadataObject;
     widget?: IWidget;
@@ -63,7 +64,7 @@ export interface IUseScheduledEmailFiltersProps {
  *
  * @internal
  */
-export function useScheduledEmailFilters({
+export function useScheduledEmailFiltersModel({
     setEditedAutomation,
     scheduledExportToEdit,
     widget,
@@ -80,7 +81,7 @@ export function useScheduledEmailFilters({
     setStoreFilters,
     filtersForNewAutomation,
     setParametersWire,
-}: IUseScheduledEmailFiltersProps): IUseScheduledEmailFilters {
+}: IUseScheduledEmailFiltersModelProps): IUseScheduledEmailFiltersModel {
     const {
         hiddenFilters: dashboardHiddenFilters,
         commonDateFilterId,
@@ -336,7 +337,10 @@ export function useScheduledEmailFilters({
         [onFiltersChange, onFiltersByTabChange, setStoreFilters, onStoreParametersChange],
     );
 
-    return {
+    // Held stable member-wise, not just internally: this whole object is the filter context's value,
+    // so its identity is what every consumer re-renders on. The model never reads the draft, so a
+    // keystroke changes no member — and without this a fresh literal would re-render every consumer.
+    return useShallowStable({
         selectedFilters: editedAutomationFilters,
         availableFilters,
         storeFilters,
@@ -349,15 +353,31 @@ export function useScheduledEmailFilters({
         automationIsValid,
         filtersAreStale,
         ...parameters,
-    };
+    });
 }
 
 /**
- * Return type of {@link useScheduledEmailFilters}: its own filter model plus the whole absorbed
+ * Returns the previous object while every member keeps its identity, so a caller can hold a whole
+ * model stable without naming its members. Preferred over `useMemo` here because the roster is the
+ * hook's return shape: a dependency array would have to restate all of it, and a missed entry would
+ * serve a stale member rather than fail loudly.
+ */
+function useShallowStable<T extends object>(value: T): T {
+    const previous = useRef(value);
+
+    if (!shallowEqualObjects(previous.current, value)) {
+        previous.current = value;
+    }
+
+    return previous.current;
+}
+
+/**
+ * Return type of {@link useScheduledEmailFiltersModel}: its own filter model plus the whole absorbed
  * {@link useAutomationExportParameters} model, spread in verbatim so its member names stay canonical.
  * @internal
  */
-export interface IUseScheduledEmailFilters extends IUseAutomationExportParameters {
+export interface IUseScheduledEmailFiltersModel extends IUseAutomationExportParameters {
     selectedFilters: FilterContextItem[];
     availableFilters: FilterContextItem[] | undefined;
     storeFilters: boolean;

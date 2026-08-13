@@ -113,11 +113,15 @@ function convertTigerDimensionalityToSdk(dimensionality: unknown[] | undefined):
 }
 
 function convertTigerMeasureValueConditionsToSdk(
-    conditions: MeasureValueCondition[],
+    conditions: MeasureValueCondition[] | undefined,
     treatNullValuesAs: number | undefined,
 ): MeasureValueFilterCondition[] {
     type TigerComparisonCondition = { comparison: { operator: unknown; value: number } };
     type TigerRangeCondition = { range: { operator: unknown; from: number; to: number } };
+
+    if (conditions === undefined) {
+        return [];
+    }
 
     return conditions.map((c): MeasureValueFilterCondition => {
         if ("comparison" in (c as any)) {

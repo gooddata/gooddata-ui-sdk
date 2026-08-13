@@ -595,6 +595,12 @@ export interface IFeatureFlags {
     enableSingleStoreDataSource?: boolean;
 
     /**
+     * Enables the data source cache retention policy: the UI for viewing and setting how long
+     * a data source's cached results are kept becomes available on the data source detail screen.
+     */
+    enableCacheRetentionPolicy?: boolean;
+
+    /**
      * Enable Semantic Search in the UI.
      */
     enableSemanticSearch?: boolean;

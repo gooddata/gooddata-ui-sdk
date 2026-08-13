@@ -306,7 +306,10 @@ export interface AggregateKeyConfig {
      * Key columns. Defaults to first inferred column.
      */
     'columns'?: Array<string>;
+    'type': AggregateKeyConfigTypeEnum;
 }
+
+export type AggregateKeyConfigTypeEnum = 'aggregate';
 
 /**
  * AI usage metadata returned after the interaction (e.g. current query count vs. entitlement limit).
@@ -683,7 +686,7 @@ export interface ChangeAnalysisParams {
     /**
      * Optional filters to apply
      */
-    'filters': Array<ChangeAnalysisParamsFiltersInner>;
+    'filters': Array<FilterDefinition>;
     'measure': MeasureItem;
     /**
      * The title of the measure being analyzed
@@ -698,11 +701,6 @@ export interface ChangeAnalysisParams {
      */
     'useSmartAttributeSelection': boolean;
 }
-
-/**
- * @type ChangeAnalysisParamsFiltersInner
- */
-export type ChangeAnalysisParamsFiltersInner = AbstractMeasureValueFilter | FilterDefinitionForSimpleMeasure | InlineFilterDefinition;
 
 /**
  * Request for change analysis computation
@@ -728,7 +726,7 @@ export interface ChangeAnalysisRequest {
     /**
      * Optional filters to apply.
      */
-    'filters'?: Array<ChangeAnalysisRequestFiltersInner>;
+    'filters'?: Array<FilterDefinition>;
     /**
      * Only include attributes with at least one of these tags. If empty, no inclusion filter is applied. This filter applies to both auto-discovered and explicitly provided attributes.
      */
@@ -743,11 +741,6 @@ export interface ChangeAnalysisRequest {
      */
     'useSmartAttributeSelection'?: boolean;
 }
-
-/**
- * @type ChangeAnalysisRequestFiltersInner
- */
-export type ChangeAnalysisRequestFiltersInner = AbstractMeasureValueFilter | FilterDefinitionForSimpleMeasure | InlineFilterDefinition;
 
 /**
  * Response for change analysis computation
@@ -1016,7 +1009,10 @@ export interface ColumnPartitionConfig {
      * Columns to partition by.
      */
     'columns': Array<string>;
+    'type': ColumnPartitionConfigTypeEnum;
 }
+
+export type ColumnPartitionConfigTypeEnum = 'column';
 
 /**
  * Condition that compares the metric value to a given constant value using a comparison operator.
@@ -1069,7 +1065,7 @@ export interface CompoundMeasureValueFilterCompoundMeasureValueFilter {
     /**
      * List of conditions to apply. Conditions are combined with OR logic. Each condition can be either a comparison (e.g., > 100) or a range (e.g., BETWEEN 10 AND 50). If empty, no filtering is applied and all rows are returned.
      */
-    'conditions': Array<MeasureValueCondition>;
+    'conditions'?: Array<MeasureValueCondition>;
     /**
      * References to the attributes to be used when filtering.
      */
@@ -1098,13 +1094,13 @@ export interface CreatePipeTableRequest {
      * Override inferred column types. Maps column names to SQL type strings (e.g. {\"year\": \"INT\", \"event_date\": \"DATE\"}). Applied after parquet schema inference.
      */
     'columnOverrides'?: { [key: string]: string; };
-    'distributionConfig'?: DistributionConfig;
-    'keyConfig'?: KeyConfig;
+    'distributionConfig'?: CreatePipeTableRequestDistributionConfig;
+    'keyConfig'?: CreatePipeTableRequestKeyConfig;
     /**
      * Cap VARCHAR(N) to this length when N exceeds it. 0 = no cap.
      */
     'maxVarcharLength'?: number;
-    'partitionConfig'?: PartitionConfig;
+    'partitionConfig'?: CreatePipeTableRequestPartitionConfig;
     /**
      * Path prefix to the parquet files (e.g. \'my-dataset/year=2024/\'). All parquet files must be at a uniform depth under the prefix — either all directly under the prefix, or all under a consistent Hive partition hierarchy (e.g. year=2024/month=01/). Mixed layouts (files at multiple depths) are not supported.
      */
@@ -1126,6 +1122,21 @@ export interface CreatePipeTableRequest {
      */
     'tableProperties'?: { [key: string]: string; };
 }
+
+/**
+ * @type CreatePipeTableRequestDistributionConfig
+ */
+export type CreatePipeTableRequestDistributionConfig = HashDistributionConfig | RandomDistributionConfig;
+
+/**
+ * @type CreatePipeTableRequestKeyConfig
+ */
+export type CreatePipeTableRequestKeyConfig = AggregateKeyConfig | DuplicateKeyConfig | PrimaryKeyConfig | UniqueKeyConfig;
+
+/**
+ * @type CreatePipeTableRequestPartitionConfig
+ */
+export type CreatePipeTableRequestPartitionConfig = ColumnPartitionConfig | DateTruncPartitionConfig | TimeSlicePartitionConfig;
 
 /**
  * List of created visualization objects
@@ -1171,7 +1182,7 @@ export type CreatedVisualizationVisualizationTypeEnum = 'TABLE' | 'HEADLINE' | '
 /**
  * @type CreatedVisualizationFiltersInner
  */
-export type CreatedVisualizationFiltersInner = AttributeNegativeFilter | AttributePositiveFilter | DateAbsoluteFilter | DateRelativeFilter | RankingFilter;
+export type CreatedVisualizationFiltersInner = AttributeNegativeFilter | AttributePositiveFilter | DateAbsoluteFilter | DateRelativeFilter | GenAiRankingFilter;
 
 /**
  * Visualization definitions created by AI.
@@ -1183,6 +1194,7 @@ export interface CreatedVisualizations {
     'objects': Array<CreatedVisualization>;
     /**
      * DEPRECATED: Use top-level reasoning.steps instead. Reasoning from LLM. Description of how and why the answer was generated.
+     * @deprecated
      */
     'reasoning': string;
     /**
@@ -1312,12 +1324,14 @@ export interface DateTruncPartitionConfig {
      * Column to partition on.
      */
     'column': string;
+    'type': DateTruncPartitionConfigTypeEnum;
     /**
      * Date/time unit for partition granularity
      */
     'unit': DateTruncPartitionConfigUnitEnum;
 }
 
+export type DateTruncPartitionConfigTypeEnum = 'dateTrunc';
 export type DateTruncPartitionConfigUnitEnum = 'year' | 'quarter' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond' | 'microsecond';
 
 /**
@@ -1415,7 +1429,10 @@ export interface DuplicateKeyConfig {
      * Key columns. Defaults to first inferred column.
      */
     'columns'?: Array<string>;
+    'type': DuplicateKeyConfigTypeEnum;
 }
+
+export type DuplicateKeyConfigTypeEnum = 'duplicate';
 
 /**
  * List of returned elements.
@@ -1680,9 +1697,11 @@ export interface ExecutionSettings {
  * Operation that has failed
  */
 export interface FailedOperation extends Operation {
+    'status': FailedOperationStatusEnum;
     'error': OperationError;
 }
 
+export type FailedOperationStatusEnum = 'failed';
 
 export interface FeedbackRequestDto {
     'sentiment': FeedbackRequestDtoSentimentEnum;
@@ -1765,9 +1784,19 @@ export interface FoundObjects {
     'objects': Array<SearchResultObject>;
     /**
      * DEPRECATED: Use top-level reasoning.steps instead. Reasoning from LLM. Description of how and why the answer was generated.
+     * @deprecated
      */
     'reasoning': string;
 }
+
+export interface GenAiRankingFilter {
+    'dimensionality'?: Array<string>;
+    'measures': Array<string>;
+    'operator': GenAiRankingFilterOperatorEnum;
+    'value': number;
+}
+
+export type GenAiRankingFilterOperatorEnum = 'TOP' | 'BOTTOM';
 
 export interface GenerateDescriptionRequest {
     /**
@@ -1881,7 +1910,10 @@ export interface HashDistributionConfig {
      * Columns to distribute by. Defaults to first column.
      */
     'columns'?: Array<string>;
+    'type': HashDistributionConfigTypeEnum;
 }
+
+export type HashDistributionConfigTypeEnum = 'hash';
 
 /**
  * Contains the information specific for a group of headers. These groups correlate to attributes and metric groups.
@@ -1947,7 +1979,10 @@ export interface InsightWidgetDescriptor {
      * Widget object ID.
      */
     'widgetId': string;
+    'widgetType': InsightWidgetDescriptorWidgetTypeEnum;
 }
+
+export type InsightWidgetDescriptorWidgetTypeEnum = 'insight';
 
 /**
  * JSON:API-compatible single-resource response envelope
@@ -2226,13 +2261,8 @@ export interface KnowledgeRecommendationsResponseDto {
 }
 
 export interface ListLlmProviderModelsRequest {
-    'providerConfig': ListLlmProviderModelsRequestProviderConfig;
+    'providerConfig': LlmProviderConfig;
 }
-
-/**
- * @type ListLlmProviderModelsRequestProviderConfig
- */
-export type ListLlmProviderModelsRequestProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
 
 export interface ListLlmProviderModelsResponse {
     /**
@@ -2639,7 +2669,7 @@ export interface OutlierDetectionRequest {
     /**
      * Various filter types to filter the execution result.
      */
-    'filters': Array<OutlierDetectionRequestFiltersInner>;
+    'filters'?: Array<FilterDefinition>;
     /**
      * Date granularity for anomaly detection. Only time-based granularities are supported (HOUR, DAY, WEEK, MONTH, QUARTER, YEAR).
      */
@@ -2653,11 +2683,6 @@ export interface OutlierDetectionRequest {
 
 export type OutlierDetectionRequestGranularityEnum = 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR';
 export type OutlierDetectionRequestSensitivityEnum = 'LOW' | 'MEDIUM' | 'HIGH';
-
-/**
- * @type OutlierDetectionRequestFiltersInner
- */
-export type OutlierDetectionRequestFiltersInner = AbstractMeasureValueFilter | FilterDefinitionForSimpleMeasure | InlineFilterDefinition;
 
 export interface OutlierDetectionResponse {
     'links': ExecutionLinks;
@@ -2720,8 +2745,10 @@ export interface PartitionConfig {
  * Operation that is still pending
  */
 export interface PendingOperation extends Operation {
+    'status': PendingOperationStatusEnum;
 }
 
+export type PendingOperationStatusEnum = 'pending';
 
 /**
  * Full details of a pipe-backed OLAP table
@@ -2888,7 +2915,10 @@ export interface PrimaryKeyConfig {
      * Key columns. Defaults to first inferred column.
      */
     'columns'?: Array<string>;
+    'type': PrimaryKeyConfigTypeEnum;
 }
+
+export type PrimaryKeyConfigTypeEnum = 'primary';
 
 /**
  * Request to provision a new AILake Database instance
@@ -2987,7 +3017,10 @@ export interface RandomDistributionConfig {
      * Number of random distribution buckets. Defaults to 1.
      */
     'buckets'?: number;
+    'type': RandomDistributionConfigTypeEnum;
 }
+
+export type RandomDistributionConfigTypeEnum = 'random';
 
 /**
  * Condition that checks if the metric value is within a given range.
@@ -3232,7 +3265,10 @@ export interface RichTextWidgetDescriptor {
      * Widget object ID.
      */
     'widgetId': string;
+    'widgetType': RichTextWidgetDescriptorWidgetTypeEnum;
 }
+
+export type RichTextWidgetDescriptorWidgetTypeEnum = 'richText';
 
 /**
  * Question -> Use Case routing. May contain final answer is a special use case is not required.
@@ -3366,6 +3402,7 @@ export interface SearchResult {
     'error'?: ErrorInfo;
     /**
      * DEPRECATED: Use top-level reasoning.steps instead. If something is not working properly this field will contain explanation.
+     * @deprecated
      */
     'reasoning': string;
     'relationships': Array<SearchRelationshipObject>;
@@ -3544,12 +3581,14 @@ export type SortKeyValueValueDirectionEnum = 'ASC' | 'DESC';
  * Operation that has succeeded
  */
 export interface SucceededOperation extends Operation {
+    'status': SucceededOperationStatusEnum;
     /**
      * Operation-specific result payload, can be missing for operations like delete
      */
     'result'?: object;
 }
 
+export type SucceededOperationStatusEnum = 'succeeded';
 
 /**
  * List of suggestions for next steps. Filled when no visualization was created, suggests alternatives.
@@ -3570,26 +3609,16 @@ export interface TestLlmProviderByIdRequest {
      * Models overrides.
      */
     'models'?: Array<LlmModel>;
-    'providerConfig'?: TestLlmProviderByIdRequestProviderConfig;
+    'providerConfig'?: LlmProviderConfig;
 }
-
-/**
- * @type TestLlmProviderByIdRequestProviderConfig
- */
-export type TestLlmProviderByIdRequestProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
 
 export interface TestLlmProviderDefinitionRequest {
     /**
      * Models to test.
      */
     'models'?: Array<LlmModel>;
-    'providerConfig': TestLlmProviderDefinitionRequestProviderConfig;
+    'providerConfig': LlmProviderConfig;
 }
-
-/**
- * @type TestLlmProviderDefinitionRequestProviderConfig
- */
-export type TestLlmProviderDefinitionRequestProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
 
 export interface TestLlmProviderResponse {
     /**
@@ -3628,12 +3657,14 @@ export interface TimeSlicePartitionConfig {
      * How many units per slice.
      */
     'slices': number;
+    'type': TimeSlicePartitionConfigTypeEnum;
     /**
      * Date/time unit for partition granularity
      */
     'unit': TimeSlicePartitionConfigUnitEnum;
 }
 
+export type TimeSlicePartitionConfigTypeEnum = 'timeSlice';
 export type TimeSlicePartitionConfigUnitEnum = 'year' | 'quarter' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond' | 'microsecond';
 
 /**
@@ -3789,7 +3820,10 @@ export interface UniqueKeyConfig {
      * Key columns. Defaults to first inferred column.
      */
     'columns'?: Array<string>;
+    'type': UniqueKeyConfigTypeEnum;
 }
+
+export type UniqueKeyConfigTypeEnum = 'unique';
 
 /**
  * Request to update the data source associated with an AI Lake Database instance
@@ -3892,7 +3926,10 @@ export interface VisualizationSwitcherWidgetDescriptor {
      * Widget object ID.
      */
     'widgetId': string;
+    'widgetType': VisualizationSwitcherWidgetDescriptorWidgetTypeEnum;
 }
+
+export type VisualizationSwitcherWidgetDescriptorWidgetTypeEnum = 'visualizationSwitcher';
 
 /**
  * Measure adjustments for this scenario
@@ -3944,16 +3981,11 @@ export interface WhatIfScenarioItem {
  * Descriptor for a widget on the dashboard.
  */
 export interface WidgetDescriptor {
-    'filters'?: Array<WidgetDescriptorFiltersInner>;
+    'filters'?: Array<FilterDefinition>;
     'title': string;
     'widgetId': string;
     'widgetType': string;
 }
-
-/**
- * @type WidgetDescriptorFiltersInner
- */
-export type WidgetDescriptorFiltersInner = AbstractMeasureValueFilter | FilterDefinitionForSimpleMeasure | InlineFilterDefinition;
 
 export interface WorkflowDashboardSummaryRequestDto {
     'customUserPrompt'?: string;
@@ -4468,15 +4500,15 @@ export async function AILakeApiAxiosParamCreator_GetAiLakeServiceStatus(
  * (BETA) Returns data source associations for the specified AI Lake database instance.
  * @summary (BETA) List data sources of an AILake Database instance
  * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
- * @param {string} [page] Zero-based page number.
- * @param {string} [size] Number of items per page.
+ * @param {number} [page] Zero-based page number.
+ * @param {number} [size] Number of items per page.
  * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeApiAxiosParamCreator_ListAiLakeDatabaseDataSources(
-    instanceId: string, page?: string, size?: string, metaInclude?: Array<string>, 
+    instanceId: string, page?: number, size?: number, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -4527,15 +4559,15 @@ export async function AILakeApiAxiosParamCreator_ListAiLakeDatabaseDataSources(
 /**
  * (BETA) Lists database instances in the organization\'s AI Lake.
  * @summary (BETA) List AI Lake Database instances
- * @param {string} [page] Zero-based page number.
- * @param {string} [size] Number of items per page.
+ * @param {number} [page] Zero-based page number.
+ * @param {number} [size] Number of items per page.
  * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeApiAxiosParamCreator_ListAiLakeDatabaseInstances(
-    page?: string, size?: string, metaInclude?: Array<string>, 
+    page?: number, size?: number, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -4583,15 +4615,15 @@ export async function AILakeApiAxiosParamCreator_ListAiLakeDatabaseInstances(
 /**
  * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
  * @summary (BETA) List registered AI Lake ObjectStorages
- * @param {string} [page] Zero-based page number.
- * @param {string} [size] Number of items per page.
+ * @param {number} [page] Zero-based page number.
+ * @param {number} [size] Number of items per page.
  * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeApiAxiosParamCreator_ListAiLakeObjectStorages(
-    page?: string, size?: string, metaInclude?: Array<string>, 
+    page?: number, size?: number, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -4640,15 +4672,15 @@ export async function AILakeApiAxiosParamCreator_ListAiLakeObjectStorages(
  * (BETA) Lists active pipe tables in the given AI Lake database instance.
  * @summary (BETA) List AI Lake pipe tables
  * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
- * @param {string} [page] Zero-based page number.
- * @param {string} [size] Number of items per page.
+ * @param {number} [page] Zero-based page number.
+ * @param {number} [size] Number of items per page.
  * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeApiAxiosParamCreator_ListAiLakePipeTables(
-    instanceId: string, page?: string, size?: string, metaInclude?: Array<string>, 
+    instanceId: string, page?: number, size?: number, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -4699,15 +4731,15 @@ export async function AILakeApiAxiosParamCreator_ListAiLakePipeTables(
 /**
  * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name).
  * @summary (BETA) List AI Lake services
- * @param {string} [page] Zero-based page number.
- * @param {string} [size] Number of items per page.
+ * @param {number} [page] Zero-based page number.
+ * @param {number} [size] Number of items per page.
  * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeApiAxiosParamCreator_ListAiLakeServices(
-    page?: string, size?: string, metaInclude?: Array<string>, 
+    page?: number, size?: number, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -5110,7 +5142,7 @@ export async function AILakeApi_AnalyzeStatistics(
     requestParameters: AILakeApiAnalyzeStatisticsRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<object> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_AnalyzeStatistics(
         requestParameters.instanceId, requestParameters.analyzeStatisticsRequest, requestParameters.operationId, 
         options || {},
@@ -5136,7 +5168,7 @@ export async function AILakeApi_CreateAiLakePipeTable(
     requestParameters: AILakeApiCreateAiLakePipeTableRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<object> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_CreateAiLakePipeTable(
         requestParameters.instanceId, requestParameters.createPipeTableRequest, requestParameters.operationId, 
         options || {},
@@ -5162,7 +5194,7 @@ export async function AILakeApi_DeleteAiLakePipeTable(
     requestParameters: AILakeApiDeleteAiLakePipeTableRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<object> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_DeleteAiLakePipeTable(
         requestParameters.instanceId, requestParameters.tableName, requestParameters.operationId, 
         options || {},
@@ -5188,7 +5220,7 @@ export async function AILakeApi_DeprovisionAiLakeDatabaseInstance(
     requestParameters: AILakeApiDeprovisionAiLakeDatabaseInstanceRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<object> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_DeprovisionAiLakeDatabaseInstance(
         requestParameters.instanceId, requestParameters.operationId, 
         options || {},
@@ -5448,7 +5480,7 @@ export async function AILakeApi_ProvisionAiLakeDatabaseInstance(
     requestParameters: AILakeApiProvisionAiLakeDatabaseInstanceRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<object> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_ProvisionAiLakeDatabaseInstance(
         requestParameters.provisionDatabaseInstanceRequest, requestParameters.operationId, 
         options || {},
@@ -5474,7 +5506,7 @@ export async function AILakeApi_RefreshAiLakePipeTablePartition(
     requestParameters: AILakeApiRefreshAiLakePipeTablePartitionRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<object> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_RefreshAiLakePipeTablePartition(
         requestParameters.instanceId, requestParameters.tableName, requestParameters.refreshPartitionRequest, requestParameters.operationId, 
         options || {},
@@ -5526,7 +5558,7 @@ export async function AILakeApi_RunAiLakeServiceCommand(
     requestParameters: AILakeApiRunAiLakeServiceCommandRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<object> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_RunAiLakeServiceCommand(
         requestParameters.serviceId, requestParameters.commandName, requestParameters.runServiceCommandRequest, requestParameters.operationId, 
         options || {},
@@ -5586,7 +5618,7 @@ export interface AILakeApiInterface {
      * @throws {RequiredError}
      * @memberof AILakeApiInterface
      */
-    analyzeStatistics(requestParameters: AILakeApiAnalyzeStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+    analyzeStatistics(requestParameters: AILakeApiAnalyzeStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
@@ -5596,7 +5628,7 @@ export interface AILakeApiInterface {
      * @throws {RequiredError}
      * @memberof AILakeApiInterface
      */
-    createAiLakePipeTable(requestParameters: AILakeApiCreateAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+    createAiLakePipeTable(requestParameters: AILakeApiCreateAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * (BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.
@@ -5606,7 +5638,7 @@ export interface AILakeApiInterface {
      * @throws {RequiredError}
      * @memberof AILakeApiInterface
      */
-    deleteAiLakePipeTable(requestParameters: AILakeApiDeleteAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+    deleteAiLakePipeTable(requestParameters: AILakeApiDeleteAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
@@ -5616,7 +5648,7 @@ export interface AILakeApiInterface {
      * @throws {RequiredError}
      * @memberof AILakeApiInterface
      */
-    deprovisionAiLakeDatabaseInstance(requestParameters: AILakeApiDeprovisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+    deprovisionAiLakeDatabaseInstance(requestParameters: AILakeApiDeprovisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * (BETA) Retrieve details of the specified AI Lake database instance in the organization\'s AI Lake.
@@ -5716,7 +5748,7 @@ export interface AILakeApiInterface {
      * @throws {RequiredError}
      * @memberof AILakeApiInterface
      */
-    provisionAiLakeDatabaseInstance(requestParameters: AILakeApiProvisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+    provisionAiLakeDatabaseInstance(requestParameters: AILakeApiProvisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * (BETA) Deletes all rows for the specified Hive partition and re-loads them from S3. Use after overwriting a partition file in object storage with corrected data. Returns an operation-id header the client can use to poll for progress.
@@ -5726,7 +5758,7 @@ export interface AILakeApiInterface {
      * @throws {RequiredError}
      * @memberof AILakeApiInterface
      */
-    refreshAiLakePipeTablePartition(requestParameters: AILakeApiRefreshAiLakePipeTablePartitionRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+    refreshAiLakePipeTablePartition(requestParameters: AILakeApiRefreshAiLakePipeTablePartitionRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * (BETA) Removes a data source association from an AI Lake database instance and deletes the corresponding data source from metadata-api. Fails if removing the data source would leave the instance with no data sources.
@@ -5746,7 +5778,7 @@ export interface AILakeApiInterface {
      * @throws {RequiredError}
      * @memberof AILakeApiInterface
      */
-    runAiLakeServiceCommand(requestParameters: AILakeApiRunAiLakeServiceCommandRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+    runAiLakeServiceCommand(requestParameters: AILakeApiRunAiLakeServiceCommandRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * (BETA) Updates the data source ID and name for an existing AI Lake database instance without deleting the underlying database. Use this to recover from a wrong data source ID provisioned on an existing database instance.
@@ -5964,17 +5996,17 @@ export interface AILakeApiListAiLakeDatabaseDataSourcesRequest {
 
     /**
      * Zero-based page number.
-     * @type {string}
+     * @type {number}
      * @memberof AILakeApiListAiLakeDatabaseDataSources
      */
-    readonly page?: string
+    readonly page?: number
 
     /**
      * Number of items per page.
-     * @type {string}
+     * @type {number}
      * @memberof AILakeApiListAiLakeDatabaseDataSources
      */
-    readonly size?: string
+    readonly size?: number
 
     /**
      * 
@@ -5992,17 +6024,17 @@ export interface AILakeApiListAiLakeDatabaseDataSourcesRequest {
 export interface AILakeApiListAiLakeDatabaseInstancesRequest {
     /**
      * Zero-based page number.
-     * @type {string}
+     * @type {number}
      * @memberof AILakeApiListAiLakeDatabaseInstances
      */
-    readonly page?: string
+    readonly page?: number
 
     /**
      * Number of items per page.
-     * @type {string}
+     * @type {number}
      * @memberof AILakeApiListAiLakeDatabaseInstances
      */
-    readonly size?: string
+    readonly size?: number
 
     /**
      * 
@@ -6020,17 +6052,17 @@ export interface AILakeApiListAiLakeDatabaseInstancesRequest {
 export interface AILakeApiListAiLakeObjectStoragesRequest {
     /**
      * Zero-based page number.
-     * @type {string}
+     * @type {number}
      * @memberof AILakeApiListAiLakeObjectStorages
      */
-    readonly page?: string
+    readonly page?: number
 
     /**
      * Number of items per page.
-     * @type {string}
+     * @type {number}
      * @memberof AILakeApiListAiLakeObjectStorages
      */
-    readonly size?: string
+    readonly size?: number
 
     /**
      * 
@@ -6055,17 +6087,17 @@ export interface AILakeApiListAiLakePipeTablesRequest {
 
     /**
      * Zero-based page number.
-     * @type {string}
+     * @type {number}
      * @memberof AILakeApiListAiLakePipeTables
      */
-    readonly page?: string
+    readonly page?: number
 
     /**
      * Number of items per page.
-     * @type {string}
+     * @type {number}
      * @memberof AILakeApiListAiLakePipeTables
      */
-    readonly size?: string
+    readonly size?: number
 
     /**
      * 
@@ -6083,17 +6115,17 @@ export interface AILakeApiListAiLakePipeTablesRequest {
 export interface AILakeApiListAiLakeServicesRequest {
     /**
      * Zero-based page number.
-     * @type {string}
+     * @type {number}
      * @memberof AILakeApiListAiLakeServices
      */
-    readonly page?: string
+    readonly page?: number
 
     /**
      * Number of items per page.
-     * @type {string}
+     * @type {number}
      * @memberof AILakeApiListAiLakeServices
      */
-    readonly size?: string
+    readonly size?: number
 
     /**
      * 
@@ -6635,15 +6667,15 @@ export async function AILakeDatabasesApiAxiosParamCreator_GetAiLakeDatabaseInsta
  * (BETA) Returns data source associations for the specified AI Lake database instance.
  * @summary (BETA) List data sources of an AILake Database instance
  * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
- * @param {string} [page] Zero-based page number.
- * @param {string} [size] Number of items per page.
+ * @param {number} [page] Zero-based page number.
+ * @param {number} [size] Number of items per page.
  * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeDatabasesApiAxiosParamCreator_ListAiLakeDatabaseDataSources(
-    instanceId: string, page?: string, size?: string, metaInclude?: Array<string>, 
+    instanceId: string, page?: number, size?: number, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -6694,15 +6726,15 @@ export async function AILakeDatabasesApiAxiosParamCreator_ListAiLakeDatabaseData
 /**
  * (BETA) Lists database instances in the organization\'s AI Lake.
  * @summary (BETA) List AI Lake Database instances
- * @param {string} [page] Zero-based page number.
- * @param {string} [size] Number of items per page.
+ * @param {number} [page] Zero-based page number.
+ * @param {number} [size] Number of items per page.
  * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeDatabasesApiAxiosParamCreator_ListAiLakeDatabaseInstances(
-    page?: string, size?: string, metaInclude?: Array<string>, 
+    page?: number, size?: number, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -6750,15 +6782,15 @@ export async function AILakeDatabasesApiAxiosParamCreator_ListAiLakeDatabaseInst
 /**
  * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
  * @summary (BETA) List registered AI Lake ObjectStorages
- * @param {string} [page] Zero-based page number.
- * @param {string} [size] Number of items per page.
+ * @param {number} [page] Zero-based page number.
+ * @param {number} [size] Number of items per page.
  * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeDatabasesApiAxiosParamCreator_ListAiLakeObjectStorages(
-    page?: string, size?: string, metaInclude?: Array<string>, 
+    page?: number, size?: number, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -7019,7 +7051,7 @@ export async function AILakeDatabasesApi_DeprovisionAiLakeDatabaseInstance(
     requestParameters: AILakeDatabasesApiDeprovisionAiLakeDatabaseInstanceRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<object> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await AILakeDatabasesApiAxiosParamCreator_DeprovisionAiLakeDatabaseInstance(
         requestParameters.instanceId, requestParameters.operationId, 
         options || {},
@@ -7149,7 +7181,7 @@ export async function AILakeDatabasesApi_ProvisionAiLakeDatabaseInstance(
     requestParameters: AILakeDatabasesApiProvisionAiLakeDatabaseInstanceRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<object> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await AILakeDatabasesApiAxiosParamCreator_ProvisionAiLakeDatabaseInstance(
         requestParameters.provisionDatabaseInstanceRequest, requestParameters.operationId, 
         options || {},
@@ -7235,7 +7267,7 @@ export interface AILakeDatabasesApiInterface {
      * @throws {RequiredError}
      * @memberof AILakeDatabasesApiInterface
      */
-    deprovisionAiLakeDatabaseInstance(requestParameters: AILakeDatabasesApiDeprovisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+    deprovisionAiLakeDatabaseInstance(requestParameters: AILakeDatabasesApiDeprovisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * (BETA) Retrieve details of the specified AI Lake database instance in the organization\'s AI Lake.
@@ -7285,7 +7317,7 @@ export interface AILakeDatabasesApiInterface {
      * @throws {RequiredError}
      * @memberof AILakeDatabasesApiInterface
      */
-    provisionAiLakeDatabaseInstance(requestParameters: AILakeDatabasesApiProvisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+    provisionAiLakeDatabaseInstance(requestParameters: AILakeDatabasesApiProvisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * (BETA) Removes a data source association from an AI Lake database instance and deletes the corresponding data source from metadata-api. Fails if removing the data source would leave the instance with no data sources.
@@ -7380,17 +7412,17 @@ export interface AILakeDatabasesApiListAiLakeDatabaseDataSourcesRequest {
 
     /**
      * Zero-based page number.
-     * @type {string}
+     * @type {number}
      * @memberof AILakeDatabasesApiListAiLakeDatabaseDataSources
      */
-    readonly page?: string
+    readonly page?: number
 
     /**
      * Number of items per page.
-     * @type {string}
+     * @type {number}
      * @memberof AILakeDatabasesApiListAiLakeDatabaseDataSources
      */
-    readonly size?: string
+    readonly size?: number
 
     /**
      * 
@@ -7408,17 +7440,17 @@ export interface AILakeDatabasesApiListAiLakeDatabaseDataSourcesRequest {
 export interface AILakeDatabasesApiListAiLakeDatabaseInstancesRequest {
     /**
      * Zero-based page number.
-     * @type {string}
+     * @type {number}
      * @memberof AILakeDatabasesApiListAiLakeDatabaseInstances
      */
-    readonly page?: string
+    readonly page?: number
 
     /**
      * Number of items per page.
-     * @type {string}
+     * @type {number}
      * @memberof AILakeDatabasesApiListAiLakeDatabaseInstances
      */
-    readonly size?: string
+    readonly size?: number
 
     /**
      * 
@@ -7436,17 +7468,17 @@ export interface AILakeDatabasesApiListAiLakeDatabaseInstancesRequest {
 export interface AILakeDatabasesApiListAiLakeObjectStoragesRequest {
     /**
      * Zero-based page number.
-     * @type {string}
+     * @type {number}
      * @memberof AILakeDatabasesApiListAiLakeObjectStorages
      */
-    readonly page?: string
+    readonly page?: number
 
     /**
      * Number of items per page.
-     * @type {string}
+     * @type {number}
      * @memberof AILakeDatabasesApiListAiLakeObjectStorages
      */
-    readonly size?: string
+    readonly size?: number
 
     /**
      * 
@@ -7878,15 +7910,15 @@ export async function AILakePipeTablesApiAxiosParamCreator_GetAiLakePipeTable(
  * (BETA) Lists active pipe tables in the given AI Lake database instance.
  * @summary (BETA) List AI Lake pipe tables
  * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
- * @param {string} [page] Zero-based page number.
- * @param {string} [size] Number of items per page.
+ * @param {number} [page] Zero-based page number.
+ * @param {number} [size] Number of items per page.
  * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakePipeTablesApiAxiosParamCreator_ListAiLakePipeTables(
-    instanceId: string, page?: string, size?: string, metaInclude?: Array<string>, 
+    instanceId: string, page?: number, size?: number, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -8021,7 +8053,7 @@ export async function AILakePipeTablesApi_AnalyzeStatistics(
     requestParameters: AILakePipeTablesApiAnalyzeStatisticsRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<object> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await AILakePipeTablesApiAxiosParamCreator_AnalyzeStatistics(
         requestParameters.instanceId, requestParameters.analyzeStatisticsRequest, requestParameters.operationId, 
         options || {},
@@ -8047,7 +8079,7 @@ export async function AILakePipeTablesApi_CreateAiLakePipeTable(
     requestParameters: AILakePipeTablesApiCreateAiLakePipeTableRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<object> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await AILakePipeTablesApiAxiosParamCreator_CreateAiLakePipeTable(
         requestParameters.instanceId, requestParameters.createPipeTableRequest, requestParameters.operationId, 
         options || {},
@@ -8073,7 +8105,7 @@ export async function AILakePipeTablesApi_DeleteAiLakePipeTable(
     requestParameters: AILakePipeTablesApiDeleteAiLakePipeTableRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<object> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await AILakePipeTablesApiAxiosParamCreator_DeleteAiLakePipeTable(
         requestParameters.instanceId, requestParameters.tableName, requestParameters.operationId, 
         options || {},
@@ -8151,7 +8183,7 @@ export async function AILakePipeTablesApi_RefreshAiLakePipeTablePartition(
     requestParameters: AILakePipeTablesApiRefreshAiLakePipeTablePartitionRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<object> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await AILakePipeTablesApiAxiosParamCreator_RefreshAiLakePipeTablePartition(
         requestParameters.instanceId, requestParameters.tableName, requestParameters.refreshPartitionRequest, requestParameters.operationId, 
         options || {},
@@ -8175,7 +8207,7 @@ export interface AILakePipeTablesApiInterface {
      * @throws {RequiredError}
      * @memberof AILakePipeTablesApiInterface
      */
-    analyzeStatistics(requestParameters: AILakePipeTablesApiAnalyzeStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+    analyzeStatistics(requestParameters: AILakePipeTablesApiAnalyzeStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
@@ -8185,7 +8217,7 @@ export interface AILakePipeTablesApiInterface {
      * @throws {RequiredError}
      * @memberof AILakePipeTablesApiInterface
      */
-    createAiLakePipeTable(requestParameters: AILakePipeTablesApiCreateAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+    createAiLakePipeTable(requestParameters: AILakePipeTablesApiCreateAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * (BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.
@@ -8195,7 +8227,7 @@ export interface AILakePipeTablesApiInterface {
      * @throws {RequiredError}
      * @memberof AILakePipeTablesApiInterface
      */
-    deleteAiLakePipeTable(requestParameters: AILakePipeTablesApiDeleteAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+    deleteAiLakePipeTable(requestParameters: AILakePipeTablesApiDeleteAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * (BETA) Returns full details of the specified pipe table.
@@ -8225,7 +8257,7 @@ export interface AILakePipeTablesApiInterface {
      * @throws {RequiredError}
      * @memberof AILakePipeTablesApiInterface
      */
-    refreshAiLakePipeTablePartition(requestParameters: AILakePipeTablesApiRefreshAiLakePipeTablePartitionRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+    refreshAiLakePipeTablePartition(requestParameters: AILakePipeTablesApiRefreshAiLakePipeTablePartitionRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
 }
 
@@ -8349,17 +8381,17 @@ export interface AILakePipeTablesApiListAiLakePipeTablesRequest {
 
     /**
      * Zero-based page number.
-     * @type {string}
+     * @type {number}
      * @memberof AILakePipeTablesApiListAiLakePipeTables
      */
-    readonly page?: string
+    readonly page?: number
 
     /**
      * Number of items per page.
-     * @type {string}
+     * @type {number}
      * @memberof AILakePipeTablesApiListAiLakePipeTables
      */
-    readonly size?: string
+    readonly size?: number
 
     /**
      * 
@@ -8579,15 +8611,15 @@ export async function AILakeServicesOperationsApiAxiosParamCreator_GetAiLakeServ
 /**
  * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name).
  * @summary (BETA) List AI Lake services
- * @param {string} [page] Zero-based page number.
- * @param {string} [size] Number of items per page.
+ * @param {number} [page] Zero-based page number.
+ * @param {number} [size] Number of items per page.
  * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeServicesOperationsApiAxiosParamCreator_ListAiLakeServices(
-    page?: string, size?: string, metaInclude?: Array<string>, 
+    page?: number, size?: number, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -8797,7 +8829,7 @@ export async function AILakeServicesOperationsApi_RunAiLakeServiceCommand(
     requestParameters: AILakeServicesOperationsApiRunAiLakeServiceCommandRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<object> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await AILakeServicesOperationsApiAxiosParamCreator_RunAiLakeServiceCommand(
         requestParameters.serviceId, requestParameters.commandName, requestParameters.runServiceCommandRequest, requestParameters.operationId, 
         options || {},
@@ -8851,7 +8883,7 @@ export interface AILakeServicesOperationsApiInterface {
      * @throws {RequiredError}
      * @memberof AILakeServicesOperationsApiInterface
      */
-    runAiLakeServiceCommand(requestParameters: AILakeServicesOperationsApiRunAiLakeServiceCommandRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+    runAiLakeServiceCommand(requestParameters: AILakeServicesOperationsApiRunAiLakeServiceCommandRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
 }
 
@@ -8891,17 +8923,17 @@ export interface AILakeServicesOperationsApiGetAiLakeServiceStatusRequest {
 export interface AILakeServicesOperationsApiListAiLakeServicesRequest {
     /**
      * Zero-based page number.
-     * @type {string}
+     * @type {number}
      * @memberof AILakeServicesOperationsApiListAiLakeServices
      */
-    readonly page?: string
+    readonly page?: number
 
     /**
      * Number of items per page.
-     * @type {string}
+     * @type {number}
      * @memberof AILakeServicesOperationsApiListAiLakeServices
      */
-    readonly size?: string
+    readonly size?: number
 
     /**
      * 

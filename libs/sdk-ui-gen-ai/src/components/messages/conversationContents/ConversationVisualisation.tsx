@@ -88,6 +88,7 @@ export type ConversationVisualisationProps = {
     ) => void;
     enableDrilling?: boolean;
     enableChangeAnalysis?: boolean;
+    enableSecondGranularities?: boolean;
     enableNewPivotTable?: boolean;
     enableAccessibleChartTooltip?: boolean;
 };
@@ -103,6 +104,7 @@ export function ConversationVisualisation({
     onDrillFired,
     enableDrilling = true,
     enableChangeAnalysis = false,
+    enableSecondGranularities = false,
     enableNewPivotTable = true,
     enableAccessibleChartTooltip = false,
 }: ConversationVisualisationProps) {
@@ -190,6 +192,7 @@ export function ConversationVisualisation({
                     origin: {} as IDrillOrigin,
                 } as IKeyDriveAnalysis,
                 event,
+                enableSecondGranularities,
             );
             if (keyDriverData.length === 0) {
                 onDrillFired?.(null);
@@ -197,7 +200,7 @@ export function ConversationVisualisation({
                 onDrillFired?.({ keyDriverData, event });
             }
         },
-        [onDrillFired],
+        [onDrillFired, enableSecondGranularities],
     );
 
     const renderCurrentChart = () => {

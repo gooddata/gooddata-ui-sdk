@@ -1,5 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
+import { type ReactNode } from "react";
+
 import { type DayPickerProps } from "react-day-picker";
 
 import { type WeekStart } from "@gooddata/sdk-model";
@@ -24,6 +26,7 @@ export interface IAbsoluteDateFilterFormProps {
     shouldOverlayDatePicker?: boolean;
     withoutApply?: boolean;
     submitForm: () => void;
+    customRangeHint?: ReactNode;
 }
 
 const dayPickerProps: DayPickerProps = {
@@ -45,6 +48,7 @@ export function AbsoluteDateFilterForm({
     withoutApply,
     onSelectedFilterOptionChange,
     submitForm,
+    customRangeHint,
 }: IAbsoluteDateFilterFormProps) {
     const handleRangeChange = (range: IDateRange): void => {
         onSelectedFilterOptionChange(
@@ -71,6 +75,7 @@ export function AbsoluteDateFilterForm({
             shouldOverlayDatePicker={shouldOverlayDatePicker}
             submitForm={submitForm}
             withoutApply={withoutApply}
+            customRangeHint={customRangeHint}
         />
     );
 }

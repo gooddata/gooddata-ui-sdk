@@ -14,7 +14,7 @@ import {
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 
-import type { IAutomationFiltersTab } from "../../../../../../model/store/filtering/types.js";
+import type { IAutomationFiltersTab } from "../../../../../model/store/filtering/types.js";
 
 // ---------------------------------------------------------------------------
 // Mocks — vi.mock calls are hoisted; factories must not reference top-level
@@ -26,18 +26,18 @@ const { mockUseScheduledEmailDialogContext } = vi.hoisted(() => ({
     mockUseScheduledEmailDialogContext: vi.fn(),
 }));
 
-vi.mock("../../../../contexts/ScheduledEmailDialogContext.js", () => ({
+vi.mock("../../../contexts/ScheduledEmailDialogContext.js", () => ({
     useScheduledEmailDialogContext: mockUseScheduledEmailDialogContext,
 }));
 
-vi.mock("../../../../shared/filters/index.js", () => ({
+vi.mock("../../../shared/filters/index.js", () => ({
     getAppliedWidgetFilters: vi.fn(),
     getAppliedDashboardFilters: vi.fn(),
     getVisibleFiltersByFilters: vi.fn(),
     getVisibleFiltersByFiltersByTab: vi.fn(),
 }));
 
-vi.mock("../../../../shared/automationFilters/automationParameters.js", () => ({
+vi.mock("../../../shared/automationFilters/automationParameters.js", () => ({
     shouldStoreExportParameters: vi.fn(),
 }));
 
@@ -45,13 +45,13 @@ vi.mock("../../../../shared/automationFilters/automationParameters.js", () => ({
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
 // ---------------------------------------------------------------------------
 
-import { shouldStoreExportParameters } from "../../../../shared/automationFilters/automationParameters.js";
+import { shouldStoreExportParameters } from "../../../shared/automationFilters/automationParameters.js";
 import {
     getAppliedDashboardFilters,
     getAppliedWidgetFilters,
     getVisibleFiltersByFilters,
     getVisibleFiltersByFiltersByTab,
-} from "../../../../shared/filters/index.js";
+} from "../../../shared/filters/index.js";
 import {
     type IUseScheduledEmailEffectiveFiltersProps,
     useScheduledEmailEffectiveFilters,

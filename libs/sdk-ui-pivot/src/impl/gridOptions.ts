@@ -2,8 +2,6 @@
 
 import { type FocusGridInnerElementParams } from "ag-grid-community";
 
-import { type ICorePivotTableProps } from "../publicTypes.js";
-
 import {
     COLUMN_ATTRIBUTE_COLUMN,
     COLUMN_SUBTOTAL,
@@ -20,6 +18,7 @@ import { cellClassFactory } from "./cell/cellClass.js";
 import { onCellClickedFactory } from "./cell/onCellClick.js";
 import { onCellKeyDownFactory } from "./cell/onCellKeyDown.js";
 import {
+    type ICorePivotTableInternalProps,
     type ICustomGridOptions,
     type TableAgGridCallbacks,
     type TableConfigAccessors,
@@ -51,7 +50,7 @@ class NoTooltip {
 export function createGridOptions(
     table: TableFacade,
     tableMethods: TableAgGridCallbacks & TableConfigAccessors & TableMenuCallbacks,
-    props: Readonly<ICorePivotTableProps>,
+    props: Readonly<ICorePivotTableInternalProps>,
 ): ICustomGridOptions {
     const { colDefs } = table.tableDescriptor;
     const { pageSize } = props;

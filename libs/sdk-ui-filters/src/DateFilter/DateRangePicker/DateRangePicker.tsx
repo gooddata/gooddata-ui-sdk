@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
+import { type KeyboardEvent, type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 
 import { type DateRange, type DayPickerProps, type SelectRangeEventHandler } from "react-day-picker";
 import { useIntl } from "react-intl";
@@ -275,6 +275,7 @@ export interface IDateRangePickerProps {
     shouldOverlayDatePicker?: boolean;
     withoutApply?: boolean;
     submitForm: () => void;
+    customRangeHint?: ReactNode;
 }
 
 export function DateRangePicker({
@@ -289,6 +290,7 @@ export function DateRangePicker({
     shouldOverlayDatePicker = false,
     withoutApply = false,
     submitForm,
+    customRangeHint,
 }: IDateRangePickerProps) {
     const intl = useIntl();
 
@@ -379,6 +381,7 @@ export function DateRangePicker({
             isSecondsEnabled={isSecondsEnabled}
             dateHintId={DATE_INPUT_HINT_ID}
             timeHintId={TIME_INPUT_HINT_ID}
+            customRangeHint={customRangeHint}
             intl={intl}
         />
     );

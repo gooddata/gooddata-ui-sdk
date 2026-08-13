@@ -71,6 +71,7 @@ export function DefaultDashboardDateFilter({
     ButtonComponent,
     overlayPositionType,
     tabId,
+    customRangeHint,
 }: IDashboardDateFilterProps): ReactElement {
     const intl = useIntl();
     const settings = useDashboardSelector(selectSettings);
@@ -255,6 +256,7 @@ export function DefaultDashboardDateFilter({
             activeCalendars={activeCalendars}
             enableEmptyDateValues={enableEmptyDateValues}
             hideDisabledExclude
+            customRangeHint={customRangeHint}
         />
     );
 }

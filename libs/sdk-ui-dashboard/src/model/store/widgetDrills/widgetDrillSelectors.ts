@@ -71,6 +71,7 @@ import {
     selectDisableDefaultDrills,
     selectEnableDrillToUrlByDefault,
     selectEnableKda,
+    selectEnableSecondGranularities,
     selectIsDisabledCrossFiltering,
     selectIsDisabledKda,
     selectIsEmbedded,
@@ -78,7 +79,7 @@ import {
 import { selectDrillableItems } from "../drill/drillSelectors.js";
 import { selectDrillTargetsByWidgetRef } from "../drillTargets/drillTargetsSelectors.js";
 import { selectInsightByWidgetRef, selectInsightsMap } from "../insights/insightsSelectors.js";
-import { keyDriverAnalysisSupportedGranularities } from "../keyDriverAnalysis/const.js";
+import { getKeyDriverAnalysisSupportedGranularities } from "../keyDriverAnalysis/const.js";
 import { selectDisableDashboardCrossFiltering, selectDisableDashboardKda } from "../meta/metaSelectors.js";
 import {
     selectIgnoredDrillDownHierarchiesByWidgetRef,
@@ -520,6 +521,7 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
     createMemoizedSelector((ref: ObjRef) =>
         createSelector(
             selectEnableKda,
+            selectEnableSecondGranularities,
             selectDrillTargetsByWidgetRef(ref),
             selectDisableDashboardKda,
             selectIsDisabledKda,
@@ -528,6 +530,7 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
             selectInsightByWidgetRef(ref),
             (
                 isKdaEnabled,
+                enableSecondGranularities,
                 availableDrillTargets,
                 disableKda,
                 disableKdaByConfig,
@@ -570,10 +573,10 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
                         ),
                 );
 
-                if (
-                    !dateAttribute ||
-                    !keyDriverAnalysisSupportedGranularities.includes(dateAttribute.granularity)
-                ) {
+                const supportedGranularities =
+                    getKeyDriverAnalysisSupportedGranularities(enableSecondGranularities);
+
+                if (!dateAttribute || !supportedGranularities.includes(dateAttribute.granularity)) {
                     return undefined;
                 }
 

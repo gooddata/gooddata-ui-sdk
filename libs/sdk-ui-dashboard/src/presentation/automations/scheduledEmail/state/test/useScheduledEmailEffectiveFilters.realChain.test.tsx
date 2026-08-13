@@ -11,17 +11,17 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
-import type { IAutomationFiltersTab } from "../../../../../../model/store/filtering/types.js";
-import { IntlWrapper } from "../../../../../localization/IntlWrapper.js";
+import type { IAutomationFiltersTab } from "../../../../../model/store/filtering/types.js";
+import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
 import {
     AutomationsContextProvider,
     type IAutomationsContextValue,
-} from "../../../../contexts/AutomationsContext.js";
+} from "../../../contexts/AutomationsContext.js";
 import {
     type IScheduledEmailDialogContextValue,
     ScheduledEmailDialogContextProvider,
-} from "../../../../contexts/ScheduledEmailDialogContext.js";
-import { useAutomationFiltersSelect } from "../../../../shared/automationFilters/useAutomationFiltersSelect.js";
+} from "../../../contexts/ScheduledEmailDialogContext.js";
+import { useAutomationFiltersSelect } from "../../../shared/automationFilters/useAutomationFiltersSelect.js";
 import { useScheduledEmailEffectiveFilters } from "../useScheduledEmailEffectiveFilters.js";
 
 // Deliberately mocks nothing: the point is stability of the real production chain,

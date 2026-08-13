@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-ext: the object share dialog now offers label access while adding a user or group, so a new grantee's label scope is picked in the same step as their permission level instead of only after they were granted every label.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

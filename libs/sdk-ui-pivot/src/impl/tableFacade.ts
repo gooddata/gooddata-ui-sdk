@@ -15,7 +15,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { type IResizedColumns, UIClick } from "../columnWidths.js";
-import { type ICorePivotTableProps, type IPivotTableConfig } from "../publicTypes.js";
+import { type IPivotTableConfig } from "../publicTypes.js";
 
 import { getHeaderHeight } from "./base/agApiWrapper.js";
 import { setColumnMaxWidth, setColumnMaxWidthIf } from "./base/agColumnWrapper.js";
@@ -27,6 +27,7 @@ import { type IGroupingProvider } from "./data/rowGroupingProvider.js";
 import { getAvailableDrillTargets } from "./drilling/drillTargets.js";
 import {
     type ColumnResizingConfig,
+    type ICorePivotTableInternalProps,
     type OnExecutionTransformed,
     type StickyRowConfig,
     type TableConfigAccessors,
@@ -132,7 +133,7 @@ export class TableFacade {
         result: IExecutionResult,
         dataView: IDataView,
         tableMethods: TableDataCallbacks & TableConfigAccessors,
-        props: Readonly<ICorePivotTableProps>,
+        props: Readonly<ICorePivotTableInternalProps>,
         private readonly getCurrentAbortController: () => AbortController | undefined,
     ) {
         this.intl = props.intl;

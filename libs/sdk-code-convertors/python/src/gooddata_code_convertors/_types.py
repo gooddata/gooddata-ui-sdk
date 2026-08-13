@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 47f80eb639d11cce66768ffb9de4c10096abb9ade60d47e9d72e5086efc0bcc3
+# schema-hash: 6d258038480244954ee4211084799c8c3e64052909ba7723baa65ccc70cc0de1
 
 from __future__ import annotations
 
@@ -429,7 +429,7 @@ class DashboardFiltersNoGroups3(TypedDict):
     type: Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter']
 
 
-DateFilterGranularity: TypeAlias = Literal['MINUTE', 'HOUR', 'DAY', 'WEEK', 'WEEK_US', 'MONTH', 'QUARTER', 'YEAR', 'FISCAL_YEAR', 'FISCAL_QUARTER', 'FISCAL_MONTH']
+DateFilterGranularity: TypeAlias = Literal['SECOND', 'MINUTE', 'HOUR', 'DAY', 'WEEK', 'WEEK_US', 'MONTH', 'QUARTER', 'YEAR', 'FISCAL_YEAR', 'FISCAL_QUARTER', 'FISCAL_MONTH']
 
 
 class MvfCondition1(TypedDict):

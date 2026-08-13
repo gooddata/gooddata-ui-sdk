@@ -1,8 +1,6 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { defineMessages, useIntl } from "react-intl";
-
-import { type AlertFilters } from "@gooddata/sdk-model";
 
 import { bem } from "../bem.js";
 import { DetailsDialog } from "../components/DetailsDialog.js";
@@ -18,26 +16,34 @@ const messages = defineMessages({
 /**
  * @internal
  */
+export type AlertItem = {
+    title?: string;
+    value: string;
+};
+
+/**
+ * @internal
+ */
 export interface INotificationFiltersDetailDialogProps {
-    filters: AlertFilters[];
+    items: AlertItem[];
     onClose: () => void;
 }
 
 /**
  * @internal
  */
-export function NotificationFiltersDetailDialog({ filters, onClose }: INotificationFiltersDetailDialogProps) {
+export function NotificationFiltersDetailDialog({ items, onClose }: INotificationFiltersDetailDialogProps) {
     const intl = useIntl();
 
     return (
         <DetailsDialog
-            title={`${intl.formatMessage(messages.title)} (${filters.length})`}
+            title={`${intl.formatMessage(messages.title)} (${items.length})`}
             content={
                 <div className={b()}>
-                    {filters.map(({ title, filter }, idx) => (
+                    {items.map(({ title, value }, idx) => (
                         <div className={e("item")} key={idx}>
                             <div className={e("label")}>{title}</div>
-                            <div className={e("values")}>{filter}</div>
+                            <div className={e("values")}>{value}</div>
                         </div>
                     ))}
                 </div>

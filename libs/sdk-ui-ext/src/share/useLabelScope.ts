@@ -3,14 +3,16 @@
 import { useCallback, useMemo, useState } from "react";
 
 import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
-import type { IObjectAccessList } from "@gooddata/sdk-model";
+import type { IGranularAccessGrantee, IObjectAccessList, ObjRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { isPermissionsNotAvailable } from "./accessErrors.js";
 import {
+    type ILabelScopeChange,
     type LabelScopePrincipal,
-    buildLabelMutationsForPrincipals,
-    isGranteeGrantedIn,
+    buildLabelMutationsForScopes,
+    buildLabelRegrades,
+    granteeGrantIn,
 } from "./objectShareController.helpers.js";
 import type { IObjectShareLabel } from "./types.js";
 
@@ -19,7 +21,12 @@ type LabelProbeResult =
     | { label: IObjectShareLabel; list: IObjectAccessList }
     | { label: IObjectShareLabel; transient: boolean };
 
-/** Pure: each grantee's in-scope label ids — primary always counts, others only where the grantee is granted. */
+/**
+ * Pure: each grantee's in-scope label ids — primary always counts, others wherever
+ * the grantee holds the label, whether granted here or inherited. An inherited label
+ * is genuinely in scope: the grantee can read it, so the checklist must show it
+ * checked, exactly as the parent workspace shows it.
+ */
 function resolveScopes(
     results: readonly LabelProbeResult[],
     committedGranteeIds: readonly string[],
@@ -33,12 +40,55 @@ function resolveScopes(
             continue;
         }
         for (const id of committedGranteeIds) {
-            if (result.label.isPrimary || isGranteeGrantedIn(result.list, id)) {
+            if (result.label.isPrimary || granteeGrantIn(result.list, id)) {
                 resolved[id]!.push(result.label.id);
             }
         }
     }
     return resolved;
+}
+
+/**
+ * Pure: per-grantee label provenance, split by which question it answers. A label that is
+ * both granted here and inherited appears in BOTH maps, and that is the point — the two
+ * facts drive different decisions.
+ *
+ * - `inherited` — access survives revoking whatever this workspace granted, so the
+ *   checkbox stays checked and locked. Immutable for the session: no write from this
+ *   workspace can change a group's or a parent's grant, so deriving it from the probe
+ *   cannot go stale.
+ * - `direct` — granted HERE, so it is the only thing a write may target. This one DOES
+ *   change under our own writes, so the hook keeps it as an optimistic overlay seeded from
+ *   here rather than re-deriving it from a probe that runs once per session.
+ *
+ * The primary label is excluded from both: it is locked for every grantee regardless, and
+ * never written.
+ */
+function resolveLabelProvenance(
+    results: readonly LabelProbeResult[],
+    committedGranteeIds: readonly string[],
+): { inherited: Record<string, string[]>; direct: Record<string, string[]> } {
+    const inherited: Record<string, string[]> = {};
+    const direct: Record<string, string[]> = {};
+    for (const id of committedGranteeIds) {
+        inherited[id] = [];
+        direct[id] = [];
+    }
+    for (const result of results) {
+        if ("transient" in result || result.label.isPrimary) {
+            continue;
+        }
+        for (const id of committedGranteeIds) {
+            const grant = granteeGrantIn(result.list, id);
+            if (grant?.inherited) {
+                inherited[id]!.push(result.label.id);
+            }
+            if (grant?.direct) {
+                direct[id]!.push(result.label.id);
+            }
+        }
+    }
+    return { inherited, direct };
 }
 
 /**
@@ -79,6 +129,34 @@ export interface ILabelScope {
     selectedLabelIdsByGrantee: Record<string, string[]>;
     setSelectedLabelIdsByGrantee: React.Dispatch<React.SetStateAction<Record<string, string[]>>>;
     /**
+     * In-scope labels whose access the grantee INHERITS, per grantee id — including ones
+     * they also hold a local grant on. Callers render these locked: unchecking cannot take
+     * the access away. Derived straight from the probe, never optimistic, because only the
+     * backend can say where a grant lives.
+     */
+    inheritedLabelIdsByGrantee: Record<string, string[]>;
+    /**
+     * Labels THIS workspace grants the grantee, per grantee id — the only ones a write may
+     * target, and the complement of "inherited only". An optimistic overlay, not a
+     * derivation: the per-label probe runs once per session, so after the dialog revokes or
+     * grants a label the probe's answer is stale and acting on it re-creates access that was
+     * just removed. Every label write reports its outcome through
+     * {@link recordDirectLabelWrites}.
+     */
+    directLabelIdsByGrantee: Record<string, string[]>;
+    /**
+     * Record the outcome of the dialog's OWN label writes so the direct set stays true:
+     * `granted` ids gain a local grant, `revoked` ids lose theirs. Pass only the writes
+     * that actually landed.
+     */
+    recordDirectLabelWrites: (
+        granteeId: string,
+        granted: readonly string[],
+        revoked: readonly string[],
+    ) => void;
+    /** Forget a grantee's label bookkeeping once their row is gone for good. */
+    forgetGranteeLabels: (granteeId: string) => void;
+    /**
      * The single per-label write path. Diffs `desired` vs `current` over the
      * permissionable labels and issues one `manageObjectPermissions` per changed
      * label, carrying every principal that changes on it. Reports `failedLabelIds`
@@ -89,6 +167,26 @@ export interface ILabelScope {
         principals: LabelScopePrincipal[],
         desiredLabelIds: ReadonlySet<string>,
         currentLabelIds: ReadonlySet<string>,
+    ) => Promise<{ ok: boolean; failedLabelIds: string[] }>;
+    /**
+     * Per-principal variant of {@link reconcileLabelScope}: each principal moves its
+     * OWN scope, for grantees added in one step that each picked a different label
+     * scope. Still one write per label carrying every principal that changes on it,
+     * so a shared label costs one call regardless of how the scopes differ.
+     */
+    reconcileLabelScopes: (
+        changes: ILabelScopeChange[],
+    ) => Promise<{ ok: boolean; failedLabelIds: string[] }>;
+    /**
+     * Re-grades an UNCHANGED label scope to each principal's `level` — what a
+     * permission-level change on the object needs so its labels don't keep the level
+     * they were granted at. Not a diff: every in-scope label is rewritten (a diff
+     * over an unchanged set produces no writes). Same independent settling and
+     * `failedLabelIds` reporting as {@link reconcileLabelScope}.
+     */
+    regradeLabelScope: (
+        principals: LabelScopePrincipal[],
+        scopeLabelIds: ReadonlySet<string>,
     ) => Promise<{ ok: boolean; failedLabelIds: string[] }>;
 }
 
@@ -120,6 +218,10 @@ export function useLabelScope(
     // a fresh add / labels edit must survive the backend's lagging re-read, so the
     // probe below only seeds grantees it doesn't already know.
     const [selectedLabelIdsByGrantee, setSelectedLabelIdsByGrantee] = useState<Record<string, string[]>>({});
+    // Which labels THIS workspace grants each grantee. Optimistic for the same reason the
+    // scope is, and for a sharper one: our own revokes and grants change it, and the probe
+    // will not run again to notice.
+    const [directLabelIdsByGrantee, setDirectLabelIdsByGrantee] = useState<Record<string, string[]>>({});
     // Whether the session's first probe has settled (see `labelsInitializing`) —
     // a fact about session history, so it is state, flipped once in onSuccess.
     const [everResolved, setEverResolved] = useState(false);
@@ -133,6 +235,7 @@ export function useLabelScope(
     if (seenLabelsKey !== labelsKey) {
         setSeenLabelsKey(labelsKey);
         setSelectedLabelIdsByGrantee({});
+        setDirectLabelIdsByGrantee({});
     }
 
     // Probe each label's access list to learn which are permissionable (some 404) and
@@ -165,6 +268,7 @@ export function useLabelScope(
             onSuccess: (results) => {
                 setEverResolved(true);
                 const resolved = resolveScopes(results, committedGranteeIds);
+                const { direct } = resolveLabelProvenance(results, committedGranteeIds);
                 // Seed only grantees we don't already have a scope for — an optimistic
                 // scope is authoritative and must survive this re-resolution. Fired once
                 // per resolution (onSuccess), so reading `prev` is safe.
@@ -172,6 +276,14 @@ export function useLabelScope(
                     const next: Record<string, string[]> = {};
                     for (const id of committedGranteeIds) {
                         next[id] = prev[id] ?? resolved[id]!;
+                    }
+                    return next;
+                });
+                // Same rule for the direct set: what we wrote outranks what the probe read.
+                setDirectLabelIdsByGrantee((prev) => {
+                    const next: Record<string, string[]> = {};
+                    for (const id of committedGranteeIds) {
+                        next[id] = prev[id] ?? direct[id]!;
                     }
                     return next;
                 });
@@ -205,6 +317,39 @@ export function useLabelScope(
         }
         return permissionable;
     }, [labelLists]);
+
+    // Inheritance is the one fact no write from here can change, so it stays a pure
+    // derivation of the probe — there is no optimistic version of "someone else granted
+    // this", and nothing we do can make it stale.
+    const inheritedLabelIdsByGrantee = useMemo(
+        () => (labelLists ? resolveLabelProvenance(labelLists, committedGranteeIds).inherited : {}),
+        [labelLists, committedGranteeIds],
+    );
+
+    const recordDirectLabelWrites = useCallback(
+        (granteeId: string, granted: readonly string[], revoked: readonly string[]) => {
+            if (granted.length === 0 && revoked.length === 0) {
+                return;
+            }
+            setDirectLabelIdsByGrantee((prev) => {
+                const dropped = new Set(revoked);
+                const kept = (prev[granteeId] ?? []).filter((id) => !dropped.has(id));
+                return { ...prev, [granteeId]: Array.from(new Set([...kept, ...granted])) };
+            });
+        },
+        [],
+    );
+
+    const forgetGranteeLabels = useCallback((granteeId: string) => {
+        setSelectedLabelIdsByGrantee((prev) => {
+            const { [granteeId]: _scope, ...rest } = prev;
+            return rest;
+        });
+        setDirectLabelIdsByGrantee((prev) => {
+            const { [granteeId]: _direct, ...rest } = prev;
+            return rest;
+        });
+    }, []);
 
     // Only permissionable labels are scope-controllable; assume all until resolved.
     const effectiveLabels = useMemo<IObjectShareLabel[]>(
@@ -240,18 +385,12 @@ export function useLabelScope(
     // drift. Writes settle independently (allSettled), and the failed labels are
     // reported by id — never collapsed into one boolean, or a partial failure would
     // roll callers back past writes that actually landed.
-    const reconcileLabelScope = useCallback(
+    // Issues one manageObjectPermissions per label and reports the failures by id.
+    // Shared by the scope diff and the level re-grade so both settle identically.
+    const writeLabels = useCallback(
         async (
-            principals: LabelScopePrincipal[],
-            desiredLabelIds: ReadonlySet<string>,
-            currentLabelIds: ReadonlySet<string>,
+            writes: Array<{ id: string; ref: ObjRef; grantees: IGranularAccessGrantee[] }>,
         ): Promise<{ ok: boolean; failedLabelIds: string[] }> => {
-            const writes = buildLabelMutationsForPrincipals(
-                principals,
-                desiredLabelIds,
-                currentLabelIds,
-                effectiveLabels,
-            );
             if (writes.length === 0) {
                 return { ok: true, failedLabelIds: [] };
             }
@@ -264,7 +403,34 @@ export function useLabelScope(
                 .map((w) => w.id);
             return { ok: failedLabelIds.length === 0, failedLabelIds };
         },
-        [effectiveLabels, backend, workspace],
+        [backend, workspace],
+    );
+
+    const reconcileLabelScopes = useCallback(
+        (changes: ILabelScopeChange[]): Promise<{ ok: boolean; failedLabelIds: string[] }> =>
+            writeLabels(buildLabelMutationsForScopes(changes, effectiveLabels)),
+        [effectiveLabels, writeLabels],
+    );
+
+    const reconcileLabelScope = useCallback(
+        (
+            principals: LabelScopePrincipal[],
+            desiredLabelIds: ReadonlySet<string>,
+            currentLabelIds: ReadonlySet<string>,
+        ): Promise<{ ok: boolean; failedLabelIds: string[] }> =>
+            reconcileLabelScopes(
+                principals.map((principal) => ({ principal, desiredLabelIds, currentLabelIds })),
+            ),
+        [reconcileLabelScopes],
+    );
+
+    const regradeLabelScope = useCallback(
+        (
+            principals: LabelScopePrincipal[],
+            scopeLabelIds: ReadonlySet<string>,
+        ): Promise<{ ok: boolean; failedLabelIds: string[] }> =>
+            writeLabels(buildLabelRegrades(principals, scopeLabelIds, effectiveLabels)),
+        [effectiveLabels, writeLabels],
     );
 
     return {
@@ -273,6 +439,12 @@ export function useLabelScope(
         labelsInitializing,
         selectedLabelIdsByGrantee,
         setSelectedLabelIdsByGrantee,
+        inheritedLabelIdsByGrantee,
+        directLabelIdsByGrantee,
+        recordDirectLabelWrites,
+        forgetGranteeLabels,
         reconcileLabelScope,
+        reconcileLabelScopes,
+        regradeLabelScope,
     };
 }

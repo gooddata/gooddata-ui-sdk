@@ -7,6 +7,8 @@ import { type IObjectAccessList, idRef } from "@gooddata/sdk-model";
 import {
     type GranteeEdit,
     assigneeIdentityFacts,
+    buildLabelMutations,
+    buildLabelRegrades,
     effectivePermissionAbove,
     granteeDisplayPair,
     granteesFromAccessList,
@@ -255,13 +257,20 @@ describe("mergeGrantees", () => {
         );
     });
 
-    it("applies a level override and recomputes the effective-permission badge against the inherited level", () => {
+    it("applies a level override and recomposes the displayed level against the inherited one", () => {
         const edits: Record<string, GranteeEdit> = {
             "user:u1": { kind: "level", level: "VIEW", pending: false },
         };
         const [u1] = mergeGrantees(base, edits, undefined, undefined);
-        // Direct VIEW under an inherited SHARE → the badge surfaces SHARE.
-        expect(u1).toMatchObject({ level: "VIEW", effectivePermission: "SHARE", pending: undefined });
+        // Direct VIEW under an inherited SHARE → the row shows the EFFECTIVE SHARE
+        // (never understating the access), keeps VIEW as the direct grant, and the
+        // badge marks the level as inheritance-derived.
+        expect(u1).toMatchObject({
+            level: "SHARE",
+            directLevel: "VIEW",
+            effectivePermission: "SHARE",
+            pending: undefined,
+        });
     });
 
     it("clears the effective badge when the override reaches the inherited level", () => {
@@ -281,17 +290,33 @@ describe("mergeGrantees", () => {
     });
 
     it("keeps a removed row visible-but-removing while pending, and drops it once settled", () => {
-        const pending: Record<string, GranteeEdit> = { "user:u1": { kind: "removed", pending: true } };
+        // u2 holds a direct grant only — nothing survives its removal.
+        const pending: Record<string, GranteeEdit> = { "user:u2": { kind: "removed", pending: true } };
         expect(mergeGrantees(base, pending, undefined, undefined).map((g) => g.id)).toEqual([
-            "user:u1", // still shown, muted
-            "user:u2",
+            "user:u1",
+            "user:u2", // still shown, muted
         ]);
         expect(
-            mergeGrantees(base, pending, undefined, undefined).find((g) => g.id === "user:u1"),
+            mergeGrantees(base, pending, undefined, undefined).find((g) => g.id === "user:u2"),
         ).toMatchObject({ pending: "removing" });
 
+        const settled: Record<string, GranteeEdit> = { "user:u2": { kind: "removed", pending: false } };
+        expect(mergeGrantees(base, settled, undefined, undefined).map((g) => g.id)).toEqual(["user:u1"]);
+    });
+
+    it("keeps a settled-removed row as inherited-only when the grantee still inherits access", () => {
+        // u1 is directly granted VIEW and inherits SHARE. Removing the direct grant
+        // revokes only what this workspace gave: the row must survive at the inherited
+        // level rather than vanish and reappear on the next load.
         const settled: Record<string, GranteeEdit> = { "user:u1": { kind: "removed", pending: false } };
-        expect(mergeGrantees(base, settled, undefined, undefined).map((g) => g.id)).toEqual(["user:u2"]);
+        const rows = mergeGrantees(base, settled, undefined, undefined);
+        expect(rows.map((g) => g.id)).toEqual(["user:u1", "user:u2"]);
+        expect(rows.find((g) => g.id === "user:u1")).toMatchObject({
+            level: "SHARE",
+            directLevel: undefined,
+            effectivePermission: "SHARE",
+            pending: undefined,
+        });
     });
 
     it("appends an added row, marking it saving while pending", () => {
@@ -383,5 +408,39 @@ describe("sortShareableLabels", () => {
         // Equal titles (base sensitivity) → stable by id: "a" before "b".
         expect(sorted.map((l) => l.id)).toEqual(["a", "b"]);
         expect(labels.map((l) => l.id)).toEqual(["b", "a"]);
+    });
+});
+
+describe("buildLabelRegrades", () => {
+    const label = (id: string, isPrimary = false): IObjectShareLabel => ({
+        ref: idRef(id),
+        id,
+        title: id,
+        isPrimary,
+        isDefault: false,
+    });
+    const LABELS = [label("primary", true), label("name"), label("email")];
+    const principal = [{ kind: "user" as const, granteeRef: REF, level: "EDIT" as const }];
+
+    it("re-grades in-scope labels at the principal's level", () => {
+        const writes = buildLabelRegrades(principal, new Set(["name"]), LABELS);
+        expect(writes.map((w) => w.id)).toEqual(["name"]);
+        expect(writes[0]!.grantees[0]!.permissions).toEqual(["EDIT", "VIEW"]);
+    });
+
+    it("never writes the primary label — a grant here could not be revoked later", () => {
+        // The removal diff treats primary access as implicit (see buildLabelMutations), so
+        // an explicit primary grant written by a re-grade would outlive the grantee's
+        // object access.
+        const writes = buildLabelRegrades(principal, new Set(["primary", "name", "email"]), LABELS);
+        expect(writes.map((w) => w.id).sort()).toEqual(["email", "name"]);
+        // Proof of the asymmetry this guards: a full revoke emits no primary write either.
+        const revokes = buildLabelMutations(
+            { kind: "user", granteeRef: REF },
+            new Set<string>(),
+            new Set(["primary", "name", "email"]),
+            LABELS,
+        );
+        expect(revokes).toHaveLength(2);
     });
 });

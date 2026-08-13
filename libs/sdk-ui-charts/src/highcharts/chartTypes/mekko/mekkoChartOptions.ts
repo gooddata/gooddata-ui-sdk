@@ -4,6 +4,9 @@ import {
     type IMeasureDescriptor,
     type IMeasureGroupDescriptor,
     isMeasureGroupDescriptor,
+    isMeasureLocator,
+    isMeasureSort,
+    sortDirection,
 } from "@gooddata/sdk-model";
 import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
 
@@ -102,6 +105,59 @@ export function isMekkoPercentBlockedByNegatives(
     series: ISeriesItem[] | undefined,
 ): boolean {
     return isMekko(type) && isNegativeValueIncluded(series);
+}
+
+/**
+ * Orders stacked Mekko columns by the config.sortBy measure sort — the stacked execution cannot
+ * express it, so every series' data and the categories are permuted in lockstep on the client.
+ * The column key is the Width total already reduced into point.z, or the Height total summed
+ * across the stack; ties keep the backend order.
+ */
+export function sortMekkoColumnsByMeasure<TCategory>(
+    series: ISeriesItem[],
+    categories: TCategory[],
+    config: IChartConfig,
+    dv: DataViewFacade,
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
+): { series: ISeriesItem[]; categories: TCategory[] } {
+    if (dv.def().isBucketEmpty(BucketNames.STACK) || !series[0]?.data?.length) {
+        return { series, categories };
+    }
+
+    const measureSort = (config.sortBy ?? []).find(isMeasureSort);
+    const measureLocator = measureSort?.measureSortItem.locators.find(isMeasureLocator);
+    const measureId = measureLocator?.measureLocatorItem.measureIdentifier;
+    if (!measureSort || !measureId) {
+        return { series, categories };
+    }
+
+    const { width, height } = getMekkoMeasures(dv, measureGroup);
+    const isWidthSort = width?.measureHeaderItem.localIdentifier === measureId;
+    if (!isWidthSort && height?.measureHeaderItem.localIdentifier !== measureId) {
+        return { series, categories };
+    }
+
+    const columnKeys = series[0].data.map((point, column) =>
+        isWidthSort
+            ? (point?.z ?? 0)
+            : series.reduce((sum, seriesItem) => sum + (seriesItem.data?.[column]?.y ?? 0), 0),
+    );
+    const directionFactor = sortDirection(measureSort) === "desc" ? -1 : 1;
+    const columnOrder = columnKeys
+        .map((_, column) => column)
+        .sort((a, b) => directionFactor * (columnKeys[a] - columnKeys[b]) || a - b);
+
+    if (columnOrder.every((column, index) => column === index)) {
+        return { series, categories };
+    }
+
+    return {
+        series: series.map((seriesItem) => ({
+            ...seriesItem,
+            data: columnOrder.map((column) => (seriesItem.data ?? [])[column]),
+        })),
+        categories: columnOrder.map((column) => categories[column]),
+    };
 }
 
 /**
