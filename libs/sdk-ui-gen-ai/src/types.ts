@@ -1,6 +1,10 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { type IChatConversationVisualisationContent } from "@gooddata/sdk-backend-spi";
+import {
+    type IChatConversationInteractionStep,
+    type IChatConversationItemDetail,
+    type IChatConversationVisualisationContent,
+} from "@gooddata/sdk-backend-spi";
 import {
     type GenAIChatEffort,
     type GenAIObjectType,
@@ -56,6 +60,40 @@ export type StoredConversation = {
      * yet, the conversation runs at the default effort.
      */
     reasoningEffort?: GenAIChatEffort;
+    /**
+     * The "Interaction Intelligence" trace of this conversation's responses, keyed by `responseId`.
+     * Kept out of `items` because a step is not a message.
+     */
+    interactionTrace?: Record<string, IChatConversationResponseTrace>;
+};
+
+/**
+ * The trace of one response: its steps (timing and spend, from the `interaction_step` events) and
+ * the per-action details of the items that ran within them (from the items' own `detail`, keyed by
+ * `stepId`). Neither half is complete alone — a step has no category, and an item has no timing.
+ * @internal
+ */
+export type IChatConversationResponseTrace = {
+    steps: IChatConversationInteractionStep[];
+    /** Details of the actions that ran within each step, keyed by `stepId`. */
+    detailsByStepId: Record<string, IChatConversationTracedAction[]>;
+    /** Backend trace id of this response, for support/debugging. Set from the first step that carries one. */
+    traceId?: string;
+};
+
+/**
+ * One traced action within a step: the tool that ran, when it ran, and what it did.
+ *
+ * `toolName` is resolved from the matching `toolCall` item, since a `toolResult` carries only its
+ * `callId`. `detail` is absent for a tool whose category has no card body yet — the action is
+ * still recorded, so its step can be named after the tool rather than falling back to nothing.
+ * @internal
+ */
+export type IChatConversationTracedAction = {
+    itemId: string;
+    createdAt: number;
+    toolName?: string;
+    detail?: IChatConversationItemDetail;
 };
 
 export type StoreContext = {

@@ -73,6 +73,21 @@ export const agentSwitchingActiveSelector: (state: RootState) => boolean = creat
     (agentSwitchingEnabled, isPreview) => agentSwitchingEnabled && !isPreview,
 );
 
+export const allowInteractionIntelligenceSelector: (state: RootState) => boolean = createSelector(
+    chatWindowSliceSelector,
+    (state) => state.allowInteractionIntelligence === true,
+);
+
+// Whether the Interaction Intelligence panel is enabled in the current chat context.
+// Requires both the plug-in instance to allow it (agent builder passes `allowInteractionIntelligence`)
+// and the workspace-level feature flag to be on.
+export const interactionIntelligenceEnabledSelector: (state: RootState) => boolean = createSelector(
+    allowInteractionIntelligenceSelector,
+    settingsSelector,
+    (allowInteractionIntelligence, settings) =>
+        allowInteractionIntelligence && settings?.["enableGenAiInteractionIntelligence"] === true,
+);
+
 export const objectTypesSelector: (state: RootState) => GenAIObjectType[] | undefined = createSelector(
     chatWindowSliceSelector,
     (state) => state.objectTypes,

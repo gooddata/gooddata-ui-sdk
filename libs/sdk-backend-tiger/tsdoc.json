@@ -12,10 +12,16 @@
             "tagName": "@interface",
             "syntaxKind": "block",
             "allowMultiple": true
+        },
+        {
+            "tagName": "@type",
+            "syntaxKind": "block",
+            "allowMultiple": true
         }
     ],
     "supportForTags": {
         "@export": true,
-        "@interface": true
+        "@interface": true,
+        "@type": true
     }
 }

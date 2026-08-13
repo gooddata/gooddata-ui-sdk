@@ -78,6 +78,11 @@ type ChatWindowSliceState = {
      * is pinned to that single agent, so agent switching is not applicable.
      */
     isPreview?: boolean;
+    /**
+     * Whether the plug-in instance allows the Interaction Intelligence panel. Combined with
+     * `settings.enableGenAiInteractionIntelligence` — both must be true for the panel to show.
+     */
+    allowInteractionIntelligence?: boolean;
 };
 
 export const chatWindowSliceName = "chatWindow";
@@ -97,15 +102,19 @@ const initialState: ChatWindowSliceState = {
         active: undefined,
     },
     isPreview: undefined,
+    allowInteractionIntelligence: undefined,
 };
 
 export const getInitialChatWindowState = ({
     isPreview,
+    allowInteractionIntelligence,
 }: {
     isPreview?: boolean;
+    allowInteractionIntelligence?: boolean;
 } = {}): ChatWindowSliceState => ({
     ...initialState,
     isPreview,
+    allowInteractionIntelligence,
 });
 
 const chatWindowSlice = createSlice({

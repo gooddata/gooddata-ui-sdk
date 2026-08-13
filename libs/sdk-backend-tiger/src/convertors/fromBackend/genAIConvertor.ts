@@ -6,9 +6,11 @@ import {
     type AiAlertProposal,
     type AiContent,
     type AiConversationItemResponse,
+    type AiConversationItemResponseDetail,
     type AiConversationResponse,
     type AiConversationResponseList,
     type AiConversationTurnResponse,
+    type AiInteractionStepResponse,
     type AiKeyDriverAnalysis,
     type AiSearchObject,
     type AiSearchRelationship,
@@ -27,7 +29,9 @@ import {
     type IChatConversationContent,
     type IChatConversationError,
     type IChatConversationFeedback,
+    type IChatConversationInteractionStep,
     type IChatConversationItem,
+    type IChatConversationItemDetail,
     type IChatConversationMultipartPart,
     type IChatKdaDefinition,
     type IChatSuggestions,
@@ -99,6 +103,8 @@ export function convertChatConversationItemFromBackend(
         createdAt: new Date(item.createdAt).getTime(),
         feedback: convertChatConversationFeedbackFromBackend(response),
         content,
+        stepId: item.stepId ?? undefined,
+        detail: convertChatConversationItemDetailFromBackend(item.detail),
         agentId: item.newAgentId ?? undefined,
         oldAgentId: item.oldAgentId ?? undefined,
         reasoningEffort: item.reasoningEffort ?? undefined,
@@ -290,6 +296,81 @@ export function convertChatConversationErrorFromBackend(
         reason: item.reason,
         traceId,
     };
+}
+
+/**
+ * Converts the `interaction_step` SSE payload to its domain shape. `type` is stamped here — the
+ * payload has no discriminator of its own, the SSE event name carries that.
+ */
+export function convertChatConversationInteractionStepFromBackend(
+    step: AiInteractionStepResponse,
+    traceId?: string,
+): IChatConversationInteractionStep {
+    return {
+        type: "interaction_step",
+        stepId: step.stepId,
+        conversationId: step.conversationId,
+        responseId: step.responseId,
+        stepIndex: step.stepIndex,
+        durationMs: step.durationMs,
+        tokens: {
+            input: step.tokens.input ?? undefined,
+            output: step.tokens.output ?? undefined,
+            total: step.tokens.total ?? undefined,
+        },
+        createdAt: new Date(step.createdAt).getTime(),
+        traceId,
+    };
+}
+
+/**
+ * Converts one conversation item's `detail` — what that action did. Returns `undefined` for a
+ * category this client version does not know, so a newer backend's body degrades to "no card
+ * content" rather than failing the whole item.
+ */
+export function convertChatConversationItemDetailFromBackend(
+    detail: AiConversationItemResponseDetail | null | undefined,
+): IChatConversationItemDetail | undefined {
+    switch (detail?.category) {
+        case "catalogSearch":
+            return {
+                category: "catalogSearch",
+                query: detail.query ?? [],
+                requestedTypes: detail.requestedTypes ?? [],
+                found: (detail.found ?? []).map((group) => ({
+                    objectType: group.objectType,
+                    titles: group.titles ?? [],
+                })),
+                used: detail.used ?? [],
+            };
+        case "composeAnswer":
+            return {
+                category: "composeAnswer",
+                modelId: detail.modelId ?? undefined,
+                suggestedActions: detail.suggestedActions ?? undefined,
+                output: detail.output ?? undefined,
+            };
+        case "knowledgeSearch":
+            return {
+                category: "knowledgeSearch",
+                query: detail.query ?? undefined,
+                documents: (detail.documents ?? []).map((document) => ({
+                    title: document.title,
+                    score: document.score ?? undefined,
+                })),
+                bestMatch: detail.bestMatch ?? undefined,
+            };
+        case "skillRouting":
+            return {
+                category: "skillRouting",
+                available: detail.available ?? [],
+                activated: detail.activated ?? [],
+            };
+        default:
+            // A category this client version does not know yet degrades to "no card content"
+            // rather than failing the whole item.
+            return undefined;
+    }
 }
 
 function convertKda(

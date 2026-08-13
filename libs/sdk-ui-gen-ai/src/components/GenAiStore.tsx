@@ -100,6 +100,16 @@ export type GenAiStoreProps = {
      * @internal
      */
     isPreview?: boolean;
+
+    /**
+     * Enables the Interaction Intelligence panel on assistant messages. Agent builder
+     * passes `true`; regular assistants leave this off. Also requires
+     * `settings.enableGenAiInteractionIntelligence` to be enabled — both must be true for the
+     * panel to be usable.
+     *
+     * @internal
+     */
+    allowInteractionIntelligence?: boolean;
 };
 
 /**
@@ -200,6 +210,7 @@ function InternalStore({
     onLinkClick,
     mode,
     isPreview,
+    allowInteractionIntelligence,
     colorPalette,
 }: GenAiStoreProps) {
     const effectiveBackend = useBackendStrict(backend);
@@ -214,6 +225,7 @@ function InternalStore({
         excludeTags,
         catalogItems,
         isPreview,
+        allowInteractionIntelligence,
         allowNativeLinks,
         onLinkClick,
         mode,

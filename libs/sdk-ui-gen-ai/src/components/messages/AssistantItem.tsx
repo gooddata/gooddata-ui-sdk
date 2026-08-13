@@ -1,10 +1,17 @@
 // (C) 2024-2026 GoodData Corporation
 
+import { useState } from "react";
+
 import cx from "classnames";
 import { useIntl } from "react-intl";
+import { useSelector } from "react-redux";
 
 import { type IChatConversationLocalItem } from "../../model.js";
+import { interactionIntelligenceEnabledSelector } from "../../store/chatWindow/chatWindowSelectors.js";
 import { useToolsReferences } from "../completion/useToolsReferences.js";
+import { useInteractionIntelligenceTotals } from "../intelligence/data/useInteractionIntelligenceTotals.js";
+import { GenAiInteractionIntelligence } from "../intelligence/GenAiInteractionIntelligence.js";
+import { InteractionIntelligenceTrigger } from "../intelligence/InteractionIntelligenceTrigger.js";
 import { type IChatMessagesGroup } from "../utils/groupUtility.js";
 
 import { AssistantItemFeedback } from "./AssistantItemFeedback.js";
@@ -25,6 +32,15 @@ export function AssistantItemComponent({ message, groups, isLast }: AssistantIte
 
     const messageState = getItemState(message);
     const references = useToolsReferences(groups);
+    const [isInteractionIntelligenceOpen, setIsInteractionIntelligenceOpen] = useState(false);
+    const interactionIntelligenceEnabled = useSelector(interactionIntelligenceEnabledSelector);
+    const showInteractionIntelligence = interactionIntelligenceEnabled && !!message.responseId;
+    const interactionIntelligenceTotals = useInteractionIntelligenceTotals(
+        showInteractionIntelligence ? message.responseId : "",
+    );
+    // The trigger only renders once its totals exist, so this is what actually shares the actions
+    // row with feedback — a message with no trace keeps its feedback exactly as before.
+    const hasInteractionIntelligenceTrigger = showInteractionIntelligence && !!interactionIntelligenceTotals;
 
     const classNames = cx(
         "gd-gen-ai-chat__messages__conversation",
@@ -66,7 +82,27 @@ export function AssistantItemComponent({ message, groups, isLast }: AssistantIte
                 showSuggestions
                 references={references}
             />
-            <AssistantItemFeedback group={group} message={message} isLast={isLast} />
+            <div className="gd-gen-ai-chat__conversation__item__actions">
+                <AssistantItemFeedback
+                    group={group}
+                    message={message}
+                    isLast={isLast}
+                    hasInteractionIntelligenceTrigger={hasInteractionIntelligenceTrigger}
+                />
+                {showInteractionIntelligence ? (
+                    <InteractionIntelligenceTrigger
+                        totals={interactionIntelligenceTotals}
+                        isOpen={isInteractionIntelligenceOpen}
+                        onToggle={() => setIsInteractionIntelligenceOpen((current) => !current)}
+                    />
+                ) : null}
+            </div>
+            {showInteractionIntelligence && isInteractionIntelligenceOpen ? (
+                <GenAiInteractionIntelligence
+                    responseId={message.responseId}
+                    onClose={() => setIsInteractionIntelligenceOpen(false)}
+                />
+            ) : null}
             <AssistantItemSuggestions type="actions" content={message.content} showSuggestions={isLast} />
         </div>
     );

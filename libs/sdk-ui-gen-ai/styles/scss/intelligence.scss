@@ -1,0 +1,328 @@
+// (C) 2026 GoodData Corporation
+
+.gd-gen-ai-chat__interaction-intelligence__trigger {
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+    background: transparent;
+    font: inherit;
+    font-size: 14px;
+    color: var(--gd-palette-complementary-8, #464e56);
+    cursor: pointer;
+    text-decoration: none;
+
+    // Cancels the left padding when the feedback thumbs are hidden and this is the actions
+    // row's first child, so the trigger's text sits flush with the row's own left edge.
+    &:first-child {
+        margin-left: -5px;
+    }
+
+    &:hover,
+    &:focus-visible {
+        text-decoration: underline;
+    }
+}
+
+.gd-gen-ai-chat__interaction-intelligence {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+    border-radius: 8px;
+    background: var(--gd-palette-complementary-0, #fff);
+    font-size: 14px;
+    color: var(--gd-palette-complementary-8, #464e56);
+}
+
+.gd-gen-ai-chat__interaction-intelligence__header {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 0;
+
+    &__title {
+        flex: 1 0 0;
+        min-width: 0;
+        line-height: 23px;
+    }
+}
+
+.gd-gen-ai-chat__interaction-intelligence__duration-tokens__separator {
+    color: var(--gd-palette-complementary-5, #b0beca);
+}
+
+.gd-gen-ai-chat__interaction-intelligence__footer {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+    font-size: 12px;
+    color: var(--gd-palette-complementary-6, #94a1ad);
+
+    &__trace-id {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__hint {
+        flex: 0 0 auto;
+        border-bottom: 1px dashed var(--gd-palette-complementary-5, #b0beca);
+        cursor: help;
+    }
+}
+
+.gd-gen-ai-chat__interaction-intelligence__category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.gd-gen-ai-chat__interaction-intelligence__category-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+    padding: 7px;
+    border: none;
+    border-radius: 3px;
+    background: transparent;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+
+    &:hover {
+        background: var(--gd-palette-complementary-1, #f5f8fa);
+    }
+
+    &__label {
+        flex: 0 0 130px;
+        width: 130px;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__excerpt {
+        display: flex;
+        flex: 1 0 0;
+        justify-content: flex-end;
+        gap: 8px;
+        min-width: 0;
+        overflow: hidden;
+        font-size: 12px;
+        color: var(--gd-palette-complementary-6, #94a1ad);
+        text-align: right;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.gd-gen-ai-chat__interaction-intelligence__icon-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--gd-palette-complementary-1, #f5f8fa);
+}
+
+.gd-gen-ai-chat__interaction-intelligence__timeline-wrapper {
+    display: flex;
+    flex: 0 0 auto;
+    min-width: 0;
+}
+
+.gd-gen-ai-chat__interaction-intelligence__timeline {
+    display: flex;
+    align-items: center;
+    flex: 1 0 0;
+    min-width: 0;
+    height: 15px;
+    // Kept in sync with TIMELINE_GAP_PX, which each tile's width subtracts its share of.
+    gap: 1px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.gd-gen-ai-chat__interaction-intelligence__timeline-segment {
+    display: block;
+    flex: 0 0 auto;
+    width: 100%;
+    height: 15px;
+    border-radius: 2px;
+    background: var(--gd-palette-complementary-3, #dde4eb);
+
+    &--dimmed {
+        background: var(--gd-palette-complementary-2, #ebeff4);
+    }
+
+    &--highlighted {
+        background: var(--gd-palette-success-base, #00c18d);
+    }
+}
+
+.gd-gen-ai-chat__interaction-intelligence__step-tooltip {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 210px;
+    padding: 15px;
+    border: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+    border-radius: 3px;
+    background: var(--gd-palette-complementary-0, #fff);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    line-height: 23px;
+    color: var(--gd-palette-complementary-8, #464e56);
+
+    &__eyebrow {
+        margin: 0;
+        font-size: 10px;
+        color: var(--gd-palette-complementary-6, #94a1ad);
+        text-transform: uppercase;
+    }
+
+    &__activity-list {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        font-size: 12px;
+        line-height: 19px;
+    }
+
+    &__divider {
+        width: 100%;
+        height: 1px;
+        background: var(--gd-palette-complementary-3, #dde4eb);
+    }
+
+    &__footer {
+        font-size: 12px;
+        color: var(--gd-palette-complementary-7, #6d7680);
+    }
+}
+
+.gd-gen-ai-chat__interaction-intelligence__detail {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    // Fixed, so paging between categories never resizes the panel. The rows scroll inside it.
+    height: 300px;
+
+    &__divider {
+        width: 100%;
+        height: 1px;
+        background: var(--gd-palette-complementary-3, #dde4eb);
+    }
+}
+
+.gd-gen-ai-chat__interaction-intelligence__detail-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+
+    &__label {
+        flex: 1 0 0;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.gd-gen-ai-chat__interaction-intelligence__detail-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    font-size: 14px;
+    color: var(--gd-palette-complementary-8, #464e56);
+
+    // Only the detail view's rows scroll — the header/timeline/carousel around them stay put,
+    // so navigating between categories never changes the panel's fixed height. `contain` keeps
+    // reaching the end from scrolling the conversation behind the panel.
+    &--scrollable {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+}
+
+.gd-gen-ai-chat__interaction-intelligence__detail-rows__row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.gd-gen-ai-chat__interaction-intelligence__detail-rows__label {
+    flex: 0 0 120px;
+    margin: 0;
+    line-height: 23px;
+}
+
+.gd-gen-ai-chat__interaction-intelligence__detail-rows__value {
+    flex: 1 0 0;
+    min-width: 0;
+    margin: 0;
+    line-height: 23px;
+}
+
+.gd-gen-ai-chat__interaction-intelligence__detail-rows__list {
+    display: flex;
+    flex-direction: column;
+
+    & + & {
+        margin-top: 10px;
+    }
+}
+
+.gd-gen-ai-chat__interaction-intelligence__detail-rows__list-heading {
+    margin: 0;
+}
+
+.gd-gen-ai-chat__interaction-intelligence__detail-rows__list-items {
+    margin: 0;
+    padding-left: 21px;
+    list-style: disc;
+
+    &--plain {
+        padding-left: 0;
+        list-style: none;
+    }
+}
+
+.gd-gen-ai-chat__interaction-intelligence__detail-rows__list-item-meta {
+    color: var(--gd-palette-complementary-6, #94a1ad);
+}
+
+.gd-gen-ai-chat__interaction-intelligence__detail-rows__list-truncated {
+    margin: 0;
+    color: var(--gd-palette-complementary-6, #94a1ad);
+}
+
+.gd-gen-ai-chat__interaction-intelligence__carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--gd-palette-complementary-7, #6d7680);
+
+    &__label b {
+        color: #000;
+        font-weight: 700;
+    }
+}

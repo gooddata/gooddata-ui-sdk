@@ -19,9 +19,19 @@ export interface IAssistantItemFeedbackProps {
     group: IChatMessagesGroup;
     message: IChatConversationLocalItem;
     isLast?: boolean;
+    /**
+     * Whether the Interaction Intelligence trigger actually shares this actions row. With it,
+     * feedback stops being hover-revealed on older messages so the trigger sits flush left.
+     */
+    hasInteractionIntelligenceTrigger?: boolean;
 }
 
-export function AssistantItemFeedback({ message, group, isLast }: IAssistantItemFeedbackProps) {
+export function AssistantItemFeedback({
+    message,
+    group,
+    isLast,
+    hasInteractionIntelligenceTrigger,
+}: IAssistantItemFeedbackProps) {
     const intl = useIntl();
     const dispatch = useDispatch();
 
@@ -45,12 +55,20 @@ export function AssistantItemFeedback({ message, group, isLast }: IAssistantItem
     const thumbsUpLabel = intl.formatMessage({ id: "gd.gen-ai.feedback.like" });
     const thumbsDownLabel = intl.formatMessage({ id: "gd.gen-ai.feedback.dislike" });
     const type = message.feedback?.feedback;
+    const isAssigned = type ? type !== "NONE" : false;
+
+    // With the Interaction Intelligence trigger sharing this row, feedback is fully hidden on
+    // older unrated messages instead of hover-revealed, so the trigger isn't pushed away from
+    // the left edge.
+    if (hasInteractionIntelligenceTrigger && !isLast && !isAssigned) {
+        return null;
+    }
 
     return (
         <div
             className={cx({
                 "gd-gen-ai-chat__conversation__item__feedback": true,
-                "gd-gen-ai-chat__conversation__item__feedback--assigned": type ? type !== "NONE" : false,
+                "gd-gen-ai-chat__conversation__item__feedback--assigned": isAssigned,
                 "gd-gen-ai-chat__conversation__item__feedback--last": isLast,
             })}
         >
@@ -61,7 +79,7 @@ export function AssistantItemFeedback({ message, group, isLast }: IAssistantItem
                     <UiIconButton
                         icon="thumbsUp"
                         variant="tertiary"
-                        size="small"
+                        size="medium"
                         isActive={type === "POSITIVE"}
                         onClick={handlePositiveFeedbackClick}
                         accessibilityConfig={{
@@ -82,7 +100,7 @@ export function AssistantItemFeedback({ message, group, isLast }: IAssistantItem
                                 <UiIconButton
                                     icon="thumbsDown"
                                     variant="tertiary"
-                                    size="small"
+                                    size="medium"
                                     isActive={type === "NEGATIVE" || opened}
                                     onClick={handleNegativeFeedbackClick}
                                     accessibilityConfig={{

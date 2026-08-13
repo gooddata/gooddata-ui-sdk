@@ -39,6 +39,7 @@ import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
 import { JsonApiAggregatedFactOutMetaOriginOriginTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDatasetOutList } from '@gooddata/api-client-tiger';
+import { JsonApiDataSourceInAttributesCacheRetention } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesCacheStrategyEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesDateTimeSemanticsEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
@@ -168,6 +169,9 @@ export interface IDataSourceApiResult {
     errorMessage?: string;
 }
 
+// @internal
+export type IDataSourceCacheRetention = JsonApiDataSourceInAttributesCacheRetention;
+
 // @internal (undocumented)
 export type IDataSourceCacheStrategy = JsonApiDataSourceInAttributesCacheStrategyEnum;
 
@@ -175,6 +179,8 @@ export type IDataSourceCacheStrategy = JsonApiDataSourceInAttributesCacheStrateg
 export interface IDataSourceConnectionInfo {
     // (undocumented)
     authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum | null;
+    // (undocumented)
+    cacheRetention?: IDataSourceCacheRetention | null;
     // (undocumented)
     cacheStrategy?: IDataSourceCacheStrategy | null;
     // (undocumented)
@@ -216,6 +222,7 @@ export interface IDataSourceDeletedResponse {
 export interface IDataSourcePatchRequest {
     // (undocumented)
     authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum | null;
+    cacheRetention?: IDataSourceCacheRetention | null;
     // (undocumented)
     cacheStrategy?: IDataSourceCacheStrategy;
     // (undocumented)
@@ -294,6 +301,7 @@ export type IDataSourceType = JsonApiDataSourceInAttributesTypeEnum;
 export interface IDataSourceUpsertRequest {
     // (undocumented)
     authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum | null;
+    cacheRetention?: IDataSourceCacheRetention | null;
     // (undocumented)
     cacheStrategy?: IDataSourceCacheStrategy;
     // (undocumented)

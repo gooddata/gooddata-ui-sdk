@@ -28,6 +28,7 @@ export const getStore = (
     eventDispatcher: EventDispatcher,
     optionsDispatcher: OptionsDispatcher,
     isPreview: boolean | undefined,
+    allowInteractionIntelligence: boolean | undefined,
 ): EnhancedStore => {
     const sagaMiddleware = createSagaMiddleware({
         context: {
@@ -44,7 +45,7 @@ export const getStore = (
             [chatWindowSliceName]: chatWindowSliceReducer,
         },
         preloadedState: {
-            [chatWindowSliceName]: getInitialChatWindowState({ isPreview }),
+            [chatWindowSliceName]: getInitialChatWindowState({ isPreview, allowInteractionIntelligence }),
         },
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware({

@@ -304,6 +304,9 @@ export type GenAIConversationsProps = Omit<GenAiStoreProps, "children"> & {
 };
 
 // @public
+export function GenAiInteractionIntelligence(input: IGenAiInteractionIntelligenceProps): JSX.Element | null;
+
+// @public
 export function GenAiStore(props: GenAiStoreProps): JSX.Element | null;
 
 // @public
@@ -324,6 +327,7 @@ export type GenAiStoreProps = {
     onDispatcher?: (dispatch: EnhancedStore["dispatch"]) => void;
     children: ReactNode | ((genAIStore: EnhancedStore) => ReactNode);
     isPreview?: boolean;
+    allowInteractionIntelligence?: boolean;
 };
 
 // @public
@@ -377,6 +381,16 @@ export type IChatConversationSystemContent = {
     type: "system";
 };
 
+// @public
+export interface IGenAiInteractionIntelligenceProps {
+    initialCategory?: string;
+    initialMode?: InteractionIntelligenceMode;
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    responseId: string;
+}
+
 // @beta (undocumented)
 export interface ILandingContentProps {
     // (undocumented)
@@ -406,6 +420,9 @@ export interface ILandingTitleProps {
     // (undocumented)
     children: ReactNode;
 }
+
+// @public
+export type InteractionIntelligenceMode = "list" | "detail";
 
 // @public
 export const isChatAgentChangeEvent: (event: ChatEvent) => event is ChatAgentChangeEvent;

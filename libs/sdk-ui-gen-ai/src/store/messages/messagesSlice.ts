@@ -2,7 +2,7 @@
 
 import { type PayloadAction, type Reducer, createSlice } from "@reduxjs/toolkit";
 
-import { type IChatConversationItem } from "@gooddata/sdk-backend-spi";
+import { type IChatConversationInteractionStep, type IChatConversationItem } from "@gooddata/sdk-backend-spi";
 import { type GenAIChatEffort, type GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
@@ -27,7 +27,11 @@ import {
     makeErrorContent,
     makeErrorContents,
 } from "../../model.js";
-import { type StoredConversation } from "../../types.js";
+import {
+    type IChatConversationResponseTrace,
+    type IChatConversationTracedAction,
+    type StoredConversation,
+} from "../../types.js";
 import { convertMessageToChatConversation } from "../sideEffects/utils.js";
 import {
     createEmptyConversation,
@@ -227,6 +231,19 @@ const setConversationInProgress = (
             inProgress,
         };
     }
+};
+
+const getResponseTrace = (
+    state: MessagesSliceState,
+    conversationId: string,
+    responseId: string,
+): IChatConversationResponseTrace | undefined => {
+    const data = getConversationData(state.conversationsData, conversationId);
+    if (!data) {
+        return undefined;
+    }
+    const trace = (data.interactionTrace ??= {});
+    return (trace[responseId] ??= { steps: [], detailsByStepId: {} });
 };
 
 const getAssistantMessageStrict = (
@@ -818,6 +835,49 @@ const messagesSlice = createSlice({
             } else {
                 state.selectedEffort = payload.effort;
             }
+        },
+        appendInteractionStepAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                conversationId: string;
+                step: IChatConversationInteractionStep;
+            }>,
+        ) => {
+            const trace = getResponseTrace(state, payload.conversationId, payload.step.responseId);
+            if (!trace) {
+                return;
+            }
+            // Defensive: a redelivered step must not be counted twice.
+            if (trace.steps.some((step) => step.stepId === payload.step.stepId)) {
+                return;
+            }
+            trace.steps.push(payload.step);
+            if (trace.traceId === undefined) {
+                trace.traceId = payload.step.traceId;
+            }
+        },
+        appendTracedActionAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                conversationId: string;
+                responseId: string;
+                stepId: string;
+                action: IChatConversationTracedAction;
+            }>,
+        ) => {
+            const trace = getResponseTrace(state, payload.conversationId, payload.responseId);
+            if (!trace) {
+                return;
+            }
+            const actions = (trace.detailsByStepId[payload.stepId] ??= []);
+            if (actions.some((action) => action.itemId === payload.action.itemId)) {
+                return;
+            }
+            actions.push(payload.action);
         },
         applyPendingAgentSwitchAction: (
             state,
@@ -1428,6 +1488,8 @@ export const {
     saveVisualisationRenderStatusAction,
     saveVisualisationRenderStatusSuccessAction,
     visualizationErrorAction,
+    appendInteractionStepAction,
+    appendTracedActionAction,
     applyPendingAgentSwitchAction,
     revertAgentSwitchAction,
     setAgentsAction,

@@ -291,6 +291,12 @@ export type FiltersByTab = {
 // @public
 export type FilterWithResolvableElements = IAttributeFilter | IRelativeDateFilter;
 
+// @internal
+export type GenAIAnswerOutput = "text" | "visualization" | "dashboard" | "keyDriverAnalysis" | "whatIf" | "searchResults" | "alertProposal";
+
+// @internal
+export type GenAIInteractionStepCategory = "applyMemory" | "skillRouting" | "knowledgeSearch" | "catalogSearch" | "metricQuery" | "composeAnswer";
+
 // @alpha
 export interface IAgentsQuery {
     query(): Promise<IAgentsQueryResult>;
@@ -704,6 +710,30 @@ export type IChatConversationAlertProposalContent = {
 };
 
 // @internal
+export type IChatConversationCatalogSearchDetail = {
+    category: "catalogSearch";
+    query: string[];
+    requestedTypes: string[];
+    found: IChatConversationSearchedGroup[];
+    used: IChatConversationCatalogSearchMatch[];
+};
+
+// @internal
+export type IChatConversationCatalogSearchMatch = {
+    objectType: string;
+    title: string;
+    score: number;
+};
+
+// @internal
+export type IChatConversationComposeAnswerDetail = {
+    category: "composeAnswer";
+    modelId?: string;
+    suggestedActions?: number;
+    output?: GenAIAnswerOutput;
+};
+
+// @internal
 export type IChatConversationContent = IChatConversationTextContent | IChatConversationReasoningContent | IChatConversationMultipartContent | IChatConversationToolCallContent | IChatConversationToolResultContent;
 
 // @internal
@@ -739,6 +769,26 @@ export type IChatConversationFeedback = {
 };
 
 // @internal
+export type IChatConversationInteractionStep = {
+    type: "interaction_step";
+    stepId: string;
+    conversationId: string;
+    responseId: string;
+    stepIndex: number;
+    durationMs: number;
+    tokens: IChatConversationInteractionStepTokens;
+    createdAt: number;
+    traceId?: string;
+};
+
+// @internal
+export type IChatConversationInteractionStepTokens = {
+    input?: number;
+    output?: number;
+    total?: number;
+};
+
+// @internal
 export type IChatConversationItem = {
     id: string;
     type: "item";
@@ -748,10 +798,15 @@ export type IChatConversationItem = {
     role: "user" | "assistant" | "tool" | "system";
     content: IChatConversationContent;
     feedback?: IChatConversationFeedback;
+    stepId?: string;
+    detail?: IChatConversationItemDetail;
     agentId?: string;
     oldAgentId?: string;
     reasoningEffort?: GenAIChatEffort;
 };
+
+// @internal
+export type IChatConversationItemDetail = IChatConversationCatalogSearchDetail | IChatConversationComposeAnswerDetail | IChatConversationKnowledgeSearchDetail | IChatConversationSkillRoutingDetail;
 
 // @public
 export interface IChatConversationItemsQuery {
@@ -767,6 +822,20 @@ export type IChatConversationItemsQueryResult = IPagedResource<IChatConversation
 export type IChatConversationKeyDriverAnalysisContent = {
     type: "kda";
     kda: IChatKdaDefinition;
+};
+
+// @internal
+export type IChatConversationKnowledgeSearchDetail = {
+    category: "knowledgeSearch";
+    query?: string;
+    documents: IChatConversationKnowledgeSearchDocument[];
+    bestMatch?: string;
+};
+
+// @internal
+export type IChatConversationKnowledgeSearchDocument = {
+    title: string;
+    score?: number;
 };
 
 // @internal
@@ -806,6 +875,19 @@ export type IChatConversationSearchContent = {
 };
 
 // @internal
+export type IChatConversationSearchedGroup = {
+    objectType: string;
+    titles: string[];
+};
+
+// @internal
+export type IChatConversationSkillRoutingDetail = {
+    category: "skillRouting";
+    available: string[];
+    activated: string[];
+};
+
+// @internal
 export type IChatConversationTextContent = {
     type: "text";
     text: string;
@@ -824,7 +906,7 @@ export interface IChatConversationThread {
 
 // @internal
 export interface IChatConversationThreadQuery {
-    stream(): ReadableStream<IChatConversationItem | IChatConversationError>;
+    stream(): ReadableStream<IChatConversationItem | IChatConversationError | IChatConversationInteractionStep>;
     withAllowedRelationshipTypes(relationshipTypes?: IAllowedRelationshipType[]): IChatConversationThreadQuery;
     withCreateLimit(createLimit: number): IChatConversationThreadQuery;
     withEffort(effort?: GenAIChatEffort): IChatConversationThreadQuery;
@@ -2443,10 +2525,16 @@ export function isAnalyticalBackendError(obj: unknown): obj is AnalyticalBackend
 export function isChatConversationAlertProposalContent(content: IChatConversationMultipartPart): content is IChatConversationAlertProposalContent;
 
 // @internal
+export function isChatConversationCatalogSearchDetail(detail: unknown): detail is IChatConversationCatalogSearchDetail;
+
+// @internal
 export function isChatConversationDashboardContent(content: IChatConversationMultipartPart): content is IChatConversationDashboardContent;
 
 // @internal
 export function isChatConversationError(item: Partial<IChatConversationItem | IChatConversationError>): item is IChatConversationError;
+
+// @internal
+export function isChatConversationInteractionStep(item: unknown): item is IChatConversationInteractionStep;
 
 // @internal
 export function isChatConversationItem(item: unknown): item is IChatConversationItem;

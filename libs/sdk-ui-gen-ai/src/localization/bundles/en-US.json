@@ -779,6 +779,190 @@
         "text": "m",
         "crowdinContext": "Unit of time in minutes"
     },
+    "gd.gen-ai.interactionIntelligence.duration.seconds": {
+        "text": "{seconds}s",
+        "crowdinContext": "Duration in seconds shown next to an Interaction Intelligence step, e.g. '0.2s'"
+    },
+    "gd.gen-ai.interactionIntelligence.duration.minutes": {
+        "text": "{minutes}m",
+        "crowdinContext": "Duration in whole minutes shown next to an Interaction Intelligence step, e.g. '1m'"
+    },
+    "gd.gen-ai.interactionIntelligence.duration.minutesAndSeconds": {
+        "text": "{minutes}m {seconds}s",
+        "crowdinContext": "Duration in minutes and seconds shown next to an Interaction Intelligence step, e.g. '1m 5s'"
+    },
+    "gd.gen-ai.interactionIntelligence.explain": {
+        "text": "Explain",
+        "crowdinContext": "Label of the button that opens the Interaction Intelligence panel for an assistant message"
+    },
+    "gd.gen-ai.interactionIntelligence.title": {
+        "text": "Behind this answer",
+        "crowdinContext": "Title of the Interaction Intelligence panel"
+    },
+    "gd.gen-ai.interactionIntelligence.close": {
+        "text": "Close",
+        "crowdinContext": "Accessible label for the button that closes the Interaction Intelligence panel"
+    },
+    "gd.gen-ai.interactionIntelligence.back": {
+        "text": "Back",
+        "crowdinContext": "Accessible label for the button that returns from a category's detail to the Interaction Intelligence list"
+    },
+    "gd.gen-ai.interactionIntelligence.footer.traceId.label": {
+        "text": "Trace ID:",
+        "crowdinContext": "Label preceding the backend trace id of the response, at the bottom of the Interaction Intelligence panel. Also the tooltip's hover/focus trigger"
+    },
+    "gd.gen-ai.interactionIntelligence.footer.traceId.tooltip": {
+        "text": "Trace ID helps us identify, investigate, and resolve issues as quickly as possible. If you decide to contact our support team, provide us with this ID.",
+        "crowdinContext": "Tooltip explaining what the Trace ID is for, shown on hover/focus of the '?' icon next to the Trace ID label"
+    },
+    "gd.gen-ai.interactionIntelligence.summary.tokens": {
+        "text": "{count, plural, one {{formattedCount} token} other {{formattedCount} tokens}}",
+        "crowdinContext": "Count of tokens used in the Interaction Intelligence summary, e.g. '4K tokens'. {count} drives singular/plural selection; {formattedCount} is the already-formatted (possibly compact, e.g. '4K') number to display — do not reformat it."
+    },
+    "gd.gen-ai.interactionIntelligence.pager": {
+        "text": "<b>{current}</b> of {total}",
+        "crowdinContext": "Pager shown at the bottom of a category's detail view, e.g. '2 of 7' with the current number in bold. The <b></b> tags must stay around the {current} placeholder."
+    },
+    "gd.gen-ai.interactionIntelligence.pager.previous": {
+        "text": "Previous activity",
+        "crowdinContext": "Accessible label for the button that moves to the previous category in the Interaction Intelligence detail view"
+    },
+    "gd.gen-ai.interactionIntelligence.pager.next": {
+        "text": "Next activity",
+        "crowdinContext": "Accessible label for the button that moves to the next category in the Interaction Intelligence detail view"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.andMore": {
+        "text": "... and {count} more",
+        "crowdinContext": "Truncation line shown under a list in the Interaction Intelligence detail view when not every item is listed, e.g. '... and 97 more'"
+    },
+    "gd.gen-ai.interactionIntelligence.tooltip.activity": {
+        "text": "Activity",
+        "crowdinContext": "Eyebrow label (shown uppercase) above the list of activities that ran within a hovered Interaction Intelligence timeline tile"
+    },
+    "gd.gen-ai.interactionIntelligence.category.applyMemory": {
+        "text": "Apply memory",
+        "crowdinContext": "Interaction Intelligence category title for the apply-memory category"
+    },
+    "gd.gen-ai.interactionIntelligence.category.catalogSearch": {
+        "text": "Catalogue search",
+        "crowdinContext": "Interaction Intelligence category title for a catalog search category"
+    },
+    "gd.gen-ai.interactionIntelligence.category.knowledgeSearch": {
+        "text": "Knowledge search",
+        "crowdinContext": "Interaction Intelligence category title for a knowledge search category"
+    },
+    "gd.gen-ai.interactionIntelligence.category.skillRouting": {
+        "text": "Skill routing",
+        "crowdinContext": "Interaction Intelligence category title for a skill routing category"
+    },
+    "gd.gen-ai.interactionIntelligence.category.metricQuery": {
+        "text": "Metric query",
+        "crowdinContext": "Interaction Intelligence category title for the metric query category"
+    },
+    "gd.gen-ai.interactionIntelligence.category.composeAnswer": {
+        "text": "Compose answer",
+        "crowdinContext": "Interaction Intelligence category title for the answer-composing category"
+    },
+    "gd.gen-ai.interactionIntelligence.excerpt.found": {
+        "text": "{count, plural, one {# found} other {# found}}",
+        "crowdinContext": "Excerpt shown on a category's list row summarizing how many catalog objects a search found, e.g. '2 found'"
+    },
+    "gd.gen-ai.interactionIntelligence.excerpt.used": {
+        "text": "{count, plural, one {# used} other {# used}}",
+        "crowdinContext": "Excerpt shown on a category's list row summarizing how many catalog matches were used, e.g. '1 used'"
+    },
+    "gd.gen-ai.interactionIntelligence.excerpt.documents": {
+        "text": "{count, plural, one {# document} other {# documents}}",
+        "crowdinContext": "Excerpt shown on a category's list row summarizing how many documents a knowledge search returned, e.g. '2 documents'"
+    },
+    "gd.gen-ai.interactionIntelligence.excerpt.activated": {
+        "text": "{count, plural, one {# activated} other {# activated}}",
+        "crowdinContext": "Excerpt shown on a category's list row summarizing how many skills were activated by routing, e.g. '2 activated'"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.query": {
+        "text": "Query",
+        "crowdinContext": "Interaction Intelligence detail row label for the search keywords/question a category used"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.documents": {
+        "text": "Documents",
+        "crowdinContext": "Interaction Intelligence detail row label listing the documents a knowledge search returned"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.bestMatch": {
+        "text": "Best match",
+        "crowdinContext": "Interaction Intelligence detail row label for a knowledge search's best-matching result"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.available": {
+        "text": "Available",
+        "crowdinContext": "Interaction Intelligence detail row label listing the skills available for routing"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.activated": {
+        "text": "Activated",
+        "crowdinContext": "Interaction Intelligence detail row label listing the skills activated by routing"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.output": {
+        "text": "Output",
+        "crowdinContext": "Interaction Intelligence detail row label for the type of output the turn produced"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.model": {
+        "text": "Model",
+        "crowdinContext": "Interaction Intelligence detail row label for the model that composed the answer"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.suggestedActions": {
+        "text": "Suggested actions",
+        "crowdinContext": "Interaction Intelligence detail row label for follow-up actions suggested with the answer"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.searched": {
+        "text": "Searched",
+        "crowdinContext": "Interaction Intelligence detail row label listing the catalog types a search requested"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.found": {
+        "text": "Found",
+        "crowdinContext": "Interaction Intelligence detail row label for the catalog objects a search found, grouped by type"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.used": {
+        "text": "Used",
+        "crowdinContext": "Interaction Intelligence detail row label for the catalog matches actually used"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.skillsCount": {
+        "text": "{count, plural, one {# skill} other {# skills}}",
+        "crowdinContext": "Count line above the 'Available' skills list in the Interaction Intelligence detail view, e.g. '4 skills'"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.foundGroup": {
+        "text": "{count} {objectType}",
+        "crowdinContext": "Count line above one group of catalog objects a search found, e.g. '2 metric'. {objectType} is a catalog type name coming from the backend (e.g. 'metric', 'fact') and is not translated."
+    },
+    "gd.gen-ai.interactionIntelligence.detail.matchScore": {
+        "text": "({percent}% match)",
+        "crowdinContext": "Relevance score shown dimmed after a matched item in the Interaction Intelligence detail view, e.g. '(89% match)'"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.output.text": {
+        "text": "Text answer",
+        "crowdinContext": "Interaction Intelligence 'Output' row value when the turn produced a plain text answer"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.output.visualization": {
+        "text": "Visualization",
+        "crowdinContext": "Interaction Intelligence 'Output' row value when the turn produced a visualization"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.output.dashboard": {
+        "text": "Dashboard",
+        "crowdinContext": "Interaction Intelligence 'Output' row value when the turn produced a dashboard"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.output.keyDriverAnalysis": {
+        "text": "Key driver analysis",
+        "crowdinContext": "Interaction Intelligence 'Output' row value when the turn produced a key driver analysis"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.output.whatIf": {
+        "text": "What-if scenario",
+        "crowdinContext": "Interaction Intelligence 'Output' row value when the turn produced a what-if scenario"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.output.searchResults": {
+        "text": "Search results",
+        "crowdinContext": "Interaction Intelligence 'Output' row value when the turn produced search results"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.output.alertProposal": {
+        "text": "Alert proposal",
+        "crowdinContext": "Interaction Intelligence 'Output' row value when the turn produced an alert proposal"
+    },
     "drill.kda.from": {
         "text": "from",
         "crowdinContext": "Key driver analysis drill from label, must be lowercase"

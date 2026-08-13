@@ -6,12 +6,14 @@ import {
     type IAnalyticalBackend,
     type IChatConversation,
     type IChatConversationError,
+    type IChatConversationInteractionStep,
     type IChatConversationItem,
     type IChatConversationThreadQuery,
     type IChatThreadQuery,
     type IGenAIChatEvaluation,
     type IUserWorkspaceSettings,
     isChatConversationError,
+    isChatConversationInteractionStep,
     isChatConversationItem,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -49,6 +51,8 @@ import {
     selectedAgentIdSelector,
 } from "../messages/messagesSelectors.js";
 import {
+    appendInteractionStepAction,
+    appendTracedActionAction,
     applyPendingAgentSwitchAction,
     evaluateMessageAction,
     evaluateMessageCompleteAction,
@@ -501,7 +505,11 @@ function* evaluateUserConversationMessage(
     preparedChatThread: IChatConversationThreadQuery,
     isStartMessage: boolean,
 ) {
-    let reader: ReadableStreamReader<IChatConversationItem | IChatConversationError> | undefined = undefined;
+    let reader:
+        | ReadableStreamReader<
+              IChatConversationItem | IChatConversationError | IChatConversationInteractionStep
+          >
+        | undefined = undefined;
     const settings: IUserWorkspaceSettings | undefined = yield select(settingsSelector);
     const objectTypes: GenAIObjectType[] | undefined = yield select(objectTypesSelector);
     const { includeTags, excludeTags }: ReturnType<typeof tagsSelector> = yield select(tagsSelector);
@@ -516,6 +524,8 @@ function* evaluateUserConversationMessage(
     let currentUserMessage: IChatConversationLocalItem | undefined = userMessage;
     let currentAssistantMessage: IChatConversationLocalItem = assistantMessage;
     let currentInteractionId: string | undefined = undefined;
+    // Tool names by callId, so a toolResult's trace detail can name the tool that produced it.
+    const toolNamesByCallId = new Map<string, string>();
 
     let queryBuilder = preparedChatThread
         .withSearchLimit(Number(settings?.["aiChatSearchLimit"]) || 10)
@@ -539,10 +549,9 @@ function* evaluateUserConversationMessage(
     }
 
     try {
-        const results: ReadableStream<IChatConversationItem | IChatConversationError> = yield call([
-            queryBuilder,
-            queryBuilder.stream,
-        ]);
+        const results: ReadableStream<
+            IChatConversationItem | IChatConversationError | IChatConversationInteractionStep
+        > = yield call([queryBuilder, queryBuilder.stream]);
 
         reader = results.getReader();
         while (true) {
@@ -550,12 +559,24 @@ function* evaluateUserConversationMessage(
                 value,
                 done,
             }: {
-                value?: IChatConversationItem | IChatConversationError;
+                value?: IChatConversationItem | IChatConversationError | IChatConversationInteractionStep;
                 done: boolean;
             } = yield call([reader, reader.read]);
 
             if (done) {
                 break;
+            }
+
+            // Interaction steps are the "Interaction Intelligence" trace, not messages — they carry the
+            // turn's timing and spend and never touch the assistant's content.
+            if (value && isChatConversationInteractionStep(value)) {
+                yield put(
+                    appendInteractionStepAction({
+                        conversationId: conversation.localId,
+                        step: value,
+                    }),
+                );
+                continue;
             }
 
             if (value) {
@@ -579,6 +600,39 @@ function* evaluateUserConversationMessage(
                     // conversation items and must not overwrite the current assistant message.
                     if (value.role === "user" || value.role === "system") {
                         continue;
+                    }
+
+                    // Remember each tool call's name so the matching toolResult — which carries
+                    // only its callId — can be attributed to the tool that produced it.
+                    if (value.content.type === "toolCall") {
+                        toolNamesByCallId.set(value.content.callId, value.content.name);
+                    }
+
+                    // Every tool result that belongs to a step is part of the "Interaction Intelligence"
+                    // trace, whether or not it carried a `detail` — one without a body still names
+                    // its step after the tool that ran, so the step's time is accounted for.
+                    // Captured aside; the item itself still flows on.
+                    if (
+                        (value.detail || value.content.type === "toolResult") &&
+                        value.stepId &&
+                        value.responseId
+                    ) {
+                        yield put(
+                            appendTracedActionAction({
+                                conversationId: conversation.localId,
+                                responseId: value.responseId,
+                                stepId: value.stepId,
+                                action: {
+                                    itemId: value.id,
+                                    createdAt: value.createdAt,
+                                    toolName:
+                                        value.content.type === "toolResult"
+                                            ? toolNamesByCallId.get(value.content.callId)
+                                            : undefined,
+                                    detail: value.detail,
+                                },
+                            }),
+                        );
                     }
 
                     const chunkInteractionId = value.id;
