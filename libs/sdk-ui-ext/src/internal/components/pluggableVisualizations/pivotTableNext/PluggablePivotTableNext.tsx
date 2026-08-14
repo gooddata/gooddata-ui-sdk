@@ -367,8 +367,11 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
     private handleLoadingChanged = (loadingState: ILoadingState): void => {
         if (loadingState.isLoading) {
             // Formats and element suggestions are deliberately kept: clearing them would flip an open
-            // percent rule's input from "40" to "0.4" and blank suggestions mid-edit.
-            this.cfTargetData = { ...this.cfTargetData, titles: {} };
+            // percent rule's input from "40" to "0.4" and blank suggestions mid-edit. Semantic-layer
+            // rules have no such open-edit session to protect (they're view-only in this panel), and a
+            // reused localId could otherwise show/open a DIFFERENT target's inherited rule until the
+            // next data view lands (or indefinitely on a failed execution) — clear them alongside titles.
+            this.cfTargetData = { ...this.cfTargetData, titles: {}, semantic: {} };
         }
         this.onLoadingChanged(loadingState);
     };
@@ -479,6 +482,9 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
                 ? (customVisualizationConfig?.conditionalFormatting ??
                   getConditionalFormattingFromProperties(insightProperties(insight)))
                 : undefined,
+            // The engine inherits from descriptors independently of `conditionalFormatting` above
+            // (even `undefined` still inherits) — it needs its own explicit gate behind the flag.
+            enableSemanticConditionalFormatting: enableConditionalFormatting,
         };
 
         // Only pass pageSize when pagination is enabled

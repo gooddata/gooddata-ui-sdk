@@ -30,6 +30,7 @@ export function ColumnDefsProvider({ children }: { children: ReactNode }) {
         textWrapping,
         separators,
         conditionalFormatting,
+        enableSemanticConditionalFormatting,
     } = config;
     const { initialDataView } = initialExecutionData;
     const columnWidths = useInitialProp(initialColumnWidths);
@@ -45,6 +46,7 @@ export function ColumnDefsProvider({ children }: { children: ReactNode }) {
             intl,
             separators,
             conditionalFormatting,
+            enableSemanticConditionalFormatting,
         });
     }, [
         initialDataView,
@@ -55,6 +57,7 @@ export function ColumnDefsProvider({ children }: { children: ReactNode }) {
         drillableItemsRef,
         separators,
         conditionalFormatting,
+        enableSemanticConditionalFormatting,
     ]);
 
     return <ColumnDefsContext.Provider value={columnDefs}>{children}</ColumnDefsContext.Provider>;

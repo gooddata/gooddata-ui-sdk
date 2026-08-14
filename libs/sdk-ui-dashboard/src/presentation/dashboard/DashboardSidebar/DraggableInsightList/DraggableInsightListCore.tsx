@@ -26,6 +26,7 @@ import { DraggableInsightListItemWrapper } from "./DraggableInsightListItemWrapp
 
 export function DraggableInsightListCore({
     WrapInsightListItemWithDragComponent,
+    disabled,
     ...remainingProps
 }: IInsightListProps) {
     const userInteraction = useDashboardUserInteraction();
@@ -35,6 +36,7 @@ export function DraggableInsightListCore({
     return (
         <InsightList
             {...remainingProps}
+            disabled={disabled}
             renderItem={({ item: insight, width, isFirst, isLast }) => {
                 if (!insight) {
                     return <InsightListItem isLoading />;
@@ -76,6 +78,7 @@ export function DraggableInsightListCore({
                         metadataTimeZone={settings?.metadataTimeZone}
                         useReferences
                         LoadingComponent={LoadingComponent}
+                        disabled={disabled}
                     />
                 );
             }}

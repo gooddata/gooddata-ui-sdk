@@ -10,6 +10,7 @@ import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsRichTextWidgets } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectIsAiGenerating } from "../../../model/store/config/configSelectors.js";
 import { selectIsNewDashboard } from "../../../model/store/meta/metaSelectors.js";
 import {
     type AttributeFilterComponentSet,
@@ -40,6 +41,7 @@ export function CreationPanel(props: ICreationPanelProps) {
     const { className, WrapCreatePanelItemWithDragComponent, WrapInsightListItemWithDragComponent } = props;
     const supportsRichText = useDashboardSelector(selectSupportsRichTextWidgets);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
+    const isAiGenerating = useDashboardSelector(selectIsAiGenerating);
     const AttributeFilterComponentSet = props.AttributeFilterComponentSet!;
     const InsightWidgetComponentSet = props.InsightWidgetComponentSet!;
     const RichTextWidgetComponentSet = props.RichTextWidgetComponentSet!;
@@ -60,6 +62,7 @@ export function CreationPanel(props: ICreationPanelProps) {
                 <CreatePanelListItemComponent
                     key={type}
                     WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDragComponent}
+                    disabled={isAiGenerating}
                 />
             );
         });
@@ -71,6 +74,7 @@ export function CreationPanel(props: ICreationPanelProps) {
         DashboardLayoutWidgetComponentSet,
         supportsRichText,
         WrapCreatePanelItemWithDragComponent,
+        isAiGenerating,
     ]);
 
     return (
@@ -93,6 +97,7 @@ export function CreationPanel(props: ICreationPanelProps) {
                         WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}
                         recalculateSizeReference={className}
                         searchAutofocus={!isNewDashboard}
+                        disabled={isAiGenerating}
                     />
                 </div>
             </div>

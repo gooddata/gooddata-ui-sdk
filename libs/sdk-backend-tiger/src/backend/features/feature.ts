@@ -229,6 +229,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableDenodoDataSource,
+            "enableDenodoDataSource",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDenodoDataSource,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableOidcAuth,
             "enableOidcAuth",
             "BOOLEAN",
@@ -877,6 +884,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableDashboardPersistentFiltersAcrossTabs",
             "BOOLEAN",
             FeatureFlagsValues.enableDashboardPersistentFiltersAcrossTabs,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableAbsoluteDateFilterGranularity,
+            "enableAbsoluteDateFilterGranularity",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAbsoluteDateFilterGranularity,
         ),
     };
 }

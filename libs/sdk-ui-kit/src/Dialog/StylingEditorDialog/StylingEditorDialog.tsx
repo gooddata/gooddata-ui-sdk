@@ -1,6 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { useCallback, useMemo, useState } from "react";
+import { type ReactNode, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -67,6 +67,15 @@ export interface IStylingEditorDialogProps<T extends StylingPickerItemContent>
      * this never prevents submission — use it for content that applies but degrades the result.
      */
     validateDefinitionWarning?: (content: T) => string | undefined;
+    /**
+     * Optionally replaces the definition editor, e.g. with a syntax-highlighting one.
+     *
+     * @remarks
+     * `value` is the definition as JSON text, and `onChange` expects JSON text back — the same
+     * contract as the plain textarea rendered when this is not supplied. Anything richer (a language
+     * toggle and its persistence, for instance) stays owned by the caller.
+     */
+    renderDefinitionEditor?: (props: { value: string; onChange: (next: string) => void }) => ReactNode;
 }
 
 /**
@@ -99,6 +108,7 @@ function StylingEditorDialogCore<T extends StylingPickerItemContent>({
     onInvalidDefinition = () => {},
     validateDefinition,
     validateDefinitionWarning,
+    renderDefinitionEditor,
 }: IStylingEditorDialogProps<T>) {
     const intl = useIntl();
     const providedExamples = !!examples && examples.length !== 0 && !!exampleToColorPreview;
@@ -109,7 +119,15 @@ function StylingEditorDialogCore<T extends StylingPickerItemContent>({
 
     const parsedDefinition = useMemo((): { ok: true; content: T } | { ok: false } => {
         try {
-            return { ok: true, content: JSON.parse(definitionField) as T };
+            const parsed: unknown = JSON.parse(definitionField);
+            // A theme is an object and a colour palette an array, so a bare scalar is never a valid
+            // definition even though JSON.parse accepts it. Worth rejecting explicitly: a
+            // syntax-highlighting editor offering YAML makes `foo` — a bare string — an easy thing to
+            // leave behind mid-edit, and it would otherwise submit as the whole styling content.
+            if (typeof parsed !== "object" || parsed === null) {
+                return { ok: false };
+            }
+            return { ok: true, content: parsed as T };
         } catch {
             return { ok: false };
         }
@@ -260,16 +278,29 @@ function StylingEditorDialogCore<T extends StylingPickerItemContent>({
                             onChange={(e) => setNameField(e.target.value)}
                         />
                     </label>
-                    <label className="gd-styling-editor-dialog-content-form-textarea">
-                        {intl.formatMessage({ id: "stylingEditor.dialog.definition" })}
-                        <textarea
-                            aria-label="Styling item definition"
-                            className="gd-input-field s-textarea-field"
-                            wrap={"off"}
-                            value={definitionField}
-                            onChange={(e) => setDefinitionField(e.target.value)}
-                        />
-                    </label>
+                    {renderDefinitionEditor ? (
+                        // Not a <label>: a custom editor brings its own controls, and a label
+                        // wrapping them would route clicks on those to the labelled element. The
+                        // editor is expected to carry its own accessible name instead.
+                        <div className="gd-styling-editor-dialog-content-form-textarea">
+                            {intl.formatMessage({ id: "stylingEditor.dialog.definition" })}
+                            {renderDefinitionEditor({
+                                value: definitionField,
+                                onChange: setDefinitionField,
+                            })}
+                        </div>
+                    ) : (
+                        <label className="gd-styling-editor-dialog-content-form-textarea">
+                            {intl.formatMessage({ id: "stylingEditor.dialog.definition" })}
+                            <textarea
+                                aria-label="Styling item definition"
+                                className="gd-input-field s-textarea-field"
+                                wrap={"off"}
+                                value={definitionField}
+                                onChange={(e) => setDefinitionField(e.target.value)}
+                            />
+                        </label>
+                    )}
                     {definitionContentWarning && !definitionContentError ? (
                         <Message
                             type="warning"

@@ -21,6 +21,7 @@ import { useDashboardDrag } from "./useDashboardDrag.js";
 export function WrapInsightListItemWithDrag({
     children,
     insight,
+    disabled,
     onDragStart,
 }: IWrapInsightListItemWithDragProps) {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
@@ -41,12 +42,12 @@ export function WrapInsightListItemWithDrag({
                     },
                 };
             },
-            canDrag: isInEditMode,
+            canDrag: isInEditMode && !disabled,
             hideDefaultPreview: false,
             dragEnd: handleDragEnd,
             dragStart: onDragStart,
         },
-        [isInEditMode, insight, handleDragEnd],
+        [isInEditMode, insight, handleDragEnd, disabled],
     );
 
     return (

@@ -57,32 +57,6 @@ export interface IAlertingDialogContextValue {
 
 const AlertingDialogContext = createContext<IAlertingDialogContextValue | undefined>(undefined);
 
-/**
- * Provider for {@link IAlertingDialogContextValue}.
- *
- * Besides the connector's own use, a custom `AlertingDialogComponent` can decorate the context for the
- * default dialog: read the value via {@link useAlertingDialogContext}, adjust it (e.g. swap the
- * `insight`), and re-provide it around `DefaultAlertingDialog`.
- *
- * The default dialog renders from the alert state contexts, which are initialized from this context
- * **above** the resolved dialog component. A decorator that changes data members must therefore also
- * remount `AlertingDialogStateProvider` beneath the re-provided context, so the state is derived from
- * the decorated value (the nested state shadows the ambient one):
- *
- * ```tsx
- * const ctx = useAlertingDialogContext();
- * const value = useMemo(() => ({ ...ctx, insight: decoratedInsight }), [ctx, decoratedInsight]);
- * return (
- *     <AlertingDialogContextProvider value={value}>
- *         <AlertingDialogStateProvider>
- *             <DefaultAlertingDialog {...props} />
- *         </AlertingDialogStateProvider>
- *     </AlertingDialogContextProvider>
- * );
- * ```
- *
- * @alpha
- */
 export const AlertingDialogContextProvider = AlertingDialogContext.Provider;
 
 /**

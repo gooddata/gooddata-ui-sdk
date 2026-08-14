@@ -25,6 +25,7 @@ export type LinkHandlerEvent = {
     preventDefault: () => void;
     section?: "ai";
     dashboard?: IDashboard;
+    insights?: IInsight[];
     dashboardStatus?: "saved" | "draft";
     visualization?: IInsight;
     visualizationStatus?: "saved" | "draft";

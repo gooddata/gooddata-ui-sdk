@@ -79,7 +79,7 @@ export function AssistantItemFeedback({
                     <UiIconButton
                         icon="thumbsUp"
                         variant="tertiary"
-                        size="medium"
+                        size="small"
                         isActive={type === "POSITIVE"}
                         onClick={handlePositiveFeedbackClick}
                         accessibilityConfig={{
@@ -100,7 +100,7 @@ export function AssistantItemFeedback({
                                 <UiIconButton
                                     icon="thumbsDown"
                                     variant="tertiary"
-                                    size="medium"
+                                    size="small"
                                     isActive={type === "NEGATIVE" || opened}
                                     onClick={handleNegativeFeedbackClick}
                                     accessibilityConfig={{

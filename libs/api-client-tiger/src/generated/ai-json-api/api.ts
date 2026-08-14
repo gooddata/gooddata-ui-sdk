@@ -129,11 +129,11 @@ export interface AiAlertExecution {
     /**
      * Alert execution filters.
      */
-    'filters'?: Array<object>;
+    'filters'?: Array<object | null>;
     /**
      * Metrics computed by the alert (1-2).
      */
-    'measures'?: Array<object>;
+    'measures'?: Array<object | null>;
 }
 
 /**
@@ -799,7 +799,7 @@ export interface AiDashboardReferences {
     /**
      * Full AAC body of every widget-referenced visualization that has one available.
      */
-    'visualizations': Array<object>;
+    'visualizations': Array<object | null>;
 }
 
 /**
@@ -1111,7 +1111,7 @@ export interface AiKeyDriverAnalysis {
     /**
      * Filters applied to analysis.
      */
-    'filters': Array<object>;
+    'filters': Array<object | null>;
     /**
      * Measure definition for key driver analysis.
      */
@@ -2055,6 +2055,7 @@ export interface AiUserContext {
 }
 
 export interface AiUserContextDashboard {
+    'definition'?: object | null;
     'filters'?: Array<AiVisualizationFilter> | null;
     'id': string;
     'title'?: string | null;

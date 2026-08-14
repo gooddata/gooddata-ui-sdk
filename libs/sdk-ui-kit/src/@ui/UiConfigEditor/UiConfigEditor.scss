@@ -1,0 +1,169 @@
+// (C) 2026 GoodData Corporation
+
+@use "sass:color";
+
+@use "../../../styles/scss/variables";
+
+.gd-ui-kit-config-editor {
+    // The single source for the row-height maths: the fixed editor height below and the pinned
+    // content line-height must agree, or `rows` stops meaning whole lines.
+    --config-editor-line-height: 1.5;
+
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+    // The frame belongs to the whole control, so the toolbar reads as part of the field rather than
+    // as separate chrome floating above it. `overflow: hidden` is what keeps the editor's square
+    // corners from poking through the rounded ones.
+    border: 1px solid var(--gd-palette-complementary-4);
+    border-radius: 3px;
+    overflow: hidden;
+
+    &__toolbar {
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--gd-spacing-10px);
+        // A fixed height, so the toolbar reads the same whichever controls happen to be in it —
+        // radios, the menu button, or just the Auto-format link. 36px of content plus the divider,
+        // sized explicitly so a host's global box-sizing reset cannot change the outcome.
+        box-sizing: border-box;
+        height: 37px;
+        padding-left: var(--gd-spacing-10px);
+        border-bottom: 1px solid var(--gd-palette-complementary-4);
+    }
+
+    &__languages {
+        display: flex;
+        align-items: center;
+        gap: var(--gd-spacing-10px);
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: var(--gd-spacing-10px);
+        // Keeps the actions pinned to the right edge even when a single-language editor renders no
+        // switcher on the left, where `space-between` alone would let them drift to the start.
+        margin-left: auto;
+        // Mirrors the switcher's inset on the other side.
+        padding-right: var(--gd-spacing-10px);
+    }
+
+    // With the menu button present the design sits it flush against the frame — the button's own
+    // padding is what keeps the ellipsis off the edge, so any padding here would double it.
+    &__actions--withMenu {
+        padding-right: 0;
+    }
+
+    &__editor {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    /**
+     * The shared syntax-highlighting input renders its own wrapper between this element and
+     * `.cm-editor`, and that wrapper is a plain block. Without making it part of the flex column the
+     * `flex` on `.cm-editor` below is inert, so a long document grows the editor without bound and
+     * the surrounding dialog scrolls instead of the editor scrolling inside itself.
+     */
+    &__editor > * {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    /**
+     * The shared syntax-highlighting input ships a fixed `height: 100px` on `.cm-editor`, scoped
+     * under its own `.gd-input-syntax-highlighting-input` class. That stylesheet is bundled after
+     * this one, so at equal specificity it would win — hence the repeated block class, which buys a
+     * third class without changing what is matched.
+     *
+     * Height comes from `rows`, while still growing to fill a taller parent, so the editor works
+     * both standalone and as a field in a fixed-height dialog.
+     *
+     * `--config-editor-rows` is deliberately outside the `--gd-` namespace: that prefix is reserved
+     * for theme variables, each of which needs a specification in sdk-ui-theme-provider. This one
+     * only carries the `rows` prop into the stylesheet and is not something a theme should set.
+     */
+    &.gd-ui-kit-config-editor &__editor .cm-editor {
+        // A definite height rather than a floor, so the scroller inside always has something to
+        // scroll against: with `min-height` alone a long document grows the editor without bound in
+        // any parent that is not itself height-constrained, and the page scrolls instead.
+        //
+        // `rows` whole lines, plus the 8px of padding CodeMirror puts around its content and the 1px
+        // border on each side (the box is border-box). Sizing to whole lines keeps a line from being
+        // clipped through the middle, which looks unfinished and makes a screenshot of it turn on how
+        // half a glyph happens to be antialiased.
+        height: calc(var(--config-editor-rows, 12) * var(--config-editor-line-height) * 1em + 8px);
+        // Still grows to take the space when a parent does constrain and offer it, which is what a
+        // fixed-height dialog does.
+        flex: 1 1 auto;
+        min-height: 0;
+        // The frame and its corners now belong to the wrapper, so the shared input's own border and
+        // radius would draw a second box inside it.
+        border: none;
+        border-radius: 0;
+        // The standard input inner shadow, falling from the toolbar onto the code area. It replaces
+        // the shared input's own (which doubles as its focus styling — here focus is shown on the
+        // whole field instead), with the design's slightly softer blur.
+        box-shadow: inset 0 1px 2px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.85);
+    }
+
+    // Focus is shown on the whole field instead, so the toolbar is visibly part of what is focused.
+    &.gd-ui-kit-config-editor:has(.cm-editor.cm-focused) {
+        border-color: var(--gd-palette-primary-base);
+    }
+
+    // Pinned rather than left as `normal`, so the height above is exactly `rows` lines.
+    &__editor .cm-content {
+        line-height: var(--config-editor-line-height);
+    }
+
+    // Scrolling past the end of a long config should not start scrolling the dialog behind it.
+    &__editor .cm-scroller {
+        overflow: auto;
+        overscroll-behavior: contain;
+    }
+
+    /**
+     * The design draws no gutter chrome at all: the line numbers sit on the editor's own surface,
+     * with no fill and no divider. Making it transparent (rather than a colour) also keeps it
+     * correct on a dark theme, where CodeMirror's built-in light-variant gutter would otherwise
+     * paint a pale strip — whatever themed background the editor has simply shows through.
+     *
+     * The repeated block class is for specificity: CodeMirror's own rule is `.cm-editor.cm-light
+     * .cm-gutters`, which would otherwise win.
+     */
+    &.gd-ui-kit-config-editor &__editor .cm-gutters {
+        border-right: none;
+        background: transparent;
+        color: var(--gd-palette-complementary-6);
+    }
+
+    &.gd-ui-kit-config-editor &__editor .cm-activeLineGutter {
+        background: transparent;
+        color: var(--gd-palette-complementary-7);
+    }
+
+    // Muted surface for a value that cannot be edited. Applied to the whole field, toolbar included,
+    // now that they share one frame — tinting only the code area would leave a lighter strip on top.
+    // The gutter is transparent, so it takes the same muted surface by itself.
+    &--disabled,
+    &--readOnly {
+        background: var(--gd-palette-complementary-1);
+
+        .cm-editor {
+            background: transparent;
+        }
+    }
+
+    &--disabled {
+        opacity: 0.7;
+    }
+}

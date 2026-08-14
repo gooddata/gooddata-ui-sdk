@@ -8,8 +8,10 @@ import type { AccessGranularPermission } from '@gooddata/sdk-model';
 import { AutomationType } from '@gooddata/sdk-backend-spi';
 import { ChartInlineVisualizationType } from '@gooddata/sdk-ui-charts';
 import { ComponentType } from 'react';
+import { ConditionalFormattingTarget } from '@gooddata/sdk-ui-pivot/next';
 import { CopyCodeOriginType } from '@gooddata/sdk-ui-kit';
 import { DataSourceAccessSource } from '@gooddata/sdk-model';
+import { DateFilterGranularity } from '@gooddata/sdk-model';
 import { Dispatch } from 'react';
 import { EmbedType } from '@gooddata/sdk-ui-kit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
@@ -23,7 +25,9 @@ import { IAutomationMetadataObject } from '@gooddata/sdk-model';
 import { ICatalogAttributeHierarchy } from '@gooddata/sdk-model';
 import { IChartConfig } from '@gooddata/sdk-ui-charts';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IConditionalFormattingRule } from '@gooddata/sdk-ui-pivot/next';
 import { IDashboardUrlBuilder } from '@gooddata/sdk-ui';
+import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
 import { IDrillEvent } from '@gooddata/sdk-ui';
 import { IDrillEventIntersectionElement } from '@gooddata/sdk-ui';
 import { IErrorProps } from '@gooddata/sdk-ui';
@@ -40,6 +44,7 @@ import { IntlShape } from 'react-intl';
 import type { IObjectAccessList } from '@gooddata/sdk-model';
 import type { IObjectPermissionsObject } from '@gooddata/sdk-backend-spi';
 import { IPivotTableConfig } from '@gooddata/sdk-ui-pivot';
+import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ITab } from '@gooddata/sdk-ui-kit';
 import { ITheme } from '@gooddata/sdk-model';
@@ -59,6 +64,7 @@ import { SetStateAction } from 'react';
 import { UiAsyncTableVariant } from '@gooddata/sdk-ui-kit';
 import { UiSkeleton } from '@gooddata/sdk-ui-kit';
 import { UseCancelablePromiseStatus } from '@gooddata/sdk-ui';
+import { WeekStart } from '@gooddata/sdk-model';
 
 // @internal
 export function accessListToSummary(list: IObjectAccessList): IObjectAccessSummary;
@@ -174,6 +180,9 @@ export const COMPARISON_OPERATORS: {
     readonly COMPARISON_OPERATOR_GREATER_THAN: "GREATER_THAN";
     readonly COMPARISON_OPERATOR_GREATER_THAN_OR_EQUAL_TO: "GREATER_THAN_OR_EQUAL_TO";
 };
+
+// @internal (undocumented)
+export function ConditionalFormattingDialog(input: IConditionalFormattingDialogProps): JSX.Element;
 
 // @internal (undocumented)
 export const CreateUserGroupDialog: {
@@ -428,6 +437,41 @@ export interface IAutomationsProps {
     widgetUrlBuilder?: IWidgetUrlBuilder;
     // (undocumented)
     workspace?: string;
+}
+
+// @internal
+export interface ICfDateMeta {
+    // (undocumented)
+    granularity: DateFilterGranularity;
+    timezone?: string;
+}
+
+// @internal
+export interface ICfDateSettings {
+    // (undocumented)
+    dateFormat?: string;
+    // (undocumented)
+    weekStart?: WeekStart;
+}
+
+// @internal (undocumented)
+export interface IConditionalFormattingDialogProps {
+    alignTo: string;
+    dateFilterOptions?: IDateFilterOptionsByType;
+    dateSettings?: ICfDateSettings;
+    fixedTarget?: boolean;
+    // (undocumented)
+    isNew: boolean;
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSave: (rule: IConditionalFormattingRule) => void;
+    readOnly?: boolean;
+    // (undocumented)
+    rule: IConditionalFormattingRule;
+    separators?: ISeparators;
+    // (undocumented)
+    targetOptions: ITargetOption[];
 }
 
 // @internal (undocumented)
@@ -978,6 +1022,18 @@ export interface ITabsIds {
 }
 
 // @internal
+export interface ITargetOption {
+    date?: ICfDateMeta;
+    elements?: readonly string[];
+    isPercent?: boolean;
+    // (undocumented)
+    target: ConditionalFormattingTarget;
+    // (undocumented)
+    title: string;
+    value: string;
+}
+
+// @internal
 export interface IUsePagedDropdownConfig {
     // (undocumented)
     author: string | undefined;
@@ -1165,6 +1221,10 @@ export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted
 
 // @internal (undocumented)
 export type TrackEventCallback = (event: TelemetryEvent) => void;
+
+// @internal
+export function useCfDateFilterOptions(backend: IAnalyticalBackend | undefined, workspace: string | undefined,
+enabled: boolean): IDateFilterOptionsByType | undefined;
 
 // @internal
 export function useInsightPagedList(input: IUsePagedDropdownConfig): IUsePagedDropdownResult;

@@ -7741,6 +7741,19 @@
             },
             "UserContextDashboard": {
                 "properties": {
+                    "definition": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": true,
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Definition",
+                        "description": "Full definition of the dashboard currently open in the client, as the client holds it. Accepted so per-widget configuration the widget descriptors do not carry — such as which dashboard filters a widget ignores — can ground the assistant's answers. Not yet interpreted: sending it currently has no effect on the response. Optional."
+                    },
                     "filters": {
                         "anyOf": [
                             {

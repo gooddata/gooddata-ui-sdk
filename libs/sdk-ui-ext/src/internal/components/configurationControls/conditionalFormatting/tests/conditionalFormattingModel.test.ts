@@ -8,11 +8,20 @@ import {
     type ScenarioRecording,
     recordedDataView,
 } from "@gooddata/sdk-backend-mockingbird";
-import { newAttribute, newBucket, newInsightDefinition, newMeasure } from "@gooddata/sdk-model";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
+import {
+    isAttributeDescriptor,
+    isMeasureGroupDescriptor,
+    newAttribute,
+    newBucket,
+    newInsightDefinition,
+    newMeasure,
+} from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import {
     type ConditionalFormattingOperator,
     type ConditionalFormattingValue,
+    type IConditionalFormatting,
     type IConditionalFormattingCondition,
     type IConditionalFormattingRule,
 } from "@gooddata/sdk-ui-pivot/next";
@@ -23,6 +32,7 @@ import {
     buildCfTargetData,
     buildTargetOptions,
     displayToRawNumber,
+    isCustomTarget,
     isPercentFormat,
     isRuleComplete,
     operatorArity,
@@ -31,6 +41,7 @@ import {
     rawToDisplayNumber,
     ruleWithTarget,
     sanitizeRuleForEditing,
+    semanticRuleFor,
     validateCondition,
     valueEditorKind,
     valueForOperator,
@@ -156,6 +167,129 @@ describe("buildCfTargetData", () => {
         expect(departments).not.toContain("sum");
         // Titles resolve from the same walk.
         expect(data.titles["a_f_owner.department_id"]).toBe("Department");
+    });
+
+    describe("semantic", () => {
+        const DEPARTMENT_LOCAL_ID = "a_f_owner.department_id";
+        const MEASURE_LOCAL_ID = "m_87a053b0_3947_49f3_b0c5_de53fd01f050";
+        const SEMANTIC = { conditions: [condition("EQUAL_TO", { kind: "literal", value: "Direct Sales" })] };
+
+        // Recordings predate `conditionalFormatting` on descriptors, so it's patched onto a real
+        // recorded IDataView's header descriptors rather than hand-built from scratch — everything
+        // else (headerItems, definition, ...) stays a real, valid recording.
+        function withSemanticOnDescriptor(
+            dataView: IDataView,
+            target: { attributeLocalId?: string; measureLocalId?: string },
+        ): IDataView {
+            const dimensions = dataView.result.dimensions.map((dimension) => ({
+                ...dimension,
+                headers: dimension.headers.map((header) => {
+                    if (
+                        target.attributeLocalId &&
+                        isAttributeDescriptor(header) &&
+                        header.attributeHeader.localIdentifier === target.attributeLocalId
+                    ) {
+                        return {
+                            attributeHeader: { ...header.attributeHeader, conditionalFormatting: SEMANTIC },
+                        };
+                    }
+                    if (target.measureLocalId && isMeasureGroupDescriptor(header)) {
+                        return {
+                            measureGroupHeader: {
+                                ...header.measureGroupHeader,
+                                items: header.measureGroupHeader.items.map((item) =>
+                                    item.measureHeaderItem.localIdentifier === target.measureLocalId
+                                        ? {
+                                              measureHeaderItem: {
+                                                  ...item.measureHeaderItem,
+                                                  conditionalFormatting: SEMANTIC,
+                                              },
+                                          }
+                                        : item,
+                                ),
+                            },
+                        };
+                    }
+                    return header;
+                }),
+            }));
+            // Preserve the recording's prototype chain (attributeHeadersForDim calls a prototype
+            // method, `forecast`, that a plain-object spread would drop): the clone's prototype is
+            // the original instance itself, so every other property/method falls through to it, and
+            // only the own `result` property below shadows it.
+            // Preserve the recording's prototype chain (attributeHeadersForDim calls a prototype
+            // method, `forecast`, that a plain-object spread would drop): copy own properties onto a
+            // new instance of the same prototype, only overriding `result`.
+            return Object.assign(Object.create(Object.getPrototypeOf(dataView)), dataView, {
+                result: { ...dataView.result, dimensions },
+            });
+        }
+
+        const baseDataView = () =>
+            recordedDataView(
+                ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresAndOneSubtotal as ScenarioRecording,
+                DataViewFirstPage,
+            );
+
+        it("populates semantic for a measure carrying measureHeaderItem.conditionalFormatting", () => {
+            const patched = withSemanticOnDescriptor(baseDataView(), { measureLocalId: MEASURE_LOCAL_ID });
+            const data = buildCfTargetData(DataViewFacade.for(patched));
+            expect(data.semantic[MEASURE_LOCAL_ID]).toEqual(SEMANTIC);
+        });
+
+        it("populates semantic for an attribute carrying attributeHeader.conditionalFormatting", () => {
+            const patched = withSemanticOnDescriptor(baseDataView(), {
+                attributeLocalId: DEPARTMENT_LOCAL_ID,
+            });
+            const data = buildCfTargetData(DataViewFacade.for(patched));
+            expect(data.semantic[DEPARTMENT_LOCAL_ID]).toEqual(SEMANTIC);
+        });
+
+        it("omits a target from semantic when its descriptor has no conditionalFormatting", () => {
+            const data = buildCfTargetData(DataViewFacade.for(baseDataView()));
+            expect(data.semantic[DEPARTMENT_LOCAL_ID]).toBeUndefined();
+            expect(data.semantic[MEASURE_LOCAL_ID]).toBeUndefined();
+        });
+    });
+});
+
+describe("isCustomTarget", () => {
+    const measureTarget = { kind: "measure" as const, measureIdentifier: "m1" };
+    const attributeTarget = { kind: "attribute" as const, attributeIdentifier: "a1" };
+
+    it("returns false when config is undefined", () => {
+        expect(isCustomTarget(undefined, measureTarget)).toBe(false);
+    });
+
+    it("is true when an insight rule targets it", () => {
+        const config: IConditionalFormatting = { enabled: true, rules: [measureRule([])] };
+        expect(isCustomTarget(config, measureTarget)).toBe(true);
+        expect(isCustomTarget(config, attributeTarget)).toBe(false);
+    });
+
+    it("is true when it's listed in customTargets, even with no matching rule", () => {
+        const config: IConditionalFormatting = {
+            enabled: true,
+            rules: [],
+            customTargets: [attributeTarget],
+        };
+        expect(isCustomTarget(config, attributeTarget)).toBe(true);
+        expect(isCustomTarget(config, measureTarget)).toBe(false);
+    });
+});
+
+describe("semanticRuleFor", () => {
+    it("synthesizes a rule with a semantic:<kind>:<localId> id and pass-through target/conditions", () => {
+        const option: ITargetOption = {
+            value: "measure:m1",
+            title: "Measure 1",
+            target: { kind: "measure", measureIdentifier: "m1" },
+        };
+        const semantic = { conditions: [condition("GREATER_THAN", { kind: "literal", value: "5" })] };
+        const rule = semanticRuleFor(option, semantic);
+        expect(rule.id).toBe("semantic:measure:m1");
+        expect(rule.target).toEqual(option.target);
+        expect(rule.conditions).toBe(semantic.conditions);
     });
 });
 
@@ -452,6 +586,23 @@ describe("sanitizeRuleForEditing", () => {
         expect(sanitizeRuleForEditing(numeric)).toEqual(numeric);
         const attribute = attributeRule([condition("CONTAINS", { kind: "literal", value: "abc" })]);
         expect(sanitizeRuleForEditing(attribute)).toEqual(attribute);
+    });
+
+    it("normalizes an uncurated measure operator instead of leaving it editable (F1-2754)", () => {
+        // CONTAINS is a text operator; operatorsForTarget("measure", false) never offers it, so a
+        // stored rule carrying it (e.g. an inherited semantic rule) must not reach the dialog as-is.
+        const rule = measureRule([condition("CONTAINS", { kind: "literal", value: "5" })]);
+        const sanitized = sanitizeRuleForEditing(rule);
+        expect(sanitized.conditions[0].operator).toBe("EQUAL_TO");
+        expect(sanitized.conditions[0].value).toEqual({ kind: "literal", value: "5" });
+        expect(sanitized.conditions[0].id).toBe(rule.conditions[0].id);
+        expect(sanitized.conditions[0].format).toEqual(rule.conditions[0].format);
+    });
+
+    it("normalizes an uncurated non-date attribute operator instead of leaving it editable (F1-2754)", () => {
+        const rule = attributeRule([condition("GREATER_THAN", { kind: "literal", value: "5" })]);
+        const sanitized = sanitizeRuleForEditing(rule);
+        expect(sanitized.conditions[0].operator).toBe("EQUAL_TO");
     });
 
     it("coerces AAC-authored text conditions on a date target into unpicked date conditions", () => {

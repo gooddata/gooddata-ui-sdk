@@ -32,7 +32,7 @@ import { useAutomationAlertParameters } from "../../shared/automationFilters/use
 import {
     getAppliedWidgetFilters,
     getVisibleFiltersByFilters,
-    resolveMvfDimensionalityLocalRefs,
+    resolveFilterDimensionalityLocalRefs,
 } from "../../shared/filters/index.js";
 import {
     convertExternalRecipientToAutomationRecipient,
@@ -135,7 +135,7 @@ export function useAlertFormState({
         if (!alertToEdit.alert || !filters?.length || !insight) {
             return alertToEdit;
         }
-        const resolvedFilters = resolveMvfDimensionalityLocalRefs(filters, insight);
+        const resolvedFilters = resolveFilterDimensionalityLocalRefs(filters, insight);
         if (resolvedFilters === filters) {
             return alertToEdit;
         }

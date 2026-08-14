@@ -6,12 +6,26 @@ import {
     type FilterContextItem,
     type IAutomationVisibleFilter,
     type IFilter,
+    type IInsight,
+    type IMeasureValueFilter,
+    type IRankingFilter,
+    idRef,
+    localIdRef,
     newAllTimeDashboardDateFilter,
     newAllTimeFilter,
+    newAttribute,
+    newBucket,
+    newInsightDefinition,
+    newMeasureValueFilter,
+    newRankingFilter,
     newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
-import { getVisibleFiltersByFilters, isNoopAllTimeDateFilterFixed } from "../conversions.js";
+import {
+    getVisibleFiltersByFilters,
+    isNoopAllTimeDateFilterFixed,
+    resolveFilterDimensionalityLocalRefs,
+} from "../conversions.js";
 
 describe("getVisibleFiltersByFilters", () => {
     const allValuesAttributeFilter: FilterContextItem = {
@@ -159,5 +173,102 @@ describe("isNoopAllTimeDateFilterFixed", () => {
         };
 
         expect(isNoopAllTimeDateFilterFixed(attributeFilter)).toBe(false);
+    });
+});
+
+describe("resolveFilterDimensionalityLocalRefs", () => {
+    const attribute1 = newAttribute(idRef("attr.df1", "displayForm"), (a) => a.localId("a1"));
+    const attribute2 = newAttribute(idRef("attr.df2", "displayForm"), (a) => a.localId("a2"));
+    const insight = newInsightDefinition("local:table", (i) =>
+        i.buckets([newBucket("attribute", attribute1, attribute2)]),
+    ) as IInsight;
+
+    const mvfWithLocalRefs: IMeasureValueFilter = {
+        measureValueFilter: {
+            ...newMeasureValueFilter(localIdRef("m1"), "GREATER_THAN", 100).measureValueFilter,
+            dimensionality: [localIdRef("a1"), localIdRef("a2")],
+        },
+    };
+    const rankingWithLocalRefs: IRankingFilter = newRankingFilter(
+        localIdRef("m1"),
+        [localIdRef("a1"), localIdRef("a2")],
+        "TOP",
+        10,
+    );
+
+    it("should return filters as-is when there is no insight", () => {
+        const filters = [rankingWithLocalRefs];
+
+        expect(resolveFilterDimensionalityLocalRefs(filters, undefined)).toBe(filters);
+    });
+
+    it("should resolve MVF dimensionality localIdRefs to display form refs", () => {
+        const [resolved] = resolveFilterDimensionalityLocalRefs([mvfWithLocalRefs], insight);
+
+        expect((resolved as IMeasureValueFilter).measureValueFilter.dimensionality).toEqual([
+            idRef("attr.df1", "displayForm"),
+            idRef("attr.df2", "displayForm"),
+        ]);
+    });
+
+    it("should resolve ranking filter attributes localIdRefs to display form refs", () => {
+        const [resolved] = resolveFilterDimensionalityLocalRefs([rankingWithLocalRefs], insight);
+
+        expect((resolved as IRankingFilter).rankingFilter.attributes).toEqual([
+            idRef("attr.df1", "displayForm"),
+            idRef("attr.df2", "displayForm"),
+        ]);
+    });
+
+    it("should keep the ranking filter measure ref untouched while resolving its attributes", () => {
+        const [resolved] = resolveFilterDimensionalityLocalRefs([rankingWithLocalRefs], insight);
+
+        expect((resolved as IRankingFilter).rankingFilter.measure).toEqual(localIdRef("m1"));
+    });
+
+    it("should keep localIdRefs that do not match any insight attribute", () => {
+        const ranking = newRankingFilter(localIdRef("m1"), [localIdRef("unknown")], "TOP", 10);
+
+        const [resolved] = resolveFilterDimensionalityLocalRefs([ranking], insight);
+
+        expect((resolved as IRankingFilter).rankingFilter.attributes).toEqual([localIdRef("unknown")]);
+        expect(resolved).toBe(ranking);
+    });
+
+    it("should return a ranking filter without attributes unchanged", () => {
+        const ranking = newRankingFilter(localIdRef("m1"), "TOP", 10);
+
+        const [resolved] = resolveFilterDimensionalityLocalRefs([ranking], insight);
+
+        expect(resolved).toBe(ranking);
+    });
+
+    it("should keep non-localIdRef dimensionality items as they are", () => {
+        const ranking = newRankingFilter(
+            localIdRef("m1"),
+            [idRef("attr.df3", "displayForm"), localIdRef("a1")],
+            "BOTTOM",
+            5,
+        );
+
+        const [resolved] = resolveFilterDimensionalityLocalRefs([ranking], insight);
+
+        expect((resolved as IRankingFilter).rankingFilter.attributes).toEqual([
+            idRef("attr.df3", "displayForm"),
+            idRef("attr.df1", "displayForm"),
+        ]);
+    });
+
+    it("should pass through other filter types untouched", () => {
+        const attributeFilter: IFilter = {
+            positiveAttributeFilter: {
+                displayForm: { identifier: "attr.df" },
+                in: { values: ["value"] },
+            },
+        };
+
+        const [resolved] = resolveFilterDimensionalityLocalRefs([attributeFilter], insight);
+
+        expect(resolved).toBe(attributeFilter);
     });
 });

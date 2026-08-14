@@ -673,6 +673,63 @@ describe("getOptionalStackingConfiguration", () => {
                     ],
                 });
             });
+
+            it('should disable stack labels for mekko when "stackMeasuresToPercent" is on', () => {
+                const chartOptions = { type: VisualizationTypes.MEKKO };
+                const config: HighchartsOptions = { yAxis: [{}] };
+                const chartConfig = {
+                    stackMeasuresToPercent: true,
+                    dataLabels: { visible: true },
+                };
+
+                const result = getYAxisConfiguration(chartOptions, config, chartConfig);
+                expect(result).toEqual({
+                    yAxis: [
+                        {
+                            stackLabels: { enabled: false },
+                        },
+                    ],
+                });
+            });
+
+            it("should keep stack labels for mekko when 100% stacking is downgraded by negative values", () => {
+                const chartOptions = {
+                    type: VisualizationTypes.MEKKO,
+                    stackToPercentBlockedByNegativeValues: true,
+                };
+                const config: HighchartsOptions = { yAxis: [{}] };
+                const chartConfig = {
+                    stackMeasuresToPercent: true,
+                    dataLabels: { visible: true },
+                };
+
+                const result = getYAxisConfiguration(chartOptions, config, chartConfig);
+                expect(result).toEqual({
+                    yAxis: [
+                        {
+                            stackLabels: { enabled: true },
+                        },
+                    ],
+                });
+            });
+
+            it("should keep stack labels for mekko with absolute stacking", () => {
+                const chartOptions = { type: VisualizationTypes.MEKKO };
+                const config: HighchartsOptions = { yAxis: [{}] };
+                const chartConfig = {
+                    stackMeasures: true,
+                    dataLabels: { visible: true },
+                };
+
+                const result = getYAxisConfiguration(chartOptions, config, chartConfig);
+                expect(result).toEqual({
+                    yAxis: [
+                        {
+                            stackLabels: { enabled: true },
+                        },
+                    ],
+                });
+            });
         });
     });
 

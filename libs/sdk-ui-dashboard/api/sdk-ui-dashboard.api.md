@@ -209,7 +209,6 @@ import { ParameterValue } from '@gooddata/sdk-model';
 import { Patch } from 'immer';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { PlatformEdition } from '@gooddata/sdk-model';
-import { Provider } from 'react';
 import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
@@ -289,14 +288,6 @@ export function addVisualizationToSwitcherWidgetContent(ref: ObjRef, visualizati
 
 // @internal
 export function AlertingDialog(props: IAlertingDialogProps): ReactElement;
-
-// @alpha
-export const AlertingDialogContextProvider: Provider<IAlertingDialogContextValue | undefined>;
-
-// @alpha
-export function AlertingDialogStateProvider(input: {
-    children: ReactNode;
-}): JSX.Element;
 
 // @internal (undocumented)
 export type AlertingDisabledReason = "noDestinations" | "oldWidget" | "disabledOnInsight";
@@ -760,6 +751,7 @@ export type CustomDashboardInsightListItemComponentProps = {
     useReferences?: boolean;
     LoadingComponent?: ComponentType;
     width?: number;
+    disabled?: boolean;
 };
 
 // @alpha (undocumented)
@@ -980,6 +972,8 @@ export type DashboardConfig = {
     hideShareButton?: boolean;
     hideWidgetTitles?: boolean;
     widgetsOverlay?: Record<string, IDashboardWidgetOverlay>;
+    isAiMode?: boolean;
+    isAiGenerating?: boolean;
     exportId?: string;
     exportType?: "visual" | "slides";
     exportMetadata?: Record<string, string>;
@@ -2375,7 +2369,6 @@ export interface IAlertingDialogContextValue {
 export interface IAlertingDialogProps {
     // @deprecated
     alertToEdit?: IAutomationMetadataObject;
-    bottomContent?: ReactNode;
     // @deprecated
     insight?: IInsight;
     // @deprecated
@@ -2389,7 +2382,6 @@ export interface IAlertingDialogProps {
     onSaveError?: (error: GoodDataSdkError) => void;
     onSaveSuccess?: (alert: IAutomationMetadataObject) => void;
     onSuccess?: (alertDefinition: IAutomationMetadataObject) => void;
-    topContent?: ReactNode;
     // @deprecated
     widget?: IWidget;
 }
@@ -2682,6 +2674,8 @@ export interface IButtonBarProps {
 
 // @beta (undocumented)
 export interface ICancelButtonProps {
+    // (undocumented)
+    isEnabled?: boolean;
     // (undocumented)
     isVisible: boolean;
     // (undocumented)
@@ -6426,6 +6420,8 @@ export type IInsightDraggingComponentProps = {
 // @internal (undocumented)
 export interface IInsightListProps {
     // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
     height?: number;
     // (undocumented)
     onSelect?: (insight: IInsight) => void;
@@ -6833,6 +6829,7 @@ export interface IMenuButtonItemsVisibility {
 export interface IMenuButtonProps {
     // (undocumented)
     DefaultMenuButton: CustomMenuButtonComponent;
+    isEnabled?: boolean;
     menuItems: ReadonlyArray<IMenuButtonItem>;
 }
 
@@ -7784,6 +7781,8 @@ export interface ISaveAsDialogProps {
 // @beta (undocumented)
 export interface ISaveAsNewButtonProps {
     // (undocumented)
+    isEnabled: boolean;
+    // (undocumented)
     isVisible: boolean;
     // (undocumented)
     onSaveAsNewClick: () => void;
@@ -7901,7 +7900,6 @@ export interface IScheduledEmailDialogContextValue {
 
 // @alpha (undocumented)
 export interface IScheduledEmailDialogProps {
-    bottomContent?: ReactNode;
     // @deprecated
     dashboardFilters?: FilterContextItem[];
     // @deprecated
@@ -7922,7 +7920,6 @@ export interface IScheduledEmailDialogProps {
     onSuccess?: (scheduledEmailDefinition: IAutomationMetadataObject) => void;
     // @deprecated
     scheduledExportToEdit?: IAutomationMetadataObject;
-    topContent?: ReactNode;
     // @deprecated
     widget?: IWidget;
     // @deprecated
@@ -8777,6 +8774,8 @@ export function isExtendedDashboardLayoutWidget(obj: unknown): obj is ExtendedDa
 
 // @beta (undocumented)
 export interface IShareButtonProps {
+    // (undocumented)
+    isEnabled: boolean;
     // (undocumented)
     isVisible: boolean;
     // (undocumented)
@@ -9685,6 +9684,8 @@ export interface IWrapInsightListItemWithDragProps {
     // (undocumented)
     children: ReactElement;
     // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
     insight: IInsight;
     // (undocumented)
     onDragStart?: (item: DraggableItem) => void;
@@ -10557,9 +10558,6 @@ export type SavingState = {
 
 // @internal
 export function ScheduledEmailDialog(props: IScheduledEmailDialogProps): ReactElement;
-
-// @alpha
-export const ScheduledEmailDialogContextProvider: Provider<IScheduledEmailDialogContextValue | undefined>;
 
 // @internal (undocumented)
 export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementDialogProps): ReactElement;
@@ -11542,6 +11540,12 @@ export const selectInvalidUrlDrillParameterWidgetWarnings: DashboardSelector<Obj
 
 // @alpha
 export const selectIsAddTabButtonHidden: DashboardSelector<boolean>;
+
+// @internal
+export const selectIsAiGenerating: DashboardSelector<boolean>;
+
+// @internal
+export const selectIsAiMode: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
 export const selectIsAlertingDialogOpen: DashboardSelector<boolean>;

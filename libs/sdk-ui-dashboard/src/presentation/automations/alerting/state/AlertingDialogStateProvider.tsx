@@ -29,11 +29,7 @@ import { useAlertSupportedMetrics } from "./useAlertSupportedMetrics.js";
  * ambient wrapper in `DashboardInner` supplies one with the same locale; a mount site without one
  * throws in react-intl.
  *
- * A custom `AlertingDialogComponent` that decorates the dialog context (re-provides
- * `AlertingDialogContextProvider` with an adjusted value) must remount this provider beneath the
- * decorated context, so the state is derived from the decorated value rather than the ambient one.
- *
- * @alpha
+ * @internal
  */
 export function AlertingDialogStateProvider({ children }: { children: ReactNode }) {
     const { isLoading } = useAlertingDialogContext();

@@ -3,7 +3,6 @@
 import { type MouseEvent, useEffect, useRef } from "react";
 
 import cx from "classnames";
-import { FormattedMessage } from "react-intl";
 
 import { simplifyText } from "@gooddata/util";
 
@@ -50,11 +49,7 @@ export function DateDatasetsListItem({
     }, [width]);
 
     if (isHeader) {
-        return (
-            <div className="gd-list-item gd-list-item-header">
-                <FormattedMessage id={title} />
-            </div>
-        );
+        return <div className="gd-list-item gd-list-item-header">{title}</div>;
     }
 
     const classNames = cx(DATE_DATASET_LIST_ITEM_CLASSNAME, `s-${id}`, `s-${simplifyText(title ?? "")}`, {

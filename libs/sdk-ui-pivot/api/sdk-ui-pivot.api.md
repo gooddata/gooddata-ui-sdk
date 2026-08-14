@@ -6,13 +6,20 @@
 
 import { AttributesMeasuresOrPlaceholders } from '@gooddata/sdk-ui';
 import { AttributesOrPlaceholders } from '@gooddata/sdk-ui';
-import { ComparisonConditionOperator } from '@gooddata/sdk-model';
-import { DateFilterGranularity } from '@gooddata/sdk-model';
+import type { ConditionalFormattingEmptinessOperator } from '@gooddata/sdk-model';
+import type { ConditionalFormattingOperator } from '@gooddata/sdk-model';
+import type { ConditionalFormattingTarget } from '@gooddata/sdk-model';
+import type { ConditionalFormattingTextOperator } from '@gooddata/sdk-model';
+import type { ConditionalFormattingValue } from '@gooddata/sdk-model';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { IBucket } from '@gooddata/sdk-model';
+import type { IConditionalFormatting } from '@gooddata/sdk-model';
+import type { IConditionalFormattingCondition } from '@gooddata/sdk-model';
+import type { IConditionalFormattingFormat } from '@gooddata/sdk-model';
+import type { IConditionalFormattingRule } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
@@ -24,7 +31,6 @@ import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
 import { JSX } from 'react/jsx-runtime';
 import { NullableFiltersOrPlaceholders } from '@gooddata/sdk-ui';
-import { RangeConditionOperator } from '@gooddata/sdk-model';
 import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
 import { TotalsOrPlaceholders } from '@gooddata/sdk-ui';
 import { TotalType } from '@gooddata/sdk-model';
@@ -59,44 +65,15 @@ export type ColumnWidthItemNext = IAttributeColumnWidthItemNext | IMeasureColumn
 // @public (undocumented)
 export type ColumnWidthNext = IAbsoluteColumnWidthNext | IAutoColumnWidthNext;
 
-// @alpha
-export type ConditionalFormattingEmptinessOperator = "IS_EMPTY" | "IS_NOT_EMPTY";
+export { ConditionalFormattingEmptinessOperator }
 
-// @alpha
-export type ConditionalFormattingOperator = "ALL" | ComparisonConditionOperator | RangeConditionOperator | ConditionalFormattingTextOperator | ConditionalFormattingEmptinessOperator;
+export { ConditionalFormattingOperator }
 
-// @alpha
-export type ConditionalFormattingTarget = {
-    kind: "attribute";
-    attributeIdentifier: string;
-} | {
-    kind: "measure";
-    measureIdentifier: string;
-};
+export { ConditionalFormattingTarget }
 
-// @alpha
-export type ConditionalFormattingTextOperator = "CONTAINS" | "NOT_CONTAINS" | "STARTS_WITH" | "NOT_STARTS_WITH" | "ENDS_WITH" | "NOT_ENDS_WITH";
+export { ConditionalFormattingTextOperator }
 
-// @alpha
-export type ConditionalFormattingValue = {
-    kind: "none";
-} | {
-    kind: "literal";
-    value: string | number;
-} | {
-    kind: "literalRange";
-    from: number;
-    to: number;
-} | {
-    kind: "absoluteDate";
-    from: string;
-    to: string;
-} | {
-    kind: "relativeDate";
-    granularity: DateFilterGranularity;
-    from: number;
-    to: number;
-};
+export { ConditionalFormattingValue }
 
 // @internal (undocumented)
 export function CorePivotTable(props: ICorePivotTableProps): JSX.Element;
@@ -242,43 +219,13 @@ export interface IColumnTextWrappingItem {
     wrapText?: boolean;
 }
 
-// @alpha
-export interface IConditionalFormatting {
-    // (undocumented)
-    enabled: boolean;
-    // (undocumented)
-    rules: readonly IConditionalFormattingRule[];
-    version?: string;
-}
+export { IConditionalFormatting }
 
-// @alpha
-export interface IConditionalFormattingCondition {
-    // (undocumented)
-    format: IConditionalFormattingFormat;
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    operator: ConditionalFormattingOperator;
-    // (undocumented)
-    value: ConditionalFormattingValue;
-}
+export { IConditionalFormattingCondition }
 
-// @alpha
-export interface IConditionalFormattingFormat {
-    backgroundColor?: string;
-    color?: string;
-    scope: "cell" | "row";
-}
+export { IConditionalFormattingFormat }
 
-// @alpha
-export interface IConditionalFormattingRule {
-    // (undocumented)
-    conditions: readonly IConditionalFormattingCondition[];
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    target: ConditionalFormattingTarget;
-}
+export { IConditionalFormattingRule }
 
 // @internal (undocumented)
 export interface ICorePivotTableProps extends IPivotTableBaseProps {
@@ -618,6 +565,7 @@ export type PivotTableNextColumnsSizingConfig = {
 // @alpha
 export type PivotTableNextConditionalFormattingConfig = {
     conditionalFormatting?: IConditionalFormatting;
+    enableSemanticConditionalFormatting?: boolean;
 };
 
 // @public

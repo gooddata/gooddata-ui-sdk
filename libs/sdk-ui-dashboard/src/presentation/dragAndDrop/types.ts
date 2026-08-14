@@ -492,6 +492,7 @@ export type CustomDashboardInsightListItemComponentProps = {
     useReferences?: boolean;
     LoadingComponent?: ComponentType;
     width?: number;
+    disabled?: boolean;
 };
 
 /**
@@ -535,6 +536,7 @@ export type IWrapCreatePanelItemWithDragComponent = ComponentType<IWrapCreatePan
 export interface IWrapInsightListItemWithDragProps {
     children: ReactElement;
     insight: IInsight;
+    disabled?: boolean;
     onDragStart?: (item: DraggableItem) => void;
 }
 

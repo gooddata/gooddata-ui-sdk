@@ -1291,6 +1291,8 @@ export {
     selectIsSaveAsNewButtonHidden,
     selectAllowUnfinishedFeatures,
     selectAllowCreateInsightRequest,
+    selectIsAiMode,
+    selectIsAiGenerating,
     selectIsKPIDashboardDependentFiltersEnabled,
     selectIsShareButtonHidden,
     selectWeekStart,
@@ -2233,17 +2235,14 @@ export {
 } from "./presentation/automations/contexts/AutomationsContext.js";
 export {
     useAlertingDialogContext,
-    AlertingDialogContextProvider,
     type IAlertingDialogContextValue,
 } from "./presentation/automations/contexts/AlertingDialogContext.js";
-export { AlertingDialogStateProvider } from "./presentation/automations/alerting/state/AlertingDialogStateProvider.js";
 export {
     useAlertingManagementDialogContext,
     type IAlertingManagementDialogContextValue,
 } from "./presentation/automations/contexts/AlertingManagementDialogContext.js";
 export {
     useScheduledEmailDialogContext,
-    ScheduledEmailDialogContextProvider,
     type IScheduledEmailDialogContextValue,
 } from "./presentation/automations/contexts/ScheduledEmailDialogContext.js";
 export {

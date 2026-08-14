@@ -13,6 +13,7 @@ import {
     useDashboardSelector,
 } from "../../../../../model/react/DashboardStoreProvider.js";
 import { dispatchAndWaitFor } from "../../../../../model/store/_infra/dispatchAndWaitFor.js";
+import { selectIsAiGenerating } from "../../../../../model/store/config/configSelectors.js";
 import { selectIsDashboardDirty } from "../../../../../model/store/meta/metaSelectors.js";
 import { selectIsInEditMode } from "../../../../../model/store/renderMode/renderModeSelectors.js";
 import { selectIsDashboardSaving } from "../../../../../model/store/saving/savingSelectors.js";
@@ -49,6 +50,7 @@ export function useSaveButtonProps(): ISaveButtonProps {
     }, [dispatch]);
 
     const isEditing = useDashboardSelector(selectIsInEditMode);
+    const isAiGenerating = useDashboardSelector(selectIsAiGenerating);
     const isSavingDashboard = useDashboardSelector(selectIsDashboardSaving);
     const isPrivateDashboard = useDashboardSelector(selectIsPrivateDashboard);
     const isEmptyDashboard = !useDashboardSelector(selectLayoutHasAnalyticalWidgets); // we need at least one non-custom widget there
@@ -57,7 +59,7 @@ export function useSaveButtonProps(): ISaveButtonProps {
     const isSaving = isSavingDashboard || optimisticIsSaving;
 
     const isVisible = isEditing;
-    const isEnabled = isDashboardDirty && !isEmptyDashboard && canSaveDashboard;
+    const isEnabled = isDashboardDirty && !isEmptyDashboard && canSaveDashboard && !isAiGenerating;
 
     let buttonTitle = messages.controlButtonsSaveAndPublishTitle;
     if (isPrivateDashboard) {

@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -7,6 +7,7 @@ import { type ComponentType } from "react";
  */
 export interface ICancelButtonProps {
     isVisible: boolean;
+    isEnabled?: boolean;
     onCancelClick: () => void;
 }
 

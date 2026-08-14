@@ -1,9 +1,10 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type CSSProperties, memo, useCallback, useEffect, useRef, useState } from "react";
+import { type CSSProperties, PureComponent, createRef, useCallback, useEffect, useRef } from "react";
 
 import { isEqual } from "lodash-es";
 import { type Root, createRoot } from "react-dom/client";
+import { type WrappedComponentProps, injectIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -49,7 +50,6 @@ import {
     DEFAULT_MESSAGES,
     FullVisualizationCatalog,
     type IInsightViewProps,
-    type IVisConstruct,
     type IVisProps,
     type IVisualization,
     resolveMessages,
@@ -77,25 +77,6 @@ export interface IInsightRendererProps extends Omit<
     widget?: IInsightWidget;
 }
 
-type InsightRendererCoreProps = IInsightRendererProps & { messages: ITranslations };
-
-/**
- * Props of the core renderer with all the defaults applied.
- */
-type ResolvedInsightRendererCoreProps = InsightRendererCoreProps &
-    Required<
-        Pick<
-            InsightRendererCoreProps,
-            | "ErrorComponent"
-            | "filters"
-            | "drillableItems"
-            | "LoadingComponent"
-            | "pushData"
-            | "locale"
-            | "afterRender"
-        >
-    >;
-
 const getElementId = () => `gd-vis-${uuidv4()}`;
 
 const visualizationUriRootStyle: CSSProperties = {
@@ -105,122 +86,76 @@ const visualizationUriRootStyle: CSSProperties = {
     flexDirection: "column",
 };
 
-const noop = () => {};
-const defaultFilters: NonNullable<IInsightRendererProps["filters"]> = [];
-const defaultDrillableItems: NonNullable<IInsightRendererProps["drillableItems"]> = [];
-
-/**
- * Applies the defaults on the props. The values used as defaults are referentially stable so that they do not
- * trigger any unnecessary work down the line.
- */
-const resolveProps = (props: InsightRendererCoreProps): ResolvedInsightRendererCoreProps => ({
-    ...props,
-    ErrorComponent: props.ErrorComponent ?? ErrorComponent,
-    filters: props.filters ?? defaultFilters,
-    drillableItems: props.drillableItems ?? defaultDrillableItems,
-    LoadingComponent: props.LoadingComponent ?? LoadingComponent,
-    pushData: props.pushData ?? noop,
-    locale: props.locale ?? DefaultLocale,
-    afterRender: props.afterRender ?? noop,
-});
-
-// this needs to be a memoized component as it can happen that this might be rendered multiple times
+// this needs to be a pure component as it can happen that this might be rendered multiple times
 // with the same props (referentially) - this might make the rendered visualization behave unpredictably
 // and is bad for performance so we need to make sure the re-renders are performed only if necessary
-const InsightRendererCore = memo(function InsightRendererCore(props: InsightRendererCoreProps) {
-    const currentProps = resolveProps(props);
-
-    const [elementId] = useState(getElementId);
-    const visualizationRef = useRef<IVisualization | undefined>(undefined);
-    const containerRef = useRef<HTMLDivElement>(null);
+class InsightRendererCore extends PureComponent<
+    IInsightRendererProps & WrappedComponentProps & { messages: ITranslations }
+> {
+    private elementId = getElementId();
+    private visualization: IVisualization | undefined;
+    private containerRef = createRef<HTMLDivElement>();
 
     /**
      * The component may render both visualization and config panel. In React18 we therefore need two
      * roots with their respective render methods. This Map holds the roots for both and provides
      * render and unmount methods whenever needed.
      */
-    const reactRootsMapRef = useRef<Map<HTMLElement, Root>>(new Map());
+    private reactRootsMap: Map<HTMLElement, Root> = new Map();
 
-    /**
-     * The callbacks and element getters below outlive the render they were created in (the visualization
-     * instance only ever gets the ones from the render it was set up in). They therefore read the props from
-     * this ref to always see the current values - the very same way `this.props` did before.
-     *
-     * This effect must stay first so that the ref is up to date before any other effect runs.
-     */
-    const propsRef = useRef(currentProps);
-    useEffect(() => {
-        propsRef.current = currentProps;
-    });
+    public static defaultProps: Pick<
+        IInsightRendererProps,
+        | "ErrorComponent"
+        | "filters"
+        | "drillableItems"
+        | "LoadingComponent"
+        | "pushData"
+        | "locale"
+        | "afterRender"
+    > = {
+        ErrorComponent,
+        filters: [],
+        drillableItems: [],
+        LoadingComponent,
+        pushData: () => {},
+        locale: DefaultLocale,
+        afterRender: () => {},
+    };
 
-    const unmountVisualization = useCallback(() => {
-        if (visualizationRef.current) {
-            visualizationRef.current.unmount();
+    private unmountVisualization = () => {
+        if (this.visualization) {
+            this.visualization.unmount();
         }
-        visualizationRef.current = undefined;
-    }, []);
+        this.visualization = undefined;
+    };
 
-    const getExecutionFactory = useCallback((): IExecutionFactory => {
-        const { backend, workspace, executeByReference, filters } = propsRef.current;
-        const factory = backend!.workspace(workspace!).execution();
-
-        if (executeByReference) {
-            /*
-             * When executing by reference, decorate the original execution factory so that it
-             * transparently routes `forInsight` to `forInsightByRef` AND adds the filters
-             * from InsightView props.
-             *
-             * Code will pass this factory over to the pluggable visualizations - they will do execution
-             * `forInsight` and under the covers things will be routed and done differently without the
-             * plug viz knowing.
-             */
-            return new ExecutionFactoryUpgradingToExecByReference(
-                new ExecutionFactoryWithFixedFilters(factory, filters),
-            );
-        }
-
-        return factory;
-    }, []);
-
-    const updateVisualization = useCallback(() => {
+    private updateVisualization = () => {
         // if the container no longer exists, update was called after unmount -> do nothing
-        if (!visualizationRef.current || !containerRef.current) {
+        if (!this.visualization || !this.containerRef.current) {
             return;
         }
-
-        const {
-            insight: insightProp,
-            config = {},
-            settings,
-            locale,
-            messages,
-            widget,
-            drillableItems,
-            colorPalette,
-            execConfig,
-            theme,
-        } = propsRef.current;
 
         // if there is no insight, bail early
-        if (!insightProp) {
+        if (!this.props.insight) {
             return;
         }
 
-        const { responsiveUiDateFormat } = settings ?? {};
+        const { config = {} } = this.props;
+        const { responsiveUiDateFormat } = this.props.settings ?? {};
 
         const visProps: IVisProps = {
-            locale,
-            messages,
+            locale: this.props.locale,
+            messages: this.props.messages,
             dateFormat: responsiveUiDateFormat,
-            a11yTitle: widget?.title,
-            a11yDescription: widget?.description,
+            a11yTitle: this.props.widget?.title,
+            a11yDescription: this.props.widget?.description,
             custom: {
-                drillableItems,
-                lastSavedVisClassUrl: insightVisualizationUrl(insightProp),
+                drillableItems: this.props.drillableItems,
+                lastSavedVisClassUrl: insightVisualizationUrl(this.props.insight),
             },
             config: {
                 separators: config.separators,
-                colorPalette,
+                colorPalette: this.props.colorPalette,
                 mapboxToken: config.mapboxToken,
                 agGridToken: config.agGridToken,
                 forceDisableDrillOnAxes: config.forceDisableDrillOnAxes,
@@ -228,14 +163,19 @@ const InsightRendererCore = memo(function InsightRendererCore(props: InsightRend
                 isExportMode: config.isExportMode,
                 enableExecutionCancelling: config.enableExecutionCancelling,
             },
-            executionConfig: execConfig,
+            executionConfig: this.props.execConfig,
             customVisualizationConfig: config,
-            theme,
+            theme: this.props.theme,
             supportsChartFill: config.supportsChartFill,
         };
 
-        const visClass = insightVisualizationType(insightProp);
-        const filled = fillMissingTitlesWithMessages(insightProp, locale, messages, undefined);
+        const visClass = insightVisualizationType(this.props.insight);
+        const filled = fillMissingTitlesWithMessages(
+            this.props.insight,
+            this.props.locale,
+            this.props.messages,
+            undefined,
+        );
         let insight = fillMissingFormats(filled);
 
         /**
@@ -249,90 +189,37 @@ const InsightRendererCore = memo(function InsightRendererCore(props: InsightRend
         if (visClass !== "repeater") {
             insight = ignoreTitlesForSimpleMeasures(insight);
         }
-        visualizationRef.current?.update(visProps, insight, {}, getExecutionFactory());
-    }, [getExecutionFactory]);
+        this.visualization?.update(visProps, insight, {}, this.getExecutionFactory());
+    };
 
-    const reactRenderFunction = useCallback<IVisConstruct["renderFun"]>((children, element) => {
-        if (!element) {
-            return;
-        }
-        const htmlElement = element as HTMLElement;
-        if (!reactRootsMapRef.current.get(htmlElement)) {
-            reactRootsMapRef.current.set(htmlElement, createRoot(htmlElement));
-        }
-        reactRootsMapRef.current.get(htmlElement)!.render(children);
-    }, []);
-
-    const reactUnmountFunction = useCallback<IVisConstruct["unmountFun"]>(() => {
-        reactRootsMapRef.current.forEach((root) => root.render(null));
-    }, []);
-
-    const onExportReadyDecorator = useCallback((exportFunction: IExportFunction): void => {
-        const { onExportReady } = propsRef.current;
-
-        if (!onExportReady) {
-            return;
-        }
-
-        const decorator = (exportConfig: IExtendedExportConfig): Promise<IExportResult> => {
-            const { insight } = propsRef.current;
-
-            if (exportConfig.title || !insight) {
-                return exportFunction(exportConfig);
-            }
-
-            return exportFunction({
-                ...exportConfig,
-                title: insightTitle(insight),
-            });
-        };
-
-        onExportReady(decorator);
-    }, []);
-
-    const setupVisualization = useCallback(() => {
-        const {
-            insight,
-            settings,
-            backend,
-            workspace,
-            permissions,
-            locale,
-            messages,
-            pushData,
-            onDrill,
-            onDataView,
-            onLoadingChanged,
-            afterRender,
-        } = propsRef.current;
-
+    private setupVisualization = () => {
         // if there is no insight, bail early
-        if (!insight) {
+        if (!this.props.insight) {
             return;
         }
 
         // the visualization we may have from earlier is no longer valid -> get rid of it
-        unmountVisualization();
+        this.unmountVisualization();
 
         const visualizationFactory = FullVisualizationCatalog.forInsight(
-            insight,
-            settings?.enableNewPivotTable ?? true,
-            settings?.enableNewGeoPushpin ?? false,
+            this.props.insight,
+            this.props.settings?.enableNewPivotTable ?? true,
+            this.props.settings?.enableNewGeoPushpin ?? false,
         ).getFactory();
 
-        visualizationRef.current = visualizationFactory({
-            backend: backend!,
+        this.visualization = visualizationFactory({
+            backend: this.props.backend!,
             callbacks: {
                 onError: (error) => {
-                    propsRef.current.onError?.(error);
-                    propsRef.current.onLoadingChanged?.({ isLoading: false });
+                    this.props.onError?.(error);
+                    this.props.onLoadingChanged?.({ isLoading: false });
                 },
-                onLoadingChanged,
-                pushData,
-                onDrill,
-                onDataView,
-                onExportReady: onExportReadyDecorator,
-                afterRender,
+                onLoadingChanged: this.props.onLoadingChanged,
+                pushData: this.props.pushData!,
+                onDrill: this.props.onDrill,
+                onDataView: this.props.onDataView,
+                onExportReady: this.onExportReadyDecorator,
+                afterRender: this.props.afterRender,
             },
             // This renderer has no configuration panel of its own — it renders read-only insights.
             // It used to resolve the panel with a document-wide lookup of the well-known
@@ -345,82 +232,137 @@ const InsightRendererCore = memo(function InsightRendererCore(props: InsightRend
             // fix STL-3184
             configPanelElement: () => null,
             element: () => {
-                const rootNode = (containerRef.current?.getRootNode() as Document | ShadowRoot) ?? document;
+                const rootNode =
+                    (this.containerRef.current?.getRootNode() as Document | ShadowRoot) ?? document;
 
-                return rootNode.querySelector(`#${elementId}`);
+                return rootNode.querySelector(`#${this.elementId}`);
             },
             environment: "dashboards", // TODO get rid of this
-            locale,
-            messages,
-            projectId: workspace!,
-            visualizationProperties: insightProperties(insight),
-            featureFlags: settings,
-            permissions,
-            renderFun: reactRenderFunction,
-            unmountFun: reactUnmountFunction,
+            locale: this.props.locale,
+            messages: this.props.messages,
+            projectId: this.props.workspace!,
+            visualizationProperties: insightProperties(this.props.insight),
+            featureFlags: this.props.settings,
+            permissions: this.props.permissions,
+            renderFun: this.getReactRenderFunction(),
+            unmountFun: this.getReactUnmountFunction(),
         });
-    }, [elementId, onExportReadyDecorator, reactRenderFunction, reactUnmountFunction, unmountVisualization]);
+    };
 
-    const prevPropsRef = useRef<ResolvedInsightRendererCoreProps | undefined>(undefined);
+    private getReactRenderFunction = () => {
+        return (children: any, element: Element | null) => {
+            if (!element) {
+                return;
+            }
+            const htmlElement = element as HTMLElement;
+            if (!this.reactRootsMap.get(htmlElement)) {
+                this.reactRootsMap.set(htmlElement, createRoot(htmlElement));
+            }
+            this.reactRootsMap.get(htmlElement)!.render(children);
+        };
+    };
 
-    // componentDidMount & componentDidUpdate: intentionally without dependencies so that it runs after
-    // every render of this (memoized) component
-    useEffect(() => {
-        const prevProps = prevPropsRef.current;
-        prevPropsRef.current = currentProps;
+    private getReactUnmountFunction = () => {
+        return () => this.reactRootsMap.forEach((root) => root.render(null));
+    };
 
-        if (!prevProps) {
-            setupVisualization();
-            updateVisualization();
+    private onExportReadyDecorator = (exportFunction: IExportFunction): void => {
+        if (!this.props.onExportReady) {
             return;
         }
 
+        const decorator = (exportConfig: IExtendedExportConfig): Promise<IExportResult> => {
+            if (exportConfig.title || !this.props.insight) {
+                return exportFunction(exportConfig);
+            }
+
+            return exportFunction({
+                ...exportConfig,
+                title: insightTitle(this.props.insight),
+            });
+        };
+
+        this.props.onExportReady(decorator);
+    };
+
+    private getExecutionFactory = (): IExecutionFactory => {
+        const factory = this.props.backend!.workspace(this.props.workspace!).execution();
+
+        if (this.props.executeByReference) {
+            /*
+             * When executing by reference, decorate the original execution factory so that it
+             * transparently routes `forInsight` to `forInsightByRef` AND adds the filters
+             * from InsightView props.
+             *
+             * Code will pass this factory over to the pluggable visualizations - they will do execution
+             * `forInsight` and under the covers things will be routed and done differently without the
+             * plug viz knowing.
+             */
+            return new ExecutionFactoryUpgradingToExecByReference(
+                new ExecutionFactoryWithFixedFilters(factory, this.props.filters),
+            );
+        }
+
+        return factory;
+    };
+
+    private componentDidMountInner = () => {
+        this.setupVisualization();
+        return this.updateVisualization();
+    };
+
+    public override componentDidMount(): void {
+        this.componentDidMountInner();
+    }
+
+    private componentDidUpdateInner = (prevProps: IInsightRendererProps) => {
         /**
          * Ignore properties when comparing insights to determine if a new setup is needed: changes to properties
          * only will be handled using the updateVisualization without unnecessary new setup just fine.
          */
         const prevInsightForCompare = prevProps.insight && insightSetProperties(prevProps.insight, {});
-        const newInsightForCompare = currentProps.insight && insightSetProperties(currentProps.insight, {});
+        const newInsightForCompare = this.props.insight && insightSetProperties(this.props.insight, {});
 
         const needsNewSetup =
             !isEqual(newInsightForCompare, prevInsightForCompare) ||
-            !isEqual(currentProps.filters, prevProps.filters) ||
-            !isEqual(currentProps.settings, prevProps.settings) ||
-            currentProps.workspace !== prevProps.workspace;
+            !isEqual(this.props.filters, prevProps.filters) ||
+            !isEqual(this.props.settings, prevProps.settings) ||
+            this.props.workspace !== prevProps.workspace;
 
         if (needsNewSetup) {
-            setupVisualization();
+            this.setupVisualization();
         }
 
-        updateVisualization();
-    });
+        return this.updateVisualization();
+    };
 
-    // componentWillUnmount
-    useEffect(() => {
-        const reactRootsMap = reactRootsMapRef.current;
+    public override componentDidUpdate(prevProps: IInsightRendererProps & WrappedComponentProps): void {
+        this.componentDidUpdateInner(prevProps);
+    }
 
-        return () => {
-            unmountVisualization();
-            // In order to avoid race conditions when mounting and unmounting synchronously,
-            // we use timeout for React18.
-            // https://github.com/facebook/react/issues/25675
-            reactRootsMap.forEach((root) => setTimeout(() => root.unmount(), 0));
-        };
-    }, [unmountVisualization]);
+    public override componentWillUnmount() {
+        this.unmountVisualization();
+        // In order to avoid race conditions when mounting and unmounting synchronously,
+        // we use timeout for React18.
+        // https://github.com/facebook/react/issues/25675
+        this.reactRootsMap.forEach((root) => setTimeout(() => root.unmount(), 0));
+    }
 
-    return (
-        // never ever dynamically change the props of this div, otherwise bad things will happen
-        // e.g. visualization being rendered multiple times, etc.
-        <div
-            className="visualization-uri-root"
-            id={elementId}
-            ref={containerRef}
-            style={visualizationUriRootStyle}
-        />
-    );
-});
+    public override render() {
+        return (
+            // never ever dynamically change the props of this div, otherwise bad things will happen
+            // e.g. visualization being rendered multiple times, etc.
+            <div
+                className="visualization-uri-root"
+                id={this.elementId}
+                ref={this.containerRef}
+                style={visualizationUriRootStyle}
+            />
+        );
+    }
+}
 
-export const IntlInsightRenderer = withTheme(withContexts(InsightRendererCore));
+export const IntlInsightRenderer = injectIntl(withTheme(withContexts(InsightRendererCore)));
 
 /**
  * Updated callback (callback with a different reference) is not properly propagated to the "visualization" instance

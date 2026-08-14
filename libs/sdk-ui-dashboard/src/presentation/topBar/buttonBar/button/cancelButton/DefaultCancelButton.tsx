@@ -38,6 +38,7 @@ export function useCancelButtonProps(): ICancelButtonProps {
 
     return {
         isVisible: isEditing && !isSaving,
+        isEnabled: !isSaving,
         onCancelClick,
     };
 }
@@ -45,7 +46,7 @@ export function useCancelButtonProps(): ICancelButtonProps {
 /**
  * @internal
  */
-export function DefaultCancelButton({ isVisible, onCancelClick }: ICancelButtonProps) {
+export function DefaultCancelButton({ isVisible, isEnabled = true, onCancelClick }: ICancelButtonProps) {
     const intl = useIntl();
 
     if (!isVisible) {
@@ -57,6 +58,7 @@ export function DefaultCancelButton({ isVisible, onCancelClick }: ICancelButtonP
             className="gd-button-secondary cancel-button s-cancel_button"
             value={intl.formatMessage({ id: "cancel" })}
             onClick={onCancelClick}
+            disabled={!isEnabled}
         />
     );
 }

@@ -228,3 +228,61 @@ Themed.parameters = {
     kind: "themed",
     screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
+
+/**
+ * Both menus drilled into their submenu, so the capture shows the default header at each menu
+ * density: a small menu gets the 35px header, a medium one the 40px header.
+ */
+function DrilledSubmenuHeaderExamples() {
+    return (
+        <IntlProvider
+            locale="en-US"
+            messages={{
+                "menu.back": "Back to the parent menu",
+                "menu.close": "Close menu",
+            }}
+        >
+            <div className="library-component screenshot-target">
+                <Example title="Small menu — 35px submenu header">
+                    <div className="submenu-example-small">
+                        <UiMenu
+                            items={itemsWithSubMenu}
+                            size="small"
+                            onSelect={() => {}}
+                            ariaAttributes={defaultAriaAttributes}
+                            itemDataTestId={(item) => `s-submenu-small-${item.id}`}
+                        />
+                    </div>
+                </Example>
+
+                <Example title="Medium menu — 40px submenu header">
+                    <div className="submenu-example-medium">
+                        <UiMenu
+                            items={itemsWithSubMenu}
+                            size="medium"
+                            onSelect={() => {}}
+                            ariaAttributes={{ ...defaultAriaAttributes, id: "test-menu-medium" }}
+                            itemDataTestId={(item) => `s-submenu-medium-${item.id}`}
+                        />
+                    </div>
+                </Example>
+            </div>
+        </IntlProvider>
+    );
+}
+
+export function DrilledSubmenuHeaders() {
+    return <DrilledSubmenuHeaderExamples />;
+}
+DrilledSubmenuHeaders.parameters = {
+    kind: "drilled-submenu-headers",
+    screenshot: {
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        // Drill both menus into their submenu before the capture, so the sticky headers render.
+        clickSelectors: [
+            { selector: '[data-testid="s-submenu-small-item2"]', waitAfter: 200 },
+            { selector: '[data-testid="s-submenu-medium-item2"]', waitAfter: 200 },
+        ],
+        misMatchThreshold: 0.01,
+    },
+} satisfies IStoryParameters;

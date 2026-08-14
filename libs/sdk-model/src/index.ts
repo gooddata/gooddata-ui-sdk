@@ -1406,6 +1406,19 @@ export type {
 } from "./geoCollections/index.js";
 
 export type {
+    ConditionalFormattingTarget,
+    ConditionalFormattingTextOperator,
+    ConditionalFormattingEmptinessOperator,
+    ConditionalFormattingOperator,
+    ConditionalFormattingValue,
+    IConditionalFormattingFormat,
+    IConditionalFormattingCondition,
+    IConditionalFormattingRule,
+    IConditionalFormatting,
+    ISemanticConditionalFormatting,
+} from "./conditionalFormatting/index.js";
+
+export type {
     IIpAllowlist,
     IIpAllowlistAssignedUser,
     IIpAllowlistAssignedUserGroup,

@@ -4,11 +4,16 @@ import { RecommendedCachingConfiguration, withCaching } from "@gooddata/sdk-back
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { TigerTokenAuthProvider, tigerFactory } from "@gooddata/sdk-backend-tiger";
 
+import { parseSemanticCfSimConfig, withSemanticCfSimulation } from "./semanticCfBackend.js";
+
 export function createBackend(): IAnalyticalBackend {
-    return withCaching(
-        tigerFactory().withAuthentication(
-            new TigerTokenAuthProvider(import.meta.env["VITE_TIGER_API_TOKEN"] as string),
+    return withSemanticCfSimulation(
+        withCaching(
+            tigerFactory().withAuthentication(
+                new TigerTokenAuthProvider(import.meta.env["VITE_TIGER_API_TOKEN"] as string),
+            ),
+            RecommendedCachingConfiguration,
         ),
-        RecommendedCachingConfiguration,
+        parseSemanticCfSimConfig(import.meta.env["VITE_SEMANTIC_CF"] as string | undefined),
     );
 }

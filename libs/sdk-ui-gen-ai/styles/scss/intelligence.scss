@@ -97,6 +97,7 @@
     color: inherit;
     text-align: left;
     cursor: pointer;
+    transition: background-color 0.2s;
 
     &:hover {
         background: var(--gd-palette-complementary-1, #f5f8fa);
@@ -162,6 +163,7 @@
     height: 15px;
     border-radius: 2px;
     background: var(--gd-palette-complementary-3, #dde4eb);
+    transition: background-color 0.2s;
 
     &--dimmed {
         background: var(--gd-palette-complementary-2, #ebeff4);

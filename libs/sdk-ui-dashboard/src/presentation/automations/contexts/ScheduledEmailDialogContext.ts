@@ -76,15 +76,6 @@ export interface IScheduledEmailDialogContextValue {
 
 const ScheduledEmailDialogContext = createContext<IScheduledEmailDialogContextValue | undefined>(undefined);
 
-/**
- * Provider for {@link IScheduledEmailDialogContextValue}.
- *
- * Besides the connector's own use, a custom `ScheduledEmailDialogComponent` can decorate the context for
- * the default dialog: read the value via {@link useScheduledEmailDialogContext}, adjust it, and
- * re-provide it around `DefaultScheduledEmailDialog`.
- *
- * @alpha
- */
 export const ScheduledEmailDialogContextProvider = ScheduledEmailDialogContext.Provider;
 
 /**

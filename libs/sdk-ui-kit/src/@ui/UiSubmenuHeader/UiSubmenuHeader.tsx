@@ -7,7 +7,7 @@ import cx from "classnames";
 import { QuestionMark } from "../../Icon/icons/QuestionMark.js";
 import { ShortenedText } from "../../ShortenedText/ShortenedText.js";
 import { Typography } from "../../Typography/Typography.js";
-import { type SizeLarge, type SizeMedium } from "../@types/size.js";
+import { type SizeLarge, type SizeMedium, type SizeSmall } from "../@types/size.js";
 import { UiIconButton } from "../UiIconButton/UiIconButton.js";
 import { UiTooltip } from "../UiTooltip/UiTooltip.js";
 
@@ -26,7 +26,7 @@ export interface IUiSubmenuHeaderProps {
     useShortenedTitle?: boolean;
     textColor?: string;
     backgroundColor?: string;
-    height?: SizeMedium | SizeLarge;
+    height?: SizeSmall | SizeMedium | SizeLarge;
     titleId?: string;
 }
 
@@ -52,6 +52,7 @@ export function UiSubmenuHeader({
     const heightClass = cx({
         "gd-ui-kit-submenu-header--large": height === "large",
         "gd-ui-kit-submenu-header--medium": height === "medium",
+        "gd-ui-kit-submenu-header--small": height === "small",
     });
 
     const backButtonSize = "small";

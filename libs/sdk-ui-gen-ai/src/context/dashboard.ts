@@ -5,6 +5,7 @@ import {
     type FilterContextItem,
     type GenAIUserContextFilter,
     type IAttributeDisplayFormMetadataObject,
+    type IDashboardDefinition,
     type IGenAIDashboardContext,
     type IGenAIObjectReference,
     type IGenAIUserContext,
@@ -29,10 +30,16 @@ import { buildContext } from "./build.js";
 /**
  * @internal
  */
-export function buildDashboardContext(dashboard: IGenAIDashboardContext): IGenAIUserContext {
+export function buildDashboardContext(
+    dashboard: Omit<IGenAIDashboardContext, "definition">,
+    definition?: IDashboardDefinition,
+): IGenAIUserContext {
     return buildContext({
         view: {
-            dashboard,
+            dashboard: {
+                ...dashboard,
+                ...(definition ? { definition } : {}),
+            },
         },
     });
 }
