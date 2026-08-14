@@ -1,81 +1,96 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type MouseEvent, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
+import { debounce } from "lodash-es";
 import { FormattedMessage, type MessageDescriptor, defineMessage, defineMessages, useIntl } from "react-intl";
 
 import { type ICatalogDateDataset, type ObjRef, objRefToString } from "@gooddata/sdk-model";
 import {
     Button,
+    DATE_DATASET_LIST_ITEM_CLASSNAME,
+    DateDatasetsListItem,
     Dropdown,
     DropdownButton,
     DropdownList,
     type IAlignPoint,
     ScrollableItem,
-    ShortenedText,
     isDateDatasetHeader,
 } from "@gooddata/sdk-ui-kit";
-import { simplifyText } from "@gooddata/util";
 
 import {
     getDateConfigurationDropdownHeight,
+    getDateDatasetDropdownWidth,
     getSortedDateDatasetsItems,
     removeDateFromTitle,
 } from "./utils.js";
 
 const DEFAULT_HYPHEN_CHAR = "-";
-const alignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "tl bl" }];
-const tooltipAlignPoints: IAlignPoint[] = [
-    { align: "cl cr", offset: { x: -10, y: 0 } },
-    { align: "cr cl", offset: { x: 10, y: 0 } },
+const alignPoints: IAlignPoint[] = [
+    { align: "bl tl" },
+    { align: "tl bl" },
+    { align: "br tr" },
+    { align: "tr br" },
 ];
 const DROPDOWN_MIN_HEIGHT = 170;
 const DEFAULT_DROPDOWN_ITEM_HEIGHT = 28;
+const EVENT_DEBOUNCE_MILLISECONDS = 60;
 
-interface IDateDatasetsListItemProps {
-    id?: string;
-    title?: string;
-    isHeader?: boolean;
-    isSelected?: boolean;
-    isUnrelated?: boolean;
-    onClick: (e: MouseEvent<HTMLDivElement>) => void;
+function measureScrollbarWidth(): number {
+    const probe = document.createElement("div");
+    probe.className = "s-date-dataset-scrollbar-probe";
+    probe.style.position = "absolute";
+    probe.style.top = "-9999px";
+    probe.style.left = "-9999px";
+    probe.style.width = "100px";
+    probe.style.height = "100px";
+    probe.style.overflow = "scroll";
+    document.body.appendChild(probe);
+
+    const scrollbarWidth = probe.offsetWidth - probe.clientWidth;
+    document.body.removeChild(probe);
+
+    return scrollbarWidth;
 }
 
-// work around the evil DateDatasetsListItem from kit that magically translates SOME of the items' titles
-// this way the i18n actually has a chance to detect these
+function measureLongestItemWidth(titles: string[]): number {
+    if (titles.length === 0) {
+        return 0;
+    }
+
+    const probe = document.createElement("div");
+    probe.className = `${DATE_DATASET_LIST_ITEM_CLASSNAME} is-selected s-date-dataset-width-probe`;
+    probe.style.position = "absolute";
+    probe.style.visibility = "hidden";
+    probe.style.whiteSpace = "nowrap";
+    probe.style.top = "-9999px";
+    probe.style.left = "-9999px";
+
+    const text = document.createElement("span");
+    text.className = "shortened is-whole";
+    probe.appendChild(text);
+    document.body.appendChild(probe);
+
+    let maxWidth = 0;
+    for (const title of titles) {
+        text.textContent = title;
+        maxWidth = Math.max(maxWidth, probe.getBoundingClientRect().width);
+    }
+
+    document.body.removeChild(probe);
+
+    return Math.ceil(maxWidth);
+}
+
+// pre-translate header titles before handing them to the kit's DateDatasetsListItem,
+// which renders whatever title it's given as-is (see DateDatasetsDropdown.tsx in AD for the same pattern)
 const dateDatasetHeaderMessages: Record<string, MessageDescriptor> = defineMessages({
     "gs.date.date-dataset.recommended": { id: "gs.date.date-dataset.recommended" },
     "gs.date.date-dataset.other": { id: "gs.date.date-dataset.other" },
     "gs.date.date-dataset.related": { id: "gs.date.date-dataset.related" },
     "gs.date.date-dataset.unrelated": { id: "gs.date.date-dataset.unrelated" },
 });
-
-function DateDatasetsListItem({
-    id,
-    title = "",
-    isHeader,
-    isSelected,
-    isUnrelated,
-    onClick,
-}: IDateDatasetsListItemProps) {
-    if (isHeader) {
-        return <div className="gd-list-item gd-list-item-header">{title}</div>;
-    }
-
-    const classNames = cx("gd-list-item", "gd-list-item-shortened", `s-${id}`, `s-${simplifyText(title)}`, {
-        "is-selected": isSelected,
-        "is-unrelated": isUnrelated,
-    });
-
-    return (
-        <div className={classNames} onClick={onClick}>
-            <ShortenedText tooltipAlignPoints={tooltipAlignPoints} ellipsisPosition="end">
-                {title}
-            </ShortenedText>
-        </div>
-    );
-}
 
 export interface IDateDatasetDropdownProps {
     autoOpen?: boolean;
@@ -134,12 +149,23 @@ export function DateDatasetDropdown(props: IDateDatasetDropdownProps) {
         );
     }
 
-    const sortedItems = getSortedDateDatasetsItems(
-        relatedDateDatasets,
-        recommendedDateDataSet,
-        unrelatedDateDataset,
-        unrelatedDateDatasets,
-        enableUnrelatedItemsVisibility && showUnavailableItems,
+    const sortedItems = useMemo(
+        () =>
+            getSortedDateDatasetsItems(
+                relatedDateDatasets,
+                recommendedDateDataSet,
+                unrelatedDateDataset,
+                unrelatedDateDatasets,
+                enableUnrelatedItemsVisibility && showUnavailableItems,
+            ),
+        [
+            relatedDateDatasets,
+            recommendedDateDataSet,
+            unrelatedDateDataset,
+            unrelatedDateDatasets,
+            enableUnrelatedItemsVisibility,
+            showUnavailableItems,
+        ],
     );
     const unrelatedDateDatasetCount = (unrelatedDateDatasets?.length ?? 0) - (unrelatedDateDataset ? 1 : 0);
 
@@ -149,18 +175,58 @@ export function DateDatasetDropdown(props: IDateDatasetDropdownProps) {
         height: DROPDOWN_MIN_HEIGHT,
     });
     const dropdownBodyHeight = (sortedItems?.length || 0) * DEFAULT_DROPDOWN_ITEM_HEIGHT;
+    const measuredContentWidthRef = useRef(0);
+    const scrollbarWidthRef = useRef<number | null>(null);
 
-    useEffect(() => {
-        const buttonRect = buttonRef?.current?.getBoundingClientRect();
-        const calculatedWidth = buttonRect?.width ?? 0;
+    // Cheap: only reads the button's current position/size plus the content width already
+    // measured below, so it's safe to run on every debounced resize/scroll. The scrollbar
+    // width is measured lazily, on first actual need, and cached — never during render, so
+    // this stays safe for SSR/non-DOM environments.
+    const recalculateDimensions = useCallback(() => {
+        const buttonRect = buttonRef.current?.getBoundingClientRect();
         const calculatedHeight = getDateConfigurationDropdownHeight(
             buttonRect?.top ?? 0,
             buttonRect?.height ?? 0,
             dropdownBodyHeight,
             !unrelatedDateDatasets?.length,
         );
+        let contentWidth = measuredContentWidthRef.current;
+        if (dropdownBodyHeight > calculatedHeight) {
+            scrollbarWidthRef.current ??= measureScrollbarWidth();
+            contentWidth += scrollbarWidthRef.current;
+        }
+        const calculatedWidth = getDateDatasetDropdownWidth(
+            buttonRect?.width ?? 0,
+            contentWidth,
+            buttonRect?.left ?? 0,
+            buttonRect?.right ?? 0,
+        );
         setDropdownDimensions({ width: calculatedWidth, height: calculatedHeight });
-    }, [dropdownBodyHeight, unrelatedDateDatasets, buttonRef]);
+    }, [dropdownBodyHeight, unrelatedDateDatasets]);
+
+    // Expensive: builds a DOM probe and measures every title, so it only re-runs when the
+    // actual item list changes, not on every resize/scroll.
+    useLayoutEffect(() => {
+        const titles = sortedItems.map((item) =>
+            isDateDatasetHeader(item)
+                ? intl.formatMessage(dateDatasetHeaderMessages[item.title])
+                : removeDateFromTitle(item.title),
+        );
+        measuredContentWidthRef.current = measureLongestItemWidth(titles);
+        recalculateDimensions();
+    }, [sortedItems, intl, recalculateDimensions]);
+
+    useEffect(() => {
+        const debouncedRecalculate = debounce(recalculateDimensions, EVENT_DEBOUNCE_MILLISECONDS);
+        window.addEventListener("resize", debouncedRecalculate);
+        window.addEventListener("scroll", debouncedRecalculate, true);
+
+        return () => {
+            debouncedRecalculate.cancel();
+            window.removeEventListener("resize", debouncedRecalculate);
+            window.removeEventListener("scroll", debouncedRecalculate, true);
+        };
+    }, [recalculateDimensions]);
 
     const onShowHideUnrelatedItemsClick = () => {
         setShowUnavailableItems(!showUnavailableItems);
@@ -179,7 +245,7 @@ export function DateDatasetDropdown(props: IDateDatasetDropdownProps) {
                     width={width}
                     items={sortedItems}
                     itemsCount={sortedItems.length}
-                    renderItem={({ item }) => {
+                    renderItem={({ item, width: itemWidth }) => {
                         const isHeader = isDateDatasetHeader(item);
                         const isSelected = !isDateDatasetHeader(item) && activeDateDataSetId === item.id;
                         const isUnrelated = !isDateDatasetHeader(item) && unrelatedDateDataSetId === item.id;
@@ -193,6 +259,7 @@ export function DateDatasetDropdown(props: IDateDatasetDropdownProps) {
                                 isHeader={isHeader}
                                 isSelected={isSelected}
                                 isUnrelated={isUnrelated}
+                                width={itemWidth}
                                 onClick={(e) => {
                                     e.preventDefault();
                                     if (isDateDatasetHeader(item)) {

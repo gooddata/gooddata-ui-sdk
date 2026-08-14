@@ -250,15 +250,19 @@ export function HostChrome({
     // resolved organization descriptor title (the profile field is optional) — and is omitted (so
     // DocumentHeader drops the " - " separator) only when neither is set. The GoodData product name
     // is used solely when white-labeling is disabled, so a branded org never falls back to it.
+    // In export mode the brand is omitted entirely: the export service prints document.title into
+    // the PDF, and the standalone apps ship the bare page title there.
     const activeApplication = getActiveInternalApplication(resolvedApplications, ctx, pathname);
     // An app may report an empty page segment (e.g. no insight open); treat it the same as `undefined`
     // (omitted) so the tab falls back to the active application's manifest title rather than going blank.
     const documentPageTitle =
         appPageTitle ||
         (activeApplication ? getLocalizedTitle(activeApplication, ctx.preferredLocale) : undefined);
-    const documentBrandTitle = ctx.whiteLabeling?.enabled
-        ? ctx.user.organizationName || ctx.organization?.title || ""
-        : defaultLogoTitle;
+    const documentBrandTitle = ctx.isExportMode
+        ? undefined
+        : ctx.whiteLabeling?.enabled
+          ? ctx.user.organizationName || ctx.organization?.title || ""
+          : defaultLogoTitle;
 
     const headerColor = ctx.theme?.header?.backgroundColor ?? defaultHeaderTheme.backgroundColor;
     const headerTextColor = ctx.theme?.header?.color ?? defaultHeaderTheme.color;
@@ -270,7 +274,7 @@ export function HostChrome({
         <HostIntlProvider locale={locale} additionalMessages={appMessages}>
             <BackendProvider backend={getBackend()}>
                 <ToastsCenterContextProvider>
-                    <div className={b()}>
+                    <div className={b({ export: ctx.isExportMode === true })}>
                         <DocumentHeader
                             pageTitle={documentPageTitle}
                             brandTitle={documentBrandTitle}

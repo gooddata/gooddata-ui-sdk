@@ -21,6 +21,7 @@ import {
     resolveConditionalFormattingDateBounds,
     resolveConditionalFormattingTriggers,
 } from "../styling/conditionalFormatting.js";
+import { resolvePerTargetConditionalFormatting } from "../styling/semanticConditionalFormatting.js";
 import { applyTextWrappingToGroupDef } from "../textWrapping/applyTextWrappingToGroupDef.js";
 
 import { getTableData } from "./valueFormatter.js";
@@ -39,6 +40,7 @@ export function dataViewToColDefs({
     intl,
     separators,
     conditionalFormatting,
+    enableSemanticConditionalFormatting,
 }: {
     dataView: DataViewFacade;
     columnHeadersPosition: ColumnHeadersPosition;
@@ -48,6 +50,8 @@ export function dataViewToColDefs({
     intl: IntlShape;
     separators?: ISeparators;
     conditionalFormatting?: IConditionalFormatting;
+    /** Off by default: descriptors may carry semantic rules the host has no other way to suppress. */
+    enableSemanticConditionalFormatting?: boolean;
 }): {
     columnDefinitionByColId: ITableColumnDefinitionByColId;
     columnDefs: (AgGridColumnDef | AgGridColumnGroupDef)[];
@@ -63,18 +67,29 @@ export function dataViewToColDefs({
         columnDefinitionByColId[colId] = columnDefinition;
     });
 
+    // Descriptors may carry semantic rules regardless of `conditionalFormatting` (even `undefined`
+    // still inherits, per resolvePerTargetConditionalFormatting) — the host can't suppress that by
+    // omitting `conditionalFormatting` alone, so inheritance needs its own explicit opt-in.
+    const effectiveConditionalFormatting = enableSemanticConditionalFormatting
+        ? resolvePerTargetConditionalFormatting(
+              conditionalFormatting,
+              dataView.meta().attributeDescriptors(),
+              dataView.meta().measureDescriptors(),
+          )
+        : conditionalFormatting;
+
     // Resolve each rule's trigger column to a colId ONCE for this render pass, so the per-cell
     // cellStyle path is O(rules) lookups instead of re-matching every column on every cell.
-    const conditionalFormattingTriggers = conditionalFormatting?.enabled
+    const conditionalFormattingTriggers = effectiveConditionalFormatting?.enabled
         ? resolveConditionalFormattingTriggers(
-              conditionalFormatting,
+              effectiveConditionalFormatting,
               tableData.columnDefinitions,
               columnHeadersPosition,
           )
         : [];
     // Resolved once per render like the triggers; relative periods anchor to render time.
-    const conditionalFormattingDateBounds = conditionalFormatting?.enabled
-        ? resolveConditionalFormattingDateBounds(conditionalFormatting, tableData.columnDefinitions)
+    const conditionalFormattingDateBounds = effectiveConditionalFormatting?.enabled
+        ? resolveConditionalFormattingDateBounds(effectiveConditionalFormatting, tableData.columnDefinitions)
         : {};
 
     const colDefs = tableData.columnDefinitions.map((columnDefinition) => {
@@ -85,7 +100,7 @@ export function dataViewToColDefs({
             textWrapping,
             drillableItemsRef,
             dataViewFacade: dataView,
-            conditionalFormatting,
+            conditionalFormatting: effectiveConditionalFormatting,
             conditionalFormattingTriggers,
             conditionalFormattingDateBounds,
         })(colDef);

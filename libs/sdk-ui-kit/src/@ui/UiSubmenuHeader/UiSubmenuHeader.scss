@@ -6,6 +6,10 @@
     align-items: center;
     gap: var(--gd-spacing-5px);
     width: 100%;
+    // The horizontal padding must come out of the 100% width, not be added on top of it: without
+    // this the header renders wider than the menu that contains it and juts out of the panel in any
+    // app that does not carry a global border-box reset.
+    box-sizing: border-box;
     color: var(--gd-palette-complementary-6, #94a1ad);
     background: var(--gd-palette-complementary-2, #ebeff4);
 
@@ -21,6 +25,17 @@
         color: inherit;
         font-family: variables.$gd-font-primary;
         text-transform: uppercase;
+    }
+
+    &--small {
+        padding: 0 10px;
+        height: 35px;
+        min-height: 35px;
+
+        h3.gd-ui-kit-submenu-header__title-text {
+            font-size: 11px;
+            line-height: normal;
+        }
     }
 
     &--medium {

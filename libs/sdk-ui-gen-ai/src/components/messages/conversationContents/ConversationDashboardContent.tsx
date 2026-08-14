@@ -6,7 +6,7 @@ import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useSelector } from "react-redux";
 
-import type { IDashboard } from "@gooddata/sdk-model";
+import type { IDashboard, IInsight } from "@gooddata/sdk-model";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { UiButton, UiIcon } from "@gooddata/sdk-ui-kit";
 
@@ -19,12 +19,13 @@ export type ConversationDashboardContentProps = {
     message: IChatConversationLocalItem;
     part: IChatConversationMultipartLocalPart;
     dashboard?: IDashboard | null;
+    insights?: IInsight[] | null;
     saved?: boolean;
     className?: string;
 };
 
 export function ConversationDashboardContent(props: ConversationDashboardContentProps) {
-    const { className, dashboard, saved } = props;
+    const { className, dashboard, insights, saved } = props;
     const intl = useIntl();
     const config = useConfig();
 
@@ -59,11 +60,12 @@ export function ConversationDashboardContent(props: ConversationDashboardContent
                         useHostedDashboards,
                     ),
                     dashboard,
+                    insights: insights ?? [],
                     dashboardStatus,
                 });
             }
         };
-    }, [dashboard, config, workspaceId, useHostedDashboards, saved]);
+    }, [dashboard, insights, config, workspaceId, useHostedDashboards, saved]);
 
     const classNames = cx(
         "gd-gen-ai-chat__conversation__item__content",

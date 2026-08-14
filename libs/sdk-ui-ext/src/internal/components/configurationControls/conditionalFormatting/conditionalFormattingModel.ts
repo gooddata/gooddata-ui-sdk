@@ -5,6 +5,7 @@ import { v4 as uuid } from "uuid";
 import {
     type DateFilterGranularity,
     type IInsightDefinition,
+    type ISemanticConditionalFormatting,
     type WeekStart,
     attributeAlias,
     attributeLocalId,
@@ -24,6 +25,7 @@ import {
     type ConditionalFormattingOperator,
     type ConditionalFormattingTarget,
     type ConditionalFormattingValue,
+    type IConditionalFormatting,
     type IConditionalFormattingCondition,
     type IConditionalFormattingRule,
     isDateConditionValue,
@@ -36,6 +38,8 @@ import { CF_DEFAULT_COLOR } from "./conditionalFormattingColors.js";
 /**
  * Date-attribute metadata date conditions author and validate against. Present only for granularities
  * the evaluation engine supports (linear; fiscal joins once its labeling convention is verified).
+ *
+ * @internal
  */
 export interface ICfDateMeta {
     granularity: DateFilterGranularity;
@@ -43,13 +47,21 @@ export interface ICfDateMeta {
     timezone?: string;
 }
 
-/** Workspace date-display settings the date value picker honors (derived by the host from settings). */
+/**
+ * Workspace date-display settings the date value picker honors (derived by the host from settings).
+ *
+ * @internal
+ */
 export interface ICfDateSettings {
     dateFormat?: string;
     weekStart?: WeekStart;
 }
 
-/** A selectable measure/attribute for the rule's "applies to" dropdown. */
+/**
+ * A selectable measure/attribute for the rule's "applies to" dropdown.
+ *
+ * @internal
+ */
 export interface ITargetOption {
     /** `measure:<localId>` | `attribute:<localId>` */
     value: string;
@@ -66,7 +78,7 @@ export interface ITargetOption {
 // Cap suggestions so a high-cardinality attribute can't build a huge suggestion list.
 const MAX_ELEMENT_SUGGESTIONS = 200;
 
-const targetToValue = (target: ConditionalFormattingTarget): string =>
+export const targetToValue = (target: ConditionalFormattingTarget): string =>
     target.kind === "measure"
         ? `measure:${target.measureIdentifier}`
         : `attribute:${target.attributeIdentifier}`;
@@ -81,6 +93,8 @@ export interface ICfTargetData {
     elements?: Record<string, string[]>;
     /** Date metadata by localId for date-condition-eligible attributes (descriptor granularity/timezone). */
     dates?: Record<string, ICfDateMeta>;
+    /** Semantic-layer conditional formatting carried on the execution result header, by localId. */
+    semantic?: Record<string, ISemanticConditionalFormatting>;
 }
 
 /**
@@ -92,15 +106,20 @@ export function buildCfTargetData(dataView: DataViewFacade): Required<ICfTargetD
     const titles: Record<string, string> = {};
     const formats: Record<string, string> = {};
     const dates: Record<string, ICfDateMeta> = {};
+    const semantic: Record<string, ISemanticConditionalFormatting> = {};
     for (const measure of dataView.meta().measureDescriptors()) {
-        const { localIdentifier, name, format } = measure.measureHeaderItem;
+        const { localIdentifier, name, format, conditionalFormatting } = measure.measureHeaderItem;
         titles[localIdentifier] = name;
         if (format) {
             formats[localIdentifier] = format;
         }
+        if (conditionalFormatting) {
+            semantic[localIdentifier] = conditionalFormatting;
+        }
     }
     for (const attribute of dataView.meta().attributeDescriptors()) {
-        const { localIdentifier, formOf, granularity, format } = attribute.attributeHeader;
+        const { localIdentifier, formOf, granularity, format, conditionalFormatting } =
+            attribute.attributeHeader;
         titles[localIdentifier] = formOf.name;
         // Eligible date attributes (resolvable granularity) get date conditions; the rest keep plain text.
         const normalizedGranularity = normalizeDateConditionGranularity(granularity);
@@ -110,8 +129,11 @@ export function buildCfTargetData(dataView: DataViewFacade): Required<ICfTargetD
                 ...(format?.timezone ? { timezone: format.timezone } : {}),
             };
         }
+        if (conditionalFormatting) {
+            semantic[localIdentifier] = conditionalFormatting;
+        }
     }
-    return { titles, formats, elements: buildElementsByLocalId(dataView), dates };
+    return { titles, formats, elements: buildElementsByLocalId(dataView), dates, semantic };
 }
 
 // Attribute header groups align by index with the dimension's attribute descriptors; the collected
@@ -192,6 +214,39 @@ export const isDateTarget = (option: ITargetOption | undefined): boolean => opti
 
 export const targetLocalId = (target: ConditionalFormattingTarget): string =>
     target.kind === "measure" ? target.measureIdentifier : target.attributeIdentifier;
+
+/**
+ * Whether `target` is already in Custom mode on this insight config — an insight rule targets it,
+ * or it's explicitly listed in `customTargets`. Mirrors the `customModeTargets` set built by
+ * sdk-ui-pivot's `resolvePerTargetConditionalFormatting` (semanticConditionalFormatting.ts); the two
+ * packages don't share this helper, so keep them in sync by hand if either changes. Honoring
+ * `customTargets` here matters even though this PR never writes it: if some other path already
+ * marked a target Custom, the semantic block must still hide it as Inherited would be wrong.
+ */
+export const isCustomTarget = (
+    config: IConditionalFormatting | undefined,
+    target: ConditionalFormattingTarget,
+): boolean => {
+    const value = targetToValue(target);
+    return (
+        (config?.rules ?? []).some((rule) => targetToValue(rule.target) === value) ||
+        (config?.customTargets ?? []).some((customTarget) => targetToValue(customTarget) === value)
+    );
+};
+
+/**
+ * Synthesizes a read-only rule for the View dialog from an inherited semantic-layer condition set.
+ * The id mirrors the engine's own `semantic:<kind>:<localId>` convention (semanticConditionalFormatting.ts)
+ * for consistency only — it's never persisted or compared.
+ */
+export const semanticRuleFor = (
+    option: ITargetOption,
+    semantic: ISemanticConditionalFormatting,
+): IConditionalFormattingRule => ({
+    id: `semantic:${option.target.kind}:${targetLocalId(option.target)}`,
+    target: option.target,
+    conditions: semantic.conditions,
+});
 
 // --- Operators -------------------------------------------------------------------------------
 
@@ -322,6 +377,50 @@ export const valueEditorKind = (
                 return "number";
             }
             return hasSuggestions && isEqualityOperator(condition.operator) ? "combobox" : "text";
+    }
+};
+
+/**
+ * Whether a stored value's shape is one `editorKind`'s control can represent. Editing always keeps
+ * this true (operator changes normalize the value's shape, and {@link sanitizeRuleForEditing} clears
+ * what it can't fix), but a read-only semantic-layer rule may pair an operator with a value shape the
+ * pivot editor never authors — e.g. a text operator stored against a date target.
+ */
+export const valueMatchesEditorKind = (
+    editorKind: ConditionValueEditor,
+    value: ConditionalFormattingValue,
+): boolean => {
+    switch (editorKind) {
+        case "none":
+            return value.kind === "none";
+        case "date":
+            return value.kind === "none" || value.kind === "absoluteDate" || value.kind === "relativeDate";
+        case "range":
+            return value.kind === "none" || value.kind === "literalRange";
+        case "number":
+            return (
+                value.kind === "none" ||
+                (value.kind === "literal" && (isBlank(value.value) || Number.isFinite(Number(value.value))))
+            );
+        case "combobox":
+        case "text":
+            return value.kind === "none" || value.kind === "literal";
+    }
+};
+
+/** A plain-text rendering of a stored value, for the read-only fallback when it doesn't fit its editor. */
+export const rawValueText = (value: ConditionalFormattingValue): string => {
+    switch (value.kind) {
+        case "none":
+            return "";
+        case "literal":
+            return String(value.value);
+        case "literalRange":
+            return `${value.from} – ${value.to}`;
+        case "absoluteDate":
+            return `${value.from} – ${value.to}`;
+        case "relativeDate":
+            return `${value.granularity} ${value.from} … ${value.to}`;
     }
 };
 
@@ -494,10 +593,11 @@ export type ConditionalFormattingFieldError = ConditionInvalidError | "valueEmpt
 const isBlank = (value: string | number): boolean => String(value).trim() === "";
 
 /**
- * Coerces stored condition shapes the editor cannot represent so an AAC-authored rule opens editable
- * instead of dead-ended (disabled Save then covers the cleared values). A non-numeric measure literal
- * clears to empty; on a date target, operators/values outside the date set reset to an unpicked
- * "Is on" (id and format survive). The engine keeps evaluating the stored original until Save.
+ * Coerces stored condition shapes the editor cannot represent so an AAC-authored (or inherited
+ * semantic-layer) rule opens editable instead of dead-ended (disabled Save then covers the cleared
+ * values). An operator outside the target's curated set resets to "Is on"/"Equal to" and its value
+ * shape follows; a non-numeric measure literal clears to empty. Id and format always survive. The
+ * engine keeps evaluating the stored original until Save.
  */
 export const sanitizeRuleForEditing = (
     rule: IConditionalFormattingRule,
@@ -523,18 +623,28 @@ export const sanitizeRuleForEditing = (
             }),
         };
     }
-    if (rule.target.kind !== "measure") {
-        return rule;
-    }
+
+    const curatedOperators = operatorsForTarget(rule.target.kind, false);
     return {
         ...rule,
-        conditions: rule.conditions.map((condition) =>
-            condition.value.kind === "literal" &&
-            !isBlank(condition.value.value) &&
-            Number.isNaN(Number(condition.value.value))
-                ? { ...condition, value: { kind: "literal", value: "" } }
-                : condition,
-        ),
+        conditions: rule.conditions.map((condition) => {
+            const operatorOk = curatedOperators.includes(condition.operator);
+            const operator = operatorOk ? condition.operator : "EQUAL_TO";
+            const value = operatorOk ? condition.value : valueForOperator(operator, condition.value, false);
+            const numericLiteralOk =
+                rule.target.kind !== "measure" ||
+                value.kind !== "literal" ||
+                isBlank(value.value) ||
+                !Number.isNaN(Number(value.value));
+            if (operatorOk && numericLiteralOk) {
+                return condition;
+            }
+            return {
+                ...condition,
+                operator,
+                value: numericLiteralOk ? value : { kind: "literal", value: "" },
+            };
+        }),
     };
 };
 

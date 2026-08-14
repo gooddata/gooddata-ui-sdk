@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-kit: Add UiConfigEditor, a config editor with syntax highlighting, JSON/YAML language switching, comment-preserving YAML auto-format and an optional context menu. It replaces the internal YamlEditor (the catalog's as-code dialogs now use it), and StylingEditorDialog can render a custom definition editor.",
+            "type": "minor"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -116,8 +116,6 @@ export function ScheduledMailDialogRenderer({
     onSaveSuccess,
     onSubmit,
     onSuccess,
-    topContent,
-    bottomContent,
 }: IScheduledEmailDialogProps) {
     const intl = useIntl();
 
@@ -433,7 +431,6 @@ export function ScheduledMailDialogRenderer({
                                     "gd-notification-channel-dialog-with-tabs": tabs.length > 1,
                                 })}
                             >
-                                {topContent}
                                 <div className="gd-divider-with-margin" />
                                 {selectedTabId === "filters" ? (
                                     <div
@@ -619,7 +616,6 @@ export function ScheduledMailDialogRenderer({
                                             ))}
                                     </div>
                                 )}
-                                {bottomContent}
                             </ScrollablePanel>
                         </ConfirmDialogBase>
                     </ValidationContextStore>

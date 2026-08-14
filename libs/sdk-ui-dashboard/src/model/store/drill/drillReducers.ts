@@ -1,6 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
+import { castDraft } from "immer";
 
 import { type ExplicitDrill } from "@gooddata/sdk-ui";
 
@@ -28,7 +29,7 @@ const crossFilterByWidget: DrillReducer<PayloadAction<CrossFilterByWidgetPayload
     if (!state.crossFiltering[tabId]) {
         state.crossFiltering[tabId] = [];
     }
-    state.crossFiltering[tabId] = [item];
+    state.crossFiltering[tabId] = castDraft([item]);
 };
 
 const resetCrossFiltering: DrillReducer<PayloadAction<string | undefined>> = (state, action) => {

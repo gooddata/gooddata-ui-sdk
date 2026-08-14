@@ -22,6 +22,7 @@ import {
     isComboChart,
     isInvertedChartType,
     isLineChart,
+    isMekko,
 } from "../_util/common.js";
 import { canComboChartBeStackedInPercent } from "../comboChart/comboChartOptions.js";
 
@@ -183,16 +184,19 @@ export function getYAxisConfiguration(
     }
     const { stackMeasuresToPercent = false } = chartConfig;
 
-    // only supports column & bar charts
-    if (!isColumnChart(type) && !isBarChart(type)) {
+    // only supports column & bar charts and mekko (whose stacked totals equal 100% too)
+    if (!isColumnChart(type) && !isBarChart(type) && !isMekko(type)) {
         return {};
     }
+
+    // Mekko downgrades 100%→absolute stacking on negative Height values — totals are meaningful again
+    const stacksToPercent = stackMeasuresToPercent && !chartOptions.stackToPercentBlockedByNegativeValues;
 
     const { enabled: stackingDataLabelEnabled } = getTotalsVisibilityConfig(type, chartConfig);
 
     const yAxisWithStackLabel = yAxis.map((axis: YAxisOptions | undefined, index: number) => {
         // disable stack labels for primary Y axis when there is 'Stack to 100%' on
-        const stackLabelEnabled = (index !== 0 || !stackMeasuresToPercent) && !!stackingDataLabelEnabled;
+        const stackLabelEnabled = (index !== 0 || !stacksToPercent) && !!stackingDataLabelEnabled;
         return {
             ...(axis ?? {}),
             stackLabels: {

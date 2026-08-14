@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -23,8 +23,10 @@ import {
 
 const DATE_DROPDOWN_BODY_MARGIN = 6;
 const UNRELATED_HEIGHT = 37;
-const PADDING = 10;
+export const PADDING = 10;
 const DROPDOWN_MAX_HEIGHT = 400;
+
+export const MAX_DATE_DATASET_DROPDOWN_WIDTH = 350;
 
 export function getUnrelatedDateDataset(
     relatedDateDataSets: readonly ICatalogDateDataset[],
@@ -89,6 +91,25 @@ export function getDateConfigurationDropdownHeight(
     const maxHeight = Math.max(nodeAboveHeight, nodeBelowHeight);
 
     return Math.min(dropdownBodyHeight, maxHeight, DROPDOWN_MAX_HEIGHT);
+}
+
+export function getDateDatasetDropdownWidth(
+    minWidth: number,
+    contentWidth: number,
+    buttonLeft: number,
+    buttonRight: number,
+    windowObj: Pick<Window, "innerWidth"> = window,
+): number {
+    const isButtonLeftOnScreen = buttonLeft >= 0 && buttonLeft <= windowObj.innerWidth;
+    const isButtonRightOnScreen = buttonRight >= 0 && buttonRight <= windowObj.innerWidth;
+    const availableToTheRight = isButtonLeftOnScreen
+        ? Math.max(0, windowObj.innerWidth - buttonLeft - PADDING)
+        : 0;
+    const availableToTheLeft = isButtonRightOnScreen ? Math.max(0, buttonRight - PADDING) : 0;
+    const viewportLimit = Math.max(availableToTheRight, availableToTheLeft);
+    const maxWidth = Math.max(minWidth, Math.min(MAX_DATE_DATASET_DROPDOWN_WIDTH, viewportLimit));
+
+    return Math.min(Math.max(minWidth, contentWidth), maxWidth);
 }
 
 function catalogDateDatasetToDateDataset(ds: ICatalogDateDataset): IDateDataset {

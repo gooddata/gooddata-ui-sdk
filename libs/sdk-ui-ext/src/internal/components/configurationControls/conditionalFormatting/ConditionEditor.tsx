@@ -53,9 +53,11 @@ import {
     operatorsForTarget,
     rangeRaw,
     rawToDisplayNumber,
+    rawValueText,
     validateCondition,
     valueEditorKind,
     valueForOperator,
+    valueMatchesEditorKind,
 } from "./conditionalFormattingModel.js";
 import { type IReorderSlot } from "./ReorderList.js";
 
@@ -211,6 +213,8 @@ interface IConditionValueInputProps {
     date: ICfDateMeta | undefined;
     dateFilterOptions: IDateFilterOptionsByType | undefined;
     dateSettings: ICfDateSettings | undefined;
+    /** A read-only rule may pair a value shape its editor can't represent; fall back to raw text. */
+    readOnly: boolean;
     onChange: (condition: IConditionalFormattingCondition) => void;
 }
 
@@ -224,6 +228,7 @@ function ConditionValueInput({
     date,
     dateFilterOptions,
     dateSettings,
+    readOnly,
     onChange,
 }: IConditionValueInputProps) {
     const intl = useIntl();
@@ -246,6 +251,13 @@ function ConditionValueInput({
         return { hasError, errorId: hasError ? errorId : undefined, onVisit: markVisited(field) };
     };
     const error = invalid ?? emptyIn("value") ?? emptyIn("from") ?? emptyIn("to");
+
+    // A read-only rule may pair a value shape its editor can't represent (e.g. a semantic-layer
+    // condition the pivot editor never authors) — fall back to raw text instead of a dead-ended
+    // control. Placed after every hook call above so it never changes the hooks called per render.
+    if (readOnly && !valueMatchesEditorKind(editorKind, condition.value)) {
+        return <span className="gd-cf-condition__raw-value">{rawValueText(condition.value)}</span>;
+    }
 
     const renderControl = () => {
         switch (editorKind) {
@@ -444,6 +456,8 @@ export interface IConditionEditorProps {
     dateSettings: ICfDateSettings | undefined;
     removable: boolean;
     slot: IReorderSlot;
+    /** A read-only rule may carry an operator/value the editor doesn't curate for this target. */
+    readOnly?: boolean;
     onChange: (condition: IConditionalFormattingCondition) => void;
     onRemove: () => void;
 }
@@ -459,13 +473,23 @@ export function ConditionEditor({
     dateSettings,
     removable,
     slot,
+    readOnly = false,
     onChange,
     onRemove,
 }: IConditionEditorProps) {
     const intl = useIntl();
     const isDate = date !== undefined;
+    const curatedOperators = operatorsForTarget(kind, isDate);
+    // A read-only rule may carry an operator the editor doesn't curate for this target (e.g. a
+    // semantic-layer rule the pivot editor can't author); keep it selectable so its real label shows
+    // instead of leaving the picker blank. Gated on readOnly: sanitizeRuleForEditing normalizes the
+    // operator on the editable path, so this must never offer an uncurated choice a user could pick.
+    const operators =
+        readOnly && !curatedOperators.includes(condition.operator)
+            ? [...curatedOperators, condition.operator]
+            : curatedOperators;
     // Date operators render label-only (per design), so no icon lookup on that path.
-    const operatorItems = operatorsForTarget(kind, isDate).map((operator) => ({
+    const operatorItems = operators.map((operator) => ({
         value: operator,
         title: intl.formatMessage(
             (isDate ? conditionalFormattingDateOperatorMessages[operator] : undefined) ??
@@ -490,7 +514,7 @@ export function ConditionEditor({
                 </span>
                 {removable ? (
                     <Button
-                        className="gd-button-link gd-button-icon-only gd-icon-cross"
+                        className="gd-button-link gd-button-icon-only gd-icon-cross gd-cf-condition__delete"
                         accessibilityConfig={{
                             ariaLabel: intl.formatMessage(
                                 conditionalFormattingMessages.dialogRemoveCondition,
@@ -522,6 +546,7 @@ export function ConditionEditor({
                 date={date}
                 dateFilterOptions={dateFilterOptions}
                 dateSettings={dateSettings}
+                readOnly={readOnly}
                 onChange={onChange}
             />
             <div className="gd-cf-condition__format-row">

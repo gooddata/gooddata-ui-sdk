@@ -80,8 +80,6 @@ export function AlertingDialogRenderer({
     onSuccess,
     onSaveError,
     onSaveSuccess,
-    topContent,
-    bottomContent,
 }: IAlertingDialogProps) {
     const intl = useIntl();
 
@@ -331,7 +329,6 @@ export function AlertingDialogRenderer({
                                 {intl.formatMessage({ id: "dialogs.alert.accessibility.label.title" })}
                             </h2>
                             <ScrollablePanel className="gd-notifications-channel-dialog-content-wrapper gd-notification-channel-dialog-with-automation-filters">
-                                {topContent}
                                 <div className="gd-divider-with-margin" />
                                 <>
                                     <AutomationFiltersSelect
@@ -620,7 +617,6 @@ export function AlertingDialogRenderer({
                                         {datapoint.message}
                                     </Message>
                                 ))}
-                                {bottomContent}
                             </ScrollablePanel>
                         </ConfirmDialogBase>
                     </ValidationContextStore>

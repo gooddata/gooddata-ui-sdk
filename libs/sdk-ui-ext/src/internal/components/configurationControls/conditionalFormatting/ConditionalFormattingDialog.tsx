@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import cx from "classnames";
 import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
 
@@ -37,6 +38,9 @@ const POPOVER_ALIGN_POINTS: IAlignPoint[] = [
     { align: "cr cl", offset: { x: 5, y: 0 } },
 ];
 
+/**
+ * @internal
+ */
 export interface IConditionalFormattingDialogProps {
     rule: IConditionalFormattingRule;
     isNew: boolean;
@@ -49,10 +53,17 @@ export interface IConditionalFormattingDialogProps {
     dateSettings?: ICfDateSettings;
     /** CSS selector of a small, stable element the popover anchors to. */
     alignTo: string;
+    /** Renders the dialog non-interactively: no target picker, no editing, no Save button. */
+    readOnly?: boolean;
+    /** Renders a static "icon + title" header for the rule's target instead of the picker dropdown. */
+    fixedTarget?: boolean;
     onSave: (rule: IConditionalFormattingRule) => void;
     onClose: () => void;
 }
 
+/**
+ * @internal
+ */
 export function ConditionalFormattingDialog({
     rule: initialRule,
     isNew,
@@ -61,14 +72,18 @@ export function ConditionalFormattingDialog({
     dateFilterOptions,
     dateSettings,
     alignTo,
+    readOnly = false,
+    fixedTarget = false,
     onSave,
     onClose,
 }: IConditionalFormattingDialogProps) {
     const intl = useIntl();
-    const initial = sanitizeRuleForEditing(
-        initialRule,
-        isDateTarget(findTargetOption(targetOptions, initialRule.target)),
-    );
+    const initial = readOnly
+        ? initialRule
+        : sanitizeRuleForEditing(
+              initialRule,
+              isDateTarget(findTargetOption(targetOptions, initialRule.target)),
+          );
     const [rule, setRule] = useState(initial);
 
     const updateCondition = (id: string, next: IConditionalFormattingCondition) =>
@@ -106,12 +121,17 @@ export function ConditionalFormattingDialog({
     };
 
     const selectedTarget = findTargetOption(targetOptions, rule.target);
+    const singleTarget = fixedTarget ? selectedTarget : undefined;
     const isPercent = selectedTarget?.isPercent ?? false;
     const suggestions = selectedTarget?.elements ?? [];
     const complete = isRuleComplete(rule, selectedTarget?.date);
     const isDirty = isNew || !isEqual(rule, initial);
     const title = intl.formatMessage(
-        isNew ? conditionalFormattingMessages.dialogAddTitle : conditionalFormattingMessages.dialogEditTitle,
+        readOnly
+            ? conditionalFormattingMessages.dialogViewTitle
+            : isNew
+              ? conditionalFormattingMessages.dialogAddTitle
+              : conditionalFormattingMessages.dialogEditTitle,
     );
 
     return (
@@ -137,43 +157,69 @@ export function ConditionalFormattingDialog({
                     <span className="gd-cf-dialog__label">
                         {intl.formatMessage(conditionalFormattingMessages.dialogTarget)}
                     </span>
-                    <CfSelect
-                        value={selectedTarget?.value}
-                        items={targetOptions.map((option) => ({
-                            value: option.value,
-                            title: option.title,
-                            icon: targetIcon(option.target.kind, isDateTarget(option)),
-                        }))}
-                        onSelect={changeTarget}
-                        placeholder={intl.formatMessage(conditionalFormattingMessages.dialogSelectTarget)}
-                    />
-                    <ReorderList
-                        items={rule.conditions}
-                        getKey={(condition) => condition.id}
-                        onReorder={reorderConditions}
-                        renderItem={(condition, slot) => (
-                            <ConditionEditor
-                                condition={condition}
-                                kind={rule.target.kind}
-                                isPercent={isPercent}
-                                separators={separators}
-                                suggestions={suggestions}
-                                date={selectedTarget?.date}
-                                dateFilterOptions={dateFilterOptions}
-                                dateSettings={dateSettings}
-                                removable={rule.conditions.length > 1}
-                                slot={slot}
-                                onChange={(next) => updateCondition(condition.id, next)}
-                                onRemove={() => removeCondition(condition.id)}
+                    {singleTarget ? (
+                        <div className="gd-cf-dialog__static-target">
+                            <span
+                                className={cx(
+                                    "gd-cf-type-icon",
+                                    targetIcon(singleTarget.target.kind, isDateTarget(singleTarget)),
+                                )}
+                                aria-hidden="true"
                             />
-                        )}
-                    />
-                    <Button
-                        className="gd-button-secondary gd-cf-dialog__add-condition"
-                        iconLeft="gd-icon-plus"
-                        value={intl.formatMessage(conditionalFormattingMessages.dialogAddCondition)}
-                        onClick={addCondition}
-                    />
+                            <span className="gd-cf-dialog__static-target-title">{singleTarget.title}</span>
+                        </div>
+                    ) : (
+                        <fieldset className="gd-cf-dialog__target-picker" disabled={readOnly}>
+                            <CfSelect
+                                value={selectedTarget?.value}
+                                items={targetOptions.map((option) => ({
+                                    value: option.value,
+                                    title: option.title,
+                                    icon: targetIcon(option.target.kind, isDateTarget(option)),
+                                }))}
+                                onSelect={changeTarget}
+                                placeholder={intl.formatMessage(
+                                    conditionalFormattingMessages.dialogSelectTarget,
+                                )}
+                            />
+                        </fieldset>
+                    )}
+                    <fieldset
+                        disabled={readOnly}
+                        className={cx("gd-cf-dialog__editable", {
+                            "gd-cf-dialog__editable--readonly": readOnly,
+                        })}
+                    >
+                        <ReorderList
+                            items={rule.conditions}
+                            getKey={(condition) => condition.id}
+                            onReorder={reorderConditions}
+                            disabled={readOnly}
+                            renderItem={(condition, slot) => (
+                                <ConditionEditor
+                                    condition={condition}
+                                    kind={rule.target.kind}
+                                    isPercent={isPercent}
+                                    separators={separators}
+                                    suggestions={suggestions}
+                                    date={selectedTarget?.date}
+                                    dateFilterOptions={dateFilterOptions}
+                                    dateSettings={dateSettings}
+                                    removable={rule.conditions.length > 1}
+                                    slot={slot}
+                                    readOnly={readOnly}
+                                    onChange={(next) => updateCondition(condition.id, next)}
+                                    onRemove={() => removeCondition(condition.id)}
+                                />
+                            )}
+                        />
+                        <Button
+                            className="gd-button-secondary gd-cf-dialog__add-condition"
+                            iconLeft="gd-icon-plus"
+                            value={intl.formatMessage(conditionalFormattingMessages.dialogAddCondition)}
+                            onClick={addCondition}
+                        />
+                    </fieldset>
                 </div>
                 <div className="gd-cf-dialog__footer">
                     <Button
@@ -181,12 +227,14 @@ export function ConditionalFormattingDialog({
                         value={intl.formatMessage(conditionalFormattingMessages.dialogCancel)}
                         onClick={onClose}
                     />
-                    <Button
-                        className="gd-button-action"
-                        value={intl.formatMessage(conditionalFormattingMessages.dialogSave)}
-                        disabled={!complete || !isDirty}
-                        onClick={() => onSave(rule)}
-                    />
+                    {readOnly ? null : (
+                        <Button
+                            className="gd-button-action"
+                            value={intl.formatMessage(conditionalFormattingMessages.dialogSave)}
+                            disabled={!complete || !isDirty}
+                            onClick={() => onSave(rule)}
+                        />
+                    )}
                 </div>
             </div>
         </Overlay>

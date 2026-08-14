@@ -258,6 +258,7 @@ export function AsCodeDialog(props: Props) {
                             <div className="gd-ascode-dialog-editor">
                                 <AsCodeEditorBody
                                     initialValue={initialYaml}
+                                    label={intl.formatMessage(descriptor.messages.sectionHeader)}
                                     onChange={handleChange}
                                     disabled={isSubmitting || isBaseUnrepresentable}
                                     completionSource={editing.completionSource}

@@ -67,6 +67,14 @@
             color: variables.$gd-color-link;
             margin-top: 20px;
 
+            // A custom definition editor rendered in place of the textarea needs the same bottom
+            // spacing; unlike the textarea it is an element child rather than a bare control.
+            > div {
+                flex: 1;
+                min-height: 0;
+                margin-bottom: 20px;
+            }
+
             textarea {
                 resize: none;
                 flex: 1;

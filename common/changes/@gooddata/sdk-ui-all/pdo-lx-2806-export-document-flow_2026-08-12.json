@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-pluggable-host: In export mode the host chrome no longer traps the application in a fixed-height scroll container (Chromium print-to-PDF clipped everything past page 1), and the brand suffix is omitted from document.title so exported PDFs carry the bare dashboard name.",
+            "type": "none",
+            "email": "petr.dolejsi@gooddata.com"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

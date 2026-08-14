@@ -50,7 +50,7 @@ const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 /**
  * @alpha
  */
-export function DefaultMenuButton({ menuItems }: IMenuButtonProps): ReactElement | null {
+export function DefaultMenuButton({ menuItems, isEnabled = true }: IMenuButtonProps): ReactElement | null {
     const [isOpen, setIsOpen] = useState(false);
     const [autofocusSubmenu, setAutofocusSubmenu] = useState(false);
     const intl = useIntl();
@@ -190,6 +190,12 @@ export function DefaultMenuButton({ menuItems }: IMenuButtonProps): ReactElement
         }
     }, [selectedMenuItem, parentItemId, menuItemRefs, autofocusSubmenu]);
 
+    useEffect(() => {
+        if (!isEnabled && isOpen) {
+            onClose();
+        }
+    }, [isEnabled, isOpen, onClose]);
+
     if (!visibleMenuItems.length) {
         return null;
     }
@@ -258,6 +264,7 @@ export function DefaultMenuButton({ menuItems }: IMenuButtonProps): ReactElement
                             dataTestId="s-header-options-button"
                             variant={smallScreen ? "tertiary" : "secondary"}
                             size={smallScreen ? "xlarge" : density === "compact" ? "small" : "medium"}
+                            isDisabled={!isEnabled}
                             accessibilityConfig={{
                                 role: "button",
                                 ariaLabel: tooltipText,

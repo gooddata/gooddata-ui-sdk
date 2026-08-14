@@ -135,6 +135,32 @@ describe("Styling editor dialog", () => {
         expect(saveButton).not.toHaveClass("disabled");
     });
 
+    it.each(['"just a string"', "42", "true", "null"])(
+        "should not enable save for the bare JSON value %s",
+        (definition) => {
+            // A theme is an object and a palette an array; JSON.parse accepts these, but they are not
+            // a styling definition and submitting one would persist it as the whole content.
+            renderEditor();
+            const saveButton = screen.getByText("Save").closest("button");
+
+            fireEvent.change(screen.getByLabelText("Styling item definition"), {
+                target: { value: definition },
+            });
+
+            expect(saveButton).toHaveClass("disabled");
+        },
+    );
+
+    it("should enable save for a palette, which is a JSON array", () => {
+        renderEditor({ stylingItem: undefined });
+        fireEvent.change(screen.getByLabelText("Styling item name"), { target: { value: "name" } });
+        fireEvent.change(screen.getByLabelText("Styling item definition"), {
+            target: { value: '[{ "guid": "a", "fill": { "r": 1, "g": 2, "b": 3 } }]' },
+        });
+
+        expect(screen.getByText("Save").closest("button")).not.toHaveClass("disabled");
+    });
+
     it("should render progress indicator if flag provided", () => {
         renderEditor({ showProgressIndicator: true });
 
@@ -253,6 +279,61 @@ describe("Styling editor dialog", () => {
             } finally {
                 consoleErrorSpy.mockRestore();
             }
+        });
+    });
+
+    describe("with a custom definition editor", () => {
+        // Stands in for a richer editor (e.g. UiConfigEditor) without pulling one in here: what
+        // matters is that the dialog's own validation and submit still work through the slot.
+        const renderWithSlot = (customProps: Partial<IStylingEditorDialogProps<ITheme>> = {}) =>
+            renderEditor({
+                renderDefinitionEditor: ({ value, onChange }) => (
+                    <textarea
+                        aria-label="Custom definition editor"
+                        value={value}
+                        onChange={(e) => onChange(e.target.value)}
+                    />
+                ),
+                ...customProps,
+            });
+
+        it("should render the custom editor instead of the default textarea", () => {
+            renderWithSlot();
+
+            expect(screen.getByLabelText("Custom definition editor")).toBeInTheDocument();
+            expect(screen.queryByLabelText("Styling item definition")).not.toBeInTheDocument();
+        });
+
+        it("should seed the custom editor with the definition as JSON text", () => {
+            renderWithSlot();
+
+            expect(screen.getByLabelText("Custom definition editor")).toHaveValue(referenceTheme("red"));
+        });
+
+        it("should still validate and submit the value coming back from the custom editor", () => {
+            const onSubmit = vi.fn();
+            renderWithSlot({ onSubmit });
+            const editor = screen.getByLabelText("Custom definition editor");
+            const saveButton = screen.getByText("Save").closest("button");
+
+            fireEvent.change(editor, { target: { value: "{ not json" } });
+            expect(saveButton).toHaveClass("disabled");
+
+            fireEvent.change(editor, { target: { value: referenceTheme("green") } });
+            expect(saveButton).not.toHaveClass("disabled");
+
+            fireEvent.click(saveButton!);
+            expect(onSubmit).toHaveBeenCalledWith(
+                expect.objectContaining({ content: theme("green").content }),
+            );
+        });
+
+        it("should push an applied example into the custom editor", () => {
+            renderWithSlot();
+
+            fireEvent.click(screen.getAllByLabelText("Styling example action").at(0)!);
+
+            expect(screen.getByLabelText("Custom definition editor")).toHaveValue(referenceTheme("green"));
         });
     });
 });

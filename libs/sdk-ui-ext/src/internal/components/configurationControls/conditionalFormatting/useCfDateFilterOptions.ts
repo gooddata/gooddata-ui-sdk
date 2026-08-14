@@ -18,6 +18,8 @@ const FALLBACK_DATE_FILTER_OPTIONS = convertDateFilterConfigToDateFilterOptions(
  * dashboard date filter consumes. Undefined while loading (the picker degrades to its static form);
  * falls back to platform defaults when backend/workspace is absent, the workspace has no custom
  * config, the query fails, or the config yields nothing visible.
+ *
+ * @internal
  */
 export function useCfDateFilterOptions(
     backend: IAnalyticalBackend | undefined,

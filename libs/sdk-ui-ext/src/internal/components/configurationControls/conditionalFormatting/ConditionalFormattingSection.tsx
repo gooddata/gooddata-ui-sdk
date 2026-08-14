@@ -7,7 +7,11 @@ import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { type IInsightDefinition, type ISeparators } from "@gooddata/sdk-model";
+import {
+    type IInsightDefinition,
+    type ISemanticConditionalFormatting,
+    type ISeparators,
+} from "@gooddata/sdk-model";
 import { Button, UiIconButton } from "@gooddata/sdk-ui-kit";
 import { type IConditionalFormatting, type IConditionalFormattingRule } from "@gooddata/sdk-ui-pivot/next";
 
@@ -22,9 +26,11 @@ import {
     type ITargetOption,
     buildTargetOptions,
     findTargetOption,
+    isCustomTarget,
     isDateTarget,
     isRuleComplete,
     newRule,
+    semanticRuleFor,
     targetIcon,
     targetLocalId,
 } from "./conditionalFormattingModel.js";
@@ -33,10 +39,11 @@ import { useCfDateFilterOptions } from "./useCfDateFilterOptions.js";
 
 const SECTION_ID = "conditionalFormatting_section";
 
-interface IDialogState {
-    rule: IConditionalFormattingRule;
-    isNew: boolean;
-}
+// At most one popover can be open against the shared `.s-cf-popover-anchor`; a union makes that
+// structural instead of an invariant two independent booleans would have to maintain by hand.
+type IDialogState =
+    | { kind: "custom"; rule: IConditionalFormattingRule; isNew: boolean }
+    | { kind: "semantic"; rule: IConditionalFormattingRule; option: ITargetOption };
 
 export interface IConditionalFormattingSectionProps {
     properties?: IVisualizationProperties;
@@ -108,6 +115,58 @@ function RuleChip({ rule, option, invalid, editable, labels, slot, onEdit, onDel
     );
 }
 
+interface ISemanticRuleRowProps {
+    option: ITargetOption;
+    viewLabel: string;
+    onView: () => void;
+}
+
+// A held-open semantic dialog is a snapshot from when "View" was clicked — re-derive it against the
+// current semantic payload every render so it tracks edits, and disappears (rather than showing stale
+// or unrelated rules) once loading clears `targetData.semantic`, the target stops being Inherited (its
+// row left `semanticRows` because it became Custom), or its semantic rule itself is no longer present.
+function resolveActiveDialog(
+    dialog: IDialogState | null,
+    semanticMap: Record<string, ISemanticConditionalFormatting>,
+    config: IConditionalFormatting | undefined,
+): IDialogState | null {
+    if (dialog?.kind !== "semantic") {
+        return dialog;
+    }
+    if (isCustomTarget(config, dialog.option.target)) {
+        return null;
+    }
+    const current = semanticMap[targetLocalId(dialog.option.target)];
+    return current
+        ? { kind: "semantic", option: dialog.option, rule: semanticRuleFor(dialog.option, current) }
+        : null;
+}
+
+// `activeDialog.rule.id` alone is stable across a semantic-rule content change (it's target-based, not
+// content-based, per semanticRuleFor) — ConditionalFormattingDialog seeds its local draft from `rule` via
+// useState and won't re-sync on a prop change, so without remounting on content change too, a rule that
+// changes while the (read-only) dialog is open would keep showing what it looked like when opened.
+function dialogKey(dialog: IDialogState): string {
+    return dialog.kind === "semantic"
+        ? `${dialog.rule.id}:${JSON.stringify(dialog.rule.conditions)}`
+        : dialog.rule.id;
+}
+
+// Read-only: no drag handle, no delete — nothing on the row is editable here, only the View
+// button opens the (readOnly) dialog. Turning it off/customizing it is PR-6, not this one.
+function SemanticRuleRow({ option, viewLabel, onView }: ISemanticRuleRowProps) {
+    return (
+        <div className="gd-cf-rule gd-cf-rule--semantic">
+            <span
+                className={`gd-cf-type-icon ${targetIcon(option.target.kind, isDateTarget(option))}`}
+                aria-hidden="true"
+            />
+            <span className="gd-cf-rule__title">{option.title}</span>
+            <Button className="gd-button-link gd-cf-rule__view" value={viewLabel} onClick={onView} />
+        </div>
+    );
+}
+
 export function ConditionalFormattingSection({
     properties,
     propertiesMeta,
@@ -129,6 +188,22 @@ export function ConditionalFormattingSection({
     const targetOptions = insight ? buildTargetOptions(insight, targetData) : [];
     // Only date pickers consume the catalog — skip the backend query when no target is date-eligible.
     const dateFilterOptions = useCfDateFilterOptions(backend, workspace, targetOptions.some(isDateTarget));
+    // Targets inheriting a semantic-layer rule, minus any already Custom (an authored rule or a
+    // customTargets entry). NOT gated on the toggle above: the engine's `enabled` only ever
+    // deactivates the insight's OWN authored rules — an untouched (Inherited) target keeps
+    // painting regardless, so hiding it here would desync the panel from what's on screen.
+    const semanticMap = targetData?.semantic ?? {};
+    const semanticRows = targetOptions.flatMap((option) => {
+        const rule = semanticMap[targetLocalId(option.target)];
+        return !rule || isCustomTarget(config, option.target) ? [] : [{ option, semantic: rule }];
+    });
+    const activeDialog = resolveActiveDialog(dialog, semanticMap, config);
+    // `resolveActiveDialog` only hides an invalidated semantic dialog from render — without also
+    // clearing the underlying state here, a later data view that happens to carry a rule for the same
+    // (possibly stale) target would silently reopen it, with no new View click.
+    if (dialog?.kind === "semantic" && activeDialog === null) {
+        setDialog(null);
+    }
     // Completeness and authoring both need execution-resolved date metadata; before the first data view
     // it's unknown — don't flash a false "Invalid" badge, don't author a plain-text rule on a date attr.
     const targetDataReady = targetData?.dates !== undefined;
@@ -164,6 +239,7 @@ export function ConditionalFormattingSection({
         edit: intl.formatMessage(conditionalFormattingMessages.ruleEdit),
         delete: intl.formatMessage(conditionalFormattingMessages.ruleDelete),
     };
+    const viewLabel = intl.formatMessage(conditionalFormattingMessages.ruleView);
 
     return (
         <ConfigSection
@@ -192,13 +268,18 @@ export function ConditionalFormattingSection({
                     iconLeft="gd-icon-plus"
                     value={intl.formatMessage(conditionalFormattingMessages.addRule)}
                     disabled={!canAddRule}
-                    onClick={() => setDialog({ rule: newRule(targetOptions[0]), isNew: true })}
+                    onClick={() =>
+                        setDialog({ kind: "custom", rule: newRule(targetOptions[0]), isNew: true })
+                    }
                 />
             </div>
             {rules.length === 0 ? (
-                <div className="gd-cf-section__empty">
-                    {intl.formatMessage(conditionalFormattingMessages.empty)}
-                </div>
+                // The empty-state hint would contradict an inherited row rendered just below it.
+                semanticRows.length === 0 ? (
+                    <div className="gd-cf-section__empty">
+                        {intl.formatMessage(conditionalFormattingMessages.empty)}
+                    </div>
+                ) : null
             ) : (
                 <div className="gd-cf-section__rules">
                     <ReorderList
@@ -218,7 +299,7 @@ export function ConditionalFormattingSection({
                                     editable={targetDataReady}
                                     labels={chipLabels}
                                     slot={slot}
-                                    onEdit={() => setDialog({ rule, isNew: false })}
+                                    onEdit={() => setDialog({ kind: "custom", rule, isNew: false })}
                                     onDelete={() => deleteRule(rule.id)}
                                 />
                             );
@@ -227,17 +308,46 @@ export function ConditionalFormattingSection({
                 </div>
             )}
 
-            {dialog ? (
+            {semanticRows.length > 0 ? (
+                <div className="gd-cf-section__semantic">
+                    <div className="gd-cf-section__subcategory">
+                        <span className="gd-cf-section__rules-label">
+                            {intl.formatMessage(conditionalFormattingMessages.semanticLabel)}
+                        </span>
+                        <span className="gd-cf-section__divider" />
+                    </div>
+                    <div className="gd-cf-section__rules">
+                        {semanticRows.map(({ option, semantic }) => (
+                            <SemanticRuleRow
+                                key={option.value}
+                                option={option}
+                                viewLabel={viewLabel}
+                                onView={() =>
+                                    setDialog({
+                                        kind: "semantic",
+                                        rule: semanticRuleFor(option, semantic),
+                                        option,
+                                    })
+                                }
+                            />
+                        ))}
+                    </div>
+                </div>
+            ) : null}
+
+            {activeDialog ? (
                 <ConditionalFormattingDialog
-                    key={dialog.rule.id}
-                    rule={dialog.rule}
-                    isNew={dialog.isNew}
+                    key={dialogKey(activeDialog)}
+                    rule={activeDialog.rule}
+                    isNew={activeDialog.kind === "custom" && activeDialog.isNew}
+                    readOnly={activeDialog.kind === "semantic"}
+                    fixedTarget={activeDialog.kind === "semantic"}
                     targetOptions={targetOptions}
                     separators={separators}
                     dateFilterOptions={dateFilterOptions}
                     dateSettings={dateSettings}
                     alignTo=".s-cf-popover-anchor"
-                    onSave={(rule) => saveRule(rule, dialog.isNew)}
+                    onSave={(rule) => activeDialog.kind === "custom" && saveRule(rule, activeDialog.isNew)}
                     onClose={() => setDialog(null)}
                 />
             ) : null}

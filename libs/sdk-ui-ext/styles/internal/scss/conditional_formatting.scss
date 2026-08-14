@@ -37,6 +37,12 @@
     margin-bottom: 5px;
 }
 
+// Spacing above the inherited-rules block; the rules list above already carries its own
+// margin-bottom, so this only needs the gap between the two subsections.
+.gd-cf-section__semantic {
+    margin-top: 10px;
+}
+
 .gd-cf-select__option {
     height: 28px;
 }
@@ -195,6 +201,28 @@
     }
 }
 
+// Read-only row: nothing on the row itself is editable (only the View button), so the base
+// hover's "pop card" bleed — which signals "click me to edit" — doesn't apply here; the dashed
+// border + muted title read as "inherited, not yours to edit here" instead.
+.gd-cf-rule--semantic {
+    border: 1px dashed var(--gd-palette-complementary-3);
+
+    &:hover {
+        margin-left: 0;
+        padding-left: 8px;
+        background: none;
+        box-shadow: none;
+    }
+
+    .gd-cf-rule__title {
+        color: var(--gd-palette-complementary-6);
+    }
+}
+
+.gd-cf-rule__view {
+    flex: 0 0 auto;
+}
+
 .gd-cf-section__anchor {
     display: block;
     width: 0;
@@ -247,6 +275,48 @@
 
     &__add-condition {
         align-self: flex-start;
+    }
+
+    &__static-target {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    &__static-target-title {
+        overflow: hidden;
+        color: var(--gd-palette-complementary-8);
+        font-size: 12px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__target-picker,
+    &__editable {
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+        border: none;
+
+        // A disabled fieldset only disables native form controls; custom widgets (the date picker's
+        // click-to-open trigger, drag-to-reorder rows) ignore it. Block pointer interaction outright.
+        &:disabled {
+            pointer-events: none;
+        }
+    }
+
+    &__editable {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    &__editable--readonly {
+        .gd-cf-condition__delete,
+        .gd-cf-reorder__handle,
+        .gd-cf-dialog__add-condition {
+            display: none;
+        }
     }
 
     &__footer {
@@ -320,6 +390,14 @@
     &__range {
         display: flex;
         gap: 5px;
+    }
+
+    &__raw-value {
+        overflow: hidden;
+        color: var(--gd-palette-complementary-7);
+        font-size: 12px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     &__error {

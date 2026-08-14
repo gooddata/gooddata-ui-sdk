@@ -1,6 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
 import type { DateAttributeGranularity } from "../base/dateGranularities.js";
+import type { IDashboardDefinition } from "../dashboard/dashboard.js";
 import type { IAttribute } from "../execution/attribute/index.js";
 import type { IFilter } from "../execution/filter/index.js";
 import type { IMeasure } from "../execution/measure/index.js";
@@ -171,6 +172,10 @@ export interface IGenAIDashboardContext {
      * Dashboard filter bar as currently applied in the UI (live state).
      */
     filters?: GenAIUserContextFilter[];
+    /**
+     * Dashboard definition.
+     */
+    definition?: IDashboardDefinition;
 }
 
 /**

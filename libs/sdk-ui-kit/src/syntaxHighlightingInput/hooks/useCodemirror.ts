@@ -9,7 +9,7 @@ import { tags as t } from "@lezer/highlight";
 
 import { useAutocompletion } from "./useAutocompletion.js";
 import { useChangeHandler } from "./useChangeHandler.js";
-import { useCodemirrorChange } from "./useCodemirrorChange.js";
+import { type ExternalChangeSelection, useCodemirrorChange } from "./useCodemirrorChange.js";
 import { useCodemirrorEditable } from "./useCodemirrorEditable.js";
 import { useCodemirrorEvents } from "./useCodemirrorEvents.js";
 import { useCodemirrorKeymap } from "./useCodemirrorKeymap.js";
@@ -40,6 +40,8 @@ export interface IUseCodemirrorProps extends IUseEventHandlersProps {
     beforeExtensions?: Extension[];
     extensions?: Extension[];
     onApi?: (view: EditorView | null) => void;
+    /** Where the selection goes when the controlled value is replaced from outside. */
+    externalChangeSelection?: ExternalChangeSelection;
 }
 
 export function useCodemirror({
@@ -57,6 +59,7 @@ export function useCodemirror({
     onChange,
     onBlur,
     onFocus,
+    externalChangeSelection,
 }: IUseCodemirrorProps) {
     const editorRef = useRef<HTMLDivElement>(null);
     const viewRef = useRef<EditorView | null>(null);
@@ -133,7 +136,7 @@ export function useCodemirror({
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     // Handle external value changes
-    useCodemirrorChange(viewRef, value);
+    useCodemirrorChange(viewRef, value, externalChangeSelection);
 
     return {
         editorRef,

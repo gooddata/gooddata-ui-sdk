@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type ComponentType, type ReactNode } from "react";
+import { type ComponentType } from "react";
 
 import {
     type DateAttributeGranularity,
@@ -65,22 +65,6 @@ export interface IAlertingDialogProps {
      * @deprecated read `isLoading` from `useAlertingDialogContext()` instead. Prop will be removed.
      */
     isLoading?: boolean;
-
-    /**
-     * Custom content rendered as the first child of the dialog content area, above the default form.
-     *
-     * @remarks
-     * Use this to surface an application-specific banner or warning without replacing the whole dialog.
-     */
-    topContent?: ReactNode;
-
-    /**
-     * Custom content rendered as the last child of the dialog content area, below the default form.
-     *
-     * @remarks
-     * Use this to surface an application-specific note or disclaimer without replacing the whole dialog.
-     */
-    bottomContent?: ReactNode;
 
     /**
      * Callback to be called, when user closes the alert dialog.

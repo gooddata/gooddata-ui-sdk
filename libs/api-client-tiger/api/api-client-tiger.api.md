@@ -2986,8 +2986,8 @@ export interface AiAlertExecution {
     // (undocumented)
     [key: string]: any;
     'attributes'?: Array<object>;
-    'filters'?: Array<object>;
-    'measures'?: Array<object>;
+    'filters'?: Array<object | null>;
+    'measures'?: Array<object | null>;
 }
 
 // @public
@@ -3982,7 +3982,7 @@ export interface AiDashboardRef {
 export interface AiDashboardReferences {
     // (undocumented)
     [key: string]: any;
-    'visualizations': Array<object>;
+    'visualizations': Array<object | null>;
 }
 
 // @public
@@ -4302,7 +4302,7 @@ export interface AiKeyDriverAnalysis {
     [key: string]: any;
     'analyzedPeriod': string;
     'dateAttributeId': string;
-    'filters': Array<object>;
+    'filters': Array<object | null>;
     'measure': AiKeyDriverAnalysisMeasure;
     'referencePeriod': string;
 }
@@ -5396,6 +5396,8 @@ export interface AiUserContext {
 
 // @public (undocumented)
 export interface AiUserContextDashboard {
+    // (undocumented)
+    'definition'?: object | null;
     // (undocumented)
     'filters'?: Array<AiVisualizationFilter> | null;
     // (undocumented)

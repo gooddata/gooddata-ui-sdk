@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-8-10
+Date generated: 2026-8-13
 
-Revision ID: df24fd6388dc31e841cd593b9a048731ec44afec
+Revision ID: 03b276147864f291b2ed2694a19ccbfa1d69ce6b
 
 ================================================================================
 ================================================================================
@@ -126,6 +126,7 @@ Revision ID: df24fd6388dc31e841cd593b9a048731ec44afec
 - @cacheable/utils (2.5.0) [MIT]
 - @codemirror/autocomplete (6.20.0) [MIT]
 - @codemirror/commands (6.10.1) [MIT]
+- @codemirror/lang-json (6.0.2) [MIT]
 - @codemirror/lang-yaml (6.1.3) [MIT]
 - @codemirror/language (6.12.1) [MIT]
 - @codemirror/lint (6.9.2) [MIT]
@@ -219,6 +220,7 @@ Revision ID: df24fd6388dc31e841cd593b9a048731ec44afec
 - @leichtgewicht/ip-codec (2.0.5) [MIT]
 - @lezer/common (1.5.2) [MIT]
 - @lezer/highlight (1.2.3) [MIT]
+- @lezer/json (1.0.3) [MIT]
 - @lezer/lr (1.4.10) [MIT]
 - @lezer/yaml (1.0.4) [MIT]
 - @mapbox/geojson-rewind (0.5.2) [ISC]
@@ -945,7 +947,7 @@ Revision ID: df24fd6388dc31e841cd593b9a048731ec44afec
 - source-map-js (1.2.1) [BSD-3-Clause]
 - source-map-support (0.5.21) [MIT]
 - space-separated-tokens (2.0.2) [MIT]
-- spark-md5 (3.0.2) [Multi-license: MIT OR WTFPL]
+- spark-md5 (3.0.2) [Multi-license: WTFPL OR MIT]
 - spdy (4.0.2) [MIT]
 - spdy-transport (3.0.0) [MIT]
 - statuses (1.5.0) [MIT]
@@ -978,7 +980,7 @@ Revision ID: df24fd6388dc31e841cd593b9a048731ec44afec
 - tar (7.5.22) [ISC]
 - terser (5.49.0) [BSD-2-Clause]
 - terser-webpack-plugin (5.6.1) [MIT]
-- text-encoding (0.7.0) [Multi-license: Apache-2.0 OR Unlicense]
+- text-encoding (0.7.0) [Multi-license: Unlicense OR Apache-2.0]
 - thingies (2.6.1) [MIT]
 - thunky (1.1.0) [MIT]
 - tinycolor2 (1.6.0) [MIT]
@@ -999,7 +1001,7 @@ Revision ID: df24fd6388dc31e841cd593b9a048731ec44afec
 - tslib (2.8.1) [ISC]
 - tslib (1.14.1) [ISC]
 - tsyringe (4.10.0) [MIT]
-- type-fest (0.21.3) [Multi-license: MIT OR CC0-1.0]
+- type-fest (0.21.3) [Multi-license: CC0-1.0 OR MIT]
 - type-is (1.6.18) [MIT]
 - typescript (5.9.3) [Apache-2.0, MIT, Unicode-DFS-2020, CC-BY-4.0, BSD-3-Clause, W3C-20150513]
 - undici-types (6.21.0) [MIT]
@@ -2289,6 +2291,18 @@ MIT
 
 
 --------------------------------------------------------------------------------
+Package Title: @codemirror/lang-json (6.0.2)
+
+Package Locator: npm+@codemirror/lang-json$6.0.2
+
+Package Depth: Direct
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
 Package Title: @codemirror/lang-yaml (6.1.3)
 
 Package Locator: npm+@codemirror/lang-yaml$6.1.3
@@ -3410,6 +3424,18 @@ Package Title: @lezer/highlight (1.2.3)
 Package Locator: npm+@lezer/highlight$1.2.3
 
 Package Depth: Direct
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: @lezer/json (1.0.3)
+
+Package Locator: npm+@lezer/json$1.0.3
+
+Package Depth: Transitive
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
@@ -12217,7 +12243,7 @@ Package Depth: Direct
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
-Multi-license: MIT OR WTFPL
+Multi-license: WTFPL OR MIT
 
 
 --------------------------------------------------------------------------------
@@ -12613,7 +12639,7 @@ Package Depth: Transitive
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
-Multi-license: Apache-2.0 OR Unlicense
+Multi-license: Unlicense OR Apache-2.0
 
 
 --------------------------------------------------------------------------------
@@ -12869,7 +12895,7 @@ Package Depth: Transitive
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
-Multi-license: MIT OR CC0-1.0
+Multi-license: CC0-1.0 OR MIT
 
 
 --------------------------------------------------------------------------------
@@ -22287,6 +22313,30 @@ THE SOFTWARE.
 
 MIT License
 
+Copyright (C) 2020 by Marijn Haverbeke <marijn@haverbeke.berlin>, Arun Srinivasan <rulfzid@gmail.com>, and others
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+* MIT *
+
+MIT License
+
 Copyright (C) 2024 by Marijn Haverbeke <marijn@haverbeke.berlin>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -29357,4 +29407,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-8-10
+Report Generated by FOSSA on 2026-8-13

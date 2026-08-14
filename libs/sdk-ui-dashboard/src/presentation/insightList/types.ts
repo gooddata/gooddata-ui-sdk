@@ -18,4 +18,5 @@ export interface IInsightListProps {
     renderItem?: (props: IRenderListItemProps<IInsight | { divider: true }>) => ReactElement;
     selectedRef?: ObjRef;
     onSelect?: (insight: IInsight) => void;
+    disabled?: boolean;
 }

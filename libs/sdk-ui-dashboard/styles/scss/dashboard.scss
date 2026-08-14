@@ -1,6 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 @use "sass:math";
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+@use "react-loading-skeleton/dist/skeleton.css";
 
 @use "variables";
 @use "layout";
@@ -32,6 +33,101 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
 // Keep this compound selector; don't reduce to a single class.
 .gd-dashboards-root.gd-flex-container {
     flex-flow: row nowrap;
+
+    &.sdk-dashboard-generating {
+        .sdk-dashboard-navigation-placeholder {
+            display: none;
+        }
+    }
+}
+
+.sdk-dashboard-generating .sdk-dashboard-skeleton {
+    margin: -15px -20px 0 -20px;
+    height: 100%;
+
+    .gd-skeleton-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .gd-skeleton-top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 48px;
+        padding-left: 15px;
+        padding-right: 11px;
+        border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+        border-bottom-color: var(
+            --gd-dashboards-title-borderColor,
+            var(--gd-palette-complementary-3, #dde4eb)
+        );
+
+        .gd-top-bar-buttons {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            height: 48px;
+        }
+    }
+
+    .gd-skeleton-filter-bar {
+        display: flex;
+        justify-content: flex-start;
+        gap: 10px;
+        height: 56px;
+        padding-left: 15px;
+        border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+        border-bottom-color: var(
+            --gd-dashboards-filterBar-borderColor,
+            var(--gd-palette-complementary-3, #dde4eb)
+        );
+        .gd-skeleton-filter {
+            display: flex;
+            justify-content: flex-start;
+            flex-direction: column;
+            height: 41px;
+            padding-top: 5px;
+        }
+    }
+
+    .gd-dash-content {
+        // The skeleton markup puts the kit `gd-flex-item` class on `.gd-dash-content`, so kit's
+        // `.gd-flex-item { flex: 0 0 auto }` ties `.gd-dash-content { flex: 1 1 100% }` (both 0,1,0)
+        // and wins by source order — non-deterministic under module federation. When kit wins,
+        // flex-grow:0 + flex-basis:0 collapses the content to a too-narrow skeleton. This compound
+        // selector (0,2,0) out-specifies kit so the content always stretches. Keep flex-grow here.
+        flex-grow: 1;
+        flex-basis: 0;
+    }
+
+    .gd-skeleton-content {
+        display: flex;
+        flex: 1;
+        gap: 20px;
+        padding: 30px;
+    }
+
+    .skeleton-flex {
+        flex: 1;
+    }
+
+    .gd-react-loading-skeleton.react-loading-skeleton {
+        --base-color: var(
+            --gd-dashboards-title-borderColor-from-theme,
+            var(--gd-palette-complementary-2, #ebeff4)
+        );
+        --highlight-color: var(
+            --gd-dashboards-content-backgroundColor,
+            var(--gd-palette-complementary-0, #fff)
+        );
+
+        @media (forced-colors: active) {
+            --base-color: canvastext;
+            --highlight-color: canvas;
+        }
+    }
 }
 
 .gd-dash-content {

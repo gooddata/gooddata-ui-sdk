@@ -13,6 +13,7 @@ interface IDraggableInsightListItemWrapperProps extends IInsightListItemProps {
     WrapInsightListItemWithDragComponent?: IWrapInsightListItemWithDragComponent;
     className?: string;
     insight: IInsight;
+    disabled?: boolean;
 }
 
 export function DraggableInsightListItemBody(props: CustomDashboardInsightListItemComponentProps) {
@@ -40,6 +41,7 @@ export function DraggableInsightListItemWrapper({
     LoadingComponent,
     filters,
     width,
+    disabled,
 }: IDraggableInsightListItemWrapperProps) {
     return (
         <DraggableInsightListItem
@@ -59,8 +61,10 @@ export function DraggableInsightListItemWrapper({
                 LoadingComponent,
                 filters,
                 width,
+                disabled,
             }}
             insight={insight}
+            disabled={disabled}
         />
     );
 }

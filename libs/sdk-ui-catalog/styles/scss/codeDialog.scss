@@ -1,6 +1,5 @@
 // (C) 2026 GoodData Corporation
 // Shared styles for the analytics-catalog "as-code" editor dialogs (parameters, metrics).
-@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 .gd-ascode-dialog {
     width: 640px;
@@ -67,33 +66,18 @@
     overflow: hidden;
     padding: 10px 20px 20px;
 
-    .gd-input-syntax-highlighting-input {
+    // The kit config editor carries its own frame, toolbar and gutter styling; the dialog only
+    // sizes it to fill the body and keeps the as-code font for the document itself.
+    .gd-ui-kit-config-editor {
         height: 100%;
+    }
+
+    .gd-input-syntax-highlighting-input {
         font-family: "Andale Mono", monospace;
         font-size: 14px;
-        line-height: 22px;
-
-        .cm-editor {
-            height: 100%;
-            border-color: transparent;
-            background-color: transparent;
-            box-shadow: none;
-            transition: none;
-
-            &.cm-focused {
-                border-color: kit-variables.$gd-palette-primary-base;
-            }
-        }
 
         .cm-content {
             font-family: "Andale Mono", monospace;
-        }
-
-        .cm-gutters {
-            background-color: transparent;
-            border-right: none;
-            color: var(--gd-palette-complementary-6);
-            padding-right: 10px;
         }
     }
 }

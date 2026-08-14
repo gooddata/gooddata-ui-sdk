@@ -12,12 +12,14 @@ interface IDraggableInsightListProps {
     WrapInsightListItemWithDragComponent?: IWrapInsightListItemWithDragComponent;
     recalculateSizeReference?: string;
     searchAutofocus?: boolean;
+    disabled?: boolean;
 }
 
 export function DraggableInsightList({
     recalculateSizeReference,
     searchAutofocus,
     WrapInsightListItemWithDragComponent,
+    disabled,
 }: IDraggableInsightListProps) {
     const flexRef = useRef<FlexDimensions>(null);
 
@@ -36,6 +38,7 @@ export function DraggableInsightList({
                 <DraggableInsightListCore
                     WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}
                     searchAutofocus={searchAutofocus}
+                    disabled={disabled}
                 />
             </FlexDimensions>
         </div>

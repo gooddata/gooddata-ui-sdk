@@ -25,4 +25,25 @@
         flex: 1;
         min-height: 0;
     }
+
+    // In export mode the document itself must be the scroller: Chromium's
+    // print-to-PDF paginates the document flow and clips anything inside a
+    // fixed-height overflow container to a single page. The chrome boxes are
+    // sized by their content instead of the viewport; note that an
+    // application whose own root is viewport-high (KD's .index) still
+    // overflows them — visibly, which is what grows the document, matching
+    // how the standalone apps print.
+    &--export {
+        height: auto;
+        min-height: 100vh;
+
+        .gd-host-chrome__content {
+            flex: 0 0 auto;
+            overflow: visible;
+        }
+
+        .gd-host-chrome__app-container {
+            flex: 0 0 auto;
+        }
+    }
 }

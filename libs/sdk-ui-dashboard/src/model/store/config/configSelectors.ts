@@ -345,6 +345,24 @@ export const selectAllowCreateInsightRequest: DashboardSelector<boolean> = creat
 );
 
 /**
+ * Returns whether the dashboard is in AI mode.
+ *
+ * @internal
+ */
+export const selectIsAiMode: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
+    return state.isAiMode ?? false;
+});
+
+/**
+ * Returns whether AI generates the dashboard.
+ *
+ * @internal
+ */
+export const selectIsAiGenerating: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
+    return state.isAiGenerating ?? false;
+});
+
+/**
  * Returns whether dependent filters are enabled.
  *
  * @internal

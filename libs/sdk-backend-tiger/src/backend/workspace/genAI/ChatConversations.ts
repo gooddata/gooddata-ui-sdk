@@ -34,12 +34,16 @@ import {
     type IChatConversationThreadQuery,
     type IChatConversations,
 } from "@gooddata/sdk-backend-spi";
+import { declarativeDashboardToYaml } from "@gooddata/sdk-code-convertors";
 import {
     type GenAIChatEffort,
     type GenAIChatInteractionUserFeedback,
     type GenAIObjectType,
     type IAllowedRelationshipType,
+    type IDashboardDefinition,
     type IGenAIUserContext,
+    isIdentifierRef,
+    isTempFilterContext,
     objRefToString,
 } from "@gooddata/sdk-model";
 
@@ -52,6 +56,10 @@ import {
     convertChatConversationItemFromBackend,
     convertChatConversationItemsFromBackend,
 } from "../../../convertors/fromBackend/genAIConvertor.js";
+import {
+    convertAnalyticalDashboard,
+    convertFilterContextToBackend,
+} from "../../../convertors/toBackend/AnalyticalDashboardConverter.js";
 import type { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 /**
@@ -622,6 +630,13 @@ function convertUserContext(userContext: IGenAIUserContext | undefined) {
                               ...(w.resultId ? { resultId: w.resultId } : {}),
                               ...(w.content === undefined ? {} : { content: w.content }),
                           })),
+                          ...(userContext.view.dashboard.definition
+                              ? {
+                                    definition: convertDashboard(
+                                        userContext.view.dashboard.definition as IDashboardDefinition,
+                                    ),
+                                }
+                              : {}),
                       },
                   },
               }
@@ -645,4 +660,41 @@ function convertUserContext(userContext: IGenAIUserContext | undefined) {
               }
             : {}),
     };
+}
+
+function convertDashboard(dashboard: IDashboardDefinition) {
+    const filterContext = dashboard.filterContext ?? dashboard.tabs?.[0].filterContext;
+    const ref = filterContext?.ref;
+
+    const dashboardContent = convertAnalyticalDashboard(
+        dashboard,
+        filterContext?.ref,
+        true,
+        true,
+        true,
+        true,
+    );
+
+    const { json } = declarativeDashboardToYaml(
+        [],
+        {
+            id: dashboard.identifier ?? "",
+            content: dashboardContent,
+            title: dashboard.title,
+            tags: dashboard.tags ?? [],
+            description: dashboard.description,
+        },
+        filterContext && ref && !isTempFilterContext(filterContext)
+            ? [
+                  {
+                      id: isIdentifierRef(ref) ? ref.identifier : ref.uri,
+                      title: filterContext.title,
+                      description: filterContext.description,
+                      content: convertFilterContextToBackend(filterContext),
+                  },
+              ]
+            : [],
+    );
+
+    return json;
 }

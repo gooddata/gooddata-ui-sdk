@@ -65,6 +65,16 @@ export { type IInsightViewProps, type IInsightTitleProps };
 export { Automations } from "./automations/Automations.js";
 export { InsightPicker } from "./insightPicker/InsightPicker.js";
 export { useInsightPickerState } from "./insightPicker/useInsightPickerState.js";
+export {
+    ConditionalFormattingDialog,
+    type IConditionalFormattingDialogProps,
+} from "./internal/components/configurationControls/conditionalFormatting/ConditionalFormattingDialog.js";
+export { useCfDateFilterOptions } from "./internal/components/configurationControls/conditionalFormatting/useCfDateFilterOptions.js";
+export type {
+    ITargetOption,
+    ICfDateSettings,
+    ICfDateMeta,
+} from "./internal/components/configurationControls/conditionalFormatting/conditionalFormattingModel.js";
 export type {
     IInsightPickerProps,
     IInsightPickerItem,

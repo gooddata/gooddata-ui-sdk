@@ -24,6 +24,7 @@ export const DefaultUiMenuHeader: FC = memo(function DefaultUiMenuHeader(): Reac
         focusedItem: ctx.focusedItem,
         shownCustomContentItemId: ctx.shownCustomContentItemId,
         setShownCustomContentItemId: ctx.setShownCustomContentItemId,
+        size: ctx.size,
     }));
 
     const {
@@ -33,6 +34,7 @@ export const DefaultUiMenuHeader: FC = memo(function DefaultUiMenuHeader(): Reac
         focusedItem,
         shownCustomContentItemId,
         setShownCustomContentItemId,
+        size,
     } = useContextStore(selector);
 
     const parentItemId = parentItem?.id;
@@ -63,7 +65,8 @@ export const DefaultUiMenuHeader: FC = memo(function DefaultUiMenuHeader(): Reac
                 backAriaLabel={formatMessage({ id: "menu.back" })}
                 closeAriaLabel={formatMessage({ id: "menu.close" })}
                 useShortenedTitle
-                height="large"
+                // The header follows the menu's density: a small menu gets the small header.
+                height={size === "small" ? "small" : "large"}
             />
         </div>
     );

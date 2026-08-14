@@ -33,6 +33,8 @@ export interface IReorderListProps<T> {
     /** Receives the full reordered array. */
     onReorder: (items: T[]) => void;
     renderItem: (item: T, slot: IReorderSlot, index: number) => ReactNode;
+    /** Suppresses drag-to-reorder regardless of item count (e.g. a read-only view of the list). */
+    disabled?: boolean;
 }
 
 /**
@@ -40,13 +42,19 @@ export interface IReorderListProps<T> {
  * The render prop keeps the consumer's own row markup; the whole row drags (the grip is a hover
  * affordance). Pointer-only — no keyboard reorder yet.
  */
-export function ReorderList<T>({ items, getKey, onReorder, renderItem }: IReorderListProps<T>) {
+export function ReorderList<T>({
+    items,
+    getKey,
+    onReorder,
+    renderItem,
+    disabled = false,
+}: IReorderListProps<T>) {
     const [dragIndex, setDragIndex] = useState<number | null>(null);
     // Insert gap (0..n), canonical: one gap = one indicator position.
     const [dropGap, setDropGap] = useState<number | null>(null);
     // Enter/leave counter across all rows; at 0 the cursor is outside every row → hide the indicator.
     const overCount = useRef(0);
-    const enabled = items.length > 1;
+    const enabled = items.length > 1 && !disabled;
 
     const reset = () => {
         setDragIndex(null);

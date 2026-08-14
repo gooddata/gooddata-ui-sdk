@@ -289,6 +289,9 @@ export function ComponentLabelsProvider(input: IComponentLabelsProviderProps): J
 // @internal (undocumented)
 export function ComponentTable<TProps extends object>(input: IComponentTableProps<TProps>): JSX.Element;
 
+// @internal
+export type ConfigEditorLanguage = "json" | "yaml";
+
 // @internal (undocumented)
 export const ConfirmDialog: NamedExoticComponent<IConfirmDialogBaseProps>;
 
@@ -566,6 +569,9 @@ export const ExportDialogBase: NamedExoticComponent<IExportDialogBaseProps>;
 
 // @internal (undocumented)
 export const ExportTabularPdfDialog: NamedExoticComponent<IExportTabularPdfDialogProps>;
+
+// @internal
+export type ExternalChangeSelection = "clamp" | "end";
 
 // @internal (undocumented)
 export const FileDropzone: ForwardRefExoticComponent<IFileDropzoneProps & RefAttributes<IFileDropzoneHandle>>;
@@ -5520,6 +5526,10 @@ export interface IStylingEditorDialogProps<T extends StylingPickerItemContent> e
     onExit?: (name: string, definition: string) => void;
     // (undocumented)
     onInvalidDefinition?: (ref: ObjRef) => void;
+    renderDefinitionEditor?: (props: {
+        value: string;
+        onChange: (next: string) => void;
+    }) => ReactNode;
     // (undocumented)
     showBackButton?: boolean;
     // (undocumented)
@@ -5635,6 +5645,7 @@ export interface ISyntaxHighlightingInputProps {
     disabled?: boolean;
     // (undocumented)
     extensions?: Extension[];
+    externalChangeSelection?: ExternalChangeSelection;
     // (undocumented)
     label?: string;
     // (undocumented)
@@ -6468,6 +6479,54 @@ export interface IUiComboboxState {
     // (undocumented)
     setIsOpen: (isOpen: boolean) => void;
     shouldRenderPopup: boolean;
+}
+
+// @internal
+export interface IUiConfigEditorApi {
+    // (undocumented)
+    focus: () => void;
+    insertAtCursor: (text: string) => void;
+}
+
+// @internal
+export interface IUiConfigEditorContextMenuProps {
+    ariaAttributes: {
+        id: string;
+        "aria-labelledby": string;
+    };
+    onClose: () => void;
+}
+
+// @internal
+export interface IUiConfigEditorLabels {
+    autoFormat?: string;
+    contextMenu?: string;
+    languages?: Partial<Record<ConfigEditorLanguage, string>>;
+    languageSwitcher?: string;
+    syntaxError?: string;
+}
+
+// @internal (undocumented)
+export interface IUiConfigEditorProps {
+    completionSource?: YamlCompletionSource;
+    // (undocumented)
+    dataTestId?: string;
+    disabled?: boolean;
+    // (undocumented)
+    editorRef?: Ref<IUiConfigEditorApi>;
+    label?: string;
+    labels?: IUiConfigEditorLabels;
+    language?: ConfigEditorLanguage;
+    languages?: ConfigEditorLanguage[];
+    onChange: (next: string) => void;
+    onLanguageChange?: (next: ConfigEditorLanguage) => void;
+    // (undocumented)
+    placeholder?: string;
+    primaryLanguage?: ConfigEditorLanguage;
+    readOnly?: boolean;
+    renderContextMenu?: (props: IUiConfigEditorContextMenuProps) => ReactNode;
+    rows?: number;
+    value: string;
 }
 
 // @internal (undocumented)
@@ -7728,7 +7787,7 @@ export interface IUiSubmenuHeaderProps {
     // (undocumented)
     closeAriaLabel?: string;
     // (undocumented)
-    height?: SizeMedium | SizeLarge;
+    height?: SizeSmall | SizeMedium | SizeLarge;
     // (undocumented)
     onBack?: (e: MouseEvent_2<HTMLButtonElement>) => void;
     // (undocumented)
@@ -8454,23 +8513,6 @@ export interface IWorkspacePickerHomeFooterProps {
 }
 
 // @internal (undocumented)
-export interface IYamlEditorProps {
-    // (undocumented)
-    completionSource?: YamlCompletionSource;
-    // (undocumented)
-    disabled?: boolean;
-    extensions?: Extension[];
-    // (undocumented)
-    initialValue: string;
-    label?: string;
-    // (undocumented)
-    onChange?: (value: string) => void;
-    // (undocumented)
-    placeholder?: string;
-    syntaxErrorMessage?: string;
-}
-
-// @internal (undocumented)
 export interface IYamlPosition {
     ancestorKeys: string[];
     isInBlockScalar: boolean;
@@ -8737,6 +8779,9 @@ export type PermissionMenuLevel = "VIEW" | "SHARE" | "EDIT";
 
 // @internal (undocumented)
 export type PositionPoint = `${VerticalPosition}-${HorizontalPosition}`;
+
+// @internal
+export function preloadUiConfigEditorGrammars(languages?: ConfigEditorLanguage[]): Promise<void>;
 
 // @internal (undocumented)
 export function preselectDateDataset<T extends IDateDataset>(dateDatasets: T[], recommendedDate: T): Array<T | IDateDatasetHeader>;
@@ -9205,6 +9250,9 @@ export type UiComboboxListItemLabelProps = HTMLAttributes<HTMLSpanElement>;
 
 // @internal (undocumented)
 export function UiComboboxPopup(input: IUiComboboxPopupProps): JSX.Element | null;
+
+// @internal
+export function UiConfigEditor(input: IUiConfigEditorProps): JSX.Element;
 
 // @internal
 export function UiConfirmDialog(input: IUiConfirmDialogProps): JSX.Element;
@@ -9778,9 +9826,6 @@ export const WorkspacePickerHomeFooter: ComponentType<Omit<IWorkspacePickerHomeF
 
 // @internal (undocumented)
 export type YamlCompletionSource = (context: CompletionContext, position: IYamlPosition) => ReturnType<CompletionSource>;
-
-// @internal
-export function YamlEditor(input: IYamlEditorProps): JSX.Element;
 
 // @internal (undocumented)
 export function yamlPositionAt(state: EditorState, pos: number): IYamlPosition;

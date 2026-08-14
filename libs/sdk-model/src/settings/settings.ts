@@ -593,6 +593,7 @@ export interface IFeatureFlags {
     enableMongoDbDataSource?: boolean;
     enableStarrocksDataSource?: boolean;
     enableSingleStoreDataSource?: boolean;
+    enableDenodoDataSource?: boolean;
 
     /**
      * Enables the data source cache retention policy: the UI for viewing and setting how long
@@ -1142,4 +1143,9 @@ export interface IFeatureFlags {
      * Enable persistent filters across tabs for dashboards.
      */
     enableDashboardPersistentFiltersAcrossTabs?: boolean;
+
+    /**
+     * Enable granularity selection for the absolute (static) date filter.
+     */
+    enableAbsoluteDateFilterGranularity?: boolean;
 }

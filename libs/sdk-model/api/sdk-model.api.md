@@ -370,6 +370,45 @@ export enum ComputeRatioRule {
 export type Condition<T> = T | IConditionOr<T> | IConditionAnd<T>;
 
 // @alpha
+export type ConditionalFormattingEmptinessOperator = "IS_EMPTY" | "IS_NOT_EMPTY";
+
+// @alpha
+export type ConditionalFormattingOperator = "ALL" | ComparisonConditionOperator | RangeConditionOperator | ConditionalFormattingTextOperator | ConditionalFormattingEmptinessOperator;
+
+// @alpha
+export type ConditionalFormattingTarget = {
+    kind: "attribute";
+    attributeIdentifier: string;
+} | {
+    kind: "measure";
+    measureIdentifier: string;
+};
+
+// @alpha
+export type ConditionalFormattingTextOperator = "CONTAINS" | "NOT_CONTAINS" | "STARTS_WITH" | "NOT_STARTS_WITH" | "ENDS_WITH" | "NOT_ENDS_WITH";
+
+// @alpha
+export type ConditionalFormattingValue = {
+    kind: "none";
+} | {
+    kind: "literal";
+    value: string | number;
+} | {
+    kind: "literalRange";
+    from: number;
+    to: number;
+} | {
+    kind: "absoluteDate";
+    from: string;
+    to: string;
+} | {
+    kind: "relativeDate";
+    granularity: DateFilterGranularity;
+    from: number;
+    to: number;
+};
+
+// @alpha
 export const CSV_DELIMITER_PRESETS: {
     readonly comma: {
         readonly delimiter: ",";
@@ -1168,6 +1207,8 @@ export interface IAttributeDescriptor {
 
 // @public
 export interface IAttributeDescriptorBody {
+    // @alpha
+    conditionalFormatting?: ISemanticConditionalFormatting;
     format?: {
         locale: string;
         pattern: string;
@@ -1723,6 +1764,45 @@ export interface IComparisonConditionBody {
     treatNullValuesAs?: number;
     // (undocumented)
     value: number;
+}
+
+// @alpha
+export interface IConditionalFormatting {
+    customTargets?: readonly ConditionalFormattingTarget[];
+    // (undocumented)
+    enabled: boolean;
+    // (undocumented)
+    rules: readonly IConditionalFormattingRule[];
+    version?: string;
+}
+
+// @alpha
+export interface IConditionalFormattingCondition {
+    // (undocumented)
+    format: IConditionalFormattingFormat;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    operator: ConditionalFormattingOperator;
+    // (undocumented)
+    value: ConditionalFormattingValue;
+}
+
+// @alpha
+export interface IConditionalFormattingFormat {
+    backgroundColor?: string;
+    color?: string;
+    scope: "cell" | "row";
+}
+
+// @alpha
+export interface IConditionalFormattingRule {
+    // (undocumented)
+    conditions: readonly IConditionalFormattingCondition[];
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    target: ConditionalFormattingTarget;
 }
 
 // @alpha
@@ -2768,6 +2848,7 @@ export interface IFactMetadataObject extends IMetadataObject {
 // @public
 export interface IFeatureFlags {
     aiChatSearchLimit?: number;
+    enableAbsoluteDateFilterGranularity?: boolean;
     enableAccessibilityMode?: boolean;
     enableAccessibleChartTooltip?: boolean;
     enableAiAgenticConversations?: boolean;
@@ -2813,6 +2894,8 @@ export interface IFeatureFlags {
     // (undocumented)
     enableDataSection?: boolean;
     enableDefaultSmtp?: boolean;
+    // (undocumented)
+    enableDenodoDataSource?: boolean;
     enableDonutDataLabels?: boolean;
     enableDrillToUrlByDefault?: boolean;
     enableEmbedButtonInAD?: boolean;
@@ -3018,6 +3101,7 @@ export interface IGenAICreatedVisualizations {
 
 // @internal
 export interface IGenAIDashboardContext {
+    definition?: IDashboardDefinition;
     filters?: GenAIUserContextFilter[];
     isNew?: boolean;
     ref: ObjRef;
@@ -3678,6 +3762,8 @@ export interface IMeasureDescriptor {
 
 // @public
 export interface IMeasureDescriptorItem {
+    // @alpha
+    conditionalFormatting?: ISemanticConditionalFormatting;
     format: string;
     identifier?: string;
     // (undocumented)
@@ -5031,6 +5117,13 @@ export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
 
 // @alpha
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
+
+// @alpha
+export interface ISemanticConditionalFormatting {
+    // (undocumented)
+    conditions: readonly IConditionalFormattingCondition[];
+    version?: string;
+}
 
 // @internal
 export interface ISemanticQualityIssue {

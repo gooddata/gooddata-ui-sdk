@@ -247,6 +247,8 @@ const CONFIG_DEFAULTS: Required<
         | "disablePersistentFiltersAcrossTabs"
         | "widgetsOverlay"
         | "hideAddTabButton"
+        | "isAiMode"
+        | "isAiGenerating"
     >
 > &
     Pick<DashboardConfig, "externalRecipient"> = {
@@ -255,6 +257,8 @@ const CONFIG_DEFAULTS: Required<
     isEmbedded: false,
     isExport: false,
     isWhiteLabeled: false,
+    isAiMode: false,
+    isAiGenerating: false,
     disableDefaultDrills: false,
     enableFilterValuesResolutionInDrillEvents: false,
     menuButtonItemsVisibility: {},

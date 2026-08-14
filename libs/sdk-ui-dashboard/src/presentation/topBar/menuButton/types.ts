@@ -84,6 +84,11 @@ export interface IMenuButtonProps {
      */
     menuItems: ReadonlyArray<IMenuButtonItem>;
 
+    /**
+     * Indicates if the menu button is enabled.
+     */
+    isEnabled?: boolean;
+
     DefaultMenuButton: CustomMenuButtonComponent;
 }
 

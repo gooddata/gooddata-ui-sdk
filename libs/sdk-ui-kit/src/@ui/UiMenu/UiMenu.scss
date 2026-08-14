@@ -192,6 +192,12 @@
         > :not(#{$root}__item-title) {
             flex: none;
         }
+
+        // The submenu indicator is an affordance, not content, so it takes the muted colour rather
+        // than inheriting the label's.
+        .gd-icon-navigateright {
+            color: var(--gd-palette-complementary-5);
+        }
     }
 
     &__item-title {

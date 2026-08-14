@@ -34,6 +34,7 @@ import {
     isNegativeAttributeFilter,
     isNoopAllTimeDashboardDateFilter,
     isObjRef,
+    isRankingFilter,
     isRelativeBoundedDateFilter,
     isRelativeDateFilter,
     measureValueFilterConditions,
@@ -148,9 +149,9 @@ export const getAppliedWidgetFilters = (
         ? mergeFilters(insight?.insight?.filters ?? [], selectedExecutionFilters, commonDateFilterId)
         : selectedExecutionFilters;
 
-    // Resolve MVF dimensionality localIdRefs to stable identifierRefs so that
+    // Resolve MVF / ranking filter dimensionality localIdRefs to stable identifierRefs so that
     // alert executions (which have empty attributes) don't contain dangling refs.
-    const resolvedFilters = resolveMvfDimensionalityLocalRefs(filtersToUse, insight);
+    const resolvedFilters = resolveFilterDimensionalityLocalRefs(filtersToUse, insight);
 
     // Strip noop filters - they have no effect on execution.
     return resolvedFilters.filter((filter) => {
@@ -281,14 +282,14 @@ export function dashboardFilterToFilterContextItem(
 }
 
 /**
- * Resolve MVF dimensionality localIdRefs to stable identifierRefs using the insight's attributes.
+ * Resolve filter dimensionality localIdRefs to stable identifierRefs using the insight's attributes.
  *
- * Measure value filters may reference attributes in their dimensionality via localIdRef,
- * which is only meaningful within the insight's own execution context. When these filters
- * are used in an alert execution (which may not include the original attributes), the
- * localIdRefs become dangling. This function resolves them to display form identifierRefs.
+ * Measure value filters (in `dimensionality`) and ranking filters (in `attributes`) may reference
+ * attributes via localIdRef, which is only meaningful within the insight's own execution context.
+ * When these filters are used in an alert execution (which may not include the original attributes),
+ * the localIdRefs become dangling. This function resolves them to display form identifierRefs.
  */
-export function resolveMvfDimensionalityLocalRefs(
+export function resolveFilterDimensionalityLocalRefs(
     filters: IFilter[],
     insight: IInsight | undefined,
 ): IFilter[] {
@@ -306,35 +307,63 @@ export function resolveMvfDimensionalityLocalRefs(
     }
 
     return filters.map((filter) => {
-        if (!isMeasureValueFilter(filter)) {
-            return filter;
+        if (isMeasureValueFilter(filter)) {
+            const resolvedDimensionality = resolveDimensionalityItems(
+                filter.measureValueFilter.dimensionality,
+                attributeLocalIdToDisplayForm,
+            );
+            return resolvedDimensionality
+                ? {
+                      ...filter,
+                      measureValueFilter: {
+                          ...filter.measureValueFilter,
+                          dimensionality: resolvedDimensionality,
+                      },
+                  }
+                : filter;
         }
 
-        const dimensionality = filter.measureValueFilter.dimensionality;
-        if (!dimensionality?.length) {
-            return filter;
+        if (isRankingFilter(filter)) {
+            const resolvedAttributes = resolveDimensionalityItems(
+                filter.rankingFilter.attributes,
+                attributeLocalIdToDisplayForm,
+            );
+            return resolvedAttributes
+                ? {
+                      ...filter,
+                      rankingFilter: {
+                          ...filter.rankingFilter,
+                          attributes: resolvedAttributes,
+                      },
+                  }
+                : filter;
         }
 
-        const resolvedDimensionality = dimensionality.map((item) => {
-            if (!isLocalIdRef(item)) {
-                return item;
-            }
-            return attributeLocalIdToDisplayForm.get(item.localIdentifier) ?? item;
-        });
-
-        const changed = dimensionality.some((item, i) => item !== resolvedDimensionality[i]);
-        if (!changed) {
-            return filter;
-        }
-
-        return {
-            ...filter,
-            measureValueFilter: {
-                ...filter.measureValueFilter,
-                dimensionality: resolvedDimensionality,
-            },
-        };
+        return filter;
     });
+}
+
+/**
+ * Resolve localIdRef dimensionality items to display form refs; returns undefined when there is
+ * nothing to resolve (empty dimensionality or no item changed), so callers can keep the original filter.
+ */
+function resolveDimensionalityItems(
+    dimensionality: ObjRefInScope[] | undefined,
+    attributeLocalIdToDisplayForm: Map<string, ObjRefInScope>,
+): ObjRefInScope[] | undefined {
+    if (!dimensionality?.length) {
+        return undefined;
+    }
+
+    const resolved = dimensionality.map((item) => {
+        if (!isLocalIdRef(item)) {
+            return item;
+        }
+        return attributeLocalIdToDisplayForm.get(item.localIdentifier) ?? item;
+    });
+
+    const changed = dimensionality.some((item, i) => item !== resolved[i]);
+    return changed ? resolved : undefined;
 }
 
 /**

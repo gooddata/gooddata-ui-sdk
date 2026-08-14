@@ -48,20 +48,20 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
     const original = await importOriginal<Record<string, unknown>>();
     return {
         ...original,
-        YamlEditor: ({
-            initialValue,
+        UiConfigEditor: ({
+            value,
             onChange,
             disabled,
         }: {
-            initialValue: string;
-            onChange?: (value: string) => void;
+            value: string;
+            onChange: (value: string) => void;
             disabled?: boolean;
         }) => (
             <textarea
                 data-testid="yaml-editor"
-                defaultValue={initialValue}
+                value={value}
                 disabled={disabled}
-                onChange={(e) => onChange?.(e.target.value)}
+                onChange={(e) => onChange(e.target.value)}
             />
         ),
     };

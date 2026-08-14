@@ -313,6 +313,29 @@ export type DashboardConfig = {
 
     /**
      * @internal
+     * Specifies if the dashboard is in AI mode.
+     *
+     * @remarks
+     * AI mode is active when the dashboard is being controlled or managed by AI capabilities.
+     * When enabled, the dashboard may exhibit specialized behaviors, such as enabling new
+     * AI-driven features or disabling certain standard functions to ensure a consistent
+     * AI-assisted experience.
+     */
+    isAiMode?: boolean;
+
+    /**
+     * @internal
+     * Specifies if ai now generates the dashboard
+     *
+     * @remarks
+     * This flag indicates that an AI process has started generating the dashboard content but
+     * has not yet finished. It can be used to trigger loading states (like skeletons or progress
+     * indicators) and to allow users to cancel the generation process before it completes.
+     */
+    isAiGenerating?: boolean;
+
+    /**
+     * @internal
      * Identifier of the export
      *
      * @remarks

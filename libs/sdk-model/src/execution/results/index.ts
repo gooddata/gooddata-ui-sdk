@@ -3,6 +3,7 @@
 import type { Feature, GeoJsonProperties, Geometry } from "geojson";
 import { isEmpty } from "lodash-es";
 
+import { type ISemanticConditionalFormatting } from "../../conditionalFormatting/index.js";
 import {
     type AttributeDisplayFormType,
     type IAttributeDisplayFormGeoAreaConfig,
@@ -100,6 +101,13 @@ export interface IMeasureDescriptorItem {
      * Opaque reference of the metric or fact object.
      */
     ref?: ObjRef;
+
+    /**
+     * Semantic-layer conditional formatting authored on the underlying metric or fact object.
+     *
+     * @alpha
+     */
+    conditionalFormatting?: ISemanticConditionalFormatting;
 }
 
 /**
@@ -258,6 +266,13 @@ export interface IAttributeDescriptorBody {
      * @alpha
      */
     geoAreaConfig?: IAttributeDisplayFormGeoAreaConfig;
+
+    /**
+     * Semantic-layer conditional formatting authored on the underlying label, fact, or date dataset.
+     *
+     * @alpha
+     */
+    conditionalFormatting?: ISemanticConditionalFormatting;
 }
 
 /**

@@ -125,7 +125,7 @@ export {
     type ISyntaxHighlightingInputProps,
     SyntaxHighlightingInput,
 } from "./syntaxHighlightingInput/SyntaxHighlightingInput.js";
-export { type IYamlEditorProps, YamlEditor } from "./syntaxHighlightingInput/YamlEditor.js";
+export { type ExternalChangeSelection } from "./syntaxHighlightingInput/hooks/useCodemirrorChange.js";
 export {
     type IYamlPosition,
     type YamlCompletionSource,
@@ -1250,6 +1250,15 @@ export {
     type IUiTextInputProps,
     type IUiTextInputIconAfterButton,
 } from "./@ui/UiTextInput/UiTextInput.js";
+export { UiConfigEditor } from "./@ui/UiConfigEditor/UiConfigEditor.js";
+export {
+    type IUiConfigEditorProps,
+    type IUiConfigEditorApi,
+    type IUiConfigEditorContextMenuProps,
+    type IUiConfigEditorLabels,
+} from "./@ui/UiConfigEditor/types.js";
+export { preloadUiConfigEditorGrammars } from "./@ui/UiConfigEditor/configEditorGrammars.js";
+export { type ConfigEditorLanguage } from "./@ui/UiConfigEditor/configEditorLanguage.js";
 export { UiRadio, type IUiRadioProps } from "./@ui/UiRadio/UiRadio.js";
 export { UiRadioRow, type IUiRadioRowProps } from "./@ui/UiRadioRow/UiRadioRow.js";
 export { UiAvatar, type IUiAvatarProps } from "./@ui/UiAvatar/UiAvatar.js";

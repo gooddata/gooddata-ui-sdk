@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Resolve ranking filter dimensionality localIdRefs to display form refs in alert execution filters (same handling as measure value filter dimensionality)",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "ivan.nejezchleb@gooddata.com"
+}

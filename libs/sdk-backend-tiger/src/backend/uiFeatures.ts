@@ -36,6 +36,7 @@ export enum TigerFeaturesNames {
     EnableExperimentalFeaturesUI = "enableExperimentalFeaturesUI",
     EnableSingleStoreDataSource = "enableSingleStoreDataSource",
     EnableCacheRetentionPolicy = "enableCacheRetentionPolicy",
+    EnableDenodoDataSource = "enableDenodoDataSource",
     EnableOidcAuth = "enableOidcAuth",
     EnableSemanticSearch = "enableSemanticSearch",
     EnableCatalogSmartSearchResults = "enableCatalogSmartSearchResults",
@@ -131,6 +132,7 @@ export enum TigerFeaturesNames {
     EnableAiContextSetup = "enableAiContextSetup",
     EnableDashboardPersistentFiltersAcrossTabs = "enableDashboardPersistentFiltersAcrossTabs",
     EnableGenAiDashboardBuilderSkill = "enableGenAiDashboardBuilderSkill",
+    EnableAbsoluteDateFilterGranularity = "enableAbsoluteDateFilterGranularity",
 }
 
 export type ITigerFeatureFlags = {
@@ -164,6 +166,7 @@ export type ITigerFeatureFlags = {
     enableExperimentalFeaturesUI: (typeof FeatureFlagsValues)["enableExperimentalFeaturesUI"][number];
     enableSingleStoreDataSource: (typeof FeatureFlagsValues)["enableSingleStoreDataSource"][number];
     enableCacheRetentionPolicy: (typeof FeatureFlagsValues)["enableCacheRetentionPolicy"][number];
+    enableDenodoDataSource: (typeof FeatureFlagsValues)["enableDenodoDataSource"][number];
     enableOidcAuth: (typeof FeatureFlagsValues)["enableOidcAuth"][number];
     enableSemanticSearch: (typeof FeatureFlagsValues)["enableSemanticSearch"][number];
     enableCatalogSmartSearchResults: (typeof FeatureFlagsValues)["enableCatalogSmartSearchResults"][number];
@@ -257,6 +260,7 @@ export type ITigerFeatureFlags = {
     enableDashboardSidebarResize: (typeof FeatureFlagsValues)["enableDashboardSidebarResize"][number];
     enableExportTimeoutFix: (typeof FeatureFlagsValues)["enableExportTimeoutFix"][number];
     enableDashboardPersistentFiltersAcrossTabs: (typeof FeatureFlagsValues)["enableDashboardPersistentFiltersAcrossTabs"][number];
+    enableAbsoluteDateFilterGranularity: (typeof FeatureFlagsValues)["enableAbsoluteDateFilterGranularity"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -290,6 +294,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableExperimentalFeaturesUI: false,
     enableSingleStoreDataSource: false,
     enableCacheRetentionPolicy: false,
+    enableDenodoDataSource: false,
     enableOidcAuth: true,
     enableSemanticSearch: false,
     enableCatalogSmartSearchResults: true,
@@ -383,6 +388,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardSidebarResize: true,
     enableExportTimeoutFix: false,
     enableDashboardPersistentFiltersAcrossTabs: false,
+    enableAbsoluteDateFilterGranularity: false,
 };
 
 export const FeatureFlagsValues = {
@@ -416,6 +422,7 @@ export const FeatureFlagsValues = {
     enableExperimentalFeaturesUI: [true, false] as const,
     enableSingleStoreDataSource: [true, false] as const,
     enableCacheRetentionPolicy: [true, false] as const,
+    enableDenodoDataSource: [true, false] as const,
     enableOidcAuth: [true, false] as const,
     enableSemanticSearch: [true, false] as const,
     enableCatalogSmartSearchResults: [true, false] as const,
@@ -509,4 +516,5 @@ export const FeatureFlagsValues = {
     enableDashboardSidebarResize: [true, false] as const,
     enableExportTimeoutFix: [true, false] as const,
     enableDashboardPersistentFiltersAcrossTabs: [true, false] as const,
+    enableAbsoluteDateFilterGranularity: [true, false] as const,
 };

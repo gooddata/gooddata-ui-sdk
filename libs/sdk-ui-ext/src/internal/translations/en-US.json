@@ -2571,6 +2571,10 @@
         "text": "Add",
         "crowdinContext": "Button (in the Rules subsection header) that opens the dialog to create a new conditional-formatting rule."
     },
+    "properties.conditionalFormatting.semanticLabel": {
+        "text": "From semantic layer",
+        "crowdinContext": "Uppercase subsection label above conditional-formatting rules inherited from the semantic layer (read-only in this view)."
+    },
     "properties.conditionalFormatting.rule.invalid": {
         "text": "Column not found",
         "crowdinContext": "Badge on a rule whose target column is no longer present on the insight."
@@ -2587,6 +2591,10 @@
         "text": "Delete rule",
         "crowdinContext": "Accessible label for the button that deletes a conditional-formatting rule."
     },
+    "properties.conditionalFormatting.rule.view": {
+        "text": "View rule",
+        "crowdinContext": "Accessible label and button text for viewing a read-only conditional-formatting rule inherited from the semantic layer."
+    },
     "properties.conditionalFormatting.dialog.addTitle": {
         "text": "Add rule",
         "crowdinContext": "Headline of the dialog when creating a new conditional-formatting rule."
@@ -2594,6 +2602,10 @@
     "properties.conditionalFormatting.dialog.editTitle": {
         "text": "Edit rule",
         "crowdinContext": "Headline of the dialog when editing an existing conditional-formatting rule."
+    },
+    "properties.conditionalFormatting.dialog.viewTitle": {
+        "text": "View rule",
+        "crowdinContext": "Headline of the dialog when viewing a read-only conditional-formatting rule inherited from the semantic layer."
     },
     "properties.conditionalFormatting.dialog.target": {
         "text": "When",

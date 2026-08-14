@@ -17,19 +17,24 @@ export interface IDraggableInsightListItemProps {
     ListItemComponent: CustomDashboardInsightListItemComponent;
     listItemComponentProps: CustomDashboardInsightListItemComponentProps;
     insight: IInsight;
+    disabled?: boolean;
 }
 
 /**
  * @internal
  */
 export function DraggableInsightListItem(props: IDraggableInsightListItemProps) {
-    const { ListItemComponent, listItemComponentProps, insight } = props;
+    const { ListItemComponent, listItemComponentProps, insight, disabled } = props;
     const WrapInsightListItemWithDragComponent = props.WrapInsightListItemWithDragComponent!;
 
     const { deselectWidgets } = useWidgetSelection();
 
     return (
-        <WrapInsightListItemWithDragComponent insight={insight} onDragStart={() => deselectWidgets()}>
+        <WrapInsightListItemWithDragComponent
+            insight={insight}
+            disabled={disabled}
+            onDragStart={() => deselectWidgets()}
+        >
             <ListItemComponent {...listItemComponentProps} />
         </WrapInsightListItemWithDragComponent>
     );

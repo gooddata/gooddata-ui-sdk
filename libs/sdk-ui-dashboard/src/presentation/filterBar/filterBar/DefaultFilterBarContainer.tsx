@@ -1,6 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import {
+    type FocusEvent,
     type KeyboardEvent,
     type ReactNode,
     type Ref,
@@ -107,18 +108,28 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
         }
     }, [hasMultipleRows, isFilterBarExpanded, setFilterBarExpanded]);
 
-    const onContainerBlur = useCallback(() => {
-        if (isFocusVisible() && expandedAutomatically) {
-            setFilterBarExpanded(false);
-            setExpandedAutomatically(false);
-            const message = `${intl.formatMessage({ id: "filterBar.label" })}. ${intl.formatMessage({
-                id: "filterBar.filterListAutoCollapsed",
-            })}`;
-            setCollapseAnnouncement(message);
-        } else {
-            setCollapseAnnouncement("");
-        }
-    }, [setFilterBarExpanded, expandedAutomatically, intl]);
+    const onContainerBlur = useCallback(
+        (event: FocusEvent<HTMLDivElement>) => {
+            // React bubbles blur from every child. Moving keyboard focus between
+            // chips collapse/expand the filter bar
+            const { relatedTarget } = event;
+            if (relatedTarget instanceof Node && event.currentTarget.contains(relatedTarget)) {
+                return;
+            }
+
+            if (isFocusVisible() && expandedAutomatically) {
+                setFilterBarExpanded(false);
+                setExpandedAutomatically(false);
+                const message = `${intl.formatMessage({ id: "filterBar.label" })}. ${intl.formatMessage({
+                    id: "filterBar.filterListAutoCollapsed",
+                })}`;
+                setCollapseAnnouncement(message);
+            } else {
+                setCollapseAnnouncement("");
+            }
+        },
+        [setFilterBarExpanded, expandedAutomatically, intl],
+    );
 
     const bubbleText = hasInvalidFilterSelections
         ? intl.formatMessage(

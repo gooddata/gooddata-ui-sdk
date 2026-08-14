@@ -87,7 +87,7 @@ vi.mock(
             ...actual,
             getAppliedWidgetFilters: vi.fn(),
             getVisibleFiltersByFilters: vi.fn(),
-            resolveMvfDimensionalityLocalRefs: vi.fn(),
+            resolveFilterDimensionalityLocalRefs: vi.fn(),
         };
     },
 );
@@ -135,7 +135,7 @@ import { useAutomationAlertParameters } from "../../../shared/automationFilters/
 import {
     getAppliedWidgetFilters,
     getVisibleFiltersByFilters,
-    resolveMvfDimensionalityLocalRefs,
+    resolveFilterDimensionalityLocalRefs,
 } from "../../../shared/filters/index.js";
 import {
     convertExternalRecipientToAutomationRecipient,
@@ -167,7 +167,7 @@ const createDefaultAlertSpy = vi.mocked(createDefaultAlert);
 const setAlertExecutionParametersSpy = vi.mocked(setAlertExecutionParameters);
 const getAppliedWidgetFiltersSpy = vi.mocked(getAppliedWidgetFilters);
 const getVisibleFiltersByFiltersSpy = vi.mocked(getVisibleFiltersByFilters);
-const resolveMvfDimensionalityLocalRefsSpy = vi.mocked(resolveMvfDimensionalityLocalRefs);
+const resolveFilterDimensionalityLocalRefsSpy = vi.mocked(resolveFilterDimensionalityLocalRefs);
 const useAutomationAlertParametersSpy = vi.mocked(useAutomationAlertParameters);
 
 // ---------------------------------------------------------------------------
@@ -320,7 +320,7 @@ beforeEach(() => {
     setAlertExecutionParametersSpy.mockReturnValue(BASE_ALERT);
     getAppliedWidgetFiltersSpy.mockReturnValue([]);
     getVisibleFiltersByFiltersSpy.mockReturnValue(undefined);
-    resolveMvfDimensionalityLocalRefsSpy.mockImplementation((filters) => filters);
+    resolveFilterDimensionalityLocalRefsSpy.mockImplementation((filters) => filters);
 
     useAutomationAlertParametersSpy.mockReturnValue(DEFAULT_PARAMETERS_RETURN);
 });
@@ -369,7 +369,7 @@ function makeEditAlert(alert: Record<string, unknown>): IAutomationMetadataObjec
     return { alert } as unknown as IAutomationMetadataObject;
 }
 
-// Only the `id` read by resolveMvfDimensionalityLocalRefs's mock args/return-value matters here,
+// Only the `id` read by resolveFilterDimensionalityLocalRefs's mock args/return-value matters here,
 // not a structurally valid IFilter.
 function fakeFilters(...ids: string[]): IFilter[] {
     return ids.map((id) => ({ id })) as unknown as IFilter[];
@@ -1089,7 +1089,7 @@ describe("useAlertFormState — edit init (resolvedAlertToEdit)", () => {
         const { result } = renderFormStateHook({ alertToEdit: editAlert, insight });
 
         expect(result.current.editedAutomation).toBe(editAlert);
-        expect(resolveMvfDimensionalityLocalRefsSpy).not.toHaveBeenCalled();
+        expect(resolveFilterDimensionalityLocalRefsSpy).not.toHaveBeenCalled();
         expect(createDefaultAlertSpy).not.toHaveBeenCalled();
     });
 
@@ -1100,22 +1100,22 @@ describe("useAlertFormState — edit init (resolvedAlertToEdit)", () => {
         const { result } = renderFormStateHook({ alertToEdit: editAlert, insight: undefined });
 
         expect(result.current.editedAutomation).toBe(editAlert);
-        expect(resolveMvfDimensionalityLocalRefsSpy).not.toHaveBeenCalled();
+        expect(resolveFilterDimensionalityLocalRefsSpy).not.toHaveBeenCalled();
     });
 
-    it("returns alertToEdit unchanged (same reference) when resolveMvfDimensionalityLocalRefs returns the same filters array", () => {
+    it("returns alertToEdit unchanged (same reference) when resolveFilterDimensionalityLocalRefs returns the same filters array", () => {
         const filters = fakeFilters("f1");
         const editAlert = makeEditAlert({ execution: { filters } });
         const insight = SENTINEL_INSIGHT;
-        resolveMvfDimensionalityLocalRefsSpy.mockReturnValue(filters);
+        resolveFilterDimensionalityLocalRefsSpy.mockReturnValue(filters);
 
         const { result } = renderFormStateHook({ alertToEdit: editAlert, insight });
 
-        expect(resolveMvfDimensionalityLocalRefsSpy).toHaveBeenCalledWith(filters, insight);
+        expect(resolveFilterDimensionalityLocalRefsSpy).toHaveBeenCalledWith(filters, insight);
         expect(result.current.editedAutomation).toBe(editAlert);
     });
 
-    it("spreads the resolved filters into a NEW object when resolveMvfDimensionalityLocalRefs returns a changed array", () => {
+    it("spreads the resolved filters into a NEW object when resolveFilterDimensionalityLocalRefs returns a changed array", () => {
         const filters = fakeFilters("f1");
         const resolvedFilters = fakeFilters("f1-resolved");
         const editAlert = makeEditAlert({
@@ -1123,7 +1123,7 @@ describe("useAlertFormState — edit init (resolvedAlertToEdit)", () => {
             trigger: { mode: "ALWAYS", interval: "DAY" },
         });
         const insight = SENTINEL_INSIGHT;
-        resolveMvfDimensionalityLocalRefsSpy.mockReturnValue(resolvedFilters);
+        resolveFilterDimensionalityLocalRefsSpy.mockReturnValue(resolvedFilters);
 
         const { result } = renderFormStateHook({ alertToEdit: editAlert, insight });
 

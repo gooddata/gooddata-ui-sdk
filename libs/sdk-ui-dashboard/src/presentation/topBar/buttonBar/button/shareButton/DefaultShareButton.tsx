@@ -11,6 +11,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectIsAiGenerating } from "../../../../../model/store/config/configSelectors.js";
 import { selectIsShareButtonVisible } from "../../../../../model/store/topBar/topBarSelectors.js";
 import { uiActions } from "../../../../../model/store/ui/index.js";
 import { selectDashboardDensity } from "../../../../../model/store/ui/uiSelectors.js";
@@ -25,9 +26,11 @@ export function useShareButtonProps(): IShareButtonProps {
     const dispatch = useDashboardDispatch();
     const onShareButtonClick = useCallback(() => dispatch(uiActions.openShareDialog()), [dispatch]);
     const isVisible = useDashboardSelector(selectIsShareButtonVisible);
+    const isAiGenerating = useDashboardSelector(selectIsAiGenerating);
 
     return {
         isVisible,
+        isEnabled: !isAiGenerating,
         onShareButtonClick,
     };
 }
@@ -37,6 +40,7 @@ export function useShareButtonProps(): IShareButtonProps {
  */
 export function DefaultShareButton({
     isVisible,
+    isEnabled,
     onShareButtonClick,
 }: IShareButtonProps): ReactElement | null {
     const density = useDashboardSelector(selectDashboardDensity);
@@ -55,6 +59,7 @@ export function DefaultShareButton({
                 <Button
                     onClick={() => onShareButtonClick()}
                     value={intl.formatMessage({ id: "share.button.text" })}
+                    disabled={!isEnabled}
                     className={cx(
                         "gd-button-secondary dash-header-share-button s-header-share-button gd-button gd-icon-users",
                         {

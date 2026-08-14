@@ -8,6 +8,6 @@ export {
     getAppliedWidgetFilters,
     getAppliedDashboardFilters,
     dashboardFilterToFilterContextItem,
-    resolveMvfDimensionalityLocalRefs,
+    resolveFilterDimensionalityLocalRefs,
     isNoopAllTimeDateFilterFixed,
 } from "./conversions.js";
