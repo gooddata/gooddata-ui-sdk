@@ -14,6 +14,8 @@ import {
 import { useVirtualizer } from "@tanstack/react-virtual";
 import cx from "classnames";
 
+import { useVirtualizerRectObserver } from "../@ui/hooks/useVirtualizerRectObserver.js";
+
 import { type ScrollCallback } from "./List.js";
 
 // it configures max number of records due to
@@ -77,29 +79,7 @@ export function LegacyList({
         [itemHeightGetter, itemHeight],
     );
 
-    // Report the viewport size to the virtualizer from the known props, falling back from a real
-    // measurement when the DOM has no layout (e.g. jsdom in tests). Keeps virtualization correct
-    // without depending on layout being available.
-    const observeElementRect = useCallback(
-        (_instance: unknown, cb: (rect: { width: number; height: number }) => void) => {
-            const el = scrollContainerRef.current;
-            if (!el) {
-                return undefined;
-            }
-            const report = () => {
-                const rect = el.getBoundingClientRect();
-                cb({ width: rect.width || width, height: rect.height || height });
-            };
-            report();
-            if (typeof ResizeObserver === "undefined") {
-                return undefined;
-            }
-            const resizeObserver = new ResizeObserver(report);
-            resizeObserver.observe(el);
-            return () => resizeObserver.disconnect();
-        },
-        [width, height],
-    );
+    const observeElementRect = useVirtualizerRectObserver(scrollContainerRef, height);
 
     const rowVirtualizer = useVirtualizer({
         count: rowsCount,

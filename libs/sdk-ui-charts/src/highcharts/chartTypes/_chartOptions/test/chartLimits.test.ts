@@ -100,6 +100,32 @@ describe("stacked column/bar series limit", () => {
     });
 });
 
+describe("mekko negligible column width", () => {
+    const mekkoOptions = (widths: number[]): IChartOptions => ({
+        type: VisualizationTypes.MEKKO,
+        stacking: "normal",
+        data: {
+            series: [{ name: "s0", data: widths.map((z) => ({ y: 1, z })) }],
+            categories: widths.map((_, i) => [`c${i}`]),
+        },
+    });
+
+    it("recommends filtering when a low Width value makes its column invisible", () => {
+        expect(getIsFilteringRecommended(mekkoOptions([1000, 500, 1]))).toBe(true);
+    });
+
+    it("does NOT recommend filtering when all columns stay wide enough", () => {
+        expect(getIsFilteringRecommended(mekkoOptions([1000, 500, 100]))).toBe(false);
+    });
+
+    it("does not report the slim column as a validation error", () => {
+        expect(validateData(undefined, mekkoOptions([1000, 500, 1]))).toEqual({
+            dataTooLarge: false,
+            hasNegativeValue: false,
+        });
+    });
+});
+
 describe("column/bar total data points limit", () => {
     describe("validateData", () => {
         it("flags COLUMN over COLUMN_BAR_TOTAL_DATA_POINTS_LIMIT (6000) when neither series nor categories alone hit their cap (EB-767)", () => {

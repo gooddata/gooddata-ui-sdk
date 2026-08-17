@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-import { FlexDimensions } from "@gooddata/sdk-ui-kit";
+import { FlexDimensions, type IFlexDimensionsHandle } from "@gooddata/sdk-ui-kit";
 
 import { type IWrapInsightListItemWithDragComponent } from "../../../dragAndDrop/types.js";
 
@@ -21,7 +21,7 @@ export function DraggableInsightList({
     WrapInsightListItemWithDragComponent,
     disabled,
 }: IDraggableInsightListProps) {
-    const flexRef = useRef<FlexDimensions>(null);
+    const flexRef = useRef<IFlexDimensionsHandle>(null);
 
     useEffect(() => {
         flexRef.current?.updateSize();

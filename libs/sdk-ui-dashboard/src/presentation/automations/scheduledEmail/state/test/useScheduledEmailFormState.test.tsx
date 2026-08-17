@@ -319,7 +319,7 @@ describe("useScheduledEmailFormState — field/message handler patches", () => {
         const { result, rerender } = renderFormStateHook({ scheduledExportToEdit: makeAutomation() });
 
         act(() => {
-            result.current.onTitleChange("New title", true);
+            result.current.onTitleChange("New title");
         });
         rerender();
 
@@ -414,20 +414,23 @@ describe("useScheduledEmailFormState — field/message handler patches", () => {
 // Case 2: validity flags toggle and are observable in the returned hook value
 // ---------------------------------------------------------------------------
 
+// One character over the 255-character title limit the form state enforces.
+const OVER_LONG_TITLE = "x".repeat(256);
+
 describe("useScheduledEmailFormState — validity flags", () => {
     it("onTitleChange toggles isTitleValid", () => {
         const { result, rerender } = renderFormStateHook({ scheduledExportToEdit: makeAutomation() });
         expect(result.current.isTitleValid).toBe(true);
 
         act(() => {
-            result.current.onTitleChange("x", false);
+            result.current.onTitleChange(OVER_LONG_TITLE);
         });
         rerender();
 
         expect(result.current.isTitleValid).toBe(false);
 
         act(() => {
-            result.current.onTitleChange("y", true);
+            result.current.onTitleChange("y");
         });
         rerender();
 
@@ -748,7 +751,7 @@ describe("useScheduledEmailFormState — originalAutomation stability", () => {
         expect(result.current.editedAutomation).toBe(scheduledExportToEdit);
 
         act(() => {
-            result.current.onTitleChange("changed", true);
+            result.current.onTitleChange("changed");
         });
         rerender();
 
@@ -763,7 +766,7 @@ describe("useScheduledEmailFormState — originalAutomation stability", () => {
         expect(result.current.originalAutomation).toBe(initialAutomation);
 
         act(() => {
-            result.current.onTitleChange("changed", true);
+            result.current.onTitleChange("changed");
         });
         rerender();
 
@@ -872,7 +875,7 @@ describe("useScheduledEmailFormState — referential stability", () => {
         const firstOnTitleChange = result.current.onTitleChange;
 
         act(() => {
-            result.current.onTitleChange("typed", true);
+            result.current.onTitleChange("typed");
         });
 
         expect(result.current.editedAutomation.title).toBe("typed");

@@ -3,7 +3,7 @@
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { FilterButtonCustomIcon as mockFilterButtonCustomIcon } from "../../../../shared/components/internal/FilterButtonCustomIcon.js";
 import {
@@ -27,7 +27,7 @@ describe("Test AttributeFilterDropdownButton", () => {
             isLoading: false,
             isError: false,
         };
-        const Wrapped = withIntl(AttributeFilterDropdownButton);
+        const Wrapped = withIntlForTest(AttributeFilterDropdownButton);
         return render(<Wrapped {...defaultProps} {...props} />);
     };
 

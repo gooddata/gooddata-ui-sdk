@@ -11,7 +11,7 @@ import { simplifyText } from "@gooddata/util";
 import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
 import { Button } from "../Button/Button.js";
 import { DESCRIPTION_PANEL_ARROW_OFFSETS, DescriptionPanel } from "../DescriptionPanel/DescriptionPanel.js";
-import { ShortenedText } from "../ShortenedText/ShortenedText.js";
+import { type IShortenedTextHandle, ShortenedText } from "../ShortenedText/ShortenedText.js";
 import { getDateTimeConfig } from "../utils/dateTimeConfig.js";
 
 import { InsightListItemDate } from "./InsightListItemDate.js";
@@ -91,7 +91,7 @@ export function InsightListItem({
     metadataTimeZone,
 }: IInsightListItemProps) {
     const intl = useIntl();
-    const shortenedTextRef = useRef<ShortenedText>(null);
+    const shortenedTextRef = useRef<IShortenedTextHandle>(null);
     const currentWidthRef = useRef<number | undefined>(width);
     const shouldRenderActions = !!onDelete;
 

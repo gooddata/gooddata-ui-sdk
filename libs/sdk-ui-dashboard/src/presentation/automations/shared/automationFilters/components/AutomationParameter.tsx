@@ -4,7 +4,12 @@ import { type KeyboardEvent, type ReactNode } from "react";
 
 import { useIntl } from "react-intl";
 
-import { DashboardParameterModeValues, type IdentifierRef, type ParameterValue } from "@gooddata/sdk-model";
+import {
+    DashboardParameterModeValues,
+    type IdentifierRef,
+    type ParameterValue,
+    getParameterValueTitle,
+} from "@gooddata/sdk-model";
 import {
     Dropdown,
     type OverlayPositionType,
@@ -43,7 +48,10 @@ export function AutomationParameter({
     const intl = useIntl();
     const { ref, title, value, mode, definition } = parameter;
     const testId = `automation-parameter-${ref.identifier}`;
-    const label = intl.formatMessage({ id: "dialogs.automation.parameters.chip" }, { title, value });
+    const label = intl.formatMessage(
+        { id: "dialogs.automation.parameters.chip" },
+        { title, value: getParameterValueTitle(definition, value) },
+    );
     const lockedTooltip = intl.formatMessage({ id: "dialogs.automation.filters.lockedTooltip" });
     const deleteAriaLabel = intl.formatMessage({ id: "dialogs.automation.filters.deleteAriaLabel" });
     const tooltipId = useIdPrefixed("automation-parameter-tooltip");

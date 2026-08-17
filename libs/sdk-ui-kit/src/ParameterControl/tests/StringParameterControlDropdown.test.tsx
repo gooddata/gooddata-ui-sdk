@@ -3,11 +3,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { StringParameterControlDropdown } from "../StringParameterControlDropdown.js";
 
-const WrappedStringParameterControlDropdown = withIntl(StringParameterControlDropdown);
+const WrappedStringParameterControlDropdown = withIntlForTest(StringParameterControlDropdown);
 
 const renderDropdown = (props: Partial<React.ComponentProps<typeof StringParameterControlDropdown>> = {}) => {
     return render(

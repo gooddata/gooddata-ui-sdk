@@ -16,6 +16,7 @@ import { useDebouncedState, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import {
     Dropdown,
     type IAccessibilityConfigBase,
+    type IInputPureHandle,
     Input,
     LoadingMask,
     UiTreeViewEventsProvider,
@@ -145,7 +146,7 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
     const allowedRelationshipTypes = !loading && !canEdit ? ALLOWED_RELATIONSHIP_TYPES_FOR_VIEWER : undefined;
 
     // Input value handling
-    const inputRef = useRef<Input>(null);
+    const inputRef = useRef<IInputPureHandle>(null);
     const [value, setValue, searchTerm, setImmediate] = useDebouncedState("", DEBOUNCE);
     const { inputId, treeViewId } = useSearchIds();
     const handleKeyDown = useSearchKeyboard();
@@ -266,7 +267,7 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
                                         width={responsiveWidth}
                                         onSelect={(item) => {
                                             // Blur and clear the state
-                                            inputRef.current?.inputNodeRef?.inputNodeRef?.blur();
+                                            inputRef.current?.inputNodeRef?.blur();
                                             setImmediate("");
                                             closeDropdown();
                                             // Report the selected item

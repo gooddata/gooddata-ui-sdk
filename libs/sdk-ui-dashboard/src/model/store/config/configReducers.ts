@@ -12,6 +12,20 @@ const setConfig: ConfigReducer<PayloadAction<ResolvedDashboardConfig>> = (state,
     state.config = action.payload;
 };
 
+const setIsAiGenerating: ConfigReducer<PayloadAction<boolean>> = (state, action) => {
+    if (state.config) {
+        state.config.isAiGenerating = action.payload;
+    }
+};
+
+const setIsAiMode: ConfigReducer<PayloadAction<boolean>> = (state, action) => {
+    if (state.config) {
+        state.config.isAiMode = action.payload;
+    }
+};
+
 export const configReducers = {
     setConfig,
+    setIsAiGenerating,
+    setIsAiMode,
 };

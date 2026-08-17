@@ -2,7 +2,7 @@
 
 import { type PropsWithChildren } from "react";
 
-import { act, renderHook, waitFor } from "@testing-library/react";
+import { act, renderHook, waitFor as rtlWaitFor } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -44,6 +44,16 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
         useToastMessage: () => ({ addSuccess, addError, addProgress: vi.fn(), addWarning }),
     };
 });
+
+/**
+ * `renderHook` mounts a component that renders nothing, so a controller state change
+ * mutates no DOM. waitFor's MutationObserver therefore never fires and every await
+ * falls through to its 50ms polling interval — a flat 50ms tax per call, even though
+ * the controller settles on the next microtask. Poll at 1ms instead of 50ms.
+ */
+function waitFor<T>(callback: () => T | Promise<T>): Promise<T> {
+    return rtlWaitFor(callback, { interval: 1 });
+}
 
 const WORKSPACE = "ws";
 const TARGET: IObjectPermissionsObject = { kind: "label", ref: idRef("label.country") };

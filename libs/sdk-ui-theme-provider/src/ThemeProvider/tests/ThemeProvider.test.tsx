@@ -12,7 +12,7 @@ import { type ITheme } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { suppressConsole } from "@gooddata/util";
 
-import { withTheme } from "../Context.js";
+import { useTheme, useThemeIsLoading, useThemeStatus, withTheme } from "../Context.js";
 import { isDarkTheme } from "../isDarkTheme.js";
 import { type ThemeModifier, ThemeProvider } from "../ThemeProvider.js";
 
@@ -33,6 +33,26 @@ const renderComponent = async (component: ReactElement): Promise<RenderResult> =
     );
     return wrappedComponent!;
 };
+
+/**
+ * Counterpart of the withTheme(TestComponent) helper - reads the very same context values
+ * through the hooks and forwards them to a spy.
+ */
+function HookTestComponent({
+    onValues,
+}: {
+    onValues: (values: {
+        theme: ReturnType<typeof useTheme>;
+        themeIsLoading: ReturnType<typeof useThemeIsLoading>;
+        themeStatus: ReturnType<typeof useThemeStatus>;
+    }) => void;
+}) {
+    const theme = useTheme();
+    const themeIsLoading = useThemeIsLoading();
+    const themeStatus = useThemeStatus();
+    onValues({ theme, themeIsLoading, themeStatus });
+    return null;
+}
 
 describe("ThemeProvider", () => {
     beforeEach(() => {
@@ -152,6 +172,17 @@ describe("ThemeProvider", () => {
         );
     });
 
+    it("should pass theme object and themeIsLoading flag to context (via hooks)", async () => {
+        const onValues = vi.fn();
+        await renderComponent(
+            <ThemeProvider backend={backend} workspace={workspace}>
+                <HookTestComponent onValues={onValues} />
+            </ThemeProvider>,
+        );
+
+        expect(onValues).toHaveBeenLastCalledWith({ themeIsLoading: false, theme, themeStatus: "success" });
+    });
+
     it("should pass themeIsLoading flag set to false if backend is missing", async () => {
         const TestComponent = vi.fn(() => null);
         const TestComponentWithTheme = withTheme(TestComponent);
@@ -167,6 +198,17 @@ describe("ThemeProvider", () => {
         );
     });
 
+    it("should pass themeIsLoading flag set to false if backend is missing (via hooks)", async () => {
+        const onValues = vi.fn();
+        await renderComponent(
+            <ThemeProvider workspace={workspace}>
+                <HookTestComponent onValues={onValues} />
+            </ThemeProvider>,
+        );
+
+        expect(onValues).toHaveBeenCalledWith({ themeIsLoading: false, theme: {}, themeStatus: "pending" });
+    });
+
     it("should pass themeIsLoading flag set to false if workspace is missing", async () => {
         const TestComponent = vi.fn(() => null);
         const TestComponentWithTheme = withTheme(TestComponent);
@@ -180,6 +222,17 @@ describe("ThemeProvider", () => {
             { themeIsLoading: false, theme: {}, themeStatus: "pending" },
             undefined,
         );
+    });
+
+    it("should pass themeIsLoading flag set to false if workspace is missing (via hooks)", async () => {
+        const onValues = vi.fn();
+        await renderComponent(
+            <ThemeProvider backend={backend}>
+                <HookTestComponent onValues={onValues} />
+            </ThemeProvider>,
+        );
+
+        expect(onValues).toHaveBeenCalledWith({ themeIsLoading: false, theme: {}, themeStatus: "pending" });
     });
 
     it("should use the theme from props if provided and not load anything", async () => {
@@ -259,6 +312,60 @@ describe("ThemeProvider", () => {
         );
     });
 
+    it("should use theme from props and contain complete complementary palette (via hooks)", async () => {
+        const theme: ITheme = { palette: { complementary: { c0: "#000", c9: "#fff" } } };
+
+        const expectedTheme: ITheme = {
+            palette: {
+                error: {
+                    base: "#e54d42",
+                },
+                primary: {
+                    base: "#14b2e2",
+                },
+                success: {
+                    base: "#00c18d",
+                },
+                warning: {
+                    base: "#f18600",
+                },
+                complementary: {
+                    c0: "#000",
+                    c1: "#1c1c1c",
+                    c2: "#383838",
+                    c3: "#555",
+                    c4: "#717171",
+                    c5: "#8d8d8d",
+                    c6: "#aaa",
+                    c7: "#c6c6c6",
+                    c8: "#e2e2e2",
+                    c9: "#fff",
+                },
+            },
+        };
+
+        const onValues = vi.fn();
+        await renderComponent(
+            <ThemeProvider theme={theme}>
+                <HookTestComponent onValues={onValues} />
+            </ThemeProvider>,
+        );
+
+        Object.values(expectedTheme.palette?.complementary ?? {}).forEach((color, index) => {
+            const themeElementPalette = document.getElementById("gdc-theme-properties");
+            expect(
+                themeElementPalette &&
+                    themeElementPalette.innerHTML.indexOf(`--gd-palette-complementary-${index}: ${color};`) >
+                        -1,
+            ).toEqual(true);
+        });
+        expect(onValues).toHaveBeenLastCalledWith({
+            themeIsLoading: false,
+            theme: expectedTheme,
+            themeStatus: "success",
+        });
+    });
+
     it("should not hang and should still apply valid colors when the theme contains an invalid color", async () => {
         // A full complementary palette where a single shade (c9) is an invalid hex value.
         const themeWithInvalidColor: ITheme = {
@@ -291,6 +398,44 @@ describe("ThemeProvider", () => {
         expect(TestComponent).toHaveBeenLastCalledWith(
             expect.objectContaining({ themeIsLoading: false, themeStatus: "success" }),
             undefined,
+        );
+
+        const themeElement = document.getElementById("gdc-theme-properties");
+        // a valid color is preserved, the invalid one is dropped (no variable emitted for it)
+        expect(themeElement?.innerHTML.indexOf("--gd-palette-complementary-1: #2662FC;")).toBeGreaterThan(-1);
+        expect(themeElement?.innerHTML).not.toContain("1616D");
+    });
+
+    it("should not hang and should still apply valid colors when the theme contains an invalid color (via hooks)", async () => {
+        // A full complementary palette where a single shade (c9) is an invalid hex value.
+        const themeWithInvalidColor: ITheme = {
+            palette: {
+                primary: { base: "#001F5A" },
+                complementary: {
+                    c0: "#ffffff",
+                    c1: "#2662FC",
+                    c2: "#BAD1F5",
+                    c3: "#F9F9F9",
+                    c4: "#00C2FF",
+                    c5: "#000C36",
+                    c6: "#082485",
+                    c7: "#0F3DB5",
+                    c8: "#E7F1FC",
+                    c9: "#1616D",
+                },
+            },
+        };
+
+        const onValues = vi.fn();
+        await renderComponent(
+            <ThemeProvider theme={themeWithInvalidColor}>
+                <HookTestComponent onValues={onValues} />
+            </ThemeProvider>,
+        );
+
+        // loading gate is released - no infinite loading screen
+        expect(onValues).toHaveBeenLastCalledWith(
+            expect.objectContaining({ themeIsLoading: false, themeStatus: "success" }),
         );
 
         const themeElement = document.getElementById("gdc-theme-properties");
@@ -332,6 +477,41 @@ describe("ThemeProvider", () => {
             { themeIsLoading: false, theme: {}, themeStatus: "success" },
             undefined,
         );
+    });
+
+    it("should not hang when loading or applying the backend theme fails (via hooks)", async () => {
+        // Simulate a failure while processing the loaded theme (e.g. an unrecoverable color error).
+        const throwingModifier: ThemeModifier = () => {
+            throw new Error("Boom while processing theme");
+        };
+        const onValues = vi.fn();
+
+        await suppressConsole(
+            () =>
+                act(() => {
+                    render(
+                        <ThemeProvider backend={backend} workspace={workspace} modifier={throwingModifier}>
+                            <HookTestComponent onValues={onValues} />
+                        </ThemeProvider>,
+                    );
+                }),
+            "error",
+            [
+                {
+                    type: "startsWith",
+                    value: "The current testing environment is not configured to support act(...)",
+                },
+                { type: "startsWith", value: "Failed to load or process the theme from the backend." },
+            ],
+        );
+
+        // loading gate is released even though theme processing failed - no infinite loading screen,
+        // and the context theme is reset to the default so it stays consistent with the cleared CSS
+        expect(onValues).toHaveBeenLastCalledWith({
+            themeIsLoading: false,
+            theme: {},
+            themeStatus: "success",
+        });
     });
 
     it("should not remove global theme styles on unmount when removeGlobalStylesOnUnmout is set to false", async () => {

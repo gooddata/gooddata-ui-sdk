@@ -160,6 +160,28 @@ export function sortMekkoColumnsByMeasure<TCategory>(
     };
 }
 
+// Share of the total Width under which a column renders as an unreadable sliver (~3 px at usual plot widths).
+export const MEKKO_MIN_VISIBLE_WIDTH_SHARE = 0.005;
+
+/** A column's width is its share of the total Width metric — a low-value item is invisible, so AD recommends filtering. */
+export function hasNegligibleMekkoColumnWidth(
+    type: string | undefined,
+    series: ISeriesItem[] | undefined,
+): boolean {
+    if (!isMekko(type) || !series?.[0]?.data?.length) {
+        return false;
+    }
+
+    // all series in a column repeat the same z; zero widths are already dropped upstream
+    const widths = series[0].data.map((point) => point?.z ?? 0);
+    const total = widths.reduce((sum, width) => sum + width, 0);
+    if (total <= 0) {
+        return false;
+    }
+
+    return widths.some((width) => width > 0 && width / total < MEKKO_MIN_VISIBLE_WIDTH_SHARE);
+}
+
 /**
  * Drops Mekko columns whose Width (point.z) is 0 — from every series' data and the categories in
  * lockstep. Negative z is kept so validateData can reject it. The first series drives the mask (all

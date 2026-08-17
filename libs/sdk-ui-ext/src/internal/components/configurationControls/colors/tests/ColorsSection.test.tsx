@@ -1,9 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { render, screen, waitFor } from "@testing-library/react";
-import { userEvent } from "@testing-library/user-event";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { cloneDeep } from "lodash-es";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IColor, type IMeasureDescriptor } from "@gooddata/sdk-model";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
@@ -74,7 +73,33 @@ function createComponent(customProps: Partial<IColorsSectionProps> = {}) {
     );
 }
 
+/**
+ * ColorDropdown intentionally defers its onReset/onColorSelected callbacks by a 100ms setTimeout so
+ * that closing the dropdown is not interrupted. Fake timers make that wait explicit and instant
+ * instead of letting the test sit through it in real time.
+ *
+ * Note the components under test only listen for plain `onClick`, so `fireEvent.click` is enough.
+ * userEvent is deliberately avoided here: its awaits go through testing-library's asyncWrapper,
+ * which under Vitest fake timers waits on a faked `setTimeout` that never fires.
+ */
+const COLOR_DROPDOWN_CALLBACK_DELAY = 100;
+
+/**
+ * Moves the (fake) clock forward and lets React commit everything that settled meanwhile.
+ */
+async function advance(ms: number) {
+    await act(() => vi.advanceTimersByTimeAsync(ms));
+}
+
 describe("ColorsSection", () => {
+    beforeEach(() => {
+        vi.useFakeTimers();
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
+
     it("should render ColorSection control with 2 colors", () => {
         const { container } = createComponent();
 
@@ -136,21 +161,21 @@ describe("ColorsSection", () => {
             references,
         });
 
-        await userEvent.click(screen.getByText("Reset Colors"));
-        await waitFor(() => {
-            expect(pushData).toBeCalledWith(
-                expect.objectContaining({
-                    messageId: COLOR_MAPPING_CHANGED,
-                    properties: {
-                        controls: {
-                            colorMapping: undefined,
-                            test: 1,
-                        },
+        // the Reset Colors button pushes the data synchronously, no waiting needed
+        fireEvent.click(screen.getByText("Reset Colors"));
+
+        expect(pushData).toBeCalledWith(
+            expect.objectContaining({
+                messageId: COLOR_MAPPING_CHANGED,
+                properties: {
+                    controls: {
+                        colorMapping: undefined,
+                        test: 1,
                     },
-                    references: {},
-                }),
-            );
-        });
+                },
+                references: {},
+            }),
+        );
     });
 
     it("should offer Reset in the color dropdown only for a custom-mapped derived measure", async () => {
@@ -193,27 +218,27 @@ describe("ColorsSection", () => {
         });
 
         // master measure item offers no Reset even though it is custom mapped
-        await userEvent.click(container.querySelectorAll(".s-colored-items-list-item")[1]!);
+        fireEvent.click(container.querySelectorAll(".s-colored-items-list-item")[1]!);
         expect(screen.queryByText("Reset")).not.toBeInTheDocument();
 
-        await userEvent.click(container.querySelectorAll(".s-colored-items-list-item")[0]!);
-        await userEvent.click(screen.getByText("Reset"));
-        await waitFor(() => {
-            expect(pushData).toBeCalledWith(
-                expect.objectContaining({
-                    messageId: COLOR_MAPPING_CHANGED,
-                    properties: {
-                        controls: {
-                            colorMapping: [
-                                { id: "m1_pop", color: null },
-                                { id: "m1", color: color1 },
-                            ],
-                            test: 1,
-                        },
+        fireEvent.click(container.querySelectorAll(".s-colored-items-list-item")[0]!);
+        fireEvent.click(screen.getByText("Reset"));
+        await advance(COLOR_DROPDOWN_CALLBACK_DELAY);
+
+        expect(pushData).toBeCalledWith(
+            expect.objectContaining({
+                messageId: COLOR_MAPPING_CHANGED,
+                properties: {
+                    controls: {
+                        colorMapping: [
+                            { id: "m1_pop", color: null },
+                            { id: "m1", color: color1 },
+                        ],
+                        test: 1,
                     },
-                }),
-            );
-        });
+                },
+            }),
+        );
     });
 
     it("should contain loading element when in loading state", () => {

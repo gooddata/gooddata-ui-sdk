@@ -4,7 +4,6 @@
 
 ```ts
 
-import { ComponentType } from 'react';
 import { ContentRect } from 'react-measure';
 import { DataViewFacade } from '@gooddata/sdk-ui';
 import { IColor } from '@gooddata/sdk-model';
@@ -62,7 +61,7 @@ export function calculateHeadlineHeightFontSize(secondaryItem?: boolean, clientH
 export type ChartFillType = "solid" | "pattern" | "outline";
 
 // @internal (undocumented)
-export const ColorLegend: ComponentType<Omit<IColorLegendProps, "theme" | "themeIsLoading" | "themeStatus">>;
+export function ColorLegend(input: IColorLegendProps): JSX.Element | null;
 
 // @internal (undocumented)
 export abstract class ColorStrategy implements IColorStrategy {
@@ -220,8 +219,6 @@ export interface IColorLegendProps {
     position: string;
     // (undocumented)
     size?: IColorLegendSize;
-    // (undocumented)
-    theme?: ITheme;
     // (undocumented)
     title?: string;
 }

@@ -314,6 +314,23 @@ button.gd-list-item {
         }
     }
 
+    // the growing spans plus space-between spread children to opposite edges; an item carrying a
+    // suffix keeps it right after the title instead. Direct children only: the title is a child
+    // span, or a child span wrapping it when the title overflows.
+    &:has(.gd-list-item-suffix) {
+        justify-content: flex-start;
+
+        > span {
+            flex-grow: 0;
+        }
+    }
+
+    .gd-list-item-suffix {
+        flex: 0 0 auto;
+        margin-left: 5px;
+        color: var(--gd-palette-complementary-6);
+    }
+
     &.gd-list-item-separator,
     &.gd-list-item-header {
         cursor: default;

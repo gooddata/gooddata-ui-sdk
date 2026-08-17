@@ -332,6 +332,39 @@ export interface AiAppDomainConversationsVisualizationRankingFilter {
 
 export type AiAppDomainConversationsVisualizationRankingFilterTypeEnum = 'ranking_filter';
 
+/**
+ * One memory item the turn injected, and how it got there.
+ */
+export interface AiAppliedMemoryItem {
+    'score'?: number | null;
+    /**
+     * How the item was selected: ALWAYS is injected unconditionally, AUTO by relevance.
+     */
+    'strategy': AiAppliedMemoryItemStrategyEnum;
+    /**
+     * Title of the injected memory item.
+     */
+    'title': string;
+}
+
+export type AiAppliedMemoryItemStrategyEnum = 'ALWAYS' | 'AUTO';
+
+/**
+ * Which memory items this turn injected, in the order the retrieval returned them.
+ */
+export interface AiApplyMemoryDetail {
+    /**
+     * Category this body belongs to.
+     */
+    'category'?: AiApplyMemoryDetailCategoryEnum;
+    /**
+     * Memory items injected into this turn\'s prompt.
+     */
+    'items'?: Array<AiAppliedMemoryItem>;
+}
+
+export type AiApplyMemoryDetailCategoryEnum = 'applyMemory';
+
 export interface AiArithmeticMeasure {
     /**
      * First metric.
@@ -635,7 +668,7 @@ export type AiConversationItemResponseTriggerEnum = 'agent_switched' | 'agent_up
  * @type AiConversationItemResponseDetail
  * What one item\'s action did.
  */
-export type AiConversationItemResponseDetail = { category: 'catalogSearch' } & AiCatalogSearchDetail | { category: 'composeAnswer' } & AiComposeAnswerDetail | { category: 'knowledgeSearch' } & AiKnowledgeSearchDetail | { category: 'skillRouting' } & AiSkillRoutingDetail;
+export type AiConversationItemResponseDetail = { category: 'applyMemory' } & AiApplyMemoryDetail | { category: 'catalogSearch' } & AiCatalogSearchDetail | { category: 'composeAnswer' } & AiComposeAnswerDetail | { category: 'knowledgeSearch' } & AiKnowledgeSearchDetail | { category: 'metricQuery' } & AiMetricQueryDetail | { category: 'skillRouting' } & AiSkillRoutingDetail;
 
 export interface AiConversationListMeta {
     'page': AiConversationListPageMeta;
@@ -1278,6 +1311,34 @@ export interface AiMetricOperand {
     'localIdentifier': string;
     'title'?: string | null;
 }
+
+/**
+ * What the query this item\'s action built asked the data for, or how much came back.
+ */
+export interface AiMetricQueryDetail {
+    /**
+     * Category this body belongs to.
+     */
+    'category'?: AiMetricQueryDetailCategoryEnum;
+    /**
+     * References of what the query filtered on. The conditions themselves are not carried.
+     */
+    'filteredBy'?: Array<string>;
+    /**
+     * References of the attributes and date dimensions the query grouped by.
+     */
+    'groupedBy'?: Array<string>;
+    /**
+     * References of the metrics the query measured, as the query wrote them.
+     */
+    'metrics'?: Array<string>;
+    'ref'?: string | null;
+    'resultColumns'?: number | null;
+    'resultRows'?: number | null;
+    'visualization'?: string | null;
+}
+
+export type AiMetricQueryDetailCategoryEnum = 'metricQuery';
 
 export interface AiMetricSortItem {
     'direction': AiMetricSortItemDirectionEnum;

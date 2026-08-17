@@ -96,17 +96,23 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
     const [expandedAutomatically, setExpandedAutomatically] = useState(false);
     const [collapseAnnouncement, setCollapseAnnouncement] = useState("");
 
+    // ref mirror: render-time state is stale inside the synchronous blur+focus pair
+    // fired when focus moves into a portaled filter dropdown
+    const isFilterBarExpandedRef = useRef(isFilterBarExpanded);
+    isFilterBarExpandedRef.current = isFilterBarExpanded;
+
     const onContainerFocus = useCallback(() => {
         // detect if event is mouse
         if (!isFocusVisible()) {
             return;
         }
         setCollapseAnnouncement("");
-        if (hasMultipleRows && !isFilterBarExpanded) {
+        if (hasMultipleRows && !isFilterBarExpandedRef.current) {
+            isFilterBarExpandedRef.current = true;
             setFilterBarExpanded(true);
             setExpandedAutomatically(true);
         }
-    }, [hasMultipleRows, isFilterBarExpanded, setFilterBarExpanded]);
+    }, [hasMultipleRows, setFilterBarExpanded]);
 
     const onContainerBlur = useCallback(
         (event: FocusEvent<HTMLDivElement>) => {
@@ -118,6 +124,7 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
             }
 
             if (isFocusVisible() && expandedAutomatically) {
+                isFilterBarExpandedRef.current = false;
                 setFilterBarExpanded(false);
                 setExpandedAutomatically(false);
                 const message = `${intl.formatMessage({ id: "filterBar.label" })}. ${intl.formatMessage({

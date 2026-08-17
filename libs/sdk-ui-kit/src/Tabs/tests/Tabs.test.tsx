@@ -1,10 +1,10 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { type ITabsProps, Tabs } from "../Tabs.js";
 
@@ -20,7 +20,7 @@ const renderTabs = (options?: ITabsProps) => {
         tabs: tabDefinitions,
     };
 
-    const Wrapper = withIntl(Tabs, "en-US", messages);
+    const Wrapper = withIntlForTest(Tabs, "en-US", messages);
 
     return render(<Wrapper {...options} {...defaultProps} />);
 };

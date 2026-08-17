@@ -4,7 +4,7 @@ import { type ChangeEvent, type FocusEvent, memo, useEffect, useRef, useState } 
 
 import { memoize } from "lodash-es";
 
-import { type IInputPureProps, InputPure } from "./InputPure.js";
+import { type IInputPureHandle, type IInputPureProps, InputPure } from "./InputPure.js";
 import { DEFAULT_SEPARATORS, formatNumberWithSeparators } from "./numberFormat.js";
 import { type Separators } from "./typings.js";
 
@@ -102,7 +102,7 @@ export const InputWithNumberFormat = memo(function InputWithNumberFormat({
     onBlur,
     ...restProps
 }: IInputWithNumberFormatProps) {
-    const inputRef = useRef<InputPure | null>(null);
+    const inputRef = useRef<IInputPureHandle | null>(null);
     const [value, setValue] = useState(() =>
         formatNumberWithSeparators(toNumberValue(propValue), separators),
     );

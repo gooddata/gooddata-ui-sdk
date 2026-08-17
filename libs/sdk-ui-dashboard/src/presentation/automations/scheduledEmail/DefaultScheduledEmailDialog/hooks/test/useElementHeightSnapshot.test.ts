@@ -11,9 +11,9 @@ import { useElementHeightSnapshot } from "../useElementHeightSnapshot.js";
 // Helpers
 // ---------------------------------------------------------------------------
 
-// The global ResizeObserver stub in vitest.setup.ts never invokes its callback, so a
-// broken subscription would still pass. This mock captures the callback/observed node so
-// tests can trigger it explicitly and assert the resulting behavior.
+// happy-dom's built-in ResizeObserver never fires, so a broken subscription would still pass.
+// This mock captures the callback/observed node so tests can trigger it explicitly and assert
+// the resulting behavior.
 class MockResizeObserver {
     static instances: MockResizeObserver[] = [];
 

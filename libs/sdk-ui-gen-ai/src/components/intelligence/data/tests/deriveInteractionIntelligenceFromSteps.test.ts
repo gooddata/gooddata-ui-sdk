@@ -3,6 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import type {
+    IChatConversationApplyMemoryDetail,
     IChatConversationCatalogSearchDetail,
     IChatConversationSkillRoutingDetail,
 } from "@gooddata/sdk-backend-spi";
@@ -17,6 +18,14 @@ function catalogSearchDetail(overrides: Partial<IChatConversationCatalogSearchDe
         requestedTypes: [],
         found: [],
         used: [],
+        ...overrides,
+    };
+}
+
+function applyMemoryDetail(overrides: Partial<IChatConversationApplyMemoryDetail> = {}) {
+    return {
+        category: "applyMemory" as const,
+        items: [{ title: "Prefers metric names", strategy: "always" as const }],
         ...overrides,
     };
 }
@@ -40,8 +49,10 @@ function action(
 function trace(
     stepIds: string[],
     detailsByStepId: Record<string, IChatConversationTracedAction[]>,
+    responseDetails: IChatConversationTracedAction[] = [],
 ): IChatConversationResponseTrace {
     return {
+        responseDetails,
         steps: stepIds.map((stepId, i) => ({
             type: "interaction_step" as const,
             stepId,
@@ -184,6 +195,29 @@ describe("deriveInteractionIntelligenceFromSteps", () => {
         );
 
         expect(result.categories.map((c) => c.category)).toEqual(["catalogSearch", "skillRouting"]);
+    });
+
+    it("should give a response-scoped detail a category row with no steps to highlight", () => {
+        const result = deriveInteractionIntelligenceFromSteps(
+            "r",
+            trace(["s1"], { s1: [action("a1", { detail: skillRoutingDetail() })] }, [
+                action("m1", { detail: applyMemoryDetail() }),
+            ]),
+        );
+
+        expect(result.categories.map((c) => c.category)).toEqual(["applyMemory", "skillRouting"]);
+        expect(result.categories[0].stepIndexes).toEqual([]);
+        // The step it did not run in must not list it either.
+        expect(result.steps[0].categories).toEqual(["skillRouting"]);
+    });
+
+    it("should keep a response-scoped category out of the step totals", () => {
+        const result = deriveInteractionIntelligenceFromSteps(
+            "r",
+            trace(["s1"], {}, [action("m1", { detail: applyMemoryDetail() })]),
+        );
+
+        expect(result.totals).toEqual({ stepsCount: 1, durationMs: 100, tokens: 10 });
     });
 
     it("should compute totals from the raw step values, independent of category resolution", () => {

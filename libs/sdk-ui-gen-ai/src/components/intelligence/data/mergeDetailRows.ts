@@ -9,7 +9,9 @@ import type { IInteractionStepDetailList, IInteractionStepDetailRow } from "./ty
  * across occurrences merges by value kind:
  * - `list` rows concatenate `items` (and sum `truncatedCount`), keeping the first occurrence
  *   that authors a `heading`/`bulleted`.
- * - `groups` rows concatenate the `groups` arrays across occurrences.
+ * - `groups` rows concatenate the `groups` arrays across occurrences, then merge groups that
+ *   describe the same thing (same heading key, e.g. Catalogue search's `objectType`) the same way
+ *   `list` rows merge — so two steps each finding metrics render one metric group, not two.
  * - `text` rows become a plain, unheaded `list` of each occurrence's text as one item — the same
  *   "stacked plain list" look already used for single-occurrence match lists like "Used".
  * - Mismatched kinds across occurrences fall back to the first occurrence's row.
@@ -66,7 +68,9 @@ function mergeRowGroup(rows: IInteractionStepDetailRow[]): IInteractionStepDetai
             labelId: first.labelId,
             value: {
                 kind: "groups",
-                groups: rows.flatMap((row) => (row.value.kind === "groups" ? row.value.groups : [])),
+                groups: mergeGroups(
+                    rows.flatMap((row) => (row.value.kind === "groups" ? row.value.groups : [])),
+                ),
             },
         };
     }
@@ -84,6 +88,73 @@ function mergeRowGroup(rows: IInteractionStepDetailRow[]): IInteractionStepDetai
 
     // Mismatched value kinds across occurrences: fall back to the first occurrence's row.
     return first;
+}
+
+/**
+ * Merges already-concatenated groups so that groups describing the same thing become one. Without
+ * this, a category running in N steps renders N separate "2 metric" groups instead of one "4
+ * metric". Groups with no resolvable key are left alone rather than pooled together, since an
+ * unkeyed group carries no evidence it describes the same thing as any other.
+ */
+function mergeGroups(groups: IInteractionStepDetailList[]): IInteractionStepDetailList[] {
+    // One ordered sequence of buckets, so a group renders where it was first seen whether or not
+    // it has a key — an unkeyed group is its own bucket and holds its position among the rest.
+    const buckets: IInteractionStepDetailList[][] = [];
+    const bucketsByKey = new Map<string, IInteractionStepDetailList[]>();
+
+    for (const group of groups) {
+        const key = groupKey(group);
+        const existing = key === undefined ? undefined : bucketsByKey.get(key);
+        if (existing) {
+            existing.push(group);
+            continue;
+        }
+        const bucket = [group];
+        buckets.push(bucket);
+        if (key !== undefined) {
+            bucketsByKey.set(key, bucket);
+        }
+    }
+
+    return buckets.map((bucket) => {
+        const [firstGroup] = bucket;
+        if (bucket.length === 1) {
+            return firstGroup;
+        }
+        const mergedItems = mergeLists(bucket);
+        const totalCount = mergedItems.items.length + (mergedItems.truncatedCount ?? 0);
+        return {
+            ...firstGroup,
+            // Restated from the merged total so the heading describes every occurrence, not the
+            // first — matching how the `list` branch restates its own heading count.
+            headingValues: firstGroup.headingValues
+                ? { ...firstGroup.headingValues, count: totalCount }
+                : undefined,
+            ...mergedItems,
+        };
+    });
+}
+
+/**
+ * Identifies which groups describe the same thing. Keyed on `headingId` together with the
+ * heading's interpolated identity (e.g. Catalogue search's `objectType`), so groups from
+ * different heading types can never collide — a `headingId` with nothing to interpolate is an
+ * identity of its own. Falls back to a verbatim `heading`, and to `undefined` when a group
+ * carries no heading at all, which leaves it unmerged.
+ */
+function groupKey(group: IInteractionStepDetailList): string | undefined {
+    const { headingId, headingValues, heading } = group;
+    if (headingId === undefined) {
+        return heading === undefined ? undefined : `heading:${JSON.stringify(heading)}`;
+    }
+    // `count` varies per occurrence by definition — it must not take part in the key. The rest
+    // is serialized rather than concatenated, so neither a value containing the separator nor a
+    // number and its string form can collide.
+    const identity = Object.entries(headingValues ?? {})
+        .filter(([name]) => name !== "count")
+        .sort(([a], [b]) => a.localeCompare(b));
+
+    return `id:${JSON.stringify([headingId, identity])}`;
 }
 
 /**

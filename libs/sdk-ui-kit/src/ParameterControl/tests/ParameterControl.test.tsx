@@ -4,11 +4,11 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { type IParameterDefinition } from "@gooddata/sdk-model";
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { ParameterControl } from "../ParameterControl.js";
 
-const WrappedParameterControl = withIntl(ParameterControl);
+const WrappedParameterControl = withIntlForTest(ParameterControl);
 
 const numberDefinition: IParameterDefinition = {
     type: "NUMBER",
@@ -19,6 +19,12 @@ const numberDefinition: IParameterDefinition = {
 const stringDefinition: IParameterDefinition = {
     type: "STRING",
     defaultValue: "Actual",
+};
+
+const enumDefinition: IParameterDefinition = {
+    type: "STRING",
+    defaultValue: "Actual",
+    constraints: { allowedValues: [{ value: "Actual", title: "Actual results" }, { value: "Plan" }] },
 };
 
 const getInput = () => screen.getByTestId("parameter-control-dropdown-input");
@@ -51,6 +57,78 @@ describe("ParameterControl", () => {
         );
         expect(getInput()).toHaveProperty("type", "text");
         expect(getInput()).toHaveValue("Budget");
+    });
+
+    it("renders the enum control for a STRING definition with allowedValues", () => {
+        render(
+            <WrappedParameterControl
+                name="Scenario"
+                definition={enumDefinition}
+                value="Actual"
+                onApply={() => {}}
+                onCancel={() => {}}
+            />,
+        );
+        expect(screen.getByTestId("parameter-control-allowed-values-dropdown")).toBeInTheDocument();
+        expect(screen.queryByTestId("parameter-control-dropdown-input")).not.toBeInTheDocument();
+    });
+
+    it("suffixes the enum row matching resetValue, not the definition default", async () => {
+        render(
+            <WrappedParameterControl
+                name="Scenario"
+                definition={enumDefinition}
+                value="Actual"
+                resetValue="Plan"
+                onApply={() => {}}
+                onCancel={() => {}}
+            />,
+        );
+        const options = await screen.findAllByRole("option");
+        expect(options.map((option) => option.textContent?.includes("(Default)"))).toEqual([false, true]);
+    });
+
+    it("suffixes the enum row matching the definition default when there is no resetValue", async () => {
+        render(
+            <WrappedParameterControl
+                name="Scenario"
+                definition={enumDefinition}
+                value="Plan"
+                onApply={() => {}}
+                onCancel={() => {}}
+            />,
+        );
+        const options = await screen.findAllByRole("option");
+        expect(options.map((option) => option.textContent?.includes("(Default)"))).toEqual([true, false]);
+    });
+
+    it("suffixes no enum row when resetValue matches none of the allowed values", async () => {
+        render(
+            <WrappedParameterControl
+                name="Scenario"
+                definition={enumDefinition}
+                value="Actual"
+                resetValue="Forecast"
+                onApply={() => {}}
+                onCancel={() => {}}
+            />,
+        );
+        const options = await screen.findAllByRole("option");
+        expect(options.map((option) => option.textContent?.includes("(Default)"))).toEqual([false, false]);
+    });
+
+    it("renders the free-text control for a STRING definition with an empty allowedValues list", () => {
+        render(
+            <WrappedParameterControl
+                name="Scenario"
+                definition={{ type: "STRING", defaultValue: "Actual", constraints: { allowedValues: [] } }}
+                value="Budget"
+                onApply={() => {}}
+                onCancel={() => {}}
+            />,
+        );
+        expect(getInput()).toHaveValue("Budget");
+        expect(screen.queryByTestId("parameter-control-allowed-values-dropdown")).not.toBeInTheDocument();
     });
 
     it("applies a numeric value through the number control", () => {

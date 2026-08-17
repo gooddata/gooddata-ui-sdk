@@ -4,7 +4,7 @@ import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { type ExplicitDrill, withIntl } from "@gooddata/sdk-ui";
+import { type ExplicitDrill, withIntlForTest } from "@gooddata/sdk-ui";
 
 import { recordedDataFacade } from "../../../../../../testUtils/recordings.js";
 import { type IHeadlineTransformationProps } from "../../../HeadlineProvider.js";
@@ -32,7 +32,7 @@ vi.mock("../useFiredDrillEvent.js", async (importOriginal) => {
 
 describe("MultiMeasuresTransformation", () => {
     const renderTransformation = (props: IHeadlineTransformationProps) => {
-        const WrappedHeadlineTransformation = withIntl(MultiMeasuresTransformation);
+        const WrappedHeadlineTransformation = withIntlForTest(MultiMeasuresTransformation);
         return render(<WrappedHeadlineTransformation {...props} />);
     };
 

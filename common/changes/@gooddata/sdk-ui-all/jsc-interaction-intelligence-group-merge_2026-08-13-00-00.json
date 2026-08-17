@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-gen-ai: Group Interaction Intelligence detail groups by heading identity when merging a category's occurrences, so a category running in several steps renders one group per object type instead of one per step.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

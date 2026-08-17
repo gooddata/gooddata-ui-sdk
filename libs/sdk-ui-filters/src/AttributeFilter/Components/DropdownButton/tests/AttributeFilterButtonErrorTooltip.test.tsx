@@ -1,15 +1,15 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { AttributeFilterButtonErrorTooltip } from "../AttributeFilterButtonErrorTooltip.js";
 
 describe("Test AttributeFilterButtonErrorTooltip", () => {
     function renderComponent(errorMessage = "") {
-        const Wrapped = withIntl(AttributeFilterButtonErrorTooltip);
+        const Wrapped = withIntlForTest(AttributeFilterButtonErrorTooltip);
         return render(
             <Wrapped errorMessage={errorMessage}>
                 <p>Child component!</p>

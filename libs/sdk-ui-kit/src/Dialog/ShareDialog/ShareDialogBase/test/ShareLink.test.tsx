@@ -4,12 +4,12 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { type IDashboardParameter, idRef } from "@gooddata/sdk-model";
-import { decompressFromUrl, withIntl } from "@gooddata/sdk-ui";
+import { decompressFromUrl, withIntlForTest } from "@gooddata/sdk-ui";
 
 import { ShareLink } from "../ShareLink.js";
 import { type IShareLinkProps } from "../types.js";
 
-const Wrapped = withIntl(ShareLink);
+const Wrapped = withIntlForTest(ShareLink);
 
 function getShareUrl(): URL {
     const input = screen.getByDisplayValue(/^https?:/i) as HTMLInputElement;

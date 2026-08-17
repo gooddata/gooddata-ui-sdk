@@ -1,12 +1,17 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { createRef } from "react";
+import { type RefObject, createRef } from "react";
 
 import { act, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
-import { type IShortenedTextProps, ShortenedText, getShortenedTitle } from "../ShortenedText.js";
+import {
+    type IShortenedTextHandle,
+    type IShortenedTextProps,
+    ShortenedText,
+    getShortenedTitle,
+} from "../ShortenedText.js";
 
 describe("ShortenedText", () => {
     const renderShortenedText = (props: IShortenedTextProps) => {
@@ -124,11 +129,56 @@ describe("ShortenedText", () => {
         expect(screen.getByText("…", { exact: false })).toBeInTheDocument();
     });
 
+    it("should measure the incoming text, not the outgoing one, when children and the container width change together", () => {
+        // Emulates a recycled virtualized list row: it gets a new title and a new width in one and
+        // the same render (see DateDatasetsListItem, which drives recomputeShortening off `width`).
+        const CHAR_WIDTH = 10;
+        const wideText = "12345678901234567890"; // 20 chars -> 200px
+        const narrowText = "12345678"; // 8 chars -> 80px
+        let containerWidth = 300;
+
+        // Unlike the fixed mocks above, scrollWidth follows whatever is really in the DOM, the way a
+        // browser measures it. The sr-only copy of the full text is clipped out of the real layout,
+        // so only the visible (aria-hidden) part contributes once the text is shortened.
+        const getElement = ({ textRef }: { textRef: RefObject<HTMLElement | null> }) => {
+            const element = textRef.current;
+            if (!element) {
+                // Falling back to a 0px measurement here would make every title "fit", so a
+                // ref-attachment regression would pass this test instead of failing it.
+                throw new Error("ShortenedText text ref is not attached");
+            }
+            const visible = element.querySelector("[aria-hidden='true']") ?? element;
+
+            return createElement(containerWidth, (visible.textContent ?? "").length * CHAR_WIDTH);
+        };
+
+        const { rerender } = render(
+            <ShortenedText tagName="div" getElement={getElement}>
+                {wideText}
+            </ShortenedText>,
+        );
+        // 200px of text in a 300px container - nothing to shorten.
+        expect(screen.getByText(wideText)).toBeInTheDocument();
+
+        // The new title needs 80px and the container is 100px wide, so it still fits and must stay
+        // whole. Measuring the outgoing 200px text here would shorten it, and the `customTitle`
+        // guard would then latch that wrong result in for good.
+        containerWidth = 100;
+        rerender(
+            <ShortenedText tagName="div" getElement={getElement}>
+                {narrowText}
+            </ShortenedText>,
+        );
+
+        expect(screen.getByText(narrowText)).toBeInTheDocument();
+        expect(screen.queryByText("…", { exact: false })).not.toBeInTheDocument();
+    });
+
     it("should restore the full text when recomputeShortening is called after the container grows", () => {
         // start narrow — forces shortening on mount
         let elementWidth = 100;
         let scrollWidth = 200;
-        const ref = createRef<ShortenedText>();
+        const ref = createRef<IShortenedTextHandle>();
 
         render(
             <ShortenedText
@@ -157,7 +207,7 @@ describe("ShortenedText", () => {
     it("should shorten further when recomputeShortening is called after the container shrinks further while already truncated", () => {
         let elementWidth = 250;
         const scrollWidth = 250;
-        const ref = createRef<ShortenedText>();
+        const ref = createRef<IShortenedTextHandle>();
 
         render(
             <ShortenedText
@@ -188,7 +238,7 @@ describe("ShortenedText", () => {
     it("should re-measure against the current DOM state, not a stale cached width, when recomputeShortening is called while already truncated and typography changed", () => {
         const elementWidth = 100;
         let scrollWidth = 200;
-        const ref = createRef<ShortenedText>();
+        const ref = createRef<IShortenedTextHandle>();
 
         render(
             <ShortenedText

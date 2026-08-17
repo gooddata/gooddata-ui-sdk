@@ -6,6 +6,7 @@ import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
+import { isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import {
     type IAccessControlAware,
     type IDashboard,
@@ -91,22 +92,69 @@ type DashboardSaveContext = {
 type DashboardSaveResult = {
     batch: BatchAction;
     dashboard: IDashboard;
+    created: boolean;
 };
 
-type DashboardSaveFn = (ctx: DashboardContext, saveCtx: DashboardSaveContext) => Promise<IDashboard>;
+type DashboardSaveFn = (
+    ctx: DashboardContext,
+    saveCtx: DashboardSaveContext,
+) => Promise<{ dashboard: IDashboard; created: boolean }>;
 
-function createDashboard(ctx: DashboardContext, saveCtx: DashboardSaveContext): Promise<IDashboard> {
-    return ctx.backend.workspace(ctx.workspace).dashboards().createDashboard(saveCtx.dashboardToSave);
+function createDashboard(
+    ctx: DashboardContext,
+    saveCtx: DashboardSaveContext,
+): Promise<{ dashboard: IDashboard; created: boolean }> {
+    return ctx.backend
+        .workspace(ctx.workspace)
+        .dashboards()
+        .createDashboard(saveCtx.dashboardToSave)
+        .then((dashboard) => ({ dashboard, created: true }));
 }
 
-function updateDashboard(ctx: DashboardContext, saveCtx: DashboardSaveContext): Promise<IDashboard> {
+function updateDashboard(
+    ctx: DashboardContext,
+    saveCtx: DashboardSaveContext,
+): Promise<{ dashboard: IDashboard; created: boolean }> {
     const { persistedDashboard, dashboardToSave } = saveCtx;
     invariant(persistedDashboard);
 
     return ctx.backend
         .workspace(ctx.workspace)
         .dashboards()
-        .updateDashboard(persistedDashboard, dashboardToSave);
+        .updateDashboard(persistedDashboard, dashboardToSave)
+        .then((dashboard) => ({ dashboard, created: false }));
+}
+
+function saveDashboard(
+    ctx: DashboardContext,
+    saveCtx: DashboardSaveContext,
+): Promise<{ dashboard: IDashboard; created: boolean }> {
+    const { persistedDashboard, dashboardToSave } = saveCtx;
+    invariant(persistedDashboard);
+
+    return ctx.backend
+        .workspace(ctx.workspace)
+        .dashboards()
+        .getDashboard(persistedDashboard.ref)
+        .then(
+            () => {
+                return ctx.backend
+                    .workspace(ctx.workspace)
+                    .dashboards()
+                    .updateDashboard(persistedDashboard, dashboardToSave)
+                    .then((dashboard) => ({ dashboard, created: false }));
+            },
+            (error) => {
+                if (isUnexpectedResponseError(error) && error.httpStatus === 404) {
+                    return ctx.backend
+                        .workspace(ctx.workspace)
+                        .dashboards()
+                        .createDashboard(dashboardToSave)
+                        .then((dashboard) => ({ dashboard, created: true }));
+                }
+                throw error;
+            },
+        );
 }
 
 export function getDashboardWithSharing(
@@ -422,7 +470,7 @@ function* save(
     saveFn: DashboardSaveFn,
     saveActionName: string,
 ): SagaIterator<DashboardSaveResult> {
-    const dashboard: PromiseFnReturnType<typeof saveFn> = yield call(saveFn, ctx, saveCtx);
+    const { dashboard, created }: PromiseFnReturnType<typeof saveFn> = yield call(saveFn, ctx, saveCtx);
 
     /*
      * The crucial thing to do after the save is to update the identities of different objects that are stored
@@ -513,7 +561,7 @@ function* save(
 
     actions.push(tabsActions.clearLayoutHistory());
 
-    if (saveCtx.persistedDashboard === undefined) {
+    if (created) {
         const listedDashboard = createListedDashboard(dashboard);
         actions.push(
             listedDashboardsActions.addListedDashboard(listedDashboard),
@@ -526,6 +574,7 @@ function* save(
     return {
         batch,
         dashboard,
+        created,
     };
 }
 
@@ -540,6 +589,7 @@ export function* saveDashboardHandler(
             yield select(selectPersistedDashboard);
 
         const isNewDashboard = persistedDashboard === undefined;
+        const isAiBuilder = ctx.config?.isAiMode;
 
         const saveCtx: SagaReturnType<typeof createDashboardSaveContext> = yield call(
             createDashboardSaveContext,
@@ -548,17 +598,19 @@ export function* saveDashboardHandler(
         );
         let result: DashboardSaveResult;
 
-        if (isNewDashboard) {
+        if (isAiBuilder) {
+            result = yield call(save, ctx, saveCtx, saveDashboard, "@@GDC.DASH.SAVE_BUILDED");
+        } else if (isNewDashboard) {
             result = yield call(save, ctx, saveCtx, createDashboard, "@@GDC.DASH.SAVE_NEW");
         } else {
             result = yield call(save, ctx, saveCtx, updateDashboard, "@@GDC.DASH.SAVE_EXISTING");
         }
 
-        const { dashboard, batch } = result;
+        const { dashboard, batch, created } = result;
 
         yield put(batch);
 
-        if (isNewDashboard) {
+        if (created) {
             /*
              * We must do this by mutating the context object, the setContext effect changes the context only
              * for the current saga and its children. See https://github.com/redux-saga/redux-saga/issues/1798#issuecomment-468054586
@@ -581,7 +633,7 @@ export function* saveDashboardHandler(
         }
 
         yield put(savingActions.setSavingSuccess());
-        return dashboardSaved(ctx, dashboard, isNewDashboard, cmd.correlationId);
+        return dashboardSaved(ctx, dashboard, created, cmd.correlationId);
     } catch (e: any) {
         yield put(savingActions.setSavingError(e));
         throw e;

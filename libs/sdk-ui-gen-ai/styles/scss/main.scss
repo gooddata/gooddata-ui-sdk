@@ -13,6 +13,39 @@
 @use "animation";
 @use "intelligence";
 
+.gd-gen-ai-chat__context-chooser {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 245px;
+    padding-bottom: 10px;
+
+    .gd-list-searchfield {
+        margin: 0 10px;
+    }
+
+    .gd-list-item {
+        justify-content: flex-start;
+        gap: 10px;
+
+        .gd-ui-kit-icon {
+            flex: 0 0 auto;
+        }
+
+        .gd-bubble-trigger {
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .shortened {
+            display: block;
+            width: 100%;
+            min-width: 0;
+            overflow: hidden;
+        }
+    }
+}
+
 .gd-gen-ai-chat {
     display: flex;
     flex-direction: column;

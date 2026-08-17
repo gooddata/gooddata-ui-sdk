@@ -5,8 +5,7 @@ import { type MouseEvent, type ReactNode } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { type ITheme } from "@gooddata/sdk-model";
-import { withTheme } from "@gooddata/sdk-ui-theme-provider";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { Icon } from "../Icon/Icon.js";
 
@@ -17,18 +16,20 @@ export interface IWorkspacePickerHomeFooterProps {
     href?: string;
     onClick?: (e: MouseEvent<HTMLAnchorElement>) => void;
     className?: string;
-    theme?: ITheme;
     children?: ReactNode;
 }
 
-function WorkspacePickerHomeFooterComponent({
+/**
+ * @internal
+ */
+export function WorkspacePickerHomeFooter({
     children,
     className,
     href,
     onClick,
-    theme,
 }: IWorkspacePickerHomeFooterProps) {
     const intl = useIntl();
+    const theme = useTheme();
     const mergedClassNames = cx("gd-workspace-picker-home-footer", className);
 
     const HomeIcon = Icon["Home"];
@@ -53,8 +54,3 @@ function WorkspacePickerHomeFooterComponent({
         </a>
     );
 }
-
-/**
- * @internal
- */
-export const WorkspacePickerHomeFooter = withTheme(WorkspacePickerHomeFooterComponent);

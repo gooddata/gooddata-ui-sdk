@@ -2,8 +2,6 @@
 
 import { type KeyboardEvent, type MouseEvent, type ReactNode } from "react";
 
-import { type ITheme } from "@gooddata/sdk-model";
-
 import { type HelpMenuDropdownAlignPoints } from "../typings/positioning.js";
 
 /**
@@ -62,7 +60,6 @@ export interface IAppHeaderProps {
     showStaticHelpMenu?: boolean;
 
     helpRedirectUrl?: string;
-    theme?: ITheme;
 
     showUpsellButton?: boolean;
     onUpsellButtonClick?: (e: MouseEvent) => void;

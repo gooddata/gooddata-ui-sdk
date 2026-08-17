@@ -112,11 +112,11 @@ export function hashCodeString(value: string): number {
         return 0;
     }
 
-    const chars: string[] = value.split("");
-    const hashCode = chars.reduce((hashCode: number, char: string): number => {
-        const charCode = char.charCodeAt(0);
-        return ((hashCode << 5) - hashCode + charCode) | 0;
-    }, 0);
+    const l = value.length;
+    let hash = 0;
+    for (let i = 0; i < l; i++) {
+        hash = ((hash << 5) - hash + value.charCodeAt(i)) | 0;
+    }
 
-    return Math.abs(hashCode);
+    return Math.abs(hash);
 }

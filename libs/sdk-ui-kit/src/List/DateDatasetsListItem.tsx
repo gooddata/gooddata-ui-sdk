@@ -6,7 +6,7 @@ import cx from "classnames";
 
 import { simplifyText } from "@gooddata/util";
 
-import { ShortenedText } from "../ShortenedText/ShortenedText.js";
+import { type IShortenedTextHandle, ShortenedText } from "../ShortenedText/ShortenedText.js";
 
 /**
  * @internal
@@ -38,7 +38,7 @@ export function DateDatasetsListItem({
     width,
     onClick,
 }: IDateDatasetsListItemProps) {
-    const shortenedTextRef = useRef<ShortenedText>(null);
+    const shortenedTextRef = useRef<IShortenedTextHandle>(null);
     const currentWidthRef = useRef<number | undefined>(width);
 
     useEffect(() => {

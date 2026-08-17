@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type ChangeEvent, type FocusEvent, type ReactNode, forwardRef, useCallback } from "react";
+import { type ChangeEvent, type FocusEvent, forwardRef, useCallback } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -8,17 +8,8 @@ import { useIntl } from "react-intl";
 import { createInvalidDatapoint, createInvalidNode, useValidationContextValue } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger, Button, IconError, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-const TITLE_MAX_LENGTH = 255;
-
-interface IAlertingDialogHeaderProps {
-    title: string;
-    isSecondaryTitleVisible?: boolean;
-    secondaryTitle?: string;
-    secondaryTitleIcon: ReactNode;
-    onChange: (value: string, isValid: boolean) => void;
-    onCancel?: () => void;
-    placeholder: string;
-}
+import { MAX_AUTOMATION_TITLE_LENGTH, isAutomationTitleValid } from "../../shared/utils/automationTitle.js";
+import { type IAlertingDialogHeaderProps } from "../types.js";
 
 export const AlertingDialogHeader = forwardRef<HTMLInputElement, IAlertingDialogHeaderProps>((props, ref) => {
     const {
@@ -53,17 +44,13 @@ export const AlertingDialogHeader = forwardRef<HTMLInputElement, IAlertingDialog
                     id: errorId,
                     message: formatMessage(
                         { id: "dialogs.alert.error.too_long" },
-                        { value: TITLE_MAX_LENGTH },
+                        { value: MAX_AUTOMATION_TITLE_LENGTH },
                     ),
                 }),
             ]);
         },
         [errorId, formatMessage, setInvalidDatapoints],
     );
-
-    const isValueValid = useCallback((value: string) => {
-        return value.length <= TITLE_MAX_LENGTH;
-    }, []);
 
     const dialogHeaderClasses = cx(
         "gd-notifications-channels-dialog-title",
@@ -81,22 +68,21 @@ export const AlertingDialogHeader = forwardRef<HTMLInputElement, IAlertingDialog
     const handleOnChange = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
             const { value } = e.target;
-            const validationResult = isValueValid(value);
 
             if (!isValid) {
-                setHasError(!validationResult);
+                setHasError(!isAutomationTitleValid(value));
             }
 
-            onChange(value, validationResult);
+            onChange(value);
         },
-        [isValueValid, isValid, onChange, setHasError],
+        [isValid, onChange, setHasError],
     );
 
     const handleBlur = useCallback(
         (e: FocusEvent<HTMLInputElement>) => {
-            setHasError(!isValueValid(e.target.value));
+            setHasError(!isAutomationTitleValid(e.target.value));
         },
-        [isValueValid, setHasError],
+        [setHasError],
     );
 
     return (

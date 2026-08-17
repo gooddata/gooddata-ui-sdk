@@ -1,6 +1,6 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
@@ -62,20 +62,29 @@ describe("TotalSection", () => {
         expect(screen.getByRole("textbox")).toBeDisabled();
     });
 
-    it("should render disabled checkbox if there is any metric as total metric", async () => {
-        createComponent({ properties: { controls: { total: { measures: ["measure_id"] } } } });
-        expect(screen.getByRole("checkbox")).toBeDisabled();
-        expect(screen.getByRole("textbox")).toBeDisabled();
+    it("should render disabled checkbox if there is any metric as total metric", () => {
+        // the disabled message bubble is only shown after BubbleHoverTrigger's SHOW_DELAY (425ms),
+        // so use fake timers instead of waiting for the real timeout to elapse
+        vi.useFakeTimers();
 
-        fireEvent.mouseOver(screen.getByRole("checkbox"));
+        try {
+            createComponent({ properties: { controls: { total: { measures: ["measure_id"] } } } });
+            expect(screen.getByRole("checkbox")).toBeDisabled();
+            expect(screen.getByRole("textbox")).toBeDisabled();
 
-        await waitFor(() =>
+            fireEvent.mouseOver(screen.getByRole("checkbox"));
+            act(() => {
+                vi.runOnlyPendingTimers();
+            });
+
             expect(
                 screen.getByText(
                     "Disable “is total” options in metric to add sum of all values as a column at the end.",
                 ),
-            ).toBeInTheDocument(),
-        );
+            ).toBeInTheDocument();
+        } finally {
+            vi.useRealTimers();
+        }
     });
 
     it("should call pushData when the toggle value changes", async () => {

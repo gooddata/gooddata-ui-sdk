@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type ComponentType } from "react";
+import { type ComponentType, type Ref } from "react";
 
 import {
     type DateAttributeGranularity,
@@ -14,6 +14,8 @@ import {
     type IWidget,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
+
+import { type IAutomationDialogHeaderProps, type ISlotProps } from "../shared/slots/types.js";
 
 ///
 /// Component props
@@ -100,6 +102,59 @@ export interface IAlertingDialogProps {
      * Callback to be called, when alert fails to delete.
      */
     onDeleteError?: (error: GoodDataSdkError) => void;
+}
+
+/**
+ * Props of the default alerting dialog's header region (the title input row).
+ *
+ * @alpha
+ */
+export interface IAlertingDialogHeaderProps extends IAutomationDialogHeaderProps {
+    /**
+     * Called when the header's back/close button is pressed. The default dialog closes on it.
+     */
+    onCancel?: () => void;
+}
+
+/**
+ * The exact props the default dialog renders its header with, including the dialog's
+ * initial-focus ref.
+ *
+ * @alpha
+ */
+export type AlertingDialogHeaderDefaultProps = IAlertingDialogHeaderProps & {
+    ref?: Ref<HTMLInputElement>;
+};
+
+/**
+ * Section-level overrides of the default alerting dialog.
+ *
+ * @alpha
+ */
+export interface IAlertingDialogSlots {
+    /**
+     * Wraps or replaces the dialog header (the title input row). Must have a stable reference
+     * identity — see {@link ISlotProps}.
+     */
+    Header?: ComponentType<ISlotProps<AlertingDialogHeaderDefaultProps>>;
+}
+
+/**
+ * Props of {@link DefaultAlertingDialog}.
+ *
+ * @remarks
+ * Extends the shared {@link IAlertingDialogProps} with customization only the default implementation
+ * supports. Slots render only in the fully rendered dialog: not while the dialog context reports
+ * loading, and not while the stale-filters confirmation step is shown.
+ *
+ * @alpha
+ */
+export interface IDefaultAlertingDialogProps extends IAlertingDialogProps {
+    /**
+     * Section-level overrides. Each slot receives `{ Default, defaultProps }` and may render its own
+     * content (replace) or `<Default {...defaultProps} />` inside its own markup (wrap).
+     */
+    slots?: IAlertingDialogSlots;
 }
 
 /**

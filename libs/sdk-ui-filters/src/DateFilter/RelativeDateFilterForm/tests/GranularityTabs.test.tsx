@@ -1,10 +1,10 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { type DateFilterGranularity } from "@gooddata/sdk-model";
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { GranularityTabs, type IGranularityTabsProps } from "../GranularityTabs.js";
 
@@ -26,7 +26,7 @@ const createTabs = (props?: Partial<IGranularityTabsProps>) => {
         onSelectedGranularityChange: () => {},
         selectedGranularity: "GDC.time.date",
     };
-    const Wrapped = withIntl(GranularityTabs);
+    const Wrapped = withIntlForTest(GranularityTabs);
     return render(<Wrapped {...defaultProps} {...props} />);
 };
 

@@ -3,7 +3,7 @@
 import { fireEvent, render } from "@testing-library/react";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { type HeadlineElementType, withIntl } from "@gooddata/sdk-ui";
+import { type HeadlineElementType, withIntlForTest } from "@gooddata/sdk-ui";
 
 import {
     type IBaseHeadlineDrillable,
@@ -27,7 +27,7 @@ describe("withDrillable", () => {
     const WrappedComponent = vi.fn().mockReturnValue(<div className={wrappedComponentClassName}></div>);
     const WithDrillableComponent = withDrillable(WrappedComponent);
     const renderWithDrillableComponent = (props: IWithDrillableItemProps<IBaseHeadlineDrillable>) => {
-        const WrappedWithDrillableComponent = withIntl(WithDrillableComponent);
+        const WrappedWithDrillableComponent = withIntlForTest(WithDrillableComponent);
         return render(<WrappedWithDrillableComponent {...props} />);
     };
 

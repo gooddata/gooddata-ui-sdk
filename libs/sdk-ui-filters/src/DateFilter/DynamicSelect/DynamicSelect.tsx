@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type CSSProperties, type ChangeEvent, Component, createRef } from "react";
+import { type CSSProperties, type ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
@@ -41,209 +41,189 @@ export interface IDynamicSelectState {
     inputValue: string;
 }
 
-export class DynamicSelect extends Component<IDynamicSelectProps, IDynamicSelectState> {
-    constructor(props: IDynamicSelectProps) {
-        super(props);
-
+export function DynamicSelect({
+    getItems,
+    onChange = () => {},
+    initialIsOpen = false,
+    placeholder,
+    value,
+    className,
+    style,
+    optionClassName,
+    visibleItemsRange = defaultVisibleItemsRange,
+    ariaLabel,
+    customValueValidator,
+}: IDynamicSelectProps) {
+    const [inputValue, setInputValue] = useState<string>(() => {
         const selectedItem =
-            props.value === undefined
+            value === undefined
                 ? null
                 : findRelativeDateFilterOptionByValue(
                       // pass the current value to make sure the searched options include it even if it is outside the default range
-                      props.getItems(props.value.toString()),
-                      props.value,
+                      getItems(value.toString()),
+                      value,
                   );
 
-        this.state = {
-            inputValue: selectedItem ? itemToString(selectedItem) : props.value ? props.value.toString() : "",
-        };
-    }
+        return selectedItem ? itemToString(selectedItem) : value ? value.toString() : "";
+    });
 
-    public inputRef = createRef<HTMLDivElement>();
+    const inputRef = useRef<HTMLDivElement>(null);
 
-    public static defaultProps: Pick<
-        IDynamicSelectProps,
-        "onChange" | "initialIsOpen" | "visibleItemsRange"
-    > = {
-        onChange: () => {},
-        initialIsOpen: false,
-        visibleItemsRange: defaultVisibleItemsRange,
-    };
-
-    public onChange = (option: DynamicSelectOption | null): void => {
-        const { onChange } = this.props;
-        if (option && onChange) {
-            onChange(option.value);
-        }
-    };
-
-    public override componentDidUpdate = (lastProps: IDynamicSelectProps): void => {
-        const { value, getItems } = this.props;
-        if (lastProps.value !== value && value !== undefined) {
+    // keep the input value in sync with the controlled value prop, but not on the initial render
+    const prevValue = useRef(value);
+    useEffect(() => {
+        if (prevValue.current !== value && value !== undefined) {
             const defaultItems = getItems(value.toString());
-            const inputValue =
-                findRelativeDateFilterOptionByValue(defaultItems, value)?.label || value.toString();
-            this.setState({
-                inputValue,
-            });
+            setInputValue(
+                findRelativeDateFilterOptionByValue(defaultItems, value)?.label || value.toString(),
+            );
         }
-    };
+        prevValue.current = value;
+    }, [value, getItems]);
 
-    public focus = (): void => {
-        if (this.inputRef.current) {
-            this.inputRef.current.focus();
-        }
-    };
-
-    public blur = (): void => {
-        if (this.inputRef.current) {
-            this.inputRef.current.blur();
-        }
-    };
-
-    public onInputValueChanged = (inputValue: string): void => {
-        if (inputValue !== this.state.inputValue) {
-            this.setState({ inputValue });
-        }
-    };
-
-    public override render() {
-        const {
-            initialIsOpen,
-            placeholder,
-            getItems,
-            value = null,
-            className,
-            style,
-            optionClassName,
-            visibleItemsRange,
-            ariaLabel,
-        } = this.props;
-
-        const items = getItems(this.state.inputValue);
-        // this is important to correctly find out selected option. It is different than 'items'.
-        const itemsByValue = value === null ? [] : getItems(value.toString());
-        // Downshift requires null as empty selected item, if we would pass undefined it would change
-        // from controlled to uncontrolled component
-        const selectedItem =
-            (value !== null && findRelativeDateFilterOptionByValue(itemsByValue, value)) || null;
-
-        const selectableItems = getSelectableItems(items);
-        const isFiltered = this.state.inputValue.trim() !== "";
-
-        return (
-            <Downshift
-                onChange={this.onChange}
-                itemToString={itemToString}
-                initialIsOpen={initialIsOpen}
-                selectedItem={selectedItem}
-                itemCount={selectableItems.length}
-                inputValue={this.state.inputValue}
-                // automatically highlight (and therefore scroll to) the middle option if default items are displayed
-                defaultHighlightedIndex={selectedItem || isFiltered ? 0 : getMedianIndex(selectableItems)}
-            >
-                {({
-                    getInputProps,
-                    getMenuProps,
-                    getItemProps,
-                    isOpen,
-                    openMenu,
-                    closeMenu,
-                    inputValue: downshiftInputValue,
-                    highlightedIndex,
-                    setHighlightedIndex,
-                    selectItem,
-                }: ControllerStateAndHelpers<DynamicSelectOption>) => {
-                    // Without this, highlight is not properly reset during filtering
-                    const effectiveHighlightedIndex =
-                        highlightedIndex === null || highlightedIndex > selectableItems.length - 1
-                            ? 0
-                            : highlightedIndex;
-                    const effectiveInputValue = downshiftInputValue ?? "";
-
-                    const menuProps: ISelectMenuProps<number> = {
-                        items,
-                        selectedItem: selectedItem as ISelectItemOption<number>,
-                        highlightedIndex: effectiveHighlightedIndex,
-                        getItemProps: getItemProps as unknown as ISelectMenuProps<number>["getItemProps"],
-                        getMenuProps: getMenuProps as unknown as ISelectMenuProps<number>["getMenuProps"],
-                        className: "gd-dynamic-select-menu",
-                        optionClassName,
-                        inputValue: effectiveInputValue,
-                        setHighlightedIndex,
-                        visibleItemsRange,
-                    };
-
-                    return (
-                        <div
-                            className={cx("gd-dynamic-select", className)}
-                            style={style}
-                            aria-labelledby={undefined}
-                        >
-                            <div className="gd-dynamic-select-input-wrapper">
-                                <input
-                                    type="text"
-                                    className="s-relative-range-input gd-input-field"
-                                    aria-label={ariaLabel}
-                                    {...getInputProps({
-                                        "aria-labelledby": undefined,
-                                        ref: this.inputRef,
-                                        placeholder: selectedItem ? selectedItem.label : placeholder,
-                                        value: effectiveInputValue,
-                                        onFocus: () => {
-                                            this.setState({ inputValue: "" });
-                                            openMenu();
-                                        },
-                                        onChange: (event: ChangeEvent<HTMLInputElement>) =>
-                                            this.onChangeHandler(event, selectItem),
-                                        onBlur: () => {
-                                            this.onBlurHandler(selectedItem!, selectItem, closeMenu);
-                                        },
-                                    })}
-                                />
-                            </div>
-                            {isOpen && items.length > 0 ? (
-                                <ScrollableSelectMenu
-                                    {...(menuProps as unknown as ISelectMenuProps<object>)}
-                                />
-                            ) : null}
-                        </div>
-                    );
-                }}
-            </Downshift>
+    const onInputValueChanged = useCallback((newInputValue: string): void => {
+        setInputValue((currentInputValue) =>
+            newInputValue === currentInputValue ? currentInputValue : newInputValue,
         );
-    }
+    }, []);
 
-    private onBlurHandler = (
-        selectedItem: ISelectItemOption<number>,
-        selectItem: (item: ISelectItemOption<number>) => void,
-        closeMenu: () => void,
-    ): void => {
-        const { customValueValidator, value } = this.props;
-        if (customValueValidator) {
-            closeMenu();
-            this.onInputValueChanged(value?.toString() ?? "");
-        } else {
-            selectItem(selectedItem);
-            this.onInputValueChanged(selectedItem.label);
-        }
-    };
+    const handleChange = useCallback(
+        (option: DynamicSelectOption | null): void => {
+            if (option && onChange) {
+                onChange(option.value);
+            }
+        },
+        [onChange],
+    );
 
-    private onChangeHandler = (
-        event: ChangeEvent<HTMLInputElement>,
-        selectItem: (item: ISelectItemOption<number>) => void,
-    ): void => {
-        const { customValueValidator } = this.props;
-        const currentValue = (event.target as HTMLInputElement).value;
-        if (customValueValidator?.(currentValue)) {
-            selectItem({
-                type: "option",
-                value: Number(currentValue),
-                label: currentValue,
-            });
-        }
-        // Downshifts onInputValueChanged fires twice and with an old value,
-        // so we need to use our own callback
-        this.onInputValueChanged(currentValue);
-    };
+    const onBlurHandler = useCallback(
+        (
+            selectedItem: ISelectItemOption<number>,
+            selectItem: (item: ISelectItemOption<number>) => void,
+            closeMenu: () => void,
+        ): void => {
+            if (customValueValidator) {
+                closeMenu();
+                onInputValueChanged(value?.toString() ?? "");
+            } else {
+                selectItem(selectedItem);
+                onInputValueChanged(selectedItem.label);
+            }
+        },
+        [customValueValidator, value, onInputValueChanged],
+    );
+
+    const onChangeHandler = useCallback(
+        (
+            event: ChangeEvent<HTMLInputElement>,
+            selectItem: (item: ISelectItemOption<number>) => void,
+        ): void => {
+            const currentValue = (event.target as HTMLInputElement).value;
+            if (customValueValidator?.(currentValue)) {
+                selectItem({
+                    type: "option",
+                    value: Number(currentValue),
+                    label: currentValue,
+                });
+            }
+            // Downshifts onInputValueChanged fires twice and with an old value,
+            // so we need to use our own callback
+            onInputValueChanged(currentValue);
+        },
+        [customValueValidator, onInputValueChanged],
+    );
+
+    const effectiveValue = value ?? null;
+
+    const items = getItems(inputValue);
+    // this is important to correctly find out selected option. It is different than 'items'.
+    const itemsByValue = effectiveValue === null ? [] : getItems(effectiveValue.toString());
+    // Downshift requires null as empty selected item, if we would pass undefined it would change
+    // from controlled to uncontrolled component
+    const selectedItem =
+        (effectiveValue !== null && findRelativeDateFilterOptionByValue(itemsByValue, effectiveValue)) ||
+        null;
+
+    const selectableItems = getSelectableItems(items);
+    const isFiltered = inputValue.trim() !== "";
+
+    return (
+        <Downshift
+            onChange={handleChange}
+            itemToString={itemToString}
+            initialIsOpen={initialIsOpen}
+            selectedItem={selectedItem}
+            itemCount={selectableItems.length}
+            inputValue={inputValue}
+            // automatically highlight (and therefore scroll to) the middle option if default items are displayed
+            defaultHighlightedIndex={selectedItem || isFiltered ? 0 : getMedianIndex(selectableItems)}
+        >
+            {({
+                getInputProps,
+                getMenuProps,
+                getItemProps,
+                isOpen,
+                openMenu,
+                closeMenu,
+                inputValue: downshiftInputValue,
+                highlightedIndex,
+                setHighlightedIndex,
+                selectItem,
+            }: ControllerStateAndHelpers<DynamicSelectOption>) => {
+                // Without this, highlight is not properly reset during filtering
+                const effectiveHighlightedIndex =
+                    highlightedIndex === null || highlightedIndex > selectableItems.length - 1
+                        ? 0
+                        : highlightedIndex;
+                const effectiveInputValue = downshiftInputValue ?? "";
+
+                const menuProps: ISelectMenuProps<number> = {
+                    items,
+                    selectedItem: selectedItem as ISelectItemOption<number>,
+                    highlightedIndex: effectiveHighlightedIndex,
+                    getItemProps: getItemProps as unknown as ISelectMenuProps<number>["getItemProps"],
+                    getMenuProps: getMenuProps as unknown as ISelectMenuProps<number>["getMenuProps"],
+                    className: "gd-dynamic-select-menu",
+                    optionClassName,
+                    inputValue: effectiveInputValue,
+                    setHighlightedIndex,
+                    visibleItemsRange,
+                };
+
+                return (
+                    <div
+                        className={cx("gd-dynamic-select", className)}
+                        style={style}
+                        aria-labelledby={undefined}
+                    >
+                        <div className="gd-dynamic-select-input-wrapper">
+                            <input
+                                type="text"
+                                className="s-relative-range-input gd-input-field"
+                                aria-label={ariaLabel}
+                                {...getInputProps({
+                                    "aria-labelledby": undefined,
+                                    ref: inputRef,
+                                    placeholder: selectedItem ? selectedItem.label : placeholder,
+                                    value: effectiveInputValue,
+                                    onFocus: () => {
+                                        setInputValue("");
+                                        openMenu();
+                                    },
+                                    onChange: (event: ChangeEvent<HTMLInputElement>) =>
+                                        onChangeHandler(event, selectItem),
+                                    onBlur: () => {
+                                        onBlurHandler(selectedItem!, selectItem, closeMenu);
+                                    },
+                                })}
+                            />
+                        </div>
+                        {isOpen && items.length > 0 ? (
+                            <ScrollableSelectMenu {...(menuProps as unknown as ISelectMenuProps<object>)} />
+                        ) : null}
+                    </div>
+                );
+            }}
+        </Downshift>
+    );
 }

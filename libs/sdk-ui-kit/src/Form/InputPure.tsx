@@ -6,8 +6,11 @@ import {
     type FocusEvent,
     type KeyboardEvent,
     type MouseEvent,
-    PureComponent,
     type ReactNode,
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useRef,
 } from "react";
 
 import cx from "classnames";
@@ -68,126 +71,178 @@ export interface IInputPureProps extends IDomNativeProps {
     iconButtonLabel?: string;
     dataTestId?: string;
 }
+
+/**
+ * Imperative handle exposed by {@link InputPure}.
+ *
+ * `inputNodeRef` is the native `<input>` element - consumers chain `Input.inputNodeRef.inputNodeRef`
+ * down to it, so it has to stay the DOM node and not the component instance.
+ *
+ * @internal
+ */
+export interface IInputPureHandle extends IDomNative {
+    inputNodeRef: HTMLInputElement | null;
+}
+
+/**
+ * Defaults shared with the `Input` wrapper, which re-exposes them as its own `defaultProps`.
+ * Keep in sync with the destructuring defaults in {@link InputPure}.
+ *
+ * @internal
+ */
+export const inputPureDefaultProps = {
+    autofocus: false,
+    className: "",
+    clearOnEsc: false,
+    disabled: false,
+    hasError: false,
+    hasWarning: false,
+    isSearch: false,
+    isSmall: false,
+    maxlength: 255,
+    onChange: (..._args: unknown[]) => {},
+    onEscKeyPress: (..._args: unknown[]) => {},
+    onEnterKeyPress: (..._args: unknown[]) => {},
+    onBlur: (..._args: unknown[]) => {},
+    onFocus: (..._args: unknown[]) => {},
+    placeholder: "",
+    prefix: "",
+    readonly: false,
+    suffix: "",
+    label: "",
+    labelPositionTop: false,
+    value: "",
+};
+
 /**
  * @internal
  */
-export class InputPure extends PureComponent<IInputPureProps> implements IDomNative {
-    public inputNodeRef: HTMLInputElement | null = null;
-    private autofocusDispatcher: () => void = () => {};
-    private readonly a11yIdBase = uuid();
+export const InputPure = forwardRef<IInputPureHandle, IInputPureProps>(function InputPure(props, ref) {
+    const {
+        accessibilityConfig,
+        autocomplete,
+        autofocus = false,
+        className = "",
+        clearOnEsc = false,
+        dataTestId,
+        disabled = false,
+        hasError = false,
+        hasWarning = false,
+        iconButton,
+        iconButtonLabel,
+        id,
+        isSearch = false,
+        isSmall = false,
+        label = "",
+        labelPositionTop = false,
+        maxlength = 255,
+        name,
+        onBlur = (..._args: unknown[]) => {},
+        onChange = (..._args: unknown[]) => {},
+        onEnterKeyPress = (..._args: unknown[]) => {},
+        onEscKeyPress = (..._args: unknown[]) => {},
+        onFocus = (..._args: unknown[]) => {},
+        onIconButtonClick,
+        onKeyDown,
+        placeholder = "",
+        prefix = "",
+        readonly = false,
+        required,
+        suffix = "",
+        type,
+        value = "",
+    }: IInputPureProps = props;
 
-    static defaultProps = {
-        autofocus: false,
-        className: "",
-        clearOnEsc: false,
-        disabled: false,
-        hasError: false,
-        hasWarning: false,
-        isSearch: false,
-        isSmall: false,
-        maxlength: 255,
-        onChange: (..._args: unknown[]) => {},
-        onEscKeyPress: (..._args: unknown[]) => {},
-        onEnterKeyPress: (..._args: unknown[]) => {},
-        onBlur: (..._args: unknown[]) => {},
-        onFocus: (..._args: unknown[]) => {},
-        placeholder: "",
-        prefix: "",
-        readonly: false,
-        suffix: "",
-        label: "",
-        labelPositionTop: false,
-        value: "",
+    const inputRef = useRef<HTMLInputElement | null>(null);
+    const autofocusDispatcher = useRef<() => void>(() => {});
+    const a11yIdBase = useRef(uuid()).current;
+
+    useEffect(() => {
+        autofocusDispatcher.current = runAutofocus(inputRef.current, autofocus);
+        // read through the ref rather than closing over the disposer: `onClear` may have replaced it
+        // with a newer autofocus loop, and that is the one which has to be cancelled here
+        return () => autofocusDispatcher.current();
+    }, [autofocus]);
+
+    useImperativeHandle(
+        ref,
+        () => ({
+            get inputNodeRef() {
+                return inputRef.current;
+            },
+            focus(options?: { preventScroll?: boolean }) {
+                inputRef.current?.focus(options);
+            },
+        }),
+        [],
+    );
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+        onChange((e.target as HTMLInputElement).value, e);
     };
 
-    override componentDidMount(): void {
-        const { autofocus } = this.props;
-        this.autofocusDispatcher = runAutofocus(this.inputNodeRef, autofocus ?? false);
-    }
-
-    override componentWillUnmount(): void {
-        this.autofocusDispatcher();
-    }
-
-    override componentDidUpdate(prevProps: Readonly<IInputPureProps>) {
-        if (prevProps.autofocus !== this.props.autofocus) {
-            this.autofocusDispatcher();
-            this.autofocusDispatcher = runAutofocus(this.inputNodeRef, this.props.autofocus ?? false);
-        }
-    }
-
-    onChange = (e: ChangeEvent<HTMLInputElement>): void => {
-        this.props.onChange?.((e.target as HTMLInputElement).value, e);
+    const onClear = (e?: ChangeEvent<HTMLInputElement>): void => {
+        onChange("", e);
+        autofocusDispatcher.current = runAutofocus(inputRef.current, true);
     };
 
-    onKeyPress = (e: KeyboardEvent): void => {
+    const onKeyPress = (e: KeyboardEvent): void => {
         switch (e.keyCode) {
             case ENUM_KEY_CODE.KEY_CODE_ESCAPE as number:
-                if (this.props.clearOnEsc) {
+                if (clearOnEsc) {
                     e.stopPropagation();
-                    this.onClear();
+                    onClear();
                 }
-                this.props.onEscKeyPress?.(e);
+                onEscKeyPress(e);
                 break;
             case ENUM_KEY_CODE.KEY_CODE_ENTER as number:
-                this.props.onEnterKeyPress?.();
+                onEnterKeyPress();
                 break;
             default:
                 break;
         }
     };
 
-    onClear = (e?: ChangeEvent<HTMLInputElement>): void => {
-        this.props.onChange?.("", e);
-        this.autofocusDispatcher = runAutofocus(this.inputNodeRef, true);
-    };
-
-    getLabelClassNames(className: string): string {
+    const getLabelClassNames = (classNames: string): string => {
         return cx(
             {
                 "gd-input": true,
-                "gd-input-small": this.props.isSmall,
-                "gd-input-search": this.props.isSearch,
-                "gd-input-with-prefix": !!this.props.prefix,
-                "gd-input-with-suffix": !!this.props.suffix,
-                "gd-input-with-icon-button": !!this.props.iconButton,
-                "gd-input-with-label": !!this.props.label,
-                "gd-input-label-top": this.props.labelPositionTop,
-                "has-error": this.props.hasError,
-                "has-warning": this.props.hasWarning,
-                "is-disabled": this.props.disabled,
+                "gd-input-small": isSmall,
+                "gd-input-search": isSearch,
+                "gd-input-with-prefix": !!prefix,
+                "gd-input-with-suffix": !!suffix,
+                "gd-input-with-icon-button": !!iconButton,
+                "gd-input-with-label": !!label,
+                "gd-input-label-top": labelPositionTop,
+                "has-error": hasError,
+                "has-warning": hasWarning,
+                "is-disabled": disabled,
             },
-            className,
+            classNames,
         );
-    }
+    };
 
-    getInputClassNames(): string {
+    const getInputClassNames = (): string => {
         return cx({
             "gd-input-field": true,
-            "gd-input-field-small": this.props.isSmall,
+            "gd-input-field-small": isSmall,
         });
-    }
+    };
 
-    private getA11yIdBase(): string {
-        return this.props.id ?? this.a11yIdBase;
-    }
+    const getA11yIdBase = (): string => id ?? a11yIdBase;
 
-    private getPrefixA11yId(): string {
-        return `${this.getA11yIdBase()}-a11y-prefix`;
-    }
+    const getPrefixA11yId = (): string => `${getA11yIdBase()}-a11y-prefix`;
 
-    private getSuffixA11yId(): string {
-        return `${this.getA11yIdBase()}-a11y-suffix`;
-    }
+    const getSuffixA11yId = (): string => `${getA11yIdBase()}-a11y-suffix`;
 
-    renderPrefix(prefix: string, ariaLabel?: string): ReactNode {
-        return prefix ? (
+    const renderPrefix = (prefixValue: string, ariaLabel?: string): ReactNode => {
+        return prefixValue ? (
             <>
                 <span className="gd-input-prefix" aria-hidden="true">
-                    {prefix}
+                    {prefixValue}
                 </span>
                 {ariaLabel ? (
-                    <span className="sr-only" id={this.getPrefixA11yId()}>
+                    <span className="sr-only" id={getPrefixA11yId()}>
                         {ariaLabel}
                     </span>
                 ) : null}
@@ -195,16 +250,16 @@ export class InputPure extends PureComponent<IInputPureProps> implements IDomNat
         ) : (
             false
         );
-    }
+    };
 
-    renderSuffix(suffix: string, ariaLabel?: string): ReactNode {
-        return suffix ? (
+    const renderSuffix = (suffixValue: string, ariaLabel?: string): ReactNode => {
+        return suffixValue ? (
             <>
                 <span className="gd-input-suffix" aria-hidden="true">
-                    {suffix}
+                    {suffixValue}
                 </span>
                 {ariaLabel ? (
-                    <span className="sr-only" id={this.getSuffixA11yId()}>
+                    <span className="sr-only" id={getSuffixA11yId()}>
                         {ariaLabel}
                     </span>
                 ) : null}
@@ -212,24 +267,24 @@ export class InputPure extends PureComponent<IInputPureProps> implements IDomNat
         ) : (
             false
         );
-    }
+    };
 
-    renderLabel(label: ReactNode, htmlFor?: string): ReactNode {
-        return label ? (
+    const renderLabel = (labelValue: ReactNode, htmlFor?: string): ReactNode => {
+        return labelValue ? (
             <label htmlFor={htmlFor} className="gd-input-label">
-                {label}
+                {labelValue}
             </label>
         ) : (
             false
         );
-    }
+    };
 
-    renderSearch(isSearch: boolean): ReactNode {
-        return isSearch ? <span className="gd-input-icon gd-icon-search" /> : false;
-    }
+    const renderSearch = (isSearchValue: boolean): ReactNode => {
+        return isSearchValue ? <span className="gd-input-icon gd-icon-search" /> : false;
+    };
 
-    renderClearIcon(clearOnEsc: boolean): ReactNode {
-        return clearOnEsc && (this.props.value as string).length > 0 ? (
+    const renderClearIcon = (clearOnEscValue: boolean): ReactNode => {
+        return clearOnEscValue && (value as string).length > 0 ? (
             <button
                 type="button"
                 className="gd-input-icon-clear gd-icon-clear s-input-clear"
@@ -238,43 +293,41 @@ export class InputPure extends PureComponent<IInputPureProps> implements IDomNat
                     // react events use delegation and don't bubble, click on clear needs to be kept local
                     // to avoid handling by overlay close handler and others
                     e.stopPropagation();
-                    this.onClear();
+                    onClear();
                 }}
             />
         ) : (
             false
         );
-    }
+    };
 
-    renderIconButton(
-        iconButton: IconType,
-        iconButtonLabel: string,
-        onIconButtonClick: (e: MouseEvent<HTMLButtonElement>) => void,
-    ): ReactNode {
-        return iconButton ? (
+    const renderIconButton = (
+        iconButtonValue: IconType,
+        iconButtonLabelValue: string,
+        onIconButtonClickValue: (e: MouseEvent<HTMLButtonElement>) => void,
+    ): ReactNode => {
+        return iconButtonValue ? (
             <span className="gd-input-icon-button">
                 <UiIconButton
-                    icon={iconButton}
-                    label={iconButtonLabel}
+                    icon={iconButtonValue}
+                    label={iconButtonLabelValue}
                     size="medium"
                     variant="tertiary"
-                    onClick={onIconButtonClick}
+                    onClick={onIconButtonClickValue}
                     accessibilityConfig={{
-                        ariaLabel: iconButtonLabel,
+                        ariaLabel: iconButtonLabelValue,
                     }}
                 />
             </span>
         ) : (
             false
         );
-    }
+    };
 
-    getAriaDescribedBy(): string | undefined {
-        const { prefix, suffix, accessibilityConfig } = this.props;
-
+    const getAriaDescribedBy = (): string | undefined => {
         const describedBy = [
-            prefix && accessibilityConfig?.prefixAriaLabel ? this.getPrefixA11yId() : undefined,
-            suffix && accessibilityConfig?.suffixAriaLabel ? this.getSuffixA11yId() : undefined,
+            prefix && accessibilityConfig?.prefixAriaLabel ? getPrefixA11yId() : undefined,
+            suffix && accessibilityConfig?.suffixAriaLabel ? getSuffixA11yId() : undefined,
             accessibilityConfig?.ariaDescribedBy,
         ]
             .filter(Boolean)
@@ -282,54 +335,30 @@ export class InputPure extends PureComponent<IInputPureProps> implements IDomNat
             .trim();
 
         return describedBy.length ? describedBy : undefined;
-    }
+    };
 
-    renderInput() {
-        const {
-            clearOnEsc,
-            disabled,
-            isSearch,
-            placeholder,
-            prefix,
-            readonly,
-            suffix,
-            maxlength,
-            value,
-            onBlur,
-            onFocus,
-            name,
-            type,
-            required,
-            accessibilityConfig,
-            autocomplete,
-            iconButton,
-            iconButtonLabel,
-            onIconButtonClick,
-            dataTestId,
-        } = this.props;
+    const renderInput = () => {
         return (
             <div className="gd-input-wrapper">
                 <input
-                    ref={(ref) => {
-                        this.inputNodeRef = ref;
-                    }}
+                    ref={inputRef}
                     type={type ?? "text"}
-                    id={this.getA11yIdBase()}
+                    id={getA11yIdBase()}
                     name={name}
                     required={required}
-                    className={this.getInputClassNames()}
+                    className={getInputClassNames()}
                     disabled={disabled}
                     maxLength={maxlength}
-                    onChange={this.onChange}
+                    onChange={handleChange}
                     onBlur={onBlur}
                     onFocus={onFocus}
-                    onKeyDown={this.props.onKeyDown ?? this.onKeyPress}
+                    onKeyDown={onKeyDown ?? onKeyPress}
                     placeholder={placeholder}
                     readOnly={readonly}
                     value={value}
                     role={accessibilityConfig?.role}
                     aria-label={accessibilityConfig?.ariaLabel ?? undefined}
-                    aria-describedby={this.getAriaDescribedBy()}
+                    aria-describedby={getAriaDescribedBy()}
                     aria-labelledby={accessibilityConfig?.ariaLabelledBy}
                     aria-expanded={accessibilityConfig?.ariaExpanded}
                     aria-controls={accessibilityConfig?.ariaControls}
@@ -340,33 +369,23 @@ export class InputPure extends PureComponent<IInputPureProps> implements IDomNat
                     autoComplete={isSearch ? "off" : autocomplete}
                     data-testid={dataTestId}
                 />
-                {this.renderSearch(isSearch ?? false)}
-                {this.renderClearIcon(clearOnEsc ?? false)}
-                {this.renderPrefix(prefix ?? "", accessibilityConfig?.prefixAriaLabel)}
-                {this.renderSuffix(suffix ?? "", accessibilityConfig?.suffixAriaLabel)}
-                {this.renderIconButton(iconButton!, iconButtonLabel ?? "", onIconButtonClick!)}
+                {renderSearch(isSearch)}
+                {renderClearIcon(clearOnEsc)}
+                {renderPrefix(prefix, accessibilityConfig?.prefixAriaLabel)}
+                {renderSuffix(suffix, accessibilityConfig?.suffixAriaLabel)}
+                {renderIconButton(iconButton!, iconButtonLabel ?? "", onIconButtonClick!)}
+            </div>
+        );
+    };
+
+    if (label) {
+        return (
+            <div className={getLabelClassNames(className)}>
+                {renderLabel(label, getA11yIdBase())}
+                {renderInput()}
             </div>
         );
     }
 
-    override render() {
-        const { className, label } = this.props;
-
-        if (label) {
-            return (
-                <div className={this.getLabelClassNames(className ?? "")}>
-                    {this.renderLabel(label, this.getA11yIdBase())}
-                    {this.renderInput()}
-                </div>
-            );
-        }
-
-        return <div className={this.getLabelClassNames(className ?? "")}>{this.renderInput()}</div>;
-    }
-
-    focus(options?: { preventScroll?: boolean }): void {
-        if (this.inputNodeRef) {
-            this.inputNodeRef.focus(options);
-        }
-    }
-}
+    return <div className={getLabelClassNames(className)}>{renderInput()}</div>;
+});

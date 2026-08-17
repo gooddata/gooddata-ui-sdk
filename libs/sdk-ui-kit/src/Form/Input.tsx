@@ -1,8 +1,13 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type ChangeEvent, PureComponent } from "react";
+import { type ChangeEvent, forwardRef, useLayoutEffect, useRef, useState } from "react";
 
-import { type IInputPureProps, InputPure } from "./InputPure.js";
+import {
+    type IInputPureHandle,
+    type IInputPureProps,
+    InputPure,
+    inputPureDefaultProps,
+} from "./InputPure.js";
 
 const isValidNumber = (value: string | number) => typeof value === "number" && !Number.isNaN(value);
 const isNumberOrString = (value: string | number) =>
@@ -19,52 +24,39 @@ export interface IInputState {
 /**
  * @internal
  */
-export class Input extends PureComponent<IInputPureProps, IInputState> {
-    static defaultProps = {
-        ...InputPure.defaultProps,
-    };
-    public inputNodeRef: InputPure | null = null;
+export const Input = forwardRef<IInputPureHandle, IInputPureProps>(function Input(props, ref) {
+    const { value: propValue = inputPureDefaultProps.value, onChange } = props;
 
-    constructor(props: IInputPureProps) {
-        super(props);
-        const { value } = props;
+    const [value, setValue] = useState(() => toValidValue(propValue));
 
-        this.state = {
-            value: toValidValue(value ?? ""),
-        };
-    }
+    const lastPropValueRef = useRef(propValue);
 
-    override UNSAFE_componentWillReceiveProps(nextProps: IInputPureProps): void {
-        const validValue = toValidValue(nextProps.value ?? "");
-        if (this.props.value !== validValue) {
-            this.valueChanged(validValue);
+    // Keeps the derived state in sync with the value prop and notifies the consumer about the
+    // normalization, the same way the former UNSAFE_componentWillReceiveProps did. A layout effect
+    // is what keeps the parity: the class synced the state before rendering, so a changed value
+    // prop was part of the very same commit. Here the re-render is flushed before the browser
+    // paints instead, so the stale value can never be shown.
+    useLayoutEffect(() => {
+        // Object.is, not ===, so that a NaN value prop counts as unchanged; === would make every
+        // re-render look like a new external update and reset the value the user just typed.
+        if (Object.is(lastPropValueRef.current, propValue)) {
+            return;
         }
-    }
+        lastPropValueRef.current = propValue;
 
-    onChange = (value: string | number, e?: ChangeEvent<HTMLInputElement>): void => {
-        this.valueChanged(value, e);
+        const validValue = toValidValue(propValue);
+        if (value !== validValue) {
+            setValue(validValue);
+            onChange?.(validValue);
+        }
+    }, [propValue, value, onChange]);
+
+    const handleChange = (newValue: string | number, e?: ChangeEvent<HTMLInputElement>): void => {
+        if (value !== newValue) {
+            setValue(newValue);
+            onChange?.(newValue, e);
+        }
     };
 
-    valueChanged(value: string | number, e?: ChangeEvent<HTMLInputElement>): void {
-        if (this.state.value !== value) {
-            this.setState({
-                value,
-            });
-
-            this.props.onChange?.(value, e);
-        }
-    }
-
-    override render() {
-        return (
-            <InputPure
-                {...this.props}
-                ref={(ref) => {
-                    this.inputNodeRef = ref;
-                }}
-                onChange={this.onChange}
-                value={this.state.value}
-            />
-        );
-    }
-}
+    return <InputPure {...props} ref={ref} onChange={handleChange} value={value} />;
+});

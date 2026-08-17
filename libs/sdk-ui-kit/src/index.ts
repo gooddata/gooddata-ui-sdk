@@ -140,7 +140,12 @@ export { Button } from "./Button/Button.js";
 export { Datepicker, type IDatePickerProps } from "./Datepicker/Datepicker.js";
 export type { Separators, LabelSize } from "./Form/typings.js";
 export { Input, type IInputState } from "./Form/Input.js";
-export { InputPure, type IInputPureProps, type IInputPureAccessibilityConfig } from "./Form/InputPure.js";
+export {
+    InputPure,
+    type IInputPureHandle,
+    type IInputPureProps,
+    type IInputPureAccessibilityConfig,
+} from "./Form/InputPure.js";
 export { Checkbox, type ICheckboxProps } from "./Form/Checkbox.js";
 export {
     InputWithNumberFormat,
@@ -513,6 +518,7 @@ export {
 export { ResponsiveText, type IResponsiveTextProps } from "./ResponsiveText/ResponsiveText.js";
 export {
     ShortenedText,
+    type IShortenedTextHandle,
     type IShortenedTextProps,
     type IShortenedTextState,
 } from "./ShortenedText/ShortenedText.js";
@@ -707,7 +713,11 @@ export type { IEditableLabelProps, IEditableLabelState } from "./EditableLabel/t
 export { EditableLabel } from "./EditableLabel/EditableLabel.js";
 export type { ISpinnerProps } from "./Spinner/typings.js";
 export { Spinner } from "./Spinner/Spinner.js";
-export type { IFlexDimensionsProps, IFlexDimensionsState } from "./FlexDimensions/typings.js";
+export type {
+    IFlexDimensionsHandle,
+    IFlexDimensionsProps,
+    IFlexDimensionsState,
+} from "./FlexDimensions/typings.js";
 export { FlexDimensions } from "./FlexDimensions/FlexDimensions.js";
 export type { IDateDataset, IDateDatasetHeader } from "./DateDatasets/typings.js";
 export {

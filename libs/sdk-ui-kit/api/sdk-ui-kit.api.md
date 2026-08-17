@@ -154,7 +154,7 @@ export function alignPointsToPlacement(alignPoints: ILegacyAlignPoint[]): Placem
 export function alignPointToPlacement(alignPoint: ILegacyAlignPoint): Placement;
 
 // @internal (undocumented)
-export const AppHeader: ComponentType<Omit<IAppHeaderProps, "theme" | "themeIsLoading" | "themeStatus">>;
+export function AppHeader(input: IAppHeaderProps): JSX.Element;
 
 // @internal (undocumented)
 export type ArrowDirections = Record<string, string>;
@@ -367,10 +367,7 @@ export const DATE_DATASET_LIST_ITEM_CLASSNAME = "gd-list-item gd-list-item-short
 export function DateDatasetsListItem(input: IDateDatasetsListItemProps): JSX.Element;
 
 // @internal (undocumented)
-export class Datepicker extends PureComponent<IDatePickerProps> {
-    // (undocumented)
-    render(): JSX.Element;
-}
+export const Datepicker: NamedExoticComponent<IDatePickerProps>;
 
 // @internal (undocumented)
 export const DEFAULT_ITEM_HEIGHT = 28;
@@ -608,28 +605,7 @@ export const findInteractiveItem: <T extends IUiMenuItemData = object>(items: IU
 export const findItem: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], predicate: (item: IUiMenuItem<T>) => boolean) => IUiMenuItem<T> | undefined;
 
 // @internal (undocumented)
-export class FlexDimensions extends Component<IFlexDimensionsProps, IFlexDimensionsState> {
-    constructor(props: IFlexDimensionsProps);
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentWillUnmount(): void;
-    // (undocumented)
-    static defaultProps: {
-        children: boolean;
-        className: string;
-        measureWidth: boolean;
-        measureHeight: boolean;
-    };
-    // (undocumented)
-    getChildrenDimensions(): Partial<IFlexDimensionsState>;
-    // (undocumented)
-    render(): ReactNode;
-    // (undocumented)
-    renderChildren(): ReactNode;
-    // (undocumented)
-    updateSize: () => void;
-}
+export const FlexDimensions: ForwardRefExoticComponent<IFlexDimensionsProps & RefAttributes<IFlexDimensionsHandle>>;
 
 // @internal
 export const FLOATING_ELEMENT_DATA_ATTR = "data-gd-floating-element";
@@ -1074,8 +1050,6 @@ export interface IAppHeaderProps {
     showStaticHelpMenu?: boolean;
     // (undocumented)
     showUpsellButton?: boolean;
-    // (undocumented)
-    theme?: ITheme;
     // (undocumented)
     userName: string;
     // (undocumented)
@@ -2458,6 +2432,7 @@ export interface IDropdownListProps<T> {
     disableAutofocus?: boolean;
     // (undocumented)
     footer?: ReactNode | ((closeDropdown: () => void) => ReactNode);
+    getIsItemSelected?: (item: T) => boolean;
     // (undocumented)
     hasNextPage?: boolean;
     // (undocumented)
@@ -2884,6 +2859,12 @@ export interface IFilterLabelState {
     hasEllipsis: boolean;
 }
 
+// @internal
+export interface IFlexDimensionsHandle {
+    // (undocumented)
+    updateSize: () => void;
+}
+
 // @internal (undocumented)
 export interface IFlexDimensionsProps {
     // (undocumented)
@@ -3277,6 +3258,12 @@ export interface IInputPureAccessibilityConfig extends IAccessibilityConfigBase 
     prefixAriaLabel?: string;
     // (undocumented)
     suffixAriaLabel?: string;
+}
+
+// @internal
+export interface IInputPureHandle extends IDomNative {
+    // (undocumented)
+    inputNodeRef: HTMLInputElement | null;
 }
 
 // @internal (undocumented)
@@ -4423,111 +4410,10 @@ export interface INoDataProps {
 }
 
 // @internal (undocumented)
-export class Input extends PureComponent<IInputPureProps, IInputState> {
-    constructor(props: IInputPureProps);
-    // (undocumented)
-    static defaultProps: {
-        autofocus: boolean;
-        className: string;
-        clearOnEsc: boolean;
-        disabled: boolean;
-        hasError: boolean;
-        hasWarning: boolean;
-        isSearch: boolean;
-        isSmall: boolean;
-        maxlength: number;
-        onChange: (..._args: unknown[]) => void;
-        onEscKeyPress: (..._args: unknown[]) => void;
-        onEnterKeyPress: (..._args: unknown[]) => void;
-        onBlur: (..._args: unknown[]) => void;
-        onFocus: (..._args: unknown[]) => void;
-        placeholder: string;
-        prefix: string;
-        readonly: boolean;
-        suffix: string;
-        label: string;
-        labelPositionTop: boolean;
-        value: string;
-    };
-    // (undocumented)
-    inputNodeRef: InputPure | null;
-    // (undocumented)
-    onChange: (value: string | number, e?: ChangeEvent<HTMLInputElement> | undefined) => void;
-    // (undocumented)
-    render(): JSX.Element;
-    // (undocumented)
-    UNSAFE_componentWillReceiveProps(nextProps: IInputPureProps): void;
-    // (undocumented)
-    valueChanged(value: string | number, e?: ChangeEvent<HTMLInputElement>): void;
-}
+export const Input: ForwardRefExoticComponent<IInputPureProps & RefAttributes<IInputPureHandle>>;
 
 // @internal (undocumented)
-export class InputPure extends PureComponent<IInputPureProps> implements IDomNative {
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentDidUpdate(prevProps: Readonly<IInputPureProps>): void;
-    // (undocumented)
-    componentWillUnmount(): void;
-    // (undocumented)
-    static defaultProps: {
-        autofocus: boolean;
-        className: string;
-        clearOnEsc: boolean;
-        disabled: boolean;
-        hasError: boolean;
-        hasWarning: boolean;
-        isSearch: boolean;
-        isSmall: boolean;
-        maxlength: number;
-        onChange: (..._args: unknown[]) => void;
-        onEscKeyPress: (..._args: unknown[]) => void;
-        onEnterKeyPress: (..._args: unknown[]) => void;
-        onBlur: (..._args: unknown[]) => void;
-        onFocus: (..._args: unknown[]) => void;
-        placeholder: string;
-        prefix: string;
-        readonly: boolean;
-        suffix: string;
-        label: string;
-        labelPositionTop: boolean;
-        value: string;
-    };
-    // (undocumented)
-    focus(options?: {
-        preventScroll?: boolean;
-    }): void;
-    // (undocumented)
-    getAriaDescribedBy(): string | undefined;
-    // (undocumented)
-    getInputClassNames(): string;
-    // (undocumented)
-    getLabelClassNames(className: string): string;
-    // (undocumented)
-    inputNodeRef: HTMLInputElement | null;
-    // (undocumented)
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    // (undocumented)
-    onClear: (e?: ChangeEvent<HTMLInputElement> | undefined) => void;
-    // (undocumented)
-    onKeyPress: (e: KeyboardEvent_2<Element>) => void;
-    // (undocumented)
-    render(): JSX.Element;
-    // (undocumented)
-    renderClearIcon(clearOnEsc: boolean): ReactNode;
-    // (undocumented)
-    renderIconButton(iconButton: IconType, iconButtonLabel: string, onIconButtonClick: (e: MouseEvent_2<HTMLButtonElement>) => void): ReactNode;
-    // (undocumented)
-    renderInput(): JSX.Element;
-    // (undocumented)
-    renderLabel(label: ReactNode, htmlFor?: string): ReactNode;
-    // (undocumented)
-    renderPrefix(prefix: string, ariaLabel?: string): ReactNode;
-    // (undocumented)
-    renderSearch(isSearch: boolean): ReactNode;
-    // (undocumented)
-    renderSuffix(suffix: string, ariaLabel?: string): ReactNode;
-}
+export const InputPure: ForwardRefExoticComponent<IInputPureProps & RefAttributes<IInputPureHandle>>;
 
 // @internal (undocumented)
 export const InputWithNumberFormat: NamedExoticComponent<IInputWithNumberFormatProps>;
@@ -4892,6 +4778,8 @@ export interface IRenderDropdownListItemProps<T> {
     isFirst: boolean;
     // (undocumented)
     isLast: boolean;
+    // (undocumented)
+    isSelected?: boolean;
     // (undocumented)
     item: T;
     // (undocumented)
@@ -5368,6 +5256,12 @@ export interface ISharingApplyPayload {
     shareStatus: ShareStatus;
 }
 
+// @internal
+export interface IShortenedTextHandle {
+    // (undocumented)
+    recomputeShortening: () => void;
+}
+
 // @internal (undocumented)
 export interface IShortenedTextProps {
     // (undocumented)
@@ -5453,6 +5347,7 @@ export interface ISingleSelectListItemProps {
     onMouseOut?: (e: MouseEvent_2<HTMLElement>) => void;
     // (undocumented)
     onMouseOver?: (e: MouseEvent_2<HTMLElement>) => void;
+    suffix?: ReactNode;
     // (undocumented)
     tabIndex?: number;
     // (undocumented)
@@ -8508,8 +8403,6 @@ export interface IWorkspacePickerHomeFooterProps {
     href?: string;
     // (undocumented)
     onClick?: (e: MouseEvent_2<HTMLAnchorElement>) => void;
-    // (undocumented)
-    theme?: ITheme;
 }
 
 // @internal (undocumented)
@@ -8926,29 +8819,7 @@ export type ShareDialogInteractionType = "SHARE_DIALOG_OPENED" | "SHARE_DIALOG_C
 export function ShareGranteeBase(input: IShareGranteeBaseProps): JSX.Element;
 
 // @internal (undocumented)
-export class ShortenedText extends PureComponent<IShortenedTextProps, IShortenedTextState> {
-    constructor(props: IShortenedTextProps);
-    // (undocumented)
-    checkTitle(): void;
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentDidUpdate(): void;
-    // (undocumented)
-    static defaultProps: Pick<IShortenedTextProps, "className" | "tagName" | "tooltipAlignPoints" | "tooltipVisibleOnMouseOver" | "getElement" | "displayTooltip" | "ellipsisPosition">;
-    // (undocumented)
-    recomputeShortening(): void;
-    // (undocumented)
-    render(): ReactNode;
-    // (undocumented)
-    renderText(): ReactNode;
-    // (undocumented)
-    renderTextWithBubble(): ReactNode;
-    // (undocumented)
-    textRef: RefObject<HTMLElement | null>;
-    // (undocumented)
-    UNSAFE_componentWillReceiveProps(nextProps: IShortenedTextProps): void;
-}
+export const ShortenedText: ForwardRefExoticComponent<IShortenedTextProps & RefAttributes<IShortenedTextHandle>>;
 
 // @internal
 export function shortenNumber(value: number | null | undefined, separators?: ISeparators_3): string;
@@ -9822,7 +9693,7 @@ export type WidgetNoticeType = "info" | "success" | "warning" | "error";
 export function withBubble<T>(WrappedComponent: ComponentType<T>): ForwardRefExoticComponent<PropsWithoutRef<T & IWithBubbleProps> & RefAttributes<any>>;
 
 // @internal (undocumented)
-export const WorkspacePickerHomeFooter: ComponentType<Omit<IWorkspacePickerHomeFooterProps, "theme" | "themeIsLoading" | "themeStatus">>;
+export function WorkspacePickerHomeFooter(input: IWorkspacePickerHomeFooterProps): JSX.Element;
 
 // @internal (undocumented)
 export type YamlCompletionSource = (context: CompletionContext, position: IYamlPosition) => ReturnType<CompletionSource>;

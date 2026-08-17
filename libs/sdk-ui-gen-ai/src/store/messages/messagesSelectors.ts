@@ -94,7 +94,11 @@ export const conversationMessagesByIdSelector: (
     },
 );
 
-const EMPTY_TRACE: IChatConversationResponseTrace = { steps: [], detailsByStepId: {} };
+const EMPTY_TRACE: IChatConversationResponseTrace = {
+    steps: [],
+    detailsByStepId: {},
+    responseDetails: [],
+};
 
 /**
  * The "Interaction Intelligence" trace of one response of the current conversation. Empty until the

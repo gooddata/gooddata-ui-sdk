@@ -58,6 +58,8 @@ export type IInteractionStepDetailRowValue =
            * rendering `text` verbatim when absent.
            */
           textId?: string;
+          /** Values to interpolate into `textId`'s message, e.g. `{ count: 110 }`. */
+          textValues?: Record<string, string | number>;
           text: string;
       }
     | ({ kind: "list" } & IInteractionStepDetailList)
@@ -111,7 +113,10 @@ export interface IInteractionCategory {
     category: GenAIInteractionStepCategory;
     /** i18n message id for the category's display label, when it is one of a known/stable set. */
     labelId?: string;
-    /** Indexes into {@link IInteractionIntelligence.steps} where this category occurred. */
+    /**
+     * Indexes into {@link IInteractionIntelligence.steps} where this category occurred. Empty for
+     * a category that belongs to the response rather than any step, which highlights nothing.
+     */
     stepIndexes: number[];
     /** The list row's right-hand summary. Absent renders no excerpt. */
     excerpt?: IInteractionCategoryExcerpt;

@@ -87,6 +87,20 @@ const boundedScenarioWorkspace: IParameterMetadataObject = {
     definition: { type: "STRING", defaultValue: "Actual", constraints: { maxLength: 6 } },
 };
 
+const enumScenarioWorkspace: IParameterMetadataObject = {
+    ...scenarioWorkspace,
+    definition: {
+        type: "STRING",
+        defaultValue: "actual",
+        constraints: {
+            allowedValues: [
+                { value: "actual", title: "Actual" },
+                { value: "budget", title: "Budget Plan" },
+            ],
+        },
+    },
+};
+
 describe("computeHydratedRuntimeOverride", () => {
     const parameterWithValue = (value: number): IDashboardParameter => ({
         ref: topNRef,
@@ -385,6 +399,14 @@ describe("formatDashboardParameter", () => {
             runtimeOverride: "Budget",
         };
         expect(formatDashboardParameter(entry, scenarioWorkspace)?.value).toBe("Budget");
+    });
+
+    it("emits an allowed value as its raw string, never as its title", () => {
+        const entry: IDashboardParameterEntry = {
+            parameter: { ref: scenarioRef, parameterType: "STRING", mode: "active" },
+            runtimeOverride: "budget",
+        };
+        expect(formatDashboardParameter(entry, enumScenarioWorkspace)?.value).toBe("budget");
     });
 });
 

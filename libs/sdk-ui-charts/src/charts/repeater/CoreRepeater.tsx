@@ -16,7 +16,7 @@ import {
     newErrorMapping,
     useCancelablePromise,
 } from "@gooddata/sdk-ui";
-import { ThemeContextProvider, useTheme, withTheme } from "@gooddata/sdk-ui-theme-provider";
+import { ThemeContextProvider, useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { ColorFactory } from "../../highcharts/chartTypes/_chartOptions/colorFactory.js";
 import { getValidColorPalette } from "../../highcharts/chartTypes/_util/color.js";
@@ -201,8 +201,6 @@ export function CoreRepeaterImpl(props: ICoreRepeaterChartProps) {
     );
 }
 
-const CoreRepeaterWithIntl = withTheme(CoreRepeaterImpl);
-
 /**
  * @internal
  */
@@ -210,7 +208,7 @@ export function CoreRepeater(props: ICoreRepeaterChartProps) {
     return (
         <ThemeContextProvider theme={props.theme} themeIsLoading={false}>
             <IntlWrapper locale={props.locale}>
-                <CoreRepeaterWithIntl {...props} />
+                <CoreRepeaterImpl {...props} />
             </IntlWrapper>
         </ThemeContextProvider>
     );

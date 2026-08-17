@@ -34,6 +34,7 @@ import {
     isOneOfTypes,
     isTreemap,
 } from "../_util/common.js";
+import { hasNegligibleMekkoColumnWidth } from "../mekko/mekkoChartOptions.js";
 
 import { unsupportedNegativeValuesTypes } from "./chartCapabilities.js";
 
@@ -226,6 +227,7 @@ export function getIsFilteringRecommended(chartOptions: IChartOptions): boolean 
 
     return (
         exceedsColumnBarTotalDataPoints(type, dataToValidate, SOFT_COLUMN_BAR_TOTAL_DATA_POINTS_LIMIT) ||
+        hasNegligibleMekkoColumnWidth(type, chartOptions.data?.series) ||
         !isDataOfReasonableSize(dataToValidate, limits, isViewByTwoAttributes)
     );
 }

@@ -1,12 +1,21 @@
 // (C) 2026 GoodData Corporation
 
-import { render, screen, waitFor } from "@testing-library/react";
-import { userEvent } from "@testing-library/user-event";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { cloneDeep, set } from "lodash-es";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
 import { CustomTooltipSection, type ICustomTooltipSectionProps } from "../CustomTooltipSection.js";
+
+/**
+ * Debounce window of the content push (see CONTENT_DEBOUNCE_MS in CustomTooltipSection).
+ */
+const CONTENT_DEBOUNCE = 500;
+
+/**
+ * Window long enough for a pending content push to have fired.
+ */
+const IDLE_WINDOW = 600;
 
 const defaultProps: ICustomTooltipSectionProps = {
     controlsDisabled: false,
@@ -26,7 +35,42 @@ function createComponent(customProps: Partial<ICustomTooltipSectionProps> = {}) 
 
 const expanded = set({}, "custom_tooltip_section.collapsed", false);
 
+/**
+ * Moves the (fake) clock forward and lets React commit whatever settled meanwhile — the fired
+ * debounce timer and the renders it triggers.
+ *
+ * Waiting for the debounce is therefore explicit and instant: no assertion has to poll for it and
+ * no test spends real time on it.
+ */
+async function advance(ms: number) {
+    await act(() => vi.advanceTimersByTimeAsync(ms));
+}
+
+/**
+ * Waits out the content debounce so a pending push has landed.
+ */
+function settleDebounce() {
+    return advance(CONTENT_DEBOUNCE);
+}
+
+/**
+ * Types into the textarea one change event per keystroke, the way the component sees real typing.
+ */
+function type(textbox: HTMLElement, text: string) {
+    for (let length = 1; length <= text.length; length++) {
+        fireEvent.change(textbox, { target: { value: text.slice(0, length) } });
+    }
+}
+
 describe("CustomTooltipSection", () => {
+    beforeEach(() => {
+        vi.useFakeTimers();
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
+
     it("renders the section title", () => {
         createComponent({ propertiesMeta: expanded });
         expect(screen.getByText("Custom tooltip")).toBeInTheDocument();
@@ -72,19 +116,19 @@ describe("CustomTooltipSection", () => {
             pushData: pushDataSpy,
         });
 
-        await userEvent.type(screen.getByRole("textbox"), "x");
+        type(screen.getByRole("textbox"), "x");
 
-        await waitFor(() => {
-            expect(pushDataSpy).toHaveBeenCalledWith({
-                properties: {
-                    controls: {
-                        customTooltip: {
-                            enabled: true,
-                            content: "x",
-                        },
+        await settleDebounce();
+
+        expect(pushDataSpy).toHaveBeenCalledWith({
+            properties: {
+                controls: {
+                    customTooltip: {
+                        enabled: true,
+                        content: "x",
                     },
                 },
-            });
+            },
         });
     });
 
@@ -97,11 +141,13 @@ describe("CustomTooltipSection", () => {
             pushData: pushDataSpy,
         });
 
-        await userEvent.type(screen.getByRole("textbox"), "hello");
+        type(screen.getByRole("textbox"), "hello");
 
-        await waitFor(() => {
-            expect(pushDataSpy).toHaveBeenCalledTimes(1);
-        });
+        expect(pushDataSpy).not.toHaveBeenCalled();
+
+        await settleDebounce();
+
+        expect(pushDataSpy).toHaveBeenCalledTimes(1);
         expect(pushDataSpy).toHaveBeenLastCalledWith({
             properties: {
                 controls: {
@@ -124,21 +170,19 @@ describe("CustomTooltipSection", () => {
         });
 
         const textbox = screen.getByRole("textbox");
-        await userEvent.type(textbox, "fast");
+        type(textbox, "fast");
         // Blur before the 500ms debounce would have settled.
-        await userEvent.tab();
+        fireEvent.blur(textbox);
 
-        await waitFor(() => {
-            expect(pushDataSpy).toHaveBeenCalledWith({
-                properties: {
-                    controls: {
-                        customTooltip: {
-                            enabled: true,
-                            content: "fast",
-                        },
+        expect(pushDataSpy).toHaveBeenCalledWith({
+            properties: {
+                controls: {
+                    customTooltip: {
+                        enabled: true,
+                        content: "fast",
                     },
                 },
-            });
+            },
         });
     });
 
@@ -191,7 +235,7 @@ describe("CustomTooltipSection", () => {
             </InternalIntlWrapper>,
         );
 
-        await userEvent.type(screen.getByRole("textbox"), "stale");
+        type(screen.getByRole("textbox"), "stale");
 
         // External undo/load lands before our debounce fires.
         const undone = set(cloneDeep(initial), "controls.customTooltip.content", "undone");
@@ -209,7 +253,7 @@ describe("CustomTooltipSection", () => {
         expect(screen.getByRole("textbox")).toHaveValue("undone");
 
         // The pending "stale" push must not arrive after the external update.
-        await new Promise((resolve) => setTimeout(resolve, 600));
+        await advance(IDLE_WINDOW);
         expect(pushDataSpy).not.toHaveBeenCalled();
     });
 });

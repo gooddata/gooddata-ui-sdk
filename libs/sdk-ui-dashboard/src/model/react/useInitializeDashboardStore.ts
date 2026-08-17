@@ -19,6 +19,7 @@ import {
 } from "../commands/dashboard.js";
 import { type DashboardEventHandler } from "../eventHandlers/eventHandler.js";
 import { dashboardDeinitialized } from "../events/dashboard.js";
+import { configActions } from "../store/config/index.js";
 import { type IReduxedDashboardStore, createDashboardStore } from "../store/dashboardStore.js";
 import { getWidgetsOfType } from "../store/tabs/layout/layoutUtils.js";
 import type { DashboardConfig } from "../types/commonTypes.js";
@@ -114,6 +115,18 @@ export const useInitializeDashboardStore = (
     const previousInitProps = usePrevious(currentInitProps);
 
     useNotifyDeinitializedOnUnmount(dashboardStore, currentInitProps);
+
+    useEffect(() => {
+        if (dashboardStore) {
+            dashboardStore.store.dispatch(configActions.setIsAiGenerating(!!props.config?.isAiGenerating));
+        }
+    }, [dashboardStore, props.config?.isAiGenerating]);
+
+    useEffect(() => {
+        if (dashboardStore) {
+            dashboardStore.store.dispatch(configActions.setIsAiMode(!!props.config?.isAiMode));
+        }
+    }, [dashboardStore, props.config?.isAiMode]);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {

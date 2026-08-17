@@ -2091,6 +2091,9 @@
                             }
                         }
                     },
+                    "404": {
+                        "description": "Conversation not found, or the interaction intelligence feature is disabled."
+                    },
                     "422": {
                         "description": "Validation Error",
                         "content": {
@@ -2887,6 +2890,67 @@
                 ],
                 "title": "AnomalyDetectionGranularity",
                 "description": "Time-based granularity supported by anomaly detection."
+            },
+            "AppliedMemoryItem": {
+                "properties": {
+                    "score": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Score",
+                        "description": "Relevance score the retrieval ranked this item by. Null for ALWAYS items, which are not ranked."
+                    },
+                    "strategy": {
+                        "type": "string",
+                        "enum": [
+                            "ALWAYS",
+                            "AUTO"
+                        ],
+                        "title": "Strategy",
+                        "description": "How the item was selected: ALWAYS is injected unconditionally, AUTO by relevance."
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title",
+                        "description": "Title of the injected memory item."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "title",
+                    "strategy"
+                ],
+                "title": "AppliedMemoryItem",
+                "description": "One memory item the turn injected, and how it got there."
+            },
+            "ApplyMemoryDetail": {
+                "properties": {
+                    "category": {
+                        "type": "string",
+                        "const": "applyMemory",
+                        "title": "Category",
+                        "description": "Category this body belongs to.",
+                        "default": "applyMemory"
+                    },
+                    "items": {
+                        "items": {
+                            "$ref": "#/components/schemas/AppliedMemoryItem"
+                        },
+                        "type": "array",
+                        "title": "Items",
+                        "description": "Memory items injected into this turn's prompt."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "title": "ApplyMemoryDetail",
+                "description": "Which memory items this turn injected, in the order the retrieval returned them."
             },
             "ArithmeticMeasure": {
                 "properties": {
@@ -3800,15 +3864,23 @@
                                     },
                                     {
                                         "$ref": "#/components/schemas/SkillRoutingDetail"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/ApplyMemoryDetail"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/MetricQueryDetail"
                                     }
                                 ],
                                 "description": "What one item's action did.",
                                 "discriminator": {
                                     "propertyName": "category",
                                     "mapping": {
+                                        "applyMemory": "#/components/schemas/ApplyMemoryDetail",
                                         "catalogSearch": "#/components/schemas/CatalogSearchDetail",
                                         "composeAnswer": "#/components/schemas/ComposeAnswerDetail",
                                         "knowledgeSearch": "#/components/schemas/KnowledgeSearchDetail",
+                                        "metricQuery": "#/components/schemas/MetricQueryDetail",
                                         "skillRouting": "#/components/schemas/SkillRoutingDetail"
                                     }
                                 }
@@ -3818,7 +3890,7 @@
                             }
                         ],
                         "title": "Detail",
-                        "description": "What this item's action did, when its category has a card body. Absent otherwise."
+                        "description": "What this item's action did, when its category has a card body; null otherwise, and null on the live stream of non-preview conversations — the trace panel is a preview surface. Replayed items keep it."
                     },
                     "itemId": {
                         "type": "string",
@@ -3910,7 +3982,7 @@
                             }
                         ],
                         "title": "Stepid",
-                        "description": "Interaction step this item belongs to."
+                        "description": "Interaction step this item belongs to. Null alongside detail on non-preview streams; replayed items keep it."
                     },
                     "taskId": {
                         "anyOf": [
@@ -5321,6 +5393,93 @@
                 ],
                 "title": "MetricOperand",
                 "description": "Reference to a metric by AFM local identifier."
+            },
+            "MetricQueryDetail": {
+                "properties": {
+                    "category": {
+                        "type": "string",
+                        "const": "metricQuery",
+                        "title": "Category",
+                        "description": "Category this body belongs to.",
+                        "default": "metricQuery"
+                    },
+                    "filteredBy": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Filteredby",
+                        "description": "References of what the query filtered on. The conditions themselves are not carried."
+                    },
+                    "groupedBy": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Groupedby",
+                        "description": "References of the attributes and date dimensions the query grouped by."
+                    },
+                    "metrics": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Metrics",
+                        "description": "References of the metrics the query measured, as the query wrote them."
+                    },
+                    "ref": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Ref",
+                        "description": "Internal handle pairing the query that built a visualization with the execution that ran it. Group a category's items on it; never display it. Null on a query that was rejected, which has no partner to pair with."
+                    },
+                    "resultColumns": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Resultcolumns",
+                        "description": "Columns the execution returned."
+                    },
+                    "resultRows": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Resultrows",
+                        "description": "Rows the execution returned."
+                    },
+                    "visualization": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Visualization",
+                        "description": "Title the query gave its visualization."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "title": "MetricQueryDetail",
+                "description": "What the query this item's action built asked the data for, or how much came back."
             },
             "MetricSortItem": {
                 "properties": {

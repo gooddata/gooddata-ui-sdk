@@ -5,6 +5,8 @@ import { describe, expect, it } from "vitest";
 import {
     type IParameterDefinition,
     getParameterAllowedValueTitle,
+    getParameterAllowedValues,
+    getParameterValueTitle,
     isStringParameterDefinition,
     isValidNumberParameterValue,
     isValidParameterValue,
@@ -216,6 +218,99 @@ describe("getParameterAllowedValueTitle", () => {
             "Plan scenario",
         );
         expect(getParameterAllowedValueTitle({ value: "Plan" })).toBe("Plan");
+    });
+});
+
+describe("getParameterAllowedValues", () => {
+    it("returns the allowed values of a STRING definition that enumerates them", () => {
+        const allowedValues = [{ value: "Actual" }, { value: "Plan", title: "Plan scenario" }];
+        expect(
+            getParameterAllowedValues({
+                type: "STRING",
+                defaultValue: "Actual",
+                constraints: { allowedValues },
+            }),
+        ).toEqual(allowedValues);
+    });
+
+    it("returns undefined for a STRING definition with an empty or absent allowed value list", () => {
+        expect(
+            getParameterAllowedValues({
+                type: "STRING",
+                defaultValue: "Actual",
+                constraints: { allowedValues: [] },
+            }),
+        ).toBeUndefined();
+        expect(
+            getParameterAllowedValues({
+                type: "STRING",
+                defaultValue: "Actual",
+                constraints: { maxLength: 10 },
+            }),
+        ).toBeUndefined();
+        expect(getParameterAllowedValues({ type: "STRING", defaultValue: "Actual" })).toBeUndefined();
+    });
+
+    it("returns undefined for a NUMBER definition", () => {
+        expect(
+            getParameterAllowedValues({ type: "NUMBER", defaultValue: 5, constraints: { min: 0 } }),
+        ).toBeUndefined();
+    });
+});
+
+describe("getParameterValueTitle", () => {
+    it("returns the matching allowed value's title", () => {
+        const definition: IParameterDefinition = {
+            type: "STRING",
+            defaultValue: "Actual",
+            constraints: { allowedValues: [{ value: "Actual" }, { value: "Plan", title: "Plan scenario" }] },
+        };
+        expect(getParameterValueTitle(definition, "Plan")).toBe("Plan scenario");
+    });
+
+    it("returns the value itself when the matching allowed value has no title", () => {
+        const definition: IParameterDefinition = {
+            type: "STRING",
+            defaultValue: "Actual",
+            constraints: { allowedValues: [{ value: "Actual" }, { value: "Plan", title: "Plan scenario" }] },
+        };
+        expect(getParameterValueTitle(definition, "Actual")).toBe("Actual");
+    });
+
+    it("returns an out-of-set value as is, without mapping it to the default", () => {
+        const definition: IParameterDefinition = {
+            type: "STRING",
+            defaultValue: "Actual",
+            constraints: { allowedValues: [{ value: "Actual", title: "Actual results" }] },
+        };
+        expect(getParameterValueTitle(definition, "Forecast")).toBe("Forecast");
+    });
+
+    it("returns the plain value for a free-text STRING definition", () => {
+        expect(getParameterValueTitle({ type: "STRING", defaultValue: "Actual" }, "Anything")).toBe(
+            "Anything",
+        );
+        expect(
+            getParameterValueTitle(
+                { type: "STRING", defaultValue: "Actual", constraints: { maxLength: 10 } },
+                "Anything",
+            ),
+        ).toBe("Anything");
+        expect(
+            getParameterValueTitle(
+                { type: "STRING", defaultValue: "Actual", constraints: { allowedValues: [] } },
+                "Anything",
+            ),
+        ).toBe("Anything");
+    });
+
+    it("stringifies the value for a NUMBER definition", () => {
+        const definition: IParameterDefinition = {
+            type: "NUMBER",
+            defaultValue: 5,
+            constraints: { min: 0, max: 10 },
+        };
+        expect(getParameterValueTitle(definition, 7)).toBe("7");
     });
 });
 

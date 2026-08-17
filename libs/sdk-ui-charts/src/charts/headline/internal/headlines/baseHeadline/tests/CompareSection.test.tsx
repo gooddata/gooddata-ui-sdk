@@ -3,7 +3,7 @@
 import { render } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { type IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import {
@@ -47,7 +47,7 @@ describe("CompareSection", () => {
         secondaryItem: IBaseHeadlineItem;
         tertiaryItem?: IBaseHeadlineItem;
     }) => {
-        const WrappedHeadlineCompareSection = withIntl(CompareSection);
+        const WrappedHeadlineCompareSection = withIntlForTest(CompareSection);
         return render(<WrappedHeadlineCompareSection {...props} />);
     };
 

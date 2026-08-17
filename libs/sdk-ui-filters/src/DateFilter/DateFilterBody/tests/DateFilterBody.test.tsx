@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { type IAllTimeDateFilterOption } from "@gooddata/sdk-model";
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/Platform.js";
 import {
@@ -62,7 +62,7 @@ describe("ExtendedDateFilterBody", () => {
             onCancelClick: vi.fn(),
             closeDropdown: vi.fn(),
         } as unknown as IDateFilterBodyProps;
-        const Wrapped = withIntl(DateFilterBody);
+        const Wrapped = withIntlForTest(DateFilterBody);
         return render(<Wrapped {...mockProps} {...props} />);
     };
 

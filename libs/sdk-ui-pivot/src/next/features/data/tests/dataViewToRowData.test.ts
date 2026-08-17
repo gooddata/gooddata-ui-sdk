@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd, ReferenceMdExt, ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -300,6 +301,25 @@ describe("dataViewToRowData", () => {
             });
 
             expect(rowData).toMatchSnapshot();
+        });
+    });
+
+    describe("dataView inclusion", () => {
+        it("should include dataView in row data", async () => {
+            const executionDef = createExecutionDef({
+                ...DEFAULT_PARAMS,
+                measures: [ReferenceMd.Amount],
+                rows: [ReferenceMd.Product.Name],
+            });
+            const executionResult = await backend
+                .workspace(workspace)
+                .execution()
+                .forDefinition(executionDef)
+                .execute();
+            const dataView = await loadDataView({ executionResult, startRow: 0, endRow: 100 });
+            const { rowData } = dataViewToRowData(dataView, "top");
+
+            expect(rowData[0].dataView).toBe(dataView);
         });
     });
 });

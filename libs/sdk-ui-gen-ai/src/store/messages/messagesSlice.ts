@@ -243,7 +243,7 @@ const getResponseTrace = (
         return undefined;
     }
     const trace = (data.interactionTrace ??= {});
-    return (trace[responseId] ??= { steps: [], detailsByStepId: {} });
+    return (trace[responseId] ??= { steps: [], detailsByStepId: {}, responseDetails: [] });
 };
 
 const getAssistantMessageStrict = (
@@ -879,6 +879,27 @@ const messagesSlice = createSlice({
             }
             actions.push(payload.action);
         },
+        appendResponseDetailAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                conversationId: string;
+                responseId: string;
+                action: IChatConversationTracedAction;
+            }>,
+        ) => {
+            const trace = getResponseTrace(state, payload.conversationId, payload.responseId);
+            if (!trace) {
+                return;
+            }
+            // `??=` backfills a trace created before this field existed.
+            const actions = (trace.responseDetails ??= []);
+            if (actions.some((action) => action.itemId === payload.action.itemId)) {
+                return;
+            }
+            actions.push(payload.action);
+        },
         applyPendingAgentSwitchAction: (
             state,
             { payload }: PayloadAction<{ conversationLocalId: string; beforeItemLocalId?: string }>,
@@ -1490,6 +1511,7 @@ export const {
     visualizationErrorAction,
     appendInteractionStepAction,
     appendTracedActionAction,
+    appendResponseDetailAction,
     applyPendingAgentSwitchAction,
     revertAgentSwitchAction,
     setAgentsAction,

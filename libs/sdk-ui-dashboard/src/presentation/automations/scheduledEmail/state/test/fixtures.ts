@@ -2,51 +2,36 @@
 
 import {
     type DashboardAttachmentType,
-    type FilterContextItem,
     type IAutomationMetadataObjectDefinition,
     type IExportDefinitionDashboardRequestPayload,
     type IExportDefinitionVisualizationObjectRequestPayload,
     type IInsight,
-    type INotificationChannelIdentifier,
-    type IUser,
     type IWidget,
     type WidgetAttachmentType,
     idRef,
 } from "@gooddata/sdk-model";
 
-import { type IAutomationsContextValue } from "../../../contexts/AutomationsContext.js";
 import { type IScheduledEmailDialogContextValue } from "../../../contexts/ScheduledEmailDialogContext.js";
-import { workspaceStringParameter } from "../../../shared/automationFilters/test/parameterFixtures.js";
+import {
+    AUTOMATIONS_CONTEXT as SHARED_AUTOMATIONS_CONTEXT,
+    CURRENT_USER as SHARED_CURRENT_USER,
+    NEXT_FILTER as SHARED_NEXT_FILTER,
+    SENTINEL_CHANNEL as SHARED_SENTINEL_CHANNEL,
+    SENTINEL_WIDGET as SHARED_SENTINEL_WIDGET,
+    WORKSPACE_PARAMETER as SHARED_WORKSPACE_PARAMETER,
+} from "../../../shared/test/fixtures.js";
 import { type IScheduledExportDataContextValue } from "../ScheduledExportDataContext.js";
 import { type IScheduledExportDraftContextValue } from "../ScheduledExportDraftContext.js";
 
-export const CURRENT_USER: IUser = {
-    ref: idRef("user-1"),
-    login: "user1@example.com",
-    email: "user1@example.com",
-};
+export const AUTOMATIONS_CONTEXT = SHARED_AUTOMATIONS_CONTEXT;
+export const CURRENT_USER = SHARED_CURRENT_USER;
+export const NEXT_FILTER = SHARED_NEXT_FILTER;
+export const SENTINEL_CHANNEL = SHARED_SENTINEL_CHANNEL;
+export const WORKSPACE_PARAMETER = SHARED_WORKSPACE_PARAMETER;
 
-export const SENTINEL_CHANNEL: INotificationChannelIdentifier = {
-    type: "notificationChannel",
-    destinationType: "webhook",
-    id: "channel-1",
-    allowedRecipients: "internal",
-};
-
-// Only `ref`/`localIdentifier`/`type`/`ignoreDashboardFilters` are read by the code exercised here
-// (widget identity, the insight-widget type guard, and the ignored-filters check); the remaining
-// required IWidget fields are filler values.
 export const SENTINEL_WIDGET: IWidget = {
-    ref: idRef("widget-1"),
-    uri: "/widget-1",
-    identifier: "widget-1",
-    localIdentifier: "widget-1",
-    type: "insight",
-    title: "Widget",
-    description: "",
+    ...SHARED_SENTINEL_WIDGET,
     insight: idRef("insight-1", "insight"),
-    drills: [],
-    ignoreDashboardFilters: [],
 };
 
 export const SENTINEL_INSIGHT: IInsight = {
@@ -61,81 +46,6 @@ export const SENTINEL_INSIGHT: IInsight = {
         sorts: [],
         properties: {},
     },
-};
-
-export const NEXT_FILTER: FilterContextItem = {
-    attributeFilter: {
-        localIdentifier: "f1",
-        displayForm: idRef("df1"),
-        negativeSelection: false,
-        attributeElements: { uris: ["/e1"] },
-    },
-};
-
-// A catalog parameter with a matching workspace definition, so a stored `{ref, value}` override
-// survives reconstruction instead of being dropped as unresolvable.
-export const WORKSPACE_PARAMETER = workspaceStringParameter("param-1", "Param 1", "default");
-
-export const AUTOMATIONS_CONTEXT: IAutomationsContextValue = {
-    locale: "en-US",
-    separators: { decimal: ".", thousand: "," },
-    settings: undefined,
-    catalogAttributes: [],
-    catalogDateDatasets: [],
-    catalogMeasures: [],
-    dateFilterConfig: {
-        availableGranularities: [],
-        dateFilterOptions: {},
-        getGranularitiesForTab: () => [],
-        getOptionsForTab: () => undefined,
-    },
-    dateFilterContextConfig: undefined,
-    attributeFilterConfigs: [],
-    attributeFilterConfigsByTab: {},
-    attributeFilterSelectionTypeMap: new Map(),
-    attributeFilterSelectionTypeMapByTab: {},
-    dateFilterConfigs: [],
-    dateFilterConfigsByTab: {},
-    dateFilterConfigOverridesByTab: {},
-    measureValueFilterConfigs: [],
-    measureValueFilterConfigsByTab: {},
-    commonDateFilterId: undefined,
-    lockedFilters: [],
-    hiddenFilters: [],
-    availableFilters: [],
-    automationFiltersByTab: [],
-    defaultSelectedFilters: [],
-    automationAvailableFilters: [],
-    maxAutomationsRecipients: 5,
-    isExecutionTimestampMode: false,
-    allowHourlyRecurrence: false,
-    currentUser: CURRENT_USER,
-    weekStart: "Monday",
-    timezone: "Europe/Prague",
-    isWhiteLabeled: false,
-    isSecondaryTitleVisible: false,
-    externalRecipient: undefined,
-    features: {
-        canCreateAutomation: true,
-        enableAlertOncePerInterval: false,
-        enableAnomalyDetectionAlert: false,
-        canUseAiAssistant: false,
-        canManageWorkspace: false,
-        enableSlideshowExports: false,
-        enableAutomationEvaluationMode: false,
-    },
-    parameters: {
-        enabled: true,
-        stringParametersEnabled: true,
-        catalog: [WORKSPACE_PARAMETER],
-        catalogIsLoaded: true,
-        dashboardParametersByTab: {},
-    },
-    tabIds: [],
-    widgetLocalIdToTabIdMap: {},
-    getCatalogAttributeByRef: () => undefined,
-    getAttributeFilterDisplayForm: () => undefined,
-    widgetExistsByRef: () => false,
 };
 
 export const SCHEDULED_EMAIL_DIALOG_CONTEXT: IScheduledEmailDialogContextValue = {

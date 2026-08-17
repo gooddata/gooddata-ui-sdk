@@ -231,7 +231,7 @@ function TitleTypist() {
             data-testid="type-keystroke"
             onClick={() => {
                 keystrokeCount.current += 1;
-                onTitleChange(`draft-title-${keystrokeCount.current}`, true);
+                onTitleChange(`draft-title-${keystrokeCount.current}`);
             }}
         >
             type

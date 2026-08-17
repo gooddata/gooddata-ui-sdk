@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { Component, type ComponentClass, type ComponentType } from "react";
+import { type ComponentClass, type ComponentType, useCallback, useEffect, useRef, useState } from "react";
 
 import { isEqual, omit } from "lodash-es";
 import { type IntlShape, injectIntl } from "react-intl";
@@ -41,6 +41,28 @@ interface IDataViewLoadState {
     seType?: GoodDataSdkError["seType"] | null;
     executionResult?: IExecutionResult | null;
     dataView?: IDataView | null;
+}
+
+/**
+ * Applies the wrapped component's `defaultProps` the same way React did for class components: the default
+ * value is only used when the respective prop is `undefined`.
+ */
+function applyDefaultProps<P extends object>(props: P, defaultProps: Partial<P>): P {
+    const keys = Object.keys(defaultProps) as (keyof P)[];
+
+    if (keys.every((key) => props[key] !== undefined)) {
+        return props;
+    }
+
+    const propsWithDefaults = { ...props };
+
+    keys.forEach((key) => {
+        if (propsWithDefaults[key] === undefined) {
+            propsWithDefaults[key] = defaultProps[key]!;
+        }
+    });
+
+    return propsWithDefaults;
 }
 
 /**
@@ -102,376 +124,441 @@ export interface ILoadingInjectedProps {
 export function withEntireDataView<T extends IDataVisualizationProps>(
     InnerComponent: ComponentType<T & ILoadingInjectedProps>,
 ): ComponentType<T> {
-    class LoadingHOCWrapped extends Component<T & ILoadingInjectedProps, IDataViewLoadState> {
-        public static defaultProps = (InnerComponent as unknown as ComponentClass).defaultProps || {};
+    const innerDefaultProps = ((InnerComponent as unknown as ComponentClass).defaultProps || {}) as Partial<
+        T & ILoadingInjectedProps
+    >;
 
-        private hasUnmounted: boolean = false;
-        private abortController: AbortController;
+    function LoadingHOCWrapped(receivedProps: T & ILoadingInjectedProps) {
+        const props = applyDefaultProps(receivedProps, innerDefaultProps);
+
+        const [state, setState] = useState<IDataViewLoadState>({
+            isLoading: false,
+            error: null,
+            executionResult: null,
+            dataView: null,
+        });
+
+        // refs holding the latest props and state, so that the (possibly async) callbacks below always work
+        // with the current values - the same way `this.props` and `this.state` did
+        const latestPropsRef = useRef(props);
+        latestPropsRef.current = props;
+        const latestStateRef = useRef(state);
+        latestStateRef.current = state;
+
+        const hasUnmounted = useRef(false);
+        const abortController = useRef(new AbortController());
 
         /**
          * Fingerprint of the last execution definition the initialize was called with.
          */
-        private lastInitRequestFingerprint: string | null = null;
+        const lastInitRequestFingerprint = useRef<string | null>(null);
 
-        constructor(props: T & ILoadingInjectedProps) {
-            super(props);
+        const updateState = useCallback((newState: Partial<IDataViewLoadState>) => {
+            setState((s) => ({ ...s, ...newState }));
+        }, []);
 
-            this.state = {
-                isLoading: false,
-                error: null,
-                executionResult: null,
-                dataView: null,
-            };
-
-            this.onLoadingChanged = this.onLoadingChanged.bind(this);
-            this.onDataTooLarge = this.onDataTooLarge.bind(this);
-            this.onNegativeValues = this.onNegativeValues.bind(this);
-            this.onDataView = this.onDataView.bind(this);
-            this.abortController = new AbortController();
-        }
-
-        public override componentDidMount() {
-            void this.initDataLoading(
-                this.props.execution,
-                this.props.forecastConfig,
-                this.props.outliersConfig,
-                this.props.clusteringConfig,
-            );
-        }
-
-        public override render() {
-            const { isLoading, error, dataView, seType } = this.state;
-            const { intl } = this.props;
-
-            // lower-level components do not need workspace
-            const props = this.stripWorkspace(this.props);
-
-            return (
-                <InnerComponent
-                    {...(props as any)}
-                    dataView={dataView}
-                    onDataTooLarge={this.onDataTooLarge}
-                    onNegativeValues={this.onNegativeValues}
-                    error={error}
-                    seType={seType}
-                    isLoading={isLoading}
-                    intl={intl}
-                />
-            );
-        }
-
-        public override UNSAFE_componentWillReceiveProps(nextProps: Readonly<T & ILoadingInjectedProps>) {
-            //  we need strict equality here in case only the buckets changed (not measures or attributes)
-            if (
-                !this.props.execution.equals(nextProps.execution) ||
-                !isEqual(this.props.forecastConfig, nextProps.forecastConfig) ||
-                !isEqual(this.props.clusteringConfig, nextProps.clusteringConfig) ||
-                !isEqual(this.props.outliersConfig, nextProps.outliersConfig)
-            ) {
-                this.refreshAbortController();
-                void this.initDataLoading(
-                    nextProps.execution,
-                    nextProps.forecastConfig,
-                    nextProps.outliersConfig,
-                    nextProps.clusteringConfig,
-                );
-            }
-        }
-
-        public override componentWillUnmount() {
-            this.hasUnmounted = true;
-            this.onLoadingChanged = () => {};
-            this.onDataView = () => {};
-            this.onError = () => {};
-            this.refreshAbortController();
-        }
-
-        private refreshAbortController() {
-            if (this.props.enableExecutionCancelling) {
-                if (this.state.isLoading) {
-                    this.abortController.abort();
+        const refreshAbortController = useCallback(() => {
+            if (latestPropsRef.current.enableExecutionCancelling) {
+                if (latestStateRef.current.isLoading) {
+                    abortController.current.abort();
                 }
-                this.abortController = new AbortController();
+                abortController.current = new AbortController();
             }
-        }
+        }, []);
 
-        private onLoadingChanged(loadingState: ILoadingState) {
-            const { onLoadingChanged } = this.props;
-
-            onLoadingChanged?.(loadingState);
-
-            const { isLoading } = loadingState;
-
-            const state: IDataViewLoadState = { isLoading };
-
-            if (isLoading) {
-                state.error = null;
-            }
-
-            this.setState(state);
-        }
-
-        private onDataView(dataView: IDataView) {
-            const { onDataView } = this.props;
-
-            onDataView?.(DataViewFacade.for(dataView));
-        }
-
-        private onError(error: GoodDataSdkError) {
-            const { onExportReady } = this.props;
-
-            if (!isForecastNotReceived(error) && !isClusteringNotReceived(error)) {
-                const err = error as GoodDataSdkError;
-                this.setState({ error: err.getMessage(), seType: err.seType, dataView: null });
-            }
-            this.onLoadingChanged({ isLoading: false });
-
-            if (onExportReady) {
-                onExportReady(createExportErrorFunction(error));
-            }
-
-            this.props.onError?.(error);
-        }
-
-        private onDataTooLarge(_data: any, errorMessage?: string) {
-            this.onError(new DataTooLargeToDisplaySdkError(errorMessage));
-        }
-
-        private onNegativeValues() {
-            this.onError(new NegativeValuesSdkError());
-        }
-
-        private isRequestStale(fingerprint: string): boolean {
-            return this.lastInitRequestFingerprint !== fingerprint || this.hasUnmounted;
-        }
-
-        private async loadClusteringData(
-            dataView: IDataView,
-            executionResult: IExecutionResult,
-            clusteringConfig: IClusteringConfig,
-        ): Promise<IDataView> {
-            let result = dataView.withClustering(clusteringConfig);
-            try {
-                const clusteringResult = await executionResult.readClusteringAll(clusteringConfig);
-                result = result.withClustering(clusteringConfig, clusteringResult);
-            } catch (e) {
-                result = result.withClustering(clusteringConfig, {
-                    attribute: [],
-                    clusters: [],
-                    xcoord: [],
-                    ycoord: [],
-                });
-
-                const err = e as any;
-                throw new ClusteringNotReceivedSdkError(
-                    err.responseBody?.reason || err.message || "Unknown error",
-                    err,
-                );
-            }
-            return result;
-        }
-
-        private async loadForecastData(
-            dataView: IDataView,
-            executionResult: IExecutionResult,
-            forecastConfig: IForecastConfig,
-        ): Promise<IDataView> {
-            const { pushData } = this.props;
-            try {
-                const forecastResult = await executionResult.readForecastAll(dataView.forecastConfig!);
-                const updatedDataView = dataView.withForecast(dataView.forecastConfig, forecastResult);
-                this.setState((s) => ({ ...s, dataView: updatedDataView }));
-                if (pushData) {
-                    pushData({
-                        dataView: updatedDataView,
-                        propertiesMeta: {
-                            slicedForecast:
-                                forecastConfig.forecastPeriod !== dataView.forecastConfig?.forecastPeriod,
-                        },
-                    });
-                }
-                return updatedDataView;
-            } catch (e) {
-                const updatedDataView = dataView.withForecast(undefined);
-                this.setState((s) => ({ ...s, dataView: updatedDataView }));
-                if (pushData) {
-                    pushData({ dataView: updatedDataView });
+        const onLoadingChanged = useCallback(
+            (loadingState: ILoadingState) => {
+                if (hasUnmounted.current) {
+                    return;
                 }
 
-                const err = e as any;
-                throw new ForecastNotReceivedSdkError(
-                    err.responseBody?.reason || err.message || "Unknown error",
-                    err,
-                );
-            }
-        }
+                latestPropsRef.current.onLoadingChanged?.(loadingState);
 
-        private async loadOutliersData(
-            dataView: IDataView,
-            executionResult: IExecutionResult,
-            _outliersConfig: IOutliersConfig,
-        ): Promise<IDataView> {
-            const { pushData } = this.props;
-            try {
-                const outliersResult = await executionResult.readOutliersAll(dataView.outliersConfig!);
-                const updatedDataView = dataView.withOutliers(dataView.outliersConfig, outliersResult);
-                this.setState((s) => ({ ...s, dataView: updatedDataView }));
-                if (pushData) {
-                    pushData({
-                        dataView: updatedDataView,
-                    });
-                }
-                return updatedDataView;
-            } catch (e) {
-                const updatedDataView = dataView.withForecast(undefined);
-                this.setState((s) => ({ ...s, dataView: updatedDataView }));
-                if (pushData) {
-                    pushData({ dataView: updatedDataView });
+                const { isLoading } = loadingState;
+
+                const newState: IDataViewLoadState = { isLoading };
+
+                if (isLoading) {
+                    newState.error = null;
                 }
 
-                const err = e as any;
-                throw new ForecastNotReceivedSdkError(
-                    err.responseBody?.reason || err.message || "Unknown error",
-                    err,
-                );
-            }
-        }
+                updateState(newState);
+            },
+            [updateState],
+        );
 
-        private handleLoadingSuccess(dataView: IDataView, executionResult: IExecutionResult): void {
-            const { onExportReady, pushData, exportTitle } = this.props;
-
-            this.setState({ dataView, error: null, executionResult });
-            this.onLoadingChanged({ isLoading: false });
-            this.onDataView(dataView);
-
-            if (onExportReady) {
-                onExportReady(createExportFunction(dataView.result, exportTitle));
-            }
-
-            if (pushData) {
-                const availableDrillTargets = getAvailableDrillTargets(DataViewFacade.for(dataView));
-                pushData({ dataView, availableDrillTargets });
-            }
-        }
-
-        private handleLoadingError(error: unknown, fingerprint: string): void {
-            if (this.isRequestStale(fingerprint)) {
+        const onDataView = useCallback((dataView: IDataView) => {
+            if (hasUnmounted.current) {
                 return;
             }
 
-            const { pushData } = this.props;
-            /*
-             * There can be situations, where there is no data to visualize but the result / dataView contains
-             * metadata essential for setup of drilling. Look for that and if available push up.
-             */
-            if (isNoDataError(error) && error.dataView && pushData) {
-                const availableDrillTargets = getAvailableDrillTargets(DataViewFacade.for(error.dataView));
-                pushData({ availableDrillTargets });
-            }
+            latestPropsRef.current.onDataView?.(DataViewFacade.for(dataView));
+        }, []);
 
-            this.onError(convertError(error));
-        }
-
-        private async initDataLoading(
-            originalExecution: IPreparedExecution,
-            forecastConfig?: IForecastConfig,
-            outliersConfig?: IOutliersConfig,
-            clusteringConfig?: IClusteringConfig,
-        ) {
-            let execution = originalExecution;
-            if (this.props.enableExecutionCancelling) {
-                execution = execution.withSignal(this.abortController.signal);
-            }
-            const { pushData } = this.props;
-            this.onLoadingChanged({ isLoading: true });
-            this.setState({ dataView: null });
-            const fingerprint = defFingerprint(execution.definition);
-            this.lastInitRequestFingerprint = fingerprint;
-
-            try {
-                const executionResult = await execution.execute();
-                if (this.isRequestStale(fingerprint)) {
+        const onError = useCallback(
+            (error: GoodDataSdkError) => {
+                if (hasUnmounted.current) {
                     return;
                 }
 
-                const originalDataView = await executionResult.readAll().catch((err) => {
-                    /**
-                     * When execution result is received successfully,
-                     * but data load fails with unexpected http response,
-                     * we still want to push availableDrillTargets
-                     */
-                    if (isUnexpectedResponseError(err) && pushData) {
-                        const availableDrillTargets = getAvailableDrillTargets(
-                            DataViewFacade.forResult(executionResult),
-                        );
+                const { onExportReady } = latestPropsRef.current;
 
-                        pushData({ availableDrillTargets });
-                    }
-                    throw err;
-                });
+                if (!isForecastNotReceived(error) && !isClusteringNotReceived(error)) {
+                    const err = error as GoodDataSdkError;
+                    updateState({ error: err.getMessage(), seType: err.seType, dataView: null });
+                }
+                onLoadingChanged({ isLoading: false });
 
-                if (this.isRequestStale(defFingerprint(originalDataView.definition))) {
-                    /*
-                     * Stop right now if the data are not relevant anymore because there was another
-                     * initialize request in the meantime.
-                     */
-                    return;
+                if (onExportReady) {
+                    onExportReady(createExportErrorFunction(error));
                 }
 
-                let dataView = originalDataView;
+                latestPropsRef.current.onError?.(error);
+            },
+            [onLoadingChanged, updateState],
+        );
 
-                if (forecastConfig) {
-                    dataView = originalDataView.withForecast(forecastConfig);
-                }
-                if (outliersConfig) {
-                    dataView = dataView.withOutliers(outliersConfig);
-                }
+        const onDataTooLarge = useCallback(
+            (_data: any, errorMessage?: string) => {
+                onError(new DataTooLargeToDisplaySdkError(errorMessage));
+            },
+            [onError],
+        );
 
-                if (clusteringConfig) {
-                    dataView = await this.loadClusteringData(
-                        originalDataView,
-                        executionResult,
-                        clusteringConfig,
+        const onNegativeValues = useCallback(() => {
+            onError(new NegativeValuesSdkError());
+        }, [onError]);
+
+        const isRequestStale = useCallback((fingerprint: string): boolean => {
+            return lastInitRequestFingerprint.current !== fingerprint || hasUnmounted.current;
+        }, []);
+
+        const loadClusteringData = useCallback(
+            async (
+                dataView: IDataView,
+                executionResult: IExecutionResult,
+                clusteringConfig: IClusteringConfig,
+            ): Promise<IDataView> => {
+                let result = dataView.withClustering(clusteringConfig);
+                try {
+                    const clusteringResult = await executionResult.readClusteringAll(clusteringConfig);
+                    result = result.withClustering(clusteringConfig, clusteringResult);
+                } catch (e) {
+                    result = result.withClustering(clusteringConfig, {
+                        attribute: [],
+                        clusters: [],
+                        xcoord: [],
+                        ycoord: [],
+                    });
+
+                    const err = e as any;
+                    throw new ClusteringNotReceivedSdkError(
+                        err.responseBody?.reason || err.message || "Unknown error",
+                        err,
                     );
+                }
+                return result;
+            },
+            [],
+        );
+
+        const loadForecastData = useCallback(
+            async (
+                dataView: IDataView,
+                executionResult: IExecutionResult,
+                forecastConfig: IForecastConfig,
+            ): Promise<IDataView> => {
+                const { pushData } = latestPropsRef.current;
+                try {
+                    const forecastResult = await executionResult.readForecastAll(dataView.forecastConfig!);
+                    const updatedDataView = dataView.withForecast(dataView.forecastConfig, forecastResult);
+                    updateState({ dataView: updatedDataView });
+                    if (pushData) {
+                        pushData({
+                            dataView: updatedDataView,
+                            propertiesMeta: {
+                                slicedForecast:
+                                    forecastConfig.forecastPeriod !== dataView.forecastConfig?.forecastPeriod,
+                            },
+                        });
+                    }
+                    return updatedDataView;
+                } catch (e) {
+                    const updatedDataView = dataView.withForecast(undefined);
+                    updateState({ dataView: updatedDataView });
+                    if (pushData) {
+                        pushData({ dataView: updatedDataView });
+                    }
+
+                    const err = e as any;
+                    throw new ForecastNotReceivedSdkError(
+                        err.responseBody?.reason || err.message || "Unknown error",
+                        err,
+                    );
+                }
+            },
+            [updateState],
+        );
+
+        const loadOutliersData = useCallback(
+            async (
+                dataView: IDataView,
+                executionResult: IExecutionResult,
+                _outliersConfig: IOutliersConfig,
+            ): Promise<IDataView> => {
+                const { pushData } = latestPropsRef.current;
+                try {
+                    const outliersResult = await executionResult.readOutliersAll(dataView.outliersConfig!);
+                    const updatedDataView = dataView.withOutliers(dataView.outliersConfig, outliersResult);
+                    updateState({ dataView: updatedDataView });
+                    if (pushData) {
+                        pushData({
+                            dataView: updatedDataView,
+                        });
+                    }
+                    return updatedDataView;
+                } catch (e) {
+                    const updatedDataView = dataView.withForecast(undefined);
+                    updateState({ dataView: updatedDataView });
+                    if (pushData) {
+                        pushData({ dataView: updatedDataView });
+                    }
+
+                    const err = e as any;
+                    throw new ForecastNotReceivedSdkError(
+                        err.responseBody?.reason || err.message || "Unknown error",
+                        err,
+                    );
+                }
+            },
+            [updateState],
+        );
+
+        const handleLoadingSuccess = useCallback(
+            (dataView: IDataView, executionResult: IExecutionResult): void => {
+                const { onExportReady, pushData, exportTitle } = latestPropsRef.current;
+
+                updateState({ dataView, error: null, executionResult });
+                onLoadingChanged({ isLoading: false });
+                onDataView(dataView);
+
+                if (onExportReady) {
+                    onExportReady(createExportFunction(dataView.result, exportTitle));
+                }
+
+                if (pushData) {
+                    const availableDrillTargets = getAvailableDrillTargets(DataViewFacade.for(dataView));
+                    pushData({ dataView, availableDrillTargets });
+                }
+            },
+            [onDataView, onLoadingChanged, updateState],
+        );
+
+        const handleLoadingError = useCallback(
+            (error: unknown, fingerprint: string): void => {
+                if (isRequestStale(fingerprint)) {
+                    return;
+                }
+
+                const { pushData } = latestPropsRef.current;
+                /*
+                 * There can be situations, where there is no data to visualize but the result / dataView contains
+                 * metadata essential for setup of drilling. Look for that and if available push up.
+                 */
+                if (isNoDataError(error) && error.dataView && pushData) {
+                    const availableDrillTargets = getAvailableDrillTargets(
+                        DataViewFacade.for(error.dataView),
+                    );
+                    pushData({ availableDrillTargets });
+                }
+
+                onError(convertError(error));
+            },
+            [isRequestStale, onError],
+        );
+
+        const initDataLoading = useCallback(
+            async (
+                originalExecution: IPreparedExecution,
+                forecastConfig?: IForecastConfig,
+                outliersConfig?: IOutliersConfig,
+                clusteringConfig?: IClusteringConfig,
+            ) => {
+                let execution = originalExecution;
+                if (latestPropsRef.current.enableExecutionCancelling) {
+                    execution = execution.withSignal(abortController.current.signal);
+                }
+                const { pushData } = latestPropsRef.current;
+                onLoadingChanged({ isLoading: true });
+                updateState({ dataView: null });
+                const fingerprint = defFingerprint(execution.definition);
+                lastInitRequestFingerprint.current = fingerprint;
+
+                try {
+                    const executionResult = await execution.execute();
+                    if (isRequestStale(fingerprint)) {
+                        return;
+                    }
+
+                    const originalDataView = await executionResult.readAll().catch((err) => {
+                        /**
+                         * When execution result is received successfully,
+                         * but data load fails with unexpected http response,
+                         * we still want to push availableDrillTargets
+                         */
+                        if (isUnexpectedResponseError(err) && pushData) {
+                            const availableDrillTargets = getAvailableDrillTargets(
+                                DataViewFacade.forResult(executionResult),
+                            );
+
+                            pushData({ availableDrillTargets });
+                        }
+                        throw err;
+                    });
+
+                    if (isRequestStale(defFingerprint(originalDataView.definition))) {
+                        /*
+                         * Stop right now if the data are not relevant anymore because there was another
+                         * initialize request in the meantime.
+                         */
+                        return;
+                    }
+
+                    let dataView = originalDataView;
+
                     if (forecastConfig) {
-                        dataView = dataView.withForecast(forecastConfig);
+                        dataView = originalDataView.withForecast(forecastConfig);
                     }
                     if (outliersConfig) {
                         dataView = dataView.withOutliers(outliersConfig);
                     }
-                }
 
-                this.handleLoadingSuccess(dataView, executionResult);
+                    if (clusteringConfig) {
+                        dataView = await loadClusteringData(
+                            originalDataView,
+                            executionResult,
+                            clusteringConfig,
+                        );
+                        if (forecastConfig) {
+                            dataView = dataView.withForecast(forecastConfig);
+                        }
+                        if (outliersConfig) {
+                            dataView = dataView.withOutliers(outliersConfig);
+                        }
+                    }
 
-                if (this.hasUnmounted) {
-                    return;
-                }
+                    handleLoadingSuccess(dataView, executionResult);
 
-                if (dataView.forecastConfig && forecastConfig) {
-                    dataView = await this.loadForecastData(dataView, executionResult, forecastConfig);
+                    if (hasUnmounted.current) {
+                        return;
+                    }
+
+                    if (dataView.forecastConfig && forecastConfig) {
+                        dataView = await loadForecastData(dataView, executionResult, forecastConfig);
+                    }
+                    if (dataView.outliersConfig && outliersConfig) {
+                        await loadOutliersData(dataView, executionResult, outliersConfig);
+                    }
+                } catch (error) {
+                    handleLoadingError(error, fingerprint);
                 }
-                if (dataView.outliersConfig && outliersConfig) {
-                    await this.loadOutliersData(dataView, executionResult, outliersConfig);
-                }
-            } catch (error) {
-                this.handleLoadingError(error, fingerprint);
+            },
+            [
+                handleLoadingError,
+                handleLoadingSuccess,
+                isRequestStale,
+                loadClusteringData,
+                loadForecastData,
+                loadOutliersData,
+                onLoadingChanged,
+                updateState,
+            ],
+        );
+
+        // componentDidMount & componentWillUnmount
+        useEffect(() => {
+            hasUnmounted.current = false;
+
+            void initDataLoading(
+                props.execution,
+                props.forecastConfig,
+                props.outliersConfig,
+                props.clusteringConfig,
+            );
+
+            return () => {
+                hasUnmounted.current = true;
+                refreshAbortController();
+            };
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, []);
+
+        // UNSAFE_componentWillReceiveProps; the props are compared with custom equality, hence the effect runs
+        // on every render and decides on its own whether the data must be loaded again
+        const isFirstEffectRunRef = useRef(true);
+        const prevRef = useRef({
+            execution: props.execution,
+            forecastConfig: props.forecastConfig,
+            outliersConfig: props.outliersConfig,
+            clusteringConfig: props.clusteringConfig,
+        });
+        useEffect(() => {
+            const { execution, forecastConfig, outliersConfig, clusteringConfig } = props;
+
+            if (isFirstEffectRunRef.current) {
+                // the mount effect above has already started the initial load
+                isFirstEffectRunRef.current = false;
+                return;
             }
-        }
 
-        private stripWorkspace = (props: T & ILoadingInjectedProps): T & ILoadingInjectedProps => {
-            return omit(props, ["workspace"]) as any;
+            const prev = prevRef.current;
+            prevRef.current = { execution, forecastConfig, outliersConfig, clusteringConfig };
+
+            //  we need strict equality here in case only the buckets changed (not measures or attributes)
+            if (
+                !prev.execution.equals(execution) ||
+                !isEqual(prev.forecastConfig, forecastConfig) ||
+                !isEqual(prev.clusteringConfig, clusteringConfig) ||
+                !isEqual(prev.outliersConfig, outliersConfig)
+            ) {
+                refreshAbortController();
+                void initDataLoading(execution, forecastConfig, outliersConfig, clusteringConfig);
+            }
+        });
+
+        const stripWorkspace = (allProps: T & ILoadingInjectedProps): T & ILoadingInjectedProps => {
+            return omit(allProps, ["workspace"]) as any;
         };
+
+        const { isLoading, error, dataView, seType } = state;
+        const { intl } = props;
+
+        // lower-level components do not need workspace
+        const innerProps = stripWorkspace(props);
+
+        return (
+            <InnerComponent
+                {...(innerProps as any)}
+                dataView={dataView}
+                onDataTooLarge={onDataTooLarge}
+                onNegativeValues={onNegativeValues}
+                error={error}
+                seType={seType}
+                isLoading={isLoading}
+                intl={intl}
+            />
+        );
     }
 
     const IntlLoadingHOC = injectIntl<"intl", T & ILoadingInjectedProps>(LoadingHOCWrapped);
 
-    return class LoadingHOC extends Component<T> {
-        public override render() {
-            return (
-                <IntlWrapper locale={this.props.locale}>
-                    <IntlLoadingHOC {...(this.props as any)} />
-                </IntlWrapper>
-            );
-        }
-    };
+    function LoadingHOC(props: T) {
+        return (
+            <IntlWrapper locale={props.locale}>
+                <IntlLoadingHOC {...(props as any)} />
+            </IntlWrapper>
+        );
+    }
+
+    return LoadingHOC;
 }

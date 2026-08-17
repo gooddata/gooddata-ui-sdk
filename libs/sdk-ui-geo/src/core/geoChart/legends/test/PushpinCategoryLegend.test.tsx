@@ -1,10 +1,10 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
 import { type ContentRect } from "react-measure";
 import { describe, expect, it } from "vitest";
 
-import { VisualizationTypes, withIntl } from "@gooddata/sdk-ui";
+import { VisualizationTypes, withIntlForTest } from "@gooddata/sdk-ui";
 import { type PositionType } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IPushpinCategoryLegendProps, PushpinCategoryLegend } from "../PushpinCategoryLegend.js";
@@ -41,7 +41,7 @@ function createComponent(customProps: Partial<IPushpinCategoryLegendProps> = {})
         containerId: "id",
         ...customProps,
     };
-    const Wrapped = withIntl(PushpinCategoryLegend);
+    const Wrapped = withIntlForTest(PushpinCategoryLegend);
     return render(<Wrapped {...legendProps} />);
 }
 

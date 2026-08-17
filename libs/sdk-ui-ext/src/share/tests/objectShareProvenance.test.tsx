@@ -193,15 +193,33 @@ describe("label access provenance — state matrix", () => {
         vi.clearAllMocks();
     });
 
+    /**
+     * `renderHook` renders no DOM, so `waitFor`'s MutationObserver shortcut never fires and
+     * every pending assertion costs a full poll interval — 50ms by default, which is the whole
+     * runtime of each test here. Poll tightly instead; the awaited work is a resolved promise
+     * away, not a timer.
+     */
+    const POLL = { interval: 1 } as const;
+
     const ready = async (result: { current: { state: { status: string } } }) => {
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.status).toBe("success"), POLL);
+    };
+
+    /** The label probe resolves after the access list, so it needs its own wait. */
+    const labelsReady = async (result: {
+        current: { state: { selectedLabelIdsByGrantee: Record<string, string[] | undefined> } };
+    }) => {
+        await waitFor(
+            () => expect(result.current.state.selectedLabelIdsByGrantee[U1_ROW]).toBeDefined(),
+            POLL,
+        );
     };
 
     it("INV-D: scope covers direct, inherited and primary; locked covers inherited", async () => {
         const { svc } = makeStatefulService(DUAL_EVERYWHERE);
         const { result } = renderController(svc);
         await ready(result);
-        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee[U1_ROW]).toBeDefined());
+        await labelsReady(result);
 
         expect(result.current.state.selectedLabelIdsByGrantee[U1_ROW]!.sort()).toEqual([
             "attr.country", // primary
@@ -220,7 +238,7 @@ describe("label access provenance — state matrix", () => {
         const { svc, directOnObject, directOnLabel } = makeStatefulService(DUAL_EVERYWHERE);
         const { result } = renderController(svc);
         await ready(result);
-        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee[U1_ROW]).toBeDefined());
+        await labelsReady(result);
 
         await act(async () => {
             await result.current.actions.removeGrantee(U1_ROW);
@@ -237,7 +255,7 @@ describe("label access provenance — state matrix", () => {
         const { svc, directOnObject, directOnLabel } = makeStatefulService(DUAL_EVERYWHERE);
         const { result } = renderController(svc);
         await ready(result);
-        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee[U1_ROW]).toBeDefined());
+        await labelsReady(result);
 
         await act(async () => {
             await result.current.actions.removeGrantee(U1_ROW);
@@ -264,7 +282,7 @@ describe("label access provenance — state matrix", () => {
         });
         const { result } = renderController(svc);
         await ready(result);
-        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee[U1_ROW]).toBeDefined());
+        await labelsReady(result);
 
         await act(async () => {
             await result.current.actions.changePermissionLevel(U1_ROW, "EDIT");
@@ -289,7 +307,7 @@ describe("label access provenance — state matrix", () => {
         });
         const { result } = renderController(svc);
         await ready(result);
-        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee[U1_ROW]).toBeDefined());
+        await labelsReady(result);
 
         // Bring lbl.code into scope — a brand new local grant.
         await act(async () => {
@@ -313,7 +331,7 @@ describe("label access provenance — state matrix", () => {
         const { svc, directOnLabel, state } = makeStatefulService(DUAL_EVERYWHERE);
         const { result } = renderController(svc);
         await ready(result);
-        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee[U1_ROW]).toBeDefined());
+        await labelsReady(result);
         svc.manageObjectPermissions.mockClear();
 
         // Ask to drop lbl.code, which the grantee only inherits.
@@ -332,7 +350,7 @@ describe("label access provenance — state matrix", () => {
         const { svc, directOnObject } = makeStatefulService(DUAL_EVERYWHERE);
         const { result } = renderController(svc);
         await ready(result);
-        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee[U1_ROW]).toBeDefined());
+        await labelsReady(result);
 
         await act(async () => {
             await result.current.actions.changeGranteeLabels(U1_ROW, [
@@ -358,7 +376,7 @@ describe("label access provenance — state matrix", () => {
         });
         const { result } = renderController(svc);
         await ready(result);
-        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee[U1_ROW]).toBeDefined());
+        await labelsReady(result);
 
         await act(async () => {
             await result.current.actions.changePermissionLevel(U1_ROW, "VIEW");

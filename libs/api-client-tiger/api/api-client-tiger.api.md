@@ -3488,6 +3488,26 @@ export interface AiAppDomainConversationsVisualizationRankingFilter {
 // @public (undocumented)
 export type AiAppDomainConversationsVisualizationRankingFilterTypeEnum = 'ranking_filter';
 
+// @public
+export interface AiAppliedMemoryItem {
+    // (undocumented)
+    'score'?: number | null;
+    'strategy': AiAppliedMemoryItemStrategyEnum;
+    'title': string;
+}
+
+// @public (undocumented)
+export type AiAppliedMemoryItemStrategyEnum = 'ALWAYS' | 'AUTO';
+
+// @public
+export interface AiApplyMemoryDetail {
+    'category'?: AiApplyMemoryDetailCategoryEnum;
+    'items'?: Array<AiAppliedMemoryItem>;
+}
+
+// @public (undocumented)
+export type AiApplyMemoryDetailCategoryEnum = 'applyMemory';
+
 // @public (undocumented)
 export interface AiArithmeticMeasure {
     'left': AiMetricOperand;
@@ -3836,12 +3856,16 @@ export interface AiConversationItemResponse {
 
 // @public
 export type AiConversationItemResponseDetail = ({
+    category: 'applyMemory';
+} & AiApplyMemoryDetail) | ({
     category: 'catalogSearch';
 } & AiCatalogSearchDetail) | ({
     category: 'composeAnswer';
 } & AiComposeAnswerDetail) | ({
     category: 'knowledgeSearch';
 } & AiKnowledgeSearchDetail) | ({
+    category: 'metricQuery';
+} & AiMetricQueryDetail) | ({
     category: 'skillRouting';
 } & AiSkillRoutingDetail);
 
@@ -4481,6 +4505,25 @@ export interface AiMetricOperand {
     // (undocumented)
     'title'?: string | null;
 }
+
+// @public
+export interface AiMetricQueryDetail {
+    'category'?: AiMetricQueryDetailCategoryEnum;
+    'filteredBy'?: Array<string>;
+    'groupedBy'?: Array<string>;
+    'metrics'?: Array<string>;
+    // (undocumented)
+    'ref'?: string | null;
+    // (undocumented)
+    'resultColumns'?: number | null;
+    // (undocumented)
+    'resultRows'?: number | null;
+    // (undocumented)
+    'visualization'?: string | null;
+}
+
+// @public (undocumented)
+export type AiMetricQueryDetailCategoryEnum = 'metricQuery';
 
 // @public (undocumented)
 export interface AiMetricSortItem {

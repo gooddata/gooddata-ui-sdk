@@ -926,7 +926,13 @@ export function getKdaSupportedGranularities(enableSecondGranularities?: boolean
 export function getKdaSupportedStringGranularities(enableSecondGranularities?: boolean): string[];
 
 // @alpha
+export function getParameterAllowedValues(definition: IParameterDefinition): IParameterAllowedValue[] | undefined;
+
+// @alpha
 export function getParameterAllowedValueTitle(allowedValue: IParameterAllowedValue): string;
+
+// @alpha
+export function getParameterValueTitle(definition: IParameterDefinition, value: ParameterValue): string;
 
 // @alpha
 export function getSelectedElementsCount(filter: IDashboardAttributeFilter): number;

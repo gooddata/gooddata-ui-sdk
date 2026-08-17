@@ -1,13 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import {
-    type ChangeEvent,
-    type FocusEvent,
-    type KeyboardEvent,
-    type ReactNode,
-    forwardRef,
-    useCallback,
-} from "react";
+import { type ChangeEvent, type FocusEvent, forwardRef, useCallback } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -15,18 +8,11 @@ import { useIntl } from "react-intl";
 import { createInvalidDatapoint, createInvalidNode, useValidationContextValue } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger, Button, IconError, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-const TITLE_MAX_LENGTH = 255;
-
-interface IScheduledEmailDialogHeaderProps {
-    title: string;
-    placeholder: string;
-    isSecondaryTitleVisible?: boolean;
-    secondaryTitle?: string;
-    secondaryTitleIcon: ReactNode;
-    onChange: (value: string, isValid: boolean) => void;
-    onKeyDownSubmit: (e: KeyboardEvent) => void;
-    onBack?: () => void;
-}
+import {
+    MAX_AUTOMATION_TITLE_LENGTH,
+    isAutomationTitleValid,
+} from "../../../../shared/utils/automationTitle.js";
+import { type IScheduledEmailDialogHeaderProps } from "../../../types.js";
 
 export const ScheduledEmailDialogHeader = forwardRef<HTMLInputElement, IScheduledEmailDialogHeaderProps>(
     (props, ref) => {
@@ -38,7 +24,7 @@ export const ScheduledEmailDialogHeader = forwardRef<HTMLInputElement, ISchedule
             isSecondaryTitleVisible,
             onChange,
             onBack,
-            onKeyDownSubmit,
+            onTitleKeyDown,
         } = props;
 
         const { formatMessage } = useIntl();
@@ -63,17 +49,13 @@ export const ScheduledEmailDialogHeader = forwardRef<HTMLInputElement, ISchedule
                         id: errorId,
                         message: formatMessage(
                             { id: "dialogs.schedule.error.too_long" },
-                            { value: TITLE_MAX_LENGTH },
+                            { value: MAX_AUTOMATION_TITLE_LENGTH },
                         ),
                     }),
                 ]);
             },
             [errorId, formatMessage, setInvalidDatapoints],
         );
-
-        const isValueValid = useCallback((value: string) => {
-            return value.length <= TITLE_MAX_LENGTH;
-        }, []);
 
         const dialogHeaderClasses = cx(
             "gd-notifications-channels-dialog-title",
@@ -91,22 +73,21 @@ export const ScheduledEmailDialogHeader = forwardRef<HTMLInputElement, ISchedule
         const handleOnChange = useCallback(
             (e: ChangeEvent<HTMLInputElement>) => {
                 const { value } = e.target;
-                const validationResult = isValueValid(value);
 
                 if (!isValid) {
-                    setHasError(!validationResult);
+                    setHasError(!isAutomationTitleValid(value));
                 }
 
-                onChange(value, validationResult);
+                onChange(value);
             },
-            [isValueValid, isValid, onChange, setHasError],
+            [isValid, onChange, setHasError],
         );
 
         const handleBlur = useCallback(
             (e: FocusEvent<HTMLInputElement>) => {
-                setHasError(!isValueValid(e.target.value));
+                setHasError(!isAutomationTitleValid(e.target.value));
             },
-            [isValueValid, setHasError],
+            [setHasError],
         );
 
         return (
@@ -134,7 +115,7 @@ export const ScheduledEmailDialogHeader = forwardRef<HTMLInputElement, ISchedule
                             value={title}
                             placeholder={placeholder}
                             onChange={handleOnChange}
-                            onKeyDown={onKeyDownSubmit}
+                            onKeyDown={onTitleKeyDown}
                             autoComplete="off"
                             aria-describedby={isValid ? undefined : errorId}
                             aria-label={formatMessage({

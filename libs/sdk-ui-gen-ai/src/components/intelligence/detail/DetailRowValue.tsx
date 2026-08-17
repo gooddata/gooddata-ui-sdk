@@ -60,7 +60,7 @@ export function DetailRowValue({ value }: IDetailRowValueProps) {
     const intl = useIntl();
 
     if (value.kind === "text") {
-        return resolveMessage(intl, value.textId, value.text);
+        return resolveMessage(intl, value.textId, value.text, value.textValues);
     }
     if (value.kind === "list") {
         return <DetailList {...value} />;

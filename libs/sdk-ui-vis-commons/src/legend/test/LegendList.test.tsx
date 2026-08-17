@@ -3,7 +3,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { LegendSeriesContextStore, VisibilityContext } from "../context.js";
 import { type ILegendListProps, LegendList } from "../LegendList.js";
@@ -37,7 +37,7 @@ describe("LegendList", () => {
             visibleItems: new Set([0, 1, 2, 3, 4, 5]),
         };
 
-        const Wrapped = withIntl(LegendList);
+        const Wrapped = withIntlForTest(LegendList);
 
         return render(
             <LegendSeriesContextStore value={mockContextValue}>

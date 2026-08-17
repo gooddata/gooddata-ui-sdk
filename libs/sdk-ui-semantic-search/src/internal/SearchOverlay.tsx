@@ -23,6 +23,7 @@ import { useDebouncedState, useLocalStorage, useWorkspaceStrict } from "@gooddat
 import {
     DETAILED_ANNOUNCEMENT_THRESHOLD,
     type IAccessibilityConfigBase,
+    type IInputPureHandle,
     Input,
     LoadingMask,
     Message,
@@ -199,7 +200,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
     const { toggleOpen } = useHeaderSearch();
 
     // Input value handling
-    const inputRef = useRef<Input>(null);
+    const inputRef = useRef<IInputPureHandle>(null);
     const [value, setValue, searchTerm, setImmediate] = useDebouncedState("", DEBOUNCE);
     const isModified = value.length > 0;
     const { inputId, treeViewId } = useSearchIds();
@@ -271,7 +272,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
             setImmediate(value);
             // The input element is loosing focus after the selection,
             // therefore it needs to be focused explicitly.
-            inputRef.current?.inputNodeRef?.inputNodeRef?.focus();
+            inputRef.current?.inputNodeRef?.focus();
         },
         [setImmediate],
     );

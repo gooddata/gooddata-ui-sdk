@@ -1,11 +1,10 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement, type ReactNode } from "react";
 
 import cx from "classnames";
 
-import { type ITheme } from "@gooddata/sdk-model";
-import { withTheme } from "@gooddata/sdk-ui-theme-provider";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import {
     type IColorLegendBox,
@@ -25,7 +24,6 @@ export interface IColorLegendProps {
     position: string;
     size?: IColorLegendSize;
     format?: string;
-    theme?: ITheme;
     title?: string;
 }
 
@@ -102,8 +100,16 @@ function LegendWithTitle({
 /**
  * @internal
  */
-export const ColorLegend = withTheme((colorLegendProps: IColorLegendProps) => {
-    const { title, data, format, numericSymbols, size = "large", position, theme } = colorLegendProps;
+export function ColorLegend({
+    title,
+    data,
+    format,
+    numericSymbols,
+    size = "large",
+    position,
+}: IColorLegendProps) {
+    const theme = useTheme();
+
     if (!data.length) {
         return null;
     }
@@ -131,4 +137,4 @@ export const ColorLegend = withTheme((colorLegendProps: IColorLegendProps) => {
             )}
         </div>
     );
-});
+}

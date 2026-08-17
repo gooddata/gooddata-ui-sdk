@@ -1,15 +1,15 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { SettingItem } from "../SettingItem.js";
 import { type ISettingItem } from "../typings.js";
 
-const Wrapped = withIntl(SettingItem);
+const Wrapped = withIntlForTest(SettingItem);
 
 describe("ReactSettingItem", () => {
     it("should render setting item", () => {

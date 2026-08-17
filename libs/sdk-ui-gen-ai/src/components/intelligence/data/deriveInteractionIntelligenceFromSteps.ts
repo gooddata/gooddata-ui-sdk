@@ -46,6 +46,8 @@ interface ICategoryAccumulator {
  * though its step keeps its time regardless.
  *
  * A tile's `index` is its array position, not the backend's `stepIndex` — it is the highlight key.
+ * A category can also come from a detail that belongs to the response rather than a step, which
+ * yields a row with no `stepIndexes` and so nothing to highlight.
  * @internal
  */
 export function deriveInteractionIntelligenceFromSteps(
@@ -54,6 +56,17 @@ export function deriveInteractionIntelligenceFromSteps(
 ): IInteractionIntelligence {
     const sorted = [...trace.steps].sort((a, b) => a.stepIndex - b.stepIndex);
     const byCategory = new Map<GenAIInteractionStepCategory, ICategoryAccumulator>();
+
+    // Seeded first, so a response-scoped category sorts above the steps' own — it happened before
+    // them. Its `stepIndexes` stay empty: there is no tile it ran in.
+    for (const { detail } of trace.responseDetails ?? []) {
+        if (!detail) {
+            continue;
+        }
+        const entry = byCategory.get(detail.category) ?? { stepIndexes: [], details: [] };
+        byCategory.set(detail.category, entry);
+        entry.details.push(detail);
+    }
 
     const steps: IInteractionStepTile[] = sorted.map((step, index) => {
         const actions = trace.detailsByStepId[step.stepId] ?? [];

@@ -1,7 +1,6 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
-import { render, screen } from "@testing-library/react";
-import { userEvent } from "@testing-library/user-event";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { type IBucket, type IInsightDefinition } from "@gooddata/sdk-model";
@@ -11,6 +10,12 @@ import { emptyInsight } from "../../../tests/mocks/testMocks.js";
 import { attributeItemA1, attributeItemA2 } from "../../../tests/mocks/visualizationObjectMocks.js";
 import { BulletChartConfigurationPanel } from "../BulletChartConfigurationPanel.js";
 import { type IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
+
+// The section headers only handle onClick, so plain fireEvent is enough here; userEvent would add a
+// full pointer/mouse sequence plus a real setTimeout between each event for no extra coverage.
+function expandSection(title: string): void {
+    fireEvent.click(screen.getByText(title));
+}
 
 function testInsight(buckets: IBucket[]): IInsightDefinition {
     return {
@@ -159,7 +164,7 @@ describe("BulletChartConfigurationPanel", () => {
             type: VisualizationTypes.BULLET,
         };
 
-        it("should render configuration panel with enabled name sections", async () => {
+        it("should render configuration panel with enabled name sections", () => {
             const insight = testInsight([
                 {
                     localIdentifier: "measures",
@@ -176,28 +181,28 @@ describe("BulletChartConfigurationPanel", () => {
                 insight,
             });
 
-            await userEvent.click(screen.getByText("X-Axis"));
+            expandSection("X-Axis");
             expect(screen.getByLabelText("xaxis name")).toBeEnabled();
 
-            await userEvent.click(screen.getByText("Y-Axis"));
+            expandSection("Y-Axis");
             expect(screen.getByLabelText("yaxis name")).toBeEnabled();
         });
 
-        it("should render configuration panel with disabled name sections", async () => {
+        it("should render configuration panel with disabled name sections", () => {
             const insight = emptyInsight;
             createComponent({
                 ...defaultProps,
                 insight,
             });
 
-            await userEvent.click(screen.getByText("X-Axis"));
+            expandSection("X-Axis");
             expect(screen.getByLabelText("xaxis name")).toBeDisabled();
 
-            await userEvent.click(screen.getByText("Y-Axis"));
+            expandSection("Y-Axis");
             expect(screen.getByLabelText("yaxis name")).toBeDisabled();
         });
 
-        it("should render configuration panel with enabled X axis name section and disabled Y axis name section", async () => {
+        it("should render configuration panel with enabled X axis name section and disabled Y axis name section", () => {
             const insight = testInsight([
                 {
                     localIdentifier: "measures",
@@ -210,10 +215,10 @@ describe("BulletChartConfigurationPanel", () => {
                 insight,
             });
 
-            await userEvent.click(screen.getByText("X-Axis"));
+            expandSection("X-Axis");
             expect(screen.getByLabelText("xaxis name")).toBeEnabled();
 
-            await userEvent.click(screen.getByText("Y-Axis"));
+            expandSection("Y-Axis");
             expect(screen.getByLabelText("yaxis name")).toBeDisabled();
         });
     });
@@ -226,7 +231,7 @@ describe("BulletChartConfigurationPanel", () => {
             type: VisualizationTypes.BULLET,
         };
 
-        it("should render labels configuration panel disabled if there is no attribute", async () => {
+        it("should render labels configuration panel disabled if there is no attribute", () => {
             const insight = testInsight([
                 {
                     localIdentifier: "measures",
@@ -242,11 +247,11 @@ describe("BulletChartConfigurationPanel", () => {
                 insight,
             });
 
-            await userEvent.click(screen.getByText("Y-Axis"));
+            expandSection("Y-Axis");
             expect(screen.getByLabelText("yaxis labels")).toBeDisabled();
         });
 
-        it("should render labels configuration panel enabled if there is an attribute", async () => {
+        it("should render labels configuration panel enabled if there is an attribute", () => {
             const insight = testInsight([
                 {
                     localIdentifier: "measures",
@@ -263,7 +268,7 @@ describe("BulletChartConfigurationPanel", () => {
                 insight,
             });
 
-            await userEvent.click(screen.getByText("Y-Axis"));
+            expandSection("Y-Axis");
             expect(screen.getByLabelText("yaxis labels")).toBeEnabled();
         });
     });
@@ -276,7 +281,7 @@ describe("BulletChartConfigurationPanel", () => {
             type: VisualizationTypes.BULLET,
         };
 
-        it("should render name configuration panel enabled if there is an attribute", async () => {
+        it("should render name configuration panel enabled if there is an attribute", () => {
             const insight = testInsight([
                 {
                     localIdentifier: "measures",
@@ -293,11 +298,11 @@ describe("BulletChartConfigurationPanel", () => {
                 insight,
             });
 
-            await userEvent.click(screen.getByText("Y-Axis"));
+            expandSection("Y-Axis");
             expect(screen.getByLabelText("yaxis name")).toBeEnabled();
         });
 
-        it("should render name configuration panel enabled if there are two attributes", async () => {
+        it("should render name configuration panel enabled if there are two attributes", () => {
             const insight = testInsight([
                 {
                     localIdentifier: "measures",
@@ -314,7 +319,7 @@ describe("BulletChartConfigurationPanel", () => {
                 insight,
             });
 
-            await userEvent.click(screen.getByText("Y-Axis"));
+            expandSection("Y-Axis");
             expect(screen.getByLabelText("yaxis name")).toBeEnabled();
         });
     });

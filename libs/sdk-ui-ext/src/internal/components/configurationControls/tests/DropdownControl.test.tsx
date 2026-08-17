@@ -1,6 +1,6 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
@@ -18,11 +18,14 @@ describe("DropdownControl", () => {
 
     function createComponent(customProps: Partial<IDropdownControlProps> = {}) {
         const props = { ...defaultProps, ...customProps };
-        return render(
+        // delay: null keeps the full event sequence but drops the real-timer waits between events
+        const user = userEvent.setup({ delay: null });
+        render(
             <InternalIntlWrapper>
                 <DropdownControl {...props} />
             </InternalIntlWrapper>,
         );
+        return { user };
     }
 
     it("should render dropdown control", () => {
@@ -76,12 +79,12 @@ describe("DropdownControl", () => {
             ["header item", headerItems, "item-header"],
             ["item with info", itemsWithInfo, "item-info"],
         ])("should render %s", async (_testType, items: IDropdownItem[], role: string) => {
-            createComponent({ items });
+            const { user } = createComponent({ items });
 
-            await userEvent.click(screen.getByRole("combobox"));
-            await waitFor(() => {
-                expect(screen.getByTestId(role)).toBeInTheDocument();
-            });
+            // the click is act-wrapped, so the dropdown body is already flushed to the DOM
+            await user.click(screen.getByRole("combobox"));
+
+            expect(screen.getByTestId(role)).toBeInTheDocument();
         });
     });
 });

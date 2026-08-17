@@ -8,7 +8,7 @@ import { debounce } from "lodash-es";
 import { FormattedMessage, defineMessage, defineMessages, useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
-import { withTheme } from "@gooddata/sdk-ui-theme-provider";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { Icon } from "../Icon/Icon.js";
 import { Overlay } from "../Overlay/Overlay.js";
@@ -53,7 +53,7 @@ const HEADER_HELP_MENU_ITEM_ID = defineMessage({ id: "gs.header.help" }).id;
 /**
  * @internal
  */
-export const AppHeader = withTheme(function AppHeader({
+export function AppHeader({
     logoHref = "/",
     accountMenuItems = [],
     helpMenuItems = [],
@@ -76,7 +76,6 @@ export const AppHeader = withTheme(function AppHeader({
     badges,
     showStaticHelpMenu,
     userName,
-    theme,
     helpMenuDropdownAlignPoints: helpDropdownAlign,
     disableHelpDropdown,
     onHelpClick,
@@ -88,6 +87,7 @@ export const AppHeader = withTheme(function AppHeader({
     onMenuItemClick,
 }: IAppHeaderProps) {
     const intl = useIntl();
+    const theme = useTheme();
     const [state, setState] = useState<IAppHeaderState>({
         childrenWidth: 0,
         guid: `header-${uuid()}`,
@@ -635,4 +635,4 @@ export const AppHeader = withTheme(function AppHeader({
             {state.responsiveMode ? renderMobileNav() : renderStandardNav()}
         </header>
     );
-});
+}

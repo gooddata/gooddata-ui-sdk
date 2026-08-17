@@ -9,7 +9,7 @@ import {
     newMeasureValueFilter,
     newMeasureValueFilterWithOptions,
 } from "@gooddata/sdk-model";
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { type IMeasureValueFilterProps, MeasureValueFilter } from "../MeasureValueFilter.js";
 
@@ -30,7 +30,7 @@ const renderComponent = (props?: Partial<IMeasureValueFilterProps>) => {
         measureIdentifier: "myMeasure",
         buttonTitle: "My measure",
     };
-    const Wrapped = withIntl(MeasureValueFilter);
+    const Wrapped = withIntlForTest(MeasureValueFilter);
     return render(<Wrapped {...defaultProps} {...props} />);
 };
 

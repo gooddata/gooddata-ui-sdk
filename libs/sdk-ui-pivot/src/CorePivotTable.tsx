@@ -38,7 +38,7 @@ import {
     IntlWrapper,
     newErrorMapping,
 } from "@gooddata/sdk-ui";
-import { ThemeContextProvider, withTheme } from "@gooddata/sdk-ui-theme-provider";
+import { ThemeContextProvider, useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { PivotTableError } from "./components/PivotTableError.js";
 import { PivotTableLoading } from "./components/PivotTableLoading.js";
@@ -259,8 +259,9 @@ function stopEventWhenResizeHeader(e: ReactMouseEvent): void {
  */
 export function CorePivotTableAgImpl(props: ICorePivotTableProps) {
     const intl = useIntl();
+    const theme = useTheme();
 
-    const resolvedProps: ICorePivotTableInternalProps = { ...resolveDefaultProps(props), intl };
+    const resolvedProps: ICorePivotTableInternalProps = { ...resolveDefaultProps(props), intl, theme };
 
     /*
      * Vast majority of the code below runs outside of the React rendering (ag-grid callbacks, timeouts, promise
@@ -290,34 +291,41 @@ export function CorePivotTableAgImpl(props: ICorePivotTableProps) {
      * Callbacks passed to the `setState(update, callback)` calls; they must run after the commit of the state
      * update that registered them - the same way React does it for class components.
      *
-     * Callbacks of the state updates that are already reflected in the state being rendered are moved to the
-     * 'committed' queue below, which is then drained by an effect after the commit.
+     * Each callback is tagged with the version of the state update it belongs to, and every `setState` pushes
+     * that version into the React state as well. A layout effect then drains only the callbacks whose version
+     * is already reflected in the state being rendered, so a callback can never observe a `stateRef` that does
+     * not yet contain its own update - not even when the `setState` happens in a layout effect that runs
+     * before the drain within the very same commit (which is what `handleUpdate` -> `reinitialize` does).
+     *
+     * Nothing is mutated during render, which keeps the shim safe under concurrent rendering: a discarded or
+     * replayed render cannot advance the queue, because only a real commit can advance `committedStateVersion`.
      */
-    const enqueuedStateUpdateCallbacks = useRef<Array<() => void>>([]);
-    const committedStateUpdateCallbacks = useRef<Array<() => void>>([]);
-
-    if (enqueuedStateUpdateCallbacks.current.length > 0) {
-        committedStateUpdateCallbacks.current.push(...enqueuedStateUpdateCallbacks.current);
-        enqueuedStateUpdateCallbacks.current = [];
-    }
+    const enqueuedStateUpdateCallbacks = useRef<Array<{ version: number; callback: () => void }>>([]);
+    const lastEnqueuedStateVersion = useRef(0);
+    const [committedStateVersion, setCommittedStateVersion] = useState(0);
 
     /**
      * Drop-in replacement of `React.Component.setState`: merges the partial state (or the result of the state
      * updater function) into the current state and optionally calls a callback once the new state is committed.
      */
     const setState = useCallback((update: CorePivotTableStateUpdate, callback?: () => void): void => {
+        const version = ++lastEnqueuedStateVersion.current;
+
         if (callback) {
-            enqueuedStateUpdateCallbacks.current.push(callback);
+            enqueuedStateUpdateCallbacks.current.push({ version, callback });
         }
 
         setStateInternal((prevState) => ({
             ...prevState,
             ...(typeof update === "function" ? update(prevState) : update),
         }));
+        // queued after the state update itself, so seeing this version rendered guarantees the update above
+        // is part of the same commit
+        setCommittedStateVersion(version);
     }, []);
 
     const errorMap = useMemo(() => newErrorMapping(resolvedProps.intl), [resolvedProps.intl]);
-    const pivotTableId = useMemo(() => uuidv4().replace(/-/g, ""), []);
+    const [pivotTableId] = useState(() => uuidv4().replace(/-/g, ""));
 
     /*
      * The internal table state is intentionally kept out of the React state; it is replaced whenever the table
@@ -1155,13 +1163,23 @@ export function CorePivotTableAgImpl(props: ICorePivotTableProps) {
 
     // drain the setState callbacks; they run right after the commit of the state update that registered them
     useLayoutEffect(() => {
-        if (committedStateUpdateCallbacks.current.length === 0) {
+        if (enqueuedStateUpdateCallbacks.current.length === 0) {
             return;
         }
 
-        const callbacks = committedStateUpdateCallbacks.current;
-        committedStateUpdateCallbacks.current = [];
-        callbacks.forEach((callback) => callback());
+        // callbacks of updates that are not part of this commit yet stay queued for one of the next commits
+        const due = enqueuedStateUpdateCallbacks.current.filter(
+            ({ version }) => version <= committedStateVersion,
+        );
+
+        if (due.length === 0) {
+            return;
+        }
+
+        enqueuedStateUpdateCallbacks.current = enqueuedStateUpdateCallbacks.current.filter(
+            ({ version }) => version > committedStateVersion,
+        );
+        due.forEach(({ callback }) => callback());
     });
 
     //
@@ -1246,8 +1264,6 @@ export function CorePivotTableAgImpl(props: ICorePivotTableProps) {
     );
 }
 
-const CorePivotTableWithIntl = withTheme(CorePivotTableAgImpl);
-
 /**
  * @internal
  */
@@ -1255,7 +1271,7 @@ export function CorePivotTable(props: ICorePivotTableProps) {
     return (
         <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
             <IntlWrapper locale={props.locale}>
-                <CorePivotTableWithIntl {...props} />
+                <CorePivotTableAgImpl {...props} />
             </IntlWrapper>
         </ThemeContextProvider>
     );

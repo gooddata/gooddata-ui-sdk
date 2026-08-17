@@ -2,8 +2,8 @@
 
 import { type ComponentProps } from "react";
 
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -17,6 +17,21 @@ import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
 import { IntlWrapper } from "../../../../../localization/IntlWrapper.js";
 import { RecipientsSelect } from "../RecipientsSelect/RecipientsSelect.js";
+
+/**
+ * Debounce window of the user search (see useWorkspaceUsersSearch).
+ */
+const SEARCH_DEBOUNCE = 300;
+
+/**
+ * Debounce window of the screen reader announcement (see UiSearchResultsAnnouncement).
+ */
+const ANNOUNCEMENT_DEBOUNCE = 1000;
+
+/**
+ * Window long enough for any pending debounce to have fired.
+ */
+const IDLE_WINDOW = 700;
 
 function workspaceUser(login: string, email: string, fullName: string): IWorkspaceUser {
     return {
@@ -85,7 +100,44 @@ function openMenu() {
     fireEvent.keyDown(input, { key: "ArrowDown", code: "ArrowDown" });
 }
 
+/**
+ * Moves the (fake) clock forward and lets React commit everything that settled meanwhile —
+ * fired timers, resolved query promises and the renders they trigger.
+ *
+ * Waiting is therefore explicit and instant: no debounce is ever awaited in real time and no
+ * assertion has to poll for the result.
+ */
+async function advance(ms: number) {
+    await act(() => vi.advanceTimersByTimeAsync(ms));
+}
+
+/**
+ * Lets the in-flight query promises settle without moving the clock.
+ */
+function settle() {
+    return advance(0);
+}
+
+/**
+ * Waits out the search debounce and lets the resulting request settle.
+ */
+function settleSearch() {
+    return advance(SEARCH_DEBOUNCE);
+}
+
+function searchRequests(requests: IWorkspaceUsersQueryOptions[]) {
+    return requests.filter((request) => request.search !== undefined);
+}
+
 describe("RecipientsSelect", () => {
+    beforeEach(() => {
+        vi.useFakeTimers();
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
+
     it("requests a single capped first page of users on menu open and offers them as options", async () => {
         const { query, requests } = createUsersQueryStub(async () => [
             workspaceUser("john.id", "john@example.com", "John Doe"),
@@ -94,13 +146,12 @@ describe("RecipientsSelect", () => {
         renderComponent(createBackend(query));
 
         openMenu();
+        await settle();
 
-        expect(await screen.findByText("John Doe")).toBeInTheDocument();
+        expect(screen.getByText("John Doe")).toBeInTheDocument();
         expect(screen.getByText("Jane Roe")).toBeInTheDocument();
 
-        await waitFor(() => {
-            expect(requests).toHaveLength(1);
-        });
+        expect(requests).toHaveLength(1);
         expect(requests[0].limit).toBe(50);
         expect(requests[0].search).toBeUndefined();
     });
@@ -113,8 +164,9 @@ describe("RecipientsSelect", () => {
         renderComponent(createBackend(query));
 
         openMenu();
+        await settle();
 
-        expect(await screen.findByText("Zoe Zed")).toBeInTheDocument();
+        expect(screen.getByText("Zoe Zed")).toBeInTheDocument();
         const optionTexts = screen
             .getAllByRole("option", { hidden: true })
             .map((option) => option.textContent);
@@ -136,20 +188,16 @@ describe("RecipientsSelect", () => {
         fireEvent.change(input, { target: { value: "jo" } });
         fireEvent.change(input, { target: { value: "john" } });
 
-        await waitFor(
-            () => {
-                expect(requests.filter((request) => request.search !== undefined)).toHaveLength(1);
-            },
-            { timeout: 3000 },
-        );
-        const searchRequest = requests.find((request) => request.search !== undefined)!;
-        expect(searchRequest.search).toBe("john");
-        expect(searchRequest.limit).toBe(50);
+        expect(searchRequests(requests)).toHaveLength(0);
 
-        expect(await screen.findByText("John Doe")).toBeInTheDocument();
-        await waitFor(() => {
-            expect(screen.queryByText("Jane Roe")).not.toBeInTheDocument();
-        });
+        await settleSearch();
+
+        expect(searchRequests(requests)).toHaveLength(1);
+        expect(searchRequests(requests)[0].search).toBe("john");
+        expect(searchRequests(requests)[0].limit).toBe(50);
+
+        expect(screen.getByText("John Doe")).toBeInTheDocument();
+        expect(screen.queryByText("Jane Roe")).not.toBeInTheDocument();
     });
 
     it("searches the server even when the typed text equals a selected recipient's id", async () => {
@@ -161,8 +209,9 @@ describe("RecipientsSelect", () => {
         });
 
         fireEvent.change(screen.getByRole("combobox"), { target: { value: "john" } });
+        await settleSearch();
 
-        expect(await screen.findByText("John Smith", undefined, { timeout: 3000 })).toBeInTheDocument();
+        expect(screen.getByText("John Smith")).toBeInTheDocument();
         expect(requests.some((request) => request.search === "john")).toBe(true);
     });
 
@@ -175,15 +224,18 @@ describe("RecipientsSelect", () => {
         renderComponent(createBackend(query));
 
         openMenu();
-        expect(await screen.findByText("John Doe")).toBeInTheDocument();
+        await settle();
+        expect(screen.getByText("John Doe")).toBeInTheDocument();
 
         fireEvent.change(screen.getByRole("combobox"), { target: { value: "jane" } });
 
         expect(screen.getByLabelText("loading")).toBeInTheDocument();
         expect(screen.queryByText("John Doe")).not.toBeInTheDocument();
-        expect(requests.filter((request) => request.search !== undefined)).toHaveLength(0);
+        expect(searchRequests(requests)).toHaveLength(0);
 
-        expect(await screen.findByText("Jane Roe", undefined, { timeout: 3000 })).toBeInTheDocument();
+        await settleSearch();
+
+        expect(screen.getByText("Jane Roe")).toBeInTheDocument();
         expect(screen.queryByText("John Doe")).not.toBeInTheDocument();
     });
 
@@ -193,10 +245,9 @@ describe("RecipientsSelect", () => {
 
         const input = screen.getByRole("combobox");
         fireEvent.change(input, { target: { value: "guest@example.com" } });
+        await settleSearch();
 
-        expect(
-            await screen.findByText("guest@example.com", undefined, { timeout: 3000 }),
-        ).toBeInTheDocument();
+        expect(screen.getByText("guest@example.com")).toBeInTheDocument();
         expect(screen.getByText("(guest)")).toBeInTheDocument();
     });
 
@@ -206,16 +257,10 @@ describe("RecipientsSelect", () => {
 
         const input = screen.getByRole("combobox");
         fireEvent.change(input, { target: { value: "guest@example.com" } });
+        await settleSearch();
 
-        await waitFor(
-            () => {
-                expect(requests.some((request) => request.search === "guest@example.com")).toBe(true);
-            },
-            { timeout: 3000 },
-        );
-        await waitFor(() => {
-            expect(screen.getByText("No matching users or groups.")).toBeInTheDocument();
-        });
+        expect(requests.some((request) => request.search === "guest@example.com")).toBe(true);
+        expect(screen.getByText("No matching users or groups.")).toBeInTheDocument();
         expect(screen.queryByText("guest@example.com")).not.toBeInTheDocument();
     });
 
@@ -230,12 +275,14 @@ describe("RecipientsSelect", () => {
         renderComponent(createBackend(query));
 
         openMenu();
+        await settle();
 
-        expect(await screen.findByLabelText("loading")).toBeInTheDocument();
+        expect(screen.getByLabelText("loading")).toBeInTheDocument();
 
         resolveUsers([workspaceUser("john.id", "john@example.com", "John Doe")]);
+        await settle();
 
-        expect(await screen.findByText("John Doe")).toBeInTheDocument();
+        expect(screen.getByText("John Doe")).toBeInTheDocument();
         expect(screen.queryByLabelText("loading")).not.toBeInTheDocument();
     });
 
@@ -244,8 +291,9 @@ describe("RecipientsSelect", () => {
         renderComponent(createBackend(query));
 
         openMenu();
+        await settle();
 
-        expect(await screen.findByText("Error: Unable to load users — try again later.")).toBeInTheDocument();
+        expect(screen.getByText("Error: Unable to load users — try again later.")).toBeInTheDocument();
     });
 
     it("retries the failed search when the menu is reopened", async () => {
@@ -259,12 +307,14 @@ describe("RecipientsSelect", () => {
         renderComponent(createBackend(query));
 
         openMenu();
-        expect(await screen.findByText("Error: Unable to load users — try again later.")).toBeInTheDocument();
+        await settle();
+        expect(screen.getByText("Error: Unable to load users — try again later.")).toBeInTheDocument();
 
         fireEvent.keyDown(screen.getByRole("combobox"), { key: "Escape", code: "Escape" });
         openMenu();
+        await settle();
 
-        expect(await screen.findByText("John Doe")).toBeInTheDocument();
+        expect(screen.getByText("John Doe")).toBeInTheDocument();
         expect(requests).toHaveLength(2);
     });
 
@@ -279,14 +329,17 @@ describe("RecipientsSelect", () => {
         renderComponent(createBackend(query));
 
         openMenu();
-        expect(await screen.findByText("Error: Unable to load users — try again later.")).toBeInTheDocument();
+        await settle();
+        expect(screen.getByText("Error: Unable to load users — try again later.")).toBeInTheDocument();
 
         const input = screen.getByRole("combobox");
         fireEvent.change(input, { target: { value: "j" } });
         fireEvent.change(input, { target: { value: "jo" } });
         expect(requests).toHaveLength(1);
 
-        expect(await screen.findByText("John Doe", undefined, { timeout: 3000 })).toBeInTheDocument();
+        await settleSearch();
+
+        expect(screen.getByText("John Doe")).toBeInTheDocument();
         expect(requests).toHaveLength(2);
         expect(requests[1].search).toBe("jo");
     });
@@ -298,10 +351,11 @@ describe("RecipientsSelect", () => {
         renderComponent(createBackend(query));
 
         openMenu();
-        expect(await screen.findByText("John Doe")).toBeInTheDocument();
+        await settle();
+        expect(screen.getByText("John Doe")).toBeInTheDocument();
 
         fireEvent.keyDown(screen.getByRole("combobox"), { key: "Escape", code: "Escape" });
-        await new Promise((resolve) => setTimeout(resolve, 700));
+        await advance(IDLE_WINDOW);
 
         expect(requests).toHaveLength(1);
     });
@@ -316,8 +370,9 @@ describe("RecipientsSelect", () => {
         });
 
         openMenu();
+        await settle();
 
-        expect(await screen.findByText("Me Myself")).toBeInTheDocument();
+        expect(screen.getByText("Me Myself")).toBeInTheDocument();
         expect(screen.queryByText("Other User")).not.toBeInTheDocument();
         expect(requests).toHaveLength(0);
     });
@@ -332,14 +387,14 @@ describe("RecipientsSelect", () => {
         });
 
         openMenu();
-        expect(await screen.findByText("Me Myself")).toBeInTheDocument();
+        await settle();
+        expect(screen.getByText("Me Myself")).toBeInTheDocument();
 
         fireEvent.change(screen.getByRole("combobox"), { target: { value: "nobody" } });
+        await settle();
 
-        expect(await screen.findByText("No matching users or groups.")).toBeInTheDocument();
-        await waitFor(() => {
-            expect(screen.queryByText("Me Myself")).not.toBeInTheDocument();
-        });
+        expect(screen.getByText("No matching users or groups.")).toBeInTheDocument();
+        expect(screen.queryByText("Me Myself")).not.toBeInTheDocument();
         expect(requests).toHaveLength(0);
     });
 
@@ -356,13 +411,11 @@ describe("RecipientsSelect", () => {
         openMenu();
         fireEvent.change(screen.getByRole("combobox"), { target: { value: "john" } });
 
-        expect(await screen.findByText("John Doe", undefined, { timeout: 3000 })).toBeInTheDocument();
-        await waitFor(
-            () => {
-                expect(screen.getByRole("status")).toHaveTextContent("1 result: John Doe");
-            },
-            { timeout: 3000 },
-        );
+        await settleSearch();
+        expect(screen.getByText("John Doe")).toBeInTheDocument();
+
+        await advance(ANNOUNCEMENT_DEBOUNCE);
+        expect(screen.getByRole("status")).toHaveTextContent("1 result: John Doe");
     });
 
     it("discards a stale response resolving after a newer search", async () => {
@@ -377,15 +430,15 @@ describe("RecipientsSelect", () => {
         renderComponent(createBackend(query));
 
         openMenu();
-        await waitFor(() => {
-            expect(requests).toHaveLength(1);
-        });
-        fireEvent.change(screen.getByRole("combobox"), { target: { value: "john" } });
+        await settle();
+        expect(requests).toHaveLength(1);
 
-        expect(await screen.findByText("John Doe", undefined, { timeout: 3000 })).toBeInTheDocument();
+        fireEvent.change(screen.getByRole("combobox"), { target: { value: "john" } });
+        await settleSearch();
+        expect(screen.getByText("John Doe")).toBeInTheDocument();
 
         resolveFirstPage([workspaceUser("stale.id", "stale@example.com", "Stale User")]);
-        await new Promise((resolve) => setTimeout(resolve, 50));
+        await settle();
 
         expect(screen.queryByText("Stale User")).not.toBeInTheDocument();
         expect(screen.getByText("John Doe")).toBeInTheDocument();

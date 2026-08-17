@@ -4,7 +4,7 @@ import { render } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IColorPalette } from "@gooddata/sdk-model";
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { type IColorConfig } from "../../../../../../../../interfaces/comparison.js";
 import {
@@ -33,7 +33,7 @@ const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
 
 describe("ComparisonDataItem", () => {
     const renderComparisonDataItem = (props: IBaseHeadlineDataItemProps<IComparisonDataItem>) => {
-        const WrappedComparisonDataItem = withIntl(ComparisonDataItem);
+        const WrappedComparisonDataItem = withIntlForTest(ComparisonDataItem);
         return render(<WrappedComparisonDataItem {...props} />);
     };
 

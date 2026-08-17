@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type CSSProperties, Component, createRef } from "react";
+import { type CSSProperties, useCallback, useLayoutEffect, useRef } from "react";
 
 import cx from "classnames";
 import { type ControllerStateAndHelpers } from "downshift";
@@ -93,104 +93,76 @@ const getItemHeight =
 
 export const getMedianIndex = (array: any[]): number => Math.floor(array.length / 2);
 
-export class ScrollableSelectMenu<V extends object> extends Component<ISelectMenuProps<V>> {
-    // static cannot have <V>
-    public static defaultProps: Partial<ISelectMenuProps<any>> = {
-        selectedItem: undefined,
-        visibleItemsRange: defaultVisibleItemsRange as number,
-    };
+export function ScrollableSelectMenu<V extends object>({
+    items,
+    selectedItem,
+    highlightedIndex,
+    getItemProps,
+    getMenuProps,
+    className,
+    optionClassName,
+    visibleItemsRange = defaultVisibleItemsRange,
+    inputValue,
+    setHighlightedIndex,
+}: ISelectMenuProps<V>) {
+    const listRef = useRef<HTMLDivElement | null>(null);
 
-    private listRef = createRef<HTMLDivElement | null>();
-
-    public override render() {
-        const {
-            items,
-            selectedItem,
-            highlightedIndex,
-            getItemProps,
-            getMenuProps,
-            className,
-            optionClassName,
-            visibleItemsRange,
-        } = this.props;
-
-        const Option = optionGetter<V>({
-            items,
-            selectedItem: selectedItem,
-            highlightedIndex,
-            getItemProps,
-            optionClassName,
-        });
-
-        const middleItemIndex = getMedianIndex(getSelectableItems(items));
-        const visibleIndexes = range(
-            Math.max(middleItemIndex - visibleItemsRange!, 0),
-            Math.min(middleItemIndex + visibleItemsRange! + 1, items.length),
-        );
-
-        const itemHeightFn = getItemHeight(items);
-        const listHeight = visibleIndexes.reduce(
-            (totalHeight, itemIndex) => totalHeight + itemHeightFn(itemIndex),
-            0,
-        );
-
-        return (
-            <div {...getMenuProps({ className: cx("gd-select-menu-wrapper", className) })}>
-                <div className="gd-select-menu s-select-menu">
-                    <div
-                        className="List"
-                        ref={this.listRef}
-                        style={{
-                            height: listHeight,
-                            width: "100%",
-                            overflowY: items.length === 1 ? "hidden" : "auto",
-                        }}
-                    >
-                        {items.map((_, index) => (
-                            <Option
-                                key={`item-${index}`}
-                                index={index}
-                                style={{ height: itemHeightFn(index) }}
-                            />
-                        ))}
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
-    public scrollToIndex = (index = this.props.highlightedIndex): void => {
-        if (this.listRef.current) {
-            const { items } = this.props;
-            const selectableOptions = getSelectableItems(items);
-            const optionIndex = index === null ? getMedianIndex(getSelectableItems(items)) : index;
-            const highlightedOption = selectableOptions[optionIndex!];
-            const actualItemIndex = items.indexOf(highlightedOption);
-            if (actualItemIndex >= 0) {
-                const container = this.listRef.current;
-                const heightFn = getItemHeight(items);
-                const itemOffset = items
-                    .slice(0, actualItemIndex)
-                    .reduce((sum, _it, i) => sum + heightFn(i), 0);
-                const itemHeight = heightFn(actualItemIndex);
-                const targetTop = Math.max(
-                    0,
-                    itemOffset - Math.max(0, container.clientHeight / 2 - itemHeight / 2),
-                );
-                container.scrollTo({ top: targetTop });
+    const scrollToIndex = useCallback(
+        (index = highlightedIndex): void => {
+            if (listRef.current) {
+                const selectableOptions = getSelectableItems(items);
+                const optionIndex = index === null ? getMedianIndex(getSelectableItems(items)) : index;
+                const highlightedOption = selectableOptions[optionIndex!];
+                const actualItemIndex = items.indexOf(highlightedOption);
+                if (actualItemIndex >= 0) {
+                    const container = listRef.current;
+                    const heightFn = getItemHeight(items);
+                    const itemOffset = items
+                        .slice(0, actualItemIndex)
+                        .reduce((sum, _it, i) => sum + heightFn(i), 0);
+                    const itemHeight = heightFn(actualItemIndex);
+                    const targetTop = Math.max(
+                        0,
+                        itemOffset - Math.max(0, container.clientHeight / 2 - itemHeight / 2),
+                    );
+                    container.scrollTo({ top: targetTop });
+                }
             }
-        }
-    };
+        },
+        [highlightedIndex, items],
+    );
 
-    public scrollToTop = (): void => {
-        if (!this.listRef.current) {
+    const scrollToTop = useCallback((): void => {
+        if (!listRef.current) {
             return;
         }
-        this.listRef.current.scrollTo({ top: 0 });
-    };
+        listRef.current.scrollTo({ top: 0 });
+    }, []);
 
-    public override componentDidUpdate = (lastProps: ISelectMenuProps<V>): void => {
-        const { highlightedIndex, items, setHighlightedIndex, inputValue } = this.props;
+    const isMounted = useRef(false);
+    const prev = useRef({ items, highlightedIndex, inputValue });
+
+    // componentDidMount; layout effect so it runs in the commit phase, as the class lifecycle did
+    useLayoutEffect(() => {
+        if (inputValue) {
+            scrollToIndex();
+        } else {
+            const medianIndex = getMedianIndex(getSelectableItems(items));
+            setHighlightedIndex(medianIndex);
+            scrollToIndex(medianIndex);
+        }
+        // this must run only once on mount, exactly as componentDidMount did
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // componentDidUpdate: runs after every commit except the initial one
+    useLayoutEffect(() => {
+        if (!isMounted.current) {
+            isMounted.current = true;
+            return;
+        }
+
+        const lastProps = prev.current;
 
         const lastSelectibleLastItemIndex = getSelectableItems(lastProps.items).length - 1;
         const selectiblelastItemIndex = getSelectableItems(items).length - 1;
@@ -216,28 +188,60 @@ export class ScrollableSelectMenu<V extends object> extends Component<ISelectMen
             setHighlightedIndex(0);
         }
 
-        const hasOnlyOneItem = this.props.items.length === 1;
+        const hasOnlyOneItem = items.length === 1;
 
         if (isInputValueReset) {
             // We need to restore explicitly medianIndex scroll position immediately after inputValue reset
             // even though setHighlightedIndex(medianIndex) is called, because it takes effect after one tick
-            this.scrollToIndex(medianIndex);
+            scrollToIndex(medianIndex);
         } else if (isHighlightLoopedBack || isHighlightLoopedForward) {
-            this.scrollToIndex();
+            scrollToIndex();
         } else if (hasOnlyOneItem) {
             // if there is only one item, we need to explicitly scroll to top
             // in order to handle error messages being scrolled out of view
-            this.scrollToTop();
+            scrollToTop();
         }
-    };
 
-    public override componentDidMount(): void {
-        if (this.props.inputValue) {
-            this.scrollToIndex();
-        } else {
-            const medianIndex = getMedianIndex(getSelectableItems(this.props.items));
-            this.props.setHighlightedIndex(medianIndex);
-            this.scrollToIndex(medianIndex);
-        }
-    }
+        prev.current = { items, highlightedIndex, inputValue };
+    });
+
+    const Option = optionGetter<V>({
+        items,
+        selectedItem: selectedItem!,
+        highlightedIndex,
+        getItemProps,
+        optionClassName,
+    });
+
+    const middleItemIndex = getMedianIndex(getSelectableItems(items));
+    const visibleIndexes = range(
+        Math.max(middleItemIndex - visibleItemsRange, 0),
+        Math.min(middleItemIndex + visibleItemsRange + 1, items.length),
+    );
+
+    const itemHeightFn = getItemHeight(items);
+    const listHeight = visibleIndexes.reduce(
+        (totalHeight, itemIndex) => totalHeight + itemHeightFn(itemIndex),
+        0,
+    );
+
+    return (
+        <div {...getMenuProps({ className: cx("gd-select-menu-wrapper", className) })}>
+            <div className="gd-select-menu s-select-menu">
+                <div
+                    className="List"
+                    ref={listRef}
+                    style={{
+                        height: listHeight,
+                        width: "100%",
+                        overflowY: items.length === 1 ? "hidden" : "auto",
+                    }}
+                >
+                    {items.map((_, index) => (
+                        <Option key={`item-${index}`} index={index} style={{ height: itemHeightFn(index) }} />
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
 }

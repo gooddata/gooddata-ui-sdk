@@ -1,9 +1,9 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { type IPopUpLegendProps, PopUpLegend } from "../PopUpLegend/PopUpLegend.js";
 import { type IPushpinCategoryLegendItem } from "../types.js";
@@ -19,7 +19,7 @@ describe("PopUpLegend", () => {
             containerId: "",
             ...customProps,
         };
-        const Wrapped = withIntl(PopUpLegend);
+        const Wrapped = withIntlForTest(PopUpLegend);
 
         return render(<Wrapped {...props} />);
     }
