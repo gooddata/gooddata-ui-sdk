@@ -1,7 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
-import { userEvent } from "@testing-library/user-event";
+import { PointerEventsCheckLevel, userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
@@ -22,6 +22,15 @@ describe("PushpinViewportControl", () => {
             </InternalIntlWrapper>,
         );
     }
+
+    // The interaction tests below dominate this file's runtime. Two opt-outs from
+    // userEvent's defaults cut that cost without changing what is exercised:
+    // - `delay: null` skips the awaited setTimeout(0) inserted between every dispatched
+    //   pointer/mouse event (a single click dispatches ~10 of them).
+    // - `pointerEventsCheck: Never` skips the getComputedStyle walk up the ancestor
+    //   chain that userEvent otherwise repeats for each pointer event; it is slow in jsdom.
+    const createUser = () =>
+        userEvent.setup({ delay: null, pointerEventsCheck: PointerEventsCheckLevel.Never });
 
     describe("Rendering", () => {
         it("should render PushpinViewportControl", () => {
@@ -83,13 +92,14 @@ describe("PushpinViewportControl", () => {
 
         it("should keep custom area selection when map snapshot is not available", async () => {
             const pushData = vi.fn();
+            const user = createUser();
             createComponent({
                 pushData,
                 getCurrentMapView: () => ({}),
             });
 
-            await userEvent.click(screen.getByRole("combobox"));
-            await userEvent.click(screen.getByText("Custom"));
+            await user.click(screen.getByRole("combobox"));
+            await user.click(screen.getByText("Custom"));
 
             expect(pushData).toHaveBeenCalledOnce();
             expect(pushData.mock.calls[0]?.[0]?.properties?.controls?.viewport?.area).toBe("custom");
@@ -97,6 +107,7 @@ describe("PushpinViewportControl", () => {
 
         it("should clear stale bounds when switching to custom without live bounds snapshot", async () => {
             const pushData = vi.fn();
+            const user = createUser();
             createComponent({
                 pushData,
                 getCurrentMapView: () => ({
@@ -113,8 +124,8 @@ describe("PushpinViewportControl", () => {
                 },
             });
 
-            await userEvent.click(screen.getByRole("combobox"));
-            await userEvent.click(screen.getByText("Custom"));
+            await user.click(screen.getByRole("combobox"));
+            await user.click(screen.getByText("Custom"));
 
             expect(pushData).toHaveBeenCalledOnce();
             expect(pushData.mock.calls[0]?.[0]?.properties?.controls?.bounds).toBeUndefined();
@@ -122,6 +133,7 @@ describe("PushpinViewportControl", () => {
 
         it("should preserve preset bounds when switching from preset viewport to custom", async () => {
             const pushData = vi.fn();
+            const user = createUser();
             createComponent({
                 pushData,
                 getCurrentMapView: () => ({
@@ -141,8 +153,8 @@ describe("PushpinViewportControl", () => {
                 },
             });
 
-            await userEvent.click(screen.getByRole("combobox"));
-            await userEvent.click(screen.getByText("Custom"));
+            await user.click(screen.getByRole("combobox"));
+            await user.click(screen.getByText("Custom"));
 
             expect(pushData).toHaveBeenCalledOnce();
             expect(pushData.mock.calls[0]?.[0]?.properties?.controls?.bounds).toEqual({
@@ -190,6 +202,7 @@ describe("PushpinViewportControl", () => {
         });
 
         it("should show navigation tooltip text when hovering over the question mark", async () => {
+            const user = createUser();
             const { container } = createComponent({
                 getCurrentMapView: () => ({
                     center: { lat: 50.1, lng: 14.4 },
@@ -205,7 +218,7 @@ describe("PushpinViewportControl", () => {
                 throw new Error("Missing navigation tooltip trigger.");
             }
 
-            await userEvent.hover(tooltipTrigger);
+            await user.hover(tooltipTrigger);
 
             expect(
                 await screen.findByText(

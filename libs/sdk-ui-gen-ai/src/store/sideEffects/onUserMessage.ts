@@ -52,6 +52,7 @@ import {
 } from "../messages/messagesSelectors.js";
 import {
     appendInteractionStepAction,
+    appendResponseDetailAction,
     appendTracedActionAction,
     applyPendingAgentSwitchAction,
     evaluateMessageAction,
@@ -596,6 +597,22 @@ function* evaluateUserConversationMessage(
                         //reset
                         currentUserMessage = undefined;
                     }
+                    // A `detail` with no `stepId` belongs to the response, not a step. Captured
+                    // ahead of the user/system skip below, which would otherwise drop it.
+                    if (value.detail && !value.stepId && value.responseId) {
+                        yield put(
+                            appendResponseDetailAction({
+                                conversationId: conversation.localId,
+                                responseId: value.responseId,
+                                action: {
+                                    itemId: value.id,
+                                    createdAt: value.createdAt,
+                                    detail: value.detail,
+                                },
+                            }),
+                        );
+                    }
+
                     // Skip user and system messages — system items are stored as standalone
                     // conversation items and must not overwrite the current assistant message.
                     if (value.role === "user" || value.role === "system") {

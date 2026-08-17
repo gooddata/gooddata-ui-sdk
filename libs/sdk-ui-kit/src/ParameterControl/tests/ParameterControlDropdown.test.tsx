@@ -3,11 +3,11 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { ParameterControlDropdown } from "../ParameterControlDropdown.js";
 
-const WrappedParameterControlDropdown = withIntl(ParameterControlDropdown);
+const WrappedParameterControlDropdown = withIntlForTest(ParameterControlDropdown);
 
 const renderDropdown = (props: Partial<React.ComponentProps<typeof ParameterControlDropdown>> = {}) => {
     return render(

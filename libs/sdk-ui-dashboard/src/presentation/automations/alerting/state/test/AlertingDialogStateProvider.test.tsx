@@ -250,7 +250,7 @@ function DraftProbe() {
 function ActionsProbe() {
     const actions = useAlertActions();
     return (
-        <button data-testid="actions-ok" onClick={() => actions.onTitleChange("Edited title", true)}>
+        <button data-testid="actions-ok" onClick={() => actions.onTitleChange("Edited title")}>
             edit
         </button>
     );

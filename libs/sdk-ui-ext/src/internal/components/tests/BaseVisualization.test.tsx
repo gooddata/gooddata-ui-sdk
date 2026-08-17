@@ -1,5 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
+import { createRef } from "react";
+
 import { render, screen, waitFor } from "@testing-library/react";
 import { type Mock, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -29,7 +31,11 @@ import {
     emptyInsight,
 } from "../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../utils/translations.js";
-import { BaseVisualization, type IBaseVisualizationProps } from "../BaseVisualization.js";
+import {
+    BaseVisualization,
+    type IBaseVisualizationApi,
+    type IBaseVisualizationProps,
+} from "../BaseVisualization.js";
 import { AbstractPluggableVisualization } from "../pluggableVisualizations/AbstractPluggableVisualization.js";
 import { BaseChartDescriptor } from "../pluggableVisualizations/baseChart/BaseChartDescriptor.js";
 import { DummyVisConstruct } from "../pluggableVisualizations/tests/visConstruct.fixture.js";
@@ -556,10 +562,11 @@ describe("BaseVisualization", () => {
     });
 
     it("should call pluggable visualization's getExecution method", () => {
-        const visualization = new BaseVisualization(defaultProps);
+        const visualization = createRef<IBaseVisualizationApi>();
+        render(<BaseVisualization ref={visualization} {...defaultProps} />);
 
         expect(pluggableVisualizationGetExecutionMock).toHaveBeenCalledTimes(0);
-        visualization.getExecution();
+        visualization.current!.getExecution();
         expect(pluggableVisualizationGetExecutionMock).toHaveBeenCalledTimes(1);
     });
 });

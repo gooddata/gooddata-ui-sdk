@@ -1,9 +1,9 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { type ILegendProps, Legend } from "../Legend.js";
 
@@ -46,7 +46,7 @@ describe("Legend", () => {
             ...userProps,
         };
 
-        const Wrapped = withIntl(Legend);
+        const Wrapped = withIntlForTest(Legend);
 
         return render(<Wrapped {...props} />);
     }

@@ -3,7 +3,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { type IRankingFilterProps, RankingFilter } from "../RankingFilter.js";
 
@@ -24,7 +24,7 @@ const renderComponent = (props?: Partial<IRankingFilterProps>) => {
         onCancel: () => {},
         buttonTitle: "Ranking Filter",
     };
-    const Wrapped = withIntl(RankingFilter);
+    const Wrapped = withIntlForTest(RankingFilter);
     return render(<Wrapped {...defaultProps} {...props} />);
 };
 

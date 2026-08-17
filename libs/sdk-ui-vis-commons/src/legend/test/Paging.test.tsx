@@ -3,7 +3,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { type IPagingProps, Paging } from "../Paging.js";
 
@@ -16,7 +16,7 @@ describe("Paging", () => {
             showPrevPage: () => {},
             ...customProps,
         };
-        const Wrapped = withIntl(Paging);
+        const Wrapped = withIntlForTest(Paging);
         return render(<Wrapped {...props} />);
     }
 

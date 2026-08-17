@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import {
@@ -78,5 +79,11 @@ describe("hashCodeString", () => {
     it("should return 0 when string is empty", () => {
         const hashCode = hashCodeString("");
         expect(hashCode).toBe(0);
+    });
+
+    it("should return same hash code for large string", () => {
+        const input = "a".repeat(1000);
+        const hashCode = hashCodeString(input);
+        expect(hashCode).toBe(904019584);
     });
 });

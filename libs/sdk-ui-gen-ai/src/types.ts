@@ -77,6 +77,11 @@ export type IChatConversationResponseTrace = {
     steps: IChatConversationInteractionStep[];
     /** Details of the actions that ran within each step, keyed by `stepId`. */
     detailsByStepId: Record<string, IChatConversationTracedAction[]>;
+    /**
+     * Details of items carrying a `detail` but no `stepId`, e.g. the memory applied to the turn
+     * before the first step ran. These produce a category row with no steps to highlight.
+     */
+    responseDetails: IChatConversationTracedAction[];
     /** Backend trace id of this response, for support/debugging. Set from the first step that carries one. */
     traceId?: string;
 };

@@ -223,7 +223,35 @@ export function isValidStringParameterValue(
 }
 
 /**
- * Returns the allowed value's `title` when present, its `value` otherwise.
+ * Returns the title to show for `value` under the given parameter definition. When the definition
+ * has no title for `value`, returns the plain value as a string.
+ *
+ * @alpha
+ */
+export function getParameterValueTitle(definition: IParameterDefinition, value: ParameterValue): string {
+    const allowedValue = getParameterAllowedValues(definition)?.find((allowed) => allowed.value === value);
+    return allowedValue ? getParameterAllowedValueTitle(allowedValue) : String(value);
+}
+
+/**
+ * Returns the allowed values enumerated by the parameter definition, or `undefined` when the
+ * definition does not enumerate any and thus accepts free text.
+ *
+ * @alpha
+ */
+export function getParameterAllowedValues(
+    definition: IParameterDefinition,
+): IParameterAllowedValue[] | undefined {
+    if (!isStringParameterDefinition(definition)) {
+        return undefined;
+    }
+    const allowedValues = definition.constraints?.allowedValues;
+    return allowedValues?.length ? allowedValues : undefined;
+}
+
+/**
+ * Returns the `title` of the allowed value. If the allowed value has no `title`, returns its
+ * `value`.
  *
  * @alpha
  */

@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { type ILegacyMultiSelectListProps, LegacyMultiSelectListWithIntl } from "../LegacyMultiSelectList.js";
 
@@ -37,7 +37,7 @@ describe("LegacyMultiSelectList", () => {
             ...customProps,
         };
 
-        const Wrapped = withIntl<ILegacyMultiSelectListProps<any>>(
+        const Wrapped = withIntlForTest<ILegacyMultiSelectListProps<any>>(
             LegacyMultiSelectListWithIntl,
             undefined,
             customMessages,

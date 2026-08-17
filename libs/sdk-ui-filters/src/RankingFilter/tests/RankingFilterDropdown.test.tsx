@@ -4,7 +4,7 @@ import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { newRankingFilter } from "@gooddata/sdk-model";
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import {
     type IRankingFilterDropdownProps,
@@ -34,7 +34,7 @@ const renderComponent = (props?: Partial<IRankingFilterDropdownProps>) => {
         onApply: () => {},
         onCancel: () => {},
     };
-    const Wrapped = withIntl(RankingFilterDropdown);
+    const Wrapped = withIntlForTest(RankingFilterDropdown);
     return render(<Wrapped {...defaultProps} {...props} />);
 };
 

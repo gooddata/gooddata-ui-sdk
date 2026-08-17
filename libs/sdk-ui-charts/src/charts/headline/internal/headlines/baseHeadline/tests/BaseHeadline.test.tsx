@@ -3,7 +3,7 @@
 import { render } from "@testing-library/react";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { type IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
@@ -65,7 +65,7 @@ describe("BaseHeadline", () => {
             onAfterRender: params.onAfterRender || vi.fn(),
         } satisfies IHeadlineProps;
 
-        const WrappedBaseHeadline = withIntl(BaseHeadline);
+        const WrappedBaseHeadline = withIntlForTest(BaseHeadline);
         return render(<WrappedBaseHeadline {...props} />);
     };
 

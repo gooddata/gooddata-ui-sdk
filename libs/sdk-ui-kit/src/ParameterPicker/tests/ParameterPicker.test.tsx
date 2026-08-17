@@ -4,7 +4,7 @@ import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { type IParameterMetadataObject, idRef, objRefToString } from "@gooddata/sdk-model";
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { ParameterPicker } from "../ParameterPicker.js";
 
@@ -23,7 +23,7 @@ const param = (id: string, title: string, tags: string[] = []): IParameterMetada
         definition: { type: "NUMBER", defaultValue: 0 },
     }) as IParameterMetadataObject;
 
-const WrappedParameterPicker = withIntl(ParameterPicker);
+const WrappedParameterPicker = withIntlForTest(ParameterPicker);
 
 const renderPicker = (props: Partial<React.ComponentProps<typeof ParameterPicker>> = {}) => {
     return render(

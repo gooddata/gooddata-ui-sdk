@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-model, sdk-ui-kit, sdk-ui-dashboard: Render constrained STRING parameters as a single-select dropdown of allowed-value titles (`AllowedValuesParameterControlDropdown`, `getParameterValueTitle`); chips, drag previews, and automation dialogs show titles, never raw values",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

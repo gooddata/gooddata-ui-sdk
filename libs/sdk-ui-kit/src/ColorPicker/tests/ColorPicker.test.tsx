@@ -1,10 +1,10 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { type ColorFormats } from "tinycolor2";
 import { describe, expect, it, vi } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { ColorPicker } from "../ColorPicker.js";
 import { type IColorPickerProps } from "../typings.js";
@@ -27,7 +27,7 @@ function renderComponent(options?: Partial<IColorPickerProps>) {
         ...options,
     };
 
-    const Wrapper = withIntl(ColorPicker, "en-US", {
+    const Wrapper = withIntlForTest(ColorPicker, "en-US", {
         "gs.color-picker.inputPlaceholder": "placeholder",
         "gs.color-picker.hex": "hex",
         "gs.color-picker.currentColor": "current color",

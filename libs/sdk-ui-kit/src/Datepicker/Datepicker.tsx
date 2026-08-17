@@ -3,7 +3,6 @@
 import {
     type ChangeEvent,
     type FocusEvent,
-    PureComponent,
     type KeyboardEvent as ReactKeyboardEvent,
     type MouseEvent as ReactMouseEvent,
     memo,
@@ -455,12 +454,10 @@ WrappedDatePicker.displayName = "WrappedDatePicker";
 /**
  * @internal
  */
-export class Datepicker extends PureComponent<IDatePickerProps> {
-    public override render() {
-        return (
-            <IntlWrapper locale={this.props.locale}>
-                <WrappedDatePicker {...this.props} />
-            </IntlWrapper>
-        );
-    }
-}
+export const Datepicker = memo(function Datepicker(props: IDatePickerProps) {
+    return (
+        <IntlWrapper locale={props.locale}>
+            <WrappedDatePicker {...props} />
+        </IntlWrapper>
+    );
+});

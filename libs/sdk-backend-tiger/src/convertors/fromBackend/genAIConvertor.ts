@@ -48,8 +48,12 @@ import {
 import {
     type GenAIObjectType,
     type IAutomationUserRecipient,
+    type IDashboard,
+    type IFilterContext,
+    type IFilterContextDefinition,
     type ISemanticSearchRelationship,
     type ISemanticSearchResultItem,
+    type ITempFilterContext,
     type IdentifierRef,
     type ObjectType,
     assertNever,
@@ -216,11 +220,13 @@ function convertChatConversationContentFromBackend(
                                       )
                                     : null;
 
+                                const saved = !!part.saved_dashboard_id;
+
                                 return {
                                     type: "dashboard",
-                                    dashboard,
+                                    saved,
                                     insights,
-                                    saved: !!part.saved_dashboard_id,
+                                    dashboard: convertToTemporaryFilterContexts(dashboard),
                                 };
                             }
                             case "kda":
@@ -332,6 +338,17 @@ export function convertChatConversationItemDetailFromBackend(
     detail: AiConversationItemResponseDetail | null | undefined,
 ): IChatConversationItemDetail | undefined {
     switch (detail?.category) {
+        case "applyMemory":
+            return {
+                category: "applyMemory",
+                items: (detail.items ?? []).map((item) => ({
+                    title: item.title,
+                    // The backend spells the strategy in upper case; the domain shape keeps the
+                    // lower-case form the rest of the SDK uses for enum-like values.
+                    strategy: item.strategy === "ALWAYS" ? "always" : "auto",
+                    score: item.score ?? undefined,
+                })),
+            };
         case "catalogSearch":
             return {
                 category: "catalogSearch",
@@ -359,6 +376,17 @@ export function convertChatConversationItemDetailFromBackend(
                     score: document.score ?? undefined,
                 })),
                 bestMatch: detail.bestMatch ?? undefined,
+            };
+        case "metricQuery":
+            return {
+                category: "metricQuery",
+                ref: detail.ref ?? undefined,
+                metrics: detail.metrics ?? [],
+                groupedBy: detail.groupedBy ?? [],
+                filteredBy: detail.filteredBy ?? [],
+                visualization: detail.visualization ?? undefined,
+                resultRows: detail.resultRows ?? undefined,
+                resultColumns: detail.resultColumns ?? undefined,
             };
         case "skillRouting":
             return {
@@ -566,6 +594,46 @@ function buildDashboardWrapper(
         })),
         links: {
             self: "",
+        },
+    };
+}
+
+function convertToTemporaryFilterContexts(dashboard: IDashboard | null): IDashboard | null {
+    if (!dashboard) {
+        return null;
+    }
+
+    return {
+        ...dashboard,
+        ...asNonPersistedFilterContext(dashboard),
+        ...(dashboard.tabs
+            ? {
+                  tabs: dashboard.tabs.map((tab) => ({
+                      ...tab,
+                      ...asNonPersistedFilterContext(tab),
+                  })),
+              }
+            : {}),
+    } as IDashboard;
+}
+
+function asNonPersistedFilterContext<T>(
+    fc: T & { filterContext?: IFilterContext | ITempFilterContext | IFilterContextDefinition },
+): {
+    filterContext?: IFilterContextDefinition;
+} {
+    if (!fc.filterContext) {
+        return {};
+    }
+
+    return {
+        filterContext: {
+            title: "",
+            description: "",
+            ...fc.filterContext,
+            ref: undefined,
+            identifier: undefined,
+            uri: undefined,
         },
     };
 }

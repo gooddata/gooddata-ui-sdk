@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "gdc-datasource-management: Add UI for setting the data source cache invalidation policy",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

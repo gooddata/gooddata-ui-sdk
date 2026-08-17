@@ -50,6 +50,7 @@ export interface IRenderDropdownListItemProps<T> {
     isFirst: boolean;
     isLast: boolean;
     focused?: boolean;
+    isSelected?: boolean;
 }
 
 /**
@@ -105,6 +106,11 @@ export interface IDropdownListProps<T> {
     renderItem: (props: IRenderDropdownListItemProps<T>) => ReactElement;
     itemHeightGetter?: (index: number) => number;
     itemTitleGetter?: (item: T) => string;
+    /**
+     * Predicate that returns true for the currently selected item. It drives the options'
+     * `aria-selected` and the `isSelected` render prop.
+     */
+    getIsItemSelected?: (item: T) => boolean;
 
     accessibilityConfig?: Pick<IAccessibilityConfigBase, "ariaLabel" | "ariaLabelledBy" | "role">;
 
@@ -207,6 +213,7 @@ export function DropdownList<T>({
     body,
     itemHeightGetter,
     itemTitleGetter,
+    getIsItemSelected,
     loadNextPage,
     hasNextPage,
     skeletonItemsCount = 0,
@@ -372,6 +379,7 @@ export function DropdownList<T>({
                                     onKeyDownConfirm={onKeyDownConfirm}
                                     closeDropdown={closeDropdown}
                                     itemHeightGetter={itemHeightGetter}
+                                    getIsItemSelected={getIsItemSelected}
                                     hasNextPage={hasNextPage}
                                     loadNextPage={loadNextPage}
                                     skeletonItemsCount={skeletonItemsCount}
@@ -411,6 +419,7 @@ export function DropdownList<T>({
                                             height: rowHeight,
                                             isFirst: rowIndex === 0,
                                             isLast: rowIndex === itemsCount - 1,
+                                            isSelected: getIsItemSelected?.(item),
                                         });
                                     }}
                                 </UiPagedVirtualList>

@@ -190,6 +190,7 @@ import { IWidget } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
+import { KeyboardEvent as KeyboardEvent_2 } from 'react';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MeasureValueFilterCondition } from '@gooddata/sdk-model';
 import { MessageDescriptor } from 'react-intl';
@@ -213,6 +214,7 @@ import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
 import { Reducer } from '@reduxjs/toolkit';
+import { Ref } from 'react';
 import { RefObject } from 'react';
 import { SagaIterator } from 'redux-saga';
 import { ScreenSize } from '@gooddata/sdk-model';
@@ -288,6 +290,11 @@ export function addVisualizationToSwitcherWidgetContent(ref: ObjRef, visualizati
 
 // @internal
 export function AlertingDialog(props: IAlertingDialogProps): ReactElement;
+
+// @alpha
+export type AlertingDialogHeaderDefaultProps = IAlertingDialogHeaderProps & {
+    ref?: Ref<HTMLInputElement>;
+};
 
 // @internal (undocumented)
 export type AlertingDisabledReason = "noDestinations" | "oldWidget" | "disabledOnInsight";
@@ -1476,7 +1483,7 @@ export const DEFAULT_MESSAGES: Record<string, ITranslations>;
 export const DEFAULT_TAB_ID = "defaultTabId";
 
 // @alpha
-export function DefaultAlertingDialog(props: IAlertingDialogProps): JSX.Element;
+export function DefaultAlertingDialog(props: IDefaultAlertingDialogProps): JSX.Element;
 
 // @alpha
 export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDialogProps): JSX.Element;
@@ -1604,8 +1611,8 @@ export function DefaultSaveAsNewButton(input: ISaveAsNewButtonProps): JSX.Elemen
 // @internal (undocumented)
 export function DefaultSaveButton(input: ISaveButtonProps): JSX.Element | null;
 
-// @alpha (undocumented)
-export function DefaultScheduledEmailDialog(props: IScheduledEmailDialogProps): JSX.Element;
+// @alpha
+export function DefaultScheduledEmailDialog(props: IDefaultScheduledEmailDialogProps): JSX.Element;
 
 // @alpha (undocumented)
 export function DefaultScheduledEmailManagementDialog(input: IScheduledEmailManagementDialogProps): JSX.Element;
@@ -2365,6 +2372,11 @@ export interface IAlertingDialogContextValue {
     widgetTitle?: string;
 }
 
+// @alpha
+export interface IAlertingDialogHeaderProps extends IAutomationDialogHeaderProps {
+    onCancel?: () => void;
+}
+
 // @alpha (undocumented)
 export interface IAlertingDialogProps {
     // @deprecated
@@ -2384,6 +2396,11 @@ export interface IAlertingDialogProps {
     onSuccess?: (alertDefinition: IAutomationMetadataObject) => void;
     // @deprecated
     widget?: IWidget;
+}
+
+// @alpha
+export interface IAlertingDialogSlots {
+    Header?: ComponentType<ISlotProps<AlertingDialogHeaderDefaultProps>>;
 }
 
 // @alpha
@@ -2493,6 +2510,16 @@ export interface IAttributesDropdownProps extends IDashboardAttributeFilterPlace
     // (undocumented)
     onParameterSelect?: (ref: IdentifierRef) => void;
     parameters?: IParameterDropdownListItem[];
+}
+
+// @alpha
+export interface IAutomationDialogHeaderProps {
+    isSecondaryTitleVisible?: boolean;
+    onChange: (value: string) => void;
+    placeholder: string;
+    secondaryTitle?: string;
+    secondaryTitleIcon: ReactNode;
+    title: string;
 }
 
 // @alpha
@@ -5665,6 +5692,11 @@ export interface IDateFiltersCustomizer {
     withCustomProvider(provider: OptionalDateFilterComponentProvider): IDateFiltersCustomizer;
 }
 
+// @alpha
+export interface IDefaultAlertingDialogProps extends IAlertingDialogProps {
+    slots?: IAlertingDialogSlots;
+}
+
 // @alpha (undocumented)
 export interface IDefaultDashboardExportVariablesProps {
     // (undocumented)
@@ -5691,6 +5723,11 @@ export interface IDefaultDashboardToolbarGroupProps {
     children?: ReactNode;
     // (undocumented)
     title: string;
+}
+
+// @alpha
+export interface IDefaultScheduledEmailDialogProps extends IScheduledEmailDialogProps {
+    slots?: IScheduledEmailDialogSlots;
 }
 
 // @internal
@@ -7898,6 +7935,12 @@ export interface IScheduledEmailDialogContextValue {
     widgetTitle?: string;
 }
 
+// @alpha
+export interface IScheduledEmailDialogHeaderProps extends IAutomationDialogHeaderProps {
+    onBack?: () => void;
+    onTitleKeyDown: (event: KeyboardEvent_2) => void;
+}
+
 // @alpha (undocumented)
 export interface IScheduledEmailDialogProps {
     // @deprecated
@@ -7924,6 +7967,11 @@ export interface IScheduledEmailDialogProps {
     widget?: IWidget;
     // @deprecated
     widgetFilters?: IFilter[];
+}
+
+// @alpha
+export interface IScheduledEmailDialogSlots {
+    Header?: ComponentType<ISlotProps<ScheduledEmailDialogHeaderDefaultProps>>;
 }
 
 // @alpha
@@ -8919,6 +8967,12 @@ export function isLayoutSectionPath(obj: unknown): obj is ILayoutSectionPath;
 
 // @internal
 export function isLoadingPlaceholderWidget(obj: unknown): obj is IPlaceholderWidget;
+
+// @alpha
+export interface ISlotProps<TProps> {
+    Default: ComponentType<TProps>;
+    defaultProps: TProps;
+}
 
 // @internal (undocumented)
 export function isMeasureValueFilterDraggableItem(item: DraggableContentItem): item is MeasureValueFilterDraggableItem;
@@ -10558,6 +10612,11 @@ export type SavingState = {
 
 // @internal
 export function ScheduledEmailDialog(props: IScheduledEmailDialogProps): ReactElement;
+
+// @alpha
+export type ScheduledEmailDialogHeaderDefaultProps = IScheduledEmailDialogHeaderProps & {
+    ref?: Ref<HTMLInputElement>;
+};
 
 // @internal (undocumented)
 export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementDialogProps): ReactElement;

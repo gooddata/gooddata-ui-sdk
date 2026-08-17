@@ -2283,6 +2283,14 @@
         "text": "Reset",
         "crowdinContext": "Reset link in the parameter control dropdown; reverts the value to the workspace default"
     },
+    "parameter_filter.dropdown.search_label": {
+        "text": "Search values",
+        "crowdinContext": "Accessible name of the search field above the list of allowed values in the parameter control dropdown"
+    },
+    "parameter_filter.dropdown.default_suffix": {
+        "text": "(Default)",
+        "crowdinContext": "Suffix shown next to an allowed value title in the parameter control dropdown. Identifies which value is the parameter default."
+    },
     "parameter_filter.dropdown.preview_label": {
         "text": "Preview:",
         "crowdinContext": "Preview label in the parameter control dropdown"

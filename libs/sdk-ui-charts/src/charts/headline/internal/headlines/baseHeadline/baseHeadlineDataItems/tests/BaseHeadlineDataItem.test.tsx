@@ -3,7 +3,7 @@
 import { render, screen } from "@testing-library/react";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { EvaluationType, type IBaseHeadlineDataItemProps } from "../../../../interfaces/BaseHeadlines.js";
 import { type IHeadlineDataItem } from "../../../../interfaces/Headlines.js";
@@ -26,7 +26,7 @@ const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
 
 describe("BaseHeadlineDataItem", () => {
     const renderBaseHeadlineDataItem = (props: IBaseHeadlineDataItemProps<IHeadlineDataItem>) => {
-        const WrappedBaseHeadlineDataItem = withIntl(BaseHeadlineDataItem);
+        const WrappedBaseHeadlineDataItem = withIntlForTest(BaseHeadlineDataItem);
         return render(<WrappedBaseHeadlineDataItem {...props} />);
     };
 

@@ -5,9 +5,8 @@ import { type CSSProperties, useCallback } from "react";
 import cx from "classnames";
 import { unescape } from "lodash-es";
 
-import { type ITheme } from "@gooddata/sdk-model";
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
-import { withTheme } from "@gooddata/sdk-ui-theme-provider";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { getDarkerColor, isPatternObject } from "../coloring/color.js";
 import { PatternFill } from "../coloring/PatternFill.js";
@@ -25,7 +24,6 @@ interface ILegendItemProps {
     width?: number;
     enableBorderRadius?: boolean;
     onItemClick: (item: ISeriesItemMetric) => void;
-    theme?: ITheme;
     chartFill?: ChartFillType;
 }
 
@@ -112,15 +110,16 @@ function getIconStyle(
     }
 }
 
-export const LegendItem = withTheme(function LegendItem({
+export function LegendItem({
     item,
     index,
     width,
     enableBorderRadius = false,
     onItemClick,
-    theme,
     chartFill,
 }: ILegendItemProps) {
+    const theme = useTheme();
+
     const { isFocused, id } = LegendSeriesContextStore.useContextStore((ctx) => ({
         isFocused: ctx.focusedItem === item,
         id: ctx.makeItemId(item),
@@ -214,4 +213,4 @@ export const LegendItem = withTheme(function LegendItem({
             </div>
         </button>
     );
-});
+}

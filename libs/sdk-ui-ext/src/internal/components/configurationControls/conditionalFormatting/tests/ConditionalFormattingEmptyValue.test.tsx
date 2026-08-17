@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
-import { userEvent } from "@testing-library/user-event";
+import { PointerEventsCheckLevel, userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
 import {
@@ -83,6 +83,12 @@ const inputHasError = (input: HTMLElement) => input.closest(".gd-input")?.classL
 
 const EMPTY_ERROR = "Error: Value cannot be empty.";
 
+// userEvent's defaults dominate the runtime of these tests: the default `delay: 0` awaits a macrotask
+// between every dispatched event, and the default pointer-events check re-walks the ancestor chain
+// through jsdom's `getComputedStyle` on every single event. Neither adds anything here — nothing in
+// this file depends on timers, and the elements under test are never covered or pointer-events: none.
+const setupUser = () => userEvent.setup({ delay: null, pointerEventsCheck: PointerEventsCheckLevel.Never });
+
 describe("ConditionalFormattingDialog — empty condition value (F1-2733)", () => {
     it("shows no error before the value input is visited", () => {
         renderDialog(rule(MEASURE, { operator: "LESS_THAN" }));
@@ -92,7 +98,7 @@ describe("ConditionalFormattingDialog — empty condition value (F1-2733)", () =
     });
 
     it("shows the inline error when a measure threshold is left empty on blur", async () => {
-        const user = userEvent.setup();
+        const user = setupUser();
         renderDialog(rule(MEASURE, { operator: "LESS_THAN" }));
         const input = screen.getByPlaceholderText("Value");
 
@@ -106,7 +112,7 @@ describe("ConditionalFormattingDialog — empty condition value (F1-2733)", () =
     });
 
     it("shows the inline error when an attribute text value is left empty on blur", async () => {
-        const user = userEvent.setup();
+        const user = setupUser();
         renderDialog(rule(ATTRIBUTE, { operator: "NOT_ENDS_WITH" }));
         const input = screen.getByPlaceholderText("Value");
 
@@ -120,7 +126,7 @@ describe("ConditionalFormattingDialog — empty condition value (F1-2733)", () =
     });
 
     it("shows the inline error when an attribute suggestion combobox is left empty on blur", async () => {
-        const user = userEvent.setup();
+        const user = setupUser();
         renderDialog(rule(ATTRIBUTE, { operator: "EQUAL_TO" }));
         const input = screen.getByPlaceholderText("Value");
         expect(input.getAttribute("role")).toBe("combobox");
@@ -134,7 +140,7 @@ describe("ConditionalFormattingDialog — empty condition value (F1-2733)", () =
     });
 
     it("clears the error as soon as a value is entered", async () => {
-        const user = userEvent.setup();
+        const user = setupUser();
         renderDialog(rule(MEASURE, { operator: "LESS_THAN" }));
         const input = screen.getByPlaceholderText("Value");
 
@@ -150,7 +156,7 @@ describe("ConditionalFormattingDialog — empty condition value (F1-2733)", () =
     });
 
     it("marks only the range bound that was left empty", async () => {
-        const user = userEvent.setup();
+        const user = setupUser();
         renderDialog(
             rule(MEASURE, { operator: "BETWEEN", value: { kind: "literalRange", from: NaN, to: NaN } }),
         );
@@ -167,7 +173,7 @@ describe("ConditionalFormattingDialog — empty condition value (F1-2733)", () =
     });
 
     it("keeps the range order error taking precedence once both bounds are filled", async () => {
-        const user = userEvent.setup();
+        const user = setupUser();
         renderDialog(
             rule(MEASURE, { operator: "BETWEEN", value: { kind: "literalRange", from: NaN, to: NaN } }),
         );
@@ -184,7 +190,7 @@ describe("ConditionalFormattingDialog — empty condition value (F1-2733)", () =
     });
 
     it("drops the error when the operator switches to a different value editor", async () => {
-        const user = userEvent.setup();
+        const user = setupUser();
         renderDialog(rule(MEASURE, { operator: "LESS_THAN" }));
 
         await user.click(screen.getByPlaceholderText("Value"));
@@ -200,7 +206,7 @@ describe("ConditionalFormattingDialog — empty condition value (F1-2733)", () =
     // Deliberate: the field was visited, and a retarget across the percent boundary clears its value
     // (ruleWithTarget). Surfacing the error is what explains the Save button going disabled.
     it("keeps the error on a visited field whose value a retarget clears", async () => {
-        const user = userEvent.setup();
+        const user = setupUser();
         renderDialog(rule(MEASURE, { operator: "LESS_THAN" }));
 
         await user.type(screen.getByPlaceholderText("Value"), "42");
@@ -216,7 +222,7 @@ describe("ConditionalFormattingDialog — empty condition value (F1-2733)", () =
     });
 
     it("shows the inline error when the date picker is closed without choosing a period", async () => {
-        const user = userEvent.setup();
+        const user = setupUser();
         renderDialog(rule(DATE, { operator: "EQUAL_TO", value: { kind: "none" } }));
 
         await user.click(screen.getByText("Select period"));

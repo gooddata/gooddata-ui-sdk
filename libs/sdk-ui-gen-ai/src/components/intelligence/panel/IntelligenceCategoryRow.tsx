@@ -19,8 +19,8 @@ export interface IIntelligenceCategoryRowProps {
 /**
  * One list row: the category's icon, its label, a content excerpt on the right (never a
  * duration — that figure was always a fabricated per-category aggregate), and a chevron to open
- * its detail view. Reports its own hover state up so the shared timeline can highlight the
- * steps this category occurred in.
+ * its detail view. Reports its own hover state up so the shared timeline can highlight the steps
+ * this category occurred in.
  */
 export function IntelligenceCategoryRow({
     category,
@@ -43,13 +43,12 @@ export function IntelligenceCategoryRow({
             <span className={e("category-row__label")}>
                 {resolveMessage(intl, category.labelId, category.category)}
             </span>
-            {category.excerpt ? (
-                <span className={e("category-row__excerpt")}>
-                    {category.excerpt.fragments.map((fragment, index) => (
-                        <span key={index}>{intl.formatMessage({ id: fragment.id }, fragment.values)}</span>
-                    ))}
-                </span>
-            ) : null}
+            {/* Always rendered — it is what pushes the chevron to the end of the row. */}
+            <span className={e("category-row__excerpt")}>
+                {category.excerpt?.fragments.map((fragment, index) => (
+                    <span key={index}>{intl.formatMessage({ id: fragment.id }, fragment.values)}</span>
+                ))}
+            </span>
             <UiIcon
                 type="navigateRight"
                 size={16}

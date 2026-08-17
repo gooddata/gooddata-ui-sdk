@@ -2216,6 +2216,10 @@ export type {
     IScheduledEmailManagementDialogProps,
     CustomScheduledEmailDialogComponent,
     CustomScheduledEmailManagementDialogComponent,
+    IScheduledEmailDialogHeaderProps,
+    ScheduledEmailDialogHeaderDefaultProps,
+    IScheduledEmailDialogSlots,
+    IDefaultScheduledEmailDialogProps,
 } from "./presentation/automations/scheduledEmail/types.js";
 export { DefaultAlertingDialog } from "./presentation/automations/alerting/DefaultAlertingDialog/DefaultAlertingDialog.js";
 export { DefaultAlertingManagementDialogNew } from "./presentation/automations/connectors/DefaultAlertingManagementDialogConnected.js";
@@ -2226,7 +2230,15 @@ export type {
     CustomAlertingDialogComponent,
     IAlertingManagementDialogProps,
     IAlertingDialogProps,
+    IAlertingDialogHeaderProps,
+    AlertingDialogHeaderDefaultProps,
+    IAlertingDialogSlots,
+    IDefaultAlertingDialogProps,
 } from "./presentation/automations/alerting/types.js";
+export type {
+    IAutomationDialogHeaderProps,
+    ISlotProps,
+} from "./presentation/automations/shared/slots/types.js";
 export {
     useAutomationsContext,
     type IAutomationsContextValue,

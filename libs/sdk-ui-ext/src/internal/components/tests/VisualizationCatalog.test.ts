@@ -1,5 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
+import { omit } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -84,28 +85,61 @@ describe("getEmbeddingCode functionality", () => {
         i,
     ]);
 
-    it.each(scenarios)("should generate code for %s", (_, insight) => {
-        const descriptor = FullVisualizationCatalog.forInsight(insight);
-        expect(
-            descriptor.getEmbeddingCode?.(insight, {
-                context: {
-                    settings: {
-                        locale: "en-US",
-                        separators: { decimal: ".", thousand: "," },
-                        userId: "user",
-                        workspace: "workspace",
-                    },
-                    backend: {
-                        capabilities: {
-                            canCalculateGrandTotals: true,
-                            canCalculateNativeTotals: true,
-                            canCalculateSubTotals: true,
-                            canCalculateTotals: true,
-                        },
-                    } as any,
+    const embeddingCodeConfig = {
+        context: {
+            settings: {
+                locale: "en-US",
+                separators: { decimal: ".", thousand: "," },
+                userId: "user",
+                workspace: "workspace",
+            },
+            backend: {
+                capabilities: {
+                    canCalculateGrandTotals: true,
+                    canCalculateNativeTotals: true,
+                    canCalculateSubTotals: true,
+                    canCalculateTotals: true,
                 },
-                language: "ts",
-            }),
-        ).toMatchSnapshot();
+            } as any,
+        },
+        language: "ts" as const,
+    };
+
+    // fields identifying the insight object itself; the embedding code is derived from the visualization
+    // class, buckets, filters, sorts, layers and properties only
+    const insightIdentityFields = [
+        "title",
+        "summary",
+        "identifier",
+        "uri",
+        "ref",
+        "created",
+        "updated",
+        "tags",
+    ];
+
+    /**
+     * Roughly half of the recorded insights (778 out of 1616 at the time of writing) are scenarios sharing
+     * a byte-identical insight definition, differing only in their title - the responsive legend scenarios,
+     * for example, reuse a single insight for many chart sizes and legend positions. Generating the
+     * embedding code is by far the most expensive part of this suite (insight normalization plus factory
+     * notation serialization), so it is done once per distinct definition and reused for the remaining
+     * scenarios. Each scenario still asserts its own snapshot.
+     */
+    const codeByDefinition = new Map<string, string | undefined>();
+
+    const getEmbeddingCode = (insight: IInsight): string | undefined => {
+        const definitionKey = JSON.stringify(omit(insight.insight, insightIdentityFields));
+
+        if (!codeByDefinition.has(definitionKey)) {
+            const descriptor = FullVisualizationCatalog.forInsight(insight);
+            codeByDefinition.set(definitionKey, descriptor.getEmbeddingCode?.(insight, embeddingCodeConfig));
+        }
+
+        return codeByDefinition.get(definitionKey);
+    };
+
+    it.each(scenarios)("should generate code for %s", (_, insight) => {
+        expect(getEmbeddingCode(insight)).toMatchSnapshot();
     });
 });

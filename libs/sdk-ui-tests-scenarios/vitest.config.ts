@@ -4,7 +4,8 @@ import { URL, fileURLToPath } from "node:url";
 
 import { defineConfig } from "vitest/config";
 
-// Note: all unit tests which iterate on scenarios are skipped, as neoBackstop is now voting on pre-merge
+// Note: all unit tests which iterate on scenarios are skipped, as neoBackstop is now voting on pre-merge.
+// The smoke-and-capture sweep is skipped too unless GDC_STORE_DEFS is set (populate-ref sets it).
 
 // eslint-disable-next-line no-restricted-exports
 export default defineConfig({

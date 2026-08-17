@@ -140,7 +140,7 @@ function TitleEditor() {
     const { onTitleChange } = useScheduledExportActions();
 
     return (
-        <button data-testid="edit-title" onClick={() => onTitleChange("edited", true)}>
+        <button data-testid="edit-title" onClick={() => onTitleChange("edited")}>
             edit title
         </button>
     );

@@ -5,7 +5,7 @@ import { type CSSProperties } from "react";
 import { render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { type IBaseHeadlineValueItem } from "../../../../../interfaces/BaseHeadlines.js";
 import { TEST_DATA_ITEM, TEST_RENDER_VALUE_SPECS } from "../../../../../tests/TestData.fixtures.js";
@@ -26,7 +26,7 @@ describe("ComparisonValue", () => {
         comparisonStyle: CSSProperties;
         isSubItem?: boolean;
     }) => {
-        const Component = withIntl(ComparisonValue);
+        const Component = withIntlForTest(ComparisonValue);
         return render(<Component {...props} />);
     };
 

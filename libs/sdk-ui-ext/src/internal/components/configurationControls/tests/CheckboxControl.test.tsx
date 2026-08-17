@@ -1,13 +1,22 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
 import { CheckboxControl, type ICheckboxControlProps } from "../CheckboxControl.js";
 
 describe("CheckboxControl", () => {
+    // BubbleHoverTrigger schedules the bubble with a window.setTimeout of SHOW_DELAY (425ms).
+    // Waiting for it with real timers is what made the tooltip test slow, so the test below
+    // drives that timer with fake timers instead.
+    const BUBBLE_SHOW_DELAY = 425;
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
+
     const defaultProps = {
         valuePath: "path",
         labelText: "properties.canvas.gridline",
@@ -50,15 +59,19 @@ describe("CheckboxControl", () => {
         expect(screen.getByRole("checkbox")).toBeDisabled();
     });
 
-    it("should display tooltip message when configured", async () => {
+    it("should display tooltip message when configured", () => {
+        vi.useFakeTimers();
+
         createComponent({ disabled: true, showDisabledMessage: true });
         fireEvent.mouseOver(screen.getByRole("checkbox"));
 
-        await waitFor(() =>
-            expect(
-                screen.getByText("Property is not applicable for this configuration of the visualization"),
-            ).toBeInTheDocument(),
-        );
+        act(() => {
+            vi.advanceTimersByTime(BUBBLE_SHOW_DELAY);
+        });
+
+        expect(
+            screen.getByText("Property is not applicable for this configuration of the visualization"),
+        ).toBeInTheDocument();
     });
 
     it("should call pushData when checkbox value changes", async () => {

@@ -5,7 +5,7 @@ import { type FocusEventHandler, type JSX, useEffect, useRef } from "react";
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { Input, LoadingSpinner, UiTag, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { type IInputPureHandle, Input, LoadingSpinner, UiTag, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { useArbitraryValuesInput } from "./useArbitraryValuesInput.js";
 
@@ -145,7 +145,7 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
 
     const intl = useIntl();
     const previousValuesLengthRef = useRef<number>(values.length);
-    const inputRef = useRef<Input | null>(null);
+    const inputRef = useRef<IInputPureHandle | null>(null);
     const generatedInputId = useIdPrefixed("text-filter-values-input");
     const inputId = inputIdProp ?? generatedInputId;
     const autocompleteListId = `${inputId}-autocomplete-list`;
@@ -184,7 +184,7 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
     useEffect(() => {
         if (previousValuesLengthRef.current === 1 && values.length === 0) {
             requestAnimationFrame(() => {
-                inputRef.current?.inputNodeRef?.focus();
+                inputRef.current?.focus();
             });
         }
         previousValuesLengthRef.current = values.length;

@@ -2,12 +2,15 @@
 
 import {
     Children,
-    Component,
     type ReactElement,
-    type ReactNode,
-    type RefObject,
     cloneElement,
-    createRef,
+    forwardRef,
+    useCallback,
+    useEffect,
+    useImperativeHandle,
+    useMemo,
+    useRef,
+    useState,
 } from "react";
 
 import cx from "classnames";
@@ -15,81 +18,65 @@ import { pickBy, throttle } from "lodash-es";
 
 import { elementRegion } from "../utils/domUtilities.js";
 
-import { type IFlexDimensionsProps, type IFlexDimensionsState } from "./typings.js";
+import {
+    type IFlexDimensionsHandle,
+    type IFlexDimensionsProps,
+    type IFlexDimensionsState,
+} from "./typings.js";
 
 /**
  * @internal
  */
-export class FlexDimensions extends Component<IFlexDimensionsProps, IFlexDimensionsState> {
-    static defaultProps = {
-        children: false,
-        className: "",
-        measureWidth: true,
-        measureHeight: true,
-    };
-    private wrapperRef: RefObject<HTMLDivElement | null> = createRef();
-    private readonly throttledUpdateSize: ReturnType<typeof throttle>;
-    private readonly resizeObserver: ResizeObserver;
+export const FlexDimensions = forwardRef<IFlexDimensionsHandle, IFlexDimensionsProps>(function FlexDimensions(
+    { children = false, className = "", measureWidth = true, measureHeight = true },
+    ref,
+) {
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    const [{ width, height }, setDimensions] = useState<IFlexDimensionsState>({ width: 0, height: 0 });
 
-    constructor(props: IFlexDimensionsProps) {
-        super(props);
-
-        this.state = {
-            width: 0,
-            height: 0,
-        };
-
-        this.throttledUpdateSize = throttle(this.updateSize, 250, { leading: false });
-        this.resizeObserver = new ResizeObserver(this.throttledUpdateSize);
-    }
-
-    override componentDidMount(): void {
-        if (this.wrapperRef.current) {
-            this.resizeObserver.observe(this.wrapperRef.current);
-        }
-
-        this.throttledUpdateSize();
-    }
-
-    override componentWillUnmount(): void {
-        this.throttledUpdateSize.cancel();
-        this.resizeObserver.disconnect();
-    }
-
-    getChildrenDimensions(): Partial<IFlexDimensionsState> {
-        return pickBy(this.state, (_, key) => {
-            const setWidth = this.props.measureWidth && key === "width";
-            const setHeight = this.props.measureHeight && key === "height";
-
-            return setWidth || setHeight;
-        });
-    }
-
-    updateSize = (): void => {
-        if (!this.wrapperRef.current) {
+    const updateSize = useCallback((): void => {
+        if (!wrapperRef.current) {
             return;
         }
-        const { width, height } = elementRegion(this.wrapperRef.current);
+        const { width, height } = elementRegion(wrapperRef.current);
 
-        this.setState({
-            width,
-            height,
-        });
-    };
+        setDimensions({ width, height });
+    }, []);
 
-    renderChildren(): ReactNode {
-        const child = Children.only(this.props.children);
+    useImperativeHandle(ref, () => ({ updateSize }), [updateSize]);
 
-        return cloneElement(child as ReactElement<unknown>, this.getChildrenDimensions());
-    }
+    const throttledUpdateSize = useMemo(() => throttle(updateSize, 250, { leading: false }), [updateSize]);
 
-    override render(): ReactNode {
-        const classNames = cx(this.props.className);
+    useEffect(() => {
+        // constructed here rather than during render so that this component can be rendered in
+        // environments without a ResizeObserver (server-side rendering and the like)
+        let resizeObserver: ResizeObserver | undefined;
 
-        return (
-            <div ref={this.wrapperRef} className={classNames}>
-                {this.renderChildren()}
-            </div>
-        );
-    }
-}
+        if (wrapperRef.current && typeof ResizeObserver !== "undefined") {
+            resizeObserver = new ResizeObserver(throttledUpdateSize);
+            resizeObserver.observe(wrapperRef.current);
+        }
+
+        throttledUpdateSize();
+
+        return () => {
+            throttledUpdateSize.cancel();
+            resizeObserver?.disconnect();
+        };
+    }, [throttledUpdateSize]);
+
+    const childrenDimensions = pickBy({ width, height }, (_, key) => {
+        const setWidth = measureWidth && key === "width";
+        const setHeight = measureHeight && key === "height";
+
+        return setWidth || setHeight;
+    });
+
+    const child = Children.only(children);
+
+    return (
+        <div ref={wrapperRef} className={cx(className)}>
+            {cloneElement(child as ReactElement<unknown>, childrenDimensions)}
+        </div>
+    );
+});

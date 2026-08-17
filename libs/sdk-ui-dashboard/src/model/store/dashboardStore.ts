@@ -67,6 +67,7 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "GDC.DASH/EVT.COMMAND.FAILED",
     "GDC.DASH/EVT.QUERY.FAILED",
     "@@GDC.DASH.SAVE_NEW",
+    "@@GDC.DASH.SAVE_BUILDED",
     "@@GDC.DASH.SAVE_EXISTING",
     "@@GDC.DASH.SAVE_AS",
     // Execution events have errors, execution definitions etc. in them

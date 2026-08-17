@@ -9,7 +9,7 @@ import {
     newMeasureValueFilter,
     newMeasureValueFilterWithOptions,
 } from "@gooddata/sdk-model";
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import {
     type IMeasureValueFilterDropdownProps,
@@ -34,7 +34,7 @@ const renderComponent = (props?: Partial<IMeasureValueFilterDropdownProps>) => {
         filter: emptyFilter,
         isDimensionalityEnabled: false,
     };
-    const Wrapped = withIntl(MeasureValueFilterDropdown);
+    const Wrapped = withIntlForTest(MeasureValueFilterDropdown);
     return render(<Wrapped {...defaultProps} {...props} />);
 };
 

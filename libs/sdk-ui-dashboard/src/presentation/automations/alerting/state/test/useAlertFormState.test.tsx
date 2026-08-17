@@ -684,6 +684,9 @@ describe("useAlertFormState — onRecipientsChange", () => {
 // Case 2: onTitleChange sets isTitleValid and updates the title
 // ---------------------------------------------------------------------------
 
+// One character over the 255-character title limit the form state enforces.
+const OVER_LONG_TITLE = "x".repeat(256);
+
 describe("useAlertFormState — onTitleChange", () => {
     it("updates isTitleValid (observable in the returned hook value) and the title", () => {
         const { result, rerender } = renderFormStateHook();
@@ -691,15 +694,15 @@ describe("useAlertFormState — onTitleChange", () => {
         expect(result.current.isTitleValid).toBe(true);
 
         act(() => {
-            result.current.onTitleChange("New title", false);
+            result.current.onTitleChange(OVER_LONG_TITLE);
         });
         rerender();
 
         expect(result.current.isTitleValid).toBe(false);
-        expect(result.current.editedAutomation).toMatchObject({ title: "New title" });
+        expect(result.current.editedAutomation).toMatchObject({ title: OVER_LONG_TITLE });
 
         act(() => {
-            result.current.onTitleChange("Another title", true);
+            result.current.onTitleChange("Another title");
         });
         rerender();
 
@@ -710,7 +713,7 @@ describe("useAlertFormState — onTitleChange", () => {
         const { result, rerender } = renderWithUndefinedDraft();
 
         act(() => {
-            result.current.onTitleChange("x", true);
+            result.current.onTitleChange("x");
         });
         rerender();
 
@@ -736,11 +739,11 @@ describe("useAlertFormState — handler identity", () => {
         const { result, rerender } = renderFormStateHook();
 
         act(() => {
-            result.current.onTitleChange("New title", false);
+            result.current.onTitleChange(OVER_LONG_TITLE);
         });
         rerender();
 
-        expect(result.current.editedAutomation?.title).toBe("New title");
+        expect(result.current.editedAutomation?.title).toBe(OVER_LONG_TITLE);
         expect(result.current.isTitleValid).toBe(false);
     });
 });
@@ -1166,7 +1169,7 @@ describe("useAlertFormState — originalAutomation stability", () => {
         expect(result.current.originalAutomation).toBe(editAlert);
 
         act(() => {
-            result.current.onTitleChange("changed", true);
+            result.current.onTitleChange("changed");
         });
         rerender();
 

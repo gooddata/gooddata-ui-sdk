@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IAnalyticalWidget, type IDashboard, idRef, uriRef } from "@gooddata/sdk-model";
 
@@ -32,6 +32,50 @@ import {
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 import { type PrivateDashboardContext } from "../../../types/commonTypes.js";
 import { EmptyDashboardLayout } from "../../dashboard/common/dashboardInitialize.js";
+
+type StoreOptions = Record<string, unknown>;
+type GetDefaultMiddleware = (options?: StoreOptions) => unknown;
+type MiddlewareBuilder = (getDefaultMiddleware: GetDefaultMiddleware) => unknown;
+
+/**
+ * Every test here builds a fresh dashboard store in `beforeEach` (19 full dashboard initializations).
+ * Redux Toolkit's `getDefaultMiddleware` adds the `immutableCheck` and `serializableCheck` invariant
+ * middlewares outside of production builds; both deep-walk the whole dashboard state on every single
+ * dispatched action, which dominated the runtime of this file (~55% of the samples went into
+ * `isNestedFrozen` and `findNonSerializableValue`).
+ *
+ * These middlewares are development-only sanity checks that never run in production, and this file
+ * asserts on emitted events and selector output rather than on store immutability, so switching them
+ * off here costs no coverage and roughly halves the runtime of the whole file.
+ */
+vi.mock("@reduxjs/toolkit", async (importOriginal) => {
+    const actual = (await importOriginal()) as StoreOptions & {
+        configureStore: (options: StoreOptions) => unknown;
+    };
+
+    return {
+        ...actual,
+        configureStore: (options: StoreOptions) => {
+            const middleware = options["middleware"] as MiddlewareBuilder | undefined;
+
+            if (!middleware) {
+                return actual.configureStore(options);
+            }
+
+            return actual.configureStore({
+                ...options,
+                middleware: (getDefaultMiddleware: GetDefaultMiddleware) =>
+                    middleware((getDefaultMiddlewareOptions) =>
+                        getDefaultMiddleware({
+                            ...getDefaultMiddlewareOptions,
+                            immutableCheck: false,
+                            serializableCheck: false,
+                        }),
+                    ),
+            });
+        },
+    };
+});
 
 describe("add layout section handler", () => {
     describe("for an empty dashboard", () => {

@@ -175,7 +175,8 @@ export default {
             // callback. Do NOT widen these back to globs, and do NOT re-add a store selector — its
             // data belongs on a context. Add any genuinely new dependency as its own entry with a
             // GDP-3167 Phase-3 note so reviewers can track the remaining coupling — the
-            // depcruiserBoundary test fails when a new unlisted model/filterBar import appears.
+            // package's dep-cruiser validate run fails when a new unlisted model/filterBar import
+            // appears.
             //
             // model coupling — pure types and functions used by automationFilters:
             "src/model/commandHandlers/dashboard/common/attributeFilterSelectionTypeCompatibility.ts",
@@ -227,6 +228,7 @@ export default {
             "src/presentation/automations/shared/automationFilters/*",
             "src/presentation/automations/shared/filters",
             "src/presentation/automations/shared/hooks/*",
+            "src/presentation/automations/shared/slots/*",
             "src/presentation/automations/shared/utils/*",
             "src/presentation/automations/connectors/*",
             "src/converters/*",
@@ -240,6 +242,7 @@ export default {
             "src/presentation/automations/contexts/*",
             "src/presentation/automations/shared/automationFilters/*",
             "src/presentation/automations/shared/filters",
+            "src/presentation/automations/shared/slots/*",
             "src/presentation/automations/shared/utils/*",
             "src/presentation/automations/scheduledEmail/*",
             "src/converters/*",

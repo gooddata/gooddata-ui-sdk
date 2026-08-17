@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-storybook",
-    "version": "11.53.0-alpha.1",
+    "version": "11.53.0-alpha.2",
     "description": "GoodData React components storybook",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -17,7 +17,6 @@
     "type": "module",
     "scripts": {
         "_phase:build": "npm run build",
-        "_phase:test": "npm run test-once",
         "_phase:validate": "npm run validate",
         "build": "npm-run-all -p build-check build-storybook",
         "build-check": "tsgo",
@@ -40,7 +39,6 @@
         "storybook-serve": "bash stories/serve-storybook.sh",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-fix": "stylelint '**/*.scss' --fix",
-        "test-once": "npm run scenario-extractor-local",
         "validate": "npm run lint && npm run stylelint && npm run format-check"
     },
     "devDependencies": {

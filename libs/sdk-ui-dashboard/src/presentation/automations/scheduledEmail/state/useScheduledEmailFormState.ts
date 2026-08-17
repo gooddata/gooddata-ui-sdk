@@ -22,6 +22,7 @@ import {
 import { setExportParametersByTab } from "../../../../_staging/automation/index.js";
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
+import { isAutomationTitleValid } from "../../shared/utils/automationTitle.js";
 import {
     convertExternalRecipientToAutomationRecipient,
     convertUserToAutomationRecipient,
@@ -155,8 +156,8 @@ export function useScheduledEmailFormState({
     const [isSubjectValid, setIsSubjectValid] = useState(true);
     const [isOnMessageValid, setIsOnMessageValid] = useState(true);
 
-    const onTitleChange = useCallback((value: string, isValid: boolean) => {
-        setIsTitleValid(isValid);
+    const onTitleChange = useCallback((value: string) => {
+        setIsTitleValid(isAutomationTitleValid(value));
         setEditedAutomation((s) => ({ ...s, title: value }));
     }, []);
 

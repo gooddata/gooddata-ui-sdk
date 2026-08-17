@@ -19,9 +19,12 @@
         font-family: monospace;
         font-weight: 200;
 
+        // Deviates from the mixin, which transitions `all`: `.cm-editor` is a sized, flex-grown box,
+        // so `all` animates its height whenever a stylesheet or a container hands it a new one —
+        // and CodeMirror re-measures partway through, re-laying out the text in steps.
         transition:
-            all 0.25s ease-in-out,
-            padding 0s;
+            border-color 0.25s ease-in-out,
+            box-shadow 0.25s ease-in-out;
         // end of gd-input-base mixin body
 
         @include mixins.border-radius(3px);

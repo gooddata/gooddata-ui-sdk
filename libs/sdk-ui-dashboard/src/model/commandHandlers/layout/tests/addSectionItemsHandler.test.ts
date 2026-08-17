@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
 import { uriRef } from "@gooddata/sdk-model";
 
@@ -8,7 +8,7 @@ import { type IAddSectionItems, addSectionItem, undoLayoutChanges } from "../../
 import { type IDashboardCommandFailed } from "../../../events/general.js";
 import { type IDashboardLayoutSectionItemsAdded } from "../../../events/layout.js";
 import { selectInsightByRef } from "../../../store/insights/insightsSelectors.js";
-import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
+import { selectLayout, selectUndoableLayoutCommands } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { ComplexDashboardIdentifier } from "../../../tests/fixtures/ComplexDashboard.fixtures.js";
 import { TestCorrelation, TestStash } from "../../../tests/fixtures/Dashboard.fixtures.js";
@@ -20,101 +20,171 @@ import {
 } from "../../../tests/fixtures/Layout.fixtures.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
+/*
+ * Bootstrapping a dashboard tester (recorded backend + store + the whole InitializeDashboard flow) is by far the
+ * most expensive thing happening in this file - it costs roughly an order of magnitude more than dispatching the
+ * tested command and running the assertions. The tests below therefore share a single bootstrapped dashboard
+ * wherever they can and roll the layout back to its initial state instead of paying for a fresh bootstrap.
+ */
+
+/**
+ * Reverts all layout changes done by a test, so that the next test using the same tester starts with the very
+ * same layout it would get from a freshly bootstrapped dashboard.
+ */
+async function rollbackLayoutChanges(tester: DashboardTester): Promise<void> {
+    while (selectUndoableLayoutCommands(tester.state()).length > 0) {
+        await tester.dispatchAndWaitFor(undoLayoutChanges(), "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED");
+    }
+}
+
 describe("add section items handler", () => {
     describe("for any dashboard", () => {
-        let Tester: DashboardTester;
+        /*
+         * These tests assert on insights being loaded into the state - that is not part of the layout and cannot
+         * be rolled back, so each of them needs its own freshly bootstrapped dashboard.
+         */
+        describe("insight loading", () => {
+            let Tester: DashboardTester;
 
-        beforeEach(async () => {
-            await preloadedTesterFactory(
-                (tester) => {
-                    Tester = tester;
-                },
-                SimpleDashboardIdentifier,
-                {
-                    backendConfig: {
-                        useRefType: "id",
+            beforeEach(async () => {
+                await preloadedTesterFactory(
+                    (tester) => {
+                        Tester = tester;
                     },
-                },
-            );
+                    SimpleDashboardIdentifier,
+                    {
+                        backendConfig: {
+                            useRefType: "id",
+                        },
+                    },
+                );
+            });
+
+            it("should load and add insight when adding insight widget", async () => {
+                await Tester.dispatchAndWaitFor(
+                    addSectionItem(0, 0, TestInsightItem, false, TestCorrelation),
+                    "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
+                );
+
+                const insight = selectInsightByRef(TestInsightItem.widget!.insight)(Tester.state());
+                expect(insight).toBeDefined();
+            });
+
+            it("should not undo loaded insight", async () => {
+                await Tester.dispatchAndWaitFor(
+                    addSectionItem(0, 0, TestInsightItem, false, TestCorrelation),
+                    "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
+                );
+                await Tester.dispatchAndWaitFor(
+                    undoLayoutChanges(),
+                    "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
+                );
+
+                const insight = selectInsightByRef(TestInsightItem.widget!.insight)(Tester.state());
+                expect(insight).toBeDefined();
+            });
         });
 
-        it("should load and add insight when adding insight widget", async () => {
-            await Tester.dispatchAndWaitFor(
-                addSectionItem(0, 0, TestInsightItem, false, TestCorrelation),
-                "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
-            );
+        /*
+         * These tests only verify that the command is rejected. A rejected command leaves the dashboard
+         * untouched, so a single bootstrapped dashboard shared by all of them is enough.
+         */
+        describe("command validation", () => {
+            let Tester: DashboardTester;
 
-            const insight = selectInsightByRef(TestInsightItem.widget!.insight)(Tester.state());
-            expect(insight).toBeDefined();
-        });
+            beforeAll(async () => {
+                await preloadedTesterFactory(
+                    (tester) => {
+                        Tester = tester;
+                    },
+                    SimpleDashboardIdentifier,
+                    {
+                        backendConfig: {
+                            useRefType: "id",
+                        },
+                    },
+                );
+            });
 
-        it("should not undo loaded insight", async () => {
-            await Tester.dispatchAndWaitFor(
-                addSectionItem(0, 0, TestInsightItem, false, TestCorrelation),
-                "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
-            );
-            await Tester.dispatchAndWaitFor(undoLayoutChanges(), "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED");
+            beforeEach(() => {
+                Tester.resetMonitors();
+            });
 
-            const insight = selectInsightByRef(TestInsightItem.widget!.insight)(Tester.state());
-            expect(insight).toBeDefined();
-        });
+            it("should fail if bad section is provided", async () => {
+                const originalLayout = selectLayout(Tester.state());
 
-        it("should fail if bad section is provided", async () => {
-            const originalLayout = selectLayout(Tester.state());
+                const event: IDashboardCommandFailed<IAddSectionItems> = await Tester.dispatchAndWaitFor(
+                    addSectionItem(
+                        originalLayout.sections.length,
+                        0,
+                        TestKpiPlaceholderItem,
+                        false,
+                        TestCorrelation,
+                    ),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
-            const event: IDashboardCommandFailed<IAddSectionItems> = await Tester.dispatchAndWaitFor(
-                addSectionItem(
-                    originalLayout.sections.length,
-                    0,
-                    TestKpiPlaceholderItem,
-                    false,
-                    TestCorrelation,
-                ),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+                expect(event.payload.reason).toEqual("USER_ERROR");
+                expect(event.correlationId).toEqual(TestCorrelation);
+            });
 
-            expect(event.payload.reason).toEqual("USER_ERROR");
-            expect(event.correlationId).toEqual(TestCorrelation);
-        });
+            it("should fail if bad item index is provided", async () => {
+                const event: IDashboardCommandFailed<IAddSectionItems> = await Tester.dispatchAndWaitFor(
+                    addSectionItem(0, 4, TestKpiPlaceholderItem, false, TestCorrelation),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
-        it("should fail if bad item index is provided", async () => {
-            const event: IDashboardCommandFailed<IAddSectionItems> = await Tester.dispatchAndWaitFor(
-                addSectionItem(0, 4, TestKpiPlaceholderItem, false, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+                expect(event.payload.reason).toEqual("USER_ERROR");
+                expect(event.correlationId).toEqual(TestCorrelation);
+            });
 
-            expect(event.payload.reason).toEqual("USER_ERROR");
-            expect(event.correlationId).toEqual(TestCorrelation);
-        });
+            it("should fail if attempting to add item with non-existent insight", async () => {
+                const event: IDashboardCommandFailed<IAddSectionItems> = await Tester.dispatchAndWaitFor(
+                    addSectionItem(
+                        0,
+                        4,
+                        createTestInsightItem(uriRef("does-not-exist")),
+                        false,
+                        TestCorrelation,
+                    ),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
-        it("should fail if attempting to add item with non-existent insight", async () => {
-            const event: IDashboardCommandFailed<IAddSectionItems> = await Tester.dispatchAndWaitFor(
-                addSectionItem(0, 4, createTestInsightItem(uriRef("does-not-exist")), false, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+                expect(event.payload.reason).toEqual("USER_ERROR");
+                expect(event.correlationId).toEqual(TestCorrelation);
+            });
 
-            expect(event.payload.reason).toEqual("USER_ERROR");
-            expect(event.correlationId).toEqual(TestCorrelation);
-        });
+            it("should fail if bad stash identifier is provided", async () => {
+                const event: IDashboardCommandFailed<IAddSectionItems> = await Tester.dispatchAndWaitFor(
+                    addSectionItem(0, -1, TestStash, false, TestCorrelation),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
-        it("should fail if bad stash identifier is provided", async () => {
-            const event: IDashboardCommandFailed<IAddSectionItems> = await Tester.dispatchAndWaitFor(
-                addSectionItem(0, -1, TestStash, false, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
-
-            expect(event.payload.reason).toEqual("USER_ERROR");
-            expect(event.correlationId).toEqual(TestCorrelation);
+                expect(event.payload.reason).toEqual("USER_ERROR");
+                expect(event.correlationId).toEqual(TestCorrelation);
+            });
         });
     });
 
     describe("for dashboard with existing sections", () => {
         let Tester: DashboardTester;
 
-        beforeEach(async () => {
+        /*
+         * All the tests here only add items to the layout, which is fully undoable - a single bootstrapped
+         * dashboard plus a rollback after each test gives the same isolation as a bootstrap per test.
+         */
+        beforeAll(async () => {
             await preloadedTesterFactory((tester) => {
                 Tester = tester;
             }, ComplexDashboardIdentifier);
+        });
+
+        beforeEach(() => {
+            Tester.resetMonitors();
+        });
+
+        afterEach(async () => {
+            await rollbackLayoutChanges(Tester);
         });
 
         // this section has two existing items

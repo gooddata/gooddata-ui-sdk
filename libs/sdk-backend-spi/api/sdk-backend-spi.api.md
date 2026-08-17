@@ -295,6 +295,9 @@ export type FilterWithResolvableElements = IAttributeFilter | IRelativeDateFilte
 export type GenAIAnswerOutput = "text" | "visualization" | "dashboard" | "keyDriverAnalysis" | "whatIf" | "searchResults" | "alertProposal";
 
 // @internal
+export type GenAIAppliedMemoryStrategy = "always" | "auto";
+
+// @internal
 export type GenAIInteractionStepCategory = "applyMemory" | "skillRouting" | "knowledgeSearch" | "catalogSearch" | "metricQuery" | "composeAnswer";
 
 // @alpha
@@ -710,6 +713,19 @@ export type IChatConversationAlertProposalContent = {
 };
 
 // @internal
+export type IChatConversationAppliedMemoryItem = {
+    title: string;
+    strategy: GenAIAppliedMemoryStrategy;
+    score?: number;
+};
+
+// @internal
+export type IChatConversationApplyMemoryDetail = {
+    category: "applyMemory";
+    items: IChatConversationAppliedMemoryItem[];
+};
+
+// @internal
 export type IChatConversationCatalogSearchDetail = {
     category: "catalogSearch";
     query: string[];
@@ -806,7 +822,7 @@ export type IChatConversationItem = {
 };
 
 // @internal
-export type IChatConversationItemDetail = IChatConversationCatalogSearchDetail | IChatConversationComposeAnswerDetail | IChatConversationKnowledgeSearchDetail | IChatConversationSkillRoutingDetail;
+export type IChatConversationItemDetail = IChatConversationApplyMemoryDetail | IChatConversationCatalogSearchDetail | IChatConversationComposeAnswerDetail | IChatConversationKnowledgeSearchDetail | IChatConversationMetricQueryDetail | IChatConversationSkillRoutingDetail;
 
 // @public
 export interface IChatConversationItemsQuery {
@@ -836,6 +852,18 @@ export type IChatConversationKnowledgeSearchDetail = {
 export type IChatConversationKnowledgeSearchDocument = {
     title: string;
     score?: number;
+};
+
+// @internal
+export type IChatConversationMetricQueryDetail = {
+    category: "metricQuery";
+    ref?: string;
+    metrics: string[];
+    groupedBy: string[];
+    filteredBy: string[];
+    visualization?: string;
+    resultRows?: number;
+    resultColumns?: number;
 };
 
 // @internal

@@ -8,7 +8,7 @@ import { userEvent } from "@testing-library/user-event";
 import cx from "classnames";
 import { describe, expect, it, vi } from "vitest";
 
-import { type ISeparators, withIntl } from "@gooddata/sdk-ui";
+import { type ISeparators, withIntlForTest } from "@gooddata/sdk-ui";
 
 import { type IMeasureNumberFormatOwnProps, MeasureNumberFormat } from "../MeasureNumberFormat.js";
 import { type IFormatTemplate, type IToggleButtonProps } from "../typings.js";
@@ -64,7 +64,7 @@ const defaultProps: IMeasureNumberFormatOwnProps = {
 };
 
 const renderComponent = (props?: Partial<IMeasureNumberFormatOwnProps>) => {
-    const Wrapped = withIntl(MeasureNumberFormat);
+    const Wrapped = withIntlForTest(MeasureNumberFormat);
     return render(<Wrapped {...defaultProps} {...props} />);
 };
 

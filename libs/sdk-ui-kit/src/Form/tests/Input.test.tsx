@@ -180,4 +180,70 @@ describe("Input", () => {
             expect(onEnterKeyPress).toHaveBeenCalledTimes(1);
         });
     });
+
+    describe("With externally changed value", () => {
+        it("should render the new value when the value prop changes", () => {
+            const onChange = vi.fn();
+            const { rerender } = render(
+                <Input onChange={onChange} placeholder="input placeholder" value="old" />,
+            );
+
+            expect(screen.getByPlaceholderText("input placeholder")).toHaveValue("old");
+
+            rerender(<Input onChange={onChange} placeholder="input placeholder" value="new" />);
+
+            expect(screen.getByPlaceholderText("input placeholder")).toHaveValue("new");
+            expect(onChange).toHaveBeenCalledWith("new");
+        });
+
+        it("should normalize an invalid value prop and notify the consumer", () => {
+            const onChange = vi.fn();
+            const { rerender } = render(
+                <Input onChange={onChange} placeholder="input placeholder" value="test" />,
+            );
+
+            rerender(<Input onChange={onChange} placeholder="input placeholder" value={Number.NaN} />);
+
+            expect(screen.getByPlaceholderText("input placeholder")).toHaveValue("");
+            expect(onChange).toHaveBeenCalledWith("");
+        });
+
+        it("should keep a value typed after the value prop was normalized from NaN", () => {
+            const onChange = vi.fn();
+            const { rerender } = render(
+                <Input onChange={onChange} placeholder="input placeholder" value={Number.NaN} />,
+            );
+
+            expect(screen.getByPlaceholderText("input placeholder")).toHaveValue("");
+
+            fireEvent.change(screen.getByPlaceholderText("input placeholder"), {
+                target: { value: "typed" },
+            });
+
+            expect(screen.getByPlaceholderText("input placeholder")).toHaveValue("typed");
+
+            onChange.mockClear();
+            rerender(<Input onChange={onChange} placeholder="input placeholder" value={Number.NaN} />);
+
+            expect(screen.getByPlaceholderText("input placeholder")).toHaveValue("typed");
+            expect(onChange).not.toHaveBeenCalled();
+        });
+
+        it("should keep the typed value when the value prop stays the same", () => {
+            const onChange = vi.fn();
+            const { rerender } = render(
+                <Input onChange={onChange} placeholder="input placeholder" value="test" />,
+            );
+
+            fireEvent.change(screen.getByPlaceholderText("input placeholder"), {
+                target: { value: "typed" },
+            });
+            onChange.mockClear();
+
+            rerender(<Input onChange={onChange} placeholder="input placeholder" value="test" />);
+
+            expect(screen.getByPlaceholderText("input placeholder")).toHaveValue("typed");
+            expect(onChange).not.toHaveBeenCalled();
+        });
+    });
 });

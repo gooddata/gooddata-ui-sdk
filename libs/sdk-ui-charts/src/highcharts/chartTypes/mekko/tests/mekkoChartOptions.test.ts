@@ -13,6 +13,7 @@ import {
     getMekkoEffectiveConfig,
     getMekkoMeasures,
     getMekkoWidthOnlyYAxisProps,
+    hasNegligibleMekkoColumnWidth,
     isMekkoPercentBlockedByNegatives,
     sortMekkoColumnsByMeasure,
 } from "../mekkoChartOptions.js";
@@ -185,6 +186,43 @@ describe("dropZeroWidthMekkoColumns", () => {
 
         expect(result.series).toBe(input);
         expect(result.categories).toBe(categories);
+    });
+});
+
+describe("hasNegligibleMekkoColumnWidth", () => {
+    it("is true when a column's Width share falls under MEKKO_MIN_VISIBLE_WIDTH_SHARE", () => {
+        expect(
+            hasNegligibleMekkoColumnWidth(VisualizationTypes.MEKKO, [series([{ z: 1000 }, { z: 1 }])]),
+        ).toBe(true);
+    });
+
+    it("is false when every column keeps a visible share", () => {
+        expect(
+            hasNegligibleMekkoColumnWidth(VisualizationTypes.MEKKO, [series([{ z: 100 }, { z: 10 }])]),
+        ).toBe(false);
+    });
+
+    it("reads the width off the first series of a stacked chart", () => {
+        const stacked = [series([{ z: 1000 }, { z: 1 }]), series([{ z: 1000 }, { z: 1 }])];
+        expect(hasNegligibleMekkoColumnWidth(VisualizationTypes.MEKKO, stacked)).toBe(true);
+    });
+
+    it("is false for a non-Mekko chart with the same slim point", () => {
+        expect(
+            hasNegligibleMekkoColumnWidth(VisualizationTypes.COLUMN, [series([{ z: 1000 }, { z: 1 }])]),
+        ).toBe(false);
+    });
+
+    it("is false without series data, and for a single column", () => {
+        expect(hasNegligibleMekkoColumnWidth(VisualizationTypes.MEKKO, undefined)).toBe(false);
+        expect(hasNegligibleMekkoColumnWidth(VisualizationTypes.MEKKO, [series([])])).toBe(false);
+        expect(hasNegligibleMekkoColumnWidth(VisualizationTypes.MEKKO, [series([{ z: 1 }])])).toBe(false);
+    });
+
+    it("is false when the total width is not positive", () => {
+        expect(hasNegligibleMekkoColumnWidth(VisualizationTypes.MEKKO, [series([{ y: 1 }, { y: 2 }])])).toBe(
+            false,
+        );
     });
 });
 

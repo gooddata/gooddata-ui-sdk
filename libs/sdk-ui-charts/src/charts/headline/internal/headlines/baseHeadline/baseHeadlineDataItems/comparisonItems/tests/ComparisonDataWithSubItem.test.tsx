@@ -4,7 +4,7 @@ import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { type IColorPalette } from "@gooddata/sdk-model";
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { type IColorConfig } from "../../../../../../../../interfaces/comparison.js";
 import { EvaluationType, type IComparisonDataWithSubItem } from "../../../../../interfaces/BaseHeadlines.js";
@@ -63,7 +63,7 @@ describe("ComparisonDataWithSubItem", () => {
             ...params,
         };
 
-        const Component = withIntl(ComparisonDataWithSubItem);
+        const Component = withIntlForTest(ComparisonDataWithSubItem);
         return render(<Component {...props} />);
     };
 

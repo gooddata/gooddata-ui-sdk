@@ -1,7 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { render, screen } from "@testing-library/react";
-import { userEvent } from "@testing-library/user-event";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { type IInsightDefinition, newMeasure } from "@gooddata/sdk-model";
@@ -12,6 +11,13 @@ import { BubbleChartConfigurationPanel } from "../BubbleChartConfigurationPanel.
 import { type IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
 
 describe("BubbleChartConfigurationPanel", () => {
+    // The section headers only react to a plain onClick, so fireEvent.click is enough here;
+    // userEvent's full pointer sequence (plus its inter-event delay and pointer-events
+    // getComputedStyle checks) is pure overhead for these static panels.
+    function expandSection(title: string) {
+        fireEvent.click(screen.getByText(title));
+    }
+
     function createComponent(props: IConfigurationPanelContentProps) {
         return render(<BubbleChartConfigurationPanel {...props} />);
     }
@@ -96,7 +102,7 @@ describe("BubbleChartConfigurationPanel", () => {
             type: VisualizationTypes.BUBBLE,
         };
 
-        it("should render configuration panel with enabled name sections", async () => {
+        it("should render configuration panel with enabled name sections", () => {
             const insight: IInsightDefinition = {
                 insight: {
                     title: "My Insight",
@@ -148,14 +154,14 @@ describe("BubbleChartConfigurationPanel", () => {
                 insight,
             });
 
-            await userEvent.click(screen.getByText("X-Axis"));
+            expandSection("X-Axis");
             expect(screen.getByLabelText("xaxis name")).toBeEnabled();
 
-            await userEvent.click(screen.getByText("Y-Axis"));
+            expandSection("Y-Axis");
             expect(screen.getByLabelText("yaxis name")).toBeEnabled();
         });
 
-        it("should render configuration panel with disabled name sections", async () => {
+        it("should render configuration panel with disabled name sections", () => {
             const insight: IInsightDefinition = {
                 insight: {
                     title: "My Insight",
@@ -172,14 +178,14 @@ describe("BubbleChartConfigurationPanel", () => {
                 insight,
             });
 
-            await userEvent.click(screen.getByText("X-Axis"));
+            expandSection("X-Axis");
             expect(screen.getByLabelText("xaxis name")).toBeDisabled();
 
-            await userEvent.click(screen.getByText("Y-Axis"));
+            expandSection("Y-Axis");
             expect(screen.getByLabelText("yaxis name")).toBeDisabled();
         });
 
-        it("should render configuration panel with enabled X axis name section and disabled Y axis name section", async () => {
+        it("should render configuration panel with enabled X axis name section and disabled Y axis name section", () => {
             const insight: IInsightDefinition = {
                 insight: {
                     title: "My Insight",
@@ -214,10 +220,10 @@ describe("BubbleChartConfigurationPanel", () => {
                 insight,
             });
 
-            await userEvent.click(screen.getByText("X-Axis"));
+            expandSection("X-Axis");
             expect(screen.getByLabelText("xaxis name")).toBeEnabled();
 
-            await userEvent.click(screen.getByText("Y-Axis"));
+            expandSection("Y-Axis");
             expect(screen.getByLabelText("yaxis name")).toBeDisabled();
         });
 
@@ -226,7 +232,7 @@ describe("BubbleChartConfigurationPanel", () => {
             [true, false, "secondary_measures"],
         ])(
             "should render configuration panel with X axis name section is disabled=%s and Y axis name section is disabled=%s",
-            async (
+            (
                 expectedXAxisSectionDisabled: boolean,
                 expectedYAxisSectionDisabled: boolean,
                 measureIdentifier: string,
@@ -236,25 +242,25 @@ describe("BubbleChartConfigurationPanel", () => {
                     insight: newInsight(measureIdentifier),
                 });
 
-                await userEvent.click(screen.getByText("X-Axis"));
+                expandSection("X-Axis");
                 expect(screen.getByLabelText<HTMLInputElement>("xaxis name").disabled).toBe(
                     expectedXAxisSectionDisabled,
                 );
 
-                await userEvent.click(screen.getByText("Y-Axis"));
+                expandSection("Y-Axis");
                 expect(screen.getByLabelText<HTMLInputElement>("yaxis name").disabled).toBe(
                     expectedYAxisSectionDisabled,
                 );
             },
         );
 
-        it("should not render name sections in configuration panel", async () => {
+        it("should not render name sections in configuration panel", () => {
             createComponent({
                 ...defaultProps,
                 insight: insightWithSingleAttribute,
             });
 
-            await userEvent.click(screen.getByText("X-Axis"));
+            expandSection("X-Axis");
             expect(screen.queryByLabelText("xaxis")).not.toBeInTheDocument();
         });
     });

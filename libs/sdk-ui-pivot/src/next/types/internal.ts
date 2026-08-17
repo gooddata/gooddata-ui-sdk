@@ -30,6 +30,7 @@ import { type IPivotTableNextProps } from "./public.js";
 export type AgGridRowData = {
     cellDataByColId: { [colId: string]: ITableDataValue };
     allRowData: DataValue[];
+    dataView?: DataViewFacade;
 };
 
 /**

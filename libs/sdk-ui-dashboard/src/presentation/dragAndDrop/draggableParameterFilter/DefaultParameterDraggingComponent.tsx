@@ -1,9 +1,14 @@
 // (C) 2026 GoodData Corporation
 
+import { getParameterValueTitle } from "@gooddata/sdk-model";
 import { ParameterControlButton } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogParameterByRef } from "../../../model/store/catalog/catalogSelectors.js";
+import {
+    matchingWorkspaceDefinition,
+    resolveParameterTitle,
+} from "../../../model/store/tabs/parameters/parametersHelpers.js";
 import { selectDashboardParameterEntryByRef } from "../../../model/store/tabs/parameters/parametersSelectors.js";
 import { type ParameterDraggableItem } from "../types.js";
 
@@ -28,14 +33,12 @@ export function DefaultParameterDraggingComponent({ item }: IParameterDraggingCo
         return null;
     }
 
-    const name = entry.parameter.label ?? workspaceParameter?.title ?? "";
-    return (
-        <ParameterControlButton
-            name={name}
-            value={entry.runtimeOverride}
-            isActive={false}
-            isDraggable
-            isDragging
-        />
-    );
+    const definition = matchingWorkspaceDefinition(entry.parameter, workspaceParameter);
+    if (!workspaceParameter || !definition) {
+        return null;
+    }
+
+    const name = resolveParameterTitle(entry.parameter, workspaceParameter);
+    const value = getParameterValueTitle(definition, entry.runtimeOverride);
+    return <ParameterControlButton name={name} value={value} isActive={false} isDraggable isDragging />;
 }

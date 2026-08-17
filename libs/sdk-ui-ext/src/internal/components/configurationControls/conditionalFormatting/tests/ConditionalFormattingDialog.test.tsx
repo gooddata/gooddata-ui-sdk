@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
-import { userEvent } from "@testing-library/user-event";
+import { PointerEventsCheckLevel, userEvent } from "@testing-library/user-event";
 import { type Mock, describe, expect, it, vi } from "vitest";
 
 import { type IConditionalFormattingRule } from "@gooddata/sdk-ui-pivot/next";
@@ -53,6 +53,13 @@ const multiConditionRule: IConditionalFormattingRule = {
     ],
 };
 
+// userEvent's default `delay: 0` awaits a real macrotask between every keystroke/click, which
+// dominates the runtime of this file; nothing under test is debounced, so drop the wait entirely.
+// `pointerEventsCheck: Never` skips userEvent's per-call getComputedStyle walk up the tree, which is
+// one of the most expensive operations in jsdom. Nothing here asserts disabled-ness via
+// pointer-events — the kit Button uses aria-disabled — so the check buys these tests nothing.
+const setupUser = () => userEvent.setup({ delay: null, pointerEventsCheck: PointerEventsCheckLevel.Never });
+
 // The kit Button conveys disabled via aria-disabled, not the native attribute.
 const saveButton = () => screen.getByText("Save").closest("button");
 const isSaveDisabled = () => saveButton()?.getAttribute("aria-disabled") === "true";
@@ -82,7 +89,7 @@ describe("ConditionalFormattingDialog — Save dirty gating", () => {
     });
 
     it("enables Save once the reopened rule is modified", async () => {
-        const user = userEvent.setup();
+        const user = setupUser();
         renderDialog({ isNew: false });
         expect(isSaveDisabled()).toBe(true);
 
@@ -119,7 +126,7 @@ describe("ConditionalFormattingDialog — measure threshold input (F1-2738)", ()
     ])(
         "accepts the scientific-notation threshold %s and saves it in raw numeric space",
         async (typed, expected) => {
-            const user = userEvent.setup();
+            const user = setupUser();
             const { onSave } = renderDialog({ rule: emptyRule, isNew: true });
             expect(isSaveDisabled()).toBe(true);
 
@@ -132,7 +139,7 @@ describe("ConditionalFormattingDialog — measure threshold input (F1-2738)", ()
     );
 
     it("never saves a non-finite threshold when the exponent overflows", async () => {
-        const user = userEvent.setup();
+        const user = setupUser();
         const { onSave } = renderDialog({ rule: emptyRule, isNew: true });
 
         await user.type(valueInput(), "1e309");

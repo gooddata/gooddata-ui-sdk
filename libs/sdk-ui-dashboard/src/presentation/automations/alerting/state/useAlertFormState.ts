@@ -34,6 +34,7 @@ import {
     getVisibleFiltersByFilters,
     resolveFilterDimensionalityLocalRefs,
 } from "../../shared/filters/index.js";
+import { isAutomationTitleValid } from "../../shared/utils/automationTitle.js";
 import {
     convertExternalRecipientToAutomationRecipient,
     convertUserToAutomationRecipient,
@@ -215,8 +216,8 @@ export function useAlertFormState({
     // Handlers
     //
     const onTitleChange = useCallback(
-        (value: string, isValid: boolean) => {
-            setIsTitleValid(isValid);
+        (value: string) => {
+            setIsTitleValid(isAutomationTitleValid(value));
             setEditedAutomation((s) => (s ? { ...s, title: value } : undefined));
         },
         [setEditedAutomation],

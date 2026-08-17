@@ -1,7 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 
 import { type IDataLabelsVisible } from "@gooddata/sdk-ui-charts";
 
@@ -14,6 +14,9 @@ describe("DataLabelsControl", () => {
     const AUTO_LABEL = "auto (default)";
     const TOTAL_LABELS_TEXT = "Total Labels";
     const DISABLED_TOOLTIP = "Property is not applicable for this configuration of the visualization";
+    // BubbleHoverTrigger delays showing the bubble by SHOW_DELAY (425ms) via setTimeout,
+    // so the hover test drives that timer instead of waiting for it in real time.
+    const BUBBLE_SHOW_DELAY = 425;
 
     const defaultProps = {
         properties: {},
@@ -116,17 +119,26 @@ describe("DataLabelsControl", () => {
             expect(buttons[1]).toHaveClass("disabled");
         });
 
-        it("should show the tooltip while hover on the disabled total labels control", async () => {
-            createComponent({
-                isTotalsDisabled: true,
-                enableSeparateTotalLabels: true,
-            });
+        it("should show the tooltip while hover on the disabled total labels control", () => {
+            vi.useFakeTimers();
 
-            fireEvent.mouseEnter(screen.queryByText(TOTAL_LABELS_TEXT)!);
+            try {
+                createComponent({
+                    isTotalsDisabled: true,
+                    enableSeparateTotalLabels: true,
+                });
 
-            await waitFor(() => {
+                fireEvent.mouseEnter(screen.queryByText(TOTAL_LABELS_TEXT)!);
+                expect(screen.queryByText(DISABLED_TOOLTIP)).not.toBeInTheDocument();
+
+                act(() => {
+                    vi.advanceTimersByTime(BUBBLE_SHOW_DELAY);
+                });
+
                 expect(screen.getByText(DISABLED_TOOLTIP)).toBeInTheDocument();
-            });
+            } finally {
+                vi.useRealTimers();
+            }
         });
 
         it("should not render Position dropdown by default", () => {

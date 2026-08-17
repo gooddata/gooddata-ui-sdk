@@ -123,9 +123,33 @@
         "text": "Add context",
         "crowdinContext": "Label for the button that adds a new context to the AI chatbot"
     },
+    "gd.gen-ai.context.close": {
+        "text": "Close add context",
+        "crowdinContext": "Accessibility label for the button that closes the AI chatbot add-context dialog"
+    },
     "gd.gen-ai.context.untitled": {
         "text": "Untitled",
         "crowdinContext": "Label for untitled objects in the AI chatbot context"
+    },
+    "gd.gen-ai.context.list.ariaLabel": {
+        "text": "Available context items",
+        "crowdinContext": "Accessible name for the list of dashboards and visualizations that can be added to the AI chatbot context"
+    },
+    "gd.gen-ai.context.search.placeholder": {
+        "text": "Search...",
+        "crowdinContext": "Placeholder for the search field in the AI chatbot context chooser"
+    },
+    "gd.gen-ai.context.search.ariaLabel": {
+        "text": "Search context items",
+        "crowdinContext": "Accessible name for the search field in the AI chatbot context chooser"
+    },
+    "gd.gen-ai.context.noMatchingData": {
+        "text": "No matching items",
+        "crowdinContext": "Message shown when the context chooser search returns no results"
+    },
+    "gd.gen-ai.context.noDataAvailable": {
+        "text": "No items available",
+        "crowdinContext": "Message shown when there are no context items to add"
     },
     "gd.gen-ai.agents": {
         "text": "Agents",
@@ -879,6 +903,10 @@
         "text": "{count, plural, one {# activated} other {# activated}}",
         "crowdinContext": "Excerpt shown on a category's list row summarizing how many skills were activated by routing, e.g. '2 activated'"
     },
+    "gd.gen-ai.interactionIntelligence.excerpt.memories": {
+        "text": "{count, plural, one {# memory} other {# memories}}",
+        "crowdinContext": "Excerpt shown on a category's list row summarizing how many memories were applied to the turn, e.g. '110 memories'"
+    },
     "gd.gen-ai.interactionIntelligence.detail.query": {
         "text": "Query",
         "crowdinContext": "Interaction Intelligence detail row label for the search keywords/question a category used"
@@ -922,6 +950,46 @@
     "gd.gen-ai.interactionIntelligence.detail.used": {
         "text": "Used",
         "crowdinContext": "Interaction Intelligence detail row label for the catalog matches actually used"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.metrics": {
+        "text": "Metrics",
+        "crowdinContext": "Interaction Intelligence detail row label listing the metrics a query measured"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.groupedBy": {
+        "text": "Grouped by",
+        "crowdinContext": "Interaction Intelligence detail row label listing the attributes and date dimensions a query grouped its results by"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.filteredBy": {
+        "text": "Filtered by",
+        "crowdinContext": "Interaction Intelligence detail row label listing what a query filtered on"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.visualization": {
+        "text": "Visualization",
+        "crowdinContext": "Interaction Intelligence detail row label for the title a query gave its visualization"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.result": {
+        "text": "Result",
+        "crowdinContext": "Interaction Intelligence detail row label for the size of the data a query returned"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.resultSize": {
+        "text": "{rows, plural, one {# row} other {# rows}}, {columns, plural, one {# column} other {# columns}}",
+        "crowdinContext": "Size of the data a query returned, shown both as the excerpt on the category's list row and in its detail view, e.g. '2 rows, 1 column'"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.useAlways": {
+        "text": "Use always",
+        "crowdinContext": "Interaction Intelligence detail row label for the memories injected into every turn unconditionally"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.useWhenRelevant": {
+        "text": "Use when relevant",
+        "crowdinContext": "Interaction Intelligence detail row label for the memories injected only when relevant to the question"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.appliedInTotal": {
+        "text": "Applied in total",
+        "crowdinContext": "Interaction Intelligence detail row label for the total number of memories applied to the turn"
+    },
+    "gd.gen-ai.interactionIntelligence.detail.memoriesCount": {
+        "text": "{count, plural, one {# memory} other {# memories}}",
+        "crowdinContext": "Count of applied memories in the Interaction Intelligence detail view, e.g. '100 memories'"
     },
     "gd.gen-ai.interactionIntelligence.detail.skillsCount": {
         "text": "{count, plural, one {# skill} other {# skills}}",

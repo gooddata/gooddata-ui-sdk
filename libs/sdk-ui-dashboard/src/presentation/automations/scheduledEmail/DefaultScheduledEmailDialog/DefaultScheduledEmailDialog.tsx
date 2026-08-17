@@ -44,7 +44,10 @@ import { useScheduledExportDraft } from "../state/ScheduledExportDraftContext.js
 import { useScheduledExportFilters } from "../state/ScheduledExportFiltersContext.js";
 import { useScheduledExportAttachments } from "../state/useScheduledExportAttachments.js";
 import { useScheduledExportDialogValidity } from "../state/useScheduledExportDialogValidity.js";
-import { type IScheduledEmailDialogProps } from "../types.js";
+import {
+    type IDefaultScheduledEmailDialogProps,
+    type ScheduledEmailDialogHeaderDefaultProps,
+} from "../types.js";
 import { getDefaultCronExpression } from "../utils/cron.js";
 import { isMobileView } from "../utils/responsive.js";
 import { TIMEZONE_DEFAULT } from "../utils/timezone.js";
@@ -116,7 +119,10 @@ export function ScheduledMailDialogRenderer({
     onSaveSuccess,
     onSubmit,
     onSuccess,
-}: IScheduledEmailDialogProps) {
+    slots,
+}: IDefaultScheduledEmailDialogProps) {
+    const HeaderSlot = slots?.Header;
+
     const intl = useIntl();
 
     const dialogTitleRef = useRef<HTMLInputElement | null>(null);
@@ -388,23 +394,31 @@ export function ScheduledMailDialogRenderer({
                             onCancel={onCancel}
                             onSubmit={handleSaveScheduledEmail}
                             headline={undefined}
-                            headerLeftButtonRenderer={() => (
-                                <ScheduledEmailDialogHeader
-                                    title={editedAutomation.title ?? ""}
-                                    onChange={onTitleChange}
-                                    onBack={onBack}
-                                    placeholder={intl.formatMessage({
+                            headerLeftButtonRenderer={() => {
+                                const headerDefaultProps: ScheduledEmailDialogHeaderDefaultProps = {
+                                    title: editedAutomation.title ?? "",
+                                    onChange: onTitleChange,
+                                    onBack,
+                                    placeholder: intl.formatMessage({
                                         id: "dialogs.schedule.email.title.placeholder",
-                                    })}
-                                    ref={dialogTitleRef}
-                                    onKeyDownSubmit={handleSubmitForm}
-                                    secondaryTitle={secondaryTitle}
-                                    secondaryTitleIcon={secondaryTitleIcon}
-                                    isSecondaryTitleVisible={
-                                        isSecondaryTitleVisible ? isParentValid : undefined
-                                    }
-                                />
-                            )}
+                                    }),
+                                    ref: dialogTitleRef,
+                                    onTitleKeyDown: handleSubmitForm,
+                                    secondaryTitle,
+                                    secondaryTitleIcon,
+                                    isSecondaryTitleVisible: isSecondaryTitleVisible
+                                        ? isParentValid
+                                        : undefined,
+                                };
+                                return HeaderSlot ? (
+                                    <HeaderSlot
+                                        Default={ScheduledEmailDialogHeader}
+                                        defaultProps={headerDefaultProps}
+                                    />
+                                ) : (
+                                    <ScheduledEmailDialogHeader {...headerDefaultProps} />
+                                );
+                            }}
                         >
                             <h2 className={"sr-only"} id={titleElementId}>
                                 {intl.formatMessage({ id: "dialogs.schedule.email.accessibilityTitle" })}
@@ -634,9 +648,29 @@ export function ScheduledMailDialogRenderer({
 }
 
 /**
+ * Default implementation of the scheduled export create/edit dialog.
+ *
+ * This component is a pure consumer of `AutomationsContext`, `ScheduledEmailDialogContext`, and the
+ * scheduled export dialog state contexts: it reads org/workspace data, per-dialog state, and the
+ * export draft's state from those contexts rather than from the dashboard store. It must therefore
+ * be rendered within an `AutomationsContextProvider`, a `ScheduledEmailDialogContextProvider` (for
+ * the create/edit flow), and a `ScheduledEmailDialogStateProvider`, whose state model establishes
+ * itself once `useScheduledEmailDialogContext().isLoading` is false. Inside a `Dashboard`, the
+ * scheduled export connector supplies the first two providers above the
+ * `ScheduledEmailDialogComponent` slot and mounts `ScheduledEmailDialogStateProvider` around the
+ * resolved slot component — so the default component, and any wholesale slot replacement, inherit
+ * all three contexts automatically and require no extra wiring.
+ *
+ * The providers are intentionally hoisted above the slot rather than built inside this component:
+ * that is what lets a wholesale replacement receive the same contexts. Rendering this component
+ * outside those providers throws at runtime.
+ *
+ * Slots render only in the fully rendered dialog: not while the dialog context reports loading,
+ * and not while the stale-filters confirmation step is shown.
+ *
  * @alpha
  */
-export function DefaultScheduledEmailDialog(props: IScheduledEmailDialogProps) {
+export function DefaultScheduledEmailDialog(props: IDefaultScheduledEmailDialogProps) {
     const { onCancel } = props;
     const { isLoading, scheduledExportToEdit } = useScheduledEmailDialogContext();
     if (isLoading) {
@@ -650,7 +684,7 @@ export function DefaultScheduledEmailDialog(props: IScheduledEmailDialogProps) {
     return <DefaultScheduledEmailDialogBody {...props} />;
 }
 
-function DefaultScheduledEmailDialogBody(props: IScheduledEmailDialogProps) {
+function DefaultScheduledEmailDialogBody(props: IDefaultScheduledEmailDialogProps) {
     const { locale } = useAutomationsContext();
 
     return (

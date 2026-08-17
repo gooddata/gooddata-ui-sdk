@@ -85,16 +85,18 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
                 | CellClickedEvent<AgGridRowData, string | null>
                 | CellKeyDownEvent<AgGridRowData, string | null>,
         ) => {
-            if (!onDrill || !drillableItems || !currentDataView) {
+            const { data, rowIndex, colDef } = event;
+            const dv = data?.dataView ?? currentDataView;
+
+            if (!onDrill || !drillableItems || !dv) {
                 return;
             }
 
-            const { data, rowIndex, colDef } = event;
             if (!data || !colDef || rowIndex === null || rowIndex === undefined) {
                 return;
             }
 
-            if (!isCellDrillable(colDef as AgGridColumnDef, data, drillableItems, currentDataView)) {
+            if (!isCellDrillable(colDef as AgGridColumnDef, data, drillableItems, dv)) {
                 return;
             }
 
@@ -126,7 +128,7 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
 
             // Create drill event with actual dataView from context
             const drillEvent: IDrillEvent = {
-                dataView: currentDataView.dataView,
+                dataView: dv.dataView,
                 drillContext,
                 ...cord,
             };

@@ -41,7 +41,7 @@ export function dataViewToRowData(
     const tempGrandTotalRows: AgGridRowData[] = [];
 
     tableData.data.forEach((row, rowIndex) => {
-        const data: AgGridRowData = { cellDataByColId: {}, allRowData: [] };
+        const data: AgGridRowData = { cellDataByColId: {}, allRowData: [], dataView };
 
         row.forEach((cell) => {
             const key = columnDefinitionToColId(cell.columnDefinition, columnHeadersPosition);

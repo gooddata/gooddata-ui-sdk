@@ -22,6 +22,7 @@ import { bem } from "../@utils/bem.js";
 import { makeLinearKeyboardNavigationWithConfirm } from "../@utils/keyboardNavigation.js";
 import { SELECT_ITEM_ACTION } from "../hooks/useListWithActionsKeyboardNavigation.js";
 import { ScopedIdStore } from "../hooks/useScopedId.js";
+import { useVirtualizerRectObserver } from "../hooks/useVirtualizerRectObserver.js";
 import { UiSkeleton } from "../UiSkeleton/UiSkeleton.js";
 const { b, e } = bem("gd-ui-kit-paged-virtual-list");
 
@@ -369,10 +370,13 @@ function useVirtualList<T>({
           scrollContainerRef.current?.getBoundingClientRect().height
         : false;
 
+    const observeElementRect = useVirtualizerRectObserver(scrollContainerRef, height);
+
     const rowVirtualizer = useVirtualizer({
         count: renderItemsCount,
         getScrollElement: () => scrollContainerRef.current,
         estimateSize: (index) => getItemSizeWithGap(index),
+        observeElementRect,
         overscan: 5,
     });
 

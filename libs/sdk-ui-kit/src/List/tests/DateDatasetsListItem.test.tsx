@@ -1,10 +1,33 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactNode, forwardRef, useImperativeHandle } from "react";
+
 import { render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { ShortenedText } from "../../ShortenedText/ShortenedText.js";
+import type * as ShortenedTextModule from "../../ShortenedText/ShortenedText.js";
+import { type IShortenedTextHandle } from "../../ShortenedText/ShortenedText.js";
 import { DateDatasetsListItem } from "../DateDatasetsListItem.js";
+
+const { recomputeShorteningSpy } = vi.hoisted(() => ({ recomputeShorteningSpy: vi.fn() }));
+
+// ShortenedText exposes recomputeShortening only through its imperative ref handle, so the spy has
+// to be injected in place of the real component.
+vi.mock("../../ShortenedText/ShortenedText.js", async (importOriginal) => {
+    const actual = await importOriginal<typeof ShortenedTextModule>();
+
+    return {
+        ...actual,
+        ShortenedText: forwardRef<IShortenedTextHandle, { children?: ReactNode }>(function ShortenedTextMock(
+            { children },
+            ref,
+        ) {
+            useImperativeHandle(ref, () => ({ recomputeShortening: recomputeShorteningSpy }));
+
+            return <span>{children}</span>;
+        }),
+    };
+});
 
 describe("DateDatasetsListItem", () => {
     it("renders the header title as plain text, without treating it as a translation id", () => {
@@ -15,7 +38,7 @@ describe("DateDatasetsListItem", () => {
 
     describe("remeasures its shortened label when the list resizes", () => {
         afterEach(() => {
-            vi.restoreAllMocks();
+            recomputeShorteningSpy.mockClear();
         });
 
         function renderItem(width: number) {
@@ -25,28 +48,25 @@ describe("DateDatasetsListItem", () => {
         }
 
         it("does not recompute on mount", () => {
-            const spy = vi.spyOn(ShortenedText.prototype, "recomputeShortening");
             renderItem(120);
 
-            expect(spy).not.toHaveBeenCalled();
+            expect(recomputeShorteningSpy).not.toHaveBeenCalled();
         });
 
         it("recomputes when its width prop changes", () => {
-            const spy = vi.spyOn(ShortenedText.prototype, "recomputeShortening");
             const { rerender } = renderItem(120);
 
             rerender(<DateDatasetsListItem id="d1" title="A dataset name" width={80} onClick={() => {}} />);
 
-            expect(spy).toHaveBeenCalledTimes(1);
+            expect(recomputeShorteningSpy).toHaveBeenCalledTimes(1);
         });
 
         it("does not recompute again on a re-render with the same width", () => {
-            const spy = vi.spyOn(ShortenedText.prototype, "recomputeShortening");
             const { rerender } = renderItem(120);
 
             rerender(<DateDatasetsListItem id="d1" title="A dataset name" width={120} onClick={() => {}} />);
 
-            expect(spy).not.toHaveBeenCalled();
+            expect(recomputeShorteningSpy).not.toHaveBeenCalled();
         });
     });
 });

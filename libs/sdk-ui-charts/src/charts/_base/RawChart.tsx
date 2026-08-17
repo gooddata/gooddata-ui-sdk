@@ -2,6 +2,7 @@
 
 import { useCallback } from "react";
 
+import { type ITheme } from "@gooddata/sdk-model";
 import {
     type ChartType,
     type ITranslationsComponentProps,
@@ -21,6 +22,11 @@ import { getSanitizedStackingConfig } from "../_commons/sanitizeStacking.js";
  */
 export interface IRawChartProps extends IChartTransformationProps {
     type: ChartType;
+    /**
+     * Presentation theme provided to the chart via context; undefined for pluggable charts in AD
+     * that should not respect theming.
+     */
+    theme?: ITheme;
 }
 
 /**

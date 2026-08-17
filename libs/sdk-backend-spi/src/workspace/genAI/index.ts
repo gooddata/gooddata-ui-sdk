@@ -1137,13 +1137,71 @@ export type IChatConversationSkillRoutingDetail = {
 };
 
 /**
+ * How a memory item got into the turn's prompt: `always` is injected unconditionally, `auto` by
+ * relevance.
+ * @internal
+ */
+export type GenAIAppliedMemoryStrategy = "always" | "auto";
+
+/**
+ * One memory item the turn injected.
+ * @internal
+ */
+export type IChatConversationAppliedMemoryItem = {
+    title: string;
+    strategy: GenAIAppliedMemoryStrategy;
+    /** Relevance of the item, when it was selected by relevance. Absent for `always` items. */
+    score?: number;
+};
+
+/**
+ * Details of an `applyMemory` action.
+ * @internal
+ */
+export type IChatConversationApplyMemoryDetail = {
+    category: "applyMemory";
+    /** Memory items injected into the turn's prompt, in retrieval order. */
+    items: IChatConversationAppliedMemoryItem[];
+};
+
+/**
+ * Details of a `metricQuery` action: what the query asked the data for, or how much came back.
+ *
+ * A single query surfaces as two of these — one for the request, one for the execution that ran
+ * it — paired by `ref`, so the fields of either half are absent on the other.
+ * @internal
+ */
+export type IChatConversationMetricQueryDetail = {
+    category: "metricQuery";
+    /**
+     * Internal handle pairing the query that built a visualization with the execution that ran
+     * it. Never displayed. Absent on a query that was rejected, which has no partner.
+     */
+    ref?: string;
+    /** References of the metrics the query measured, as the query wrote them. */
+    metrics: string[];
+    /** References of the attributes and date dimensions the query grouped by. */
+    groupedBy: string[];
+    /** References of what the query filtered on. The conditions themselves are not carried. */
+    filteredBy: string[];
+    /** Title the query gave its visualization. */
+    visualization?: string;
+    /** Rows the execution returned. */
+    resultRows?: number;
+    /** Columns the execution returned. */
+    resultColumns?: number;
+};
+
+/**
  * Details of a conversation item's action, discriminated by `category`.
  * @internal
  */
 export type IChatConversationItemDetail =
+    | IChatConversationApplyMemoryDetail
     | IChatConversationCatalogSearchDetail
     | IChatConversationComposeAnswerDetail
     | IChatConversationKnowledgeSearchDetail
+    | IChatConversationMetricQueryDetail
     | IChatConversationSkillRoutingDetail;
 
 /**

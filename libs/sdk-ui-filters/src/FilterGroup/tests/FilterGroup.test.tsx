@@ -308,6 +308,13 @@ describe("FilterGroup", () => {
         const searchInputBeforeToggle = await screen.findByRole("searchbox", {
             name: "Search attribute values",
         });
+        // The search input autofocuses itself in a requestAnimationFrame loop once it becomes
+        // visible. Awaiting its presence in the DOM does not await that frame, so let the
+        // autofocus land here - a frame still queued from the mount would otherwise fire after
+        // the toggle below and steal the focus back from the toggled item.
+        await waitFor(() => {
+            expect(searchInputBeforeToggle).toHaveFocus();
+        });
         const toggleSelectionButton = screen.getByRole("button", { name: "Toggle selection for Region" });
         toggleSelectionButton.focus();
 

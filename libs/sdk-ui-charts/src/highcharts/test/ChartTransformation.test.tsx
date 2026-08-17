@@ -6,7 +6,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { measureLocalId } from "@gooddata/sdk-model";
-import { IntlWrapper, VisualizationTypes, withIntl } from "@gooddata/sdk-ui";
+import { IntlWrapper, VisualizationTypes, withIntlForTest } from "@gooddata/sdk-ui";
 
 import { pieChartWithMetricsOnlyFundata } from "../../../testUtils/fixtures.js";
 import { recordedDataFacade } from "../../../testUtils/recordings.js";
@@ -83,7 +83,7 @@ describe("ChartTransformation", () => {
 
     function createComponent(customProps: any = {}) {
         const props = { ...defaultProps, ...customProps };
-        const Wrapped = withIntl(ChartTransformation);
+        const Wrapped = withIntlForTest(ChartTransformation);
         return <Wrapped {...props} />;
     }
 

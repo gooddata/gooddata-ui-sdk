@@ -1,9 +1,9 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { FilterLabel } from "../FilterLabel.js";
 import { type IFilterLabelProps } from "../typings.js";
@@ -14,7 +14,7 @@ const customMessages = {
 };
 
 function renderFilterLabel(options: IFilterLabelProps) {
-    const Wrapped = withIntl(FilterLabel, "en-US", customMessages);
+    const Wrapped = withIntlForTest(FilterLabel, "en-US", customMessages);
     return render(<Wrapped {...options} />);
 }
 
@@ -102,7 +102,7 @@ describe("FilterLabel", () => {
             selectionSize: 100,
         });
 
-        const Wrapped = withIntl(FilterLabel, "en-US", customMessages);
+        const Wrapped = withIntlForTest(FilterLabel, "en-US", customMessages);
 
         rerender(<Wrapped title={title} selection={newSelection} selectionSize={100} />);
 

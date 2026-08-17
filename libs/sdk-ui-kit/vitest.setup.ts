@@ -44,52 +44,6 @@ document.createRange = () => {
 // Note: This stub is also needed for happy-dom
 globalThis.HTMLElement.prototype.scrollIntoView = vi.fn();
 
-global.ResizeObserver = class ResizeObserver {
-    private callback: ResizeObserverCallback;
-    private observedElements: Set<Element> = new Set();
-
-    constructor(callback: ResizeObserverCallback) {
-        this.callback = callback;
-    }
-
-    observe(element: Element) {
-        this.observedElements.add(element);
-        // Trigger callback asynchronously to allow virtualizers to measure
-        // Use requestAnimationFrame to ensure DOM is ready
-        requestAnimationFrame(() => {
-            if (element && this.observedElements.has(element)) {
-                const rect = element.getBoundingClientRect();
-                // Only trigger if element has dimensions
-                if (rect.width > 0 || rect.height > 0) {
-                    this.callback(
-                        [
-                            {
-                                target: element,
-                                contentRect: rect,
-                                borderBoxSize: [{ inlineSize: rect.width, blockSize: rect.height }],
-                                contentBoxSize: [{ inlineSize: rect.width, blockSize: rect.height }],
-                                devicePixelContentBoxSize: [
-                                    { inlineSize: rect.width, blockSize: rect.height },
-                                ],
-                            },
-                        ],
-                        this,
-                    );
-                }
-            }
-        });
-        return null;
-    }
-    unobserve(element: Element) {
-        this.observedElements.delete(element);
-        return null;
-    }
-    disconnect() {
-        this.observedElements.clear();
-        return null;
-    }
-};
-
 global.IntersectionObserver = class IntersectionObserver {
     observe() {
         return null;

@@ -44,7 +44,7 @@ import { useAlertDraft } from "../state/AlertDraftContext.js";
 import { useAlertFilters } from "../state/AlertFiltersContext.js";
 import { useAlertDialogValidity } from "../state/useAlertDialogValidity.js";
 import { useAlertSelectedValues } from "../state/useAlertSelectedValues.js";
-import { type IAlertingDialogProps } from "../types.js";
+import { type AlertingDialogHeaderDefaultProps, type IDefaultAlertingDialogProps } from "../types.js";
 
 import { AlertingDialogHeader } from "./AlertingDialogHeader.js";
 import { AlertAttributeSelect } from "./components/AlertAttributeSelect.js";
@@ -80,7 +80,10 @@ export function AlertingDialogRenderer({
     onSuccess,
     onSaveError,
     onSaveSuccess,
-}: IAlertingDialogProps) {
+    slots,
+}: IDefaultAlertingDialogProps) {
+    const HeaderSlot = slots?.Header;
+
     const intl = useIntl();
 
     const dialogTitleRef = useRef<HTMLInputElement | null>(null);
@@ -308,22 +311,30 @@ export function AlertingDialogRenderer({
                             onCancel={onCancel}
                             onSubmit={() => void submit()}
                             headline={undefined}
-                            headerLeftButtonRenderer={() => (
-                                <AlertingDialogHeader
-                                    title={editedAutomation?.title ?? ""}
-                                    onChange={onTitleChange}
-                                    onCancel={onCancel}
-                                    placeholder={intl.formatMessage({
+                            headerLeftButtonRenderer={() => {
+                                const headerDefaultProps: AlertingDialogHeaderDefaultProps = {
+                                    title: editedAutomation?.title ?? "",
+                                    onChange: onTitleChange,
+                                    onCancel,
+                                    placeholder: intl.formatMessage({
                                         id: "dialogs.alert.title.placeholder",
-                                    })}
-                                    ref={dialogTitleRef}
-                                    secondaryTitle={secondaryTitle}
-                                    secondaryTitleIcon={secondaryTitleIcon}
-                                    isSecondaryTitleVisible={
-                                        isSecondaryTitleVisible ? isParentValid : undefined
-                                    }
-                                />
-                            )}
+                                    }),
+                                    ref: dialogTitleRef,
+                                    secondaryTitle,
+                                    secondaryTitleIcon,
+                                    isSecondaryTitleVisible: isSecondaryTitleVisible
+                                        ? isParentValid
+                                        : undefined,
+                                };
+                                return HeaderSlot ? (
+                                    <HeaderSlot
+                                        Default={AlertingDialogHeader}
+                                        defaultProps={headerDefaultProps}
+                                    />
+                                ) : (
+                                    <AlertingDialogHeader {...headerDefaultProps} />
+                                );
+                            }}
                         >
                             <h2 className={"sr-only"} id={titleElementId}>
                                 {intl.formatMessage({ id: "dialogs.alert.accessibility.label.title" })}
@@ -651,9 +662,12 @@ export function AlertingDialogRenderer({
  * that is what lets a wholesale replacement receive the same contexts. Rendering this component
  * outside those providers throws at runtime.
  *
+ * Slots render only in the fully rendered dialog: not while the dialog context reports loading,
+ * and not while the stale-filters confirmation step is shown.
+ *
  * @alpha
  */
-export function DefaultAlertingDialog(props: IAlertingDialogProps) {
+export function DefaultAlertingDialog(props: IDefaultAlertingDialogProps) {
     const { onCancel } = props;
     const { locale } = useAutomationsContext();
     const { isLoading, alertToEdit } = useAlertingDialogContext();

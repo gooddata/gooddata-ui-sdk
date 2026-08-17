@@ -1,9 +1,9 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle.js";
 
@@ -15,7 +15,7 @@ describe("ExcludeCurrentPeriodToggle", () => {
             onChange: vi.fn(),
             value: true,
         };
-        const Wrapped = withIntl(ExcludeCurrentPeriodToggle);
+        const Wrapped = withIntlForTest(ExcludeCurrentPeriodToggle);
         return render(<Wrapped {...props} />);
     };
 

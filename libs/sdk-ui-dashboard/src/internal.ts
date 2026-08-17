@@ -122,6 +122,7 @@ export { ScheduledEmailManagementDialog } from "./presentation/automations/sched
 export type {
     CustomScheduledEmailDialogComponent,
     CustomScheduledEmailManagementDialogComponent,
+    IDefaultScheduledEmailDialogProps,
     IScheduledEmailDialogProps,
     IScheduledEmailManagementDialogProps,
 } from "./presentation/automations/scheduledEmail/types.js";

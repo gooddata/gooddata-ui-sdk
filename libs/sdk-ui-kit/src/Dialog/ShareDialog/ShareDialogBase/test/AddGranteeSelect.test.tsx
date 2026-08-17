@@ -11,7 +11,7 @@ import {
 } from "@gooddata/sdk-backend-mockingbird";
 import { type IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 import { type IAvailableAccessGrantee, uriRef } from "@gooddata/sdk-model";
-import { BackendProvider, WorkspaceProvider, withIntl } from "@gooddata/sdk-ui";
+import { BackendProvider, WorkspaceProvider, withIntlForTest } from "@gooddata/sdk-ui";
 
 import { mapWorkspaceUserToGrantee } from "../../shareDialogMappers.js";
 import { AddGranteeSelect } from "../AddGranteeSelect.js";
@@ -49,7 +49,7 @@ const createComponent = (
         ...defaultRecordedBackendCapabilities,
         ...backendCapabilities,
     });
-    const Wrapped = withIntl(AddGranteeSelect);
+    const Wrapped = withIntlForTest(AddGranteeSelect);
 
     return render(
         <BackendProvider backend={backend}>

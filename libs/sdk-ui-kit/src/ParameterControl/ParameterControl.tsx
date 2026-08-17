@@ -1,9 +1,15 @@
 // (C) 2026 GoodData Corporation
 
-import { type IParameterDefinition, type ParameterValue, throwUnexpected } from "@gooddata/sdk-model";
+import {
+    type IParameterDefinition,
+    type ParameterValue,
+    getParameterAllowedValues,
+    throwUnexpected,
+} from "@gooddata/sdk-model";
 
 import { type IDropdownBodyRenderProps } from "../Dropdown/Dropdown.js";
 
+import { AllowedValuesParameterControlDropdown } from "./AllowedValuesParameterControlDropdown.js";
 import { NumberParameterControlDropdown } from "./NumberParameterControlDropdown.js";
 import { StringParameterControlDropdown } from "./StringParameterControlDropdown.js";
 
@@ -22,8 +28,9 @@ export interface IParameterControlProps {
 }
 
 /**
- * Selects the parameter editing control by `definition.type` — the single seam where control
- * variants are dispatched. New parameter types get a sibling control and a new arm here.
+ * Selects the parameter editing control by `definition.type` and constraint shape — the single
+ * seam where control variants are dispatched. New variants get a sibling control and a new arm
+ * here.
  *
  * @internal
  */
@@ -51,8 +58,19 @@ export function ParameterControl({
                     onCancel={onCancel}
                 />
             );
-        case "STRING":
-            return (
+        case "STRING": {
+            const allowedValues = getParameterAllowedValues(definition);
+            return allowedValues ? (
+                <AllowedValuesParameterControlDropdown
+                    name={name}
+                    value={String(value)}
+                    defaultValue={resetValue === undefined ? definition.defaultValue : String(resetValue)}
+                    allowedValues={allowedValues}
+                    ariaAttributes={ariaAttributes}
+                    onApply={onApply}
+                    onCancel={onCancel}
+                />
+            ) : (
                 <StringParameterControlDropdown
                     name={name}
                     value={String(value)}
@@ -64,6 +82,7 @@ export function ParameterControl({
                     onCancel={onCancel}
                 />
             );
+        }
         default:
             return throwUnexpected(definition);
     }

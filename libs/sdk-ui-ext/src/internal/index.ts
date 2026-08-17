@@ -13,7 +13,11 @@ export { ColoredItemContent } from "./components/configurationControls/colors/co
 export { LegendSection } from "./components/configurationControls/legend/LegendSection.js";
 export { MinMaxControl } from "./components/configurationControls/MinMaxControl.js";
 
-export { BaseVisualization, type IBaseVisualizationProps } from "./components/BaseVisualization.js";
+export {
+    BaseVisualization,
+    type IBaseVisualizationApi,
+    type IBaseVisualizationProps,
+} from "./components/BaseVisualization.js";
 
 export {
     DefaultVisualizationCatalog,

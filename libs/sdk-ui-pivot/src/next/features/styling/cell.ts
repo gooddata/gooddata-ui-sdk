@@ -133,6 +133,7 @@ export const getCellTypes = (
         return undefined;
     }
 
+    const effectiveDv = data?.dataView ?? dv;
     const colData = data.cellDataByColId?.[colId];
 
     if (!colData) {
@@ -144,7 +145,7 @@ export const getCellTypes = (
     const isTransposedSubtotalCell =
         isTableMeasureValue(colData) && isSubtotalRowDefinition(colData.rowDefinition);
 
-    const isDrillable = isCellDrillable(colDef as AgGridColumnDef, data, drillableItems ?? [], dv);
+    const isDrillable = isCellDrillable(colDef as AgGridColumnDef, data, drillableItems ?? [], effectiveDv);
     const isAttribute = isTableAttributeHeaderValue(colData);
     const isSubtotal = isTableSubtotalMeasureValue(colData) || isTransposedSubtotalCell;
     const isColSubtotal = isColumnSubtotal(colData);

@@ -3,18 +3,15 @@
 import { defineMessages, useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Dropdown, UiIconButton, UiMenu, UiSubmenuHeader } from "@gooddata/sdk-ui-kit";
+import { Dropdown, UiIconButton, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { ambientContextSelector, userContextSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import { addContextReferenceAction } from "../store/chatWindow/chatWindowSlice.js";
 import { type RootState } from "../store/types.js";
 import { type IGenAIContextObject } from "../types.js";
 
+import { GenAiChatContextChooserBody } from "./GenAiChatContextChooserBody.js";
 import { useContextItems } from "./hooks/useContextItems.js";
-
-type GenAiChatContextChooserOwnProps = {
-    onAddContext?: (context: IGenAIContextObject) => void;
-};
 
 const msgs = defineMessages({
     add: {
@@ -22,12 +19,18 @@ const msgs = defineMessages({
     },
 });
 
+type GenAiChatContextChooserOwnProps = {
+    onAddContext?: (context: IGenAIContextObject) => void;
+};
+
 export function GenAiChatContextChooser({ onAddContext }: GenAiChatContextChooserOwnProps) {
     const intl = useIntl();
     const dispatch = useDispatch();
+    const titleId = useIdPrefixed("context-chooser-title");
     const ambient = useSelector((state: RootState) => ambientContextSelector(state));
     const active = useSelector((state: RootState) => userContextSelector(state));
-    const items = useContextItems(ambient, active);
+    const inputItems = useContextItems(ambient, active);
+    const addContextLabel = intl.formatMessage(msgs.add);
 
     if (!ambient) {
         return null;
@@ -50,37 +53,26 @@ export function GenAiChatContextChooser({ onAddContext }: GenAiChatContextChoose
                         isActive={isOpen}
                         accessibilityConfig={{
                             ...accessibilityConfig,
-                            ariaLabel: intl.formatMessage(msgs.add),
+                            ariaLabel: addContextLabel,
                         }}
                         onClick={toggleDropdown}
-                        isDisabled={!items.length}
+                        isDisabled={!inputItems.length}
                     />
                 )}
                 renderBody={({ closeDropdown, ariaAttributes }) => (
-                    <UiMenu<{ interactive: IGenAIContextObject }>
-                        dataTestId="agent_dropdown_menu"
-                        items={items}
-                        size="medium"
-                        minWidth={245}
-                        maxWidth={245}
-                        containerTopPadding="none"
-                        containerBottomPadding="none"
-                        MenuHeader={ContextMenuHeader}
+                    <GenAiChatContextChooserBody
+                        inputItems={inputItems}
+                        title={addContextLabel}
+                        titleId={titleId}
                         ariaAttributes={ariaAttributes}
+                        closeDropdown={closeDropdown}
                         onSelect={(item) => {
-                            dispatch(addContextReferenceAction({ object: item.data }));
-                            onAddContext?.(item.data);
-                            closeDropdown();
+                            dispatch(addContextReferenceAction({ object: item }));
+                            onAddContext?.(item);
                         }}
                     />
                 )}
             />
         </div>
     );
-}
-
-function ContextMenuHeader() {
-    const intl = useIntl();
-
-    return <UiSubmenuHeader title={intl.formatMessage(msgs.add)} height="medium" />;
 }

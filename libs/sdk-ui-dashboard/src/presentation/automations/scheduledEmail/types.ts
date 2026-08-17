@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type ComponentType } from "react";
+import { type ComponentType, type KeyboardEvent, type Ref } from "react";
 
 import {
     type FilterContextItem,
@@ -13,6 +13,8 @@ import {
     type IWidget,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
+
+import { type IAutomationDialogHeaderProps, type ISlotProps } from "../shared/slots/types.js";
 
 ///
 /// Component props
@@ -148,6 +150,64 @@ export interface IScheduledEmailDialogProps {
      * Callback to be called, when schedule fails to delete.
      */
     onDeleteError?: (error: GoodDataSdkError) => void;
+}
+
+/**
+ * Props of the default scheduled email dialog's header region (the title input row).
+ *
+ * @alpha
+ */
+export interface IScheduledEmailDialogHeaderProps extends IAutomationDialogHeaderProps {
+    /**
+     * Called on key-down inside the title input.
+     */
+    onTitleKeyDown: (event: KeyboardEvent) => void;
+
+    /**
+     * Called when the header's back button is pressed.
+     */
+    onBack?: () => void;
+}
+
+/**
+ * The exact props the default dialog renders its header with, including the dialog's
+ * initial-focus ref.
+ *
+ * @alpha
+ */
+export type ScheduledEmailDialogHeaderDefaultProps = IScheduledEmailDialogHeaderProps & {
+    ref?: Ref<HTMLInputElement>;
+};
+
+/**
+ * Section-level overrides of the default scheduled email dialog.
+ *
+ * @alpha
+ */
+export interface IScheduledEmailDialogSlots {
+    /**
+     * Wraps or replaces the dialog header (the title input row). Must have a stable reference
+     * identity — see {@link ISlotProps}.
+     */
+    Header?: ComponentType<ISlotProps<ScheduledEmailDialogHeaderDefaultProps>>;
+}
+
+/**
+ * Props of {@link DefaultScheduledEmailDialog}.
+ *
+ * @remarks
+ * Extends the shared {@link IScheduledEmailDialogProps} with customization only the default implementation
+ * supports. Slots render only in the fully rendered dialog: not while the dialog context reports
+ * loading, and not while the stale-filters confirmation step is shown.
+ *
+ * @alpha
+ */
+export interface IDefaultScheduledEmailDialogProps extends IScheduledEmailDialogProps {
+    /**
+     * Section-level overrides. Each slot receives `{ Default, defaultProps }` and may render its own
+     * content (replace) or `<Default {...defaultProps} />` inside its own markup (wrap).
+     */
+    slots?: IScheduledEmailDialogSlots;
 }
 
 /**

@@ -4,7 +4,12 @@ import { type ReactElement } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
-import { DashboardParameterModeValues, type IDashboardParameter, objRefToString } from "@gooddata/sdk-model";
+import {
+    DashboardParameterModeValues,
+    type IDashboardParameter,
+    getParameterValueTitle,
+    objRefToString,
+} from "@gooddata/sdk-model";
 import { Dropdown, ParameterControl, ParameterControlButton, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
@@ -55,6 +60,7 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
     }
 
     const name = parameter.label ?? workspaceParameter.title;
+    const valueTitle = getParameterValueTitle(definition, runtimeOverride);
     const dragItem = { type: "parameter", ref: parameter.ref } as const;
     const warningTooltip = reconciliation === "reset" ? intl.formatMessage(messages.resetWarning) : undefined;
 
@@ -63,7 +69,7 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
             <DraggableChipSource dragItem={dragItem} canDrag={isInEditMode}>
                 <ParameterControlButton
                     name={name}
-                    value={runtimeOverride}
+                    value={valueTitle}
                     isActive={false}
                     isDraggable={isInEditMode}
                     warningTooltip={warningTooltip}
@@ -82,7 +88,7 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
                 renderButton={({ isOpen, toggleDropdown, dropdownId }) => (
                     <ParameterControlButton
                         name={name}
-                        value={runtimeOverride}
+                        value={valueTitle}
                         isActive={isOpen}
                         isDraggable={isInEditMode}
                         dropdownId={dropdownId}

@@ -17,18 +17,6 @@ declare module "vitest" {
     interface AsymmetricMatchersContaining extends TestingLibraryMatchers<unknown, unknown> {}
 }
 
-global.ResizeObserver = class ResizeObserver {
-    observe() {
-        return null;
-    }
-    unobserve() {
-        return null;
-    }
-    disconnect() {
-        return null;
-    }
-};
-
 global.IntersectionObserver = class IntersectionObserver {
     observe() {
         return null;

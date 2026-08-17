@@ -32,6 +32,8 @@ export type SingleSelectListItemType = "header" | "separator";
  */
 export interface ISingleSelectListItemProps {
     title?: string;
+    /** Rendered right after the title, e.g. a "(Default)" marker. */
+    suffix?: ReactNode;
     icon?: string | ReactNode;
     type?: SingleSelectListItemType;
     className?: string;
@@ -129,6 +131,7 @@ export const SingleSelectListItem = forwardRef<
 >(function SingleSelectListItem(props, ref) {
     const {
         title,
+        suffix,
         icon,
         type,
         className,
@@ -247,6 +250,7 @@ export const SingleSelectListItem = forwardRef<
         <>
             {iconRenderer ? iconRenderer(icon) : renderIcon(icon)}
             {renderTitle()}
+            {suffix ? <span className="gd-list-item-suffix">{suffix}</span> : null}
             {infoRenderer ? infoRenderer(info) : renderInfo()}
         </>
     );
