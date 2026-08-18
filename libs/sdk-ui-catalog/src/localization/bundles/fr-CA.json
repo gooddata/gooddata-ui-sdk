@@ -212,6 +212,7 @@
     "analyticsCatalog.asCode.dialog.edit.submit": "Enregistrer",
     "analyticsCatalog.asCode.dialog.cancel": "Annuler",
     "analyticsCatalog.asCode.dialog.unrepresentable": "Cet objet utilise du contenu qui ne peut pas être représenté sous forme de code. Il est affiché en lecture seule; utilisez l’éditeur standard pour le modifier.",
+    "analyticsCatalog.asCode.dialog.autoFormat": "Format automatique",
     "analyticsCatalog.metric.create.defaultTitle": "Ma métrique",
     "analyticsCatalog.metric.create.success": "Métrique créée.",
     "analyticsCatalog.metric.update.success": "Métrique enregistrée.",

@@ -274,4 +274,49 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         const widget = request.aiSendMessageRequest.userContext?.view?.dashboard?.widgets?.[0];
         expect(widget).toHaveProperty("content", "");
     });
+
+    it("should send the active tab id when the dashboard has tabs", async () => {
+        const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
+            workspaceId: "workspace",
+            conversationId: "conversation",
+            userQuestion: "Summarize",
+            userContext: {
+                view: {
+                    dashboard: {
+                        ref: idRef("dashboard-1", "analyticalDashboard"),
+                        activeTabId: "tab-2",
+                        widgets: [],
+                    },
+                },
+            },
+        });
+
+        query.stream();
+
+        const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
+        const dashboard = request.aiSendMessageRequest.userContext?.view?.dashboard;
+        expect(dashboard).toHaveProperty("activeTabId", "tab-2");
+    });
+
+    it("should omit the active tab id when the dashboard has no tabs", async () => {
+        const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
+            workspaceId: "workspace",
+            conversationId: "conversation",
+            userQuestion: "Summarize",
+            userContext: {
+                view: {
+                    dashboard: {
+                        ref: idRef("dashboard-1", "analyticalDashboard"),
+                        widgets: [],
+                    },
+                },
+            },
+        });
+
+        query.stream();
+
+        const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
+        const dashboard = request.aiSendMessageRequest.userContext?.view?.dashboard;
+        expect(dashboard).not.toHaveProperty("activeTabId");
+    });
 });

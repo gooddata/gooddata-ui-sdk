@@ -1,7 +1,12 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { type CatalogItem, type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
+import {
+    type CatalogItem,
+    type GenAIObjectType,
+    type IColorPalette,
+    type IListedDashboard,
+} from "@gooddata/sdk-model";
 
 import type { GenAIAssistantMode, LinkHandlerEvent } from "../components/ConfigContext.js";
 
@@ -16,6 +21,7 @@ export class OptionsDispatcher {
     private includeTags: string[] | undefined = undefined;
     private excludeTags: string[] | undefined = undefined;
     private catalogItems: CatalogItem[] | undefined = undefined;
+    private dashboards: IListedDashboard[] | undefined = undefined;
     private mode: GenAIAssistantMode | undefined = undefined;
     private onLinkClick: ((linkClickEvent: LinkHandlerEvent) => string | undefined) | undefined = undefined;
     private allowNativeLinks: boolean | undefined = undefined;
@@ -80,6 +86,14 @@ export class OptionsDispatcher {
 
     public getCatalogItems(): CatalogItem[] | undefined {
         return this.catalogItems;
+    }
+
+    public setDashboards(dashboards: IListedDashboard[] | undefined): void {
+        this.dashboards = dashboards;
+    }
+
+    public getDashboards(): IListedDashboard[] | undefined {
+        return this.dashboards;
     }
 
     public setMode(mode: GenAIAssistantMode | undefined): void {

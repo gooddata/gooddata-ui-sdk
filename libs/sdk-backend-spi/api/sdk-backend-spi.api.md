@@ -723,6 +723,7 @@ export type IChatConversationAppliedMemoryItem = {
 export type IChatConversationApplyMemoryDetail = {
     category: "applyMemory";
     items: IChatConversationAppliedMemoryItem[];
+    durationMs?: number;
 };
 
 // @internal

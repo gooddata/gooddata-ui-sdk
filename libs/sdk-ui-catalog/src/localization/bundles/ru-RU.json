@@ -212,6 +212,7 @@
     "analyticsCatalog.asCode.dialog.edit.submit": "Сохранить",
     "analyticsCatalog.asCode.dialog.cancel": "Отмена",
     "analyticsCatalog.asCode.dialog.unrepresentable": "Этот объект использует содержимое, которое невозможно представить в виде кода. Оно отображается только для чтения; используйте стандартный редактор, чтобы изменить его.",
+    "analyticsCatalog.asCode.dialog.autoFormat": "Автоформат",
     "analyticsCatalog.metric.create.defaultTitle": "Моя метрика",
     "analyticsCatalog.metric.create.success": "Метрика создана.",
     "analyticsCatalog.metric.update.success": "Метрика сохранена.",

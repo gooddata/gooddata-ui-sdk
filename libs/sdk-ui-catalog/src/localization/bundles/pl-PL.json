@@ -212,6 +212,7 @@
     "analyticsCatalog.asCode.dialog.edit.submit": "Zapisz",
     "analyticsCatalog.asCode.dialog.cancel": "Anuluj",
     "analyticsCatalog.asCode.dialog.unrepresentable": "Ten obiekt wykorzystuje zawartość, której nie można przedstawić jako kod. Jest wyświetlany w trybie tylko do odczytu; aby go zmienić, użyj standardowego edytora.",
+    "analyticsCatalog.asCode.dialog.autoFormat": "Automatyczne formatowanie",
     "analyticsCatalog.metric.create.defaultTitle": "Moja metryka",
     "analyticsCatalog.metric.create.success": "Metryka utworzona.",
     "analyticsCatalog.metric.update.success": "Metryka zapisana.",

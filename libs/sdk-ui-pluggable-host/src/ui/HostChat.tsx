@@ -45,6 +45,7 @@ export interface IHostChatLink {
 export interface IHostChatContext {
     includeTags?: string[];
     excludeTags?: string[];
+    disabled?: boolean;
     dialogPosition?: "left" | "right";
     embedded?: boolean;
     /**
@@ -113,6 +114,7 @@ export function HostChat({
         telemetry: shellTelemetry,
         dialogPosition: context?.dialogPosition,
         embedded: context?.embedded,
+        disabled: context?.disabled,
         onAppLinkClick,
         onAppEventReceive,
     });

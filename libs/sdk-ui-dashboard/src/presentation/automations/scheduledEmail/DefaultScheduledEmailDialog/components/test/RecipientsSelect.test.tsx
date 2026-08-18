@@ -94,10 +94,23 @@ function renderComponent(
     );
 }
 
+/**
+ * The search input.
+ *
+ * Role queries in this file pass `hidden: true`: otherwise `getByRole` filters candidates through
+ * happy-dom's `getComputedStyle`, which walks the whole tree and dominated this file's runtime.
+ * Nothing rendered here is hidden from the accessibility tree, so the filter only ever cost time.
+ */
+function combobox() {
+    return screen.getByRole("combobox", { hidden: true });
+}
+
+/**
+ * Opens the menu the way a keyboard user does. React-select opens on the key event alone, so no
+ * separate focus event is needed.
+ */
 function openMenu() {
-    const input = screen.getByRole("combobox");
-    fireEvent.focus(input);
-    fireEvent.keyDown(input, { key: "ArrowDown", code: "ArrowDown" });
+    fireEvent.keyDown(combobox(), { key: "ArrowDown", code: "ArrowDown" });
 }
 
 /**
@@ -183,7 +196,7 @@ describe("RecipientsSelect", () => {
         );
         renderComponent(createBackend(query));
 
-        const input = screen.getByRole("combobox");
+        const input = combobox();
         fireEvent.change(input, { target: { value: "j" } });
         fireEvent.change(input, { target: { value: "jo" } });
         fireEvent.change(input, { target: { value: "john" } });
@@ -208,7 +221,7 @@ describe("RecipientsSelect", () => {
             value: [userRecipient("john", "john@example.com", "John Doe")],
         });
 
-        fireEvent.change(screen.getByRole("combobox"), { target: { value: "john" } });
+        fireEvent.change(combobox(), { target: { value: "john" } });
         await settleSearch();
 
         expect(screen.getByText("John Smith")).toBeInTheDocument();
@@ -227,7 +240,7 @@ describe("RecipientsSelect", () => {
         await settle();
         expect(screen.getByText("John Doe")).toBeInTheDocument();
 
-        fireEvent.change(screen.getByRole("combobox"), { target: { value: "jane" } });
+        fireEvent.change(combobox(), { target: { value: "jane" } });
 
         expect(screen.getByLabelText("loading")).toBeInTheDocument();
         expect(screen.queryByText("John Doe")).not.toBeInTheDocument();
@@ -243,7 +256,7 @@ describe("RecipientsSelect", () => {
         const { query } = createUsersQueryStub(async () => []);
         renderComponent(createBackend(query));
 
-        const input = screen.getByRole("combobox");
+        const input = combobox();
         fireEvent.change(input, { target: { value: "guest@example.com" } });
         await settleSearch();
 
@@ -255,7 +268,7 @@ describe("RecipientsSelect", () => {
         const { query, requests } = createUsersQueryStub(async () => []);
         renderComponent(createBackend(query), { allowExternalRecipients: false });
 
-        const input = screen.getByRole("combobox");
+        const input = combobox();
         fireEvent.change(input, { target: { value: "guest@example.com" } });
         await settleSearch();
 
@@ -310,7 +323,7 @@ describe("RecipientsSelect", () => {
         await settle();
         expect(screen.getByText("Error: Unable to load users — try again later.")).toBeInTheDocument();
 
-        fireEvent.keyDown(screen.getByRole("combobox"), { key: "Escape", code: "Escape" });
+        fireEvent.keyDown(combobox(), { key: "Escape", code: "Escape" });
         openMenu();
         await settle();
 
@@ -332,7 +345,7 @@ describe("RecipientsSelect", () => {
         await settle();
         expect(screen.getByText("Error: Unable to load users — try again later.")).toBeInTheDocument();
 
-        const input = screen.getByRole("combobox");
+        const input = combobox();
         fireEvent.change(input, { target: { value: "j" } });
         fireEvent.change(input, { target: { value: "jo" } });
         expect(requests).toHaveLength(1);
@@ -354,7 +367,7 @@ describe("RecipientsSelect", () => {
         await settle();
         expect(screen.getByText("John Doe")).toBeInTheDocument();
 
-        fireEvent.keyDown(screen.getByRole("combobox"), { key: "Escape", code: "Escape" });
+        fireEvent.keyDown(combobox(), { key: "Escape", code: "Escape" });
         await advance(IDLE_WINDOW);
 
         expect(requests).toHaveLength(1);
@@ -390,7 +403,7 @@ describe("RecipientsSelect", () => {
         await settle();
         expect(screen.getByText("Me Myself")).toBeInTheDocument();
 
-        fireEvent.change(screen.getByRole("combobox"), { target: { value: "nobody" } });
+        fireEvent.change(combobox(), { target: { value: "nobody" } });
         await settle();
 
         expect(screen.getByText("No matching users or groups.")).toBeInTheDocument();
@@ -406,16 +419,16 @@ describe("RecipientsSelect", () => {
         );
         renderComponent(createBackend(query));
 
-        expect(screen.getByRole("status")).toBeEmptyDOMElement();
+        expect(screen.getByRole("status", { hidden: true })).toBeEmptyDOMElement();
 
         openMenu();
-        fireEvent.change(screen.getByRole("combobox"), { target: { value: "john" } });
+        fireEvent.change(combobox(), { target: { value: "john" } });
 
         await settleSearch();
         expect(screen.getByText("John Doe")).toBeInTheDocument();
 
         await advance(ANNOUNCEMENT_DEBOUNCE);
-        expect(screen.getByRole("status")).toHaveTextContent("1 result: John Doe");
+        expect(screen.getByRole("status", { hidden: true })).toHaveTextContent("1 result: John Doe");
     });
 
     it("discards a stale response resolving after a newer search", async () => {
@@ -433,7 +446,7 @@ describe("RecipientsSelect", () => {
         await settle();
         expect(requests).toHaveLength(1);
 
-        fireEvent.change(screen.getByRole("combobox"), { target: { value: "john" } });
+        fireEvent.change(combobox(), { target: { value: "john" } });
         await settleSearch();
         expect(screen.getByText("John Doe")).toBeInTheDocument();
 

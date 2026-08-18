@@ -26,6 +26,7 @@ import type { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
 import { IGenAIUserContext } from '@gooddata/sdk-model';
 import type { IGenAIVisualization } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
+import { IListedDashboard } from '@gooddata/sdk-model';
 import type { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import type { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { IUiButtonProps } from '@gooddata/sdk-ui-kit';
@@ -315,6 +316,7 @@ export type GenAiStoreProps = {
     backend?: IAnalyticalBackend;
     workspace?: string;
     catalogItems?: CatalogItem[];
+    dashboards?: IListedDashboard[];
     settings?: IUserWorkspaceSettings;
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
     allowNativeLinks?: boolean;

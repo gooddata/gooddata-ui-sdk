@@ -11,13 +11,21 @@ import {
     type IDashboard,
     type IGenAIUserContext,
     type IInsight,
+    type IListedDashboard,
+    isIdentifierRef,
+    serializeObjRef,
 } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
 import { addAmbientContextReferences, addContextReference } from "../../context/addContextReference.js";
 import { mergeContexts } from "../../context/build.js";
 import { removeContextReference, removeUserContextReferences } from "../../context/removeContextReference.js";
-import { type IGenAIContextObject, type StoreContext } from "../../types.js";
+import {
+    type ContextDashboardsState,
+    type IGenAIContextObject,
+    type IGenAIDashboardListItem,
+    type StoreContext,
+} from "../../types.js";
 import { clearThreadAction, startNewConversationAction } from "../messages/messagesSlice.js";
 
 type ChatWindowSliceState = {
@@ -58,6 +66,10 @@ type ChatWindowSliceState = {
      */
     catalogItems?: CatalogItem[];
     /**
+     * Dashboards offered by the context chooser, on top of the one being viewed.
+     */
+    contextDashboards: ContextDashboardsState;
+    /**
      * Only objects with these tags will be included
      */
     includeTags?: string[];
@@ -87,6 +99,16 @@ type ChatWindowSliceState = {
 
 export const chatWindowSliceName = "chatWindow";
 
+function toDashboardListItem(dashboard: IListedDashboard): IGenAIDashboardListItem {
+    const ref = dashboard.ref;
+
+    return {
+        id: isIdentifierRef(ref) ? ref.identifier : ref.uri,
+        ref,
+        title: dashboard.title,
+    };
+}
+
 const initialState: ChatWindowSliceState = {
     isOpen: false,
     isHistory: false,
@@ -97,6 +119,12 @@ const initialState: ChatWindowSliceState = {
     includeTags: undefined,
     excludeTags: undefined,
     allowedRelationshipTypes: undefined,
+    contextDashboards: {
+        items: [],
+        loadedPages: 0,
+        hasNextPage: true,
+        isLoading: false,
+    },
     context: {
         ambient: undefined,
         active: undefined,
@@ -113,6 +141,7 @@ export const getInitialChatWindowState = ({
     allowInteractionIntelligence?: boolean;
 } = {}): ChatWindowSliceState => ({
     ...initialState,
+    contextDashboards: { ...initialState.contextDashboards, items: [] },
     isPreview,
     allowInteractionIntelligence,
 });
@@ -177,6 +206,48 @@ const chatWindowSlice = createSlice({
         },
         setCatalogItemsActions: (state, { payload }: PayloadAction<CatalogItem[] | undefined>) => {
             state.catalogItems = payload;
+        },
+        initContextDashboardsAction: (state) => state,
+        loadContextDashboardsNextPageAction: (state) => state,
+        setContextDashboardsAction: (
+            state,
+            { payload: { items } }: PayloadAction<{ items: IListedDashboard[] }>,
+        ) => {
+            state.contextDashboards = {
+                items: items.map(toDashboardListItem),
+                loadedPages: 1,
+                hasNextPage: false,
+                isLoading: false,
+            };
+        },
+        contextDashboardsLoadingAction: (state) => {
+            state.contextDashboards.isLoading = true;
+        },
+        contextDashboardsPageLoadedAction: (
+            state,
+            {
+                payload: { items, hasNextPage },
+            }: PayloadAction<{ items: IListedDashboard[]; hasNextPage: boolean }>,
+        ) => {
+            const known = new Set(state.contextDashboards.items.map((item) => serializeObjRef(item.ref)));
+            const newItems = items.map(toDashboardListItem).filter((item) => {
+                const refKey = serializeObjRef(item.ref);
+
+                if (known.has(refKey)) {
+                    return false;
+                }
+
+                known.add(refKey);
+                return true;
+            });
+
+            state.contextDashboards.items.push(...newItems);
+            state.contextDashboards.loadedPages += 1;
+            state.contextDashboards.hasNextPage = hasNextPage;
+            state.contextDashboards.isLoading = false;
+        },
+        contextDashboardsLoadFailedAction: (state) => {
+            state.contextDashboards.isLoading = false;
         },
         setAllowedRelationshipTypesAction: (
             state,
@@ -265,6 +336,12 @@ export const {
     setObjectTypesAction,
     setTagsAction,
     setCatalogItemsActions,
+    initContextDashboardsAction,
+    loadContextDashboardsNextPageAction,
+    setContextDashboardsAction,
+    contextDashboardsLoadingAction,
+    contextDashboardsPageLoadedAction,
+    contextDashboardsLoadFailedAction,
     setAllowedRelationshipTypesAction,
     onDefinitionReceivedAction,
     addContextReferenceAction,

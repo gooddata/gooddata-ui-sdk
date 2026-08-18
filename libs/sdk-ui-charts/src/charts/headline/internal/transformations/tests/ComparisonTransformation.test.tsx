@@ -1,10 +1,11 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
+import { RawIntlProvider } from "react-intl";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { type ExplicitDrill, createIntlMock, withIntlForTest } from "@gooddata/sdk-ui";
+import { type ExplicitDrill, createIntlMock } from "@gooddata/sdk-ui";
 
 import { recordedDataFacade } from "../../../../../../testUtils/recordings.js";
 import { type IChartConfig } from "../../../../../interfaces/chartConfig.js";
@@ -16,11 +17,13 @@ import { getComparisonBaseHeadlineData } from "../../utils/ComparisonTransformat
 import { ComparisonTransformation } from "../ComparisonTransformation.js";
 import { useFireDrillEvent } from "../useFiredDrillEvent.js";
 
+// The assertions below only check the props passed down to BaseHeadline, so it is stubbed out
+// completely - rendering the real headline subtree here would only duplicate BaseHeadline's own tests.
 vi.mock("../../headlines/baseHeadline/BaseHeadline.js", async (importOriginal) => {
     const original = await importOriginal();
     return {
         ...(original as object),
-        BaseHeadline: vi.fn((original as { BaseHeadline: () => void }).BaseHeadline),
+        BaseHeadline: vi.fn(() => null),
     };
 });
 
@@ -32,14 +35,29 @@ vi.mock("../useFiredDrillEvent.js", async (importOriginal) => {
     };
 });
 
+// Building the intl shape resolves the whole message map, so it is created once and shared by
+// every test - both for the expected data and for the rendered component.
+const intl = createIntlMock();
+
+// Several scenarios reuse the same recording; converting it to a facade is not free, so cache it.
+const dataFacadeCache = new Map<ScenarioRecording, ReturnType<typeof recordedDataFacade>>();
+const cachedDataFacade = (recorded: ScenarioRecording) => {
+    if (!dataFacadeCache.has(recorded)) {
+        dataFacadeCache.set(recorded, recordedDataFacade(recorded));
+    }
+    return dataFacadeCache.get(recorded)!;
+};
+
 describe("ComparisonTransformation", () => {
-    const renderTransformation = (props: IHeadlineTransformationProps) => {
-        const WrappedHeadlineTransformation = withIntlForTest(ComparisonTransformation);
-        return render(<WrappedHeadlineTransformation {...props} />);
-    };
+    const renderTransformation = (props: IHeadlineTransformationProps) =>
+        render(
+            <RawIntlProvider value={intl}>
+                <ComparisonTransformation {...props} />
+            </RawIntlProvider>,
+        );
 
     afterEach(() => {
-        vi.resetAllMocks();
+        vi.clearAllMocks();
     });
 
     it.each<[string, ScenarioRecording, IComparison?, ExplicitDrill[]?]>(TEST_COMPARISON_TRANSFORMATIONS)(
@@ -51,14 +69,13 @@ describe("ComparisonTransformation", () => {
             drillableItems: ExplicitDrill[] = [],
         ) => {
             const mockOnAfterRender = vi.fn();
-            const mockIntl = createIntlMock();
             const MockBaseHeadline = vi.mocked(BaseHeadline);
             const mockHandleFiredDrillEvent = vi.fn();
             vi.mocked(useFireDrillEvent).mockReturnValue({
                 handleFiredDrillEvent: mockHandleFiredDrillEvent,
             });
 
-            const dataFacade = recordedDataFacade(recorded);
+            const dataFacade = cachedDataFacade(recorded);
             const config: IChartConfig = {
                 comparison,
             };
@@ -66,7 +83,7 @@ describe("ComparisonTransformation", () => {
                 dataFacade.dataView,
                 drillableItems,
                 config.comparison!,
-                mockIntl,
+                intl,
             );
 
             renderTransformation({

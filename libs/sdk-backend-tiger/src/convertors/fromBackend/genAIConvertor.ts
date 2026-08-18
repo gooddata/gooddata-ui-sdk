@@ -341,6 +341,7 @@ export function convertChatConversationItemDetailFromBackend(
         case "applyMemory":
             return {
                 category: "applyMemory",
+                durationMs: detail.durationMs ?? undefined,
                 items: (detail.items ?? []).map((item) => ({
                     title: item.title,
                     // The backend spells the strategy in upper case; the domain shape keeps the

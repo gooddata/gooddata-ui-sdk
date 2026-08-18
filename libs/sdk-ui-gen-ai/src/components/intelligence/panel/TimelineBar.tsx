@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 
 import { UiTooltip } from "@gooddata/sdk-ui-kit";
 
@@ -24,10 +24,12 @@ export interface ITimelineBarProps {
  * order. Purely informational — a tile is never clickable, only hoverable when `renderTooltip`
  * is given. Tiles in `highlightedStepIndexes` render highlighted; every other tile dims once
  * that list is non-empty, and all tiles render at the same neutral shade when it's absent (the
- * list view's resting state).
+ * list view's resting state). Hovering a tile takes the highlight over while it lasts — only
+ * the hovered tile stays highlighted, whatever the surrounding view has highlighted.
  */
 export function TimelineBar({ segments, highlightedStepIndexes, renderTooltip }: ITimelineBarProps) {
-    const highlighted = new Set(highlightedStepIndexes);
+    const [hoveredStepIndex, setHoveredStepIndex] = useState<number | undefined>(undefined);
+    const highlighted = new Set(hoveredStepIndex === undefined ? highlightedStepIndexes : [hoveredStepIndex]);
     // Widths sum to exactly 100%, so each tile has to give back its share of the 1px gaps
     // between them — otherwise the track overflows and clips its last tile.
     const totalGapPx = TIMELINE_GAP_PX * Math.max(segments.length - 1, 0);
@@ -58,7 +60,13 @@ export function TimelineBar({ segments, highlightedStepIndexes, renderTooltip }:
                         arrowPlacement="bottom"
                         variant="none"
                         anchorWrapperStyles={{ flex: "0 0 auto", width: style.width }}
-                        anchor={<div className={className} />}
+                        anchor={
+                            <div
+                                className={className}
+                                onMouseEnter={() => setHoveredStepIndex(segment.stepIndex)}
+                                onMouseLeave={() => setHoveredStepIndex(undefined)}
+                            />
+                        }
                         content={() => renderTooltip(segment)}
                     />
                 );

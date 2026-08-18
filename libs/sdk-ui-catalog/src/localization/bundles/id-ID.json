@@ -212,6 +212,7 @@
     "analyticsCatalog.asCode.dialog.edit.submit": "Simpan",
     "analyticsCatalog.asCode.dialog.cancel": "Batal",
     "analyticsCatalog.asCode.dialog.unrepresentable": "Objek ini menggunakan konten yang tidak dapat direpresentasikan sebagai kode. Objek ini ditampilkan sebagai hanya baca; gunakan editor standar untuk mengubahnya.",
+    "analyticsCatalog.asCode.dialog.autoFormat": "Format otomatis",
     "analyticsCatalog.metric.create.defaultTitle": "Metrik saya",
     "analyticsCatalog.metric.create.success": "Metrik berhasil dibuat.",
     "analyticsCatalog.metric.update.success": "Metrik berhasil disimpan.",

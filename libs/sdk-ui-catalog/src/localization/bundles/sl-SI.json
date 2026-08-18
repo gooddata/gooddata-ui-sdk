@@ -212,6 +212,7 @@
     "analyticsCatalog.asCode.dialog.edit.submit": "Shrani",
     "analyticsCatalog.asCode.dialog.cancel": "Prekliči",
     "analyticsCatalog.asCode.dialog.unrepresentable": "Ta predmet uporablja vsebino, ki je ni mogoče predstaviti kot kodo. Prikazan je samo za branje; za spreminjanje uporabite standardni urejevalnik.",
+    "analyticsCatalog.asCode.dialog.autoFormat": "Samodejno oblikovanje",
     "analyticsCatalog.metric.create.defaultTitle": "Moja metrika",
     "analyticsCatalog.metric.create.success": "Metrika je ustvarjena.",
     "analyticsCatalog.metric.update.success": "Metrika je shranjena.",

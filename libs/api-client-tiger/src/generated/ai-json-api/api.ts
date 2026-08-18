@@ -357,6 +357,7 @@ export interface AiApplyMemoryDetail {
      * Category this body belongs to.
      */
     'category'?: AiApplyMemoryDetailCategoryEnum;
+    'durationMs'?: number | null;
     /**
      * Memory items injected into this turn\'s prompt.
      */
@@ -2116,6 +2117,7 @@ export interface AiUserContext {
 }
 
 export interface AiUserContextDashboard {
+    'activeTabId'?: string | null;
     'definition'?: object | null;
     'filters'?: Array<AiVisualizationFilter> | null;
     'id': string;

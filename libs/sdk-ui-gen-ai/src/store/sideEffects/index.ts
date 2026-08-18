@@ -1,8 +1,12 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { call, fork, takeEvery, takeLatest } from "redux-saga/effects";
+import { call, fork, takeEvery, takeLatest, takeLeading } from "redux-saga/effects";
 
-import { setOpenAction } from "../chatWindow/chatWindowSlice.js";
+import {
+    initContextDashboardsAction,
+    loadContextDashboardsNextPageAction,
+    setOpenAction,
+} from "../chatWindow/chatWindowSlice.js";
 import {
     clearThreadAction,
     deleteConversationAction,
@@ -21,6 +25,7 @@ import {
 import { loadAgents } from "./loadAgents.js";
 import { loadCatalogItems } from "./loadCatalogItems.js";
 import { loadColorPalette } from "./loadColorPalette.js";
+import { initContextDashboards, loadContextDashboardsNextPage } from "./loadContextDashboards.js";
 import { loadSettings } from "./loadSettings.js";
 import { onChatOpenSync } from "./onChatOpenSync.js";
 import { onConversationDelete } from "./onConversationDelete.js";
@@ -58,6 +63,9 @@ export function* rootSaga() {
     yield takeEvery(renameConversationAction.type, onConversationRename);
     yield takeEvery(deleteConversationAction.type, onConversationDelete);
     yield takeEvery(evaluateMessageUpdateAction.type, onUserMessageUpdate);
+    //context chooser
+    yield takeLeading(initContextDashboardsAction.type, initContextDashboards);
+    yield takeLeading(loadContextDashboardsNextPageAction.type, loadContextDashboardsNextPage);
     //others
     yield takeEvery(setVerboseAction.type, onVerboseStore);
     yield fork(onEvent);

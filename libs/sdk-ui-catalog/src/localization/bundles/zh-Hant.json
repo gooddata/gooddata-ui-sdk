@@ -212,6 +212,7 @@
     "analyticsCatalog.asCode.dialog.edit.submit": "儲存",
     "analyticsCatalog.asCode.dialog.cancel": "取消",
     "analyticsCatalog.asCode.dialog.unrepresentable": "此物件使用無法表示為程式碼的內容。它會以唯讀方式顯示；請使用標準編輯器加以變更。",
+    "analyticsCatalog.asCode.dialog.autoFormat": "自動格式化",
     "analyticsCatalog.metric.create.defaultTitle": "我的指標",
     "analyticsCatalog.metric.create.success": "已建立指標。",
     "analyticsCatalog.metric.update.success": "已儲存指標。",

@@ -212,6 +212,7 @@
     "analyticsCatalog.asCode.dialog.edit.submit": "保存",
     "analyticsCatalog.asCode.dialog.cancel": "キャンセル",
     "analyticsCatalog.asCode.dialog.unrepresentable": "このオブジェクトは、コードとして表現できないコンテンツを使用しています。読み取り専用で表示されます。変更するには標準エディターを使用してください。",
+    "analyticsCatalog.asCode.dialog.autoFormat": "自動フォーマット",
     "analyticsCatalog.metric.create.defaultTitle": "マイメトリック",
     "analyticsCatalog.metric.create.success": "メトリックを作成しました。",
     "analyticsCatalog.metric.update.success": "メトリックを保存しました。",

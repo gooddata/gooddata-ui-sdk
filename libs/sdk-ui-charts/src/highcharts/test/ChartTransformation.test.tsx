@@ -6,9 +6,10 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { measureLocalId } from "@gooddata/sdk-model";
-import { IntlWrapper, VisualizationTypes, withIntlForTest } from "@gooddata/sdk-ui";
+import { DataViewFacade, IntlWrapper, VisualizationTypes, withIntlForTest } from "@gooddata/sdk-ui";
 
-import { pieChartWithMetricsOnlyFundata } from "../../../testUtils/fixtures.js";
+import { PieChartWithMetricsOnlyFundata } from "../../../testUtils/fixturesData/PieChartWithMetricsOnlyFundata.js";
+import { localDataView } from "../../../testUtils/localDataView.js";
 import { recordedDataFacade } from "../../../testUtils/recordings.js";
 import { type IChartConfig } from "../../interfaces/chartConfig.js";
 import { HighChartsRenderer } from "../adapter/HighChartsRenderer.js";
@@ -34,6 +35,7 @@ const BarChartViewAndStack = recordedDataFacade(
 const PieChartSingleMeasure = recordedDataFacade(
     ReferenceRecordings.Scenarios.PieChart.SingleMeasure as unknown as ScenarioRecording,
 );
+const pieChartWithMetricsOnlyFundata = DataViewFacade.for(localDataView(PieChartWithMetricsOnlyFundata));
 
 const customColorPalette = [
     {
@@ -57,10 +59,20 @@ const customColorPalette = [
 /**
  * This mock enables us to test props as parameters of the called chart function
  */
-vi.mock("../adapter/HighChartsRenderer", async () => ({
-    ...(await vi.importActual("../adapter/HighChartsRenderer")),
+vi.mock("../adapter/HighChartsRenderer", () => ({
     HighChartsRenderer: vi.fn(() => null),
+    // ChartTransformation only forwards these to HighChartsRenderer, which is stubbed out above, so they
+    // are never invoked. Stubbing them (instead of spreading importActual) keeps the real module - and its
+    // highcharts-react/react-measure dependencies - out of the test's import graph.
+    renderChart: vi.fn(),
+    renderLegend: vi.fn(),
 }));
+
+/**
+ * Created once for the whole file: withIntlForTest builds a brand new component type (and with it a
+ * fresh IntlProvider / message cache) on every call, so building it per test only adds work.
+ */
+const WrappedChartTransformation = withIntlForTest(ChartTransformation);
 
 describe("ChartTransformation", () => {
     beforeEach(() => {
@@ -83,8 +95,7 @@ describe("ChartTransformation", () => {
 
     function createComponent(customProps: any = {}) {
         const props = { ...defaultProps, ...customProps };
-        const Wrapped = withIntlForTest(ChartTransformation);
-        return <Wrapped {...props} />;
+        return <WrappedChartTransformation {...props} />;
     }
 
     it("should use custom renderer", () => {

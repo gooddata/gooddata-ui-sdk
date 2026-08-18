@@ -32,3 +32,4 @@ export {
     PluggableAppTelemetryProvider,
     usePluggableAppTelemetry,
 } from "./telemetry.js";
+export { subscribeAiAssistantDefault } from "./ai.js";

@@ -115,7 +115,7 @@ export interface IInteractionCategory {
     labelId?: string;
     /**
      * Indexes into {@link IInteractionIntelligence.steps} where this category occurred. Empty for
-     * a category that belongs to the response rather than any step, which highlights nothing.
+     * a category that ran outside any step and reported no duration, which highlights nothing.
      */
     stepIndexes: number[];
     /** The list row's right-hand summary. Absent renders no excerpt. */

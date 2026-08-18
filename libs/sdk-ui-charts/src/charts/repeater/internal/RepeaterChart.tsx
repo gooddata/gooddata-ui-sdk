@@ -161,6 +161,8 @@ export function RepeaterChart(props: IRepeaterChartProps) {
         config?.cellImageSizing,
         config?.hyperLinks,
         config?.inlineVisualizations,
+        config?.colorMapping,
+        config?.colorPalette,
     ]);
 
     const {
