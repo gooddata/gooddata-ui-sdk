@@ -61,6 +61,108 @@ export const areFiltersMatchedByIdentifier = (
     return getFilterLocalIdentifier(filter1) === getFilterLocalIdentifier(filter2);
 };
 
+/**
+ * Returns `filters` with the entry matching `changed` (by filter local identifier) replaced by
+ * `changed`; non-matching entries keep their references.
+ */
+export function applyFilterChange(
+    filters: FilterContextItem[],
+    changed: FilterContextItem,
+): FilterContextItem[] {
+    return filters.map((filter) => (areFiltersMatchedByIdentifier(filter, changed) ? changed : filter));
+}
+
+/**
+ * Returns `filters` without the entry matching `toRemove` (by filter local identifier).
+ */
+export function removeFilterFrom(
+    filters: FilterContextItem[],
+    toRemove: FilterContextItem,
+): FilterContextItem[] {
+    return filters.filter((filter) => !areFiltersMatchedByIdentifier(filter, toRemove));
+}
+
+function getCatalogItemTargets(
+    catalogItemRef: ObjRef,
+    attributes: ICatalogAttribute[],
+    dateDatasets: ICatalogDateDataset[],
+): { attributeDisplayForms: ObjRef[]; dateDataSets: ICatalogDateDataset[] } {
+    // The dropdown may emit a different display form than the filter uses, so all display forms
+    // of the owning attribute are candidates.
+    const attributeDisplayForms =
+        attributes
+            .find((attribute) => attribute.displayForms.some((df) => areObjRefsEqual(df.ref, catalogItemRef)))
+            ?.displayForms?.map((df) => df.ref) ?? [];
+    const dateDataSets = dateDatasets.filter((ds) => areObjRefsEqual(ds.dataSet.ref, catalogItemRef));
+    return { attributeDisplayForms, dateDataSets };
+}
+
+/**
+ * Resolves the filter to add for a catalog item picked in the Add dropdown, searching `candidates`
+ * (the not-yet-selected filters). Attribute items match through every display form of the owning
+ * attribute, date items through their dataset, measure items by the metric's own ref (MVF only).
+ */
+export function resolveFilterToAdd(
+    catalogItemRef: ObjRef,
+    candidates: FilterContextItem[],
+    attributes: ICatalogAttribute[],
+    dateDatasets: ICatalogDateDataset[],
+): FilterContextItem | undefined {
+    const { attributeDisplayForms, dateDataSets } = getCatalogItemTargets(
+        catalogItemRef,
+        attributes,
+        dateDatasets,
+    );
+
+    const attributeFilter = attributeDisplayForms.reduce<FilterContextItem | undefined>(
+        (acc, displayFormRef) => acc || getFilterByCatalogItemRef(displayFormRef, candidates),
+        undefined,
+    );
+    const dateFilter = dateDataSets.reduce<FilterContextItem | undefined>(
+        (acc, dateDataSet) => acc || getFilterByCatalogItemRef(dateDataSet.dataSet.ref, candidates),
+        undefined,
+    );
+    // For MVF: the dropdown emits the metric's catalog ref directly; look it up by ref.
+    const measureFilter = getFilterByCatalogItemRef(catalogItemRef, candidates);
+
+    return (
+        attributeFilter ||
+        dateFilter ||
+        (measureFilter && isDashboardMeasureValueFilter(measureFilter) ? measureFilter : undefined)
+    );
+}
+
+/**
+ * By-tab variant of {@link resolveFilterToAdd}: searches a tab's `availableFilters` by filter
+ * shape. Deliberately not converged with the flat resolver — the candidate sets differ
+ * (available vs non-selected), so unifying them changes duplicate-add behavior.
+ */
+export function resolveTabFilterToAdd(
+    catalogItemRef: ObjRef,
+    availableFilters: FilterContextItem[],
+    attributes: ICatalogAttribute[],
+    dateDatasets: ICatalogDateDataset[],
+): FilterContextItem | undefined {
+    const { attributeDisplayForms, dateDataSets } = getCatalogItemTargets(
+        catalogItemRef,
+        attributes,
+        dateDatasets,
+    );
+
+    return availableFilters.find((f) => {
+        if (isDashboardAttributeFilterItem(f)) {
+            return attributeDisplayForms.some((dfRef) =>
+                areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(f), dfRef),
+            );
+        } else if (isDashboardDateFilter(f)) {
+            return dateDataSets.some((ds) => areObjRefsEqual(f.dateFilter.dataSet, ds.dataSet.ref));
+        } else if (isDashboardMeasureValueFilter(f)) {
+            return areObjRefsEqual(f.dashboardMeasureValueFilter.measure, catalogItemRef);
+        }
+        return false;
+    });
+}
+
 export const getNonSelectedFilters = (
     allFilters: FilterContextItem[],
     selectedFilters: FilterContextItem[],

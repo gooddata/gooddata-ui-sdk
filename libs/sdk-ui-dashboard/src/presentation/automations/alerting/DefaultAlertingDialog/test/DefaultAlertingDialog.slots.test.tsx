@@ -8,10 +8,16 @@ import { AlertingDialogContextProvider } from "../../../contexts/AlertingDialogC
 import { AutomationsContextProvider } from "../../../contexts/AutomationsContext.js";
 import { type ISlotProps } from "../../../shared/slots/types.js";
 import { AlertingDialogStateProvider } from "../../state/AlertingDialogStateProvider.js";
-import { ALERTING_DIALOG_CONTEXT, AUTOMATIONS_CONTEXT, SENTINEL_MEASURE } from "../../state/test/fixtures.js";
+import {
+    ALERTING_DIALOG_CONTEXT,
+    AUTOMATIONS_CONTEXT,
+    NEXT_FILTER,
+    SENTINEL_MEASURE,
+} from "../../state/test/fixtures.js";
 import {
     type AlertAttribute,
     type AlertingDialogHeaderDefaultProps,
+    type IAlertingDialogFiltersProps,
     type IDefaultAlertingDialogProps,
 } from "../../types.js";
 import { DefaultAlertingDialog } from "../DefaultAlertingDialog.js";
@@ -32,6 +38,16 @@ vi.mock("../../../shared/automationFilters/hooks/useValidateExistingAutomationFi
     useValidateExistingAutomationFilters: mockUseValidateExistingAutomationFilters,
 }));
 
+// The filter bar's attribute dropdown reads the dashboard redux store, which this harness does not mount.
+vi.mock("../../../../filterBar/attributeFilter/addAttributeFilter/AttributesDropdown.js", () => ({
+    AttributesDropdown: () => null,
+}));
+
+// A selected attribute filter chip reads the dashboard redux store, which this harness does not mount.
+vi.mock("../../../../filterBar/attributeFilter/DefaultDashboardAttributeFilter.js", () => ({
+    DefaultDashboardAttributeFilter: () => null,
+}));
+
 // RecipientsSelect resolves users through useBackendStrict, which this harness does not provide.
 vi.mock(
     "../../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js",
@@ -45,12 +61,10 @@ vi.mock(
 // is read by the assertions below. Only the controls this fixture actually renders are stubbed — a single
 // notification channel, no supported attributes and the default trigger mode leave the rest unrendered.
 // The dialog shell, the alert state providers, the default header and the threshold input (the one control
-// a test drives) all still render for real, so the Header slot contract is exercised unchanged. Stubbing
-// AutomationFiltersSelect also takes its AttributesDropdown child — which reads the dashboard redux store
-// this harness does not mount — out of the tree, so that child needs no mock of its own.
-vi.mock("../../../shared/automationFilters/components/AutomationFiltersSelect.js", () => ({
-    AutomationFiltersSelect: () => null,
-}));
+// a test drives) all still render for real, so the Header slot contract is exercised unchanged.
+// AutomationFiltersSelect renders for real — the slots.Filters suite below asserts on its DOM and drives
+// onFiltersChange through it — so its AttributesDropdown/DefaultDashboardAttributeFilter children are
+// mocked individually above instead of being stubbed out with it.
 vi.mock("../components/AlertMeasureSelect.js", () => ({
     AlertMeasureSelect: () => null,
 }));
@@ -88,8 +102,36 @@ function OverLongTitleHeader({ defaultProps }: ISlotProps<AlertingDialogHeaderDe
     );
 }
 
+const DEFAULT_FILTERS_SELECTOR = ".s-gd-notifications-channels-dialog-automation-filters";
+
+function CustomFilters() {
+    return <div data-testid="custom-filters" />;
+}
+
+function WrappingFilters({ Default, defaultProps }: ISlotProps<IAlertingDialogFiltersProps>) {
+    return (
+        <>
+            <div data-testid="filters-banner" />
+            <Default {...defaultProps} />
+        </>
+    );
+}
+
+const capturedFiltersProps: IAlertingDialogFiltersProps[] = [];
+
+function RecordingFilters({ Default, defaultProps }: ISlotProps<IAlertingDialogFiltersProps>) {
+    capturedFiltersProps.push(defaultProps);
+    return (
+        <>
+            <button data-testid="set-filters" onClick={() => defaultProps.onFiltersChange([NEXT_FILTER])} />
+            <Default {...defaultProps} />
+        </>
+    );
+}
+
 beforeEach(() => {
     vi.clearAllMocks();
+    capturedFiltersProps.length = 0;
 
     mockUseAlertSupportedMetrics.mockReturnValue({
         measureFormatMap: {},
@@ -192,5 +234,67 @@ describe("DefaultAlertingDialog slots.Header", () => {
         expect(baseElement.querySelector(".s-gd-notifications-channels-dialog")).not.toBeNull();
         expect(within(baseElement).queryByTestId("custom-header")).toBeNull();
         expect(baseElement.querySelector(DEFAULT_HEADER_SELECTOR)).toBeNull();
+    });
+});
+
+describe("DefaultAlertingDialog slots.Filters", () => {
+    it("renders the default filters region when no slots are passed", () => {
+        const { baseElement } = renderDialog();
+
+        expect(baseElement.querySelector(DEFAULT_FILTERS_SELECTOR)).not.toBeNull();
+    });
+
+    it("replaces the default filters region when the slot renders its own content", () => {
+        const { baseElement } = renderDialog({ slots: { Filters: CustomFilters } });
+
+        expect(within(baseElement).getByTestId("custom-filters")).toBeInTheDocument();
+        expect(baseElement.querySelector(DEFAULT_FILTERS_SELECTOR)).toBeNull();
+    });
+
+    it("wraps the default filters region", () => {
+        const { baseElement } = renderDialog({ slots: { Filters: WrappingFilters } });
+
+        expect(within(baseElement).getByTestId("filters-banner")).toBeInTheDocument();
+        expect(baseElement.querySelector(DEFAULT_FILTERS_SELECTOR)).not.toBeNull();
+    });
+
+    it("passes live defaultProps: onFiltersChange round-trips through the draft", () => {
+        const { baseElement } = renderDialog({ slots: { Filters: RecordingFilters } });
+
+        fireEvent.click(within(baseElement).getByTestId("set-filters"));
+
+        const latest = capturedFiltersProps.at(-1)!;
+        expect(latest.selectedFilters).toEqual([NEXT_FILTER]);
+    });
+
+    it("does not render the slot while the dialog context is loading", () => {
+        const { baseElement } = renderDialog(
+            { slots: { Filters: CustomFilters } },
+            { ...ALERTING_DIALOG_CONTEXT, isLoading: true },
+        );
+
+        expect(within(baseElement).queryByTestId("custom-filters")).toBeNull();
+        expect(baseElement.querySelector(DEFAULT_FILTERS_SELECTOR)).toBeNull();
+    });
+
+    it("does not render the slot while the stale-filters confirmation is shown", () => {
+        mockUseValidateExistingAutomationFilters.mockReturnValue({
+            isValid: false,
+            hiddenFilterIsMissingInSavedFilters: false,
+            hiddenFilterHasDifferentValueInSavedFilter: false,
+            lockedFilterIsMissingInSavedFilters: false,
+            lockedFilterHasDifferentValueInSavedFilter: false,
+            ignoredFilterIsAppliedInSavedFilters: false,
+            removedFilterIsAppliedInSavedFilters: false,
+            commonDateFilterIsMissingInSavedVisibleFilters: false,
+            visibleFilterIsMissingInSavedFilters: false,
+            visibleFiltersAreMissing: false,
+            incompatibleSelectionTypeIsAppliedInSavedFilters: false,
+            filtersAreStale: false,
+        });
+        const { baseElement } = renderDialog({ slots: { Filters: CustomFilters } });
+
+        expect(within(baseElement).queryByTestId("custom-filters")).toBeNull();
+        expect(baseElement.querySelector(DEFAULT_FILTERS_SELECTOR)).toBeNull();
     });
 });

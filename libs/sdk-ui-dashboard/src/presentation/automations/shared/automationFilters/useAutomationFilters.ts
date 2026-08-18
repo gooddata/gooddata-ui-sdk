@@ -13,26 +13,22 @@ import {
     type IDashboardDateFilterConfigItem,
     type IDashboardMeasureValueFilterConfig,
     type ObjRef,
-    areObjRefsEqual,
-    dashboardAttributeFilterItemDisplayForm,
-    isDashboardAttributeFilterItem,
-    isDashboardDateFilter,
-    isDashboardMeasureValueFilter,
 } from "@gooddata/sdk-model";
 
 import type { IAutomationFiltersTab } from "../../../../model/store/filtering/types.js";
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 
 import {
-    areFiltersMatchedByIdentifier,
+    applyFilterChange,
     getCatalogAttributesByFilters,
     getCatalogDateDatasetsByFilters,
     getCatalogMeasuresByFilters,
-    getFilterByCatalogItemRef,
-    getFilterLocalIdentifier,
     getFilterTitle,
     getNonHiddenFilters,
     getNonSelectedFilters,
+    removeFilterFrom,
+    resolveFilterToAdd,
+    resolveTabFilterToAdd,
 } from "./utils.js";
 
 //
@@ -260,12 +256,7 @@ export const useAutomationFilters = ({
             );
             announceFiltersChanged(message);
 
-            const updatedFilters = selectedFilters.map((prevFilter) => {
-                if (areFiltersMatchedByIdentifier(prevFilter, filter)) {
-                    return filter;
-                }
-                return prevFilter;
-            });
+            const updatedFilters = applyFilterChange(selectedFilters, filter);
             onFiltersChange(updatedFilters);
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -281,9 +272,7 @@ export const useAutomationFilters = ({
             );
             announceFiltersChanged(message);
 
-            const updatedFilters = selectedFilters.filter(
-                (prevFilter) => !areFiltersMatchedByIdentifier(prevFilter, filter),
-            );
+            const updatedFilters = removeFilterFrom(selectedFilters, filter);
             onFiltersChange(updatedFilters);
 
             focusFilterGroup();
@@ -294,37 +283,7 @@ export const useAutomationFilters = ({
 
     const handleAddFilter = useCallback(
         (catalogItemRef: ObjRef, attributes: ICatalogAttribute[], dateDatasets: ICatalogDateDataset[]) => {
-            // We need to go through all display forms of the attribute in case
-            // the filter is using different display form.
-            const selectedAttributeDisplayForms =
-                attributes
-                    .find((attribute) =>
-                        attribute.displayForms.some((df) => areObjRefsEqual(df.ref, catalogItemRef)),
-                    )
-                    ?.displayForms?.map((df) => df.ref) ?? [];
-
-            const selectedDateDataSets = dateDatasets.filter((ds) =>
-                areObjRefsEqual(ds.dataSet.ref, catalogItemRef),
-            );
-
-            const attributeFilter = selectedAttributeDisplayForms.reduce<FilterContextItem | undefined>(
-                (acc, displayFormRef) => acc || getFilterByCatalogItemRef(displayFormRef, nonSelectedFilters),
-                undefined,
-            );
-
-            const dateFilter = selectedDateDataSets.reduce<FilterContextItem | undefined>(
-                (acc, dateDataSet) =>
-                    acc || getFilterByCatalogItemRef(dateDataSet.dataSet.ref, nonSelectedFilters),
-                undefined,
-            );
-
-            // For MVF: the dropdown emits the metric's catalog ref directly; look it up by ref.
-            const measureFilter = getFilterByCatalogItemRef(catalogItemRef, nonSelectedFilters);
-
-            const filter =
-                attributeFilter ||
-                dateFilter ||
-                (measureFilter && isDashboardMeasureValueFilter(measureFilter) ? measureFilter : undefined);
+            const filter = resolveFilterToAdd(catalogItemRef, nonSelectedFilters, attributes, dateDatasets);
 
             if (filter) {
                 const filterTitle = getFilterTitle(filter, allAttributes, allDateDatasets, intl);
@@ -512,12 +471,7 @@ export const useAutomationFiltersByTab = ({
                 return;
             }
 
-            const filterLocalId = getFilterLocalIdentifier(updatedFilter);
-
-            const updatedTabFilters = currentTabFilters.map((f) => {
-                const currentFilterLocalId = getFilterLocalIdentifier(f);
-                return currentFilterLocalId === filterLocalId ? updatedFilter : f;
-            });
+            const updatedTabFilters = applyFilterChange(currentTabFilters, updatedFilter);
 
             onFiltersByTabChange({
                 ...editedFiltersByTab,
@@ -534,12 +488,7 @@ export const useAutomationFiltersByTab = ({
             }
 
             const currentTabFilters = editedFiltersByTab[tabId] ?? [];
-            const filterLocalId = getFilterLocalIdentifier(filterToDelete);
-
-            const updatedTabFilters = currentTabFilters.filter((f) => {
-                const currentFilterLocalId = getFilterLocalIdentifier(f);
-                return currentFilterLocalId !== filterLocalId;
-            });
+            const updatedTabFilters = removeFilterFrom(currentTabFilters, filterToDelete);
 
             onFiltersByTabChange({
                 ...editedFiltersByTab,
@@ -566,34 +515,12 @@ export const useAutomationFiltersByTab = ({
                 return;
             }
 
-            // We need to go through all display forms of the attribute in case
-            // the filter is using different display form (same logic as flat version).
-            const selectedAttributeDisplayForms =
-                attributes
-                    .find((attribute) =>
-                        attribute.displayForms.some((df) => areObjRefsEqual(df.ref, displayForm)),
-                    )
-                    ?.displayForms?.map((df) => df.ref) ?? [];
-
-            const selectedDateDataSets = dateDatasets.filter((ds) =>
-                areObjRefsEqual(ds.dataSet.ref, displayForm),
+            const availableFilter = resolveTabFilterToAdd(
+                displayForm,
+                tabData.availableFilters,
+                attributes,
+                dateDatasets,
             );
-
-            // Search through all display forms to find matching filter
-            const availableFilter = tabData.availableFilters.find((f) => {
-                if (isDashboardAttributeFilterItem(f)) {
-                    return selectedAttributeDisplayForms.some((dfRef) =>
-                        areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(f), dfRef),
-                    );
-                } else if (isDashboardDateFilter(f)) {
-                    return selectedDateDataSets.some((ds) =>
-                        areObjRefsEqual(f.dateFilter.dataSet, ds.dataSet.ref),
-                    );
-                } else if (isDashboardMeasureValueFilter(f)) {
-                    return areObjRefsEqual(f.dashboardMeasureValueFilter.measure, displayForm);
-                }
-                return false;
-            });
 
             if (availableFilter) {
                 onFiltersByTabChange({

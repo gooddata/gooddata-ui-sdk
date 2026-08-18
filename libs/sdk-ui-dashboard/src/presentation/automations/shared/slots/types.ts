@@ -2,6 +2,10 @@
 
 import { type ComponentType, type ReactNode } from "react";
 
+import { type FilterContextItem, type IdentifierRef, type ParameterValue } from "@gooddata/sdk-model";
+
+import { type IAutomationParameter } from "../automationFilters/automationParameters.js";
+
 /**
  * Contract of a section-level slot: the default implementation and the exact props the default
  * dialog would render it with.
@@ -64,4 +68,52 @@ export interface IAutomationDialogHeaderProps {
      * Called on every title change with the new value. The dialog validates the title itself.
      */
     onChange: (value: string) => void;
+}
+
+/**
+ * Members shared by both automation dialogs' filters regions.
+ *
+ * @alpha
+ */
+export interface IAutomationDialogFiltersProps {
+    /**
+     * All filters the automation could select from.
+     */
+    availableFilters: FilterContextItem[] | undefined;
+
+    /**
+     * The automation's current filter selection.
+     */
+    selectedFilters: FilterContextItem[];
+
+    /**
+     * Replaces the selection with the complete updated array. The dialog state applies it
+     * wholesale — change/remove/add gestures must submit the whole array, not a delta.
+     */
+    onFiltersChange: (filters: FilterContextItem[]) => void;
+
+    /**
+     * Parameter chips to render. Empty or undefined while the `enableParameters` feature is off.
+     */
+    parameters?: IAutomationParameter[];
+
+    /**
+     * Workspace parameters addable via the "+" menu.
+     */
+    availableParameters?: IAutomationParameter[];
+
+    /**
+     * Called when a parameter is added from the "+" menu.
+     */
+    onParameterAdd: (ref: IdentifierRef) => void;
+
+    /**
+     * Called when a parameter chip's value is edited.
+     */
+    onParameterChange: (ref: IdentifierRef, value: ParameterValue) => void;
+
+    /**
+     * Called when a parameter chip is removed.
+     */
+    onParameterDelete: (ref: IdentifierRef) => void;
 }

@@ -11,10 +11,18 @@ import {
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
     type IWidget,
+    type IdentifierRef,
+    type ParameterValue,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { type IAutomationDialogHeaderProps, type ISlotProps } from "../shared/slots/types.js";
+import { type IAutomationFiltersTab } from "../../../model/store/filtering/types.js";
+import { type IAutomationParameter } from "../shared/automationFilters/automationParameters.js";
+import {
+    type IAutomationDialogFiltersProps,
+    type IAutomationDialogHeaderProps,
+    type ISlotProps,
+} from "../shared/slots/types.js";
 
 ///
 /// Component props
@@ -180,6 +188,89 @@ export type ScheduledEmailDialogHeaderDefaultProps = IScheduledEmailDialogHeader
 };
 
 /**
+ * Props of the default scheduled email dialog's filters region (the Filters tab content).
+ *
+ * @remarks
+ * The region is bimodal: whenever `filtersByTab` is present with more than one tab, the by-tab
+ * members (`filtersByTab` and the `*ByTab` parameter family) drive rendering and the flat
+ * handlers are unused; otherwise the flat members drive it and the by-tab members are unused.
+ * `defaultProps` always carries both families so a wrap stays faithful in either mode.
+ *
+ * @alpha
+ */
+export interface IScheduledEmailDialogFiltersProps extends IAutomationDialogFiltersProps {
+    /**
+     * Whether the schedule stores its own filters instead of using the latest saved dashboard
+     * filters.
+     */
+    storeFilters: boolean;
+
+    /**
+     * Toggles filter (and parameter) persistence. The current filters must be passed back —
+     * flat mode as `(value, selectedFilters, undefined)`, by-tab mode as
+     * `(value, undefined, editedFiltersByTab)`; calling it with the value alone leaves the
+     * draft's export definitions out of sync with the toggle.
+     */
+    onStoreFiltersChange: (
+        value: boolean,
+        filters?: FilterContextItem[],
+        filtersByTab?: Record<string, FilterContextItem[]>,
+    ) => void;
+
+    /**
+     * Whether the schedule targets the whole dashboard (shows the store-filters checkbox)
+     * rather than a single widget.
+     */
+    isDashboardAutomation: boolean;
+
+    /**
+     * Filters structured per dashboard tab; when present with more than one tab, the region
+     * renders in by-tab mode.
+     */
+    filtersByTab?: IAutomationFiltersTab[];
+
+    /**
+     * Edited filter selection per tab.
+     */
+    editedFiltersByTab?: Record<string, FilterContextItem[]>;
+
+    /**
+     * Replaces a tab's filter selection with the complete updated record.
+     */
+    onFiltersByTabChange?: (filtersByTab: Record<string, FilterContextItem[]>) => void;
+
+    /**
+     * Parameter chips per tab (by-tab mode).
+     */
+    parametersByTab?: Record<string, IAutomationParameter[]>;
+
+    /**
+     * Addable workspace parameters per tab (by-tab mode).
+     */
+    availableParametersByTab?: Record<string, IAutomationParameter[]>;
+
+    /**
+     * Called when a parameter is added in a tab section (by-tab mode).
+     */
+    onParameterAddByTab?: (tabId: string, ref: IdentifierRef) => void;
+
+    /**
+     * Called when a parameter chip's value is edited in a tab section (by-tab mode).
+     */
+    onParameterChangeByTab?: (tabId: string, ref: IdentifierRef, value: ParameterValue) => void;
+
+    /**
+     * Called when a parameter chip is removed in a tab section (by-tab mode).
+     */
+    onParameterDeleteByTab?: (tabId: string, ref: IdentifierRef) => void;
+
+    /**
+     * Whether workspace parameters are enabled; adjusts the store-filters tooltip copy.
+     */
+    parametersEnabled?: boolean;
+}
+
+/**
  * Section-level overrides of the default scheduled email dialog.
  *
  * @alpha
@@ -190,6 +281,22 @@ export interface IScheduledEmailDialogSlots {
      * identity — see {@link ISlotProps}.
      */
     Header?: ComponentType<ISlotProps<ScheduledEmailDialogHeaderDefaultProps>>;
+
+    /**
+     * Wraps or replaces the Filters tab content (the filter and parameter chips). Must have a
+     * stable reference identity — see {@link ISlotProps}.
+     *
+     * Renders only in the fully rendered dialog **and only while the Filters tab is selected**:
+     * not while the dialog context reports loading, not while the stale-filters confirmation
+     * step is shown, and not on the General tab. The dialog opens on the General tab, so the
+     * slot is not mounted initially, and it unmounts — losing any local state — on every switch
+     * away from the Filters tab.
+     *
+     * A replacement takes over computing the next filters array: `onFiltersChange` /
+     * `onFiltersByTabChange` expect the complete selection, and `onStoreFiltersChange` must be
+     * passed the current filters — see {@link IScheduledEmailDialogFiltersProps}.
+     */
+    Filters?: ComponentType<ISlotProps<IScheduledEmailDialogFiltersProps>>;
 }
 
 /**
@@ -198,7 +305,9 @@ export interface IScheduledEmailDialogSlots {
  * @remarks
  * Extends the shared {@link IScheduledEmailDialogProps} with customization only the default implementation
  * supports. Slots render only in the fully rendered dialog: not while the dialog context reports
- * loading, and not while the stale-filters confirmation step is shown.
+ * loading, and not while the stale-filters confirmation step is shown. The Filters slot
+ * additionally renders only while the Filters tab is selected — see
+ * {@link IScheduledEmailDialogSlots.Filters}.
  *
  * @alpha
  */

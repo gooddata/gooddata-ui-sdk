@@ -36,7 +36,6 @@ import { useAlertingDialogContext } from "../../contexts/AlertingDialogContext.j
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { RecipientsSelect } from "../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
 import { ApplyCurrentFiltersConfirmDialog } from "../../shared/automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
-import { AutomationFiltersSelect } from "../../shared/automationFilters/components/AutomationFiltersSelect.js";
 import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/components/DeleteAlertConfirmDialog.js";
 import { useAlertActions } from "../state/AlertActionsContext.js";
 import { useAlertData } from "../state/AlertDataContext.js";
@@ -44,8 +43,13 @@ import { useAlertDraft } from "../state/AlertDraftContext.js";
 import { useAlertFilters } from "../state/AlertFiltersContext.js";
 import { useAlertDialogValidity } from "../state/useAlertDialogValidity.js";
 import { useAlertSelectedValues } from "../state/useAlertSelectedValues.js";
-import { type AlertingDialogHeaderDefaultProps, type IDefaultAlertingDialogProps } from "../types.js";
+import {
+    type AlertingDialogHeaderDefaultProps,
+    type IAlertingDialogFiltersProps,
+    type IDefaultAlertingDialogProps,
+} from "../types.js";
 
+import { AlertingDialogFilters } from "./AlertingDialogFilters.js";
 import { AlertingDialogHeader } from "./AlertingDialogHeader.js";
 import { AlertAttributeSelect } from "./components/AlertAttributeSelect.js";
 import { AlertComparisonOperatorSelect } from "./components/AlertComparisonOperatorSelect.js";
@@ -83,6 +87,7 @@ export function AlertingDialogRenderer({
     slots,
 }: IDefaultAlertingDialogProps) {
     const HeaderSlot = slots?.Header;
+    const FiltersSlot = slots?.Filters;
 
     const intl = useIntl();
 
@@ -259,6 +264,18 @@ export function AlertingDialogRenderer({
         );
     }
 
+    const filtersDefaultProps: IAlertingDialogFiltersProps = {
+        availableFilters,
+        selectedFilters,
+        onFiltersChange,
+        disableDateFilters: isAnomalyDetection(editedAutomation?.alert),
+        parameters: automationParameters,
+        availableParameters,
+        onParameterAdd,
+        onParameterChange,
+        onParameterDelete,
+    };
+
     return (
         <>
             <Overlay
@@ -342,21 +359,14 @@ export function AlertingDialogRenderer({
                             <ScrollablePanel className="gd-notifications-channel-dialog-content-wrapper gd-notification-channel-dialog-with-automation-filters">
                                 <div className="gd-divider-with-margin" />
                                 <>
-                                    <AutomationFiltersSelect
-                                        availableFilters={availableFilters}
-                                        selectedFilters={selectedFilters}
-                                        onFiltersChange={onFiltersChange}
-                                        storeFilters
-                                        onStoreFiltersChange={() => {}}
-                                        isDashboardAutomation={false}
-                                        overlayPositionType={OVERLAY_POSITION_TYPE}
-                                        disableDateFilters={isAnomalyDetection(editedAutomation?.alert)}
-                                        parameters={automationParameters}
-                                        onParameterChange={onParameterChange}
-                                        onParameterDelete={onParameterDelete}
-                                        availableParameters={availableParameters}
-                                        onParameterAdd={onParameterAdd}
-                                    />
+                                    {FiltersSlot ? (
+                                        <FiltersSlot
+                                            Default={AlertingDialogFilters}
+                                            defaultProps={filtersDefaultProps}
+                                        />
+                                    ) : (
+                                        <AlertingDialogFilters {...filtersDefaultProps} />
+                                    )}
                                     <ContentDivider className="gd-divider-with-margin" />
                                 </>
                                 <FormFieldGroup label={<FormattedMessage id="insightAlert.config.when" />}>

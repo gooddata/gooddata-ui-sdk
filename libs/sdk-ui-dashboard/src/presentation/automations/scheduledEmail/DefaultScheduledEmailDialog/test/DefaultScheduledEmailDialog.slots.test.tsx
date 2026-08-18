@@ -11,6 +11,7 @@ import { ScheduledEmailDialogStateProvider } from "../../state/ScheduledEmailDia
 import { AUTOMATIONS_CONTEXT, SCHEDULED_EMAIL_DIALOG_CONTEXT } from "../../state/test/fixtures.js";
 import {
     type IDefaultScheduledEmailDialogProps,
+    type IScheduledEmailDialogFiltersProps,
     type ScheduledEmailDialogHeaderDefaultProps,
 } from "../../types.js";
 import { DefaultScheduledEmailDialog } from "../DefaultScheduledEmailDialog.js";
@@ -29,6 +30,11 @@ vi.mock("../../../shared/automationFilters/hooks/useValidateExistingAutomationFi
 // The filter bar's attribute dropdown reads the dashboard redux store, which this harness does not mount.
 vi.mock("../../../../filterBar/attributeFilter/addAttributeFilter/AttributesDropdown.js", () => ({
     AttributesDropdown: () => null,
+}));
+
+// A selected attribute filter chip reads the dashboard redux store, which this harness does not mount.
+vi.mock("../../../../filterBar/attributeFilter/DefaultDashboardAttributeFilter.js", () => ({
+    DefaultDashboardAttributeFilter: () => null,
 }));
 
 // RecipientsSelect resolves users through useBackendStrict, which this harness does not provide.
@@ -61,8 +67,53 @@ function OverLongTitleHeader({ defaultProps }: ISlotProps<ScheduledEmailDialogHe
     );
 }
 
+const DEFAULT_FILTERS_SELECTOR = ".s-gd-notifications-channels-dialog-automation-filters";
+
+function CustomFilters() {
+    return <div data-testid="custom-filters" />;
+}
+
+function WrappingFilters({ Default, defaultProps }: ISlotProps<IScheduledEmailDialogFiltersProps>) {
+    return (
+        <>
+            <div data-testid="filters-banner" />
+            <Default {...defaultProps} />
+        </>
+    );
+}
+
+const capturedFiltersProps: IScheduledEmailDialogFiltersProps[] = [];
+
+function StoreToggleFilters({ Default, defaultProps }: ISlotProps<IScheduledEmailDialogFiltersProps>) {
+    capturedFiltersProps.push(defaultProps);
+    return (
+        <>
+            <button
+                data-testid="toggle-store"
+                onClick={() =>
+                    defaultProps.onStoreFiltersChange(
+                        !defaultProps.storeFilters,
+                        defaultProps.selectedFilters,
+                        undefined,
+                    )
+                }
+            />
+            <Default {...defaultProps} />
+        </>
+    );
+}
+
+// The dialog's Overlay aligns itself (and lifts the visibility:hidden it renders with initially)
+// on a real timer, not inside React's commit phase - the tab is only accessible-by-role once that
+// has run, so finding it needs to poll rather than query synchronously.
+async function selectFiltersTab(baseElement: HTMLElement) {
+    const tab = await within(baseElement).findByRole("tab", { name: /filters/i });
+    fireEvent.click(tab);
+}
+
 beforeEach(() => {
     vi.clearAllMocks();
+    capturedFiltersProps.length = 0;
 
     mockUseValidateExistingAutomationFilters.mockReturnValue({
         isValid: true,
@@ -156,5 +207,85 @@ describe("DefaultScheduledEmailDialog slots.Header", () => {
         expect(baseElement.querySelector(".s-gd-notifications-channels-dialog")).not.toBeNull();
         expect(within(baseElement).queryByTestId("custom-header")).toBeNull();
         expect(baseElement.querySelector(DEFAULT_HEADER_SELECTOR)).toBeNull();
+    });
+});
+
+describe("DefaultScheduledEmailDialog slots.Filters", () => {
+    it("renders the default filters region on the filters tab when no slots are passed", async () => {
+        const { baseElement } = renderDialog();
+
+        await selectFiltersTab(baseElement);
+        expect(baseElement.querySelector(DEFAULT_FILTERS_SELECTOR)).not.toBeNull();
+    });
+
+    it("replaces the default filters region when the slot renders its own content", async () => {
+        const { baseElement } = renderDialog({ slots: { Filters: CustomFilters } });
+
+        await selectFiltersTab(baseElement);
+        expect(within(baseElement).getByTestId("custom-filters")).toBeInTheDocument();
+        expect(baseElement.querySelector(DEFAULT_FILTERS_SELECTOR)).toBeNull();
+    });
+
+    it("wraps the default filters region", async () => {
+        const { baseElement } = renderDialog({ slots: { Filters: WrappingFilters } });
+
+        await selectFiltersTab(baseElement);
+        expect(within(baseElement).getByTestId("filters-banner")).toBeInTheDocument();
+        expect(baseElement.querySelector(DEFAULT_FILTERS_SELECTOR)).not.toBeNull();
+    });
+
+    it("renders the slot only while the filters tab is selected, on one mounted tree", async () => {
+        const { baseElement } = renderDialog({ slots: { Filters: CustomFilters } });
+
+        // the dialog opens on the General tab - the slot is not mounted
+        expect(within(baseElement).queryByTestId("custom-filters")).toBeNull();
+
+        await selectFiltersTab(baseElement);
+        expect(within(baseElement).getByTestId("custom-filters")).toBeInTheDocument();
+
+        fireEvent.click(within(baseElement).getByRole("tab", { name: /general/i }));
+        expect(within(baseElement).queryByTestId("custom-filters")).toBeNull();
+    });
+
+    it("passes live defaultProps: onStoreFiltersChange round-trips the toggle", async () => {
+        const { baseElement } = renderDialog({ slots: { Filters: StoreToggleFilters } });
+
+        await selectFiltersTab(baseElement);
+        const initial = capturedFiltersProps.at(-1)!.storeFilters;
+
+        fireEvent.click(within(baseElement).getByTestId("toggle-store"));
+
+        expect(capturedFiltersProps.at(-1)!.storeFilters).toBe(!initial);
+    });
+
+    it("does not render the slot while the dialog context is loading", () => {
+        const { baseElement } = renderDialog(
+            { slots: { Filters: CustomFilters } },
+            { ...SCHEDULED_EMAIL_DIALOG_CONTEXT, isLoading: true },
+        );
+
+        expect(within(baseElement).queryByTestId("custom-filters")).toBeNull();
+        expect(baseElement.querySelector(DEFAULT_FILTERS_SELECTOR)).toBeNull();
+    });
+
+    it("does not render the slot while the stale-filters confirmation is shown", () => {
+        mockUseValidateExistingAutomationFilters.mockReturnValue({
+            isValid: false,
+            hiddenFilterIsMissingInSavedFilters: false,
+            hiddenFilterHasDifferentValueInSavedFilter: false,
+            lockedFilterIsMissingInSavedFilters: false,
+            lockedFilterHasDifferentValueInSavedFilter: false,
+            ignoredFilterIsAppliedInSavedFilters: false,
+            removedFilterIsAppliedInSavedFilters: false,
+            commonDateFilterIsMissingInSavedVisibleFilters: false,
+            visibleFilterIsMissingInSavedFilters: false,
+            visibleFiltersAreMissing: false,
+            incompatibleSelectionTypeIsAppliedInSavedFilters: false,
+            filtersAreStale: false,
+        });
+        const { baseElement } = renderDialog({ slots: { Filters: CustomFilters } });
+
+        expect(within(baseElement).queryByTestId("custom-filters")).toBeNull();
+        expect(within(baseElement).queryByRole("tab", { name: /filters/i })).toBeNull();
     });
 });
