@@ -36,6 +36,24 @@ interface ICategoryAccumulator {
     details: IChatConversationItemDetail[];
 }
 
+/** `stepId` of the memory step. The backend records none for it, so this collides with no real one. */
+const MEMORY_STEP_ID = "memory";
+
+/** The details of the work done before the first step — the memory applied to the turn. */
+function preStepDetails(trace: IChatConversationResponseTrace): IChatConversationItemDetail[] {
+    return (trace.responseDetails ?? [])
+        .map(({ detail }) => detail)
+        .filter((detail): detail is IChatConversationItemDetail => !!detail);
+}
+
+/** How long that work took, and so the width of its step. 0 when it reported no duration. */
+function preStepDurationMs(trace: IChatConversationResponseTrace): number {
+    return preStepDetails(trace).reduce(
+        (sum, detail) => sum + (detail.category === "applyMemory" ? (detail.durationMs ?? 0) : 0),
+        0,
+    );
+}
+
 /**
  * Builds the render model for one response: a step carries timing/token spend but no category,
  * the actions within it carry a category but no timing, and the two are joined here.
@@ -46,8 +64,9 @@ interface ICategoryAccumulator {
  * though its step keeps its time regardless.
  *
  * A tile's `index` is its array position, not the backend's `stepIndex` — it is the highlight key.
- * A category can also come from a detail that belongs to the response rather than a step, which
- * yields a row with no `stepIndexes` and so nothing to highlight.
+ * The memory applied to the turn runs before the backend's first step and has none of its own, so
+ * it becomes the turn's first step here when it reports a duration, shifting the rest one place
+ * along; without one it still gets a category row, with no tile to highlight.
  * @internal
  */
 export function deriveInteractionIntelligenceFromSteps(
@@ -57,18 +76,26 @@ export function deriveInteractionIntelligenceFromSteps(
     const sorted = [...trace.steps].sort((a, b) => a.stepIndex - b.stepIndex);
     const byCategory = new Map<GenAIInteractionStepCategory, ICategoryAccumulator>();
 
-    // Seeded first, so a response-scoped category sorts above the steps' own — it happened before
-    // them. Its `stepIndexes` stay empty: there is no tile it ran in.
-    for (const { detail } of trace.responseDetails ?? []) {
-        if (!detail) {
-            continue;
-        }
+    // Seeded first, since this happened before the first step — its category sorts above theirs.
+    // A duration turns it into the turn's own first step, shifting the rest one place along.
+    const memoryDetails = preStepDetails(trace);
+    const memoryDuration = preStepDurationMs(trace);
+    const hasMemoryStep = memoryDuration > 0;
+    const firstStepIndex = hasMemoryStep ? 1 : 0;
+
+    for (const detail of memoryDetails) {
         const entry = byCategory.get(detail.category) ?? { stepIndexes: [], details: [] };
         byCategory.set(detail.category, entry);
+        // Only memory earns the step: another category running outside the steps would not have
+        // spent its time, so it keeps a row with nothing to highlight.
+        if (hasMemoryStep && detail.category === "applyMemory" && entry.stepIndexes.length === 0) {
+            entry.stepIndexes.push(0);
+        }
         entry.details.push(detail);
     }
 
-    const steps: IInteractionStepTile[] = sorted.map((step, index) => {
+    const steps: IInteractionStepTile[] = sorted.map((step, position) => {
+        const index = position + firstStepIndex;
         const actions = trace.detailsByStepId[step.stepId] ?? [];
         const categoriesInStep: GenAIInteractionStepCategory[] = [];
 
@@ -97,6 +124,17 @@ export function deriveInteractionIntelligenceFromSteps(
             categories: categoriesInStep,
         };
     });
+
+    if (hasMemoryStep) {
+        // No tokens: the retrieval spends none, and a 0 would render as spend rather than absence.
+        steps.unshift({
+            stepId: MEMORY_STEP_ID,
+            index: 0,
+            durationMs: memoryDuration,
+            // Only memory ran in this step, whatever else arrived without one.
+            categories: ["applyMemory"],
+        });
+    }
 
     // Map insertion order already reflects each category's earliest step, since steps are
     // walked in order above.
@@ -129,10 +167,14 @@ export function deriveInteractionIntelligenceTotals(
     trace: IChatConversationResponseTrace,
 ): IInteractionIntelligenceTotals {
     const reported = trace.steps.filter((step) => step.tokens.total !== undefined);
+    // The memory step is a step of the turn like any other, so it counts here too — otherwise the
+    // timeline would show a tile the totals deny.
+    const memoryDuration = preStepDurationMs(trace);
+    const memorySteps = memoryDuration > 0 ? 1 : 0;
 
     return {
-        stepsCount: trace.steps.length,
-        durationMs: trace.steps.reduce((sum, step) => sum + step.durationMs, 0),
+        stepsCount: trace.steps.length + memorySteps,
+        durationMs: trace.steps.reduce((sum, step) => sum + step.durationMs, memoryDuration),
         // Left undefined when no step reported a token total, so "unknown" never renders as "0".
         tokens:
             reported.length === 0

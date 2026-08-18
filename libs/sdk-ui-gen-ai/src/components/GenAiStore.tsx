@@ -6,7 +6,12 @@ import { type EnhancedStore, type Store } from "@reduxjs/toolkit";
 import { ReactReduxContext, Provider as StoreProvider } from "react-redux";
 
 import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { type CatalogItem, type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
+import {
+    type CatalogItem,
+    type GenAIObjectType,
+    type IColorPalette,
+    type IListedDashboard,
+} from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { useGenAIStore } from "../hooks/useGenAIStore.js";
@@ -37,6 +42,11 @@ export type GenAiStoreProps = {
      * Catalog items for autocomplete.
      */
     catalogItems?: CatalogItem[];
+    /**
+     * Dashboards offered by the context chooser. When provided, the list is taken as complete and
+     * no dashboards are loaded from the backend.
+     */
+    dashboards?: IListedDashboard[];
     /**
      * User settings to use for the chat UI.
      */
@@ -203,6 +213,7 @@ function InternalStore({
     eventHandlers,
     settings,
     catalogItems,
+    dashboards,
     includeTags,
     excludeTags,
     objectTypes,
@@ -224,6 +235,7 @@ function InternalStore({
         includeTags,
         excludeTags,
         catalogItems,
+        dashboards,
         isPreview,
         allowInteractionIntelligence,
         allowNativeLinks,

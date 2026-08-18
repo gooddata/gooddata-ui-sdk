@@ -70,6 +70,10 @@ export interface IUseHostChromeChatArgs {
     dialogPosition?: "left" | "right";
     /** Whether the active app is embedded; switches the chat to the embedded presentation. */
     embedded?: boolean;
+    /**
+     * Whether the chat is disabled.
+     */
+    disabled?: boolean;
     /** Delegates a chat link click to the active app; returns true if the app handled it. */
     onAppLinkClick?: (link: { type?: string; id?: string; itemUrl?: string; newTab?: boolean }) => boolean;
     /** Delegates a chat event receive to the active app. */
@@ -89,6 +93,7 @@ export function useHostChromeChat({
     telemetry,
     dialogPosition,
     embedded,
+    disabled,
     onAppLinkClick,
     onAppEventReceive,
 }: IUseHostChromeChatArgs): IHostChromeChat {
@@ -178,6 +183,7 @@ export function useHostChromeChat({
             <GenAIChat
                 workspaceId={features.workspaceId}
                 open={isChatOpen}
+                disabled={disabled}
                 onOpen={open}
                 onClose={close}
                 askedQuestion={askedQuestion}

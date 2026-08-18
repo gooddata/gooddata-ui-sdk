@@ -212,6 +212,7 @@
     "analyticsCatalog.asCode.dialog.edit.submit": "Opslaan",
     "analyticsCatalog.asCode.dialog.cancel": "Annuleren",
     "analyticsCatalog.asCode.dialog.unrepresentable": "Dit object gebruikt inhoud die niet als code kan worden weergegeven. Het wordt als alleen-lezen weergegeven; gebruik de standaardeditor om het te wijzigen.",
+    "analyticsCatalog.asCode.dialog.autoFormat": "Automatische indeling",
     "analyticsCatalog.metric.create.defaultTitle": "Mijn metriek",
     "analyticsCatalog.metric.create.success": "Metriek gemaakt.",
     "analyticsCatalog.metric.update.success": "Metriek opgeslagen.",

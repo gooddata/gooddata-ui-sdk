@@ -47,6 +47,7 @@ export type GenAIChatEvent =
 export interface IGenAIChatProps {
     workspaceId: string;
     open: boolean;
+    disabled?: boolean;
     onOpen: () => void;
     onClose: () => void;
     askedQuestion?: string | null;
@@ -108,6 +109,7 @@ export interface IGenAIChatProps {
 export function GenAIChat({
     workspaceId,
     open,
+    disabled,
     onOpen,
     onClose,
     askedQuestion,
@@ -214,6 +216,7 @@ export function GenAIChat({
             workspace={workspaceId}
             locale={intl.locale}
             isOpen={open}
+            isDisabled={disabled}
             onOpen={onOpen}
             onClose={onClose}
             askedQuestion={askedQuestion}

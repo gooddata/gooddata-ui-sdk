@@ -54,6 +54,8 @@ type GenAiChatContextChooserBodyProps = {
     title: string;
     titleId: string;
     isLoading?: boolean;
+    hasNextPage?: boolean;
+    loadNextPage?: () => void;
     ariaAttributes: {
         id: string;
         role?: string;
@@ -68,6 +70,8 @@ export function GenAiChatContextChooserBody({
     title,
     titleId,
     isLoading = false,
+    hasNextPage = false,
+    loadNextPage,
     ariaAttributes,
     onSelect,
     closeDropdown,
@@ -76,7 +80,7 @@ export function GenAiChatContextChooserBody({
     const listboxId = useId();
     const [searchString, setSearchString] = useState("");
 
-    const isSearchFieldVisible = inputItems.length > SEARCH_FIELD_VISIBILITY_THRESHOLD && !isLoading;
+    const isSearchFieldVisible = inputItems.length > SEARCH_FIELD_VISIBILITY_THRESHOLD;
     const searchStringToUse = isSearchFieldVisible ? searchString : "";
     const normalizedSearch = searchStringToUse.trim().toLowerCase();
 
@@ -115,8 +119,13 @@ export function GenAiChatContextChooserBody({
         [closeDropdown, searchFilled],
     );
 
-    const listMaxHeight =
-        Math.min(Math.max(filteredItems.length, 1), MAX_VISIBLE_ITEMS) * DEFAULT_ITEM_HEIGHT;
+    const canLoadNextPage = hasNextPage && normalizedSearch.length === 0;
+    const shouldShowPagedList = !hasNoData || canLoadNextPage;
+    const skeletonItemsCount =
+        isLoading || (canLoadNextPage && filteredItems.length === 0) ? LOADING_SKELETON_ITEMS_COUNT : 0;
+
+    const visibleRowsCount = filteredItems.length + skeletonItemsCount;
+    const listMaxHeight = Math.min(Math.max(visibleRowsCount, 1), MAX_VISIBLE_ITEMS) * DEFAULT_ITEM_HEIGHT;
 
     return (
         <div
@@ -168,13 +177,7 @@ export function GenAiChatContextChooserBody({
                     />
                 </>
             ) : null}
-            {hasNoData ? (
-                <NoData
-                    hasNoMatchingData={hasNoMatchingData}
-                    notFoundLabel={intl.formatMessage(msgs.noMatchingData)}
-                    noDataLabel={intl.formatMessage(msgs.noDataAvailable)}
-                />
-            ) : (
+            {shouldShowPagedList ? (
                 <ScopedIdStore value={scopedIdStoreValue}>
                     <UiPagedVirtualList
                         maxHeight={listMaxHeight}
@@ -182,8 +185,10 @@ export function GenAiChatContextChooserBody({
                         itemHeight={DEFAULT_ITEM_HEIGHT}
                         itemsGap={0}
                         itemPadding={0}
-                        skeletonItemsCount={isLoading ? LOADING_SKELETON_ITEMS_COUNT : 0}
+                        skeletonItemsCount={skeletonItemsCount}
                         isLoading={isLoading}
+                        hasNextPage={canLoadNextPage}
+                        loadNextPage={loadNextPage}
                         representAs="listbox"
                         closeDropdown={closeDropdown}
                         onKeyDownConfirm={handleSelect}
@@ -195,6 +200,12 @@ export function GenAiChatContextChooserBody({
                         {(item) => <ContextChooserItem item={item} onSelect={() => handleSelect(item)} />}
                     </UiPagedVirtualList>
                 </ScopedIdStore>
+            ) : (
+                <NoData
+                    hasNoMatchingData={hasNoMatchingData}
+                    notFoundLabel={intl.formatMessage(msgs.noMatchingData)}
+                    noDataLabel={intl.formatMessage(msgs.noDataAvailable)}
+                />
             )}
         </div>
     );

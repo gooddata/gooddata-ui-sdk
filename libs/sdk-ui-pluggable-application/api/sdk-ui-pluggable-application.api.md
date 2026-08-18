@@ -9,6 +9,7 @@ import { IAuthCredentials } from '@gooddata/sdk-pluggable-application-model';
 import { ILocale } from '@gooddata/sdk-model';
 import { IPlatformContext } from '@gooddata/sdk-pluggable-application-model';
 import { IPluggableAppEvent } from '@gooddata/sdk-pluggable-application-model';
+import { IPluggableApplicationMountOptions } from '@gooddata/sdk-pluggable-application-model';
 import { IPluggableAppTelemetryCallbacks } from '@gooddata/sdk-pluggable-application-model';
 import { ITranslations } from '@gooddata/sdk-ui';
 import { JSX } from 'react/jsx-runtime';
@@ -79,6 +80,9 @@ export function PluggableAppEventsProvider(input: IPluggableAppEventsProviderPro
 
 // @alpha
 export function PluggableAppTelemetryProvider(input: IPluggableAppTelemetryProviderProps): JSX.Element;
+
+// @alpha
+export function subscribeAiAssistantDefault(options: IPluggableApplicationMountOptions): () => void;
 
 // @alpha
 export function usePlatformContext(): IClientPlatformContext | undefined;

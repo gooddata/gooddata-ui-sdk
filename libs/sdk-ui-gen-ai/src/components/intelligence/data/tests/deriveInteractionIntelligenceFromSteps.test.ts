@@ -197,7 +197,55 @@ describe("deriveInteractionIntelligenceFromSteps", () => {
         expect(result.categories.map((c) => c.category)).toEqual(["catalogSearch", "skillRouting"]);
     });
 
-    it("should give a response-scoped detail a category row with no steps to highlight", () => {
+    it("should make timed memory the turn's first step", () => {
+        const result = deriveInteractionIntelligenceFromSteps(
+            "r",
+            trace(["s1", "s2"], { s1: [action("a1", { detail: skillRoutingDetail() })] }, [
+                action("m1", { detail: applyMemoryDetail({ durationMs: 200 }) }),
+            ]),
+        );
+
+        expect(result.steps).toHaveLength(3);
+        expect(result.steps[0]).toMatchObject({
+            index: 0,
+            durationMs: 200,
+            categories: ["applyMemory"],
+        });
+        // The retrieval spends none, so "unknown" must not render as "0".
+        expect(result.steps[0].tokens).toBeUndefined();
+        // The backend's own steps shift one place along, and keep their own timing.
+        expect(result.steps[1]).toMatchObject({ stepId: "s1", index: 1, durationMs: 100 });
+        expect(result.steps[2]).toMatchObject({ stepId: "s2", index: 2 });
+        expect(result.categories[0]).toMatchObject({ category: "applyMemory", stepIndexes: [0] });
+        expect(result.categories[1]).toMatchObject({ category: "skillRouting", stepIndexes: [1] });
+    });
+
+    it("should keep a non-memory detail off the memory step it did not run in", () => {
+        const result = deriveInteractionIntelligenceFromSteps(
+            "r",
+            trace(["s1"], {}, [
+                action("m1", { detail: applyMemoryDetail({ durationMs: 200 }) }),
+                action("k1", { detail: skillRoutingDetail() }),
+            ]),
+        );
+
+        expect(result.steps[0]).toMatchObject({ index: 0, categories: ["applyMemory"] });
+        expect(result.categories[0]).toMatchObject({ category: "applyMemory", stepIndexes: [0] });
+        // It ran outside the steps too, but spent none of the memory step's time.
+        expect(result.categories[1]).toMatchObject({ category: "skillRouting", stepIndexes: [] });
+    });
+
+    it("should count the memory step's time in the turn totals", () => {
+        const result = deriveInteractionIntelligenceFromSteps(
+            "r",
+            trace(["s1", "s2"], {}, [action("m1", { detail: applyMemoryDetail({ durationMs: 200 }) })]),
+        );
+
+        // 2 backend steps + the memory one; 200 + 100 + 100.
+        expect(result.totals).toEqual({ stepsCount: 3, durationMs: 400, tokens: 20 });
+    });
+
+    it("should give untimed memory a category row with no step to highlight", () => {
         const result = deriveInteractionIntelligenceFromSteps(
             "r",
             trace(["s1"], { s1: [action("a1", { detail: skillRoutingDetail() })] }, [
@@ -211,7 +259,7 @@ describe("deriveInteractionIntelligenceFromSteps", () => {
         expect(result.steps[0].categories).toEqual(["skillRouting"]);
     });
 
-    it("should keep a response-scoped category out of the step totals", () => {
+    it("should keep untimed memory out of the turn totals", () => {
         const result = deriveInteractionIntelligenceFromSteps(
             "r",
             trace(["s1"], {}, [action("m1", { detail: applyMemoryDetail() })]),

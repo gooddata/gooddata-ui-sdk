@@ -212,6 +212,7 @@
     "analyticsCatalog.asCode.dialog.edit.submit": "บันทึก",
     "analyticsCatalog.asCode.dialog.cancel": "ยกเลิก",
     "analyticsCatalog.asCode.dialog.unrepresentable": "ออบเจ็กต์นี้ใช้เนื้อหาที่ไม่สามารถแสดงเป็นโค้ดได้ ระบบจะแสดงเป็นแบบอ่านอย่างเดียว ใช้ตัวแก้ไขมาตรฐานเพื่อเปลี่ยนแปลง",
+    "analyticsCatalog.asCode.dialog.autoFormat": "จัดรูปแบบอัตโนมัติ",
     "analyticsCatalog.metric.create.defaultTitle": "เมตริกของฉัน",
     "analyticsCatalog.metric.create.success": "สร้างเมตริกแล้ว",
     "analyticsCatalog.metric.update.success": "บันทึกเมตริกแล้ว",

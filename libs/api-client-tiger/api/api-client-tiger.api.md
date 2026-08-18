@@ -3502,6 +3502,8 @@ export type AiAppliedMemoryItemStrategyEnum = 'ALWAYS' | 'AUTO';
 // @public
 export interface AiApplyMemoryDetail {
     'category'?: AiApplyMemoryDetailCategoryEnum;
+    // (undocumented)
+    'durationMs'?: number | null;
     'items'?: Array<AiAppliedMemoryItem>;
 }
 
@@ -5439,6 +5441,8 @@ export interface AiUserContext {
 
 // @public (undocumented)
 export interface AiUserContextDashboard {
+    // (undocumented)
+    'activeTabId'?: string | null;
     // (undocumented)
     'definition'?: object | null;
     // (undocumented)

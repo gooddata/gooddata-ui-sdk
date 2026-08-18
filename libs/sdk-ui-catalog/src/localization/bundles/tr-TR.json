@@ -212,6 +212,7 @@
     "analyticsCatalog.asCode.dialog.edit.submit": "Kaydet",
     "analyticsCatalog.asCode.dialog.cancel": "İptal",
     "analyticsCatalog.asCode.dialog.unrepresentable": "Bu nesne, kod olarak temsil edilemeyen içerik kullanıyor. Salt okunur olarak gösterilir; değiştirmek için standart düzenleyiciyi kullanın.",
+    "analyticsCatalog.asCode.dialog.autoFormat": "Otomatik biçimlendir",
     "analyticsCatalog.metric.create.defaultTitle": "Metriğim",
     "analyticsCatalog.metric.create.success": "Metrik oluşturuldu.",
     "analyticsCatalog.metric.update.success": "Metrik kaydedildi.",

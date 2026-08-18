@@ -72,6 +72,7 @@ export interface IPluggableApplicationRendererProps {
         excludeTags?: string[];
         dialogPosition?: "left" | "right";
         embedded?: boolean;
+        disabled?: boolean;
         userContext?: IGenAIUserContext;
     }) => void;
     /**
@@ -168,6 +169,7 @@ export function PluggableApplicationRenderer({
                     excludeTags: event.payload.excludeTags,
                     dialogPosition: event.payload.dialogPosition,
                     embedded: event.payload.embedded,
+                    disabled: event.payload.disabled,
                     userContext: event.payload.userContext,
                 });
                 return;

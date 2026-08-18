@@ -212,6 +212,7 @@
     "analyticsCatalog.asCode.dialog.edit.submit": "Speichern",
     "analyticsCatalog.asCode.dialog.cancel": "Abbrechen",
     "analyticsCatalog.asCode.dialog.unrepresentable": "Dieses Objekt verwendet Inhalte, die nicht als Code dargestellt werden können. Es wird schreibgeschützt angezeigt; verwenden Sie den Standardeditor, um es zu ändern.",
+    "analyticsCatalog.asCode.dialog.autoFormat": "Autom. Format",
     "analyticsCatalog.metric.create.defaultTitle": "Meine Metrik",
     "analyticsCatalog.metric.create.success": "Metrik erstellt.",
     "analyticsCatalog.metric.update.success": "Metrik gespeichert.",

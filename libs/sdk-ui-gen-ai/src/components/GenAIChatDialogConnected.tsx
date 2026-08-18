@@ -85,6 +85,15 @@ export interface IGenAIChatDialogConnectedProps {
 
     /** Open-state is fully controlled by the caller (props, not redux). */
     isOpen: boolean;
+    /**
+     * Whether the Gen AI chat dialog is disabled.
+     *
+     * @remarks
+     * Defaults to true. The shell application is expected to explicitly enable the dialog by setting this to false.
+     * This default prevents the dialog from briefly appearing (blinking) before the application state is fully
+     * initialized.
+     */
+    isDisabled?: boolean;
     onOpen: () => void;
     onClose: () => void;
 
@@ -155,6 +164,7 @@ export function GenAIChatDialogConnected({
     settings,
     agentId,
     isOpen,
+    isDisabled = true,
     onOpen,
     onClose,
     askedQuestion,
@@ -317,6 +327,7 @@ export function GenAIChatDialogConnected({
     return (
         <GenAIChatDialog
             isOpen={isOpen}
+            disabled={isDisabled}
             locale={locale}
             backend={backend}
             workspace={workspace}

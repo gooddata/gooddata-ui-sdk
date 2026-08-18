@@ -15,19 +15,29 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
         listboxProps,
         onKeyDownConfirm,
         isLoading,
+        hasNextPage,
+        skeletonItemsCount,
     }: {
         items?: T[];
         children: (item: T, index?: number) => ReactNode;
         listboxProps?: Record<string, unknown>;
         onKeyDownConfirm?: (item: T) => void;
         isLoading?: boolean;
+        hasNextPage?: boolean;
+        skeletonItemsCount?: number;
     }) {
         if (isLoading) {
             return <div data-testid="context-chooser-loading" />;
         }
 
         return (
-            <ul role="listbox" {...listboxProps}>
+            <ul
+                role="listbox"
+                data-testid="context-chooser-paged-list"
+                data-has-next-page={hasNextPage}
+                data-skeleton-count={skeletonItemsCount}
+                {...listboxProps}
+            >
                 {items?.map((item, index) => (
                     <li
                         key={index}
@@ -85,7 +95,15 @@ function createItem(
 function renderBody(
     inputItems: IGenAIContextObject[],
     onSelect = vi.fn(),
-    { isLoading = false }: { isLoading?: boolean } = {},
+    {
+        isLoading = false,
+        hasNextPage = false,
+        loadNextPage = vi.fn(),
+    }: {
+        isLoading?: boolean;
+        hasNextPage?: boolean;
+        loadNextPage?: () => void;
+    } = {},
 ) {
     const closeDropdown = vi.fn();
 
@@ -96,6 +114,8 @@ function renderBody(
                 title="Add context"
                 titleId="context-chooser-title"
                 isLoading={isLoading}
+                hasNextPage={hasNextPage}
+                loadNextPage={loadNextPage}
                 ariaAttributes={{ id: "context-chooser-dialog", role: "dialog" }}
                 onSelect={onSelect}
                 closeDropdown={closeDropdown}
@@ -103,7 +123,7 @@ function renderBody(
         </IntlProvider>,
     );
 
-    return { onSelect, closeDropdown };
+    return { onSelect, closeDropdown, loadNextPage };
 }
 
 describe("GenAiChatContextChooserBody", () => {
@@ -153,7 +173,7 @@ describe("GenAiChatContextChooserBody", () => {
         expect(searchbox).toHaveAttribute("placeholder", "Search...");
     });
 
-    it("does not render search while loading even when item count exceeds the threshold", () => {
+    it("keeps search rendered while a follow-up page is loading", () => {
         renderBody(
             Array.from({ length: SEARCH_FIELD_VISIBILITY_THRESHOLD + 1 }, (_, index) =>
                 createItem(`item-${index}`, `Item ${index}`),
@@ -161,6 +181,13 @@ describe("GenAiChatContextChooserBody", () => {
             vi.fn(),
             { isLoading: true },
         );
+
+        expect(screen.getByRole("searchbox", { name: "Search context items" })).toBeInTheDocument();
+        expect(screen.getByTestId("context-chooser-loading")).toBeInTheDocument();
+    });
+
+    it("does not render search while the initial load has produced no items yet", () => {
+        renderBody([], vi.fn(), { isLoading: true });
 
         expect(screen.queryByRole("searchbox")).not.toBeInTheDocument();
         expect(screen.getByTestId("context-chooser-loading")).toBeInTheDocument();
@@ -189,5 +216,23 @@ describe("GenAiChatContextChooserBody", () => {
         fireEvent.click(screen.getByText("Sales Chart"));
 
         expect(onSelect).toHaveBeenCalledWith(item);
+    });
+
+    it("keeps the paged list mounted when the current page has no selectable items but another page is available", () => {
+        renderBody([], vi.fn(), { hasNextPage: true });
+
+        expect(screen.queryByText("No items available")).not.toBeInTheDocument();
+        expect(screen.getByTestId("context-chooser-paged-list")).toHaveAttribute(
+            "data-has-next-page",
+            "true",
+        );
+        expect(screen.getByTestId("context-chooser-paged-list")).toHaveAttribute("data-skeleton-count", "3");
+    });
+
+    it("shows no-data when there are no items and no further pages", () => {
+        renderBody([], vi.fn(), { hasNextPage: false });
+
+        expect(screen.getByText("No items available")).toBeInTheDocument();
+        expect(screen.queryByTestId("context-chooser-paged-list")).not.toBeInTheDocument();
     });
 });

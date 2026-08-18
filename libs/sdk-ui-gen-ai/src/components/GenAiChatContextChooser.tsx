@@ -1,12 +1,17 @@
 // (C) 2026 GoodData Corporation
 
+import { useCallback } from "react";
+
 import { defineMessages, useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Dropdown, UiIconButton, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { ambientContextSelector, userContextSelector } from "../store/chatWindow/chatWindowSelectors.js";
-import { addContextReferenceAction } from "../store/chatWindow/chatWindowSlice.js";
+import {
+    addContextReferenceAction,
+    initContextDashboardsAction,
+} from "../store/chatWindow/chatWindowSlice.js";
 import { type RootState } from "../store/types.js";
 import { type IGenAIContextObject } from "../types.js";
 
@@ -29,8 +34,17 @@ export function GenAiChatContextChooser({ onAddContext }: GenAiChatContextChoose
     const titleId = useIdPrefixed("context-chooser-title");
     const ambient = useSelector((state: RootState) => ambientContextSelector(state));
     const active = useSelector((state: RootState) => userContextSelector(state));
-    const inputItems = useContextItems(ambient, active);
+    const { items: inputItems, isLoading, hasNextPage, loadNextPage } = useContextItems(ambient, active);
     const addContextLabel = intl.formatMessage(msgs.add);
+
+    const onOpenStateChanged = useCallback(
+        (isOpen: boolean) => {
+            if (isOpen) {
+                dispatch(initContextDashboardsAction());
+            }
+        },
+        [dispatch],
+    );
 
     if (!ambient) {
         return null;
@@ -44,6 +58,7 @@ export function GenAiChatContextChooser({ onAddContext }: GenAiChatContextChoose
                 fullscreenOnMobile={false}
                 autofocusOnOpen
                 accessibilityConfig={{}}
+                onOpenStateChanged={onOpenStateChanged}
                 renderButton={({ isOpen, toggleDropdown, accessibilityConfig }) => (
                     <UiIconButton
                         icon="plus"
@@ -56,7 +71,7 @@ export function GenAiChatContextChooser({ onAddContext }: GenAiChatContextChoose
                             ariaLabel: addContextLabel,
                         }}
                         onClick={toggleDropdown}
-                        isDisabled={!inputItems.length}
+                        isDisabled={!inputItems.length && !hasNextPage && !isLoading}
                     />
                 )}
                 renderBody={({ closeDropdown, ariaAttributes }) => (
@@ -64,6 +79,9 @@ export function GenAiChatContextChooser({ onAddContext }: GenAiChatContextChoose
                         inputItems={inputItems}
                         title={addContextLabel}
                         titleId={titleId}
+                        isLoading={isLoading}
+                        hasNextPage={hasNextPage}
+                        loadNextPage={loadNextPage}
                         ariaAttributes={ariaAttributes}
                         closeDropdown={closeDropdown}
                         onSelect={(item) => {

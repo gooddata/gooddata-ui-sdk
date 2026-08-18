@@ -212,6 +212,7 @@
     "analyticsCatalog.asCode.dialog.edit.submit": "Tallenna",
     "analyticsCatalog.asCode.dialog.cancel": "Peruuta",
     "analyticsCatalog.asCode.dialog.unrepresentable": "Tämä objekti käyttää sisältöä, jota ei voi esittää koodina. Se näytetään vain luku -tilassa; muuta sitä vakioeditorilla.",
+    "analyticsCatalog.asCode.dialog.autoFormat": "Automaattinen muotoilu",
     "analyticsCatalog.metric.create.defaultTitle": "Oma metrikka",
     "analyticsCatalog.metric.create.success": "Metrikka luotu.",
     "analyticsCatalog.metric.update.success": "Metrikka tallennettu.",

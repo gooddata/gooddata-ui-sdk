@@ -212,6 +212,7 @@
     "analyticsCatalog.asCode.dialog.edit.submit": "Lưu",
     "analyticsCatalog.asCode.dialog.cancel": "Hủy",
     "analyticsCatalog.asCode.dialog.unrepresentable": "Đối tượng này sử dụng nội dung không thể được biểu diễn dưới dạng mã. Đối tượng được hiển thị ở chế độ chỉ đọc; hãy sử dụng trình chỉnh sửa tiêu chuẩn để thay đổi.",
+    "analyticsCatalog.asCode.dialog.autoFormat": "Tự động định dạng",
     "analyticsCatalog.metric.create.defaultTitle": "Thước đo của tôi",
     "analyticsCatalog.metric.create.success": "Đã tạo thước đo.",
     "analyticsCatalog.metric.update.success": "Đã lưu thước đo.",

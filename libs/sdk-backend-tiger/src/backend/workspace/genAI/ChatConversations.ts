@@ -598,6 +598,9 @@ function convertUserContext(userContext: IGenAIUserContext | undefined) {
                           ...(userContext.view.dashboard.title
                               ? { title: userContext.view.dashboard.title }
                               : {}),
+                          ...(userContext.view.dashboard.activeTabId
+                              ? { activeTabId: userContext.view.dashboard.activeTabId }
+                              : {}),
                           ...(userContext.view.dashboard.filters?.length
                               ? {
                                     // Filter `title` is display-only (drives the context indicator);

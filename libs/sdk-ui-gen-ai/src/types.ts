@@ -126,3 +126,24 @@ export interface IGenAIContextObject {
     where: "view.dashboard" | "referencedObjects";
     context?: IGenAIObjectReference;
 }
+
+/**
+ * A dashboard offered by the context chooser.
+ * @internal
+ */
+export interface IGenAIDashboardListItem {
+    id: string;
+    ref: ObjRef;
+    title: string;
+}
+
+/**
+ * State of the dashboard list offered by the context chooser.
+ * @internal
+ */
+export type ContextDashboardsState = {
+    items: IGenAIDashboardListItem[];
+    loadedPages: number;
+    hasNextPage: boolean;
+    isLoading: boolean;
+};

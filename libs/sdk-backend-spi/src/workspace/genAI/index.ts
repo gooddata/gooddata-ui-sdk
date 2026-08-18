@@ -1162,6 +1162,8 @@ export type IChatConversationApplyMemoryDetail = {
     category: "applyMemory";
     /** Memory items injected into the turn's prompt, in retrieval order. */
     items: IChatConversationAppliedMemoryItem[];
+    /** Duration of the memory retrieval. */
+    durationMs?: number;
 };
 
 /**

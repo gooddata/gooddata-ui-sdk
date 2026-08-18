@@ -60,6 +60,9 @@ export function GenAiInteractionIntelligence({
 
     const openCategory = useCallback((categoryIndex: number) => {
         setView({ mode: "detail", categoryIndex });
+        // Clicking a row unmounts the list, so its `mouseleave` never fires — the hover would
+        // otherwise still be highlighting that row's tiles on the way back.
+        setHoveredStepIndexes(undefined);
     }, []);
 
     const backToList = useCallback(() => setView({ mode: "list", categoryIndex: 0 }), []);

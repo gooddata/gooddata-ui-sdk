@@ -212,6 +212,7 @@
     "analyticsCatalog.asCode.dialog.edit.submit": "保存",
     "analyticsCatalog.asCode.dialog.cancel": "取消",
     "analyticsCatalog.asCode.dialog.unrepresentable": "此对象使用的内容无法表示为代码。该内容以只读方式显示；请使用标准编辑器进行更改。",
+    "analyticsCatalog.asCode.dialog.autoFormat": "自动格式化",
     "analyticsCatalog.metric.create.defaultTitle": "我的指标",
     "analyticsCatalog.metric.create.success": "指标已创建。",
     "analyticsCatalog.metric.update.success": "指标已保存。",

@@ -3107,6 +3107,7 @@ export interface IGenAICreatedVisualizations {
 
 // @internal
 export interface IGenAIDashboardContext {
+    activeTabId?: string;
     definition?: IDashboardDefinition;
     filters?: GenAIUserContextFilter[];
     isNew?: boolean;

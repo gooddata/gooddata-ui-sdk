@@ -5,12 +5,18 @@ import { useEffect, useMemo } from "react";
 import { type EnhancedStore } from "@reduxjs/toolkit";
 
 import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { type CatalogItem, type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
+import {
+    type CatalogItem,
+    type GenAIObjectType,
+    type IColorPalette,
+    type IListedDashboard,
+} from "@gooddata/sdk-model";
 
 import type { GenAIAssistantMode, LinkHandlerEvent } from "../components/ConfigContext.js";
 import {
     setCatalogItemsActions,
     setColorPaletteAction,
+    setContextDashboardsAction,
     setFullscreenAction,
     setIsPreviewAction,
     setObjectTypesAction,
@@ -32,6 +38,7 @@ export const useGenAIStore = (
         includeTags?: string[];
         excludeTags?: string[];
         catalogItems?: CatalogItem[];
+        dashboards?: IListedDashboard[];
         isPreview?: boolean;
         allowInteractionIntelligence?: boolean;
         onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
@@ -47,6 +54,7 @@ export const useGenAIStore = (
         includeTags,
         excludeTags,
         catalogItems,
+        dashboards,
         isPreview,
         allowInteractionIntelligence,
         onLinkClick,
@@ -134,6 +142,13 @@ export const useGenAIStore = (
             store.dispatch(setCatalogItemsActions(catalogItems));
         }
     }, [eventHandlers, eventDispatcher, catalogItems, optionsDispatcher, store]);
+
+    useEffect(() => {
+        if (dashboards) {
+            optionsDispatcher.setDashboards(dashboards);
+            store.dispatch(setContextDashboardsAction({ items: dashboards }));
+        }
+    }, [dashboards, optionsDispatcher, store]);
 
     useEffect(() => {
         if (mode && mode !== optionsDispatcher.getMode()) {

@@ -173,6 +173,11 @@ export interface IGenAIDashboardContext {
      */
     filters?: GenAIUserContextFilter[];
     /**
+     * Local identifier of the dashboard tab the user is currently on. Matches the `id` of one
+     * entry in `definition.tabs`. Undefined for a dashboard without tabs.
+     */
+    activeTabId?: string;
+    /**
      * Dashboard definition.
      */
     definition?: IDashboardDefinition;

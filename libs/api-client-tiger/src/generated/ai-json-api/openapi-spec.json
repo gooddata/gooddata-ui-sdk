@@ -2938,6 +2938,18 @@
                         "description": "Category this body belongs to.",
                         "default": "applyMemory"
                     },
+                    "durationMs": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Durationms",
+                        "description": "Wall-clock duration of the memory retrieval. Not part of the turn total, which sums interaction steps, and null on a body stored before this was recorded."
+                    },
                     "items": {
                         "items": {
                             "$ref": "#/components/schemas/AppliedMemoryItem"
@@ -7900,6 +7912,18 @@
             },
             "UserContextDashboard": {
                 "properties": {
+                    "activeTabId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Activetabid",
+                        "description": "Id of the dashboard tab the user is currently on. Matches the `id` of one entry in `definition.tabs`, which a version-3 dashboard document carries; it is not the `localIdentifier` that the dashboard-summary endpoint's `tabId` matches. Sent for a tab-based dashboard so the assistant can reason about the tab in view instead of assuming the first one. Optional."
+                    },
                     "definition": {
                         "anyOf": [
                             {
