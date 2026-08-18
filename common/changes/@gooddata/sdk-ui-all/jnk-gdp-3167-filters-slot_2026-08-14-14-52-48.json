@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-dashboard: Add an alpha Filters slot to DefaultAlertingDialog and DefaultScheduledEmailDialog for wrap-or-replace customization of the dialog filters row",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

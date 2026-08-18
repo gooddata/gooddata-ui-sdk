@@ -284,6 +284,7 @@ export function DefaultDashboardSettingsDialog({
                             }}
                         />
                         <ConfigurationOption
+                            dataTestId="s-timezone-allow-user-override"
                             label={intl.formatMessage({
                                 id: "settingsDashboardDialog.section.timezone.allowUserOverride.toggle",
                             })}
@@ -302,6 +303,7 @@ export function DefaultDashboardSettingsDialog({
                             }}
                         />
                         <ConfigurationOption
+                            dataTestId="s-timezone-show-info"
                             label={intl.formatMessage({
                                 id: "settingsDashboardDialog.section.timezone.showTimezoneInfo.toggle",
                             })}
@@ -336,12 +338,17 @@ interface IConfigurationOptionProps {
      * Receives the new checked state of the toggle.
      */
     onChange: (isChecked: boolean) => void;
+    /**
+     * Identifies this toggle for tests. Without it the toggles in a section can only be told
+     * apart by their DOM order.
+     */
+    dataTestId?: string;
 }
 
-function ConfigurationOption({ label, tooltip, isChecked, onChange }: IConfigurationOptionProps) {
+function ConfigurationOption({ label, tooltip, isChecked, onChange, dataTestId }: IConfigurationOptionProps) {
     return (
         <div className="configuration-category-item">
-            <label className="input-checkbox-toggle">
+            <label className="input-checkbox-toggle" data-testid={dataTestId}>
                 <input
                     type="checkbox"
                     checked={isChecked}

@@ -35,7 +35,6 @@ import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
 import { ApplyCurrentFiltersConfirmDialog } from "../../shared/automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
-import { AutomationFiltersSelect } from "../../shared/automationFilters/components/AutomationFiltersSelect.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
 import { useScheduledExportActions } from "../state/ScheduledExportActionsContext.js";
@@ -46,6 +45,7 @@ import { useScheduledExportAttachments } from "../state/useScheduledExportAttach
 import { useScheduledExportDialogValidity } from "../state/useScheduledExportDialogValidity.js";
 import {
     type IDefaultScheduledEmailDialogProps,
+    type IScheduledEmailDialogFiltersProps,
     type ScheduledEmailDialogHeaderDefaultProps,
 } from "../types.js";
 import { getDefaultCronExpression } from "../utils/cron.js";
@@ -59,6 +59,7 @@ import { EvaluationModeCheckbox } from "./components/EvaluationModeCheckbox/Eval
 import { ScheduledEmailDialogHeader } from "./components/Header/ScheduleEmailDialogHeader.js";
 import { MessageForm } from "./components/MessageForm/MessageForm.js";
 import { RecipientsSelect } from "./components/RecipientsSelect/RecipientsSelect.js";
+import { ScheduledEmailDialogFilters } from "./components/ScheduledEmailDialogFilters.js";
 import { SubjectForm } from "./components/SubjectForm/SubjectForm.js";
 import { SCHEDULED_EMAIL_DIALOG_ID } from "./constants.js";
 import { DefaultLoadingScheduledEmailDialog } from "./DefaultLoadingScheduledEmailDialog.js";
@@ -122,6 +123,7 @@ export function ScheduledMailDialogRenderer({
     slots,
 }: IDefaultScheduledEmailDialogProps) {
     const HeaderSlot = slots?.Header;
+    const FiltersSlot = slots?.Filters;
 
     const intl = useIntl();
 
@@ -341,6 +343,29 @@ export function ScheduledMailDialogRenderer({
         (channel) => channel.id === editedAutomation.notificationChannel,
     );
     const isInPlatformChannel = selectedChannel?.destinationType === "inPlatform";
+
+    const filtersDefaultProps: IScheduledEmailDialogFiltersProps = {
+        availableFilters,
+        selectedFilters,
+        onFiltersChange,
+        storeFilters,
+        onStoreFiltersChange,
+        isDashboardAutomation: !widget,
+        filtersByTab,
+        editedFiltersByTab,
+        onFiltersByTabChange,
+        parameters: flatTabId ? visibleParametersByTab[flatTabId] : undefined,
+        availableParameters: flatTabId ? availableParametersByTab[flatTabId] : undefined,
+        onParameterAdd,
+        onParameterChange,
+        onParameterDelete,
+        parametersByTab: visibleParametersByTab,
+        availableParametersByTab,
+        onParameterAddByTab,
+        onParameterChangeByTab,
+        onParameterDeleteByTab,
+        parametersEnabled,
+    };
     return (
         <>
             <Overlay
@@ -456,35 +481,14 @@ export function ScheduledMailDialogRenderer({
                                                 : undefined
                                         }
                                     >
-                                        <AutomationFiltersSelect
-                                            availableFilters={availableFilters}
-                                            selectedFilters={selectedFilters}
-                                            onFiltersChange={onFiltersChange}
-                                            storeFilters={storeFilters}
-                                            onStoreFiltersChange={onStoreFiltersChange}
-                                            isDashboardAutomation={!widget}
-                                            overlayPositionType={OVERLAY_POSITION_TYPE}
-                                            hideTitle
-                                            showAllFilters
-                                            filtersByTab={filtersByTab}
-                                            editedFiltersByTab={editedFiltersByTab}
-                                            onFiltersByTabChange={onFiltersByTabChange}
-                                            parameters={
-                                                flatTabId ? visibleParametersByTab[flatTabId] : undefined
-                                            }
-                                            availableParameters={
-                                                flatTabId ? availableParametersByTab[flatTabId] : undefined
-                                            }
-                                            onParameterChange={onParameterChange}
-                                            onParameterDelete={onParameterDelete}
-                                            onParameterAdd={onParameterAdd}
-                                            parametersByTab={visibleParametersByTab}
-                                            availableParametersByTab={availableParametersByTab}
-                                            onParameterChangeByTab={onParameterChangeByTab}
-                                            onParameterDeleteByTab={onParameterDeleteByTab}
-                                            onParameterAddByTab={onParameterAddByTab}
-                                            parametersEnabled={parametersEnabled}
-                                        />
+                                        {FiltersSlot ? (
+                                            <FiltersSlot
+                                                Default={ScheduledEmailDialogFilters}
+                                                defaultProps={filtersDefaultProps}
+                                            />
+                                        ) : (
+                                            <ScheduledEmailDialogFilters {...filtersDefaultProps} />
+                                        )}
                                     </div>
                                 ) : (
                                     <div
@@ -666,7 +670,8 @@ export function ScheduledMailDialogRenderer({
  * outside those providers throws at runtime.
  *
  * Slots render only in the fully rendered dialog: not while the dialog context reports loading,
- * and not while the stale-filters confirmation step is shown.
+ * and not while the stale-filters confirmation step is shown. The Filters slot additionally
+ * renders only while the Filters tab is selected — see {@link IScheduledEmailDialogSlots.Filters}.
  *
  * @alpha
  */

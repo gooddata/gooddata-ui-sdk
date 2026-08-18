@@ -15,7 +15,11 @@ import {
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { type IAutomationDialogHeaderProps, type ISlotProps } from "../shared/slots/types.js";
+import {
+    type IAutomationDialogFiltersProps,
+    type IAutomationDialogHeaderProps,
+    type ISlotProps,
+} from "../shared/slots/types.js";
 
 ///
 /// Component props
@@ -127,6 +131,20 @@ export type AlertingDialogHeaderDefaultProps = IAlertingDialogHeaderProps & {
 };
 
 /**
+ * Props of the default alerting dialog's filters region (the filter and parameter chips above
+ * the form).
+ *
+ * @alpha
+ */
+export interface IAlertingDialogFiltersProps extends IAutomationDialogFiltersProps {
+    /**
+     * Disables the date filter chips. The default dialog disables them while the alert uses
+     * anomaly detection.
+     */
+    disableDateFilters: boolean;
+}
+
+/**
  * Section-level overrides of the default alerting dialog.
  *
  * @alpha
@@ -137,6 +155,19 @@ export interface IAlertingDialogSlots {
      * identity — see {@link ISlotProps}.
      */
     Header?: ComponentType<ISlotProps<AlertingDialogHeaderDefaultProps>>;
+
+    /**
+     * Wraps or replaces the dialog's filters region (the filter and parameter chips). Must have
+     * a stable reference identity — see {@link ISlotProps}.
+     *
+     * Renders only in the fully rendered dialog: not while the dialog context reports loading,
+     * and not while the stale-filters confirmation step is shown.
+     *
+     * A replacement takes over computing the next filters array: `defaultProps.onFiltersChange`
+     * expects the complete selection, so change/remove/add gestures must submit the whole
+     * updated array, not a delta.
+     */
+    Filters?: ComponentType<ISlotProps<IAlertingDialogFiltersProps>>;
 }
 
 /**

@@ -22,6 +22,7 @@ import { DashboardAttributeFilterSelectionMode } from '@gooddata/sdk-model';
 import { DashboardAttributeFilterSelectionType } from '@gooddata/sdk-model';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { DashboardFiltersApplyMode } from '@gooddata/sdk-model';
+import { DashboardParameterMode } from '@gooddata/sdk-model';
 import { DashboardSummaryWorkflowStatus } from '@gooddata/sdk-backend-spi';
 import { DashboardTextAttributeFilter } from '@gooddata/sdk-model';
 import { DataViewFacade } from '@gooddata/sdk-ui';
@@ -163,6 +164,7 @@ import { INotificationChannelMetadataObjectBase } from '@gooddata/sdk-model';
 import { InsightDisplayFormUsage } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
+import { IParameterDefinition } from '@gooddata/sdk-model';
 import { IParameterMetadataObject } from '@gooddata/sdk-model';
 import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
 import { IPushData } from '@gooddata/sdk-ui';
@@ -2373,6 +2375,11 @@ export interface IAlertingDialogContextValue {
 }
 
 // @alpha
+export interface IAlertingDialogFiltersProps extends IAutomationDialogFiltersProps {
+    disableDateFilters: boolean;
+}
+
+// @alpha
 export interface IAlertingDialogHeaderProps extends IAutomationDialogHeaderProps {
     onCancel?: () => void;
 }
@@ -2400,6 +2407,7 @@ export interface IAlertingDialogProps {
 
 // @alpha
 export interface IAlertingDialogSlots {
+    Filters?: ComponentType<ISlotProps<IAlertingDialogFiltersProps>>;
     Header?: ComponentType<ISlotProps<AlertingDialogHeaderDefaultProps>>;
 }
 
@@ -2513,6 +2521,18 @@ export interface IAttributesDropdownProps extends IDashboardAttributeFilterPlace
 }
 
 // @alpha
+export interface IAutomationDialogFiltersProps {
+    availableFilters: FilterContextItem[] | undefined;
+    availableParameters?: IAutomationParameter[];
+    onFiltersChange: (filters: FilterContextItem[]) => void;
+    onParameterAdd: (ref: IdentifierRef) => void;
+    onParameterChange: (ref: IdentifierRef, value: ParameterValue) => void;
+    onParameterDelete: (ref: IdentifierRef) => void;
+    parameters?: IAutomationParameter[];
+    selectedFilters: FilterContextItem[];
+}
+
+// @alpha
 export interface IAutomationDialogHeaderProps {
     isSecondaryTitleVisible?: boolean;
     onChange: (value: string) => void;
@@ -2530,6 +2550,15 @@ export interface IAutomationFiltersTab {
     lockedFilters: FilterContextItem[];
     tabId: string;
     tabTitle: string;
+}
+
+// @alpha
+export interface IAutomationParameter {
+    definition: IParameterDefinition;
+    mode: DashboardParameterMode;
+    ref: IdentifierRef;
+    title: string;
+    value: ParameterValue;
 }
 
 // @alpha
@@ -7936,6 +7965,22 @@ export interface IScheduledEmailDialogContextValue {
 }
 
 // @alpha
+export interface IScheduledEmailDialogFiltersProps extends IAutomationDialogFiltersProps {
+    availableParametersByTab?: Record<string, IAutomationParameter[]>;
+    editedFiltersByTab?: Record<string, FilterContextItem[]>;
+    filtersByTab?: IAutomationFiltersTab[];
+    isDashboardAutomation: boolean;
+    onFiltersByTabChange?: (filtersByTab: Record<string, FilterContextItem[]>) => void;
+    onParameterAddByTab?: (tabId: string, ref: IdentifierRef) => void;
+    onParameterChangeByTab?: (tabId: string, ref: IdentifierRef, value: ParameterValue) => void;
+    onParameterDeleteByTab?: (tabId: string, ref: IdentifierRef) => void;
+    onStoreFiltersChange: (value: boolean, filters?: FilterContextItem[], filtersByTab?: Record<string, FilterContextItem[]>) => void;
+    parametersByTab?: Record<string, IAutomationParameter[]>;
+    parametersEnabled?: boolean;
+    storeFilters: boolean;
+}
+
+// @alpha
 export interface IScheduledEmailDialogHeaderProps extends IAutomationDialogHeaderProps {
     onBack?: () => void;
     onTitleKeyDown: (event: KeyboardEvent_2) => void;
@@ -7971,6 +8016,7 @@ export interface IScheduledEmailDialogProps {
 
 // @alpha
 export interface IScheduledEmailDialogSlots {
+    Filters?: ComponentType<ISlotProps<IScheduledEmailDialogFiltersProps>>;
     Header?: ComponentType<ISlotProps<ScheduledEmailDialogHeaderDefaultProps>>;
 }
 

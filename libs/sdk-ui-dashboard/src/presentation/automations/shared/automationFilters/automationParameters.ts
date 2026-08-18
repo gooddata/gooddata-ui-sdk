@@ -24,13 +24,33 @@ import { exportParametersToValues } from "../../../../_staging/automation/index.
  * dialog. The `value` is the current effective value the headless run will capture; `definition`
  * picks which control renders.
  *
- * @internal
+ * @alpha
  */
 export interface IAutomationParameter {
+    /**
+     * Reference to the workspace parameter this row represents.
+     */
     ref: IdentifierRef;
+
+    /**
+     * Title shown on the parameter chip: the dashboard-level label when the dashboard defines one,
+     * otherwise the workspace parameter's title, otherwise the identifier.
+     */
     title: string;
+
+    /**
+     * The current effective value — the value a headless run of the automation will capture.
+     */
     value: ParameterValue;
+
+    /**
+     * Dashboard-level mode of the parameter, controlling whether its chip is editable in the dialog.
+     */
     mode: DashboardParameterMode;
+
+    /**
+     * Resolved definition of the parameter; determines which editing control the chip renders.
+     */
     definition: IParameterDefinition;
 }
 
