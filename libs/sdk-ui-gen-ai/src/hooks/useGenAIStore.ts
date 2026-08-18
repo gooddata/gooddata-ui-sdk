@@ -9,14 +9,17 @@ import {
     type CatalogItem,
     type GenAIObjectType,
     type IColorPalette,
+    type IInsight,
     type IListedDashboard,
+    insightRef,
+    insightTitle,
 } from "@gooddata/sdk-model";
 
 import type { GenAIAssistantMode, LinkHandlerEvent } from "../components/ConfigContext.js";
 import {
     setCatalogItemsActions,
     setColorPaletteAction,
-    setContextDashboardsAction,
+    setContextObjectsAction,
     setFullscreenAction,
     setIsPreviewAction,
     setObjectTypesAction,
@@ -26,6 +29,7 @@ import {
 import { type ChatEventHandler, EventDispatcher } from "../store/events.js";
 import { OptionsDispatcher } from "../store/options.js";
 import { getStore } from "../store/store.js";
+import { toContextListItem } from "../utils.js";
 
 export const useGenAIStore = (
     backend: IAnalyticalBackend,
@@ -39,6 +43,7 @@ export const useGenAIStore = (
         excludeTags?: string[];
         catalogItems?: CatalogItem[];
         dashboards?: IListedDashboard[];
+        visualizations?: IInsight[];
         isPreview?: boolean;
         allowInteractionIntelligence?: boolean;
         onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
@@ -55,6 +60,7 @@ export const useGenAIStore = (
         excludeTags,
         catalogItems,
         dashboards,
+        visualizations,
         isPreview,
         allowInteractionIntelligence,
         onLinkClick,
@@ -146,9 +152,28 @@ export const useGenAIStore = (
     useEffect(() => {
         if (dashboards) {
             optionsDispatcher.setDashboards(dashboards);
-            store.dispatch(setContextDashboardsAction({ items: dashboards }));
+            store.dispatch(
+                setContextObjectsAction({
+                    kind: "dashboard",
+                    items: dashboards.map((dashboard) => toContextListItem(dashboard.ref, dashboard.title)),
+                }),
+            );
         }
     }, [dashboards, optionsDispatcher, store]);
+
+    useEffect(() => {
+        if (visualizations) {
+            optionsDispatcher.setVisualizations(visualizations);
+            store.dispatch(
+                setContextObjectsAction({
+                    kind: "visualization",
+                    items: visualizations.map((insight) =>
+                        toContextListItem(insightRef(insight), insightTitle(insight)),
+                    ),
+                }),
+            );
+        }
+    }, [visualizations, optionsDispatcher, store]);
 
     useEffect(() => {
         if (mode && mode !== optionsDispatcher.getMode()) {

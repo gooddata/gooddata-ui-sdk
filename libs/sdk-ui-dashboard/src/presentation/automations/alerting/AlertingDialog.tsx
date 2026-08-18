@@ -9,16 +9,20 @@ import { type IAlertingDialogProps } from "./types.js";
 
 /**
  * Resolves the dialog component from DashboardComponentsContext and mounts it under the
- * alerting dialog's state contexts.
+ * alerting dialog's state contexts, inside the resolved context decorator — so a decorated
+ * dialog context is what both the state seeding and the dialog (default or replacement) read.
  *
  * @internal
  */
 export function AlertingDialog(props: IAlertingDialogProps): ReactElement {
-    const { AlertingDialogComponent } = useDashboardComponentsContext();
+    const { AlertingDialogComponent, AlertingDialogContextDecoratorComponent } =
+        useDashboardComponentsContext();
 
     return (
-        <AlertingDialogStateProvider>
-            <AlertingDialogComponent {...props} />
-        </AlertingDialogStateProvider>
+        <AlertingDialogContextDecoratorComponent>
+            <AlertingDialogStateProvider>
+                <AlertingDialogComponent {...props} />
+            </AlertingDialogStateProvider>
+        </AlertingDialogContextDecoratorComponent>
     );
 }

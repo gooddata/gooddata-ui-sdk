@@ -10,6 +10,7 @@ import {
     type CatalogItem,
     type GenAIObjectType,
     type IColorPalette,
+    type IInsight,
     type IListedDashboard,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -47,6 +48,11 @@ export type GenAiStoreProps = {
      * no dashboards are loaded from the backend.
      */
     dashboards?: IListedDashboard[];
+    /**
+     * Visualizations offered by the context chooser. When provided, the list is taken as complete
+     * and no visualizations are loaded from the backend.
+     */
+    visualizations?: IInsight[];
     /**
      * User settings to use for the chat UI.
      */
@@ -214,6 +220,7 @@ function InternalStore({
     settings,
     catalogItems,
     dashboards,
+    visualizations,
     includeTags,
     excludeTags,
     objectTypes,
@@ -236,6 +243,7 @@ function InternalStore({
         excludeTags,
         catalogItems,
         dashboards,
+        visualizations,
         isPreview,
         allowInteractionIntelligence,
         allowNativeLinks,

@@ -170,6 +170,7 @@ export function useReasoningOptionItems(
                     isDisabled: false,
                     data: { effort },
                     tooltip: descriptionText,
+                    tooltipWidth: 230,
                     iconRight: (
                         <UiIcon
                             type="question"

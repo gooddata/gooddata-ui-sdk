@@ -9,16 +9,21 @@ import { type IScheduledEmailDialogProps } from "./types.js";
 
 /**
  * Resolves the dialog component from DashboardComponentsContext and mounts it under the
- * scheduled-export dialog's state contexts.
+ * scheduled-export dialog's state contexts, inside the resolved context decorator — so a
+ * decorated dialog context is what both the state seeding and the dialog (default or
+ * replacement) read.
  *
  * @internal
  */
 export function ScheduledEmailDialog(props: IScheduledEmailDialogProps): ReactElement {
-    const { ScheduledEmailDialogComponent } = useDashboardComponentsContext();
+    const { ScheduledEmailDialogComponent, ScheduledEmailDialogContextDecoratorComponent } =
+        useDashboardComponentsContext();
 
     return (
-        <ScheduledEmailDialogStateProvider>
-            <ScheduledEmailDialogComponent {...props} />
-        </ScheduledEmailDialogStateProvider>
+        <ScheduledEmailDialogContextDecoratorComponent>
+            <ScheduledEmailDialogStateProvider>
+                <ScheduledEmailDialogComponent {...props} />
+            </ScheduledEmailDialogStateProvider>
+        </ScheduledEmailDialogContextDecoratorComponent>
     );
 }

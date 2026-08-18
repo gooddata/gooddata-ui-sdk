@@ -8,10 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dropdown, UiIconButton, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { ambientContextSelector, userContextSelector } from "../store/chatWindow/chatWindowSelectors.js";
-import {
-    addContextReferenceAction,
-    initContextDashboardsAction,
-} from "../store/chatWindow/chatWindowSlice.js";
+import { addContextReferenceAction, initContextObjectsAction } from "../store/chatWindow/chatWindowSlice.js";
 import { type RootState } from "../store/types.js";
 import { type IGenAIContextObject } from "../types.js";
 
@@ -40,7 +37,7 @@ export function GenAiChatContextChooser({ onAddContext }: GenAiChatContextChoose
     const onOpenStateChanged = useCallback(
         (isOpen: boolean) => {
             if (isOpen) {
-                dispatch(initContextDashboardsAction());
+                dispatch(initContextObjectsAction());
             }
         },
         [dispatch],

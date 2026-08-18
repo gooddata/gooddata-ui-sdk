@@ -5,7 +5,7 @@ import { isEmpty } from "lodash-es";
 import {
     type IUserProfile,
     type JsonApiAnalyticalDashboardOutIncludes,
-    type JsonApiMetricOutIncludes,
+    type JsonApiComputedAttributeOutIncludes,
     type JsonApiUserGroupOutWithLinks,
     type JsonApiUserIdentifierLinkage,
     type JsonApiUserIdentifierOutAttributes,
@@ -66,7 +66,7 @@ function isJsonApiUserIdentifierOutAttributes(
 }
 
 export type IIncludedWithUserIdentifier =
-    | JsonApiMetricOutIncludes
+    | JsonApiComputedAttributeOutIncludes
     | JsonApiUserIdentifierOutWithLinks
     | JsonApiWorkspaceAutomationOutWithLinks
     | JsonApiAnalyticalDashboardOutIncludes

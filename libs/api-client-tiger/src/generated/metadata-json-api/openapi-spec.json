@@ -16346,6 +16346,7 @@
                                     "facts",
                                     "attributes",
                                     "labels",
+                                    "computedAttributes",
                                     "metrics",
                                     "datasets",
                                     "parameters",
@@ -16356,7 +16357,7 @@
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,metrics,datasets,parameters"
+                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,computedAttributes,metrics,datasets,parameters"
                     },
                     {
                         "$ref": "#/components/parameters/page"
@@ -16457,6 +16458,7 @@
                                     "facts",
                                     "attributes",
                                     "labels",
+                                    "computedAttributes",
                                     "metrics",
                                     "datasets",
                                     "parameters",
@@ -16467,7 +16469,7 @@
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,metrics,datasets,parameters"
+                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,computedAttributes,metrics,datasets,parameters"
                     },
                     {
                         "name": "metaInclude",
@@ -16662,6 +16664,7 @@
                                     "facts",
                                     "attributes",
                                     "labels",
+                                    "computedAttributes",
                                     "metrics",
                                     "datasets",
                                     "parameters",
@@ -16672,7 +16675,7 @@
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,metrics,datasets,parameters"
+                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,computedAttributes,metrics,datasets,parameters"
                     },
                     {
                         "name": "X-GDC-VALIDATE-RELATIONS",
@@ -16780,6 +16783,7 @@
                                     "facts",
                                     "attributes",
                                     "labels",
+                                    "computedAttributes",
                                     "metrics",
                                     "datasets",
                                     "parameters",
@@ -16790,7 +16794,7 @@
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,metrics,datasets,parameters"
+                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,computedAttributes,metrics,datasets,parameters"
                     }
                 ],
                 "requestBody": {
@@ -16920,6 +16924,7 @@
                                     "facts",
                                     "attributes",
                                     "labels",
+                                    "computedAttributes",
                                     "metrics",
                                     "datasets",
                                     "parameters",
@@ -16930,7 +16935,7 @@
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,metrics,datasets,parameters"
+                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,computedAttributes,metrics,datasets,parameters"
                     }
                 ],
                 "requestBody": {
@@ -17682,6 +17687,7 @@
                                     "facts",
                                     "attributes",
                                     "labels",
+                                    "computedAttributes",
                                     "metrics",
                                     "datasets",
                                     "parameters",
@@ -17691,7 +17697,7 @@
                                 ]
                             }
                         },
-                        "example": "user,userGroup,facts,attributes,labels,metrics,datasets,parameters"
+                        "example": "user,userGroup,facts,attributes,labels,computedAttributes,metrics,datasets,parameters"
                     },
                     {
                         "$ref": "#/components/parameters/page"
@@ -17793,6 +17799,7 @@
                                     "facts",
                                     "attributes",
                                     "labels",
+                                    "computedAttributes",
                                     "metrics",
                                     "datasets",
                                     "parameters",
@@ -17802,7 +17809,7 @@
                                 ]
                             }
                         },
-                        "example": "user,userGroup,facts,attributes,labels,metrics,datasets,parameters"
+                        "example": "user,userGroup,facts,attributes,labels,computedAttributes,metrics,datasets,parameters"
                     },
                     {
                         "name": "metaInclude",
@@ -17998,6 +18005,7 @@
                                     "facts",
                                     "attributes",
                                     "labels",
+                                    "computedAttributes",
                                     "metrics",
                                     "datasets",
                                     "parameters",
@@ -18007,7 +18015,7 @@
                                 ]
                             }
                         },
-                        "example": "user,userGroup,facts,attributes,labels,metrics,datasets,parameters"
+                        "example": "user,userGroup,facts,attributes,labels,computedAttributes,metrics,datasets,parameters"
                     },
                     {
                         "name": "X-GDC-VALIDATE-RELATIONS",
@@ -18116,6 +18124,7 @@
                                     "facts",
                                     "attributes",
                                     "labels",
+                                    "computedAttributes",
                                     "metrics",
                                     "datasets",
                                     "parameters",
@@ -18125,7 +18134,7 @@
                                 ]
                             }
                         },
-                        "example": "user,userGroup,facts,attributes,labels,metrics,datasets,parameters"
+                        "example": "user,userGroup,facts,attributes,labels,computedAttributes,metrics,datasets,parameters"
                     }
                 ],
                 "requestBody": {
@@ -18256,6 +18265,7 @@
                                     "facts",
                                     "attributes",
                                     "labels",
+                                    "computedAttributes",
                                     "metrics",
                                     "datasets",
                                     "parameters",
@@ -18265,7 +18275,7 @@
                                 ]
                             }
                         },
-                        "example": "user,userGroup,facts,attributes,labels,metrics,datasets,parameters"
+                        "example": "user,userGroup,facts,attributes,labels,computedAttributes,metrics,datasets,parameters"
                     }
                 ],
                 "requestBody": {
@@ -27139,6 +27149,696 @@
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/computedAttributes": {
+            "get": {
+                "tags": [
+                    "Computed Attributes",
+                    "entities",
+                    "computed-attribute-controller"
+                ],
+                "summary": "Get all Computed Attributes",
+                "operationId": "getAllEntities@ComputedAttributes",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "origin",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Defines scope of origin of objects. All by default.",
+                            "default": "ALL",
+                            "enum": [
+                                "ALL",
+                                "PARENTS",
+                                "NATIVE"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "title==someString;description==someString;createdBy.id==321;modifiedBy.id==321"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "facts",
+                                    "attributes",
+                                    "labels",
+                                    "computedAttributes",
+                                    "metrics",
+                                    "datasets",
+                                    "parameters",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "certifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,computedAttributes,metrics,datasets,parameters"
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
+                    },
+                    {
+                        "$ref": "#/components/parameters/size"
+                    },
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    },
+                    {
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "page",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,page,all"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiComputedAttributeOutList"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiComputedAttributeOutList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Contains minimal permission level required to view this object type."
+                }
+            },
+            "post": {
+                "tags": [
+                    "Computed Attributes",
+                    "entities",
+                    "computed-attribute-controller"
+                ],
+                "summary": "Post Computed Attributes",
+                "operationId": "createEntity@ComputedAttributes",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "facts",
+                                    "attributes",
+                                    "labels",
+                                    "computedAttributes",
+                                    "metrics",
+                                    "datasets",
+                                    "parameters",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "certifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,computedAttributes,metrics,datasets,parameters"
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,all"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiComputedAttributePostOptionalIdDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiComputedAttributePostOptionalIdDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiComputedAttributeOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiComputedAttributeOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/computedAttributes/search": {
+            "post": {
+                "tags": [
+                    "Computed Attributes",
+                    "entities",
+                    "computed-attribute-controller"
+                ],
+                "summary": "The search endpoint (beta)",
+                "operationId": "searchEntities@ComputedAttributes",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "origin",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Defines scope of origin of objects. All by default.",
+                            "default": "ALL",
+                            "enum": [
+                                "ALL",
+                                "PARENTS",
+                                "NATIVE"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Search request body with filter, pagination, and sorting options",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EntitySearchBody"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiComputedAttributeOutList"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiComputedAttributeOutList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Contains minimal permission level required to view this object type."
+                }
+            }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/computedAttributes/{objectId}": {
+            "get": {
+                "tags": [
+                    "Computed Attributes",
+                    "entities",
+                    "computed-attribute-controller"
+                ],
+                "summary": "Get a Computed Attribute",
+                "operationId": "getEntity@ComputedAttributes",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "title==someString;description==someString;createdBy.id==321;modifiedBy.id==321"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "facts",
+                                    "attributes",
+                                    "labels",
+                                    "computedAttributes",
+                                    "metrics",
+                                    "datasets",
+                                    "parameters",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "certifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,computedAttributes,metrics,datasets,parameters"
+                    },
+                    {
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,all"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiComputedAttributeOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiComputedAttributeOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Contains minimal permission level required to view this object type."
+                }
+            },
+            "put": {
+                "tags": [
+                    "Computed Attributes",
+                    "entities",
+                    "computed-attribute-controller"
+                ],
+                "summary": "Put a Computed Attribute",
+                "operationId": "updateEntity@ComputedAttributes",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "title==someString;description==someString;createdBy.id==321;modifiedBy.id==321"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "facts",
+                                    "attributes",
+                                    "labels",
+                                    "computedAttributes",
+                                    "metrics",
+                                    "datasets",
+                                    "parameters",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "certifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,computedAttributes,metrics,datasets,parameters"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiComputedAttributeInDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiComputedAttributeInDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiComputedAttributeOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiComputedAttributeOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Computed Attributes",
+                    "entities",
+                    "computed-attribute-controller"
+                ],
+                "summary": "Delete a Computed Attribute",
+                "operationId": "deleteEntity@ComputedAttributes",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "$ref": "#/components/responses/Deleted"
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Computed Attributes",
+                    "entities",
+                    "computed-attribute-controller"
+                ],
+                "summary": "Patch a Computed Attribute",
+                "operationId": "patchEntity@ComputedAttributes",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "title==someString;description==someString;createdBy.id==321;modifiedBy.id==321"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "facts",
+                                    "attributes",
+                                    "labels",
+                                    "computedAttributes",
+                                    "metrics",
+                                    "datasets",
+                                    "parameters",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "certifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,computedAttributes,metrics,datasets,parameters"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiComputedAttributePatchDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiComputedAttributePatchDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiComputedAttributeOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiComputedAttributeOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            }
         }
     },
     "components": {
@@ -29019,6 +29719,384 @@
                 },
                 "description": "Filter the result by applying multiple comparison and/or range conditions combined with OR logic. If conditions list is empty, no filtering is applied (all rows are returned)."
             },
+            "ConditionalFormatting": {
+                "required": [
+                    "enabled",
+                    "rules"
+                ],
+                "type": "object",
+                "properties": {
+                    "enabled": {
+                        "type": "boolean",
+                        "description": "Whether the rules are applied when rendering."
+                    },
+                    "rules": {
+                        "type": "array",
+                        "description": "Rules evaluated in order; within a target, the first matching condition wins.",
+                        "items": {
+                            "$ref": "#/components/schemas/ConditionalFormattingRule"
+                        }
+                    }
+                },
+                "description": "Conditional formatting for a table, with one entry per formatted column.",
+                "nullable": true
+            },
+            "ConditionalFormattingAbsoluteDateValue": {
+                "required": [
+                    "from",
+                    "kind",
+                    "to"
+                ],
+                "type": "object",
+                "properties": {
+                    "from": {
+                        "type": "string",
+                        "description": "`YYYY-MM-DD`, or `YYYY-MM-DD HH:mm` at hour or minute granularity."
+                    },
+                    "kind": {
+                        "type": "string",
+                        "description": "The value kind.",
+                        "enum": [
+                            "absoluteDate"
+                        ]
+                    },
+                    "to": {
+                        "type": "string",
+                        "description": "`YYYY-MM-DD`, or `YYYY-MM-DD HH:mm` at hour or minute granularity. Inclusive."
+                    }
+                },
+                "description": "A fixed, inclusive date period."
+            },
+            "ConditionalFormattingAttributeTarget": {
+                "required": [
+                    "attributeIdentifier",
+                    "kind"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributeIdentifier": {
+                        "type": "string",
+                        "example": "23990482d9d04e62a9c564a29be804f8"
+                    },
+                    "kind": {
+                        "type": "string",
+                        "description": "The target kind.",
+                        "enum": [
+                            "attribute"
+                        ]
+                    }
+                },
+                "description": "An attribute column, addressed by its bucket item local identifier."
+            },
+            "ConditionalFormattingCondition": {
+                "required": [
+                    "format",
+                    "operator",
+                    "value"
+                ],
+                "type": "object",
+                "properties": {
+                    "format": {
+                        "$ref": "#/components/schemas/ConditionalFormattingFormat"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "Client-assigned identifier, stable across edits.",
+                        "example": "d0538854-aac3-4fc6-9603-61f49bab6aa3"
+                    },
+                    "operator": {
+                        "type": "string",
+                        "description": "How a condition compares the cell value against its value.",
+                        "enum": [
+                            "ALL",
+                            "GREATER_THAN",
+                            "GREATER_THAN_OR_EQUAL_TO",
+                            "LESS_THAN",
+                            "LESS_THAN_OR_EQUAL_TO",
+                            "EQUAL_TO",
+                            "NOT_EQUAL_TO",
+                            "BETWEEN",
+                            "NOT_BETWEEN",
+                            "CONTAINS",
+                            "NOT_CONTAINS",
+                            "STARTS_WITH",
+                            "NOT_STARTS_WITH",
+                            "ENDS_WITH",
+                            "NOT_ENDS_WITH",
+                            "IS_EMPTY",
+                            "IS_NOT_EMPTY"
+                        ]
+                    },
+                    "value": {
+                        "$ref": "#/components/schemas/ConditionalFormattingValue"
+                    }
+                },
+                "description": "A condition and the formatting applied to cells matching it."
+            },
+            "ConditionalFormattingFormat": {
+                "required": [
+                    "scope"
+                ],
+                "type": "object",
+                "properties": {
+                    "backgroundColor": {
+                        "type": "string",
+                        "description": "Background color as a hex triplet.",
+                        "example": "#3DB36B"
+                    },
+                    "color": {
+                        "type": "string",
+                        "description": "Text color as a hex triplet.",
+                        "example": "#E54D40"
+                    },
+                    "scope": {
+                        "type": "string",
+                        "description": "Whether the formatting applies to the matching cell only, or to its whole row.",
+                        "enum": [
+                            "cell",
+                            "row"
+                        ]
+                    }
+                },
+                "description": "Visual formatting applied to a matching cell."
+            },
+            "ConditionalFormattingLiteral": {
+                "description": "A string or a number, serialized in whichever form it was authored.",
+                "oneOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "number"
+                    }
+                ]
+            },
+            "ConditionalFormattingLiteralRangeValue": {
+                "required": [
+                    "from",
+                    "kind",
+                    "to"
+                ],
+                "type": "object",
+                "properties": {
+                    "from": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "kind": {
+                        "type": "string",
+                        "description": "The value kind.",
+                        "enum": [
+                            "literalRange"
+                        ]
+                    },
+                    "to": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "description": "An inclusive numeric range."
+            },
+            "ConditionalFormattingLiteralValue": {
+                "required": [
+                    "kind",
+                    "value"
+                ],
+                "type": "object",
+                "properties": {
+                    "kind": {
+                        "type": "string",
+                        "description": "The value kind.",
+                        "enum": [
+                            "literal"
+                        ]
+                    },
+                    "value": {
+                        "$ref": "#/components/schemas/ConditionalFormattingLiteral"
+                    }
+                },
+                "description": "A single value compared against the cell value."
+            },
+            "ConditionalFormattingMeasureTarget": {
+                "required": [
+                    "kind",
+                    "measureIdentifier"
+                ],
+                "type": "object",
+                "properties": {
+                    "kind": {
+                        "type": "string",
+                        "description": "The target kind.",
+                        "enum": [
+                            "measure"
+                        ]
+                    },
+                    "measureIdentifier": {
+                        "type": "string",
+                        "example": "8cd55fe5748b48d7820ae9ee18e58011"
+                    }
+                },
+                "description": "A measure column, addressed by its bucket item local identifier."
+            },
+            "ConditionalFormattingNoneValue": {
+                "required": [
+                    "kind"
+                ],
+                "type": "object",
+                "properties": {
+                    "kind": {
+                        "type": "string",
+                        "description": "The value kind.",
+                        "enum": [
+                            "none"
+                        ]
+                    }
+                },
+                "description": "No value; used by operators that take none."
+            },
+            "ConditionalFormattingRelativeDateValue": {
+                "required": [
+                    "from",
+                    "granularity",
+                    "kind",
+                    "to"
+                ],
+                "type": "object",
+                "properties": {
+                    "from": {
+                        "type": "integer",
+                        "description": "Offset in periods; 0 is the current period, negative is the past.",
+                        "format": "int32",
+                        "example": -29
+                    },
+                    "granularity": {
+                        "type": "string",
+                        "description": "Granularity the offsets are counted in.",
+                        "example": "GDC.time.month",
+                        "enum": [
+                            "ALL_TIME_GRANULARITY",
+                            "GDC.time.year",
+                            "GDC.time.week_us",
+                            "GDC.time.week_in_year",
+                            "GDC.time.week_in_quarter",
+                            "GDC.time.week",
+                            "GDC.time.euweek_in_year",
+                            "GDC.time.euweek_in_quarter",
+                            "GDC.time.quarter",
+                            "GDC.time.quarter_in_year",
+                            "GDC.time.month",
+                            "GDC.time.month_in_quarter",
+                            "GDC.time.month_in_year",
+                            "GDC.time.day_in_year",
+                            "GDC.time.day_in_quarter",
+                            "GDC.time.day_in_month",
+                            "GDC.time.day_in_week",
+                            "GDC.time.day_in_euweek",
+                            "GDC.time.date",
+                            "GDC.time.hour",
+                            "GDC.time.hour_in_day",
+                            "GDC.time.minute",
+                            "GDC.time.minute_in_hour",
+                            "GDC.time.minute_in_day",
+                            "GDC.time.second",
+                            "GDC.time.second_in_minute",
+                            "GDC.time.second_in_day",
+                            "GDC.time.fiscal_week",
+                            "GDC.time.fiscal_month",
+                            "GDC.time.fiscal_quarter",
+                            "GDC.time.fiscal_semester",
+                            "GDC.time.fiscal_year",
+                            "GDC.time.fiscal_day_in_fiscal_week",
+                            "GDC.time.fiscal_day_in_fiscal_month",
+                            "GDC.time.fiscal_day_in_fiscal_quarter",
+                            "GDC.time.fiscal_day_in_fiscal_semester",
+                            "GDC.time.fiscal_day_in_fiscal_year",
+                            "GDC.time.fiscal_week_in_fiscal_month",
+                            "GDC.time.fiscal_week_in_fiscal_quarter",
+                            "GDC.time.fiscal_week_in_fiscal_semester",
+                            "GDC.time.fiscal_week_in_fiscal_year",
+                            "GDC.time.fiscal_month_in_fiscal_quarter",
+                            "GDC.time.fiscal_month_in_fiscal_semester",
+                            "GDC.time.fiscal_month_in_fiscal_year",
+                            "GDC.time.fiscal_quarter_in_fiscal_semester",
+                            "GDC.time.fiscal_quarter_in_fiscal_year",
+                            "GDC.time.fiscal_semester_in_fiscal_year"
+                        ]
+                    },
+                    "kind": {
+                        "type": "string",
+                        "description": "The value kind.",
+                        "enum": [
+                            "relativeDate"
+                        ]
+                    },
+                    "to": {
+                        "type": "integer",
+                        "description": "Offset in periods, not lower than `from`.",
+                        "format": "int32",
+                        "example": 0
+                    }
+                },
+                "description": "A date period relative to the moment of evaluation, resolved at render time."
+            },
+            "ConditionalFormattingRule": {
+                "required": [
+                    "conditions",
+                    "target"
+                ],
+                "type": "object",
+                "properties": {
+                    "conditions": {
+                        "type": "array",
+                        "description": "Conditions evaluated in order; the first match wins.",
+                        "items": {
+                            "$ref": "#/components/schemas/ConditionalFormattingCondition"
+                        }
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "Client-assigned identifier, stable across edits.",
+                        "example": "bb955b38-a9e6-45f5-b068-155cb7ce509a"
+                    },
+                    "target": {
+                        "$ref": "#/components/schemas/ConditionalFormattingTarget"
+                    }
+                },
+                "description": "Conditions applied to a single column."
+            },
+            "ConditionalFormattingTarget": {
+                "type": "object",
+                "description": "Column a rule formats. The shape is selected by the `kind` property.",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/ConditionalFormattingAttributeTarget"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ConditionalFormattingMeasureTarget"
+                    }
+                ]
+            },
+            "ConditionalFormattingValue": {
+                "type": "object",
+                "description": "Value a condition compares against. The shape is selected by the `kind` property.",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/ConditionalFormattingNoneValue"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ConditionalFormattingLiteralValue"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ConditionalFormattingLiteralRangeValue"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ConditionalFormattingAbsoluteDateValue"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ConditionalFormattingRelativeDateValue"
+                    }
+                ]
+            },
             "ContentSlideTemplate": {
                 "type": "object",
                 "properties": {
@@ -30395,6 +31473,13 @@
                             "$ref": "#/components/schemas/DeclarativeAttributeHierarchy"
                         }
                     },
+                    "computedAttributes": {
+                        "type": "array",
+                        "description": "A list of computed attributes available in the model.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeComputedAttribute"
+                        }
+                    },
                     "dashboardPlugins": {
                         "type": "array",
                         "description": "A list of dashboard plugins available in the model.",
@@ -30454,6 +31539,9 @@
                 ],
                 "type": "object",
                 "properties": {
+                    "conditionalFormatting": {
+                        "$ref": "#/components/schemas/ObjectConditionalFormatting"
+                    },
                     "defaultView": {
                         "$ref": "#/components/schemas/LabelIdentifier"
                     },
@@ -30890,6 +31978,171 @@
                 },
                 "description": "A table column."
             },
+            "DeclarativeComputedAttribute": {
+                "required": [
+                    "content",
+                    "id",
+                    "title"
+                ],
+                "type": "object",
+                "properties": {
+                    "certification": {
+                        "type": "string",
+                        "description": "Certification status of the entity.",
+                        "enum": [
+                            "CERTIFIED"
+                        ]
+                    },
+                    "certificationMessage": {
+                        "type": "string",
+                        "description": "Optional message associated with the certification.",
+                        "nullable": true
+                    },
+                    "certifiedAt": {
+                        "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}",
+                        "type": "string",
+                        "description": "Time when the certification was set.",
+                        "nullable": true
+                    },
+                    "certifiedBy": {
+                        "$ref": "#/components/schemas/DeclarativeUserIdentifier"
+                    },
+                    "content": {
+                        "$ref": "#/components/schemas/DeclarativeComputedAttributeContent"
+                    },
+                    "createdAt": {
+                        "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}",
+                        "type": "string",
+                        "description": "Time of the entity creation.",
+                        "nullable": true,
+                        "example": "2023-07-20 12:30"
+                    },
+                    "createdBy": {
+                        "$ref": "#/components/schemas/DeclarativeUserIdentifier"
+                    },
+                    "dataType": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "Computed attribute data type",
+                        "example": "STRING",
+                        "enum": [
+                            "INT",
+                            "STRING",
+                            "DATE",
+                            "NUMERIC",
+                            "TIMESTAMP",
+                            "TIMESTAMP_TZ",
+                            "BOOLEAN",
+                            "HLL"
+                        ]
+                    },
+                    "description": {
+                        "maxLength": 10000,
+                        "type": "string",
+                        "description": "Computed attribute description.",
+                        "example": "Sales for all the data available."
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "Computed attribute ID.",
+                        "example": "total-sales"
+                    },
+                    "isHidden": {
+                        "type": "boolean",
+                        "description": "If true, this computed attribute is hidden from AI search results.",
+                        "example": false
+                    },
+                    "isNullable": {
+                        "type": "boolean",
+                        "description": "Flag indicating whether the associated source column allows null values.",
+                        "example": false
+                    },
+                    "locale": {
+                        "type": "string",
+                        "description": "Default locale for primary computed label.",
+                        "example": "en-US"
+                    },
+                    "modifiedAt": {
+                        "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}",
+                        "type": "string",
+                        "description": "Time of the last entity modification.",
+                        "nullable": true,
+                        "example": "2023-07-20 12:30"
+                    },
+                    "modifiedBy": {
+                        "$ref": "#/components/schemas/DeclarativeUserIdentifier"
+                    },
+                    "nullValue": {
+                        "type": "string",
+                        "description": "Value used in coalesce during joins instead of null.",
+                        "example": "empty_value"
+                    },
+                    "tags": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "A list of tags.",
+                        "example": [
+                            "Revenues"
+                        ],
+                        "items": {
+                            "type": "string",
+                            "description": "A list of tags.",
+                            "example": "[\"Revenues\"]"
+                        }
+                    },
+                    "title": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "Computed attribute title.",
+                        "example": "Total sales"
+                    },
+                    "valueType": {
+                        "type": "string",
+                        "description": "Specific type of the computed attribute value",
+                        "enum": [
+                            "TEXT",
+                            "HYPERLINK",
+                            "GEO",
+                            "GEO_LONGITUDE",
+                            "GEO_LATITUDE",
+                            "GEO_AREA",
+                            "GEO_ICON",
+                            "IMAGE",
+                            "HYPERLOGLOG"
+                        ]
+                    }
+                }
+            },
+            "DeclarativeComputedAttributeContent": {
+                "required": [
+                    "maql"
+                ],
+                "type": "object",
+                "properties": {
+                    "format": {
+                        "maxLength": 2048,
+                        "type": "string",
+                        "description": "Excel-like format string with optional dynamic tokens. Filter value tokens: [$FILTER:<label_id>] for raw filter value passthrough. Currency tokens: [$CURRENCY:<label_id>] for currency symbol, with optional forms :symbol, :narrow, :code, :name. Locale abbreviations: [$K], [$M], [$B], [$T] for locale-specific scale abbreviations. Tokens are resolved at execution time based on AFM filters and user's format locale. Single-value filters only; multi-value filters use fallback values.",
+                        "nullable": true,
+                        "example": "%0.2f"
+                    },
+                    "maql": {
+                        "maxLength": 10000,
+                        "type": "string",
+                        "example": "SELECT 1"
+                    },
+                    "metricType": {
+                        "type": "string",
+                        "description": "Categorizes metric semantics (e.g., currency).",
+                        "enum": [
+                            "UNSPECIFIED",
+                            "CURRENCY"
+                        ]
+                    }
+                },
+                "description": "A definition of the computed attribute content."
+            },
             "DeclarativeCspDirective": {
                 "required": [
                     "directive",
@@ -31177,7 +32430,6 @@
                             "MSSQL",
                             "PRESTO",
                             "DREMIO",
-                            "DRILL",
                             "AZURESQL",
                             "SYNAPSESQL",
                             "DATABRICKS",
@@ -31428,6 +32680,9 @@
                 ],
                 "type": "object",
                 "properties": {
+                    "conditionalFormatting": {
+                        "$ref": "#/components/schemas/ObjectConditionalFormatting"
+                    },
                     "description": {
                         "maxLength": 10000,
                         "type": "string",
@@ -32009,6 +33264,9 @@
                 ],
                 "type": "object",
                 "properties": {
+                    "conditionalFormatting": {
+                        "$ref": "#/components/schemas/ObjectConditionalFormatting"
+                    },
                     "description": {
                         "maxLength": 10000,
                         "type": "string",
@@ -32283,6 +33541,9 @@
                     },
                     "certifiedBy": {
                         "$ref": "#/components/schemas/DeclarativeUserIdentifier"
+                    },
+                    "conditionalFormatting": {
+                        "$ref": "#/components/schemas/ObjectConditionalFormatting"
                     },
                     "content": {
                         "$ref": "#/components/schemas/JsonNode"
@@ -32971,7 +34232,8 @@
                             "ENABLE_QUERY_TAGS",
                             "RESTRICT_BASE_UI",
                             "CERTIFY_PARENT_OBJECTS",
-                            "HLL_TYPE"
+                            "HLL_TYPE",
+                            "ENABLE_TIMEZONE_CHANGE"
                         ]
                     }
                 },
@@ -33463,6 +34725,9 @@
                     },
                     "certifiedBy": {
                         "$ref": "#/components/schemas/DeclarativeUserIdentifier"
+                    },
+                    "conditionalFormatting": {
+                        "$ref": "#/components/schemas/ConditionalFormatting"
                     },
                     "content": {
                         "$ref": "#/components/schemas/JsonNode"
@@ -34836,6 +36101,7 @@
                                     "aggregatedFact",
                                     "label",
                                     "metric",
+                                    "computedAttribute",
                                     "userDataFilter",
                                     "parameter",
                                     "exportDefinition",
@@ -36910,6 +38176,28 @@
                             "areRelationsValid": {
                                 "type": "boolean"
                             },
+                            "conditionalFormatting": {
+                                "required": [
+                                    "conditions",
+                                    "enabled"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "conditions": {
+                                        "type": "array",
+                                        "description": "Conditions evaluated in order; the first match wins.",
+                                        "items": {
+                                            "$ref": "#/components/schemas/ConditionalFormattingCondition"
+                                        }
+                                    },
+                                    "enabled": {
+                                        "type": "boolean",
+                                        "description": "Whether the conditions are applied when rendering."
+                                    }
+                                },
+                                "description": "Conditional formatting applied to table columns that render this attribute.",
+                                "nullable": true
+                            },
                             "description": {
                                 "maxLength": 10000,
                                 "type": "string"
@@ -37193,6 +38481,28 @@
                     "attributes": {
                         "type": "object",
                         "properties": {
+                            "conditionalFormatting": {
+                                "required": [
+                                    "conditions",
+                                    "enabled"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "conditions": {
+                                        "type": "array",
+                                        "description": "Conditions evaluated in order; the first match wins.",
+                                        "items": {
+                                            "$ref": "#/components/schemas/ConditionalFormattingCondition"
+                                        }
+                                    },
+                                    "enabled": {
+                                        "type": "boolean",
+                                        "description": "Whether the conditions are applied when rendering."
+                                    }
+                                },
+                                "description": "Conditional formatting applied to table columns that render this attribute.",
+                                "nullable": true
+                            },
                             "description": {
                                 "maxLength": 10000,
                                 "type": "string"
@@ -38732,6 +40042,793 @@
                     }
                 }
             },
+            "JsonApiComputedAttributeIn": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "required": [
+                                    "maql"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "format": {
+                                        "maxLength": 2048,
+                                        "type": "string",
+                                        "description": "Excel-like format string with optional dynamic tokens. Filter value tokens: [$FILTER:<label_id>] for raw filter value passthrough. Currency tokens: [$CURRENCY:<label_id>] for currency symbol, with optional forms :symbol, :narrow, :code, :name. Locale abbreviations: [$K], [$M], [$B], [$T] for locale-specific scale abbreviations. Tokens are resolved at execution time based on AFM filters and user's format locale. Single-value filters only; multi-value filters use fallback values.",
+                                        "nullable": true
+                                    },
+                                    "maql": {
+                                        "maxLength": 10000,
+                                        "type": "string"
+                                    },
+                                    "metricType": {
+                                        "type": "string",
+                                        "description": "Categorizes metric semantics (e.g., currency).",
+                                        "enum": [
+                                            "UNSPECIFIED",
+                                            "CURRENCY"
+                                        ]
+                                    }
+                                }
+                            },
+                            "dataType": {
+                                "type": "string",
+                                "enum": [
+                                    "INT",
+                                    "STRING",
+                                    "DATE",
+                                    "NUMERIC",
+                                    "TIMESTAMP",
+                                    "TIMESTAMP_TZ",
+                                    "BOOLEAN",
+                                    "HLL"
+                                ]
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "isHidden": {
+                                "type": "boolean"
+                            },
+                            "isNullable": {
+                                "type": "boolean"
+                            },
+                            "locale": {
+                                "type": "string"
+                            },
+                            "nullValue": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "valueType": {
+                                "type": "string",
+                                "enum": [
+                                    "TEXT",
+                                    "HYPERLINK",
+                                    "GEO",
+                                    "GEO_LONGITUDE",
+                                    "GEO_LATITUDE",
+                                    "GEO_AREA",
+                                    "GEO_ICON",
+                                    "IMAGE",
+                                    "HYPERLOGLOG"
+                                ]
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "computedAttribute",
+                        "enum": [
+                            "computedAttribute"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of computedAttribute entity."
+            },
+            "JsonApiComputedAttributeInDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiComputedAttributeIn"
+                    }
+                }
+            },
+            "JsonApiComputedAttributeLinkage": {
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "computedAttribute"
+                        ]
+                    }
+                },
+                "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
+            },
+            "JsonApiComputedAttributeOut": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "certification": {
+                                "type": "string",
+                                "description": "Certification status of the entity.",
+                                "enum": [
+                                    "CERTIFIED"
+                                ]
+                            },
+                            "certificationMessage": {
+                                "type": "string",
+                                "description": "Optional message associated with the certification.",
+                                "nullable": true
+                            },
+                            "certifiedAt": {
+                                "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}",
+                                "type": "string",
+                                "description": "Time when the certification was set.",
+                                "format": "date-time",
+                                "nullable": true,
+                                "example": "2023-07-20 12:30"
+                            },
+                            "content": {
+                                "required": [
+                                    "maql"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "format": {
+                                        "maxLength": 2048,
+                                        "type": "string",
+                                        "description": "Excel-like format string with optional dynamic tokens. Filter value tokens: [$FILTER:<label_id>] for raw filter value passthrough. Currency tokens: [$CURRENCY:<label_id>] for currency symbol, with optional forms :symbol, :narrow, :code, :name. Locale abbreviations: [$K], [$M], [$B], [$T] for locale-specific scale abbreviations. Tokens are resolved at execution time based on AFM filters and user's format locale. Single-value filters only; multi-value filters use fallback values.",
+                                        "nullable": true
+                                    },
+                                    "maql": {
+                                        "maxLength": 10000,
+                                        "type": "string"
+                                    },
+                                    "metricType": {
+                                        "type": "string",
+                                        "description": "Categorizes metric semantics (e.g., currency).",
+                                        "enum": [
+                                            "UNSPECIFIED",
+                                            "CURRENCY"
+                                        ]
+                                    }
+                                }
+                            },
+                            "createdAt": {
+                                "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}",
+                                "type": "string",
+                                "description": "Time of the entity creation.",
+                                "format": "date-time",
+                                "nullable": true,
+                                "example": "2023-07-20 12:30"
+                            },
+                            "dataType": {
+                                "type": "string",
+                                "enum": [
+                                    "INT",
+                                    "STRING",
+                                    "DATE",
+                                    "NUMERIC",
+                                    "TIMESTAMP",
+                                    "TIMESTAMP_TZ",
+                                    "BOOLEAN",
+                                    "HLL"
+                                ]
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "isHidden": {
+                                "type": "boolean"
+                            },
+                            "isNullable": {
+                                "type": "boolean"
+                            },
+                            "locale": {
+                                "type": "string"
+                            },
+                            "modifiedAt": {
+                                "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}",
+                                "type": "string",
+                                "description": "Time of the last entity modification.",
+                                "format": "date-time",
+                                "nullable": true,
+                                "example": "2023-07-20 12:30"
+                            },
+                            "nullValue": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "valueType": {
+                                "type": "string",
+                                "enum": [
+                                    "TEXT",
+                                    "HYPERLINK",
+                                    "GEO",
+                                    "GEO_LONGITUDE",
+                                    "GEO_LATITUDE",
+                                    "GEO_AREA",
+                                    "GEO_ICON",
+                                    "IMAGE",
+                                    "HYPERLOGLOG"
+                                ]
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "origin": {
+                                "required": [
+                                    "originId",
+                                    "originType"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "originId": {
+                                        "type": "string",
+                                        "description": "defines id of the workspace where the entity comes from"
+                                    },
+                                    "originType": {
+                                        "type": "string",
+                                        "description": "defines type of the origin of the entity",
+                                        "enum": [
+                                            "NATIVE",
+                                            "PARENT"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "attributes": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiAttributeToManyLinkage"
+                                    }
+                                }
+                            },
+                            "certifiedBy": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiUserIdentifierToOneLinkage"
+                                    }
+                                }
+                            },
+                            "computedAttributes": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiComputedAttributeToManyLinkage"
+                                    }
+                                }
+                            },
+                            "createdBy": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiUserIdentifierToOneLinkage"
+                                    }
+                                }
+                            },
+                            "datasets": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiDatasetToManyLinkage"
+                                    }
+                                }
+                            },
+                            "facts": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiFactToManyLinkage"
+                                    }
+                                }
+                            },
+                            "labels": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiLabelToManyLinkage"
+                                    }
+                                }
+                            },
+                            "metrics": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiMetricToManyLinkage"
+                                    }
+                                }
+                            },
+                            "modifiedBy": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiUserIdentifierToOneLinkage"
+                                    }
+                                }
+                            },
+                            "parameters": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiParameterToManyLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "computedAttribute",
+                        "enum": [
+                            "computedAttribute"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of computedAttribute entity."
+            },
+            "JsonApiComputedAttributeOutDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiComputedAttributeOut"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiComputedAttributeOutIncludes"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    }
+                }
+            },
+            "JsonApiComputedAttributeOutIncludes": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiComputedAttributeOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiMetricOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiParameterOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
+                    }
+                ]
+            },
+            "JsonApiComputedAttributeOutList": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiComputedAttributeOutWithLinks"
+                        }
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiComputedAttributeOutIncludes"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            }
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiComputedAttributeOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiComputedAttributeOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiComputedAttributePatch": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "required": [
+                                    "maql"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "format": {
+                                        "maxLength": 2048,
+                                        "type": "string",
+                                        "description": "Excel-like format string with optional dynamic tokens. Filter value tokens: [$FILTER:<label_id>] for raw filter value passthrough. Currency tokens: [$CURRENCY:<label_id>] for currency symbol, with optional forms :symbol, :narrow, :code, :name. Locale abbreviations: [$K], [$M], [$B], [$T] for locale-specific scale abbreviations. Tokens are resolved at execution time based on AFM filters and user's format locale. Single-value filters only; multi-value filters use fallback values.",
+                                        "nullable": true
+                                    },
+                                    "maql": {
+                                        "maxLength": 10000,
+                                        "type": "string"
+                                    },
+                                    "metricType": {
+                                        "type": "string",
+                                        "description": "Categorizes metric semantics (e.g., currency).",
+                                        "enum": [
+                                            "UNSPECIFIED",
+                                            "CURRENCY"
+                                        ]
+                                    }
+                                }
+                            },
+                            "dataType": {
+                                "type": "string",
+                                "enum": [
+                                    "INT",
+                                    "STRING",
+                                    "DATE",
+                                    "NUMERIC",
+                                    "TIMESTAMP",
+                                    "TIMESTAMP_TZ",
+                                    "BOOLEAN",
+                                    "HLL"
+                                ]
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "isHidden": {
+                                "type": "boolean"
+                            },
+                            "isNullable": {
+                                "type": "boolean"
+                            },
+                            "locale": {
+                                "type": "string"
+                            },
+                            "nullValue": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "valueType": {
+                                "type": "string",
+                                "enum": [
+                                    "TEXT",
+                                    "HYPERLINK",
+                                    "GEO",
+                                    "GEO_LONGITUDE",
+                                    "GEO_LATITUDE",
+                                    "GEO_AREA",
+                                    "GEO_ICON",
+                                    "IMAGE",
+                                    "HYPERLOGLOG"
+                                ]
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "computedAttribute",
+                        "enum": [
+                            "computedAttribute"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of patching computedAttribute entity."
+            },
+            "JsonApiComputedAttributePatchDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiComputedAttributePatch"
+                    }
+                }
+            },
+            "JsonApiComputedAttributePostOptionalId": {
+                "required": [
+                    "attributes",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "required": [
+                                    "maql"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "format": {
+                                        "maxLength": 2048,
+                                        "type": "string",
+                                        "description": "Excel-like format string with optional dynamic tokens. Filter value tokens: [$FILTER:<label_id>] for raw filter value passthrough. Currency tokens: [$CURRENCY:<label_id>] for currency symbol, with optional forms :symbol, :narrow, :code, :name. Locale abbreviations: [$K], [$M], [$B], [$T] for locale-specific scale abbreviations. Tokens are resolved at execution time based on AFM filters and user's format locale. Single-value filters only; multi-value filters use fallback values.",
+                                        "nullable": true
+                                    },
+                                    "maql": {
+                                        "maxLength": 10000,
+                                        "type": "string"
+                                    },
+                                    "metricType": {
+                                        "type": "string",
+                                        "description": "Categorizes metric semantics (e.g., currency).",
+                                        "enum": [
+                                            "UNSPECIFIED",
+                                            "CURRENCY"
+                                        ]
+                                    }
+                                }
+                            },
+                            "dataType": {
+                                "type": "string",
+                                "enum": [
+                                    "INT",
+                                    "STRING",
+                                    "DATE",
+                                    "NUMERIC",
+                                    "TIMESTAMP",
+                                    "TIMESTAMP_TZ",
+                                    "BOOLEAN",
+                                    "HLL"
+                                ]
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "isHidden": {
+                                "type": "boolean"
+                            },
+                            "isNullable": {
+                                "type": "boolean"
+                            },
+                            "locale": {
+                                "type": "string"
+                            },
+                            "nullValue": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "valueType": {
+                                "type": "string",
+                                "enum": [
+                                    "TEXT",
+                                    "HYPERLINK",
+                                    "GEO",
+                                    "GEO_LONGITUDE",
+                                    "GEO_LATITUDE",
+                                    "GEO_AREA",
+                                    "GEO_ICON",
+                                    "IMAGE",
+                                    "HYPERLOGLOG"
+                                ]
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "computedAttribute",
+                        "enum": [
+                            "computedAttribute"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of computedAttribute entity."
+            },
+            "JsonApiComputedAttributePostOptionalIdDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiComputedAttributePostOptionalId"
+                    }
+                }
+            },
+            "JsonApiComputedAttributeToManyLinkage": {
+                "type": "array",
+                "description": "References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
+                "items": {
+                    "$ref": "#/components/schemas/JsonApiComputedAttributeLinkage"
+                }
+            },
             "JsonApiCookieSecurityConfigurationIn": {
                 "required": [
                     "id",
@@ -40197,7 +42294,6 @@
                                     "MSSQL",
                                     "PRESTO",
                                     "DREMIO",
-                                    "DRILL",
                                     "AZURESQL",
                                     "SYNAPSESQL",
                                     "DATABRICKS",
@@ -40451,7 +42547,6 @@
                                     "MSSQL",
                                     "PRESTO",
                                     "DREMIO",
-                                    "DRILL",
                                     "AZURESQL",
                                     "SYNAPSESQL",
                                     "DATABRICKS",
@@ -40655,7 +42750,6 @@
                                     "MSSQL",
                                     "PRESTO",
                                     "DREMIO",
-                                    "DRILL",
                                     "AZURESQL",
                                     "SYNAPSESQL",
                                     "DATABRICKS",
@@ -40916,7 +43010,6 @@
                                     "MSSQL",
                                     "PRESTO",
                                     "DREMIO",
-                                    "DRILL",
                                     "AZURESQL",
                                     "SYNAPSESQL",
                                     "DATABRICKS",
@@ -45505,6 +47598,28 @@
                             "areRelationsValid": {
                                 "type": "boolean"
                             },
+                            "conditionalFormatting": {
+                                "required": [
+                                    "conditions",
+                                    "enabled"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "conditions": {
+                                        "type": "array",
+                                        "description": "Conditions evaluated in order; the first match wins.",
+                                        "items": {
+                                            "$ref": "#/components/schemas/ConditionalFormattingCondition"
+                                        }
+                                    },
+                                    "enabled": {
+                                        "type": "boolean",
+                                        "description": "Whether the conditions are applied when rendering."
+                                    }
+                                },
+                                "description": "Conditional formatting applied to table columns that render this label, taking precedence over the rules of its attribute. When absent, a primary label falls back to those rules and every other label is left unformatted.",
+                                "nullable": true
+                            },
                             "description": {
                                 "maxLength": 10000,
                                 "type": "string"
@@ -45733,6 +47848,28 @@
                     "attributes": {
                         "type": "object",
                         "properties": {
+                            "conditionalFormatting": {
+                                "required": [
+                                    "conditions",
+                                    "enabled"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "conditions": {
+                                        "type": "array",
+                                        "description": "Conditions evaluated in order; the first match wins.",
+                                        "items": {
+                                            "$ref": "#/components/schemas/ConditionalFormattingCondition"
+                                        }
+                                    },
+                                    "enabled": {
+                                        "type": "boolean",
+                                        "description": "Whether the conditions are applied when rendering."
+                                    }
+                                },
+                                "description": "Conditional formatting applied to table columns that render this label, taking precedence over the rules of its attribute. When absent, a primary label falls back to those rules and every other label is left unformatted.",
+                                "nullable": true
+                            },
                             "description": {
                                 "maxLength": 10000,
                                 "type": "string"
@@ -46644,6 +48781,28 @@
                             "areRelationsValid": {
                                 "type": "boolean"
                             },
+                            "conditionalFormatting": {
+                                "required": [
+                                    "conditions",
+                                    "enabled"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "conditions": {
+                                        "type": "array",
+                                        "description": "Conditions evaluated in order; the first match wins.",
+                                        "items": {
+                                            "$ref": "#/components/schemas/ConditionalFormattingCondition"
+                                        }
+                                    },
+                                    "enabled": {
+                                        "type": "boolean",
+                                        "description": "Whether the conditions are applied when rendering."
+                                    }
+                                },
+                                "description": "Conditional formatting inherited by every table column that renders this metric.",
+                                "nullable": true
+                            },
                             "content": {
                                 "required": [
                                     "maql"
@@ -46776,6 +48935,28 @@
                                 "nullable": true,
                                 "example": "2023-07-20 12:30"
                             },
+                            "conditionalFormatting": {
+                                "required": [
+                                    "conditions",
+                                    "enabled"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "conditions": {
+                                        "type": "array",
+                                        "description": "Conditions evaluated in order; the first match wins.",
+                                        "items": {
+                                            "$ref": "#/components/schemas/ConditionalFormattingCondition"
+                                        }
+                                    },
+                                    "enabled": {
+                                        "type": "boolean",
+                                        "description": "Whether the conditions are applied when rendering."
+                                    }
+                                },
+                                "description": "Conditional formatting inherited by every table column that renders this metric.",
+                                "nullable": true
+                            },
                             "content": {
                                 "required": [
                                     "maql"
@@ -46897,6 +49078,17 @@
                                     }
                                 }
                             },
+                            "computedAttributes": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiComputedAttributeToManyLinkage"
+                                    }
+                                }
+                            },
                             "createdBy": {
                                 "required": [
                                     "data"
@@ -47001,38 +49193,13 @@
                         "type": "array",
                         "description": "Included resources",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiMetricOutIncludes"
+                            "$ref": "#/components/schemas/JsonApiComputedAttributeOutIncludes"
                         }
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
                     }
                 }
-            },
-            "JsonApiMetricOutIncludes": {
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiMetricOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiParameterOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
-                    }
-                ]
             },
             "JsonApiMetricOutList": {
                 "required": [
@@ -47052,7 +49219,7 @@
                         "type": "array",
                         "description": "Included resources",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiMetricOutIncludes"
+                            "$ref": "#/components/schemas/JsonApiComputedAttributeOutIncludes"
                         }
                     },
                     "links": {
@@ -47092,6 +49259,28 @@
                         "properties": {
                             "areRelationsValid": {
                                 "type": "boolean"
+                            },
+                            "conditionalFormatting": {
+                                "required": [
+                                    "conditions",
+                                    "enabled"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "conditions": {
+                                        "type": "array",
+                                        "description": "Conditions evaluated in order; the first match wins.",
+                                        "items": {
+                                            "$ref": "#/components/schemas/ConditionalFormattingCondition"
+                                        }
+                                    },
+                                    "enabled": {
+                                        "type": "boolean",
+                                        "description": "Whether the conditions are applied when rendering."
+                                    }
+                                },
+                                "description": "Conditional formatting inherited by every table column that renders this metric.",
+                                "nullable": true
                             },
                             "content": {
                                 "required": [
@@ -47184,6 +49373,28 @@
                         "properties": {
                             "areRelationsValid": {
                                 "type": "boolean"
+                            },
+                            "conditionalFormatting": {
+                                "required": [
+                                    "conditions",
+                                    "enabled"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "conditions": {
+                                        "type": "array",
+                                        "description": "Conditions evaluated in order; the first match wins.",
+                                        "items": {
+                                            "$ref": "#/components/schemas/ConditionalFormattingCondition"
+                                        }
+                                    },
+                                    "enabled": {
+                                        "type": "boolean",
+                                        "description": "Whether the conditions are applied when rendering."
+                                    }
+                                },
+                                "description": "Conditional formatting inherited by every table column that renders this metric.",
+                                "nullable": true
                             },
                             "content": {
                                 "required": [
@@ -48627,7 +50838,8 @@
                                     "ENABLE_QUERY_TAGS",
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
-                                    "HLL_TYPE"
+                                    "HLL_TYPE",
+                                    "ENABLE_TIMEZONE_CHANGE"
                                 ]
                             }
                         }
@@ -48730,7 +50942,8 @@
                                     "ENABLE_QUERY_TAGS",
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
-                                    "HLL_TYPE"
+                                    "HLL_TYPE",
+                                    "ENABLE_TIMEZONE_CHANGE"
                                 ]
                             }
                         }
@@ -48873,7 +51086,8 @@
                                     "ENABLE_QUERY_TAGS",
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
-                                    "HLL_TYPE"
+                                    "HLL_TYPE",
+                                    "ENABLE_TIMEZONE_CHANGE"
                                 ]
                             }
                         }
@@ -49742,6 +51956,17 @@
                                     }
                                 }
                             },
+                            "computedAttributes": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiComputedAttributeToManyLinkage"
+                                    }
+                                }
+                            },
                             "datasets": {
                                 "required": [
                                     "data"
@@ -49858,6 +52083,9 @@
                 "oneOf": [
                     {
                         "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiComputedAttributeOutWithLinks"
                     },
                     {
                         "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
@@ -50874,7 +53102,8 @@
                                     "ENABLE_QUERY_TAGS",
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
-                                    "HLL_TYPE"
+                                    "HLL_TYPE",
+                                    "ENABLE_TIMEZONE_CHANGE"
                                 ]
                             }
                         }
@@ -50977,7 +53206,8 @@
                                     "ENABLE_QUERY_TAGS",
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
-                                    "HLL_TYPE"
+                                    "HLL_TYPE",
+                                    "ENABLE_TIMEZONE_CHANGE"
                                 ]
                             }
                         }
@@ -51082,6 +53312,28 @@
                         "properties": {
                             "areRelationsValid": {
                                 "type": "boolean"
+                            },
+                            "conditionalFormatting": {
+                                "required": [
+                                    "enabled",
+                                    "rules"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "enabled": {
+                                        "type": "boolean",
+                                        "description": "Whether the rules are applied when rendering."
+                                    },
+                                    "rules": {
+                                        "type": "array",
+                                        "description": "Rules evaluated in order; within a target, the first matching condition wins.",
+                                        "items": {
+                                            "$ref": "#/components/schemas/ConditionalFormattingRule"
+                                        }
+                                    }
+                                },
+                                "description": "Conditional formatting applied when this visualization is rendered.",
+                                "nullable": true
                             },
                             "content": {
                                 "type": "object",
@@ -51196,6 +53448,28 @@
                                 "format": "date-time",
                                 "nullable": true,
                                 "example": "2023-07-20 12:30"
+                            },
+                            "conditionalFormatting": {
+                                "required": [
+                                    "enabled",
+                                    "rules"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "enabled": {
+                                        "type": "boolean",
+                                        "description": "Whether the rules are applied when rendering."
+                                    },
+                                    "rules": {
+                                        "type": "array",
+                                        "description": "Rules evaluated in order; within a target, the first matching condition wins.",
+                                        "items": {
+                                            "$ref": "#/components/schemas/ConditionalFormattingRule"
+                                        }
+                                    }
+                                },
+                                "description": "Conditional formatting applied when this visualization is rendered.",
+                                "nullable": true
                             },
                             "content": {
                                 "type": "object",
@@ -51404,13 +53678,38 @@
                         "type": "array",
                         "description": "Included resources",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiMetricOutIncludes"
+                            "$ref": "#/components/schemas/JsonApiVisualizationObjectOutIncludes"
                         }
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
                     }
                 }
+            },
+            "JsonApiVisualizationObjectOutIncludes": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiMetricOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiParameterOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
+                    }
+                ]
             },
             "JsonApiVisualizationObjectOutList": {
                 "required": [
@@ -51430,7 +53729,7 @@
                         "type": "array",
                         "description": "Included resources",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiMetricOutIncludes"
+                            "$ref": "#/components/schemas/JsonApiVisualizationObjectOutIncludes"
                         }
                     },
                     "links": {
@@ -51470,6 +53769,28 @@
                         "properties": {
                             "areRelationsValid": {
                                 "type": "boolean"
+                            },
+                            "conditionalFormatting": {
+                                "required": [
+                                    "enabled",
+                                    "rules"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "enabled": {
+                                        "type": "boolean",
+                                        "description": "Whether the rules are applied when rendering."
+                                    },
+                                    "rules": {
+                                        "type": "array",
+                                        "description": "Rules evaluated in order; within a target, the first matching condition wins.",
+                                        "items": {
+                                            "$ref": "#/components/schemas/ConditionalFormattingRule"
+                                        }
+                                    }
+                                },
+                                "description": "Conditional formatting applied when this visualization is rendered.",
+                                "nullable": true
                             },
                             "content": {
                                 "type": "object",
@@ -51544,6 +53865,28 @@
                         "properties": {
                             "areRelationsValid": {
                                 "type": "boolean"
+                            },
+                            "conditionalFormatting": {
+                                "required": [
+                                    "enabled",
+                                    "rules"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "enabled": {
+                                        "type": "boolean",
+                                        "description": "Whether the rules are applied when rendering."
+                                    },
+                                    "rules": {
+                                        "type": "array",
+                                        "description": "Rules evaluated in order; within a target, the first matching condition wins.",
+                                        "items": {
+                                            "$ref": "#/components/schemas/ConditionalFormattingRule"
+                                        }
+                                    }
+                                },
+                                "description": "Conditional formatting applied when this visualization is rendered.",
+                                "nullable": true
                             },
                             "content": {
                                 "type": "object",
@@ -54001,7 +56344,8 @@
                                     "ENABLE_QUERY_TAGS",
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
-                                    "HLL_TYPE"
+                                    "HLL_TYPE",
+                                    "ENABLE_TIMEZONE_CHANGE"
                                 ]
                             }
                         }
@@ -54104,7 +56448,8 @@
                                     "ENABLE_QUERY_TAGS",
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
-                                    "HLL_TYPE"
+                                    "HLL_TYPE",
+                                    "ENABLE_TIMEZONE_CHANGE"
                                 ]
                             }
                         }
@@ -54273,7 +56618,8 @@
                                     "ENABLE_QUERY_TAGS",
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
-                                    "HLL_TYPE"
+                                    "HLL_TYPE",
+                                    "ENABLE_TIMEZONE_CHANGE"
                                 ]
                             }
                         }
@@ -54375,7 +56721,8 @@
                                     "ENABLE_QUERY_TAGS",
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
-                                    "HLL_TYPE"
+                                    "HLL_TYPE",
+                                    "ENABLE_TIMEZONE_CHANGE"
                                 ]
                             }
                         }
@@ -55258,6 +57605,28 @@
                         ]
                     }
                 }
+            },
+            "ObjectConditionalFormatting": {
+                "required": [
+                    "conditions",
+                    "enabled"
+                ],
+                "type": "object",
+                "properties": {
+                    "conditions": {
+                        "type": "array",
+                        "description": "Conditions evaluated in order; the first match wins.",
+                        "items": {
+                            "$ref": "#/components/schemas/ConditionalFormattingCondition"
+                        }
+                    },
+                    "enabled": {
+                        "type": "boolean",
+                        "description": "Whether the conditions are applied when rendering."
+                    }
+                },
+                "description": "Conditional formatting inherited by every table column that renders this object.",
+                "nullable": true
             },
             "ObjectLinks": {
                 "required": [
@@ -56594,7 +58963,8 @@
                             "ENABLE_QUERY_TAGS",
                             "RESTRICT_BASE_UI",
                             "CERTIFY_PARENT_OBJECTS",
-                            "HLL_TYPE"
+                            "HLL_TYPE",
+                            "ENABLE_TIMEZONE_CHANGE"
                         ]
                     }
                 },
@@ -56761,7 +59131,8 @@
                         "enum": [
                             "metric",
                             "visualizationObject",
-                            "analyticalDashboard"
+                            "analyticalDashboard",
+                            "computedAttribute"
                         ]
                     }
                 },

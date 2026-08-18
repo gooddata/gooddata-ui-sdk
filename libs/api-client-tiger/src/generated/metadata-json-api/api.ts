@@ -847,6 +847,201 @@ export interface CompoundMeasureValueFilterCompoundMeasureValueFilter {
 }
 
 /**
+ * Conditional formatting for a table, with one entry per formatted column.
+ */
+export interface ConditionalFormatting {
+    /**
+     * Whether the rules are applied when rendering.
+     */
+    'enabled': boolean;
+    /**
+     * Rules evaluated in order; within a target, the first matching condition wins.
+     */
+    'rules': Array<ConditionalFormattingRule>;
+}
+
+/**
+ * A fixed, inclusive date period.
+ */
+export interface ConditionalFormattingAbsoluteDateValue {
+    /**
+     * `YYYY-MM-DD`, or `YYYY-MM-DD HH:mm` at hour or minute granularity.
+     */
+    'from': string;
+    /**
+     * The value kind.
+     */
+    'kind': ConditionalFormattingAbsoluteDateValueKindEnum;
+    /**
+     * `YYYY-MM-DD`, or `YYYY-MM-DD HH:mm` at hour or minute granularity. Inclusive.
+     */
+    'to': string;
+}
+
+export type ConditionalFormattingAbsoluteDateValueKindEnum = 'absoluteDate';
+
+/**
+ * An attribute column, addressed by its bucket item local identifier.
+ */
+export interface ConditionalFormattingAttributeTarget {
+    'attributeIdentifier': string;
+    /**
+     * The target kind.
+     */
+    'kind': ConditionalFormattingAttributeTargetKindEnum;
+}
+
+export type ConditionalFormattingAttributeTargetKindEnum = 'attribute';
+
+/**
+ * A condition and the formatting applied to cells matching it.
+ */
+export interface ConditionalFormattingCondition {
+    'format': ConditionalFormattingFormat;
+    /**
+     * Client-assigned identifier, stable across edits.
+     */
+    'id'?: string;
+    /**
+     * How a condition compares the cell value against its value.
+     */
+    'operator': ConditionalFormattingConditionOperatorEnum;
+    'value': ConditionalFormattingValue;
+}
+
+export type ConditionalFormattingConditionOperatorEnum = 'ALL' | 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO' | 'BETWEEN' | 'NOT_BETWEEN' | 'CONTAINS' | 'NOT_CONTAINS' | 'STARTS_WITH' | 'NOT_STARTS_WITH' | 'ENDS_WITH' | 'NOT_ENDS_WITH' | 'IS_EMPTY' | 'IS_NOT_EMPTY';
+
+/**
+ * Visual formatting applied to a matching cell.
+ */
+export interface ConditionalFormattingFormat {
+    /**
+     * Background color as a hex triplet.
+     */
+    'backgroundColor'?: string;
+    /**
+     * Text color as a hex triplet.
+     */
+    'color'?: string;
+    /**
+     * Whether the formatting applies to the matching cell only, or to its whole row.
+     */
+    'scope': ConditionalFormattingFormatScopeEnum;
+}
+
+export type ConditionalFormattingFormatScopeEnum = 'cell' | 'row';
+
+/**
+ * @type ConditionalFormattingLiteral
+ * A string or a number, serialized in whichever form it was authored.
+ */
+export type ConditionalFormattingLiteral = number | string;
+
+/**
+ * An inclusive numeric range.
+ */
+export interface ConditionalFormattingLiteralRangeValue {
+    'from': number;
+    /**
+     * The value kind.
+     */
+    'kind': ConditionalFormattingLiteralRangeValueKindEnum;
+    'to': number;
+}
+
+export type ConditionalFormattingLiteralRangeValueKindEnum = 'literalRange';
+
+/**
+ * A single value compared against the cell value.
+ */
+export interface ConditionalFormattingLiteralValue {
+    /**
+     * The value kind.
+     */
+    'kind': ConditionalFormattingLiteralValueKindEnum;
+    'value': ConditionalFormattingLiteral;
+}
+
+export type ConditionalFormattingLiteralValueKindEnum = 'literal';
+
+/**
+ * A measure column, addressed by its bucket item local identifier.
+ */
+export interface ConditionalFormattingMeasureTarget {
+    /**
+     * The target kind.
+     */
+    'kind': ConditionalFormattingMeasureTargetKindEnum;
+    'measureIdentifier': string;
+}
+
+export type ConditionalFormattingMeasureTargetKindEnum = 'measure';
+
+/**
+ * No value; used by operators that take none.
+ */
+export interface ConditionalFormattingNoneValue {
+    /**
+     * The value kind.
+     */
+    'kind': ConditionalFormattingNoneValueKindEnum;
+}
+
+export type ConditionalFormattingNoneValueKindEnum = 'none';
+
+/**
+ * A date period relative to the moment of evaluation, resolved at render time.
+ */
+export interface ConditionalFormattingRelativeDateValue {
+    /**
+     * Offset in periods; 0 is the current period, negative is the past.
+     */
+    'from': number;
+    /**
+     * Granularity the offsets are counted in.
+     */
+    'granularity': ConditionalFormattingRelativeDateValueGranularityEnum;
+    /**
+     * The value kind.
+     */
+    'kind': ConditionalFormattingRelativeDateValueKindEnum;
+    /**
+     * Offset in periods, not lower than `from`.
+     */
+    'to': number;
+}
+
+export type ConditionalFormattingRelativeDateValueGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.minute_in_day' | 'GDC.time.second' | 'GDC.time.second_in_minute' | 'GDC.time.second_in_day' | 'GDC.time.fiscal_week' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_semester' | 'GDC.time.fiscal_year' | 'GDC.time.fiscal_day_in_fiscal_week' | 'GDC.time.fiscal_day_in_fiscal_month' | 'GDC.time.fiscal_day_in_fiscal_quarter' | 'GDC.time.fiscal_day_in_fiscal_semester' | 'GDC.time.fiscal_day_in_fiscal_year' | 'GDC.time.fiscal_week_in_fiscal_month' | 'GDC.time.fiscal_week_in_fiscal_quarter' | 'GDC.time.fiscal_week_in_fiscal_semester' | 'GDC.time.fiscal_week_in_fiscal_year' | 'GDC.time.fiscal_month_in_fiscal_quarter' | 'GDC.time.fiscal_month_in_fiscal_semester' | 'GDC.time.fiscal_month_in_fiscal_year' | 'GDC.time.fiscal_quarter_in_fiscal_semester' | 'GDC.time.fiscal_quarter_in_fiscal_year' | 'GDC.time.fiscal_semester_in_fiscal_year';
+export type ConditionalFormattingRelativeDateValueKindEnum = 'relativeDate';
+
+/**
+ * Conditions applied to a single column.
+ */
+export interface ConditionalFormattingRule {
+    /**
+     * Conditions evaluated in order; the first match wins.
+     */
+    'conditions': Array<ConditionalFormattingCondition>;
+    /**
+     * Client-assigned identifier, stable across edits.
+     */
+    'id'?: string;
+    'target': ConditionalFormattingTarget;
+}
+
+/**
+ * @type ConditionalFormattingTarget
+ * Column a rule formats. The shape is selected by the `kind` property.
+ */
+export type ConditionalFormattingTarget = ConditionalFormattingAttributeTarget | ConditionalFormattingMeasureTarget;
+
+/**
+ * @type ConditionalFormattingValue
+ * Value a condition compares against. The shape is selected by the `kind` property.
+ */
+export type ConditionalFormattingValue = ConditionalFormattingAbsoluteDateValue | ConditionalFormattingLiteralRangeValue | ConditionalFormattingLiteralValue | ConditionalFormattingNoneValue | ConditionalFormattingRelativeDateValue;
+
+/**
  * Settings for content slide.
  */
 export interface ContentSlideTemplate {
@@ -1489,6 +1684,10 @@ export interface DeclarativeAnalyticsLayer {
      */
     'attributeHierarchies'?: Array<DeclarativeAttributeHierarchy>;
     /**
+     * A list of computed attributes available in the model.
+     */
+    'computedAttributes'?: Array<DeclarativeComputedAttribute>;
+    /**
      * A list of dashboard plugins available in the model.
      */
     'dashboardPlugins'?: Array<DeclarativeDashboardPlugin>;
@@ -1522,6 +1721,7 @@ export interface DeclarativeAnalyticsLayer {
  * A dataset attribute.
  */
 export interface DeclarativeAttribute {
+    'conditionalFormatting'?: ObjectConditionalFormatting | null;
     'defaultView'?: LabelIdentifier;
     /**
      * Attribute description.
@@ -1733,6 +1933,94 @@ export interface DeclarativeColumn {
 
 export type DeclarativeColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 
+export interface DeclarativeComputedAttribute {
+    /**
+     * Certification status of the entity.
+     */
+    'certification'?: DeclarativeComputedAttributeCertificationEnum;
+    /**
+     * Optional message associated with the certification.
+     */
+    'certificationMessage'?: string | null;
+    /**
+     * Time when the certification was set.
+     */
+    'certifiedAt'?: string | null;
+    'certifiedBy'?: DeclarativeUserIdentifier;
+    'content': DeclarativeComputedAttributeContent;
+    /**
+     * Time of the entity creation.
+     */
+    'createdAt'?: string | null;
+    'createdBy'?: DeclarativeUserIdentifier;
+    /**
+     * Computed attribute data type
+     */
+    'dataType'?: DeclarativeComputedAttributeDataTypeEnum;
+    /**
+     * Computed attribute description.
+     */
+    'description'?: string;
+    /**
+     * Computed attribute ID.
+     */
+    'id': string;
+    /**
+     * If true, this computed attribute is hidden from AI search results.
+     */
+    'isHidden'?: boolean;
+    /**
+     * Flag indicating whether the associated source column allows null values.
+     */
+    'isNullable'?: boolean;
+    /**
+     * Default locale for primary computed label.
+     */
+    'locale'?: string;
+    /**
+     * Time of the last entity modification.
+     */
+    'modifiedAt'?: string | null;
+    'modifiedBy'?: DeclarativeUserIdentifier;
+    /**
+     * Value used in coalesce during joins instead of null.
+     */
+    'nullValue'?: string;
+    /**
+     * A list of tags.
+     */
+    'tags'?: Array<string>;
+    /**
+     * Computed attribute title.
+     */
+    'title': string;
+    /**
+     * Specific type of the computed attribute value
+     */
+    'valueType'?: DeclarativeComputedAttributeValueTypeEnum;
+}
+
+export type DeclarativeComputedAttributeCertificationEnum = 'CERTIFIED';
+export type DeclarativeComputedAttributeDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
+export type DeclarativeComputedAttributeValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE' | 'HYPERLOGLOG';
+
+/**
+ * A definition of the computed attribute content.
+ */
+export interface DeclarativeComputedAttributeContent {
+    /**
+     * Excel-like format string with optional dynamic tokens. Filter value tokens: [$FILTER:<label_id>] for raw filter value passthrough. Currency tokens: [$CURRENCY:<label_id>] for currency symbol, with optional forms :symbol, :narrow, :code, :name. Locale abbreviations: [$K], [$M], [$B], [$T] for locale-specific scale abbreviations. Tokens are resolved at execution time based on AFM filters and user\'s format locale. Single-value filters only; multi-value filters use fallback values.
+     */
+    'format'?: string | null;
+    'maql': string;
+    /**
+     * Categorizes metric semantics (e.g., currency).
+     */
+    'metricType'?: DeclarativeComputedAttributeContentMetricTypeEnum;
+}
+
+export type DeclarativeComputedAttributeContentMetricTypeEnum = 'UNSPECIFIED' | 'CURRENCY';
+
 export interface DeclarativeCspDirective {
     'directive': string;
     'sources': Array<string>;
@@ -1891,7 +2179,7 @@ export interface DeclarativeDataSource {
 export type DeclarativeDataSourceAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 export type DeclarativeDataSourceCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type DeclarativeDataSourceDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
-export type DeclarativeDataSourceTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type DeclarativeDataSourceTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 export interface DeclarativeDataSourcePermission {
     'assignee': AssigneeIdentifier;
@@ -2011,6 +2299,7 @@ export interface DeclarativeDatasetSql {
  * A date dataset.
  */
 export interface DeclarativeDateDataset {
+    'conditionalFormatting'?: ObjectConditionalFormatting | null;
     /**
      * Date dataset description.
      */
@@ -2301,6 +2590,7 @@ export interface DeclarativeJwk {
  * A attribute label.
  */
 export interface DeclarativeLabel {
+    'conditionalFormatting'?: ObjectConditionalFormatting | null;
     /**
      * Label description.
      */
@@ -2452,6 +2742,7 @@ export interface DeclarativeMetric {
      */
     'certifiedAt'?: string | null;
     'certifiedBy'?: DeclarativeUserIdentifier;
+    'conditionalFormatting'?: ObjectConditionalFormatting | null;
     /**
      * Free-form JSON object
      */
@@ -2789,7 +3080,7 @@ export interface DeclarativeSetting {
     'type'?: DeclarativeSettingTypeEnum;
 }
 
-export type DeclarativeSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
+export type DeclarativeSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
 
 export interface DeclarativeSingleWorkspacePermission {
     'assignee': AssigneeIdentifier;
@@ -3047,6 +3338,7 @@ export interface DeclarativeVisualizationObject {
      */
     'certifiedAt'?: string | null;
     'certifiedBy'?: DeclarativeUserIdentifier;
+    'conditionalFormatting'?: ConditionalFormatting | null;
     /**
      * Free-form JSON object
      */
@@ -3675,7 +3967,7 @@ export interface IdentifierRefIdentifier {
     'type': IdentifierRefIdentifierTypeEnum;
 }
 
-export type IdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
+export type IdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
 
 /**
  * Export request object describing the export properties and metadata for image exports.
@@ -4750,6 +5042,7 @@ export type JsonApiAttributeOutTypeEnum = 'attribute';
 
 export interface JsonApiAttributeOutAttributes {
     'areRelationsValid'?: boolean;
+    'conditionalFormatting'?: JsonApiAttributeOutAttributesConditionalFormatting | null;
     'description'?: string;
     'granularity'?: JsonApiAttributeOutAttributesGranularityEnum;
     'isHidden'?: boolean;
@@ -4767,6 +5060,20 @@ export interface JsonApiAttributeOutAttributes {
 export type JsonApiAttributeOutAttributesGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 export type JsonApiAttributeOutAttributesSortDirectionEnum = 'ASC' | 'DESC';
 export type JsonApiAttributeOutAttributesSourceColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
+
+/**
+ * Conditional formatting applied to table columns that render this attribute.
+ */
+export interface JsonApiAttributeOutAttributesConditionalFormatting {
+    /**
+     * Conditions evaluated in order; the first match wins.
+     */
+    'conditions': Array<ConditionalFormattingCondition>;
+    /**
+     * Whether the conditions are applied when rendering.
+     */
+    'enabled': boolean;
+}
 
 export interface JsonApiAttributeOutDocument {
     'data': JsonApiAttributeOut;
@@ -4881,9 +5188,24 @@ export interface JsonApiAttributePatch {
 export type JsonApiAttributePatchTypeEnum = 'attribute';
 
 export interface JsonApiAttributePatchAttributes {
+    'conditionalFormatting'?: JsonApiAttributePatchAttributesConditionalFormatting | null;
     'description'?: string;
     'tags'?: Array<string>;
     'title'?: string;
+}
+
+/**
+ * Conditional formatting applied to table columns that render this attribute.
+ */
+export interface JsonApiAttributePatchAttributesConditionalFormatting {
+    /**
+     * Conditions evaluated in order; the first match wins.
+     */
+    'conditions': Array<ConditionalFormattingCondition>;
+    /**
+     * Whether the conditions are applied when rendering.
+     */
+    'enabled': boolean;
 }
 
 export interface JsonApiAttributePatchDocument {
@@ -5680,6 +6002,382 @@ export interface JsonApiColorPalettePatchAttributes {
 
 export interface JsonApiColorPalettePatchDocument {
     'data': JsonApiColorPalettePatch;
+}
+
+/**
+ * JSON:API representation of computedAttribute entity.
+ */
+export interface JsonApiComputedAttributeIn {
+    'attributes': JsonApiComputedAttributeInAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    /**
+     * Object type
+     */
+    'type': JsonApiComputedAttributeInTypeEnum;
+}
+
+export type JsonApiComputedAttributeInTypeEnum = 'computedAttribute';
+
+export interface JsonApiComputedAttributeInAttributes {
+    'areRelationsValid'?: boolean;
+    'content': JsonApiComputedAttributeInAttributesContent;
+    'dataType'?: JsonApiComputedAttributeInAttributesDataTypeEnum;
+    'description'?: string;
+    'isHidden'?: boolean;
+    'isNullable'?: boolean;
+    'locale'?: string;
+    'nullValue'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
+    'valueType'?: JsonApiComputedAttributeInAttributesValueTypeEnum;
+}
+
+export type JsonApiComputedAttributeInAttributesDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
+export type JsonApiComputedAttributeInAttributesValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE' | 'HYPERLOGLOG';
+
+export interface JsonApiComputedAttributeInAttributesContent {
+    /**
+     * Excel-like format string with optional dynamic tokens. Filter value tokens: [$FILTER:<label_id>] for raw filter value passthrough. Currency tokens: [$CURRENCY:<label_id>] for currency symbol, with optional forms :symbol, :narrow, :code, :name. Locale abbreviations: [$K], [$M], [$B], [$T] for locale-specific scale abbreviations. Tokens are resolved at execution time based on AFM filters and user\'s format locale. Single-value filters only; multi-value filters use fallback values.
+     */
+    'format'?: string | null;
+    'maql': string;
+    /**
+     * Categorizes metric semantics (e.g., currency).
+     */
+    'metricType'?: JsonApiComputedAttributeInAttributesContentMetricTypeEnum;
+}
+
+export type JsonApiComputedAttributeInAttributesContentMetricTypeEnum = 'UNSPECIFIED' | 'CURRENCY';
+
+export interface JsonApiComputedAttributeInDocument {
+    'data': JsonApiComputedAttributeIn;
+}
+
+/**
+ * The \\\"type\\\" and \\\"id\\\" to non-empty members.
+ */
+export interface JsonApiComputedAttributeLinkage {
+    'id': string;
+    'type': JsonApiComputedAttributeLinkageTypeEnum;
+}
+
+export type JsonApiComputedAttributeLinkageTypeEnum = 'computedAttribute';
+
+/**
+ * JSON:API representation of computedAttribute entity.
+ */
+export interface JsonApiComputedAttributeOut {
+    'attributes': JsonApiComputedAttributeOutAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    'meta'?: JsonApiComputedAttributeOutMeta;
+    'relationships'?: JsonApiComputedAttributeOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiComputedAttributeOutTypeEnum;
+}
+
+export type JsonApiComputedAttributeOutTypeEnum = 'computedAttribute';
+
+export interface JsonApiComputedAttributeOutAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Certification status of the entity.
+     */
+    'certification'?: JsonApiComputedAttributeOutAttributesCertificationEnum;
+    /**
+     * Optional message associated with the certification.
+     */
+    'certificationMessage'?: string | null;
+    /**
+     * Time when the certification was set.
+     */
+    'certifiedAt'?: string | null;
+    'content': JsonApiComputedAttributeOutAttributesContent;
+    /**
+     * Time of the entity creation.
+     */
+    'createdAt'?: string | null;
+    'dataType'?: JsonApiComputedAttributeOutAttributesDataTypeEnum;
+    'description'?: string;
+    'isHidden'?: boolean;
+    'isNullable'?: boolean;
+    'locale'?: string;
+    /**
+     * Time of the last entity modification.
+     */
+    'modifiedAt'?: string | null;
+    'nullValue'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
+    'valueType'?: JsonApiComputedAttributeOutAttributesValueTypeEnum;
+}
+
+export type JsonApiComputedAttributeOutAttributesCertificationEnum = 'CERTIFIED';
+export type JsonApiComputedAttributeOutAttributesDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
+export type JsonApiComputedAttributeOutAttributesValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE' | 'HYPERLOGLOG';
+
+export interface JsonApiComputedAttributeOutAttributesContent {
+    /**
+     * Excel-like format string with optional dynamic tokens. Filter value tokens: [$FILTER:<label_id>] for raw filter value passthrough. Currency tokens: [$CURRENCY:<label_id>] for currency symbol, with optional forms :symbol, :narrow, :code, :name. Locale abbreviations: [$K], [$M], [$B], [$T] for locale-specific scale abbreviations. Tokens are resolved at execution time based on AFM filters and user\'s format locale. Single-value filters only; multi-value filters use fallback values.
+     */
+    'format'?: string | null;
+    'maql': string;
+    /**
+     * Categorizes metric semantics (e.g., currency).
+     */
+    'metricType'?: JsonApiComputedAttributeOutAttributesContentMetricTypeEnum;
+}
+
+export type JsonApiComputedAttributeOutAttributesContentMetricTypeEnum = 'UNSPECIFIED' | 'CURRENCY';
+
+export interface JsonApiComputedAttributeOutDocument {
+    'data': JsonApiComputedAttributeOut;
+    /**
+     * Included resources
+     */
+    'included'?: Array<JsonApiComputedAttributeOutIncludes>;
+    'links'?: ObjectLinks;
+}
+
+/**
+ * @type JsonApiComputedAttributeOutIncludes
+ */
+export type JsonApiComputedAttributeOutIncludes = JsonApiAttributeOutWithLinks | JsonApiComputedAttributeOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFactOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiParameterOutWithLinks | JsonApiUserIdentifierOutWithLinks;
+
+/**
+ * A JSON:API document with a list of resources
+ */
+export interface JsonApiComputedAttributeOutList {
+    'data': Array<JsonApiComputedAttributeOutWithLinks>;
+    /**
+     * Included resources
+     */
+    'included'?: Array<JsonApiComputedAttributeOutIncludes>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiComputedAttributeOutListMeta;
+}
+
+export interface JsonApiComputedAttributeOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiComputedAttributeOutMeta {
+    'origin'?: JsonApiComputedAttributeOutMetaOrigin;
+}
+
+export interface JsonApiComputedAttributeOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiComputedAttributeOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiComputedAttributeOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
+export interface JsonApiComputedAttributeOutRelationships {
+    'attributes'?: JsonApiComputedAttributeOutRelationshipsAttributes;
+    'certifiedBy'?: JsonApiComputedAttributeOutRelationshipsCertifiedBy;
+    'computedAttributes'?: JsonApiComputedAttributeOutRelationshipsComputedAttributes;
+    'createdBy'?: JsonApiComputedAttributeOutRelationshipsCreatedBy;
+    'datasets'?: JsonApiComputedAttributeOutRelationshipsDatasets;
+    'facts'?: JsonApiComputedAttributeOutRelationshipsFacts;
+    'labels'?: JsonApiComputedAttributeOutRelationshipsLabels;
+    'metrics'?: JsonApiComputedAttributeOutRelationshipsMetrics;
+    'modifiedBy'?: JsonApiComputedAttributeOutRelationshipsModifiedBy;
+    'parameters'?: JsonApiComputedAttributeOutRelationshipsParameters;
+}
+
+export interface JsonApiComputedAttributeOutRelationshipsAttributes {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiAttributeLinkage>;
+}
+
+export interface JsonApiComputedAttributeOutRelationshipsCertifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiComputedAttributeOutRelationshipsComputedAttributes {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiComputedAttributeLinkage>;
+}
+
+export interface JsonApiComputedAttributeOutRelationshipsCreatedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiComputedAttributeOutRelationshipsDatasets {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiDatasetLinkage>;
+}
+
+export interface JsonApiComputedAttributeOutRelationshipsFacts {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiFactLinkage>;
+}
+
+export interface JsonApiComputedAttributeOutRelationshipsLabels {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiLabelLinkage>;
+}
+
+export interface JsonApiComputedAttributeOutRelationshipsMetrics {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiMetricLinkage>;
+}
+
+export interface JsonApiComputedAttributeOutRelationshipsModifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiComputedAttributeOutRelationshipsParameters {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiParameterLinkage>;
+}
+
+export interface JsonApiComputedAttributeOutWithLinks {
+    'attributes': JsonApiComputedAttributeOutAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    'meta'?: JsonApiComputedAttributeOutMeta;
+    'relationships'?: JsonApiComputedAttributeOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiComputedAttributeOutWithLinksTypeEnum;
+    'links'?: ObjectLinks;
+}
+
+export type JsonApiComputedAttributeOutWithLinksTypeEnum = 'computedAttribute';
+
+/**
+ * JSON:API representation of patching computedAttribute entity.
+ */
+export interface JsonApiComputedAttributePatch {
+    'attributes': JsonApiComputedAttributePatchAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    /**
+     * Object type
+     */
+    'type': JsonApiComputedAttributePatchTypeEnum;
+}
+
+export type JsonApiComputedAttributePatchTypeEnum = 'computedAttribute';
+
+export interface JsonApiComputedAttributePatchAttributes {
+    'areRelationsValid'?: boolean;
+    'content'?: JsonApiComputedAttributePatchAttributesContent;
+    'dataType'?: JsonApiComputedAttributePatchAttributesDataTypeEnum;
+    'description'?: string;
+    'isHidden'?: boolean;
+    'isNullable'?: boolean;
+    'locale'?: string;
+    'nullValue'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
+    'valueType'?: JsonApiComputedAttributePatchAttributesValueTypeEnum;
+}
+
+export type JsonApiComputedAttributePatchAttributesDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
+export type JsonApiComputedAttributePatchAttributesValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE' | 'HYPERLOGLOG';
+
+export interface JsonApiComputedAttributePatchAttributesContent {
+    /**
+     * Excel-like format string with optional dynamic tokens. Filter value tokens: [$FILTER:<label_id>] for raw filter value passthrough. Currency tokens: [$CURRENCY:<label_id>] for currency symbol, with optional forms :symbol, :narrow, :code, :name. Locale abbreviations: [$K], [$M], [$B], [$T] for locale-specific scale abbreviations. Tokens are resolved at execution time based on AFM filters and user\'s format locale. Single-value filters only; multi-value filters use fallback values.
+     */
+    'format'?: string | null;
+    'maql': string;
+    /**
+     * Categorizes metric semantics (e.g., currency).
+     */
+    'metricType'?: JsonApiComputedAttributePatchAttributesContentMetricTypeEnum;
+}
+
+export type JsonApiComputedAttributePatchAttributesContentMetricTypeEnum = 'UNSPECIFIED' | 'CURRENCY';
+
+export interface JsonApiComputedAttributePatchDocument {
+    'data': JsonApiComputedAttributePatch;
+}
+
+/**
+ * JSON:API representation of computedAttribute entity.
+ */
+export interface JsonApiComputedAttributePostOptionalId {
+    'attributes': JsonApiComputedAttributePostOptionalIdAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id'?: string;
+    /**
+     * Object type
+     */
+    'type': JsonApiComputedAttributePostOptionalIdTypeEnum;
+}
+
+export type JsonApiComputedAttributePostOptionalIdTypeEnum = 'computedAttribute';
+
+export interface JsonApiComputedAttributePostOptionalIdAttributes {
+    'areRelationsValid'?: boolean;
+    'content': JsonApiComputedAttributePostOptionalIdAttributesContent;
+    'dataType'?: JsonApiComputedAttributePostOptionalIdAttributesDataTypeEnum;
+    'description'?: string;
+    'isHidden'?: boolean;
+    'isNullable'?: boolean;
+    'locale'?: string;
+    'nullValue'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
+    'valueType'?: JsonApiComputedAttributePostOptionalIdAttributesValueTypeEnum;
+}
+
+export type JsonApiComputedAttributePostOptionalIdAttributesDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
+export type JsonApiComputedAttributePostOptionalIdAttributesValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE' | 'HYPERLOGLOG';
+
+export interface JsonApiComputedAttributePostOptionalIdAttributesContent {
+    /**
+     * Excel-like format string with optional dynamic tokens. Filter value tokens: [$FILTER:<label_id>] for raw filter value passthrough. Currency tokens: [$CURRENCY:<label_id>] for currency symbol, with optional forms :symbol, :narrow, :code, :name. Locale abbreviations: [$K], [$M], [$B], [$T] for locale-specific scale abbreviations. Tokens are resolved at execution time based on AFM filters and user\'s format locale. Single-value filters only; multi-value filters use fallback values.
+     */
+    'format'?: string | null;
+    'maql': string;
+    /**
+     * Categorizes metric semantics (e.g., currency).
+     */
+    'metricType'?: JsonApiComputedAttributePostOptionalIdAttributesContentMetricTypeEnum;
+}
+
+export type JsonApiComputedAttributePostOptionalIdAttributesContentMetricTypeEnum = 'UNSPECIFIED' | 'CURRENCY';
+
+export interface JsonApiComputedAttributePostOptionalIdDocument {
+    'data': JsonApiComputedAttributePostOptionalId;
 }
 
 /**
@@ -6514,7 +7212,7 @@ export interface JsonApiDataSourceIdentifierOutAttributes {
     'type': JsonApiDataSourceIdentifierOutAttributesTypeEnum;
 }
 
-export type JsonApiDataSourceIdentifierOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourceIdentifierOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 export interface JsonApiDataSourceIdentifierOutDocument {
     'data': JsonApiDataSourceIdentifierOut;
@@ -6647,7 +7345,7 @@ export interface JsonApiDataSourceInAttributes {
 export type JsonApiDataSourceInAttributesAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 export type JsonApiDataSourceInAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type JsonApiDataSourceInAttributesDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
-export type JsonApiDataSourceInAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourceInAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 /**
  * @type JsonApiDataSourceInAttributesCacheRetention
@@ -6741,7 +7439,7 @@ export interface JsonApiDataSourceOutAttributes {
 export type JsonApiDataSourceOutAttributesAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 export type JsonApiDataSourceOutAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type JsonApiDataSourceOutAttributesDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
-export type JsonApiDataSourceOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourceOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 /**
  * @type JsonApiDataSourceOutAttributesCacheRetention
@@ -6890,7 +7588,7 @@ export interface JsonApiDataSourcePatchAttributes {
 export type JsonApiDataSourcePatchAttributesAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 export type JsonApiDataSourcePatchAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type JsonApiDataSourcePatchAttributesDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
-export type JsonApiDataSourcePatchAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourcePatchAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 /**
  * @type JsonApiDataSourcePatchAttributesCacheRetention
@@ -9382,6 +10080,7 @@ export type JsonApiLabelOutTypeEnum = 'label';
 
 export interface JsonApiLabelOutAttributes {
     'areRelationsValid'?: boolean;
+    'conditionalFormatting'?: JsonApiLabelOutAttributesConditionalFormatting | null;
     'description'?: string;
     'geoAreaConfig'?: JsonApiLabelOutAttributesGeoAreaConfig;
     'isHidden'?: boolean;
@@ -9399,6 +10098,20 @@ export interface JsonApiLabelOutAttributes {
 
 export type JsonApiLabelOutAttributesSourceColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 export type JsonApiLabelOutAttributesValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE' | 'HYPERLOGLOG';
+
+/**
+ * Conditional formatting applied to table columns that render this label, taking precedence over the rules of its attribute. When absent, a primary label falls back to those rules and every other label is left unformatted.
+ */
+export interface JsonApiLabelOutAttributesConditionalFormatting {
+    /**
+     * Conditions evaluated in order; the first match wins.
+     */
+    'conditions': Array<ConditionalFormattingCondition>;
+    /**
+     * Whether the conditions are applied when rendering.
+     */
+    'enabled': boolean;
+}
 
 /**
  * Configuration specific to geo area labels.
@@ -9498,9 +10211,24 @@ export interface JsonApiLabelPatch {
 export type JsonApiLabelPatchTypeEnum = 'label';
 
 export interface JsonApiLabelPatchAttributes {
+    'conditionalFormatting'?: JsonApiLabelPatchAttributesConditionalFormatting | null;
     'description'?: string;
     'tags'?: Array<string>;
     'title'?: string;
+}
+
+/**
+ * Conditional formatting applied to table columns that render this label, taking precedence over the rules of its attribute. When absent, a primary label falls back to those rules and every other label is left unformatted.
+ */
+export interface JsonApiLabelPatchAttributesConditionalFormatting {
+    /**
+     * Conditions evaluated in order; the first match wins.
+     */
+    'conditions': Array<ConditionalFormattingCondition>;
+    /**
+     * Whether the conditions are applied when rendering.
+     */
+    'enabled': boolean;
 }
 
 export interface JsonApiLabelPatchDocument {
@@ -9998,12 +10726,27 @@ export type JsonApiMetricInTypeEnum = 'metric';
 
 export interface JsonApiMetricInAttributes {
     'areRelationsValid'?: boolean;
+    'conditionalFormatting'?: JsonApiMetricInAttributesConditionalFormatting | null;
     'content': JsonApiMetricInAttributesContent;
     'description'?: string;
     'isHidden'?: boolean;
     'isHiddenFromKda'?: boolean;
     'tags'?: Array<string>;
     'title'?: string;
+}
+
+/**
+ * Conditional formatting inherited by every table column that renders this metric.
+ */
+export interface JsonApiMetricInAttributesConditionalFormatting {
+    /**
+     * Conditions evaluated in order; the first match wins.
+     */
+    'conditions': Array<ConditionalFormattingCondition>;
+    /**
+     * Whether the conditions are applied when rendering.
+     */
+    'enabled': boolean;
 }
 
 export interface JsonApiMetricInAttributesContent {
@@ -10067,6 +10810,7 @@ export interface JsonApiMetricOutAttributes {
      * Time when the certification was set.
      */
     'certifiedAt'?: string | null;
+    'conditionalFormatting'?: JsonApiMetricOutAttributesConditionalFormatting | null;
     'content': JsonApiMetricOutAttributesContent;
     /**
      * Time of the entity creation.
@@ -10084,6 +10828,20 @@ export interface JsonApiMetricOutAttributes {
 }
 
 export type JsonApiMetricOutAttributesCertificationEnum = 'CERTIFIED';
+
+/**
+ * Conditional formatting inherited by every table column that renders this metric.
+ */
+export interface JsonApiMetricOutAttributesConditionalFormatting {
+    /**
+     * Conditions evaluated in order; the first match wins.
+     */
+    'conditions': Array<ConditionalFormattingCondition>;
+    /**
+     * Whether the conditions are applied when rendering.
+     */
+    'enabled': boolean;
+}
 
 export interface JsonApiMetricOutAttributesContent {
     /**
@@ -10104,14 +10862,9 @@ export interface JsonApiMetricOutDocument {
     /**
      * Included resources
      */
-    'included'?: Array<JsonApiMetricOutIncludes>;
+    'included'?: Array<JsonApiComputedAttributeOutIncludes>;
     'links'?: ObjectLinks;
 }
-
-/**
- * @type JsonApiMetricOutIncludes
- */
-export type JsonApiMetricOutIncludes = JsonApiAttributeOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFactOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiParameterOutWithLinks | JsonApiUserIdentifierOutWithLinks;
 
 /**
  * A JSON:API document with a list of resources
@@ -10121,7 +10874,7 @@ export interface JsonApiMetricOutList {
     /**
      * Included resources
      */
-    'included'?: Array<JsonApiMetricOutIncludes>;
+    'included'?: Array<JsonApiComputedAttributeOutIncludes>;
     'links'?: ListLinks;
     'meta'?: JsonApiMetricOutListMeta;
 }
@@ -10150,6 +10903,7 @@ export type JsonApiMetricOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
 export interface JsonApiMetricOutRelationships {
     'attributes'?: JsonApiMetricOutRelationshipsAttributes;
     'certifiedBy'?: JsonApiMetricOutRelationshipsCertifiedBy;
+    'computedAttributes'?: JsonApiMetricOutRelationshipsComputedAttributes;
     'createdBy'?: JsonApiMetricOutRelationshipsCreatedBy;
     'datasets'?: JsonApiMetricOutRelationshipsDatasets;
     'facts'?: JsonApiMetricOutRelationshipsFacts;
@@ -10168,6 +10922,13 @@ export interface JsonApiMetricOutRelationshipsAttributes {
 
 export interface JsonApiMetricOutRelationshipsCertifiedBy {
     'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiMetricOutRelationshipsComputedAttributes {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiComputedAttributeLinkage>;
 }
 
 export interface JsonApiMetricOutRelationshipsCreatedBy {
@@ -10249,12 +11010,27 @@ export type JsonApiMetricPatchTypeEnum = 'metric';
 
 export interface JsonApiMetricPatchAttributes {
     'areRelationsValid'?: boolean;
+    'conditionalFormatting'?: JsonApiMetricPatchAttributesConditionalFormatting | null;
     'content'?: JsonApiMetricPatchAttributesContent;
     'description'?: string;
     'isHidden'?: boolean;
     'isHiddenFromKda'?: boolean;
     'tags'?: Array<string>;
     'title'?: string;
+}
+
+/**
+ * Conditional formatting inherited by every table column that renders this metric.
+ */
+export interface JsonApiMetricPatchAttributesConditionalFormatting {
+    /**
+     * Conditions evaluated in order; the first match wins.
+     */
+    'conditions': Array<ConditionalFormattingCondition>;
+    /**
+     * Whether the conditions are applied when rendering.
+     */
+    'enabled': boolean;
 }
 
 export interface JsonApiMetricPatchAttributesContent {
@@ -10294,12 +11070,27 @@ export type JsonApiMetricPostOptionalIdTypeEnum = 'metric';
 
 export interface JsonApiMetricPostOptionalIdAttributes {
     'areRelationsValid'?: boolean;
+    'conditionalFormatting'?: JsonApiMetricPostOptionalIdAttributesConditionalFormatting | null;
     'content': JsonApiMetricPostOptionalIdAttributesContent;
     'description'?: string;
     'isHidden'?: boolean;
     'isHiddenFromKda'?: boolean;
     'tags'?: Array<string>;
     'title'?: string;
+}
+
+/**
+ * Conditional formatting inherited by every table column that renders this metric.
+ */
+export interface JsonApiMetricPostOptionalIdAttributesConditionalFormatting {
+    /**
+     * Conditions evaluated in order; the first match wins.
+     */
+    'conditions': Array<ConditionalFormattingCondition>;
+    /**
+     * Whether the conditions are applied when rendering.
+     */
+    'enabled': boolean;
 }
 
 export interface JsonApiMetricPostOptionalIdAttributesContent {
@@ -11050,7 +11841,7 @@ export interface JsonApiOrganizationSettingInAttributes {
     'type'?: JsonApiOrganizationSettingInAttributesTypeEnum;
 }
 
-export type JsonApiOrganizationSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
+export type JsonApiOrganizationSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
 
 export interface JsonApiOrganizationSettingInDocument {
     'data': JsonApiOrganizationSettingIn;
@@ -11081,7 +11872,7 @@ export interface JsonApiOrganizationSettingOutAttributes {
     'type'?: JsonApiOrganizationSettingOutAttributesTypeEnum;
 }
 
-export type JsonApiOrganizationSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
+export type JsonApiOrganizationSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
 
 export interface JsonApiOrganizationSettingOutDocument {
     'data': JsonApiOrganizationSettingOut;
@@ -11141,7 +11932,7 @@ export interface JsonApiOrganizationSettingPatchAttributes {
     'type'?: JsonApiOrganizationSettingPatchAttributesTypeEnum;
 }
 
-export type JsonApiOrganizationSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
+export type JsonApiOrganizationSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
 
 export interface JsonApiOrganizationSettingPatchDocument {
     'data': JsonApiOrganizationSettingPatch;
@@ -11570,7 +12361,7 @@ export interface JsonApiUserDataFilterOutDocument {
 /**
  * @type JsonApiUserDataFilterOutIncludes
  */
-export type JsonApiUserDataFilterOutIncludes = JsonApiAttributeOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFactOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiParameterOutWithLinks | JsonApiUserGroupOutWithLinks | JsonApiUserOutWithLinks;
+export type JsonApiUserDataFilterOutIncludes = JsonApiAttributeOutWithLinks | JsonApiComputedAttributeOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFactOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiParameterOutWithLinks | JsonApiUserGroupOutWithLinks | JsonApiUserOutWithLinks;
 
 /**
  * A JSON:API document with a list of resources
@@ -11608,6 +12399,7 @@ export type JsonApiUserDataFilterOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PAREN
 
 export interface JsonApiUserDataFilterOutRelationships {
     'attributes'?: JsonApiUserDataFilterOutRelationshipsAttributes;
+    'computedAttributes'?: JsonApiUserDataFilterOutRelationshipsComputedAttributes;
     'datasets'?: JsonApiUserDataFilterOutRelationshipsDatasets;
     'facts'?: JsonApiUserDataFilterOutRelationshipsFacts;
     'labels'?: JsonApiUserDataFilterOutRelationshipsLabels;
@@ -11622,6 +12414,13 @@ export interface JsonApiUserDataFilterOutRelationshipsAttributes {
      * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
      */
     'data': Array<JsonApiAttributeLinkage>;
+}
+
+export interface JsonApiUserDataFilterOutRelationshipsComputedAttributes {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiComputedAttributeLinkage>;
 }
 
 export interface JsonApiUserDataFilterOutRelationshipsDatasets {
@@ -12200,7 +12999,7 @@ export interface JsonApiUserSettingInAttributes {
     'type'?: JsonApiUserSettingInAttributesTypeEnum;
 }
 
-export type JsonApiUserSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
+export type JsonApiUserSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
 
 export interface JsonApiUserSettingInDocument {
     'data': JsonApiUserSettingIn;
@@ -12231,7 +13030,7 @@ export interface JsonApiUserSettingOutAttributes {
     'type'?: JsonApiUserSettingOutAttributesTypeEnum;
 }
 
-export type JsonApiUserSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
+export type JsonApiUserSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
 
 export interface JsonApiUserSettingOutDocument {
     'data': JsonApiUserSettingOut;
@@ -12285,6 +13084,7 @@ export type JsonApiVisualizationObjectInTypeEnum = 'visualizationObject';
 
 export interface JsonApiVisualizationObjectInAttributes {
     'areRelationsValid'?: boolean;
+    'conditionalFormatting'?: JsonApiVisualizationObjectInAttributesConditionalFormatting | null;
     /**
      * Free-form JSON content. Maximum supported length is 250000 characters.
      */
@@ -12293,6 +13093,20 @@ export interface JsonApiVisualizationObjectInAttributes {
     'isHidden'?: boolean;
     'tags'?: Array<string>;
     'title'?: string;
+}
+
+/**
+ * Conditional formatting applied when this visualization is rendered.
+ */
+export interface JsonApiVisualizationObjectInAttributesConditionalFormatting {
+    /**
+     * Whether the rules are applied when rendering.
+     */
+    'enabled': boolean;
+    /**
+     * Rules evaluated in order; within a target, the first matching condition wins.
+     */
+    'rules': Array<ConditionalFormattingRule>;
 }
 
 export interface JsonApiVisualizationObjectInDocument {
@@ -12342,6 +13156,7 @@ export interface JsonApiVisualizationObjectOutAttributes {
      * Time when the certification was set.
      */
     'certifiedAt'?: string | null;
+    'conditionalFormatting'?: JsonApiVisualizationObjectOutAttributesConditionalFormatting | null;
     /**
      * Free-form JSON content. Maximum supported length is 250000 characters.
      */
@@ -12362,14 +13177,33 @@ export interface JsonApiVisualizationObjectOutAttributes {
 
 export type JsonApiVisualizationObjectOutAttributesCertificationEnum = 'CERTIFIED';
 
+/**
+ * Conditional formatting applied when this visualization is rendered.
+ */
+export interface JsonApiVisualizationObjectOutAttributesConditionalFormatting {
+    /**
+     * Whether the rules are applied when rendering.
+     */
+    'enabled': boolean;
+    /**
+     * Rules evaluated in order; within a target, the first matching condition wins.
+     */
+    'rules': Array<ConditionalFormattingRule>;
+}
+
 export interface JsonApiVisualizationObjectOutDocument {
     'data': JsonApiVisualizationObjectOut;
     /**
      * Included resources
      */
-    'included'?: Array<JsonApiMetricOutIncludes>;
+    'included'?: Array<JsonApiVisualizationObjectOutIncludes>;
     'links'?: ObjectLinks;
 }
+
+/**
+ * @type JsonApiVisualizationObjectOutIncludes
+ */
+export type JsonApiVisualizationObjectOutIncludes = JsonApiAttributeOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFactOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiParameterOutWithLinks | JsonApiUserIdentifierOutWithLinks;
 
 /**
  * A JSON:API document with a list of resources
@@ -12379,7 +13213,7 @@ export interface JsonApiVisualizationObjectOutList {
     /**
      * Included resources
      */
-    'included'?: Array<JsonApiMetricOutIncludes>;
+    'included'?: Array<JsonApiVisualizationObjectOutIncludes>;
     'links'?: ListLinks;
     'meta'?: JsonApiVisualizationObjectOutListMeta;
 }
@@ -12507,6 +13341,7 @@ export type JsonApiVisualizationObjectPatchTypeEnum = 'visualizationObject';
 
 export interface JsonApiVisualizationObjectPatchAttributes {
     'areRelationsValid'?: boolean;
+    'conditionalFormatting'?: JsonApiVisualizationObjectPatchAttributesConditionalFormatting | null;
     /**
      * Free-form JSON content. Maximum supported length is 250000 characters.
      */
@@ -12515,6 +13350,20 @@ export interface JsonApiVisualizationObjectPatchAttributes {
     'isHidden'?: boolean;
     'tags'?: Array<string>;
     'title'?: string;
+}
+
+/**
+ * Conditional formatting applied when this visualization is rendered.
+ */
+export interface JsonApiVisualizationObjectPatchAttributesConditionalFormatting {
+    /**
+     * Whether the rules are applied when rendering.
+     */
+    'enabled': boolean;
+    /**
+     * Rules evaluated in order; within a target, the first matching condition wins.
+     */
+    'rules': Array<ConditionalFormattingRule>;
 }
 
 export interface JsonApiVisualizationObjectPatchDocument {
@@ -12540,6 +13389,7 @@ export type JsonApiVisualizationObjectPostOptionalIdTypeEnum = 'visualizationObj
 
 export interface JsonApiVisualizationObjectPostOptionalIdAttributes {
     'areRelationsValid'?: boolean;
+    'conditionalFormatting'?: JsonApiVisualizationObjectPostOptionalIdAttributesConditionalFormatting | null;
     /**
      * Free-form JSON content. Maximum supported length is 250000 characters.
      */
@@ -12548,6 +13398,20 @@ export interface JsonApiVisualizationObjectPostOptionalIdAttributes {
     'isHidden'?: boolean;
     'tags'?: Array<string>;
     'title'?: string;
+}
+
+/**
+ * Conditional formatting applied when this visualization is rendered.
+ */
+export interface JsonApiVisualizationObjectPostOptionalIdAttributesConditionalFormatting {
+    /**
+     * Whether the rules are applied when rendering.
+     */
+    'enabled': boolean;
+    /**
+     * Rules evaluated in order; within a target, the first matching condition wins.
+     */
+    'rules': Array<ConditionalFormattingRule>;
 }
 
 export interface JsonApiVisualizationObjectPostOptionalIdDocument {
@@ -13865,7 +14729,7 @@ export interface JsonApiWorkspaceSettingInAttributes {
     'type'?: JsonApiWorkspaceSettingInAttributesTypeEnum;
 }
 
-export type JsonApiWorkspaceSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
+export type JsonApiWorkspaceSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
 
 export interface JsonApiWorkspaceSettingInDocument {
     'data': JsonApiWorkspaceSettingIn;
@@ -13897,7 +14761,7 @@ export interface JsonApiWorkspaceSettingOutAttributes {
     'type'?: JsonApiWorkspaceSettingOutAttributesTypeEnum;
 }
 
-export type JsonApiWorkspaceSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
+export type JsonApiWorkspaceSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
 
 export interface JsonApiWorkspaceSettingOutDocument {
     'data': JsonApiWorkspaceSettingOut;
@@ -13975,7 +14839,7 @@ export interface JsonApiWorkspaceSettingPatchAttributes {
     'type'?: JsonApiWorkspaceSettingPatchAttributesTypeEnum;
 }
 
-export type JsonApiWorkspaceSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
+export type JsonApiWorkspaceSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
 
 export interface JsonApiWorkspaceSettingPatchDocument {
     'data': JsonApiWorkspaceSettingPatch;
@@ -14006,7 +14870,7 @@ export interface JsonApiWorkspaceSettingPostOptionalIdAttributes {
     'type'?: JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum;
 }
 
-export type JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
+export type JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
 
 export interface JsonApiWorkspaceSettingPostOptionalIdDocument {
     'data': JsonApiWorkspaceSettingPostOptionalId;
@@ -14481,6 +15345,20 @@ export interface NumberParameterDefinition {
 }
 
 export type NumberParameterDefinitionTypeEnum = 'NUMBER';
+
+/**
+ * Conditional formatting inherited by every table column that renders this object.
+ */
+export interface ObjectConditionalFormatting {
+    /**
+     * Conditions evaluated in order; the first match wins.
+     */
+    'conditions': Array<ConditionalFormattingCondition>;
+    /**
+     * Whether the conditions are applied when rendering.
+     */
+    'enabled': boolean;
+}
 
 export interface ObjectLinks {
     /**
@@ -15089,7 +15967,7 @@ export interface ResolvedSetting {
     'type'?: ResolvedSettingTypeEnum;
 }
 
-export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
+export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
 
 export interface RsaSpecification {
     'alg': RsaSpecificationAlgEnum;
@@ -15182,7 +16060,7 @@ export interface SetCertificationRequest {
 }
 
 export type SetCertificationRequestStatusEnum = 'CERTIFIED';
-export type SetCertificationRequestTypeEnum = 'metric' | 'visualizationObject' | 'analyticalDashboard';
+export type SetCertificationRequestTypeEnum = 'metric' | 'visualizationObject' | 'analyticalDashboard' | 'computedAttribute';
 
 /**
  * Additional settings.
@@ -44462,6 +45340,2306 @@ export class ColorPaletteControllerApi extends BaseAPI implements ColorPaletteCo
 }
 
 
+// ComputedAttributeControllerApi FP - ComputedAttributeControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Post Computed Attributes
+ * @param {string} workspaceId 
+ * @param {JsonApiComputedAttributePostOptionalIdDocument} jsonApiComputedAttributePostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributeControllerApiAxiosParamCreator_CreateEntityComputedAttributes(
+    workspaceId: string, jsonApiComputedAttributePostOptionalIdDocument: JsonApiComputedAttributePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createEntityComputedAttributes', 'workspaceId', workspaceId)
+    // verify required parameter 'jsonApiComputedAttributePostOptionalIdDocument' is not null or undefined
+    assertParamExists('createEntityComputedAttributes', 'jsonApiComputedAttributePostOptionalIdDocument', jsonApiComputedAttributePostOptionalIdDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiComputedAttributePostOptionalIdDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiComputedAttributePostOptionalIdDocument !== undefined ? jsonApiComputedAttributePostOptionalIdDocument : {})
+        : jsonApiComputedAttributePostOptionalIdDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ComputedAttributeControllerApi FP - ComputedAttributeControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Delete a Computed Attribute
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributeControllerApiAxiosParamCreator_DeleteEntityComputedAttributes(
+    workspaceId: string, objectId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('deleteEntityComputedAttributes', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('deleteEntityComputedAttributes', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ComputedAttributeControllerApi FP - ComputedAttributeControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Get all Computed Attributes
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributeControllerApiAxiosParamCreator_GetAllEntitiesComputedAttributes(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesComputedAttributes', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ComputedAttributeControllerApi FP - ComputedAttributeControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Get a Computed Attribute
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributeControllerApiAxiosParamCreator_GetEntityComputedAttributes(
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityComputedAttributes', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityComputedAttributes', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ComputedAttributeControllerApi FP - ComputedAttributeControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Patch a Computed Attribute
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiComputedAttributePatchDocument} jsonApiComputedAttributePatchDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributeControllerApiAxiosParamCreator_PatchEntityComputedAttributes(
+    workspaceId: string, objectId: string, jsonApiComputedAttributePatchDocument: JsonApiComputedAttributePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchEntityComputedAttributes', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('patchEntityComputedAttributes', 'objectId', objectId)
+    // verify required parameter 'jsonApiComputedAttributePatchDocument' is not null or undefined
+    assertParamExists('patchEntityComputedAttributes', 'jsonApiComputedAttributePatchDocument', jsonApiComputedAttributePatchDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiComputedAttributePatchDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiComputedAttributePatchDocument !== undefined ? jsonApiComputedAttributePatchDocument : {})
+        : jsonApiComputedAttributePatchDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ComputedAttributeControllerApi FP - ComputedAttributeControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary The search endpoint (beta)
+ * @param {string} workspaceId 
+ * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributeControllerApiAxiosParamCreator_SearchEntitiesComputedAttributes(
+    workspaceId: string, entitySearchBody: EntitySearchBody, origin?: 'ALL' | 'PARENTS' | 'NATIVE', xGDCVALIDATERELATIONS?: boolean, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('searchEntitiesComputedAttributes', 'workspaceId', workspaceId)
+    // verify required parameter 'entitySearchBody' is not null or undefined
+    assertParamExists('searchEntitiesComputedAttributes', 'entitySearchBody', entitySearchBody)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes/search`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof entitySearchBody !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(entitySearchBody !== undefined ? entitySearchBody : {})
+        : entitySearchBody || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ComputedAttributeControllerApi FP - ComputedAttributeControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Put a Computed Attribute
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiComputedAttributeInDocument} jsonApiComputedAttributeInDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributeControllerApiAxiosParamCreator_UpdateEntityComputedAttributes(
+    workspaceId: string, objectId: string, jsonApiComputedAttributeInDocument: JsonApiComputedAttributeInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('updateEntityComputedAttributes', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('updateEntityComputedAttributes', 'objectId', objectId)
+    // verify required parameter 'jsonApiComputedAttributeInDocument' is not null or undefined
+    assertParamExists('updateEntityComputedAttributes', 'jsonApiComputedAttributeInDocument', jsonApiComputedAttributeInDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiComputedAttributeInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiComputedAttributeInDocument !== undefined ? jsonApiComputedAttributeInDocument : {})
+        : jsonApiComputedAttributeInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// ComputedAttributeControllerApi Api FP
+/**
+ * 
+ * @summary Post Computed Attributes
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputedAttributeControllerApiCreateEntityComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributeControllerApi_CreateEntityComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ComputedAttributeControllerApiCreateEntityComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiComputedAttributeOutDocument> {
+    const localVarAxiosArgs = await ComputedAttributeControllerApiAxiosParamCreator_CreateEntityComputedAttributes(
+        requestParameters.workspaceId, requestParameters.jsonApiComputedAttributePostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ComputedAttributeControllerApi Api FP
+/**
+ * 
+ * @summary Delete a Computed Attribute
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputedAttributeControllerApiDeleteEntityComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributeControllerApi_DeleteEntityComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ComputedAttributeControllerApiDeleteEntityComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await ComputedAttributeControllerApiAxiosParamCreator_DeleteEntityComputedAttributes(
+        requestParameters.workspaceId, requestParameters.objectId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ComputedAttributeControllerApi Api FP
+/**
+ * 
+ * @summary Get all Computed Attributes
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputedAttributeControllerApiGetAllEntitiesComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributeControllerApi_GetAllEntitiesComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ComputedAttributeControllerApiGetAllEntitiesComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiComputedAttributeOutList> {
+    const localVarAxiosArgs = await ComputedAttributeControllerApiAxiosParamCreator_GetAllEntitiesComputedAttributes(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ComputedAttributeControllerApi Api FP
+/**
+ * 
+ * @summary Get a Computed Attribute
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputedAttributeControllerApiGetEntityComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributeControllerApi_GetEntityComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ComputedAttributeControllerApiGetEntityComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiComputedAttributeOutDocument> {
+    const localVarAxiosArgs = await ComputedAttributeControllerApiAxiosParamCreator_GetEntityComputedAttributes(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ComputedAttributeControllerApi Api FP
+/**
+ * 
+ * @summary Patch a Computed Attribute
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputedAttributeControllerApiPatchEntityComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributeControllerApi_PatchEntityComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ComputedAttributeControllerApiPatchEntityComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiComputedAttributeOutDocument> {
+    const localVarAxiosArgs = await ComputedAttributeControllerApiAxiosParamCreator_PatchEntityComputedAttributes(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiComputedAttributePatchDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ComputedAttributeControllerApi Api FP
+/**
+ * 
+ * @summary The search endpoint (beta)
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputedAttributeControllerApiSearchEntitiesComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributeControllerApi_SearchEntitiesComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ComputedAttributeControllerApiSearchEntitiesComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiComputedAttributeOutList> {
+    const localVarAxiosArgs = await ComputedAttributeControllerApiAxiosParamCreator_SearchEntitiesComputedAttributes(
+        requestParameters.workspaceId, requestParameters.entitySearchBody, requestParameters.origin, requestParameters.xGDCVALIDATERELATIONS, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ComputedAttributeControllerApi Api FP
+/**
+ * 
+ * @summary Put a Computed Attribute
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputedAttributeControllerApiUpdateEntityComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributeControllerApi_UpdateEntityComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ComputedAttributeControllerApiUpdateEntityComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiComputedAttributeOutDocument> {
+    const localVarAxiosArgs = await ComputedAttributeControllerApiAxiosParamCreator_UpdateEntityComputedAttributes(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiComputedAttributeInDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * ComputedAttributeControllerApi - interface
+ * @export
+ * @interface ComputedAttributeControllerApi
+ */
+export interface ComputedAttributeControllerApiInterface {
+    /**
+     * 
+     * @summary Post Computed Attributes
+     * @param {ComputedAttributeControllerApiCreateEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributeControllerApiInterface
+     */
+    createEntityComputedAttributes(requestParameters: ComputedAttributeControllerApiCreateEntityComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiComputedAttributeOutDocument>;
+
+    /**
+     * 
+     * @summary Delete a Computed Attribute
+     * @param {ComputedAttributeControllerApiDeleteEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributeControllerApiInterface
+     */
+    deleteEntityComputedAttributes(requestParameters: ComputedAttributeControllerApiDeleteEntityComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Get all Computed Attributes
+     * @param {ComputedAttributeControllerApiGetAllEntitiesComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributeControllerApiInterface
+     */
+    getAllEntitiesComputedAttributes(requestParameters: ComputedAttributeControllerApiGetAllEntitiesComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiComputedAttributeOutList>;
+
+    /**
+     * 
+     * @summary Get a Computed Attribute
+     * @param {ComputedAttributeControllerApiGetEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributeControllerApiInterface
+     */
+    getEntityComputedAttributes(requestParameters: ComputedAttributeControllerApiGetEntityComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiComputedAttributeOutDocument>;
+
+    /**
+     * 
+     * @summary Patch a Computed Attribute
+     * @param {ComputedAttributeControllerApiPatchEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributeControllerApiInterface
+     */
+    patchEntityComputedAttributes(requestParameters: ComputedAttributeControllerApiPatchEntityComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiComputedAttributeOutDocument>;
+
+    /**
+     * 
+     * @summary The search endpoint (beta)
+     * @param {ComputedAttributeControllerApiSearchEntitiesComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributeControllerApiInterface
+     */
+    searchEntitiesComputedAttributes(requestParameters: ComputedAttributeControllerApiSearchEntitiesComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiComputedAttributeOutList>;
+
+    /**
+     * 
+     * @summary Put a Computed Attribute
+     * @param {ComputedAttributeControllerApiUpdateEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributeControllerApiInterface
+     */
+    updateEntityComputedAttributes(requestParameters: ComputedAttributeControllerApiUpdateEntityComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiComputedAttributeOutDocument>;
+
+}
+
+/**
+ * Request parameters for createEntityComputedAttributes operation in ComputedAttributeControllerApi.
+ * @export
+ * @interface ComputedAttributeControllerApiCreateEntityComputedAttributesRequest
+ */
+export interface ComputedAttributeControllerApiCreateEntityComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributeControllerApiCreateEntityComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {JsonApiComputedAttributePostOptionalIdDocument}
+     * @memberof ComputedAttributeControllerApiCreateEntityComputedAttributes
+     */
+    readonly jsonApiComputedAttributePostOptionalIdDocument: JsonApiComputedAttributePostOptionalIdDocument
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @memberof ComputedAttributeControllerApiCreateEntityComputedAttributes
+     */
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof ComputedAttributeControllerApiCreateEntityComputedAttributes
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for deleteEntityComputedAttributes operation in ComputedAttributeControllerApi.
+ * @export
+ * @interface ComputedAttributeControllerApiDeleteEntityComputedAttributesRequest
+ */
+export interface ComputedAttributeControllerApiDeleteEntityComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributeControllerApiDeleteEntityComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributeControllerApiDeleteEntityComputedAttributes
+     */
+    readonly objectId: string
+}
+
+/**
+ * Request parameters for getAllEntitiesComputedAttributes operation in ComputedAttributeControllerApi.
+ * @export
+ * @interface ComputedAttributeControllerApiGetAllEntitiesComputedAttributesRequest
+ */
+export interface ComputedAttributeControllerApiGetAllEntitiesComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributeControllerApiGetAllEntitiesComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof ComputedAttributeControllerApiGetAllEntitiesComputedAttributes
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof ComputedAttributeControllerApiGetAllEntitiesComputedAttributes
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @memberof ComputedAttributeControllerApiGetAllEntitiesComputedAttributes
+     */
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof ComputedAttributeControllerApiGetAllEntitiesComputedAttributes
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof ComputedAttributeControllerApiGetAllEntitiesComputedAttributes
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof ComputedAttributeControllerApiGetAllEntitiesComputedAttributes
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ComputedAttributeControllerApiGetAllEntitiesComputedAttributes
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @memberof ComputedAttributeControllerApiGetAllEntitiesComputedAttributes
+     */
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getEntityComputedAttributes operation in ComputedAttributeControllerApi.
+ * @export
+ * @interface ComputedAttributeControllerApiGetEntityComputedAttributesRequest
+ */
+export interface ComputedAttributeControllerApiGetEntityComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributeControllerApiGetEntityComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributeControllerApiGetEntityComputedAttributes
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof ComputedAttributeControllerApiGetEntityComputedAttributes
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @memberof ComputedAttributeControllerApiGetEntityComputedAttributes
+     */
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ComputedAttributeControllerApiGetEntityComputedAttributes
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof ComputedAttributeControllerApiGetEntityComputedAttributes
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for patchEntityComputedAttributes operation in ComputedAttributeControllerApi.
+ * @export
+ * @interface ComputedAttributeControllerApiPatchEntityComputedAttributesRequest
+ */
+export interface ComputedAttributeControllerApiPatchEntityComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributeControllerApiPatchEntityComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributeControllerApiPatchEntityComputedAttributes
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiComputedAttributePatchDocument}
+     * @memberof ComputedAttributeControllerApiPatchEntityComputedAttributes
+     */
+    readonly jsonApiComputedAttributePatchDocument: JsonApiComputedAttributePatchDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof ComputedAttributeControllerApiPatchEntityComputedAttributes
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @memberof ComputedAttributeControllerApiPatchEntityComputedAttributes
+     */
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for searchEntitiesComputedAttributes operation in ComputedAttributeControllerApi.
+ * @export
+ * @interface ComputedAttributeControllerApiSearchEntitiesComputedAttributesRequest
+ */
+export interface ComputedAttributeControllerApiSearchEntitiesComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributeControllerApiSearchEntitiesComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * Search request body with filter, pagination, and sorting options
+     * @type {EntitySearchBody}
+     * @memberof ComputedAttributeControllerApiSearchEntitiesComputedAttributes
+     */
+    readonly entitySearchBody: EntitySearchBody
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof ComputedAttributeControllerApiSearchEntitiesComputedAttributes
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ComputedAttributeControllerApiSearchEntitiesComputedAttributes
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+}
+
+/**
+ * Request parameters for updateEntityComputedAttributes operation in ComputedAttributeControllerApi.
+ * @export
+ * @interface ComputedAttributeControllerApiUpdateEntityComputedAttributesRequest
+ */
+export interface ComputedAttributeControllerApiUpdateEntityComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributeControllerApiUpdateEntityComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributeControllerApiUpdateEntityComputedAttributes
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiComputedAttributeInDocument}
+     * @memberof ComputedAttributeControllerApiUpdateEntityComputedAttributes
+     */
+    readonly jsonApiComputedAttributeInDocument: JsonApiComputedAttributeInDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof ComputedAttributeControllerApiUpdateEntityComputedAttributes
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @memberof ComputedAttributeControllerApiUpdateEntityComputedAttributes
+     */
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+}
+
+/**
+ * ComputedAttributeControllerApi - object-oriented interface
+ * @export
+ * @class ComputedAttributeControllerApi
+ * @extends {BaseAPI}
+ */
+export class ComputedAttributeControllerApi extends BaseAPI implements ComputedAttributeControllerApiInterface {
+    /**
+     * 
+     * @summary Post Computed Attributes
+     * @param {ComputedAttributeControllerApiCreateEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributeControllerApi
+     */
+    public createEntityComputedAttributes(requestParameters: ComputedAttributeControllerApiCreateEntityComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return ComputedAttributeControllerApi_CreateEntityComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Delete a Computed Attribute
+     * @param {ComputedAttributeControllerApiDeleteEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributeControllerApi
+     */
+    public deleteEntityComputedAttributes(requestParameters: ComputedAttributeControllerApiDeleteEntityComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return ComputedAttributeControllerApi_DeleteEntityComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get all Computed Attributes
+     * @param {ComputedAttributeControllerApiGetAllEntitiesComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributeControllerApi
+     */
+    public getAllEntitiesComputedAttributes(requestParameters: ComputedAttributeControllerApiGetAllEntitiesComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return ComputedAttributeControllerApi_GetAllEntitiesComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get a Computed Attribute
+     * @param {ComputedAttributeControllerApiGetEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributeControllerApi
+     */
+    public getEntityComputedAttributes(requestParameters: ComputedAttributeControllerApiGetEntityComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return ComputedAttributeControllerApi_GetEntityComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Patch a Computed Attribute
+     * @param {ComputedAttributeControllerApiPatchEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributeControllerApi
+     */
+    public patchEntityComputedAttributes(requestParameters: ComputedAttributeControllerApiPatchEntityComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return ComputedAttributeControllerApi_PatchEntityComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary The search endpoint (beta)
+     * @param {ComputedAttributeControllerApiSearchEntitiesComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributeControllerApi
+     */
+    public searchEntitiesComputedAttributes(requestParameters: ComputedAttributeControllerApiSearchEntitiesComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return ComputedAttributeControllerApi_SearchEntitiesComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Put a Computed Attribute
+     * @param {ComputedAttributeControllerApiUpdateEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributeControllerApi
+     */
+    public updateEntityComputedAttributes(requestParameters: ComputedAttributeControllerApiUpdateEntityComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return ComputedAttributeControllerApi_UpdateEntityComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
+// ComputedAttributesApi FP - ComputedAttributesApiAxiosParamCreator
+/**
+ * 
+ * @summary Post Computed Attributes
+ * @param {string} workspaceId 
+ * @param {JsonApiComputedAttributePostOptionalIdDocument} jsonApiComputedAttributePostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributesApiAxiosParamCreator_CreateEntityComputedAttributes(
+    workspaceId: string, jsonApiComputedAttributePostOptionalIdDocument: JsonApiComputedAttributePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createEntityComputedAttributes', 'workspaceId', workspaceId)
+    // verify required parameter 'jsonApiComputedAttributePostOptionalIdDocument' is not null or undefined
+    assertParamExists('createEntityComputedAttributes', 'jsonApiComputedAttributePostOptionalIdDocument', jsonApiComputedAttributePostOptionalIdDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiComputedAttributePostOptionalIdDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiComputedAttributePostOptionalIdDocument !== undefined ? jsonApiComputedAttributePostOptionalIdDocument : {})
+        : jsonApiComputedAttributePostOptionalIdDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ComputedAttributesApi FP - ComputedAttributesApiAxiosParamCreator
+/**
+ * 
+ * @summary Delete a Computed Attribute
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributesApiAxiosParamCreator_DeleteEntityComputedAttributes(
+    workspaceId: string, objectId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('deleteEntityComputedAttributes', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('deleteEntityComputedAttributes', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ComputedAttributesApi FP - ComputedAttributesApiAxiosParamCreator
+/**
+ * 
+ * @summary Get all Computed Attributes
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributesApiAxiosParamCreator_GetAllEntitiesComputedAttributes(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesComputedAttributes', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ComputedAttributesApi FP - ComputedAttributesApiAxiosParamCreator
+/**
+ * 
+ * @summary Get a Computed Attribute
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributesApiAxiosParamCreator_GetEntityComputedAttributes(
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityComputedAttributes', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityComputedAttributes', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ComputedAttributesApi FP - ComputedAttributesApiAxiosParamCreator
+/**
+ * 
+ * @summary Patch a Computed Attribute
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiComputedAttributePatchDocument} jsonApiComputedAttributePatchDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributesApiAxiosParamCreator_PatchEntityComputedAttributes(
+    workspaceId: string, objectId: string, jsonApiComputedAttributePatchDocument: JsonApiComputedAttributePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchEntityComputedAttributes', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('patchEntityComputedAttributes', 'objectId', objectId)
+    // verify required parameter 'jsonApiComputedAttributePatchDocument' is not null or undefined
+    assertParamExists('patchEntityComputedAttributes', 'jsonApiComputedAttributePatchDocument', jsonApiComputedAttributePatchDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiComputedAttributePatchDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiComputedAttributePatchDocument !== undefined ? jsonApiComputedAttributePatchDocument : {})
+        : jsonApiComputedAttributePatchDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ComputedAttributesApi FP - ComputedAttributesApiAxiosParamCreator
+/**
+ * 
+ * @summary The search endpoint (beta)
+ * @param {string} workspaceId 
+ * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributesApiAxiosParamCreator_SearchEntitiesComputedAttributes(
+    workspaceId: string, entitySearchBody: EntitySearchBody, origin?: 'ALL' | 'PARENTS' | 'NATIVE', xGDCVALIDATERELATIONS?: boolean, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('searchEntitiesComputedAttributes', 'workspaceId', workspaceId)
+    // verify required parameter 'entitySearchBody' is not null or undefined
+    assertParamExists('searchEntitiesComputedAttributes', 'entitySearchBody', entitySearchBody)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes/search`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof entitySearchBody !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(entitySearchBody !== undefined ? entitySearchBody : {})
+        : entitySearchBody || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ComputedAttributesApi FP - ComputedAttributesApiAxiosParamCreator
+/**
+ * 
+ * @summary Put a Computed Attribute
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiComputedAttributeInDocument} jsonApiComputedAttributeInDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributesApiAxiosParamCreator_UpdateEntityComputedAttributes(
+    workspaceId: string, objectId: string, jsonApiComputedAttributeInDocument: JsonApiComputedAttributeInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('updateEntityComputedAttributes', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('updateEntityComputedAttributes', 'objectId', objectId)
+    // verify required parameter 'jsonApiComputedAttributeInDocument' is not null or undefined
+    assertParamExists('updateEntityComputedAttributes', 'jsonApiComputedAttributeInDocument', jsonApiComputedAttributeInDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiComputedAttributeInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiComputedAttributeInDocument !== undefined ? jsonApiComputedAttributeInDocument : {})
+        : jsonApiComputedAttributeInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// ComputedAttributesApi Api FP
+/**
+ * 
+ * @summary Post Computed Attributes
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputedAttributesApiCreateEntityComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributesApi_CreateEntityComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ComputedAttributesApiCreateEntityComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiComputedAttributeOutDocument> {
+    const localVarAxiosArgs = await ComputedAttributesApiAxiosParamCreator_CreateEntityComputedAttributes(
+        requestParameters.workspaceId, requestParameters.jsonApiComputedAttributePostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ComputedAttributesApi Api FP
+/**
+ * 
+ * @summary Delete a Computed Attribute
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputedAttributesApiDeleteEntityComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributesApi_DeleteEntityComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ComputedAttributesApiDeleteEntityComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await ComputedAttributesApiAxiosParamCreator_DeleteEntityComputedAttributes(
+        requestParameters.workspaceId, requestParameters.objectId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ComputedAttributesApi Api FP
+/**
+ * 
+ * @summary Get all Computed Attributes
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputedAttributesApiGetAllEntitiesComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributesApi_GetAllEntitiesComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ComputedAttributesApiGetAllEntitiesComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiComputedAttributeOutList> {
+    const localVarAxiosArgs = await ComputedAttributesApiAxiosParamCreator_GetAllEntitiesComputedAttributes(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ComputedAttributesApi Api FP
+/**
+ * 
+ * @summary Get a Computed Attribute
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputedAttributesApiGetEntityComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributesApi_GetEntityComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ComputedAttributesApiGetEntityComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiComputedAttributeOutDocument> {
+    const localVarAxiosArgs = await ComputedAttributesApiAxiosParamCreator_GetEntityComputedAttributes(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ComputedAttributesApi Api FP
+/**
+ * 
+ * @summary Patch a Computed Attribute
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputedAttributesApiPatchEntityComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributesApi_PatchEntityComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ComputedAttributesApiPatchEntityComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiComputedAttributeOutDocument> {
+    const localVarAxiosArgs = await ComputedAttributesApiAxiosParamCreator_PatchEntityComputedAttributes(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiComputedAttributePatchDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ComputedAttributesApi Api FP
+/**
+ * 
+ * @summary The search endpoint (beta)
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputedAttributesApiSearchEntitiesComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributesApi_SearchEntitiesComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ComputedAttributesApiSearchEntitiesComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiComputedAttributeOutList> {
+    const localVarAxiosArgs = await ComputedAttributesApiAxiosParamCreator_SearchEntitiesComputedAttributes(
+        requestParameters.workspaceId, requestParameters.entitySearchBody, requestParameters.origin, requestParameters.xGDCVALIDATERELATIONS, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ComputedAttributesApi Api FP
+/**
+ * 
+ * @summary Put a Computed Attribute
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputedAttributesApiUpdateEntityComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputedAttributesApi_UpdateEntityComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ComputedAttributesApiUpdateEntityComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiComputedAttributeOutDocument> {
+    const localVarAxiosArgs = await ComputedAttributesApiAxiosParamCreator_UpdateEntityComputedAttributes(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiComputedAttributeInDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * ComputedAttributesApi - interface
+ * @export
+ * @interface ComputedAttributesApi
+ */
+export interface ComputedAttributesApiInterface {
+    /**
+     * 
+     * @summary Post Computed Attributes
+     * @param {ComputedAttributesApiCreateEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributesApiInterface
+     */
+    createEntityComputedAttributes(requestParameters: ComputedAttributesApiCreateEntityComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiComputedAttributeOutDocument>;
+
+    /**
+     * 
+     * @summary Delete a Computed Attribute
+     * @param {ComputedAttributesApiDeleteEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributesApiInterface
+     */
+    deleteEntityComputedAttributes(requestParameters: ComputedAttributesApiDeleteEntityComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Get all Computed Attributes
+     * @param {ComputedAttributesApiGetAllEntitiesComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributesApiInterface
+     */
+    getAllEntitiesComputedAttributes(requestParameters: ComputedAttributesApiGetAllEntitiesComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiComputedAttributeOutList>;
+
+    /**
+     * 
+     * @summary Get a Computed Attribute
+     * @param {ComputedAttributesApiGetEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributesApiInterface
+     */
+    getEntityComputedAttributes(requestParameters: ComputedAttributesApiGetEntityComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiComputedAttributeOutDocument>;
+
+    /**
+     * 
+     * @summary Patch a Computed Attribute
+     * @param {ComputedAttributesApiPatchEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributesApiInterface
+     */
+    patchEntityComputedAttributes(requestParameters: ComputedAttributesApiPatchEntityComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiComputedAttributeOutDocument>;
+
+    /**
+     * 
+     * @summary The search endpoint (beta)
+     * @param {ComputedAttributesApiSearchEntitiesComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributesApiInterface
+     */
+    searchEntitiesComputedAttributes(requestParameters: ComputedAttributesApiSearchEntitiesComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiComputedAttributeOutList>;
+
+    /**
+     * 
+     * @summary Put a Computed Attribute
+     * @param {ComputedAttributesApiUpdateEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributesApiInterface
+     */
+    updateEntityComputedAttributes(requestParameters: ComputedAttributesApiUpdateEntityComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiComputedAttributeOutDocument>;
+
+}
+
+/**
+ * Request parameters for createEntityComputedAttributes operation in ComputedAttributesApi.
+ * @export
+ * @interface ComputedAttributesApiCreateEntityComputedAttributesRequest
+ */
+export interface ComputedAttributesApiCreateEntityComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributesApiCreateEntityComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {JsonApiComputedAttributePostOptionalIdDocument}
+     * @memberof ComputedAttributesApiCreateEntityComputedAttributes
+     */
+    readonly jsonApiComputedAttributePostOptionalIdDocument: JsonApiComputedAttributePostOptionalIdDocument
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @memberof ComputedAttributesApiCreateEntityComputedAttributes
+     */
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof ComputedAttributesApiCreateEntityComputedAttributes
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for deleteEntityComputedAttributes operation in ComputedAttributesApi.
+ * @export
+ * @interface ComputedAttributesApiDeleteEntityComputedAttributesRequest
+ */
+export interface ComputedAttributesApiDeleteEntityComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributesApiDeleteEntityComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributesApiDeleteEntityComputedAttributes
+     */
+    readonly objectId: string
+}
+
+/**
+ * Request parameters for getAllEntitiesComputedAttributes operation in ComputedAttributesApi.
+ * @export
+ * @interface ComputedAttributesApiGetAllEntitiesComputedAttributesRequest
+ */
+export interface ComputedAttributesApiGetAllEntitiesComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributesApiGetAllEntitiesComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof ComputedAttributesApiGetAllEntitiesComputedAttributes
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof ComputedAttributesApiGetAllEntitiesComputedAttributes
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @memberof ComputedAttributesApiGetAllEntitiesComputedAttributes
+     */
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof ComputedAttributesApiGetAllEntitiesComputedAttributes
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof ComputedAttributesApiGetAllEntitiesComputedAttributes
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof ComputedAttributesApiGetAllEntitiesComputedAttributes
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ComputedAttributesApiGetAllEntitiesComputedAttributes
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @memberof ComputedAttributesApiGetAllEntitiesComputedAttributes
+     */
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getEntityComputedAttributes operation in ComputedAttributesApi.
+ * @export
+ * @interface ComputedAttributesApiGetEntityComputedAttributesRequest
+ */
+export interface ComputedAttributesApiGetEntityComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributesApiGetEntityComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributesApiGetEntityComputedAttributes
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof ComputedAttributesApiGetEntityComputedAttributes
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @memberof ComputedAttributesApiGetEntityComputedAttributes
+     */
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ComputedAttributesApiGetEntityComputedAttributes
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof ComputedAttributesApiGetEntityComputedAttributes
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for patchEntityComputedAttributes operation in ComputedAttributesApi.
+ * @export
+ * @interface ComputedAttributesApiPatchEntityComputedAttributesRequest
+ */
+export interface ComputedAttributesApiPatchEntityComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributesApiPatchEntityComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributesApiPatchEntityComputedAttributes
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiComputedAttributePatchDocument}
+     * @memberof ComputedAttributesApiPatchEntityComputedAttributes
+     */
+    readonly jsonApiComputedAttributePatchDocument: JsonApiComputedAttributePatchDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof ComputedAttributesApiPatchEntityComputedAttributes
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @memberof ComputedAttributesApiPatchEntityComputedAttributes
+     */
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for searchEntitiesComputedAttributes operation in ComputedAttributesApi.
+ * @export
+ * @interface ComputedAttributesApiSearchEntitiesComputedAttributesRequest
+ */
+export interface ComputedAttributesApiSearchEntitiesComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributesApiSearchEntitiesComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * Search request body with filter, pagination, and sorting options
+     * @type {EntitySearchBody}
+     * @memberof ComputedAttributesApiSearchEntitiesComputedAttributes
+     */
+    readonly entitySearchBody: EntitySearchBody
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof ComputedAttributesApiSearchEntitiesComputedAttributes
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ComputedAttributesApiSearchEntitiesComputedAttributes
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+}
+
+/**
+ * Request parameters for updateEntityComputedAttributes operation in ComputedAttributesApi.
+ * @export
+ * @interface ComputedAttributesApiUpdateEntityComputedAttributesRequest
+ */
+export interface ComputedAttributesApiUpdateEntityComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributesApiUpdateEntityComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputedAttributesApiUpdateEntityComputedAttributes
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiComputedAttributeInDocument}
+     * @memberof ComputedAttributesApiUpdateEntityComputedAttributes
+     */
+    readonly jsonApiComputedAttributeInDocument: JsonApiComputedAttributeInDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof ComputedAttributesApiUpdateEntityComputedAttributes
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @memberof ComputedAttributesApiUpdateEntityComputedAttributes
+     */
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+}
+
+/**
+ * ComputedAttributesApi - object-oriented interface
+ * @export
+ * @class ComputedAttributesApi
+ * @extends {BaseAPI}
+ */
+export class ComputedAttributesApi extends BaseAPI implements ComputedAttributesApiInterface {
+    /**
+     * 
+     * @summary Post Computed Attributes
+     * @param {ComputedAttributesApiCreateEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributesApi
+     */
+    public createEntityComputedAttributes(requestParameters: ComputedAttributesApiCreateEntityComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return ComputedAttributesApi_CreateEntityComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Delete a Computed Attribute
+     * @param {ComputedAttributesApiDeleteEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributesApi
+     */
+    public deleteEntityComputedAttributes(requestParameters: ComputedAttributesApiDeleteEntityComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return ComputedAttributesApi_DeleteEntityComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get all Computed Attributes
+     * @param {ComputedAttributesApiGetAllEntitiesComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributesApi
+     */
+    public getAllEntitiesComputedAttributes(requestParameters: ComputedAttributesApiGetAllEntitiesComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return ComputedAttributesApi_GetAllEntitiesComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get a Computed Attribute
+     * @param {ComputedAttributesApiGetEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributesApi
+     */
+    public getEntityComputedAttributes(requestParameters: ComputedAttributesApiGetEntityComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return ComputedAttributesApi_GetEntityComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Patch a Computed Attribute
+     * @param {ComputedAttributesApiPatchEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributesApi
+     */
+    public patchEntityComputedAttributes(requestParameters: ComputedAttributesApiPatchEntityComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return ComputedAttributesApi_PatchEntityComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary The search endpoint (beta)
+     * @param {ComputedAttributesApiSearchEntitiesComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributesApi
+     */
+    public searchEntitiesComputedAttributes(requestParameters: ComputedAttributesApiSearchEntitiesComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return ComputedAttributesApi_SearchEntitiesComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Put a Computed Attribute
+     * @param {ComputedAttributesApiUpdateEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputedAttributesApi
+     */
+    public updateEntityComputedAttributes(requestParameters: ComputedAttributesApiUpdateEntityComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return ComputedAttributesApi_UpdateEntityComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
 // CookieSecurityConfigurationApi FP - CookieSecurityConfigurationApiAxiosParamCreator
 /**
  * 
@@ -51046,14 +54224,14 @@ export class DashboardsApi extends BaseAPI implements DashboardsApiInterface {
  * @summary Post User Data Filters
  * @param {string} workspaceId 
  * @param {JsonApiUserDataFilterPostOptionalIdDocument} jsonApiUserDataFilterPostOptionalIdDocument 
- * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function DataFiltersApiAxiosParamCreator_CreateEntityUserDataFilters(
-    workspaceId: string, jsonApiUserDataFilterPostOptionalIdDocument: JsonApiUserDataFilterPostOptionalIdDocument, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiUserDataFilterPostOptionalIdDocument: JsonApiUserDataFilterPostOptionalIdDocument, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -51413,7 +54591,7 @@ export async function DataFiltersApiAxiosParamCreator_DeleteEntityWorkspaceDataF
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -51424,7 +54602,7 @@ export async function DataFiltersApiAxiosParamCreator_DeleteEntityWorkspaceDataF
  * @throws {RequiredError}
  */
 export async function DataFiltersApiAxiosParamCreator_GetAllEntitiesUserDataFilters(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -51668,7 +54846,7 @@ export async function DataFiltersApiAxiosParamCreator_GetAllEntitiesWorkspaceDat
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -51676,7 +54854,7 @@ export async function DataFiltersApiAxiosParamCreator_GetAllEntitiesWorkspaceDat
  * @throws {RequiredError}
  */
 export async function DataFiltersApiAxiosParamCreator_GetEntityUserDataFilters(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -51917,13 +55095,13 @@ export async function DataFiltersApiAxiosParamCreator_GetWorkspaceDataFiltersLay
  * @param {string} objectId 
  * @param {JsonApiUserDataFilterPatchDocument} jsonApiUserDataFilterPatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function DataFiltersApiAxiosParamCreator_PatchEntityUserDataFilters(
-    workspaceId: string, objectId: string, jsonApiUserDataFilterPatchDocument: JsonApiUserDataFilterPatchDocument, filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiUserDataFilterPatchDocument: JsonApiUserDataFilterPatchDocument, filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -52422,13 +55600,13 @@ export async function DataFiltersApiAxiosParamCreator_SetWorkspaceDataFiltersLay
  * @param {string} objectId 
  * @param {JsonApiUserDataFilterInDocument} jsonApiUserDataFilterInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function DataFiltersApiAxiosParamCreator_UpdateEntityUserDataFilters(
-    workspaceId: string, objectId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -53502,10 +56680,10 @@ export interface DataFiltersApiCreateEntityUserDataFiltersRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
+     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
      * @memberof DataFiltersApiCreateEntityUserDataFilters
      */
-    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
+    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
 
     /**
      * Include Meta objects.
@@ -53677,10 +56855,10 @@ export interface DataFiltersApiGetAllEntitiesUserDataFiltersRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
+     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
      * @memberof DataFiltersApiGetAllEntitiesUserDataFilters
      */
-    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
+    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -53887,10 +57065,10 @@ export interface DataFiltersApiGetEntityUserDataFiltersRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
+     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
      * @memberof DataFiltersApiGetEntityUserDataFilters
      */
-    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
+    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
 
     /**
      * 
@@ -54041,10 +57219,10 @@ export interface DataFiltersApiPatchEntityUserDataFiltersRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
+     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
      * @memberof DataFiltersApiPatchEntityUserDataFilters
      */
-    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
+    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
 }
 
 /**
@@ -54286,10 +57464,10 @@ export interface DataFiltersApiUpdateEntityUserDataFiltersRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
+     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
      * @memberof DataFiltersApiUpdateEntityUserDataFilters
      */
-    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
+    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
 }
 
 /**
@@ -59651,6 +62829,79 @@ export async function EntitiesApiAxiosParamCreator_CreateEntityColorPalettes(
 
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
+ * 
+ * @summary Post Computed Attributes
+ * @param {string} workspaceId 
+ * @param {JsonApiComputedAttributePostOptionalIdDocument} jsonApiComputedAttributePostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_CreateEntityComputedAttributes(
+    workspaceId: string, jsonApiComputedAttributePostOptionalIdDocument: JsonApiComputedAttributePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createEntityComputedAttributes', 'workspaceId', workspaceId)
+    // verify required parameter 'jsonApiComputedAttributePostOptionalIdDocument' is not null or undefined
+    assertParamExists('createEntityComputedAttributes', 'jsonApiComputedAttributePostOptionalIdDocument', jsonApiComputedAttributePostOptionalIdDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiComputedAttributePostOptionalIdDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiComputedAttributePostOptionalIdDocument !== undefined ? jsonApiComputedAttributePostOptionalIdDocument : {})
+        : jsonApiComputedAttributePostOptionalIdDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
  *  Context Security Police Directive
  * @summary Post CSP Directives
  * @param {JsonApiCspDirectiveInDocument} jsonApiCspDirectiveInDocument 
@@ -60701,14 +63952,14 @@ export async function EntitiesApiAxiosParamCreator_CreateEntityMemoryItems(
  * @summary Post Metrics
  * @param {string} workspaceId 
  * @param {JsonApiMetricPostOptionalIdDocument} jsonApiMetricPostOptionalIdDocument 
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_CreateEntityMetrics(
-    workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -61088,14 +64339,14 @@ export async function EntitiesApiAxiosParamCreator_CreateEntityThemes(
  * @summary Post User Data Filters
  * @param {string} workspaceId 
  * @param {JsonApiUserDataFilterPostOptionalIdDocument} jsonApiUserDataFilterPostOptionalIdDocument 
- * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_CreateEntityUserDataFilters(
-    workspaceId: string, jsonApiUserDataFilterPostOptionalIdDocument: JsonApiUserDataFilterPostOptionalIdDocument, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiUserDataFilterPostOptionalIdDocument: JsonApiUserDataFilterPostOptionalIdDocument, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -62210,6 +65461,55 @@ export async function EntitiesApiAxiosParamCreator_DeleteEntityColorPalettes(
     assertParamExists('deleteEntityColorPalettes', 'id', id)
     const localVarPath = `/api/v1/entities/colorPalettes/{id}`
         .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
+ * @summary Delete a Computed Attribute
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_DeleteEntityComputedAttributes(
+    workspaceId: string, objectId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('deleteEntityComputedAttributes', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('deleteEntityComputedAttributes', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
     let baseOptions;
@@ -64589,6 +67889,91 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesColorPalettes(
 
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
+ * 
+ * @summary Get all Computed Attributes
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_GetAllEntitiesComputedAttributes(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesComputedAttributes', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
  *  Context Security Police Directive
  * @summary Get CSP Directives
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -66254,7 +69639,7 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesMemoryItems(
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -66265,7 +69650,7 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesMemoryItems(
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_GetAllEntitiesMetrics(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -66759,7 +70144,7 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesThemes(
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -66770,7 +70155,7 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesThemes(
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_GetAllEntitiesUserDataFilters(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -68395,6 +71780,75 @@ export async function EntitiesApiAxiosParamCreator_GetEntityColorPalettes(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
+ * @summary Get a Computed Attribute
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_GetEntityComputedAttributes(
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityComputedAttributes', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityComputedAttributes', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
  * @summary Get CookieSecurityConfiguration
  * @param {string} id 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -69757,7 +73211,7 @@ export async function EntitiesApiAxiosParamCreator_GetEntityMemoryItems(
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -69765,7 +73219,7 @@ export async function EntitiesApiAxiosParamCreator_GetEntityMemoryItems(
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_GetEntityMetrics(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -70210,7 +73664,7 @@ export async function EntitiesApiAxiosParamCreator_GetEntityThemes(
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -70218,7 +73672,7 @@ export async function EntitiesApiAxiosParamCreator_GetEntityThemes(
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_GetEntityUserDataFilters(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -71552,6 +75006,83 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityColorPalettes(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
+ * @summary Patch a Computed Attribute
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiComputedAttributePatchDocument} jsonApiComputedAttributePatchDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_PatchEntityComputedAttributes(
+    workspaceId: string, objectId: string, jsonApiComputedAttributePatchDocument: JsonApiComputedAttributePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchEntityComputedAttributes', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('patchEntityComputedAttributes', 'objectId', objectId)
+    // verify required parameter 'jsonApiComputedAttributePatchDocument' is not null or undefined
+    assertParamExists('patchEntityComputedAttributes', 'jsonApiComputedAttributePatchDocument', jsonApiComputedAttributePatchDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiComputedAttributePatchDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiComputedAttributePatchDocument !== undefined ? jsonApiComputedAttributePatchDocument : {})
+        : jsonApiComputedAttributePatchDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
  * @summary Patch CookieSecurityConfiguration
  * @param {string} id 
  * @param {JsonApiCookieSecurityConfigurationPatchDocument} jsonApiCookieSecurityConfigurationPatchDocument 
@@ -72866,13 +76397,13 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityMemoryItems(
  * @param {string} objectId 
  * @param {JsonApiMetricPatchDocument} jsonApiMetricPatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_PatchEntityMetrics(
-    workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -73370,13 +76901,13 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityThemes(
  * @param {string} objectId 
  * @param {JsonApiUserDataFilterPatchDocument} jsonApiUserDataFilterPatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_PatchEntityUserDataFilters(
-    workspaceId: string, objectId: string, jsonApiUserDataFilterPatchDocument: JsonApiUserDataFilterPatchDocument, filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiUserDataFilterPatchDocument: JsonApiUserDataFilterPatchDocument, filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -74559,6 +78090,78 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesAutomations(
     // verify required parameter 'entitySearchBody' is not null or undefined
     assertParamExists('searchEntitiesAutomations', 'entitySearchBody', entitySearchBody)
     const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/automations/search`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof entitySearchBody !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(entitySearchBody !== undefined ? entitySearchBody : {})
+        : entitySearchBody || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
+ * @summary The search endpoint (beta)
+ * @param {string} workspaceId 
+ * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_SearchEntitiesComputedAttributes(
+    workspaceId: string, entitySearchBody: EntitySearchBody, origin?: 'ALL' | 'PARENTS' | 'NATIVE', xGDCVALIDATERELATIONS?: boolean, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('searchEntitiesComputedAttributes', 'workspaceId', workspaceId)
+    // verify required parameter 'entitySearchBody' is not null or undefined
+    assertParamExists('searchEntitiesComputedAttributes', 'entitySearchBody', entitySearchBody)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes/search`
         .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -76253,6 +79856,83 @@ export async function EntitiesApiAxiosParamCreator_UpdateEntityColorPalettes(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
+ * @summary Put a Computed Attribute
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiComputedAttributeInDocument} jsonApiComputedAttributeInDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_UpdateEntityComputedAttributes(
+    workspaceId: string, objectId: string, jsonApiComputedAttributeInDocument: JsonApiComputedAttributeInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('updateEntityComputedAttributes', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('updateEntityComputedAttributes', 'objectId', objectId)
+    // verify required parameter 'jsonApiComputedAttributeInDocument' is not null or undefined
+    assertParamExists('updateEntityComputedAttributes', 'jsonApiComputedAttributeInDocument', jsonApiComputedAttributeInDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/computedAttributes/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiComputedAttributeInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiComputedAttributeInDocument !== undefined ? jsonApiComputedAttributeInDocument : {})
+        : jsonApiComputedAttributeInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
  * @summary Put CookieSecurityConfiguration
  * @param {string} id 
  * @param {JsonApiCookieSecurityConfigurationInDocument} jsonApiCookieSecurityConfigurationInDocument 
@@ -77481,13 +81161,13 @@ export async function EntitiesApiAxiosParamCreator_UpdateEntityMemoryItems(
  * @param {string} objectId 
  * @param {JsonApiMetricInDocument} jsonApiMetricInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_UpdateEntityMetrics(
-    workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -77985,13 +81665,13 @@ export async function EntitiesApiAxiosParamCreator_UpdateEntityThemes(
  * @param {string} objectId 
  * @param {JsonApiUserDataFilterInDocument} jsonApiUserDataFilterInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_UpdateEntityUserDataFilters(
-    workspaceId: string, objectId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -79039,6 +82719,32 @@ export async function EntitiesApi_CreateEntityColorPalettes(
 ): AxiosPromise<JsonApiColorPaletteOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_CreateEntityColorPalettes(
         requestParameters.jsonApiColorPaletteInDocument, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Post Computed Attributes
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiCreateEntityComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_CreateEntityComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiCreateEntityComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiComputedAttributeOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_CreateEntityComputedAttributes(
+        requestParameters.workspaceId, requestParameters.jsonApiComputedAttributePostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -80105,6 +83811,32 @@ export async function EntitiesApi_DeleteEntityColorPalettes(
 ): AxiosPromise<void> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_DeleteEntityColorPalettes(
         requestParameters.id, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Delete a Computed Attribute
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiDeleteEntityComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_DeleteEntityComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiDeleteEntityComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_DeleteEntityComputedAttributes(
+        requestParameters.workspaceId, requestParameters.objectId, 
         options || {},
         configuration,
     );
@@ -81248,6 +84980,32 @@ export async function EntitiesApi_GetAllEntitiesColorPalettes(
 ): AxiosPromise<JsonApiColorPaletteOutList> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetAllEntitiesColorPalettes(
         requestParameters.filter, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Get all Computed Attributes
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiGetAllEntitiesComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_GetAllEntitiesComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiGetAllEntitiesComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiComputedAttributeOutList> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetAllEntitiesComputedAttributes(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -82634,6 +86392,32 @@ export async function EntitiesApi_GetEntityColorPalettes(
 // EntitiesApi Api FP
 /**
  * 
+ * @summary Get a Computed Attribute
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiGetEntityComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_GetEntityComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiGetEntityComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiComputedAttributeOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetEntityComputedAttributes(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
  * @summary Get CookieSecurityConfiguration
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -83986,6 +87770,32 @@ export async function EntitiesApi_PatchEntityColorPalettes(
 // EntitiesApi Api FP
 /**
  * 
+ * @summary Patch a Computed Attribute
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiPatchEntityComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_PatchEntityComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiPatchEntityComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiComputedAttributeOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_PatchEntityComputedAttributes(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiComputedAttributePatchDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
  * @summary Patch CookieSecurityConfiguration
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -85081,6 +88891,32 @@ export async function EntitiesApi_SearchEntitiesAutomations(
  * @summary The search endpoint (beta)
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
+ * @param {EntitiesApiSearchEntitiesComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_SearchEntitiesComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiSearchEntitiesComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiComputedAttributeOutList> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_SearchEntitiesComputedAttributes(
+        requestParameters.workspaceId, requestParameters.entitySearchBody, requestParameters.origin, requestParameters.xGDCVALIDATERELATIONS, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary The search endpoint (beta)
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesCustomApplicationSettingsRequest} requestParameters Request parameters.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
@@ -85666,6 +89502,32 @@ export async function EntitiesApi_UpdateEntityColorPalettes(
 ): AxiosPromise<JsonApiColorPaletteOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_UpdateEntityColorPalettes(
         requestParameters.id, requestParameters.jsonApiColorPaletteInDocument, requestParameters.filter, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Put a Computed Attribute
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiUpdateEntityComputedAttributesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_UpdateEntityComputedAttributes(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiUpdateEntityComputedAttributesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiComputedAttributeOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_UpdateEntityComputedAttributes(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiComputedAttributeInDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -86686,6 +90548,16 @@ export interface EntitiesApiInterface {
     createEntityColorPalettes(requestParameters: EntitiesApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
 
     /**
+     * 
+     * @summary Post Computed Attributes
+     * @param {EntitiesApiCreateEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    createEntityComputedAttributes(requestParameters: EntitiesApiCreateEntityComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiComputedAttributeOutDocument>;
+
+    /**
      *  Context Security Police Directive
      * @summary Post CSP Directives
      * @param {EntitiesApiCreateEntityCspDirectivesRequest} requestParameters Request parameters.
@@ -87095,6 +90967,16 @@ export interface EntitiesApiInterface {
      * @memberof EntitiesApiInterface
      */
     deleteEntityColorPalettes(requestParameters: EntitiesApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Delete a Computed Attribute
+     * @param {EntitiesApiDeleteEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    deleteEntityComputedAttributes(requestParameters: EntitiesApiDeleteEntityComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      *  Context Security Police Directive
@@ -87535,6 +91417,16 @@ export interface EntitiesApiInterface {
      * @memberof EntitiesApiInterface
      */
     getAllEntitiesColorPalettes(requestParameters: EntitiesApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutList>;
+
+    /**
+     * 
+     * @summary Get all Computed Attributes
+     * @param {EntitiesApiGetAllEntitiesComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getAllEntitiesComputedAttributes(requestParameters: EntitiesApiGetAllEntitiesComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiComputedAttributeOutList>;
 
     /**
      *  Context Security Police Directive
@@ -88067,6 +91959,16 @@ export interface EntitiesApiInterface {
 
     /**
      * 
+     * @summary Get a Computed Attribute
+     * @param {EntitiesApiGetEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getEntityComputedAttributes(requestParameters: EntitiesApiGetEntityComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiComputedAttributeOutDocument>;
+
+    /**
+     * 
      * @summary Get CookieSecurityConfiguration
      * @param {EntitiesApiGetEntityCookieSecurityConfigurationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -88588,6 +92490,16 @@ export interface EntitiesApiInterface {
 
     /**
      * 
+     * @summary Patch a Computed Attribute
+     * @param {EntitiesApiPatchEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    patchEntityComputedAttributes(requestParameters: EntitiesApiPatchEntityComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiComputedAttributeOutDocument>;
+
+    /**
+     * 
      * @summary Patch CookieSecurityConfiguration
      * @param {EntitiesApiPatchEntityCookieSecurityConfigurationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -89009,6 +92921,16 @@ export interface EntitiesApiInterface {
     /**
      * 
      * @summary The search endpoint (beta)
+     * @param {EntitiesApiSearchEntitiesComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    searchEntitiesComputedAttributes(requestParameters: EntitiesApiSearchEntitiesComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiComputedAttributeOutList>;
+
+    /**
+     * 
+     * @summary The search endpoint (beta)
      * @param {EntitiesApiSearchEntitiesCustomApplicationSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -89236,6 +93158,16 @@ export interface EntitiesApiInterface {
      * @memberof EntitiesApiInterface
      */
     updateEntityColorPalettes(requestParameters: EntitiesApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
+
+    /**
+     * 
+     * @summary Put a Computed Attribute
+     * @param {EntitiesApiUpdateEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    updateEntityComputedAttributes(requestParameters: EntitiesApiUpdateEntityComputedAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiComputedAttributeOutDocument>;
 
     /**
      * 
@@ -89761,6 +93693,41 @@ export interface EntitiesApiCreateEntityColorPalettesRequest {
 }
 
 /**
+ * Request parameters for createEntityComputedAttributes operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiCreateEntityComputedAttributesRequest
+ */
+export interface EntitiesApiCreateEntityComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiCreateEntityComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {JsonApiComputedAttributePostOptionalIdDocument}
+     * @memberof EntitiesApiCreateEntityComputedAttributes
+     */
+    readonly jsonApiComputedAttributePostOptionalIdDocument: JsonApiComputedAttributePostOptionalIdDocument
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiCreateEntityComputedAttributes
+     */
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiCreateEntityComputedAttributes
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
  * Request parameters for createEntityCspDirectives operation in EntitiesApi.
  * @export
  * @interface EntitiesApiCreateEntityCspDirectivesRequest
@@ -90160,10 +94127,10 @@ export interface EntitiesApiCreateEntityMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof EntitiesApiCreateEntityMetrics
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 
     /**
      * Include Meta objects.
@@ -90293,10 +94260,10 @@ export interface EntitiesApiCreateEntityUserDataFiltersRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
+     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
      * @memberof EntitiesApiCreateEntityUserDataFilters
      */
-    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
+    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
 
     /**
      * Include Meta objects.
@@ -90738,6 +94705,27 @@ export interface EntitiesApiDeleteEntityColorPalettesRequest {
      * @memberof EntitiesApiDeleteEntityColorPalettes
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for deleteEntityComputedAttributes operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiDeleteEntityComputedAttributesRequest
+ */
+export interface EntitiesApiDeleteEntityComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityComputedAttributes
+     */
+    readonly objectId: string
 }
 
 /**
@@ -91886,6 +95874,76 @@ export interface EntitiesApiGetAllEntitiesColorPalettesRequest {
      * @memberof EntitiesApiGetAllEntitiesColorPalettes
      */
     readonly metaInclude?: Array<'page' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getAllEntitiesComputedAttributes operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetAllEntitiesComputedAttributesRequest
+ */
+export interface EntitiesApiGetAllEntitiesComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof EntitiesApiGetAllEntitiesComputedAttributes
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesComputedAttributes
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesComputedAttributes
+     */
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesComputedAttributes
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesComputedAttributes
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof EntitiesApiGetAllEntitiesComputedAttributes
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EntitiesApiGetAllEntitiesComputedAttributes
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesComputedAttributes
+     */
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
 }
 
 /**
@@ -93149,10 +97207,10 @@ export interface EntitiesApiGetAllEntitiesMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof EntitiesApiGetAllEntitiesMetrics
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -93506,10 +97564,10 @@ export interface EntitiesApiGetAllEntitiesUserDataFiltersRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
+     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
      * @memberof EntitiesApiGetAllEntitiesUserDataFilters
      */
-    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
+    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -94584,6 +98642,55 @@ export interface EntitiesApiGetEntityColorPalettesRequest {
 }
 
 /**
+ * Request parameters for getEntityComputedAttributes operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetEntityComputedAttributesRequest
+ */
+export interface EntitiesApiGetEntityComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiGetEntityComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiGetEntityComputedAttributes
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetEntityComputedAttributes
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityComputedAttributes
+     */
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EntitiesApiGetEntityComputedAttributes
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityComputedAttributes
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
  * Request parameters for getEntityCookieSecurityConfigurations operation in EntitiesApi.
  * @export
  * @interface EntitiesApiGetEntityCookieSecurityConfigurationsRequest
@@ -95403,10 +99510,10 @@ export interface EntitiesApiGetEntityMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof EntitiesApiGetEntityMetrics
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 
     /**
      * 
@@ -95648,10 +99755,10 @@ export interface EntitiesApiGetEntityUserDataFiltersRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
+     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
      * @memberof EntitiesApiGetEntityUserDataFilters
      */
-    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
+    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
 
     /**
      * 
@@ -96383,6 +100490,48 @@ export interface EntitiesApiPatchEntityColorPalettesRequest {
 }
 
 /**
+ * Request parameters for patchEntityComputedAttributes operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiPatchEntityComputedAttributesRequest
+ */
+export interface EntitiesApiPatchEntityComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityComputedAttributes
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiComputedAttributePatchDocument}
+     * @memberof EntitiesApiPatchEntityComputedAttributes
+     */
+    readonly jsonApiComputedAttributePatchDocument: JsonApiComputedAttributePatchDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityComputedAttributes
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiPatchEntityComputedAttributes
+     */
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+}
+
+/**
  * Request parameters for patchEntityCookieSecurityConfigurations operation in EntitiesApi.
  * @export
  * @interface EntitiesApiPatchEntityCookieSecurityConfigurationsRequest
@@ -97055,10 +101204,10 @@ export interface EntitiesApiPatchEntityMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof EntitiesApiPatchEntityMetrics
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 }
 
 /**
@@ -97293,10 +101442,10 @@ export interface EntitiesApiPatchEntityUserDataFiltersRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
+     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
      * @memberof EntitiesApiPatchEntityUserDataFilters
      */
-    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
+    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
 }
 
 /**
@@ -97876,6 +102025,41 @@ export interface EntitiesApiSearchEntitiesAutomationsRequest {
      * 
      * @type {boolean}
      * @memberof EntitiesApiSearchEntitiesAutomations
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+}
+
+/**
+ * Request parameters for searchEntitiesComputedAttributes operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiSearchEntitiesComputedAttributesRequest
+ */
+export interface EntitiesApiSearchEntitiesComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiSearchEntitiesComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * Search request body with filter, pagination, and sorting options
+     * @type {EntitySearchBody}
+     * @memberof EntitiesApiSearchEntitiesComputedAttributes
+     */
+    readonly entitySearchBody: EntitySearchBody
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof EntitiesApiSearchEntitiesComputedAttributes
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EntitiesApiSearchEntitiesComputedAttributes
      */
     readonly xGDCVALIDATERELATIONS?: boolean
 }
@@ -98679,6 +102863,48 @@ export interface EntitiesApiUpdateEntityColorPalettesRequest {
 }
 
 /**
+ * Request parameters for updateEntityComputedAttributes operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiUpdateEntityComputedAttributesRequest
+ */
+export interface EntitiesApiUpdateEntityComputedAttributesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityComputedAttributes
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityComputedAttributes
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiComputedAttributeInDocument}
+     * @memberof EntitiesApiUpdateEntityComputedAttributes
+     */
+    readonly jsonApiComputedAttributeInDocument: JsonApiComputedAttributeInDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityComputedAttributes
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiUpdateEntityComputedAttributes
+     */
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+}
+
+/**
  * Request parameters for updateEntityCookieSecurityConfigurations operation in EntitiesApi.
  * @export
  * @interface EntitiesApiUpdateEntityCookieSecurityConfigurationsRequest
@@ -99295,10 +103521,10 @@ export interface EntitiesApiUpdateEntityMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof EntitiesApiUpdateEntityMetrics
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 }
 
 /**
@@ -99533,10 +103759,10 @@ export interface EntitiesApiUpdateEntityUserDataFiltersRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
+     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
      * @memberof EntitiesApiUpdateEntityUserDataFilters
      */
-    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
+    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
 }
 
 /**
@@ -100037,6 +104263,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
     }
 
     /**
+     * 
+     * @summary Post Computed Attributes
+     * @param {EntitiesApiCreateEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public createEntityComputedAttributes(requestParameters: EntitiesApiCreateEntityComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_CreateEntityComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      *  Context Security Police Directive
      * @summary Post CSP Directives
      * @param {EntitiesApiCreateEntityCspDirectivesRequest} requestParameters Request parameters.
@@ -100527,6 +104765,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
      */
     public deleteEntityColorPalettes(requestParameters: EntitiesApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig) {
         return EntitiesApi_DeleteEntityColorPalettes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Delete a Computed Attribute
+     * @param {EntitiesApiDeleteEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public deleteEntityComputedAttributes(requestParameters: EntitiesApiDeleteEntityComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_DeleteEntityComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -101055,6 +105305,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
      */
     public getAllEntitiesColorPalettes(requestParameters: EntitiesApiGetAllEntitiesColorPalettesRequest = {}, options?: AxiosRequestConfig) {
         return EntitiesApi_GetAllEntitiesColorPalettes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get all Computed Attributes
+     * @param {EntitiesApiGetAllEntitiesComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getAllEntitiesComputedAttributes(requestParameters: EntitiesApiGetAllEntitiesComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_GetAllEntitiesComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -101694,6 +105956,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
+     * @summary Get a Computed Attribute
+     * @param {EntitiesApiGetEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getEntityComputedAttributes(requestParameters: EntitiesApiGetEntityComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_GetEntityComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
      * @summary Get CookieSecurityConfiguration
      * @param {EntitiesApiGetEntityCookieSecurityConfigurationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -102319,6 +106593,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
+     * @summary Patch a Computed Attribute
+     * @param {EntitiesApiPatchEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public patchEntityComputedAttributes(requestParameters: EntitiesApiPatchEntityComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_PatchEntityComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
      * @summary Patch CookieSecurityConfiguration
      * @param {EntitiesApiPatchEntityCookieSecurityConfigurationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -102824,6 +107110,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
     /**
      * 
      * @summary The search endpoint (beta)
+     * @param {EntitiesApiSearchEntitiesComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public searchEntitiesComputedAttributes(requestParameters: EntitiesApiSearchEntitiesComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_SearchEntitiesComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary The search endpoint (beta)
      * @param {EntitiesApiSearchEntitiesCustomApplicationSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -103096,6 +107394,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
      */
     public updateEntityColorPalettes(requestParameters: EntitiesApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig) {
         return EntitiesApi_UpdateEntityColorPalettes(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Put a Computed Attribute
+     * @param {EntitiesApiUpdateEntityComputedAttributesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public updateEntityComputedAttributes(requestParameters: EntitiesApiUpdateEntityComputedAttributesRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_UpdateEntityComputedAttributes(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -134820,14 +139130,14 @@ export class MetadataSynchronizationApi extends BaseAPI implements MetadataSynch
  * @summary Post Metrics
  * @param {string} workspaceId 
  * @param {JsonApiMetricPostOptionalIdDocument} jsonApiMetricPostOptionalIdDocument 
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function MetricControllerApiAxiosParamCreator_CreateEntityMetrics(
-    workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -134943,7 +139253,7 @@ export async function MetricControllerApiAxiosParamCreator_DeleteEntityMetrics(
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -134954,7 +139264,7 @@ export async function MetricControllerApiAxiosParamCreator_DeleteEntityMetrics(
  * @throws {RequiredError}
  */
 export async function MetricControllerApiAxiosParamCreator_GetAllEntitiesMetrics(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -135028,7 +139338,7 @@ export async function MetricControllerApiAxiosParamCreator_GetAllEntitiesMetrics
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -135036,7 +139346,7 @@ export async function MetricControllerApiAxiosParamCreator_GetAllEntitiesMetrics
  * @throws {RequiredError}
  */
 export async function MetricControllerApiAxiosParamCreator_GetEntityMetrics(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -135098,13 +139408,13 @@ export async function MetricControllerApiAxiosParamCreator_GetEntityMetrics(
  * @param {string} objectId 
  * @param {JsonApiMetricPatchDocument} jsonApiMetricPatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function MetricControllerApiAxiosParamCreator_PatchEntityMetrics(
-    workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -135247,13 +139557,13 @@ export async function MetricControllerApiAxiosParamCreator_SearchEntitiesMetrics
  * @param {string} objectId 
  * @param {JsonApiMetricInDocument} jsonApiMetricInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function MetricControllerApiAxiosParamCreator_UpdateEntityMetrics(
-    workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -135599,10 +139909,10 @@ export interface MetricControllerApiCreateEntityMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof MetricControllerApiCreateEntityMetrics
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 
     /**
      * Include Meta objects.
@@ -135662,10 +139972,10 @@ export interface MetricControllerApiGetAllEntitiesMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof MetricControllerApiGetAllEntitiesMetrics
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -135732,10 +140042,10 @@ export interface MetricControllerApiGetEntityMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof MetricControllerApiGetEntityMetrics
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 
     /**
      * 
@@ -135788,10 +140098,10 @@ export interface MetricControllerApiPatchEntityMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof MetricControllerApiPatchEntityMetrics
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 }
 
 /**
@@ -135865,10 +140175,10 @@ export interface MetricControllerApiUpdateEntityMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof MetricControllerApiUpdateEntityMetrics
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 }
 
 /**
@@ -135970,14 +140280,14 @@ export class MetricControllerApi extends BaseAPI implements MetricControllerApiI
  * @summary Post Metrics
  * @param {string} workspaceId 
  * @param {JsonApiMetricPostOptionalIdDocument} jsonApiMetricPostOptionalIdDocument 
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function MetricsApiAxiosParamCreator_CreateEntityMetrics(
-    workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -136093,7 +140403,7 @@ export async function MetricsApiAxiosParamCreator_DeleteEntityMetrics(
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -136104,7 +140414,7 @@ export async function MetricsApiAxiosParamCreator_DeleteEntityMetrics(
  * @throws {RequiredError}
  */
 export async function MetricsApiAxiosParamCreator_GetAllEntitiesMetrics(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -136178,7 +140488,7 @@ export async function MetricsApiAxiosParamCreator_GetAllEntitiesMetrics(
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -136186,7 +140496,7 @@ export async function MetricsApiAxiosParamCreator_GetAllEntitiesMetrics(
  * @throws {RequiredError}
  */
 export async function MetricsApiAxiosParamCreator_GetEntityMetrics(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -136248,13 +140558,13 @@ export async function MetricsApiAxiosParamCreator_GetEntityMetrics(
  * @param {string} objectId 
  * @param {JsonApiMetricPatchDocument} jsonApiMetricPatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function MetricsApiAxiosParamCreator_PatchEntityMetrics(
-    workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -136397,13 +140707,13 @@ export async function MetricsApiAxiosParamCreator_SearchEntitiesMetrics(
  * @param {string} objectId 
  * @param {JsonApiMetricInDocument} jsonApiMetricInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function MetricsApiAxiosParamCreator_UpdateEntityMetrics(
-    workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -136749,10 +141059,10 @@ export interface MetricsApiCreateEntityMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof MetricsApiCreateEntityMetrics
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 
     /**
      * Include Meta objects.
@@ -136812,10 +141122,10 @@ export interface MetricsApiGetAllEntitiesMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof MetricsApiGetAllEntitiesMetrics
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -136882,10 +141192,10 @@ export interface MetricsApiGetEntityMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof MetricsApiGetEntityMetrics
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 
     /**
      * 
@@ -136938,10 +141248,10 @@ export interface MetricsApiPatchEntityMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof MetricsApiPatchEntityMetrics
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 }
 
 /**
@@ -137015,10 +141325,10 @@ export interface MetricsApiUpdateEntityMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof MetricsApiUpdateEntityMetrics
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 }
 
 /**
@@ -154162,14 +158472,14 @@ export class UserControllerApi extends BaseAPI implements UserControllerApiInter
  * @summary Post User Data Filters
  * @param {string} workspaceId 
  * @param {JsonApiUserDataFilterPostOptionalIdDocument} jsonApiUserDataFilterPostOptionalIdDocument 
- * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function UserDataFilterControllerApiAxiosParamCreator_CreateEntityUserDataFilters(
-    workspaceId: string, jsonApiUserDataFilterPostOptionalIdDocument: JsonApiUserDataFilterPostOptionalIdDocument, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiUserDataFilterPostOptionalIdDocument: JsonApiUserDataFilterPostOptionalIdDocument, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -154285,7 +158595,7 @@ export async function UserDataFilterControllerApiAxiosParamCreator_DeleteEntityU
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -154296,7 +158606,7 @@ export async function UserDataFilterControllerApiAxiosParamCreator_DeleteEntityU
  * @throws {RequiredError}
  */
 export async function UserDataFilterControllerApiAxiosParamCreator_GetAllEntitiesUserDataFilters(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -154370,7 +158680,7 @@ export async function UserDataFilterControllerApiAxiosParamCreator_GetAllEntitie
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -154378,7 +158688,7 @@ export async function UserDataFilterControllerApiAxiosParamCreator_GetAllEntitie
  * @throws {RequiredError}
  */
 export async function UserDataFilterControllerApiAxiosParamCreator_GetEntityUserDataFilters(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -154440,13 +158750,13 @@ export async function UserDataFilterControllerApiAxiosParamCreator_GetEntityUser
  * @param {string} objectId 
  * @param {JsonApiUserDataFilterPatchDocument} jsonApiUserDataFilterPatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function UserDataFilterControllerApiAxiosParamCreator_PatchEntityUserDataFilters(
-    workspaceId: string, objectId: string, jsonApiUserDataFilterPatchDocument: JsonApiUserDataFilterPatchDocument, filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiUserDataFilterPatchDocument: JsonApiUserDataFilterPatchDocument, filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -154589,13 +158899,13 @@ export async function UserDataFilterControllerApiAxiosParamCreator_SearchEntitie
  * @param {string} objectId 
  * @param {JsonApiUserDataFilterInDocument} jsonApiUserDataFilterInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function UserDataFilterControllerApiAxiosParamCreator_UpdateEntityUserDataFilters(
-    workspaceId: string, objectId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -154941,10 +159251,10 @@ export interface UserDataFilterControllerApiCreateEntityUserDataFiltersRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
+     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
      * @memberof UserDataFilterControllerApiCreateEntityUserDataFilters
      */
-    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
+    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
 
     /**
      * Include Meta objects.
@@ -155004,10 +159314,10 @@ export interface UserDataFilterControllerApiGetAllEntitiesUserDataFiltersRequest
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
+     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
      * @memberof UserDataFilterControllerApiGetAllEntitiesUserDataFilters
      */
-    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
+    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -155074,10 +159384,10 @@ export interface UserDataFilterControllerApiGetEntityUserDataFiltersRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
+     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
      * @memberof UserDataFilterControllerApiGetEntityUserDataFilters
      */
-    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
+    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
 
     /**
      * 
@@ -155130,10 +159440,10 @@ export interface UserDataFilterControllerApiPatchEntityUserDataFiltersRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
+     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
      * @memberof UserDataFilterControllerApiPatchEntityUserDataFilters
      */
-    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
+    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
 }
 
 /**
@@ -155207,10 +159517,10 @@ export interface UserDataFilterControllerApiUpdateEntityUserDataFiltersRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
+     * @type {Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>}
      * @memberof UserDataFilterControllerApiUpdateEntityUserDataFilters
      */
-    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
+    readonly include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'user' | 'userGroup' | 'ALL'>
 }
 
 /**

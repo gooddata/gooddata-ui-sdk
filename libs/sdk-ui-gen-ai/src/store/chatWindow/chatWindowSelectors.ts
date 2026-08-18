@@ -13,7 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
-import { type ContextDashboardsState } from "../../types.js";
+import { type ContextObjectsState } from "../../types.js";
 import { type RootState } from "../types.js";
 
 import { chatWindowSliceName } from "./chatWindowSlice.js";
@@ -114,9 +114,9 @@ export const catalogItemsSelector: (state: RootState) => CatalogItem[] = createS
     },
 );
 
-export const contextDashboardsSelector: (state: RootState) => ContextDashboardsState = createSelector(
+export const contextObjectsSelector: (state: RootState) => ContextObjectsState = createSelector(
     chatWindowSliceSelector,
-    (state) => state.contextDashboards,
+    (state) => state.contextObjects,
 );
 
 export const keyDriverAnalysisSelector: (state: RootState) => IKdaDefinition | undefined = createSelector(

@@ -57,6 +57,15 @@ export interface IAlertingDialogContextValue {
 
 const AlertingDialogContext = createContext<IAlertingDialogContextValue | undefined>(undefined);
 
+/**
+ * Provides the alerting create/edit dialog context.
+ *
+ * The dashboard's connector mounts the original value. Exported so a context-decorator
+ * component (`CustomAlertingDialogContextDecoratorComponent`) can re-provide a decorated value
+ * read from `useAlertingDialogContext()`; it is not a way to run the dialog outside a dashboard.
+ *
+ * @alpha
+ */
 export const AlertingDialogContextProvider = AlertingDialogContext.Provider;
 
 /**

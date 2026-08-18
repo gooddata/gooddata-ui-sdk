@@ -2,11 +2,24 @@
 
 import { type IntlShape } from "react-intl";
 
-import { type GenAIObjectReferenceType, type IAttributeOrMeasure } from "@gooddata/sdk-model";
+import {
+    type GenAIObjectReferenceType,
+    type IAttributeOrMeasure,
+    type ObjRef,
+    isIdentifierRef,
+} from "@gooddata/sdk-model";
 
 import { REFERENCE_REGEX } from "./components/completion/references.js";
 import { type IChatConversationLocal } from "./model.js";
-import { type IGenAIContextObject } from "./types.js";
+import { type IGenAIContextListItem, type IGenAIContextObject } from "./types.js";
+
+export function toContextListItem(ref: ObjRef, title: string): IGenAIContextListItem {
+    return {
+        id: isIdentifierRef(ref) ? ref.identifier : ref.uri,
+        ref,
+        title,
+    };
+}
 
 export function getVisualizationHref(
     wsId: string,
@@ -175,6 +188,8 @@ export function convertGenAiTypeToReferenceType(type: IGenAIContextObject["type"
         case "metric":
             return "METRIC";
         case "widget":
+            return "WIDGET";
+        case "visualization":
             return "WIDGET";
         case "attribute":
             return "ATTRIBUTE";

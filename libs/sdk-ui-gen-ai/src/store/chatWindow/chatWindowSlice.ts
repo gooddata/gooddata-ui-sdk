@@ -11,8 +11,6 @@ import {
     type IDashboard,
     type IGenAIUserContext,
     type IInsight,
-    type IListedDashboard,
-    isIdentifierRef,
     serializeObjRef,
 } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
@@ -21,9 +19,11 @@ import { addAmbientContextReferences, addContextReference } from "../../context/
 import { mergeContexts } from "../../context/build.js";
 import { removeContextReference, removeUserContextReferences } from "../../context/removeContextReference.js";
 import {
-    type ContextDashboardsState,
+    type ContextObjectKind,
+    type ContextObjectListState,
+    type ContextObjectsState,
+    type IGenAIContextListItem,
     type IGenAIContextObject,
-    type IGenAIDashboardListItem,
     type StoreContext,
 } from "../../types.js";
 import { clearThreadAction, startNewConversationAction } from "../messages/messagesSlice.js";
@@ -66,9 +66,9 @@ type ChatWindowSliceState = {
      */
     catalogItems?: CatalogItem[];
     /**
-     * Dashboards offered by the context chooser, on top of the one being viewed.
+     * Dashboards and visualizations offered by the context chooser, on top of the ambient ones.
      */
-    contextDashboards: ContextDashboardsState;
+    contextObjects: ContextObjectsState;
     /**
      * Only objects with these tags will be included
      */
@@ -99,13 +99,19 @@ type ChatWindowSliceState = {
 
 export const chatWindowSliceName = "chatWindow";
 
-function toDashboardListItem(dashboard: IListedDashboard): IGenAIDashboardListItem {
-    const ref = dashboard.ref;
-
+function emptyContextObjectList(): ContextObjectListState {
     return {
-        id: isIdentifierRef(ref) ? ref.identifier : ref.uri,
-        ref,
-        title: dashboard.title,
+        items: [],
+        loadedPages: 0,
+        hasNextPage: true,
+        isLoading: false,
+    };
+}
+
+function emptyContextObjects(): ContextObjectsState {
+    return {
+        dashboard: emptyContextObjectList(),
+        visualization: emptyContextObjectList(),
     };
 }
 
@@ -119,12 +125,7 @@ const initialState: ChatWindowSliceState = {
     includeTags: undefined,
     excludeTags: undefined,
     allowedRelationshipTypes: undefined,
-    contextDashboards: {
-        items: [],
-        loadedPages: 0,
-        hasNextPage: true,
-        isLoading: false,
-    },
+    contextObjects: emptyContextObjects(),
     context: {
         ambient: undefined,
         active: undefined,
@@ -141,7 +142,7 @@ export const getInitialChatWindowState = ({
     allowInteractionIntelligence?: boolean;
 } = {}): ChatWindowSliceState => ({
     ...initialState,
-    contextDashboards: { ...initialState.contextDashboards, items: [] },
+    contextObjects: emptyContextObjects(),
     isPreview,
     allowInteractionIntelligence,
 });
@@ -207,30 +208,41 @@ const chatWindowSlice = createSlice({
         setCatalogItemsActions: (state, { payload }: PayloadAction<CatalogItem[] | undefined>) => {
             state.catalogItems = payload;
         },
-        initContextDashboardsAction: (state) => state,
-        loadContextDashboardsNextPageAction: (state) => state,
-        setContextDashboardsAction: (
+        initContextObjectsAction: (state) => state,
+        loadContextObjectsNextPageAction: (state, _action: PayloadAction<{ kind: ContextObjectKind }>) =>
             state,
-            { payload: { items } }: PayloadAction<{ items: IListedDashboard[] }>,
+        setContextObjectsAction: (
+            state,
+            {
+                payload: { kind, items },
+            }: PayloadAction<{ kind: ContextObjectKind; items: IGenAIContextListItem[] }>,
         ) => {
-            state.contextDashboards = {
-                items: items.map(toDashboardListItem),
+            state.contextObjects[kind] = {
+                items,
                 loadedPages: 1,
                 hasNextPage: false,
                 isLoading: false,
             };
         },
-        contextDashboardsLoadingAction: (state) => {
-            state.contextDashboards.isLoading = true;
+        contextObjectsLoadingAction: (
+            state,
+            { payload: { kind } }: PayloadAction<{ kind: ContextObjectKind }>,
+        ) => {
+            state.contextObjects[kind].isLoading = true;
         },
-        contextDashboardsPageLoadedAction: (
+        contextObjectsPageLoadedAction: (
             state,
             {
-                payload: { items, hasNextPage },
-            }: PayloadAction<{ items: IListedDashboard[]; hasNextPage: boolean }>,
+                payload: { kind, items, hasNextPage },
+            }: PayloadAction<{
+                kind: ContextObjectKind;
+                items: IGenAIContextListItem[];
+                hasNextPage: boolean;
+            }>,
         ) => {
-            const known = new Set(state.contextDashboards.items.map((item) => serializeObjRef(item.ref)));
-            const newItems = items.map(toDashboardListItem).filter((item) => {
+            const list = state.contextObjects[kind];
+            const known = new Set(list.items.map((item) => serializeObjRef(item.ref)));
+            const newItems = items.filter((item) => {
                 const refKey = serializeObjRef(item.ref);
 
                 if (known.has(refKey)) {
@@ -241,13 +253,16 @@ const chatWindowSlice = createSlice({
                 return true;
             });
 
-            state.contextDashboards.items.push(...newItems);
-            state.contextDashboards.loadedPages += 1;
-            state.contextDashboards.hasNextPage = hasNextPage;
-            state.contextDashboards.isLoading = false;
+            list.items.push(...newItems);
+            list.loadedPages += 1;
+            list.hasNextPage = hasNextPage;
+            list.isLoading = false;
         },
-        contextDashboardsLoadFailedAction: (state) => {
-            state.contextDashboards.isLoading = false;
+        contextObjectsLoadFailedAction: (
+            state,
+            { payload: { kind } }: PayloadAction<{ kind: ContextObjectKind }>,
+        ) => {
+            state.contextObjects[kind].isLoading = false;
         },
         setAllowedRelationshipTypesAction: (
             state,
@@ -336,12 +351,12 @@ export const {
     setObjectTypesAction,
     setTagsAction,
     setCatalogItemsActions,
-    initContextDashboardsAction,
-    loadContextDashboardsNextPageAction,
-    setContextDashboardsAction,
-    contextDashboardsLoadingAction,
-    contextDashboardsPageLoadedAction,
-    contextDashboardsLoadFailedAction,
+    initContextObjectsAction,
+    loadContextObjectsNextPageAction,
+    setContextObjectsAction,
+    contextObjectsLoadingAction,
+    contextObjectsPageLoadedAction,
+    contextObjectsLoadFailedAction,
     setAllowedRelationshipTypesAction,
     onDefinitionReceivedAction,
     addContextReferenceAction,

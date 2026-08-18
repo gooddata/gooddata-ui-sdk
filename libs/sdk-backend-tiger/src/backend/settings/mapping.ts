@@ -69,6 +69,7 @@ const TYPE_TO_KEY_MAP = {
     SORT_COLLATION: "sortCollation",
     ENABLE_PARTIAL_DATA_RESULTS: "enablePartialDataResults",
     ENABLE_NULL_JOINS: "enableNullJoins",
+    ENABLE_TIMEZONE_CHANGE: "enableTimezoneChange",
 } as const satisfies Record<MandatoryTypes, keyof ISettings>;
 
 export function mapTypeToKey(

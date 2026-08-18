@@ -58,8 +58,17 @@ vi.mock("../../../shared/automationFilters/useAutomationExportParameters.js", ()
 }));
 
 vi.mock("../../../../dashboardContexts/DashboardComponentsContext.js", () => ({
-    useDashboardComponentsContext: () => ({ ScheduledEmailDialogComponent: resolvedSlotComponent }),
+    useDashboardComponentsContext: () => ({
+        ScheduledEmailDialogComponent: resolvedSlotComponent,
+        // A module-scope component, not an inline arrow: a fresh decorator identity per render
+        // would remount the state provider and silently reset the draft the tests assert on.
+        ScheduledEmailDialogContextDecoratorComponent: PassthroughDecoratorComponent,
+    }),
 }));
+
+function PassthroughDecoratorComponent({ children }: { children?: ReactNode }) {
+    return <>{children}</>;
+}
 
 // ---------------------------------------------------------------------------
 // Imports placed AFTER vi.mock() calls to pick up mocked versions

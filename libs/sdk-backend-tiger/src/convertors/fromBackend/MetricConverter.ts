@@ -1,8 +1,8 @@
 // (C) 2021-2026 GoodData Corporation
 
 import {
+    type JsonApiComputedAttributeOutIncludes,
     type JsonApiMetricOutDocument,
-    type JsonApiMetricOutIncludes,
     type JsonApiMetricOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import { newMeasureMetadataObject } from "@gooddata/sdk-backend-base";
@@ -21,7 +21,7 @@ function isJsonApiMetricOutDocument(obj: unknown): obj is JsonApiMetricOutDocume
 
 export function convertMetricFromBackend(
     data: JsonApiMetricOutDocument | JsonApiMetricOutWithLinks,
-    included: JsonApiMetricOutIncludes[] = [],
+    included: JsonApiComputedAttributeOutIncludes[] = [],
 ): IMeasureMetadataObject {
     const { id, attributes, object, createdAt, createdBy, modifiedAt, modifiedBy, certifiedBy } =
         getPropertiesFromData(data);

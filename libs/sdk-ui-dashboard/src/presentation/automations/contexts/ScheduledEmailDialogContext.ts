@@ -76,6 +76,16 @@ export interface IScheduledEmailDialogContextValue {
 
 const ScheduledEmailDialogContext = createContext<IScheduledEmailDialogContextValue | undefined>(undefined);
 
+/**
+ * Provides the scheduled-email create/edit dialog context.
+ *
+ * The dashboard's connector mounts the original value. Exported so a context-decorator
+ * component (`CustomScheduledEmailDialogContextDecoratorComponent`) can re-provide a decorated
+ * value read from `useScheduledEmailDialogContext()`; it is not a way to run the dialog outside
+ * a dashboard.
+ *
+ * @alpha
+ */
 export const ScheduledEmailDialogContextProvider = ScheduledEmailDialogContext.Provider;
 
 /**

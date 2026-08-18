@@ -3,8 +3,8 @@
 import { call, fork, takeEvery, takeLatest, takeLeading } from "redux-saga/effects";
 
 import {
-    initContextDashboardsAction,
-    loadContextDashboardsNextPageAction,
+    initContextObjectsAction,
+    loadContextObjectsNextPageAction,
     setOpenAction,
 } from "../chatWindow/chatWindowSlice.js";
 import {
@@ -25,7 +25,7 @@ import {
 import { loadAgents } from "./loadAgents.js";
 import { loadCatalogItems } from "./loadCatalogItems.js";
 import { loadColorPalette } from "./loadColorPalette.js";
-import { initContextDashboards, loadContextDashboardsNextPage } from "./loadContextDashboards.js";
+import { initContextObjects, loadContextObjectsNextPage } from "./loadContextObjects.js";
 import { loadSettings } from "./loadSettings.js";
 import { onChatOpenSync } from "./onChatOpenSync.js";
 import { onConversationDelete } from "./onConversationDelete.js";
@@ -64,8 +64,8 @@ export function* rootSaga() {
     yield takeEvery(deleteConversationAction.type, onConversationDelete);
     yield takeEvery(evaluateMessageUpdateAction.type, onUserMessageUpdate);
     //context chooser
-    yield takeLeading(initContextDashboardsAction.type, initContextDashboards);
-    yield takeLeading(loadContextDashboardsNextPageAction.type, loadContextDashboardsNextPage);
+    yield takeLeading(initContextObjectsAction.type, initContextObjects);
+    yield takeEvery(loadContextObjectsNextPageAction.type, loadContextObjectsNextPage);
     //others
     yield takeEvery(setVerboseAction.type, onVerboseStore);
     yield fork(onEvent);

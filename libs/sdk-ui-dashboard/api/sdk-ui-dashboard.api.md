@@ -212,6 +212,7 @@ import { ParameterValue } from '@gooddata/sdk-model';
 import { Patch } from 'immer';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { PlatformEdition } from '@gooddata/sdk-model';
+import { Provider } from 'react';
 import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
@@ -292,6 +293,9 @@ export function addVisualizationToSwitcherWidgetContent(ref: ObjRef, visualizati
 
 // @internal
 export function AlertingDialog(props: IAlertingDialogProps): ReactElement;
+
+// @alpha
+export const AlertingDialogContextProvider: Provider<IAlertingDialogContextValue | undefined>;
 
 // @alpha
 export type AlertingDialogHeaderDefaultProps = IAlertingDialogHeaderProps & {
@@ -714,6 +718,11 @@ export function crossFiltering(insight: IInsight, drillDefinition: ICrossFilteri
 // @alpha (undocumented)
 export type CustomAlertingDialogComponent = ComponentType<IAlertingDialogProps>;
 
+// @alpha
+export type CustomAlertingDialogContextDecoratorComponent = ComponentType<{
+    children?: ReactNode;
+}>;
+
 // @alpha (undocumented)
 export type CustomAlertingManagementDialogComponent = ComponentType<IAlertingManagementDialogProps>;
 
@@ -845,6 +854,11 @@ export type CustomSaveButtonComponent = ComponentType<ISaveButtonProps>;
 
 // @alpha (undocumented)
 export type CustomScheduledEmailDialogComponent = ComponentType<IScheduledEmailDialogProps>;
+
+// @alpha
+export type CustomScheduledEmailDialogContextDecoratorComponent = ComponentType<{
+    children?: ReactNode;
+}>;
 
 // @alpha (undocumented)
 export type CustomScheduledEmailManagementDialogComponent = ComponentType<IScheduledEmailManagementDialogProps>;
@@ -3642,6 +3656,8 @@ export interface IDashboardCustomComponentProps {
     // @alpha
     AlertingDialogComponent?: CustomAlertingDialogComponent;
     // @alpha
+    AlertingDialogContextDecoratorComponent?: CustomAlertingDialogContextDecoratorComponent;
+    // @alpha
     AlertingManagementDialogComponent?: CustomAlertingManagementDialogComponent;
     // @alpha
     ButtonBarComponent?: CustomButtonBarComponent;
@@ -3694,6 +3710,8 @@ export interface IDashboardCustomComponentProps {
     SaveButtonComponent?: CustomSaveButtonComponent;
     // @alpha
     ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
+    // @alpha
+    ScheduledEmailDialogContextDecoratorComponent?: CustomScheduledEmailDialogContextDecoratorComponent;
     // @alpha
     ScheduledEmailManagementDialogComponent?: CustomScheduledEmailManagementDialogComponent;
     // @internal
@@ -10658,6 +10676,9 @@ export type SavingState = {
 
 // @internal
 export function ScheduledEmailDialog(props: IScheduledEmailDialogProps): ReactElement;
+
+// @alpha
+export const ScheduledEmailDialogContextProvider: Provider<IScheduledEmailDialogContextValue | undefined>;
 
 // @alpha
 export type ScheduledEmailDialogHeaderDefaultProps = IScheduledEmailDialogHeaderProps & {
