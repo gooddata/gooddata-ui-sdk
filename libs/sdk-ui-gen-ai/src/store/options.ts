@@ -5,6 +5,7 @@ import {
     type CatalogItem,
     type GenAIObjectType,
     type IColorPalette,
+    type IInsight,
     type IListedDashboard,
 } from "@gooddata/sdk-model";
 
@@ -22,6 +23,7 @@ export class OptionsDispatcher {
     private excludeTags: string[] | undefined = undefined;
     private catalogItems: CatalogItem[] | undefined = undefined;
     private dashboards: IListedDashboard[] | undefined = undefined;
+    private visualizations: IInsight[] | undefined = undefined;
     private mode: GenAIAssistantMode | undefined = undefined;
     private onLinkClick: ((linkClickEvent: LinkHandlerEvent) => string | undefined) | undefined = undefined;
     private allowNativeLinks: boolean | undefined = undefined;
@@ -94,6 +96,14 @@ export class OptionsDispatcher {
 
     public getDashboards(): IListedDashboard[] | undefined {
         return this.dashboards;
+    }
+
+    public setVisualizations(visualizations: IInsight[] | undefined): void {
+        this.visualizations = visualizations;
+    }
+
+    public getVisualizations(): IInsight[] | undefined {
+        return this.visualizations;
     }
 
     public setMode(mode: GenAIAssistantMode | undefined): void {

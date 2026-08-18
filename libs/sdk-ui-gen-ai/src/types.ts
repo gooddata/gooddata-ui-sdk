@@ -125,25 +125,38 @@ export interface IGenAIContextObject {
     type: GenAIObjectType | "widget";
     where: "view.dashboard" | "referencedObjects";
     context?: IGenAIObjectReference;
+    insightRef?: ObjRef;
 }
 
 /**
- * A dashboard offered by the context chooser.
+ * Kind of the object lists offered by the context chooser, on top of the ambient ones.
  * @internal
  */
-export interface IGenAIDashboardListItem {
+export type ContextObjectKind = "dashboard" | "visualization";
+
+/**
+ * An object offered by the context chooser.
+ * @internal
+ */
+export interface IGenAIContextListItem {
     id: string;
     ref: ObjRef;
     title: string;
 }
 
 /**
- * State of the dashboard list offered by the context chooser.
+ * State of a single object list offered by the context chooser.
  * @internal
  */
-export type ContextDashboardsState = {
-    items: IGenAIDashboardListItem[];
+export type ContextObjectListState = {
+    items: IGenAIContextListItem[];
     loadedPages: number;
     hasNextPage: boolean;
     isLoading: boolean;
 };
+
+/**
+ * State of the object lists offered by the context chooser. Each kind is paged on its own.
+ * @internal
+ */
+export type ContextObjectsState = Record<ContextObjectKind, ContextObjectListState>;

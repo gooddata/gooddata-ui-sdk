@@ -17,10 +17,12 @@ import {
 } from "../../model/types/commonTypes.js";
 import {
     type CustomAlertingDialogComponent,
+    type CustomAlertingDialogContextDecoratorComponent,
     type CustomAlertingManagementDialogComponent,
 } from "../automations/alerting/types.js";
 import {
     type CustomScheduledEmailDialogComponent,
+    type CustomScheduledEmailDialogContextDecoratorComponent,
     type CustomScheduledEmailManagementDialogComponent,
 } from "../automations/scheduledEmail/types.js";
 import { type InsightComponentSetProvider } from "../componentDefinition/types.js";
@@ -295,6 +297,16 @@ export interface IDashboardCustomComponentProps {
     ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
 
     /**
+     * Specify component to decorate the data the scheduled email dialog reads.
+     *
+     * Rendered between the dialog's data context and its state model; see
+     * `CustomScheduledEmailDialogContextDecoratorComponent` for the contract and an example.
+     *
+     * @alpha
+     */
+    ScheduledEmailDialogContextDecoratorComponent?: CustomScheduledEmailDialogContextDecoratorComponent;
+
+    /**
      * Specify component to use for rendering the scheduled email management dialog.
      *
      * @alpha
@@ -314,6 +326,16 @@ export interface IDashboardCustomComponentProps {
      * @alpha
      */
     AlertingDialogComponent?: CustomAlertingDialogComponent;
+
+    /**
+     * Specify component to decorate the data the alerting dialog reads.
+     *
+     * Rendered between the dialog's data context and its state model; see
+     * `CustomAlertingDialogContextDecoratorComponent` for the contract and an example.
+     *
+     * @alpha
+     */
+    AlertingDialogContextDecoratorComponent?: CustomAlertingDialogContextDecoratorComponent;
 
     /**
      * Specify component to use for rendering the share dialog.

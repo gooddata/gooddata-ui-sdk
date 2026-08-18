@@ -1,9 +1,11 @@
 // (C) 2026 GoodData Corporation
 
 import {
+    type IGenAIObjectReference,
     type IGenAIObjectReferenceGroup,
     type IGenAIUserContext,
     areObjRefsEqual,
+    serializeObjRef,
 } from "@gooddata/sdk-model";
 
 import { type IGenAIContextObject } from "../types.js";
@@ -53,8 +55,8 @@ export function removeContextReference(
 }
 
 /**
- * Removes from `context` everything that was contributed by `ambient` - the dashboard the user was
- * viewing, plus the objects they pinned from it.
+ * Removes what `ambient` put in `context` on its own - the viewed dashboard and its own references.
+ * The user's own picks stay, the objects pinned from that dashboard included.
  * @internal
  */
 export function removeAmbientContribution(
@@ -74,11 +76,65 @@ export function removeAmbientContribution(
         delete newContext.view.dashboard;
     }
 
-    newContext.referencedObjects = newContext.referencedObjects?.filter(
-        (group) => !areObjRefsEqual(group.context?.ref, ambientDashboardRef),
+    newContext.referencedObjects = withoutObjects(
+        newContext.referencedObjects,
+        collectRefKeys(ambient.referencedObjects?.flatMap((group) => group.objects)),
     );
 
     return normalizeContext(newContext);
+}
+
+/**
+ * Removes the references the newly opened dashboard covers itself - its own ref and the
+ * visualizations it renders - so nothing added earlier sits in the context twice.
+ * @internal
+ */
+export function removeReferencesCoveredByAmbient(
+    context: IGenAIUserContext | undefined,
+    ambient: IGenAIUserContext | undefined,
+): IGenAIUserContext | undefined {
+    const dashboard = ambient?.view?.dashboard;
+
+    if (!context?.referencedObjects || !dashboard) {
+        return context;
+    }
+
+    const covered = new Set<string>([serializeObjRef(dashboard.ref)]);
+    dashboard.widgets?.forEach((widget) => {
+        [widget, ...(widget.visualizations ?? [])].forEach(({ widgetRef, insightRef }) => {
+            if (widgetRef) {
+                covered.add(serializeObjRef(widgetRef));
+            }
+            if (insightRef) {
+                covered.add(serializeObjRef(insightRef));
+            }
+        });
+    });
+
+    return normalizeContext({
+        ...context,
+        referencedObjects: withoutObjects(context.referencedObjects, covered),
+    });
+}
+
+function collectRefKeys(objects: IGenAIObjectReference[] | undefined): Set<string> {
+    return new Set(objects?.map((object) => serializeObjRef(object.ref)));
+}
+
+function withoutObjects(
+    groups: IGenAIObjectReferenceGroup[] | undefined,
+    removedRefKeys: Set<string>,
+): IGenAIObjectReferenceGroup[] | undefined {
+    if (!groups || removedRefKeys.size === 0) {
+        return groups;
+    }
+
+    return groups
+        .map((group) => ({
+            ...group,
+            objects: group.objects.filter((object) => !removedRefKeys.has(serializeObjRef(object.ref))),
+        }))
+        .filter((group) => group.objects.length > 0);
 }
 
 function normalizeContext(context: IGenAIUserContext): IGenAIUserContext | undefined {

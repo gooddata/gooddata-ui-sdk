@@ -2626,6 +2626,7 @@
                                     "aggregatedFact",
                                     "label",
                                     "metric",
+                                    "computedAttribute",
                                     "userDataFilter",
                                     "parameter",
                                     "exportDefinition",

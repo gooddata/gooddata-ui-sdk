@@ -4099,6 +4099,16 @@
                 ],
                 "title": "ConversationListResponse"
             },
+            "ConversationMode": {
+                "type": "string",
+                "enum": [
+                    "USER",
+                    "PREVIEW",
+                    "MCP"
+                ],
+                "title": "ConversationMode",
+                "description": "What a conversation exists to serve.\n\nUSER is a person's own thread in the assistant. The others are utility modes, where the\nconversation serves something else and is kept out of the user's history: PREVIEW backs\nthe Agent Builder preview pane, MCP backs a single-purpose MCP tool call."
+            },
             "ConversationResponse": {
                 "properties": {
                     "agentId": {
@@ -4126,13 +4136,19 @@
                     "isPreview": {
                         "type": "boolean",
                         "title": "Ispreview",
-                        "description": "Whether this is a preview conversation.",
-                        "default": false
+                        "description": "Deprecated, use `mode`. True only when `mode` is PREVIEW.",
+                        "default": false,
+                        "deprecated": true
                     },
                     "lastActivityAt": {
                         "type": "string",
                         "title": "Lastactivityat",
                         "description": "Last activity timestamp (ISO-8601 UTC)."
+                    },
+                    "mode": {
+                        "$ref": "#/components/schemas/ConversationMode",
+                        "description": "What this conversation serves. USER is the user's own thread; PREVIEW backs the Agent Builder preview pane; MCP backs a single-purpose MCP tool call. Anything other than USER is a utility conversation, kept out of the user's history.",
+                        "default": "USER"
                     },
                     "organizationId": {
                         "type": "string",
@@ -4280,6 +4296,17 @@
                             }
                         ],
                         "title": "Agentid"
+                    },
+                    "mode": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ConversationMode"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "What this conversation serves. Omit for USER — a person's own thread in the assistant. PREVIEW backs the Agent Builder preview pane; MCP backs a single-purpose MCP tool call. Anything other than USER is a utility conversation: it is persisted (so follow-up turns can continue it) but kept out of the user's conversation list and out of per-agent last-activity, and it cannot switch agent.\n\nMutually exclusive with the deprecated isPreview query parameter."
                     }
                 },
                 "type": "object",
@@ -7186,6 +7213,21 @@
             },
             "SendMessageOptions": {
                 "properties": {
+                    "pinnedSkills": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Pinnedskills",
+                        "description": "Fix this turn's active skills instead of letting the agent route to them. The named skills are activated before the agent loop starts and the set_skills tool is withheld, so the agent cannot route away or pull in another skill. Intended for single-purpose programmatic callers that need a predictable result shape (e.g. the MCP create_visualization tool).\n\nNarrowing-only: the list is intersected with the skills already available in this workspace — those enabled by the organization's feature flags and by the answering agent's own skill configuration. It can never activate a skill that is otherwise unavailable. If none of the requested skills is available the request fails with 400 rather than silently falling back to normal routing.\n\nOmit for normal conversations."
+                    },
                     "reasoningEffort": {
                         "anyOf": [
                             {

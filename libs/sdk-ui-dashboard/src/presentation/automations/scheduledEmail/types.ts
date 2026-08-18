@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type ComponentType, type KeyboardEvent, type Ref } from "react";
+import { type ComponentType, type KeyboardEvent, type ReactNode, type Ref } from "react";
 
 import {
     type FilterContextItem,
@@ -35,15 +35,18 @@ export interface IScheduledEmailDialogProps {
     /**
      * In case, we are not creating new schedule, but editing existing one, this is the active schedule to be edited.
      *
-     * @deprecated read `scheduledExportToEdit` from `useScheduledEmailDialogContext()` instead. Prop will be removed.
+     * @deprecated has no effect since 11.51 — the dialog reads `scheduledExportToEdit` from
+     *     `useScheduledEmailDialogContext()`. To adjust what it reads, use the
+     *     `ScheduledEmailDialogContextDecoratorComponent` dashboard prop. Prop will be removed.
      */
     scheduledExportToEdit?: IAutomationMetadataObject;
 
     /**
      * Notification channels in organization
      *
-     * @deprecated read `notificationChannels` from `useScheduledEmailDialogContext()` instead.
-     *     Prop will be removed.
+     * @deprecated has no effect since 11.51 — the dialog reads `notificationChannels` from
+     *     `useScheduledEmailDialogContext()`. To adjust what it reads, use the
+     *     `ScheduledEmailDialogContextDecoratorComponent` dashboard prop. Prop will be removed.
      */
     notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
 
@@ -55,7 +58,9 @@ export interface IScheduledEmailDialogProps {
      * supports insight widgets; custom widgets and nested layouts are not valid
      * export targets and were silently discarded at the connector boundary anyway.
      *
-     * @deprecated read `widget` from `useScheduledEmailDialogContext()` instead. Prop will be removed.
+     * @deprecated has no effect since 11.51 — the dialog reads `widget` from
+     *     `useScheduledEmailDialogContext()`. To adjust what it reads, use the
+     *     `ScheduledEmailDialogContextDecoratorComponent` dashboard prop. Prop will be removed.
      */
     widget?: IWidget;
 
@@ -64,7 +69,9 @@ export interface IScheduledEmailDialogProps {
      *
      * Note: this is available only when scheduling export for widget, not dashboard.
      *
-     * @deprecated read `insight` from `useScheduledEmailDialogContext()` instead. Prop will be removed.
+     * @deprecated has no effect since 11.51 — the dialog reads `insight` from
+     *     `useScheduledEmailDialogContext()`. To adjust what it reads, use the
+     *     `ScheduledEmailDialogContextDecoratorComponent` dashboard prop. Prop will be removed.
      */
     insight?: IInsight;
 
@@ -80,7 +87,9 @@ export interface IScheduledEmailDialogProps {
      *
      * - If we are editing an existing scheduled export, this will contain its filters, as changing saved filters is currently not allowed.
      *
-     * @deprecated read `dashboardFilters` from `useScheduledEmailDialogContext()` instead. Prop will be removed.
+     * @deprecated has no effect since 11.51 — the dialog reads `dashboardFilters` from
+     *     `useScheduledEmailDialogContext()`. To adjust what it reads, use the
+     *     `ScheduledEmailDialogContextDecoratorComponent` dashboard prop. Prop will be removed.
      */
     dashboardFilters?: FilterContextItem[];
 
@@ -103,7 +112,8 @@ export interface IScheduledEmailDialogProps {
     /**
      * Is scheduled email dialog loading initial data, before it can be rendered?
      *
-     * @deprecated read `isLoading` from `useScheduledEmailDialogContext()` instead. Prop will be removed.
+     * @deprecated has no effect since 11.51 — the dialog reads `isLoading` from
+     *     `useScheduledEmailDialogContext()`. Prop will be removed.
      */
     isLoading?: boolean;
 
@@ -388,6 +398,41 @@ export interface IScheduledEmailManagementDialogProps {
  * @alpha
  */
 export type CustomScheduledEmailDialogComponent = ComponentType<IScheduledEmailDialogProps>;
+
+/**
+ * Decorates the data the scheduled-email create/edit dialog reads.
+ *
+ * The dashboard mounts this component between the connector-provided dialog context and the
+ * dialog's state model, so the value it re-provides is what both the default dialog and the
+ * state seeding read — a wholesale `ScheduledEmailDialogComponent` replacement sees it too.
+ * Read the current value with `useScheduledEmailDialogContext()`, decorate the members to
+ * adjust, and re-provide via `ScheduledEmailDialogContextProvider`:
+ *
+ * @example
+ * ```tsx
+ * function ChannelsDecorator({ children }: { children?: ReactNode }) {
+ *     const ctx = useScheduledEmailDialogContext();
+ *     const notificationChannels = useMyFilteredChannels(ctx.notificationChannels);
+ *     const decorated = useMemo(() => ({ ...ctx, notificationChannels }), [ctx, notificationChannels]);
+ *     return (
+ *         <ScheduledEmailDialogContextProvider value={decorated}>
+ *             {children}
+ *         </ScheduledEmailDialogContextProvider>
+ *     );
+ * }
+ * // <Dashboard ScheduledEmailDialogContextDecoratorComponent={ChannelsDecorator} />
+ * ```
+ *
+ * Pass `isLoading` through untouched. On scheduled email the loading state is on the ordinary
+ * path — a widget export renders while its filters load — so a decorator that overrides it
+ * corrupts the draft seed on every such open, not in an edge case. Define the decorator outside
+ * render, or the dialog remounts (and reseeds) on every parent render.
+ *
+ * @alpha
+ */
+export type CustomScheduledEmailDialogContextDecoratorComponent = ComponentType<{
+    children?: ReactNode;
+}>;
 
 /**
  * @alpha

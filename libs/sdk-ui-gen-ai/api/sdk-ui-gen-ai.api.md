@@ -317,6 +317,7 @@ export type GenAiStoreProps = {
     workspace?: string;
     catalogItems?: CatalogItem[];
     dashboards?: IListedDashboard[];
+    visualizations?: IInsight[];
     settings?: IUserWorkspaceSettings;
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
     allowNativeLinks?: boolean;

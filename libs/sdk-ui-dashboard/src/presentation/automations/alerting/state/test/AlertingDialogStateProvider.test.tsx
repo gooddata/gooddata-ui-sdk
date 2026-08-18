@@ -68,8 +68,17 @@ vi.mock("../useAlertSupportedMetrics.js", () => ({
 }));
 
 vi.mock("../../../../dashboardContexts/DashboardComponentsContext.js", () => ({
-    useDashboardComponentsContext: () => ({ AlertingDialogComponent: StubAlertingDialogComponent }),
+    useDashboardComponentsContext: () => ({
+        AlertingDialogComponent: StubAlertingDialogComponent,
+        // A module-scope component, not an inline arrow: a fresh decorator identity per render
+        // would remount the state provider and silently reset the draft the tests assert on.
+        AlertingDialogContextDecoratorComponent: PassthroughDecoratorComponent,
+    }),
 }));
+
+function PassthroughDecoratorComponent({ children }: { children?: ReactNode }) {
+    return <>{children}</>;
+}
 
 // ---------------------------------------------------------------------------
 // Imports placed AFTER vi.mock() calls to pick up mocked versions

@@ -105,6 +105,7 @@ export function collectAvailableReferences(
                             title: widget.title || placeholderTitle || id,
                             type: "widget",
                             context,
+                            insightRef: widget.insightRef,
                         });
                     }
                     break;
@@ -127,6 +128,7 @@ export function collectAvailableReferences(
                                 title: visualization.title || placeholderTitle || id,
                                 type: "widget",
                                 context,
+                                insightRef: visualization.insightRef,
                             });
                         }
                     });

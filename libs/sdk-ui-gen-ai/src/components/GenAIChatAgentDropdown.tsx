@@ -142,6 +142,7 @@ export function GenAIChatAgentDropdown({
                 isDisabled: false,
                 data: { type: "agent", agent },
                 tooltip: agent.description || undefined,
+                tooltipWidth: 230,
                 iconRight: agent.description ? (
                     <UiIcon
                         type="question"

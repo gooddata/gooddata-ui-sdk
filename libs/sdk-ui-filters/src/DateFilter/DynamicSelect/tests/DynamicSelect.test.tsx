@@ -1,7 +1,8 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { range } from "lodash-es";
+import { createIntl, createIntlCache } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
 
 import { type DateFilterGranularity } from "@gooddata/sdk-model";
@@ -9,7 +10,15 @@ import { type DateFilterGranularity } from "@gooddata/sdk-model";
 import { type IMessageTranslator } from "../../utils/Translations/Translators.js";
 import { DynamicSelect, type IDynamicSelectProps } from "../DynamicSelect.js";
 import { type DynamicSelectItem } from "../types.js";
-import { DAY, MONTH, QUARTER, WEEK_US, YEAR, getRelativeDateFilterItems } from "../utils.js";
+import {
+    DAY,
+    MONTH,
+    QUARTER,
+    WEEK_US,
+    YEAR,
+    findRelativeDateFilterOptionByLabel,
+    getRelativeDateFilterItems,
+} from "../utils.js";
 
 const optionTranslator =
     (lastOneString: string, thisString: string, nextOneString: string, plural: string) =>
@@ -200,11 +209,13 @@ describe("DynamicSelect", () => {
             [key: string]: DynamicSelectItem;
         } = {
             "-99999": { type: "option", value: -99999, label: "99999 days ago" },
+            "-1440": { type: "option", value: -1440, label: "1440 days ago" },
             "-2": { type: "option", value: -2, label: "2 days ago" },
             "-1": { type: "option", value: -1, label: "yesterday" },
             "0": { type: "option", value: 0, label: "today" },
             "1": { type: "option", value: 1, label: "tomorrow" },
             "2": { type: "option", value: 2, label: "2 days ahead" },
+            "1440": { type: "option", value: 1440, label: "1440 days ahead" },
             "99999": { type: "option", value: 99999, label: "99999 days ahead" },
             no_match: { label: "no match", type: "error" },
         };
@@ -329,6 +340,9 @@ describe("DynamicSelect", () => {
             ["-2", [sampleOptions[-2]]],
             ["99999", [sampleOptions[99999], sampleOptions[-99999]]],
             ["-99999", [sampleOptions[-99999]]],
+            ["1440", [sampleOptions[1440], sampleOptions[-1440]]],
+            ["1,440", [sampleOptions[1440], sampleOptions[-1440]]],
+            ["-1,440", [sampleOptions[-1440]]],
             [" day ", [sampleOptions[-1], sampleOptions[0]]],
         ])("should return relativeFilter options matching input %s", (input: string, items) => {
             const actual = getRelativeDateFilterItems(input, DAY, mockTranslator);
@@ -346,6 +360,48 @@ describe("DynamicSelect", () => {
         it.each(["100000", "-100000"])('should return "Too big" for %p', (input: string) => {
             const actual = getRelativeDateFilterItems(input, DAY, mockTranslator);
             expect(actual).toEqual([{ label: "too big 99999", type: "error" }]);
+        });
+
+        describe("locale-formatted offsets of 1000 or more", () => {
+            const intlCache = createIntlCache();
+            const realIntl = createIntl(
+                {
+                    locale: "en-US",
+                    messages: {
+                        "filters.floatingRange.option.day.offset.history":
+                            "{n, plural, one {yesterday} other {# days ago}}",
+                        "filters.floatingRange.option.day.offset.today": "today",
+                        "filters.floatingRange.option.day.offset.future":
+                            "{n, plural, one {tomorrow} other {# days ahead}}",
+                        "filters.floatingRange.noMatch": "no match",
+                    },
+                },
+                intlCache,
+            );
+
+            it("should format and parse back an offset of 1440", () => {
+                const items = getRelativeDateFilterItems("1440", DAY, realIntl);
+                expect(items).toEqual([
+                    { type: "option", value: 1440, label: "1,440 days ahead" },
+                    { type: "option", value: -1440, label: "1,440 days ago" },
+                ]);
+
+                const selectedLabel = "1,440 days ago";
+                const itemsFromLabel = getRelativeDateFilterItems(selectedLabel, DAY, realIntl);
+                expect(findRelativeDateFilterOptionByLabel(itemsFromLabel, selectedLabel)).toEqual({
+                    type: "option",
+                    value: -1440,
+                    label: selectedLabel,
+                });
+            });
+
+            it("should parse a grouped integer typed without a label", () => {
+                const items = getRelativeDateFilterItems("1,440", DAY, realIntl);
+                expect(items).toEqual([
+                    { type: "option", value: 1440, label: "1,440 days ahead" },
+                    { type: "option", value: -1440, label: "1,440 days ago" },
+                ]);
+            });
         });
     });
 });

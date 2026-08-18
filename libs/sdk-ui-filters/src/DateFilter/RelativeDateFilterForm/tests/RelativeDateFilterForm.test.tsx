@@ -147,4 +147,24 @@ describe("RelativeDateFilterForm", () => {
             visible: true,
         });
     });
+
+    it("should keep a selected offset of 1000 or more after blur", () => {
+        const onSelectedFilterOptionChange = vi.fn();
+        createForm({ onSelectedFilterOptionChange });
+
+        const fromInput = screen.getAllByPlaceholderText("Type or select")[0];
+        fireEvent.change(fromInput, { target: { value: "1440" } });
+        fireEvent.click(screen.getByText("1,440 days ago"));
+
+        expect(onSelectedFilterOptionChange).toHaveBeenLastCalledWith(
+            expect.objectContaining({ from: -1440 }),
+        );
+
+        fireEvent.blur(fromInput);
+
+        expect(screen.queryByText(/Invalid period start/)).not.toBeInTheDocument();
+        expect(onSelectedFilterOptionChange).toHaveBeenLastCalledWith(
+            expect.objectContaining({ from: -1440 }),
+        );
+    });
 });

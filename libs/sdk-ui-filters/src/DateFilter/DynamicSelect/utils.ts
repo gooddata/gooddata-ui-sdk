@@ -78,16 +78,28 @@ const getTrimmedInput = (input: string) => input?.trim();
 
 const isOffsetReasonablyBig = (offset: number) => Math.abs(offset) <= offsetMaxValue;
 
+/**
+ * ICU `#` in plural messages formats integers with locale grouping
+ * (e.g. 1440 → "1,440" in en-US). Accept those grouped integers so a
+ * selected option label can be parsed back on blur/apply.
+ * Only groups of exactly three digits are treated as grouping, so locale
+ * decimals like "1,5" / "1.5" stay non-numeric.
+ */
+const NUMERIC_INPUT_REGEX = /^[^-\d]*(-?\d{1,3}(?:[,.\s\u00a0\u202f'\u2019]\d{3})+|-?\d+)(?:\s|$)/;
+
+const parseGroupedInteger = (numericText: string): number =>
+    Number.parseInt(numericText.replace(/[^\d-]/g, ""), 10);
+
 const parseInput = (trimmedInput: string): InputInfo => {
     if (!trimmedInput) {
         return emptyInputInfo;
     }
 
     // matches only integers, we do not want to support floats
-    const numericMatch = /^[^-\d]*(-?\d+)(?:\s|$)/.exec(trimmedInput);
+    const numericMatch = NUMERIC_INPUT_REGEX.exec(trimmedInput);
     if (numericMatch) {
         const numericText = numericMatch[1];
-        const numericValue = Number.parseInt(numericText, 10);
+        const numericValue = parseGroupedInteger(numericText);
         return isOffsetReasonablyBig(numericValue)
             ? {
                   offset: numericValue,

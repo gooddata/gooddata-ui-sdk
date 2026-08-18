@@ -12,10 +12,12 @@ import {
 
 import {
     type CustomAlertingDialogComponent,
+    type CustomAlertingDialogContextDecoratorComponent,
     type CustomAlertingManagementDialogComponent,
 } from "../automations/alerting/types.js";
 import {
     type CustomScheduledEmailDialogComponent,
+    type CustomScheduledEmailDialogContextDecoratorComponent,
     type CustomScheduledEmailManagementDialogComponent,
 } from "../automations/scheduledEmail/types.js";
 import {
@@ -86,9 +88,11 @@ interface IDashboardComponentsContext {
     TopBarComponent: CustomTopBarComponent;
     ToolbarComponent: CustomToolbarComponent;
     ScheduledEmailDialogComponent: CustomScheduledEmailDialogComponent;
+    ScheduledEmailDialogContextDecoratorComponent: CustomScheduledEmailDialogContextDecoratorComponent;
     ScheduledEmailManagementDialogComponent: CustomScheduledEmailManagementDialogComponent;
     AlertingManagementDialogComponent: CustomAlertingManagementDialogComponent;
     AlertingDialogComponent: CustomAlertingDialogComponent;
+    AlertingDialogContextDecoratorComponent: CustomAlertingDialogContextDecoratorComponent;
     ShareDialogComponent: CustomShareDialogComponent;
     SaveAsDialogComponent: CustomSaveAsDialogComponent;
     DashboardAttributeFilterComponentProvider: AttributeFilterComponentProvider;
@@ -141,11 +145,17 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     TopBarComponent: ThrowMissingComponentError("TopBarComponent"),
     ToolbarComponent: ThrowMissingComponentError("ToolbarComponent"),
     ScheduledEmailDialogComponent: ThrowMissingComponentError("ScheduledEmailDialogComponent"),
+    ScheduledEmailDialogContextDecoratorComponent: ThrowMissingComponentError(
+        "ScheduledEmailDialogContextDecoratorComponent",
+    ),
     ScheduledEmailManagementDialogComponent: ThrowMissingComponentError(
         "ScheduledEmailManagementDialogComponent",
     ),
     AlertingManagementDialogComponent: ThrowMissingComponentError("AlertingManagementDialogComponent"),
     AlertingDialogComponent: ThrowMissingComponentError("AlertingDialogComponent"),
+    AlertingDialogContextDecoratorComponent: ThrowMissingComponentError(
+        "AlertingDialogContextDecoratorComponent",
+    ),
     ShareDialogComponent: ThrowMissingComponentError("ShareDialogComponent"),
     SaveAsDialogComponent: ThrowMissingComponentError("SaveAsDialogComponent"),
     DashboardAttributeFilterComponentProvider: ThrowMissingComponentError(

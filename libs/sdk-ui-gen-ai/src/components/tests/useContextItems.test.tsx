@@ -10,7 +10,7 @@ import { describe, expect, it, vi } from "vitest";
 import { type IGenAIUserContext, idRef } from "@gooddata/sdk-model";
 
 import { chatWindowSliceName } from "../../store/chatWindow/chatWindowSlice.js";
-import { type ContextDashboardsState, type IGenAIDashboardListItem } from "../../types.js";
+import { type ContextObjectListState, type IGenAIContextListItem } from "../../types.js";
 import { useContextItems } from "../hooks/useContextItems.js";
 
 const messages = { "gd.gen-ai.context.untitled": "Untitled" };
@@ -25,7 +25,8 @@ const ambientContext: IGenAIUserContext = {
             widgets: [
                 {
                     widgetType: "insight",
-                    widgetRef: idRef("sales-by-region", "insight"),
+                    widgetRef: idRef("sales-widget", "insight"),
+                    insightRef: idRef("sales-by-region", "insight"),
                     title: "Sales by Region",
                 },
             ],
@@ -33,30 +34,47 @@ const ambientContext: IGenAIUserContext = {
     },
 };
 
-function dashboard(id: string, title = id): IGenAIDashboardListItem {
+function dashboard(id: string, title = id): IGenAIContextListItem {
     return { id, ref: idRef(id, "analyticalDashboard"), title };
 }
 
+function visualization(id: string, title = id): IGenAIContextListItem {
+    return { id, ref: idRef(id, "insight"), title };
+}
+
 function renderItems(
-    items: IGenAIDashboardListItem[],
+    items: IGenAIContextListItem[],
     {
+        visualizations = [],
         ambient = ambientContext,
         active,
         state,
+        visualizationsState,
     }: {
+        visualizations?: IGenAIContextListItem[];
         ambient?: IGenAIUserContext;
         active?: IGenAIUserContext;
-        state?: Partial<ContextDashboardsState>;
+        state?: Partial<ContextObjectListState>;
+        visualizationsState?: Partial<ContextObjectListState>;
     } = {},
 ) {
     const storeState = {
         [chatWindowSliceName]: {
-            contextDashboards: {
-                items,
-                loadedPages: 1,
-                hasNextPage: false,
-                isLoading: false,
-                ...state,
+            contextObjects: {
+                dashboard: {
+                    items,
+                    loadedPages: 1,
+                    hasNextPage: false,
+                    isLoading: false,
+                    ...state,
+                },
+                visualization: {
+                    items: visualizations,
+                    loadedPages: 1,
+                    hasNextPage: false,
+                    isLoading: false,
+                    ...visualizationsState,
+                },
             },
         },
     };
@@ -82,12 +100,15 @@ function renderItems(
 
 describe("useContextItems", () => {
     it("offers the ambient dashboard and its widgets before the other dashboards", () => {
-        const { result } = renderItems([dashboard("marketing", "Marketing")]);
+        const { result } = renderItems([dashboard("marketing", "Marketing")], {
+            visualizations: [visualization("orders", "Orders")],
+        });
 
         expect(result.current.items.map((item) => [item.type, item.title])).toEqual([
             ["dashboard", "Revenue"],
             ["widget", "Sales by Region"],
             ["dashboard", "Marketing"],
+            ["visualization", "Orders"],
         ]);
     });
 
@@ -100,6 +121,58 @@ describe("useContextItems", () => {
         expect(result.current.items.filter((item) => item.id === "ambient-dashboard")).toHaveLength(1);
     });
 
+    it("does not offer a visualization already rendered by a widget of the dashboard being viewed", () => {
+        const { result } = renderItems([], {
+            visualizations: [
+                visualization("sales-by-region", "Sales by Region"),
+                visualization("orders", "Orders"),
+            ],
+        });
+
+        expect(result.current.items.map((item) => [item.type, item.title])).toEqual([
+            ["dashboard", "Revenue"],
+            ["widget", "Sales by Region"],
+            ["visualization", "Orders"],
+        ]);
+    });
+
+    it("does not offer a visualization rendered by a switcher of the dashboard being viewed", () => {
+        const ambient: IGenAIUserContext = {
+            view: {
+                dashboard: {
+                    ref: ambientDashboardRef,
+                    title: "Revenue",
+                    widgets: [
+                        {
+                            widgetType: "visualizationSwitcher",
+                            widgetRef: idRef("switcher", "insight"),
+                            title: "Switcher",
+                            visualizations: [
+                                {
+                                    widgetType: "insight",
+                                    widgetRef: idRef("child-widget", "insight"),
+                                    insightRef: idRef("orders", "insight"),
+                                    title: "Orders",
+                                },
+                            ],
+                        },
+                    ],
+                },
+            },
+        };
+
+        const { result } = renderItems([], {
+            ambient,
+            visualizations: [visualization("orders", "Orders"), visualization("costs", "Costs")],
+        });
+
+        expect(result.current.items.map((item) => [item.type, item.id])).toEqual([
+            ["dashboard", "ambient-dashboard"],
+            ["widget", "child-widget"],
+            ["visualization", "costs"],
+        ]);
+    });
+
     it("marks a dashboard the user is not viewing as an explicit reference", () => {
         const { result } = renderItems([dashboard("marketing", "Marketing")]);
 
@@ -108,7 +181,7 @@ describe("useContextItems", () => {
         expect(marketing?.context).toBeUndefined();
     });
 
-    it("leaves out dashboards already pinned to the active context", () => {
+    it("leaves out objects already pinned to the active context", () => {
         const active: IGenAIUserContext = {
             referencedObjects: [
                 {
@@ -118,6 +191,11 @@ describe("useContextItems", () => {
                             title: "Marketing",
                             type: "DASHBOARD",
                         },
+                        {
+                            ref: idRef("orders", "insight"),
+                            title: "Orders",
+                            type: "WIDGET",
+                        },
                     ],
                 },
             ],
@@ -125,11 +203,17 @@ describe("useContextItems", () => {
 
         const { result } = renderItems(
             [dashboard("marketing", "Marketing"), dashboard("finance", "Finance")],
-            { active },
+            {
+                visualizations: [visualization("orders", "Orders"), visualization("costs", "Costs")],
+                active,
+            },
         );
 
-        expect(result.current.items.map((item) => item.id)).not.toContain("marketing");
-        expect(result.current.items.map((item) => item.id)).toContain("finance");
+        const offeredIds = result.current.items.map((item) => item.id);
+        expect(offeredIds).not.toContain("marketing");
+        expect(offeredIds).not.toContain("orders");
+        expect(offeredIds).toContain("finance");
+        expect(offeredIds).toContain("costs");
     });
 
     it("falls back to the untitled label for a dashboard with no title", () => {
@@ -148,7 +232,35 @@ describe("useContextItems", () => {
 
         result.current.loadNextPage();
         expect(store.dispatch).toHaveBeenCalledWith(
-            expect.objectContaining({ type: "chatWindow/loadContextDashboardsNextPageAction" }),
+            expect.objectContaining({
+                type: "chatWindow/loadContextObjectsNextPageAction",
+                payload: { kind: "dashboard" },
+            }),
         );
+    });
+
+    it("pages the visualizations once the dashboards run out", () => {
+        const { result, store } = renderItems([dashboard("marketing")], {
+            visualizationsState: { hasNextPage: true, isLoading: true },
+        });
+
+        expect(result.current.isLoading).toBe(true);
+
+        result.current.loadNextPage();
+        expect(store.dispatch).toHaveBeenCalledWith(
+            expect.objectContaining({
+                type: "chatWindow/loadContextObjectsNextPageAction",
+                payload: { kind: "visualization" },
+            }),
+        );
+    });
+
+    it("reports no next page and loads nothing once both lists are complete", () => {
+        const { result, store } = renderItems([dashboard("marketing")]);
+
+        expect(result.current.hasNextPage).toBe(false);
+
+        result.current.loadNextPage();
+        expect(store.dispatch).not.toHaveBeenCalled();
     });
 });

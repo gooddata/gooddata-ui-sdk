@@ -236,7 +236,7 @@ describe("addAmbientContextReferences", () => {
         expect(result.active?.view?.dashboard?.filters).toEqual([{ type: "x" }]);
     });
 
-    it("should drop the previous dashboard and its pinned objects when switching dashboards", () => {
+    it("should keep the objects pinned from the previous dashboard when switching dashboards", () => {
         const context: StoreContext = {
             ambient: dashboardContext("dash1"),
             active: {
@@ -247,6 +247,152 @@ describe("addAmbientContextReferences", () => {
 
         const result = addAmbientContextReferences(context, dashboardContext("dash2"));
 
+        expect(result.active).toEqual({
+            ...dashboardContext("dash2"),
+            referencedObjects: [pinnedFrom("dash1", "widget1")],
+        });
+    });
+
+    it("should drop what the previous dashboard put in the context on its own", () => {
+        const contributed = {
+            objects: [{ ref: idRef("widget1"), title: "widget1", type: "WIDGET" as const }],
+        };
+        const context: StoreContext = {
+            ambient: { ...dashboardContext("dash1"), referencedObjects: [contributed] },
+            active: { ...dashboardContext("dash1"), referencedObjects: [contributed] },
+        };
+
+        const result = addAmbientContextReferences(context, dashboardContext("dash2"));
+
         expect(result.active).toEqual(dashboardContext("dash2"));
+    });
+
+    const added = (objects: { ref: any; title: string; type: "DASHBOARD" | "WIDGET" }[]) => ({ objects });
+
+    it("should keep an added dashboard when switching dashboards", () => {
+        const context: StoreContext = {
+            ambient: dashboardContext("dash1"),
+            active: {
+                ...dashboardContext("dash1"),
+                referencedObjects: [added([{ ref: idRef("dash3"), title: "dash3", type: "DASHBOARD" }])],
+            },
+        };
+
+        const result = addAmbientContextReferences(context, dashboardContext("dash2"));
+
+        expect(result.active?.referencedObjects).toEqual([
+            added([{ ref: idRef("dash3"), title: "dash3", type: "DASHBOARD" }]),
+        ]);
+    });
+
+    it("should keep an added visualization when switching dashboards", () => {
+        const context: StoreContext = {
+            ambient: dashboardContext("dash1"),
+            active: {
+                ...dashboardContext("dash1"),
+                referencedObjects: [added([{ ref: idRef("insight1"), title: "insight1", type: "WIDGET" }])],
+            },
+        };
+
+        const result = addAmbientContextReferences(context, dashboardContext("dash2"));
+
+        expect(result.active?.referencedObjects).toEqual([
+            added([{ ref: idRef("insight1"), title: "insight1", type: "WIDGET" }]),
+        ]);
+    });
+
+    it("should not keep an added dashboard once the user navigates to it", () => {
+        const context: StoreContext = {
+            ambient: dashboardContext("dash1"),
+            active: {
+                ...dashboardContext("dash1"),
+                referencedObjects: [added([{ ref: idRef("dash2"), title: "dash2", type: "DASHBOARD" }])],
+            },
+        };
+
+        const result = addAmbientContextReferences(context, dashboardContext("dash2"));
+
+        expect(result.active).toEqual(dashboardContext("dash2"));
+    });
+
+    it("should not keep an added visualization the newly opened dashboard renders itself", () => {
+        const dash2WithInsight1 = {
+            view: {
+                dashboard: {
+                    ref: idRef("dash2"),
+                    title: "dash2",
+                    filters: [],
+                    widgets: [
+                        {
+                            widgetType: "insight" as const,
+                            widgetRef: idRef("widget1"),
+                            insightRef: idRef("insight1"),
+                            title: "widget1",
+                        },
+                    ],
+                },
+            },
+        };
+        const context: StoreContext = {
+            ambient: dashboardContext("dash1"),
+            active: {
+                ...dashboardContext("dash1"),
+                referencedObjects: [
+                    added([
+                        { ref: idRef("insight1"), title: "insight1", type: "WIDGET" },
+                        { ref: idRef("insight2"), title: "insight2", type: "WIDGET" },
+                    ]),
+                ],
+            },
+        };
+
+        const result = addAmbientContextReferences(context, dash2WithInsight1);
+
+        expect(result.active?.referencedObjects).toEqual([
+            added([{ ref: idRef("insight2"), title: "insight2", type: "WIDGET" }]),
+        ]);
+    });
+
+    it("should not keep a pinned widget once the user navigates back to its dashboard", () => {
+        const dash2WithWidget1 = {
+            view: {
+                dashboard: {
+                    ref: idRef("dash2"),
+                    title: "dash2",
+                    filters: [],
+                    widgets: [
+                        {
+                            widgetType: "insight" as const,
+                            widgetRef: idRef("widget1"),
+                            insightRef: idRef("insight1"),
+                            title: "widget1",
+                        },
+                    ],
+                },
+            },
+        };
+        const context: StoreContext = {
+            ambient: dashboardContext("dash1"),
+            active: {
+                ...dashboardContext("dash1"),
+                referencedObjects: [pinnedFrom("dash2", "widget1")],
+            },
+        };
+
+        const result = addAmbientContextReferences(context, dash2WithWidget1);
+
+        expect(result.active).toEqual(dash2WithWidget1);
+    });
+
+    it("should keep an added metric when switching dashboards", () => {
+        const metric = { objects: [{ ref: idRef("metric1"), title: "metric1", type: "METRIC" as const }] };
+        const context: StoreContext = {
+            ambient: dashboardContext("dash1"),
+            active: { ...dashboardContext("dash1"), referencedObjects: [metric] },
+        };
+
+        const result = addAmbientContextReferences(context, dashboardContext("dash2"));
+
+        expect(result.active?.referencedObjects).toEqual([metric]);
     });
 });

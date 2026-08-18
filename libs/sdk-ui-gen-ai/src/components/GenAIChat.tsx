@@ -106,6 +106,7 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
         objectTypes,
         catalogItems,
         dashboards,
+        visualizations,
         includeTags,
         excludeTags,
         isPreview,
@@ -136,6 +137,7 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
                 excludeTags={excludeTags}
                 catalogItems={catalogItems}
                 dashboards={dashboards}
+                visualizations={visualizations}
                 isPreview={isPreview}
                 allowInteractionIntelligence={allowInteractionIntelligence}
                 providedStore={providedStore}

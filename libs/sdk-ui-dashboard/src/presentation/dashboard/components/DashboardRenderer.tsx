@@ -21,6 +21,7 @@ import { DASHBOARD_OVERLAYS_Z_INDEX } from "../../constants/zIndex.js";
 import { DashboardComponentsProvider } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { DashboardConfigProvider } from "../../dashboardContexts/DashboardConfigContext.js";
 import { DashboardCustomizationsProvider } from "../../dashboardContexts/DashboardCustomizationsContext.js";
+import { DefaultDialogContextDecorator } from "../../dashboardContexts/DefaultDialogContextDecorator.js";
 import { ExportCsvDialogContextProvider } from "../../dashboardContexts/ExportCsvDialogContext.js";
 import { ExportTabularPdfDialogContextProvider } from "../../dashboardContexts/ExportTabularPdfDialogContext.js";
 import { ExportTemplateDialogContextProvider } from "../../dashboardContexts/ExportTemplateDialogContext.js";
@@ -67,12 +68,16 @@ function resolveCoreComponents(props: IDashboardProps) {
 function resolveDialogComponents(props: IDashboardProps) {
     return {
         ScheduledEmailDialogComponent: props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialog,
+        ScheduledEmailDialogContextDecoratorComponent:
+            props.ScheduledEmailDialogContextDecoratorComponent ?? DefaultDialogContextDecorator,
         ScheduledEmailManagementDialogComponent:
             props.ScheduledEmailManagementDialogComponent ?? DefaultScheduledEmailManagementDialog,
         ShareDialogComponent: props.ShareDialogComponent ?? DefaultShareDialog,
         AlertingManagementDialogComponent:
             props.AlertingManagementDialogComponent ?? DefaultAlertingManagementDialogNew,
         AlertingDialogComponent: props.AlertingDialogComponent ?? DefaultAlertingDialog,
+        AlertingDialogContextDecoratorComponent:
+            props.AlertingDialogContextDecoratorComponent ?? DefaultDialogContextDecorator,
         SaveAsDialogComponent: props.SaveAsDialogComponent ?? DefaultSaveAsDialog,
         DashboardSettingsDialogComponent:
             props.DashboardSettingsDialogComponent ?? DefaultDashboardSettingsDialog,
@@ -199,6 +204,9 @@ export function DashboardRenderer(props: IDashboardProps) {
                                                 ScheduledEmailDialogComponent={
                                                     components.ScheduledEmailDialogComponent
                                                 }
+                                                ScheduledEmailDialogContextDecoratorComponent={
+                                                    components.ScheduledEmailDialogContextDecoratorComponent
+                                                }
                                                 ScheduledEmailManagementDialogComponent={
                                                     components.ScheduledEmailManagementDialogComponent
                                                 }
@@ -207,6 +215,9 @@ export function DashboardRenderer(props: IDashboardProps) {
                                                     components.AlertingManagementDialogComponent
                                                 }
                                                 AlertingDialogComponent={components.AlertingDialogComponent}
+                                                AlertingDialogContextDecoratorComponent={
+                                                    components.AlertingDialogContextDecoratorComponent
+                                                }
                                                 SaveAsDialogComponent={components.SaveAsDialogComponent}
                                                 DashboardAttributeFilterComponentProvider={
                                                     attributeFilterProvider

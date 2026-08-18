@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type ComponentType, type Ref } from "react";
+import { type ComponentType, type ReactNode, type Ref } from "react";
 
 import {
     type DateAttributeGranularity,
@@ -32,15 +32,18 @@ export interface IAlertingDialogProps {
     /**
      * In case, we are not creating new alert, but editing existing one, this is the active alert to be edited.
      *
-     * @deprecated read `alertToEdit` from `useAlertingDialogContext()` instead. Prop will be removed.
+     * @deprecated has no effect since 11.51 — the dialog reads `alertToEdit` from
+     *     `useAlertingDialogContext()`. To adjust what it reads, use the
+     *     `AlertingDialogContextDecoratorComponent` dashboard prop. Prop will be removed.
      */
     alertToEdit?: IAutomationMetadataObject;
 
     /**
      * Notification channels in organization
      *
-     * @deprecated read `notificationChannels` from `useAlertingDialogContext()` instead.
-     *     Prop will be removed.
+     * @deprecated has no effect since 11.51 — the dialog reads `notificationChannels` from
+     *     `useAlertingDialogContext()`. To adjust what it reads, use the
+     *     `AlertingDialogContextDecoratorComponent` dashboard prop. Prop will be removed.
      */
     notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
 
@@ -52,7 +55,9 @@ export interface IAlertingDialogProps {
      * supports insight widgets; custom widgets and nested layouts are not valid
      * alert targets and were silently discarded at the connector boundary anyway.
      *
-     * @deprecated read `widget` from `useAlertingDialogContext()` instead. Prop will be removed.
+     * @deprecated has no effect since 11.51 — the dialog reads `widget` from
+     *     `useAlertingDialogContext()`. To adjust what it reads, use the
+     *     `AlertingDialogContextDecoratorComponent` dashboard prop. Prop will be removed.
      */
     widget?: IWidget;
 
@@ -61,14 +66,18 @@ export interface IAlertingDialogProps {
      *
      * Note: this is available only when alerting for widget, not dashboard.
      *
-     * @deprecated read `insight` from `useAlertingDialogContext()` instead. Prop will be removed.
+     * @deprecated has no effect since 11.51 — the dialog reads `insight` from
+     *     `useAlertingDialogContext()`. To adjust what it reads, use the
+     *     `AlertingDialogContextDecoratorComponent` dashboard prop (e.g. so an alert follows a
+     *     widget's date-granularity selection). Prop will be removed.
      */
     insight?: IInsight;
 
     /**
      * Is alert dialog loading initial data, before it can be rendered?
      *
-     * @deprecated read `isLoading` from `useAlertingDialogContext()` instead. Prop will be removed.
+     * @deprecated has no effect since 11.51 — the dialog reads `isLoading` from
+     *     `useAlertingDialogContext()`. Prop will be removed.
      */
     isLoading?: boolean;
 
@@ -271,6 +280,34 @@ export interface IAlertingManagementDialogProps {
  * @alpha
  */
 export type CustomAlertingDialogComponent = ComponentType<IAlertingDialogProps>;
+
+/**
+ * Decorates the data the alerting create/edit dialog reads.
+ *
+ * The dashboard mounts this component between the connector-provided dialog context and the
+ * dialog's state model, so the value it re-provides is what both the default dialog and the
+ * state seeding read — a wholesale `AlertingDialogComponent` replacement sees it too. Read the
+ * current value with `useAlertingDialogContext()`, decorate the members to adjust, and
+ * re-provide via `AlertingDialogContextProvider`:
+ *
+ * @example
+ * ```tsx
+ * function InsightDecorator({ children }: { children?: ReactNode }) {
+ *     const ctx = useAlertingDialogContext();
+ *     const insight = useMyDecoratedInsight(ctx.insight);
+ *     const decorated = useMemo(() => ({ ...ctx, insight }), [ctx, insight]);
+ *     return <AlertingDialogContextProvider value={decorated}>{children}</AlertingDialogContextProvider>;
+ * }
+ * // <Dashboard AlertingDialogContextDecoratorComponent={InsightDecorator} />
+ * ```
+ *
+ * Pass `isLoading` through untouched: the dialog's state model defers seeding until it is
+ * false, and a decorator that overrides it corrupts the draft seed. Define the decorator
+ * outside render, or the dialog remounts (and reseeds) on every parent render.
+ *
+ * @alpha
+ */
+export type CustomAlertingDialogContextDecoratorComponent = ComponentType<{ children?: ReactNode }>;
 
 /**
  * @alpha

@@ -100,19 +100,34 @@ describe("removeAmbientContribution", () => {
         expect(removeAmbientContribution(context, ambient)).toEqual(context);
     });
 
-    it("should remove the objects pinned from the ambient dashboard", () => {
+    it("should keep the objects the user pinned from the ambient dashboard", () => {
         const context = {
             view: { dashboard: { ref: idRef("dash1") } },
             referencedObjects: [pinnedFrom("dash1", "widget1")],
         } as any;
 
-        expect(removeAmbientContribution(context, ambient)).toBeUndefined();
+        expect(removeAmbientContribution(context, ambient)).toEqual({
+            referencedObjects: [pinnedFrom("dash1", "widget1")],
+        });
+    });
+
+    it("should remove the references the ambient context carried itself", () => {
+        const contributed = pinnedFrom("dash1", "widget1");
+        const ambientWithObjects = { ...ambient, referencedObjects: [contributed] } as any;
+        const context = {
+            view: { dashboard: { ref: idRef("dash1") } },
+            referencedObjects: [contributed, pinnedFrom("dash2", "widget2")],
+        } as any;
+
+        expect(removeAmbientContribution(context, ambientWithObjects)).toEqual({
+            referencedObjects: [pinnedFrom("dash2", "widget2")],
+        });
     });
 
     it("should keep objects pinned from a different dashboard", () => {
         const context = {
             view: { dashboard: { ref: idRef("dash1") } },
-            referencedObjects: [pinnedFrom("dash1", "widget1"), pinnedFrom("dash2", "widget2")],
+            referencedObjects: [pinnedFrom("dash2", "widget2")],
         } as any;
 
         expect(removeAmbientContribution(context, ambient)).toEqual({

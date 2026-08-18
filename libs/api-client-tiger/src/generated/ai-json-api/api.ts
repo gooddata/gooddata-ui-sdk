@@ -696,6 +696,19 @@ export interface AiConversationListResponse {
 }
 
 /**
+ * What a conversation exists to serve.  USER is a person\'s own thread in the assistant. The others are utility modes, where the conversation serves something else and is kept out of the user\'s history: PREVIEW backs the Agent Builder preview pane, MCP backs a single-purpose MCP tool call.
+ */
+
+export const AiConversationMode = {
+    USER: 'USER',
+    PREVIEW: 'PREVIEW',
+    MCP: 'MCP'
+} as const;
+
+export type AiConversationMode = typeof AiConversationMode[keyof typeof AiConversationMode];
+
+
+/**
  * Conversation returned by the agentic HTTP API.
  */
 export interface AiConversationResponse {
@@ -709,13 +722,18 @@ export interface AiConversationResponse {
      */
     'createdAt': string;
     /**
-     * Whether this is a preview conversation.
+     * Deprecated, use `mode`. True only when `mode` is PREVIEW.
+     * @deprecated
      */
     'isPreview'?: boolean;
     /**
      * Last activity timestamp (ISO-8601 UTC).
      */
     'lastActivityAt': string;
+    /**
+     * What this conversation serves. USER is the user\'s own thread; PREVIEW backs the Agent Builder preview pane; MCP backs a single-purpose MCP tool call. Anything other than USER is a utility conversation, kept out of the user\'s history.
+     */
+    'mode'?: AiConversationMode;
     /**
      * Organization identifier.
      */
@@ -734,6 +752,7 @@ export interface AiConversationResponse {
      */
     'workspaceId': string;
 }
+
 
 export interface AiConversationResponseList {
     /**
@@ -771,7 +790,9 @@ export interface AiConversationUpdateRequest {
  */
 export interface AiCreateConversationRequest {
     'agentId'?: string | null;
+    'mode'?: AiConversationMode | null;
 }
+
 
 /**
  * AAC ref: dashboard.json (PoC subset).  The dashboard builder always emits the tabbed layout (``tabs``); ``sections`` is kept for compatibility with the AAC schema\'s flat (single-layout) form.
@@ -1906,6 +1927,7 @@ export interface AiSendMessageItem {
 export type AiSendMessageItemRoleEnum = 'user';
 
 export interface AiSendMessageOptions {
+    'pinnedSkills'?: Array<string> | null;
     'reasoningEffort'?: AiRequestedReasoningEffort | null;
     'search'?: AiSendMessageSearchOptions | null;
 }
