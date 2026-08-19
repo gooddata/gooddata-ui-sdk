@@ -5,7 +5,7 @@
 import { type ReactElement, act, createElement } from "react";
 
 import { createRoot } from "react-dom/client";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import type { IDashboardProps } from "@gooddata/sdk-ui-dashboard";
@@ -199,10 +199,14 @@ const createDeferredLoaderStatus = (options: Partial<IDashboardLoadOptions> = {}
     };
 };
 
+type ActEnvironmentHost = typeof globalThis & { IS_REACT_ACT_ENVIRONMENT?: boolean };
+
 describe("Dashboard", () => {
+    let previousActEnvironment: boolean | undefined;
+
     beforeEach(async () => {
-        (globalThis as typeof globalThis & { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT =
-            true;
+        previousActEnvironment = (globalThis as ActEnvironmentHost).IS_REACT_ACT_ENVIRONMENT;
+        (globalThis as ActEnvironmentHost).IS_REACT_ACT_ENVIRONMENT = true;
         await actAndFlush(() => {
             document.body.replaceChildren();
         }, 1);
@@ -221,16 +225,49 @@ describe("Dashboard", () => {
         changeFilterContextSelection.mockClear();
     });
 
+    afterEach(async () => {
+        // Tear the mounted elements down here rather than only on the way in. Detaching an element
+        // runs its `disconnectedCallback`, which unmounts a React root - React only tolerates that
+        // inside `act()`. Anything left mounted would instead be unmounted by whichever suite
+        // clears `document.body` next, outside of any `act()` and outside this suite's act
+        // environment, which trips the console.error guard in vitest.setup.ts.
+        await actAndFlush(() => {
+            document.body.replaceChildren();
+        }, 1);
+        // Restore rather than delete: the flag is global, so this suite must leave it exactly as
+        // it found it for the suites that share the environment.
+        (globalThis as ActEnvironmentHost).IS_REACT_ACT_ENVIRONMENT = previousActEnvironment;
+    });
+
     it(
         "registers gd-dashboard as the legacy runtime and gd-dashboard-embed as the strict runtime",
         async () => {
             const { Dashboard } = await import("../visualizations/Dashboard.js");
             const { DashboardEmbed } = await import("../visualizations/DashboardEmbed.js");
 
-            await import("../index.js");
+            // The custom element registry is owned by the environment, not by the module graph, so
+            // it outlives the `vi.resetModules()` above and is shared with every other suite in the
+            // same environment. Only the first registration of a tag name wins, which means reading
+            // the real registry back would compare against whichever module instance happened to
+            // import `index.js` first. Capture what `index.js` *asks* to register instead: that is
+            // the wiring under test, and it holds no matter what ran before.
+            const defined = new Map<string, CustomElementConstructor>();
+            const getSpy = vi.spyOn(window.customElements, "get").mockReturnValue(undefined);
+            const defineSpy = vi
+                .spyOn(window.customElements, "define")
+                .mockImplementation((name, constructor) => {
+                    defined.set(name, constructor);
+                });
 
-            expect(customElements.get("gd-dashboard")).toBe(Dashboard);
-            expect(customElements.get("gd-dashboard-embed")).toBe(DashboardEmbed);
+            try {
+                await import("../index.js");
+            } finally {
+                getSpy.mockRestore();
+                defineSpy.mockRestore();
+            }
+
+            expect(defined.get("gd-dashboard")).toBe(Dashboard);
+            expect(defined.get("gd-dashboard-embed")).toBe(DashboardEmbed);
         },
         timeout,
     );

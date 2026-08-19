@@ -70,6 +70,10 @@ type ChatWindowSliceState = {
      */
     contextObjects: ContextObjectsState;
     /**
+     * Title the context chooser lists are filtered by. Empty means no filter.
+     */
+    contextObjectsSearch: string;
+    /**
      * Only objects with these tags will be included
      */
     includeTags?: string[];
@@ -99,12 +103,13 @@ type ChatWindowSliceState = {
 
 export const chatWindowSliceName = "chatWindow";
 
-function emptyContextObjectList(): ContextObjectListState {
+function emptyContextObjectList(isExternal = false): ContextObjectListState {
     return {
         items: [],
         loadedPages: 0,
         hasNextPage: true,
         isLoading: false,
+        isExternal,
     };
 }
 
@@ -126,6 +131,7 @@ const initialState: ChatWindowSliceState = {
     excludeTags: undefined,
     allowedRelationshipTypes: undefined,
     contextObjects: emptyContextObjects(),
+    contextObjectsSearch: "",
     context: {
         ambient: undefined,
         active: undefined,
@@ -143,6 +149,7 @@ export const getInitialChatWindowState = ({
 } = {}): ChatWindowSliceState => ({
     ...initialState,
     contextObjects: emptyContextObjects(),
+    contextObjectsSearch: "",
     isPreview,
     allowInteractionIntelligence,
 });
@@ -222,7 +229,20 @@ const chatWindowSlice = createSlice({
                 loadedPages: 1,
                 hasNextPage: false,
                 isLoading: false,
+                isExternal: true,
             };
+        },
+        setContextObjectsSearchAction: (
+            state,
+            { payload: { search } }: PayloadAction<{ search: string }>,
+        ) => {
+            state.contextObjectsSearch = search;
+
+            (["dashboard", "visualization"] as ContextObjectKind[]).forEach((kind) => {
+                if (!state.contextObjects[kind].isExternal) {
+                    state.contextObjects[kind] = emptyContextObjectList();
+                }
+            });
         },
         contextObjectsLoadingAction: (
             state,
@@ -354,6 +374,7 @@ export const {
     initContextObjectsAction,
     loadContextObjectsNextPageAction,
     setContextObjectsAction,
+    setContextObjectsSearchAction,
     contextObjectsLoadingAction,
     contextObjectsPageLoadedAction,
     contextObjectsLoadFailedAction,

@@ -31,16 +31,25 @@ export function GenAiChatContextChooser({ onAddContext }: GenAiChatContextChoose
     const titleId = useIdPrefixed("context-chooser-title");
     const ambient = useSelector((state: RootState) => ambientContextSelector(state));
     const active = useSelector((state: RootState) => userContextSelector(state));
-    const { items: inputItems, isLoading, hasNextPage, loadNextPage } = useContextItems(ambient, active);
+    const {
+        items: inputItems,
+        search,
+        setSearch,
+        isLoading,
+        hasNextPage,
+        loadNextPage,
+    } = useContextItems(ambient, active);
     const addContextLabel = intl.formatMessage(msgs.add);
 
     const onOpenStateChanged = useCallback(
         (isOpen: boolean) => {
+            setSearch("");
+
             if (isOpen) {
                 dispatch(initContextObjectsAction());
             }
         },
-        [dispatch],
+        [dispatch, setSearch],
     );
 
     if (!ambient) {
@@ -68,7 +77,7 @@ export function GenAiChatContextChooser({ onAddContext }: GenAiChatContextChoose
                             ariaLabel: addContextLabel,
                         }}
                         onClick={toggleDropdown}
-                        isDisabled={!inputItems.length && !hasNextPage && !isLoading}
+                        isDisabled={!search && !inputItems.length && !hasNextPage && !isLoading}
                     />
                 )}
                 renderBody={({ closeDropdown, ariaAttributes }) => (
@@ -76,6 +85,8 @@ export function GenAiChatContextChooser({ onAddContext }: GenAiChatContextChoose
                         inputItems={inputItems}
                         title={addContextLabel}
                         titleId={titleId}
+                        search={search}
+                        onSearchChange={setSearch}
                         isLoading={isLoading}
                         hasNextPage={hasNextPage}
                         loadNextPage={loadNextPage}

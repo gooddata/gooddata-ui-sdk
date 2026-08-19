@@ -53,26 +53,19 @@ export function ConfigProvider({
     const value = useMemo(
         () => ({
             allowNativeLinks: allowNativeLinks ?? parentConfig.allowNativeLinks,
-            linkHandler: linkHandler ?? parentConfig.linkHandler,
+            linkHandler: linkHandler
+                ? (event: LinkHandlerEvent) => {
+                      const resultParent = parentConfig.linkHandler?.(event);
+                      const resultCurrent = linkHandler?.(event);
+                      return resultCurrent ?? resultParent;
+                  }
+                : parentConfig.linkHandler,
             catalogItems: catalogItems ?? parentConfig.catalogItems,
             canManage: canManage ?? parentConfig.canManage,
             canAnalyze: canAnalyze ?? parentConfig.canAnalyze,
             canFullControl: canFullControl ?? parentConfig.canFullControl,
         }),
-        [
-            allowNativeLinks,
-            parentConfig.allowNativeLinks,
-            parentConfig.linkHandler,
-            parentConfig.catalogItems,
-            parentConfig.canManage,
-            parentConfig.canAnalyze,
-            parentConfig.canFullControl,
-            linkHandler,
-            catalogItems,
-            canManage,
-            canAnalyze,
-            canFullControl,
-        ],
+        [allowNativeLinks, parentConfig, linkHandler, catalogItems, canManage, canAnalyze, canFullControl],
     );
 
     return <configContext.Provider value={value}>{children}</configContext.Provider>;

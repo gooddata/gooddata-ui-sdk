@@ -14,13 +14,18 @@ import {
     loadContextObjectsNextPageAction,
     setContextObjectsAction,
 } from "../../chatWindow/chatWindowSlice.js";
-import { initContextObjects, loadContextObjectsNextPage } from "../loadContextObjects.js";
+import {
+    initContextObjects,
+    loadContextObjectsNextPage,
+    reloadContextObjects,
+} from "../loadContextObjects.js";
 
 const emptyState: ContextObjectListState = {
     items: [],
     loadedPages: 0,
     hasNextPage: true,
     isLoading: false,
+    isExternal: false,
 };
 
 function listedDashboard(id: string, ref: ObjRef = idRef(id, "analyticalDashboard")): IListedDashboard {
@@ -54,11 +59,17 @@ function insight(id: string): IInsight {
 }
 
 function pagedQuery(result: { items: unknown[]; offset: number; totalCount: number }) {
-    const asked = { page: -1, size: -1, sorting: [] as string[] };
+    const asked = {
+        page: -1,
+        size: -1,
+        sorting: [] as string[],
+        filter: undefined as { title?: string } | undefined,
+    };
     const query: any = {
         withPage: (page: number) => ((asked.page = page), query),
         withSize: (size: number) => ((asked.size = size), query),
         withSorting: (sorting: string[]) => ((asked.sorting = sorting), query),
+        withFilter: (filter: { title?: string }) => ((asked.filter = filter), query),
         query: () => Promise.resolve(result),
     };
 
@@ -74,6 +85,7 @@ async function run(
         visualizations = emptyState,
         externalDashboards,
         externalVisualizations,
+        search = "",
         dashboardsQuery = emptyPage,
         insightsQuery = emptyPage,
     }: {
@@ -81,18 +93,34 @@ async function run(
         visualizations?: ContextObjectListState;
         externalDashboards?: IListedDashboard[];
         externalVisualizations?: IInsight[];
+        search?: string;
         dashboardsQuery?: any;
         insightsQuery?: any;
     } = {},
 ) {
     const dispatched: unknown[] = [];
+    const lists: Record<ContextObjectKind, ContextObjectListState> = {
+        dashboard: { ...dashboards },
+        visualization: { ...visualizations },
+    };
 
     await runSaga(
         {
-            dispatch: (action: unknown) => dispatched.push(action),
+            dispatch: (action: any) => {
+                dispatched.push(action);
+
+                // Keep what the sagas select in step with the pages they load, as the reducer does.
+                if (action.type === contextObjectsPageLoadedAction.type) {
+                    const list = lists[action.payload.kind as ContextObjectKind];
+
+                    list.loadedPages += 1;
+                    list.hasNextPage = action.payload.hasNextPage;
+                }
+            },
             getState: () => ({
                 [chatWindowSliceName]: {
-                    contextObjects: { dashboard: dashboards, visualization: visualizations },
+                    contextObjects: lists,
+                    contextObjectsSearch: search,
                 },
             }),
             context: {
@@ -124,7 +152,12 @@ describe("initContextObjects", () => {
 
         const dispatched = await run(initContextObjects, { dashboardsQuery: dashboards.query });
 
-        expect(dashboards.asked).toEqual({ page: 0, size: 100, sorting: ["title,asc"] });
+        expect(dashboards.asked).toEqual({
+            page: 0,
+            size: 100,
+            sorting: ["title,asc"],
+            filter: undefined,
+        });
         expect(dispatched).toContainEqual(
             contextObjectsPageLoadedAction({
                 kind: "dashboard",
@@ -268,6 +301,7 @@ describe("initContextObjects", () => {
                 getState: () => ({
                     [chatWindowSliceName]: {
                         contextObjects: { dashboard: emptyState, visualization: emptyState },
+                        contextObjectsSearch: "",
                     },
                 }),
                 context: {
@@ -295,6 +329,77 @@ describe("initContextObjects", () => {
     });
 });
 
+describe("searching", () => {
+    it("asks the backend for the searched title", async () => {
+        const dashboards = pagedQuery({ items: [listedDashboard("a")], offset: 0, totalCount: 1 });
+
+        await run(initContextObjects, { search: "revenue", dashboardsQuery: dashboards.query });
+
+        expect(dashboards.asked.filter).toEqual({ title: "revenue" });
+    });
+
+    it("keeps the search on the pages that follow", async () => {
+        const insights = pagedQuery({ items: [insight("v1")], offset: 100, totalCount: 300 });
+
+        await run(nextPage("visualization"), {
+            visualizations: { ...emptyState, loadedPages: 1 },
+            search: "revenue",
+            insightsQuery: insights.query,
+        });
+
+        expect(insights.asked).toMatchObject({ page: 1, filter: { title: "revenue" } });
+    });
+
+    it("does not filter on whitespace alone", async () => {
+        const dashboards = pagedQuery({ items: [listedDashboard("a")], offset: 0, totalCount: 1 });
+
+        await run(initContextObjects, { search: "   ", dashboardsQuery: dashboards.query });
+
+        expect(dashboards.asked.filter).toBeUndefined();
+    });
+
+    it("starts both lists over when the search changed", async () => {
+        const dashboards = pagedQuery({ items: [listedDashboard("a")], offset: 0, totalCount: 1 });
+        const insights = pagedQuery({ items: [insight("v1")], offset: 0, totalCount: 1 });
+
+        const dispatched = await run(reloadContextObjects, {
+            search: "revenue",
+            dashboardsQuery: dashboards.query,
+            insightsQuery: insights.query,
+        });
+
+        expect(dashboards.asked).toMatchObject({ page: 0, filter: { title: "revenue" } });
+        expect(insights.asked).toMatchObject({ page: 0, filter: { title: "revenue" } });
+        expect(dispatched).toContainEqual(
+            contextObjectsPageLoadedAction({
+                kind: "visualization",
+                items: [{ id: "v1", ref: idRef("v1", "insight"), title: "Insight v1" }],
+                hasNextPage: false,
+            }),
+        );
+        expect(dispatched).toContainEqual(
+            contextObjectsPageLoadedAction({
+                kind: "dashboard",
+                items: [{ id: "a", ref: idRef("a", "analyticalDashboard"), title: "Dashboard a" }],
+                hasNextPage: false,
+            }),
+        );
+    });
+
+    it("holds the visualizations back while the searched dashboards have more pages", async () => {
+        const dashboards = pagedQuery({ items: [listedDashboard("a")], offset: 0, totalCount: 5 });
+        const insights = pagedQuery({ items: [insight("v1")], offset: 0, totalCount: 1 });
+
+        await run(reloadContextObjects, {
+            search: "revenue",
+            dashboardsQuery: dashboards.query,
+            insightsQuery: insights.query,
+        });
+
+        expect(insights.asked.page).toBe(-1);
+    });
+});
+
 describe("loadContextObjectsNextPage", () => {
     it("asks for the first page of the visualizations once the dashboards are exhausted", async () => {
         const insights = pagedQuery({ items: [insight("v1")], offset: 0, totalCount: 1 });
@@ -304,7 +409,7 @@ describe("loadContextObjectsNextPage", () => {
             insightsQuery: insights.query,
         });
 
-        expect(insights.asked).toEqual({ page: 0, size: 100, sorting: ["title,asc"] });
+        expect(insights.asked).toEqual({ page: 0, size: 100, sorting: ["title,asc"], filter: undefined });
         expect(dispatched).toContainEqual(
             contextObjectsPageLoadedAction({
                 kind: "visualization",

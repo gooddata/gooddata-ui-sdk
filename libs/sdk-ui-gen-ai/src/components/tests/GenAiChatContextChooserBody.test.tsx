@@ -2,7 +2,7 @@
 
 import { type ReactNode } from "react";
 
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
 
@@ -65,6 +65,7 @@ import { type IGenAIContextObject } from "../../types.js";
 import { GenAiChatContextChooserBody } from "../GenAiChatContextChooserBody.js";
 
 const SEARCH_FIELD_VISIBILITY_THRESHOLD = 7;
+const SEARCH_DEBOUNCE_MS = 300;
 
 const messages = {
     "gd.gen-ai.context.add_context": "Add context",
@@ -99,10 +100,14 @@ function renderBody(
         isLoading = false,
         hasNextPage = false,
         loadNextPage = vi.fn(),
+        search = "",
+        onSearchChange = vi.fn(),
     }: {
         isLoading?: boolean;
         hasNextPage?: boolean;
         loadNextPage?: () => void;
+        search?: string;
+        onSearchChange?: (search: string) => void;
     } = {},
 ) {
     const closeDropdown = vi.fn();
@@ -113,6 +118,8 @@ function renderBody(
                 inputItems={inputItems}
                 title="Add context"
                 titleId="context-chooser-title"
+                search={search}
+                onSearchChange={onSearchChange}
                 isLoading={isLoading}
                 hasNextPage={hasNextPage}
                 loadNextPage={loadNextPage}
@@ -123,7 +130,7 @@ function renderBody(
         </IntlProvider>,
     );
 
-    return { onSelect, closeDropdown, loadNextPage };
+    return { onSelect, closeDropdown, loadNextPage, onSearchChange };
 }
 
 describe("GenAiChatContextChooserBody", () => {
@@ -193,18 +200,59 @@ describe("GenAiChatContextChooserBody", () => {
         expect(screen.getByTestId("context-chooser-loading")).toBeInTheDocument();
     });
 
-    it("filters items by search query", () => {
-        renderBody([
-            ...Array.from({ length: SEARCH_FIELD_VISIBILITY_THRESHOLD }, (_, index) =>
-                createItem(`item-${index}`, `Item ${index}`),
-            ),
-            createItem("target", "Unique Target Widget"),
-        ]);
+    it("hands the typed title over once the typing pauses", () => {
+        vi.useFakeTimers();
 
-        fireEvent.change(screen.getByRole("searchbox"), { target: { value: "unique target" } });
+        try {
+            const { onSearchChange } = renderBody(
+                Array.from({ length: SEARCH_FIELD_VISIBILITY_THRESHOLD + 1 }, (_, index) =>
+                    createItem(`item-${index}`, `Item ${index}`),
+                ),
+            );
+
+            fireEvent.change(screen.getByRole("searchbox"), { target: { value: " unique " } });
+            expect(onSearchChange).not.toHaveBeenCalled();
+
+            act(() => {
+                vi.advanceTimersByTime(SEARCH_DEBOUNCE_MS);
+            });
+
+            expect(onSearchChange).toHaveBeenCalledWith("unique");
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it("does not filter the items it was handed - the backend already did", () => {
+        renderBody([createItem("target", "Unique Target Widget")], vi.fn(), { search: "nothing alike" });
 
         expect(screen.getByText("Unique Target Widget")).toBeInTheDocument();
-        expect(screen.queryByText("Item 0")).not.toBeInTheDocument();
+    });
+
+    it("keeps the search field once something is typed, however little comes back", () => {
+        renderBody([createItem("target", "Unique Target Widget")], vi.fn(), { search: "unique" });
+
+        fireEvent.change(screen.getByRole("searchbox"), { target: { value: "unique" } });
+
+        expect(screen.getByRole("searchbox", { name: "Search context items" })).toBeInTheDocument();
+    });
+
+    it("keeps paging while a search is on", () => {
+        renderBody([createItem("target", "Unique Target Widget")], vi.fn(), {
+            search: "unique",
+            hasNextPage: true,
+        });
+
+        expect(screen.getByTestId("context-chooser-paged-list")).toHaveAttribute(
+            "data-has-next-page",
+            "true",
+        );
+    });
+
+    it("offers the search field while more objects are waiting on the next page", () => {
+        renderBody([createItem("widget-1", "Sales Chart")], vi.fn(), { hasNextPage: true });
+
+        expect(screen.getByRole("searchbox", { name: "Search context items" })).toBeInTheDocument();
     });
 
     it("selects an item on click", () => {

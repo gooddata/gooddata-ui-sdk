@@ -12,6 +12,7 @@ import {
     contextObjectsPageLoadedAction,
     getInitialChatWindowState,
     setContextObjectsAction,
+    setContextObjectsSearchAction,
 } from "../chatWindowSlice.js";
 
 function dashboard(id: string): IGenAIContextListItem {
@@ -22,12 +23,19 @@ describe("chatWindowSlice - context objects", () => {
     it("starts out empty and open-ended", () => {
         const state = getInitialChatWindowState().contextObjects;
 
-        expect(state.dashboard).toEqual({ items: [], loadedPages: 0, hasNextPage: true, isLoading: false });
+        expect(state.dashboard).toEqual({
+            items: [],
+            loadedPages: 0,
+            hasNextPage: true,
+            isLoading: false,
+            isExternal: false,
+        });
         expect(state.visualization).toEqual({
             items: [],
             loadedPages: 0,
             hasNextPage: true,
             isLoading: false,
+            isExternal: false,
         });
     });
 
@@ -59,6 +67,7 @@ describe("chatWindowSlice - context objects", () => {
             loadedPages: 1,
             hasNextPage: true,
             isLoading: false,
+            isExternal: false,
         });
     });
 
@@ -147,6 +156,40 @@ describe("chatWindowSlice - context objects", () => {
         expect(state.contextObjects.dashboard.hasNextPage).toBe(true);
     });
 
+    it("starts the paged lists over when the searched title changes", () => {
+        const loaded = chatWindowSliceReducer(
+            getInitialChatWindowState(),
+            contextObjectsPageLoadedAction({
+                kind: "dashboard",
+                items: [dashboard("a")],
+                hasNextPage: true,
+            }),
+        );
+
+        const state = chatWindowSliceReducer(loaded, setContextObjectsSearchAction({ search: "revenue" }));
+
+        expect(state.contextObjectsSearch).toBe("revenue");
+        expect(state.contextObjects.dashboard).toEqual({
+            items: [],
+            loadedPages: 0,
+            hasNextPage: true,
+            isLoading: false,
+            isExternal: false,
+        });
+    });
+
+    it("keeps an externally supplied list when the searched title changes", () => {
+        const external = chatWindowSliceReducer(
+            getInitialChatWindowState(),
+            setContextObjectsAction({ kind: "dashboard", items: [dashboard("a")] }),
+        );
+
+        const state = chatWindowSliceReducer(external, setContextObjectsSearchAction({ search: "revenue" }));
+
+        expect(state.contextObjects.dashboard.items).toEqual([dashboard("a")]);
+        expect(state.contextObjects.visualization.items).toEqual([]);
+    });
+
     it("treats an externally supplied list as complete", () => {
         const state = chatWindowSliceReducer(
             getInitialChatWindowState(),
@@ -158,6 +201,7 @@ describe("chatWindowSlice - context objects", () => {
             loadedPages: 1,
             hasNextPage: false,
             isLoading: false,
+            isExternal: true,
         });
     });
 

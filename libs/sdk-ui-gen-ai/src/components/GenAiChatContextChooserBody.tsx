@@ -1,10 +1,11 @@
 // (C) 2026 GoodData Corporation
 
-import { type KeyboardEvent, useCallback, useId, useMemo, useState } from "react";
+import { type KeyboardEvent, useCallback, useEffect, useId } from "react";
 
 import cx from "classnames";
 import { defineMessages, useIntl } from "react-intl";
 
+import { useDebouncedState } from "@gooddata/sdk-ui";
 import {
     DEFAULT_ITEM_HEIGHT,
     DETAILED_ANNOUNCEMENT_THRESHOLD,
@@ -25,6 +26,7 @@ import { type IGenAIContextObject } from "../types.js";
 import { getIconByType } from "./utils/icons.js";
 
 const SEARCH_FIELD_VISIBILITY_THRESHOLD = 7;
+const SEARCH_DEBOUNCE_MS = 300;
 const MAX_VISIBLE_ITEMS = 7;
 const LOADING_SKELETON_ITEMS_COUNT = 3;
 
@@ -53,6 +55,8 @@ type GenAiChatContextChooserBodyProps = {
     inputItems: IGenAIContextObject[];
     title: string;
     titleId: string;
+    search: string;
+    onSearchChange: (search: string) => void;
     isLoading?: boolean;
     hasNextPage?: boolean;
     loadNextPage?: () => void;
@@ -69,6 +73,8 @@ export function GenAiChatContextChooserBody({
     inputItems,
     title,
     titleId,
+    search,
+    onSearchChange,
     isLoading = false,
     hasNextPage = false,
     loadNextPage,
@@ -78,19 +84,17 @@ export function GenAiChatContextChooserBody({
 }: GenAiChatContextChooserBodyProps) {
     const intl = useIntl();
     const listboxId = useId();
-    const [searchString, setSearchString] = useState("");
+    const [searchString, setSearchString, debouncedSearch] = useDebouncedState(search, SEARCH_DEBOUNCE_MS);
 
-    const isSearchFieldVisible = inputItems.length > SEARCH_FIELD_VISIBILITY_THRESHOLD;
-    const searchStringToUse = isSearchFieldVisible ? searchString : "";
-    const normalizedSearch = searchStringToUse.trim().toLowerCase();
-
-    const filteredItems = useMemo(() => {
-        if (!normalizedSearch) {
-            return inputItems;
+    useEffect(() => {
+        if (debouncedSearch.trim() !== search) {
+            onSearchChange(debouncedSearch.trim());
         }
+    }, [debouncedSearch, search, onSearchChange]);
 
-        return inputItems.filter((item) => item.title.toLowerCase().includes(normalizedSearch));
-    }, [inputItems, normalizedSearch]);
+    const isSearchFieldVisible =
+        inputItems.length > SEARCH_FIELD_VISIBILITY_THRESHOLD || searchString.length > 0 || hasNextPage;
+    const normalizedSearch = search.trim().toLowerCase();
 
     const scopedIdStoreValue = useScopedIdStoreValue(
         (item: IGenAIContextObject) => `${item.type}-${item.id}`,
@@ -104,7 +108,7 @@ export function GenAiChatContextChooserBody({
         [closeDropdown, onSelect],
     );
 
-    const hasNoData = !isLoading && filteredItems.length === 0;
+    const hasNoData = !isLoading && inputItems.length === 0;
     const hasNoMatchingData = hasNoData && normalizedSearch.length > 0;
     const searchFilled = searchString.length > 0;
 
@@ -119,12 +123,11 @@ export function GenAiChatContextChooserBody({
         [closeDropdown, searchFilled],
     );
 
-    const canLoadNextPage = hasNextPage && normalizedSearch.length === 0;
-    const shouldShowPagedList = !hasNoData || canLoadNextPage;
+    const shouldShowPagedList = !hasNoData || hasNextPage;
     const skeletonItemsCount =
-        isLoading || (canLoadNextPage && filteredItems.length === 0) ? LOADING_SKELETON_ITEMS_COUNT : 0;
+        isLoading || (hasNextPage && inputItems.length === 0) ? LOADING_SKELETON_ITEMS_COUNT : 0;
 
-    const visibleRowsCount = filteredItems.length + skeletonItemsCount;
+    const visibleRowsCount = inputItems.length + skeletonItemsCount;
     const listMaxHeight = Math.min(Math.max(visibleRowsCount, 1), MAX_VISIBLE_ITEMS) * DEFAULT_ITEM_HEIGHT;
 
     return (
@@ -152,7 +155,7 @@ export function GenAiChatContextChooserBody({
                     >
                         <Input
                             className={cx("gd-list-searchfield", "gd-flex-item")}
-                            value={searchStringToUse}
+                            value={searchString}
                             onChange={(value) => setSearchString(String(value))}
                             onEscKeyPress={onEscKeyPress}
                             placeholder={intl.formatMessage(msgs.searchPlaceholder)}
@@ -168,10 +171,10 @@ export function GenAiChatContextChooserBody({
                         />
                     </div>
                     <UiSearchResultsAnnouncement
-                        totalResults={normalizedSearch ? filteredItems.length : undefined}
+                        totalResults={normalizedSearch ? inputItems.length : undefined}
                         resultValues={
-                            filteredItems.length <= DETAILED_ANNOUNCEMENT_THRESHOLD
-                                ? filteredItems.map((item) => item.title)
+                            inputItems.length <= DETAILED_ANNOUNCEMENT_THRESHOLD
+                                ? inputItems.map((item) => item.title)
                                 : undefined
                         }
                     />
@@ -181,13 +184,13 @@ export function GenAiChatContextChooserBody({
                 <ScopedIdStore value={scopedIdStoreValue}>
                     <UiPagedVirtualList
                         maxHeight={listMaxHeight}
-                        items={filteredItems}
+                        items={inputItems}
                         itemHeight={DEFAULT_ITEM_HEIGHT}
                         itemsGap={0}
                         itemPadding={0}
                         skeletonItemsCount={skeletonItemsCount}
                         isLoading={isLoading}
-                        hasNextPage={canLoadNextPage}
+                        hasNextPage={hasNextPage}
                         loadNextPage={loadNextPage}
                         representAs="listbox"
                         closeDropdown={closeDropdown}

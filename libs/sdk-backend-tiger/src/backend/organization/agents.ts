@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import {
-    AgentAi_ListAvailableSkills,
+    AgentsAi_ListAvailableSkills,
     EntitiesApi_CreateEntityAgents,
     EntitiesApi_DeleteEntityAgents,
     EntitiesApi_GetEntityAgents,
@@ -39,7 +39,7 @@ export class OrganizationAgentsService implements IOrganizationAgentsService {
 
     public getAvailableSkills(): Promise<IAgentSkill[]> {
         return this.authCall(async (client: ITigerClientBase) => {
-            const result = await AgentAi_ListAvailableSkills(client.axios, client.basePath);
+            const result = await AgentsAi_ListAvailableSkills(client.axios, client.basePath);
             return result.data.map(convertAgentSkill);
         });
     }

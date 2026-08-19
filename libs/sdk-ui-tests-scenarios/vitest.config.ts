@@ -20,8 +20,11 @@ export default defineConfig({
         fileParallelism: false,
         pool: "threads",
         maxWorkers: 8, // Thread count for CI
-        isolate: true,
+        isolate: false,
         maxConcurrency: 8, // Concurrency for CI
+        restoreMocks: true,
+        unstubEnvs: true,
+        unstubGlobals: true,
         // Disable slow operations when not needed
         globals: false,
         // Speed up test runs by avoiding unnecessary operations

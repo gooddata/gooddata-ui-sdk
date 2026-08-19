@@ -60,6 +60,24 @@ export const absoluteFormFilterWithSecondsInOneDay: IUiAbsoluteDateFilterForm = 
     visible: true,
 };
 
+export const absoluteFormFilterWithSecondsOnlyChangeInOneDay: IUiAbsoluteDateFilterForm = {
+    localIdentifier: "ABSOLUTE_FORM",
+    type: "absoluteForm",
+    from: "2019-01-01 00:00:30",
+    to: "2019-01-01 23:59:40",
+    name: "Static range",
+    visible: true,
+};
+
+export const absoluteFormFilterWithWholeDaySeconds: IUiAbsoluteDateFilterForm = {
+    localIdentifier: "ABSOLUTE_FORM",
+    type: "absoluteForm",
+    from: "2019-01-01 00:00:00",
+    to: "2019-01-01 23:59:59",
+    name: "Static range",
+    visible: true,
+};
+
 export const absoluteFormFilterWithSecondsWithinMoreDays: IUiAbsoluteDateFilterForm = {
     localIdentifier: "ABSOLUTE_FORM",
     type: "absoluteForm",

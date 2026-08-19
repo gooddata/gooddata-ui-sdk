@@ -11,7 +11,7 @@
                 "tags": [
                     "Conversations"
                 ],
-                "summary": "Post Conversations",
+                "summary": "Start a conversation",
                 "operationId": "post_conversations_api_v1_ai_workspaces__workspace_id__chat_conversations_post",
                 "parameters": [
                     {
@@ -70,7 +70,8 @@
                 "tags": [
                     "Conversations"
                 ],
-                "summary": "Get Conversations",
+                "summary": "List conversations",
+                "description": "Conversations belonging to the current user in this workspace.",
                 "operationId": "get_conversations_api_v1_ai_workspaces__workspace_id__chat_conversations_get",
                 "parameters": [
                     {
@@ -145,7 +146,7 @@
                 "tags": [
                     "Conversations"
                 ],
-                "summary": "Get Conversation",
+                "summary": "Get a conversation",
                 "operationId": "get_conversation_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__get",
                 "parameters": [
                     {
@@ -194,7 +195,8 @@
                 "tags": [
                     "Conversations"
                 ],
-                "summary": "Patch Conversation",
+                "summary": "Update a conversation",
+                "description": "Only the title and the pinned flag can be changed.",
                 "operationId": "patch_conversation_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__patch",
                 "parameters": [
                     {
@@ -259,7 +261,7 @@
                 "tags": [
                     "Conversations"
                 ],
-                "summary": "Delete Conversation",
+                "summary": "Delete a conversation",
                 "operationId": "delete_conversation_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__delete",
                 "parameters": [
                     {
@@ -303,7 +305,8 @@
                 "tags": [
                     "Conversations"
                 ],
-                "summary": "Post Generate Conversation Title",
+                "summary": "Generate a title",
+                "description": "Derives a title for the conversation from the messages exchanged so far.",
                 "operationId": "post_generate_conversation_title_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__generateTitle_post",
                 "parameters": [
                     {
@@ -350,7 +353,8 @@
                 "tags": [
                     "Conversations"
                 ],
-                "summary": "Switch the active agent on an existing conversation",
+                "summary": "Switch agent",
+                "description": "Changes the active agent on an existing conversation.",
                 "operationId": "switchAgent",
                 "parameters": [
                     {
@@ -408,9 +412,10 @@
         "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/items": {
             "get": {
                 "tags": [
-                    "Items"
+                    "Conversations"
                 ],
-                "summary": "Get Conversation Items",
+                "summary": "List conversation items",
+                "description": "Items in the order the agent produced them: text, visualizations, dashboards.",
                 "operationId": "get_conversation_items_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__items_get",
                 "parameters": [
                     {
@@ -459,9 +464,9 @@
         "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/responses": {
             "get": {
                 "tags": [
-                    "Responses"
+                    "Conversations"
                 ],
-                "summary": "Get Conversation Responses",
+                "summary": "List responses",
                 "operationId": "get_conversation_responses_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__responses_get",
                 "parameters": [
                     {
@@ -510,9 +515,10 @@
         "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/messages": {
             "post": {
                 "tags": [
-                    "Messages"
+                    "Conversations"
                 ],
-                "summary": "Post Messages",
+                "summary": "Send a message",
+                "description": "Streams the agent's reply back over SSE; see the 200 response for the event sequence.",
                 "operationId": "post_messages_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__messages_post",
                 "parameters": [
                     {
@@ -598,9 +604,10 @@
         "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/responses/{response_id}": {
             "patch": {
                 "tags": [
-                    "Responses"
+                    "Conversations"
                 ],
-                "summary": "Patch Response",
+                "summary": "Rate a response",
+                "description": "Attaches positive or negative feedback, with optional free-text, to one response.",
                 "operationId": "patch_response_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__responses__response_id__patch",
                 "parameters": [
                     {
@@ -667,9 +674,9 @@
         "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/feedback": {
             "post": {
                 "tags": [
-                    "Responses"
+                    "Conversations"
                 ],
-                "summary": "Post Feedback",
+                "summary": "Submit feedback",
                 "operationId": "post_feedback_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__feedback_post",
                 "parameters": [
                     {
@@ -727,9 +734,10 @@
         "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/visualizations/{visualization_id}": {
             "patch": {
                 "tags": [
-                    "Visualizations"
+                    "Conversations"
                 ],
-                "summary": "Patch Visualization",
+                "summary": "Link a saved visualization",
+                "description": "Re-points the conversation's visualization at the metadata object the user saved.",
                 "operationId": "patch_visualization_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__visualizations__visualization_id__patch",
                 "parameters": [
                     {
@@ -796,9 +804,10 @@
         "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/dashboards/{dashboard_id}": {
             "patch": {
                 "tags": [
-                    "Dashboards"
+                    "Conversations"
                 ],
-                "summary": "Patch Dashboard",
+                "summary": "Link a saved dashboard",
+                "description": "Re-points the conversation's dashboard at the metadata object the user saved.",
                 "operationId": "patch_dashboard_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__dashboards__dashboard_id__patch",
                 "parameters": [
                     {
@@ -865,7 +874,7 @@
         "/api/v1/ai/agent/skills": {
             "get": {
                 "tags": [
-                    "Agent"
+                    "Agents"
                 ],
                 "summary": "Get Skills",
                 "operationId": "listAvailableSkills",
@@ -892,8 +901,8 @@
                 "tags": [
                     "Agents"
                 ],
-                "summary": "List agents available to the current user in a workspace",
-                "description": "List agents the calling user can use in this workspace, sorted A-Z.\n\nThis is the personalized \"usable here\" view for the agent switcher --\naccess-filtered to the caller, enabled, non-preview, with per-agent\nlastUsedAt. For agent CRUD/management use the metadata entity endpoint\nGET /api/v1/entities/agents instead.",
+                "summary": "List available agents",
+                "description": "List agents the user can use in this workspace, sorted A-Z.\n\nThis is the personalized \"usable here\" view for the agent switcher --\naccess-filtered to the user, enabled, non-preview, with per-agent\nlastUsedAt. For agent CRUD/management use the metadata entity endpoint\nGET /api/v1/entities/agents instead.",
                 "operationId": "listAgents",
                 "parameters": [
                     {
@@ -933,7 +942,7 @@
         "/api/v1/ai/workspaces/{workspace_id}/summary": {
             "post": {
                 "tags": [
-                    "Summary"
+                    "Dashboard Summary"
                 ],
                 "summary": "(EXPERIMENTAL) Summarize a dashboard",
                 "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. Generates a natural-language summary of a dashboard's visualizations, optionally scoped by an explicit filter context.",
@@ -986,10 +995,10 @@
         "/api/v1/ai/organization/observability": {
             "get": {
                 "tags": [
-                    "AI Observability"
+                    "Observability"
                 ],
-                "summary": "(EXPERIMENTAL) AI observability overview for the caller's organization",
-                "description": "Returns AI usage stats for the caller's organization for the current calendar month, alongside the previous month's value. Backed by the ai_usage_counters table populated by the metering pipeline.",
+                "summary": "(EXPERIMENTAL) AI observability overview",
+                "description": "Returns AI usage stats for the user's organization for the current calendar month, alongside the previous month's value. Backed by the ai_usage_counters table populated by the metering pipeline.",
                 "operationId": "getObservabilityOverview",
                 "responses": {
                     "200": {
@@ -2040,9 +2049,10 @@
         "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/steps": {
             "get": {
                 "tags": [
-                    "Interaction Steps"
+                    "Conversations"
                 ],
-                "summary": "Get Conversation Interaction Steps",
+                "summary": "List reasoning steps",
+                "description": "The agent's interaction steps, available when interaction intelligence is enabled.",
                 "operationId": "get_conversation_interaction_steps_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__steps_get",
                 "parameters": [
                     {
@@ -7977,7 +7987,7 @@
                             }
                         ],
                         "title": "Definition",
-                        "description": "Full definition of the dashboard currently open in the client, as the client holds it. Accepted so per-widget configuration the widget descriptors do not carry — such as which dashboard filters a widget ignores — can ground the assistant's answers. Not yet interpreted: sending it currently has no effect on the response. Optional."
+                        "description": "Full layout definition of the open dashboard."
                     },
                     "filters": {
                         "anyOf": [
@@ -9155,5 +9165,11 @@
                 "title": "RankingFilter"
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "Conversations",
+            "description": "Chat with an AI Assistant agent. A conversation holds the message history for one workspace and user; sending a message streams the agent's reply back over SSE as a sequence of items (text, visualizations, dashboards) that these endpoints then read back, rate, or link to saved metadata objects."
+        }
+    ]
 }

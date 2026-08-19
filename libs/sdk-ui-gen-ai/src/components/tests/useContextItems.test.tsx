@@ -50,12 +50,14 @@ function renderItems(
         active,
         state,
         visualizationsState,
+        search = "",
     }: {
         visualizations?: IGenAIContextListItem[];
         ambient?: IGenAIUserContext;
         active?: IGenAIUserContext;
         state?: Partial<ContextObjectListState>;
         visualizationsState?: Partial<ContextObjectListState>;
+        search?: string;
     } = {},
 ) {
     const storeState = {
@@ -66,6 +68,7 @@ function renderItems(
                     loadedPages: 1,
                     hasNextPage: false,
                     isLoading: false,
+                    isExternal: false,
                     ...state,
                 },
                 visualization: {
@@ -73,9 +76,11 @@ function renderItems(
                     loadedPages: 1,
                     hasNextPage: false,
                     isLoading: false,
+                    isExternal: false,
                     ...visualizationsState,
                 },
             },
+            contextObjectsSearch: search,
         },
     };
     const store = {
@@ -253,6 +258,53 @@ describe("useContextItems", () => {
                 payload: { kind: "visualization" },
             }),
         );
+    });
+
+    it("matches the ambient objects against the search itself - they were never queried", () => {
+        const { result } = renderItems([], { search: "sales" });
+
+        expect(result.current.items.map((item) => item.title)).toEqual(["Sales by Region"]);
+    });
+
+    it("leaves the searching of a paged list to the backend", () => {
+        const { result } = renderItems([dashboard("marketing", "Marketing")], { search: "nothing alike" });
+
+        expect(result.current.items.map((item) => item.id)).toContain("marketing");
+    });
+
+    it("matches a list handed in from the outside against the search itself", () => {
+        const { result } = renderItems(
+            [dashboard("marketing", "Marketing"), dashboard("finance", "Finance")],
+            {
+                state: { isExternal: true },
+                search: "marketing",
+            },
+        );
+
+        const offeredIds = result.current.items.map((item) => item.id);
+        expect(offeredIds).toContain("marketing");
+        expect(offeredIds).not.toContain("finance");
+    });
+
+    it("asks the store to search when told to", () => {
+        const { result, store } = renderItems([dashboard("marketing")]);
+
+        result.current.setSearch("revenue");
+
+        expect(store.dispatch).toHaveBeenCalledWith(
+            expect.objectContaining({
+                type: "chatWindow/setContextObjectsSearchAction",
+                payload: { search: "revenue" },
+            }),
+        );
+    });
+
+    it("does not repeat a search it is already showing", () => {
+        const { result, store } = renderItems([dashboard("marketing")], { search: "revenue" });
+
+        result.current.setSearch("revenue");
+
+        expect(store.dispatch).not.toHaveBeenCalled();
     });
 
     it("reports no next page and loads nothing once both lists are complete", () => {

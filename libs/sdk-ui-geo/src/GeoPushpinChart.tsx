@@ -27,7 +27,7 @@ import {
     useResolveValuesWithPlaceholders,
     withContexts,
 } from "@gooddata/sdk-ui";
-import { withTheme } from "@gooddata/sdk-ui-theme-provider";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { CoreGeoChart } from "./core/CoreGeoChart.js";
 import {
@@ -96,6 +96,7 @@ const getNonCoreProps = (
 
 function GeoPushpinChartInner(props: GeoPushpinChartPropsUnion): ReactElement {
     const { backend, workspace, sortBy, filters, exportTitle, execConfig = {} } = props;
+    const theme = useTheme();
 
     const buckets = getBuckets(props);
     const newProps = omit(props, getNonCoreProps(props));
@@ -120,6 +121,7 @@ function GeoPushpinChartInner(props: GeoPushpinChartPropsUnion): ReactElement {
                             exportTitle={exportTitle || "GeoPushpinChart"}
                             enableExecutionCancelling={props.config?.enableExecutionCancelling ?? false}
                             {...newProps}
+                            theme={theme}
                         />
                     );
                 }}
@@ -128,7 +130,7 @@ function GeoPushpinChartInner(props: GeoPushpinChartPropsUnion): ReactElement {
     );
 }
 
-const WrappedGeoPushpinChart = withTheme(withContexts(GeoPushpinChartInner));
+const WrappedGeoPushpinChart = withContexts(GeoPushpinChartInner);
 
 function GeoPushpinChartLocation(props: ILegacyGeoPushpinChartProps) {
     const [location, size, color, segmentBy, filters, sortBy] = useResolveValuesWithPlaceholders(

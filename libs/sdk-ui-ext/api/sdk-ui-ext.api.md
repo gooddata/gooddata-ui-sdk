@@ -337,6 +337,8 @@ export interface IAddUsersToUserGroupsDialogProps extends IWithTelemetryProps {
 // @internal (undocumented)
 export interface IAddWorkspaceToSubjectsProps extends IWithTelemetryProps {
     // (undocumented)
+    areMetricPermissionsEnabled?: boolean;
+    // (undocumented)
     ids: string[];
     // (undocumented)
     onClose: () => void;
@@ -1101,6 +1103,8 @@ export interface IUsePagedDropdownResult {
 // @internal (undocumented)
 export interface IUserEditDialogProps extends IWithTelemetryProps {
     // (undocumented)
+    areMetricPermissionsEnabled?: boolean;
+    // (undocumented)
     changeUserMembership?: boolean;
     // (undocumented)
     initialView?: UserEditDialogMode;
@@ -1124,6 +1128,8 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
 
 // @internal (undocumented)
 export interface IUserGroupEditDialogProps extends IWithTelemetryProps {
+    // (undocumented)
+    areMetricPermissionsEnabled?: boolean;
     // (undocumented)
     initialView?: UserGroupEditDialogMode;
     // (undocumented)

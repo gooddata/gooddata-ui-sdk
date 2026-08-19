@@ -8,13 +8,12 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
-import { LegendSeries } from "../LegendSeries.js";
 import { type ISeriesItem } from "../types.js";
 
 // Mock the visibility detection hook to bypass registration issues
 vi.mock("../visibilityDetection.js", () => ({
     useVisibilityDetection: () => ({
-        viewportRef: { current: null },
+        viewportRefCallback: () => {}, // No-op in tests
         contextValue: {
             registerItem: () => {}, // No-op in tests
             isVisible: () => true, // All items are visible in tests
@@ -22,6 +21,13 @@ vi.mock("../visibilityDetection.js", () => ({
         },
     }),
 }));
+
+// Tests run non-isolated, so the module registry is shared between test files. Any legend test
+// that ran earlier may have already evaluated LegendSeries against the real visibility detection,
+// in which case a plain static import here would hand us that unmocked instance. Resetting the
+// registry and importing dynamically guarantees LegendSeries is re-evaluated against the mock above.
+vi.resetModules();
+const { LegendSeries } = await import("../LegendSeries.js");
 
 describe("LegendSeries", () => {
     const DefaultLocale = "en-US";

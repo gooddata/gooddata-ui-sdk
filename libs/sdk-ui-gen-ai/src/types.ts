@@ -153,6 +153,7 @@ export type ContextObjectListState = {
     loadedPages: number;
     hasNextPage: boolean;
     isLoading: boolean;
+    isExternal: boolean;
 };
 
 /**

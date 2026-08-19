@@ -119,6 +119,11 @@ export const contextObjectsSelector: (state: RootState) => ContextObjectsState =
     (state) => state.contextObjects,
 );
 
+export const contextObjectsSearchSelector: (state: RootState) => string = createSelector(
+    chatWindowSliceSelector,
+    (state) => state.contextObjectsSearch,
+);
+
 export const keyDriverAnalysisSelector: (state: RootState) => IKdaDefinition | undefined = createSelector(
     chatWindowSliceSelector,
     (state) => state.keyDriverAnalysis,

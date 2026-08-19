@@ -2574,22 +2574,6 @@ export interface AfmValidObjectsResponse {
 }
 
 // @public
-export class AgentAi extends AiBaseAPI implements AgentAiInterface {
-    listAvailableSkills(options?: AxiosRequestConfig): AxiosPromise<AiSkillResponse[]>;
-}
-
-// @public
-export function AgentAi_ListAvailableSkills(axios: AxiosInstance, basePath: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<Array<AiSkillResponse>>;
-
-// @public
-export function AgentAiAxiosParamCreator_ListAvailableSkills(options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
-
-// @public
-export interface AgentAiInterface {
-    listAvailableSkills(options?: AxiosRequestConfig): AxiosPromise<Array<AiSkillResponse>>;
-}
-
-// @public
 export class AgentControllerApi extends MetadataBaseApi implements AgentControllerApiInterface {
     createEntityAgents(requestParameters: AgentControllerApiCreateEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
     deleteEntityAgents(requestParameters: AgentControllerApiDeleteEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -2692,6 +2676,7 @@ export interface AgentControllerApiUpdateEntityAgentsRequest {
 // @public
 export class AgentsAi extends AiBaseAPI implements AgentsAiInterface {
     listAgents(requestParameters: AgentsAiListAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<AiAgentListResponse>;
+    listAvailableSkills(options?: AxiosRequestConfig): AxiosPromise<AiSkillResponse[]>;
 }
 
 // @public
@@ -2700,11 +2685,18 @@ export { AgentsAi_ListAgents }
 export { AgentsAi_ListAgents as GenAiApi_ListAgents }
 
 // @public
+export function AgentsAi_ListAvailableSkills(axios: AxiosInstance, basePath: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<Array<AiSkillResponse>>;
+
+// @public
 export function AgentsAiAxiosParamCreator_ListAgents(workspaceId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
+export function AgentsAiAxiosParamCreator_ListAvailableSkills(options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
 export interface AgentsAiInterface {
     listAgents(requestParameters: AgentsAiListAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<AiAgentListResponse>;
+    listAvailableSkills(options?: AxiosRequestConfig): AxiosPromise<Array<AiSkillResponse>>;
 }
 
 // @public
@@ -2713,6 +2705,106 @@ interface AgentsAiListAgentsRequest {
 }
 export { AgentsAiListAgentsRequest }
 export { AgentsAiListAgentsRequest as GenAiApiListAgentsRequest }
+
+// @public
+export class AgentsApi extends MetadataBaseApi implements AgentsApiInterface {
+    createEntityAgents(requestParameters: AgentsApiCreateEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
+    deleteEntityAgents(requestParameters: AgentsApiDeleteEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesAgents(requestParameters?: AgentsApiGetAllEntitiesAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutList>;
+    getEntityAgents(requestParameters: AgentsApiGetEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
+    patchEntityAgents(requestParameters: AgentsApiPatchEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
+    updateEntityAgents(requestParameters: AgentsApiUpdateEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
+}
+
+// @public
+export function AgentsApi_CreateEntityAgents(axios: AxiosInstance, basePath: string, requestParameters: AgentsApiCreateEntityAgentsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiAgentOutDocument>;
+
+// @public
+export function AgentsApi_DeleteEntityAgents(axios: AxiosInstance, basePath: string, requestParameters: AgentsApiDeleteEntityAgentsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
+
+// @public
+export function AgentsApi_GetAllEntitiesAgents(axios: AxiosInstance, basePath: string, requestParameters: AgentsApiGetAllEntitiesAgentsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiAgentOutList>;
+
+// @public
+export function AgentsApi_GetEntityAgents(axios: AxiosInstance, basePath: string, requestParameters: AgentsApiGetEntityAgentsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiAgentOutDocument>;
+
+// @public
+export function AgentsApi_PatchEntityAgents(axios: AxiosInstance, basePath: string, requestParameters: AgentsApiPatchEntityAgentsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiAgentOutDocument>;
+
+// @public
+export function AgentsApi_UpdateEntityAgents(axios: AxiosInstance, basePath: string, requestParameters: AgentsApiUpdateEntityAgentsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiAgentOutDocument>;
+
+// @public
+export function AgentsApiAxiosParamCreator_CreateEntityAgents(jsonApiAgentInDocument: JsonApiAgentInDocument, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function AgentsApiAxiosParamCreator_DeleteEntityAgents(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function AgentsApiAxiosParamCreator_GetAllEntitiesAgents(filter?: string, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function AgentsApiAxiosParamCreator_GetEntityAgents(id: string, filter?: string, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function AgentsApiAxiosParamCreator_PatchEntityAgents(id: string, jsonApiAgentPatchDocument: JsonApiAgentPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function AgentsApiAxiosParamCreator_UpdateEntityAgents(id: string, jsonApiAgentInDocument: JsonApiAgentInDocument, filter?: string, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export interface AgentsApiCreateEntityAgentsRequest {
+    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly jsonApiAgentInDocument: JsonApiAgentInDocument;
+}
+
+// @public
+export interface AgentsApiDeleteEntityAgentsRequest {
+    readonly id: string;
+}
+
+// @public
+export interface AgentsApiGetAllEntitiesAgentsRequest {
+    readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface AgentsApiGetEntityAgentsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+}
+
+// @public
+export interface AgentsApiInterface {
+    createEntityAgents(requestParameters: AgentsApiCreateEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
+    deleteEntityAgents(requestParameters: AgentsApiDeleteEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesAgents(requestParameters: AgentsApiGetAllEntitiesAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutList>;
+    getEntityAgents(requestParameters: AgentsApiGetEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
+    patchEntityAgents(requestParameters: AgentsApiPatchEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
+    updateEntityAgents(requestParameters: AgentsApiUpdateEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
+}
+
+// @public
+export interface AgentsApiPatchEntityAgentsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly jsonApiAgentPatchDocument: JsonApiAgentPatchDocument;
+}
+
+// @public
+export interface AgentsApiUpdateEntityAgentsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly jsonApiAgentInDocument: JsonApiAgentInDocument;
+}
 
 // @public
 export class AggregatedFactControllerApi extends MetadataBaseApi implements AggregatedFactControllerApiInterface {
@@ -2854,106 +2946,6 @@ interface AiAgentListResponse {
 }
 export { AiAgentListResponse }
 export { AiAgentListResponse as GenAiApiAgentListResponse }
-
-// @public
-export class AIAgentsApi extends MetadataBaseApi implements AIAgentsApiInterface {
-    createEntityAgents(requestParameters: AIAgentsApiCreateEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
-    deleteEntityAgents(requestParameters: AIAgentsApiDeleteEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getAllEntitiesAgents(requestParameters?: AIAgentsApiGetAllEntitiesAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutList>;
-    getEntityAgents(requestParameters: AIAgentsApiGetEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
-    patchEntityAgents(requestParameters: AIAgentsApiPatchEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
-    updateEntityAgents(requestParameters: AIAgentsApiUpdateEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
-}
-
-// @public
-export function AIAgentsApi_CreateEntityAgents(axios: AxiosInstance, basePath: string, requestParameters: AIAgentsApiCreateEntityAgentsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiAgentOutDocument>;
-
-// @public
-export function AIAgentsApi_DeleteEntityAgents(axios: AxiosInstance, basePath: string, requestParameters: AIAgentsApiDeleteEntityAgentsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function AIAgentsApi_GetAllEntitiesAgents(axios: AxiosInstance, basePath: string, requestParameters: AIAgentsApiGetAllEntitiesAgentsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiAgentOutList>;
-
-// @public
-export function AIAgentsApi_GetEntityAgents(axios: AxiosInstance, basePath: string, requestParameters: AIAgentsApiGetEntityAgentsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiAgentOutDocument>;
-
-// @public
-export function AIAgentsApi_PatchEntityAgents(axios: AxiosInstance, basePath: string, requestParameters: AIAgentsApiPatchEntityAgentsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiAgentOutDocument>;
-
-// @public
-export function AIAgentsApi_UpdateEntityAgents(axios: AxiosInstance, basePath: string, requestParameters: AIAgentsApiUpdateEntityAgentsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiAgentOutDocument>;
-
-// @public
-export function AIAgentsApiAxiosParamCreator_CreateEntityAgents(jsonApiAgentInDocument: JsonApiAgentInDocument, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIAgentsApiAxiosParamCreator_DeleteEntityAgents(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIAgentsApiAxiosParamCreator_GetAllEntitiesAgents(filter?: string, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIAgentsApiAxiosParamCreator_GetEntityAgents(id: string, filter?: string, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIAgentsApiAxiosParamCreator_PatchEntityAgents(id: string, jsonApiAgentPatchDocument: JsonApiAgentPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIAgentsApiAxiosParamCreator_UpdateEntityAgents(id: string, jsonApiAgentInDocument: JsonApiAgentInDocument, filter?: string, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export interface AIAgentsApiCreateEntityAgentsRequest {
-    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>;
-    readonly jsonApiAgentInDocument: JsonApiAgentInDocument;
-}
-
-// @public
-export interface AIAgentsApiDeleteEntityAgentsRequest {
-    readonly id: string;
-}
-
-// @public
-export interface AIAgentsApiGetAllEntitiesAgentsRequest {
-    readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>;
-    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-}
-
-// @public
-export interface AIAgentsApiGetEntityAgentsRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>;
-}
-
-// @public
-export interface AIAgentsApiInterface {
-    createEntityAgents(requestParameters: AIAgentsApiCreateEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
-    deleteEntityAgents(requestParameters: AIAgentsApiDeleteEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getAllEntitiesAgents(requestParameters: AIAgentsApiGetAllEntitiesAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutList>;
-    getEntityAgents(requestParameters: AIAgentsApiGetEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
-    patchEntityAgents(requestParameters: AIAgentsApiPatchEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
-    updateEntityAgents(requestParameters: AIAgentsApiUpdateEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
-}
-
-// @public
-export interface AIAgentsApiPatchEntityAgentsRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>;
-    readonly jsonApiAgentPatchDocument: JsonApiAgentPatchDocument;
-}
-
-// @public
-export interface AIAgentsApiUpdateEntityAgentsRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>;
-    readonly jsonApiAgentInDocument: JsonApiAgentInDocument;
-}
 
 // @public (undocumented)
 export interface AiAlertDatasetIdentifier {
@@ -3124,308 +3116,6 @@ export const AiAnomalyDetectionGranularity: {
 
 // @public (undocumented)
 export type AiAnomalyDetectionGranularity = typeof AiAnomalyDetectionGranularity[keyof typeof AiAnomalyDetectionGranularity];
-
-// @public
-export class AIApi extends MetadataBaseApi implements AIApiInterface {
-    createEntityKnowledgeRecommendations(requestParameters: AIApiCreateEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
-    createEntityMemoryItems(requestParameters: AIApiCreateEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
-    createEntityOrgMemoryItems(requestParameters: AIApiCreateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
-    deleteEntityKnowledgeRecommendations(requestParameters: AIApiDeleteEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityMemoryItems(requestParameters: AIApiDeleteEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityOrgMemoryItems(requestParameters: AIApiDeleteEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getAllEntitiesKnowledgeRecommendations(requestParameters: AIApiGetAllEntitiesKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutList>;
-    getAllEntitiesMemoryItems(requestParameters: AIApiGetAllEntitiesMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutList>;
-    getAllEntitiesOrgMemoryItems(requestParameters?: AIApiGetAllEntitiesOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutList>;
-    getEntityKnowledgeRecommendations(requestParameters: AIApiGetEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
-    getEntityMemoryItems(requestParameters: AIApiGetEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
-    getEntityOrgMemoryItems(requestParameters: AIApiGetEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
-    patchEntityKnowledgeRecommendations(requestParameters: AIApiPatchEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
-    patchEntityMemoryItems(requestParameters: AIApiPatchEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
-    patchEntityOrgMemoryItems(requestParameters: AIApiPatchEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
-    searchEntitiesKnowledgeRecommendations(requestParameters: AIApiSearchEntitiesKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutList>;
-    searchEntitiesMemoryItems(requestParameters: AIApiSearchEntitiesMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutList>;
-    updateEntityKnowledgeRecommendations(requestParameters: AIApiUpdateEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
-    updateEntityMemoryItems(requestParameters: AIApiUpdateEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
-    updateEntityOrgMemoryItems(requestParameters: AIApiUpdateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
-}
-
-// @public
-export function AIApi_CreateEntityKnowledgeRecommendations(axios: AxiosInstance, basePath: string, requestParameters: AIApiCreateEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
-
-// @public
-export function AIApi_CreateEntityMemoryItems(axios: AxiosInstance, basePath: string, requestParameters: AIApiCreateEntityMemoryItemsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiMemoryItemOutDocument>;
-
-// @public
-export function AIApi_DeleteEntityKnowledgeRecommendations(axios: AxiosInstance, basePath: string, requestParameters: AIApiDeleteEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function AIApi_DeleteEntityMemoryItems(axios: AxiosInstance, basePath: string, requestParameters: AIApiDeleteEntityMemoryItemsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function AIApi_GetAllEntitiesKnowledgeRecommendations(axios: AxiosInstance, basePath: string, requestParameters: AIApiGetAllEntitiesKnowledgeRecommendationsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiKnowledgeRecommendationOutList>;
-
-// @public
-export function AIApi_GetAllEntitiesMemoryItems(axios: AxiosInstance, basePath: string, requestParameters: AIApiGetAllEntitiesMemoryItemsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiMemoryItemOutList>;
-
-// @public
-export function AIApi_GetEntityKnowledgeRecommendations(axios: AxiosInstance, basePath: string, requestParameters: AIApiGetEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
-
-// @public
-export function AIApi_GetEntityMemoryItems(axios: AxiosInstance, basePath: string, requestParameters: AIApiGetEntityMemoryItemsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiMemoryItemOutDocument>;
-
-// @public
-export function AIApi_PatchEntityKnowledgeRecommendations(axios: AxiosInstance, basePath: string, requestParameters: AIApiPatchEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
-
-// @public
-export function AIApi_PatchEntityMemoryItems(axios: AxiosInstance, basePath: string, requestParameters: AIApiPatchEntityMemoryItemsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiMemoryItemOutDocument>;
-
-// @public
-export function AIApi_SearchEntitiesKnowledgeRecommendations(axios: AxiosInstance, basePath: string, requestParameters: AIApiSearchEntitiesKnowledgeRecommendationsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiKnowledgeRecommendationOutList>;
-
-// @public
-export function AIApi_SearchEntitiesMemoryItems(axios: AxiosInstance, basePath: string, requestParameters: AIApiSearchEntitiesMemoryItemsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiMemoryItemOutList>;
-
-// @public
-export function AIApi_UpdateEntityKnowledgeRecommendations(axios: AxiosInstance, basePath: string, requestParameters: AIApiUpdateEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
-
-// @public
-export function AIApi_UpdateEntityMemoryItems(axios: AxiosInstance, basePath: string, requestParameters: AIApiUpdateEntityMemoryItemsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiMemoryItemOutDocument>;
-
-// @public
-export function AIApiAxiosParamCreator_CreateEntityKnowledgeRecommendations(workspaceId: string, jsonApiKnowledgeRecommendationPostOptionalIdDocument: JsonApiKnowledgeRecommendationPostOptionalIdDocument, include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIApiAxiosParamCreator_CreateEntityMemoryItems(workspaceId: string, jsonApiMemoryItemPostOptionalIdDocument: JsonApiMemoryItemPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIApiAxiosParamCreator_DeleteEntityKnowledgeRecommendations(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIApiAxiosParamCreator_DeleteEntityMemoryItems(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIApiAxiosParamCreator_GetAllEntitiesKnowledgeRecommendations(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIApiAxiosParamCreator_GetAllEntitiesMemoryItems(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIApiAxiosParamCreator_GetEntityKnowledgeRecommendations(workspaceId: string, objectId: string, filter?: string, include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIApiAxiosParamCreator_GetEntityMemoryItems(workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIApiAxiosParamCreator_PatchEntityKnowledgeRecommendations(workspaceId: string, objectId: string, jsonApiKnowledgeRecommendationPatchDocument: JsonApiKnowledgeRecommendationPatchDocument, filter?: string, include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIApiAxiosParamCreator_PatchEntityMemoryItems(workspaceId: string, objectId: string, jsonApiMemoryItemPatchDocument: JsonApiMemoryItemPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIApiAxiosParamCreator_SearchEntitiesKnowledgeRecommendations(workspaceId: string, entitySearchBody: EntitySearchBody, origin?: 'ALL' | 'PARENTS' | 'NATIVE', xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIApiAxiosParamCreator_SearchEntitiesMemoryItems(workspaceId: string, entitySearchBody: EntitySearchBody, origin?: 'ALL' | 'PARENTS' | 'NATIVE', xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIApiAxiosParamCreator_UpdateEntityKnowledgeRecommendations(workspaceId: string, objectId: string, jsonApiKnowledgeRecommendationInDocument: JsonApiKnowledgeRecommendationInDocument, filter?: string, include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIApiAxiosParamCreator_UpdateEntityMemoryItems(workspaceId: string, objectId: string, jsonApiMemoryItemInDocument: JsonApiMemoryItemInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export interface AIApiCreateEntityKnowledgeRecommendationsRequest {
-    readonly include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>;
-    readonly jsonApiKnowledgeRecommendationPostOptionalIdDocument: JsonApiKnowledgeRecommendationPostOptionalIdDocument;
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface AIApiCreateEntityMemoryItemsRequest {
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
-    readonly jsonApiMemoryItemPostOptionalIdDocument: JsonApiMemoryItemPostOptionalIdDocument;
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface AIApiCreateEntityOrgMemoryItemsRequest {
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
-    readonly jsonApiOrgMemoryItemInDocument: JsonApiOrgMemoryItemInDocument;
-}
-
-// @public
-export interface AIApiDeleteEntityKnowledgeRecommendationsRequest {
-    readonly objectId: string;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface AIApiDeleteEntityMemoryItemsRequest {
-    readonly objectId: string;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface AIApiDeleteEntityOrgMemoryItemsRequest {
-    readonly id: string;
-}
-
-// @public
-export interface AIApiGetAllEntitiesKnowledgeRecommendationsRequest {
-    readonly filter?: string;
-    readonly include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>;
-    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
-    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-    readonly workspaceId: string;
-    readonly xGDCVALIDATERELATIONS?: boolean;
-}
-
-// @public
-export interface AIApiGetAllEntitiesMemoryItemsRequest {
-    readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
-    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
-    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-    readonly workspaceId: string;
-    readonly xGDCVALIDATERELATIONS?: boolean;
-}
-
-// @public
-export interface AIApiGetAllEntitiesOrgMemoryItemsRequest {
-    readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
-    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-}
-
-// @public
-export interface AIApiGetEntityKnowledgeRecommendationsRequest {
-    readonly filter?: string;
-    readonly include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>;
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
-    readonly objectId: string;
-    readonly workspaceId: string;
-    readonly xGDCVALIDATERELATIONS?: boolean;
-}
-
-// @public
-export interface AIApiGetEntityMemoryItemsRequest {
-    readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
-    readonly objectId: string;
-    readonly workspaceId: string;
-    readonly xGDCVALIDATERELATIONS?: boolean;
-}
-
-// @public
-export interface AIApiGetEntityOrgMemoryItemsRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
-}
-
-// @public
-export interface AIApiInterface {
-    createEntityKnowledgeRecommendations(requestParameters: AIApiCreateEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
-    createEntityMemoryItems(requestParameters: AIApiCreateEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
-    createEntityOrgMemoryItems(requestParameters: AIApiCreateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
-    deleteEntityKnowledgeRecommendations(requestParameters: AIApiDeleteEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityMemoryItems(requestParameters: AIApiDeleteEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityOrgMemoryItems(requestParameters: AIApiDeleteEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getAllEntitiesKnowledgeRecommendations(requestParameters: AIApiGetAllEntitiesKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutList>;
-    getAllEntitiesMemoryItems(requestParameters: AIApiGetAllEntitiesMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutList>;
-    getAllEntitiesOrgMemoryItems(requestParameters: AIApiGetAllEntitiesOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutList>;
-    getEntityKnowledgeRecommendations(requestParameters: AIApiGetEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
-    getEntityMemoryItems(requestParameters: AIApiGetEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
-    getEntityOrgMemoryItems(requestParameters: AIApiGetEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
-    patchEntityKnowledgeRecommendations(requestParameters: AIApiPatchEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
-    patchEntityMemoryItems(requestParameters: AIApiPatchEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
-    patchEntityOrgMemoryItems(requestParameters: AIApiPatchEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
-    searchEntitiesKnowledgeRecommendations(requestParameters: AIApiSearchEntitiesKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutList>;
-    searchEntitiesMemoryItems(requestParameters: AIApiSearchEntitiesMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutList>;
-    updateEntityKnowledgeRecommendations(requestParameters: AIApiUpdateEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
-    updateEntityMemoryItems(requestParameters: AIApiUpdateEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
-    updateEntityOrgMemoryItems(requestParameters: AIApiUpdateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
-}
-
-// @public
-export interface AIApiPatchEntityKnowledgeRecommendationsRequest {
-    readonly filter?: string;
-    readonly include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>;
-    readonly jsonApiKnowledgeRecommendationPatchDocument: JsonApiKnowledgeRecommendationPatchDocument;
-    readonly objectId: string;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface AIApiPatchEntityMemoryItemsRequest {
-    readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
-    readonly jsonApiMemoryItemPatchDocument: JsonApiMemoryItemPatchDocument;
-    readonly objectId: string;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface AIApiPatchEntityOrgMemoryItemsRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
-    readonly jsonApiOrgMemoryItemPatchDocument: JsonApiOrgMemoryItemPatchDocument;
-}
-
-// @public
-export interface AIApiSearchEntitiesKnowledgeRecommendationsRequest {
-    readonly entitySearchBody: EntitySearchBody;
-    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
-    readonly workspaceId: string;
-    readonly xGDCVALIDATERELATIONS?: boolean;
-}
-
-// @public
-export interface AIApiSearchEntitiesMemoryItemsRequest {
-    readonly entitySearchBody: EntitySearchBody;
-    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
-    readonly workspaceId: string;
-    readonly xGDCVALIDATERELATIONS?: boolean;
-}
-
-// @public
-export interface AIApiUpdateEntityKnowledgeRecommendationsRequest {
-    readonly filter?: string;
-    readonly include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>;
-    readonly jsonApiKnowledgeRecommendationInDocument: JsonApiKnowledgeRecommendationInDocument;
-    readonly objectId: string;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface AIApiUpdateEntityMemoryItemsRequest {
-    readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
-    readonly jsonApiMemoryItemInDocument: JsonApiMemoryItemInDocument;
-    readonly objectId: string;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface AIApiUpdateEntityOrgMemoryItemsRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
-    readonly jsonApiOrgMemoryItemInDocument: JsonApiOrgMemoryItemInDocument;
-}
 
 // @public (undocumented)
 export const AiAppApplicationDtosAfmFilterDefinitionDateGranularity: {
@@ -4729,24 +4419,6 @@ export const AiObjectType: {
 
 // @public (undocumented)
 export type AiObjectType = typeof AiObjectType[keyof typeof AiObjectType];
-
-// @public
-export class AIObservabilityAi extends AiBaseAPI implements AIObservabilityAiInterface {
-    getObservabilityOverview(options?: AxiosRequestConfig): AxiosPromise<AiObservabilityOverviewResponse>;
-}
-
-// @public
-function AIObservabilityAi_GetObservabilityOverview(axios: AxiosInstance, basePath: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiObservabilityOverviewResponse>;
-export { AIObservabilityAi_GetObservabilityOverview }
-export { AIObservabilityAi_GetObservabilityOverview as GenAiApi_GetObservabilityOverview }
-
-// @public
-export function AIObservabilityAiAxiosParamCreator_GetObservabilityOverview(options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
-
-// @public
-export interface AIObservabilityAiInterface {
-    getObservabilityOverview(options?: AxiosRequestConfig): AxiosPromise<AiObservabilityOverviewResponse>;
-}
 
 // @public
 const AiObservabilityMetricType: {
@@ -10389,10 +10061,18 @@ export interface ContentSlideTemplate {
 export class ConversationsAi extends AiBaseAPI implements ConversationsAiInterface {
     deleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDelete(requestParameters: ConversationsAiDeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(requestParameters: ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
+    getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(requestParameters: ConversationsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiInteractionStepListResponse>;
+    getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(requestParameters: ConversationsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationItemListResponse>;
+    getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(requestParameters: ConversationsAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseList>;
     getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationListResponse>;
     patchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(requestParameters: ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
+    patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(requestParameters: ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(requestParameters: ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(requestParameters: ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     postConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
+    postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(requestParameters: ConversationsAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     postGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost(requestParameters: ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
+    postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(requestParameters: ConversationsAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig): AxiosPromise<string>;
     switchAgent(requestParameters: ConversationsAiSwitchAgentRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
 }
 
@@ -10407,6 +10087,19 @@ export { ConversationsAi_GetConversationApiV1AiWorkspacesWorkspaceIdChatConversa
 export { ConversationsAi_GetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet as GenAiApi_GetConversation }
 
 // @public
+export function ConversationsAi_GetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiInteractionStepListResponse>;
+
+// @public
+function ConversationsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiConversationItemListResponse>;
+export { ConversationsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet }
+export { ConversationsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet as GenAiApi_GetConversationItems }
+
+// @public
+function ConversationsAi_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiConversationResponseList>;
+export { ConversationsAi_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet }
+export { ConversationsAi_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet as GenAiApi_GetConversationResponses }
+
+// @public
 function ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiConversationListResponse>;
 export { ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet }
 export { ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet as GenAiApi_GetConversations }
@@ -10417,14 +10110,37 @@ export { ConversationsAi_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConver
 export { ConversationsAi_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch as GenAiApi_PatchConversation }
 
 // @public
+export function ConversationsAi_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<void>;
+
+// @public
+function ConversationsAi_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<void>;
+export { ConversationsAi_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch }
+export { ConversationsAi_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch as GenAiApi_PatchConversationResponse }
+
+// @public
+function ConversationsAi_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<void>;
+export { ConversationsAi_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch }
+export { ConversationsAi_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch as GenAiApi_PatchVisualization }
+
+// @public
 function ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiConversationResponse>;
 export { ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost }
 export { ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost as GenAiApi_PostConversations }
 
 // @public
+function ConversationsAi_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<void>;
+export { ConversationsAi_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost }
+export { ConversationsAi_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost as GenAiApi_PostConversationFeedback }
+
+// @public
 function ConversationsAi_PostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiConversationResponse>;
 export { ConversationsAi_PostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost }
 export { ConversationsAi_PostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost as GenAiApi_PostGenerateConversationTitle }
+
+// @public
+function ConversationsAi_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<string>;
+export { ConversationsAi_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost }
+export { ConversationsAi_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost as GenAiApi_PostMessages }
 
 // @public
 function ConversationsAi_SwitchAgent(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiSwitchAgentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiConversationResponse>;
@@ -10438,16 +10154,40 @@ export function ConversationsAiAxiosParamCreator_DeleteConversationApiV1AiWorksp
 export function ConversationsAiAxiosParamCreator_GetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(workspaceId: string, conversationId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
+export function ConversationsAiAxiosParamCreator_GetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(workspaceId: string, conversationId: string, responseId?: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
+export function ConversationsAiAxiosParamCreator_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(workspaceId: string, conversationId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
+export function ConversationsAiAxiosParamCreator_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(workspaceId: string, conversationId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
 export function ConversationsAiAxiosParamCreator_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(workspaceId: string, isPreview?: boolean, page?: number, size?: number, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
 export function ConversationsAiAxiosParamCreator_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(workspaceId: string, conversationId: string, aiConversationUpdateRequest: AiConversationUpdateRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
+export function ConversationsAiAxiosParamCreator_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(workspaceId: string, conversationId: string, dashboardId: string, aiDashboardIdUpdateRequest: AiDashboardIdUpdateRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
+export function ConversationsAiAxiosParamCreator_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(workspaceId: string, conversationId: string, responseId: string, aiResponseFeedbackRequest: AiResponseFeedbackRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
+export function ConversationsAiAxiosParamCreator_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(workspaceId: string, conversationId: string, visualizationId: string, aiVisualizationIdUpdateRequest: AiVisualizationIdUpdateRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
 export function ConversationsAiAxiosParamCreator_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(workspaceId: string, isPreview?: boolean, aiCreateConversationRequest?: AiCreateConversationRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
+export function ConversationsAiAxiosParamCreator_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(workspaceId: string, conversationId: string, aiConversationFeedbackRequest: AiConversationFeedbackRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
 export function ConversationsAiAxiosParamCreator_PostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost(workspaceId: string, conversationId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
+export function ConversationsAiAxiosParamCreator_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(workspaceId: string, conversationId: string, aiSendMessageRequest: AiSendMessageRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
 export function ConversationsAiAxiosParamCreator_SwitchAgent(workspaceId: string, conversationId: string, aiSwitchAgentRequest: AiSwitchAgentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
@@ -10469,6 +10209,29 @@ export { ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversat
 export { ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest as GenAiApiGetConversationRequest }
 
 // @public
+export interface ConversationsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest {
+    readonly conversationId: string;
+    readonly responseId?: string;
+    readonly workspaceId: string;
+}
+
+// @public
+interface ConversationsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest {
+    readonly conversationId: string;
+    readonly workspaceId: string;
+}
+export { ConversationsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest }
+export { ConversationsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest as GenAiApiGetConversationItemsRequest }
+
+// @public
+interface ConversationsAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest {
+    readonly conversationId: string;
+    readonly workspaceId: string;
+}
+export { ConversationsAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest }
+export { ConversationsAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest as GenAiApiGetConversationResponsesRequest }
+
+// @public
 interface ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest {
     readonly isPreview?: boolean;
     readonly page?: number;
@@ -10482,10 +10245,18 @@ export { ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversa
 export interface ConversationsAiInterface {
     deleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDelete(requestParameters: ConversationsAiDeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(requestParameters: ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
+    getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(requestParameters: ConversationsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiInteractionStepListResponse>;
+    getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(requestParameters: ConversationsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationItemListResponse>;
+    getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(requestParameters: ConversationsAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseList>;
     getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationListResponse>;
     patchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(requestParameters: ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
+    patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(requestParameters: ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(requestParameters: ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(requestParameters: ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     postConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
+    postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(requestParameters: ConversationsAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     postGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost(requestParameters: ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
+    postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(requestParameters: ConversationsAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig): AxiosPromise<string>;
     switchAgent(requestParameters: ConversationsAiSwitchAgentRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
 }
 
@@ -10499,6 +10270,34 @@ export { ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConvers
 export { ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest as GenAiApiPatchConversationRequest }
 
 // @public
+export interface ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest {
+    readonly aiDashboardIdUpdateRequest: AiDashboardIdUpdateRequest;
+    readonly conversationId: string;
+    readonly dashboardId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+interface ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest {
+    readonly aiResponseFeedbackRequest: AiResponseFeedbackRequest;
+    readonly conversationId: string;
+    readonly responseId: string;
+    readonly workspaceId: string;
+}
+export { ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest }
+export { ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest as GenAiApiPatchConversationResponseRequest }
+
+// @public
+interface ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest {
+    readonly aiVisualizationIdUpdateRequest: AiVisualizationIdUpdateRequest;
+    readonly conversationId: string;
+    readonly visualizationId: string;
+    readonly workspaceId: string;
+}
+export { ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest }
+export { ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest as GenAiApiPatchVisualizationRequest }
+
+// @public
 interface ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest {
     readonly aiCreateConversationRequest?: AiCreateConversationRequest;
     readonly isPreview?: boolean;
@@ -10508,12 +10307,30 @@ export { ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConvers
 export { ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest as GenAiApiPostConversationsRequest }
 
 // @public
+interface ConversationsAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest {
+    readonly aiConversationFeedbackRequest: AiConversationFeedbackRequest;
+    readonly conversationId: string;
+    readonly workspaceId: string;
+}
+export { ConversationsAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest }
+export { ConversationsAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest as GenAiApiPostConversationFeedbackRequest }
+
+// @public
 interface ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest {
     readonly conversationId: string;
     readonly workspaceId: string;
 }
 export { ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest }
 export { ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest as GenAiApiPostGenerateConversationTitleRequest }
+
+// @public
+interface ConversationsAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest {
+    readonly aiSendMessageRequest: AiSendMessageRequest;
+    readonly conversationId: string;
+    readonly workspaceId: string;
+}
+export { ConversationsAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest }
+export { ConversationsAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest as GenAiApiPostMessagesRequest }
 
 // @public
 interface ConversationsAiSwitchAgentRequest {
@@ -11533,30 +11350,6 @@ export interface DashboardPluginControllerApiUpdateEntityDashboardPluginsRequest
 }
 
 // @public
-export class DashboardsAi extends AiBaseAPI implements DashboardsAiInterface {
-    patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(requestParameters: DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-}
-
-// @public
-export function DashboardsAi_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(axios: AxiosInstance, basePath: string, requestParameters: DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<void>;
-
-// @public
-export function DashboardsAiAxiosParamCreator_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(workspaceId: string, conversationId: string, dashboardId: string, aiDashboardIdUpdateRequest: AiDashboardIdUpdateRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
-
-// @public
-export interface DashboardsAiInterface {
-    patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(requestParameters: DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-}
-
-// @public
-export interface DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest {
-    readonly aiDashboardIdUpdateRequest: AiDashboardIdUpdateRequest;
-    readonly conversationId: string;
-    readonly dashboardId: string;
-    readonly workspaceId: string;
-}
-
-// @public
 export class DashboardsApi extends MetadataBaseApi implements DashboardsApiInterface {
     createEntityAnalyticalDashboards(requestParameters: DashboardsApiCreateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
     deleteEntityAnalyticalDashboards(requestParameters: DashboardsApiDeleteEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -11698,6 +11491,32 @@ export interface DashboardSlidesTemplate {
 
 // @public (undocumented)
 export type DashboardSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
+
+// @public
+export class DashboardSummaryAi extends AiBaseAPI implements DashboardSummaryAiInterface {
+    summarizeDashboard(requestParameters: DashboardSummaryAiSummarizeDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<AiSummarizeResponse>;
+}
+
+// @public
+function DashboardSummaryAi_SummarizeDashboard(axios: AxiosInstance, basePath: string, requestParameters: DashboardSummaryAiSummarizeDashboardRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiSummarizeResponse>;
+export { DashboardSummaryAi_SummarizeDashboard }
+export { DashboardSummaryAi_SummarizeDashboard as GenAiApi_SummarizeDashboard }
+
+// @public
+export function DashboardSummaryAiAxiosParamCreator_SummarizeDashboard(workspaceId: string, aiSummarizeRequest: AiSummarizeRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
+export interface DashboardSummaryAiInterface {
+    summarizeDashboard(requestParameters: DashboardSummaryAiSummarizeDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<AiSummarizeResponse>;
+}
+
+// @public
+interface DashboardSummaryAiSummarizeDashboardRequest {
+    readonly aiSummarizeRequest: AiSummarizeRequest;
+    readonly workspaceId: string;
+}
+export { DashboardSummaryAiSummarizeDashboardRequest }
+export { DashboardSummaryAiSummarizeDashboardRequest as GenAiApiSummarizeDashboardRequest }
 
 // @public (undocumented)
 export interface DashboardSummaryRequestDto {
@@ -13660,7 +13479,7 @@ export interface DeclarativeSingleWorkspacePermission {
 }
 
 // @public (undocumented)
-export type DeclarativeSingleWorkspacePermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
+export type DeclarativeSingleWorkspacePermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
 
 // @public
 export interface DeclarativeSourceReference {
@@ -13937,7 +13756,7 @@ export interface DeclarativeWorkspaceHierarchyPermission {
 }
 
 // @public (undocumented)
-export type DeclarativeWorkspaceHierarchyPermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
+export type DeclarativeWorkspaceHierarchyPermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
 
 // @public
 export interface DeclarativeWorkspaceModel {
@@ -22629,29 +22448,6 @@ export interface InPlatform {
 export type InPlatformTypeEnum = 'IN_PLATFORM';
 
 // @public
-export class InteractionStepsAi extends AiBaseAPI implements InteractionStepsAiInterface {
-    getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(requestParameters: InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiInteractionStepListResponse>;
-}
-
-// @public
-export function InteractionStepsAi_GetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(axios: AxiosInstance, basePath: string, requestParameters: InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiInteractionStepListResponse>;
-
-// @public
-export function InteractionStepsAiAxiosParamCreator_GetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(workspaceId: string, conversationId: string, responseId?: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
-
-// @public
-export interface InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest {
-    readonly conversationId: string;
-    readonly responseId?: string;
-    readonly workspaceId: string;
-}
-
-// @public
-export interface InteractionStepsAiInterface {
-    getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(requestParameters: InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiInteractionStepListResponse>;
-}
-
-// @public
 export interface IntroSlideTemplate {
     'backgroundImage'?: boolean;
     // (undocumented)
@@ -22812,32 +22608,6 @@ function isVisualizationObject_2(visualizationObject: unknown): visualizationObj
 
 // @public (undocumented)
 export function isVisualizationObjectsItem(visualizationObject: unknown): visualizationObject is JsonApiVisualizationObjectOutWithLinks;
-
-// @public
-export class ItemsAi extends AiBaseAPI implements ItemsAiInterface {
-    getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(requestParameters: ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationItemListResponse>;
-}
-
-// @public
-function ItemsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(axios: AxiosInstance, basePath: string, requestParameters: ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiConversationItemListResponse>;
-export { ItemsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet as GenAiApi_GetConversationItems }
-export { ItemsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet }
-
-// @public
-export function ItemsAiAxiosParamCreator_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(workspaceId: string, conversationId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
-
-// @public
-interface ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest {
-    readonly conversationId: string;
-    readonly workspaceId: string;
-}
-export { ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest as GenAiApiGetConversationItemsRequest }
-export { ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest }
-
-// @public
-export interface ItemsAiInterface {
-    getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(requestParameters: ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationItemListResponse>;
-}
 
 // @public
 export interface ITigerAbsoluteDateFilter {
@@ -33474,7 +33244,7 @@ export interface JsonApiWorkspaceOutMetaHierarchy {
 }
 
 // @public (undocumented)
-export type JsonApiWorkspaceOutMetaPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
+export type JsonApiWorkspaceOutMetaPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
 
 // @public (undocumented)
 export interface JsonApiWorkspaceOutRelationships {
@@ -36009,33 +35779,6 @@ export interface MemoryItemControllerApiUpdateEntityMemoryItemsRequest {
     readonly workspaceId: string;
 }
 
-// @public
-export class MessagesAi extends AiBaseAPI implements MessagesAiInterface {
-    postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(requestParameters: MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig): AxiosPromise<string>;
-}
-
-// @public
-function MessagesAi_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(axios: AxiosInstance, basePath: string, requestParameters: MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<string>;
-export { MessagesAi_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost as GenAiApi_PostMessages }
-export { MessagesAi_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost }
-
-// @public
-export function MessagesAiAxiosParamCreator_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(workspaceId: string, conversationId: string, aiSendMessageRequest: AiSendMessageRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
-
-// @public
-export interface MessagesAiInterface {
-    postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(requestParameters: MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig): AxiosPromise<string>;
-}
-
-// @public
-interface MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest {
-    readonly aiSendMessageRequest: AiSendMessageRequest;
-    readonly conversationId: string;
-    readonly workspaceId: string;
-}
-export { MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest as GenAiApiPostMessagesRequest }
-export { MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest }
-
 // @public (undocumented)
 export class MetadataBaseApi {
     constructor(configuration?: MetadataConfiguration, basePath?: string, axios?: AxiosInstance);
@@ -36964,6 +36707,24 @@ export interface ObjectReferenceGroup {
 
 // @public (undocumented)
 export type ObjectReferenceTypeEnum = 'WIDGET' | 'METRIC' | 'ATTRIBUTE' | 'DASHBOARD';
+
+// @public
+export class ObservabilityAi extends AiBaseAPI implements ObservabilityAiInterface {
+    getObservabilityOverview(options?: AxiosRequestConfig): AxiosPromise<AiObservabilityOverviewResponse>;
+}
+
+// @public
+function ObservabilityAi_GetObservabilityOverview(axios: AxiosInstance, basePath: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiObservabilityOverviewResponse>;
+export { ObservabilityAi_GetObservabilityOverview as GenAiApi_GetObservabilityOverview }
+export { ObservabilityAi_GetObservabilityOverview }
+
+// @public
+export function ObservabilityAiAxiosParamCreator_GetObservabilityOverview(options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
+export interface ObservabilityAiInterface {
+    getObservabilityOverview(options?: AxiosRequestConfig): AxiosPromise<AiObservabilityOverviewResponse>;
+}
 
 // @public
 export interface OGCAPIFeaturesApiGetCollectionItemsRequest {
@@ -38774,71 +38535,6 @@ export interface ResolveSettingsRequest {
 }
 
 // @public
-export class ResponsesAi extends AiBaseAPI implements ResponsesAiInterface {
-    getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(requestParameters: ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseList>;
-    patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(requestParameters: ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(requestParameters: ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-}
-
-// @public
-function ResponsesAi_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(axios: AxiosInstance, basePath: string, requestParameters: ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiConversationResponseList>;
-export { ResponsesAi_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet as GenAiApi_GetConversationResponses }
-export { ResponsesAi_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet }
-
-// @public
-function ResponsesAi_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(axios: AxiosInstance, basePath: string, requestParameters: ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<void>;
-export { ResponsesAi_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch as GenAiApi_PatchConversationResponse }
-export { ResponsesAi_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch }
-
-// @public
-function ResponsesAi_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(axios: AxiosInstance, basePath: string, requestParameters: ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<void>;
-export { ResponsesAi_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost as GenAiApi_PostConversationFeedback }
-export { ResponsesAi_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost }
-
-// @public
-export function ResponsesAiAxiosParamCreator_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(workspaceId: string, conversationId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
-
-// @public
-export function ResponsesAiAxiosParamCreator_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(workspaceId: string, conversationId: string, responseId: string, aiResponseFeedbackRequest: AiResponseFeedbackRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
-
-// @public
-export function ResponsesAiAxiosParamCreator_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(workspaceId: string, conversationId: string, aiConversationFeedbackRequest: AiConversationFeedbackRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
-
-// @public
-interface ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest {
-    readonly conversationId: string;
-    readonly workspaceId: string;
-}
-export { ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest as GenAiApiGetConversationResponsesRequest }
-export { ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest }
-
-// @public
-export interface ResponsesAiInterface {
-    getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(requestParameters: ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseList>;
-    patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(requestParameters: ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(requestParameters: ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-}
-
-// @public
-interface ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest {
-    readonly aiResponseFeedbackRequest: AiResponseFeedbackRequest;
-    readonly conversationId: string;
-    readonly responseId: string;
-    readonly workspaceId: string;
-}
-export { ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest as GenAiApiPatchConversationResponseRequest }
-export { ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest }
-
-// @public
-interface ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest {
-    readonly aiConversationFeedbackRequest: AiConversationFeedbackRequest;
-    readonly conversationId: string;
-    readonly workspaceId: string;
-}
-export { ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest as GenAiApiPostConversationFeedbackRequest }
-export { ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest }
-
-// @public
 export interface RestApiIdentifier {
     // (undocumented)
     'id': string;
@@ -39467,32 +39163,6 @@ export interface StringParameterDefinition {
 // @public (undocumented)
 export type StringParameterDefinitionTypeEnum = 'STRING';
 
-// @public
-export class SummaryAi extends AiBaseAPI implements SummaryAiInterface {
-    summarizeDashboard(requestParameters: SummaryAiSummarizeDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<AiSummarizeResponse>;
-}
-
-// @public
-function SummaryAi_SummarizeDashboard(axios: AxiosInstance, basePath: string, requestParameters: SummaryAiSummarizeDashboardRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiSummarizeResponse>;
-export { SummaryAi_SummarizeDashboard as GenAiApi_SummarizeDashboard }
-export { SummaryAi_SummarizeDashboard }
-
-// @public
-export function SummaryAiAxiosParamCreator_SummarizeDashboard(workspaceId: string, aiSummarizeRequest: AiSummarizeRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
-
-// @public
-export interface SummaryAiInterface {
-    summarizeDashboard(requestParameters: SummaryAiSummarizeDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<AiSummarizeResponse>;
-}
-
-// @public
-interface SummaryAiSummarizeDashboardRequest {
-    readonly aiSummarizeRequest: AiSummarizeRequest;
-    readonly workspaceId: string;
-}
-export { SummaryAiSummarizeDashboardRequest as GenAiApiSummarizeDashboardRequest }
-export { SummaryAiSummarizeDashboardRequest }
-
 // @public (undocumented)
 export interface SwitchIdentityProviderRequest {
     'idpId': string;
@@ -39843,7 +39513,7 @@ export const tigerExecutionResultClientFactory: (axios: AxiosInstance) => Pick<A
 export const tigerExportClientFactory: (axios: AxiosInstance) => ActionsExportInterface;
 
 // @public
-export type TigerGenAIClient = Pick<AfmActionsApiInterface, "aiSearch" | "aiChat" | "aiChatStream" | "aiChatHistory" | "validateLLMEndpoint" | "validateLLMEndpointById" | "getQualityIssues" | "getQualityIssuesCalculationStatus" | "triggerQualityIssuesCalculation" | "memoryCreatedByUsers"> & Pick<AIObservabilityAiInterface, "getObservabilityOverview">;
+export type TigerGenAIClient = Pick<AfmActionsApiInterface, "aiSearch" | "aiChat" | "aiChatStream" | "aiChatHistory" | "validateLLMEndpoint" | "validateLLMEndpointById" | "getQualityIssues" | "getQualityIssuesCalculationStatus" | "triggerQualityIssuesCalculation" | "memoryCreatedByUsers"> & Pick<ObservabilityAiInterface, "getObservabilityOverview">;
 
 // @public (undocumented)
 export const tigerGenAIClientFactory: (axios: AxiosInstance) => TigerGenAIClient;
@@ -41020,10 +40690,10 @@ export interface UserManagementWorkspacePermissionAssignment {
 export type UserManagementWorkspacePermissionAssignmentAccessSourceEnum = 'DIRECT' | 'GROUP' | 'HIERARCHY';
 
 // @public (undocumented)
-export type UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
+export type UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
 
 // @public (undocumented)
-export type UserManagementWorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
+export type UserManagementWorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
 
 // @public
 export interface UserPermission {
@@ -41770,34 +41440,6 @@ declare namespace VisualizationObjectModelV2 {
 export { VisualizationObjectModelV2 }
 
 // @public
-export class VisualizationsAi extends AiBaseAPI implements VisualizationsAiInterface {
-    patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(requestParameters: VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-}
-
-// @public
-function VisualizationsAi_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(axios: AxiosInstance, basePath: string, requestParameters: VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<void>;
-export { VisualizationsAi_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch as GenAiApi_PatchVisualization }
-export { VisualizationsAi_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch }
-
-// @public
-export function VisualizationsAiAxiosParamCreator_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(workspaceId: string, conversationId: string, visualizationId: string, aiVisualizationIdUpdateRequest: AiVisualizationIdUpdateRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
-
-// @public
-export interface VisualizationsAiInterface {
-    patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(requestParameters: VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-}
-
-// @public
-interface VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest {
-    readonly aiVisualizationIdUpdateRequest: AiVisualizationIdUpdateRequest;
-    readonly conversationId: string;
-    readonly visualizationId: string;
-    readonly workspaceId: string;
-}
-export { VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest as GenAiApiPatchVisualizationRequest }
-export { VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest }
-
-// @public
 export interface Webhook {
     'hasSecretKey'?: boolean | null;
     'hasToken'?: boolean | null;
@@ -42429,10 +42071,10 @@ export interface WorkspacePermissionAssignment {
 }
 
 // @public (undocumented)
-export type WorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
+export type WorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
 
 // @public (undocumented)
-export type WorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
+export type WorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
 
 // @public
 export class WorkspacesDeclarativeAPIsApi extends MetadataBaseApi implements WorkspacesDeclarativeAPIsApiInterface {

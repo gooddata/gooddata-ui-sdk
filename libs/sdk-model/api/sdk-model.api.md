@@ -111,6 +111,7 @@ export const AssignedWorkspacePermissionValue: {
     readonly CREATE_FILTER_VIEW: "CREATE_FILTER_VIEW";
     readonly VIEW: "VIEW";
     readonly CREATE_AUTOMATION: "CREATE_AUTOMATION";
+    readonly CREATE_METRIC: "CREATE_METRIC";
     readonly USE_AI_ASSISTANT: "USE_AI_ASSISTANT";
 };
 

@@ -3,7 +3,7 @@
 import { type AxiosInstance } from "axios";
 
 import { ActionsApi, type ActionsApiInterface } from "./generated/afm-rest-api/index.js";
-import { AIObservabilityAi, type AIObservabilityAiInterface } from "./generated/ai-json-api/index.js";
+import { ObservabilityAi, type ObservabilityAiInterface } from "./generated/ai-json-api/index.js";
 
 /**
  * Tiger GenAI client factory
@@ -21,11 +21,11 @@ export type TigerGenAIClient = Pick<
     | "triggerQualityIssuesCalculation"
     | "memoryCreatedByUsers"
 > &
-    Pick<AIObservabilityAiInterface, "getObservabilityOverview">;
+    Pick<ObservabilityAiInterface, "getObservabilityOverview">;
 
 export const tigerGenAIClientFactory = (axios: AxiosInstance): TigerGenAIClient => {
     const actionsApi = new ActionsApi(undefined, "", axios);
-    const observabilityApi = new AIObservabilityAi(undefined, "", axios);
+    const observabilityApi = new ObservabilityAi(undefined, "", axios);
 
     return {
         aiSearch: actionsApi.aiSearch.bind(actionsApi),

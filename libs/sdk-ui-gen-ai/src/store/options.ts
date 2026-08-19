@@ -26,6 +26,7 @@ export class OptionsDispatcher {
     private visualizations: IInsight[] | undefined = undefined;
     private mode: GenAIAssistantMode | undefined = undefined;
     private onLinkClick: ((linkClickEvent: LinkHandlerEvent) => string | undefined) | undefined = undefined;
+    private onLinkClickHandlers = new Set<(linkClickEvent: LinkHandlerEvent) => string | undefined>();
     private allowNativeLinks: boolean | undefined = undefined;
 
     public setColorPalette(colorPalette: IColorPalette | undefined): void {
@@ -44,12 +45,31 @@ export class OptionsDispatcher {
         this.allowNativeLinks = allowNativeLinks;
     }
 
+    public registerLinkHandler(
+        handler: (linkClickEvent: LinkHandlerEvent) => string | undefined,
+    ): () => void {
+        this.onLinkClickHandlers.add(handler);
+        return () => this.onLinkClickHandlers.delete(handler);
+    }
+
     public getOnLinkClick(): {
         onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
         allowNativeLinks?: boolean;
     } {
+        const onLinkClick =
+            this.onLinkClick || this.onLinkClickHandlers.size > 0
+                ? (event: LinkHandlerEvent) => {
+                      const resultCurrent = this.onLinkClick?.(event);
+                      let resultParents: string | undefined;
+                      this.onLinkClickHandlers.forEach((handler) => {
+                          resultParents = handler(event) ?? resultParents;
+                      });
+                      return resultParents ?? resultCurrent;
+                  }
+                : undefined;
+
         return {
-            onLinkClick: this.onLinkClick,
+            onLinkClick,
             allowNativeLinks: this.allowNativeLinks,
         };
     }
