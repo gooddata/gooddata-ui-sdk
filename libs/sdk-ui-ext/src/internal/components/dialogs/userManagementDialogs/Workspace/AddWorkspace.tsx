@@ -26,6 +26,7 @@ export interface IAddWorkspaceProps {
     onCancel: () => void;
     onClose: () => void;
     editWorkspace?: IGrantedWorkspace;
+    areMetricPermissionsEnabled?: boolean;
 }
 
 export function AddWorkspace({
@@ -37,6 +38,7 @@ export function AddWorkspace({
     onCancel,
     onClose,
     editWorkspace,
+    areMetricPermissionsEnabled,
 }: IAddWorkspaceProps) {
     const intl = useIntl();
     const { addedWorkspaces, isProcessing, onAdd, onChange, onOverwriteSelect } = useAddWorkspace(
@@ -101,6 +103,7 @@ export function AddWorkspace({
                 workspace={addedWorkspaces[0]}
                 onChange={onChange}
                 showRedundancyWarningMessage={showRedundancyWarningMessage}
+                areMetricPermissionsEnabled={areMetricPermissionsEnabled}
             />
         </ConfirmDialogBase>
     );

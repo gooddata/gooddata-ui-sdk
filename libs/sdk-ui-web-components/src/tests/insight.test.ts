@@ -4,7 +4,7 @@
 
 import { createElement, useEffect } from "react";
 
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { idRef } from "@gooddata/sdk-model";
@@ -97,16 +97,43 @@ describe("Insight", () => {
         document.body.innerHTML = "";
     });
 
+    afterEach(async () => {
+        // Unmount what this suite mounted instead of leaving it for whichever suite clears
+        // `document.body` next - detaching an element unmounts a React root, and that should
+        // happen while this suite still owns the DOM.
+        document.body.innerHTML = "";
+        await flushMicrotasks();
+    });
+
     it(
         "registers gd-insight as the legacy runtime and gd-insight-embed as the strict runtime",
         async () => {
             const { Insight } = await import("../visualizations/Insight.js");
             const { InsightEmbed } = await import("../visualizations/InsightEmbed.js");
 
-            await import("../index.js");
+            // The custom element registry is owned by the environment, not by the module graph, so
+            // it outlives the `vi.resetModules()` above and is shared with every other suite in the
+            // same environment. Only the first registration of a tag name wins, which means reading
+            // the real registry back would compare against whichever module instance happened to
+            // import `index.js` first. Capture what `index.js` *asks* to register instead: that is
+            // the wiring under test, and it holds no matter what ran before.
+            const defined = new Map<string, CustomElementConstructor>();
+            const getSpy = vi.spyOn(window.customElements, "get").mockReturnValue(undefined);
+            const defineSpy = vi
+                .spyOn(window.customElements, "define")
+                .mockImplementation((name, constructor) => {
+                    defined.set(name, constructor);
+                });
 
-            expect(customElements.get("gd-insight")).toBe(Insight);
-            expect(customElements.get("gd-insight-embed")).toBe(InsightEmbed);
+            try {
+                await import("../index.js");
+            } finally {
+                getSpy.mockRestore();
+                defineSpy.mockRestore();
+            }
+
+            expect(defined.get("gd-insight")).toBe(Insight);
+            expect(defined.get("gd-insight-embed")).toBe(InsightEmbed);
         },
         timeout,
     );

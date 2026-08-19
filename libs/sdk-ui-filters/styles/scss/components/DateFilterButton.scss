@@ -253,6 +253,18 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
         font-weight: bold;
         text-overflow: ellipsis;
 
+        > span {
+            overflow: hidden;
+        }
+
+        .gd-bubble-trigger,
+        .shortened {
+            display: inline-block;
+            width: 100%;
+            max-width: 100%;
+            white-space: nowrap;
+        }
+
         .overlay & {
             flex: 1 1 auto;
             max-width: none;

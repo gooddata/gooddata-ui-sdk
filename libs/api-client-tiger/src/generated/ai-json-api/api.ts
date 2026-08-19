@@ -2441,218 +2441,10 @@ export interface AiWhatIfScenarioVariant {
 
 
 
-// AIObservabilityAi FP - AIObservabilityAiAxiosParamCreator
-/**
- * Returns AI usage stats for the caller\'s organization for the current calendar month, alongside the previous month\'s value. Backed by the ai_usage_counters table populated by the metering pipeline.
- * @summary (EXPERIMENTAL) AI observability overview for the caller\'s organization
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIObservabilityAiAxiosParamCreator_GetObservabilityOverview(
-    
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    const localVarPath = `/api/v1/ai/organization/observability`;
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-
-// AIObservabilityAi Api FP
-/**
- * Returns AI usage stats for the caller\'s organization for the current calendar month, alongside the previous month\'s value. Backed by the ai_usage_counters table populated by the metering pipeline.
- * @summary (EXPERIMENTAL) AI observability overview for the caller\'s organization
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIObservabilityAi_GetObservabilityOverview(
-    axios: AxiosInstance, basePath: string,
-    
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<AiObservabilityOverviewResponse> {
-    const localVarAxiosArgs = await AIObservabilityAiAxiosParamCreator_GetObservabilityOverview(
-        
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-/**
- * AIObservabilityAi - interface
- * @export
- * @interface AIObservabilityAi
- */
-export interface AIObservabilityAiInterface {
-    /**
-     * Returns AI usage stats for the caller\'s organization for the current calendar month, alongside the previous month\'s value. Backed by the ai_usage_counters table populated by the metering pipeline.
-     * @summary (EXPERIMENTAL) AI observability overview for the caller\'s organization
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIObservabilityAiInterface
-     */
-    getObservabilityOverview(options?: AxiosRequestConfig): AxiosPromise<AiObservabilityOverviewResponse>;
-
-}
-
-/**
- * AIObservabilityAi - object-oriented interface
- * @export
- * @class AIObservabilityAi
- * @extends {BaseAPI}
- */
-export class AIObservabilityAi extends BaseAPI implements AIObservabilityAiInterface {
-    /**
-     * Returns AI usage stats for the caller\'s organization for the current calendar month, alongside the previous month\'s value. Backed by the ai_usage_counters table populated by the metering pipeline.
-     * @summary (EXPERIMENTAL) AI observability overview for the caller\'s organization
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIObservabilityAi
-     */
-    public getObservabilityOverview(options?: AxiosRequestConfig) {
-        return AIObservabilityAi_GetObservabilityOverview(this.axios, this.basePath, options, this.configuration);
-    }
-}
-
-
-// AgentAi FP - AgentAiAxiosParamCreator
-/**
- * 
- * @summary Get Skills
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AgentAiAxiosParamCreator_ListAvailableSkills(
-    
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    const localVarPath = `/api/v1/ai/agent/skills`;
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-
-// AgentAi Api FP
-/**
- * 
- * @summary Get Skills
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AgentAi_ListAvailableSkills(
-    axios: AxiosInstance, basePath: string,
-    
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<Array<AiSkillResponse>> {
-    const localVarAxiosArgs = await AgentAiAxiosParamCreator_ListAvailableSkills(
-        
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-/**
- * AgentAi - interface
- * @export
- * @interface AgentAi
- */
-export interface AgentAiInterface {
-    /**
-     * 
-     * @summary Get Skills
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AgentAiInterface
-     */
-    listAvailableSkills(options?: AxiosRequestConfig): AxiosPromise<Array<AiSkillResponse>>;
-
-}
-
-/**
- * AgentAi - object-oriented interface
- * @export
- * @class AgentAi
- * @extends {BaseAPI}
- */
-export class AgentAi extends BaseAPI implements AgentAiInterface {
-    /**
-     * 
-     * @summary Get Skills
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AgentAi
-     */
-    public listAvailableSkills(options?: AxiosRequestConfig) {
-        return AgentAi_ListAvailableSkills(this.axios, this.basePath, options, this.configuration);
-    }
-}
-
-
 // AgentsAi FP - AgentsAiAxiosParamCreator
 /**
- * List agents the calling user can use in this workspace, sorted A-Z.  This is the personalized \"usable here\" view for the agent switcher -- access-filtered to the caller, enabled, non-preview, with per-agent lastUsedAt. For agent CRUD/management use the metadata entity endpoint GET /api/v1/entities/agents instead.
- * @summary List agents available to the current user in a workspace
+ * List agents the user can use in this workspace, sorted A-Z.  This is the personalized \"usable here\" view for the agent switcher -- access-filtered to the user, enabled, non-preview, with per-agent lastUsedAt. For agent CRUD/management use the metadata entity endpoint GET /api/v1/entities/agents instead.
+ * @summary List available agents
  * @param {string} workspaceId 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
@@ -2694,11 +2486,52 @@ export async function AgentsAiAxiosParamCreator_ListAgents(
 }
 
 
+// AgentsAi FP - AgentsAiAxiosParamCreator
+/**
+ * 
+ * @summary Get Skills
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AgentsAiAxiosParamCreator_ListAvailableSkills(
+    
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/ai/agent/skills`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
 
 // AgentsAi Api FP
 /**
- * List agents the calling user can use in this workspace, sorted A-Z.  This is the personalized \"usable here\" view for the agent switcher -- access-filtered to the caller, enabled, non-preview, with per-agent lastUsedAt. For agent CRUD/management use the metadata entity endpoint GET /api/v1/entities/agents instead.
- * @summary List agents available to the current user in a workspace
+ * List agents the user can use in this workspace, sorted A-Z.  This is the personalized \"usable here\" view for the agent switcher -- access-filtered to the user, enabled, non-preview, with per-agent lastUsedAt. For agent CRUD/management use the metadata entity endpoint GET /api/v1/entities/agents instead.
+ * @summary List available agents
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {AgentsAiListAgentsRequest} requestParameters Request parameters.
@@ -2721,6 +2554,31 @@ export async function AgentsAi_ListAgents(
 }
 
 
+// AgentsAi Api FP
+/**
+ * 
+ * @summary Get Skills
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AgentsAi_ListAvailableSkills(
+    axios: AxiosInstance, basePath: string,
+    
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<Array<AiSkillResponse>> {
+    const localVarAxiosArgs = await AgentsAiAxiosParamCreator_ListAvailableSkills(
+        
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
 /**
  * AgentsAi - interface
  * @export
@@ -2728,14 +2586,23 @@ export async function AgentsAi_ListAgents(
  */
 export interface AgentsAiInterface {
     /**
-     * List agents the calling user can use in this workspace, sorted A-Z.  This is the personalized \"usable here\" view for the agent switcher -- access-filtered to the caller, enabled, non-preview, with per-agent lastUsedAt. For agent CRUD/management use the metadata entity endpoint GET /api/v1/entities/agents instead.
-     * @summary List agents available to the current user in a workspace
+     * List agents the user can use in this workspace, sorted A-Z.  This is the personalized \"usable here\" view for the agent switcher -- access-filtered to the user, enabled, non-preview, with per-agent lastUsedAt. For agent CRUD/management use the metadata entity endpoint GET /api/v1/entities/agents instead.
+     * @summary List available agents
      * @param {AgentsAiListAgentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsAiInterface
      */
     listAgents(requestParameters: AgentsAiListAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<AiAgentListResponse>;
+
+    /**
+     * 
+     * @summary Get Skills
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsAiInterface
+     */
+    listAvailableSkills(options?: AxiosRequestConfig): AxiosPromise<Array<AiSkillResponse>>;
 
 }
 
@@ -2761,8 +2628,8 @@ export interface AgentsAiListAgentsRequest {
  */
 export class AgentsAi extends BaseAPI implements AgentsAiInterface {
     /**
-     * List agents the calling user can use in this workspace, sorted A-Z.  This is the personalized \"usable here\" view for the agent switcher -- access-filtered to the caller, enabled, non-preview, with per-agent lastUsedAt. For agent CRUD/management use the metadata entity endpoint GET /api/v1/entities/agents instead.
-     * @summary List agents available to the current user in a workspace
+     * List agents the user can use in this workspace, sorted A-Z.  This is the personalized \"usable here\" view for the agent switcher -- access-filtered to the user, enabled, non-preview, with per-agent lastUsedAt. For agent CRUD/management use the metadata entity endpoint GET /api/v1/entities/agents instead.
+     * @summary List available agents
      * @param {AgentsAiListAgentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2771,13 +2638,24 @@ export class AgentsAi extends BaseAPI implements AgentsAiInterface {
     public listAgents(requestParameters: AgentsAiListAgentsRequest, options?: AxiosRequestConfig) {
         return AgentsAi_ListAgents(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
+
+    /**
+     * 
+     * @summary Get Skills
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsAi
+     */
+    public listAvailableSkills(options?: AxiosRequestConfig) {
+        return AgentsAi_ListAvailableSkills(this.axios, this.basePath, options, this.configuration);
+    }
 }
 
 
 // ConversationsAi FP - ConversationsAiAxiosParamCreator
 /**
  * 
- * @summary Delete Conversation
+ * @summary Delete a conversation
  * @param {string} workspaceId 
  * @param {string} conversationId 
  * @param {*} [options] Override http request option.
@@ -2826,7 +2704,7 @@ export async function ConversationsAiAxiosParamCreator_DeleteConversationApiV1Ai
 // ConversationsAi FP - ConversationsAiAxiosParamCreator
 /**
  * 
- * @summary Get Conversation
+ * @summary Get a conversation
  * @param {string} workspaceId 
  * @param {string} conversationId 
  * @param {*} [options] Override http request option.
@@ -2874,8 +2752,160 @@ export async function ConversationsAiAxiosParamCreator_GetConversationApiV1AiWor
 
 // ConversationsAi FP - ConversationsAiAxiosParamCreator
 /**
+ * The agent\'s interaction steps, available when interaction intelligence is enabled.
+ * @summary List reasoning steps
+ * @param {string} workspaceId 
+ * @param {string} conversationId 
+ * @param {string} [responseId] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAiAxiosParamCreator_GetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(
+    workspaceId: string, conversationId: string, responseId?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet', 'workspaceId', workspaceId)
+    // verify required parameter 'conversationId' is not null or undefined
+    assertParamExists('getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet', 'conversationId', conversationId)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/steps`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (responseId !== undefined) {
+        localVarQueryParameter['responseId'] = responseId;
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ConversationsAi FP - ConversationsAiAxiosParamCreator
+/**
+ * Items in the order the agent produced them: text, visualizations, dashboards.
+ * @summary List conversation items
+ * @param {string} workspaceId 
+ * @param {string} conversationId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAiAxiosParamCreator_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(
+    workspaceId: string, conversationId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet', 'workspaceId', workspaceId)
+    // verify required parameter 'conversationId' is not null or undefined
+    assertParamExists('getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet', 'conversationId', conversationId)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/items`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ConversationsAi FP - ConversationsAiAxiosParamCreator
+/**
  * 
- * @summary Get Conversations
+ * @summary List responses
+ * @param {string} workspaceId 
+ * @param {string} conversationId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAiAxiosParamCreator_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(
+    workspaceId: string, conversationId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet', 'workspaceId', workspaceId)
+    // verify required parameter 'conversationId' is not null or undefined
+    assertParamExists('getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet', 'conversationId', conversationId)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/responses`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ConversationsAi FP - ConversationsAiAxiosParamCreator
+/**
+ * Conversations belonging to the current user in this workspace.
+ * @summary List conversations
  * @param {string} workspaceId 
  * @param {boolean} [isPreview] 
  * @param {number} [page] 
@@ -2934,8 +2964,8 @@ export async function ConversationsAiAxiosParamCreator_GetConversationsApiV1AiWo
 
 // ConversationsAi FP - ConversationsAiAxiosParamCreator
 /**
- * 
- * @summary Patch Conversation
+ * Only the title and the pinned flag can be changed.
+ * @summary Update a conversation
  * @param {string} workspaceId 
  * @param {string} conversationId 
  * @param {AiConversationUpdateRequest} aiConversationUpdateRequest 
@@ -3000,8 +3030,218 @@ export async function ConversationsAiAxiosParamCreator_PatchConversationApiV1AiW
 
 // ConversationsAi FP - ConversationsAiAxiosParamCreator
 /**
+ * Re-points the conversation\'s dashboard at the metadata object the user saved.
+ * @summary Link a saved dashboard
+ * @param {string} workspaceId 
+ * @param {string} conversationId 
+ * @param {string} dashboardId 
+ * @param {AiDashboardIdUpdateRequest} aiDashboardIdUpdateRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAiAxiosParamCreator_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(
+    workspaceId: string, conversationId: string, dashboardId: string, aiDashboardIdUpdateRequest: AiDashboardIdUpdateRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch', 'workspaceId', workspaceId)
+    // verify required parameter 'conversationId' is not null or undefined
+    assertParamExists('patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch', 'conversationId', conversationId)
+    // verify required parameter 'dashboardId' is not null or undefined
+    assertParamExists('patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch', 'dashboardId', dashboardId)
+    // verify required parameter 'aiDashboardIdUpdateRequest' is not null or undefined
+    assertParamExists('patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch', 'aiDashboardIdUpdateRequest', aiDashboardIdUpdateRequest)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/dashboards/{dashboard_id}`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)))
+        .replace(`{${"dashboard_id"}}`, encodeURIComponent(String(dashboardId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof aiDashboardIdUpdateRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(aiDashboardIdUpdateRequest !== undefined ? aiDashboardIdUpdateRequest : {})
+        : aiDashboardIdUpdateRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ConversationsAi FP - ConversationsAiAxiosParamCreator
+/**
+ * Attaches positive or negative feedback, with optional free-text, to one response.
+ * @summary Rate a response
+ * @param {string} workspaceId 
+ * @param {string} conversationId 
+ * @param {string} responseId 
+ * @param {AiResponseFeedbackRequest} aiResponseFeedbackRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAiAxiosParamCreator_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(
+    workspaceId: string, conversationId: string, responseId: string, aiResponseFeedbackRequest: AiResponseFeedbackRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch', 'workspaceId', workspaceId)
+    // verify required parameter 'conversationId' is not null or undefined
+    assertParamExists('patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch', 'conversationId', conversationId)
+    // verify required parameter 'responseId' is not null or undefined
+    assertParamExists('patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch', 'responseId', responseId)
+    // verify required parameter 'aiResponseFeedbackRequest' is not null or undefined
+    assertParamExists('patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch', 'aiResponseFeedbackRequest', aiResponseFeedbackRequest)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/responses/{response_id}`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)))
+        .replace(`{${"response_id"}}`, encodeURIComponent(String(responseId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof aiResponseFeedbackRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(aiResponseFeedbackRequest !== undefined ? aiResponseFeedbackRequest : {})
+        : aiResponseFeedbackRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ConversationsAi FP - ConversationsAiAxiosParamCreator
+/**
+ * Re-points the conversation\'s visualization at the metadata object the user saved.
+ * @summary Link a saved visualization
+ * @param {string} workspaceId 
+ * @param {string} conversationId 
+ * @param {string} visualizationId 
+ * @param {AiVisualizationIdUpdateRequest} aiVisualizationIdUpdateRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAiAxiosParamCreator_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(
+    workspaceId: string, conversationId: string, visualizationId: string, aiVisualizationIdUpdateRequest: AiVisualizationIdUpdateRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch', 'workspaceId', workspaceId)
+    // verify required parameter 'conversationId' is not null or undefined
+    assertParamExists('patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch', 'conversationId', conversationId)
+    // verify required parameter 'visualizationId' is not null or undefined
+    assertParamExists('patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch', 'visualizationId', visualizationId)
+    // verify required parameter 'aiVisualizationIdUpdateRequest' is not null or undefined
+    assertParamExists('patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch', 'aiVisualizationIdUpdateRequest', aiVisualizationIdUpdateRequest)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/visualizations/{visualization_id}`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)))
+        .replace(`{${"visualization_id"}}`, encodeURIComponent(String(visualizationId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof aiVisualizationIdUpdateRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(aiVisualizationIdUpdateRequest !== undefined ? aiVisualizationIdUpdateRequest : {})
+        : aiVisualizationIdUpdateRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ConversationsAi FP - ConversationsAiAxiosParamCreator
+/**
  * 
- * @summary Post Conversations
+ * @summary Start a conversation
  * @param {string} workspaceId 
  * @param {boolean} [isPreview] 
  * @param {AiCreateConversationRequest} [aiCreateConversationRequest] 
@@ -3066,7 +3306,73 @@ export async function ConversationsAiAxiosParamCreator_PostConversationsApiV1AiW
 // ConversationsAi FP - ConversationsAiAxiosParamCreator
 /**
  * 
- * @summary Post Generate Conversation Title
+ * @summary Submit feedback
+ * @param {string} workspaceId 
+ * @param {string} conversationId 
+ * @param {AiConversationFeedbackRequest} aiConversationFeedbackRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAiAxiosParamCreator_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(
+    workspaceId: string, conversationId: string, aiConversationFeedbackRequest: AiConversationFeedbackRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost', 'workspaceId', workspaceId)
+    // verify required parameter 'conversationId' is not null or undefined
+    assertParamExists('postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost', 'conversationId', conversationId)
+    // verify required parameter 'aiConversationFeedbackRequest' is not null or undefined
+    assertParamExists('postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost', 'aiConversationFeedbackRequest', aiConversationFeedbackRequest)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/feedback`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof aiConversationFeedbackRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(aiConversationFeedbackRequest !== undefined ? aiConversationFeedbackRequest : {})
+        : aiConversationFeedbackRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ConversationsAi FP - ConversationsAiAxiosParamCreator
+/**
+ * Derives a title for the conversation from the messages exchanged so far.
+ * @summary Generate a title
  * @param {string} workspaceId 
  * @param {string} conversationId 
  * @param {*} [options] Override http request option.
@@ -3114,8 +3420,74 @@ export async function ConversationsAiAxiosParamCreator_PostGenerateConversationT
 
 // ConversationsAi FP - ConversationsAiAxiosParamCreator
 /**
- * 
- * @summary Switch the active agent on an existing conversation
+ * Streams the agent\'s reply back over SSE; see the 200 response for the event sequence.
+ * @summary Send a message
+ * @param {string} workspaceId 
+ * @param {string} conversationId 
+ * @param {AiSendMessageRequest} aiSendMessageRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAiAxiosParamCreator_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(
+    workspaceId: string, conversationId: string, aiSendMessageRequest: AiSendMessageRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost', 'workspaceId', workspaceId)
+    // verify required parameter 'conversationId' is not null or undefined
+    assertParamExists('postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost', 'conversationId', conversationId)
+    // verify required parameter 'aiSendMessageRequest' is not null or undefined
+    assertParamExists('postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost', 'aiSendMessageRequest', aiSendMessageRequest)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/messages`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof aiSendMessageRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(aiSendMessageRequest !== undefined ? aiSendMessageRequest : {})
+        : aiSendMessageRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ConversationsAi FP - ConversationsAiAxiosParamCreator
+/**
+ * Changes the active agent on an existing conversation.
+ * @summary Switch agent
  * @param {string} workspaceId 
  * @param {string} conversationId 
  * @param {AiSwitchAgentRequest} aiSwitchAgentRequest 
@@ -3182,7 +3554,7 @@ export async function ConversationsAiAxiosParamCreator_SwitchAgent(
 // ConversationsAi Api FP
 /**
  * 
- * @summary Delete Conversation
+ * @summary Delete a conversation
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ConversationsAiDeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDeleteRequest} requestParameters Request parameters.
@@ -3208,7 +3580,7 @@ export async function ConversationsAi_DeleteConversationApiV1AiWorkspacesWorkspa
 // ConversationsAi Api FP
 /**
  * 
- * @summary Get Conversation
+ * @summary Get a conversation
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest} requestParameters Request parameters.
@@ -3233,8 +3605,86 @@ export async function ConversationsAi_GetConversationApiV1AiWorkspacesWorkspaceI
 
 // ConversationsAi Api FP
 /**
+ * The agent\'s interaction steps, available when interaction intelligence is enabled.
+ * @summary List reasoning steps
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ConversationsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAi_GetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ConversationsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiInteractionStepListResponse> {
+    const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_GetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(
+        requestParameters.workspaceId, requestParameters.conversationId, requestParameters.responseId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ConversationsAi Api FP
+/**
+ * Items in the order the agent produced them: text, visualizations, dashboards.
+ * @summary List conversation items
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ConversationsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ConversationsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiConversationItemListResponse> {
+    const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(
+        requestParameters.workspaceId, requestParameters.conversationId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ConversationsAi Api FP
+/**
  * 
- * @summary Get Conversations
+ * @summary List responses
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ConversationsAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAi_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ConversationsAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiConversationResponseList> {
+    const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(
+        requestParameters.workspaceId, requestParameters.conversationId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ConversationsAi Api FP
+/**
+ * Conversations belonging to the current user in this workspace.
+ * @summary List conversations
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest} requestParameters Request parameters.
@@ -3259,8 +3709,8 @@ export async function ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspace
 
 // ConversationsAi Api FP
 /**
- * 
- * @summary Patch Conversation
+ * Only the title and the pinned flag can be changed.
+ * @summary Update a conversation
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest} requestParameters Request parameters.
@@ -3285,8 +3735,86 @@ export async function ConversationsAi_PatchConversationApiV1AiWorkspacesWorkspac
 
 // ConversationsAi Api FP
 /**
+ * Re-points the conversation\'s dashboard at the metadata object the user saved.
+ * @summary Link a saved dashboard
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAi_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(
+        requestParameters.workspaceId, requestParameters.conversationId, requestParameters.dashboardId, requestParameters.aiDashboardIdUpdateRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ConversationsAi Api FP
+/**
+ * Attaches positive or negative feedback, with optional free-text, to one response.
+ * @summary Rate a response
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAi_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(
+        requestParameters.workspaceId, requestParameters.conversationId, requestParameters.responseId, requestParameters.aiResponseFeedbackRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ConversationsAi Api FP
+/**
+ * Re-points the conversation\'s visualization at the metadata object the user saved.
+ * @summary Link a saved visualization
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAi_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(
+        requestParameters.workspaceId, requestParameters.conversationId, requestParameters.visualizationId, requestParameters.aiVisualizationIdUpdateRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ConversationsAi Api FP
+/**
  * 
- * @summary Post Conversations
+ * @summary Start a conversation
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest} requestParameters Request parameters.
@@ -3312,7 +3840,33 @@ export async function ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspac
 // ConversationsAi Api FP
 /**
  * 
- * @summary Post Generate Conversation Title
+ * @summary Submit feedback
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ConversationsAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAi_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ConversationsAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(
+        requestParameters.workspaceId, requestParameters.conversationId, requestParameters.aiConversationFeedbackRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ConversationsAi Api FP
+/**
+ * Derives a title for the conversation from the messages exchanged so far.
+ * @summary Generate a title
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest} requestParameters Request parameters.
@@ -3337,8 +3891,34 @@ export async function ConversationsAi_PostGenerateConversationTitleApiV1AiWorksp
 
 // ConversationsAi Api FP
 /**
- * 
- * @summary Switch the active agent on an existing conversation
+ * Streams the agent\'s reply back over SSE; see the 200 response for the event sequence.
+ * @summary Send a message
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ConversationsAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAi_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ConversationsAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<string> {
+    const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(
+        requestParameters.workspaceId, requestParameters.conversationId, requestParameters.aiSendMessageRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ConversationsAi Api FP
+/**
+ * Changes the active agent on an existing conversation.
+ * @summary Switch agent
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ConversationsAiSwitchAgentRequest} requestParameters Request parameters.
@@ -3369,7 +3949,7 @@ export async function ConversationsAi_SwitchAgent(
 export interface ConversationsAiInterface {
     /**
      * 
-     * @summary Delete Conversation
+     * @summary Delete a conversation
      * @param {ConversationsAiDeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3379,7 +3959,7 @@ export interface ConversationsAiInterface {
 
     /**
      * 
-     * @summary Get Conversation
+     * @summary Get a conversation
      * @param {ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3388,8 +3968,38 @@ export interface ConversationsAiInterface {
     getConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(requestParameters: ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
 
     /**
+     * The agent\'s interaction steps, available when interaction intelligence is enabled.
+     * @summary List reasoning steps
+     * @param {ConversationsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAiInterface
+     */
+    getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(requestParameters: ConversationsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiInteractionStepListResponse>;
+
+    /**
+     * Items in the order the agent produced them: text, visualizations, dashboards.
+     * @summary List conversation items
+     * @param {ConversationsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAiInterface
+     */
+    getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(requestParameters: ConversationsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationItemListResponse>;
+
+    /**
      * 
-     * @summary Get Conversations
+     * @summary List responses
+     * @param {ConversationsAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAiInterface
+     */
+    getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(requestParameters: ConversationsAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseList>;
+
+    /**
+     * Conversations belonging to the current user in this workspace.
+     * @summary List conversations
      * @param {ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3398,8 +4008,8 @@ export interface ConversationsAiInterface {
     getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationListResponse>;
 
     /**
-     * 
-     * @summary Patch Conversation
+     * Only the title and the pinned flag can be changed.
+     * @summary Update a conversation
      * @param {ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3408,8 +4018,38 @@ export interface ConversationsAiInterface {
     patchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(requestParameters: ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
 
     /**
+     * Re-points the conversation\'s dashboard at the metadata object the user saved.
+     * @summary Link a saved dashboard
+     * @param {ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAiInterface
+     */
+    patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(requestParameters: ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * Attaches positive or negative feedback, with optional free-text, to one response.
+     * @summary Rate a response
+     * @param {ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAiInterface
+     */
+    patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(requestParameters: ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * Re-points the conversation\'s visualization at the metadata object the user saved.
+     * @summary Link a saved visualization
+     * @param {ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAiInterface
+     */
+    patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(requestParameters: ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
      * 
-     * @summary Post Conversations
+     * @summary Start a conversation
      * @param {ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3419,7 +4059,17 @@ export interface ConversationsAiInterface {
 
     /**
      * 
-     * @summary Post Generate Conversation Title
+     * @summary Submit feedback
+     * @param {ConversationsAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAiInterface
+     */
+    postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(requestParameters: ConversationsAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * Derives a title for the conversation from the messages exchanged so far.
+     * @summary Generate a title
      * @param {ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3428,8 +4078,18 @@ export interface ConversationsAiInterface {
     postGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost(requestParameters: ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
 
     /**
-     * 
-     * @summary Switch the active agent on an existing conversation
+     * Streams the agent\'s reply back over SSE; see the 200 response for the event sequence.
+     * @summary Send a message
+     * @param {ConversationsAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAiInterface
+     */
+    postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(requestParameters: ConversationsAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig): AxiosPromise<string>;
+
+    /**
+     * Changes the active agent on an existing conversation.
+     * @summary Switch agent
      * @param {ConversationsAiSwitchAgentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3477,6 +4137,76 @@ export interface ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatC
      * 
      * @type {string}
      * @memberof ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet
+     */
+    readonly conversationId: string
+}
+
+/**
+ * Request parameters for getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet operation in ConversationsAi.
+ * @export
+ * @interface ConversationsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest
+ */
+export interface ConversationsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet
+     */
+    readonly conversationId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet
+     */
+    readonly responseId?: string
+}
+
+/**
+ * Request parameters for getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet operation in ConversationsAi.
+ * @export
+ * @interface ConversationsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest
+ */
+export interface ConversationsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet
+     */
+    readonly conversationId: string
+}
+
+/**
+ * Request parameters for getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet operation in ConversationsAi.
+ * @export
+ * @interface ConversationsAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest
+ */
+export interface ConversationsAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet
      */
     readonly conversationId: string
 }
@@ -3545,6 +4275,111 @@ export interface ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdCha
 }
 
 /**
+ * Request parameters for patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch operation in ConversationsAi.
+ * @export
+ * @interface ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest
+ */
+export interface ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch
+     */
+    readonly conversationId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch
+     */
+    readonly dashboardId: string
+
+    /**
+     * 
+     * @type {AiDashboardIdUpdateRequest}
+     * @memberof ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch
+     */
+    readonly aiDashboardIdUpdateRequest: AiDashboardIdUpdateRequest
+}
+
+/**
+ * Request parameters for patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch operation in ConversationsAi.
+ * @export
+ * @interface ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest
+ */
+export interface ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch
+     */
+    readonly conversationId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch
+     */
+    readonly responseId: string
+
+    /**
+     * 
+     * @type {AiResponseFeedbackRequest}
+     * @memberof ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch
+     */
+    readonly aiResponseFeedbackRequest: AiResponseFeedbackRequest
+}
+
+/**
+ * Request parameters for patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch operation in ConversationsAi.
+ * @export
+ * @interface ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest
+ */
+export interface ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch
+     */
+    readonly conversationId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch
+     */
+    readonly visualizationId: string
+
+    /**
+     * 
+     * @type {AiVisualizationIdUpdateRequest}
+     * @memberof ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch
+     */
+    readonly aiVisualizationIdUpdateRequest: AiVisualizationIdUpdateRequest
+}
+
+/**
  * Request parameters for postConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost operation in ConversationsAi.
  * @export
  * @interface ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest
@@ -3573,6 +4408,34 @@ export interface ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdCha
 }
 
 /**
+ * Request parameters for postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost operation in ConversationsAi.
+ * @export
+ * @interface ConversationsAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest
+ */
+export interface ConversationsAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost
+     */
+    readonly conversationId: string
+
+    /**
+     * 
+     * @type {AiConversationFeedbackRequest}
+     * @memberof ConversationsAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost
+     */
+    readonly aiConversationFeedbackRequest: AiConversationFeedbackRequest
+}
+
+/**
  * Request parameters for postGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost operation in ConversationsAi.
  * @export
  * @interface ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest
@@ -3591,6 +4454,34 @@ export interface ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWo
      * @memberof ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost
      */
     readonly conversationId: string
+}
+
+/**
+ * Request parameters for postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost operation in ConversationsAi.
+ * @export
+ * @interface ConversationsAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest
+ */
+export interface ConversationsAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost
+     */
+    readonly conversationId: string
+
+    /**
+     * 
+     * @type {AiSendMessageRequest}
+     * @memberof ConversationsAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost
+     */
+    readonly aiSendMessageRequest: AiSendMessageRequest
 }
 
 /**
@@ -3630,7 +4521,7 @@ export interface ConversationsAiSwitchAgentRequest {
 export class ConversationsAi extends BaseAPI implements ConversationsAiInterface {
     /**
      * 
-     * @summary Delete Conversation
+     * @summary Delete a conversation
      * @param {ConversationsAiDeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3642,7 +4533,7 @@ export class ConversationsAi extends BaseAPI implements ConversationsAiInterface
 
     /**
      * 
-     * @summary Get Conversation
+     * @summary Get a conversation
      * @param {ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3653,8 +4544,44 @@ export class ConversationsAi extends BaseAPI implements ConversationsAiInterface
     }
 
     /**
+     * The agent\'s interaction steps, available when interaction intelligence is enabled.
+     * @summary List reasoning steps
+     * @param {ConversationsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAi
+     */
+    public getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(requestParameters: ConversationsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest, options?: AxiosRequestConfig) {
+        return ConversationsAi_GetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Items in the order the agent produced them: text, visualizations, dashboards.
+     * @summary List conversation items
+     * @param {ConversationsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAi
+     */
+    public getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(requestParameters: ConversationsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig) {
+        return ConversationsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * 
-     * @summary Get Conversations
+     * @summary List responses
+     * @param {ConversationsAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAi
+     */
+    public getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(requestParameters: ConversationsAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig) {
+        return ConversationsAi_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Conversations belonging to the current user in this workspace.
+     * @summary List conversations
      * @param {ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3665,8 +4592,8 @@ export class ConversationsAi extends BaseAPI implements ConversationsAiInterface
     }
 
     /**
-     * 
-     * @summary Patch Conversation
+     * Only the title and the pinned flag can be changed.
+     * @summary Update a conversation
      * @param {ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3677,8 +4604,44 @@ export class ConversationsAi extends BaseAPI implements ConversationsAiInterface
     }
 
     /**
+     * Re-points the conversation\'s dashboard at the metadata object the user saved.
+     * @summary Link a saved dashboard
+     * @param {ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAi
+     */
+    public patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(requestParameters: ConversationsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig) {
+        return ConversationsAi_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Attaches positive or negative feedback, with optional free-text, to one response.
+     * @summary Rate a response
+     * @param {ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAi
+     */
+    public patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(requestParameters: ConversationsAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig) {
+        return ConversationsAi_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Re-points the conversation\'s visualization at the metadata object the user saved.
+     * @summary Link a saved visualization
+     * @param {ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAi
+     */
+    public patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(requestParameters: ConversationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest, options?: AxiosRequestConfig) {
+        return ConversationsAi_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * 
-     * @summary Post Conversations
+     * @summary Start a conversation
      * @param {ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3690,7 +4653,19 @@ export class ConversationsAi extends BaseAPI implements ConversationsAiInterface
 
     /**
      * 
-     * @summary Post Generate Conversation Title
+     * @summary Submit feedback
+     * @param {ConversationsAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAi
+     */
+    public postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(requestParameters: ConversationsAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest, options?: AxiosRequestConfig) {
+        return ConversationsAi_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Derives a title for the conversation from the messages exchanged so far.
+     * @summary Generate a title
      * @param {ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3701,8 +4676,20 @@ export class ConversationsAi extends BaseAPI implements ConversationsAiInterface
     }
 
     /**
-     * 
-     * @summary Switch the active agent on an existing conversation
+     * Streams the agent\'s reply back over SSE; see the 200 response for the event sequence.
+     * @summary Send a message
+     * @param {ConversationsAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAi
+     */
+    public postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(requestParameters: ConversationsAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig) {
+        return ConversationsAi_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Changes the active agent on an existing conversation.
+     * @summary Switch agent
      * @param {ConversationsAiSwitchAgentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3714,42 +4701,34 @@ export class ConversationsAi extends BaseAPI implements ConversationsAiInterface
 }
 
 
-// DashboardsAi FP - DashboardsAiAxiosParamCreator
+// DashboardSummaryAi FP - DashboardSummaryAiAxiosParamCreator
 /**
- * 
- * @summary Patch Dashboard
+ * Note: This API is an experimental and is going to change. Please, use it accordingly. Generates a natural-language summary of a dashboard\'s visualizations, optionally scoped by an explicit filter context.
+ * @summary (EXPERIMENTAL) Summarize a dashboard
  * @param {string} workspaceId 
- * @param {string} conversationId 
- * @param {string} dashboardId 
- * @param {AiDashboardIdUpdateRequest} aiDashboardIdUpdateRequest 
+ * @param {AiSummarizeRequest} aiSummarizeRequest 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
-export async function DashboardsAiAxiosParamCreator_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(
-    workspaceId: string, conversationId: string, dashboardId: string, aiDashboardIdUpdateRequest: AiDashboardIdUpdateRequest, 
+export async function DashboardSummaryAiAxiosParamCreator_SummarizeDashboard(
+    workspaceId: string, aiSummarizeRequest: AiSummarizeRequest, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
     // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch', 'workspaceId', workspaceId)
-    // verify required parameter 'conversationId' is not null or undefined
-    assertParamExists('patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch', 'conversationId', conversationId)
-    // verify required parameter 'dashboardId' is not null or undefined
-    assertParamExists('patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch', 'dashboardId', dashboardId)
-    // verify required parameter 'aiDashboardIdUpdateRequest' is not null or undefined
-    assertParamExists('patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch', 'aiDashboardIdUpdateRequest', aiDashboardIdUpdateRequest)
-    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/dashboards/{dashboard_id}`
-        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)))
-        .replace(`{${"dashboard_id"}}`, encodeURIComponent(String(dashboardId)));
+    assertParamExists('summarizeDashboard', 'workspaceId', workspaceId)
+    // verify required parameter 'aiSummarizeRequest' is not null or undefined
+    assertParamExists('summarizeDashboard', 'aiSummarizeRequest', aiSummarizeRequest)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/summary`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
     let baseOptions;
     if (configuration) {
         baseOptions = configuration.baseOptions;
     }
-    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
@@ -3771,11 +4750,11 @@ export async function DashboardsAiAxiosParamCreator_PatchDashboardApiV1AiWorkspa
         ...options.headers,
     };
     const needsSerialization =
-        typeof aiDashboardIdUpdateRequest !== "string" ||
+        typeof aiSummarizeRequest !== "string" ||
         localVarRequestOptions.headers["Content-Type"] === "application/json";
     localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(aiDashboardIdUpdateRequest !== undefined ? aiDashboardIdUpdateRequest : {})
-        : aiDashboardIdUpdateRequest || "";
+        ? JSON.stringify(aiSummarizeRequest !== undefined ? aiSummarizeRequest : {})
+        : aiSummarizeRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -3785,25 +4764,25 @@ export async function DashboardsAiAxiosParamCreator_PatchDashboardApiV1AiWorkspa
 
 
 
-// DashboardsAi Api FP
+// DashboardSummaryAi Api FP
 /**
- * 
- * @summary Patch Dashboard
+ * Note: This API is an experimental and is going to change. Please, use it accordingly. Generates a natural-language summary of a dashboard\'s visualizations, optionally scoped by an explicit filter context.
+ * @summary (EXPERIMENTAL) Summarize a dashboard
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
- * @param {DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest} requestParameters Request parameters.
+ * @param {DashboardSummaryAiSummarizeDashboardRequest} requestParameters Request parameters.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
-export async function DashboardsAi_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(
+export async function DashboardSummaryAi_SummarizeDashboard(
     axios: AxiosInstance, basePath: string,
-    requestParameters: DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, 
+    requestParameters: DashboardSummaryAiSummarizeDashboardRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<void> {
-    const localVarAxiosArgs = await DashboardsAiAxiosParamCreator_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(
-        requestParameters.workspaceId, requestParameters.conversationId, requestParameters.dashboardId, requestParameters.aiDashboardIdUpdateRequest, 
+): AxiosPromise<AiSummarizeResponse> {
+    const localVarAxiosArgs = await DashboardSummaryAiAxiosParamCreator_SummarizeDashboard(
+        requestParameters.workspaceId, requestParameters.aiSummarizeRequest, 
         options || {},
         configuration,
     );
@@ -3812,359 +4791,61 @@ export async function DashboardsAi_PatchDashboardApiV1AiWorkspacesWorkspaceIdCha
 
 
 /**
- * DashboardsAi - interface
+ * DashboardSummaryAi - interface
  * @export
- * @interface DashboardsAi
+ * @interface DashboardSummaryAi
  */
-export interface DashboardsAiInterface {
+export interface DashboardSummaryAiInterface {
     /**
-     * 
-     * @summary Patch Dashboard
-     * @param {DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest} requestParameters Request parameters.
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. Generates a natural-language summary of a dashboard\'s visualizations, optionally scoped by an explicit filter context.
+     * @summary (EXPERIMENTAL) Summarize a dashboard
+     * @param {DashboardSummaryAiSummarizeDashboardRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DashboardsAiInterface
+     * @memberof DashboardSummaryAiInterface
      */
-    patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(requestParameters: DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    summarizeDashboard(requestParameters: DashboardSummaryAiSummarizeDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<AiSummarizeResponse>;
 
 }
 
 /**
- * Request parameters for patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch operation in DashboardsAi.
+ * Request parameters for summarizeDashboard operation in DashboardSummaryAi.
  * @export
- * @interface DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest
+ * @interface DashboardSummaryAiSummarizeDashboardRequest
  */
-export interface DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest {
+export interface DashboardSummaryAiSummarizeDashboardRequest {
     /**
      * 
      * @type {string}
-     * @memberof DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch
+     * @memberof DashboardSummaryAiSummarizeDashboard
      */
     readonly workspaceId: string
 
     /**
      * 
-     * @type {string}
-     * @memberof DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch
+     * @type {AiSummarizeRequest}
+     * @memberof DashboardSummaryAiSummarizeDashboard
      */
-    readonly conversationId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch
-     */
-    readonly dashboardId: string
-
-    /**
-     * 
-     * @type {AiDashboardIdUpdateRequest}
-     * @memberof DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch
-     */
-    readonly aiDashboardIdUpdateRequest: AiDashboardIdUpdateRequest
+    readonly aiSummarizeRequest: AiSummarizeRequest
 }
 
 /**
- * DashboardsAi - object-oriented interface
+ * DashboardSummaryAi - object-oriented interface
  * @export
- * @class DashboardsAi
+ * @class DashboardSummaryAi
  * @extends {BaseAPI}
  */
-export class DashboardsAi extends BaseAPI implements DashboardsAiInterface {
+export class DashboardSummaryAi extends BaseAPI implements DashboardSummaryAiInterface {
     /**
-     * 
-     * @summary Patch Dashboard
-     * @param {DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest} requestParameters Request parameters.
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. Generates a natural-language summary of a dashboard\'s visualizations, optionally scoped by an explicit filter context.
+     * @summary (EXPERIMENTAL) Summarize a dashboard
+     * @param {DashboardSummaryAiSummarizeDashboardRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DashboardsAi
+     * @memberof DashboardSummaryAi
      */
-    public patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(requestParameters: DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig) {
-        return DashboardsAi_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-}
-
-
-// InteractionStepsAi FP - InteractionStepsAiAxiosParamCreator
-/**
- * 
- * @summary Get Conversation Interaction Steps
- * @param {string} workspaceId 
- * @param {string} conversationId 
- * @param {string} [responseId] 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function InteractionStepsAiAxiosParamCreator_GetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(
-    workspaceId: string, conversationId: string, responseId?: string, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet', 'workspaceId', workspaceId)
-    // verify required parameter 'conversationId' is not null or undefined
-    assertParamExists('getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet', 'conversationId', conversationId)
-    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/steps`
-        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (responseId !== undefined) {
-        localVarQueryParameter['responseId'] = responseId;
-    }
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-
-// InteractionStepsAi Api FP
-/**
- * 
- * @summary Get Conversation Interaction Steps
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function InteractionStepsAi_GetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<AiInteractionStepListResponse> {
-    const localVarAxiosArgs = await InteractionStepsAiAxiosParamCreator_GetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(
-        requestParameters.workspaceId, requestParameters.conversationId, requestParameters.responseId, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-/**
- * InteractionStepsAi - interface
- * @export
- * @interface InteractionStepsAi
- */
-export interface InteractionStepsAiInterface {
-    /**
-     * 
-     * @summary Get Conversation Interaction Steps
-     * @param {InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof InteractionStepsAiInterface
-     */
-    getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(requestParameters: InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiInteractionStepListResponse>;
-
-}
-
-/**
- * Request parameters for getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet operation in InteractionStepsAi.
- * @export
- * @interface InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest
- */
-export interface InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet
-     */
-    readonly conversationId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet
-     */
-    readonly responseId?: string
-}
-
-/**
- * InteractionStepsAi - object-oriented interface
- * @export
- * @class InteractionStepsAi
- * @extends {BaseAPI}
- */
-export class InteractionStepsAi extends BaseAPI implements InteractionStepsAiInterface {
-    /**
-     * 
-     * @summary Get Conversation Interaction Steps
-     * @param {InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof InteractionStepsAi
-     */
-    public getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(requestParameters: InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest, options?: AxiosRequestConfig) {
-        return InteractionStepsAi_GetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-}
-
-
-// ItemsAi FP - ItemsAiAxiosParamCreator
-/**
- * 
- * @summary Get Conversation Items
- * @param {string} workspaceId 
- * @param {string} conversationId 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ItemsAiAxiosParamCreator_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(
-    workspaceId: string, conversationId: string, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet', 'workspaceId', workspaceId)
-    // verify required parameter 'conversationId' is not null or undefined
-    assertParamExists('getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet', 'conversationId', conversationId)
-    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/items`
-        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-
-// ItemsAi Api FP
-/**
- * 
- * @summary Get Conversation Items
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ItemsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<AiConversationItemListResponse> {
-    const localVarAxiosArgs = await ItemsAiAxiosParamCreator_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(
-        requestParameters.workspaceId, requestParameters.conversationId, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-/**
- * ItemsAi - interface
- * @export
- * @interface ItemsAi
- */
-export interface ItemsAiInterface {
-    /**
-     * 
-     * @summary Get Conversation Items
-     * @param {ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ItemsAiInterface
-     */
-    getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(requestParameters: ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationItemListResponse>;
-
-}
-
-/**
- * Request parameters for getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet operation in ItemsAi.
- * @export
- * @interface ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest
- */
-export interface ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet
-     */
-    readonly conversationId: string
-}
-
-/**
- * ItemsAi - object-oriented interface
- * @export
- * @class ItemsAi
- * @extends {BaseAPI}
- */
-export class ItemsAi extends BaseAPI implements ItemsAiInterface {
-    /**
-     * 
-     * @summary Get Conversation Items
-     * @param {ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ItemsAi
-     */
-    public getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(requestParameters: ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig) {
-        return ItemsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(this.axios, this.basePath, requestParameters, options, this.configuration);
+    public summarizeDashboard(requestParameters: DashboardSummaryAiSummarizeDashboardRequest, options?: AxiosRequestConfig) {
+        return DashboardSummaryAi_SummarizeDashboard(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 
@@ -6359,188 +7040,20 @@ export class KnowledgeAi extends BaseAPI implements KnowledgeAiInterface {
 }
 
 
-// MessagesAi FP - MessagesAiAxiosParamCreator
+// ObservabilityAi FP - ObservabilityAiAxiosParamCreator
 /**
- * 
- * @summary Post Messages
- * @param {string} workspaceId 
- * @param {string} conversationId 
- * @param {AiSendMessageRequest} aiSendMessageRequest 
+ * Returns AI usage stats for the user\'s organization for the current calendar month, alongside the previous month\'s value. Backed by the ai_usage_counters table populated by the metering pipeline.
+ * @summary (EXPERIMENTAL) AI observability overview
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
-export async function MessagesAiAxiosParamCreator_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(
-    workspaceId: string, conversationId: string, aiSendMessageRequest: AiSendMessageRequest, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost', 'workspaceId', workspaceId)
-    // verify required parameter 'conversationId' is not null or undefined
-    assertParamExists('postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost', 'conversationId', conversationId)
-    // verify required parameter 'aiSendMessageRequest' is not null or undefined
-    assertParamExists('postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost', 'aiSendMessageRequest', aiSendMessageRequest)
-    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/messages`
-        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
+export async function ObservabilityAiAxiosParamCreator_GetObservabilityOverview(
     
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof aiSendMessageRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(aiSendMessageRequest !== undefined ? aiSendMessageRequest : {})
-        : aiSendMessageRequest || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-
-// MessagesAi Api FP
-/**
- * 
- * @summary Post Messages
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function MessagesAi_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<string> {
-    const localVarAxiosArgs = await MessagesAiAxiosParamCreator_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(
-        requestParameters.workspaceId, requestParameters.conversationId, requestParameters.aiSendMessageRequest, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-/**
- * MessagesAi - interface
- * @export
- * @interface MessagesAi
- */
-export interface MessagesAiInterface {
-    /**
-     * 
-     * @summary Post Messages
-     * @param {MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof MessagesAiInterface
-     */
-    postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(requestParameters: MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig): AxiosPromise<string>;
-
-}
-
-/**
- * Request parameters for postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost operation in MessagesAi.
- * @export
- * @interface MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest
- */
-export interface MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost
-     */
-    readonly conversationId: string
-
-    /**
-     * 
-     * @type {AiSendMessageRequest}
-     * @memberof MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost
-     */
-    readonly aiSendMessageRequest: AiSendMessageRequest
-}
-
-/**
- * MessagesAi - object-oriented interface
- * @export
- * @class MessagesAi
- * @extends {BaseAPI}
- */
-export class MessagesAi extends BaseAPI implements MessagesAiInterface {
-    /**
-     * 
-     * @summary Post Messages
-     * @param {MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof MessagesAi
-     */
-    public postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(requestParameters: MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig) {
-        return MessagesAi_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-}
-
-
-// ResponsesAi FP - ResponsesAiAxiosParamCreator
-/**
- * 
- * @summary Get Conversation Responses
- * @param {string} workspaceId 
- * @param {string} conversationId 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ResponsesAiAxiosParamCreator_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(
-    workspaceId: string, conversationId: string, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet', 'workspaceId', workspaceId)
-    // verify required parameter 'conversationId' is not null or undefined
-    assertParamExists('getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet', 'conversationId', conversationId)
-    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/responses`
-        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)));
+    const localVarPath = `/api/v1/ai/organization/observability`;
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
     let baseOptions;
@@ -6568,214 +7081,25 @@ export async function ResponsesAiAxiosParamCreator_GetConversationResponsesApiV1
 }
 
 
-// ResponsesAi FP - ResponsesAiAxiosParamCreator
+
+// ObservabilityAi Api FP
 /**
- * 
- * @summary Patch Response
- * @param {string} workspaceId 
- * @param {string} conversationId 
- * @param {string} responseId 
- * @param {AiResponseFeedbackRequest} aiResponseFeedbackRequest 
+ * Returns AI usage stats for the user\'s organization for the current calendar month, alongside the previous month\'s value. Backed by the ai_usage_counters table populated by the metering pipeline.
+ * @summary (EXPERIMENTAL) AI observability overview
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
-export async function ResponsesAiAxiosParamCreator_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(
-    workspaceId: string, conversationId: string, responseId: string, aiResponseFeedbackRequest: AiResponseFeedbackRequest, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch', 'workspaceId', workspaceId)
-    // verify required parameter 'conversationId' is not null or undefined
-    assertParamExists('patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch', 'conversationId', conversationId)
-    // verify required parameter 'responseId' is not null or undefined
-    assertParamExists('patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch', 'responseId', responseId)
-    // verify required parameter 'aiResponseFeedbackRequest' is not null or undefined
-    assertParamExists('patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch', 'aiResponseFeedbackRequest', aiResponseFeedbackRequest)
-    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/responses/{response_id}`
-        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)))
-        .replace(`{${"response_id"}}`, encodeURIComponent(String(responseId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
+export async function ObservabilityAi_GetObservabilityOverview(
+    axios: AxiosInstance, basePath: string,
     
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof aiResponseFeedbackRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(aiResponseFeedbackRequest !== undefined ? aiResponseFeedbackRequest : {})
-        : aiResponseFeedbackRequest || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// ResponsesAi FP - ResponsesAiAxiosParamCreator
-/**
- * 
- * @summary Post Feedback
- * @param {string} workspaceId 
- * @param {string} conversationId 
- * @param {AiConversationFeedbackRequest} aiConversationFeedbackRequest 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ResponsesAiAxiosParamCreator_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(
-    workspaceId: string, conversationId: string, aiConversationFeedbackRequest: AiConversationFeedbackRequest, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost', 'workspaceId', workspaceId)
-    // verify required parameter 'conversationId' is not null or undefined
-    assertParamExists('postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost', 'conversationId', conversationId)
-    // verify required parameter 'aiConversationFeedbackRequest' is not null or undefined
-    assertParamExists('postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost', 'aiConversationFeedbackRequest', aiConversationFeedbackRequest)
-    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/feedback`
-        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof aiConversationFeedbackRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(aiConversationFeedbackRequest !== undefined ? aiConversationFeedbackRequest : {})
-        : aiConversationFeedbackRequest || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-
-// ResponsesAi Api FP
-/**
- * 
- * @summary Get Conversation Responses
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ResponsesAi_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<AiConversationResponseList> {
-    const localVarAxiosArgs = await ResponsesAiAxiosParamCreator_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(
-        requestParameters.workspaceId, requestParameters.conversationId, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// ResponsesAi Api FP
-/**
- * 
- * @summary Patch Response
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ResponsesAi_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<void> {
-    const localVarAxiosArgs = await ResponsesAiAxiosParamCreator_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(
-        requestParameters.workspaceId, requestParameters.conversationId, requestParameters.responseId, requestParameters.aiResponseFeedbackRequest, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// ResponsesAi Api FP
-/**
- * 
- * @summary Post Feedback
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ResponsesAi_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<void> {
-    const localVarAxiosArgs = await ResponsesAiAxiosParamCreator_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(
-        requestParameters.workspaceId, requestParameters.conversationId, requestParameters.aiConversationFeedbackRequest, 
+): AxiosPromise<AiObservabilityOverviewResponse> {
+    const localVarAxiosArgs = await ObservabilityAiAxiosParamCreator_GetObservabilityOverview(
+        
         options || {},
         configuration,
     );
@@ -6784,488 +7108,38 @@ export async function ResponsesAi_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatCo
 
 
 /**
- * ResponsesAi - interface
+ * ObservabilityAi - interface
  * @export
- * @interface ResponsesAi
+ * @interface ObservabilityAi
  */
-export interface ResponsesAiInterface {
+export interface ObservabilityAiInterface {
     /**
-     * 
-     * @summary Get Conversation Responses
-     * @param {ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest} requestParameters Request parameters.
+     * Returns AI usage stats for the user\'s organization for the current calendar month, alongside the previous month\'s value. Backed by the ai_usage_counters table populated by the metering pipeline.
+     * @summary (EXPERIMENTAL) AI observability overview
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ResponsesAiInterface
+     * @memberof ObservabilityAiInterface
      */
-    getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(requestParameters: ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseList>;
-
-    /**
-     * 
-     * @summary Patch Response
-     * @param {ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ResponsesAiInterface
-     */
-    patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(requestParameters: ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @summary Post Feedback
-     * @param {ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ResponsesAiInterface
-     */
-    postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(requestParameters: ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getObservabilityOverview(options?: AxiosRequestConfig): AxiosPromise<AiObservabilityOverviewResponse>;
 
 }
 
 /**
- * Request parameters for getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet operation in ResponsesAi.
+ * ObservabilityAi - object-oriented interface
  * @export
- * @interface ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest
- */
-export interface ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet
-     */
-    readonly conversationId: string
-}
-
-/**
- * Request parameters for patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch operation in ResponsesAi.
- * @export
- * @interface ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest
- */
-export interface ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch
-     */
-    readonly conversationId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch
-     */
-    readonly responseId: string
-
-    /**
-     * 
-     * @type {AiResponseFeedbackRequest}
-     * @memberof ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch
-     */
-    readonly aiResponseFeedbackRequest: AiResponseFeedbackRequest
-}
-
-/**
- * Request parameters for postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost operation in ResponsesAi.
- * @export
- * @interface ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest
- */
-export interface ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost
-     */
-    readonly conversationId: string
-
-    /**
-     * 
-     * @type {AiConversationFeedbackRequest}
-     * @memberof ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost
-     */
-    readonly aiConversationFeedbackRequest: AiConversationFeedbackRequest
-}
-
-/**
- * ResponsesAi - object-oriented interface
- * @export
- * @class ResponsesAi
+ * @class ObservabilityAi
  * @extends {BaseAPI}
  */
-export class ResponsesAi extends BaseAPI implements ResponsesAiInterface {
+export class ObservabilityAi extends BaseAPI implements ObservabilityAiInterface {
     /**
-     * 
-     * @summary Get Conversation Responses
-     * @param {ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest} requestParameters Request parameters.
+     * Returns AI usage stats for the user\'s organization for the current calendar month, alongside the previous month\'s value. Backed by the ai_usage_counters table populated by the metering pipeline.
+     * @summary (EXPERIMENTAL) AI observability overview
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ResponsesAi
+     * @memberof ObservabilityAi
      */
-    public getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(requestParameters: ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig) {
-        return ResponsesAi_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Patch Response
-     * @param {ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ResponsesAi
-     */
-    public patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(requestParameters: ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig) {
-        return ResponsesAi_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Post Feedback
-     * @param {ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ResponsesAi
-     */
-    public postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(requestParameters: ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest, options?: AxiosRequestConfig) {
-        return ResponsesAi_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-}
-
-
-// SummaryAi FP - SummaryAiAxiosParamCreator
-/**
- * Note: This API is an experimental and is going to change. Please, use it accordingly. Generates a natural-language summary of a dashboard\'s visualizations, optionally scoped by an explicit filter context.
- * @summary (EXPERIMENTAL) Summarize a dashboard
- * @param {string} workspaceId 
- * @param {AiSummarizeRequest} aiSummarizeRequest 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function SummaryAiAxiosParamCreator_SummarizeDashboard(
-    workspaceId: string, aiSummarizeRequest: AiSummarizeRequest, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('summarizeDashboard', 'workspaceId', workspaceId)
-    // verify required parameter 'aiSummarizeRequest' is not null or undefined
-    assertParamExists('summarizeDashboard', 'aiSummarizeRequest', aiSummarizeRequest)
-    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/summary`
-        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof aiSummarizeRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(aiSummarizeRequest !== undefined ? aiSummarizeRequest : {})
-        : aiSummarizeRequest || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-
-// SummaryAi Api FP
-/**
- * Note: This API is an experimental and is going to change. Please, use it accordingly. Generates a natural-language summary of a dashboard\'s visualizations, optionally scoped by an explicit filter context.
- * @summary (EXPERIMENTAL) Summarize a dashboard
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {SummaryAiSummarizeDashboardRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function SummaryAi_SummarizeDashboard(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: SummaryAiSummarizeDashboardRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<AiSummarizeResponse> {
-    const localVarAxiosArgs = await SummaryAiAxiosParamCreator_SummarizeDashboard(
-        requestParameters.workspaceId, requestParameters.aiSummarizeRequest, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-/**
- * SummaryAi - interface
- * @export
- * @interface SummaryAi
- */
-export interface SummaryAiInterface {
-    /**
-     * Note: This API is an experimental and is going to change. Please, use it accordingly. Generates a natural-language summary of a dashboard\'s visualizations, optionally scoped by an explicit filter context.
-     * @summary (EXPERIMENTAL) Summarize a dashboard
-     * @param {SummaryAiSummarizeDashboardRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SummaryAiInterface
-     */
-    summarizeDashboard(requestParameters: SummaryAiSummarizeDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<AiSummarizeResponse>;
-
-}
-
-/**
- * Request parameters for summarizeDashboard operation in SummaryAi.
- * @export
- * @interface SummaryAiSummarizeDashboardRequest
- */
-export interface SummaryAiSummarizeDashboardRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof SummaryAiSummarizeDashboard
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {AiSummarizeRequest}
-     * @memberof SummaryAiSummarizeDashboard
-     */
-    readonly aiSummarizeRequest: AiSummarizeRequest
-}
-
-/**
- * SummaryAi - object-oriented interface
- * @export
- * @class SummaryAi
- * @extends {BaseAPI}
- */
-export class SummaryAi extends BaseAPI implements SummaryAiInterface {
-    /**
-     * Note: This API is an experimental and is going to change. Please, use it accordingly. Generates a natural-language summary of a dashboard\'s visualizations, optionally scoped by an explicit filter context.
-     * @summary (EXPERIMENTAL) Summarize a dashboard
-     * @param {SummaryAiSummarizeDashboardRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SummaryAi
-     */
-    public summarizeDashboard(requestParameters: SummaryAiSummarizeDashboardRequest, options?: AxiosRequestConfig) {
-        return SummaryAi_SummarizeDashboard(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-}
-
-
-// VisualizationsAi FP - VisualizationsAiAxiosParamCreator
-/**
- * 
- * @summary Patch Visualization
- * @param {string} workspaceId 
- * @param {string} conversationId 
- * @param {string} visualizationId 
- * @param {AiVisualizationIdUpdateRequest} aiVisualizationIdUpdateRequest 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function VisualizationsAiAxiosParamCreator_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(
-    workspaceId: string, conversationId: string, visualizationId: string, aiVisualizationIdUpdateRequest: AiVisualizationIdUpdateRequest, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch', 'workspaceId', workspaceId)
-    // verify required parameter 'conversationId' is not null or undefined
-    assertParamExists('patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch', 'conversationId', conversationId)
-    // verify required parameter 'visualizationId' is not null or undefined
-    assertParamExists('patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch', 'visualizationId', visualizationId)
-    // verify required parameter 'aiVisualizationIdUpdateRequest' is not null or undefined
-    assertParamExists('patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch', 'aiVisualizationIdUpdateRequest', aiVisualizationIdUpdateRequest)
-    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/visualizations/{visualization_id}`
-        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)))
-        .replace(`{${"visualization_id"}}`, encodeURIComponent(String(visualizationId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof aiVisualizationIdUpdateRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(aiVisualizationIdUpdateRequest !== undefined ? aiVisualizationIdUpdateRequest : {})
-        : aiVisualizationIdUpdateRequest || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-
-// VisualizationsAi Api FP
-/**
- * 
- * @summary Patch Visualization
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function VisualizationsAi_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<void> {
-    const localVarAxiosArgs = await VisualizationsAiAxiosParamCreator_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(
-        requestParameters.workspaceId, requestParameters.conversationId, requestParameters.visualizationId, requestParameters.aiVisualizationIdUpdateRequest, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-/**
- * VisualizationsAi - interface
- * @export
- * @interface VisualizationsAi
- */
-export interface VisualizationsAiInterface {
-    /**
-     * 
-     * @summary Patch Visualization
-     * @param {VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof VisualizationsAiInterface
-     */
-    patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(requestParameters: VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-}
-
-/**
- * Request parameters for patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch operation in VisualizationsAi.
- * @export
- * @interface VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest
- */
-export interface VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch
-     */
-    readonly conversationId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch
-     */
-    readonly visualizationId: string
-
-    /**
-     * 
-     * @type {AiVisualizationIdUpdateRequest}
-     * @memberof VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch
-     */
-    readonly aiVisualizationIdUpdateRequest: AiVisualizationIdUpdateRequest
-}
-
-/**
- * VisualizationsAi - object-oriented interface
- * @export
- * @class VisualizationsAi
- * @extends {BaseAPI}
- */
-export class VisualizationsAi extends BaseAPI implements VisualizationsAiInterface {
-    /**
-     * 
-     * @summary Patch Visualization
-     * @param {VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof VisualizationsAi
-     */
-    public patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(requestParameters: VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest, options?: AxiosRequestConfig) {
-        return VisualizationsAi_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(this.axios, this.basePath, requestParameters, options, this.configuration);
+    public getObservabilityOverview(options?: AxiosRequestConfig) {
+        return ObservabilityAi_GetObservabilityOverview(this.axios, this.basePath, options, this.configuration);
     }
 }
 

@@ -19,6 +19,7 @@ export interface IAddWorkspaceToSubjectsProps extends IWithTelemetryProps {
     organizationId: string;
     onSuccess: () => void;
     onClose: () => void;
+    areMetricPermissionsEnabled?: boolean;
 }
 
 function AddWorkspaceToSubjectsComponent({
@@ -27,6 +28,7 @@ function AddWorkspaceToSubjectsComponent({
     organizationId,
     onSuccess,
     onClose,
+    areMetricPermissionsEnabled,
 }: IAddWorkspaceToSubjectsProps) {
     return (
         <OrganizationIdProvider organizationId={organizationId}>
@@ -45,6 +47,7 @@ function AddWorkspaceToSubjectsComponent({
                     onSubmit={onSuccess}
                     onCancel={onClose}
                     onClose={onClose}
+                    areMetricPermissionsEnabled={areMetricPermissionsEnabled}
                 />
             </Overlay>
         </OrganizationIdProvider>

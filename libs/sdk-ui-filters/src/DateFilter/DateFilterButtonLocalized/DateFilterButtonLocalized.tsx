@@ -20,6 +20,8 @@ const ALIGN_POINT = [
     { align: "bl tr", offset: { x: -2, y: -8 } },
 ];
 
+const TOOLTIP_ALIGN_POINT = [{ align: "bc tc", offset: { x: 0, y: -2 } }];
+
 export interface IDateFilterButtonLocalizedProps {
     dateFilterOption?: DateFilterOption;
     dateFormat: string;
@@ -74,7 +76,13 @@ export function DateFilterButtonLocalized({
             dropdownId={dropdownId}
         >
             <span className="s-button-text">
-                <DateFilterTextLocalized filter={dateFilterOption} dateFormat={dateFormat} labelMode="full" />
+                <DateFilterTextLocalized
+                    filter={dateFilterOption}
+                    dateFormat={dateFormat}
+                    labelMode="full"
+                    shortened
+                    tooltipAlignPoints={TOOLTIP_ALIGN_POINT}
+                />
             </span>
         </Component>
     );

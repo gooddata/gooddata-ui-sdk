@@ -33,6 +33,7 @@ const granularPermissions: IPermissionsItem[] = [
     { id: "EXPORT", enabled: true },
     { id: "EXPORT_PDF", enabled: true, group: true },
     { id: "EXPORT_TABULAR", enabled: true, group: true },
+    { id: "CREATE_METRIC", enabled: true },
     { id: "CREATE_FILTER_VIEW", enabled: true },
 ];
 
@@ -40,19 +41,23 @@ interface IGranularPermissionsProps {
     workspace: IGrantedWorkspace | undefined;
     onChange: (workspace: IGrantedWorkspace) => void;
     showRedundancyWarningMessage: boolean;
+    areMetricPermissionsEnabled?: boolean;
 }
 
 export function GranularPermissions({
     workspace,
     onChange,
     showRedundancyWarningMessage,
+    areMetricPermissionsEnabled = false,
 }: IGranularPermissionsProps) {
     const intl = useIntl();
     const { permissions: selectedPermissions = [], isHierarchical = false } = workspace ?? {};
     const selectedWorkspacePermission = getWorkspacePermission(selectedPermissions);
     const selectedGranularPermissions = getGranularPermissions(selectedPermissions);
 
-    const granularItems = granularPermissions;
+    const granularItems = areMetricPermissionsEnabled
+        ? granularPermissions
+        : granularPermissions.filter(({ id }) => id !== "CREATE_METRIC");
 
     const handleChange = useCallback(
         (permissions: WorkspacePermissions, isHierarchical: boolean) => {

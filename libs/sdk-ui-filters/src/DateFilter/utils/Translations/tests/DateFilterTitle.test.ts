@@ -18,10 +18,12 @@ import {
     absoluteFormFilter,
     absoluteFormFilterOneDay,
     absoluteFormFilterWithSecondsInOneDay,
+    absoluteFormFilterWithSecondsOnlyChangeInOneDay,
     absoluteFormFilterWithSecondsWithinMoreDays,
     absoluteFormFilterWithTime,
     absoluteFormFilterWithTimeInOneDay,
     absoluteFormFilterWithTimeWithinMoreDays,
+    absoluteFormFilterWithWholeDaySeconds,
     absolutePresetFilter,
     allTimeFilter,
     relativePresetFilter,
@@ -119,6 +121,26 @@ describe("getDateFilterTitleUsingTranslator", () => {
                 DEFAULT_DATE_FORMAT_WITH_SECONDS,
             );
             expect(actual).toEqual("01/01/2019, 22:11:00 – 22:31:05");
+        });
+
+        it("should include time when only seconds differ from a whole-day range", () => {
+            const actual = getDateFilterTitleUsingTranslator(
+                absoluteFormFilterWithSecondsOnlyChangeInOneDay,
+                serializingTranslator,
+                "short",
+                DEFAULT_DATE_FORMAT_WITH_SECONDS,
+            );
+            expect(actual).toEqual("01/01/2019, 00:00:30 – 23:59:40");
+        });
+
+        it("should hide time for a whole-day range at second precision", () => {
+            const actual = getDateFilterTitleUsingTranslator(
+                absoluteFormFilterWithWholeDaySeconds,
+                serializingTranslator,
+                "short",
+                DEFAULT_DATE_FORMAT_WITH_SECONDS,
+            );
+            expect(actual).toEqual("01/01/2019");
         });
 
         it("should include seconds in the title for an absolute form filter across more days", () => {

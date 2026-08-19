@@ -3875,6 +3875,14 @@
         "text": "Adds CREATE_AUTOMATIONS permission to create automated alerts and scheduled exports.",
         "crowdinContext": "Create automation permission tooltip"
     },
+    "userManagement.workspace.permission.createMetric": {
+        "text": "Metrics",
+        "crowdinContext": "Name of the workspace permission that allows user to create, edit or delete metrics in workspace."
+    },
+    "userManagement.workspace.permission.createMetric.tooltip": {
+        "text": "Adds CREATE_METRIC permission to create, edit or delete metrics.",
+        "crowdinContext": "Create metric permission tooltip"
+    },
     "userManagement.workspace.permission.useAiAssistant": {
         "text": "AI Assistant",
         "crowdinContext": "Name of the workspace permission that allows user to use ai assistant in workspace."

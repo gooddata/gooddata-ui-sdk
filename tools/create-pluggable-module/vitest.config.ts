@@ -9,5 +9,9 @@ export default defineConfig({
         // compiled tests in esm/, doubling the run and producing duplicate
         // snapshot files.
         include: ["src/**/*.test.{ts,tsx}"],
+        isolate: false,
+        restoreMocks: true,
+        unstubEnvs: true,
+        unstubGlobals: true,
     },
 });

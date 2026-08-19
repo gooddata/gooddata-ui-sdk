@@ -2,7 +2,7 @@
 
 // @vitest-environment happy-dom
 
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -78,6 +78,13 @@ describe("InsightEmbed cache integration (real sdk-ui-ext cache)", () => {
         document.body.innerHTML = "";
     });
 
+    afterEach(() => {
+        // The loader cache is module-scoped and shared with every other suite in this worker, so it
+        // has to be emptied on the way out too - not just on the way in.
+        document.body.innerHTML = "";
+        clearInsightViewCaches();
+    });
+
     it("should evict the cache entry InsightView reads, so refresh() refetches the insight", async () => {
         const { setContext } = await import("../context.js");
         const { InsightEmbed: InsightElement } = await import("../visualizations/InsightEmbed.js");
@@ -86,7 +93,13 @@ describe("InsightEmbed cache integration (real sdk-ui-ext cache)", () => {
         setContext({ backend: buildCountingBackend(getInsight), workspaceId: workspace });
 
         const tagName = "test-gd-insight-cache-integration";
-        customElements.define(tagName, InsightElement);
+        // A constructor may only ever be registered under a single tag name, and this suite
+        // deliberately does not reset the module registry - it needs the very `sdk-ui-ext` instance
+        // whose module-scoped cache it asserts on. So `InsightEmbed` here is the same class object
+        // the suites sharing this worker have already registered under their own tag names.
+        // Registering a subclass sidesteps that without giving up the real module instance.
+        class CacheIntegrationInsightEmbed extends InsightElement {}
+        customElements.define(tagName, CacheIntegrationInsightEmbed);
         const element = document.createElement(tagName) as HTMLElement & {
             insight?: string;
             refresh: () => Promise<void>;

@@ -15,10 +15,12 @@ export default defineConfig({
         pool: "threads",
         maxWorkers: 8, // Thread count for CI
         // Improve performance with these options
-        isolate: true,
+        isolate: false,
         maxConcurrency: 8, // Concurrency for CI
+        restoreMocks: true,
+        unstubEnvs: true,
+        unstubGlobals: true,
         // Disable slow operations when not needed
-        globals: true,
         // Speed up test runs by avoiding unnecessary operations
         environmentOptions: {
             "happy-dom": {

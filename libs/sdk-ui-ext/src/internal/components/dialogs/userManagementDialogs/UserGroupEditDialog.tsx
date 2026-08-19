@@ -48,6 +48,7 @@ export interface IUserGroupEditDialogProps extends IWithTelemetryProps {
     onSuccess: () => void;
     onClose: () => void;
     renderDataSourceIcon?: (dataSource: IGrantedDataSource) => ReactElement;
+    areMetricPermissionsEnabled?: boolean;
 }
 
 function UserGroupEditDialogComponent({
@@ -58,6 +59,7 @@ function UserGroupEditDialogComponent({
     onClose,
     initialView = "VIEW",
     renderDataSourceIcon,
+    areMetricPermissionsEnabled = false,
 }: IUserGroupEditDialogProps) {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useUserGroupDialogMode(initialView);
@@ -276,6 +278,7 @@ function UserGroupEditDialogComponent({
                                     onCancel={isOpenedInEditMode ? onClose : handleWorkspaceCancel}
                                     onClose={onClose}
                                     editWorkspace={workspaceToEdit}
+                                    areMetricPermissionsEnabled={areMetricPermissionsEnabled}
                                 />
                             )}
                             {dialogMode === "USERS" && (

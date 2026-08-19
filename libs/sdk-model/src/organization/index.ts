@@ -62,6 +62,7 @@ export const AssignedWorkspacePermissionValue = {
     CREATE_FILTER_VIEW: "CREATE_FILTER_VIEW",
     VIEW: "VIEW",
     CREATE_AUTOMATION: "CREATE_AUTOMATION",
+    CREATE_METRIC: "CREATE_METRIC",
     USE_AI_ASSISTANT: "USE_AI_ASSISTANT",
 } as const;
 

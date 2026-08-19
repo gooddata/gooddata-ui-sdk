@@ -26,7 +26,14 @@ export const getImplicitGranularPermissions = (
         case "ANALYZE":
             return ["CREATE_FILTER_VIEW"];
         case "MANAGE":
-            return ["EXPORT", "EXPORT_PDF", "EXPORT_TABULAR", "CREATE_AUTOMATION", "CREATE_FILTER_VIEW"];
+            return [
+                "EXPORT",
+                "EXPORT_PDF",
+                "EXPORT_TABULAR",
+                "CREATE_AUTOMATION",
+                "CREATE_METRIC",
+                "CREATE_FILTER_VIEW",
+            ];
         default:
             return [];
     }
@@ -195,6 +202,7 @@ const reorderPermissions = (permissions: WorkspacePermissions): WorkspacePermiss
         "VIEW",
         "CREATE_FILTER_VIEW",
         "CREATE_AUTOMATION",
+        "CREATE_METRIC",
         "EXPORT",
         "EXPORT_PDF",
         "EXPORT_TABULAR",

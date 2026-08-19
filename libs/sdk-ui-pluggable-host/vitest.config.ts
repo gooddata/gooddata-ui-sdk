@@ -18,7 +18,6 @@ export default defineConfig({
         maxWorkers: 8,
         isolate: true,
         maxConcurrency: 8,
-        globals: true,
         environmentOptions: {
             "happy-dom": {
                 url: "http://localhost",

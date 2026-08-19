@@ -11,9 +11,20 @@ import {
     collectAvailableReferences,
     collectContextReferences,
 } from "../../context/collectContextReferences.js";
-import { contextObjectsSelector } from "../../store/chatWindow/chatWindowSelectors.js";
-import { loadContextObjectsNextPageAction } from "../../store/chatWindow/chatWindowSlice.js";
-import { type ContextObjectKind, type IGenAIContextListItem, type IGenAIContextObject } from "../../types.js";
+import {
+    contextObjectsSearchSelector,
+    contextObjectsSelector,
+} from "../../store/chatWindow/chatWindowSelectors.js";
+import {
+    loadContextObjectsNextPageAction,
+    setContextObjectsSearchAction,
+} from "../../store/chatWindow/chatWindowSlice.js";
+import {
+    type ContextObjectKind,
+    type ContextObjectListState,
+    type IGenAIContextListItem,
+    type IGenAIContextObject,
+} from "../../types.js";
 
 export function useContextItems(
     ambient: IGenAIUserContext | undefined,
@@ -23,15 +34,19 @@ export function useContextItems(
     const dispatch = useDispatch();
     const emptyReferenceLabel = intl.formatMessage({ id: "gd.gen-ai.context.untitled" });
     const contextObjects = useSelector(contextObjectsSelector);
+    const search = useSelector(contextObjectsSearchSelector);
     const dashboards = contextObjects.dashboard;
     const visualizations = contextObjects.visualization;
 
     const items = useMemo(() => {
-        const ambientReferences = collectAvailableReferences(ambient, emptyReferenceLabel);
+        const matchesSearch = titleMatcher(search);
+        const ambientReferences = collectAvailableReferences(ambient, emptyReferenceLabel).filter(
+            matchesSearch,
+        );
         const selectedReferences = collectContextReferences(active, emptyReferenceLabel);
 
         const offered = new Set<string>();
-        ambientReferences.forEach((reference) => {
+        collectAvailableReferences(ambient, emptyReferenceLabel).forEach((reference) => {
             offered.add(serializeObjRef(reference.ref));
             if (reference.insightRef) {
                 offered.add(serializeObjRef(reference.insightRef));
@@ -39,15 +54,26 @@ export function useContextItems(
         });
 
         const workspaceReferences = [
-            ...toContextObjects(dashboards.items, "dashboard", emptyReferenceLabel),
-            ...toContextObjects(visualizations.items, "visualization", emptyReferenceLabel),
+            ...searchable(dashboards, "dashboard", emptyReferenceLabel, matchesSearch),
+            ...searchable(visualizations, "visualization", emptyReferenceLabel, matchesSearch),
         ].filter((reference) => !offered.has(serializeObjRef(reference.ref)));
 
         return [...ambientReferences, ...workspaceReferences].filter(
             (reference) =>
                 !selectedReferences.some((selectedReference) => isSameObject(selectedReference, reference)),
         );
-    }, [active, ambient, dashboards.items, visualizations.items, emptyReferenceLabel]);
+    }, [active, ambient, dashboards, visualizations, emptyReferenceLabel, search]);
+
+    const setSearch = useCallback(
+        (value: string) => {
+            if (value === search) {
+                return;
+            }
+
+            dispatch(setContextObjectsSearchAction({ search: value }));
+        },
+        [dispatch, search],
+    );
 
     const nextPageKind: ContextObjectKind | undefined = dashboards.hasNextPage
         ? "dashboard"
@@ -65,10 +91,29 @@ export function useContextItems(
 
     return {
         items,
+        search,
+        setSearch,
         isLoading: dashboards.isLoading || visualizations.isLoading,
         hasNextPage: nextPageKind !== undefined,
         loadNextPage,
     };
+}
+
+function titleMatcher(search: string): (reference: IGenAIContextObject) => boolean {
+    const normalized = search.trim().toLowerCase();
+
+    return normalized ? (reference) => reference.title.toLowerCase().includes(normalized) : () => true;
+}
+
+function searchable(
+    list: ContextObjectListState,
+    type: ContextObjectKind,
+    emptyReferenceLabel: string,
+    matchesSearch: (reference: IGenAIContextObject) => boolean,
+): IGenAIContextObject[] {
+    const references = toContextObjects(list.items, type, emptyReferenceLabel);
+
+    return list.isExternal ? references.filter(matchesSearch) : references;
 }
 
 function toContextObjects(

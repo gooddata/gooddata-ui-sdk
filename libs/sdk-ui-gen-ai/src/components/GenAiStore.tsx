@@ -19,6 +19,7 @@ import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { chatWindowSliceName } from "../store/chatWindow/chatWindowSlice.js";
 import { type ChatEventHandler } from "../store/events.js";
 import { messagesSliceName } from "../store/messages/messagesSlice.js";
+import { type GenAiStore as GenAiStoreType } from "../store/store.js";
 
 import { ConfigProvider, type GenAIAssistantMode, type LinkHandlerEvent } from "./ConfigContext.js";
 
@@ -189,10 +190,20 @@ function ExternalStore({
     onDispatcher,
     children,
     currentStore,
+    onLinkClick,
 }: GenAiStoreProps & { currentStore: EnhancedStore }) {
     useEffect(() => {
         onDispatcher?.(currentStore.dispatch);
     }, [currentStore, onDispatcher]);
+
+    useEffect(() => {
+        const store = currentStore as GenAiStoreType;
+        const dispatcher = store.optionsDispatcher;
+        if (dispatcher && onLinkClick) {
+            return dispatcher.registerLinkHandler(onLinkClick);
+        }
+        return undefined;
+    }, [currentStore, onLinkClick]);
 
     const content = typeof children === "function" ? children(currentStore) : children;
     return <>{content}</>;
@@ -202,10 +213,20 @@ function InjectedStore({
     onDispatcher,
     children,
     currentStore,
+    onLinkClick,
 }: GenAiStoreProps & { currentStore: EnhancedStore }) {
     useEffect(() => {
         onDispatcher?.(currentStore.dispatch);
     }, [currentStore, onDispatcher]);
+
+    useEffect(() => {
+        const store = currentStore as GenAiStoreType;
+        const dispatcher = store.optionsDispatcher;
+        if (dispatcher && onLinkClick) {
+            return dispatcher.registerLinkHandler(onLinkClick);
+        }
+        return undefined;
+    }, [currentStore, onLinkClick]);
 
     const content = typeof children === "function" ? children(currentStore) : children;
     return <StoreProvider store={currentStore}>{content}</StoreProvider>;

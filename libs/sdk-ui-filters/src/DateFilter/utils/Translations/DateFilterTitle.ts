@@ -60,8 +60,10 @@ export const getTimeRange = (
 const isTimeForWholeDay = (dateFrom: Date, dateTo: Date) =>
     dateFrom.getHours() === 0 &&
     dateFrom.getMinutes() === 0 &&
+    dateFrom.getSeconds() === 0 &&
     dateTo.getHours() === 23 &&
-    dateTo.getMinutes() === 59;
+    dateTo.getMinutes() === 59 &&
+    (dateTo.getSeconds() === 0 || dateTo.getSeconds() === 59);
 
 const adjustDatetime = (date: string | Date, isTimeEnabled: boolean, defaultTime = DAY_START_TIME) => {
     if (!(typeof date === "string")) {

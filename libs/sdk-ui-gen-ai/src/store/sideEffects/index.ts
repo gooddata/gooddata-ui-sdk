@@ -5,6 +5,7 @@ import { call, fork, takeEvery, takeLatest, takeLeading } from "redux-saga/effec
 import {
     initContextObjectsAction,
     loadContextObjectsNextPageAction,
+    setContextObjectsSearchAction,
     setOpenAction,
 } from "../chatWindow/chatWindowSlice.js";
 import {
@@ -25,7 +26,11 @@ import {
 import { loadAgents } from "./loadAgents.js";
 import { loadCatalogItems } from "./loadCatalogItems.js";
 import { loadColorPalette } from "./loadColorPalette.js";
-import { initContextObjects, loadContextObjectsNextPage } from "./loadContextObjects.js";
+import {
+    initContextObjects,
+    loadContextObjectsNextPage,
+    reloadContextObjects,
+} from "./loadContextObjects.js";
 import { loadSettings } from "./loadSettings.js";
 import { onChatOpenSync } from "./onChatOpenSync.js";
 import { onConversationDelete } from "./onConversationDelete.js";
@@ -66,6 +71,7 @@ export function* rootSaga() {
     //context chooser
     yield takeLeading(initContextObjectsAction.type, initContextObjects);
     yield takeEvery(loadContextObjectsNextPageAction.type, loadContextObjectsNextPage);
+    yield takeLatest(setContextObjectsSearchAction.type, reloadContextObjects);
     //others
     yield takeEvery(setVerboseAction.type, onVerboseStore);
     yield fork(onEvent);

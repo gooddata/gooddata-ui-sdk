@@ -22,6 +22,13 @@ import { rootSaga } from "./sideEffects/index.js";
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
 const createSagaMiddleware = defaultImport(defaultReduxSaga);
 
+export type GenAiStore = EnhancedStore<{
+    [messagesSliceName]: ReturnType<typeof messagesSliceReducer>;
+    [chatWindowSliceName]: ReturnType<typeof chatWindowSliceReducer>;
+}> & {
+    optionsDispatcher: OptionsDispatcher;
+};
+
 export const getStore = (
     backend: IAnalyticalBackend,
     workspace: string,
@@ -29,7 +36,7 @@ export const getStore = (
     optionsDispatcher: OptionsDispatcher,
     isPreview: boolean | undefined,
     allowInteractionIntelligence: boolean | undefined,
-): EnhancedStore => {
+): GenAiStore => {
     const sagaMiddleware = createSagaMiddleware({
         context: {
             backend,
@@ -58,9 +65,12 @@ export const getStore = (
         devTools: {
             name: "GenAI",
         },
-    });
+    }) as GenAiStore;
 
     sagaMiddleware.run(rootSaga);
+
+    // Save optionsDispatcher
+    store.optionsDispatcher = optionsDispatcher;
 
     return store;
 };

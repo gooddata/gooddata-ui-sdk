@@ -1,4 +1,5 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
@@ -7,5 +8,9 @@ export default defineConfig({
     },
     test: {
         globals: false,
+        isolate: false,
+        restoreMocks: true,
+        unstubEnvs: true,
+        unstubGlobals: true,
     },
 });

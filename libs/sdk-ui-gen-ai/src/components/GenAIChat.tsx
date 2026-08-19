@@ -8,12 +8,7 @@ import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { PermissionsProvider } from "../permissions/PermissionsContext.js";
 import { usePermissions } from "../permissions/usePermissions.js";
 
-import {
-    ConfigProvider,
-    type GenAIAssistantMode,
-    type LinkHandlerEvent,
-    useConfig,
-} from "./ConfigContext.js";
+import { ConfigProvider, type GenAIAssistantMode, type LinkHandlerEvent } from "./ConfigContext.js";
 import { CustomizationProvider } from "./CustomizationProvider.js";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { GenAiStore, type GenAiStoreProps } from "./GenAiStore.js";
@@ -162,21 +157,12 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
 export const GenAIChat = GenAIAssistant;
 
 function GenAIContent(props: GenAIChatProps) {
-    const {
-        onLinkClick,
-        catalogItems,
-        LandingScreenComponentProvider,
-        DisclaimerComponentProvider,
-        className,
-    } = props;
+    const { LandingScreenComponentProvider, DisclaimerComponentProvider, className, catalogItems } = props;
     const { permissions, loading } = usePermissions();
-    const { allowNativeLinks } = useConfig();
 
     return (
         <ConfigProvider
-            linkHandler={onLinkClick}
             catalogItems={catalogItems}
-            allowNativeLinks={allowNativeLinks ?? props.allowNativeLinks}
             canFullControl={props.disableFullControl ? false : (permissions.canManageProject ?? false)}
             canManage={props.disableManage ? false : (permissions.canManageProject ?? false)}
             canAnalyze={props.disableAnalyze ? false : (permissions.canCreateVisualization ?? false)}

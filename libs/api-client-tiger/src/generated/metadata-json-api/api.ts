@@ -3090,7 +3090,7 @@ export interface DeclarativeSingleWorkspacePermission {
     'name': DeclarativeSingleWorkspacePermissionNameEnum;
 }
 
-export type DeclarativeSingleWorkspacePermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
+export type DeclarativeSingleWorkspacePermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
 
 /**
  * Source object reference (attribute or fact) including aggregation operation.
@@ -3567,7 +3567,7 @@ export interface DeclarativeWorkspaceHierarchyPermission {
     'name': DeclarativeWorkspaceHierarchyPermissionNameEnum;
 }
 
-export type DeclarativeWorkspaceHierarchyPermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
+export type DeclarativeWorkspaceHierarchyPermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
 
 /**
  * A declarative form of a model and analytics for a workspace.
@@ -14584,7 +14584,7 @@ export interface JsonApiWorkspaceOutMeta {
     'permissions'?: Array<JsonApiWorkspaceOutMetaPermissionsEnum>;
 }
 
-export type JsonApiWorkspaceOutMetaPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
+export type JsonApiWorkspaceOutMetaPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
 
 export interface JsonApiWorkspaceOutMetaConfig {
     /**
@@ -16589,8 +16589,8 @@ export interface UserManagementWorkspacePermissionAssignment {
 }
 
 export type UserManagementWorkspacePermissionAssignmentAccessSourceEnum = 'DIRECT' | 'GROUP' | 'HIERARCHY';
-export type UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
-export type UserManagementWorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
+export type UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
+export type UserManagementWorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
 
 /**
  * List of users
@@ -16773,8 +16773,8 @@ export interface WorkspacePermissionAssignment {
     'permissions'?: Array<WorkspacePermissionAssignmentPermissionsEnum>;
 }
 
-export type WorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
-export type WorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
+export type WorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
+export type WorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'CREATE_METRIC' | 'VIEW';
 
 /**
  * List of workspace users
@@ -16840,4112 +16840,6 @@ export interface Xliff {
     'version'?: string;
 }
 
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * 
- * @summary Post Knowledge Recommendations
- * @param {string} workspaceId 
- * @param {JsonApiKnowledgeRecommendationPostOptionalIdDocument} jsonApiKnowledgeRecommendationPostOptionalIdDocument 
- * @param {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_CreateEntityKnowledgeRecommendations(
-    workspaceId: string, jsonApiKnowledgeRecommendationPostOptionalIdDocument: JsonApiKnowledgeRecommendationPostOptionalIdDocument, include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('createEntityKnowledgeRecommendations', 'workspaceId', workspaceId)
-    // verify required parameter 'jsonApiKnowledgeRecommendationPostOptionalIdDocument' is not null or undefined
-    assertParamExists('createEntityKnowledgeRecommendations', 'jsonApiKnowledgeRecommendationPostOptionalIdDocument', jsonApiKnowledgeRecommendationPostOptionalIdDocument)
-    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/knowledgeRecommendations`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-    if (metaInclude) {
-        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
-    }
-
-
-    
-    const consumes = [
-        'application/vnd.gooddata.api+json',
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof jsonApiKnowledgeRecommendationPostOptionalIdDocument !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(jsonApiKnowledgeRecommendationPostOptionalIdDocument !== undefined ? jsonApiKnowledgeRecommendationPostOptionalIdDocument : {})
-        : jsonApiKnowledgeRecommendationPostOptionalIdDocument || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * 
- * @summary Post Memory Items
- * @param {string} workspaceId 
- * @param {JsonApiMemoryItemPostOptionalIdDocument} jsonApiMemoryItemPostOptionalIdDocument 
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_CreateEntityMemoryItems(
-    workspaceId: string, jsonApiMemoryItemPostOptionalIdDocument: JsonApiMemoryItemPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('createEntityMemoryItems', 'workspaceId', workspaceId)
-    // verify required parameter 'jsonApiMemoryItemPostOptionalIdDocument' is not null or undefined
-    assertParamExists('createEntityMemoryItems', 'jsonApiMemoryItemPostOptionalIdDocument', jsonApiMemoryItemPostOptionalIdDocument)
-    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/memoryItems`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-    if (metaInclude) {
-        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
-    }
-
-
-    
-    const consumes = [
-        'application/vnd.gooddata.api+json',
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof jsonApiMemoryItemPostOptionalIdDocument !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(jsonApiMemoryItemPostOptionalIdDocument !== undefined ? jsonApiMemoryItemPostOptionalIdDocument : {})
-        : jsonApiMemoryItemPostOptionalIdDocument || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * Organization-scoped AI memory item
- * @summary Post organization Memory Item entities
- * @param {JsonApiOrgMemoryItemInDocument} jsonApiOrgMemoryItemInDocument 
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_CreateEntityOrgMemoryItems(
-    jsonApiOrgMemoryItemInDocument: JsonApiOrgMemoryItemInDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'jsonApiOrgMemoryItemInDocument' is not null or undefined
-    assertParamExists('createEntityOrgMemoryItems', 'jsonApiOrgMemoryItemInDocument', jsonApiOrgMemoryItemInDocument)
-    const localVarPath = `/api/v1/entities/orgMemoryItems`;
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-
-    
-    const consumes = [
-        'application/vnd.gooddata.api+json',
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof jsonApiOrgMemoryItemInDocument !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(jsonApiOrgMemoryItemInDocument !== undefined ? jsonApiOrgMemoryItemInDocument : {})
-        : jsonApiOrgMemoryItemInDocument || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * 
- * @summary Delete a Knowledge Recommendation
- * @param {string} workspaceId 
- * @param {string} objectId 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_DeleteEntityKnowledgeRecommendations(
-    workspaceId: string, objectId: string, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('deleteEntityKnowledgeRecommendations', 'workspaceId', workspaceId)
-    // verify required parameter 'objectId' is not null or undefined
-    assertParamExists('deleteEntityKnowledgeRecommendations', 'objectId', objectId)
-    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/knowledgeRecommendations/{objectId}`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * 
- * @summary Delete a Memory Item
- * @param {string} workspaceId 
- * @param {string} objectId 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_DeleteEntityMemoryItems(
-    workspaceId: string, objectId: string, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('deleteEntityMemoryItems', 'workspaceId', workspaceId)
-    // verify required parameter 'objectId' is not null or undefined
-    assertParamExists('deleteEntityMemoryItems', 'objectId', objectId)
-    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/memoryItems/{objectId}`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * 
- * @summary Delete an organization Memory Item entity
- * @param {string} id 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_DeleteEntityOrgMemoryItems(
-    id: string, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'id' is not null or undefined
-    assertParamExists('deleteEntityOrgMemoryItems', 'id', id)
-    const localVarPath = `/api/v1/entities/orgMemoryItems/{id}`
-        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * 
- * @summary Get all Knowledge Recommendations
- * @param {string} workspaceId 
- * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
- * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {number} [page] Zero-based page index (0..N)
- * @param {number} [size] The size of the page to be returned
- * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
- * @param {boolean} [xGDCVALIDATERELATIONS] 
- * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_GetAllEntitiesKnowledgeRecommendations(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('getAllEntitiesKnowledgeRecommendations', 'workspaceId', workspaceId)
-    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/knowledgeRecommendations`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (origin !== undefined) {
-        localVarQueryParameter['origin'] = origin;
-    }
-
-    if (filter !== undefined) {
-        localVarQueryParameter['filter'] = filter;
-    }
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-    if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
-    }
-
-    if (size !== undefined) {
-        localVarQueryParameter['size'] = size;
-    }
-
-    if (sort) {
-        localVarQueryParameter['sort'] = sort;
-    }
-
-    if (metaInclude) {
-        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
-    }
-
-    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
-        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
-    }
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * 
- * @summary Get all Memory Items
- * @param {string} workspaceId 
- * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
- * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {number} [page] Zero-based page index (0..N)
- * @param {number} [size] The size of the page to be returned
- * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
- * @param {boolean} [xGDCVALIDATERELATIONS] 
- * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_GetAllEntitiesMemoryItems(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('getAllEntitiesMemoryItems', 'workspaceId', workspaceId)
-    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/memoryItems`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (origin !== undefined) {
-        localVarQueryParameter['origin'] = origin;
-    }
-
-    if (filter !== undefined) {
-        localVarQueryParameter['filter'] = filter;
-    }
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-    if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
-    }
-
-    if (size !== undefined) {
-        localVarQueryParameter['size'] = size;
-    }
-
-    if (sort) {
-        localVarQueryParameter['sort'] = sort;
-    }
-
-    if (metaInclude) {
-        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
-    }
-
-    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
-        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
-    }
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * 
- * @summary Get all organization Memory Item entities
- * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {number} [page] Zero-based page index (0..N)
- * @param {number} [size] The size of the page to be returned
- * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
- * @param {Array<'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_GetAllEntitiesOrgMemoryItems(
-    filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    const localVarPath = `/api/v1/entities/orgMemoryItems`;
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (filter !== undefined) {
-        localVarQueryParameter['filter'] = filter;
-    }
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-    if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
-    }
-
-    if (size !== undefined) {
-        localVarQueryParameter['size'] = size;
-    }
-
-    if (sort) {
-        localVarQueryParameter['sort'] = sort;
-    }
-
-    if (metaInclude) {
-        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
-    }
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * 
- * @summary Get a Knowledge Recommendation
- * @param {string} workspaceId 
- * @param {string} objectId 
- * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {boolean} [xGDCVALIDATERELATIONS] 
- * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_GetEntityKnowledgeRecommendations(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('getEntityKnowledgeRecommendations', 'workspaceId', workspaceId)
-    // verify required parameter 'objectId' is not null or undefined
-    assertParamExists('getEntityKnowledgeRecommendations', 'objectId', objectId)
-    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/knowledgeRecommendations/{objectId}`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (filter !== undefined) {
-        localVarQueryParameter['filter'] = filter;
-    }
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-    if (metaInclude) {
-        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
-    }
-
-    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
-        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
-    }
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * 
- * @summary Get a Memory Item
- * @param {string} workspaceId 
- * @param {string} objectId 
- * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {boolean} [xGDCVALIDATERELATIONS] 
- * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_GetEntityMemoryItems(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('getEntityMemoryItems', 'workspaceId', workspaceId)
-    // verify required parameter 'objectId' is not null or undefined
-    assertParamExists('getEntityMemoryItems', 'objectId', objectId)
-    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/memoryItems/{objectId}`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (filter !== undefined) {
-        localVarQueryParameter['filter'] = filter;
-    }
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-    if (metaInclude) {
-        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
-    }
-
-    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
-        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
-    }
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * 
- * @summary Get an organization Memory Item entity
- * @param {string} id 
- * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_GetEntityOrgMemoryItems(
-    id: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'id' is not null or undefined
-    assertParamExists('getEntityOrgMemoryItems', 'id', id)
-    const localVarPath = `/api/v1/entities/orgMemoryItems/{id}`
-        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (filter !== undefined) {
-        localVarQueryParameter['filter'] = filter;
-    }
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * 
- * @summary Patch a Knowledge Recommendation
- * @param {string} workspaceId 
- * @param {string} objectId 
- * @param {JsonApiKnowledgeRecommendationPatchDocument} jsonApiKnowledgeRecommendationPatchDocument 
- * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_PatchEntityKnowledgeRecommendations(
-    workspaceId: string, objectId: string, jsonApiKnowledgeRecommendationPatchDocument: JsonApiKnowledgeRecommendationPatchDocument, filter?: string, include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('patchEntityKnowledgeRecommendations', 'workspaceId', workspaceId)
-    // verify required parameter 'objectId' is not null or undefined
-    assertParamExists('patchEntityKnowledgeRecommendations', 'objectId', objectId)
-    // verify required parameter 'jsonApiKnowledgeRecommendationPatchDocument' is not null or undefined
-    assertParamExists('patchEntityKnowledgeRecommendations', 'jsonApiKnowledgeRecommendationPatchDocument', jsonApiKnowledgeRecommendationPatchDocument)
-    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/knowledgeRecommendations/{objectId}`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (filter !== undefined) {
-        localVarQueryParameter['filter'] = filter;
-    }
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-
-    
-    const consumes = [
-        'application/vnd.gooddata.api+json',
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof jsonApiKnowledgeRecommendationPatchDocument !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(jsonApiKnowledgeRecommendationPatchDocument !== undefined ? jsonApiKnowledgeRecommendationPatchDocument : {})
-        : jsonApiKnowledgeRecommendationPatchDocument || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * 
- * @summary Patch a Memory Item
- * @param {string} workspaceId 
- * @param {string} objectId 
- * @param {JsonApiMemoryItemPatchDocument} jsonApiMemoryItemPatchDocument 
- * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_PatchEntityMemoryItems(
-    workspaceId: string, objectId: string, jsonApiMemoryItemPatchDocument: JsonApiMemoryItemPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('patchEntityMemoryItems', 'workspaceId', workspaceId)
-    // verify required parameter 'objectId' is not null or undefined
-    assertParamExists('patchEntityMemoryItems', 'objectId', objectId)
-    // verify required parameter 'jsonApiMemoryItemPatchDocument' is not null or undefined
-    assertParamExists('patchEntityMemoryItems', 'jsonApiMemoryItemPatchDocument', jsonApiMemoryItemPatchDocument)
-    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/memoryItems/{objectId}`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (filter !== undefined) {
-        localVarQueryParameter['filter'] = filter;
-    }
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-
-    
-    const consumes = [
-        'application/vnd.gooddata.api+json',
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof jsonApiMemoryItemPatchDocument !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(jsonApiMemoryItemPatchDocument !== undefined ? jsonApiMemoryItemPatchDocument : {})
-        : jsonApiMemoryItemPatchDocument || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * 
- * @summary Patch an organization Memory Item entity
- * @param {string} id 
- * @param {JsonApiOrgMemoryItemPatchDocument} jsonApiOrgMemoryItemPatchDocument 
- * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_PatchEntityOrgMemoryItems(
-    id: string, jsonApiOrgMemoryItemPatchDocument: JsonApiOrgMemoryItemPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'id' is not null or undefined
-    assertParamExists('patchEntityOrgMemoryItems', 'id', id)
-    // verify required parameter 'jsonApiOrgMemoryItemPatchDocument' is not null or undefined
-    assertParamExists('patchEntityOrgMemoryItems', 'jsonApiOrgMemoryItemPatchDocument', jsonApiOrgMemoryItemPatchDocument)
-    const localVarPath = `/api/v1/entities/orgMemoryItems/{id}`
-        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (filter !== undefined) {
-        localVarQueryParameter['filter'] = filter;
-    }
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-
-    
-    const consumes = [
-        'application/vnd.gooddata.api+json',
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof jsonApiOrgMemoryItemPatchDocument !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(jsonApiOrgMemoryItemPatchDocument !== undefined ? jsonApiOrgMemoryItemPatchDocument : {})
-        : jsonApiOrgMemoryItemPatchDocument || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * 
- * @summary The search endpoint (beta)
- * @param {string} workspaceId 
- * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
- * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
- * @param {boolean} [xGDCVALIDATERELATIONS] 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_SearchEntitiesKnowledgeRecommendations(
-    workspaceId: string, entitySearchBody: EntitySearchBody, origin?: 'ALL' | 'PARENTS' | 'NATIVE', xGDCVALIDATERELATIONS?: boolean, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('searchEntitiesKnowledgeRecommendations', 'workspaceId', workspaceId)
-    // verify required parameter 'entitySearchBody' is not null or undefined
-    assertParamExists('searchEntitiesKnowledgeRecommendations', 'entitySearchBody', entitySearchBody)
-    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/knowledgeRecommendations/search`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (origin !== undefined) {
-        localVarQueryParameter['origin'] = origin;
-    }
-
-    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
-        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
-    }
-
-
-    
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof entitySearchBody !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(entitySearchBody !== undefined ? entitySearchBody : {})
-        : entitySearchBody || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * 
- * @summary The search endpoint (beta)
- * @param {string} workspaceId 
- * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
- * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
- * @param {boolean} [xGDCVALIDATERELATIONS] 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_SearchEntitiesMemoryItems(
-    workspaceId: string, entitySearchBody: EntitySearchBody, origin?: 'ALL' | 'PARENTS' | 'NATIVE', xGDCVALIDATERELATIONS?: boolean, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('searchEntitiesMemoryItems', 'workspaceId', workspaceId)
-    // verify required parameter 'entitySearchBody' is not null or undefined
-    assertParamExists('searchEntitiesMemoryItems', 'entitySearchBody', entitySearchBody)
-    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/memoryItems/search`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (origin !== undefined) {
-        localVarQueryParameter['origin'] = origin;
-    }
-
-    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
-        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
-    }
-
-
-    
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof entitySearchBody !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(entitySearchBody !== undefined ? entitySearchBody : {})
-        : entitySearchBody || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * 
- * @summary Put a Knowledge Recommendation
- * @param {string} workspaceId 
- * @param {string} objectId 
- * @param {JsonApiKnowledgeRecommendationInDocument} jsonApiKnowledgeRecommendationInDocument 
- * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_UpdateEntityKnowledgeRecommendations(
-    workspaceId: string, objectId: string, jsonApiKnowledgeRecommendationInDocument: JsonApiKnowledgeRecommendationInDocument, filter?: string, include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('updateEntityKnowledgeRecommendations', 'workspaceId', workspaceId)
-    // verify required parameter 'objectId' is not null or undefined
-    assertParamExists('updateEntityKnowledgeRecommendations', 'objectId', objectId)
-    // verify required parameter 'jsonApiKnowledgeRecommendationInDocument' is not null or undefined
-    assertParamExists('updateEntityKnowledgeRecommendations', 'jsonApiKnowledgeRecommendationInDocument', jsonApiKnowledgeRecommendationInDocument)
-    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/knowledgeRecommendations/{objectId}`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (filter !== undefined) {
-        localVarQueryParameter['filter'] = filter;
-    }
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-
-    
-    const consumes = [
-        'application/vnd.gooddata.api+json',
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof jsonApiKnowledgeRecommendationInDocument !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(jsonApiKnowledgeRecommendationInDocument !== undefined ? jsonApiKnowledgeRecommendationInDocument : {})
-        : jsonApiKnowledgeRecommendationInDocument || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * 
- * @summary Put a Memory Item
- * @param {string} workspaceId 
- * @param {string} objectId 
- * @param {JsonApiMemoryItemInDocument} jsonApiMemoryItemInDocument 
- * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_UpdateEntityMemoryItems(
-    workspaceId: string, objectId: string, jsonApiMemoryItemInDocument: JsonApiMemoryItemInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('updateEntityMemoryItems', 'workspaceId', workspaceId)
-    // verify required parameter 'objectId' is not null or undefined
-    assertParamExists('updateEntityMemoryItems', 'objectId', objectId)
-    // verify required parameter 'jsonApiMemoryItemInDocument' is not null or undefined
-    assertParamExists('updateEntityMemoryItems', 'jsonApiMemoryItemInDocument', jsonApiMemoryItemInDocument)
-    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/memoryItems/{objectId}`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (filter !== undefined) {
-        localVarQueryParameter['filter'] = filter;
-    }
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-
-    
-    const consumes = [
-        'application/vnd.gooddata.api+json',
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof jsonApiMemoryItemInDocument !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(jsonApiMemoryItemInDocument !== undefined ? jsonApiMemoryItemInDocument : {})
-        : jsonApiMemoryItemInDocument || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIApi FP - AIApiAxiosParamCreator
-/**
- * 
- * @summary Put an organization Memory Item entity
- * @param {string} id 
- * @param {JsonApiOrgMemoryItemInDocument} jsonApiOrgMemoryItemInDocument 
- * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApiAxiosParamCreator_UpdateEntityOrgMemoryItems(
-    id: string, jsonApiOrgMemoryItemInDocument: JsonApiOrgMemoryItemInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'id' is not null or undefined
-    assertParamExists('updateEntityOrgMemoryItems', 'id', id)
-    // verify required parameter 'jsonApiOrgMemoryItemInDocument' is not null or undefined
-    assertParamExists('updateEntityOrgMemoryItems', 'jsonApiOrgMemoryItemInDocument', jsonApiOrgMemoryItemInDocument)
-    const localVarPath = `/api/v1/entities/orgMemoryItems/{id}`
-        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (filter !== undefined) {
-        localVarQueryParameter['filter'] = filter;
-    }
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-
-    
-    const consumes = [
-        'application/vnd.gooddata.api+json',
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof jsonApiOrgMemoryItemInDocument !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(jsonApiOrgMemoryItemInDocument !== undefined ? jsonApiOrgMemoryItemInDocument : {})
-        : jsonApiOrgMemoryItemInDocument || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-
-// AIApi Api FP
-/**
- * 
- * @summary Post Knowledge Recommendations
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiCreateEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_CreateEntityKnowledgeRecommendations(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiCreateEntityKnowledgeRecommendationsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_CreateEntityKnowledgeRecommendations(
-        requestParameters.workspaceId, requestParameters.jsonApiKnowledgeRecommendationPostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIApi Api FP
-/**
- * 
- * @summary Post Memory Items
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiCreateEntityMemoryItemsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_CreateEntityMemoryItems(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiCreateEntityMemoryItemsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiMemoryItemOutDocument> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_CreateEntityMemoryItems(
-        requestParameters.workspaceId, requestParameters.jsonApiMemoryItemPostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIApi Api FP
-/**
- * Organization-scoped AI memory item
- * @summary Post organization Memory Item entities
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiCreateEntityOrgMemoryItemsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_CreateEntityOrgMemoryItems(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiCreateEntityOrgMemoryItemsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiOrgMemoryItemOutDocument> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_CreateEntityOrgMemoryItems(
-        requestParameters.jsonApiOrgMemoryItemInDocument, requestParameters.include, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIApi Api FP
-/**
- * 
- * @summary Delete a Knowledge Recommendation
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiDeleteEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_DeleteEntityKnowledgeRecommendations(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiDeleteEntityKnowledgeRecommendationsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<void> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_DeleteEntityKnowledgeRecommendations(
-        requestParameters.workspaceId, requestParameters.objectId, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIApi Api FP
-/**
- * 
- * @summary Delete a Memory Item
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiDeleteEntityMemoryItemsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_DeleteEntityMemoryItems(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiDeleteEntityMemoryItemsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<void> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_DeleteEntityMemoryItems(
-        requestParameters.workspaceId, requestParameters.objectId, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIApi Api FP
-/**
- * 
- * @summary Delete an organization Memory Item entity
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiDeleteEntityOrgMemoryItemsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_DeleteEntityOrgMemoryItems(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiDeleteEntityOrgMemoryItemsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<void> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_DeleteEntityOrgMemoryItems(
-        requestParameters.id, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIApi Api FP
-/**
- * 
- * @summary Get all Knowledge Recommendations
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiGetAllEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_GetAllEntitiesKnowledgeRecommendations(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiGetAllEntitiesKnowledgeRecommendationsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiKnowledgeRecommendationOutList> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_GetAllEntitiesKnowledgeRecommendations(
-        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIApi Api FP
-/**
- * 
- * @summary Get all Memory Items
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiGetAllEntitiesMemoryItemsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_GetAllEntitiesMemoryItems(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiGetAllEntitiesMemoryItemsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiMemoryItemOutList> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_GetAllEntitiesMemoryItems(
-        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIApi Api FP
-/**
- * 
- * @summary Get all organization Memory Item entities
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiGetAllEntitiesOrgMemoryItemsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_GetAllEntitiesOrgMemoryItems(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiGetAllEntitiesOrgMemoryItemsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiOrgMemoryItemOutList> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_GetAllEntitiesOrgMemoryItems(
-        requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.metaInclude, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIApi Api FP
-/**
- * 
- * @summary Get a Knowledge Recommendation
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiGetEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_GetEntityKnowledgeRecommendations(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiGetEntityKnowledgeRecommendationsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_GetEntityKnowledgeRecommendations(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIApi Api FP
-/**
- * 
- * @summary Get a Memory Item
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiGetEntityMemoryItemsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_GetEntityMemoryItems(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiGetEntityMemoryItemsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiMemoryItemOutDocument> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_GetEntityMemoryItems(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIApi Api FP
-/**
- * 
- * @summary Get an organization Memory Item entity
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiGetEntityOrgMemoryItemsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_GetEntityOrgMemoryItems(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiGetEntityOrgMemoryItemsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiOrgMemoryItemOutDocument> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_GetEntityOrgMemoryItems(
-        requestParameters.id, requestParameters.filter, requestParameters.include, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIApi Api FP
-/**
- * 
- * @summary Patch a Knowledge Recommendation
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiPatchEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_PatchEntityKnowledgeRecommendations(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiPatchEntityKnowledgeRecommendationsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_PatchEntityKnowledgeRecommendations(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiKnowledgeRecommendationPatchDocument, requestParameters.filter, requestParameters.include, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIApi Api FP
-/**
- * 
- * @summary Patch a Memory Item
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiPatchEntityMemoryItemsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_PatchEntityMemoryItems(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiPatchEntityMemoryItemsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiMemoryItemOutDocument> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_PatchEntityMemoryItems(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiMemoryItemPatchDocument, requestParameters.filter, requestParameters.include, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIApi Api FP
-/**
- * 
- * @summary Patch an organization Memory Item entity
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiPatchEntityOrgMemoryItemsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_PatchEntityOrgMemoryItems(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiPatchEntityOrgMemoryItemsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiOrgMemoryItemOutDocument> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_PatchEntityOrgMemoryItems(
-        requestParameters.id, requestParameters.jsonApiOrgMemoryItemPatchDocument, requestParameters.filter, requestParameters.include, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIApi Api FP
-/**
- * 
- * @summary The search endpoint (beta)
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiSearchEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_SearchEntitiesKnowledgeRecommendations(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiSearchEntitiesKnowledgeRecommendationsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiKnowledgeRecommendationOutList> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_SearchEntitiesKnowledgeRecommendations(
-        requestParameters.workspaceId, requestParameters.entitySearchBody, requestParameters.origin, requestParameters.xGDCVALIDATERELATIONS, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIApi Api FP
-/**
- * 
- * @summary The search endpoint (beta)
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiSearchEntitiesMemoryItemsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_SearchEntitiesMemoryItems(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiSearchEntitiesMemoryItemsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiMemoryItemOutList> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_SearchEntitiesMemoryItems(
-        requestParameters.workspaceId, requestParameters.entitySearchBody, requestParameters.origin, requestParameters.xGDCVALIDATERELATIONS, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIApi Api FP
-/**
- * 
- * @summary Put a Knowledge Recommendation
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiUpdateEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_UpdateEntityKnowledgeRecommendations(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiUpdateEntityKnowledgeRecommendationsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_UpdateEntityKnowledgeRecommendations(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiKnowledgeRecommendationInDocument, requestParameters.filter, requestParameters.include, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIApi Api FP
-/**
- * 
- * @summary Put a Memory Item
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiUpdateEntityMemoryItemsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_UpdateEntityMemoryItems(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiUpdateEntityMemoryItemsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiMemoryItemOutDocument> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_UpdateEntityMemoryItems(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiMemoryItemInDocument, requestParameters.filter, requestParameters.include, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIApi Api FP
-/**
- * 
- * @summary Put an organization Memory Item entity
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIApiUpdateEntityOrgMemoryItemsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIApi_UpdateEntityOrgMemoryItems(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIApiUpdateEntityOrgMemoryItemsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiOrgMemoryItemOutDocument> {
-    const localVarAxiosArgs = await AIApiAxiosParamCreator_UpdateEntityOrgMemoryItems(
-        requestParameters.id, requestParameters.jsonApiOrgMemoryItemInDocument, requestParameters.filter, requestParameters.include, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-/**
- * AIApi - interface
- * @export
- * @interface AIApi
- */
-export interface AIApiInterface {
-    /**
-     * 
-     * @summary Post Knowledge Recommendations
-     * @param {AIApiCreateEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    createEntityKnowledgeRecommendations(requestParameters: AIApiCreateEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
-
-    /**
-     * 
-     * @summary Post Memory Items
-     * @param {AIApiCreateEntityMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    createEntityMemoryItems(requestParameters: AIApiCreateEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
-
-    /**
-     * Organization-scoped AI memory item
-     * @summary Post organization Memory Item entities
-     * @param {AIApiCreateEntityOrgMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    createEntityOrgMemoryItems(requestParameters: AIApiCreateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
-
-    /**
-     * 
-     * @summary Delete a Knowledge Recommendation
-     * @param {AIApiDeleteEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    deleteEntityKnowledgeRecommendations(requestParameters: AIApiDeleteEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @summary Delete a Memory Item
-     * @param {AIApiDeleteEntityMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    deleteEntityMemoryItems(requestParameters: AIApiDeleteEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @summary Delete an organization Memory Item entity
-     * @param {AIApiDeleteEntityOrgMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    deleteEntityOrgMemoryItems(requestParameters: AIApiDeleteEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @summary Get all Knowledge Recommendations
-     * @param {AIApiGetAllEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    getAllEntitiesKnowledgeRecommendations(requestParameters: AIApiGetAllEntitiesKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutList>;
-
-    /**
-     * 
-     * @summary Get all Memory Items
-     * @param {AIApiGetAllEntitiesMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    getAllEntitiesMemoryItems(requestParameters: AIApiGetAllEntitiesMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutList>;
-
-    /**
-     * 
-     * @summary Get all organization Memory Item entities
-     * @param {AIApiGetAllEntitiesOrgMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    getAllEntitiesOrgMemoryItems(requestParameters: AIApiGetAllEntitiesOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutList>;
-
-    /**
-     * 
-     * @summary Get a Knowledge Recommendation
-     * @param {AIApiGetEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    getEntityKnowledgeRecommendations(requestParameters: AIApiGetEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
-
-    /**
-     * 
-     * @summary Get a Memory Item
-     * @param {AIApiGetEntityMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    getEntityMemoryItems(requestParameters: AIApiGetEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
-
-    /**
-     * 
-     * @summary Get an organization Memory Item entity
-     * @param {AIApiGetEntityOrgMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    getEntityOrgMemoryItems(requestParameters: AIApiGetEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
-
-    /**
-     * 
-     * @summary Patch a Knowledge Recommendation
-     * @param {AIApiPatchEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    patchEntityKnowledgeRecommendations(requestParameters: AIApiPatchEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
-
-    /**
-     * 
-     * @summary Patch a Memory Item
-     * @param {AIApiPatchEntityMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    patchEntityMemoryItems(requestParameters: AIApiPatchEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
-
-    /**
-     * 
-     * @summary Patch an organization Memory Item entity
-     * @param {AIApiPatchEntityOrgMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    patchEntityOrgMemoryItems(requestParameters: AIApiPatchEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
-
-    /**
-     * 
-     * @summary The search endpoint (beta)
-     * @param {AIApiSearchEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    searchEntitiesKnowledgeRecommendations(requestParameters: AIApiSearchEntitiesKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutList>;
-
-    /**
-     * 
-     * @summary The search endpoint (beta)
-     * @param {AIApiSearchEntitiesMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    searchEntitiesMemoryItems(requestParameters: AIApiSearchEntitiesMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutList>;
-
-    /**
-     * 
-     * @summary Put a Knowledge Recommendation
-     * @param {AIApiUpdateEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    updateEntityKnowledgeRecommendations(requestParameters: AIApiUpdateEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
-
-    /**
-     * 
-     * @summary Put a Memory Item
-     * @param {AIApiUpdateEntityMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    updateEntityMemoryItems(requestParameters: AIApiUpdateEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
-
-    /**
-     * 
-     * @summary Put an organization Memory Item entity
-     * @param {AIApiUpdateEntityOrgMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApiInterface
-     */
-    updateEntityOrgMemoryItems(requestParameters: AIApiUpdateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
-
-}
-
-/**
- * Request parameters for createEntityKnowledgeRecommendations operation in AIApi.
- * @export
- * @interface AIApiCreateEntityKnowledgeRecommendationsRequest
- */
-export interface AIApiCreateEntityKnowledgeRecommendationsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiCreateEntityKnowledgeRecommendations
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {JsonApiKnowledgeRecommendationPostOptionalIdDocument}
-     * @memberof AIApiCreateEntityKnowledgeRecommendations
-     */
-    readonly jsonApiKnowledgeRecommendationPostOptionalIdDocument: JsonApiKnowledgeRecommendationPostOptionalIdDocument
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>}
-     * @memberof AIApiCreateEntityKnowledgeRecommendations
-     */
-    readonly include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>
-
-    /**
-     * Include Meta objects.
-     * @type {Array<'origin' | 'all' | 'ALL'>}
-     * @memberof AIApiCreateEntityKnowledgeRecommendations
-     */
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
-}
-
-/**
- * Request parameters for createEntityMemoryItems operation in AIApi.
- * @export
- * @interface AIApiCreateEntityMemoryItemsRequest
- */
-export interface AIApiCreateEntityMemoryItemsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiCreateEntityMemoryItems
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {JsonApiMemoryItemPostOptionalIdDocument}
-     * @memberof AIApiCreateEntityMemoryItems
-     */
-    readonly jsonApiMemoryItemPostOptionalIdDocument: JsonApiMemoryItemPostOptionalIdDocument
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
-     * @memberof AIApiCreateEntityMemoryItems
-     */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
-
-    /**
-     * Include Meta objects.
-     * @type {Array<'origin' | 'all' | 'ALL'>}
-     * @memberof AIApiCreateEntityMemoryItems
-     */
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
-}
-
-/**
- * Request parameters for createEntityOrgMemoryItems operation in AIApi.
- * @export
- * @interface AIApiCreateEntityOrgMemoryItemsRequest
- */
-export interface AIApiCreateEntityOrgMemoryItemsRequest {
-    /**
-     * 
-     * @type {JsonApiOrgMemoryItemInDocument}
-     * @memberof AIApiCreateEntityOrgMemoryItems
-     */
-    readonly jsonApiOrgMemoryItemInDocument: JsonApiOrgMemoryItemInDocument
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
-     * @memberof AIApiCreateEntityOrgMemoryItems
-     */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
-}
-
-/**
- * Request parameters for deleteEntityKnowledgeRecommendations operation in AIApi.
- * @export
- * @interface AIApiDeleteEntityKnowledgeRecommendationsRequest
- */
-export interface AIApiDeleteEntityKnowledgeRecommendationsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiDeleteEntityKnowledgeRecommendations
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiDeleteEntityKnowledgeRecommendations
-     */
-    readonly objectId: string
-}
-
-/**
- * Request parameters for deleteEntityMemoryItems operation in AIApi.
- * @export
- * @interface AIApiDeleteEntityMemoryItemsRequest
- */
-export interface AIApiDeleteEntityMemoryItemsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiDeleteEntityMemoryItems
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiDeleteEntityMemoryItems
-     */
-    readonly objectId: string
-}
-
-/**
- * Request parameters for deleteEntityOrgMemoryItems operation in AIApi.
- * @export
- * @interface AIApiDeleteEntityOrgMemoryItemsRequest
- */
-export interface AIApiDeleteEntityOrgMemoryItemsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiDeleteEntityOrgMemoryItems
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for getAllEntitiesKnowledgeRecommendations operation in AIApi.
- * @export
- * @interface AIApiGetAllEntitiesKnowledgeRecommendationsRequest
- */
-export interface AIApiGetAllEntitiesKnowledgeRecommendationsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiGetAllEntitiesKnowledgeRecommendations
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
-     * @memberof AIApiGetAllEntitiesKnowledgeRecommendations
-     */
-    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
-
-    /**
-     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-     * @type {string}
-     * @memberof AIApiGetAllEntitiesKnowledgeRecommendations
-     */
-    readonly filter?: string
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>}
-     * @memberof AIApiGetAllEntitiesKnowledgeRecommendations
-     */
-    readonly include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>
-
-    /**
-     * Zero-based page index (0..N)
-     * @type {number}
-     * @memberof AIApiGetAllEntitiesKnowledgeRecommendations
-     */
-    readonly page?: number
-
-    /**
-     * The size of the page to be returned
-     * @type {number}
-     * @memberof AIApiGetAllEntitiesKnowledgeRecommendations
-     */
-    readonly size?: number
-
-    /**
-     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @type {Array<string>}
-     * @memberof AIApiGetAllEntitiesKnowledgeRecommendations
-     */
-    readonly sort?: Array<string>
-
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AIApiGetAllEntitiesKnowledgeRecommendations
-     */
-    readonly xGDCVALIDATERELATIONS?: boolean
-
-    /**
-     * Include Meta objects.
-     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
-     * @memberof AIApiGetAllEntitiesKnowledgeRecommendations
-     */
-    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
-}
-
-/**
- * Request parameters for getAllEntitiesMemoryItems operation in AIApi.
- * @export
- * @interface AIApiGetAllEntitiesMemoryItemsRequest
- */
-export interface AIApiGetAllEntitiesMemoryItemsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiGetAllEntitiesMemoryItems
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
-     * @memberof AIApiGetAllEntitiesMemoryItems
-     */
-    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
-
-    /**
-     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-     * @type {string}
-     * @memberof AIApiGetAllEntitiesMemoryItems
-     */
-    readonly filter?: string
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
-     * @memberof AIApiGetAllEntitiesMemoryItems
-     */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
-
-    /**
-     * Zero-based page index (0..N)
-     * @type {number}
-     * @memberof AIApiGetAllEntitiesMemoryItems
-     */
-    readonly page?: number
-
-    /**
-     * The size of the page to be returned
-     * @type {number}
-     * @memberof AIApiGetAllEntitiesMemoryItems
-     */
-    readonly size?: number
-
-    /**
-     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @type {Array<string>}
-     * @memberof AIApiGetAllEntitiesMemoryItems
-     */
-    readonly sort?: Array<string>
-
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AIApiGetAllEntitiesMemoryItems
-     */
-    readonly xGDCVALIDATERELATIONS?: boolean
-
-    /**
-     * Include Meta objects.
-     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
-     * @memberof AIApiGetAllEntitiesMemoryItems
-     */
-    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
-}
-
-/**
- * Request parameters for getAllEntitiesOrgMemoryItems operation in AIApi.
- * @export
- * @interface AIApiGetAllEntitiesOrgMemoryItemsRequest
- */
-export interface AIApiGetAllEntitiesOrgMemoryItemsRequest {
-    /**
-     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-     * @type {string}
-     * @memberof AIApiGetAllEntitiesOrgMemoryItems
-     */
-    readonly filter?: string
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
-     * @memberof AIApiGetAllEntitiesOrgMemoryItems
-     */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
-
-    /**
-     * Zero-based page index (0..N)
-     * @type {number}
-     * @memberof AIApiGetAllEntitiesOrgMemoryItems
-     */
-    readonly page?: number
-
-    /**
-     * The size of the page to be returned
-     * @type {number}
-     * @memberof AIApiGetAllEntitiesOrgMemoryItems
-     */
-    readonly size?: number
-
-    /**
-     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @type {Array<string>}
-     * @memberof AIApiGetAllEntitiesOrgMemoryItems
-     */
-    readonly sort?: Array<string>
-
-    /**
-     * Include Meta objects.
-     * @type {Array<'page' | 'all' | 'ALL'>}
-     * @memberof AIApiGetAllEntitiesOrgMemoryItems
-     */
-    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>
-}
-
-/**
- * Request parameters for getEntityKnowledgeRecommendations operation in AIApi.
- * @export
- * @interface AIApiGetEntityKnowledgeRecommendationsRequest
- */
-export interface AIApiGetEntityKnowledgeRecommendationsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiGetEntityKnowledgeRecommendations
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiGetEntityKnowledgeRecommendations
-     */
-    readonly objectId: string
-
-    /**
-     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-     * @type {string}
-     * @memberof AIApiGetEntityKnowledgeRecommendations
-     */
-    readonly filter?: string
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>}
-     * @memberof AIApiGetEntityKnowledgeRecommendations
-     */
-    readonly include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>
-
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AIApiGetEntityKnowledgeRecommendations
-     */
-    readonly xGDCVALIDATERELATIONS?: boolean
-
-    /**
-     * Include Meta objects.
-     * @type {Array<'origin' | 'all' | 'ALL'>}
-     * @memberof AIApiGetEntityKnowledgeRecommendations
-     */
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
-}
-
-/**
- * Request parameters for getEntityMemoryItems operation in AIApi.
- * @export
- * @interface AIApiGetEntityMemoryItemsRequest
- */
-export interface AIApiGetEntityMemoryItemsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiGetEntityMemoryItems
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiGetEntityMemoryItems
-     */
-    readonly objectId: string
-
-    /**
-     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-     * @type {string}
-     * @memberof AIApiGetEntityMemoryItems
-     */
-    readonly filter?: string
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
-     * @memberof AIApiGetEntityMemoryItems
-     */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
-
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AIApiGetEntityMemoryItems
-     */
-    readonly xGDCVALIDATERELATIONS?: boolean
-
-    /**
-     * Include Meta objects.
-     * @type {Array<'origin' | 'all' | 'ALL'>}
-     * @memberof AIApiGetEntityMemoryItems
-     */
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
-}
-
-/**
- * Request parameters for getEntityOrgMemoryItems operation in AIApi.
- * @export
- * @interface AIApiGetEntityOrgMemoryItemsRequest
- */
-export interface AIApiGetEntityOrgMemoryItemsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiGetEntityOrgMemoryItems
-     */
-    readonly id: string
-
-    /**
-     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-     * @type {string}
-     * @memberof AIApiGetEntityOrgMemoryItems
-     */
-    readonly filter?: string
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
-     * @memberof AIApiGetEntityOrgMemoryItems
-     */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
-}
-
-/**
- * Request parameters for patchEntityKnowledgeRecommendations operation in AIApi.
- * @export
- * @interface AIApiPatchEntityKnowledgeRecommendationsRequest
- */
-export interface AIApiPatchEntityKnowledgeRecommendationsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiPatchEntityKnowledgeRecommendations
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiPatchEntityKnowledgeRecommendations
-     */
-    readonly objectId: string
-
-    /**
-     * 
-     * @type {JsonApiKnowledgeRecommendationPatchDocument}
-     * @memberof AIApiPatchEntityKnowledgeRecommendations
-     */
-    readonly jsonApiKnowledgeRecommendationPatchDocument: JsonApiKnowledgeRecommendationPatchDocument
-
-    /**
-     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-     * @type {string}
-     * @memberof AIApiPatchEntityKnowledgeRecommendations
-     */
-    readonly filter?: string
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>}
-     * @memberof AIApiPatchEntityKnowledgeRecommendations
-     */
-    readonly include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>
-}
-
-/**
- * Request parameters for patchEntityMemoryItems operation in AIApi.
- * @export
- * @interface AIApiPatchEntityMemoryItemsRequest
- */
-export interface AIApiPatchEntityMemoryItemsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiPatchEntityMemoryItems
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiPatchEntityMemoryItems
-     */
-    readonly objectId: string
-
-    /**
-     * 
-     * @type {JsonApiMemoryItemPatchDocument}
-     * @memberof AIApiPatchEntityMemoryItems
-     */
-    readonly jsonApiMemoryItemPatchDocument: JsonApiMemoryItemPatchDocument
-
-    /**
-     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-     * @type {string}
-     * @memberof AIApiPatchEntityMemoryItems
-     */
-    readonly filter?: string
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
-     * @memberof AIApiPatchEntityMemoryItems
-     */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
-}
-
-/**
- * Request parameters for patchEntityOrgMemoryItems operation in AIApi.
- * @export
- * @interface AIApiPatchEntityOrgMemoryItemsRequest
- */
-export interface AIApiPatchEntityOrgMemoryItemsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiPatchEntityOrgMemoryItems
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {JsonApiOrgMemoryItemPatchDocument}
-     * @memberof AIApiPatchEntityOrgMemoryItems
-     */
-    readonly jsonApiOrgMemoryItemPatchDocument: JsonApiOrgMemoryItemPatchDocument
-
-    /**
-     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-     * @type {string}
-     * @memberof AIApiPatchEntityOrgMemoryItems
-     */
-    readonly filter?: string
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
-     * @memberof AIApiPatchEntityOrgMemoryItems
-     */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
-}
-
-/**
- * Request parameters for searchEntitiesKnowledgeRecommendations operation in AIApi.
- * @export
- * @interface AIApiSearchEntitiesKnowledgeRecommendationsRequest
- */
-export interface AIApiSearchEntitiesKnowledgeRecommendationsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiSearchEntitiesKnowledgeRecommendations
-     */
-    readonly workspaceId: string
-
-    /**
-     * Search request body with filter, pagination, and sorting options
-     * @type {EntitySearchBody}
-     * @memberof AIApiSearchEntitiesKnowledgeRecommendations
-     */
-    readonly entitySearchBody: EntitySearchBody
-
-    /**
-     * 
-     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
-     * @memberof AIApiSearchEntitiesKnowledgeRecommendations
-     */
-    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
-
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AIApiSearchEntitiesKnowledgeRecommendations
-     */
-    readonly xGDCVALIDATERELATIONS?: boolean
-}
-
-/**
- * Request parameters for searchEntitiesMemoryItems operation in AIApi.
- * @export
- * @interface AIApiSearchEntitiesMemoryItemsRequest
- */
-export interface AIApiSearchEntitiesMemoryItemsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiSearchEntitiesMemoryItems
-     */
-    readonly workspaceId: string
-
-    /**
-     * Search request body with filter, pagination, and sorting options
-     * @type {EntitySearchBody}
-     * @memberof AIApiSearchEntitiesMemoryItems
-     */
-    readonly entitySearchBody: EntitySearchBody
-
-    /**
-     * 
-     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
-     * @memberof AIApiSearchEntitiesMemoryItems
-     */
-    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
-
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AIApiSearchEntitiesMemoryItems
-     */
-    readonly xGDCVALIDATERELATIONS?: boolean
-}
-
-/**
- * Request parameters for updateEntityKnowledgeRecommendations operation in AIApi.
- * @export
- * @interface AIApiUpdateEntityKnowledgeRecommendationsRequest
- */
-export interface AIApiUpdateEntityKnowledgeRecommendationsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiUpdateEntityKnowledgeRecommendations
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiUpdateEntityKnowledgeRecommendations
-     */
-    readonly objectId: string
-
-    /**
-     * 
-     * @type {JsonApiKnowledgeRecommendationInDocument}
-     * @memberof AIApiUpdateEntityKnowledgeRecommendations
-     */
-    readonly jsonApiKnowledgeRecommendationInDocument: JsonApiKnowledgeRecommendationInDocument
-
-    /**
-     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-     * @type {string}
-     * @memberof AIApiUpdateEntityKnowledgeRecommendations
-     */
-    readonly filter?: string
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>}
-     * @memberof AIApiUpdateEntityKnowledgeRecommendations
-     */
-    readonly include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>
-}
-
-/**
- * Request parameters for updateEntityMemoryItems operation in AIApi.
- * @export
- * @interface AIApiUpdateEntityMemoryItemsRequest
- */
-export interface AIApiUpdateEntityMemoryItemsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiUpdateEntityMemoryItems
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiUpdateEntityMemoryItems
-     */
-    readonly objectId: string
-
-    /**
-     * 
-     * @type {JsonApiMemoryItemInDocument}
-     * @memberof AIApiUpdateEntityMemoryItems
-     */
-    readonly jsonApiMemoryItemInDocument: JsonApiMemoryItemInDocument
-
-    /**
-     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-     * @type {string}
-     * @memberof AIApiUpdateEntityMemoryItems
-     */
-    readonly filter?: string
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
-     * @memberof AIApiUpdateEntityMemoryItems
-     */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
-}
-
-/**
- * Request parameters for updateEntityOrgMemoryItems operation in AIApi.
- * @export
- * @interface AIApiUpdateEntityOrgMemoryItemsRequest
- */
-export interface AIApiUpdateEntityOrgMemoryItemsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIApiUpdateEntityOrgMemoryItems
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {JsonApiOrgMemoryItemInDocument}
-     * @memberof AIApiUpdateEntityOrgMemoryItems
-     */
-    readonly jsonApiOrgMemoryItemInDocument: JsonApiOrgMemoryItemInDocument
-
-    /**
-     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-     * @type {string}
-     * @memberof AIApiUpdateEntityOrgMemoryItems
-     */
-    readonly filter?: string
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
-     * @memberof AIApiUpdateEntityOrgMemoryItems
-     */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
-}
-
-/**
- * AIApi - object-oriented interface
- * @export
- * @class AIApi
- * @extends {BaseAPI}
- */
-export class AIApi extends BaseAPI implements AIApiInterface {
-    /**
-     * 
-     * @summary Post Knowledge Recommendations
-     * @param {AIApiCreateEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public createEntityKnowledgeRecommendations(requestParameters: AIApiCreateEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig) {
-        return AIApi_CreateEntityKnowledgeRecommendations(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Post Memory Items
-     * @param {AIApiCreateEntityMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public createEntityMemoryItems(requestParameters: AIApiCreateEntityMemoryItemsRequest, options?: AxiosRequestConfig) {
-        return AIApi_CreateEntityMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * Organization-scoped AI memory item
-     * @summary Post organization Memory Item entities
-     * @param {AIApiCreateEntityOrgMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public createEntityOrgMemoryItems(requestParameters: AIApiCreateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig) {
-        return AIApi_CreateEntityOrgMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Delete a Knowledge Recommendation
-     * @param {AIApiDeleteEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public deleteEntityKnowledgeRecommendations(requestParameters: AIApiDeleteEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig) {
-        return AIApi_DeleteEntityKnowledgeRecommendations(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Delete a Memory Item
-     * @param {AIApiDeleteEntityMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public deleteEntityMemoryItems(requestParameters: AIApiDeleteEntityMemoryItemsRequest, options?: AxiosRequestConfig) {
-        return AIApi_DeleteEntityMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Delete an organization Memory Item entity
-     * @param {AIApiDeleteEntityOrgMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public deleteEntityOrgMemoryItems(requestParameters: AIApiDeleteEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig) {
-        return AIApi_DeleteEntityOrgMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Get all Knowledge Recommendations
-     * @param {AIApiGetAllEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public getAllEntitiesKnowledgeRecommendations(requestParameters: AIApiGetAllEntitiesKnowledgeRecommendationsRequest, options?: AxiosRequestConfig) {
-        return AIApi_GetAllEntitiesKnowledgeRecommendations(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Get all Memory Items
-     * @param {AIApiGetAllEntitiesMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public getAllEntitiesMemoryItems(requestParameters: AIApiGetAllEntitiesMemoryItemsRequest, options?: AxiosRequestConfig) {
-        return AIApi_GetAllEntitiesMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Get all organization Memory Item entities
-     * @param {AIApiGetAllEntitiesOrgMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public getAllEntitiesOrgMemoryItems(requestParameters: AIApiGetAllEntitiesOrgMemoryItemsRequest = {}, options?: AxiosRequestConfig) {
-        return AIApi_GetAllEntitiesOrgMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Get a Knowledge Recommendation
-     * @param {AIApiGetEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public getEntityKnowledgeRecommendations(requestParameters: AIApiGetEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig) {
-        return AIApi_GetEntityKnowledgeRecommendations(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Get a Memory Item
-     * @param {AIApiGetEntityMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public getEntityMemoryItems(requestParameters: AIApiGetEntityMemoryItemsRequest, options?: AxiosRequestConfig) {
-        return AIApi_GetEntityMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Get an organization Memory Item entity
-     * @param {AIApiGetEntityOrgMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public getEntityOrgMemoryItems(requestParameters: AIApiGetEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig) {
-        return AIApi_GetEntityOrgMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Patch a Knowledge Recommendation
-     * @param {AIApiPatchEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public patchEntityKnowledgeRecommendations(requestParameters: AIApiPatchEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig) {
-        return AIApi_PatchEntityKnowledgeRecommendations(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Patch a Memory Item
-     * @param {AIApiPatchEntityMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public patchEntityMemoryItems(requestParameters: AIApiPatchEntityMemoryItemsRequest, options?: AxiosRequestConfig) {
-        return AIApi_PatchEntityMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Patch an organization Memory Item entity
-     * @param {AIApiPatchEntityOrgMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public patchEntityOrgMemoryItems(requestParameters: AIApiPatchEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig) {
-        return AIApi_PatchEntityOrgMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary The search endpoint (beta)
-     * @param {AIApiSearchEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public searchEntitiesKnowledgeRecommendations(requestParameters: AIApiSearchEntitiesKnowledgeRecommendationsRequest, options?: AxiosRequestConfig) {
-        return AIApi_SearchEntitiesKnowledgeRecommendations(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary The search endpoint (beta)
-     * @param {AIApiSearchEntitiesMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public searchEntitiesMemoryItems(requestParameters: AIApiSearchEntitiesMemoryItemsRequest, options?: AxiosRequestConfig) {
-        return AIApi_SearchEntitiesMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Put a Knowledge Recommendation
-     * @param {AIApiUpdateEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public updateEntityKnowledgeRecommendations(requestParameters: AIApiUpdateEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig) {
-        return AIApi_UpdateEntityKnowledgeRecommendations(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Put a Memory Item
-     * @param {AIApiUpdateEntityMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public updateEntityMemoryItems(requestParameters: AIApiUpdateEntityMemoryItemsRequest, options?: AxiosRequestConfig) {
-        return AIApi_UpdateEntityMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Put an organization Memory Item entity
-     * @param {AIApiUpdateEntityOrgMemoryItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public updateEntityOrgMemoryItems(requestParameters: AIApiUpdateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig) {
-        return AIApi_UpdateEntityOrgMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-}
-
-
-// AIAgentsApi FP - AIAgentsApiAxiosParamCreator
-/**
- * AI Agent - behavior configuration for AI assistants
- * @summary Post Agent entities
- * @param {JsonApiAgentInDocument} jsonApiAgentInDocument 
- * @param {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIAgentsApiAxiosParamCreator_CreateEntityAgents(
-    jsonApiAgentInDocument: JsonApiAgentInDocument, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'jsonApiAgentInDocument' is not null or undefined
-    assertParamExists('createEntityAgents', 'jsonApiAgentInDocument', jsonApiAgentInDocument)
-    const localVarPath = `/api/v1/entities/agents`;
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-
-    
-    const consumes = [
-        'application/vnd.gooddata.api+json',
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof jsonApiAgentInDocument !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(jsonApiAgentInDocument !== undefined ? jsonApiAgentInDocument : {})
-        : jsonApiAgentInDocument || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIAgentsApi FP - AIAgentsApiAxiosParamCreator
-/**
- * 
- * @summary Delete Agent entity
- * @param {string} id 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIAgentsApiAxiosParamCreator_DeleteEntityAgents(
-    id: string, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'id' is not null or undefined
-    assertParamExists('deleteEntityAgents', 'id', id)
-    const localVarPath = `/api/v1/entities/agents/{id}`
-        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIAgentsApi FP - AIAgentsApiAxiosParamCreator
-/**
- * 
- * @summary Get all Agent entities
- * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {number} [page] Zero-based page index (0..N)
- * @param {number} [size] The size of the page to be returned
- * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
- * @param {Array<'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIAgentsApiAxiosParamCreator_GetAllEntitiesAgents(
-    filter?: string, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    const localVarPath = `/api/v1/entities/agents`;
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (filter !== undefined) {
-        localVarQueryParameter['filter'] = filter;
-    }
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-    if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
-    }
-
-    if (size !== undefined) {
-        localVarQueryParameter['size'] = size;
-    }
-
-    if (sort) {
-        localVarQueryParameter['sort'] = sort;
-    }
-
-    if (metaInclude) {
-        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
-    }
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIAgentsApi FP - AIAgentsApiAxiosParamCreator
-/**
- * 
- * @summary Get Agent entity
- * @param {string} id 
- * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIAgentsApiAxiosParamCreator_GetEntityAgents(
-    id: string, filter?: string, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'id' is not null or undefined
-    assertParamExists('getEntityAgents', 'id', id)
-    const localVarPath = `/api/v1/entities/agents/{id}`
-        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (filter !== undefined) {
-        localVarQueryParameter['filter'] = filter;
-    }
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIAgentsApi FP - AIAgentsApiAxiosParamCreator
-/**
- * 
- * @summary Patch Agent entity
- * @param {string} id 
- * @param {JsonApiAgentPatchDocument} jsonApiAgentPatchDocument 
- * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIAgentsApiAxiosParamCreator_PatchEntityAgents(
-    id: string, jsonApiAgentPatchDocument: JsonApiAgentPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'id' is not null or undefined
-    assertParamExists('patchEntityAgents', 'id', id)
-    // verify required parameter 'jsonApiAgentPatchDocument' is not null or undefined
-    assertParamExists('patchEntityAgents', 'jsonApiAgentPatchDocument', jsonApiAgentPatchDocument)
-    const localVarPath = `/api/v1/entities/agents/{id}`
-        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (filter !== undefined) {
-        localVarQueryParameter['filter'] = filter;
-    }
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-
-    
-    const consumes = [
-        'application/vnd.gooddata.api+json',
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof jsonApiAgentPatchDocument !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(jsonApiAgentPatchDocument !== undefined ? jsonApiAgentPatchDocument : {})
-        : jsonApiAgentPatchDocument || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AIAgentsApi FP - AIAgentsApiAxiosParamCreator
-/**
- * 
- * @summary Put Agent entity
- * @param {string} id 
- * @param {JsonApiAgentInDocument} jsonApiAgentInDocument 
- * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIAgentsApiAxiosParamCreator_UpdateEntityAgents(
-    id: string, jsonApiAgentInDocument: JsonApiAgentInDocument, filter?: string, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'id' is not null or undefined
-    assertParamExists('updateEntityAgents', 'id', id)
-    // verify required parameter 'jsonApiAgentInDocument' is not null or undefined
-    assertParamExists('updateEntityAgents', 'jsonApiAgentInDocument', jsonApiAgentInDocument)
-    const localVarPath = `/api/v1/entities/agents/{id}`
-        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (filter !== undefined) {
-        localVarQueryParameter['filter'] = filter;
-    }
-
-    if (include) {
-        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
-    }
-
-
-    
-    const consumes = [
-        'application/vnd.gooddata.api+json',
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof jsonApiAgentInDocument !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(jsonApiAgentInDocument !== undefined ? jsonApiAgentInDocument : {})
-        : jsonApiAgentInDocument || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-
-// AIAgentsApi Api FP
-/**
- * AI Agent - behavior configuration for AI assistants
- * @summary Post Agent entities
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIAgentsApiCreateEntityAgentsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIAgentsApi_CreateEntityAgents(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIAgentsApiCreateEntityAgentsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiAgentOutDocument> {
-    const localVarAxiosArgs = await AIAgentsApiAxiosParamCreator_CreateEntityAgents(
-        requestParameters.jsonApiAgentInDocument, requestParameters.include, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIAgentsApi Api FP
-/**
- * 
- * @summary Delete Agent entity
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIAgentsApiDeleteEntityAgentsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIAgentsApi_DeleteEntityAgents(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIAgentsApiDeleteEntityAgentsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<void> {
-    const localVarAxiosArgs = await AIAgentsApiAxiosParamCreator_DeleteEntityAgents(
-        requestParameters.id, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIAgentsApi Api FP
-/**
- * 
- * @summary Get all Agent entities
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIAgentsApiGetAllEntitiesAgentsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIAgentsApi_GetAllEntitiesAgents(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIAgentsApiGetAllEntitiesAgentsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiAgentOutList> {
-    const localVarAxiosArgs = await AIAgentsApiAxiosParamCreator_GetAllEntitiesAgents(
-        requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.metaInclude, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIAgentsApi Api FP
-/**
- * 
- * @summary Get Agent entity
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIAgentsApiGetEntityAgentsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIAgentsApi_GetEntityAgents(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIAgentsApiGetEntityAgentsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiAgentOutDocument> {
-    const localVarAxiosArgs = await AIAgentsApiAxiosParamCreator_GetEntityAgents(
-        requestParameters.id, requestParameters.filter, requestParameters.include, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIAgentsApi Api FP
-/**
- * 
- * @summary Patch Agent entity
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIAgentsApiPatchEntityAgentsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIAgentsApi_PatchEntityAgents(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIAgentsApiPatchEntityAgentsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiAgentOutDocument> {
-    const localVarAxiosArgs = await AIAgentsApiAxiosParamCreator_PatchEntityAgents(
-        requestParameters.id, requestParameters.jsonApiAgentPatchDocument, requestParameters.filter, requestParameters.include, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AIAgentsApi Api FP
-/**
- * 
- * @summary Put Agent entity
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AIAgentsApiUpdateEntityAgentsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIAgentsApi_UpdateEntityAgents(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AIAgentsApiUpdateEntityAgentsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiAgentOutDocument> {
-    const localVarAxiosArgs = await AIAgentsApiAxiosParamCreator_UpdateEntityAgents(
-        requestParameters.id, requestParameters.jsonApiAgentInDocument, requestParameters.filter, requestParameters.include, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-/**
- * AIAgentsApi - interface
- * @export
- * @interface AIAgentsApi
- */
-export interface AIAgentsApiInterface {
-    /**
-     * AI Agent - behavior configuration for AI assistants
-     * @summary Post Agent entities
-     * @param {AIAgentsApiCreateEntityAgentsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIAgentsApiInterface
-     */
-    createEntityAgents(requestParameters: AIAgentsApiCreateEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
-
-    /**
-     * 
-     * @summary Delete Agent entity
-     * @param {AIAgentsApiDeleteEntityAgentsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIAgentsApiInterface
-     */
-    deleteEntityAgents(requestParameters: AIAgentsApiDeleteEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @summary Get all Agent entities
-     * @param {AIAgentsApiGetAllEntitiesAgentsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIAgentsApiInterface
-     */
-    getAllEntitiesAgents(requestParameters: AIAgentsApiGetAllEntitiesAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutList>;
-
-    /**
-     * 
-     * @summary Get Agent entity
-     * @param {AIAgentsApiGetEntityAgentsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIAgentsApiInterface
-     */
-    getEntityAgents(requestParameters: AIAgentsApiGetEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
-
-    /**
-     * 
-     * @summary Patch Agent entity
-     * @param {AIAgentsApiPatchEntityAgentsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIAgentsApiInterface
-     */
-    patchEntityAgents(requestParameters: AIAgentsApiPatchEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
-
-    /**
-     * 
-     * @summary Put Agent entity
-     * @param {AIAgentsApiUpdateEntityAgentsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIAgentsApiInterface
-     */
-    updateEntityAgents(requestParameters: AIAgentsApiUpdateEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
-
-}
-
-/**
- * Request parameters for createEntityAgents operation in AIAgentsApi.
- * @export
- * @interface AIAgentsApiCreateEntityAgentsRequest
- */
-export interface AIAgentsApiCreateEntityAgentsRequest {
-    /**
-     * 
-     * @type {JsonApiAgentInDocument}
-     * @memberof AIAgentsApiCreateEntityAgents
-     */
-    readonly jsonApiAgentInDocument: JsonApiAgentInDocument
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>}
-     * @memberof AIAgentsApiCreateEntityAgents
-     */
-    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>
-}
-
-/**
- * Request parameters for deleteEntityAgents operation in AIAgentsApi.
- * @export
- * @interface AIAgentsApiDeleteEntityAgentsRequest
- */
-export interface AIAgentsApiDeleteEntityAgentsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIAgentsApiDeleteEntityAgents
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for getAllEntitiesAgents operation in AIAgentsApi.
- * @export
- * @interface AIAgentsApiGetAllEntitiesAgentsRequest
- */
-export interface AIAgentsApiGetAllEntitiesAgentsRequest {
-    /**
-     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-     * @type {string}
-     * @memberof AIAgentsApiGetAllEntitiesAgents
-     */
-    readonly filter?: string
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>}
-     * @memberof AIAgentsApiGetAllEntitiesAgents
-     */
-    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>
-
-    /**
-     * Zero-based page index (0..N)
-     * @type {number}
-     * @memberof AIAgentsApiGetAllEntitiesAgents
-     */
-    readonly page?: number
-
-    /**
-     * The size of the page to be returned
-     * @type {number}
-     * @memberof AIAgentsApiGetAllEntitiesAgents
-     */
-    readonly size?: number
-
-    /**
-     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @type {Array<string>}
-     * @memberof AIAgentsApiGetAllEntitiesAgents
-     */
-    readonly sort?: Array<string>
-
-    /**
-     * Include Meta objects.
-     * @type {Array<'page' | 'all' | 'ALL'>}
-     * @memberof AIAgentsApiGetAllEntitiesAgents
-     */
-    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>
-}
-
-/**
- * Request parameters for getEntityAgents operation in AIAgentsApi.
- * @export
- * @interface AIAgentsApiGetEntityAgentsRequest
- */
-export interface AIAgentsApiGetEntityAgentsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIAgentsApiGetEntityAgents
-     */
-    readonly id: string
-
-    /**
-     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-     * @type {string}
-     * @memberof AIAgentsApiGetEntityAgents
-     */
-    readonly filter?: string
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>}
-     * @memberof AIAgentsApiGetEntityAgents
-     */
-    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>
-}
-
-/**
- * Request parameters for patchEntityAgents operation in AIAgentsApi.
- * @export
- * @interface AIAgentsApiPatchEntityAgentsRequest
- */
-export interface AIAgentsApiPatchEntityAgentsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIAgentsApiPatchEntityAgents
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {JsonApiAgentPatchDocument}
-     * @memberof AIAgentsApiPatchEntityAgents
-     */
-    readonly jsonApiAgentPatchDocument: JsonApiAgentPatchDocument
-
-    /**
-     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-     * @type {string}
-     * @memberof AIAgentsApiPatchEntityAgents
-     */
-    readonly filter?: string
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>}
-     * @memberof AIAgentsApiPatchEntityAgents
-     */
-    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>
-}
-
-/**
- * Request parameters for updateEntityAgents operation in AIAgentsApi.
- * @export
- * @interface AIAgentsApiUpdateEntityAgentsRequest
- */
-export interface AIAgentsApiUpdateEntityAgentsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AIAgentsApiUpdateEntityAgents
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {JsonApiAgentInDocument}
-     * @memberof AIAgentsApiUpdateEntityAgents
-     */
-    readonly jsonApiAgentInDocument: JsonApiAgentInDocument
-
-    /**
-     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-     * @type {string}
-     * @memberof AIAgentsApiUpdateEntityAgents
-     */
-    readonly filter?: string
-
-    /**
-     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>}
-     * @memberof AIAgentsApiUpdateEntityAgents
-     */
-    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>
-}
-
-/**
- * AIAgentsApi - object-oriented interface
- * @export
- * @class AIAgentsApi
- * @extends {BaseAPI}
- */
-export class AIAgentsApi extends BaseAPI implements AIAgentsApiInterface {
-    /**
-     * AI Agent - behavior configuration for AI assistants
-     * @summary Post Agent entities
-     * @param {AIAgentsApiCreateEntityAgentsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIAgentsApi
-     */
-    public createEntityAgents(requestParameters: AIAgentsApiCreateEntityAgentsRequest, options?: AxiosRequestConfig) {
-        return AIAgentsApi_CreateEntityAgents(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Delete Agent entity
-     * @param {AIAgentsApiDeleteEntityAgentsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIAgentsApi
-     */
-    public deleteEntityAgents(requestParameters: AIAgentsApiDeleteEntityAgentsRequest, options?: AxiosRequestConfig) {
-        return AIAgentsApi_DeleteEntityAgents(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Get all Agent entities
-     * @param {AIAgentsApiGetAllEntitiesAgentsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIAgentsApi
-     */
-    public getAllEntitiesAgents(requestParameters: AIAgentsApiGetAllEntitiesAgentsRequest = {}, options?: AxiosRequestConfig) {
-        return AIAgentsApi_GetAllEntitiesAgents(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Get Agent entity
-     * @param {AIAgentsApiGetEntityAgentsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIAgentsApi
-     */
-    public getEntityAgents(requestParameters: AIAgentsApiGetEntityAgentsRequest, options?: AxiosRequestConfig) {
-        return AIAgentsApi_GetEntityAgents(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Patch Agent entity
-     * @param {AIAgentsApiPatchEntityAgentsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIAgentsApi
-     */
-    public patchEntityAgents(requestParameters: AIAgentsApiPatchEntityAgentsRequest, options?: AxiosRequestConfig) {
-        return AIAgentsApi_PatchEntityAgents(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @summary Put Agent entity
-     * @param {AIAgentsApiUpdateEntityAgentsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIAgentsApi
-     */
-    public updateEntityAgents(requestParameters: AIAgentsApiUpdateEntityAgentsRequest, options?: AxiosRequestConfig) {
-        return AIAgentsApi_UpdateEntityAgents(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-}
-
-
-// AIObservabilityApi FP - AIObservabilityApiAxiosParamCreator
-/**
- * Re-applies the latest GoodData-managed AI observability layout to the organization. Requires the AI_OBSERVABILITY entitlement and organization MANAGE permission. Idempotent; customer-authored content is left untouched.
- * @summary Reload the managed AI observability layout
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIObservabilityApiAxiosParamCreator_ReloadObservabilityLayout(
-    
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    const localVarPath = `/api/v1/actions/organization/reloadObservabilityLayout`;
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-
-// AIObservabilityApi Api FP
-/**
- * Re-applies the latest GoodData-managed AI observability layout to the organization. Requires the AI_OBSERVABILITY entitlement and organization MANAGE permission. Idempotent; customer-authored content is left untouched.
- * @summary Reload the managed AI observability layout
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AIObservabilityApi_ReloadObservabilityLayout(
-    axios: AxiosInstance, basePath: string,
-    
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<void> {
-    const localVarAxiosArgs = await AIObservabilityApiAxiosParamCreator_ReloadObservabilityLayout(
-        
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-/**
- * AIObservabilityApi - interface
- * @export
- * @interface AIObservabilityApi
- */
-export interface AIObservabilityApiInterface {
-    /**
-     * Re-applies the latest GoodData-managed AI observability layout to the organization. Requires the AI_OBSERVABILITY entitlement and organization MANAGE permission. Idempotent; customer-authored content is left untouched.
-     * @summary Reload the managed AI observability layout
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIObservabilityApiInterface
-     */
-    reloadObservabilityLayout(options?: AxiosRequestConfig): AxiosPromise<void>;
-
-}
-
-/**
- * AIObservabilityApi - object-oriented interface
- * @export
- * @class AIObservabilityApi
- * @extends {BaseAPI}
- */
-export class AIObservabilityApi extends BaseAPI implements AIObservabilityApiInterface {
-    /**
-     * Re-applies the latest GoodData-managed AI observability layout to the organization. Requires the AI_OBSERVABILITY entitlement and organization MANAGE permission. Idempotent; customer-authored content is left untouched.
-     * @summary Reload the managed AI observability layout
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIObservabilityApi
-     */
-    public reloadObservabilityLayout(options?: AxiosRequestConfig) {
-        return AIObservabilityApi_ReloadObservabilityLayout(this.axios, this.basePath, options, this.configuration);
-    }
-}
 
 
 // APITokensApi FP - APITokensApiAxiosParamCreator
@@ -29137,6 +25031,875 @@ export class AgentControllerApi extends BaseAPI implements AgentControllerApiInt
      */
     public updateEntityAgents(requestParameters: AgentControllerApiUpdateEntityAgentsRequest, options?: AxiosRequestConfig) {
         return AgentControllerApi_UpdateEntityAgents(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
+// AgentsApi FP - AgentsApiAxiosParamCreator
+/**
+ * AI Agent - behavior configuration for AI assistants
+ * @summary Post Agent entities
+ * @param {JsonApiAgentInDocument} jsonApiAgentInDocument 
+ * @param {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AgentsApiAxiosParamCreator_CreateEntityAgents(
+    jsonApiAgentInDocument: JsonApiAgentInDocument, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'jsonApiAgentInDocument' is not null or undefined
+    assertParamExists('createEntityAgents', 'jsonApiAgentInDocument', jsonApiAgentInDocument)
+    const localVarPath = `/api/v1/entities/agents`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiAgentInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiAgentInDocument !== undefined ? jsonApiAgentInDocument : {})
+        : jsonApiAgentInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AgentsApi FP - AgentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Delete Agent entity
+ * @param {string} id 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AgentsApiAxiosParamCreator_DeleteEntityAgents(
+    id: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'id' is not null or undefined
+    assertParamExists('deleteEntityAgents', 'id', id)
+    const localVarPath = `/api/v1/entities/agents/{id}`
+        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AgentsApi FP - AgentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Get all Agent entities
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {Array<'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AgentsApiAxiosParamCreator_GetAllEntitiesAgents(
+    filter?: string, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/entities/agents`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AgentsApi FP - AgentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Get Agent entity
+ * @param {string} id 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AgentsApiAxiosParamCreator_GetEntityAgents(
+    id: string, filter?: string, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'id' is not null or undefined
+    assertParamExists('getEntityAgents', 'id', id)
+    const localVarPath = `/api/v1/entities/agents/{id}`
+        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AgentsApi FP - AgentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Patch Agent entity
+ * @param {string} id 
+ * @param {JsonApiAgentPatchDocument} jsonApiAgentPatchDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AgentsApiAxiosParamCreator_PatchEntityAgents(
+    id: string, jsonApiAgentPatchDocument: JsonApiAgentPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'id' is not null or undefined
+    assertParamExists('patchEntityAgents', 'id', id)
+    // verify required parameter 'jsonApiAgentPatchDocument' is not null or undefined
+    assertParamExists('patchEntityAgents', 'jsonApiAgentPatchDocument', jsonApiAgentPatchDocument)
+    const localVarPath = `/api/v1/entities/agents/{id}`
+        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiAgentPatchDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiAgentPatchDocument !== undefined ? jsonApiAgentPatchDocument : {})
+        : jsonApiAgentPatchDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AgentsApi FP - AgentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Put Agent entity
+ * @param {string} id 
+ * @param {JsonApiAgentInDocument} jsonApiAgentInDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AgentsApiAxiosParamCreator_UpdateEntityAgents(
+    id: string, jsonApiAgentInDocument: JsonApiAgentInDocument, filter?: string, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'id' is not null or undefined
+    assertParamExists('updateEntityAgents', 'id', id)
+    // verify required parameter 'jsonApiAgentInDocument' is not null or undefined
+    assertParamExists('updateEntityAgents', 'jsonApiAgentInDocument', jsonApiAgentInDocument)
+    const localVarPath = `/api/v1/entities/agents/{id}`
+        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiAgentInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiAgentInDocument !== undefined ? jsonApiAgentInDocument : {})
+        : jsonApiAgentInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// AgentsApi Api FP
+/**
+ * AI Agent - behavior configuration for AI assistants
+ * @summary Post Agent entities
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AgentsApiCreateEntityAgentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AgentsApi_CreateEntityAgents(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AgentsApiCreateEntityAgentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiAgentOutDocument> {
+    const localVarAxiosArgs = await AgentsApiAxiosParamCreator_CreateEntityAgents(
+        requestParameters.jsonApiAgentInDocument, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AgentsApi Api FP
+/**
+ * 
+ * @summary Delete Agent entity
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AgentsApiDeleteEntityAgentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AgentsApi_DeleteEntityAgents(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AgentsApiDeleteEntityAgentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await AgentsApiAxiosParamCreator_DeleteEntityAgents(
+        requestParameters.id, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AgentsApi Api FP
+/**
+ * 
+ * @summary Get all Agent entities
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AgentsApiGetAllEntitiesAgentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AgentsApi_GetAllEntitiesAgents(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AgentsApiGetAllEntitiesAgentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiAgentOutList> {
+    const localVarAxiosArgs = await AgentsApiAxiosParamCreator_GetAllEntitiesAgents(
+        requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AgentsApi Api FP
+/**
+ * 
+ * @summary Get Agent entity
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AgentsApiGetEntityAgentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AgentsApi_GetEntityAgents(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AgentsApiGetEntityAgentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiAgentOutDocument> {
+    const localVarAxiosArgs = await AgentsApiAxiosParamCreator_GetEntityAgents(
+        requestParameters.id, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AgentsApi Api FP
+/**
+ * 
+ * @summary Patch Agent entity
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AgentsApiPatchEntityAgentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AgentsApi_PatchEntityAgents(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AgentsApiPatchEntityAgentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiAgentOutDocument> {
+    const localVarAxiosArgs = await AgentsApiAxiosParamCreator_PatchEntityAgents(
+        requestParameters.id, requestParameters.jsonApiAgentPatchDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AgentsApi Api FP
+/**
+ * 
+ * @summary Put Agent entity
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AgentsApiUpdateEntityAgentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AgentsApi_UpdateEntityAgents(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AgentsApiUpdateEntityAgentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiAgentOutDocument> {
+    const localVarAxiosArgs = await AgentsApiAxiosParamCreator_UpdateEntityAgents(
+        requestParameters.id, requestParameters.jsonApiAgentInDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * AgentsApi - interface
+ * @export
+ * @interface AgentsApi
+ */
+export interface AgentsApiInterface {
+    /**
+     * AI Agent - behavior configuration for AI assistants
+     * @summary Post Agent entities
+     * @param {AgentsApiCreateEntityAgentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApiInterface
+     */
+    createEntityAgents(requestParameters: AgentsApiCreateEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
+
+    /**
+     * 
+     * @summary Delete Agent entity
+     * @param {AgentsApiDeleteEntityAgentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApiInterface
+     */
+    deleteEntityAgents(requestParameters: AgentsApiDeleteEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Get all Agent entities
+     * @param {AgentsApiGetAllEntitiesAgentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApiInterface
+     */
+    getAllEntitiesAgents(requestParameters: AgentsApiGetAllEntitiesAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutList>;
+
+    /**
+     * 
+     * @summary Get Agent entity
+     * @param {AgentsApiGetEntityAgentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApiInterface
+     */
+    getEntityAgents(requestParameters: AgentsApiGetEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
+
+    /**
+     * 
+     * @summary Patch Agent entity
+     * @param {AgentsApiPatchEntityAgentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApiInterface
+     */
+    patchEntityAgents(requestParameters: AgentsApiPatchEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
+
+    /**
+     * 
+     * @summary Put Agent entity
+     * @param {AgentsApiUpdateEntityAgentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApiInterface
+     */
+    updateEntityAgents(requestParameters: AgentsApiUpdateEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAgentOutDocument>;
+
+}
+
+/**
+ * Request parameters for createEntityAgents operation in AgentsApi.
+ * @export
+ * @interface AgentsApiCreateEntityAgentsRequest
+ */
+export interface AgentsApiCreateEntityAgentsRequest {
+    /**
+     * 
+     * @type {JsonApiAgentInDocument}
+     * @memberof AgentsApiCreateEntityAgents
+     */
+    readonly jsonApiAgentInDocument: JsonApiAgentInDocument
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof AgentsApiCreateEntityAgents
+     */
+    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for deleteEntityAgents operation in AgentsApi.
+ * @export
+ * @interface AgentsApiDeleteEntityAgentsRequest
+ */
+export interface AgentsApiDeleteEntityAgentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentsApiDeleteEntityAgents
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getAllEntitiesAgents operation in AgentsApi.
+ * @export
+ * @interface AgentsApiGetAllEntitiesAgentsRequest
+ */
+export interface AgentsApiGetAllEntitiesAgentsRequest {
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof AgentsApiGetAllEntitiesAgents
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof AgentsApiGetAllEntitiesAgents
+     */
+    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof AgentsApiGetAllEntitiesAgents
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof AgentsApiGetAllEntitiesAgents
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof AgentsApiGetAllEntitiesAgents
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'page' | 'all' | 'ALL'>}
+     * @memberof AgentsApiGetAllEntitiesAgents
+     */
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getEntityAgents operation in AgentsApi.
+ * @export
+ * @interface AgentsApiGetEntityAgentsRequest
+ */
+export interface AgentsApiGetEntityAgentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentsApiGetEntityAgents
+     */
+    readonly id: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof AgentsApiGetEntityAgents
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof AgentsApiGetEntityAgents
+     */
+    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for patchEntityAgents operation in AgentsApi.
+ * @export
+ * @interface AgentsApiPatchEntityAgentsRequest
+ */
+export interface AgentsApiPatchEntityAgentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentsApiPatchEntityAgents
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {JsonApiAgentPatchDocument}
+     * @memberof AgentsApiPatchEntityAgents
+     */
+    readonly jsonApiAgentPatchDocument: JsonApiAgentPatchDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof AgentsApiPatchEntityAgents
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof AgentsApiPatchEntityAgents
+     */
+    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for updateEntityAgents operation in AgentsApi.
+ * @export
+ * @interface AgentsApiUpdateEntityAgentsRequest
+ */
+export interface AgentsApiUpdateEntityAgentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentsApiUpdateEntityAgents
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {JsonApiAgentInDocument}
+     * @memberof AgentsApiUpdateEntityAgents
+     */
+    readonly jsonApiAgentInDocument: JsonApiAgentInDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof AgentsApiUpdateEntityAgents
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof AgentsApiUpdateEntityAgents
+     */
+    readonly include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * AgentsApi - object-oriented interface
+ * @export
+ * @class AgentsApi
+ * @extends {BaseAPI}
+ */
+export class AgentsApi extends BaseAPI implements AgentsApiInterface {
+    /**
+     * AI Agent - behavior configuration for AI assistants
+     * @summary Post Agent entities
+     * @param {AgentsApiCreateEntityAgentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApi
+     */
+    public createEntityAgents(requestParameters: AgentsApiCreateEntityAgentsRequest, options?: AxiosRequestConfig) {
+        return AgentsApi_CreateEntityAgents(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Delete Agent entity
+     * @param {AgentsApiDeleteEntityAgentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApi
+     */
+    public deleteEntityAgents(requestParameters: AgentsApiDeleteEntityAgentsRequest, options?: AxiosRequestConfig) {
+        return AgentsApi_DeleteEntityAgents(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get all Agent entities
+     * @param {AgentsApiGetAllEntitiesAgentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApi
+     */
+    public getAllEntitiesAgents(requestParameters: AgentsApiGetAllEntitiesAgentsRequest = {}, options?: AxiosRequestConfig) {
+        return AgentsApi_GetAllEntitiesAgents(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get Agent entity
+     * @param {AgentsApiGetEntityAgentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApi
+     */
+    public getEntityAgents(requestParameters: AgentsApiGetEntityAgentsRequest, options?: AxiosRequestConfig) {
+        return AgentsApi_GetEntityAgents(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Patch Agent entity
+     * @param {AgentsApiPatchEntityAgentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApi
+     */
+    public patchEntityAgents(requestParameters: AgentsApiPatchEntityAgentsRequest, options?: AxiosRequestConfig) {
+        return AgentsApi_PatchEntityAgents(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Put Agent entity
+     * @param {AgentsApiUpdateEntityAgentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApi
+     */
+    public updateEntityAgents(requestParameters: AgentsApiUpdateEntityAgentsRequest, options?: AxiosRequestConfig) {
+        return AgentsApi_UpdateEntityAgents(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 
@@ -128000,6 +124763,1156 @@ export class KnowledgeRecommendationControllerApi extends BaseAPI implements Kno
 }
 
 
+// KnowledgeRecommendationsApi FP - KnowledgeRecommendationsApiAxiosParamCreator
+/**
+ * 
+ * @summary Post Knowledge Recommendations
+ * @param {string} workspaceId 
+ * @param {JsonApiKnowledgeRecommendationPostOptionalIdDocument} jsonApiKnowledgeRecommendationPostOptionalIdDocument 
+ * @param {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeRecommendationsApiAxiosParamCreator_CreateEntityKnowledgeRecommendations(
+    workspaceId: string, jsonApiKnowledgeRecommendationPostOptionalIdDocument: JsonApiKnowledgeRecommendationPostOptionalIdDocument, include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createEntityKnowledgeRecommendations', 'workspaceId', workspaceId)
+    // verify required parameter 'jsonApiKnowledgeRecommendationPostOptionalIdDocument' is not null or undefined
+    assertParamExists('createEntityKnowledgeRecommendations', 'jsonApiKnowledgeRecommendationPostOptionalIdDocument', jsonApiKnowledgeRecommendationPostOptionalIdDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/knowledgeRecommendations`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiKnowledgeRecommendationPostOptionalIdDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiKnowledgeRecommendationPostOptionalIdDocument !== undefined ? jsonApiKnowledgeRecommendationPostOptionalIdDocument : {})
+        : jsonApiKnowledgeRecommendationPostOptionalIdDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// KnowledgeRecommendationsApi FP - KnowledgeRecommendationsApiAxiosParamCreator
+/**
+ * 
+ * @summary Delete a Knowledge Recommendation
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeRecommendationsApiAxiosParamCreator_DeleteEntityKnowledgeRecommendations(
+    workspaceId: string, objectId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('deleteEntityKnowledgeRecommendations', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('deleteEntityKnowledgeRecommendations', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/knowledgeRecommendations/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// KnowledgeRecommendationsApi FP - KnowledgeRecommendationsApiAxiosParamCreator
+/**
+ * 
+ * @summary Get all Knowledge Recommendations
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeRecommendationsApiAxiosParamCreator_GetAllEntitiesKnowledgeRecommendations(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesKnowledgeRecommendations', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/knowledgeRecommendations`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// KnowledgeRecommendationsApi FP - KnowledgeRecommendationsApiAxiosParamCreator
+/**
+ * 
+ * @summary Get a Knowledge Recommendation
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeRecommendationsApiAxiosParamCreator_GetEntityKnowledgeRecommendations(
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityKnowledgeRecommendations', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityKnowledgeRecommendations', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/knowledgeRecommendations/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// KnowledgeRecommendationsApi FP - KnowledgeRecommendationsApiAxiosParamCreator
+/**
+ * 
+ * @summary Patch a Knowledge Recommendation
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiKnowledgeRecommendationPatchDocument} jsonApiKnowledgeRecommendationPatchDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeRecommendationsApiAxiosParamCreator_PatchEntityKnowledgeRecommendations(
+    workspaceId: string, objectId: string, jsonApiKnowledgeRecommendationPatchDocument: JsonApiKnowledgeRecommendationPatchDocument, filter?: string, include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchEntityKnowledgeRecommendations', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('patchEntityKnowledgeRecommendations', 'objectId', objectId)
+    // verify required parameter 'jsonApiKnowledgeRecommendationPatchDocument' is not null or undefined
+    assertParamExists('patchEntityKnowledgeRecommendations', 'jsonApiKnowledgeRecommendationPatchDocument', jsonApiKnowledgeRecommendationPatchDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/knowledgeRecommendations/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiKnowledgeRecommendationPatchDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiKnowledgeRecommendationPatchDocument !== undefined ? jsonApiKnowledgeRecommendationPatchDocument : {})
+        : jsonApiKnowledgeRecommendationPatchDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// KnowledgeRecommendationsApi FP - KnowledgeRecommendationsApiAxiosParamCreator
+/**
+ * 
+ * @summary The search endpoint (beta)
+ * @param {string} workspaceId 
+ * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeRecommendationsApiAxiosParamCreator_SearchEntitiesKnowledgeRecommendations(
+    workspaceId: string, entitySearchBody: EntitySearchBody, origin?: 'ALL' | 'PARENTS' | 'NATIVE', xGDCVALIDATERELATIONS?: boolean, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('searchEntitiesKnowledgeRecommendations', 'workspaceId', workspaceId)
+    // verify required parameter 'entitySearchBody' is not null or undefined
+    assertParamExists('searchEntitiesKnowledgeRecommendations', 'entitySearchBody', entitySearchBody)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/knowledgeRecommendations/search`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof entitySearchBody !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(entitySearchBody !== undefined ? entitySearchBody : {})
+        : entitySearchBody || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// KnowledgeRecommendationsApi FP - KnowledgeRecommendationsApiAxiosParamCreator
+/**
+ * 
+ * @summary Put a Knowledge Recommendation
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiKnowledgeRecommendationInDocument} jsonApiKnowledgeRecommendationInDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeRecommendationsApiAxiosParamCreator_UpdateEntityKnowledgeRecommendations(
+    workspaceId: string, objectId: string, jsonApiKnowledgeRecommendationInDocument: JsonApiKnowledgeRecommendationInDocument, filter?: string, include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('updateEntityKnowledgeRecommendations', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('updateEntityKnowledgeRecommendations', 'objectId', objectId)
+    // verify required parameter 'jsonApiKnowledgeRecommendationInDocument' is not null or undefined
+    assertParamExists('updateEntityKnowledgeRecommendations', 'jsonApiKnowledgeRecommendationInDocument', jsonApiKnowledgeRecommendationInDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/knowledgeRecommendations/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiKnowledgeRecommendationInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiKnowledgeRecommendationInDocument !== undefined ? jsonApiKnowledgeRecommendationInDocument : {})
+        : jsonApiKnowledgeRecommendationInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// KnowledgeRecommendationsApi Api FP
+/**
+ * 
+ * @summary Post Knowledge Recommendations
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeRecommendationsApiCreateEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeRecommendationsApi_CreateEntityKnowledgeRecommendations(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeRecommendationsApiCreateEntityKnowledgeRecommendationsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument> {
+    const localVarAxiosArgs = await KnowledgeRecommendationsApiAxiosParamCreator_CreateEntityKnowledgeRecommendations(
+        requestParameters.workspaceId, requestParameters.jsonApiKnowledgeRecommendationPostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// KnowledgeRecommendationsApi Api FP
+/**
+ * 
+ * @summary Delete a Knowledge Recommendation
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeRecommendationsApiDeleteEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeRecommendationsApi_DeleteEntityKnowledgeRecommendations(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeRecommendationsApiDeleteEntityKnowledgeRecommendationsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await KnowledgeRecommendationsApiAxiosParamCreator_DeleteEntityKnowledgeRecommendations(
+        requestParameters.workspaceId, requestParameters.objectId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// KnowledgeRecommendationsApi Api FP
+/**
+ * 
+ * @summary Get all Knowledge Recommendations
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeRecommendationsApiGetAllEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeRecommendationsApi_GetAllEntitiesKnowledgeRecommendations(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeRecommendationsApiGetAllEntitiesKnowledgeRecommendationsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiKnowledgeRecommendationOutList> {
+    const localVarAxiosArgs = await KnowledgeRecommendationsApiAxiosParamCreator_GetAllEntitiesKnowledgeRecommendations(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// KnowledgeRecommendationsApi Api FP
+/**
+ * 
+ * @summary Get a Knowledge Recommendation
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeRecommendationsApiGetEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeRecommendationsApi_GetEntityKnowledgeRecommendations(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeRecommendationsApiGetEntityKnowledgeRecommendationsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument> {
+    const localVarAxiosArgs = await KnowledgeRecommendationsApiAxiosParamCreator_GetEntityKnowledgeRecommendations(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// KnowledgeRecommendationsApi Api FP
+/**
+ * 
+ * @summary Patch a Knowledge Recommendation
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeRecommendationsApiPatchEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeRecommendationsApi_PatchEntityKnowledgeRecommendations(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeRecommendationsApiPatchEntityKnowledgeRecommendationsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument> {
+    const localVarAxiosArgs = await KnowledgeRecommendationsApiAxiosParamCreator_PatchEntityKnowledgeRecommendations(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiKnowledgeRecommendationPatchDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// KnowledgeRecommendationsApi Api FP
+/**
+ * 
+ * @summary The search endpoint (beta)
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeRecommendationsApiSearchEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeRecommendationsApi_SearchEntitiesKnowledgeRecommendations(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeRecommendationsApiSearchEntitiesKnowledgeRecommendationsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiKnowledgeRecommendationOutList> {
+    const localVarAxiosArgs = await KnowledgeRecommendationsApiAxiosParamCreator_SearchEntitiesKnowledgeRecommendations(
+        requestParameters.workspaceId, requestParameters.entitySearchBody, requestParameters.origin, requestParameters.xGDCVALIDATERELATIONS, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// KnowledgeRecommendationsApi Api FP
+/**
+ * 
+ * @summary Put a Knowledge Recommendation
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeRecommendationsApiUpdateEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeRecommendationsApi_UpdateEntityKnowledgeRecommendations(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeRecommendationsApiUpdateEntityKnowledgeRecommendationsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument> {
+    const localVarAxiosArgs = await KnowledgeRecommendationsApiAxiosParamCreator_UpdateEntityKnowledgeRecommendations(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiKnowledgeRecommendationInDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * KnowledgeRecommendationsApi - interface
+ * @export
+ * @interface KnowledgeRecommendationsApi
+ */
+export interface KnowledgeRecommendationsApiInterface {
+    /**
+     * 
+     * @summary Post Knowledge Recommendations
+     * @param {KnowledgeRecommendationsApiCreateEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeRecommendationsApiInterface
+     */
+    createEntityKnowledgeRecommendations(requestParameters: KnowledgeRecommendationsApiCreateEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
+
+    /**
+     * 
+     * @summary Delete a Knowledge Recommendation
+     * @param {KnowledgeRecommendationsApiDeleteEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeRecommendationsApiInterface
+     */
+    deleteEntityKnowledgeRecommendations(requestParameters: KnowledgeRecommendationsApiDeleteEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Get all Knowledge Recommendations
+     * @param {KnowledgeRecommendationsApiGetAllEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeRecommendationsApiInterface
+     */
+    getAllEntitiesKnowledgeRecommendations(requestParameters: KnowledgeRecommendationsApiGetAllEntitiesKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutList>;
+
+    /**
+     * 
+     * @summary Get a Knowledge Recommendation
+     * @param {KnowledgeRecommendationsApiGetEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeRecommendationsApiInterface
+     */
+    getEntityKnowledgeRecommendations(requestParameters: KnowledgeRecommendationsApiGetEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
+
+    /**
+     * 
+     * @summary Patch a Knowledge Recommendation
+     * @param {KnowledgeRecommendationsApiPatchEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeRecommendationsApiInterface
+     */
+    patchEntityKnowledgeRecommendations(requestParameters: KnowledgeRecommendationsApiPatchEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
+
+    /**
+     * 
+     * @summary The search endpoint (beta)
+     * @param {KnowledgeRecommendationsApiSearchEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeRecommendationsApiInterface
+     */
+    searchEntitiesKnowledgeRecommendations(requestParameters: KnowledgeRecommendationsApiSearchEntitiesKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutList>;
+
+    /**
+     * 
+     * @summary Put a Knowledge Recommendation
+     * @param {KnowledgeRecommendationsApiUpdateEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeRecommendationsApiInterface
+     */
+    updateEntityKnowledgeRecommendations(requestParameters: KnowledgeRecommendationsApiUpdateEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
+
+}
+
+/**
+ * Request parameters for createEntityKnowledgeRecommendations operation in KnowledgeRecommendationsApi.
+ * @export
+ * @interface KnowledgeRecommendationsApiCreateEntityKnowledgeRecommendationsRequest
+ */
+export interface KnowledgeRecommendationsApiCreateEntityKnowledgeRecommendationsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeRecommendationsApiCreateEntityKnowledgeRecommendations
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {JsonApiKnowledgeRecommendationPostOptionalIdDocument}
+     * @memberof KnowledgeRecommendationsApiCreateEntityKnowledgeRecommendations
+     */
+    readonly jsonApiKnowledgeRecommendationPostOptionalIdDocument: JsonApiKnowledgeRecommendationPostOptionalIdDocument
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>}
+     * @memberof KnowledgeRecommendationsApiCreateEntityKnowledgeRecommendations
+     */
+    readonly include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof KnowledgeRecommendationsApiCreateEntityKnowledgeRecommendations
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for deleteEntityKnowledgeRecommendations operation in KnowledgeRecommendationsApi.
+ * @export
+ * @interface KnowledgeRecommendationsApiDeleteEntityKnowledgeRecommendationsRequest
+ */
+export interface KnowledgeRecommendationsApiDeleteEntityKnowledgeRecommendationsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeRecommendationsApiDeleteEntityKnowledgeRecommendations
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeRecommendationsApiDeleteEntityKnowledgeRecommendations
+     */
+    readonly objectId: string
+}
+
+/**
+ * Request parameters for getAllEntitiesKnowledgeRecommendations operation in KnowledgeRecommendationsApi.
+ * @export
+ * @interface KnowledgeRecommendationsApiGetAllEntitiesKnowledgeRecommendationsRequest
+ */
+export interface KnowledgeRecommendationsApiGetAllEntitiesKnowledgeRecommendationsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeRecommendationsApiGetAllEntitiesKnowledgeRecommendations
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof KnowledgeRecommendationsApiGetAllEntitiesKnowledgeRecommendations
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof KnowledgeRecommendationsApiGetAllEntitiesKnowledgeRecommendations
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>}
+     * @memberof KnowledgeRecommendationsApiGetAllEntitiesKnowledgeRecommendations
+     */
+    readonly include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof KnowledgeRecommendationsApiGetAllEntitiesKnowledgeRecommendations
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof KnowledgeRecommendationsApiGetAllEntitiesKnowledgeRecommendations
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof KnowledgeRecommendationsApiGetAllEntitiesKnowledgeRecommendations
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof KnowledgeRecommendationsApiGetAllEntitiesKnowledgeRecommendations
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @memberof KnowledgeRecommendationsApiGetAllEntitiesKnowledgeRecommendations
+     */
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getEntityKnowledgeRecommendations operation in KnowledgeRecommendationsApi.
+ * @export
+ * @interface KnowledgeRecommendationsApiGetEntityKnowledgeRecommendationsRequest
+ */
+export interface KnowledgeRecommendationsApiGetEntityKnowledgeRecommendationsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeRecommendationsApiGetEntityKnowledgeRecommendations
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeRecommendationsApiGetEntityKnowledgeRecommendations
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof KnowledgeRecommendationsApiGetEntityKnowledgeRecommendations
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>}
+     * @memberof KnowledgeRecommendationsApiGetEntityKnowledgeRecommendations
+     */
+    readonly include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof KnowledgeRecommendationsApiGetEntityKnowledgeRecommendations
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof KnowledgeRecommendationsApiGetEntityKnowledgeRecommendations
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for patchEntityKnowledgeRecommendations operation in KnowledgeRecommendationsApi.
+ * @export
+ * @interface KnowledgeRecommendationsApiPatchEntityKnowledgeRecommendationsRequest
+ */
+export interface KnowledgeRecommendationsApiPatchEntityKnowledgeRecommendationsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeRecommendationsApiPatchEntityKnowledgeRecommendations
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeRecommendationsApiPatchEntityKnowledgeRecommendations
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiKnowledgeRecommendationPatchDocument}
+     * @memberof KnowledgeRecommendationsApiPatchEntityKnowledgeRecommendations
+     */
+    readonly jsonApiKnowledgeRecommendationPatchDocument: JsonApiKnowledgeRecommendationPatchDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof KnowledgeRecommendationsApiPatchEntityKnowledgeRecommendations
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>}
+     * @memberof KnowledgeRecommendationsApiPatchEntityKnowledgeRecommendations
+     */
+    readonly include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>
+}
+
+/**
+ * Request parameters for searchEntitiesKnowledgeRecommendations operation in KnowledgeRecommendationsApi.
+ * @export
+ * @interface KnowledgeRecommendationsApiSearchEntitiesKnowledgeRecommendationsRequest
+ */
+export interface KnowledgeRecommendationsApiSearchEntitiesKnowledgeRecommendationsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeRecommendationsApiSearchEntitiesKnowledgeRecommendations
+     */
+    readonly workspaceId: string
+
+    /**
+     * Search request body with filter, pagination, and sorting options
+     * @type {EntitySearchBody}
+     * @memberof KnowledgeRecommendationsApiSearchEntitiesKnowledgeRecommendations
+     */
+    readonly entitySearchBody: EntitySearchBody
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof KnowledgeRecommendationsApiSearchEntitiesKnowledgeRecommendations
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof KnowledgeRecommendationsApiSearchEntitiesKnowledgeRecommendations
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+}
+
+/**
+ * Request parameters for updateEntityKnowledgeRecommendations operation in KnowledgeRecommendationsApi.
+ * @export
+ * @interface KnowledgeRecommendationsApiUpdateEntityKnowledgeRecommendationsRequest
+ */
+export interface KnowledgeRecommendationsApiUpdateEntityKnowledgeRecommendationsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeRecommendationsApiUpdateEntityKnowledgeRecommendations
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeRecommendationsApiUpdateEntityKnowledgeRecommendations
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiKnowledgeRecommendationInDocument}
+     * @memberof KnowledgeRecommendationsApiUpdateEntityKnowledgeRecommendations
+     */
+    readonly jsonApiKnowledgeRecommendationInDocument: JsonApiKnowledgeRecommendationInDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof KnowledgeRecommendationsApiUpdateEntityKnowledgeRecommendations
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>}
+     * @memberof KnowledgeRecommendationsApiUpdateEntityKnowledgeRecommendations
+     */
+    readonly include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>
+}
+
+/**
+ * KnowledgeRecommendationsApi - object-oriented interface
+ * @export
+ * @class KnowledgeRecommendationsApi
+ * @extends {BaseAPI}
+ */
+export class KnowledgeRecommendationsApi extends BaseAPI implements KnowledgeRecommendationsApiInterface {
+    /**
+     * 
+     * @summary Post Knowledge Recommendations
+     * @param {KnowledgeRecommendationsApiCreateEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeRecommendationsApi
+     */
+    public createEntityKnowledgeRecommendations(requestParameters: KnowledgeRecommendationsApiCreateEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig) {
+        return KnowledgeRecommendationsApi_CreateEntityKnowledgeRecommendations(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Delete a Knowledge Recommendation
+     * @param {KnowledgeRecommendationsApiDeleteEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeRecommendationsApi
+     */
+    public deleteEntityKnowledgeRecommendations(requestParameters: KnowledgeRecommendationsApiDeleteEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig) {
+        return KnowledgeRecommendationsApi_DeleteEntityKnowledgeRecommendations(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get all Knowledge Recommendations
+     * @param {KnowledgeRecommendationsApiGetAllEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeRecommendationsApi
+     */
+    public getAllEntitiesKnowledgeRecommendations(requestParameters: KnowledgeRecommendationsApiGetAllEntitiesKnowledgeRecommendationsRequest, options?: AxiosRequestConfig) {
+        return KnowledgeRecommendationsApi_GetAllEntitiesKnowledgeRecommendations(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get a Knowledge Recommendation
+     * @param {KnowledgeRecommendationsApiGetEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeRecommendationsApi
+     */
+    public getEntityKnowledgeRecommendations(requestParameters: KnowledgeRecommendationsApiGetEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig) {
+        return KnowledgeRecommendationsApi_GetEntityKnowledgeRecommendations(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Patch a Knowledge Recommendation
+     * @param {KnowledgeRecommendationsApiPatchEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeRecommendationsApi
+     */
+    public patchEntityKnowledgeRecommendations(requestParameters: KnowledgeRecommendationsApiPatchEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig) {
+        return KnowledgeRecommendationsApi_PatchEntityKnowledgeRecommendations(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary The search endpoint (beta)
+     * @param {KnowledgeRecommendationsApiSearchEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeRecommendationsApi
+     */
+    public searchEntitiesKnowledgeRecommendations(requestParameters: KnowledgeRecommendationsApiSearchEntitiesKnowledgeRecommendationsRequest, options?: AxiosRequestConfig) {
+        return KnowledgeRecommendationsApi_SearchEntitiesKnowledgeRecommendations(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Put a Knowledge Recommendation
+     * @param {KnowledgeRecommendationsApiUpdateEntityKnowledgeRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeRecommendationsApi
+     */
+    public updateEntityKnowledgeRecommendations(requestParameters: KnowledgeRecommendationsApiUpdateEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig) {
+        return KnowledgeRecommendationsApi_UpdateEntityKnowledgeRecommendations(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
 // LDMDeclarativeAPIsApi FP - LDMDeclarativeAPIsApiAxiosParamCreator
 /**
  * Retrieve current logical model of the workspace in declarative form.
@@ -139020,6 +136933,2007 @@ export class MemoryItemControllerApi extends BaseAPI implements MemoryItemContro
 }
 
 
+// MemoryItemsApi FP - MemoryItemsApiAxiosParamCreator
+/**
+ * 
+ * @summary Post Memory Items
+ * @param {string} workspaceId 
+ * @param {JsonApiMemoryItemPostOptionalIdDocument} jsonApiMemoryItemPostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApiAxiosParamCreator_CreateEntityMemoryItems(
+    workspaceId: string, jsonApiMemoryItemPostOptionalIdDocument: JsonApiMemoryItemPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createEntityMemoryItems', 'workspaceId', workspaceId)
+    // verify required parameter 'jsonApiMemoryItemPostOptionalIdDocument' is not null or undefined
+    assertParamExists('createEntityMemoryItems', 'jsonApiMemoryItemPostOptionalIdDocument', jsonApiMemoryItemPostOptionalIdDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/memoryItems`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiMemoryItemPostOptionalIdDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiMemoryItemPostOptionalIdDocument !== undefined ? jsonApiMemoryItemPostOptionalIdDocument : {})
+        : jsonApiMemoryItemPostOptionalIdDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// MemoryItemsApi FP - MemoryItemsApiAxiosParamCreator
+/**
+ * Organization-scoped AI memory item
+ * @summary Post organization Memory Item entities
+ * @param {JsonApiOrgMemoryItemInDocument} jsonApiOrgMemoryItemInDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApiAxiosParamCreator_CreateEntityOrgMemoryItems(
+    jsonApiOrgMemoryItemInDocument: JsonApiOrgMemoryItemInDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'jsonApiOrgMemoryItemInDocument' is not null or undefined
+    assertParamExists('createEntityOrgMemoryItems', 'jsonApiOrgMemoryItemInDocument', jsonApiOrgMemoryItemInDocument)
+    const localVarPath = `/api/v1/entities/orgMemoryItems`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiOrgMemoryItemInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiOrgMemoryItemInDocument !== undefined ? jsonApiOrgMemoryItemInDocument : {})
+        : jsonApiOrgMemoryItemInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// MemoryItemsApi FP - MemoryItemsApiAxiosParamCreator
+/**
+ * 
+ * @summary Delete a Memory Item
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApiAxiosParamCreator_DeleteEntityMemoryItems(
+    workspaceId: string, objectId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('deleteEntityMemoryItems', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('deleteEntityMemoryItems', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/memoryItems/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// MemoryItemsApi FP - MemoryItemsApiAxiosParamCreator
+/**
+ * 
+ * @summary Delete an organization Memory Item entity
+ * @param {string} id 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApiAxiosParamCreator_DeleteEntityOrgMemoryItems(
+    id: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'id' is not null or undefined
+    assertParamExists('deleteEntityOrgMemoryItems', 'id', id)
+    const localVarPath = `/api/v1/entities/orgMemoryItems/{id}`
+        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// MemoryItemsApi FP - MemoryItemsApiAxiosParamCreator
+/**
+ * 
+ * @summary Get all Memory Items
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApiAxiosParamCreator_GetAllEntitiesMemoryItems(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesMemoryItems', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/memoryItems`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// MemoryItemsApi FP - MemoryItemsApiAxiosParamCreator
+/**
+ * 
+ * @summary Get all organization Memory Item entities
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {Array<'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApiAxiosParamCreator_GetAllEntitiesOrgMemoryItems(
+    filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/entities/orgMemoryItems`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// MemoryItemsApi FP - MemoryItemsApiAxiosParamCreator
+/**
+ * 
+ * @summary Get a Memory Item
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApiAxiosParamCreator_GetEntityMemoryItems(
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityMemoryItems', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityMemoryItems', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/memoryItems/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// MemoryItemsApi FP - MemoryItemsApiAxiosParamCreator
+/**
+ * 
+ * @summary Get an organization Memory Item entity
+ * @param {string} id 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApiAxiosParamCreator_GetEntityOrgMemoryItems(
+    id: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'id' is not null or undefined
+    assertParamExists('getEntityOrgMemoryItems', 'id', id)
+    const localVarPath = `/api/v1/entities/orgMemoryItems/{id}`
+        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// MemoryItemsApi FP - MemoryItemsApiAxiosParamCreator
+/**
+ * 
+ * @summary Patch a Memory Item
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiMemoryItemPatchDocument} jsonApiMemoryItemPatchDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApiAxiosParamCreator_PatchEntityMemoryItems(
+    workspaceId: string, objectId: string, jsonApiMemoryItemPatchDocument: JsonApiMemoryItemPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchEntityMemoryItems', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('patchEntityMemoryItems', 'objectId', objectId)
+    // verify required parameter 'jsonApiMemoryItemPatchDocument' is not null or undefined
+    assertParamExists('patchEntityMemoryItems', 'jsonApiMemoryItemPatchDocument', jsonApiMemoryItemPatchDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/memoryItems/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiMemoryItemPatchDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiMemoryItemPatchDocument !== undefined ? jsonApiMemoryItemPatchDocument : {})
+        : jsonApiMemoryItemPatchDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// MemoryItemsApi FP - MemoryItemsApiAxiosParamCreator
+/**
+ * 
+ * @summary Patch an organization Memory Item entity
+ * @param {string} id 
+ * @param {JsonApiOrgMemoryItemPatchDocument} jsonApiOrgMemoryItemPatchDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApiAxiosParamCreator_PatchEntityOrgMemoryItems(
+    id: string, jsonApiOrgMemoryItemPatchDocument: JsonApiOrgMemoryItemPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'id' is not null or undefined
+    assertParamExists('patchEntityOrgMemoryItems', 'id', id)
+    // verify required parameter 'jsonApiOrgMemoryItemPatchDocument' is not null or undefined
+    assertParamExists('patchEntityOrgMemoryItems', 'jsonApiOrgMemoryItemPatchDocument', jsonApiOrgMemoryItemPatchDocument)
+    const localVarPath = `/api/v1/entities/orgMemoryItems/{id}`
+        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiOrgMemoryItemPatchDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiOrgMemoryItemPatchDocument !== undefined ? jsonApiOrgMemoryItemPatchDocument : {})
+        : jsonApiOrgMemoryItemPatchDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// MemoryItemsApi FP - MemoryItemsApiAxiosParamCreator
+/**
+ * 
+ * @summary The search endpoint (beta)
+ * @param {string} workspaceId 
+ * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApiAxiosParamCreator_SearchEntitiesMemoryItems(
+    workspaceId: string, entitySearchBody: EntitySearchBody, origin?: 'ALL' | 'PARENTS' | 'NATIVE', xGDCVALIDATERELATIONS?: boolean, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('searchEntitiesMemoryItems', 'workspaceId', workspaceId)
+    // verify required parameter 'entitySearchBody' is not null or undefined
+    assertParamExists('searchEntitiesMemoryItems', 'entitySearchBody', entitySearchBody)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/memoryItems/search`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof entitySearchBody !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(entitySearchBody !== undefined ? entitySearchBody : {})
+        : entitySearchBody || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// MemoryItemsApi FP - MemoryItemsApiAxiosParamCreator
+/**
+ * 
+ * @summary Put a Memory Item
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiMemoryItemInDocument} jsonApiMemoryItemInDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApiAxiosParamCreator_UpdateEntityMemoryItems(
+    workspaceId: string, objectId: string, jsonApiMemoryItemInDocument: JsonApiMemoryItemInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('updateEntityMemoryItems', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('updateEntityMemoryItems', 'objectId', objectId)
+    // verify required parameter 'jsonApiMemoryItemInDocument' is not null or undefined
+    assertParamExists('updateEntityMemoryItems', 'jsonApiMemoryItemInDocument', jsonApiMemoryItemInDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/memoryItems/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiMemoryItemInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiMemoryItemInDocument !== undefined ? jsonApiMemoryItemInDocument : {})
+        : jsonApiMemoryItemInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// MemoryItemsApi FP - MemoryItemsApiAxiosParamCreator
+/**
+ * 
+ * @summary Put an organization Memory Item entity
+ * @param {string} id 
+ * @param {JsonApiOrgMemoryItemInDocument} jsonApiOrgMemoryItemInDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApiAxiosParamCreator_UpdateEntityOrgMemoryItems(
+    id: string, jsonApiOrgMemoryItemInDocument: JsonApiOrgMemoryItemInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'id' is not null or undefined
+    assertParamExists('updateEntityOrgMemoryItems', 'id', id)
+    // verify required parameter 'jsonApiOrgMemoryItemInDocument' is not null or undefined
+    assertParamExists('updateEntityOrgMemoryItems', 'jsonApiOrgMemoryItemInDocument', jsonApiOrgMemoryItemInDocument)
+    const localVarPath = `/api/v1/entities/orgMemoryItems/{id}`
+        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiOrgMemoryItemInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiOrgMemoryItemInDocument !== undefined ? jsonApiOrgMemoryItemInDocument : {})
+        : jsonApiOrgMemoryItemInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// MemoryItemsApi Api FP
+/**
+ * 
+ * @summary Post Memory Items
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {MemoryItemsApiCreateEntityMemoryItemsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApi_CreateEntityMemoryItems(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: MemoryItemsApiCreateEntityMemoryItemsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiMemoryItemOutDocument> {
+    const localVarAxiosArgs = await MemoryItemsApiAxiosParamCreator_CreateEntityMemoryItems(
+        requestParameters.workspaceId, requestParameters.jsonApiMemoryItemPostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// MemoryItemsApi Api FP
+/**
+ * Organization-scoped AI memory item
+ * @summary Post organization Memory Item entities
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {MemoryItemsApiCreateEntityOrgMemoryItemsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApi_CreateEntityOrgMemoryItems(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: MemoryItemsApiCreateEntityOrgMemoryItemsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiOrgMemoryItemOutDocument> {
+    const localVarAxiosArgs = await MemoryItemsApiAxiosParamCreator_CreateEntityOrgMemoryItems(
+        requestParameters.jsonApiOrgMemoryItemInDocument, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// MemoryItemsApi Api FP
+/**
+ * 
+ * @summary Delete a Memory Item
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {MemoryItemsApiDeleteEntityMemoryItemsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApi_DeleteEntityMemoryItems(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: MemoryItemsApiDeleteEntityMemoryItemsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await MemoryItemsApiAxiosParamCreator_DeleteEntityMemoryItems(
+        requestParameters.workspaceId, requestParameters.objectId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// MemoryItemsApi Api FP
+/**
+ * 
+ * @summary Delete an organization Memory Item entity
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {MemoryItemsApiDeleteEntityOrgMemoryItemsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApi_DeleteEntityOrgMemoryItems(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: MemoryItemsApiDeleteEntityOrgMemoryItemsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await MemoryItemsApiAxiosParamCreator_DeleteEntityOrgMemoryItems(
+        requestParameters.id, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// MemoryItemsApi Api FP
+/**
+ * 
+ * @summary Get all Memory Items
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {MemoryItemsApiGetAllEntitiesMemoryItemsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApi_GetAllEntitiesMemoryItems(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: MemoryItemsApiGetAllEntitiesMemoryItemsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiMemoryItemOutList> {
+    const localVarAxiosArgs = await MemoryItemsApiAxiosParamCreator_GetAllEntitiesMemoryItems(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// MemoryItemsApi Api FP
+/**
+ * 
+ * @summary Get all organization Memory Item entities
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {MemoryItemsApiGetAllEntitiesOrgMemoryItemsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApi_GetAllEntitiesOrgMemoryItems(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: MemoryItemsApiGetAllEntitiesOrgMemoryItemsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiOrgMemoryItemOutList> {
+    const localVarAxiosArgs = await MemoryItemsApiAxiosParamCreator_GetAllEntitiesOrgMemoryItems(
+        requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// MemoryItemsApi Api FP
+/**
+ * 
+ * @summary Get a Memory Item
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {MemoryItemsApiGetEntityMemoryItemsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApi_GetEntityMemoryItems(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: MemoryItemsApiGetEntityMemoryItemsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiMemoryItemOutDocument> {
+    const localVarAxiosArgs = await MemoryItemsApiAxiosParamCreator_GetEntityMemoryItems(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// MemoryItemsApi Api FP
+/**
+ * 
+ * @summary Get an organization Memory Item entity
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {MemoryItemsApiGetEntityOrgMemoryItemsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApi_GetEntityOrgMemoryItems(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: MemoryItemsApiGetEntityOrgMemoryItemsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiOrgMemoryItemOutDocument> {
+    const localVarAxiosArgs = await MemoryItemsApiAxiosParamCreator_GetEntityOrgMemoryItems(
+        requestParameters.id, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// MemoryItemsApi Api FP
+/**
+ * 
+ * @summary Patch a Memory Item
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {MemoryItemsApiPatchEntityMemoryItemsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApi_PatchEntityMemoryItems(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: MemoryItemsApiPatchEntityMemoryItemsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiMemoryItemOutDocument> {
+    const localVarAxiosArgs = await MemoryItemsApiAxiosParamCreator_PatchEntityMemoryItems(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiMemoryItemPatchDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// MemoryItemsApi Api FP
+/**
+ * 
+ * @summary Patch an organization Memory Item entity
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {MemoryItemsApiPatchEntityOrgMemoryItemsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApi_PatchEntityOrgMemoryItems(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: MemoryItemsApiPatchEntityOrgMemoryItemsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiOrgMemoryItemOutDocument> {
+    const localVarAxiosArgs = await MemoryItemsApiAxiosParamCreator_PatchEntityOrgMemoryItems(
+        requestParameters.id, requestParameters.jsonApiOrgMemoryItemPatchDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// MemoryItemsApi Api FP
+/**
+ * 
+ * @summary The search endpoint (beta)
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {MemoryItemsApiSearchEntitiesMemoryItemsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApi_SearchEntitiesMemoryItems(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: MemoryItemsApiSearchEntitiesMemoryItemsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiMemoryItemOutList> {
+    const localVarAxiosArgs = await MemoryItemsApiAxiosParamCreator_SearchEntitiesMemoryItems(
+        requestParameters.workspaceId, requestParameters.entitySearchBody, requestParameters.origin, requestParameters.xGDCVALIDATERELATIONS, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// MemoryItemsApi Api FP
+/**
+ * 
+ * @summary Put a Memory Item
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {MemoryItemsApiUpdateEntityMemoryItemsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApi_UpdateEntityMemoryItems(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: MemoryItemsApiUpdateEntityMemoryItemsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiMemoryItemOutDocument> {
+    const localVarAxiosArgs = await MemoryItemsApiAxiosParamCreator_UpdateEntityMemoryItems(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiMemoryItemInDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// MemoryItemsApi Api FP
+/**
+ * 
+ * @summary Put an organization Memory Item entity
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {MemoryItemsApiUpdateEntityOrgMemoryItemsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function MemoryItemsApi_UpdateEntityOrgMemoryItems(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: MemoryItemsApiUpdateEntityOrgMemoryItemsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiOrgMemoryItemOutDocument> {
+    const localVarAxiosArgs = await MemoryItemsApiAxiosParamCreator_UpdateEntityOrgMemoryItems(
+        requestParameters.id, requestParameters.jsonApiOrgMemoryItemInDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * MemoryItemsApi - interface
+ * @export
+ * @interface MemoryItemsApi
+ */
+export interface MemoryItemsApiInterface {
+    /**
+     * 
+     * @summary Post Memory Items
+     * @param {MemoryItemsApiCreateEntityMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApiInterface
+     */
+    createEntityMemoryItems(requestParameters: MemoryItemsApiCreateEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
+
+    /**
+     * Organization-scoped AI memory item
+     * @summary Post organization Memory Item entities
+     * @param {MemoryItemsApiCreateEntityOrgMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApiInterface
+     */
+    createEntityOrgMemoryItems(requestParameters: MemoryItemsApiCreateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
+
+    /**
+     * 
+     * @summary Delete a Memory Item
+     * @param {MemoryItemsApiDeleteEntityMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApiInterface
+     */
+    deleteEntityMemoryItems(requestParameters: MemoryItemsApiDeleteEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Delete an organization Memory Item entity
+     * @param {MemoryItemsApiDeleteEntityOrgMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApiInterface
+     */
+    deleteEntityOrgMemoryItems(requestParameters: MemoryItemsApiDeleteEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Get all Memory Items
+     * @param {MemoryItemsApiGetAllEntitiesMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApiInterface
+     */
+    getAllEntitiesMemoryItems(requestParameters: MemoryItemsApiGetAllEntitiesMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutList>;
+
+    /**
+     * 
+     * @summary Get all organization Memory Item entities
+     * @param {MemoryItemsApiGetAllEntitiesOrgMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApiInterface
+     */
+    getAllEntitiesOrgMemoryItems(requestParameters: MemoryItemsApiGetAllEntitiesOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutList>;
+
+    /**
+     * 
+     * @summary Get a Memory Item
+     * @param {MemoryItemsApiGetEntityMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApiInterface
+     */
+    getEntityMemoryItems(requestParameters: MemoryItemsApiGetEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
+
+    /**
+     * 
+     * @summary Get an organization Memory Item entity
+     * @param {MemoryItemsApiGetEntityOrgMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApiInterface
+     */
+    getEntityOrgMemoryItems(requestParameters: MemoryItemsApiGetEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
+
+    /**
+     * 
+     * @summary Patch a Memory Item
+     * @param {MemoryItemsApiPatchEntityMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApiInterface
+     */
+    patchEntityMemoryItems(requestParameters: MemoryItemsApiPatchEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
+
+    /**
+     * 
+     * @summary Patch an organization Memory Item entity
+     * @param {MemoryItemsApiPatchEntityOrgMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApiInterface
+     */
+    patchEntityOrgMemoryItems(requestParameters: MemoryItemsApiPatchEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
+
+    /**
+     * 
+     * @summary The search endpoint (beta)
+     * @param {MemoryItemsApiSearchEntitiesMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApiInterface
+     */
+    searchEntitiesMemoryItems(requestParameters: MemoryItemsApiSearchEntitiesMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutList>;
+
+    /**
+     * 
+     * @summary Put a Memory Item
+     * @param {MemoryItemsApiUpdateEntityMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApiInterface
+     */
+    updateEntityMemoryItems(requestParameters: MemoryItemsApiUpdateEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
+
+    /**
+     * 
+     * @summary Put an organization Memory Item entity
+     * @param {MemoryItemsApiUpdateEntityOrgMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApiInterface
+     */
+    updateEntityOrgMemoryItems(requestParameters: MemoryItemsApiUpdateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
+
+}
+
+/**
+ * Request parameters for createEntityMemoryItems operation in MemoryItemsApi.
+ * @export
+ * @interface MemoryItemsApiCreateEntityMemoryItemsRequest
+ */
+export interface MemoryItemsApiCreateEntityMemoryItemsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MemoryItemsApiCreateEntityMemoryItems
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {JsonApiMemoryItemPostOptionalIdDocument}
+     * @memberof MemoryItemsApiCreateEntityMemoryItems
+     */
+    readonly jsonApiMemoryItemPostOptionalIdDocument: JsonApiMemoryItemPostOptionalIdDocument
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof MemoryItemsApiCreateEntityMemoryItems
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof MemoryItemsApiCreateEntityMemoryItems
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for createEntityOrgMemoryItems operation in MemoryItemsApi.
+ * @export
+ * @interface MemoryItemsApiCreateEntityOrgMemoryItemsRequest
+ */
+export interface MemoryItemsApiCreateEntityOrgMemoryItemsRequest {
+    /**
+     * 
+     * @type {JsonApiOrgMemoryItemInDocument}
+     * @memberof MemoryItemsApiCreateEntityOrgMemoryItems
+     */
+    readonly jsonApiOrgMemoryItemInDocument: JsonApiOrgMemoryItemInDocument
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof MemoryItemsApiCreateEntityOrgMemoryItems
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for deleteEntityMemoryItems operation in MemoryItemsApi.
+ * @export
+ * @interface MemoryItemsApiDeleteEntityMemoryItemsRequest
+ */
+export interface MemoryItemsApiDeleteEntityMemoryItemsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MemoryItemsApiDeleteEntityMemoryItems
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MemoryItemsApiDeleteEntityMemoryItems
+     */
+    readonly objectId: string
+}
+
+/**
+ * Request parameters for deleteEntityOrgMemoryItems operation in MemoryItemsApi.
+ * @export
+ * @interface MemoryItemsApiDeleteEntityOrgMemoryItemsRequest
+ */
+export interface MemoryItemsApiDeleteEntityOrgMemoryItemsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MemoryItemsApiDeleteEntityOrgMemoryItems
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getAllEntitiesMemoryItems operation in MemoryItemsApi.
+ * @export
+ * @interface MemoryItemsApiGetAllEntitiesMemoryItemsRequest
+ */
+export interface MemoryItemsApiGetAllEntitiesMemoryItemsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MemoryItemsApiGetAllEntitiesMemoryItems
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof MemoryItemsApiGetAllEntitiesMemoryItems
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof MemoryItemsApiGetAllEntitiesMemoryItems
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof MemoryItemsApiGetAllEntitiesMemoryItems
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof MemoryItemsApiGetAllEntitiesMemoryItems
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof MemoryItemsApiGetAllEntitiesMemoryItems
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof MemoryItemsApiGetAllEntitiesMemoryItems
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MemoryItemsApiGetAllEntitiesMemoryItems
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @memberof MemoryItemsApiGetAllEntitiesMemoryItems
+     */
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getAllEntitiesOrgMemoryItems operation in MemoryItemsApi.
+ * @export
+ * @interface MemoryItemsApiGetAllEntitiesOrgMemoryItemsRequest
+ */
+export interface MemoryItemsApiGetAllEntitiesOrgMemoryItemsRequest {
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof MemoryItemsApiGetAllEntitiesOrgMemoryItems
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof MemoryItemsApiGetAllEntitiesOrgMemoryItems
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof MemoryItemsApiGetAllEntitiesOrgMemoryItems
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof MemoryItemsApiGetAllEntitiesOrgMemoryItems
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof MemoryItemsApiGetAllEntitiesOrgMemoryItems
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'page' | 'all' | 'ALL'>}
+     * @memberof MemoryItemsApiGetAllEntitiesOrgMemoryItems
+     */
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getEntityMemoryItems operation in MemoryItemsApi.
+ * @export
+ * @interface MemoryItemsApiGetEntityMemoryItemsRequest
+ */
+export interface MemoryItemsApiGetEntityMemoryItemsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MemoryItemsApiGetEntityMemoryItems
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MemoryItemsApiGetEntityMemoryItems
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof MemoryItemsApiGetEntityMemoryItems
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof MemoryItemsApiGetEntityMemoryItems
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MemoryItemsApiGetEntityMemoryItems
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof MemoryItemsApiGetEntityMemoryItems
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getEntityOrgMemoryItems operation in MemoryItemsApi.
+ * @export
+ * @interface MemoryItemsApiGetEntityOrgMemoryItemsRequest
+ */
+export interface MemoryItemsApiGetEntityOrgMemoryItemsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MemoryItemsApiGetEntityOrgMemoryItems
+     */
+    readonly id: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof MemoryItemsApiGetEntityOrgMemoryItems
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof MemoryItemsApiGetEntityOrgMemoryItems
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for patchEntityMemoryItems operation in MemoryItemsApi.
+ * @export
+ * @interface MemoryItemsApiPatchEntityMemoryItemsRequest
+ */
+export interface MemoryItemsApiPatchEntityMemoryItemsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MemoryItemsApiPatchEntityMemoryItems
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MemoryItemsApiPatchEntityMemoryItems
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiMemoryItemPatchDocument}
+     * @memberof MemoryItemsApiPatchEntityMemoryItems
+     */
+    readonly jsonApiMemoryItemPatchDocument: JsonApiMemoryItemPatchDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof MemoryItemsApiPatchEntityMemoryItems
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof MemoryItemsApiPatchEntityMemoryItems
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for patchEntityOrgMemoryItems operation in MemoryItemsApi.
+ * @export
+ * @interface MemoryItemsApiPatchEntityOrgMemoryItemsRequest
+ */
+export interface MemoryItemsApiPatchEntityOrgMemoryItemsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MemoryItemsApiPatchEntityOrgMemoryItems
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {JsonApiOrgMemoryItemPatchDocument}
+     * @memberof MemoryItemsApiPatchEntityOrgMemoryItems
+     */
+    readonly jsonApiOrgMemoryItemPatchDocument: JsonApiOrgMemoryItemPatchDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof MemoryItemsApiPatchEntityOrgMemoryItems
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof MemoryItemsApiPatchEntityOrgMemoryItems
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for searchEntitiesMemoryItems operation in MemoryItemsApi.
+ * @export
+ * @interface MemoryItemsApiSearchEntitiesMemoryItemsRequest
+ */
+export interface MemoryItemsApiSearchEntitiesMemoryItemsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MemoryItemsApiSearchEntitiesMemoryItems
+     */
+    readonly workspaceId: string
+
+    /**
+     * Search request body with filter, pagination, and sorting options
+     * @type {EntitySearchBody}
+     * @memberof MemoryItemsApiSearchEntitiesMemoryItems
+     */
+    readonly entitySearchBody: EntitySearchBody
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof MemoryItemsApiSearchEntitiesMemoryItems
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MemoryItemsApiSearchEntitiesMemoryItems
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+}
+
+/**
+ * Request parameters for updateEntityMemoryItems operation in MemoryItemsApi.
+ * @export
+ * @interface MemoryItemsApiUpdateEntityMemoryItemsRequest
+ */
+export interface MemoryItemsApiUpdateEntityMemoryItemsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MemoryItemsApiUpdateEntityMemoryItems
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MemoryItemsApiUpdateEntityMemoryItems
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiMemoryItemInDocument}
+     * @memberof MemoryItemsApiUpdateEntityMemoryItems
+     */
+    readonly jsonApiMemoryItemInDocument: JsonApiMemoryItemInDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof MemoryItemsApiUpdateEntityMemoryItems
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof MemoryItemsApiUpdateEntityMemoryItems
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for updateEntityOrgMemoryItems operation in MemoryItemsApi.
+ * @export
+ * @interface MemoryItemsApiUpdateEntityOrgMemoryItemsRequest
+ */
+export interface MemoryItemsApiUpdateEntityOrgMemoryItemsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MemoryItemsApiUpdateEntityOrgMemoryItems
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {JsonApiOrgMemoryItemInDocument}
+     * @memberof MemoryItemsApiUpdateEntityOrgMemoryItems
+     */
+    readonly jsonApiOrgMemoryItemInDocument: JsonApiOrgMemoryItemInDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof MemoryItemsApiUpdateEntityOrgMemoryItems
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof MemoryItemsApiUpdateEntityOrgMemoryItems
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * MemoryItemsApi - object-oriented interface
+ * @export
+ * @class MemoryItemsApi
+ * @extends {BaseAPI}
+ */
+export class MemoryItemsApi extends BaseAPI implements MemoryItemsApiInterface {
+    /**
+     * 
+     * @summary Post Memory Items
+     * @param {MemoryItemsApiCreateEntityMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApi
+     */
+    public createEntityMemoryItems(requestParameters: MemoryItemsApiCreateEntityMemoryItemsRequest, options?: AxiosRequestConfig) {
+        return MemoryItemsApi_CreateEntityMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Organization-scoped AI memory item
+     * @summary Post organization Memory Item entities
+     * @param {MemoryItemsApiCreateEntityOrgMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApi
+     */
+    public createEntityOrgMemoryItems(requestParameters: MemoryItemsApiCreateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig) {
+        return MemoryItemsApi_CreateEntityOrgMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Delete a Memory Item
+     * @param {MemoryItemsApiDeleteEntityMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApi
+     */
+    public deleteEntityMemoryItems(requestParameters: MemoryItemsApiDeleteEntityMemoryItemsRequest, options?: AxiosRequestConfig) {
+        return MemoryItemsApi_DeleteEntityMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Delete an organization Memory Item entity
+     * @param {MemoryItemsApiDeleteEntityOrgMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApi
+     */
+    public deleteEntityOrgMemoryItems(requestParameters: MemoryItemsApiDeleteEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig) {
+        return MemoryItemsApi_DeleteEntityOrgMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get all Memory Items
+     * @param {MemoryItemsApiGetAllEntitiesMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApi
+     */
+    public getAllEntitiesMemoryItems(requestParameters: MemoryItemsApiGetAllEntitiesMemoryItemsRequest, options?: AxiosRequestConfig) {
+        return MemoryItemsApi_GetAllEntitiesMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get all organization Memory Item entities
+     * @param {MemoryItemsApiGetAllEntitiesOrgMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApi
+     */
+    public getAllEntitiesOrgMemoryItems(requestParameters: MemoryItemsApiGetAllEntitiesOrgMemoryItemsRequest = {}, options?: AxiosRequestConfig) {
+        return MemoryItemsApi_GetAllEntitiesOrgMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get a Memory Item
+     * @param {MemoryItemsApiGetEntityMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApi
+     */
+    public getEntityMemoryItems(requestParameters: MemoryItemsApiGetEntityMemoryItemsRequest, options?: AxiosRequestConfig) {
+        return MemoryItemsApi_GetEntityMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get an organization Memory Item entity
+     * @param {MemoryItemsApiGetEntityOrgMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApi
+     */
+    public getEntityOrgMemoryItems(requestParameters: MemoryItemsApiGetEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig) {
+        return MemoryItemsApi_GetEntityOrgMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Patch a Memory Item
+     * @param {MemoryItemsApiPatchEntityMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApi
+     */
+    public patchEntityMemoryItems(requestParameters: MemoryItemsApiPatchEntityMemoryItemsRequest, options?: AxiosRequestConfig) {
+        return MemoryItemsApi_PatchEntityMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Patch an organization Memory Item entity
+     * @param {MemoryItemsApiPatchEntityOrgMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApi
+     */
+    public patchEntityOrgMemoryItems(requestParameters: MemoryItemsApiPatchEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig) {
+        return MemoryItemsApi_PatchEntityOrgMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary The search endpoint (beta)
+     * @param {MemoryItemsApiSearchEntitiesMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApi
+     */
+    public searchEntitiesMemoryItems(requestParameters: MemoryItemsApiSearchEntitiesMemoryItemsRequest, options?: AxiosRequestConfig) {
+        return MemoryItemsApi_SearchEntitiesMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Put a Memory Item
+     * @param {MemoryItemsApiUpdateEntityMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApi
+     */
+    public updateEntityMemoryItems(requestParameters: MemoryItemsApiUpdateEntityMemoryItemsRequest, options?: AxiosRequestConfig) {
+        return MemoryItemsApi_UpdateEntityMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Put an organization Memory Item entity
+     * @param {MemoryItemsApiUpdateEntityOrgMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemoryItemsApi
+     */
+    public updateEntityOrgMemoryItems(requestParameters: MemoryItemsApiUpdateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig) {
+        return MemoryItemsApi_UpdateEntityOrgMemoryItems(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
 // MetadataSynchronizationApi FP - MetadataSynchronizationApiAxiosParamCreator
 /**
  * Enqueues an organization-scoped metadata resync, fanning out the organization\'s current metadata to GenAI, GW Forge, and Automations. Requires organization MANAGE permission. Requests are deduplicated while a resync session is pending for the organization.
@@ -144018,6 +143932,110 @@ export class NotificationChannelsApi extends BaseAPI implements NotificationChan
      */
     public updateEntityNotificationChannels(requestParameters: NotificationChannelsApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig) {
         return NotificationChannelsApi_UpdateEntityNotificationChannels(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
+// ObservabilityApi FP - ObservabilityApiAxiosParamCreator
+/**
+ * Re-applies the latest GoodData-managed AI observability layout to the organization. Requires the AI_OBSERVABILITY entitlement and organization MANAGE permission. Idempotent; customer-authored content is left untouched.
+ * @summary Reload the managed AI observability layout
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ObservabilityApiAxiosParamCreator_ReloadObservabilityLayout(
+    
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/actions/organization/reloadObservabilityLayout`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// ObservabilityApi Api FP
+/**
+ * Re-applies the latest GoodData-managed AI observability layout to the organization. Requires the AI_OBSERVABILITY entitlement and organization MANAGE permission. Idempotent; customer-authored content is left untouched.
+ * @summary Reload the managed AI observability layout
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ObservabilityApi_ReloadObservabilityLayout(
+    axios: AxiosInstance, basePath: string,
+    
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await ObservabilityApiAxiosParamCreator_ReloadObservabilityLayout(
+        
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * ObservabilityApi - interface
+ * @export
+ * @interface ObservabilityApi
+ */
+export interface ObservabilityApiInterface {
+    /**
+     * Re-applies the latest GoodData-managed AI observability layout to the organization. Requires the AI_OBSERVABILITY entitlement and organization MANAGE permission. Idempotent; customer-authored content is left untouched.
+     * @summary Reload the managed AI observability layout
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ObservabilityApiInterface
+     */
+    reloadObservabilityLayout(options?: AxiosRequestConfig): AxiosPromise<void>;
+
+}
+
+/**
+ * ObservabilityApi - object-oriented interface
+ * @export
+ * @class ObservabilityApi
+ * @extends {BaseAPI}
+ */
+export class ObservabilityApi extends BaseAPI implements ObservabilityApiInterface {
+    /**
+     * Re-applies the latest GoodData-managed AI observability layout to the organization. Requires the AI_OBSERVABILITY entitlement and organization MANAGE permission. Idempotent; customer-authored content is left untouched.
+     * @summary Reload the managed AI observability layout
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ObservabilityApi
+     */
+    public reloadObservabilityLayout(options?: AxiosRequestConfig) {
+        return ObservabilityApi_ReloadObservabilityLayout(this.axios, this.basePath, options, this.configuration);
     }
 }
 

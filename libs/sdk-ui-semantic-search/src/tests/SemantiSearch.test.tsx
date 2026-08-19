@@ -4,16 +4,36 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IWorkspacePermissions } from "@gooddata/sdk-model";
 
 import { SemanticSearch } from "../SemanticSearch.js";
 
-vi.mock("../permissions/utils.js", () => ({
-    emptyWorkspacePermissions: vi.fn(() => ({
-        canManageProject: true,
-    })),
-}));
+/**
+ * The dummy backend throws NotSupported for workspace permissions, which makes the component treat the
+ * user as a viewer and filter the relationships out. Decorate the backend so the permissions resolve
+ * instead of mocking `../permissions/utils.js` — a module mock would leak into other test files when
+ * tests run without isolation.
+ */
+const withEditPermissions = (base: IAnalyticalBackend): IAnalyticalBackend => {
+    const decorated: IAnalyticalBackend = {
+        ...base,
+        withTelemetry: () => decorated,
+        withCorrelation: () => decorated,
+        withAuthentication: () => decorated,
+        workspace: (id) => ({
+            ...base.workspace(id),
+            permissions: () => ({
+                getPermissionsForCurrentUser: () =>
+                    Promise.resolve({ canManageProject: true } as IWorkspacePermissions),
+            }),
+        }),
+    };
 
-const backend = dummyBackend();
+    return decorated;
+};
+
+const backend = withEditPermissions(dummyBackend());
 
 describe("SemanticSearch component", () => {
     beforeEach(() => {
