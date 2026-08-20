@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type ITheme } from "@gooddata/sdk-model";
@@ -106,10 +106,12 @@ export function ThemeProvider({
     const [isLoading, setIsLoading] = useState(false);
     const [status, setStatus] = useState<ThemeStatus>("pending");
 
-    const lastWorkspace = useRef<string | undefined>(undefined);
-    lastWorkspace.current = workspace;
-
     useEffect(() => {
+        // Marks the in-flight getTheme() as stale once this effect is torn down - either because the
+        // workspace/backend changed or because the component unmounted. Without it a late resolution
+        // would re-inject the global styles that the unmount cleanup below has just removed.
+        let cancelled = false;
+
         // A malformed theme (e.g. an unparseable color) must never block rendering. Preparing and
         // applying the theme is wrapped so any failure falls back to the default theme and always
         // resolves the loading state, instead of leaving the app stuck on the loading screen.
@@ -141,7 +143,7 @@ export function ThemeProvider({
         // no need to load anything if the themeParam is present
         if (themeParam) {
             applyTheme(themeParam);
-            return;
+            return undefined;
         }
 
         const fetchData = async () => {
@@ -156,11 +158,11 @@ export function ThemeProvider({
             try {
                 const selectedTheme = await backend.workspace(workspace).styling().getTheme();
 
-                if (lastWorkspace.current === workspace) {
+                if (!cancelled) {
                     applyTheme(modifier(selectedTheme));
                 }
             } catch (error) {
-                if (lastWorkspace.current === workspace) {
+                if (!cancelled) {
                     // covers both the backend fetch and the modifier transformation of the theme
                     console.error("Failed to load or process the theme from the backend.", error);
                     // reset both channels (context theme and global CSS) to the default theme so
@@ -175,6 +177,10 @@ export function ThemeProvider({
         };
 
         void fetchData();
+
+        return () => {
+            cancelled = true;
+        };
     }, [themeParam, workspace, backend, modifier, enableComplementaryPalette]);
 
     useEffect(() => {

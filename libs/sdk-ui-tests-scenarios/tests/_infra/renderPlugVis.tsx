@@ -42,11 +42,14 @@ function createVisualizationClass(insight: IInsightDefinition): IVisualizationCl
  * @param scenario - test scenario which the insight represents
  * @param insight - insight definition
  * @param normalize - indicates whether execution normalization should take place
+ * @param container - container to render into; only pass a reused one from mounts that never overlap,
+ *  see `sequentialContainer` in ./sequentialMount.ts
  */
 export async function mountInsight(
     scenario: IScenario<any>,
     insight: IInsightDefinition,
     normalize: boolean = false,
+    container?: HTMLElement,
 ): Promise<ChartInteractions> {
     const [backend, promisedInteractions] = backendWithCapturing(normalize, scenario.backendSettings);
     const persistedInsight: IInsight = {
@@ -81,6 +84,7 @@ export async function mountInsight(
             messages={DEFAULT_MESSAGES[DEFAULT_LANGUAGE]}
             drillableItems={drillableItems}
         />,
+        container ? { container } : {},
     );
 
     return await promisedInteractions;

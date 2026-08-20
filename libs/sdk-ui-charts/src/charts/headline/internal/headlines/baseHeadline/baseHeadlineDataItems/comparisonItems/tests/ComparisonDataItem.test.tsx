@@ -20,21 +20,15 @@ import {
     TEST_RENDER_COLOR_SPECS,
     createComparison,
 } from "../../../../../tests/TestData.fixtures.js";
-import { createMockUseBaseHeadline } from "../../../tests/BaseHeadline.test.helpers.js";
+import { createBaseHeadlineTestContext } from "../../../tests/BaseHeadline.test.helpers.js";
 import { ComparisonDataItem } from "../ComparisonDataItem.js";
 
-const useBaseHeadlineMock = vi.hoisted(() => vi.fn());
-
-vi.mock("../../../BaseHeadlineContext.js", () => ({
-    useBaseHeadline: useBaseHeadlineMock,
-}));
-
-const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
+const { setBaseHeadline, wrapper } = createBaseHeadlineTestContext();
 
 describe("ComparisonDataItem", () => {
     const renderComparisonDataItem = (props: IBaseHeadlineDataItemProps<IComparisonDataItem>) => {
         const WrappedComparisonDataItem = withIntlForTest(ComparisonDataItem);
-        return render(<WrappedComparisonDataItem {...props} />);
+        return render(<WrappedComparisonDataItem {...props} />, { wrapper });
     };
 
     afterEach(() => {
@@ -49,7 +43,7 @@ describe("ComparisonDataItem", () => {
         it.each<[string, IColorConfig, EvaluationType, string, IColorPalette?]>(TEST_RENDER_COLOR_SPECS)(
             "%s",
             (_test, colorConfig, evaluationType, expectedColor, customPalette) => {
-                mockUseBaseHeadline({
+                setBaseHeadline({
                     config: {
                         comparison: createComparison({
                             colorConfig,
@@ -78,7 +72,7 @@ describe("ComparisonDataItem", () => {
 
     describe("Should render indicator correctly", () => {
         beforeEach(() => {
-            mockUseBaseHeadline({
+            setBaseHeadline({
                 config: {
                     comparison: createComparison({
                         isArrowEnabled: true,
@@ -122,7 +116,7 @@ describe("ComparisonDataItem", () => {
         });
 
         it("Should not render arrow indicator in case is-arrow-enabled property is a falsy value", () => {
-            mockUseBaseHeadline({
+            setBaseHeadline({
                 config: {
                     comparison: createComparison({
                         isArrowEnabled: false,

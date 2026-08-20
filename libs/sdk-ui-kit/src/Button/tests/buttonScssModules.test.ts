@@ -4,7 +4,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import * as sass from "sass";
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 
 const SCSS_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "../../../styles/scss");
 
@@ -79,14 +79,23 @@ const outerRules = (css: string): IRule[] => {
     return rules;
 };
 
-const secondaryButtonRules = () => {
+// Running the Sass compiler over the whole button stylesheet is by far the most expensive thing this
+// file does, and it is a pure function of fixed inputs. Compiling once in a hook, under a budget
+// sized for a compiler rather than for an assertion, leaves the tests themselves instant — where a
+// compile inside each test had two chances per run to overrun the default per-test timeout on a busy
+// machine.
+const SASS_COMPILE_TIMEOUT = 60_000;
+
+let secondaryButtonRules: IRule[];
+
+beforeAll(() => {
     const css = sass.compileString(ENTRY_SCSS, {
         loadPaths: [SCSS_DIR, resolve(SCSS_DIR, "../../node_modules")],
         importers: [consumerImporter],
     }).css;
 
-    return outerRules(css).filter((rule) => rule.selector.includes(".gd-button-secondary"));
-};
+    secondaryButtonRules = outerRules(css).filter((rule) => rule.selector.includes(".gd-button-secondary"));
+}, SASS_COMPILE_TIMEOUT);
 
 // Each `@import` gets its own import context, and every module `@use`d below it is re-evaluated
 // there — so a placeholder that button.scss `@extend`s is emitted once per import context. When
@@ -96,18 +105,17 @@ const secondaryButtonRules = () => {
 // Shared button rules belong in Button/_placeholders.scss, which only button.scss loads.
 describe("button.scss cascade under legacy @import", () => {
     it("should emit the %btn base rule for .gd-button-secondary exactly once", () => {
-        const bases = secondaryButtonRules().filter((rule) => rule.body.includes(BASE_BORDER));
+        const bases = secondaryButtonRules.filter((rule) => rule.body.includes(BASE_BORDER));
 
         expect(bases).toHaveLength(1);
     });
 
     it("should keep the %btn base rule ahead of the .gd-button-secondary border-color", () => {
-        const rules = secondaryButtonRules();
-        const bases = rules.filter((rule) => rule.body.includes(BASE_BORDER));
+        const bases = secondaryButtonRules.filter((rule) => rule.body.includes(BASE_BORDER));
         // Only the pseudo-class-free variant rule ties with the base rule on specificity, so it is the
         // one document order decides. The `:hover` variant outranks the base wherever it sits and would
         // make this assertion pass even with a stray base copy right after the plain rule.
-        const variants = rules.filter(
+        const variants = secondaryButtonRules.filter(
             (rule) => rule.body.includes(VARIANT_BORDER) && !rule.selector.includes(":"),
         );
 

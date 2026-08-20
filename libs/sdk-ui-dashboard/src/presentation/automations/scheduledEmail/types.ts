@@ -281,6 +281,68 @@ export interface IScheduledEmailDialogFiltersProps extends IAutomationDialogFilt
 }
 
 /**
+ * A timezone selection of the schedule dialog's "Time zone" section.
+ *
+ * `shouldSave` decides whether the value is baked into the export definitions. Values the backend
+ * derives itself at run time are displayed but not saved: the Default option of a dashboard
+ * schedule (id undefined; persisted dashboard configuration → settings hierarchy) and a widget
+ * schedule showing the settings-hierarchy resolution (concrete id). Everything the backend cannot
+ * derive is saved: the view-mode override and browser resolution always, the dashboard's stored
+ * configuration for widget schedules, and any timezone picked manually in the dropdown.
+ *
+ * @alpha
+ */
+export interface IScheduleTimezoneSelection {
+    /**
+     * Selected timezone (IANA ID); undefined represents the Default option.
+     */
+    id: string | undefined;
+
+    /**
+     * Whether the selection is baked into the export definitions or left for the backend to
+     * derive at run time.
+     */
+    shouldSave: boolean;
+}
+
+/**
+ * Props of the default scheduled email dialog's "Time zone" section (the export-content timezone
+ * picker on the General tab; unrelated to the schedule cron timezone).
+ *
+ * @alpha
+ */
+export interface IScheduledEmailDialogTimezoneProps {
+    /**
+     * Whether the dialog schedules a single-widget export. Widget schedules always show a concrete
+     * resolved timezone — they have no Default option, because the backend cannot derive anything
+     * dashboard-scoped for them.
+     */
+    isWidget: boolean;
+
+    /**
+     * Current selection; an undefined id is the Default option (dashboard schedules only).
+     */
+    selection: IScheduleTimezoneSelection;
+
+    /**
+     * Concrete timezone the Default option currently resolves to (display only).
+     */
+    defaultResolvedTimezone: string | undefined;
+
+    /**
+     * Called with the picked timezone; undefined selects the Default option.
+     */
+    onTimezoneChange: (timezoneId: string | undefined) => void;
+}
+
+/**
+ * The exact props the default dialog renders its "Time zone" section with.
+ *
+ * @alpha
+ */
+export type ScheduledEmailDialogTimezoneDefaultProps = IScheduledEmailDialogTimezoneProps;
+
+/**
  * Section-level overrides of the default scheduled email dialog.
  *
  * @alpha
@@ -307,6 +369,16 @@ export interface IScheduledEmailDialogSlots {
      * passed the current filters — see {@link IScheduledEmailDialogFiltersProps}.
      */
     Filters?: ComponentType<ISlotProps<IScheduledEmailDialogFiltersProps>>;
+
+    /**
+     * Wraps or replaces the "Time zone" section on the General tab. Must have a stable reference
+     * identity — see {@link ISlotProps}.
+     *
+     * Renders only when the dialog shows the section at all: the dashboard-timezone feature is
+     * enabled and the dashboard allows the view-mode timezone override. When the section is
+     * hidden, the slot is not rendered either.
+     */
+    Timezone?: ComponentType<ISlotProps<ScheduledEmailDialogTimezoneDefaultProps>>;
 }
 
 /**

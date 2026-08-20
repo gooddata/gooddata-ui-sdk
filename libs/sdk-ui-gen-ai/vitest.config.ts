@@ -10,6 +10,7 @@ export default defineConfig({
     test: {
         // Use happy-dom for faster performance than jsdom
         environment: "happy-dom",
+        reporters: ["default"],
         setupFiles: "./vitest.setup.ts",
         pool: "threads",
         maxWorkers: 8, // Thread count for CI
@@ -19,8 +20,6 @@ export default defineConfig({
         unstubEnvs: true,
         unstubGlobals: true,
         maxConcurrency: 8, // Concurrency for CI
-        // Disable slow operations when not needed
-        globals: false,
         // Speed up test runs by avoiding unnecessary operations
         environmentOptions: {
             "happy-dom": {

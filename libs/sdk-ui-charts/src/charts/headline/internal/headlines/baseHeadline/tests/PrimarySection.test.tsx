@@ -1,97 +1,97 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { type IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { PrimarySection } from "../PrimarySection.js";
-import { PrimarySectionCompactContent } from "../PrimarySectionCompactContent.js";
-import { PrimarySectionContent } from "../PrimarySectionContent.js";
 
-import { createMockUseBaseHeadline } from "./BaseHeadline.test.helpers.js";
+import { createBaseHeadlineTestContext } from "./BaseHeadline.test.helpers.js";
 
-const useBaseHeadlineMock = vi.hoisted(() => vi.fn());
+const HEADLINE_PRIMARY_ITEM_SELECTOR = ".s-headline-primary-item";
 
-vi.mock("../BaseHeadlineContext.js", () => ({
-    useBaseHeadline: useBaseHeadlineMock,
-}));
-
-vi.mock("../PrimarySectionCompactContent.js", async (importOriginal) => {
-    const original = await importOriginal();
-    return {
-        ...(original as object),
-        PrimarySectionCompactContent: vi.fn(
-            (original as { PrimarySectionCompactContent: () => void }).PrimarySectionCompactContent,
-        ),
-    };
-});
-
-vi.mock("../PrimarySectionContent.js", async (importOriginal) => {
-    const original = await importOriginal();
-    return {
-        ...(original as object),
-        PrimarySectionContent: vi.fn(
-            (original as { PrimarySectionContent: () => void }).PrimarySectionContent,
-        ),
-    };
-});
-
-const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
+const { setBaseHeadline, wrapper } = createBaseHeadlineTestContext();
 
 describe("PrimarySection", () => {
-    const MockContent = vi.mocked(PrimarySectionContent);
-    const MockCompactContent = vi.mocked(PrimarySectionCompactContent);
+    /**
+     * The data item component is injected through the primary item, so that the rendered content can be
+     * verified without mocking the primary section content modules.
+     */
+    const MockPrimaryItemContent = vi.fn().mockReturnValue(null);
+
+    const primaryItem = {
+        ...TEST_BASE_HEADLINE_ITEM,
+        baseHeadlineDataItemComponent: MockPrimaryItemContent,
+    } as unknown as IBaseHeadlineItem;
 
     const renderPrimarySection = () => {
         const props = {
-            primaryItem: TEST_BASE_HEADLINE_ITEM,
+            primaryItem,
             isOnlyPrimaryItem: false,
         };
-        return render(<PrimarySection {...(props as any)} />);
+        return render(<PrimarySection {...props} />, { wrapper });
     };
 
     beforeEach(() => {
-        vi.clearAllMocks();
-    });
-
-    afterEach(() => {
-        vi.restoreAllMocks();
+        MockPrimaryItemContent.mockClear();
     });
 
     it("Should render primary compact content while enable compact size", () => {
-        mockUseBaseHeadline({
+        setBaseHeadline({
             config: {
                 enableCompactSize: true,
             },
+            clientHeight: 100,
         });
 
-        renderPrimarySection();
+        const { container } = renderPrimarySection();
 
-        expect(MockContent).not.toHaveBeenCalled();
-        expect(MockCompactContent).toHaveBeenCalledWith(
+        // the compact content sizes the primary item according to the client height
+        const primaryItemElement = container.querySelector(HEADLINE_PRIMARY_ITEM_SELECTOR);
+        expect(primaryItemElement).toBeInTheDocument();
+        expect(primaryItemElement!.getAttribute("style")).toContain("line-height");
+        expect(MockPrimaryItemContent).toHaveBeenCalledWith(
             expect.objectContaining({
-                primaryItem: TEST_BASE_HEADLINE_ITEM,
-                isOnlyPrimaryItem: false,
+                dataItem: primaryItem.data,
             }),
             undefined,
         );
     });
 
+    it("Should not render any primary content while enable compact size and client height is 0", () => {
+        setBaseHeadline({
+            config: {
+                enableCompactSize: true,
+            },
+            clientHeight: 0,
+        });
+
+        const { container } = renderPrimarySection();
+
+        expect(container.querySelector(HEADLINE_PRIMARY_ITEM_SELECTOR)).toBeNull();
+        expect(MockPrimaryItemContent).not.toHaveBeenCalled();
+    });
+
     it("Should render primary content while do not enable compact size", () => {
-        mockUseBaseHeadline({
+        setBaseHeadline({
             config: {
                 enableCompactSize: false,
             },
+            clientHeight: 100,
         });
 
-        renderPrimarySection();
+        const { container } = renderPrimarySection();
 
-        expect(MockContent).toHaveBeenCalledWith(
+        // the plain content does not apply any custom sizing on the primary item
+        const primaryItemElement = container.querySelector(HEADLINE_PRIMARY_ITEM_SELECTOR);
+        expect(primaryItemElement).toBeInTheDocument();
+        expect(primaryItemElement!.getAttribute("style") ?? "").not.toContain("line-height");
+        expect(MockPrimaryItemContent).toHaveBeenCalledWith(
             expect.objectContaining({
-                primaryItem: TEST_BASE_HEADLINE_ITEM,
+                dataItem: primaryItem.data,
             }),
             undefined,
         );
-        expect(MockCompactContent).not.toHaveBeenCalled();
     });
 });

@@ -4,10 +4,11 @@ import { type ReactElement, act } from "react";
 
 import { type RenderResult, render } from "@testing-library/react";
 import { cloneDeep } from "lodash-es";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type ITheme } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { suppressConsole } from "@gooddata/util";
@@ -55,13 +56,6 @@ function HookTestComponent({
 }
 
 describe("ThemeProvider", () => {
-    beforeEach(() => {
-        // Remove global theme styles manually before each test,
-        // so we don't need to call component.unmount() in every test
-        // to remove them.
-        document.getElementById("gdc-theme-properties")?.remove();
-    });
-
     const workspace = "testWorkspace";
     const theme: ITheme = {
         button: {
@@ -512,6 +506,38 @@ describe("ThemeProvider", () => {
             theme: {},
             themeStatus: "success",
         });
+    });
+
+    it("should not re-add global theme styles when the backend theme resolves after unmount", async () => {
+        let resolveTheme: (theme: ITheme) => void = () => {};
+        const pendingTheme = new Promise<ITheme>((resolve) => {
+            resolveTheme = resolve;
+        });
+        const getTheme = vi.fn(() => pendingTheme);
+        const pendingBackend = {
+            workspace: () => ({
+                styling: () => ({
+                    getTheme,
+                }),
+            }),
+        } as unknown as IAnalyticalBackend;
+
+        const { unmount } = await renderComponent(
+            <ThemeProvider backend={pendingBackend} workspace={workspace}>
+                <div>Test</div>
+            </ThemeProvider>,
+        );
+
+        // without this the test would pass vacuously - no getTheme() call means no theme to re-add
+        expect(getTheme).toHaveBeenCalled();
+
+        unmount();
+        resolveTheme(theme);
+        // let the getTheme() continuation inside ThemeProvider run
+        await pendingTheme;
+        await Promise.resolve();
+
+        expect(document.getElementById("gdc-theme-properties")).toEqual(null);
     });
 
     it("should not remove global theme styles on unmount when removeGlobalStylesOnUnmout is set to false", async () => {

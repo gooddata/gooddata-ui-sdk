@@ -7,6 +7,7 @@ import { type ILocale } from "@gooddata/sdk-ui";
 import { changeIgnoreExecutionTimestamp } from "../../../model/commands/dashboard.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectLocale, selectTimezone } from "../../../model/store/config/configSelectors.js";
+import { selectEffectiveDashboardTimezone } from "../../../model/store/meta/metaSelectors.js";
 import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
 
 /**
@@ -46,7 +47,11 @@ function formatDate(isoString: string | undefined, locale: ILocale, timezone?: s
 
 export const useExecutionTimestampMessage = () => {
     const locale = useDashboardSelector(selectLocale);
-    const timezone = useDashboardSelector(selectTimezone);
+    // the custom dashboard timezone (view-mode override or dashboard configuration) wins over
+    // the workspace setting so the displayed timestamp matches the rest of the dashboard
+    const workspaceTimezone = useDashboardSelector(selectTimezone);
+    const customTimezone = useDashboardSelector(selectEffectiveDashboardTimezone);
+    const timezone = customTimezone ?? workspaceTimezone;
     const dashboardExecutionTimestamp = useDashboardSelector(selectExecutionTimestamp);
     const showExecutionTimestampMessage = dashboardExecutionTimestamp !== undefined;
     const formattedDate = formatDate(dashboardExecutionTimestamp, locale, timezone);

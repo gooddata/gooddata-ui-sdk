@@ -4,6 +4,8 @@ import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace"
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
     type ElementsQueryOptionsElementsSpecification,
+    type IAnalyticalBackend,
+    type IElementsQuery,
     type IElementsQueryAttributeFilter,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -11,6 +13,7 @@ import {
     type IAttributeFilter,
     type IMeasure,
     type IRelativeDateFilter,
+    type ObjRef,
     attributeIdentifier,
     idRef,
     measureIdentifier,
@@ -157,4 +160,105 @@ export const newTestAttributeFilterHandlerWithAttributeFilter = (
     };
 
     return newAttributeFilterHandler(backend, workspace, attributeFilter, options);
+};
+
+type TestFunction = (...args: unknown[]) => unknown;
+
+const isFunction = (value: unknown): value is TestFunction => typeof value === "function";
+
+const isElementsQuery = (value: unknown): value is IElementsQuery =>
+    typeof value === "object" && value !== null && isFunction((value as { query?: unknown }).query);
+
+/**
+ * Facade of `target` with a single method replaced.
+ *
+ * A proxy is used instead of an object spread, because the backend services are class instances -
+ * their methods live on the prototype and a spread would drop them.
+ */
+const withReplacedMethod = <T extends object, K extends keyof T & string>(
+    target: T,
+    method: K,
+    replacement: T[K],
+): T =>
+    new Proxy(target, {
+        get(proxiedTarget, property) {
+            if (property === method) {
+                return replacement;
+            }
+
+            const value = Reflect.get(proxiedTarget, property, proxiedTarget);
+            return isFunction(value) ? value.bind(proxiedTarget) : value;
+        },
+    });
+
+/**
+ * Elements query that rejects with the queued errors, one error per query() call, and delegates to
+ * the recorded implementation once the queue is empty.
+ */
+const withQueuedElementsLoadFailures = (elementsQuery: IElementsQuery, errors: unknown[]): IElementsQuery =>
+    new Proxy(elementsQuery, {
+        get(proxiedTarget, property) {
+            const value = Reflect.get(proxiedTarget, property, proxiedTarget);
+
+            if (!isFunction(value)) {
+                return value;
+            }
+
+            if (property === "query") {
+                return (...args: unknown[]) =>
+                    errors.length > 0 ? Promise.reject(errors.shift()) : value.apply(proxiedTarget, args);
+            }
+
+            return (...args: unknown[]) => {
+                const result = value.apply(proxiedTarget, args);
+                // The builder methods return the query itself, so the result has to be wrapped again
+                // to keep the interception in place for the rest of the chain.
+                return isElementsQuery(result) ? withQueuedElementsLoadFailures(result, errors) : result;
+            };
+        },
+    });
+
+const backendWithQueuedElementsLoadFailures = (errors: unknown[]): IAnalyticalBackend =>
+    withReplacedMethod(backend, "workspace", (workspaceId: string) => {
+        const analyticalWorkspace = backend.workspace(workspaceId);
+
+        return withReplacedMethod(analyticalWorkspace, "attributes", () => {
+            const attributes = analyticalWorkspace.attributes();
+
+            return withReplacedMethod(attributes, "elements", () => {
+                const elements = attributes.elements();
+
+                return withReplacedMethod(elements, "forDisplayForm", (ref: ObjRef) =>
+                    withQueuedElementsLoadFailures(elements.forDisplayForm(ref), errors),
+                );
+            });
+        });
+    });
+
+/**
+ * Handler whose elements loads can be made to fail on demand.
+ *
+ * The failure is injected into the backend the handler talks to, so that the tests of the error
+ * paths do not have to mock the internal loadElements module. A module mock cannot be relied on
+ * here, because the test files share the module registry (see `isolate: false` in vitest.config.ts)
+ * and the module is already evaluated unmocked by the time such a suite runs.
+ */
+export const newTestAttributeFilterHandlerWithElementsLoadFailures = (attributeFilter: IAttributeFilter) => {
+    const errors: unknown[] = [];
+
+    return {
+        attributeFilterHandler: newAttributeFilterHandler(
+            backendWithQueuedElementsLoadFailures(errors),
+            workspace,
+            attributeFilter,
+            { selectionMode: "multi" },
+        ),
+        /**
+         * Makes the next elements load reject with the provided error. Call it repeatedly to queue up
+         * more failures, one per load - the equivalent of several mockRejectedValueOnce() calls.
+         */
+        failNextElementsLoad: (error: unknown) => {
+            errors.push(error);
+        },
+    };
 };

@@ -1,7 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { cloneDeep } from "lodash-es";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import {
     DashboardAttributeFilterConfigModeValues,
@@ -16,7 +16,9 @@ import { filterBarAttributeFilterIndexes } from "./filterBar.fixture.js";
 
 describe("utils", () => {
     describe("getVisibilityIcon", () => {
-        const mockIntl: any = { formatMessage: vi.fn().mockImplementation((message) => message) };
+        // A plain function rather than a spy: no call assertions are made on it, and a spy's
+        // implementation would be wiped by the suite-wide mockReset before each test.
+        const mockIntl: any = { formatMessage: (message: unknown) => message };
 
         it("should return undefined when supportsHiddenAndLockedFiltersOnUI is false", () => {
             const result = getVisibilityIcon(

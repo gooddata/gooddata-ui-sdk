@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import axios, { type AxiosAdapter } from "axios";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IUserProfile, newAxios } from "@gooddata/api-client-tiger";
 import * as actions from "@gooddata/api-client-tiger/endpoints/actions";
@@ -9,10 +9,13 @@ import * as entities from "@gooddata/api-client-tiger/endpoints/entitiesObjects"
 import * as profile from "@gooddata/api-client-tiger/endpoints/profile";
 
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { OrganizationSettingsService } from "../../organization/settings.js";
-import { TigerUserSettingsService } from "../../user/settings.js";
-import { TigerWorkspaceSettings } from "../../workspace/settings/index.js";
-import { invalidateSettingsResponses, trackSettingsResponse } from "../responseCacheCoherence.js";
+import { type OrganizationSettingsService } from "../../organization/settings.js";
+import { type TigerUserSettingsService } from "../../user/settings.js";
+import { type TigerWorkspaceSettings } from "../../workspace/settings/index.js";
+import {
+    type invalidateSettingsResponses as InvalidateSettingsResponses,
+    type trackSettingsResponse as TrackSettingsResponse,
+} from "../responseCacheCoherence.js";
 
 vi.mock("@gooddata/api-client-tiger/endpoints/actions", () => ({
     ActionsApi_WorkspaceResolveAllSettings: vi.fn(),
@@ -188,6 +191,26 @@ function userProfile(): IUserProfile {
     };
 }
 
+// The units under test are imported dynamically from a fresh module registry so that they pick up
+// the endpoint mocks above even when another (non-isolated) test file already imported them without
+// the mocks. They must all come from the same fresh registry — the services and the test share the
+// module-level response tracking state of responseCacheCoherence.js.
+let OrganizationSettingsServiceCtor: typeof OrganizationSettingsService;
+let TigerUserSettingsServiceCtor: typeof TigerUserSettingsService;
+let TigerWorkspaceSettingsCtor: typeof TigerWorkspaceSettings;
+let invalidateSettingsResponses: typeof InvalidateSettingsResponses;
+let trackSettingsResponse: typeof TrackSettingsResponse;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ OrganizationSettingsService: OrganizationSettingsServiceCtor } =
+        await import("../../organization/settings.js"));
+    ({ TigerUserSettingsService: TigerUserSettingsServiceCtor } = await import("../../user/settings.js"));
+    ({ TigerWorkspaceSettings: TigerWorkspaceSettingsCtor } =
+        await import("../../workspace/settings/index.js"));
+    ({ invalidateSettingsResponses, trackSettingsResponse } = await import("../responseCacheCoherence.js"));
+});
+
 beforeEach(() => {
     vi.clearAllMocks();
 });
@@ -291,7 +314,7 @@ describe("settings response cache coherence", () => {
         it("serves fresh settings immediately after a write", async () => {
             const stub = createBackendStub();
             wireEndpointMocks(stub);
-            const service = new TigerWorkspaceSettings(authCallFor(stub), WORKSPACE);
+            const service = new TigerWorkspaceSettingsCtor(authCallFor(stub), WORKSPACE);
 
             const first = await service.getSettings();
             expect(first.exportCsvCustomDelimiter).toBe("|");
@@ -314,7 +337,7 @@ describe("settings response cache coherence", () => {
             const stub = createBackendStub();
             wireEndpointMocks(stub);
             stub.setSettingsRecordCount(2);
-            const service = new TigerWorkspaceSettings(authCallFor(stub), WORKSPACE);
+            const service = new TigerWorkspaceSettingsCtor(authCallFor(stub), WORKSPACE);
 
             await service.getSettings();
             expect(stub.resolveHits()).toBe(1);
@@ -338,7 +361,7 @@ describe("settings response cache coherence", () => {
         it("serves fresh settings immediately after a write", async () => {
             const stub = createBackendStub();
             wireEndpointMocks(stub);
-            const service = new OrganizationSettingsService(authCallFor(stub));
+            const service = new OrganizationSettingsServiceCtor(authCallFor(stub));
 
             const first = await service.getSettings();
             expect(first.exportCsvCustomDelimiter).toBe("|");
@@ -356,8 +379,8 @@ describe("settings response cache coherence", () => {
         it("evicts other services' cached settings resolutions on a user-level write", async () => {
             const stub = createBackendStub();
             wireEndpointMocks(stub);
-            const workspaceService = new TigerWorkspaceSettings(authCallFor(stub), WORKSPACE);
-            const userService = new TigerUserSettingsService(authCallFor(stub));
+            const workspaceService = new TigerWorkspaceSettingsCtor(authCallFor(stub), WORKSPACE);
+            const userService = new TigerUserSettingsServiceCtor(authCallFor(stub));
 
             await workspaceService.getSettings();
             expect(stub.resolveHits()).toBe(1);
@@ -404,7 +427,7 @@ describe("settings response cache coherence", () => {
         it("a post-write read does not deduplicate onto a pre-write in-flight request", async () => {
             const stub = createBackendStub();
             wireEndpointMocks(stub);
-            const service = new TigerWorkspaceSettings(authCallFor(stub), WORKSPACE);
+            const service = new TigerWorkspaceSettingsCtor(authCallFor(stub), WORKSPACE);
             let releaseRead: () => void = () => {};
             stub.setResolveGate(
                 new Promise<void>((resolve) => {
@@ -428,7 +451,7 @@ describe("settings response cache coherence", () => {
         it("end to end: a write during the initial read does not poison later reads", async () => {
             const stub = createBackendStub();
             wireEndpointMocks(stub);
-            const service = new TigerWorkspaceSettings(authCallFor(stub), WORKSPACE);
+            const service = new TigerWorkspaceSettingsCtor(authCallFor(stub), WORKSPACE);
             let releaseRead: () => void = () => {};
             stub.setResolveGate(
                 new Promise<void>((resolve) => {

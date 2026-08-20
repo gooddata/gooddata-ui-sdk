@@ -1,7 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
 import axios from "axios";
-import { describe, expect, it, vi } from "vitest";
+import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type ApiEntitlement, type ILiveFeatures } from "@gooddata/api-client-tiger";
 
@@ -9,7 +9,17 @@ import { type FeatureDef } from "../feature.js";
 import { type FeatureHubResponse, getFeatureHubFeatures } from "../hub.js";
 import { pickContext } from "../index.js";
 
-const axiosGetSpy = vi.spyOn(axios, "get");
+// The spy is installed per test and restored afterwards so that it does not leak into other
+// (non-isolated) test files sharing the same axios module instance.
+let axiosGetSpy: MockInstance;
+
+beforeEach(() => {
+    axiosGetSpy = vi.spyOn(axios, "get");
+});
+
+afterEach(() => {
+    axiosGetSpy.mockRestore();
+});
 
 const entitlements: ApiEntitlement[] = [
     {

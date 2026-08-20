@@ -15,7 +15,7 @@ import {
 
 import { objectShareMessages } from "./messages.js";
 import { granteeDisplayPair } from "./objectShareController.helpers.js";
-import type { IObjectShareGrantee } from "./objectShareController.types.js";
+import type { IObjectShareGrantee, ObjectSharePermissionLevel } from "./objectShareController.types.js";
 import type { IObjectAccessSummary, IObjectShareLabel } from "./types.js";
 import { useObjectShareDialog } from "./useObjectShareDialog.js";
 
@@ -23,6 +23,18 @@ import { useObjectShareDialog } from "./useObjectShareDialog.js";
 // required onLabelsChange never fires; a stable no-op satisfies the prop type
 // without churning the controls' identity each render.
 const noop = () => {};
+
+/** The grant-limit reason, keyed per level, for the menus that render those levels disabled. */
+function grantLimitTooltips(
+    levels: ObjectSharePermissionLevel[] | undefined,
+    tooltip: string,
+): Partial<Record<ObjectSharePermissionLevel, string>> {
+    const map: Partial<Record<ObjectSharePermissionLevel, string>> = {};
+    for (const level of levels ?? []) {
+        map[level] = tooltip;
+    }
+    return map;
+}
 
 // Static Admin badge on the synthesized administrator self row — the tooltip
 // explains the grant-independent access; the focusable span keeps it
@@ -134,8 +146,12 @@ function ObjectShareDialogSession({
         isMutable,
         isLoading,
         workspaceDisabledLevels,
+        grantableDisabledLevels,
+        grantLimitTooltip,
         rowDisabledLevels,
+        rowDisabledLevelTooltips,
         isRowRemoveDisabled,
+        isRowControlsLocked,
         rowRemoveDisabledTooltip,
         onClose: closeDialog,
         onRowPermissionChange,
@@ -196,17 +212,22 @@ function ObjectShareDialogSession({
                     permissionLevel={g.level}
                     effectivePermission={g.effectivePermission}
                     disabledLevels={disabledLevels}
+                    // Row-wide warning is the self row's; covered picks carry their own.
                     disabledTooltip={
-                        disabledLevels
+                        state.selfManagedGranteeId === g.id
                             ? intl.formatMessage(objectShareMessages.selfRestrictWarning)
                             : undefined
                     }
+                    disabledLevelTooltips={{
+                        ...grantLimitTooltips(grantableDisabledLevels, grantLimitTooltip),
+                        ...rowDisabledLevelTooltips(g),
+                    }}
                     isRemoveDisabled={isRowRemoveDisabled(g)}
                     removeDisabledTooltip={rowRemoveDisabledTooltip}
                     // Disabled while the row's own write is saving, while mutations are
                     // gated (unresolved label scope would orphan real per-label grants),
                     // and while a sole row's self identity is unknown.
-                    isDisabled={g.pending !== undefined || !isMutable || state.granteeControlsLocked}
+                    isDisabled={g.pending !== undefined || !isMutable || isRowControlsLocked(g)}
                     onLabelsChange={(selectedIds) => {
                         void actions.changeGranteeLabels(g.id, selectedIds);
                     }}
@@ -264,6 +285,12 @@ function ObjectShareDialogSession({
                             // effect (the inherited grant already exceeds them).
                             disabledLevels={workspaceDisabledLevels}
                             disabledTooltip={intl.formatMessage(objectShareMessages.workspaceLevelInherited)}
+                            // A level can also be disabled because the caller does not
+                            // hold it, which is a different reason from the inherited one.
+                            disabledLevelTooltips={grantLimitTooltips(
+                                grantableDisabledLevels,
+                                grantLimitTooltip,
+                            )}
                             // Also disabled while its own re-grade is committing, so
                             // rapid toggles can't queue overlapping writes — and when
                             // the level is locked (inherited-only access has no direct
@@ -298,6 +325,9 @@ function ObjectShareDialogSession({
                 isOpen={isAddGranteeOpen}
                 objectTitle={objectTitle}
                 loadOptions={actions.loadOptions}
+                // The caller cannot grant above their own level; the server refuses it.
+                disabledLevels={grantableDisabledLevels}
+                disabledTooltip={grantLimitTooltip}
                 selectedGrantees={state.pendingGrantees}
                 onSelectedGranteesChange={actions.setPendingGrantees}
                 // Same checklist the grantee rows use, so a label scope can be narrowed

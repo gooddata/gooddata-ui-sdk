@@ -30,6 +30,8 @@ export {
     type Matcher,
     type SpecificMatcherFunction,
     type ConsoleType,
+    type WaitForFn,
     delay,
     suppressConsole,
+    createTightWaitFor,
 } from "./testUtils.js";

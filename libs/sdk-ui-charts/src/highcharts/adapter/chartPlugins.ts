@@ -6,6 +6,7 @@ import { groupedCategories } from "./plugins/3rdParty/grouped-categories.js";
 import { initAccessibleTooltipPluginOnce } from "./plugins/accessibleTooltip.js";
 import { adjustTickAmount } from "./plugins/adjustTickAmount.js";
 import { autohideLabels } from "./plugins/autohideLabels/autohideLabels.js";
+import { skipDataLabelsWithoutSpace } from "./plugins/autohideLabels/skipDataLabelsWithoutSpace.js";
 import { extendDataLabelColors } from "./plugins/dataLabelsColors.js";
 import { groupCategoriesWrapper } from "./plugins/group-categories-wrapper.js";
 import { linearTickPositions } from "./plugins/linearTickPositions.js";
@@ -23,6 +24,7 @@ export function initChartPlugins(
 ): void {
     if (!basePluginsInitialized) {
         autohideLabels(highcharts);
+        skipDataLabelsWithoutSpace(highcharts);
         applyPointHaloOptions(highcharts);
         linearTickPositions(highcharts);
         groupedCategories(highcharts);

@@ -12,11 +12,15 @@ export default defineConfig({
     },
     test: {
         environment: "happy-dom",
+        reporters: ["default"],
         setupFiles: "./vitest.setup.ts",
         include: ["src/**/*.test.{ts,tsx}"],
         pool: "threads",
         maxWorkers: 8,
-        isolate: true,
+        isolate: false,
+        clearMocks: true,
+        unstubEnvs: true,
+        unstubGlobals: true,
         maxConcurrency: 8,
         environmentOptions: {
             "happy-dom": {

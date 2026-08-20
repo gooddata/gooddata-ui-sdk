@@ -20,6 +20,7 @@ export interface IUiChipAccessibilityConfig
     extends IAccessibilityConfigBase, IDropdownButtonAccessibilityConfig {
     deleteAriaLabel?: string;
     deleteAriaDescribedBy?: string;
+    iconBeforeAriaLabel?: string;
 }
 
 /**

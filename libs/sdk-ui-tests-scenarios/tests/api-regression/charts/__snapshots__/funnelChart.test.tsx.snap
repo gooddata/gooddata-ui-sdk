@@ -94,6 +94,7 @@ exports[`FunnelChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -191,6 +192,7 @@ exports[`FunnelChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -288,6 +290,7 @@ exports[`FunnelChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -385,6 +388,7 @@ exports[`FunnelChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -482,6 +486,7 @@ exports[`FunnelChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -579,6 +584,7 @@ exports[`FunnelChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -676,6 +682,7 @@ exports[`FunnelChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -773,6 +780,7 @@ exports[`FunnelChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -870,6 +878,7 @@ exports[`FunnelChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -967,6 +976,7 @@ exports[`FunnelChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1064,6 +1074,7 @@ exports[`FunnelChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1161,6 +1172,7 @@ exports[`FunnelChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1258,6 +1270,7 @@ exports[`FunnelChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1355,6 +1368,7 @@ exports[`FunnelChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1452,6 +1466,7 @@ exports[`FunnelChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1549,6 +1564,7 @@ exports[`FunnelChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1646,6 +1662,7 @@ exports[`FunnelChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1743,6 +1760,7 @@ exports[`FunnelChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1840,6 +1858,7 @@ exports[`FunnelChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1937,6 +1956,7 @@ exports[`FunnelChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2034,6 +2054,7 @@ exports[`FunnelChart > with 610x154 - Force position RIGHT - auto legend > shoul
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2131,6 +2152,7 @@ exports[`FunnelChart > with 610x154 - Force position RIGHT - legend at bottom > 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2228,6 +2250,7 @@ exports[`FunnelChart > with 610x154 - Force position RIGHT - legend on left > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2325,6 +2348,7 @@ exports[`FunnelChart > with 610x154 - Force position RIGHT - legend on right > s
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2422,6 +2446,7 @@ exports[`FunnelChart > with 610x154 - Force position RIGHT - legend on top > sho
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2519,6 +2544,7 @@ exports[`FunnelChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2616,6 +2642,7 @@ exports[`FunnelChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2713,6 +2740,7 @@ exports[`FunnelChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2810,6 +2838,7 @@ exports[`FunnelChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2907,6 +2936,7 @@ exports[`FunnelChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3004,6 +3034,7 @@ exports[`FunnelChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3101,6 +3132,7 @@ exports[`FunnelChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3198,6 +3230,7 @@ exports[`FunnelChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3295,6 +3328,7 @@ exports[`FunnelChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3392,6 +3426,7 @@ exports[`FunnelChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3489,6 +3524,7 @@ exports[`FunnelChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3586,6 +3622,7 @@ exports[`FunnelChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3683,6 +3720,7 @@ exports[`FunnelChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3780,6 +3818,7 @@ exports[`FunnelChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3877,6 +3916,7 @@ exports[`FunnelChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4002,6 +4042,7 @@ exports[`FunnelChart > with arithmetic measures > should create expected props f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4161,6 +4202,7 @@ exports[`FunnelChart > with assign color to attributes > should create expected 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4350,6 +4392,7 @@ exports[`FunnelChart > with assign color to measures > should create expected pr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4450,6 +4493,7 @@ exports[`FunnelChart > with coloring - custom colors > should create expected pr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4585,6 +4629,7 @@ exports[`FunnelChart > with coloring - custom palette > should create expected p
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4727,6 +4772,7 @@ exports[`FunnelChart > with coloring - custom palette preferred over colors > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4819,6 +4865,7 @@ exports[`FunnelChart > with coloring - default > should create expected props fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4915,6 +4962,7 @@ exports[`FunnelChart > with data labels - auto visibility > should create expect
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5007,6 +5055,7 @@ exports[`FunnelChart > with data labels - default > should create expected props
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5103,6 +5152,7 @@ exports[`FunnelChart > with data labels - forced hidden > should create expected
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5200,6 +5250,7 @@ exports[`FunnelChart > with data labels - forced hidden, percentages visible has
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5296,6 +5347,7 @@ exports[`FunnelChart > with data labels - forced visible > should create expecte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5396,6 +5448,7 @@ exports[`FunnelChart > with data labels - forced visible and german separators >
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5493,6 +5546,7 @@ exports[`FunnelChart > with data labels - forced visible with hidden percentages
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5590,6 +5644,7 @@ exports[`FunnelChart > with data labels - forced visible with shown percentages 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5686,6 +5741,7 @@ exports[`FunnelChart > with legend position - single measure and viewBy - auto l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5782,6 +5838,7 @@ exports[`FunnelChart > with legend position - single measure and viewBy - disabl
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5878,6 +5935,7 @@ exports[`FunnelChart > with legend position - single measure and viewBy - legend
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5974,6 +6032,7 @@ exports[`FunnelChart > with legend position - single measure and viewBy - legend
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6070,6 +6129,7 @@ exports[`FunnelChart > with legend position - single measure and viewBy - legend
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6166,6 +6226,7 @@ exports[`FunnelChart > with legend position - single measure and viewBy - legend
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6266,6 +6327,7 @@ exports[`FunnelChart > with legend position - two measures - auto legend > shoul
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6366,6 +6428,7 @@ exports[`FunnelChart > with legend position - two measures - disabled > should c
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6466,6 +6529,7 @@ exports[`FunnelChart > with legend position - two measures - legend at bottom > 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6566,6 +6630,7 @@ exports[`FunnelChart > with legend position - two measures - legend on left > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6666,6 +6731,7 @@ exports[`FunnelChart > with legend position - two measures - legend on right > s
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6766,6 +6832,7 @@ exports[`FunnelChart > with legend position - two measures - legend on top > sho
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6835,6 +6902,7 @@ exports[`FunnelChart > with single measure > should create expected props for co
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6926,6 +6994,7 @@ exports[`FunnelChart > with single measure with viewBy > should create expected 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7027,6 +7096,7 @@ exports[`FunnelChart > with single measure with viewBy sorted by attribute > sho
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7134,6 +7204,7 @@ exports[`FunnelChart > with single measure with viewBy sorted by measure > shoul
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7229,6 +7300,7 @@ exports[`FunnelChart > with two measures > should create expected props for core
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7325,6 +7397,7 @@ exports[`FunnelChart > with vertical alignment - bottom > should create expected
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7417,6 +7490,7 @@ exports[`FunnelChart > with vertical alignment - default > should create expecte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7513,6 +7587,7 @@ exports[`FunnelChart > with vertical alignment - middle > should create expected
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7609,5 +7684,6 @@ exports[`FunnelChart > with vertical alignment - top > should create expected pr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;

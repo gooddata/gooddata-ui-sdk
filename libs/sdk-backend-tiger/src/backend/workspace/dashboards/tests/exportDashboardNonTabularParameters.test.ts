@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { type AxiosResponse } from "axios";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import * as entitiesObjects from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import * as exportApi from "@gooddata/api-client-tiger/endpoints/export";
@@ -9,7 +9,7 @@ import { idRef } from "@gooddata/sdk-model";
 
 import { type IExportMetadata, type TigerAuthenticatedCallGuard } from "../../../../types/index.js";
 import * as exportPolling from "../../../../utils/exportPolling.js";
-import { TigerWorkspaceDashboards } from "../index.js";
+import { type TigerWorkspaceDashboards } from "../index.js";
 
 vi.mock("@gooddata/api-client-tiger/endpoints/entitiesObjects", () => ({
     DashboardsApi_GetEntityAnalyticalDashboards: vi.fn(),
@@ -45,7 +45,15 @@ describe("TigerWorkspaceDashboards — non-tabular export parameter overrides", 
     const mockAuthCall = vi.fn((callback) =>
         callback({ axios: {}, basePath: "" }),
     ) as unknown as TigerAuthenticatedCallGuard;
-    const service = new TigerWorkspaceDashboards(mockAuthCall, "ws-1");
+    let service: TigerWorkspaceDashboards;
+
+    // The service is imported dynamically from a fresh module registry so that it picks up the mocks
+    // above even when another (non-isolated) test file already imported it without them.
+    beforeAll(async () => {
+        vi.resetModules();
+        const { TigerWorkspaceDashboards } = await import("../index.js");
+        service = new TigerWorkspaceDashboards(mockAuthCall, "ws-1");
+    });
 
     beforeEach(() => {
         vi.clearAllMocks();

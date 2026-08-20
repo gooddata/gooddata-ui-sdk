@@ -63,7 +63,7 @@ export function GenAiChatContextChooser({ onAddContext }: GenAiChatContextChoose
                 closeOnEscape
                 fullscreenOnMobile={false}
                 autofocusOnOpen
-                accessibilityConfig={{}}
+                accessibilityConfig={{ popupRole: "dialog" }}
                 onOpenStateChanged={onOpenStateChanged}
                 renderButton={({ isOpen, toggleDropdown, accessibilityConfig }) => (
                     <UiIconButton

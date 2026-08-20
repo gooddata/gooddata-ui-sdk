@@ -1,16 +1,16 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 
 import { DEFAULT_COMPARISON_PALETTE } from "@gooddata/sdk-ui-charts";
 
 import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
 import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
-import { ArrowControl } from "../ArrowControl.js";
-import { ColorsControl } from "../colorsControl/ColorsControl.js";
-import { IndicatorSubSection } from "../IndicatorSubSection.js";
+import type * as ArrowControlModule from "../ArrowControl.js";
+import type * as ColorsControlModule from "../colorsControl/ColorsControl.js";
+import type * as IndicatorSubSectionModule from "../IndicatorSubSection.js";
 
 vi.mock("../ArrowControl.js", async (importOriginal) => {
     // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -25,6 +25,27 @@ vi.mock("../colorsControl/ColorsControl.js", async (importOriginal) => {
         ...actual,
         ColorsControl: vi.fn(actual.ColorsControl),
     };
+});
+
+/*
+ * Test isolation is disabled for this package, so the module cache is shared between test files:
+ * IndicatorSubSection.js may already have been evaluated - bound to the real controls - by another test
+ * file, and the mocked graph this file builds must not outlive it. Re-import all three modules up front so
+ * this file always observes the mocked ones, and drop the mocked graph again on the way out.
+ */
+let ArrowControl: typeof ArrowControlModule.ArrowControl;
+let ColorsControl: typeof ColorsControlModule.ColorsControl;
+let IndicatorSubSection: typeof IndicatorSubSectionModule.IndicatorSubSection;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ ArrowControl } = await import("../ArrowControl.js"));
+    ({ ColorsControl } = await import("../colorsControl/ColorsControl.js"));
+    ({ IndicatorSubSection } = await import("../IndicatorSubSection.js"));
+});
+
+afterAll(() => {
+    vi.resetModules();
 });
 
 const TITLE_TEXT_QUERY = "Indicator";

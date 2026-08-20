@@ -120,6 +120,7 @@ exports[`BarChart > with 100x70 - without x axis, without y axis (very small con
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -243,6 +244,7 @@ exports[`BarChart > with 120x354 - without y axis labels > should create expecte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -366,6 +368,7 @@ exports[`BarChart > with 165x354 - without y axis title > should create expected
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -532,6 +535,7 @@ exports[`BarChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -698,6 +702,7 @@ exports[`BarChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -864,6 +869,7 @@ exports[`BarChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1030,6 +1036,7 @@ exports[`BarChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1196,6 +1203,7 @@ exports[`BarChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1362,6 +1370,7 @@ exports[`BarChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1528,6 +1537,7 @@ exports[`BarChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1694,6 +1704,7 @@ exports[`BarChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1860,6 +1871,7 @@ exports[`BarChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2026,6 +2038,7 @@ exports[`BarChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2192,6 +2205,7 @@ exports[`BarChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2358,6 +2372,7 @@ exports[`BarChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2524,6 +2539,7 @@ exports[`BarChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2690,6 +2706,7 @@ exports[`BarChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2856,6 +2873,7 @@ exports[`BarChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3022,6 +3040,7 @@ exports[`BarChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3188,6 +3207,7 @@ exports[`BarChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3354,6 +3374,7 @@ exports[`BarChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3520,6 +3541,7 @@ exports[`BarChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3686,6 +3708,7 @@ exports[`BarChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3852,6 +3875,7 @@ exports[`BarChart > with 610x154 - Force position RIGHT - auto legend > should c
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4018,6 +4042,7 @@ exports[`BarChart > with 610x154 - Force position RIGHT - legend at bottom > sho
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4184,6 +4209,7 @@ exports[`BarChart > with 610x154 - Force position RIGHT - legend on left > shoul
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4350,6 +4376,7 @@ exports[`BarChart > with 610x154 - Force position RIGHT - legend on right > shou
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4516,6 +4543,7 @@ exports[`BarChart > with 610x154 - Force position RIGHT - legend on top > should
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4682,6 +4710,7 @@ exports[`BarChart > with 610x194 - Position respects configuration, max 1 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4848,6 +4877,7 @@ exports[`BarChart > with 610x194 - Position respects configuration, max 1 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5014,6 +5044,7 @@ exports[`BarChart > with 610x194 - Position respects configuration, max 1 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5180,6 +5211,7 @@ exports[`BarChart > with 610x194 - Position respects configuration, max 1 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5346,6 +5378,7 @@ exports[`BarChart > with 610x194 - Position respects configuration, max 1 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5512,6 +5545,7 @@ exports[`BarChart > with 610x274 - Position respects configuration, max 2 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5678,6 +5712,7 @@ exports[`BarChart > with 610x274 - Position respects configuration, max 2 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5844,6 +5879,7 @@ exports[`BarChart > with 610x274 - Position respects configuration, max 2 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6010,6 +6046,7 @@ exports[`BarChart > with 610x274 - Position respects configuration, max 2 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6176,6 +6213,7 @@ exports[`BarChart > with 610x274 - Position respects configuration, max 2 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6299,6 +6337,7 @@ exports[`BarChart > with 650x90 - without x axis labels > should create expected
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6422,6 +6461,7 @@ exports[`BarChart > with 650x120 - without x axis title > should create expected
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6588,6 +6628,7 @@ exports[`BarChart > with 650x354 - Position respects configuration, map legend f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6754,6 +6795,7 @@ exports[`BarChart > with 650x354 - Position respects configuration, map legend f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6920,6 +6962,7 @@ exports[`BarChart > with 650x354 - Position respects configuration, map legend f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7086,6 +7129,7 @@ exports[`BarChart > with 650x354 - Position respects configuration, map legend f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7252,6 +7296,7 @@ exports[`BarChart > with 650x354 - Position respects configuration, map legend f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7381,6 +7426,7 @@ exports[`BarChart > with X axis min/max configuration > should create expected p
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7512,6 +7558,7 @@ exports[`BarChart > with X axis on top > should create expected props for core c
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7662,6 +7709,7 @@ exports[`BarChart > with X axis on top with two viewBy attributes > should creat
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7809,6 +7857,7 @@ exports[`BarChart > with Y axis invisible > should create expected props for cor
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7956,6 +8005,7 @@ exports[`BarChart > with Y axis rotation > should create expected props for core
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8141,6 +8191,7 @@ exports[`BarChart > with arithmetic measures > should create expected props for 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8326,6 +8377,7 @@ exports[`BarChart > with assign color to attribute element stack > should create
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8536,6 +8588,7 @@ exports[`BarChart > with assign color to master measure impacts derived PoP > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8723,6 +8776,7 @@ exports[`BarChart > with assign color to measures > should create expected props
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8855,6 +8909,7 @@ exports[`BarChart > with coloring - custom colors > should create expected props
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9022,6 +9077,7 @@ exports[`BarChart > with coloring - custom palette > should create expected prop
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9196,6 +9252,7 @@ exports[`BarChart > with coloring - custom palette preferred over colors > shoul
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9321,6 +9378,7 @@ exports[`BarChart > with coloring - default > should create expected props for c
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9445,6 +9503,7 @@ exports[`BarChart > with data labels - data labels and totals with auto visibili
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9568,6 +9627,7 @@ exports[`BarChart > with data labels - data labels auto visibility > should crea
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9691,6 +9751,7 @@ exports[`BarChart > with data labels - data labels forced hidden > should create
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9815,6 +9876,7 @@ exports[`BarChart > with data labels - data labels forced hidden totals forced h
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9939,6 +10001,7 @@ exports[`BarChart > with data labels - data labels forced hidden totals forced v
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10062,6 +10125,7 @@ exports[`BarChart > with data labels - data labels forced visible > should creat
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10187,6 +10251,7 @@ exports[`BarChart > with data labels - data labels with backplate style > should
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10307,6 +10372,7 @@ exports[`BarChart > with data labels - default > should create expected props fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10434,6 +10500,7 @@ exports[`BarChart > with data labels - forced dataLabels visible and german sepa
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10558,6 +10625,7 @@ exports[`BarChart > with data labels - labels forced hidden totals auto visibili
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10752,6 +10820,7 @@ exports[`BarChart > with dual axis label rotation - 60 > should create expected 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10946,6 +11015,7 @@ exports[`BarChart > with dual axis label rotation - 90 > should create expected 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11140,6 +11210,7 @@ exports[`BarChart > with dual axis label rotation - minus60 > should create expe
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11334,6 +11405,7 @@ exports[`BarChart > with dual axis label rotation - minus90 > should create expe
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11505,6 +11577,7 @@ exports[`BarChart > with dual axis name customization - high > should create exp
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11676,6 +11749,7 @@ exports[`BarChart > with dual axis name customization - invisible > should creat
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11847,6 +11921,7 @@ exports[`BarChart > with dual axis name customization - low > should create expe
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12018,6 +12093,7 @@ exports[`BarChart > with dual axis name customization - middle > should create e
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12167,6 +12243,7 @@ exports[`BarChart > with dual axis when two viewBy attributes > should create ex
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12357,6 +12434,7 @@ exports[`BarChart > with dual axis with one top measure and three bottom > shoul
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12505,6 +12583,7 @@ exports[`BarChart > with force disable drill on axes > should create expected pr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12720,6 +12799,7 @@ exports[`BarChart > with four measures and PoP > should create expected props fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12848,6 +12928,7 @@ exports[`BarChart > with legend position - auto legend > should create expected 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12976,6 +13057,7 @@ exports[`BarChart > with legend position - disabled > should create expected pro
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13104,6 +13186,7 @@ exports[`BarChart > with legend position - legend at bottom > should create expe
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13232,6 +13315,7 @@ exports[`BarChart > with legend position - legend on left > should create expect
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13360,6 +13444,7 @@ exports[`BarChart > with legend position - legend on right > should create expec
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13488,6 +13573,7 @@ exports[`BarChart > with legend position - legend on top > should create expecte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13679,6 +13765,7 @@ exports[`BarChart > with reversed three measures and one viewBy with top axis an
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13824,6 +13911,7 @@ exports[`BarChart > with reversed two measures and two viewBy with stackMeasures
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13973,6 +14061,7 @@ exports[`BarChart > with single axis name customization - high > should create e
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14122,6 +14211,7 @@ exports[`BarChart > with single axis name customization - invisible > should cre
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14271,6 +14361,7 @@ exports[`BarChart > with single axis name customization - low > should create ex
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14420,6 +14511,7 @@ exports[`BarChart > with single axis name customization - middle > should create
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14497,6 +14589,7 @@ exports[`BarChart > with single measure > should create expected props for core 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14644,6 +14737,7 @@ exports[`BarChart > with single measure and two viewBy with drilling on child at
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14791,6 +14885,7 @@ exports[`BarChart > with single measure and two viewBy with drilling on parent a
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14894,6 +14989,7 @@ exports[`BarChart > with single measure and viewBy with drilling on bars > shoul
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14993,6 +15089,7 @@ exports[`BarChart > with single measure ignores stack measures > should create e
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15092,6 +15189,7 @@ exports[`BarChart > with single measure with stack to 100% > should create expec
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15230,6 +15328,7 @@ exports[`BarChart > with single measure with two viewBy and stack > should creat
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15329,6 +15428,7 @@ exports[`BarChart > with single measure with viewBy > should create expected pro
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15448,6 +15548,7 @@ exports[`BarChart > with single measure with viewBy and stackBy > should create 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15589,6 +15690,7 @@ exports[`BarChart > with single measure, two viewBy and stacking with drilling o
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15779,6 +15881,7 @@ exports[`BarChart > with stack measures and dual axis > should create expected p
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15969,6 +16072,7 @@ exports[`BarChart > with stack measures to 100% and dual axis > should create ex
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16165,6 +16269,7 @@ exports[`BarChart > with stack measures to 100% with dual axis and axis min/max 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16320,6 +16425,7 @@ exports[`BarChart > with stackBy with one date > should create expected props fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16464,6 +16570,7 @@ exports[`BarChart > with two measures and two viewBy with stackMeasures > should
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16608,6 +16715,7 @@ exports[`BarChart > with two measures and two viewBy with stackMeasuresToPercent
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16758,6 +16866,7 @@ exports[`BarChart > with two measures and two viewBy with top axis and stackMeas
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16910,6 +17019,7 @@ exports[`BarChart > with two measures and two viewBy, dual axis, with drilling o
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17063,6 +17173,7 @@ exports[`BarChart > with two measures and two viewBy, dual axis, with drilling o
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17215,6 +17326,7 @@ exports[`BarChart > with two measures and two viewBy, dual axis, with drilling o
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17364,6 +17476,7 @@ exports[`BarChart > with two measures with dual axis and stack measures to 100% 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17513,6 +17626,7 @@ exports[`BarChart > with two measures with dual axis ignores stack measures > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17657,6 +17771,7 @@ exports[`BarChart > with two measures with two viewBy > should create expected p
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17828,6 +17943,7 @@ exports[`BarChart > with two measures with two viewBy, filtered to single value 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17953,6 +18069,7 @@ exports[`BarChart > with two measures with viewBy > should create expected props
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -18085,6 +18202,7 @@ exports[`BarChart > with two measures with viewBy sorted by attribute > should c
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -18223,6 +18341,7 @@ exports[`BarChart > with two measures with viewBy sorted by measure > should cre
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -18378,6 +18497,7 @@ exports[`BarChart > with viewBy date and PoP measure > should create expected pr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -18552,5 +18672,6 @@ exports[`BarChart > with viewBy with two dates > should create expected props fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;

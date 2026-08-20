@@ -89,6 +89,12 @@ export const interactionIntelligenceEnabledSelector: (state: RootState) => boole
         allowInteractionIntelligence && settings?.["enableGenAiInteractionIntelligence"] === true,
 );
 
+// Whether the timeline bar is shown inside the (already gated) Interaction Intelligence panel.
+export const interactionIntelligenceTimelineEnabledSelector: (state: RootState) => boolean = createSelector(
+    settingsSelector,
+    (settings) => settings?.["enableGenAiInteractionIntelligence_timeline"] === true,
+);
+
 export const objectTypesSelector: (state: RootState) => GenAIObjectType[] | undefined = createSelector(
     chatWindowSliceSelector,
     (state) => state.objectTypes,

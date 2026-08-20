@@ -98,10 +98,11 @@ export interface IObjectShareControllerState {
     summary: IObjectAccessSummary | undefined;
     grantees: IObjectShareGrantee[];
     /**
-     * Id of the grantee row whose permission menu manages the signed-in user's
-     * OWN access — set only when the sole explicit grant is the caller's own
-     * (the "restrict own access" design). Consumers gate lowering behind a
-     * confirm and disable the levels above the row's own.
+     * Id of the grantee row whose permission menu manages the signed-in user's OWN
+     * access (the "restrict own access" design), whatever else is listed. Consumers
+     * gate lowering behind a confirm and disable the levels above the row's own.
+     * Undefined for a workspace manager (their access is not this grant) and while
+     * their identity is unresolved, which `granteeControlsLocked` covers.
      */
     selfManagedGranteeId: string | undefined;
     /**
@@ -118,10 +119,19 @@ export interface IObjectShareControllerState {
      */
     workspaceDisabledLevels: ObjectSharePermissionLevel[] | undefined;
     /**
-     * Whether grantee-row controls must stay disabled because a sole USER row
-     * cannot be told apart from the caller's own grant yet (profile pending or
-     * silently failed) — mutating it then would bypass the self-restriction
-     * confirm. Group rows and multi-row lists never set this.
+     * Levels the caller cannot grant to anyone, because they hold less themselves —
+     * the server refuses such a write. Proven from the caller's OWN grant row, so it
+     * is undefined when they have no row (their access may come from a group, which
+     * the list does not show) and whenever they may be a workspace manager, who has
+     * no limit.
+     */
+    grantableDisabledLevels: ObjectSharePermissionLevel[] | undefined;
+    /**
+     * Whether USER-row controls must stay disabled because no row can be told apart
+     * from the caller's own grant yet (profile pending or silently failed) — mutating
+     * one then would bypass the self-restriction confirm and can lose access for good.
+     * Set however many rows are listed. Group rows are never the caller, and a known
+     * workspace manager needs no confirm, so neither sets this.
      */
     granteeControlsLocked: boolean;
     /**

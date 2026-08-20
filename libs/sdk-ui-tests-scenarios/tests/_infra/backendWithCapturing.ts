@@ -14,6 +14,28 @@ import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IExecutionDefinition, type ISettings } from "@gooddata/sdk-model";
 
 /**
+ * Schedules `cb` on the next macrotask and returns a canceller.
+ *
+ * Node clamps `setTimeout(cb, 0)` to a full millisecond, so a timer-based settle costs ~1ms of pure
+ * idling per mount. Every scenario mounts twice (react component + pluggable visualization), so with
+ * several thousand scenarios in this package that clamp alone accounted for roughly half of the
+ * smoke-and-capture wall-clock time. `setImmediate` gives the same guarantee we actually need - it
+ * runs in the check phase, i.e. only after the microtask queue has fully drained - for free.
+ */
+const scheduleMacrotask: (cb: () => void) => () => void =
+    typeof setImmediate === "function"
+        ? (cb) => {
+              const handle = setImmediate(cb);
+
+              return () => clearImmediate(handle);
+          }
+        : (cb) => {
+              const handle = setTimeout(cb, 0);
+
+              return () => clearTimeout(handle);
+          };
+
+/**
  * Recorded chart interactions
  */
 export type ChartInteractions = {
@@ -47,6 +69,15 @@ export type ChartInteractions = {
     executionError?: unknown;
 
     effectiveProps?: any;
+
+    /**
+     * Props that were handed to the top-most component rendered by the scenario.
+     *
+     * This is always captured, also when the mount extracts `effectiveProps` from somewhere deeper in the
+     * tree (e.g. the core chart). It lets a single mount serve both the core-props assertions and the
+     * insight reconstruction, which needs the scenario-level props.
+     */
+    componentProps?: any;
 };
 
 /**
@@ -69,7 +100,7 @@ export function backendWithCapturing(
         dataRequestResolver = resolve;
         dataRequestRejecter = reject;
     });
-    let resolveTimer: ReturnType<typeof setTimeout> | undefined;
+    let cancelResolve: (() => void) | undefined;
     let hasDataRequest = false;
     let resolved = false;
 
@@ -78,18 +109,20 @@ export function backendWithCapturing(
             return;
         }
 
-        if (resolveTimer) {
-            clearTimeout(resolveTimer);
-        }
+        cancelResolve?.();
 
-        // Allow batched async callbacks from multi-execution visualizations to settle.
-        resolveTimer = setTimeout(() => {
+        // Allow batched async callbacks from multi-execution visualizations to settle. A single macrotask
+        // hop is enough: it fires only after the whole microtask queue has drained, so any follow-up
+        // execution chained off a promise gets to call scheduleResolve() again and push the resolution out.
+        // Keep it at the cheapest possible hop - every mount awaits it, so any padding here is paid as
+        // wall-clock time by each of the several thousand scenario tests in this package.
+        cancelResolve = scheduleMacrotask(() => {
             if (resolved) {
                 return;
             }
             resolved = true;
             dataRequestResolver(interactions);
-        }, 5);
+        });
     };
 
     let backend = withEventing(

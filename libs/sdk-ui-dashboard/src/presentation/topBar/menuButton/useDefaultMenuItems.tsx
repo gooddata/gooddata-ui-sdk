@@ -4,6 +4,7 @@ import { useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
+import { resolveDashboardTimezoneUserOverrideAllowed } from "@gooddata/sdk-model";
 import { type IconType, UiIcon, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import { requestOpenDensityDialog } from "../../../model/commands/density.js";
@@ -15,6 +16,7 @@ import {
     selectEnableDashboardTabularExport,
     selectEnableDashboardTimezone,
     selectEnableSnapshotExport,
+    selectEnableTimezoneChange,
     selectIsReadOnly,
     selectSettings,
 } from "../../../model/store/config/configSelectors.js";
@@ -231,10 +233,13 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const openDensityDialog = useCallback(() => dispatch(requestOpenDensityDialog()), [dispatch]);
 
     const isTimezoneEnabled = useDashboardSelector(selectEnableDashboardTimezone);
+    const enableTimezoneChange = useDashboardSelector(selectEnableTimezoneChange);
     const timezoneConfig = useDashboardSelector(selectDashboardTimezoneConfig);
     const isInViewMode = useDashboardSelector(selectIsInViewMode);
     const isTimezoneChangeVisible =
-        isTimezoneEnabled && !!timezoneConfig?.allowUserOverrideInViewMode && isInViewMode;
+        isTimezoneEnabled &&
+        resolveDashboardTimezoneUserOverrideAllowed(timezoneConfig, enableTimezoneChange) &&
+        isInViewMode;
     const openTimezoneDialog = useCallback(() => dispatch(uiActions.openTimezoneDialog()), [dispatch]);
 
     // Do not show save as new button in menu item when it is already shown as a standalone top bar button.

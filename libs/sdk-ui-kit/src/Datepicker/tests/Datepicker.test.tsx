@@ -7,7 +7,6 @@ import { type IntlShape, RawIntlProvider } from "react-intl";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
 import { type ITranslations, createIntlMock, resolveMessages } from "@gooddata/sdk-ui";
-import { suppressConsole } from "@gooddata/util";
 
 import { type IDatePickerProps, WrappedDatePicker } from "../Datepicker.js";
 
@@ -141,22 +140,12 @@ describe("DatePicker", () => {
                 expect(screen.getByRole("textbox")).toHaveValue("01/01/2015");
             });
 
-            it("should show date in provided format", async () => {
-                await suppressConsole(
-                    () =>
-                        createComponent({
-                            intl: createIntlMock({}, "en-US"),
-                            date: parse("02/01/2015", defaultDateFormat, new Date()),
-                            dateFormat: "yyyy/MM/dd",
-                        }),
-                    "warn",
-                    [
-                        {
-                            type: "startsWith",
-                            value: "Missing locale strings for cs",
-                        },
-                    ],
-                );
+            it("should show date in provided format", () => {
+                createComponent({
+                    intl: createIntlMock({}, "en-US"),
+                    date: parse("02/01/2015", defaultDateFormat, new Date()),
+                    dateFormat: "yyyy/MM/dd",
+                });
 
                 expect(screen.getByRole("textbox")).toHaveValue("2015/02/01");
             });

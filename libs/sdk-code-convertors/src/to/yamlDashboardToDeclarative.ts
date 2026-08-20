@@ -937,7 +937,7 @@ function yamlTimezoneConfigToDeclarative(
     return {
         ...(input.timezone_id ? { timezoneId: input.timezone_id } : {}),
         ...(input.show_timezone_info ? { showTimezoneInfo: input.show_timezone_info } : {}),
-        ...(input.allow_user_override_in_view_mode
+        ...(typeof input.allow_user_override_in_view_mode === "boolean"
             ? { allowUserOverrideInViewMode: input.allow_user_override_in_view_mode }
             : {}),
     };

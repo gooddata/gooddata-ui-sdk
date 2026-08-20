@@ -102,6 +102,7 @@ export function useAlertFormState({
         currentUser,
         widgetLocalIdToTabIdMap: widgetTabMap,
         features: { enableAlertOncePerInterval },
+        exportTimezones,
     } = useAutomationsContext();
 
     const {
@@ -184,6 +185,10 @@ export function useAlertFormState({
                 dashboardId,
                 (widget as IInsightWidget)?.title,
                 targetTabIdentifier,
+                // defined only when the effective timezone comes from a dashboard-scoped source
+                // (view-mode override, browser resolution, dashboard configuration) — the alert
+                // evaluation service resolves the settings hierarchy itself
+                exportTimezones?.effectiveTimezone,
             );
             return defaultNewAlert && parameterValues.length > 0
                 ? setAlertExecutionParameters(defaultNewAlert, parameterValues)
