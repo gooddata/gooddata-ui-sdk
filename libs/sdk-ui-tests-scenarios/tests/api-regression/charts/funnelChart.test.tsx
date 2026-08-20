@@ -2,6 +2,13 @@
 
 import { describe, expect, it, vi } from "vitest";
 
+// The suite runs with `isolate: false`, so the module registry is shared across test files. Any earlier
+// file that pulls in `@gooddata/sdk-ui-charts` binds FunnelChart to the real CoreFunnelChart, which would
+// make the mock below a no-op. Dropping the registry here forces this file's imports to re-evaluate.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 // Prepare hoisted global extractProps variable which gets its value in hoisted mock and then is used in test.
 let { extractProps } = vi.hoisted(() => ({
     extractProps: null as any,
@@ -29,7 +36,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreFunnelChart", async () => {
     };
 });
 
-describe.skip("FunnelChart", () => {
+describe("FunnelChart", () => {
     const Scenarios: Array<ScenarioAndDescription<IFunnelChartProps>> = funnelChartScenarios.flatMap(
         (group) => group.forTestTypes("api").asScenarioDescAndScenario(),
     );

@@ -1,11 +1,18 @@
-// (C) 2007-2025 GoodData Corporation
-import { describe, it, vi } from "vitest";
+// (C) 2007-2026 GoodData Corporation
+
+import { afterEach, beforeEach, describe, it, vi } from "vitest";
 
 import { delay } from "../testUtils.js";
 
-vi.useFakeTimers();
-
 describe("testUtils", () => {
+    beforeEach(() => {
+        vi.useFakeTimers();
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
+
     describe("delay", () => {
         it("should call doneFn after timeout", async () => {
             const pendingDelay = delay(2);

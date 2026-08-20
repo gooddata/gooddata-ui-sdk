@@ -1,0 +1,15 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-ext: the share dialog now says a permission change was refused because you cannot grant more than you hold, instead of reporting a generic failure.",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-backend-spi, sdk-backend-tiger: added the PermissionEscalationRefused error, so a refused permission change can be recognised without reading a backend's response text.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

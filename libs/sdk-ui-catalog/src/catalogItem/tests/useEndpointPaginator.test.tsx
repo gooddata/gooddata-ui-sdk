@@ -40,10 +40,17 @@ function endpointFromPages(pages: Array<{ items: Entity[]; offset: number; total
 
 const identity = (e: Entity) => e;
 
+// The hook settles on the microtask queue (mocked endpoints resolve immediately) and
+// renders no DOM, so `waitFor`'s MutationObserver never fires and its default 50ms
+// polling interval dominates the runtime of every test in this file. Poll on the
+// shortest interval instead – the awaited state is already there on the first retry.
 async function waitForStatus(result: { current: { status: AsyncStatus } }, expected: AsyncStatus) {
-    await waitFor(() => {
-        expect(result.current.status).toBe(expected);
-    });
+    await waitFor(
+        () => {
+            expect(result.current.status).toBe(expected);
+        },
+        { interval: 1 },
+    );
 }
 
 beforeEach(() => {

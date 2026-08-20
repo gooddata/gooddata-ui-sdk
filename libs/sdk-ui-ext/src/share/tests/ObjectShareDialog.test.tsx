@@ -2,7 +2,7 @@
 
 import { act, render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
-import { describe, expect, it, vi } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { type IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
@@ -21,7 +21,7 @@ import type {
     IObjectShareControllerActions,
     IObjectShareControllerState,
 } from "../objectShareController.types.js";
-import { ObjectShareDialog } from "../ObjectShareDialog.js";
+import type * as ObjectShareDialogModule from "../ObjectShareDialog.js";
 
 // The dialog owns its controller (one open = one session), so tests inject a stub
 // by mocking the controller hook: `renderDialog` assigns the stub per test.
@@ -105,6 +105,23 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
             return null;
         },
     };
+});
+
+/*
+ * Test isolation is disabled for this package, so the module cache is shared between test files:
+ * ObjectShareDialog.js may already have been evaluated - bound to the real controller hook and UI kit
+ * components - elsewhere, and the mocked graph this file builds must not outlive it. Re-import it up front so
+ * this file always observes the mocks above, and drop the mocked graph again on the way out.
+ */
+let ObjectShareDialog: typeof ObjectShareDialogModule.ObjectShareDialog;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ ObjectShareDialog } = await import("../ObjectShareDialog.js"));
+});
+
+afterAll(() => {
+    vi.resetModules();
 });
 
 const TARGET: IObjectPermissionsObject = { kind: "label", ref: idRef("label.country") };
@@ -342,6 +359,69 @@ describe("ObjectShareDialog self row", () => {
 
         expect(captured.controls.at(-1)?.disabledLevels).toBeUndefined();
         expect(captured.controls.at(-1)?.disabledTooltip).toBeUndefined();
+    });
+
+    it("locks only user rows while the caller's identity is unresolved", () => {
+        // A group row can never be the caller, so it stays usable.
+        renderDialog(
+            makeController({
+                granteeControlsLocked: true,
+                grantees: [
+                    OTHER_GRANTEE,
+                    {
+                        id: "group:g1",
+                        kind: "group" as const,
+                        granteeRef: idRef("g1"),
+                        name: "Marketing",
+                        level: "SHARE" as const,
+                    },
+                ],
+            }),
+        );
+
+        const byLevel = new Map(captured.controls.map((c) => [c.permissionLevel, c.isDisabled]));
+        expect(byLevel.get("VIEW")).toBe(true); // the user row
+        expect(byLevel.get("SHARE")).toBe(false); // the group row
+    });
+
+    it("disables the picks an inherited grant covers, with their own reason", () => {
+        renderDialog(
+            makeController({
+                grantees: [
+                    {
+                        ...OTHER_GRANTEE,
+                        level: "EDIT" as const,
+                        directLevel: "VIEW" as const,
+                        inheritedLevel: "EDIT" as const,
+                    },
+                ],
+            }),
+        );
+
+        const controls = captured.controls.at(-1)!;
+        // EDIT is displayed so it stays enabled; SHARE and VIEW cannot move anything.
+        expect(controls.disabledLevels?.slice().sort()).toEqual(["SHARE", "VIEW"]);
+        expect(controls.disabledTooltip).toBeUndefined(); // not the self row
+        expect(controls.disabledLevelTooltips?.SHARE).toMatch(/inherited/);
+        expect(controls.disabledLevelTooltips?.VIEW).toMatch(/inherited/);
+    });
+
+    it("keeps lowering enabled while the direct grant sits above what is inherited", () => {
+        renderDialog(
+            makeController({
+                grantees: [
+                    {
+                        ...OTHER_GRANTEE,
+                        level: "EDIT" as const,
+                        directLevel: "EDIT" as const,
+                        inheritedLevel: "SHARE" as const,
+                    },
+                ],
+            }),
+        );
+
+        // Both lower picks still move the effective level (EDIT drops to SHARE).
+        expect(captured.controls.at(-1)?.disabledLevels).toBeUndefined();
     });
 
     it("confirms before lowering the signed-in user's own level, then commits", () => {

@@ -8,7 +8,7 @@ import { type ScenarioAndDescription } from "../../../src/index.js";
 import { executeScenarios } from "../../../src/scenarios/execute/base.js";
 import { mountChartAndCapture } from "../../_infra/render.js";
 
-describe.skip("Execute", () => {
+describe("Execute", () => {
     const Scenarios: Array<ScenarioAndDescription<IExecuteProps>> = [executeScenarios].flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );

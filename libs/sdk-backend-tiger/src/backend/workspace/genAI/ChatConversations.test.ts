@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { type AxiosProgressEvent, type AxiosPromise } from "axios";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
     GenAiApi_PostConversations,
@@ -13,7 +13,10 @@ import { idRef } from "@gooddata/sdk-model";
 import type { DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import type { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
-import { ChatConversationThreadQuery, ChatConversationsService } from "./ChatConversations.js";
+import {
+    type ChatConversationThreadQuery as ChatConversationThreadQueryClass,
+    type ChatConversationsService as ChatConversationsServiceClass,
+} from "./ChatConversations.js";
 
 vi.mock("@gooddata/api-client-tiger/endpoints/genAI", () => ({
     GenAiApi_DeleteConversation: vi.fn(),
@@ -29,6 +32,17 @@ vi.mock("@gooddata/api-client-tiger/endpoints/genAI", () => ({
     GenAiApi_PostMessages: vi.fn(),
     GenAiApi_SwitchAgent: vi.fn(),
 }));
+
+// The units under test are imported dynamically from a fresh module registry so that they pick up
+// the endpoint mock above even when another (non-isolated) test file already imported them without
+// the mock.
+let ChatConversationThreadQuery: typeof ChatConversationThreadQueryClass;
+let ChatConversationsService: typeof ChatConversationsServiceClass;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ ChatConversationThreadQuery, ChatConversationsService } = await import("./ChatConversations.js"));
+});
 
 describe("ChatConversationsService.create", () => {
     const dateNormalizer: DateNormalizer = (value) => value ?? "";

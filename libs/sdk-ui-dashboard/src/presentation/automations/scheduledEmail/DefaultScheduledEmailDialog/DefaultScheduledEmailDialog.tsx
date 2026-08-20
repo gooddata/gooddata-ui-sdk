@@ -26,6 +26,7 @@ import {
     ScrollablePanel,
     UiIcon,
     UiTabs,
+    getTimezoneDisplayLabel,
     isEnterKey,
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
@@ -47,6 +48,7 @@ import {
     type IDefaultScheduledEmailDialogProps,
     type IScheduledEmailDialogFiltersProps,
     type ScheduledEmailDialogHeaderDefaultProps,
+    type ScheduledEmailDialogTimezoneDefaultProps,
 } from "../types.js";
 import { getDefaultCronExpression } from "../utils/cron.js";
 import { isMobileView } from "../utils/responsive.js";
@@ -60,6 +62,7 @@ import { ScheduledEmailDialogHeader } from "./components/Header/ScheduleEmailDia
 import { MessageForm } from "./components/MessageForm/MessageForm.js";
 import { RecipientsSelect } from "./components/RecipientsSelect/RecipientsSelect.js";
 import { ScheduledEmailDialogFilters } from "./components/ScheduledEmailDialogFilters.js";
+import { ScheduleTimezoneSelect } from "./components/ScheduleTimezoneSelect/ScheduleTimezoneSelect.js";
 import { SubjectForm } from "./components/SubjectForm/SubjectForm.js";
 import { SCHEDULED_EMAIL_DIALOG_ID } from "./constants.js";
 import { DefaultLoadingScheduledEmailDialog } from "./DefaultLoadingScheduledEmailDialog.js";
@@ -124,6 +127,7 @@ export function ScheduledMailDialogRenderer({
 }: IDefaultScheduledEmailDialogProps) {
     const HeaderSlot = slots?.Header;
     const FiltersSlot = slots?.Filters;
+    const TimezoneSlot = slots?.Timezone;
 
     const intl = useIntl();
 
@@ -171,7 +175,16 @@ export function ScheduledMailDialogRenderer({
         enableAutomationEvaluationMode,
     } = useDefaultScheduledEmailDialogData();
 
-    const { editedAutomation, originalAutomation, startDate } = useScheduledExportDraft();
+    const {
+        editedAutomation,
+        originalAutomation,
+        startDate,
+        isTimezoneFeatureEnabled,
+        canSelectScheduleTimezone,
+        scheduleTimezoneSelection,
+        defaultResolvedTimezone,
+        scheduleTimezoneIsStale,
+    } = useScheduledExportDraft();
     const {
         onTitleChange,
         onRecurrenceChange,
@@ -187,6 +200,8 @@ export function ScheduledMailDialogRenderer({
         onCsvSettingsChange,
         onCsvRawSettingsChange,
         onSlidesTemplateIdChange,
+        onScheduleTimezoneChange,
+        applyCurrentScheduleTimezone,
     } = useScheduledExportActions();
     const { defaultUser } = useScheduledExportData();
     const {
@@ -222,8 +237,10 @@ export function ScheduledMailDialogRenderer({
         allowOnlyLoggedUserRecipients,
     } = useScheduledExportDialogValidity();
 
-    const [isApplyCurrentFiltersDialogOpen, setIsApplyCurrentFiltersDialogOpen] =
-        useState(!automationIsValid);
+    // a stale schedule timezone repairs through the same consent dialog as stale filters
+    const [isApplyCurrentFiltersDialogOpen, setIsApplyCurrentFiltersDialogOpen] = useState(
+        !automationIsValid || scheduleTimezoneIsStale,
+    );
 
     const { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage } =
         useSaveScheduledEmailToBackend(editedAutomation, {
@@ -264,6 +281,15 @@ export function ScheduledMailDialogRenderer({
         },
         [submitDisabled, handleSaveScheduledEmail],
     );
+
+    // the exact props the default dialog renders the "Time zone" section with; also handed to the
+    // Timezone slot so a wrap keeps the default behavior
+    const timezoneDefaultProps: ScheduledEmailDialogTimezoneDefaultProps = {
+        isWidget: !!widget,
+        selection: scheduleTimezoneSelection,
+        defaultResolvedTimezone,
+        onTimezoneChange: onScheduleTimezoneChange,
+    };
 
     const { secondaryTitle, secondaryTitleIcon } = useMemo(() => {
         if (widget) {
@@ -329,10 +355,17 @@ export function ScheduledMailDialogRenderer({
         return (
             <ApplyCurrentFiltersConfirmDialog
                 automationType="schedule"
+                filtersChanged={!automationIsValid}
+                timezoneChanged={scheduleTimezoneIsStale}
                 onCancel={() => onCancel?.()}
                 onEdit={() => {
-                    onApplyCurrentFilters();
-                    applyLatestParameters();
+                    // each repair only fixes its own staleness: a timezone-only repair must not
+                    // replace intentionally snapshotted, still-valid filters (and vice versa)
+                    if (!automationIsValid) {
+                        onApplyCurrentFilters();
+                        applyLatestParameters();
+                    }
+                    applyCurrentScheduleTimezone();
                     setIsApplyCurrentFiltersDialogOpen(false);
                 }}
             />
@@ -513,8 +546,16 @@ export function ScheduledMailDialogRenderer({
                                             }
                                             cronDescription={editedAutomation.schedule?.cronDescription}
                                             timezone={
-                                                editedAutomation.schedule?.timezone ??
-                                                TIMEZONE_DEFAULT.identifier
+                                                // display-only prop; with the timezone feature on,
+                                                // show the friendly label used by the time zone
+                                                // picker instead of the raw IANA ID
+                                                isTimezoneFeatureEnabled
+                                                    ? getTimezoneDisplayLabel(
+                                                          editedAutomation.schedule?.timezone ??
+                                                              TIMEZONE_DEFAULT.identifier,
+                                                      )
+                                                    : (editedAutomation.schedule?.timezone ??
+                                                      TIMEZONE_DEFAULT.identifier)
                                             }
                                             dateFormat={dateFormat ?? "MM/dd/yyyy"}
                                             locale={locale}
@@ -600,6 +641,16 @@ export function ScheduledMailDialogRenderer({
                                                 onSlidesTemplateIdChange={onSlidesTemplateIdChange}
                                             />
                                         )}
+                                        {canSelectScheduleTimezone ? (
+                                            TimezoneSlot ? (
+                                                <TimezoneSlot
+                                                    Default={ScheduleTimezoneSelect}
+                                                    defaultProps={timezoneDefaultProps}
+                                                />
+                                            ) : (
+                                                <ScheduleTimezoneSelect {...timezoneDefaultProps} />
+                                            )
+                                        ) : null}
                                         {enableAutomationEvaluationMode ? (
                                             <EvaluationModeCheckbox
                                                 isShared={editedAutomation.evaluationMode === "SHARED"}

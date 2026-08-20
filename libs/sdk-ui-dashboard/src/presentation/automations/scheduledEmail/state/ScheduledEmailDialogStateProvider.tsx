@@ -5,6 +5,7 @@ import { type ReactNode, useMemo } from "react";
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
 import { useAutomationFiltersSelect } from "../../shared/automationFilters/useAutomationFiltersSelect.js";
+import { useScheduleTimezone } from "../DefaultScheduledEmailDialog/hooks/useScheduleTimezone.js";
 import { getDefaultPdfPageSize } from "../utils/pdfPageSize.js";
 
 import {
@@ -109,6 +110,12 @@ function LoadedScheduledEmailDialogState({ children }: { children: ReactNode }) 
         defaultPdfPageSize,
     });
 
+    const scheduleTimezoneState = useScheduleTimezone({
+        scheduledExportToEdit,
+        widget,
+        setEditedAutomation: formState.setEditedAutomation,
+    });
+
     const exportSettings = useScheduledEmailExportSettings({
         editedAutomation: formState.editedAutomation,
         setEditedAutomation: formState.setEditedAutomation,
@@ -120,6 +127,7 @@ function LoadedScheduledEmailDialogState({ children }: { children: ReactNode }) 
         effectiveWidgetFilters,
         effectiveWidgetFiltersWithInsight,
         defaultPdfPageSize,
+        scheduleTimezone: scheduleTimezoneState.scheduleTimezone,
     });
 
     const filtersModel = useScheduledEmailFiltersModel({
@@ -150,6 +158,11 @@ function LoadedScheduledEmailDialogState({ children }: { children: ReactNode }) 
             isTitleValid: formState.isTitleValid,
             isSubjectValid: formState.isSubjectValid,
             isOnMessageValid: formState.isOnMessageValid,
+            isTimezoneFeatureEnabled: scheduleTimezoneState.isTimezoneFeatureEnabled,
+            canSelectScheduleTimezone: scheduleTimezoneState.canSelectScheduleTimezone,
+            scheduleTimezoneSelection: scheduleTimezoneState.scheduleTimezoneSelection,
+            defaultResolvedTimezone: scheduleTimezoneState.defaultResolvedTimezone,
+            scheduleTimezoneIsStale: scheduleTimezoneState.scheduleTimezoneIsStale,
         }),
         [
             formState.editedAutomation,
@@ -159,6 +172,11 @@ function LoadedScheduledEmailDialogState({ children }: { children: ReactNode }) 
             formState.isTitleValid,
             formState.isSubjectValid,
             formState.isOnMessageValid,
+            scheduleTimezoneState.isTimezoneFeatureEnabled,
+            scheduleTimezoneState.canSelectScheduleTimezone,
+            scheduleTimezoneState.scheduleTimezoneSelection,
+            scheduleTimezoneState.defaultResolvedTimezone,
+            scheduleTimezoneState.scheduleTimezoneIsStale,
         ],
     );
 
@@ -179,6 +197,8 @@ function LoadedScheduledEmailDialogState({ children }: { children: ReactNode }) 
             onCsvSettingsChange: exportSettings.onCsvSettingsChange,
             onCsvRawSettingsChange: exportSettings.onCsvRawSettingsChange,
             onSlidesTemplateIdChange: exportSettings.onSlidesTemplateIdChange,
+            onScheduleTimezoneChange: scheduleTimezoneState.onScheduleTimezoneChange,
+            applyCurrentScheduleTimezone: scheduleTimezoneState.applyCurrentScheduleTimezone,
         }),
         [
             formState.setEditedAutomation,
@@ -196,6 +216,8 @@ function LoadedScheduledEmailDialogState({ children }: { children: ReactNode }) 
             exportSettings.onCsvSettingsChange,
             exportSettings.onCsvRawSettingsChange,
             exportSettings.onSlidesTemplateIdChange,
+            scheduleTimezoneState.onScheduleTimezoneChange,
+            scheduleTimezoneState.applyCurrentScheduleTimezone,
         ],
     );
 

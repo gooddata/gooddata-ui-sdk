@@ -2,10 +2,19 @@
 
 import { describe, expect, it, vi } from "vitest";
 
-// Prepare hoisted global extractProps variable which gets its value in hoisted mock and then is used in test.
-let { extractProps } = vi.hoisted(() => ({
-    extractProps: null as any,
-}));
+type CaptureProps = <T>(mount: (extractProps: () => any) => T) => T;
+
+// Prepare hoisted global captureProps variable which gets its value in hoisted mock and then is used in test.
+let { captureProps } = vi.hoisted(() => {
+    // The suite runs with `isolate: false`, so the module registry is shared between test files. Any
+    // file executed earlier may have already evaluated `AreaChart` against the real `CoreAreaChart`,
+    // and vitest does not re-execute cached importers when a later file mocks one of their
+    // dependencies. Dropping the registry before this file's imports are evaluated makes the mock
+    // below take effect regardless of the order in which vitest schedules the test files.
+    vi.resetModules();
+
+    return { captureProps: null as unknown as CaptureProps };
+});
 
 import { defSetSorts } from "@gooddata/sdk-model";
 import { type IAreaChartProps } from "@gooddata/sdk-ui-charts";
@@ -19,9 +28,9 @@ import { cleanupCoreChartProps } from "../../_infra/utils.js";
 
 vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreAreaChart", async () => {
     const Original = await vi.importActual<any>("@gooddata/sdk-ui-charts/internal-tests/CoreAreaChart");
-    const { withPropsExtractor } = await import("../../_infra/withProps.js");
-    const { extractProps: originalExtractProps, wrap } = withPropsExtractor();
-    extractProps = originalExtractProps;
+    const { withScopedPropsExtractor } = await import("../../_infra/withProps.js");
+    const { captureProps: originalCaptureProps, wrap } = withScopedPropsExtractor();
+    captureProps = originalCaptureProps;
 
     return {
         ...Original,
@@ -29,13 +38,44 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreAreaChart", async () => {
     };
 });
 
-describe.skip("AreaChart", () => {
+/**
+ * Every mount resolves only once its capturing backend has debounced (a real timer per mount), so a mount
+ * started inside `it` costs that wait sequentially - once per scenario, per test. Starting all mounts during
+ * collection instead lets those timers run concurrently across scenarios and turns the whole file's
+ * accumulated wait into roughly one debounce.
+ *
+ * The catch handler keeps a rejection from being reported as an unhandled rejection during collection; the
+ * returned promise still rejects, so the test that awaits it is the one that fails.
+ */
+function started<T>(promise: Promise<T>): Promise<T> {
+    promise.catch(() => {
+        /* reported by the test awaiting this promise */
+    });
+
+    return promise;
+}
+
+describe("AreaChart", () => {
     const Scenarios: Array<ScenarioAndDescription<IAreaChartProps>> = areaScenarios.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 
     describe.each(Scenarios)("with %s", (_desc, scenario) => {
-        const promisedInteractions = mountChartAndCapture(scenario);
+        /*
+         * A single chart mount serves both the execution-definition and the core-props assertions: passing
+         * the props extractor does not alter what the mount does or what execution it triggers, it only
+         * decides whether `effectiveProps` holds the top-level or the core chart props - and only the
+         * core-props test reads them.
+         */
+        const promisedInteractions = started(
+            captureProps((extractProps: () => any) => mountChartAndCapture(scenario, extractProps)),
+        );
+
+        const promisedPlugVizInteractions = started(
+            promisedInteractions.then((interactions) =>
+                mountInsight(scenario, createInsightDefinitionForChart("AreaChart", _desc, interactions)),
+            ),
+        );
 
         it("should create expected execution definition", async () => {
             const interactions = await promisedInteractions;
@@ -44,8 +84,6 @@ describe.skip("AreaChart", () => {
         });
 
         it("should create expected props for core chart", async () => {
-            const promisedInteractions = mountChartAndCapture(scenario, extractProps);
-
             const interactions = await promisedInteractions;
 
             expect(interactions.effectiveProps).toBeDefined();
@@ -55,10 +93,7 @@ describe.skip("AreaChart", () => {
 
         it("should lead to same execution when rendered as insight via plug viz", async () => {
             const interactions = await promisedInteractions;
-
-            const insight = createInsightDefinitionForChart("AreaChart", _desc, interactions);
-
-            const plugVizInteractions = await mountInsight(scenario, insight);
+            const plugVizInteractions = await promisedPlugVizInteractions;
 
             // remove sorts from both original and plug viz exec - simply because plug vis will automatically
             // create sorts

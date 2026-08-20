@@ -4,7 +4,7 @@ import { type PropsWithChildren } from "react";
 
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import {
@@ -16,7 +16,7 @@ import { type IGranularAccessGrantee, idRef, objRefToString } from "@gooddata/sd
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
 import type { IObjectShareLabel } from "../types.js";
-import { useObjectShareController } from "../useObjectShareController.js";
+import type * as UseObjectShareControllerModule from "../useObjectShareController.js";
 
 /**
  * State-matrix coverage for per-label access provenance.
@@ -177,6 +177,23 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
             addWarning: vi.fn(),
         }),
     };
+});
+
+/*
+ * Test isolation is disabled for this package, so the module cache is shared between test files:
+ * useObjectShareController.js may already have been evaluated - bound to another file's mocks - elsewhere,
+ * and the mocked graph this file builds must not outlive it. Re-import it up front so this file always
+ * drives a controller wired to the stubs above, and drop the mocked graph again on the way out.
+ */
+let useObjectShareController: typeof UseObjectShareControllerModule.useObjectShareController;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ useObjectShareController } = await import("../useObjectShareController.js"));
+});
+
+afterAll(() => {
+    vi.resetModules();
 });
 
 /** The object is granted here AND inherited; `lbl.name` likewise; `lbl.code` inherited only. */

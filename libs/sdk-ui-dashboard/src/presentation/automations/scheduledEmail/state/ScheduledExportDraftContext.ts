@@ -2,6 +2,8 @@
 
 import { createContext, useContext } from "react";
 
+import { type useScheduleTimezone } from "../DefaultScheduledEmailDialog/hooks/useScheduleTimezone.js";
+
 import { missingScheduledExportStateProvider } from "./missingScheduledExportStateProvider.js";
 import { type useScheduledEmailFormState } from "./useScheduledEmailFormState.js";
 
@@ -11,7 +13,9 @@ import { type useScheduledEmailFormState } from "./useScheduledEmailFormState.js
  * flags the form fields report back.
  *
  * Changes on every keystroke; consumers re-render by design. The shape is derived from
- * `useScheduledEmailFormState`, which owns these values.
+ * `useScheduledEmailFormState`, which owns these values, and `useScheduleTimezone`, which owns the
+ * "Time zone" section's view state (a timezone pick also edits the draft's export definitions, so
+ * the selection changes together with the draft).
  *
  * @internal
  */
@@ -24,7 +28,15 @@ export type IScheduledExportDraftContextValue = Pick<
     | "isTitleValid"
     | "isSubjectValid"
     | "isOnMessageValid"
->;
+> &
+    Pick<
+        ReturnType<typeof useScheduleTimezone>,
+        | "isTimezoneFeatureEnabled"
+        | "canSelectScheduleTimezone"
+        | "scheduleTimezoneSelection"
+        | "defaultResolvedTimezone"
+        | "scheduleTimezoneIsStale"
+    >;
 
 const ScheduledExportDraftContext = createContext<IScheduledExportDraftContextValue | undefined>(undefined);
 ScheduledExportDraftContext.displayName = "ScheduledExportDraftContext";

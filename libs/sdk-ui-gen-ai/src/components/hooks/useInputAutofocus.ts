@@ -3,8 +3,11 @@
 import { createRef, useEffect, useMemo, useRef } from "react";
 
 import type { EditorView } from "@codemirror/view";
+import { useSelector } from "react-redux";
 
 import { useUiAutofocusConnectors } from "@gooddata/sdk-ui-kit";
+
+import { conversationSelector } from "../../store/messages/messagesSelectors.js";
 
 export function useInputAutofocus(
     editorApi: EditorView | null,
@@ -13,6 +16,8 @@ export function useInputAutofocus(
 ) {
     // Force focus when autofocus is enables on the first mount, right after the initial state is loaded
     const forceFocusOnce = useRef<boolean>(autofocus);
+    const conversationLocalId = useSelector(conversationSelector)?.localId;
+    const focusedConversationLocalId = useRef(conversationLocalId);
 
     const initialFocus = useMemo(() => {
         const ref = createRef<HTMLDivElement>();
@@ -23,8 +28,12 @@ export function useInputAutofocus(
     const ref = useUiAutofocusConnectors<HTMLDivElement>({
         initialFocus,
         active:
-            autofocus && !opts.isBusy && (forceFocusOnce.current || document.activeElement === document.body),
-        refocusKey: opts.isBusy,
+            autofocus &&
+            !opts.isBusy &&
+            (forceFocusOnce.current ||
+                document.activeElement === document.body ||
+                focusedConversationLocalId.current !== conversationLocalId),
+        refocusKey: `${opts.isBusy}-${conversationLocalId ?? ""}`,
     });
 
     useEffect(() => {
@@ -32,6 +41,10 @@ export function useInputAutofocus(
             forceFocusOnce.current = false;
         }
     }, [editorApi]);
+
+    useEffect(() => {
+        focusedConversationLocalId.current = conversationLocalId;
+    }, [conversationLocalId]);
 
     useEffect(
         () => () => {

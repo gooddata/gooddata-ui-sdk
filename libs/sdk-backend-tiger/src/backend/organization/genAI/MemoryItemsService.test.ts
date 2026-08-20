@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { type AxiosPromise } from "axios";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
     type EntitiesApiCreateEntityOrgMemoryItemsRequest,
@@ -19,7 +19,7 @@ import { type IMemoryItemDefinition } from "@gooddata/sdk-model";
 
 import type { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
-import { OrganizationMemoryItemsService } from "./MemoryItemsService.js";
+import { type OrganizationMemoryItemsService as OrganizationMemoryItemsServiceClass } from "./MemoryItemsService.js";
 
 // The org memory service must call the GENERATED api-client functions (not hand-built
 // client.axios.request(...)). We mock those generated functions and assert on the request
@@ -31,6 +31,15 @@ vi.mock("@gooddata/api-client-tiger/endpoints/entitiesObjects", () => ({
     EntitiesApi_DeleteEntityOrgMemoryItems: vi.fn(),
     EntitiesApi_GetAllEntitiesOrgMemoryItems: vi.fn(),
 }));
+
+// The service is imported dynamically from a fresh module registry so that it picks up the mock
+// above even when another (non-isolated) test file already imported it without the mock.
+let OrganizationMemoryItemsService: typeof OrganizationMemoryItemsServiceClass;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ OrganizationMemoryItemsService } = await import("./MemoryItemsService.js"));
+});
 
 const BASE_PATH = "https://example.gooddata.com";
 

@@ -1,7 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { type IColorPalette } from "@gooddata/sdk-model";
 import { withIntlForTest } from "@gooddata/sdk-ui";
@@ -10,41 +10,16 @@ import { type IColorConfig } from "../../../../../../../../interfaces/comparison
 import { EvaluationType, type IComparisonDataWithSubItem } from "../../../../../interfaces/BaseHeadlines.js";
 import {
     COMPARISON_HEADLINE_VALUE_SELECTOR,
+    INDICATOR_UP_CLASSNAME_SELECTOR,
     TEST_COLOR_CONFIGS,
     TEST_DATA_WITH_SUB_ITEM,
     TEST_RENDER_COLOR_SPECS,
     createComparison,
 } from "../../../../../tests/TestData.fixtures.js";
-import { createMockUseBaseHeadline } from "../../../tests/BaseHeadline.test.helpers.js";
+import { createBaseHeadlineTestContext } from "../../../tests/BaseHeadline.test.helpers.js";
 import { ComparisonDataWithSubItem } from "../ComparisonDataWithSubItem.js";
-import { ComparisonValue } from "../ComparisonValue.js";
-import { useComparisonDataItem } from "../useComparisonDataItem.js";
 
-const useBaseHeadlineMock = vi.hoisted(() => vi.fn());
-
-vi.mock("../../../BaseHeadlineContext.js", () => ({
-    useBaseHeadline: useBaseHeadlineMock,
-}));
-
-vi.mock("../ComparisonValue.js", async (importOriginal) => {
-    const original = await importOriginal();
-    return {
-        ...(original as object),
-        ComparisonValue: vi.fn((original as { ComparisonValue: () => void }).ComparisonValue),
-    };
-});
-
-vi.mock("../useComparisonDataItem.js", async (importOriginal) => {
-    const original = await importOriginal();
-    return {
-        ...(original as object),
-        useComparisonDataItem: vi.fn(
-            (original as { useComparisonDataItem: () => void }).useComparisonDataItem,
-        ),
-    };
-});
-
-const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
+const { setBaseHeadline, wrapper } = createBaseHeadlineTestContext();
 
 describe("ComparisonDataWithSubItem", () => {
     const DEFAULT_PROPS = {
@@ -64,11 +39,11 @@ describe("ComparisonDataWithSubItem", () => {
         };
 
         const Component = withIntlForTest(ComparisonDataWithSubItem);
-        return render(<Component {...props} />);
+        return render(<Component {...props} />, { wrapper });
     };
 
     it("Should render value and sub-value based on comparison-value component", () => {
-        mockUseBaseHeadline({
+        setBaseHeadline({
             config: {
                 comparison: createComparison({
                     colorConfig: TEST_COLOR_CONFIGS,
@@ -76,38 +51,21 @@ describe("ComparisonDataWithSubItem", () => {
             },
         });
 
-        const MockComparisonValue = vi.mocked(ComparisonValue);
-        renderComparisonDataItem();
+        const { container } = renderComparisonDataItem();
 
-        expect(MockComparisonValue).toHaveBeenCalledTimes(2);
-        expect(MockComparisonValue).toHaveBeenNthCalledWith(
-            1,
-            expect.objectContaining({
-                dataItem: TEST_DATA_WITH_SUB_ITEM.item,
-                comparisonStyle: { color: "rgb(5,5,5)" },
-            }),
-            undefined,
-        );
-        expect(MockComparisonValue).toHaveBeenNthCalledWith(
-            2,
-            expect.objectContaining({
-                dataItem: TEST_DATA_WITH_SUB_ITEM.subItem,
-                comparisonStyle: { color: "rgb(5,5,5)" },
-                isSubItem: true,
-            }),
-            undefined,
-        );
+        const valueWrappers = container.querySelectorAll(COMPARISON_HEADLINE_VALUE_SELECTOR);
+        expect(valueWrappers).toHaveLength(2);
+        expect(valueWrappers[0]).toHaveTextContent("$130,000.00");
+        expect(valueWrappers[0]).toHaveStyle("color: rgb(5, 5, 5)");
+        expect(valueWrappers[1]).toHaveTextContent("(80000)");
+        expect(valueWrappers[1]).toHaveStyle("color: rgb(5, 5, 5)");
     });
 
     describe("Should render color correctly", () => {
-        afterEach(() => {
-            vi.clearAllMocks();
-        });
-
         it.each<[string, IColorConfig, EvaluationType, string, IColorPalette?]>(TEST_RENDER_COLOR_SPECS)(
             "%s",
             (_test, colorConfig, evaluationType, expectedColor, customPalette) => {
-                mockUseBaseHeadline({
+                setBaseHeadline({
                     config: {
                         comparison: createComparison({
                             colorConfig,
@@ -144,21 +102,17 @@ describe("ComparisonDataWithSubItem", () => {
     });
 
     it("Should render comparison indicator", () => {
-        mockUseBaseHeadline({
+        setBaseHeadline({
             config: {
                 comparison: createComparison({
                     colorConfig: TEST_COLOR_CONFIGS,
+                    isArrowEnabled: true,
                 }),
             },
         });
-        const MockIndicator = vi.fn();
-        vi.mocked(useComparisonDataItem).mockReturnValue({
-            style: {},
-            indicator: MockIndicator,
-            comparisonAriaLabelFactory: vi.fn(),
-        });
 
-        renderComparisonDataItem();
-        expect(MockIndicator).toHaveBeenCalled();
+        const { container } = renderComparisonDataItem();
+
+        expect(container.querySelector(INDICATOR_UP_CLASSNAME_SELECTOR)).toBeInTheDocument();
     });
 });

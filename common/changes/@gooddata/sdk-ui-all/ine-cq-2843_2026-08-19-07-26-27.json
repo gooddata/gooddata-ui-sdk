@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Improve accessibility of the timezone controls: announce timezone search results, add a screen-reader label to the top-bar timezone indicator, announce listbox item tooltips and the current-time preview to screen readers, and make the dashboard settings help icon keyboard accessible.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "ivan.nejezchleb@gooddata.com"
+}

@@ -1399,7 +1399,7 @@ export interface IAutomationAlertComparisonCondition {
 export type IAutomationAlertCondition = IAutomationAlertComparisonCondition | IAutomationAlertRelativeCondition | IAutomationAnomalyDetectionCondition;
 
 // @alpha (undocumented)
-export type IAutomationAlertExecutionDefinition = Pick<IExecutionDefinition, "attributes" | "measures" | "filters"> & {
+export type IAutomationAlertExecutionDefinition = Pick<IExecutionDefinition, "attributes" | "measures" | "filters" | "executionConfig"> & {
     readonly auxMeasures?: IMeasure[];
     readonly parameters?: IInsightParameterValue[];
 };
@@ -2666,6 +2666,7 @@ export type IExportDefinitionDashboardRequestPayload = {
     settings?: IExportDefinitionDashboardSettings;
     content: IExportDefinitionDashboardContent;
     templateId?: string;
+    timezoneId?: string;
 };
 
 // @alpha
@@ -2712,6 +2713,7 @@ export type IExportDefinitionVisualizationObjectRequestPayload = {
     settings?: IExportDefinitionVisualizationObjectSettings;
     content: IExportDefinitionVisualizationObjectContent;
     templateId?: string;
+    timezoneId?: string;
 };
 
 // @alpha
@@ -2919,6 +2921,7 @@ export interface IFeatureFlags {
     enableGenAICatalogQualityChecker?: boolean;
     enableGenAIChat?: boolean;
     enableGenAiInteractionIntelligence?: boolean;
+    enableGenAiInteractionIntelligence_timeline?: boolean;
     enableGenAIMemory?: boolean;
     enableGenAiObservability?: boolean;
     enableGenAiReasoningEffort?: boolean;
@@ -2986,6 +2989,7 @@ export interface IFeatureFlags {
     enableStarrocksDataSource?: boolean;
     enableStringParameters?: boolean;
     enableSystemAccountFiltering?: boolean;
+    enableTimezoneChange?: boolean;
     enableUserDataFiltersUi?: boolean;
     enableVisualizationFilteringByTags?: boolean;
     enableVisualizationFineTuning?: boolean;
@@ -7086,6 +7090,9 @@ export type RequiredSettings = Condition<Partial<IPermanentSettings | IFeatureFl
 
 // @alpha
 export type RequiredWorkspacePermissions = Condition<Partial<IPluggableApplicationWorkspacePermissions>>;
+
+// @alpha
+export function resolveDashboardTimezoneUserOverrideAllowed(config: IDashboardTimezoneConfig | undefined, enableTimezoneChange: boolean | undefined): boolean;
 
 // @alpha
 export function resolveTimezoneId(timezoneId: DashboardTimezoneId | undefined): string | undefined;

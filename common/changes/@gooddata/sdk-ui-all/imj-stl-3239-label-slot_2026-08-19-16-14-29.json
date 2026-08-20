@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-charts: Lower the minimum space per data point that keeps data labels from being skipped on column, bar and waterfall charts from 12px to 8px. Single character labels ('7') are about 9.8px wide, so with the 12px bound charts with short values could lose labels that the auto-hide rules still displayed. Measured on a 600px wide column chart: all short labels are shown at 11.6px per point and all are hidden at 8.7px per point.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "ivan.mjartan@gooddata.com"
+}

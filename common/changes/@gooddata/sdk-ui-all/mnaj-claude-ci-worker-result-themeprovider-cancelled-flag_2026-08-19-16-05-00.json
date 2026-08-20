@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-theme-provider: Fix stale theme application in ThemeProvider. The in-flight backend getTheme() call is now tracked by an effect-scoped cancelled flag with cleanup, so a late resolution is ignored once the workspace or backend changes or the component unmounts, instead of applying an outdated theme or re-injecting the global CSS variables that the unmount cleanup has just removed.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

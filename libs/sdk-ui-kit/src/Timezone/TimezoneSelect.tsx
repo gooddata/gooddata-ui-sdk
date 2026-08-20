@@ -4,6 +4,10 @@ import { type ReactElement, type ReactNode, useMemo, useState } from "react";
 
 import { type IUiListboxInteractiveItem, type IUiListboxItem } from "../@ui/UiListbox/types.js";
 import { UiListbox } from "../@ui/UiListbox/UiListbox.js";
+import {
+    DETAILED_ANNOUNCEMENT_THRESHOLD,
+    UiSearchResultsAnnouncement,
+} from "../@ui/UiSearchResultsAnnouncement/UiSearchResultsAnnouncement.js";
 import { Dropdown, type IDropdownButtonRenderProps } from "../Dropdown/Dropdown.js";
 import { DropdownButton } from "../Dropdown/DropdownButton.js";
 import { Input } from "../Form/Input.js";
@@ -19,7 +23,7 @@ const LIST_MAX_HEIGHT = 280;
 
 /**
  * Special item rendered above the divider in {@link TimezoneSelect}, ahead of the curated
- * timezone list. Callers use these for entries like "Default (workspace)" or "From browser (...)".
+ * timezone list. Callers use these for entries like "Default" or "Device time zone".
  *
  * @internal
  */
@@ -53,7 +57,7 @@ export interface ITimezoneSelectSpecialItem {
 export interface ITimezoneSelectButtonRenderProps extends IDropdownButtonRenderProps {
     /**
      * Human-readable label of the current selection: the matching special item label,
-     * the selected timezone as "name (offset)" (e.g. "Prague (GMT+01:00)"),
+     * the friendly name of the selected timezone (e.g. "Prague"),
      * or the placeholder when nothing is selected.
      */
     buttonLabel: string;
@@ -105,6 +109,18 @@ export interface ITimezoneSelectProps {
      * Accessibility label of the search input and the listbox.
      */
     ariaLabel: string;
+
+    /**
+     * Id of the default dropdown trigger, so a visible `<label htmlFor>` can be associated
+     * with it. Ignored when a custom trigger is rendered via `renderButton`.
+     */
+    id?: string;
+
+    /**
+     * Ids of elements describing the default dropdown trigger (`aria-describedby`), e.g. an
+     * adjacent hint text. Ignored when a custom trigger is rendered via `renderButton`.
+     */
+    ariaDescribedBy?: string;
 
     /**
      * Label shown when the search yields no results.
@@ -198,7 +214,7 @@ export function getSelectedItemId(
 
 /**
  * Searchable dropdown for picking a timezone from the curated list, with optional special
- * items (e.g. "Default (workspace)", "From browser (...)") rendered above a divider.
+ * items (e.g. "Default", "Device time zone") rendered above a divider.
  *
  * @internal
  */
@@ -209,6 +225,8 @@ export function TimezoneSelect({
     placeholder = "",
     searchPlaceholder,
     ariaLabel,
+    id,
+    ariaDescribedBy,
     noMatchLabel,
     isDisabled,
     header,
@@ -230,6 +248,17 @@ export function TimezoneSelect({
     );
     const hasNoMatchingData = items.length === 0;
 
+    // items may contain a separator between special items and the timezone list; only the
+    // interactive entries are search results worth announcing
+    const interactiveItems = useMemo(
+        () =>
+            items.filter(
+                (item): item is IUiListboxInteractiveItem<TimezoneListItemData> =>
+                    item.type === "interactive",
+            ),
+        [items],
+    );
+
     return (
         <Dropdown
             closeOnParentScroll
@@ -250,10 +279,12 @@ export function TimezoneSelect({
                         isOpen={renderProps.isOpen}
                         onClick={renderProps.toggleDropdown}
                         disabled={isDisabled}
+                        id={id}
                         dropdownId={renderProps.dropdownId}
                         buttonRef={renderProps.buttonRef}
                         accessibilityConfig={{
                             ariaLabel,
+                            ariaDescribedBy,
                             ariaExpanded: renderProps.isOpen,
                             popupType: "listbox",
                         }}
@@ -285,6 +316,14 @@ export function TimezoneSelect({
                             }}
                         />
                     </div>
+                    <UiSearchResultsAnnouncement
+                        totalResults={searchString ? interactiveItems.length : undefined}
+                        resultValues={
+                            interactiveItems.length <= DETAILED_ANNOUNCEMENT_THRESHOLD
+                                ? interactiveItems.map((item) => item.stringTitle)
+                                : undefined
+                        }
+                    />
                     {hasNoMatchingData ? (
                         <NoData hasNoMatchingData notFoundLabel={noMatchLabel} noDataLabel={noMatchLabel} />
                     ) : (

@@ -28,6 +28,7 @@ export const convertExportMetadata = (exportMetadata: any): Partial<IExportMetad
             : {}),
 
         ...(exportMetadata?.parametersByTab ? { parametersByTab: exportMetadata.parametersByTab } : {}),
+        ...(exportMetadata?.timezoneId ? { timezoneId: exportMetadata.timezoneId } : {}),
         ...(exportMetadata?.title ? { title: exportMetadata.title } : {}),
         ...(exportMetadata?.hideWidgetTitles ? { hideWidgetTitles: exportMetadata.hideWidgetTitles } : {}),
         ...(exportMetadata?.exportMetadata === undefined

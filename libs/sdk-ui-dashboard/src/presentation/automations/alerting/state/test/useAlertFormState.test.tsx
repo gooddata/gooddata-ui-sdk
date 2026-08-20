@@ -1032,6 +1032,7 @@ describe("useAlertFormState — new-alert init (createDefaultAlert wiring)", () 
             "dashboard-1",
             "Widget Title",
             "tab-1",
+            undefined,
         );
     });
 
@@ -1052,7 +1053,26 @@ describe("useAlertFormState — new-alert init (createDefaultAlert wiring)", () 
             undefined,
             undefined,
             undefined,
+            undefined,
         );
+    });
+
+    it("threads the dashboard-scoped effective timezone into createDefaultAlert", () => {
+        mockUseAutomationsContext.mockReturnValue({
+            ...DEFAULT_AUTOMATIONS_CONTEXT_VALUE,
+            exportTimezones: {
+                isTimezoneFeatureEnabled: true,
+                allowUserOverrideInViewMode: true,
+                configuredTimezoneId: undefined,
+                workspaceTimezone: "America/Argentina/Buenos_Aires",
+                effectiveTimezone: "Europe/Prague",
+                scheduledExportTimezone: "Europe/Prague",
+            },
+        });
+        renderFormStateHook();
+
+        // last arg is the execution timezone baked into the new alert's execution config
+        expect(createDefaultAlertSpy.mock.calls[0]?.at(-1)).toBe("Europe/Prague");
     });
 });
 

@@ -1,14 +1,13 @@
 // (C) 2026 GoodData Corporation
 
 import { renderHook } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type { IFeatureFlags } from "@gooddata/sdk-model";
 
 import { ObjectTypes } from "../../objectType/constants.js";
 import type { ObjectType } from "../../objectType/types.js";
-import * as query from "../query.js";
 import type { ICatalogItemFeedOptions, ICatalogItemQueryOptions } from "../types.js";
 import {
     type EndpointResult,
@@ -19,16 +18,9 @@ import {
     useCatalogQueryOptions,
 } from "../useCatalogEndpoints.js";
 
-vi.mock("../query.js", () => ({
-    getDashboardsQuery: vi.fn(() => ({ query: vi.fn() })),
-    getInsightsQuery: vi.fn(() => ({ query: vi.fn() })),
-    getMetricsQuery: vi.fn(() => ({ query: vi.fn() })),
-    getParametersQuery: vi.fn(() => ({ query: vi.fn() })),
-    getAttributesQuery: vi.fn(() => ({ query: vi.fn() })),
-    getFactsQuery: vi.fn(() => ({ query: vi.fn() })),
-    getDateDatasetsQuery: vi.fn(() => ({ query: vi.fn() })),
-}));
+import { createCatalogBackendStub } from "./catalogBackend.test.utils.js";
 
+// Endpoint selection never touches the backend, so most cases can hand the hook an opaque one.
 const backend = {} as IAnalyticalBackend;
 
 function makeQueryOptions(overrides: Partial<ICatalogItemQueryOptions> = {}): ICatalogItemQueryOptions {
@@ -47,10 +39,6 @@ function makeRow(type: ObjectType, extra: Partial<ICatalogEndpoint> = {}): ICata
 function noopQuery(): Promise<EndpointResult> {
     return Promise.resolve({} as EndpointResult);
 }
-
-beforeEach(() => {
-    vi.clearAllMocks();
-});
 
 describe("useCatalogEndpoints", () => {
     it("with empty types and parameters gate off, returns all endpoints except parameters in default order", () => {
@@ -102,14 +90,19 @@ describe("useCatalogEndpoints", () => {
         expect(result.current).toEqual([]);
     });
 
-    it("each FeedEndpoint.query() invokes its corresponding query module function with queryOptions", async () => {
-        const options = makeQueryOptions();
+    it("each FeedEndpoint.query() runs its type's backend query with the current query options", async () => {
+        const stub = createCatalogBackendStub();
+        const options = makeQueryOptions({ backend: stub.backend, search: "revenue" });
         const { result } = renderHook(() =>
             useCatalogEndpoints([ObjectTypes.DASHBOARD], options, { enableParameters: false }),
         );
 
         await result.current[0].query();
-        expect(vi.mocked(query.getDashboardsQuery)).toHaveBeenCalledWith(options);
+
+        expect(stub.queries[ObjectTypes.DASHBOARD]).toHaveBeenCalledTimes(1);
+        expect(stub.builders[ObjectTypes.DASHBOARD].withFilter).toHaveBeenCalledWith(
+            expect.objectContaining({ search: "revenue" }),
+        );
     });
 
     it("suppresses attribute/fact/dataset endpoints when createdBy is set (non-inverted)", () => {

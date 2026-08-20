@@ -1,7 +1,9 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
+import { type ComponentType } from "react";
 
 import { act, render } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { type Mock, beforeAll, describe, expect, it, vi } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
@@ -20,16 +22,31 @@ import { createIntlMock } from "@gooddata/sdk-ui";
 import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { AVAILABLE_TOTALS } from "../../../base/constants.js";
 import { TableDescriptor } from "../../tableDescriptor.js";
-import { AggregationsMenu, type IAggregationsMenuProps } from "../AggregationsMenu.js";
-import { AggregationsSubMenu } from "../AggregationsSubMenu.js";
+import { type IAggregationsMenuProps } from "../AggregationsMenu.js";
 
 /**
- * This mock enables us to test props as parameters of the called chart function
+ * This mock enables us to test the props the sub menu is rendered with.
  */
-vi.mock("../AggregationsSubMenu", () => ({
-    __esModule: true,
+vi.mock("../AggregationsSubMenu.js", () => ({
     AggregationsSubMenu: vi.fn(() => null),
 }));
+
+/*
+ * The suite runs without isolation, so `AggregationsMenu.js` may already sit in the shared module graph
+ * (`HeaderCell.js` pulls it in) by the time this file runs - and a cached module keeps the original,
+ * unmocked `AggregationsSubMenu` it was evaluated with. Dropping the cache here and importing both modules
+ * afterwards makes the mock above take effect no matter what ran before.
+ */
+let AggregationsMenu: ComponentType<IAggregationsMenuProps>;
+let AggregationsSubMenu: Mock;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ AggregationsMenu } = await import("../AggregationsMenu.js"));
+    ({ AggregationsSubMenu } = (await import("../AggregationsSubMenu.js")) as unknown as {
+        AggregationsSubMenu: Mock;
+    });
+});
 
 const intlMock = createIntlMock({
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": "Tooltip 1",
@@ -72,10 +89,6 @@ describe("AggregationsMenu", () => {
         );
     }
     const tableHeaderSelector = ".s-table-header-menu";
-
-    beforeEach(() => {
-        vi.clearAllMocks();
-    });
 
     it("should render opened main menu", () => {
         renderComponent();

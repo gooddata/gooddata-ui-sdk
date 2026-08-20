@@ -1,7 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
-import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 
 import { withIntlForTest } from "@gooddata/sdk-ui";
 
@@ -13,29 +13,19 @@ import {
     TEST_DATA_ITEM,
     TEST_RENDER_VALUE_SPECS,
 } from "../../../../tests/TestData.fixtures.js";
-import { createMockUseBaseHeadline } from "../../tests/BaseHeadline.test.helpers.js";
+import { createBaseHeadlineTestContext } from "../../tests/BaseHeadline.test.helpers.js";
 import { BaseHeadlineDataItem } from "../BaseHeadlineDataItem.js";
 
-const useBaseHeadlineMock = vi.hoisted(() => vi.fn());
-
-vi.mock("../../BaseHeadlineContext.js", () => ({
-    useBaseHeadline: useBaseHeadlineMock,
-}));
-
-const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
+const { setBaseHeadline, wrapper } = createBaseHeadlineTestContext();
 
 describe("BaseHeadlineDataItem", () => {
     const renderBaseHeadlineDataItem = (props: IBaseHeadlineDataItemProps<IHeadlineDataItem>) => {
         const WrappedBaseHeadlineDataItem = withIntlForTest(BaseHeadlineDataItem);
-        return render(<WrappedBaseHeadlineDataItem {...props} />);
+        return render(<WrappedBaseHeadlineDataItem {...props} />, { wrapper });
     };
 
     beforeEach(() => {
-        mockUseBaseHeadline();
-    });
-
-    afterAll(() => {
-        vi.clearAllMocks();
+        setBaseHeadline();
     });
 
     it("Should render headline item link with underline style when is drillable", () => {
@@ -51,7 +41,7 @@ describe("BaseHeadlineDataItem", () => {
     });
 
     it("Should not render headline item link with underline style when is drillable and disableDrillUnderline is true", () => {
-        mockUseBaseHeadline({
+        setBaseHeadline({
             config: {
                 disableDrillUnderline: true,
             },

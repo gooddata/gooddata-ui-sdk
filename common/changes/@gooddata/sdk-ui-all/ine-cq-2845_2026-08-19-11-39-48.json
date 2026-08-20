@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Send the dashboard-scoped effective timezone with new alerts as execution settings (settings.timezone)",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "ivan.nejezchleb@gooddata.com"
+}

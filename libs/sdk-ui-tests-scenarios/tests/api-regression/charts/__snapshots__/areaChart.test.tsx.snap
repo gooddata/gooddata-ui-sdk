@@ -290,6 +290,7 @@ exports[`AreaChart > with 180x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -583,6 +584,7 @@ exports[`AreaChart > with 180x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -876,6 +878,7 @@ exports[`AreaChart > with 180x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1169,6 +1172,7 @@ exports[`AreaChart > with 180x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1462,6 +1466,7 @@ exports[`AreaChart > with 180x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1755,6 +1760,7 @@ exports[`AreaChart > with 180x300 - Force position TOP, max 2 rows, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2048,6 +2054,7 @@ exports[`AreaChart > with 180x300 - Force position TOP, max 2 rows, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2341,6 +2348,7 @@ exports[`AreaChart > with 180x300 - Force position TOP, max 2 rows, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2634,6 +2642,7 @@ exports[`AreaChart > with 180x300 - Force position TOP, max 2 rows, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2927,6 +2936,7 @@ exports[`AreaChart > with 180x300 - Force position TOP, max 2 rows, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3220,6 +3230,7 @@ exports[`AreaChart > with 260x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3513,6 +3524,7 @@ exports[`AreaChart > with 260x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3806,6 +3818,7 @@ exports[`AreaChart > with 260x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4099,6 +4112,7 @@ exports[`AreaChart > with 260x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4392,6 +4406,7 @@ exports[`AreaChart > with 260x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4685,6 +4700,7 @@ exports[`AreaChart > with 440x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4978,6 +4994,7 @@ exports[`AreaChart > with 440x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5271,6 +5288,7 @@ exports[`AreaChart > with 440x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5564,6 +5582,7 @@ exports[`AreaChart > with 440x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5857,6 +5876,7 @@ exports[`AreaChart > with 440x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6150,6 +6170,7 @@ exports[`AreaChart > with 610x154 - Force position RIGHT - auto legend > should 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6443,6 +6464,7 @@ exports[`AreaChart > with 610x154 - Force position RIGHT - legend at bottom > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6736,6 +6758,7 @@ exports[`AreaChart > with 610x154 - Force position RIGHT - legend on left > shou
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7029,6 +7052,7 @@ exports[`AreaChart > with 610x154 - Force position RIGHT - legend on right > sho
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7322,6 +7346,7 @@ exports[`AreaChart > with 610x154 - Force position RIGHT - legend on top > shoul
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7615,6 +7640,7 @@ exports[`AreaChart > with 610x194 - Position respects configuration, max 1 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7908,6 +7934,7 @@ exports[`AreaChart > with 610x194 - Position respects configuration, max 1 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8201,6 +8228,7 @@ exports[`AreaChart > with 610x194 - Position respects configuration, max 1 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8494,6 +8522,7 @@ exports[`AreaChart > with 610x194 - Position respects configuration, max 1 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8787,6 +8816,7 @@ exports[`AreaChart > with 610x194 - Position respects configuration, max 1 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9080,6 +9110,7 @@ exports[`AreaChart > with 610x274 - Position respects configuration, max 2 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9373,6 +9404,7 @@ exports[`AreaChart > with 610x274 - Position respects configuration, max 2 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9666,6 +9698,7 @@ exports[`AreaChart > with 610x274 - Position respects configuration, max 2 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9959,6 +9992,7 @@ exports[`AreaChart > with 610x274 - Position respects configuration, max 2 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10252,6 +10286,7 @@ exports[`AreaChart > with 610x274 - Position respects configuration, max 2 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10545,6 +10580,7 @@ exports[`AreaChart > with 650x354 - Position respects configuration, map legend 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10838,6 +10874,7 @@ exports[`AreaChart > with 650x354 - Position respects configuration, map legend 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11131,6 +11168,7 @@ exports[`AreaChart > with 650x354 - Position respects configuration, map legend 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11424,6 +11462,7 @@ exports[`AreaChart > with 650x354 - Position respects configuration, map legend 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11717,6 +11756,7 @@ exports[`AreaChart > with 650x354 - Position respects configuration, map legend 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11846,6 +11886,7 @@ exports[`AreaChart > with Y axis configuration > should create expected props fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12031,6 +12072,7 @@ exports[`AreaChart > with arithmetic measures > should create expected props for
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12163,6 +12205,7 @@ exports[`AreaChart > with coloring - custom colors > should create expected prop
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12330,6 +12373,7 @@ exports[`AreaChart > with coloring - custom palette > should create expected pro
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12504,6 +12548,7 @@ exports[`AreaChart > with coloring - custom palette preferred over colors > shou
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12629,6 +12674,7 @@ exports[`AreaChart > with coloring - default > should create expected props for 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12757,6 +12803,7 @@ exports[`AreaChart > with data labels - auto visibility > should create expected
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12882,6 +12929,7 @@ exports[`AreaChart > with data labels - default > should create expected props f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13010,6 +13058,7 @@ exports[`AreaChart > with data labels - forced hidden > should create expected p
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13138,6 +13187,7 @@ exports[`AreaChart > with data labels - forced visible > should create expected 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13270,6 +13320,7 @@ exports[`AreaChart > with data labels - forced visible and german separators > s
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13386,6 +13437,7 @@ exports[`AreaChart > with data points - dense chart - auto visibility > should c
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13499,6 +13551,7 @@ exports[`AreaChart > with data points - dense chart - default > should create ex
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13615,6 +13668,7 @@ exports[`AreaChart > with data points - dense chart - forced hidden > should cre
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13731,6 +13785,7 @@ exports[`AreaChart > with data points - dense chart - forced visible > should cr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13859,6 +13914,7 @@ exports[`AreaChart > with data points - sparse chart - auto visibility > should 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13984,6 +14040,7 @@ exports[`AreaChart > with data points - sparse chart - default > should create e
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14112,6 +14169,7 @@ exports[`AreaChart > with data points - sparse chart - forced hidden > should cr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14240,6 +14298,7 @@ exports[`AreaChart > with data points - sparse chart - forced visible > should c
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14368,6 +14427,7 @@ exports[`AreaChart > with legend position - auto legend > should create expected
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14496,6 +14556,7 @@ exports[`AreaChart > with legend position - disabled > should create expected pr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14624,6 +14685,7 @@ exports[`AreaChart > with legend position - legend at bottom > should create exp
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14752,6 +14814,7 @@ exports[`AreaChart > with legend position - legend on left > should create expec
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14880,6 +14943,7 @@ exports[`AreaChart > with legend position - legend on right > should create expe
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15008,6 +15072,7 @@ exports[`AreaChart > with legend position - legend on top > should create expect
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15085,6 +15150,7 @@ exports[`AreaChart > with single measure > should create expected props for core
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15205,6 +15271,7 @@ exports[`AreaChart > with single measure with two viewBy > should create expecte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15304,6 +15371,7 @@ exports[`AreaChart > with single measure with viewBy > should create expected pr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15404,6 +15472,7 @@ exports[`AreaChart > with single measure with viewBy and stack to percent > shou
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15523,6 +15592,7 @@ exports[`AreaChart > with single measure with viewBy and stackBy > should create
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15643,6 +15713,7 @@ exports[`AreaChart > with single measure with viewBy and stackBy and disabled st
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15763,6 +15834,7 @@ exports[`AreaChart > with single measure with viewBy and stackBy and stack to pe
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15886,6 +15958,7 @@ exports[`AreaChart > with single measure with viewBy and stackBy and stack to pe
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16011,6 +16084,7 @@ exports[`AreaChart > with two measures with undefined values > should create exp
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16136,6 +16210,7 @@ exports[`AreaChart > with two measures with viewBy > should create expected prop
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16262,6 +16337,7 @@ exports[`AreaChart > with two measures with viewBy and disabled stack measures >
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16388,6 +16464,7 @@ exports[`AreaChart > with two measures with viewBy and disabled stacking > shoul
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16514,6 +16591,7 @@ exports[`AreaChart > with two measures with viewBy and enabled stack measures > 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16640,6 +16718,7 @@ exports[`AreaChart > with two measures with viewBy and enabled stacking > should
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16766,6 +16845,7 @@ exports[`AreaChart > with two measures with viewBy and stack measures to percent
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16898,6 +16978,7 @@ exports[`AreaChart > with two measures with viewBy sorted by attribute > should 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17036,6 +17117,7 @@ exports[`AreaChart > with two measures with viewBy sorted by measure > should cr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17162,6 +17244,7 @@ exports[`AreaChart > with undefined values and disabled stacking > should create
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17291,6 +17374,7 @@ exports[`AreaChart > with undefined values, disabled stacking and the continuous
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17410,5 +17494,6 @@ exports[`AreaChart > with with one measure and view by date and stack by date > 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;

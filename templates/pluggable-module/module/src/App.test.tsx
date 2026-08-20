@@ -2,9 +2,9 @@
 
 import { version as reactVersion } from "react";
 
-import { render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
     type IPluggableAppTelemetryCallbacks,
@@ -46,6 +46,14 @@ function renderWithProviders(ui: React.ReactElement) {
         </PlatformContextProvider>,
     );
 }
+
+// Vitest globals are off, so testing-library cannot register its own auto-cleanup. Unmount
+// explicitly — without it the rendered trees stack up in the shared document and later
+// queries hit "found multiple elements", both within this file and across files when
+// isolation is disabled.
+afterEach(() => {
+    cleanup();
+});
 
 describe("App", () => {
     it("renders the application title", () => {

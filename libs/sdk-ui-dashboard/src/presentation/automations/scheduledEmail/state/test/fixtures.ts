@@ -90,6 +90,11 @@ export const DRAFT_FIXTURE: IScheduledExportDraftContextValue = {
     isTitleValid: true,
     isSubjectValid: false,
     isOnMessageValid: true,
+    isTimezoneFeatureEnabled: false,
+    canSelectScheduleTimezone: false,
+    scheduleTimezoneSelection: { id: undefined, shouldSave: false },
+    defaultResolvedTimezone: undefined,
+    scheduleTimezoneIsStale: false,
 };
 
 export const DATA_FIXTURE: IScheduledExportDataContextValue = {

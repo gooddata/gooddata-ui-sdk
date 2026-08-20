@@ -12,18 +12,44 @@ import {
 const RELOAD_FLAG_KEY = "gd-chunk-reload-guard";
 const RELOAD_LOOP_WINDOW_MS = 30_000;
 
+/**
+ * Installs the `location.replace` spy and hands back the undo.
+ *
+ * `Object.defineProperty` is not something `vi.restoreAllMocks()` knows about, and with isolation
+ * off both the real `location` object and `window.COMMITHASH` are shared with every other test file
+ * in the worker — so each suite puts them back exactly as it found them.
+ */
+function stubLocationReplace(replaceSpy: ReturnType<typeof vi.fn>): () => void {
+    const { location } = window;
+    const originalReplace = Object.getOwnPropertyDescriptor(location, "replace");
+    const originalCommitHash = Object.getOwnPropertyDescriptor(window, "COMMITHASH");
+
+    // happy-dom blocks direct calls to location.replace(); replace it with a spy.
+    Object.defineProperty(location, "replace", { configurable: true, value: replaceSpy });
+    window.COMMITHASH = "buildA";
+
+    return () => {
+        if (originalReplace) {
+            Object.defineProperty(location, "replace", originalReplace);
+        } else {
+            delete (location as unknown as Record<string, unknown>)["replace"];
+        }
+        if (originalCommitHash) {
+            Object.defineProperty(window, "COMMITHASH", originalCommitHash);
+        } else {
+            delete (window as unknown as Record<string, unknown>)["COMMITHASH"];
+        }
+    };
+}
+
 describe("reloadForStaleChunks", () => {
     let replaceSpy: ReturnType<typeof vi.fn>;
+    let restoreLocation: () => void;
 
     beforeEach(() => {
         sessionStorage.removeItem(RELOAD_FLAG_KEY);
-        window.COMMITHASH = "buildA";
         replaceSpy = vi.fn();
-        // happy-dom blocks direct calls to location.replace(); replace it with a spy.
-        Object.defineProperty(window.location, "replace", {
-            configurable: true,
-            value: replaceSpy,
-        });
+        restoreLocation = stubLocationReplace(replaceSpy);
         vi.spyOn(console, "warn").mockImplementation(() => {});
         vi.spyOn(console, "error").mockImplementation(() => {});
     });
@@ -31,6 +57,7 @@ describe("reloadForStaleChunks", () => {
     afterEach(() => {
         setStaleChunkReloadListener(undefined);
         sessionStorage.removeItem(RELOAD_FLAG_KEY);
+        restoreLocation();
         vi.useRealTimers();
         vi.restoreAllMocks();
     });
@@ -142,15 +169,12 @@ describe("reloadForStaleChunks", () => {
 
 describe("installPreloadErrorHandler", () => {
     let replaceSpy: ReturnType<typeof vi.fn>;
+    let restoreLocation: () => void;
 
     beforeEach(() => {
         sessionStorage.removeItem(RELOAD_FLAG_KEY);
-        window.COMMITHASH = "buildA";
         replaceSpy = vi.fn();
-        Object.defineProperty(window.location, "replace", {
-            configurable: true,
-            value: replaceSpy,
-        });
+        restoreLocation = stubLocationReplace(replaceSpy);
         vi.spyOn(console, "warn").mockImplementation(() => {});
         vi.spyOn(console, "error").mockImplementation(() => {});
         // installPreloadErrorHandler is idempotent across test files; the listener it
@@ -162,6 +186,7 @@ describe("installPreloadErrorHandler", () => {
 
     afterEach(() => {
         sessionStorage.removeItem(RELOAD_FLAG_KEY);
+        restoreLocation();
         vi.restoreAllMocks();
     });
 

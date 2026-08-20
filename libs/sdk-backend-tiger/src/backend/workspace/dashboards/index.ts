@@ -160,6 +160,25 @@ export function getOrphanedTabFilterContexts(
         .filter((filterContext) => !currentRefs.some((ref) => areObjRefsEqual(ref, filterContext.ref)));
 }
 
+/**
+ * Module-level because a new service instance is created on every `.dashboards()` accessor call;
+ * the cache must span instances to actually deduplicate the export-metadata fetches. Scoped by
+ * the authenticated call guard so one session never serves another session's response, then keyed
+ * by workspace, export type and export id. Deliberately unbounded: the getter runs only in
+ * export-mode renders, and the headless browser works with a single export id per page lifetime,
+ * so in practice the cache holds one entry.
+ */
+const exportMetadataFetchCaches = new WeakMap<TigerAuthenticatedCallGuard, Map<string, Promise<unknown>>>();
+
+function getExportMetadataFetchCache(authCall: TigerAuthenticatedCallGuard): Map<string, Promise<unknown>> {
+    let cache = exportMetadataFetchCaches.get(authCall);
+    if (!cache) {
+        cache = new Map();
+        exportMetadataFetchCaches.set(authCall, cache);
+    }
+    return cache;
+}
+
 export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
@@ -280,7 +299,43 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
     };
 
-    public getFilterContextByExportId = async (
+    /**
+     * Export metadata is an immutable snapshot stored with the export request, and several layers
+     * (dashboard load, app bootstrap, dashboard component initialization) read it during a single
+     * export-mode render — the fetch is therefore deduplicated per workspace/export. Failed
+     * fetches are evicted so they can be retried.
+     */
+    private fetchExportMetadata = (
+        exportId: string,
+        type: "visual" | "slides" | undefined,
+    ): Promise<unknown> => {
+        const cache = getExportMetadataFetchCache(this.authCall);
+        const key = `${this.workspace}:${type ?? "visual"}:${exportId}`;
+        let promise = cache.get(key);
+        if (!promise) {
+            promise = this.authCall((client) => {
+                if (type === "slides") {
+                    return ExportApi_GetSlidesExportMetadata(client.axios, client.basePath, {
+                        workspaceId: this.workspace,
+                        exportId,
+                    });
+                }
+                return ExportApi_GetMetadata(client.axios, client.basePath, {
+                    workspaceId: this.workspace,
+                    exportId,
+                });
+            })
+                .then((result) => result.data as unknown)
+                .catch(() => {
+                    cache.delete(key);
+                    return null;
+                });
+            cache.set(key, promise);
+        }
+        return promise;
+    };
+
+    public getExportDataByExportId = async (
         exportId: string,
         type: "visual" | "slides" | undefined,
         exportTabId?: string,
@@ -290,21 +345,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         title?: string;
         hideWidgetTitles?: boolean;
         exportMetadata?: Record<string, string>;
+        timezoneId?: string;
     } | null> => {
-        const metadata = await this.authCall((client) => {
-            if (type === "slides") {
-                return ExportApi_GetSlidesExportMetadata(client.axios, client.basePath, {
-                    workspaceId: this.workspace,
-                    exportId,
-                });
-            }
-            return ExportApi_GetMetadata(client.axios, client.basePath, {
-                workspaceId: this.workspace,
-                exportId,
-            });
-        })
-            .then((result) => result.data)
-            .catch(() => null);
+        const metadata = await this.fetchExportMetadata(exportId, type);
 
         if (!metadata) {
             // Error during fetching of export metadata: return null and
@@ -357,6 +400,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             ...(convertedExportMetadata?.exportMetadata === undefined
                 ? {}
                 : { exportMetadata: convertedExportMetadata.exportMetadata }),
+            ...(convertedExportMetadata?.timezoneId
+                ? { timezoneId: convertedExportMetadata.timezoneId }
+                : {}),
         };
     };
 
@@ -693,11 +739,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             const visualExportRequest = {
                 fileName: options?.filename ?? title,
                 dashboardId,
+                ...(options?.timezoneId ? { timezoneId: options.timezoneId } : {}),
                 metadata: convertToBackendExportMetadata({
                     filters: withoutAllTime,
                     filtersByTab: withoutAllTimePerTab,
                     ...getParametersMetadata(options?.parametersByTab),
                     exportMetadata: options?.exportMetadata,
+                    // metadata copy for the headless render — see "Export timezone channels" in ExportDefinitionsConverter.ts
+                    ...(options?.timezoneId ? { timezoneId: options.timezoneId } : {}),
                 }),
             };
             const pdfExport = await ExportApi_CreatePdfExport(client.axios, client.basePath, {
@@ -757,6 +806,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     objRefToString(visualizationId),
                 ),
                 templateId: options?.templateId,
+                ...(options?.timezoneId ? { timezoneId: options.timezoneId } : {}),
                 metadata: convertToBackendExportMetadata({
                     filters: withoutAllTime,
                     filtersByTab: withoutAllTimePerTab,
@@ -764,6 +814,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     title: options?.title,
                     hideWidgetTitles: options?.hideWidgetTitles,
                     exportMetadata: options?.exportMetadata,
+                    // metadata copy for the headless render — see "Export timezone channels" in ExportDefinitionsConverter.ts
+                    ...(options?.timezoneId ? { timezoneId: options.timezoneId } : {}),
                 }),
             };
             const slideshowExport = await ExportApi_CreateSlidesExport(client.axios, client.basePath, {
@@ -857,6 +909,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                         ...dashboardFiltersOverrideObj,
                         ...dashboardTabsFiltersOverridesObj,
                         ...dashboardTabsParametersOverridesObj,
+                        ...(options?.timezoneId
+                            ? { executionSettings: { timezone: options.timezoneId } }
+                            : {}),
                     },
                     workspaceId: this.workspace,
                     dashboardId,
@@ -883,12 +938,16 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     ): Promise<IExportResult> => {
         const execution = toAfmExecution(definition);
         const delimiter = options?.delimiter;
+        // The execution-config timezone (already the effective dashboard timezone) wins over the option.
+        const timezone = execution.settings?.timezone ?? options?.timezoneId;
+        const executionSettings =
+            execution.settings || timezone ? { ...execution.settings, timezone } : undefined;
         const payload: ExportRawExportRequest = {
             format: "CSV",
             execution: execution.execution as ExportAFM,
             fileName: filename,
             delimiter,
-            executionSettings: execution.settings,
+            executionSettings,
             customOverride: isEmpty(customOverrides)
                 ? undefined
                 : {
@@ -1008,6 +1067,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 format: "PNG",
                 fileName: options?.filename || "export",
                 dashboardId,
+                ...(options?.timezoneId ? { timezoneId: options.timezoneId } : {}),
                 widgetIds:
                     options?.widgetIds?.map((ref) => {
                         if ("identifier" in ref) {
@@ -1020,6 +1080,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     filtersByTab: withoutAllTimePerTab,
                     ...getParametersMetadata(options?.parametersByTab),
                     title: options?.filename,
+                    // metadata copy for the headless render — see "Export timezone channels" in ExportDefinitionsConverter.ts
+                    ...(options?.timezoneId ? { timezoneId: options.timezoneId } : {}),
                 }),
             };
 
@@ -1619,7 +1681,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             : undefined;
 
         const filterContextByExport = exportId
-            ? await this.getFilterContextByExportId(exportId, type, exportTabId)
+            ? await this.getExportDataByExportId(exportId, type, exportTabId)
             : undefined;
 
         return {

@@ -124,6 +124,7 @@ exports[`LineChart > with 40x70 - without x axis, without y axis (very small con
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -251,6 +252,7 @@ exports[`LineChart > with 60x354 - without y axis labels > should create expecte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -352,6 +354,7 @@ exports[`LineChart > with 60x354 - without y axis labels, with y axis title > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -453,6 +456,7 @@ exports[`LineChart > with 140x354 - without y axis title > should create expecte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -718,6 +722,7 @@ exports[`LineChart > with 180x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -983,6 +988,7 @@ exports[`LineChart > with 180x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1248,6 +1254,7 @@ exports[`LineChart > with 180x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1513,6 +1520,7 @@ exports[`LineChart > with 180x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1778,6 +1786,7 @@ exports[`LineChart > with 180x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2043,6 +2052,7 @@ exports[`LineChart > with 180x300 - Force position TOP, max 2 rows, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2308,6 +2318,7 @@ exports[`LineChart > with 180x300 - Force position TOP, max 2 rows, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2573,6 +2584,7 @@ exports[`LineChart > with 180x300 - Force position TOP, max 2 rows, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2838,6 +2850,7 @@ exports[`LineChart > with 180x300 - Force position TOP, max 2 rows, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3103,6 +3116,7 @@ exports[`LineChart > with 180x300 - Force position TOP, max 2 rows, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3368,6 +3382,7 @@ exports[`LineChart > with 260x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3633,6 +3648,7 @@ exports[`LineChart > with 260x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3898,6 +3914,7 @@ exports[`LineChart > with 260x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4163,6 +4180,7 @@ exports[`LineChart > with 260x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4428,6 +4446,7 @@ exports[`LineChart > with 260x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4693,6 +4712,7 @@ exports[`LineChart > with 440x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4958,6 +4978,7 @@ exports[`LineChart > with 440x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5223,6 +5244,7 @@ exports[`LineChart > with 440x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5488,6 +5510,7 @@ exports[`LineChart > with 440x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5753,6 +5776,7 @@ exports[`LineChart > with 440x154 - Force position TOP, max 1 row, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6018,6 +6042,7 @@ exports[`LineChart > with 610x154 - Force position RIGHT - auto legend > should 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6283,6 +6308,7 @@ exports[`LineChart > with 610x154 - Force position RIGHT - legend at bottom > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6548,6 +6574,7 @@ exports[`LineChart > with 610x154 - Force position RIGHT - legend on left > shou
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6813,6 +6840,7 @@ exports[`LineChart > with 610x154 - Force position RIGHT - legend on right > sho
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7078,6 +7106,7 @@ exports[`LineChart > with 610x154 - Force position RIGHT - legend on top > shoul
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7343,6 +7372,7 @@ exports[`LineChart > with 610x194 - Position respects configuration, max 1 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7608,6 +7638,7 @@ exports[`LineChart > with 610x194 - Position respects configuration, max 1 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7873,6 +7904,7 @@ exports[`LineChart > with 610x194 - Position respects configuration, max 1 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8138,6 +8170,7 @@ exports[`LineChart > with 610x194 - Position respects configuration, max 1 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8403,6 +8436,7 @@ exports[`LineChart > with 610x194 - Position respects configuration, max 1 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8668,6 +8702,7 @@ exports[`LineChart > with 610x274 - Position respects configuration, max 2 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8933,6 +8968,7 @@ exports[`LineChart > with 610x274 - Position respects configuration, max 2 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9198,6 +9234,7 @@ exports[`LineChart > with 610x274 - Position respects configuration, max 2 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9463,6 +9500,7 @@ exports[`LineChart > with 610x274 - Position respects configuration, max 2 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9728,6 +9766,7 @@ exports[`LineChart > with 610x274 - Position respects configuration, max 2 row f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9855,6 +9894,7 @@ exports[`LineChart > with 650x90 - without x axis labels > should create expecte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9982,6 +10022,7 @@ exports[`LineChart > with 650x140 - without x axis title > should create expecte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10247,6 +10288,7 @@ exports[`LineChart > with 650x354 - Position respects configuration, map legend 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10512,6 +10554,7 @@ exports[`LineChart > with 650x354 - Position respects configuration, map legend 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10777,6 +10820,7 @@ exports[`LineChart > with 650x354 - Position respects configuration, map legend 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11042,6 +11086,7 @@ exports[`LineChart > with 650x354 - Position respects configuration, map legend 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11307,6 +11352,7 @@ exports[`LineChart > with 650x354 - Position respects configuration, map legend 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11434,6 +11480,7 @@ exports[`LineChart > with Y axis min/max configuration > should create expected 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11563,6 +11610,7 @@ exports[`LineChart > with Y axis on the right > should create expected props for
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11744,6 +11792,7 @@ exports[`LineChart > with arithmetic measures > should create expected props for
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11922,6 +11971,7 @@ exports[`LineChart > with assign color to measures > should create expected prop
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12052,6 +12102,7 @@ exports[`LineChart > with coloring - custom colors > should create expected prop
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12217,6 +12268,7 @@ exports[`LineChart > with coloring - custom palette > should create expected pro
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12389,6 +12441,7 @@ exports[`LineChart > with coloring - custom palette preferred over colors > shou
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12511,6 +12564,7 @@ exports[`LineChart > with coloring - default > should create expected props for 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12637,6 +12691,7 @@ exports[`LineChart > with data labels - auto visibility > should create expected
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12759,6 +12814,7 @@ exports[`LineChart > with data labels - default > should create expected props f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12885,6 +12941,7 @@ exports[`LineChart > with data labels - forced hidden > should create expected p
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13011,6 +13068,7 @@ exports[`LineChart > with data labels - forced visible > should create expected 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13141,6 +13199,7 @@ exports[`LineChart > with data labels - forced visible and german separators > s
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13255,6 +13314,7 @@ exports[`LineChart > with data points - dense chart - auto visibility > should c
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13365,6 +13425,7 @@ exports[`LineChart > with data points - dense chart - default > should create ex
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13479,6 +13540,7 @@ exports[`LineChart > with data points - dense chart - forced hidden > should cre
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13593,6 +13655,7 @@ exports[`LineChart > with data points - dense chart - forced visible > should cr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13779,6 +13842,7 @@ exports[`LineChart > with data points - sparse chart - auto visibility > should 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13961,6 +14025,7 @@ exports[`LineChart > with data points - sparse chart - default > should create e
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14147,6 +14212,7 @@ exports[`LineChart > with data points - sparse chart - forced hidden > should cr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14333,6 +14399,7 @@ exports[`LineChart > with data points - sparse chart - forced visible > should c
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14521,6 +14588,7 @@ exports[`LineChart > with dual axes with one right measure > should create expec
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14671,6 +14739,7 @@ exports[`LineChart > with dual axis name configuration - high > should create ex
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14821,6 +14890,7 @@ exports[`LineChart > with dual axis name configuration - invisible > should crea
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14971,6 +15041,7 @@ exports[`LineChart > with dual axis name configuration - low > should create exp
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15121,6 +15192,7 @@ exports[`LineChart > with dual axis name configuration - middle > should create 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15247,6 +15319,7 @@ exports[`LineChart > with legend position - auto legend > should create expected
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15373,6 +15446,7 @@ exports[`LineChart > with legend position - disabled > should create expected pr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15499,6 +15573,7 @@ exports[`LineChart > with legend position - legend at bottom > should create exp
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15625,6 +15700,7 @@ exports[`LineChart > with legend position - legend on left > should create expec
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15751,6 +15827,7 @@ exports[`LineChart > with legend position - legend on right > should create expe
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15877,6 +15954,7 @@ exports[`LineChart > with legend position - legend on top > should create expect
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16003,6 +16081,7 @@ exports[`LineChart > with null values with continuous line > should create expec
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16150,6 +16229,7 @@ exports[`LineChart > with single axis name configuration - high > should create 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16297,6 +16377,7 @@ exports[`LineChart > with single axis name configuration - invisible > should cr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16444,6 +16525,7 @@ exports[`LineChart > with single axis name configuration - low > should create e
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16591,6 +16673,7 @@ exports[`LineChart > with single axis name configuration - middle > should creat
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16664,6 +16747,7 @@ exports[`LineChart > with single measure > should create expected props for core
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16759,6 +16843,7 @@ exports[`LineChart > with single measure with % and trendBy > should create expe
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16854,6 +16939,7 @@ exports[`LineChart > with single measure with trendBy > should create expected p
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16969,6 +17055,7 @@ exports[`LineChart > with single measure with trendBy and segmentBy > should cre
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17126,6 +17213,7 @@ exports[`LineChart > with stacked threshold zones > should create expected props
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17315,6 +17403,7 @@ exports[`LineChart > with threshold zones > should create expected props for cor
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17436,6 +17525,7 @@ exports[`LineChart > with two measures with trendBy > should create expected pro
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17564,6 +17654,7 @@ exports[`LineChart > with two measures with trendBy and sort by attribute > shou
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17698,6 +17789,7 @@ exports[`LineChart > with two measures with trendBy and sort by measure > should
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17793,6 +17885,7 @@ exports[`LineChart > with with one measure and segment by date > should create e
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17908,6 +18001,7 @@ exports[`LineChart > with with one measure and trend by date and segment by date
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -18029,5 +18123,6 @@ exports[`LineChart > with with two measures and null values > should create expe
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;

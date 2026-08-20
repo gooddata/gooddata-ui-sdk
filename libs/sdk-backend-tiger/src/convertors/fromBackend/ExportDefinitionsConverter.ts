@@ -119,6 +119,7 @@ export const convertDashboardTabularExportRequest = (
             widgetIds,
         },
     } = exportRequest;
+    const timezoneId = exportRequest.requestPayload.executionSettings?.timezone ?? undefined;
 
     const normalizedSettings = normalizeExportDefinitionSettings(settings);
 
@@ -130,6 +131,7 @@ export const convertDashboardTabularExportRequest = (
             fileName,
             format: format === "PDF" ? "PDF_TABULAR" : format,
             settings: normalizedSettings,
+            ...(timezoneId ? { timezoneId } : {}),
             content: {
                 dashboard: dashboardId,
                 visualizationObject: widgetId ?? "",
@@ -156,6 +158,7 @@ export const convertDashboardTabularExportRequest = (
         fileName,
         format,
         settings: normalizedSettings,
+        ...(timezoneId ? { timezoneId } : {}),
         content: {
             dashboard: dashboardId,
             filters: convertTigerToDashboardFilters(dashboardFiltersOverride),
@@ -188,11 +191,13 @@ export const convertVisualExportRequest = (
         : undefined;
     const filtersByTabObj = filtersByTab ? { filtersByTab } : {};
     const parametersByTabObj = metadata?.parametersByTab ? { parametersByTab: metadata.parametersByTab } : {};
+    const timezoneId = exportRequest.requestPayload.timezoneId ?? undefined;
 
     return {
         type: "dashboard",
         fileName,
         format: "PDF",
+        ...(timezoneId ? { timezoneId } : {}),
         content: {
             dashboard: dashboardId,
             ...filtersObj,
@@ -213,11 +218,13 @@ export const convertToRawExportRequest = (
     const metadataFilters = convertTigerToSdkFilters(metadataObj?.filters);
     const resolvedFilters = metadataFilters && metadataFilters.length > 0 ? metadataFilters : filters;
     const filtersObj = resolvedFilters && resolvedFilters.length > 0 ? { filters: resolvedFilters } : {};
+    const timezoneId = exportRequest.requestPayload.executionSettings?.timezone ?? undefined;
     return {
         type: "visualizationObject",
         fileName,
         format: "CSV_RAW",
         ...(delimiter ? { settings: { delimiter } } : {}),
+        ...(timezoneId ? { timezoneId } : {}),
         content: {
             visualizationObject: metadataObj.visualizationObject ?? "",
             widget: metadataObj.widget ?? "",
@@ -236,11 +243,13 @@ export const convertImageExportRequest = (
     } = exportRequest;
 
     const tigerMetadata = metadata as MetadataObjectDefinition<ITigerFilter> | undefined;
+    const timezoneId = exportRequest.requestPayload.timezoneId ?? undefined;
 
     return {
         type: "visualizationObject",
         fileName,
         format,
+        ...(timezoneId ? { timezoneId } : {}),
         content: {
             visualizationObject: widgetIds?.[0] ?? "",
             widget: widgetIds?.[0] ?? "",
@@ -257,6 +266,7 @@ export const convertSlidesExportRequest = (
     const {
         requestPayload: { fileName, format, dashboardId, widgetIds, metadata, templateId },
     } = exportRequest;
+    const timezoneId = exportRequest.requestPayload.timezoneId ?? undefined;
 
     if (Array.isArray(widgetIds) && widgetIds.length > 0) {
         const tigerMetadata = metadata as MetadataObjectDefinition<ITigerFilter> | undefined;
@@ -266,6 +276,7 @@ export const convertSlidesExportRequest = (
             fileName,
             format,
             ...(templateId ? { templateId } : {}),
+            ...(timezoneId ? { timezoneId } : {}),
             content: {
                 visualizationObject: widgetIds?.[0] ?? "",
                 dashboard: dashboardId,
@@ -295,6 +306,7 @@ export const convertSlidesExportRequest = (
         fileName,
         format: format === "PDF" ? "PDF_SLIDES" : format,
         ...(templateId ? { templateId } : {}),
+        ...(timezoneId ? { timezoneId } : {}),
         content: {
             dashboard: dashboardId,
             filters,
@@ -319,6 +331,7 @@ export const convertTabularExportRequest = (
         },
     } = exportRequest;
     const metadata = metadataObj as MetadataObjectDefinition<ITigerFilter> | undefined;
+    const timezoneId = exportRequest.requestPayload.executionSettings?.timezone ?? undefined;
 
     if (visualizationObjectCustomFilters && !isTigerFilters(visualizationObjectCustomFilters)) {
         throw new Error("Invalid visualizationObjectCustomFilters format");
@@ -329,6 +342,7 @@ export const convertTabularExportRequest = (
         fileName,
         format,
         settings,
+        ...(timezoneId ? { timezoneId } : {}),
         content: {
             visualizationObject: visualizationObject ?? "",
             filters: convertTigerToSdkFilters(visualizationObjectCustomFilters),
@@ -380,6 +394,7 @@ const convertExportDefinitionRequestPayload = (
     exportRequest: VisualExportRequest | TabularExportRequest,
 ): IExportDefinitionRequestPayload => {
     if (isTabularRequest(exportRequest)) {
+        const timezoneId = exportRequest.executionSettings?.timezone ?? undefined;
         const { widget, parametersByTab } = (exportRequest.metadata as MetadataObjectDefinition) ?? {};
 
         const filters = exportRequest.visualizationObjectCustomFilters as ITigerFilter[] | undefined;
@@ -401,6 +416,7 @@ const convertExportDefinitionRequestPayload = (
             type: "visualizationObject",
             fileName: exportRequest.fileName,
             format: exportRequest.format,
+            ...(timezoneId ? { timezoneId } : {}),
             content: {
                 visualizationObject: exportRequest.visualizationObject ?? "",
                 dashboard: exportRequest.relatedDashboardId ?? "",
@@ -411,6 +427,7 @@ const convertExportDefinitionRequestPayload = (
             ...settingsObj,
         };
     } else {
+        const timezoneId = exportRequest.timezoneId ?? undefined;
         const metadata = exportRequest.metadata as MetadataObjectDefinition | undefined;
         const filters = convertTigerToSdkFilters(metadata?.filters);
         const filtersObj = filters ? { filters } : {};
@@ -434,6 +451,7 @@ const convertExportDefinitionRequestPayload = (
             type: "dashboard",
             fileName: exportRequest.fileName,
             format: "PDF",
+            ...(timezoneId ? { timezoneId } : {}),
             content: {
                 dashboard: exportRequest.dashboardId,
                 ...filtersObj,

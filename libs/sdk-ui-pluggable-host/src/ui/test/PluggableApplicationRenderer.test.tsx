@@ -18,8 +18,6 @@ import {
 
 import { type AppSecurityFailure } from "../../loader/appSecurityValidation.js";
 import { type IAppLifecycleCallbacks } from "../../types/lifecycle.js";
-import { HostIntlProvider } from "../HostIntlProvider.js";
-import { PluggableApplicationRenderer } from "../PluggableApplicationRenderer.js";
 
 const mocks = vi.hoisted(() => ({
     loadPluggableApplication: vi.fn<(app: PluggableApplicationRegistryItem) => Promise<IPluggableApp>>(),
@@ -77,6 +75,10 @@ const app: ILocalPluggableApplicationRegistryItemV1 = {
 const WS1_PATHNAME = "/workspace/ws1/analyze";
 const WS2_PATHNAME = "/workspace/ws2/analyze";
 
+// Bound in `beforeEach` from a freshly built module graph — see the `vi.resetModules()` there.
+let HostIntlProvider: typeof import("../HostIntlProvider.js").HostIntlProvider;
+let PluggableApplicationRenderer: typeof import("../PluggableApplicationRenderer.js").PluggableApplicationRenderer;
+
 function renderer(options: {
     pathname: string;
     ctx: IPlatformContext;
@@ -105,8 +107,15 @@ describe("PluggableApplicationRenderer", () => {
     let onHostNavigationRequested: Mock<NavigationGuard>;
     let navigationRequestRef: NavigationGuardRef;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         vi.clearAllMocks();
+        // The component is also imported by HostUiContainer, so with isolation off a test file that
+        // rendered the host container earlier left it cached — wired to the *real* loader and
+        // security validation rather than the mocks above. Rebuild the graph for this file.
+        vi.resetModules();
+        ({ HostIntlProvider } = await import("../HostIntlProvider.js"));
+        ({ PluggableApplicationRenderer } = await import("../PluggableApplicationRenderer.js"));
+
         navigationRequestRef = { current: undefined };
         mocks.validateAppSecurity.mockReturnValue(undefined);
         mocks.getSecuredRemoteAppValidUntil.mockReturnValue(undefined);

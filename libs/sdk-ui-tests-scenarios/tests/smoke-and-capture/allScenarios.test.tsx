@@ -2,7 +2,6 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import process from "process";
 
 import { unionBy } from "lodash-es";
 import { describe, expect, it } from "vitest";
@@ -295,7 +294,7 @@ async function scenarioStoreInsight(scenario: IScenario<any>, def: IInsightDefin
  */
 const PlugVisUnsupported: string[] = [];
 
-describe.skipIf(!process.env["GDC_STORE_DEFS"])("all scenarios", () => {
+describe("all scenarios", () => {
     const Scenarios: AllScenariosType[] = allScenarios.flatMap((s): AllScenariosType[] => {
         const testInputs: Array<IScenario<any>> = s.asScenarioList();
 

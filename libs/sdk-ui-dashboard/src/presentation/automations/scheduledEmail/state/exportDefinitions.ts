@@ -30,6 +30,43 @@ export function withRebuiltExportDefinitions(
     return parametersByTab ? setExportParametersByTab(next, parametersByTab) : next;
 }
 
+/**
+ * Applies the export-content timezone to every export definition of the automation. Undefined
+ * removes the timezone so the backend derives it at run time from the stored dashboard.
+ */
+export function withExportDefinitionsTimezone(
+    automation: IAutomationMetadataObjectDefinition,
+    timezoneId: string | undefined,
+): IAutomationMetadataObjectDefinition {
+    if (!automation.exportDefinitions?.length) {
+        return automation;
+    }
+    return {
+        ...automation,
+        exportDefinitions: automation.exportDefinitions.map((definition) => {
+            // a shallow copy mutated in place: rest-destructuring the payload union would lose
+            // the member TypeScript correlates with `definition` and force a cast
+            const requestPayload = { ...definition.requestPayload };
+            if (timezoneId) {
+                requestPayload.timezoneId = timezoneId;
+            } else {
+                delete requestPayload.timezoneId;
+            }
+            return { ...definition, requestPayload };
+        }),
+    };
+}
+
+/**
+ * The export-content timezone stored with the automation, read from its export definitions.
+ * All definitions of one automation carry the same value, so the first one is authoritative.
+ */
+export function getExportDefinitionsTimezone(
+    automation: IAutomationMetadataObjectDefinition | undefined,
+): string | undefined {
+    return automation?.exportDefinitions?.[0]?.requestPayload.timezoneId;
+}
+
 export function newDashboardExportDefinitionMetadataObjectDefinition({
     dashboardId,
     dashboardTitle,
@@ -37,6 +74,7 @@ export function newDashboardExportDefinitionMetadataObjectDefinition({
     filtersByTab,
     format,
     templateId,
+    timezoneId,
 }: {
     dashboardId: string;
     dashboardTitle: string;
@@ -44,6 +82,7 @@ export function newDashboardExportDefinitionMetadataObjectDefinition({
     filtersByTab?: Record<string, FilterContextItem[]>;
     format: DashboardAttachmentType;
     templateId?: string;
+    timezoneId?: string;
 }): IExportDefinitionMetadataObjectDefinition {
     // Use filtersByTab if provided, otherwise fall back to simple filters
     const filtersObj = filtersByTab
@@ -67,6 +106,7 @@ export function newDashboardExportDefinitionMetadataObjectDefinition({
             },
             ...settingsObj,
             ...(templateId ? { templateId } : {}),
+            ...(timezoneId ? { timezoneId } : {}),
         },
     };
 }
@@ -81,6 +121,7 @@ export function newWidgetExportDefinitionMetadataObjectDefinition({
     dashboardFilters,
     defaultPdfPageSize,
     defaultCsvDelimiter,
+    timezoneId,
 }: {
     insight: IInsight;
     widget: IWidget;
@@ -91,6 +132,12 @@ export function newWidgetExportDefinitionMetadataObjectDefinition({
     dashboardFilters?: FilterContextItem[];
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
     defaultCsvDelimiter?: string;
+    /**
+     * Effective dashboard timezone baked into the definition. Unlike dashboard export definitions,
+     * widget exports always carry it when defined — the backend does not load the dashboard object
+     * for widget exports, so it has no access to the dashboard's timezone configuration.
+     */
+    timezoneId?: string;
 }): IExportDefinitionMetadataObjectDefinition {
     const widgetTitle = widget.title;
 
@@ -154,6 +201,7 @@ export function newWidgetExportDefinitionMetadataObjectDefinition({
                 ...filtersObj,
             },
             ...settingsObj,
+            ...(timezoneId ? { timezoneId } : {}),
         },
     };
 }

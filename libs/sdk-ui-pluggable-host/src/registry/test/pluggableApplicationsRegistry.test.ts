@@ -333,18 +333,6 @@ describe("resolveApplications", () => {
     });
 
     describe("isEnabled filtering", () => {
-        it("keeps apps where isEnabled is undefined (default)", () => {
-            const local = [externalApp({ id: "a", menuOrder: 10 })];
-            const result = resolveApplications({
-                localApps: local,
-                remoteRegistry: undefined,
-                ctx: emptyContext(),
-                scope: "workspace",
-            });
-
-            expect(result).toHaveLength(1);
-        });
-
         it("keeps apps where isEnabled is true", () => {
             const local = [externalApp({ id: "a", menuOrder: 10, isEnabled: true })];
             const result = resolveApplications({
@@ -513,18 +501,6 @@ describe("resolveApplications", () => {
                 localApps: local,
                 remoteRegistry: undefined,
                 ctx: ctxWith({}),
-                scope: "workspace",
-            });
-
-            expect(result).toHaveLength(1);
-        });
-
-        it("includes app when requirement filtering with empty ctx passes", () => {
-            const local = [externalApp({ id: "a", menuOrder: 1 })];
-            const result = resolveApplications({
-                localApps: local,
-                remoteRegistry: undefined,
-                ctx: emptyContext(),
                 scope: "workspace",
             });
 
@@ -930,18 +906,6 @@ describe("resolveApplications", () => {
                 });
 
                 expect(result.map((a) => a.id)).toEqual(["remote-x"]);
-            });
-
-            it("skips BASE_UI_ACCESS check when restrictBaseUi is not set", () => {
-                const local = [externalApp({ id: "a", menuOrder: 1 })];
-                const result = resolveApplications({
-                    localApps: local,
-                    remoteRegistry: undefined,
-                    ctx: emptyContext(),
-                    scope: "workspace",
-                });
-
-                expect(result).toHaveLength(1);
             });
         });
 

@@ -1,7 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { fireEvent, render } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 
 import { CalculateAs, type CalculationType, DEFAULT_COMPARISON_PALETTE } from "@gooddata/sdk-ui-charts";
 
@@ -9,8 +9,8 @@ import { type IComparisonControlProperties } from "../../../../interfaces/Contro
 import { type IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { TEST_DEFAULT_SEPARATOR, createTestProperties } from "../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
-import { ConfigSection } from "../../ConfigSection.js";
-import { ComparisonSection } from "../ComparisonSection.js";
+import type * as ConfigSectionModule from "../../ConfigSection.js";
+import type * as ComparisonSectionModule from "../ComparisonSection.js";
 import { COMPARISON_ENABLED_VALUE_PATH } from "../ComparisonValuePath.js";
 
 vi.mock("../../ConfigSection.js", async (importOriginal) => {
@@ -20,6 +20,25 @@ vi.mock("../../ConfigSection.js", async (importOriginal) => {
         ...actual,
         ConfigSection: vi.fn(actual.ConfigSection),
     };
+});
+
+/*
+ * Test isolation is disabled for this package, so the module cache is shared between test files:
+ * ComparisonSection.js may already have been evaluated - bound to the real ConfigSection - by another test
+ * file, and the mocked graph this file builds must not outlive it. Re-import both modules up front so this
+ * file always observes the mocked one, and drop the mocked graph again on the way out.
+ */
+let ConfigSection: typeof ConfigSectionModule.ConfigSection;
+let ComparisonSection: typeof ComparisonSectionModule.ComparisonSection;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ ConfigSection } = await import("../../ConfigSection.js"));
+    ({ ComparisonSection } = await import("../ComparisonSection.js"));
+});
+
+afterAll(() => {
+    vi.resetModules();
 });
 
 const COMPARISON_TOGGLE_SELECTOR = ".s-config-section-comparison_section input";

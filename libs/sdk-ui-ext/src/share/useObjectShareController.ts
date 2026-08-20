@@ -71,7 +71,9 @@ export function useObjectShareController(
         hasList,
         grantees,
         seededWithoutSelfGrant,
+        seededRuleShareCapable,
         selfIdentity,
+        isWorkspaceManager,
         selfIdentityResolved,
         generalAccess,
         workspaceLevel,
@@ -771,23 +773,25 @@ export function useObjectShareController(
     const state = useMemo<IObjectShareControllerState>(() => {
         // Row policy is classified here, not in the dialog, so a consumer
         // injecting this controller into its own UI gets the same classification.
-        const selfManagedGranteeId = grantees.length === 1 && grantees[0].isSelf ? grantees[0].id : undefined;
+        // The policy follows the self row however many others are listed: what makes
+        // it special is that the access is THEIRS. A manager is exempt, their access
+        // comes from the role, so there is no ceiling to cap and no lockout to warn of.
+        const selfRow = isWorkspaceManager ? undefined : grantees.find((g) => g.isSelf);
+        const selfManagedGranteeId = selfRow?.id;
         const granteeControlsLocked =
-            grantees.length === 1 && grantees[0].kind === "user" && !selfIdentityResolved;
-        // A workspace-wide share-capable rule (SHARE or EDIT) is the one way other
-        // than admin/manager rights through the manage gate — no Admin badge then.
-        const workspaceShareCapable =
-            effectiveWorkspace.generalAccess === "WORKSPACE" && effectiveWorkspace.workspaceLevel !== "VIEW";
+            !selfIdentityResolved && !isWorkspaceManager && grantees.some((g) => g.kind === "user");
         // The synthesized Admin row shows only while NO other permissions are set:
         // the caller must have reached the list without a grant of their own
         // (`seededWithoutSelfGrant` — a non-admin who locally removes their own
         // grant must not gain the badge) and the list must currently be empty, so
         // adding a grantee hides it and removing the last one brings it back.
+        // A share-capable rule also passes the gate, judged from the SEED. A group
+        // grant is another way in this cannot see: the heuristic's accepted blind spot.
         const adminSelfRow =
             status === "success" &&
             seededWithoutSelfGrant &&
             grantees.length === 0 &&
-            !workspaceShareCapable &&
+            !seededRuleShareCapable &&
             selfIdentity
                 ? userDisplayPair(selfIdentity, selfIdentity.id)
                 : undefined;
@@ -798,9 +802,9 @@ export function useObjectShareController(
             summary,
             grantees: sortedGrantees,
             selfManagedGranteeId,
-            // Policy, not just classification: the caller's own sole row can't be
-            // raised above itself, an inherited workspace level can't be undercut.
-            selfManagedDisabledLevels: selfManagedGranteeId ? levelsAbove(grantees[0].level) : undefined,
+            // Policy, not just classification: the caller's own row can't be raised
+            // above itself, an inherited workspace level can't be undercut.
+            selfManagedDisabledLevels: selfRow ? levelsAbove(selfRow.level) : undefined,
             workspaceDisabledLevels: workspaceInheritedLevel
                 ? levelsBelow(workspaceInheritedLevel)
                 : undefined,
@@ -825,7 +829,9 @@ export function useObjectShareController(
         summary,
         selfIdentity,
         selfIdentityResolved,
+        isWorkspaceManager,
         seededWithoutSelfGrant,
+        seededRuleShareCapable,
         grantees,
         sortedGrantees,
         effectiveWorkspace,

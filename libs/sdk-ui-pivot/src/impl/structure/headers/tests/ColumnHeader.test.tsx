@@ -1,7 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
@@ -10,7 +10,6 @@ import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { TableDescriptor } from "../../tableDescriptor.js";
 import { SingleColumn } from "../../tests/table.fixture.js";
 import { ColumnHeader } from "../ColumnHeader.js";
-import { HeaderCell } from "../HeaderCell.js";
 
 const fixture = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable
@@ -62,46 +61,56 @@ const getColumnHeader = (
 };
 
 /**
- * This mock enables us to test props as parameters of the called chart function
+ * The header cell is asserted through its rendered output instead of through a mock of HeaderCell:
+ * mocking a sibling module is unreliable here, because the test suite runs without isolation and the
+ * module graph is shared between test files.
  */
-vi.mock("../HeaderCell", async () => ({
-    ...(await vi.importActual("../HeaderCell")),
-    HeaderCell: vi.fn(() => null),
-}));
+const headerCellSelector = ".s-pivot-table-column-header";
+const labelSelector = ".s-header-cell-label";
+const clickableLabelClass = "gd-pivot-table-header-label--clickable";
+const rightAlignedLabelClass = "gd-pivot-table-header-label--right";
+const centerAlignedLabelClass = "gd-pivot-table-header-label--center";
 
 describe("ColumnHeader renderer", () => {
-    beforeEach(() => {
-        vi.clearAllMocks();
-    });
-
     it("should render HeaderCell", () => {
-        render(getColumnHeader());
-        expect(HeaderCell).toHaveBeenCalled();
+        const { container } = render(getColumnHeader());
+
+        expect(container.querySelector(headerCellSelector)).toBeInTheDocument();
+        expect(container.querySelector(labelSelector)).toHaveTextContent("test");
     });
 
     it("should pass enableSorting to HeaderCell", () => {
-        render(getColumnHeader({ enableSorting: true }));
-        expect(HeaderCell).toHaveBeenCalledWith(expect.objectContaining({ enableSorting: true }), undefined);
+        const { container } = render(getColumnHeader({ enableSorting: true }));
+
+        expect(container.querySelector(labelSelector)).toHaveClass(clickableLabelClass);
     });
 
     it("should disable sorting if ColumnHeader is displaying a column attribute (use cse of no measures)", () => {
-        render(
+        const { container } = render(
             getColumnHeader(
                 { enableSorting: true },
                 { type: "COLUMN_ATTRIBUTE_COLUMN", colGroupId: "cg_0" },
                 TableDescriptor.for(SingleColumn, "empty value"),
             ),
         );
-        expect(HeaderCell).toHaveBeenCalledWith(expect.objectContaining({ enableSorting: false }), undefined);
+
+        const label = container.querySelector(labelSelector);
+        expect(label).toBeInTheDocument();
+        expect(label).not.toHaveClass(clickableLabelClass);
     });
 
     it("should alignment left if this is an attribute", () => {
-        render(getColumnHeader({}, { colGroupId: "r_0" }));
-        expect(HeaderCell).toHaveBeenCalledWith(expect.objectContaining({ textAlign: "left" }), undefined);
+        const { container } = render(getColumnHeader({}, { colGroupId: "r_0" }));
+
+        const label = container.querySelector(labelSelector);
+        expect(label).toBeInTheDocument();
+        expect(label).not.toHaveClass(rightAlignedLabelClass);
+        expect(label).not.toHaveClass(centerAlignedLabelClass);
     });
 
     it("should alignment right if this is a measure", () => {
-        render(getColumnHeader({}, { colGroupId: "c_0" }));
-        expect(HeaderCell).toHaveBeenCalledWith(expect.objectContaining({ textAlign: "right" }), undefined);
+        const { container } = render(getColumnHeader({}, { colGroupId: "c_0" }));
+
+        expect(container.querySelector(labelSelector)).toHaveClass(rightAlignedLabelClass);
     });
 });

@@ -1,17 +1,33 @@
 // (C) 2020-2026 GoodData Corporation
 
 import { type AxiosAdapter } from "axios";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type ITigerClient, type IUserProfile, newAxios } from "@gooddata/api-client-tiger";
 import * as profile from "@gooddata/api-client-tiger/endpoints/profile";
 
-import { ContextDeferredAuthProvider, TigerTokenAuthProvider } from "../auth.js";
-import { TigerBackend } from "../backend/index.js";
+import {
+    type ContextDeferredAuthProvider as ContextDeferredAuthProviderClass,
+    type TigerTokenAuthProvider as TigerTokenAuthProviderClass,
+} from "../auth.js";
+import { type TigerBackend as TigerBackendClass } from "../backend/index.js";
 
 vi.mock("@gooddata/api-client-tiger/endpoints/profile", () => ({
     ProfileApi_GetCurrent: vi.fn(),
 }));
+
+// The units under test are imported dynamically from a fresh module registry so that they pick up
+// the profile endpoint mock above even when another (non-isolated) test file already imported them
+// without the mock.
+let ContextDeferredAuthProvider: typeof ContextDeferredAuthProviderClass;
+let TigerTokenAuthProvider: typeof TigerTokenAuthProviderClass;
+let TigerBackend: typeof TigerBackendClass;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ ContextDeferredAuthProvider, TigerTokenAuthProvider } = await import("../auth.js"));
+    ({ TigerBackend } = await import("../backend/index.js"));
+});
 
 /**
  * A cache-enabled axios instance (as created by the tiger client factories) whose adapter serves

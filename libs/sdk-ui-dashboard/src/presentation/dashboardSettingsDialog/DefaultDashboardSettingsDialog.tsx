@@ -291,7 +291,11 @@ export function DefaultDashboardSettingsDialog({
                             tooltip={intl.formatMessage({
                                 id: "settingsDashboardDialog.section.timezone.allowUserOverride.toggle.tooltip",
                             })}
-                            isChecked={currentData.timezoneConfig?.allowUserOverrideInViewMode ?? false}
+                            isChecked={
+                                currentData.timezoneConfig?.allowUserOverrideInViewMode ??
+                                settings.enableTimezoneChange ??
+                                false
+                            }
                             onChange={(isChecked: boolean) => {
                                 setCurrentData({
                                     ...currentData,

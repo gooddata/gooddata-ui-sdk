@@ -7,6 +7,16 @@ let { extractProps } = vi.hoisted(() => ({
     extractProps: null as any,
 }));
 
+// The suite runs with `isolate: false`, so the module graph is shared between test files. Any test
+// file executed earlier may have already evaluated `LineChart` against the real `CoreLineChart`, and
+// Vitest does not re-execute cached importers when a later file mocks one of their dependencies. Drop
+// the module registry before this file's own imports are evaluated so that the scenarios imported
+// below bind to the mocked `CoreLineChart` and the props extractor actually observes the core chart
+// props.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 import { defSetSorts } from "@gooddata/sdk-model";
 import { type ILineChartProps } from "@gooddata/sdk-ui-charts";
 
@@ -29,13 +39,15 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreLineChart", async () => {
     };
 });
 
-describe.skip("LineChart", () => {
+describe("LineChart", () => {
     const Scenarios: Array<ScenarioAndDescription<ILineChartProps>> = lineChartScenario.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 
     describe.each(Scenarios)("with %s", (_desc, scenario) => {
-        const promisedInteractions = mountChartAndCapture(scenario);
+        // Single mount per scenario serves all the assertions below - the props extractor already
+        // captures the core chart props of this very mount, so there is no need to render twice.
+        const promisedInteractions = mountChartAndCapture(scenario, extractProps);
 
         it("should create expected execution definition", async () => {
             const interactions = await promisedInteractions;
@@ -44,8 +56,6 @@ describe.skip("LineChart", () => {
         });
 
         it("should create expected props for core chart", async () => {
-            const promisedInteractions = mountChartAndCapture(scenario, extractProps);
-
             const interactions = await promisedInteractions;
 
             expect(interactions.effectiveProps).toBeDefined();
