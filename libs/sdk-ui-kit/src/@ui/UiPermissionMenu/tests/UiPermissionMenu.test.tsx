@@ -2,7 +2,7 @@
 
 import { type ReactNode } from "react";
 
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
 
@@ -108,6 +108,33 @@ describe("UiPermissionMenu", () => {
         act(() => {
             infoButtons[0]!.focus();
         });
+        expect(await screen.findByRole("tooltip")).toHaveTextContent(
+            "You can't set higher permissions for yourself.",
+        );
+    });
+
+    it("prefers a per-level disabled tooltip over the shared one", async () => {
+        renderMenu({
+            selectedLevel: "EDIT",
+            disabledLevels: ["SHARE", "VIEW"],
+            disabledTooltip: "You can't set higher permissions for yourself.",
+            disabledLevelTooltips: { SHARE: "Covered by inherited access." },
+        });
+        openMenu();
+        // Info buttons render in EDIT, SHARE, VIEW order.
+        const infoButtons = screen.getAllByRole("button", { name: /More information about/ });
+        act(() => {
+            infoButtons[1]!.focus();
+        });
+        expect(await screen.findByRole("tooltip")).toHaveTextContent("Covered by inherited access.");
+        act(() => {
+            infoButtons[1]!.blur();
+        });
+        await waitFor(() => expect(screen.queryByRole("tooltip")).not.toBeInTheDocument());
+        act(() => {
+            infoButtons[2]!.focus();
+        });
+        // No per-level entry for VIEW — falls back to the shared tooltip.
         expect(await screen.findByRole("tooltip")).toHaveTextContent(
             "You can't set higher permissions for yourself.",
         );

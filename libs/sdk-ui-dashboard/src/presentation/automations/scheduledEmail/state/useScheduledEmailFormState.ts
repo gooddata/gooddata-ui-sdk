@@ -27,6 +27,7 @@ import {
     convertExternalRecipientToAutomationRecipient,
     convertUserToAutomationRecipient,
 } from "../../shared/utils/automationUtils.js";
+import { useExportTimezones } from "../DefaultScheduledEmailDialog/hooks/useExportTimezones.js";
 import {
     toModifiedISOStringToTimezone,
     toNormalizedFirstRunAndCron,
@@ -89,6 +90,12 @@ export function useScheduledEmailFormState({
     const { timezone, currentUser, widgetLocalIdToTabIdMap: widgetTabMap } = useAutomationsContext();
     const { dashboardId, dashboardTitle } = useScheduledEmailDialogContext();
 
+    // Baked into new export definitions when the backend cannot derive the value at run time:
+    // override/browser-resolution for dashboard schedules, additionally the dashboard's stored
+    // configuration for widget schedules (the backend has only workspace/organization settings
+    // available for those).
+    const { exportTimezoneId } = useExportTimezones(!!widget && !!insight);
+
     const isWidget = !!widget && !!insight;
 
     // Determine target tab ID if widget is present
@@ -126,6 +133,7 @@ export function useScheduledEmailFormState({
                           evaluationMode: "PER_RECIPIENT",
                           targetTabId,
                           parametersByTab: parametersByTabForNewAutomation,
+                          exportTimezoneId,
                       }
                     : {
                           timezone,
@@ -140,6 +148,7 @@ export function useScheduledEmailFormState({
                           defaultPdfPageSize,
                           evaluationMode: "PER_RECIPIENT",
                           parametersByTab: parametersByTabForNewAutomation,
+                          exportTimezoneId,
                       },
             ),
     );
@@ -169,7 +178,12 @@ export function useScheduledEmailFormState({
                 schedule: {
                     ...s.schedule,
                     cron: cronExpression,
-                    firstRun: toModifiedISOStringToTimezone(startDate ?? new Date(), timezone).iso,
+                    // the schedule's own timezone wins so that editing an existing schedule keeps
+                    // interpreting the picked date in the timezone it was created with
+                    firstRun: toModifiedISOStringToTimezone(
+                        startDate ?? new Date(),
+                        s.schedule?.timezone ?? timezone,
+                    ).iso,
                 },
             }));
         },
@@ -258,6 +272,7 @@ function newAutomationMetadataObjectDefinition({
     evaluationMode,
     targetTabId,
     parametersByTab,
+    exportTimezoneId,
 }: {
     timezone?: string;
     dashboardId: string;
@@ -276,6 +291,13 @@ function newAutomationMetadataObjectDefinition({
     evaluationMode: AutomationEvaluationMode;
     targetTabId?: string;
     parametersByTab?: Record<string, IDashboardExportParameter[]>;
+    /**
+     * Export-content timezone; unrelated to the schedule cron `timezone`. Defined only when the
+     * backend cannot derive it at run time (view-mode override or resolved browser-detected
+     * timezone) — otherwise nothing is baked and the backend reads the persisted
+     * dashboard/settings timezone itself.
+     */
+    exportTimezoneId?: string;
 }): IAutomationMetadataObjectDefinition {
     const { firstRun, cron } = toNormalizedFirstRunAndCron(timezone);
     const exportDefinition =
@@ -289,6 +311,7 @@ function newAutomationMetadataObjectDefinition({
                   widgetFiltersWithInsight,
                   dashboardFilters,
                   defaultPdfPageSize,
+                  timezoneId: exportTimezoneId,
               })
             : newDashboardExportDefinitionMetadataObjectDefinition({
                   dashboardId,
@@ -296,6 +319,7 @@ function newAutomationMetadataObjectDefinition({
                   dashboardFilters,
                   filtersByTab,
                   format: "PDF",
+                  timezoneId: exportTimezoneId,
               });
 
     let metadataObj: { metadata?: IAutomationMetadataObjectBase["metadata"] } =

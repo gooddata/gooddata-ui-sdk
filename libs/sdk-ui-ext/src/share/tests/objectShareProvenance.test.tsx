@@ -4,7 +4,7 @@ import { type PropsWithChildren } from "react";
 
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import {
@@ -14,9 +14,10 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { type IGranularAccessGrantee, idRef, objRefToString } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
+import { createTightWaitFor } from "@gooddata/util";
 
 import type { IObjectShareLabel } from "../types.js";
-import { useObjectShareController } from "../useObjectShareController.js";
+import type * as UseObjectShareControllerModule from "../useObjectShareController.js";
 
 /**
  * State-matrix coverage for per-label access provenance.
@@ -179,6 +180,23 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
     };
 });
 
+/*
+ * Test isolation is disabled for this package, so the module cache is shared between test files:
+ * useObjectShareController.js may already have been evaluated - bound to another file's mocks - elsewhere,
+ * and the mocked graph this file builds must not outlive it. Re-import it up front so this file always
+ * drives a controller wired to the stubs above, and drop the mocked graph again on the way out.
+ */
+let useObjectShareController: typeof UseObjectShareControllerModule.useObjectShareController;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ useObjectShareController } = await import("../useObjectShareController.js"));
+});
+
+afterAll(() => {
+    vi.resetModules();
+});
+
 /** The object is granted here AND inherited; `lbl.name` likewise; `lbl.code` inherited only. */
 const DUAL_EVERYWHERE = {
     "attribute:attr.country": { [U1]: { direct: ["VIEW"], inherited: ["SHARE", "VIEW"] } },
@@ -195,24 +213,20 @@ describe("label access provenance — state matrix", () => {
 
     /**
      * `renderHook` renders no DOM, so `waitFor`'s MutationObserver shortcut never fires and
-     * every pending assertion costs a full poll interval — 50ms by default, which is the whole
-     * runtime of each test here. Poll tightly instead; the awaited work is a resolved promise
-     * away, not a timer.
+     * every pending assertion costs a full default poll interval — the whole runtime of each
+     * test here. The awaited work is a resolved promise away, not a timer.
      */
-    const POLL = { interval: 1 } as const;
+    const settle = createTightWaitFor(waitFor);
 
     const ready = async (result: { current: { state: { status: string } } }) => {
-        await waitFor(() => expect(result.current.state.status).toBe("success"), POLL);
+        await settle(() => expect(result.current.state.status).toBe("success"));
     };
 
     /** The label probe resolves after the access list, so it needs its own wait. */
     const labelsReady = async (result: {
         current: { state: { selectedLabelIdsByGrantee: Record<string, string[] | undefined> } };
     }) => {
-        await waitFor(
-            () => expect(result.current.state.selectedLabelIdsByGrantee[U1_ROW]).toBeDefined(),
-            POLL,
-        );
+        await settle(() => expect(result.current.state.selectedLabelIdsByGrantee[U1_ROW]).toBeDefined());
     };
 
     it("INV-D: scope covers direct, inherited and primary; locked covers inherited", async () => {

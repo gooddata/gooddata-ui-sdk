@@ -19,7 +19,7 @@ import {
 } from "../../events/dashboard.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
-import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
+import { selectDashboardRef, selectEffectiveDashboardTimezone } from "../../store/meta/metaSelectors.js";
 import {
     selectFilterContextFilters,
     selectFiltersByTab,
@@ -80,12 +80,17 @@ export function* exportDashboardToPdfPresentationHandler(
         selectExportResultPollingTimeout,
     );
 
+    const timezoneId: ReturnType<typeof selectEffectiveDashboardTimezone> = yield select(
+        selectEffectiveDashboardTimezone,
+    );
+
     const options: IDashboardExportPresentationOptions = {
         ...(cmd.payload?.options ?? {}),
         exportMetadata: cmd.payload?.exportMetadata,
         timeout,
         // explicit caller-provided overrides win; otherwise fall back to the store-derived effective ones
         parametersByTab: cmd.payload?.options?.parametersByTab ?? parametersByTab,
+        timezoneId: cmd.payload?.options?.timezoneId ?? timezoneId,
     };
 
     const result: PromiseFnReturnType<typeof exportDashboardToPdfPresentation> = yield call(

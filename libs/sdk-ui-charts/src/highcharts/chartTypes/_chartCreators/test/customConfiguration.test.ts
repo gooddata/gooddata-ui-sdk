@@ -1,6 +1,10 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type PlotBarDataLabelsOptions, type PlotBubbleDataLabelsOptions } from "highcharts";
+import {
+    type PlotBarDataLabelsOptions,
+    type PlotBubbleDataLabelsOptions,
+    type XAxisOptions,
+} from "highcharts";
 import { omit, set } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
@@ -1287,6 +1291,26 @@ describe("getCustomizedConfiguration", () => {
             expect(result.plotOptions!.bullet).toBe(undefined);
         });
     });
+});
+
+describe("charts without a category axis", () => {
+    // sankey and dependency wheel chart options carry a placeholder [[""]] in data.categories;
+    // it must not reach xAxis.categories, otherwise the 'grouped-categories' plugin builds a
+    // category whose name is an object and the chart fails to render
+    it.each([[VisualizationTypes.SANKEY], [VisualizationTypes.DEPENDENCY_WHEEL]])(
+        "should not set x axis categories for %s",
+        (type: string) => {
+            const result = getCustomizedConfiguration({
+                type,
+                data: {
+                    series: [{ data: [{ name: "node", y: 1 }] }],
+                    categories: [[""]],
+                },
+            } as IChartOptions);
+
+            expect((result.xAxis as XAxisOptions[])?.[0]?.categories).toBeUndefined();
+        },
+    );
 });
 
 describe("escapeCategories", () => {

@@ -28,6 +28,7 @@ import {
     type ShareStatus,
     type UriRef,
     idRef,
+    isBrowserDetectedTimezone,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     isDashboardDateFilterWithDimension,
@@ -747,6 +748,39 @@ export const selectEffectiveDashboardTimezone: DashboardSelector<string | undefi
             return undefined;
         }
         return resolveTimezoneId(timezoneConfig.timezoneId);
+    },
+);
+
+/**
+ * Selects the timezone to store into a scheduled export definition, as a concrete IANA timezone ID.
+ *
+ * @remarks
+ * Unlike {@link selectEffectiveDashboardTimezone}, this returns a value only when the timezone
+ * cannot be derived by the backend at schedule run time: when the viewer has an ad-hoc view-mode
+ * override active, or when the dashboard is configured with the browser-detected sentinel (the
+ * exporter service has no browser to detect from, so the resolution made here must be persisted).
+ * When the dashboard has an explicit configured timezone — or none, falling back to workspace or
+ * organization settings — this returns undefined and the schedule stores no timezone: the backend
+ * reads the dashboard's stored timezone itself, so schedules stay up to date when the dashboard
+ * or organization configuration changes without having to be recreated.
+ *
+ * @alpha
+ */
+export const selectScheduledExportTimezone: DashboardSelector<string | undefined> = createSelector(
+    selectEnableDashboardTimezone,
+    selectDashboardTimezoneConfig,
+    selectTimezoneOverride,
+    (isEnabled, timezoneConfig, timezoneOverride) => {
+        if (!isEnabled) {
+            return undefined;
+        }
+        if (timezoneOverride) {
+            return timezoneOverride;
+        }
+        if (timezoneConfig?.timezoneId && isBrowserDetectedTimezone(timezoneConfig.timezoneId)) {
+            return resolveTimezoneId(timezoneConfig.timezoneId);
+        }
+        return undefined;
     },
 );
 

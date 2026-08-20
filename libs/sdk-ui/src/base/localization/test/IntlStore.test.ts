@@ -1,6 +1,6 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { getIntl, getTranslation } from "../IntlStore.js";
 import { DefaultLocale, type ILocale } from "../Locale.js";
@@ -55,13 +55,16 @@ describe("IntlStore", () => {
             });
         });
 
-        it("should return default message in production environment when translationId was not found", () => {
-            process.env["NODE_ENV"] = "production";
+        it("should return default message when translationId was not found", () => {
+            // react-intl reports the missing translation through console.error; silence it instead of
+            // switching NODE_ENV to "production". Mutating NODE_ENV is a process-wide side effect and,
+            // with test isolation disabled, it permanently breaks react/jsx-dev-runtime (which resolves
+            // to the empty production shim) for every test file that runs afterwards in the same worker.
+            // The spy is restored automatically after the test (restoreMocks).
+            vi.spyOn(console, "error").mockImplementation(() => {});
 
             const result = getTranslation("unknown_id", "fr-FR", {});
             expect(result).toEqual("unknown_id");
-
-            process.env["NODE_ENV"] = "test";
         });
     });
 });

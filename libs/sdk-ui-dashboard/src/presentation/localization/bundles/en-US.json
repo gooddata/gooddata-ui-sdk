@@ -443,6 +443,10 @@
         "text": "Time zone used for date filters and date values on this dashboard.",
         "crowdinContext": "Tooltip of the default time zone picker in the dashboard settings dialog"
     },
+    "settingsDashboardDialog.section.timezone.defaultTimezone.help": {
+        "text": "More information",
+        "crowdinContext": "Screen-reader label of the help icon next to the time zone picker label in the dashboard settings dialog; focusing the icon reads the tooltip with details."
+    },
     "settingsDashboardDialog.section.timezone.defaultTimezone.workspace": {
         "text": "Default",
         "crowdinContext": "Time zone picker item meaning the workspace default time zone is used."
@@ -476,7 +480,7 @@
         "crowdinContext": "Tooltip of the toggle controlling whether the used time zone is shown on the dashboard"
     },
     "settingsDashboardDialog.section.timezone.select.searchPlaceholder": {
-        "text": "Search ...",
+        "text": "Search…",
         "crowdinContext": "Placeholder of the search input in the time zone picker"
     },
     "settingsDashboardDialog.section.timezone.select.noMatch": {
@@ -491,10 +495,6 @@
         "text": "<b>Note:</b> Time zone resets to the default when you reload the page.",
         "crowdinContext": "Note in the dialog for temporarily changing the dashboard time zone in view mode. The <b> tags wrap the 'Note:' label."
     },
-    "timezoneDialog.description.ariaLabel": {
-        "text": "Change timezone dialog information message",
-        "crowdinContext": "Aria label for the change timezone dialog information message"
-    },
     "timezoneDialog.default": {
         "text": "Default",
         "crowdinContext": "Time zone picker item meaning the dashboard's configured time zone is used."
@@ -504,7 +504,7 @@
         "crowdinContext": "Time zone picker item meaning the time zone is detected from the viewer's browser. The {timezone} placeholder shows the detected time zone."
     },
     "timezoneDialog.select.searchPlaceholder": {
-        "text": "Search ...",
+        "text": "Search…",
         "crowdinContext": "Placeholder of the search input in the time zone picker of the change time zone dialog"
     },
     "timezoneDialog.select.noMatch": {
@@ -955,6 +955,38 @@
         "text": "Note: These filters will always be used for future exports.",
         "crowdinContext": "Informational message about filters being permanently applied to exports"
     },
+    "dialogs.schedule.email.timezone": {
+        "text": "Time zone",
+        "crowdinContext": "Label of the time zone section in the scheduled export dialog"
+    },
+    "dialogs.automation.timezone.default": {
+        "text": "Default",
+        "crowdinContext": "Time zone picker item in the scheduled export dialog meaning the persisted dashboard or workspace/organization time zone setting is used"
+    },
+    "dialogs.automation.timezone.default.tooltip": {
+        "text": "Follows the time zone set for the dashboard or, when the dashboard has none, for your organization, workspace, or user account. It updates automatically if that setting changes.",
+        "crowdinContext": "Tooltip of the Default time zone picker item in the scheduled export dialog"
+    },
+    "dialogs.automation.timezone.select.searchPlaceholder": {
+        "text": "Search ...",
+        "crowdinContext": "Placeholder of the search input in the time zone picker of the scheduled export dialog"
+    },
+    "dialogs.automation.timezone.select.noMatch": {
+        "text": "No matching time zone.",
+        "crowdinContext": "Message shown when the time zone search yields no results in the scheduled export dialog"
+    },
+    "dialogs.automation.timezone.now": {
+        "text": "Now: {time}",
+        "crowdinContext": "Live clock preview next to the time zone picker in the scheduled export dialog. Example: 'Now: 14:45'. The {time} placeholder is replaced with the current time in the selected time zone."
+    },
+    "dialogs.automation.timezone.defaultNow": {
+        "text": "{timezone}, Now: {time}",
+        "crowdinContext": "Live clock preview next to the time zone picker in the scheduled export dialog when the Default option is selected. Example: 'Prague (GMT+01:00), Now: 14:45'. The {timezone} placeholder shows the time zone the Default option currently resolves to, the {time} placeholder shows the current time in it."
+    },
+    "dialogs.automation.timezone.usage": {
+        "text": "Used to calculate dates in the exported data.",
+        "crowdinContext": "Helper text under the time zone picker in the scheduled export dialog"
+    },
     "dialogs.automation.filters.missing": {
         "text": "<b>Warning:</b> Some filters couldn't be applied — they're no longer available on the dashboard.",
         "crowdinContext": "Warning message when saved filters are no longer available on the dashboard"
@@ -990,6 +1022,14 @@
     "dialogs.automation.applyCurrentFilters.schedule.confirm": {
         "text": "<b>Warning</b>: Some filters used when this schedule was created are no longer available or valid. Editing will apply the current dashboard filters.",
         "crowdinContext": "Warning message when editing a schedule with outdated filters"
+    },
+    "dialogs.automation.applyCurrentFilters.schedule.timezone.confirm": {
+        "text": "<b>Warning</b>: The time zone used when this schedule was created no longer matches the dashboard. Editing will apply the dashboard's current time zone.",
+        "crowdinContext": "Warning message when editing a schedule whose stored time zone no longer matches the dashboard"
+    },
+    "dialogs.automation.applyCurrentFilters.schedule.filtersAndTimezone.confirm": {
+        "text": "<b>Warning</b>: Some filters and the time zone used when this schedule was created are no longer available or valid. Editing will apply the current dashboard filters and time zone.",
+        "crowdinContext": "Warning message when editing a schedule with outdated filters and an outdated time zone"
     },
     "dialogs.automation.filters.schedule.ariaLabel": {
         "text": "Information about the option: Always use these filters for future exports.",
@@ -1523,9 +1563,13 @@
         "text": "The creator can edit this dashboard. Other users with appropriate user roles can edit this dashboard when they drill to it.",
         "crowdinContext": "Tooltip explaining that while the dashboard is private, users with proper roles can edit it when accessing through drill navigation"
     },
+    "topBar.timezoneIndicator.label": {
+        "text": "Time zone: ",
+        "crowdinContext": "Screen-reader-only prefix of the time zone indicator badge in the dashboard top bar; read before the friendly time zone name (e.g. Prague). Keep the trailing space."
+    },
     "topBar.timezoneIndicator.tooltip": {
         "text": "Time zone",
-        "crowdinContext": "Tooltip of the time zone indicator in the dashboard top bar. The {name} placeholder is the friendly time zone name (e.g. Prague), the {offset} placeholder is its UTC offset (e.g. GMT+02:00)."
+        "crowdinContext": "Tooltip of the time zone indicator in the dashboard top bar, shown when hovering the indicator badge."
     },
     "dashboard.shareDialog.removeAccessGranteeTooltip": {
         "text": "Remove access to this dashboard.",

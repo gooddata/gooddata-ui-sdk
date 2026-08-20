@@ -1,7 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { fireEvent, render } from "@testing-library/react";
-import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type HeadlineElementType, withIntlForTest } from "@gooddata/sdk-ui";
 
@@ -11,16 +11,10 @@ import {
 } from "../../../../interfaces/BaseHeadlines.js";
 import { type IHeadlineDataItem } from "../../../../interfaces/Headlines.js";
 import { HEADLINE_ITEM_LINK_SELECTOR, TEST_DATA_ITEM } from "../../../../tests/TestData.fixtures.js";
-import { createMockUseBaseHeadline } from "../../tests/BaseHeadline.test.helpers.js";
+import { createBaseHeadlineTestContext } from "../../tests/BaseHeadline.test.helpers.js";
 import { withDrillable } from "../withDrillable.js";
 
-const useBaseHeadlineMock = vi.hoisted(() => vi.fn());
-
-vi.mock("../../BaseHeadlineContext.js", () => ({
-    useBaseHeadline: useBaseHeadlineMock,
-}));
-
-const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
+const { setBaseHeadline, wrapper } = createBaseHeadlineTestContext();
 
 describe("withDrillable", () => {
     const wrappedComponentClassName = "s-wrapped-component-class-name";
@@ -28,15 +22,12 @@ describe("withDrillable", () => {
     const WithDrillableComponent = withDrillable(WrappedComponent);
     const renderWithDrillableComponent = (props: IWithDrillableItemProps<IBaseHeadlineDrillable>) => {
         const WrappedWithDrillableComponent = withIntlForTest(WithDrillableComponent);
-        return render(<WrappedWithDrillableComponent {...props} />);
+        return render(<WrappedWithDrillableComponent {...props} />, { wrapper });
     };
 
     beforeEach(() => {
-        mockUseBaseHeadline();
-    });
-
-    afterAll(() => {
-        vi.clearAllMocks();
+        setBaseHeadline();
+        WrappedComponent.mockClear();
     });
 
     it("Should render as drillable item", () => {
@@ -64,7 +55,7 @@ describe("withDrillable", () => {
             isDrillable: true,
         };
 
-        mockUseBaseHeadline({ fireDrillEvent });
+        setBaseHeadline({ fireDrillEvent });
         const { container } = renderWithDrillableComponent({ dataItem, elementType });
 
         const drillLink = container.querySelector(HEADLINE_ITEM_LINK_SELECTOR)!;
@@ -82,7 +73,7 @@ describe("withDrillable", () => {
         const fireDrillEvent = vi.fn();
         const elementType: HeadlineElementType = "primaryValue";
 
-        mockUseBaseHeadline({ fireDrillEvent });
+        setBaseHeadline({ fireDrillEvent });
         const { container } = renderWithDrillableComponent({ dataItem: TEST_DATA_ITEM, elementType });
 
         fireEvent.click(container.querySelector(`.${wrappedComponentClassName}`)!);

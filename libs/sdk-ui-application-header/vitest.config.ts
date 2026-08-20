@@ -10,6 +10,7 @@ export default defineConfig({
     test: {
         // Use happy-dom for faster performance than jsdom
         environment: "happy-dom",
+        reporters: ["default"],
         setupFiles: "./vitest.setup.ts",
         include: ["src/**/*.test.{ts,tsx}"],
         pool: "threads",

@@ -3,6 +3,8 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
 
+import { createTightWaitFor } from "@gooddata/util";
+
 import type { AsyncStatus } from "../../async/types.js";
 import {
     type IPaginatorEndpoint,
@@ -40,8 +42,14 @@ function endpointFromPages(pages: Array<{ items: Entity[]; offset: number; total
 
 const identity = (e: Entity) => e;
 
+// The hook settles on the microtask queue (mocked endpoints resolve immediately) and
+// renders no DOM, so `waitFor`'s MutationObserver never fires and its default polling
+// interval dominates the runtime of every test in this file. Poll tightly instead –
+// the awaited state is already there on the first retry.
+const settle = createTightWaitFor(waitFor);
+
 async function waitForStatus(result: { current: { status: AsyncStatus } }, expected: AsyncStatus) {
-    await waitFor(() => {
+    await settle(() => {
         expect(result.current.status).toBe(expected);
     });
 }

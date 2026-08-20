@@ -238,6 +238,20 @@ export function changesEffectiveLevel(
 }
 
 /**
+ * Union of two disabled-level sets, or undefined when both are empty — the shape the
+ * permission menus take (undefined means "nothing disabled").
+ *
+ * @internal
+ */
+export function mergeDisabledLevels(
+    a: ObjectSharePermissionLevel[] | undefined,
+    b: ObjectSharePermissionLevel[] | undefined,
+): ObjectSharePermissionLevel[] | undefined {
+    const merged = [...new Set([...(a ?? []), ...(b ?? [])])];
+    return merged.length > 0 ? merged : undefined;
+}
+
+/**
  * Whether revoking this grantee's direct grant would change the level they EFFECTIVELY
  * hold. False when inheritance alone already covers the displayed level: the revoke still
  * removes the local grant, but restricts nothing the grantee can do — so no

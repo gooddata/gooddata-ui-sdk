@@ -30,7 +30,7 @@ interface IFilterStateBase {
     certification: boolean | undefined;
 }
 
-interface IFilterState extends IFilterStateBase {
+export interface IFilterState extends IFilterStateBase {
     // Derived state
     isModified: boolean;
 }
@@ -70,7 +70,11 @@ const initialState: IFilterStateBase = {
     certification: undefined,
 };
 
-const initialFullState: IFilterState = {
+/**
+ * The unfiltered state {@link useFilterState} falls back to outside a provider.
+ * @internal
+ */
+export const defaultFilterState: IFilterState = {
     ...initialState,
     // Derived state
     isModified: false,
@@ -90,7 +94,12 @@ const initialActions: IFilterActions = {
     toggleTag: () => {},
 };
 
-const FilterStateContext = createContext<IFilterState>(initialFullState);
+/**
+ * The state context behind {@link useFilterState}. Exported so a test can mount a fixed filter
+ * state (see `TestFilterProvider`); production code goes through {@link FilterProvider}.
+ * @internal
+ */
+export const FilterStateContext = createContext<IFilterState>(defaultFilterState);
 const FilterActionsContext = createContext<IFilterActions>(initialActions);
 
 export function FilterProvider({ children }: PropsWithChildren) {

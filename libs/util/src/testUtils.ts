@@ -174,3 +174,31 @@ export function suppressConsole<T>(
         },
     );
 }
+
+/**
+ * A waitFor-compatible polling function, structurally matching testing-library's waitFor.
+ *
+ * @internal
+ */
+export type WaitForFn = <T>(
+    callback: () => T | Promise<T>,
+    options?: { interval?: number; timeout?: number },
+) => Promise<T>;
+
+/**
+ * Wraps a testing-library waitFor so it polls every millisecond instead of the default 50ms.
+ *
+ * @remarks
+ * Use in tests where the awaited work settles on the next microtask or a resolved promise -
+ * there, every pending assertion would otherwise cost a full default poll interval.
+ *
+ * @param waitFor - the consumer's waitFor (e.g. from `@testing-library/react`)
+ * @param interval - the polling interval in milliseconds, 1 by default
+ * @internal
+ */
+export function createTightWaitFor(
+    waitFor: WaitForFn,
+    interval: number = 1,
+): <T>(callback: () => T | Promise<T>) => Promise<T> {
+    return (callback) => waitFor(callback, { interval });
+}

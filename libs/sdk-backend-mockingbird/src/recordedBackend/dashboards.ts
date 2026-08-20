@@ -205,7 +205,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         });
     };
 
-    public getFilterContextByExportId = async (
+    public getExportDataByExportId = async (
         _exportId: string,
         _type: "visual" | "slides" | undefined,
         _tabId?: string,
@@ -214,6 +214,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         title?: string;
         hideWidgetTitles?: boolean;
         exportMetadata?: Record<string, string>;
+        timezoneId?: string;
     } | null> => {
         return Promise.resolve(null);
     };

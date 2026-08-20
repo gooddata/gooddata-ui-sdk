@@ -23,6 +23,15 @@ import {
 // vi.fn() inline and retrieve spies via vi.mocked() after the import statements.
 // ---------------------------------------------------------------------------
 
+// `isolate: false` shares one module graph per worker, so the modules mocked below may already have
+// been evaluated — against their real dependencies — by a test file that ran earlier in the same
+// worker, which turns those `vi.mock()` calls into no-ops. Dropping the module registry from
+// `vi.hoisted()` (it runs before this file's own imports, unlike any `beforeEach`) makes those
+// imports resolve through the mocks.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 const { mockUseAutomationsContext, mockUseScheduledEmailDialogContext } = vi.hoisted(() => ({
     mockUseAutomationsContext: vi.fn(),
     mockUseScheduledEmailDialogContext: vi.fn(),
@@ -880,5 +889,39 @@ describe("useScheduledEmailFormState — referential stability", () => {
 
         expect(result.current.editedAutomation.title).toBe("typed");
         expect(result.current.onTitleChange).toBe(firstOnTitleChange);
+    });
+});
+
+// ---------------------------------------------------------------------------
+// Schedule timezone source — the "Starts on" section takes the context timezone
+// (which useBuildAutomationsContext resolves with the custom dashboard timezone
+// winning over the workspace setting) for new schedules, while an existing
+// schedule keeps interpreting dates in the timezone it was created with.
+// ---------------------------------------------------------------------------
+
+describe("useScheduledEmailFormState — schedule timezone source", () => {
+    it("uses the context timezone for a new schedule", () => {
+        const { result } = renderFormStateHook();
+
+        expect(result.current.editedAutomation.schedule?.timezone).toBe(SENTINEL_TIMEZONE);
+        expect(toNormalizedFirstRunAndCronSpy).toHaveBeenCalledWith(SENTINEL_TIMEZONE);
+    });
+
+    it("keeps the stored schedule timezone for firstRun conversion when editing", () => {
+        mockUseAutomationsContext.mockReturnValue({
+            ...DEFAULT_AUTOMATIONS_CONTEXT_VALUE,
+            timezone: "America/New_York",
+        });
+        const scheduledExportToEdit = makeAutomation({
+            schedule: { cron: "0 0 * * *", firstRun: "2026-05-01T12:00:00Z", timezone: "Europe/Prague" },
+        });
+        const { result } = renderFormStateHook({ scheduledExportToEdit });
+        const startDate = new Date("2026-03-15T08:30:00Z");
+
+        act(() => {
+            result.current.onRecurrenceChange("0 8 * * *", startDate, true);
+        });
+
+        expect(toModifiedISOStringToTimezoneSpy).toHaveBeenCalledWith(startDate, "Europe/Prague");
     });
 });

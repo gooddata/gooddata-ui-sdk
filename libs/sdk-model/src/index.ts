@@ -1013,6 +1013,7 @@ export {
     isBrowserDetectedTimezone,
     resolveTimezoneId,
     normalizeDashboardTimezoneConfig,
+    resolveDashboardTimezoneUserOverrideAllowed,
     DashboardDateFilterConfigModeValues,
     DashboardAttributeFilterConfigModeValues,
     isDashboard,

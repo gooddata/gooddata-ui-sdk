@@ -58,6 +58,12 @@ export interface IExportMetadata {
     title?: string;
     hideWidgetTitles?: boolean;
     exportMetadata?: Record<string, string>;
+    /**
+     * Concrete IANA timezone ID stored for the export-mode dashboard render. Mirrors the
+     * request's top-level timezoneId (which the exporter service consumes); the metadata copy is
+     * what the dashboard loaded in the headless browser reads via exportId.
+     */
+    timezoneId?: string;
 }
 
 export type TigerSettingsType = DeclarativeSettingTypeEnum;

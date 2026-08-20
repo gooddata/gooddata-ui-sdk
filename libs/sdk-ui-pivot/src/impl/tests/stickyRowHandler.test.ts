@@ -1,7 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
 import { type GridApi } from "ag-grid-community";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ROW_ATTRIBUTE_COLUMN } from "../base/constants.js";
 import { type IGroupingProvider } from "../data/rowGroupingProvider.js";
@@ -180,14 +180,16 @@ describe("stickyRowHandler", () => {
                 left: 0,
             };
 
-            updateStickyRowContentClassesAndData(
-                currentScrollPosition,
-                lastScrollPosition,
-                TEST_ROW_HEIGHT,
-                fakeGridApi,
-                fakeGroupingProvider,
-                fakeGridApiWrapper,
-            );
+            beforeEach(() => {
+                updateStickyRowContentClassesAndData(
+                    currentScrollPosition,
+                    lastScrollPosition,
+                    TEST_ROW_HEIGHT,
+                    fakeGridApi,
+                    fakeGroupingProvider,
+                    fakeGridApiWrapper,
+                );
+            });
 
             it("should show the sticky row", () => {
                 expect(fakeGridApiWrapper.addPinnedTopRowClass).toHaveBeenCalledWith(
@@ -220,14 +222,16 @@ describe("stickyRowHandler", () => {
                 left: 70,
             };
 
-            updateStickyRowContentClassesAndData(
-                currentScrollPosition,
-                lastScrollPosition,
-                TEST_ROW_HEIGHT,
-                fakeGridApi,
-                fakeGroupingProvider,
-                fakeGridApiWrapper,
-            );
+            beforeEach(() => {
+                updateStickyRowContentClassesAndData(
+                    currentScrollPosition,
+                    lastScrollPosition,
+                    TEST_ROW_HEIGHT,
+                    fakeGridApi,
+                    fakeGroupingProvider,
+                    fakeGridApiWrapper,
+                );
+            });
 
             it("should show the sticky row", () => {
                 expect(fakeGridApiWrapper.addPinnedTopRowClass).toHaveBeenCalledWith(
@@ -260,14 +264,16 @@ describe("stickyRowHandler", () => {
                 left: 0,
             };
 
-            updateStickyRowContentClassesAndData(
-                currentScrollPosition,
-                lastScrollPosition,
-                TEST_ROW_HEIGHT,
-                fakeGridApi,
-                fakeGroupingProvider,
-                fakeGridApiWrapper,
-            );
+            beforeEach(() => {
+                updateStickyRowContentClassesAndData(
+                    currentScrollPosition,
+                    lastScrollPosition,
+                    TEST_ROW_HEIGHT,
+                    fakeGridApi,
+                    fakeGroupingProvider,
+                    fakeGridApiWrapper,
+                );
+            });
 
             // it("should keep sticky row data empty", () => {
             //     expect(fakeGridApi.setPinnedTopRowData).not.toHaveBeenCalled();
@@ -297,14 +303,16 @@ describe("stickyRowHandler", () => {
                 left: 0,
             };
 
-            updateStickyRowContentClassesAndData(
-                currentScrollPosition,
-                lastScrollPosition,
-                TEST_ROW_HEIGHT,
-                fakeGridApi,
-                fakeGroupingProvider,
-                fakeGridApiWrapper,
-            );
+            beforeEach(() => {
+                updateStickyRowContentClassesAndData(
+                    currentScrollPosition,
+                    lastScrollPosition,
+                    TEST_ROW_HEIGHT,
+                    fakeGridApi,
+                    fakeGroupingProvider,
+                    fakeGridApiWrapper,
+                );
+            });
 
             it("should set empty sticky row data", () => {
                 expect(fakeGridApi.updateGridOptions).toHaveBeenCalledWith({ pinnedTopRowData: [{}] });
@@ -334,14 +342,16 @@ describe("stickyRowHandler", () => {
                 left: 0,
             };
 
-            updateStickyRowContentClassesAndData(
-                currentScrollPosition,
-                lastScrollPosition,
-                TEST_ROW_HEIGHT,
-                fakeGridApi,
-                fakeGroupingProvider,
-                fakeGridApiWrapper,
-            );
+            beforeEach(() => {
+                updateStickyRowContentClassesAndData(
+                    currentScrollPosition,
+                    lastScrollPosition,
+                    TEST_ROW_HEIGHT,
+                    fakeGridApi,
+                    fakeGroupingProvider,
+                    fakeGridApiWrapper,
+                );
+            });
 
             it("should set correct sticky row data", () => {
                 expect(fakeGridApi.updateGridOptions).toHaveBeenCalledWith({
@@ -359,7 +369,9 @@ describe("stickyRowHandler", () => {
         const api = getFakeGridApi();
         const apiWrapper = getFakeGridApiWrapper();
 
-        updateStickyRowPosition(api, apiWrapper);
+        beforeEach(() => {
+            updateStickyRowPosition(api, apiWrapper);
+        });
 
         it("should set top and padding-right styles", () => {
             expect(apiWrapper.setPinnedTopRowStyles).toHaveBeenCalledWith(api, {

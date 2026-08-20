@@ -3,7 +3,11 @@
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
-import { type IDashboardTimezoneConfig, resolveTimezoneId } from "@gooddata/sdk-model";
+import {
+    type IDashboardTimezoneConfig,
+    resolveDashboardTimezoneUserOverrideAllowed,
+    resolveTimezoneId,
+} from "@gooddata/sdk-model";
 
 import { type IChangeDashboardTimezoneOverride } from "../../commands/timezone.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
@@ -11,7 +15,10 @@ import {
     type IDashboardTimezoneOverrideChanged,
     dashboardTimezoneOverrideChanged,
 } from "../../events/timezone.js";
-import { selectEnableDashboardTimezone } from "../../store/config/configSelectors.js";
+import {
+    selectEnableDashboardTimezone,
+    selectEnableTimezoneChange,
+} from "../../store/config/configSelectors.js";
 import {
     selectDashboardTimezoneConfig,
     selectEffectiveDashboardTimezone,
@@ -44,7 +51,8 @@ export function* changeDashboardTimezoneOverrideHandler(
     }
 
     const timezoneConfig: IDashboardTimezoneConfig | undefined = yield select(selectDashboardTimezoneConfig);
-    if (timezoneConfig?.allowUserOverrideInViewMode !== true) {
+    const enableTimezoneChange: boolean = yield select(selectEnableTimezoneChange);
+    if (!resolveDashboardTimezoneUserOverrideAllowed(timezoneConfig, enableTimezoneChange)) {
         throw invalidArgumentsProvided(
             ctx,
             cmd,

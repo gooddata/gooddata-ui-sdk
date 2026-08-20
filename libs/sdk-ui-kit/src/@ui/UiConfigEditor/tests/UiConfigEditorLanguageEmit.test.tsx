@@ -7,14 +7,19 @@ import { beforeAll, describe, expect, it, vi } from "vitest";
 import { preloadUiConfigEditorGrammars } from "../configEditorGrammars.js";
 import { UiConfigEditor } from "../UiConfigEditor.js";
 
-// A stub that renders the value and never calls `onChange`. Switching language must report the new
-// canonical value on its own — the editor's value sync is remote-annotated and never reaches the
-// change handler — and stubbing the editor away is what proves the component does not depend on it.
-vi.mock("../../../syntaxHighlightingInput/SyntaxHighlightingInput.js", () => ({
-    SyntaxHighlightingInput: ({ value }: { value: string }) => <div data-testid="editor">{value}</div>,
-}));
-
+// This file is about the value the editor REPORTS on a language switch, not about the editing:
+// switching must re-emit the value in the new language's canonical form on its own, because the
+// editor's own value sync is remote-annotated and so never reaches the change handler. `onChange`
+// staying silent below is what proves that — the real editor is rendered rather than stubbed away,
+// since a stub in its place would replace a module the other suites in this worker share.
 const CANONICAL_JSON = JSON.stringify({ a: { b: 1 } }, null, 4);
+
+/** The text on screen, rebuilt from CodeMirror's rendered lines. */
+function displayedText() {
+    return Array.from(document.querySelectorAll(".cm-line"))
+        .map((line) => line.textContent)
+        .join("\n");
+}
 
 // The editor loads its language grammar on demand; tests assert on a fully initialized editor
 // synchronously, so the grammars are warmed up front.
@@ -86,7 +91,7 @@ describe("UiConfigEditor language switch, without the editor echoing changes bac
 
         expect(onChange).not.toHaveBeenCalled();
         // The view still follows the shared language.
-        expect(screen.getByTestId("editor")).toHaveTextContent("a:");
+        expect(displayedText()).toContain("a:");
     });
 
     it("stays quiet when the value is already canonical, so a form is not marked dirty", () => {
@@ -130,7 +135,7 @@ describe("UiConfigEditor language switch, without the editor echoing changes bac
         );
 
         expect(onChange).not.toHaveBeenCalled();
-        expect(screen.getByTestId("editor")).toHaveTextContent(value.trim());
+        expect(displayedText()).toContain(value.trim());
     });
 
     it.each([
@@ -165,7 +170,7 @@ describe("UiConfigEditor language switch, without the editor echoing changes bac
     it("shows the value in the requested language", () => {
         renderEditor(CANONICAL_JSON);
 
-        expect(screen.getByTestId("editor")).toHaveTextContent('"a"');
+        expect(displayedText()).toContain('"a"');
     });
 
     it("asks the host to change language when a toolbar button is used", async () => {

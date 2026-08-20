@@ -14,7 +14,10 @@ import { type DashboardTester, preloadedTesterFactory } from "../../../tests/Das
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { SimpleDashboardNoDrillsIdentifier } from "../../../tests/fixtures/SimpleDashboardNoDrills.fixtures.js";
 
-async function createTester(enableDashboardTimezone: boolean): Promise<DashboardTester> {
+async function createTester(
+    enableDashboardTimezone: boolean,
+    enableTimezoneChange = false,
+): Promise<DashboardTester> {
     let Tester: DashboardTester;
     await preloadedTesterFactory(
         (tester) => {
@@ -23,7 +26,7 @@ async function createTester(enableDashboardTimezone: boolean): Promise<Dashboard
         SimpleDashboardNoDrillsIdentifier,
         {
             initCommand: initializeDashboard({
-                settings: { enableDashboardTimezone },
+                settings: { enableDashboardTimezone, enableTimezoneChange },
             }),
         },
     );
@@ -123,6 +126,39 @@ describe("changeDashboardTimezoneOverrideHandler", () => {
 
             await Tester.dispatchAndWaitFor(
                 changeDashboardTimezoneOverride("Europe/Prague", TestCorrelation),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(Tester.select(selectTimezoneOverride)).toBeUndefined();
+        });
+
+        it("should allow the command when the dashboard does not set an override and the organization setting is on", async () => {
+            const Tester = await createTester(true, true);
+            Tester.dispatch(
+                metaActions.setDashboardTimezoneConfig({
+                    timezoneId: "Europe/Prague",
+                }),
+            );
+
+            await Tester.dispatchAndWaitFor(
+                changeDashboardTimezoneOverride("America/New_York", TestCorrelation),
+                "GDC.DASH/EVT.TIMEZONE_OVERRIDE.CHANGED",
+            );
+
+            expect(Tester.select(selectTimezoneOverride)).toBe("America/New_York");
+        });
+
+        it("should fail the command when the dashboard explicitly disallows overrides even if the organization setting is on", async () => {
+            const Tester = await createTester(true, true);
+            Tester.dispatch(
+                metaActions.setDashboardTimezoneConfig({
+                    timezoneId: "Europe/Prague",
+                    allowUserOverrideInViewMode: false,
+                }),
+            );
+
+            await Tester.dispatchAndWaitFor(
+                changeDashboardTimezoneOverride("America/New_York", TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 

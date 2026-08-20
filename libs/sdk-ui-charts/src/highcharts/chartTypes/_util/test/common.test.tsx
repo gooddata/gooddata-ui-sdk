@@ -1,8 +1,9 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
 import {
+    decodeHtmlEntities,
     formatLegendLabel,
     getAxesCounts,
     getPrimaryChartType,
@@ -68,6 +69,28 @@ describe("Common utils", () => {
 
         it("should return id from attribute value uri", () => {
             expect(unEscapeAngleBrackets(str)).toEqual(expectedString);
+        });
+    });
+
+    describe("decodeHtmlEntities", () => {
+        it("should decode escaped entities", () => {
+            expect(decodeHtmlEntities("abc&lt;b&gt;d&amp;e")).toEqual("abc<b>d&e");
+        });
+
+        it("should stringify numbers", () => {
+            expect(decodeHtmlEntities(42)).toEqual("42");
+        });
+
+        // the formatters are fed from highcharts internals, so anything can come in;
+        // returning an empty string keeps chart creation alive
+        it.each([
+            ["undefined", undefined],
+            ["null", null],
+            ["an object", { name: undefined, categories: undefined }],
+            ["NaN", NaN],
+            ["Infinity", Infinity],
+        ])("should return an empty string for %s", (_name, value) => {
+            expect(decodeHtmlEntities(value)).toEqual("");
         });
     });
 

@@ -82,7 +82,7 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
         return this.decorated.getDashboardWithReferences(ref, filterContextRef, options, types);
     }
 
-    public getFilterContextByExportId = async (
+    public getExportDataByExportId = async (
         exportId: string,
         type: "visual" | "slides" | undefined,
         tabId?: string,
@@ -91,8 +91,9 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
         title?: string;
         hideWidgetTitles?: boolean;
         exportMetadata?: Record<string, string>;
+        timezoneId?: string;
     } | null> => {
-        return this.decorated.getFilterContextByExportId(exportId, type, tabId);
+        return this.decorated.getExportDataByExportId(exportId, type, tabId);
     };
 
     getDashboardReferencedObjects(

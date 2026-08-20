@@ -7,4 +7,8 @@ export default defineConfig({
     resolve: {
         preserveSymlinks: true,
     },
+    test: {
+        reporters: ["default"],
+        isolate: false,
+    },
 });

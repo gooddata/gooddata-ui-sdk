@@ -1,35 +1,19 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { describe, expect, it, vi } from "vitest";
-
-// Prepare hoisted global extractProps variable which gets its value in hoisted mock and then is used in test.
-let { extractProps } = vi.hoisted(() => ({
-    extractProps: null as any,
-}));
+import { describe, expect, it } from "vitest";
 
 import { defSetSorts } from "@gooddata/sdk-model";
 import { type IBubbleChartProps } from "@gooddata/sdk-ui-charts";
 
 import { type ScenarioAndDescription } from "../../../src/index.js";
 import { bubbleChart as bubbleChartScenarios } from "../../../src/scenarios/charts/bubbleChart/index.js";
+import { captureProps } from "../../_infra/coreChartMocks.js";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
 import { mountChartAndCapture } from "../../_infra/render.js";
 import { mountInsight } from "../../_infra/renderPlugVis.js";
 import { cleanupCoreChartProps } from "../../_infra/utils.js";
 
-vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreBubbleChart", async () => {
-    const Original = await vi.importActual<any>("@gooddata/sdk-ui-charts/internal-tests/CoreBubbleChart");
-    const { withPropsExtractor } = await import("../../_infra/withProps.js");
-    const { extractProps: originalExtractProps, wrap } = withPropsExtractor();
-    extractProps = originalExtractProps;
-
-    return {
-        ...Original,
-        CoreBubbleChart: wrap(Original.CoreBubbleChart),
-    };
-});
-
-describe.skip("BubbleChart", () => {
+describe("BubbleChart", () => {
     const Scenarios: Array<ScenarioAndDescription<IBubbleChartProps>> = bubbleChartScenarios.flatMap(
         (group) => group.forTestTypes("api").asScenarioDescAndScenario(),
     );
@@ -44,7 +28,9 @@ describe.skip("BubbleChart", () => {
         });
 
         it("should create expected props for core chart", async () => {
-            const promisedInteractions = mountChartAndCapture(scenario, extractProps);
+            const promisedInteractions = captureProps((extractProps: () => any) =>
+                mountChartAndCapture(scenario, extractProps),
+            );
 
             const interactions = await promisedInteractions;
 

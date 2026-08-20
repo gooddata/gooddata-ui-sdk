@@ -66,6 +66,7 @@ import { loadDashboardList } from "./loadDashboardList.js";
 import { loadDashboardParameters } from "./loadDashboardParameters.js";
 import { loadDashboardPermissions } from "./loadDashboardPermissions.js";
 import { loadDateHierarchyTemplates } from "./loadDateHierarchyTemplates.js";
+import { loadExportTimezone } from "./loadExportTimezone.js";
 import { loadFilterViews } from "./loadFilterViews.js";
 import { loadMeasureParameterDependencies } from "./loadMeasureParameterDependencies.js";
 import { loadUser } from "./loadUser.js";
@@ -264,6 +265,7 @@ function* loadExistingDashboard(
         call(loadDashboardPermissions, ctx),
         call(loadDateHierarchyTemplates, ctx),
         call(loadFilterViews, ctx),
+        call(loadExportTimezone, ctx),
     ];
 
     const [
@@ -278,6 +280,7 @@ function* loadExistingDashboard(
         dashboardPermissions,
         dateHierarchyTemplates,
         filterViews,
+        exportTimezone,
     ]: [
         PromiseFnReturnType<typeof loadDashboardFromBackend>,
         SagaReturnType<typeof resolveDashboardConfigAndFeatureFlagDependentCalls>,
@@ -287,6 +290,7 @@ function* loadExistingDashboard(
         PromiseFnReturnType<typeof loadDashboardPermissions>,
         PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
         PromiseFnReturnType<typeof loadFilterViews>,
+        PromiseFnReturnType<typeof loadExportTimezone>,
     ] = yield all(calls);
 
     const {
@@ -355,6 +359,8 @@ function* loadExistingDashboard(
             // NOTE: Tab configs (dateFilterConfig, dateFilterConfigs, attributeFilterConfigs, filterContext)
             // are now initialized as part of the tabs state in initActions via setTabs action
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
+            // must land in the init batch so it is in effect before the first widget executions
+            ...(exportTimezone ? [uiActions.setTimezoneOverride(exportTimezone)] : []),
             renderModeActions.setRenderMode(config.initialRenderMode),
             dashboardPermissionsActions.setDashboardPermissions(dashboardPermissions),
             automationsActions.setAllAutomationsCount(workspaceAutomationsCount),
@@ -391,6 +397,8 @@ function* initializeNewDashboard(
         user,
         listedDashboards,
         dateHierarchyTemplates,
+        ,
+        exportTimezone,
     ]: [
         SagaReturnType<typeof resolveDashboardConfigAndFeatureFlagDependentCalls>,
         SagaReturnType<typeof resolvePermissions>,
@@ -399,6 +407,8 @@ function* initializeNewDashboard(
         PromiseFnReturnType<typeof loadUser>,
         PromiseFnReturnType<typeof loadDashboardList>,
         PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
+        PromiseFnReturnType<typeof loadFilterViews>,
+        PromiseFnReturnType<typeof loadExportTimezone>,
     ] = yield all([
         call(resolveDashboardConfigAndFeatureFlagDependentCalls, ctx, cmd),
         call(resolvePermissions, ctx, cmd),
@@ -408,6 +418,7 @@ function* initializeNewDashboard(
         call(loadDashboardList, ctx),
         call(loadDateHierarchyTemplates, ctx),
         call(loadFilterViews, ctx),
+        call(loadExportTimezone, ctx),
     ]);
 
     const workspaceParameters: SagaReturnType<typeof loadWorkspaceParametersWithStatus> = yield call(
@@ -463,6 +474,8 @@ function* initializeNewDashboard(
                 isUsingDashboardOverrides: false,
             }),
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
+            // must land in the init batch so it is in effect before the first widget executions
+            ...(exportTimezone ? [uiActions.setTimezoneOverride(exportTimezone)] : []),
             renderModeActions.setRenderMode(config.initialRenderMode),
             dashboardPermissionsActions.setDashboardPermissions({
                 canViewDashboard: true,

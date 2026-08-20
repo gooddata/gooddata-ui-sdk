@@ -6,25 +6,16 @@ import { ReferenceMd } from "@gooddata/reference-workspace";
 import { BadRequestSdkError } from "@gooddata/sdk-ui";
 import { suppressConsole } from "@gooddata/util";
 
-import { loadElements as mockLoadElements } from "../internal/redux/elements/loadElements.js";
-
 import {
     limitingAttributeFilters,
     limitingDateFilters,
     limitingMeasures,
     newTestAttributeFilterHandler,
     newTestAttributeFilterHandlerWithAttributeFilter,
+    newTestAttributeFilterHandlerWithElementsLoadFailures,
     positiveAttributeFilterDefaultDF,
 } from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
-
-vi.mock("../internal/redux/elements/loadElements.js", async () => {
-    const original = await vi.importActual("../internal/redux/elements/loadElements.js");
-    return {
-        ...original,
-        loadElements: vi.fn((original as { loadElements: typeof mockLoadElements }).loadElements),
-    };
-});
 
 describe("AttributeFilterHandler", () => {
     it("loadNextElementsPage() should trigger onLoadNextElementsPageStart() callback", async () => {
@@ -84,15 +75,14 @@ describe("AttributeFilterHandler", () => {
 
     it("loadNextElementsPage() that failed should trigger onLoadNextElementsPageError() callback", async () => {
         const onLoadNextElementsPageError = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
-            positiveAttributeFilterDefaultDF,
-        );
+        const { attributeFilterHandler, failNextElementsLoad } =
+            newTestAttributeFilterHandlerWithElementsLoadFailures(positiveAttributeFilterDefaultDF);
 
         attributeFilterHandler.setLimit(2);
         attributeFilterHandler.init();
         await waitForAsync();
 
-        vi.mocked(mockLoadElements).mockRejectedValueOnce(new BadRequestSdkError("Elements error"));
+        failNextElementsLoad(new BadRequestSdkError("Elements error"));
         attributeFilterHandler.onLoadNextElementsPageError(onLoadNextElementsPageError);
         attributeFilterHandler.loadNextElementsPage("error");
 
@@ -284,15 +274,14 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("getNextElementsPageError() should return error", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
-            positiveAttributeFilterDefaultDF,
-        );
+        const { attributeFilterHandler, failNextElementsLoad } =
+            newTestAttributeFilterHandlerWithElementsLoadFailures(positiveAttributeFilterDefaultDF);
 
         attributeFilterHandler.setLimit(2);
         attributeFilterHandler.init();
         await waitForAsync();
 
-        vi.mocked(mockLoadElements).mockRejectedValueOnce(new BadRequestSdkError("Elements error"));
+        failNextElementsLoad(new BadRequestSdkError("Elements error"));
         attributeFilterHandler.loadNextElementsPage();
 
         await suppressConsole(waitForAsync, "error", [

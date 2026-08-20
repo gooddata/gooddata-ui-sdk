@@ -218,7 +218,7 @@ function ContextChooserItem({ item, onSelect }: { item: IGenAIContextObject; onS
     const icon = getIconByType(item.type);
 
     return (
-        <div className="gd-list-item" title={item.title} onClick={onSelect}>
+        <div className="gd-list-item" onClick={onSelect}>
             {icon.iconBefore ? <UiIcon size={16} type={icon.iconBefore} color={icon.iconColor} /> : null}
             <ShortenedText ellipsisPosition="end">{item.title}</ShortenedText>
         </div>

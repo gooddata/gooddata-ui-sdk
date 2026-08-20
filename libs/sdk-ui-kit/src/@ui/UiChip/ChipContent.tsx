@@ -25,8 +25,16 @@ export function ChipContent({
     buttonRef,
     styleObj,
 }: IChipContentProps) {
-    const { isExpanded, popupId, popupType, ariaHaspopup, ariaLabel, ariaLabelledBy, ariaControls } =
-        accessibilityConfig ?? {};
+    const {
+        isExpanded,
+        popupId,
+        popupType,
+        ariaHaspopup,
+        ariaLabel,
+        ariaLabelledBy,
+        ariaControls,
+        iconBeforeAriaLabel,
+    } = accessibilityConfig ?? {};
     const isDropdownTrigger = isExpandable || isExpanded !== undefined || popupId !== undefined;
     const ariaDropdownProps = isDropdownTrigger
         ? {
@@ -53,7 +61,14 @@ export function ChipContent({
         >
             {iconBefore ? (
                 <span className={e("icon-before")}>
-                    <UiIcon type={iconBefore} color={iconColor} size={15} />
+                    <UiIcon
+                        type={iconBefore}
+                        color={iconColor}
+                        size={15}
+                        accessibilityConfig={
+                            iconBeforeAriaLabel ? { ariaLabel: iconBeforeAriaLabel } : undefined
+                        }
+                    />
                 </span>
             ) : null}
             <span className={e("label")}>{label}</span>

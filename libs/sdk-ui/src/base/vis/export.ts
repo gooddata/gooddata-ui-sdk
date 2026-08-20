@@ -18,6 +18,7 @@ function buildExportRequestConfig(exportConfig: IExtendedExportConfig, exportTit
         delimiter,
         pdfConfiguration,
         grandTotalsPosition,
+        timezoneId,
         timeout,
     } = exportConfig;
 
@@ -29,6 +30,7 @@ function buildExportRequestConfig(exportConfig: IExtendedExportConfig, exportTit
         title,
         delimiter,
         ...(grandTotalsPosition ? { grandTotalsPosition } : {}),
+        ...(timezoneId ? { timezoneId } : {}),
         // layer titles become sheet/file names, so they need the same sanitization as the main title
         ...(exportConfig.additionalExecutions
             ? {

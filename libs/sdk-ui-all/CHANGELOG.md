@@ -1,6 +1,64 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 13 Aug 2026 06:46:34 GMT and should not be manually modified.
+This log was last generated on Thu, 20 Aug 2026 07:31:50 GMT and should not be manually modified.
+
+## 11.53.0
+
+Thu, 20 Aug 2026 07:31:50 GMT
+
+### Minor changes
+
+- sdk-ui-kit: Add UiConfigEditor, a config editor with syntax highlighting, JSON/YAML language switching, comment-preserving YAML auto-format and an optional context menu. It replaces the internal YamlEditor (the catalog's as-code dialogs now use it), and StylingEditorDialog can render a custom definition editor.
+
+### Patches
+
+- sdk-model: Add the enableAbsoluteDateFilterGranularity feature flag
+- sdk-ui-all: Pivot tables can inherit conditional formatting defined once on a semantic-layer catalog object. Ships dark until the backend emits the new fields.
+
+### Updates
+
+- sdk-model, sdk-ui-kit, sdk-ui-dashboard: Render constrained STRING parameters as a single-select dropdown of allowed-value titles (`AllowedValuesParameterControlDropdown`, `getParameterValueTitle`); chips, drag previews, and automation dialogs show titles, never raw values
+- sdk-ui-dashboard: Add test ids to the dashboard settings timezone
+- sdk-ui-all: Added `enableDenodoDataSource` feature flag.
+- gdc-datasource-management: Add UI for setting the data source cache invalidation policy
+- sdk-ui-charts: Fix `Repeater` inline charts not re-rendering when the color configuration changes.
+- sdk-ui-charts: Lower the minimum space per data point that keeps data labels from being skipped on column, bar and waterfall charts from 12px to 8px. Single character labels ('7') are about 9.8px wide, so with the 12px bound charts with short values could lose labels that the auto-hide rules still displayed. Measured on a 600px wide column chart: all short labels are shown at 11.6px per point and all are hidden at 8.7px per point.
+- sdk-ui-charts: Do not draw data labels that cannot be displayed on column, bar and waterfall charts with 'auto' data label visibility. Highcharts drew a label for every data point, each one forcing a style recalculation, before the auto-hide rules hid all of them again - which blocked the main thread for seconds on charts with many data points. A 1794-point column chart now renders in 0.2s instead of 6.9s.
+- Resolve ranking filter dimensionality localIdRefs to display form refs in alert execution filters (same handling as measure value filter dimensionality)
+- sdk-ui-all: Propagate the effective dashboard timezone to all ad-hoc and scheduled export request payloads.
+- Improve accessibility of the timezone controls: announce timezone search results, add a screen-reader label to the top-bar timezone indicator, announce listbox item tooltips and the current-time preview to screen readers, and make the dashboard settings help icon keyboard accessible.
+- Send the dashboard-scoped effective timezone with new alerts as execution settings (settings.timezone)
+- sdk-model, sdk-backend-tiger: Relay the active dashboard tab id in the GenAI user context.
+- sdk-ui-dashboard: Add alpha context-decorator slots (AlertingDialogContextDecoratorComponent, ScheduledEmailDialogContextDecoratorComponent) so hosts can decorate the data the automation dialogs read, and export AlertingDialogContextProvider / ScheduledEmailDialogContextProvider for the re-provide
+- sdk-ui-dashboard: Add an alpha Filters slot to DefaultAlertingDialog and DefaultScheduledEmailDialog for wrap-or-replace customization of the dialog filters row
+- sdk-ui-dashboard: Add an alpha Header slot to DefaultAlertingDialog and DefaultScheduledEmailDialog for wrap-or-replace customization of the dialog title row
+- sdk-ui-gen-ai: Show the applied memories and the metric query details in the Interaction Intelligence detail view.
+- sdk-ui-gen-ai: Group Interaction Intelligence detail groups by heading identity when merging a category's occurrences, so a category running in several steps renders one group per object type instead of one per step.
+- sdk-ui-gen-ai: Give the memory applied to a turn its own tile on the Interaction Intelligence timeline.
+- sdk-ui-gen-ai: Add the Interaction Intelligence panel, showing the processing steps behind an assistant response with a per-category detail view.
+- sdk-ui-kit: Expose aria-haspopup on the DropdownButton trigger so screen readers announce the popup type.
+- sdk-ui-ext: Add the CREATE_METRIC granular workspace permission to user management dialogs, gated by the enableMetricPermissions feature flag.
+- sdk-ui-ext: Fix the alignment of the dropdown indicator in the workspace permission select.
+- sdk-ui-theme-provider: Fix stale theme application in ThemeProvider. The in-flight backend getTheme() call is now tracked by an effect-scoped cancelled flag with cleanup, so a late resolution is ignored once the workspace or backend changes or the component unmounts, instead of applying an outdated theme or re-injecting the global CSS variables that the unmount cleanup has just removed.
+- sdk-ui-dashboard: Fixed filter bar collapsing while a filter dropdown is open during keyboard navigation.
+- sdk-ui-charts: recommend filtering when a low Width value renders a Mekko column as an invisible thin line
+- sdk-ui-charts: hide mekko column total labels when Stack to 100% is enabled
+- Introduce new setting enableTimezoneChange to control whether timezone can be changed in Analytical Designer and the default of dashboard for timezone override option.
+- sdk-ui-dashboard:Keep the filter bar expanded while keyboard focus moves between filter chips, instead of flickering.
+- sdk-ui-kit: Stop transitioning `all` on the syntax-highlighting editor, so it no longer animates its height when a container or stylesheet resizes it.
+- sdk-ui-pluggable-host: In export mode the host chrome no longer traps the application in a fixed-height scroll container (Chromium print-to-PDF clipped everything past page 1), and the brand suffix is omitted from document.title so exported PDFs carry the bare dashboard name.
+- sdk-ui-gen-ai: Offer the other workspace dashboards in the assistant context chooser loaded page by page.
+- sdk-ui-gen-ai: Offer the workspace visualizations in the assistant context chooser.
+- sdk-ui-dashboard: Fix Date dropdown list width being clamped to the trigger, truncating long date dataset names in KD edit mode
+- sdk-ui-charts: fix TypeError crash when rendering Sankey/Dependency Wheel charts with accessibility descriptions
+- sdk-ui-pivot: Include `dataView` in row data and update drill handling logic.
+- sdk-ui-gen-ai: Repair support for disabling GenAI chat in embed mode.
+- sdk-ui-gen-ai: Improved link handler registration.
+- sdk-ui-ext: the share dialog no longer shows the Admin badge to a caller who just restricted workspace access.
+- sdk-ui-ext: the share dialog now says a permission change was refused because you cannot grant more than you hold, instead of reporting a generic failure.
+- sdk-backend-spi, sdk-backend-tiger: added the PermissionEscalationRefused error, so a refused permission change can be recognised without reading a backend's response text.
+- sdk-ui-ext: level picks an inherited grant already covers render disabled with an explanation instead of silently doing nothing.
+- sdk-ui-ext: the share dialog now guards the signed-in user's own permission row whatever else is listed, not only when it is the only grant.
 
 ## 11.52.0
 

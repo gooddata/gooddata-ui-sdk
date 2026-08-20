@@ -1168,6 +1168,12 @@ function getDataConfiguration(chartOptions: IChartOptions): HighchartsOptions {
         case VisualizationTypes.SCATTER:
         case VisualizationTypes.BUBBLE:
         case VisualizationTypes.WATERFALL:
+        case VisualizationTypes.SANKEY:
+        case VisualizationTypes.DEPENDENCY_WHEEL:
+            // These types have no category axis. Sankey and dependency wheel chart options carry
+            // only a placeholder [[""]] in data.categories; passing that on to xAxis.categories
+            // makes the 'grouped-categories' plugin build a category whose 'name' is an object,
+            // which then breaks consumers expecting a string (the accessibility formatters).
             return {
                 series,
             };

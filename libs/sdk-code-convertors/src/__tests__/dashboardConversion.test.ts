@@ -187,6 +187,7 @@ describe("dashboard conversion", () => {
             expect(content.timezoneConfig).toEqual({
                 timezoneId: "$browserDetected",
                 showTimezoneInfo: true,
+                allowUserOverrideInViewMode: false,
             });
         });
 

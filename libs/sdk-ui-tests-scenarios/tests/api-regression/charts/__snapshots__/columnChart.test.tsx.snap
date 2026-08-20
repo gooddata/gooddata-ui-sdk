@@ -186,6 +186,7 @@ exports[`ColumnChart > with 40x60 - without x axis, without y axis (very small c
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -375,6 +376,7 @@ exports[`ColumnChart > with 60x354 - without y axis labels > should create expec
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -478,6 +480,7 @@ exports[`ColumnChart > with 60x354 - without y axis labels, with y axis title > 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -581,6 +584,7 @@ exports[`ColumnChart > with 120x354 - without y axis title > should create expec
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -704,6 +708,7 @@ exports[`ColumnChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -827,6 +832,7 @@ exports[`ColumnChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -950,6 +956,7 @@ exports[`ColumnChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1073,6 +1080,7 @@ exports[`ColumnChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1196,6 +1204,7 @@ exports[`ColumnChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1319,6 +1328,7 @@ exports[`ColumnChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1442,6 +1452,7 @@ exports[`ColumnChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1565,6 +1576,7 @@ exports[`ColumnChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1688,6 +1700,7 @@ exports[`ColumnChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1811,6 +1824,7 @@ exports[`ColumnChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1934,6 +1948,7 @@ exports[`ColumnChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2057,6 +2072,7 @@ exports[`ColumnChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2180,6 +2196,7 @@ exports[`ColumnChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2303,6 +2320,7 @@ exports[`ColumnChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2426,6 +2444,7 @@ exports[`ColumnChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2549,6 +2568,7 @@ exports[`ColumnChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2672,6 +2692,7 @@ exports[`ColumnChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2795,6 +2816,7 @@ exports[`ColumnChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2918,6 +2940,7 @@ exports[`ColumnChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3041,6 +3064,7 @@ exports[`ColumnChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3164,6 +3188,7 @@ exports[`ColumnChart > with 610x154 - Force position RIGHT - auto legend > shoul
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3287,6 +3312,7 @@ exports[`ColumnChart > with 610x154 - Force position RIGHT - legend at bottom > 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3410,6 +3436,7 @@ exports[`ColumnChart > with 610x154 - Force position RIGHT - legend on left > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3533,6 +3560,7 @@ exports[`ColumnChart > with 610x154 - Force position RIGHT - legend on right > s
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3656,6 +3684,7 @@ exports[`ColumnChart > with 610x154 - Force position RIGHT - legend on top > sho
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3779,6 +3808,7 @@ exports[`ColumnChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3902,6 +3932,7 @@ exports[`ColumnChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4025,6 +4056,7 @@ exports[`ColumnChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4148,6 +4180,7 @@ exports[`ColumnChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4271,6 +4304,7 @@ exports[`ColumnChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4394,6 +4428,7 @@ exports[`ColumnChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4517,6 +4552,7 @@ exports[`ColumnChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4640,6 +4676,7 @@ exports[`ColumnChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4763,6 +4800,7 @@ exports[`ColumnChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4886,6 +4924,7 @@ exports[`ColumnChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5075,6 +5114,7 @@ exports[`ColumnChart > with 650x90 - without x axis labels > should create expec
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5264,6 +5304,7 @@ exports[`ColumnChart > with 650x120 - without x axis title > should create expec
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5387,6 +5428,7 @@ exports[`ColumnChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5510,6 +5552,7 @@ exports[`ColumnChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5633,6 +5676,7 @@ exports[`ColumnChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5756,6 +5800,7 @@ exports[`ColumnChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5879,6 +5924,7 @@ exports[`ColumnChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6030,6 +6076,7 @@ exports[`ColumnChart > with Stack measures to 100% with and axis min/max > shoul
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6180,6 +6227,7 @@ exports[`ColumnChart > with X and Y axis invisible > should create expected prop
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6327,6 +6375,7 @@ exports[`ColumnChart > with X axis invisible > should create expected props for 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6474,6 +6523,7 @@ exports[`ColumnChart > with X axis rotation > should create expected props for c
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6603,6 +6653,7 @@ exports[`ColumnChart > with Y axis min/max configuration > should create expecte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6734,6 +6785,7 @@ exports[`ColumnChart > with Y axis on right > should create expected props for c
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6884,6 +6936,7 @@ exports[`ColumnChart > with Y axis on right with two viewBy attributes > should 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7069,6 +7122,7 @@ exports[`ColumnChart > with assign color to attribute element stack > should cre
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7279,6 +7333,7 @@ exports[`ColumnChart > with assign color to master measure impacts derived PoP >
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7466,6 +7521,7 @@ exports[`ColumnChart > with assign color to measures > should create expected pr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7598,6 +7654,7 @@ exports[`ColumnChart > with coloring - custom colors > should create expected pr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7765,6 +7822,7 @@ exports[`ColumnChart > with coloring - custom palette > should create expected p
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7939,6 +7997,7 @@ exports[`ColumnChart > with coloring - custom palette preferred over colors > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8064,6 +8123,7 @@ exports[`ColumnChart > with coloring - default > should create expected props fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8187,6 +8247,7 @@ exports[`ColumnChart > with data labels - data labels and totals with auto visib
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8309,6 +8370,7 @@ exports[`ColumnChart > with data labels - data labels auto visibility > should c
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8431,6 +8493,7 @@ exports[`ColumnChart > with data labels - data labels forced hidden > should cre
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8554,6 +8617,7 @@ exports[`ColumnChart > with data labels - data labels forced hidden totals force
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8677,6 +8741,7 @@ exports[`ColumnChart > with data labels - data labels forced hidden totals force
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8799,6 +8864,7 @@ exports[`ColumnChart > with data labels - data labels forced visible > should cr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8923,6 +8989,7 @@ exports[`ColumnChart > with data labels - data labels with backplate style > sho
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9042,6 +9109,7 @@ exports[`ColumnChart > with data labels - default > should create expected props
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9168,6 +9236,7 @@ exports[`ColumnChart > with data labels - forced dataLabels visible and german s
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9291,6 +9360,7 @@ exports[`ColumnChart > with data labels - labels forced hidden totals auto visib
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9425,6 +9495,7 @@ exports[`ColumnChart > with dense chart with two view by > should create expecte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9637,6 +9708,7 @@ exports[`ColumnChart > with dual axis name customization - high > should create 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9849,6 +9921,7 @@ exports[`ColumnChart > with dual axis name customization - invisible > should cr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10061,6 +10134,7 @@ exports[`ColumnChart > with dual axis name customization - low > should create e
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10273,6 +10347,7 @@ exports[`ColumnChart > with dual axis name customization - middle > should creat
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10422,6 +10497,7 @@ exports[`ColumnChart > with dual axis when two viewBy attributes > should create
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10613,6 +10689,7 @@ exports[`ColumnChart > with dual axis with hidden right Y axis > should create e
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10804,6 +10881,7 @@ exports[`ColumnChart > with dual axis with no labels on right Y axis > should cr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10994,6 +11072,7 @@ exports[`ColumnChart > with dual axis with one right measure and three left > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11185,6 +11264,7 @@ exports[`ColumnChart > with dual axis with right axis labels rotated > should cr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11333,6 +11413,7 @@ exports[`ColumnChart > with force disable drill on axes > should create expected
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11461,6 +11542,7 @@ exports[`ColumnChart > with legend position - auto legend > should create expect
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11589,6 +11671,7 @@ exports[`ColumnChart > with legend position - disabled > should create expected 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11717,6 +11800,7 @@ exports[`ColumnChart > with legend position - legend at bottom > should create e
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11845,6 +11929,7 @@ exports[`ColumnChart > with legend position - legend on left > should create exp
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11973,6 +12058,7 @@ exports[`ColumnChart > with legend position - legend on right > should create ex
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12101,6 +12187,7 @@ exports[`ColumnChart > with legend position - legend on top > should create expe
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12229,6 +12316,7 @@ exports[`ColumnChart > with no gridline > should create expected props for core 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12378,6 +12466,7 @@ exports[`ColumnChart > with single axis name customization - high > should creat
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12527,6 +12616,7 @@ exports[`ColumnChart > with single axis name customization - invisible > should 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12676,6 +12766,7 @@ exports[`ColumnChart > with single axis name customization - low > should create
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12825,6 +12916,7 @@ exports[`ColumnChart > with single axis name customization - middle > should cre
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -12902,6 +12994,7 @@ exports[`ColumnChart > with single measure > should create expected props for co
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13049,6 +13142,7 @@ exports[`ColumnChart > with single measure and two viewBy with drilling on child
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13196,6 +13290,7 @@ exports[`ColumnChart > with single measure and two viewBy with drilling on paren
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13299,6 +13394,7 @@ exports[`ColumnChart > with single measure and viewBy with drilling on bars > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13398,6 +13494,7 @@ exports[`ColumnChart > with single measure ignores stack measures > should creat
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13517,6 +13614,7 @@ exports[`ColumnChart > with single measure with one viewBy and one stackBy with 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13616,6 +13714,7 @@ exports[`ColumnChart > with single measure with stack to 100% > should create ex
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13754,6 +13853,7 @@ exports[`ColumnChart > with single measure with two viewBy and stack > should cr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13853,6 +13953,7 @@ exports[`ColumnChart > with single measure with viewBy > should create expected 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -13972,6 +14073,7 @@ exports[`ColumnChart > with single measure with viewBy and stackBy > should crea
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14105,6 +14207,7 @@ exports[`ColumnChart > with single measure with viewBy and stackBy filtered to s
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14246,6 +14349,7 @@ exports[`ColumnChart > with single measure, two viewBy and stacking with drillin
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14387,6 +14491,7 @@ exports[`ColumnChart > with single measure, two viewBy and stacking with drillin
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14490,6 +14595,7 @@ exports[`ColumnChart > with single ratio measure with viewBy > should create exp
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14680,6 +14786,7 @@ exports[`ColumnChart > with stack measures and dual axis > should create expecte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -14870,6 +14977,7 @@ exports[`ColumnChart > with stack measures to 100% and dual axis > should create
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15066,6 +15174,7 @@ exports[`ColumnChart > with stack measures to 100% with dual axis and axis min/m
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15221,6 +15330,7 @@ exports[`ColumnChart > with stackBy with one date > should create expected props
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15324,6 +15434,7 @@ exports[`ColumnChart > with two measures > should create expected props for core
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15474,6 +15585,7 @@ exports[`ColumnChart > with two measures and two viewBy with right axis and stac
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15618,6 +15730,7 @@ exports[`ColumnChart > with two measures and two viewBy with stackMeasures > sho
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15762,6 +15875,7 @@ exports[`ColumnChart > with two measures and two viewBy with stackMeasuresToPerc
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -15914,6 +16028,7 @@ exports[`ColumnChart > with two measures and two viewBy, dual axis, with drillin
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16067,6 +16182,7 @@ exports[`ColumnChart > with two measures and two viewBy, dual axis, with drillin
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16219,6 +16335,7 @@ exports[`ColumnChart > with two measures and two viewBy, dual axis, with drillin
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16368,6 +16485,7 @@ exports[`ColumnChart > with two measures with dual axis and stack measures to 10
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16517,6 +16635,7 @@ exports[`ColumnChart > with two measures with dual axis ignores stack measures >
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16661,6 +16780,7 @@ exports[`ColumnChart > with two measures with two viewBy > should create expecte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16786,6 +16906,7 @@ exports[`ColumnChart > with two measures with viewBy > should create expected pr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -16918,6 +17039,7 @@ exports[`ColumnChart > with two measures with viewBy sorted by attribute > shoul
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17056,6 +17178,7 @@ exports[`ColumnChart > with two measures with viewBy sorted by measure > should 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17211,6 +17334,7 @@ exports[`ColumnChart > with viewBy date and PoP measure > should create expected
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -17385,5 +17509,6 @@ exports[`ColumnChart > with viewBy with two dates > should create expected props
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;

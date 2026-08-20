@@ -2,82 +2,69 @@
 
 import { render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
-import { Provider } from "react-redux";
 import { describe, expect, it, vi } from "vitest";
 
-import { type IGenAIUserContext, idRef } from "@gooddata/sdk-model";
+import { type IGenAIUserContext } from "@gooddata/sdk-model";
 
-import { chatWindowSliceName } from "../../store/chatWindow/chatWindowSlice.js";
-import { GenAiChatContextChooser } from "../GenAiChatContextChooser.js";
+import { type RootState } from "../../store/types.js";
 
-const messages = {
-    "gd.gen-ai.context.add_context": "Add context",
-    "gd.gen-ai.context.untitled": "Untitled",
-};
-
-const ambient: IGenAIUserContext = {
-    view: {
-        dashboard: {
-            ref: idRef("ambient-dashboard", "analyticalDashboard"),
-            title: "Revenue",
-            widgets: [],
+const state = {
+    chatWindow: {
+        settings: { enableAiContextSetup: true },
+        context: {
+            active: undefined,
+            ambient: {
+                view: {
+                    dashboard: {
+                        ref: { identifier: "dashboard-1", type: "analyticalDashboard" },
+                        title: "Revenue Dashboard",
+                        widgets: [],
+                    },
+                },
+            } as unknown as IGenAIUserContext,
         },
     },
-};
+} as unknown as RootState;
 
-function renderChooser({ search = "" }: { search?: string } = {}) {
-    const completeAndEmpty = {
-        items: [],
-        loadedPages: 1,
-        hasNextPage: false,
-        isLoading: false,
-        isExternal: false,
-    };
-    const storeState = {
-        [chatWindowSliceName]: {
-            context: {
-                ambient,
-                active: {
-                    referencedObjects: [
-                        {
-                            objects: [
-                                {
-                                    ref: idRef("ambient-dashboard", "analyticalDashboard"),
-                                    title: "Revenue",
-                                    type: "DASHBOARD",
-                                },
-                            ],
-                        },
-                    ],
-                },
+vi.mock("react-redux", () => ({
+    useDispatch: () => vi.fn(),
+    useSelector: (selector: (state: RootState) => unknown) => selector(state),
+}));
+
+vi.mock("../hooks/useContextItems.js", () => ({
+    useContextItems: () => ({
+        items: [
+            {
+                id: "insight-1",
+                ref: { identifier: "insight-1", type: "insight" },
+                title: "Sales Chart",
+                nesting: 1,
+                type: "widget",
+                where: "referencedObjects",
             },
-            contextObjects: { dashboard: completeAndEmpty, visualization: completeAndEmpty },
-            contextObjectsSearch: search,
-        },
-    };
-    const store = {
-        getState: () => storeState,
-        subscribe: () => () => {},
-        dispatch: vi.fn(),
-    };
+        ],
+        isLoading: false,
+        hasNextPage: false,
+        loadNextPage: vi.fn(),
+    }),
+}));
 
-    render(
-        <Provider store={store as never}>
-            <IntlProvider locale="en-US" messages={messages}>
-                <GenAiChatContextChooser />
-            </IntlProvider>
-        </Provider>,
-    );
+import { en_US } from "../../localization/bundles/en-US.localization-bundle.js";
+import { GenAiChatContextChooser } from "../GenAiChatContextChooser.js";
 
-    return screen.getByTestId("choose_context");
-}
+const messages = Object.fromEntries(Object.entries(en_US).map(([id, message]) => [id, message.text]));
 
 describe("GenAiChatContextChooser", () => {
-    it("disables the button when the workspace has nothing left to offer", () => {
-        expect(renderChooser()).toBeDisabled();
-    });
+    it("advertises the popup as a dialog on the trigger button", () => {
+        render(
+            <IntlProvider locale="en" messages={messages}>
+                <GenAiChatContextChooser />
+            </IntlProvider>,
+        );
 
-    it("keeps the button open when it is the search that left the list empty", () => {
-        expect(renderChooser({ search: "revenue" })).not.toBeDisabled();
+        expect(screen.getByRole("button", { name: "Add context" })).toHaveAttribute(
+            "aria-haspopup",
+            "dialog",
+        );
     });
 });

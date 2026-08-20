@@ -1,39 +1,31 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactNode, createElement } from "react";
+
 import { act, renderHook } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { type ITableColumnDefinition } from "@gooddata/sdk-ui";
 
+import { PivotTablePropsProvider } from "../../context/PivotTablePropsContext.js";
 import { type AgGridOnColumnResized } from "../../types/agGrid.js";
-import { type ColumnWidthItem, newWidthForAttributeColumn } from "../../types/resizing.js";
+import { type ICorePivotTableNextProps } from "../../types/internal.js";
+import {
+    type ColumnResizedCallback,
+    type ColumnWidthItem,
+    newWidthForAttributeColumn,
+} from "../../types/resizing.js";
 
 import { useManualResize } from "./useManualResize.js";
 
-const { usePivotTablePropsMock } = vi.hoisted(() => ({
-    usePivotTablePropsMock: vi.fn(),
-}));
-
-vi.mock("../../context/PivotTablePropsContext.js", () => ({
-    usePivotTableProps: usePivotTablePropsMock,
-}));
-
 describe("useManualResize", () => {
-    beforeEach(() => {
-        vi.clearAllMocks();
-    });
-
     it("should ignore resize events not coming from UI interaction", () => {
         const onColumnResized = vi.fn();
 
-        usePivotTablePropsMock.mockReturnValue(
-            createPivotTableProps({
-                onColumnResized,
-                columnWidths: [newWidthForAttributeColumn("region", 120)],
-            }),
-        );
-
-        const { result } = renderHook(() => useManualResize());
+        const { result } = renderManualResize({
+            onColumnResized,
+            columnWidths: [newWidthForAttributeColumn("region", 120)],
+        });
 
         act(() => {
             result.current.handleManualResize(
@@ -52,14 +44,7 @@ describe("useManualResize", () => {
         const existingWidth = newWidthForAttributeColumn("city", 150);
         const updatedWidth = 260;
 
-        usePivotTablePropsMock.mockReturnValue(
-            createPivotTableProps({
-                onColumnResized,
-                columnWidths: [existingWidth],
-            }),
-        );
-
-        const { result } = renderHook(() => useManualResize());
+        const { result } = renderManualResize({ onColumnResized, columnWidths: [existingWidth] });
 
         act(() => {
             result.current.handleManualResize(
@@ -83,14 +68,10 @@ describe("useManualResize", () => {
         const oldMatchingWidth = newWidthForAttributeColumn("region", 110);
         const updatedWidth = 320;
 
-        usePivotTablePropsMock.mockReturnValue(
-            createPivotTableProps({
-                onColumnResized,
-                columnWidths: [unmatchedWidth, oldMatchingWidth],
-            }),
-        );
-
-        const { result } = renderHook(() => useManualResize());
+        const { result } = renderManualResize({
+            onColumnResized,
+            columnWidths: [unmatchedWidth, oldMatchingWidth],
+        });
 
         act(() => {
             result.current.handleManualResize(
@@ -112,14 +93,7 @@ describe("useManualResize", () => {
         const onColumnResized = vi.fn();
         const existingWidth = newWidthForAttributeColumn("city", 180);
 
-        usePivotTablePropsMock.mockReturnValue(
-            createPivotTableProps({
-                onColumnResized,
-                columnWidths: [existingWidth],
-            }),
-        );
-
-        const { result } = renderHook(() => useManualResize());
+        const { result } = renderManualResize({ onColumnResized, columnWidths: [existingWidth] });
 
         act(() => {
             result.current.handleManualResize(
@@ -142,14 +116,28 @@ describe("useManualResize", () => {
     });
 });
 
+function renderManualResize(props: {
+    onColumnResized: ColumnResizedCallback;
+    columnWidths: ColumnWidthItem[];
+}) {
+    const pivotTableProps = createPivotTableProps(props);
+
+    return renderHook(() => useManualResize(), {
+        wrapper: ({ children }: { children: ReactNode }) =>
+            createElement(PivotTablePropsProvider, { ...pivotTableProps, children }),
+    });
+}
+
 function createPivotTableProps({
     onColumnResized,
     columnWidths,
 }: {
-    onColumnResized: (columnWidths: ColumnWidthItem[]) => void;
+    onColumnResized: ColumnResizedCallback;
     columnWidths: ColumnWidthItem[];
-}) {
+}): ICorePivotTableNextProps {
     return {
+        // the hook under test never touches the execution, it is required by the props contract only
+        execution: {} as ICorePivotTableNextProps["execution"],
         config: {
             columnSizing: {
                 columnWidths,

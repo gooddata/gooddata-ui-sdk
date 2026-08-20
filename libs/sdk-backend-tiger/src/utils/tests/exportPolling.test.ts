@@ -1,11 +1,11 @@
 // (C) 2026 GoodData Corporation
 
-import { describe, expect, it, vi } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 
 import * as exportApi from "@gooddata/api-client-tiger/endpoints/export";
 import { TimeoutError } from "@gooddata/sdk-backend-spi";
 
-import { handleExportResultPolling } from "../exportPolling.js";
+import { type handleExportResultPolling as HandleExportResultPolling } from "../exportPolling.js";
 
 vi.mock("@gooddata/api-client-tiger/endpoints/export", () => ({
     ExportApi_GetExportedFile: vi.fn(),
@@ -18,9 +18,18 @@ vi.mock("@gooddata/api-client-tiger/endpoints/export", () => ({
 describe("exportPolling", () => {
     describe("handleExportResultPolling", () => {
         const client = { axios: {}, basePath: "" } as unknown as Parameters<
-            typeof handleExportResultPolling
+            typeof HandleExportResultPolling
         >[0];
         const payload = { workspaceId: "ws-1", exportId: "export-1" };
+
+        // Imported dynamically from a fresh module registry so that it picks up the mock above even
+        // when another (non-isolated) test file already imported it without the mock.
+        let handleExportResultPolling: typeof HandleExportResultPolling;
+
+        beforeAll(async () => {
+            vi.resetModules();
+            ({ handleExportResultPolling } = await import("../exportPolling.js"));
+        });
 
         it("throws TimeoutError when the export API responds with 504", async () => {
             const axios504Error = {
