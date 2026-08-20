@@ -83,13 +83,15 @@ describe("meta timezoneConfig", () => {
         });
     });
 
-    it("should collapse an all-defaults configuration to undefined on write", () => {
+    it("should persist an explicit allowUserOverrideInViewMode false so dashboards can override a true org default", () => {
         const state = setTimezoneConfig(loadedState(), {
             showTimezoneInfo: false,
             allowUserOverrideInViewMode: false,
         });
 
-        expect(selectDashboardTimezoneConfig(stateWithMeta(state))).toBeUndefined();
+        expect(selectDashboardTimezoneConfig(stateWithMeta(state))).toEqual({
+            allowUserOverrideInViewMode: false,
+        });
     });
 
     it("should report the timezone configuration as changed after resetting it to the workspace default", () => {

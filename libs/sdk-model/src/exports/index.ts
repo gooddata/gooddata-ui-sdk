@@ -250,6 +250,12 @@ export type IExportDefinitionDashboardRequestPayload = {
      * Identifier of the export template to use for slide exports.
      */
     templateId?: string;
+    /**
+     * Concrete IANA timezone ID used to resolve relative date filters and render date/time values
+     * in the export. Overrides the workspace/user timezone settings. The placement is intentionally
+     * the same for every export type (unlike filter overrides).
+     */
+    timezoneId?: string;
 };
 
 /**
@@ -291,6 +297,12 @@ export type IExportDefinitionVisualizationObjectRequestPayload = {
      * Identifier of the export template to use for slide exports.
      */
     templateId?: string;
+    /**
+     * Concrete IANA timezone ID used to resolve relative date filters and render date/time values
+     * in the export. Overrides the workspace/user timezone settings. The placement is intentionally
+     * the same for every export type (unlike filter overrides).
+     */
+    timezoneId?: string;
 };
 
 /**

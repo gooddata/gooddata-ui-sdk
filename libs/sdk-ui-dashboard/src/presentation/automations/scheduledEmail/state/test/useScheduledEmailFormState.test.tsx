@@ -882,3 +882,37 @@ describe("useScheduledEmailFormState — referential stability", () => {
         expect(result.current.onTitleChange).toBe(firstOnTitleChange);
     });
 });
+
+// ---------------------------------------------------------------------------
+// Schedule timezone source — the "Starts on" section takes the context timezone
+// (which useBuildAutomationsContext resolves with the custom dashboard timezone
+// winning over the workspace setting) for new schedules, while an existing
+// schedule keeps interpreting dates in the timezone it was created with.
+// ---------------------------------------------------------------------------
+
+describe("useScheduledEmailFormState — schedule timezone source", () => {
+    it("uses the context timezone for a new schedule", () => {
+        const { result } = renderFormStateHook();
+
+        expect(result.current.editedAutomation.schedule?.timezone).toBe(SENTINEL_TIMEZONE);
+        expect(toNormalizedFirstRunAndCronSpy).toHaveBeenCalledWith(SENTINEL_TIMEZONE);
+    });
+
+    it("keeps the stored schedule timezone for firstRun conversion when editing", () => {
+        mockUseAutomationsContext.mockReturnValue({
+            ...DEFAULT_AUTOMATIONS_CONTEXT_VALUE,
+            timezone: "America/New_York",
+        });
+        const scheduledExportToEdit = makeAutomation({
+            schedule: { cron: "0 0 * * *", firstRun: "2026-05-01T12:00:00Z", timezone: "Europe/Prague" },
+        });
+        const { result } = renderFormStateHook({ scheduledExportToEdit });
+        const startDate = new Date("2026-03-15T08:30:00Z");
+
+        act(() => {
+            result.current.onRecurrenceChange("0 8 * * *", startDate, true);
+        });
+
+        expect(toModifiedISOStringToTimezoneSpy).toHaveBeenCalledWith(startDate, "Europe/Prague");
+    });
+});

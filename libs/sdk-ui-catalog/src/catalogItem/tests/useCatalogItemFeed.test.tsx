@@ -1,204 +1,207 @@
 // (C) 2026 GoodData Corporation
 
-import { act, renderHook, waitFor } from "@testing-library/react";
-import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
+import { type PropsWithChildren, useMemo } from "react";
 
-import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { act, renderHook, waitFor } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
+import type { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import {
+    type ISemanticQualityIssue,
+    type SemanticQualityIssueCode,
+    SemanticQualityIssueCodeValues,
+} from "@gooddata/sdk-model";
 
 import type { AsyncStatus } from "../../async/types.js";
-import * as filterCtx from "../../filter/FilterContext.js";
+import type { IFilterState } from "../../filter/FilterContext.js";
+import { TestFilterProvider } from "../../filter/TestFilterProvider.js";
 import { ObjectTypes } from "../../objectType/constants.js";
 import type { ObjectType } from "../../objectType/types.js";
-import * as permissionCtx from "../../permission/PermissionsContext.js";
-import * as searchCtx from "../../search/FullTextSearchContext.js";
-import * as query from "../query.js";
-import type { ICatalogItemFeedOptions, ICatalogItemQueryOptions } from "../types.js";
+import {
+    TestPermissionsProvider,
+    defaultPermissionsResult,
+} from "../../permission/TestPermissionsProvider.js";
+import { TestQualityProvider } from "../../quality/TestQualityProvider.js";
+import type { ICatalogItemFeedOptions } from "../types.js";
 import { useCatalogItemFeed } from "../useCatalogItemFeed.js";
 
-// vi.mock calls are hoisted by vitest before imports, so placement is purely stylistic.
-vi.mock("../query.js", () => ({
-    getDashboardsQuery: vi.fn(),
-    getInsightsQuery: vi.fn(),
-    getMetricsQuery: vi.fn(),
-    getParametersQuery: vi.fn(),
-    getAttributesQuery: vi.fn(),
-    getFactsQuery: vi.fn(),
-    getDateDatasetsQuery: vi.fn(),
-}));
+import {
+    type ICatalogBackendStub,
+    type IStubPage,
+    catalogEntity,
+    chainPages,
+    createCatalogBackendStub,
+} from "./catalogBackend.test.utils.js";
 
-vi.mock("../converter.js", () => ({
-    convertEntityToCatalogItem: vi.fn((entity: unknown) => entity),
-}));
+/**
+ * The feed reaches the backend through `catalogItem/query.js` and reads its inputs from the filter,
+ * search, permissions and quality contexts. Both are injected here — a stub backend and the test
+ * providers — rather than replaced with `vi.mock`: those modules are loaded unmocked by the
+ * component tests, and a module mock cannot be applied to a module graph they already evaluated,
+ * which is what a non-isolated run does.
+ *
+ * The search context is left at its default (`searchTerm: ""`), which is all these cases need.
+ */
 
-vi.mock("../../filter/FilterContext.js", () => ({
-    useFilterState: vi.fn(),
-    useQualityFilter: vi.fn(),
-}));
+interface IFeedContext {
+    flags: Record<string, boolean>;
+    filter: Partial<IFilterState>;
+    issues: ISemanticQualityIssue[] | undefined;
+}
 
-vi.mock("../../search/FullTextSearchContext.js", () => ({
-    useFullTextSearchState: vi.fn(),
-}));
+interface IFeedSetup {
+    flags?: Record<string, boolean>;
+    filter?: Partial<IFilterState>;
+    issues?: ISemanticQualityIssue[];
+    options?: Partial<ICatalogItemFeedOptions>;
+    /** Runs before the first render, so the first-load effect sees the configured pages. */
+    prepare?: (stub: ICatalogBackendStub) => void;
+}
 
-vi.mock("../../permission/PermissionsContext.js", () => ({
-    useFeatureFlags: vi.fn(),
-}));
-
-type TestItem = {
-    identifier: string;
-    type: ObjectType;
-    title: string;
-};
-
-type TestPage = {
-    items: TestItem[];
+interface IItemPageSpec {
+    items: string[];
     offset: number;
-    limit: number;
     totalCount: number;
-    next: Mock;
-};
-
-function makeItem(identifier: string, type: ObjectType): TestItem {
-    return { identifier, type, title: identifier };
 }
 
-// Build a linked chain of pages where each page.next() returns the next in-chain page.
-function chainPages(pages: Array<{ items: TestItem[]; offset: number; totalCount: number }>): TestPage {
-    const asResult = (index: number): TestPage => {
-        const pageSpec = pages[index];
-        if (!pageSpec) {
-            throw new Error("next() called beyond the configured page chain");
-        }
-        return {
-            items: pageSpec.items,
-            offset: pageSpec.offset,
-            limit: pageSpec.items.length,
-            totalCount: pageSpec.totalCount,
-            next: vi.fn(async () => asResult(index + 1)),
-        };
-    };
-    return asResult(0);
+/** A page source for `type`, rebuilt per query so every call walks a fresh chain. */
+function pagesOf(type: ObjectType, specs: IItemPageSpec[]): () => Promise<IStubPage> {
+    return () =>
+        Promise.resolve(
+            chainPages(
+                specs.map(({ items, offset, totalCount }) => ({
+                    items: items.map((id) => catalogEntity(type, id)),
+                    offset,
+                    totalCount,
+                })),
+            ),
+        );
 }
 
-function emptyPage(): TestPage {
-    return chainPages([{ items: [], offset: 0, totalCount: 0 }]);
-}
-
-type FilterState = ReturnType<typeof filterCtx.useFilterState>;
-
-let filterState: FilterState;
-let qualityFilter: ReturnType<typeof filterCtx.useQualityFilter>;
-let searchState: { searchTerm: string };
-let flags: ReturnType<typeof permissionCtx.useFeatureFlags>;
-let pageProviders: Partial<Record<ObjectType, () => TestPage>>;
-
-function defaultFilterState(): FilterState {
+function qualityIssue(code: SemanticQualityIssueCode, identifiers: string[]): ISemanticQualityIssue {
     return {
-        types: [],
-        origin: "ALL",
-        createdBy: { values: [], isInverted: true },
-        tags: { values: [], isInverted: true },
-        qualityCodes: { values: [], isInverted: true },
-        isHidden: undefined,
-        certification: undefined,
-        isModified: false,
+        code,
+        severity: "INFO",
+        objects: identifiers.map((identifier) => ({ identifier })),
+    } as unknown as ISemanticQualityIssue;
+}
+
+/** The filter payload the given type's endpoint sent to the backend on its first query. */
+function sentFilter(stub: ICatalogBackendStub, type: ObjectType) {
+    return stub.builders[type].withFilter.mock.calls[0][0] as {
+        id?: string[];
+        excludeId?: string[];
+        createdBy?: string[];
+        excludeCreatedBy?: string[];
     };
 }
 
-function setPageProvider(type: ObjectType, provider: () => TestPage) {
-    pageProviders[type] = provider;
-}
+function renderFeed(setup: IFeedSetup = {}) {
+    const stub = createCatalogBackendStub();
+    setup.prepare?.(stub);
 
-const backend = {} as IAnalyticalBackend;
+    const holder: { current: IFeedContext } = {
+        current: {
+            flags: setup.flags ?? { enableParameters: false },
+            filter: setup.filter ?? {},
+            issues: setup.issues,
+        },
+    };
 
-const defaultOptions: ICatalogItemFeedOptions = {
-    backend,
-    workspace: "ws",
-    pageSize: 10,
-};
+    function Wrapper({ children }: PropsWithChildren) {
+        const { flags, filter, issues } = holder.current;
+        // Re-derived only when the test swaps `holder.current`; a fresh value per render would
+        // re-derive the endpoints and re-query forever.
+        const permissions = useMemo(
+            () => ({
+                ...defaultPermissionsResult,
+                settings: flags as unknown as IUserWorkspaceSettings,
+            }),
+            [flags],
+        );
 
-function renderFeed(options: Partial<ICatalogItemFeedOptions> = {}) {
-    return renderHook((props: ICatalogItemFeedOptions) => useCatalogItemFeed(props), {
-        initialProps: { ...defaultOptions, ...options } as ICatalogItemFeedOptions,
-    });
-}
-
-async function waitForStatus(result: { current: { status: AsyncStatus } }, expected: AsyncStatus) {
-    await waitFor(() => {
-        expect(result.current.status).toBe(expected);
-    });
-}
-
-beforeEach(() => {
-    vi.clearAllMocks();
-    filterState = defaultFilterState();
-    qualityFilter = undefined;
-    searchState = { searchTerm: "" };
-    flags = { enableParameters: false };
-    pageProviders = {};
-
-    vi.mocked(filterCtx.useFilterState).mockImplementation(() => filterState);
-    vi.mocked(filterCtx.useQualityFilter).mockImplementation(() => qualityFilter);
-    vi.mocked(searchCtx.useFullTextSearchState).mockImplementation(() => searchState);
-    vi.mocked(permissionCtx.useFeatureFlags).mockImplementation(() => flags);
-
-    const mountProvider = (type: ObjectType) => ({
-        query: () => Promise.resolve(pageProviders[type]?.() ?? emptyPage()),
-    });
-
-    const queryMocks: Array<[keyof typeof query, ObjectType]> = [
-        ["getDashboardsQuery", ObjectTypes.DASHBOARD],
-        ["getInsightsQuery", ObjectTypes.VISUALIZATION],
-        ["getMetricsQuery", ObjectTypes.METRIC],
-        ["getParametersQuery", ObjectTypes.PARAMETER],
-        ["getAttributesQuery", ObjectTypes.ATTRIBUTE],
-        ["getFactsQuery", ObjectTypes.FACT],
-        ["getDateDatasetsQuery", ObjectTypes.DATASET],
-    ];
-    for (const [fnName, type] of queryMocks) {
-        vi.mocked(query[fnName]).mockImplementation((() => mountProvider(type)) as never);
+        return (
+            <TestPermissionsProvider result={permissions}>
+                <TestQualityProvider issues={issues}>
+                    <TestFilterProvider state={filter}>{children}</TestFilterProvider>
+                </TestQualityProvider>
+            </TestPermissionsProvider>
+        );
     }
-});
+
+    const initialProps: ICatalogItemFeedOptions = {
+        backend: stub.backend,
+        workspace: "ws",
+        pageSize: 10,
+        ...setup.options,
+    };
+
+    const view = renderHook((props: ICatalogItemFeedOptions) => useCatalogItemFeed(props), {
+        initialProps,
+        wrapper: Wrapper,
+    });
+
+    /** Swaps the mounted filters/flags and re-renders, the way a filter change in the UI would. */
+    function setContext(next: Partial<IFeedContext>) {
+        holder.current = { ...holder.current, ...next };
+        act(() => {
+            view.rerender({ ...initialProps });
+        });
+    }
+
+    return { ...view, stub, setContext };
+}
+
+/**
+ * `renderHook` mounts a component that renders nothing, so `waitFor`'s MutationObserver never
+ * fires and it falls back to polling. At the default 50ms interval every wait costs a full tick
+ * even though the stub backend settles within a few microtasks — hence the 1ms interval.
+ */
+async function waitForStatus(result: { current: { status: AsyncStatus } }, expected: AsyncStatus) {
+    await waitFor(
+        () => {
+            expect(result.current.status).toBe(expected);
+        },
+        { interval: 1 },
+    );
+}
 
 describe("useCatalogItemFeed – endpoint selection", () => {
     it("with empty types and parameters gate off, selects all endpoints except parameters", async () => {
-        const { result } = renderFeed();
+        const { result, stub } = renderFeed();
         await waitForStatus(result, "success");
 
-        expect(vi.mocked(query.getDashboardsQuery)).toHaveBeenCalledTimes(1);
-        expect(vi.mocked(query.getInsightsQuery)).toHaveBeenCalledTimes(1);
-        expect(vi.mocked(query.getMetricsQuery)).toHaveBeenCalledTimes(1);
-        expect(vi.mocked(query.getAttributesQuery)).toHaveBeenCalledTimes(1);
-        expect(vi.mocked(query.getFactsQuery)).toHaveBeenCalledTimes(1);
-        expect(vi.mocked(query.getDateDatasetsQuery)).toHaveBeenCalledTimes(1);
-        expect(vi.mocked(query.getParametersQuery)).not.toHaveBeenCalled();
+        expect(stub.queries[ObjectTypes.DASHBOARD]).toHaveBeenCalledTimes(1);
+        expect(stub.queries[ObjectTypes.VISUALIZATION]).toHaveBeenCalledTimes(1);
+        expect(stub.queries[ObjectTypes.METRIC]).toHaveBeenCalledTimes(1);
+        expect(stub.queries[ObjectTypes.ATTRIBUTE]).toHaveBeenCalledTimes(1);
+        expect(stub.queries[ObjectTypes.FACT]).toHaveBeenCalledTimes(1);
+        expect(stub.queries[ObjectTypes.DATASET]).toHaveBeenCalledTimes(1);
+        expect(stub.queries[ObjectTypes.PARAMETER]).not.toHaveBeenCalled();
     });
 
     it("with a types subset, only selected endpoints are called", async () => {
-        filterState = { ...filterState, types: [ObjectTypes.DASHBOARD, ObjectTypes.METRIC] };
-
-        const { result } = renderFeed();
+        const { result, stub } = renderFeed({
+            filter: { types: [ObjectTypes.DASHBOARD, ObjectTypes.METRIC] },
+        });
         await waitForStatus(result, "success");
 
-        expect(vi.mocked(query.getDashboardsQuery)).toHaveBeenCalledTimes(1);
-        expect(vi.mocked(query.getMetricsQuery)).toHaveBeenCalledTimes(1);
-        expect(vi.mocked(query.getInsightsQuery)).not.toHaveBeenCalled();
-        expect(vi.mocked(query.getAttributesQuery)).not.toHaveBeenCalled();
-        expect(vi.mocked(query.getFactsQuery)).not.toHaveBeenCalled();
-        expect(vi.mocked(query.getDateDatasetsQuery)).not.toHaveBeenCalled();
-        expect(vi.mocked(query.getParametersQuery)).not.toHaveBeenCalled();
+        expect(stub.queries[ObjectTypes.DASHBOARD]).toHaveBeenCalledTimes(1);
+        expect(stub.queries[ObjectTypes.METRIC]).toHaveBeenCalledTimes(1);
+        expect(stub.queries[ObjectTypes.VISUALIZATION]).not.toHaveBeenCalled();
+        expect(stub.queries[ObjectTypes.ATTRIBUTE]).not.toHaveBeenCalled();
+        expect(stub.queries[ObjectTypes.FACT]).not.toHaveBeenCalled();
+        expect(stub.queries[ObjectTypes.DATASET]).not.toHaveBeenCalled();
+        expect(stub.queries[ObjectTypes.PARAMETER]).not.toHaveBeenCalled();
     });
 
     it("short-circuits to no endpoints when options.id is an empty array", async () => {
-        const { result } = renderFeed({ id: [] });
+        const { result, stub } = renderFeed({ options: { id: [] } });
         await waitForStatus(result, "success");
 
-        expect(vi.mocked(query.getDashboardsQuery)).not.toHaveBeenCalled();
-        expect(vi.mocked(query.getInsightsQuery)).not.toHaveBeenCalled();
-        expect(vi.mocked(query.getMetricsQuery)).not.toHaveBeenCalled();
-        expect(vi.mocked(query.getAttributesQuery)).not.toHaveBeenCalled();
-        expect(vi.mocked(query.getFactsQuery)).not.toHaveBeenCalled();
-        expect(vi.mocked(query.getDateDatasetsQuery)).not.toHaveBeenCalled();
-        expect(vi.mocked(query.getParametersQuery)).not.toHaveBeenCalled();
+        for (const type of Object.values(ObjectTypes)) {
+            expect(stub.queries[type]).not.toHaveBeenCalled();
+        }
 
         expect(result.current.items).toEqual([]);
         expect(result.current.totalCount).toBe(0);
@@ -206,122 +209,118 @@ describe("useCatalogItemFeed – endpoint selection", () => {
     });
 
     it("includes parameters endpoint when the parameters gate is enabled", async () => {
-        flags = { enableParameters: true };
-
-        const { result } = renderFeed();
+        const { result, stub } = renderFeed({ flags: { enableParameters: true } });
         await waitForStatus(result, "success");
 
-        expect(vi.mocked(query.getParametersQuery)).toHaveBeenCalledTimes(1);
+        expect(stub.queries[ObjectTypes.PARAMETER]).toHaveBeenCalledTimes(1);
     });
 
     it("skips parameters endpoint when types includes PARAMETER but gate is off", async () => {
-        filterState = {
-            ...filterState,
-            types: [ObjectTypes.PARAMETER],
-        };
-
-        const { result } = renderFeed();
+        const { result, stub } = renderFeed({ filter: { types: [ObjectTypes.PARAMETER] } });
         await waitForStatus(result, "success");
 
-        expect(vi.mocked(query.getParametersQuery)).not.toHaveBeenCalled();
+        expect(stub.queries[ObjectTypes.PARAMETER]).not.toHaveBeenCalled();
     });
 
     it("suppresses attribute/fact/dataset endpoints when createdBy values are set (not inverted)", async () => {
-        filterState = {
-            ...filterState,
-            createdBy: { values: ["user-1"], isInverted: false },
-        };
-
-        const { result } = renderFeed();
+        const { result, stub } = renderFeed({
+            filter: { createdBy: { values: ["user-1"], isInverted: false } },
+        });
         await waitForStatus(result, "success");
 
-        expect(vi.mocked(query.getDashboardsQuery)).toHaveBeenCalledTimes(1);
-        expect(vi.mocked(query.getInsightsQuery)).toHaveBeenCalledTimes(1);
-        expect(vi.mocked(query.getMetricsQuery)).toHaveBeenCalledTimes(1);
-        expect(vi.mocked(query.getAttributesQuery)).not.toHaveBeenCalled();
-        expect(vi.mocked(query.getFactsQuery)).not.toHaveBeenCalled();
-        expect(vi.mocked(query.getDateDatasetsQuery)).not.toHaveBeenCalled();
+        expect(stub.queries[ObjectTypes.DASHBOARD]).toHaveBeenCalledTimes(1);
+        expect(stub.queries[ObjectTypes.VISUALIZATION]).toHaveBeenCalledTimes(1);
+        expect(stub.queries[ObjectTypes.METRIC]).toHaveBeenCalledTimes(1);
+        expect(stub.queries[ObjectTypes.ATTRIBUTE]).not.toHaveBeenCalled();
+        expect(stub.queries[ObjectTypes.FACT]).not.toHaveBeenCalled();
+        expect(stub.queries[ObjectTypes.DATASET]).not.toHaveBeenCalled();
 
-        const opts = vi.mocked(query.getDashboardsQuery).mock.calls[0][0] as ICatalogItemQueryOptions;
-        expect(opts.createdBy).toEqual(["user-1"]);
-        expect(opts.excludeCreatedBy).toBeUndefined();
+        const filter = sentFilter(stub, ObjectTypes.DASHBOARD);
+        expect(filter.createdBy).toEqual(["user-1"]);
+        expect(filter.excludeCreatedBy).toBeUndefined();
     });
 
     it("suppresses attribute/fact/dataset endpoints when createdBy values are set (inverted)", async () => {
-        filterState = {
-            ...filterState,
-            createdBy: { values: ["user-1"], isInverted: true },
-        };
-
-        const { result } = renderFeed();
+        const { result, stub } = renderFeed({
+            filter: { createdBy: { values: ["user-1"], isInverted: true } },
+        });
         await waitForStatus(result, "success");
 
-        expect(vi.mocked(query.getAttributesQuery)).not.toHaveBeenCalled();
-        expect(vi.mocked(query.getFactsQuery)).not.toHaveBeenCalled();
-        expect(vi.mocked(query.getDateDatasetsQuery)).not.toHaveBeenCalled();
+        expect(stub.queries[ObjectTypes.ATTRIBUTE]).not.toHaveBeenCalled();
+        expect(stub.queries[ObjectTypes.FACT]).not.toHaveBeenCalled();
+        expect(stub.queries[ObjectTypes.DATASET]).not.toHaveBeenCalled();
 
-        const opts = vi.mocked(query.getDashboardsQuery).mock.calls[0][0] as ICatalogItemQueryOptions;
-        expect(opts.createdBy).toBeUndefined();
-        expect(opts.excludeCreatedBy).toEqual(["user-1"]);
+        const filter = sentFilter(stub, ObjectTypes.DASHBOARD);
+        expect(filter.createdBy).toBeUndefined();
+        expect(filter.excludeCreatedBy).toEqual(["user-1"]);
     });
 
     it("suppresses attribute/fact/dataset endpoints when certification filter is on", async () => {
-        filterState = { ...filterState, certification: true };
-
-        const { result } = renderFeed();
+        const { result, stub } = renderFeed({ filter: { certification: true } });
         await waitForStatus(result, "success");
 
-        expect(vi.mocked(query.getAttributesQuery)).not.toHaveBeenCalled();
-        expect(vi.mocked(query.getFactsQuery)).not.toHaveBeenCalled();
-        expect(vi.mocked(query.getDateDatasetsQuery)).not.toHaveBeenCalled();
-        expect(vi.mocked(query.getDashboardsQuery)).toHaveBeenCalledTimes(1);
-        expect(vi.mocked(query.getInsightsQuery)).toHaveBeenCalledTimes(1);
-        expect(vi.mocked(query.getMetricsQuery)).toHaveBeenCalledTimes(1);
+        expect(stub.queries[ObjectTypes.ATTRIBUTE]).not.toHaveBeenCalled();
+        expect(stub.queries[ObjectTypes.FACT]).not.toHaveBeenCalled();
+        expect(stub.queries[ObjectTypes.DATASET]).not.toHaveBeenCalled();
+        expect(stub.queries[ObjectTypes.DASHBOARD]).toHaveBeenCalledTimes(1);
+        expect(stub.queries[ObjectTypes.VISUALIZATION]).toHaveBeenCalledTimes(1);
+        expect(stub.queries[ObjectTypes.METRIC]).toHaveBeenCalledTimes(1);
     });
 });
 
 describe("useCatalogItemFeed – quality filter branches", () => {
     it("non-inverted quality filter merges ids into queryOptions.id together with options.id", async () => {
-        qualityFilter = { values: ["q1", "q2"], isInverted: false };
-
-        const { result } = renderFeed({ id: ["a"] });
+        const { result, stub } = renderFeed({
+            filter: {
+                qualityCodes: { values: [SemanticQualityIssueCodeValues.SIMILAR_TITLE], isInverted: false },
+            },
+            issues: [qualityIssue(SemanticQualityIssueCodeValues.SIMILAR_TITLE, ["q1", "q2"])],
+            options: { id: ["a"] },
+        });
         await waitForStatus(result, "success");
 
-        const opts = vi.mocked(query.getDashboardsQuery).mock.calls[0][0] as ICatalogItemQueryOptions;
-        expect(opts.id).toEqual(expect.arrayContaining(["q1", "q2", "a"]));
-        expect(opts.id).toHaveLength(3);
-        expect(opts.excludeId).toBeUndefined();
+        const filter = sentFilter(stub, ObjectTypes.DASHBOARD);
+        expect(filter.id).toEqual(expect.arrayContaining(["q1", "q2", "a"]));
+        expect(filter.id).toHaveLength(3);
+        expect(filter.excludeId).toBeUndefined();
     });
 
     it("inverted quality filter populates excludeId and leaves includeId as options.id", async () => {
-        qualityFilter = { values: ["q1"], isInverted: true };
-
-        const { result } = renderFeed({ id: ["a"] });
+        const { result, stub } = renderFeed({
+            filter: {
+                qualityCodes: { values: [SemanticQualityIssueCodeValues.SIMILAR_TITLE], isInverted: true },
+            },
+            // Inverted means "objects whose issues are *not* of the selected code", so only the
+            // identically-titled object's id is excluded.
+            issues: [
+                qualityIssue(SemanticQualityIssueCodeValues.SIMILAR_TITLE, ["kept"]),
+                qualityIssue(SemanticQualityIssueCodeValues.IDENTICAL_TITLE, ["q1"]),
+            ],
+            options: { id: ["a"] },
+        });
         await waitForStatus(result, "success");
 
-        const opts = vi.mocked(query.getDashboardsQuery).mock.calls[0][0] as ICatalogItemQueryOptions;
-        expect(opts.id).toEqual(["a"]);
-        expect(opts.excludeId).toEqual(["q1"]);
+        const filter = sentFilter(stub, ObjectTypes.DASHBOARD);
+        expect(filter.id).toEqual(["a"]);
+        expect(filter.excludeId).toEqual(["q1"]);
     });
 });
 
 describe("useCatalogItemFeed – first-load sequencing", () => {
     it("ends in success with populated items and totalCount derived from endpoint totals", async () => {
-        filterState = { ...filterState, types: [ObjectTypes.DASHBOARD, ObjectTypes.METRIC] };
-        setPageProvider(ObjectTypes.DASHBOARD, () =>
-            chainPages([{ items: [makeItem("d1", ObjectTypes.DASHBOARD)], offset: 0, totalCount: 1 }]),
-        );
-        setPageProvider(ObjectTypes.METRIC, () =>
-            chainPages([
-                {
-                    items: [makeItem("m1", ObjectTypes.METRIC), makeItem("m2", ObjectTypes.METRIC)],
-                    offset: 0,
-                    totalCount: 3,
-                },
-            ]),
-        );
-
-        const { result } = renderFeed();
+        const { result } = renderFeed({
+            filter: { types: [ObjectTypes.DASHBOARD, ObjectTypes.METRIC] },
+            prepare: (stub) => {
+                stub.setPages(
+                    ObjectTypes.DASHBOARD,
+                    pagesOf(ObjectTypes.DASHBOARD, [{ items: ["d1"], offset: 0, totalCount: 1 }]),
+                );
+                stub.setPages(
+                    ObjectTypes.METRIC,
+                    pagesOf(ObjectTypes.METRIC, [{ items: ["m1", "m2"], offset: 0, totalCount: 3 }]),
+                );
+            },
+        });
         await waitForStatus(result, "success");
 
         expect(result.current.items.map((i) => i.identifier)).toEqual(["d1", "m1", "m2"]);
@@ -332,29 +331,25 @@ describe("useCatalogItemFeed – first-load sequencing", () => {
     });
 
     it("currentEndpoint lands on the first endpoint that still has more pages", async () => {
-        filterState = {
-            ...filterState,
-            types: [ObjectTypes.DASHBOARD, ObjectTypes.METRIC, ObjectTypes.FACT],
-        };
-        setPageProvider(ObjectTypes.DASHBOARD, () =>
-            chainPages([
-                {
-                    items: [makeItem("d1", ObjectTypes.DASHBOARD), makeItem("d2", ObjectTypes.DASHBOARD)],
-                    offset: 0,
-                    totalCount: 2,
-                },
-            ]),
-        );
-        setPageProvider(ObjectTypes.METRIC, () =>
-            chainPages([{ items: [makeItem("m1", ObjectTypes.METRIC)], offset: 0, totalCount: 3 }]),
-        );
-        // Third endpoint is also partial; items must NOT include f1 because currentEndpoint
-        // should stop at the first unfinished endpoint (metrics), not advance past it.
-        setPageProvider(ObjectTypes.FACT, () =>
-            chainPages([{ items: [makeItem("f1", ObjectTypes.FACT)], offset: 0, totalCount: 5 }]),
-        );
-
-        const { result } = renderFeed();
+        const { result } = renderFeed({
+            filter: { types: [ObjectTypes.DASHBOARD, ObjectTypes.METRIC, ObjectTypes.FACT] },
+            prepare: (stub) => {
+                stub.setPages(
+                    ObjectTypes.DASHBOARD,
+                    pagesOf(ObjectTypes.DASHBOARD, [{ items: ["d1", "d2"], offset: 0, totalCount: 2 }]),
+                );
+                stub.setPages(
+                    ObjectTypes.METRIC,
+                    pagesOf(ObjectTypes.METRIC, [{ items: ["m1"], offset: 0, totalCount: 3 }]),
+                );
+                // Third endpoint is also partial; items must NOT include f1 because currentEndpoint
+                // should stop at the first unfinished endpoint (metrics), not advance past it.
+                stub.setPages(
+                    ObjectTypes.FACT,
+                    pagesOf(ObjectTypes.FACT, [{ items: ["f1"], offset: 0, totalCount: 5 }]),
+                );
+            },
+        });
         await waitForStatus(result, "success");
 
         expect(result.current.items.map((i) => i.identifier)).toEqual(["d1", "d2", "m1"]);
@@ -363,12 +358,10 @@ describe("useCatalogItemFeed – first-load sequencing", () => {
 
     it("renders status=error and empty items when an endpoint query rejects", async () => {
         const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
-        filterState = { ...filterState, types: [ObjectTypes.DASHBOARD] };
-        vi.mocked(query.getDashboardsQuery).mockImplementation((() => ({
-            query: () => Promise.reject(new Error("boom")),
-        })) as never);
-
-        const { result } = renderFeed();
+        const { result } = renderFeed({
+            filter: { types: [ObjectTypes.DASHBOARD] },
+            prepare: (stub) => stub.setPages(ObjectTypes.DASHBOARD, () => Promise.reject(new Error("boom"))),
+        });
         await waitForStatus(result, "error");
 
         expect(result.current.items).toEqual([]);
@@ -379,23 +372,17 @@ describe("useCatalogItemFeed – first-load sequencing", () => {
 
 describe("useCatalogItemFeed – next() pagination", () => {
     it("loads the next page within a single endpoint and appends items in order", async () => {
-        filterState = { ...filterState, types: [ObjectTypes.METRIC] };
-        setPageProvider(ObjectTypes.METRIC, () =>
-            chainPages([
-                {
-                    items: [makeItem("m1", ObjectTypes.METRIC), makeItem("m2", ObjectTypes.METRIC)],
-                    offset: 0,
-                    totalCount: 4,
-                },
-                {
-                    items: [makeItem("m3", ObjectTypes.METRIC), makeItem("m4", ObjectTypes.METRIC)],
-                    offset: 2,
-                    totalCount: 4,
-                },
-            ]),
-        );
-
-        const { result } = renderFeed();
+        const { result } = renderFeed({
+            filter: { types: [ObjectTypes.METRIC] },
+            prepare: (stub) =>
+                stub.setPages(
+                    ObjectTypes.METRIC,
+                    pagesOf(ObjectTypes.METRIC, [
+                        { items: ["m1", "m2"], offset: 0, totalCount: 4 },
+                        { items: ["m3", "m4"], offset: 2, totalCount: 4 },
+                    ]),
+                ),
+        });
         await waitForStatus(result, "success");
         expect(result.current.items.map((i) => i.identifier)).toEqual(["m1", "m2"]);
 
@@ -408,37 +395,29 @@ describe("useCatalogItemFeed – next() pagination", () => {
     });
 
     it("advances across endpoint boundaries when the current endpoint is exhausted", async () => {
-        filterState = {
-            ...filterState,
-            types: [ObjectTypes.DASHBOARD, ObjectTypes.METRIC, ObjectTypes.FACT],
-        };
-        setPageProvider(ObjectTypes.DASHBOARD, () =>
-            chainPages([
-                {
-                    items: [makeItem("d1", ObjectTypes.DASHBOARD), makeItem("d2", ObjectTypes.DASHBOARD)],
-                    offset: 0,
-                    totalCount: 2,
-                },
-            ]),
-        );
-        setPageProvider(ObjectTypes.METRIC, () =>
-            chainPages([
-                { items: [makeItem("m1", ObjectTypes.METRIC)], offset: 0, totalCount: 2 },
-                { items: [makeItem("m2", ObjectTypes.METRIC)], offset: 1, totalCount: 2 },
-            ]),
-        );
-        setPageProvider(ObjectTypes.FACT, () =>
-            chainPages([
-                { items: [makeItem("f1", ObjectTypes.FACT)], offset: 0, totalCount: 3 },
-                {
-                    items: [makeItem("f2", ObjectTypes.FACT), makeItem("f3", ObjectTypes.FACT)],
-                    offset: 1,
-                    totalCount: 3,
-                },
-            ]),
-        );
-
-        const { result } = renderFeed();
+        const { result } = renderFeed({
+            filter: { types: [ObjectTypes.DASHBOARD, ObjectTypes.METRIC, ObjectTypes.FACT] },
+            prepare: (stub) => {
+                stub.setPages(
+                    ObjectTypes.DASHBOARD,
+                    pagesOf(ObjectTypes.DASHBOARD, [{ items: ["d1", "d2"], offset: 0, totalCount: 2 }]),
+                );
+                stub.setPages(
+                    ObjectTypes.METRIC,
+                    pagesOf(ObjectTypes.METRIC, [
+                        { items: ["m1"], offset: 0, totalCount: 2 },
+                        { items: ["m2"], offset: 1, totalCount: 2 },
+                    ]),
+                );
+                stub.setPages(
+                    ObjectTypes.FACT,
+                    pagesOf(ObjectTypes.FACT, [
+                        { items: ["f1"], offset: 0, totalCount: 3 },
+                        { items: ["f2", "f3"], offset: 1, totalCount: 3 },
+                    ]),
+                );
+            },
+        });
         await waitForStatus(result, "success");
         // First-load: dashboards complete, first page of metrics loaded, first page of facts NOT yet.
         expect(result.current.items.map((i) => i.identifier)).toEqual(["d1", "d2", "m1"]);
@@ -468,24 +447,23 @@ describe("useCatalogItemFeed – next() pagination", () => {
 
 describe("useCatalogItemFeed – reset on filter change", () => {
     it("clears items and resets status to loading before the next first-load resolves", async () => {
-        filterState = { ...filterState, types: [ObjectTypes.DASHBOARD] };
-        setPageProvider(ObjectTypes.DASHBOARD, () =>
-            chainPages([{ items: [makeItem("d1", ObjectTypes.DASHBOARD)], offset: 0, totalCount: 1 }]),
-        );
-
-        const { result, rerender } = renderFeed();
+        const { result, stub, setContext } = renderFeed({
+            filter: { types: [ObjectTypes.DASHBOARD] },
+            prepare: (s) =>
+                s.setPages(
+                    ObjectTypes.DASHBOARD,
+                    pagesOf(ObjectTypes.DASHBOARD, [{ items: ["d1"], offset: 0, totalCount: 1 }]),
+                ),
+        });
         await waitForStatus(result, "success");
         expect(result.current.items).toHaveLength(1);
 
         // Swap filters to METRIC only; the reset layout-effect should clear items synchronously.
-        filterState = { ...filterState, types: [ObjectTypes.METRIC] };
-        setPageProvider(ObjectTypes.METRIC, () =>
-            chainPages([{ items: [makeItem("m1", ObjectTypes.METRIC)], offset: 0, totalCount: 1 }]),
+        stub.setPages(
+            ObjectTypes.METRIC,
+            pagesOf(ObjectTypes.METRIC, [{ items: ["m1"], offset: 0, totalCount: 1 }]),
         );
-
-        act(() => {
-            rerender({ ...defaultOptions });
-        });
+        setContext({ filter: { types: [ObjectTypes.METRIC] } });
 
         expect(result.current.status).toBe("loading");
         expect(result.current.items).toEqual([]);
@@ -497,23 +475,17 @@ describe("useCatalogItemFeed – reset on filter change", () => {
 
 describe("useCatalogItemFeed – refetchObjectType", () => {
     it("preserves depth: refetch reloads at least as many items as were previously loaded", async () => {
-        filterState = { ...filterState, types: [ObjectTypes.METRIC] };
-        setPageProvider(ObjectTypes.METRIC, () =>
-            chainPages([
-                {
-                    items: [makeItem("m1", ObjectTypes.METRIC), makeItem("m2", ObjectTypes.METRIC)],
-                    offset: 0,
-                    totalCount: 4,
-                },
-                {
-                    items: [makeItem("m3", ObjectTypes.METRIC), makeItem("m4", ObjectTypes.METRIC)],
-                    offset: 2,
-                    totalCount: 4,
-                },
-            ]),
-        );
-
-        const { result } = renderFeed();
+        const { result, stub } = renderFeed({
+            filter: { types: [ObjectTypes.METRIC] },
+            prepare: (s) =>
+                s.setPages(
+                    ObjectTypes.METRIC,
+                    pagesOf(ObjectTypes.METRIC, [
+                        { items: ["m1", "m2"], offset: 0, totalCount: 4 },
+                        { items: ["m3", "m4"], offset: 2, totalCount: 4 },
+                    ]),
+                ),
+        });
         await waitForStatus(result, "success");
 
         // Load a second page so we've visited depth=4 items on the metrics endpoint.
@@ -523,18 +495,11 @@ describe("useCatalogItemFeed – refetchObjectType", () => {
         expect(result.current.items).toHaveLength(4);
 
         // Swap the page source to fresh data and call refetchObjectType.
-        setPageProvider(ObjectTypes.METRIC, () =>
-            chainPages([
-                {
-                    items: [makeItem("mA", ObjectTypes.METRIC), makeItem("mB", ObjectTypes.METRIC)],
-                    offset: 0,
-                    totalCount: 4,
-                },
-                {
-                    items: [makeItem("mC", ObjectTypes.METRIC), makeItem("mD", ObjectTypes.METRIC)],
-                    offset: 2,
-                    totalCount: 4,
-                },
+        stub.setPages(
+            ObjectTypes.METRIC,
+            pagesOf(ObjectTypes.METRIC, [
+                { items: ["mA", "mB"], offset: 0, totalCount: 4 },
+                { items: ["mC", "mD"], offset: 2, totalCount: 4 },
             ]),
         );
 
@@ -547,12 +512,14 @@ describe("useCatalogItemFeed – refetchObjectType", () => {
     });
 
     it("is a no-op for a type not present in the current endpoint set", async () => {
-        filterState = { ...filterState, types: [ObjectTypes.METRIC] };
-        setPageProvider(ObjectTypes.METRIC, () =>
-            chainPages([{ items: [makeItem("m1", ObjectTypes.METRIC)], offset: 0, totalCount: 1 }]),
-        );
-
-        const { result } = renderFeed();
+        const { result, stub } = renderFeed({
+            filter: { types: [ObjectTypes.METRIC] },
+            prepare: (s) =>
+                s.setPages(
+                    ObjectTypes.METRIC,
+                    pagesOf(ObjectTypes.METRIC, [{ items: ["m1"], offset: 0, totalCount: 1 }]),
+                ),
+        });
         await waitForStatus(result, "success");
 
         await act(async () => {
@@ -560,24 +527,20 @@ describe("useCatalogItemFeed – refetchObjectType", () => {
         });
 
         expect(result.current.items.map((i) => i.identifier)).toEqual(["m1"]);
-        expect(vi.mocked(query.getDashboardsQuery)).not.toHaveBeenCalled();
+        expect(stub.queries[ObjectTypes.DASHBOARD]).not.toHaveBeenCalled();
     });
 });
 
 describe("useCatalogItemFeed – updateItem / removeItem", () => {
     it("updateItem replaces the matching item in the visible list", async () => {
-        filterState = { ...filterState, types: [ObjectTypes.METRIC] };
-        setPageProvider(ObjectTypes.METRIC, () =>
-            chainPages([
-                {
-                    items: [makeItem("m1", ObjectTypes.METRIC), makeItem("m2", ObjectTypes.METRIC)],
-                    offset: 0,
-                    totalCount: 2,
-                },
-            ]),
-        );
-
-        const { result } = renderFeed();
+        const { result } = renderFeed({
+            filter: { types: [ObjectTypes.METRIC] },
+            prepare: (s) =>
+                s.setPages(
+                    ObjectTypes.METRIC,
+                    pagesOf(ObjectTypes.METRIC, [{ items: ["m1", "m2"], offset: 0, totalCount: 2 }]),
+                ),
+        });
         await waitForStatus(result, "success");
 
         act(() => {
@@ -601,18 +564,14 @@ describe("useCatalogItemFeed – updateItem / removeItem", () => {
     });
 
     it("removeItem removes the item and decrements the matching totalCount entry", async () => {
-        filterState = { ...filterState, types: [ObjectTypes.METRIC] };
-        setPageProvider(ObjectTypes.METRIC, () =>
-            chainPages([
-                {
-                    items: [makeItem("m1", ObjectTypes.METRIC), makeItem("m2", ObjectTypes.METRIC)],
-                    offset: 0,
-                    totalCount: 2,
-                },
-            ]),
-        );
-
-        const { result } = renderFeed();
+        const { result } = renderFeed({
+            filter: { types: [ObjectTypes.METRIC] },
+            prepare: (s) =>
+                s.setPages(
+                    ObjectTypes.METRIC,
+                    pagesOf(ObjectTypes.METRIC, [{ items: ["m1", "m2"], offset: 0, totalCount: 2 }]),
+                ),
+        });
         await waitForStatus(result, "success");
         expect(result.current.totalCountByType[ObjectTypes.METRIC]).toBe(2);
 

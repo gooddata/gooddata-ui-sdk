@@ -17,3 +17,15 @@ describe("convertExportMetadata — parameter overrides", () => {
         expect(result).not.toHaveProperty("parametersByTab");
     });
 });
+
+describe("convertExportMetadata — timezone", () => {
+    it("reads timezoneId from the metadata blob", () => {
+        const result = convertExportMetadata({ timezoneId: "Europe/Prague" });
+        expect(result?.timezoneId).toBe("Europe/Prague");
+    });
+
+    it("omits timezoneId when the metadata carries no timezone", () => {
+        const result = convertExportMetadata({ title: "Export" });
+        expect(result).not.toHaveProperty("timezoneId");
+    });
+});

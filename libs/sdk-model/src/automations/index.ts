@@ -390,7 +390,7 @@ export type IAutomationRecipient =
  */
 export type IAutomationAlertExecutionDefinition = Pick<
     IExecutionDefinition,
-    "attributes" | "measures" | "filters"
+    "attributes" | "measures" | "filters" | "executionConfig"
 > & {
     /**
      * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.

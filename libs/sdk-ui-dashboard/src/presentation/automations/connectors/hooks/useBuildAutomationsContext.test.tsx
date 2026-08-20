@@ -51,6 +51,14 @@ const selectors = vi.hoisted(() => {
         dashboardParametersByTab: {} as Record<string, never>,
         tabs: [{ localIdentifier: "tab1" }],
         widgetTabMap: { "widget-1": "tab1" } as Record<string, string>,
+        // mutable so the timezone-precedence tests can vary what the store serves
+        timezoneValues: {
+            workspace: undefined as string | undefined,
+            custom: undefined as string | undefined,
+            featureEnabled: false as boolean,
+            config: undefined as { allowUserOverrideInViewMode?: boolean; timezoneId?: string } | undefined,
+            scheduledExport: undefined as string | undefined,
+        },
     };
 });
 
@@ -73,6 +81,7 @@ vi.mock("../../../../model/store/config/configSelectors.js", () => ({
     selectEnableAlertOncePerInterval: () => false,
     selectEnableAnomalyDetectionAlert: () => false,
     selectEnableAutomationEvaluationMode: () => false,
+    selectEnableDashboardTimezone: () => selectors.timezoneValues.featureEnabled,
     selectEnableParameters: () => true,
     selectEnableSlideshowExports: () => false,
     selectEnableStringParameters: () => true,
@@ -81,7 +90,7 @@ vi.mock("../../../../model/store/config/configSelectors.js", () => ({
     selectLocale: () => "en-US",
     selectSeparators: () => selectors.separators,
     selectSettings: () => undefined,
-    selectTimezone: () => undefined,
+    selectTimezone: () => selectors.timezoneValues.workspace,
     selectWeekStart: () => "Sunday",
 }));
 
@@ -118,7 +127,10 @@ vi.mock("../../../../model/store/filtering/dashboardFilterSelectors.js", () => (
 }));
 
 vi.mock("../../../../model/store/meta/metaSelectors.js", () => ({
+    selectDashboardTimezoneConfig: () => selectors.timezoneValues.config,
+    selectEffectiveDashboardTimezone: () => selectors.timezoneValues.custom,
     selectPersistedDashboardFilterContextDateFilterConfig: () => undefined,
+    selectScheduledExportTimezone: () => selectors.timezoneValues.scheduledExport,
 }));
 
 vi.mock("../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js", () => ({
@@ -222,5 +234,57 @@ describe("useBuildAutomationsContext — referential stability", () => {
         expect(result.current).toBe(first);
         expect(result.current.tabIds).toBe(first.tabIds);
         expect(result.current.parameters).toBe(first.parameters);
+    });
+});
+
+describe("useBuildAutomationsContext — timezone source", () => {
+    it("prefers the custom dashboard timezone over the workspace setting", () => {
+        selectors.timezoneValues.workspace = "Europe/Prague";
+        selectors.timezoneValues.custom = "Asia/Tokyo";
+        try {
+            const { result } = renderHook(() => useBuildAutomationsContext());
+
+            expect(result.current.timezone).toBe("Asia/Tokyo");
+        } finally {
+            selectors.timezoneValues.workspace = undefined;
+            selectors.timezoneValues.custom = undefined;
+        }
+    });
+
+    it("falls back to the workspace timezone when no custom timezone is defined", () => {
+        selectors.timezoneValues.workspace = "Europe/Prague";
+        try {
+            const { result } = renderHook(() => useBuildAutomationsContext());
+
+            expect(result.current.timezone).toBe("Europe/Prague");
+        } finally {
+            selectors.timezoneValues.workspace = undefined;
+        }
+    });
+
+    it("publishes the scheduled-export timezone inputs read from the store", () => {
+        selectors.timezoneValues.workspace = "America/Argentina/Buenos_Aires";
+        selectors.timezoneValues.custom = "Europe/Prague";
+        selectors.timezoneValues.featureEnabled = true;
+        selectors.timezoneValues.config = { allowUserOverrideInViewMode: true, timezoneId: "Asia/Tokyo" };
+        selectors.timezoneValues.scheduledExport = "Europe/Prague";
+        try {
+            const { result } = renderHook(() => useBuildAutomationsContext());
+
+            expect(result.current.exportTimezones).toEqual({
+                isTimezoneFeatureEnabled: true,
+                allowUserOverrideInViewMode: true,
+                configuredTimezoneId: "Asia/Tokyo",
+                workspaceTimezone: "America/Argentina/Buenos_Aires",
+                effectiveTimezone: "Europe/Prague",
+                scheduledExportTimezone: "Europe/Prague",
+            });
+        } finally {
+            selectors.timezoneValues.workspace = undefined;
+            selectors.timezoneValues.custom = undefined;
+            selectors.timezoneValues.featureEnabled = false;
+            selectors.timezoneValues.config = undefined;
+            selectors.timezoneValues.scheduledExport = undefined;
+        }
     });
 });

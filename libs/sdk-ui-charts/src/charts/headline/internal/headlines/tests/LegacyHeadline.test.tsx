@@ -1,9 +1,43 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { type IHeadlineVisualizationProps, LegacyHeadline } from "../LegacyHeadline.js";
+
+/**
+ * `LegacyHeadline` wraps its content into two purely measurement-driven components - `react-measure` and
+ * `ResponsiveText`. Neither of them contributes anything the assertions below look at (the test DOM reports
+ * zero dimensions for every node, so no size is ever resolved), but both of them are by far the most
+ * expensive part of every mount in this file: `ResponsiveText` runs `getComputedStyle` +
+ * `getBoundingClientRect` from a layout effect and forces two extra commits of the whole tree, and
+ * `react-measure` attaches a `ResizeObserver` to the root on every mount.
+ *
+ * Stubbing them with the markup they render in this environment keeps the rendered DOM identical while
+ * cutting roughly a fifth off the runtime of the whole file.
+ */
+/**
+ * `LegacyHeadline` wraps its content into two purely measurement driven components - `react-measure` and
+ * `ResponsiveText`. Neither of them influences anything the assertions below look at, because every node
+ * reports zero dimensions in the test DOM and no size is ever resolved, but together they are the most
+ * expensive part of every mount in this file: `ResponsiveText` runs `getComputedStyle` +
+ * `getBoundingClientRect` from a layout effect and forces two extra commits of the whole tree, and
+ * `react-measure` attaches a `ResizeObserver` to the root on every mount.
+ *
+ * Replacing them with the markup they render in this environment keeps the resulting DOM identical while
+ * cutting roughly a fifth off the runtime of the whole file.
+ */
+vi.mock("react-measure", () => ({
+    // the real component only ever reports an all zero client rect here, which the headline ignores, so the
+    // stub just hands over the same empty initial content rect
+    default: ({ children }: any) => children({ measureRef: () => {}, contentRect: { client: {} } }),
+}));
+
+vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => ({
+    ...(await importOriginal<Record<string, unknown>>()),
+    // renders the same single <div> wrapper as the real one, just without the font size measuring
+    ResponsiveText: ({ children }: any) => <div>{children}</div>,
+}));
 
 describe("LegacyHeadline", () => {
     function createComponent(props: Omit<IHeadlineVisualizationProps, "data"> & { data: any }) {

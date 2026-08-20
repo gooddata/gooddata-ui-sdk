@@ -113,6 +113,16 @@ export interface IWorkspaceSettingsService {
     setTimezone(timezone: string): Promise<void>;
 
     /**
+     * Sets whether end users may change the timezone in Analytical Designer and, by default, on dashboards.
+     *
+     * @param enabled - whether end users may change the timezone
+     *
+     * @returns promise
+     * @alpha
+     */
+    setEnableTimezoneChange(enabled: boolean): Promise<void>;
+
+    /**
      * Sets date format for current workspace.
      *
      * @param dateFormat - the format based on the ICU standard, for example: "en-US", "cs-CZ", etc.

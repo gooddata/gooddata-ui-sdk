@@ -1,6 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { yaml } from "@codemirror/lang-yaml";
+import { ensureSyntaxTree } from "@codemirror/language";
 import { EditorState } from "@codemirror/state";
 import { describe, expect, it } from "vitest";
 
@@ -11,10 +12,19 @@ const CURSOR = "‸";
 
 function positionAt(docWithCursor: string) {
     const pos = docWithCursor.indexOf(CURSOR);
-    const state = EditorState.create({
-        doc: docWithCursor.replace(CURSOR, ""),
-        extensions: [yaml()],
-    });
+    const doc = docWithCursor.replace(CURSOR, "");
+    const initial = EditorState.create({ doc, extensions: [yaml()] });
+    // The initial parse only gets a small time budget, and with no view to continue it in the
+    // background a partial tree stays partial. Then resolveInner finds no Pair to anchor to and
+    // yamlPositionAt quietly returns the indentation fallback instead of the tree-derived keys
+    // under test — which on a loaded machine reads as a wrong answer, not as a slow one.
+    if (ensureSyntaxTree(initial, doc.length, 5000) === null && doc.length > 0) {
+        throw new Error("Parse did not finish; the ancestors under test would not be tree-derived.");
+    }
+    // `ensureSyntaxTree` finishes the parse but hands the completed tree back rather than storing it:
+    // the state still carries the snapshot its own budgeted parse ended on, and that is the tree
+    // `yamlPositionAt` reads. An empty transaction is what makes the state adopt the finished one.
+    const state = initial.update({}).state;
     return yamlPositionAt(state, pos);
 }
 

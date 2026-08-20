@@ -3,9 +3,15 @@
 import { describe, expect, it, vi } from "vitest";
 
 // Prepare hoisted global extractProps variable which gets its value in hoisted mock and then is used in test.
-let { extractProps } = vi.hoisted(() => ({
-    extractProps: null as any,
-}));
+let { extractProps } = vi.hoisted(() => {
+    // The suite shares a module registry with the other test files (vitest `isolate: false`), so
+    // `PieChart` may already be evaluated - and bound to the real `CorePieChart` - by the time this
+    // file runs. Dropping the registry here forces the imports below to be re-evaluated against
+    // the mock declared underneath, no matter in which order vitest schedules the test files.
+    vi.resetModules();
+
+    return { extractProps: null as any };
+});
 
 import { defSetSorts } from "@gooddata/sdk-model";
 import { type IPieChartProps } from "@gooddata/sdk-ui-charts";
@@ -29,7 +35,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CorePieChart", async () => {
     };
 });
 
-describe.skip("PieChart", () => {
+describe("PieChart", () => {
     const Scenarios: Array<ScenarioAndDescription<IPieChartProps>> = pieChartScenarios.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );

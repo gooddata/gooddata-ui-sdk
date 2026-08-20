@@ -18,6 +18,7 @@ import {
     selectEnableAlertOncePerInterval,
     selectEnableAnomalyDetectionAlert,
     selectEnableAutomationEvaluationMode,
+    selectEnableDashboardTimezone,
     selectEnableParameters,
     selectEnableSlideshowExports,
     selectEnableStringParameters,
@@ -42,7 +43,12 @@ import {
     selectDashboardHiddenFilters,
     selectDashboardLockedFilters,
 } from "../../../../model/store/filtering/dashboardFilterSelectors.js";
-import { selectPersistedDashboardFilterContextDateFilterConfig } from "../../../../model/store/meta/metaSelectors.js";
+import {
+    selectDashboardTimezoneConfig,
+    selectEffectiveDashboardTimezone,
+    selectPersistedDashboardFilterContextDateFilterConfig,
+    selectScheduledExportTimezone,
+} from "../../../../model/store/meta/metaSelectors.js";
 import {
     selectCanCreateAutomation,
     selectCanManageWorkspace,
@@ -132,7 +138,34 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
     const automationAvailableFilters = useDashboardSelector(selectAutomationAvailableDashboardFilters);
     const currentUser = useDashboardSelector(selectCurrentUser);
     const weekStart = useDashboardSelector(selectWeekStart);
-    const timezone = useDashboardSelector(selectTimezone);
+    // The custom dashboard timezone (view-mode override or dashboard configuration,
+    // browser-detected resolved) wins over the workspace setting for everything automations do
+    // with a timezone: schedule "Starts on", alert crons, and next-run display.
+    const workspaceTimezone = useDashboardSelector(selectTimezone);
+    const customTimezone = useDashboardSelector(selectEffectiveDashboardTimezone);
+    const timezone = customTimezone ?? workspaceTimezone;
+    // Inputs of the scheduled-export "Time zone" section, resolved here because the
+    // scheduledEmail tree must not read the dashboard store itself.
+    const isTimezoneFeatureEnabled = useDashboardSelector(selectEnableDashboardTimezone);
+    const timezoneConfig = useDashboardSelector(selectDashboardTimezoneConfig);
+    const scheduledExportTimezone = useDashboardSelector(selectScheduledExportTimezone);
+    const exportTimezones = useMemo(
+        () => ({
+            isTimezoneFeatureEnabled: !!isTimezoneFeatureEnabled,
+            allowUserOverrideInViewMode: !!timezoneConfig?.allowUserOverrideInViewMode,
+            configuredTimezoneId: timezoneConfig?.timezoneId,
+            workspaceTimezone,
+            effectiveTimezone: customTimezone,
+            scheduledExportTimezone,
+        }),
+        [
+            isTimezoneFeatureEnabled,
+            timezoneConfig,
+            workspaceTimezone,
+            customTimezone,
+            scheduledExportTimezone,
+        ],
+    );
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const externalRecipient = useDashboardSelector(selectExternalRecipient);
     const enableAlertOncePerInterval = useDashboardSelector(selectEnableAlertOncePerInterval);
@@ -261,6 +294,7 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             currentUser,
             weekStart,
             timezone,
+            exportTimezones,
             isWhiteLabeled,
             isSecondaryTitleVisible: true,
             externalRecipient,
@@ -304,6 +338,7 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             currentUser,
             weekStart,
             timezone,
+            exportTimezones,
             isWhiteLabeled,
             externalRecipient,
             features,

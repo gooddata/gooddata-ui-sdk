@@ -119,6 +119,7 @@ exports[`SankeyChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -239,6 +240,7 @@ exports[`SankeyChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -361,6 +363,7 @@ exports[`SankeyChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -483,6 +486,7 @@ exports[`SankeyChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -605,6 +609,7 @@ exports[`SankeyChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -727,6 +732,7 @@ exports[`SankeyChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -849,6 +855,7 @@ exports[`SankeyChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -969,6 +976,7 @@ exports[`SankeyChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1091,6 +1099,7 @@ exports[`SankeyChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1213,6 +1222,7 @@ exports[`SankeyChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1335,6 +1345,7 @@ exports[`SankeyChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1457,6 +1468,7 @@ exports[`SankeyChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1579,6 +1591,7 @@ exports[`SankeyChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1699,6 +1712,7 @@ exports[`SankeyChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1821,6 +1835,7 @@ exports[`SankeyChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1943,6 +1958,7 @@ exports[`SankeyChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2065,6 +2081,7 @@ exports[`SankeyChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2187,6 +2204,7 @@ exports[`SankeyChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2309,6 +2327,7 @@ exports[`SankeyChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2429,6 +2448,7 @@ exports[`SankeyChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2551,6 +2571,7 @@ exports[`SankeyChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2673,6 +2694,7 @@ exports[`SankeyChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2795,6 +2817,7 @@ exports[`SankeyChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2917,6 +2940,7 @@ exports[`SankeyChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3039,6 +3063,7 @@ exports[`SankeyChart > with 610x154 - Force position RIGHT - auto legend > shoul
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3159,6 +3184,7 @@ exports[`SankeyChart > with 610x154 - Force position RIGHT - default legend > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3281,6 +3307,7 @@ exports[`SankeyChart > with 610x154 - Force position RIGHT - legend at bottom > 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3403,6 +3430,7 @@ exports[`SankeyChart > with 610x154 - Force position RIGHT - legend on left > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3525,6 +3553,7 @@ exports[`SankeyChart > with 610x154 - Force position RIGHT - legend on right > s
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3647,6 +3676,7 @@ exports[`SankeyChart > with 610x154 - Force position RIGHT - legend on top > sho
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3769,6 +3799,7 @@ exports[`SankeyChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3889,6 +3920,7 @@ exports[`SankeyChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4011,6 +4043,7 @@ exports[`SankeyChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4133,6 +4166,7 @@ exports[`SankeyChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4255,6 +4289,7 @@ exports[`SankeyChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4377,6 +4412,7 @@ exports[`SankeyChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4499,6 +4535,7 @@ exports[`SankeyChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4619,6 +4656,7 @@ exports[`SankeyChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4741,6 +4779,7 @@ exports[`SankeyChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4863,6 +4902,7 @@ exports[`SankeyChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4985,6 +5025,7 @@ exports[`SankeyChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5107,6 +5148,7 @@ exports[`SankeyChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5229,6 +5271,7 @@ exports[`SankeyChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5349,6 +5392,7 @@ exports[`SankeyChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5471,6 +5515,7 @@ exports[`SankeyChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5593,6 +5638,7 @@ exports[`SankeyChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5715,6 +5761,7 @@ exports[`SankeyChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5837,6 +5884,7 @@ exports[`SankeyChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6020,6 +6068,7 @@ exports[`SankeyChart > with assign color to nodes > should create expected props
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6144,6 +6193,7 @@ exports[`SankeyChart > with coloring - custom colors > should create expected pr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6303,6 +6353,7 @@ exports[`SankeyChart > with coloring - custom palette > should create expected p
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6469,6 +6520,7 @@ exports[`SankeyChart > with coloring - custom palette preferred over colors > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6585,6 +6637,7 @@ exports[`SankeyChart > with coloring - default > should create expected props fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6705,6 +6758,7 @@ exports[`SankeyChart > with data labels - auto visibility > should create expect
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6821,6 +6875,7 @@ exports[`SankeyChart > with data labels - default > should create expected props
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6941,6 +6996,7 @@ exports[`SankeyChart > with data labels - forced hidden > should create expected
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7061,6 +7117,7 @@ exports[`SankeyChart > with data labels - forced visible > should create expecte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7185,6 +7242,7 @@ exports[`SankeyChart > with data labels - forced visible and german separators >
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7286,6 +7344,7 @@ exports[`SankeyChart > with legend position - 1 measure and 1 attribute - auto l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7384,6 +7443,7 @@ exports[`SankeyChart > with legend position - 1 measure and 1 attribute - defaul
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7484,6 +7544,7 @@ exports[`SankeyChart > with legend position - 1 measure and 1 attribute - disabl
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7585,6 +7646,7 @@ exports[`SankeyChart > with legend position - 1 measure and 1 attribute - legend
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7686,6 +7748,7 @@ exports[`SankeyChart > with legend position - 1 measure and 1 attribute - legend
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7787,6 +7850,7 @@ exports[`SankeyChart > with legend position - 1 measure and 1 attribute - legend
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7888,6 +7952,7 @@ exports[`SankeyChart > with legend position - 1 measure and 1 attribute - legend
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8009,6 +8074,7 @@ exports[`SankeyChart > with legend position - 1 measure and 2 attributes - auto 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8127,6 +8193,7 @@ exports[`SankeyChart > with legend position - 1 measure and 2 attributes - defau
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8247,6 +8314,7 @@ exports[`SankeyChart > with legend position - 1 measure and 2 attributes - disab
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8368,6 +8436,7 @@ exports[`SankeyChart > with legend position - 1 measure and 2 attributes - legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8489,6 +8558,7 @@ exports[`SankeyChart > with legend position - 1 measure and 2 attributes - legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8610,6 +8680,7 @@ exports[`SankeyChart > with legend position - 1 measure and 2 attributes - legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8731,6 +8802,7 @@ exports[`SankeyChart > with legend position - 1 measure and 2 attributes - legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8826,6 +8898,7 @@ exports[`SankeyChart > with measure and attributeFrom > should create expected p
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8921,6 +8994,7 @@ exports[`SankeyChart > with measure and attributeTo > should create expected pro
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8994,6 +9068,7 @@ exports[`SankeyChart > with measure only > should create expected props for core
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9109,5 +9184,6 @@ exports[`SankeyChart > with measure, attributeFrom and attributeTo > should crea
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;

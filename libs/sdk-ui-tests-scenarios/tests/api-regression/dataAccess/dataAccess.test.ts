@@ -8,7 +8,7 @@ import { type IDataView } from "@gooddata/sdk-backend-spi";
 import { isAttributeDescriptor, isTotal } from "@gooddata/sdk-model";
 import { DataViewFacade, type IDataSeriesCollection, type IDataSliceCollection } from "@gooddata/sdk-ui";
 
-describe.skip("DataAccess", () => {
+describe("DataAccess", () => {
     const Scenarios: Array<[string, IDataView]> = recordedDataViews(ReferenceRecordings.Recordings).map(
         (dv) => [dv.name, dv.dataView],
     );

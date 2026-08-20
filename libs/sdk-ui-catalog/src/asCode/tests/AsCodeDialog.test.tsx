@@ -3,7 +3,7 @@
 import { type PropsWithChildren, type ReactNode, createContext, useContext } from "react";
 
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 
 import type { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
@@ -33,28 +33,7 @@ const parameterDescriptor = getAsCodeDescriptor(ObjectTypes.PARAMETER)!;
 
 const stubBackend = {} as unknown as IAnalyticalBackend;
 
-vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
-    const original = await importOriginal<Record<string, unknown>>();
-    return {
-        ...original,
-        UiConfigEditor: ({
-            value,
-            onChange,
-            disabled,
-        }: {
-            value: string;
-            onChange: (value: string) => void;
-            disabled?: boolean;
-        }) => (
-            <textarea
-                data-testid="yaml-editor"
-                value={value}
-                disabled={disabled}
-                onChange={(e) => onChange(e.target.value)}
-            />
-        ),
-    };
-});
+vi.mock("../AsCodeEditorBody.js", () => import("./asCodeEditorBody.test.utils.js"));
 
 const editItem: ICatalogItemParameter = {
     identifier: "test",
@@ -110,6 +89,24 @@ function clickSubmit(label: string) {
 function renderCreate(wrapper: (props: { children: ReactNode }) => ReactNode) {
     return render(<AsCodeCreateDialog descriptor={parameterDescriptor} onClose={vi.fn()} />, { wrapper });
 }
+
+// The dialog's editor body is `lazy()`, so the very first mount in this file commits the Suspense
+// fallback — and React then holds the resolved content back for FALLBACK_THROTTLE_MS (300ms) to keep
+// the spinner from flashing. That one-off 300ms landed on whichever test awaited the editor first.
+// Resolving the lazy chunk once here, with the throttle timer faked away, leaves every later mount
+// synchronous: no fallback, no throttle.
+beforeAll(async () => {
+    vi.useFakeTimers();
+    try {
+        const { unmount } = renderCreate(makeWrapper());
+        await act(async () => {
+            await vi.advanceTimersByTimeAsync(300);
+        });
+        unmount();
+    } finally {
+        vi.useRealTimers();
+    }
+});
 
 describe("AsCodeDialog chrome", () => {
     it("renders the entity's help link", () => {

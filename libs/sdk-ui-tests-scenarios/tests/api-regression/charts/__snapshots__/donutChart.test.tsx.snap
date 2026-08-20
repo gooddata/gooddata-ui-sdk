@@ -97,6 +97,7 @@ exports[`DonutChart > with  - custom colors > should create expected props for c
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -232,6 +233,7 @@ exports[`DonutChart > with  - custom palette > should create expected props for 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -374,6 +376,7 @@ exports[`DonutChart > with  - custom palette preferred over colors > should crea
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -466,6 +469,7 @@ exports[`DonutChart > with  - default > should create expected props for core ch
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -563,6 +567,7 @@ exports[`DonutChart > with 180x154 - Force position TOP, max 1 row, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -660,6 +665,7 @@ exports[`DonutChart > with 180x154 - Force position TOP, max 1 row, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -757,6 +763,7 @@ exports[`DonutChart > with 180x154 - Force position TOP, max 1 row, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -854,6 +861,7 @@ exports[`DonutChart > with 180x154 - Force position TOP, max 1 row, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -951,6 +959,7 @@ exports[`DonutChart > with 180x154 - Force position TOP, max 1 row, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1048,6 +1057,7 @@ exports[`DonutChart > with 180x300 - Force position TOP, max 2 rows, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1145,6 +1155,7 @@ exports[`DonutChart > with 180x300 - Force position TOP, max 2 rows, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1242,6 +1253,7 @@ exports[`DonutChart > with 180x300 - Force position TOP, max 2 rows, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1339,6 +1351,7 @@ exports[`DonutChart > with 180x300 - Force position TOP, max 2 rows, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1436,6 +1449,7 @@ exports[`DonutChart > with 180x300 - Force position TOP, max 2 rows, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1536,6 +1550,7 @@ exports[`DonutChart > with 200x200 - without data labels > should create expecte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1633,6 +1648,7 @@ exports[`DonutChart > with 260x154 - Force position TOP, max 1 row, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1730,6 +1746,7 @@ exports[`DonutChart > with 260x154 - Force position TOP, max 1 row, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1827,6 +1844,7 @@ exports[`DonutChart > with 260x154 - Force position TOP, max 1 row, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1924,6 +1942,7 @@ exports[`DonutChart > with 260x154 - Force position TOP, max 1 row, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2021,6 +2040,7 @@ exports[`DonutChart > with 260x154 - Force position TOP, max 1 row, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2121,6 +2141,7 @@ exports[`DonutChart > with 300x250 - auto data labels > should create expected p
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2218,6 +2239,7 @@ exports[`DonutChart > with 440x154 - Force position TOP, max 1 row, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2315,6 +2337,7 @@ exports[`DonutChart > with 440x154 - Force position TOP, max 1 row, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2412,6 +2435,7 @@ exports[`DonutChart > with 440x154 - Force position TOP, max 1 row, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2509,6 +2533,7 @@ exports[`DonutChart > with 440x154 - Force position TOP, max 1 row, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2606,6 +2631,7 @@ exports[`DonutChart > with 440x154 - Force position TOP, max 1 row, Gradient leg
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2703,6 +2729,7 @@ exports[`DonutChart > with 610x154 - Force position RIGHT - auto legend > should
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2800,6 +2827,7 @@ exports[`DonutChart > with 610x154 - Force position RIGHT - legend at bottom > s
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2897,6 +2925,7 @@ exports[`DonutChart > with 610x154 - Force position RIGHT - legend on left > sho
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2994,6 +3023,7 @@ exports[`DonutChart > with 610x154 - Force position RIGHT - legend on right > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3091,6 +3121,7 @@ exports[`DonutChart > with 610x154 - Force position RIGHT - legend on top > shou
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3188,6 +3219,7 @@ exports[`DonutChart > with 610x194 - Position respects configuration, max 1 row 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3285,6 +3317,7 @@ exports[`DonutChart > with 610x194 - Position respects configuration, max 1 row 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3382,6 +3415,7 @@ exports[`DonutChart > with 610x194 - Position respects configuration, max 1 row 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3479,6 +3513,7 @@ exports[`DonutChart > with 610x194 - Position respects configuration, max 1 row 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3576,6 +3611,7 @@ exports[`DonutChart > with 610x194 - Position respects configuration, max 1 row 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3673,6 +3709,7 @@ exports[`DonutChart > with 610x274 - Position respects configuration, max 2 row 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3770,6 +3807,7 @@ exports[`DonutChart > with 610x274 - Position respects configuration, max 2 row 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3867,6 +3905,7 @@ exports[`DonutChart > with 610x274 - Position respects configuration, max 2 row 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3964,6 +4003,7 @@ exports[`DonutChart > with 610x274 - Position respects configuration, max 2 row 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4061,6 +4101,7 @@ exports[`DonutChart > with 610x274 - Position respects configuration, max 2 row 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4158,6 +4199,7 @@ exports[`DonutChart > with 650x354 - Position respects configuration, map legend
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4255,6 +4297,7 @@ exports[`DonutChart > with 650x354 - Position respects configuration, map legend
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4352,6 +4395,7 @@ exports[`DonutChart > with 650x354 - Position respects configuration, map legend
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4449,6 +4493,7 @@ exports[`DonutChart > with 650x354 - Position respects configuration, map legend
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4546,6 +4591,7 @@ exports[`DonutChart > with 650x354 - Position respects configuration, map legend
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4701,6 +4747,7 @@ exports[`DonutChart > with arithmetic measures > should create expected props fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4860,6 +4907,7 @@ exports[`DonutChart > with assign color to attributes > should create expected p
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5019,6 +5067,7 @@ exports[`DonutChart > with assign color to measures > should create expected pro
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5115,6 +5164,7 @@ exports[`DonutChart > with data labels - auto visibility > should create expecte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5207,6 +5257,7 @@ exports[`DonutChart > with data labels - default > should create expected props 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5303,6 +5354,7 @@ exports[`DonutChart > with data labels - forced hidden > should create expected 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5399,6 +5451,7 @@ exports[`DonutChart > with data labels - forced visible > should create expected
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5499,6 +5552,7 @@ exports[`DonutChart > with data labels - forced visible and german separators > 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5595,6 +5649,7 @@ exports[`DonutChart > with legend position - single measure and viewBy - auto le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5691,6 +5746,7 @@ exports[`DonutChart > with legend position - single measure and viewBy - disable
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5787,6 +5843,7 @@ exports[`DonutChart > with legend position - single measure and viewBy - legend 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5883,6 +5940,7 @@ exports[`DonutChart > with legend position - single measure and viewBy - legend 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5979,6 +6037,7 @@ exports[`DonutChart > with legend position - single measure and viewBy - legend 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6075,6 +6134,7 @@ exports[`DonutChart > with legend position - single measure and viewBy - legend 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6175,6 +6235,7 @@ exports[`DonutChart > with legend position - two measures - auto legend > should
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6275,6 +6336,7 @@ exports[`DonutChart > with legend position - two measures - disabled > should cr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6375,6 +6437,7 @@ exports[`DonutChart > with legend position - two measures - legend at bottom > s
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6475,6 +6538,7 @@ exports[`DonutChart > with legend position - two measures - legend on left > sho
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6575,6 +6639,7 @@ exports[`DonutChart > with legend position - two measures - legend on right > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6675,6 +6740,7 @@ exports[`DonutChart > with legend position - two measures - legend on top > shou
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6744,6 +6810,7 @@ exports[`DonutChart > with single measure > should create expected props for cor
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6835,6 +6902,7 @@ exports[`DonutChart > with single measure with viewBy > should create expected p
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6930,6 +6998,7 @@ exports[`DonutChart > with two measures > should create expected props for core 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7026,6 +7095,7 @@ exports[`DonutChart > with vertical alignment - bottom > should create expected 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7118,6 +7188,7 @@ exports[`DonutChart > with vertical alignment - default > should create expected
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7214,6 +7285,7 @@ exports[`DonutChart > with vertical alignment - middle > should create expected 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7310,5 +7382,6 @@ exports[`DonutChart > with vertical alignment - top > should create expected pro
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;

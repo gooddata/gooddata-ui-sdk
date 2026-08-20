@@ -7,7 +7,7 @@ export default defineConfig({
         preserveSymlinks: true,
     },
     test: {
-        globals: false,
+        reporters: ["default"],
         isolate: false,
         restoreMocks: true,
         unstubEnvs: true,

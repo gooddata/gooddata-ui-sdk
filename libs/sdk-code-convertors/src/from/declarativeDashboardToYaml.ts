@@ -644,9 +644,9 @@ function declarativeTimezoneConfigToYaml(
         ...(config.showTimezoneInfo
             ? { show_timezone_info: config.showTimezoneInfo }
             : { show_timezone_info: false }),
-        ...(config.allowUserOverrideInViewMode
+        ...(typeof config.allowUserOverrideInViewMode === "boolean"
             ? { allow_user_override_in_view_mode: config.allowUserOverrideInViewMode }
-            : { allow_user_override_in_view_mode: false }),
+            : {}),
     };
 }
 

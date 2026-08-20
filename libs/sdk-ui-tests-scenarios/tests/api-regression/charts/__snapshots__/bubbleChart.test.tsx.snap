@@ -156,6 +156,7 @@ exports[`BubbleChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -315,6 +316,7 @@ exports[`BubbleChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -474,6 +476,7 @@ exports[`BubbleChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -633,6 +636,7 @@ exports[`BubbleChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -792,6 +796,7 @@ exports[`BubbleChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -951,6 +956,7 @@ exports[`BubbleChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1110,6 +1116,7 @@ exports[`BubbleChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1269,6 +1276,7 @@ exports[`BubbleChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1428,6 +1436,7 @@ exports[`BubbleChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1587,6 +1596,7 @@ exports[`BubbleChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1746,6 +1756,7 @@ exports[`BubbleChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1905,6 +1916,7 @@ exports[`BubbleChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2064,6 +2076,7 @@ exports[`BubbleChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2223,6 +2236,7 @@ exports[`BubbleChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2382,6 +2396,7 @@ exports[`BubbleChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2541,6 +2556,7 @@ exports[`BubbleChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2700,6 +2716,7 @@ exports[`BubbleChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2859,6 +2876,7 @@ exports[`BubbleChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3018,6 +3036,7 @@ exports[`BubbleChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3177,6 +3196,7 @@ exports[`BubbleChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3336,6 +3356,7 @@ exports[`BubbleChart > with 610x154 - Force position RIGHT - auto legend > shoul
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3495,6 +3516,7 @@ exports[`BubbleChart > with 610x154 - Force position RIGHT - legend at bottom > 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3654,6 +3676,7 @@ exports[`BubbleChart > with 610x154 - Force position RIGHT - legend on left > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3813,6 +3836,7 @@ exports[`BubbleChart > with 610x154 - Force position RIGHT - legend on right > s
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3972,6 +3996,7 @@ exports[`BubbleChart > with 610x154 - Force position RIGHT - legend on top > sho
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4131,6 +4156,7 @@ exports[`BubbleChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4290,6 +4316,7 @@ exports[`BubbleChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4449,6 +4476,7 @@ exports[`BubbleChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4608,6 +4636,7 @@ exports[`BubbleChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4767,6 +4796,7 @@ exports[`BubbleChart > with 610x194 - Position respects configuration, max 1 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4926,6 +4956,7 @@ exports[`BubbleChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5085,6 +5116,7 @@ exports[`BubbleChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5244,6 +5276,7 @@ exports[`BubbleChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5403,6 +5436,7 @@ exports[`BubbleChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5562,6 +5596,7 @@ exports[`BubbleChart > with 610x274 - Position respects configuration, max 2 row
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5721,6 +5756,7 @@ exports[`BubbleChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5880,6 +5916,7 @@ exports[`BubbleChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6039,6 +6076,7 @@ exports[`BubbleChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6198,6 +6236,7 @@ exports[`BubbleChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6357,6 +6396,7 @@ exports[`BubbleChart > with 650x354 - Position respects configuration, map legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6520,6 +6560,7 @@ exports[`BubbleChart > with X and Y axis min/max configuration > should create e
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6678,6 +6719,7 @@ exports[`BubbleChart > with X axis max only configuration > should create expect
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6837,6 +6879,7 @@ exports[`BubbleChart > with X axis min/max configuration > should create expecte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6995,6 +7038,7 @@ exports[`BubbleChart > with Y axis max only configuration > should create expect
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7154,6 +7198,7 @@ exports[`BubbleChart > with Y axis min/max configuration > should create expecte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7311,6 +7356,7 @@ exports[`BubbleChart > with arithmetic measure > should create expected props fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7532,6 +7578,7 @@ exports[`BubbleChart > with assign color to attribute bubbles > should create ex
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7711,6 +7758,7 @@ exports[`BubbleChart > with axis name customization - high > should create expec
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7890,6 +7938,7 @@ exports[`BubbleChart > with axis name customization - invisible > should create 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8069,6 +8118,7 @@ exports[`BubbleChart > with axis name customization - low > should create expect
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8248,6 +8298,7 @@ exports[`BubbleChart > with axis name customization - middle > should create exp
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8410,6 +8461,7 @@ exports[`BubbleChart > with coloring - custom colors > should create expected pr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8607,6 +8659,7 @@ exports[`BubbleChart > with coloring - custom palette > should create expected p
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8811,6 +8864,7 @@ exports[`BubbleChart > with coloring - custom palette preferred over colors > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -8965,6 +9019,7 @@ exports[`BubbleChart > with coloring - default > should create expected props fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9123,6 +9178,7 @@ exports[`BubbleChart > with data labels - auto visibility > should create expect
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9277,6 +9333,7 @@ exports[`BubbleChart > with data labels - default > should create expected props
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9435,6 +9492,7 @@ exports[`BubbleChart > with data labels - forced hidden > should create expected
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9593,6 +9651,7 @@ exports[`BubbleChart > with data labels - forced visible > should create expecte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9755,6 +9814,7 @@ exports[`BubbleChart > with data labels - forced visible and german separators >
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -9913,6 +9973,7 @@ exports[`BubbleChart > with legend position - auto legend > should create expect
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10071,6 +10132,7 @@ exports[`BubbleChart > with legend position - disabled > should create expected 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10229,6 +10291,7 @@ exports[`BubbleChart > with legend position - legend at bottom > should create e
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10387,6 +10450,7 @@ exports[`BubbleChart > with legend position - legend on left > should create exp
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10545,6 +10609,7 @@ exports[`BubbleChart > with legend position - legend on right > should create ex
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10703,6 +10768,7 @@ exports[`BubbleChart > with legend position - legend on top > should create expe
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -10859,6 +10925,7 @@ exports[`BubbleChart > with single series mode enabled > should create expected 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11012,6 +11079,7 @@ exports[`BubbleChart > with x and y axis and size measures with viewBy > should 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11172,6 +11240,7 @@ exports[`BubbleChart > with x and y axis and size measures with viewBy and sorte
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11325,6 +11394,7 @@ exports[`BubbleChart > with x and y axis and size measures with viewBy with null
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11451,6 +11521,7 @@ exports[`BubbleChart > with x and y axis measures with viewBy > should create ex
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11577,6 +11648,7 @@ exports[`BubbleChart > with x axis and size measures with viewBy > should create
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11654,6 +11726,7 @@ exports[`BubbleChart > with x axis measure > should create expected props for co
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11753,6 +11826,7 @@ exports[`BubbleChart > with x axis measure with viewBy > should create expected 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -11879,5 +11953,6 @@ exports[`BubbleChart > with y axis and size measures with viewBy > should create
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;

@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@gooddata/sdk-ui-all",
+      "comment": "Introduce new setting enableTimezoneChange to control whether timezone can be changed in Analytical Designer and the default of dashboard for timezone override option.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@gooddata/sdk-ui-all"
+}

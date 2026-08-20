@@ -5,6 +5,7 @@ import { type PropsWithChildren } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { type Mock, describe, expect, it, vi } from "vitest";
 
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
     type IAnalyticalBackend,
     type IUserWorkspaceSettings,
@@ -23,15 +24,36 @@ import {
 } from "../../permission/TestPermissionsProvider.js";
 import { CreateObjectButton } from "../CreateObjectButton.js";
 
-vi.mock("../../catalogItem/useCatalogItemFeed.js");
+// The parameter tests below open the as-code create dialog, which `lazy()`-loads the editor body.
+// Stubbed even though nothing here asserts on the editor: leaving the real CodeMirror body to
+// resolve would cache it for the whole run, and the as-code tests that do drive the editor would
+// then find the real one instead of their stub.
+vi.mock(
+    "../../asCode/AsCodeEditorBody.js",
+    () => import("../../asCode/tests/asCodeEditorBody.test.utils.js"),
+);
 
+/**
+ * `CatalogFeedProvider` runs the real feed hook on top of `dummyBackend`: mocking
+ * `useCatalogItemFeed` module-wide is unreliable once the suite runs without isolation,
+ * because the provider module keeps whatever binding the first test file that loaded it got.
+ * Only the parameters service is swapped so parameter creation stays observable.
+ */
 function createBackend(createParameter: Mock = vi.fn().mockResolvedValue({})) {
+    const backend = dummyBackend();
+
     return {
-        workspace: () => ({
-            parameters: () => ({
-                createParameter,
-            }),
-        }),
+        ...backend,
+        workspace: (id: string) => {
+            const workspace = backend.workspace(id);
+
+            return {
+                ...workspace,
+                // Keep the dummy service (the feed reads parameters through it) and only
+                // override the one call the assertions care about.
+                parameters: () => Object.assign(Object.create(workspace.parameters()), { createParameter }),
+            };
+        },
     } as unknown as IAnalyticalBackend;
 }
 
@@ -46,19 +68,19 @@ function wrapper({
         <TestIntlProvider>
             <BackendProvider backend={backend}>
                 <WorkspaceProvider workspace="test-workspace">
-                    <CatalogFeedProvider backend={backend} workspace="test-workspace">
-                        <TestPermissionsProvider
-                            result={{
-                                ...defaultPermissionsResult,
-                                permissions: { canManageProject: true } as IWorkspacePermissions,
-                                settings: (parameterEnabled
-                                    ? { enableParameters: true }
-                                    : {}) as IUserWorkspaceSettings,
-                            }}
-                        >
+                    <TestPermissionsProvider
+                        result={{
+                            ...defaultPermissionsResult,
+                            permissions: { canManageProject: true } as IWorkspacePermissions,
+                            settings: (parameterEnabled
+                                ? { enableParameters: true }
+                                : {}) as IUserWorkspaceSettings,
+                        }}
+                    >
+                        <CatalogFeedProvider backend={backend} workspace="test-workspace">
                             <ToastsCenterContextProvider>{children}</ToastsCenterContextProvider>
-                        </TestPermissionsProvider>
-                    </CatalogFeedProvider>
+                        </CatalogFeedProvider>
+                    </TestPermissionsProvider>
                 </WorkspaceProvider>
             </BackendProvider>
         </TestIntlProvider>

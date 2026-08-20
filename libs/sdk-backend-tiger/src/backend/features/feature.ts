@@ -670,6 +670,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableGenAiInteractionIntelligenceTimeline,
+            "enableGenAiInteractionIntelligence_timeline",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAiInteractionIntelligence_timeline,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableAiLlmAnthropicProvider,
             "enableAiLlmAnthropicProvider",
             "BOOLEAN",

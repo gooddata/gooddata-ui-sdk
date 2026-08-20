@@ -33,8 +33,18 @@ export const repeatItemsNTimes = <T>(array: T[], n: number): T[] =>
 export const unEscapeAngleBrackets = (str: string): string =>
     str?.replace(/&lt;|&#60;/g, "<").replace(/&gt;|&#62;/g, ">");
 
-export function decodeHtmlEntities(str: string): string {
-    return str.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+/**
+ * Decodes the entities we escape before handing values over to highcharts.
+ *
+ * Takes unknown on purpose: most callers are accessibility/tooltip formatters fed from highcharts
+ * internals (category, point and series names) that are not guaranteed to be strings. Those
+ * formatters run during chart creation, so throwing here takes the whole chart down.
+ */
+export function decodeHtmlEntities(value: unknown): string {
+    if (typeof value !== "string") {
+        return Number.isFinite(value) ? String(value) : "";
+    }
+    return value.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
 }
 
 export function isRotationInRange(rotation: number, min: number, max: number): boolean {

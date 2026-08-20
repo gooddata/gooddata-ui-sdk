@@ -1,15 +1,15 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { createElement } from "react";
 
 import { render, screen } from "@testing-library/react";
 import { cloneDeep } from "lodash-es";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 // eslint-disable-next-line no-restricted-imports
-import * as uiKit from "@gooddata/sdk-ui-kit";
+import type * as UiKit from "@gooddata/sdk-ui-kit";
 
-import { ColorOverlay, DropdownVersionType, type IColorOverlayProps } from "../ColorOverlay.js";
+import type * as ColorOverlayModule from "../ColorOverlay.js";
 
 // Mock the Overlay component
 vi.mock("@gooddata/sdk-ui-kit", async () => {
@@ -22,14 +22,35 @@ vi.mock("@gooddata/sdk-ui-kit", async () => {
     };
 });
 
-const defaultProps: IColorOverlayProps = {
-    alignTo: "#somestyle",
-    dropdownVersion: DropdownVersionType.ColorPalette,
-    onClose: () => {},
-};
+/*
+ * Test isolation is disabled for this package, so the module cache is shared between test files:
+ * ColorOverlay.js may already have been evaluated - bound to the real Overlay - by another test file, and
+ * the mocked graph this file builds must not outlive it. Re-import both modules up front so this file
+ * always observes the mocked Overlay, and drop the mocked graph again on the way out.
+ */
+let uiKit: typeof UiKit;
+let ColorOverlay: typeof ColorOverlayModule.ColorOverlay;
+let DropdownVersionType: typeof ColorOverlayModule.DropdownVersionType;
+let defaultProps: ColorOverlayModule.IColorOverlayProps;
 
-function createComponent(customProps: Partial<IColorOverlayProps> = {}) {
-    const props: IColorOverlayProps = { ...cloneDeep(defaultProps), ...customProps };
+beforeAll(async () => {
+    vi.resetModules();
+    uiKit = await import("@gooddata/sdk-ui-kit");
+    ({ ColorOverlay, DropdownVersionType } = await import("../ColorOverlay.js"));
+
+    defaultProps = {
+        alignTo: "#somestyle",
+        dropdownVersion: DropdownVersionType.ColorPalette,
+        onClose: () => {},
+    };
+});
+
+afterAll(() => {
+    vi.resetModules();
+});
+
+function createComponent(customProps: Partial<ColorOverlayModule.IColorOverlayProps> = {}) {
+    const props: ColorOverlayModule.IColorOverlayProps = { ...cloneDeep(defaultProps), ...customProps };
     return render(<ColorOverlay {...props} />);
 }
 

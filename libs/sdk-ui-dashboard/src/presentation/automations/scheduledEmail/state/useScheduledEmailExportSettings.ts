@@ -23,6 +23,7 @@ import {
     setExportParametersByTab,
 } from "../../../../_staging/automation/index.js";
 import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
+import { useExportTimezones } from "../DefaultScheduledEmailDialog/hooks/useExportTimezones.js";
 
 import {
     newDashboardExportDefinitionMetadataObjectDefinition,
@@ -41,6 +42,11 @@ export interface IUseScheduledEmailExportSettingsProps {
     effectiveWidgetFilters: IFilter[];
     effectiveWidgetFiltersWithInsight: IFilter[];
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
+    /**
+     * Live value of the "Schedule time zone" section. When active, it replaces the store-derived
+     * defaults for export definitions created by attachment changes.
+     */
+    scheduleTimezone?: { active: boolean; timezoneId: string | undefined };
 }
 
 /**
@@ -65,8 +71,15 @@ export function useScheduledEmailExportSettings({
     effectiveWidgetFilters,
     effectiveWidgetFiltersWithInsight,
     defaultPdfPageSize,
+    scheduleTimezone,
 }: IUseScheduledEmailExportSettingsProps) {
     const { dashboardId, dashboardTitle } = useScheduledEmailDialogContext();
+
+    const { exportTimezoneId: defaultExportTimezoneId } = useExportTimezones(!!widget && !!insight);
+
+    // The live "Time zone" section value wins over the store-derived default for definitions
+    // created while the dialog is open.
+    const exportTimezoneId = scheduleTimezone?.active ? scheduleTimezone.timezoneId : defaultExportTimezoneId;
 
     // Holds the wire outside the automation so it survives a rebuild from zero export definitions —
     // with no definitions `setExportParametersByTab` has nowhere to store it.
@@ -121,6 +134,7 @@ export function useScheduledEmailExportSettings({
                         dashboardFilters: storeFilters ? effectiveDashboardFilters : undefined,
                         filtersByTab: storeFilters ? effectiveDashboardFiltersByTab : undefined,
                         format,
+                        timezoneId: exportTimezoneId,
                     }),
                 );
 
@@ -139,6 +153,7 @@ export function useScheduledEmailExportSettings({
             storeFilters,
             effectiveDashboardFilters,
             effectiveDashboardFiltersByTab,
+            exportTimezoneId,
         ],
     );
 
@@ -175,6 +190,7 @@ export function useScheduledEmailExportSettings({
                         widgetFiltersWithInsight: effectiveWidgetFiltersWithInsight,
                         dashboardFilters: effectiveDashboardFilters,
                         defaultPdfPageSize,
+                        timezoneId: exportTimezoneId,
                     }),
                 );
 
@@ -196,6 +212,7 @@ export function useScheduledEmailExportSettings({
             effectiveWidgetFiltersWithInsight,
             effectiveDashboardFilters,
             defaultPdfPageSize,
+            exportTimezoneId,
         ],
     );
 

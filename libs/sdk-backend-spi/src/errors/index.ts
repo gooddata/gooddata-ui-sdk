@@ -20,6 +20,7 @@ export const AnalyticalBackendErrorTypes = {
     NOT_AUTHENTICATED: "NAuth",
     LIMIT_REACHED: "LR",
     CONTRACT_EXPIRED: "CE",
+    PERMISSION_ESCALATION_REFUSED: "PE",
     TIMEOUT_ERROR: "TE",
     ABORT: "AB",
 };
@@ -287,6 +288,19 @@ export class ContractExpired extends AnalyticalBackendError {
 }
 
 /**
+ * This exception is thrown when a permission change is refused because it would grant a
+ * level the caller does not hold themselves. The backend is the authority on what may be
+ * granted, so a client can offer the change and report this refusal instead of predicting it.
+ *
+ * @alpha
+ */
+export class PermissionEscalationRefused extends AnalyticalBackendError {
+    constructor(message: string, cause?: Error) {
+        super(message, AnalyticalBackendErrorTypes.PERMISSION_ESCALATION_REFUSED, cause);
+    }
+}
+
+/**
  * Error converter
  *
  * @public
@@ -399,6 +413,18 @@ export function isLimitReached(obj: unknown): obj is LimitReached {
  */
 export function isContractExpired(obj: unknown): obj is ContractExpired {
     return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.CONTRACT_EXPIRED;
+}
+
+/**
+ * Type guard checking whether input is an instance of {@link PermissionEscalationRefused}
+ *
+ * @alpha
+ */
+export function isPermissionEscalationRefused(obj: unknown): obj is PermissionEscalationRefused {
+    return (
+        isAnalyticalBackendError(obj) &&
+        obj.abeType === AnalyticalBackendErrorTypes.PERMISSION_ESCALATION_REFUSED
+    );
 }
 
 /**

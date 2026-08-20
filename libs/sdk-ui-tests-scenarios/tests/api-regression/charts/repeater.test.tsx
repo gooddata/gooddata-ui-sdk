@@ -7,6 +7,23 @@ let { extractProps } = vi.hoisted(() => ({
     extractProps: null as any,
 }));
 
+/*
+ * This suite runs with `isolate: false`, so every test file shares a single module registry. The
+ * sibling chart suites are skipped, but `describe.skip` still evaluates the module — importing the
+ * `@gooddata/sdk-ui-charts` barrel is enough to put a copy of `Repeater`, bound to the real
+ * `CoreRepeater`, into that registry. `vi.mock` cannot retroactively rebind an already-evaluated
+ * module, so whether the mock below takes effect comes down to the order the sequencer happens to
+ * pick: `wrap` never runs and `extractProps()` returns `undefined` when this file is not collected
+ * first.
+ *
+ * Dropping the registry makes the outcome order-independent. It has to happen inside `vi.hoisted`
+ * because the imports below are hoisted above plain top-level statements — resetting at statement
+ * level would run too late, after the stale modules had already been bound.
+ */
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 import { defSetSorts } from "@gooddata/sdk-model";
 import { type IRepeaterProps } from "@gooddata/sdk-ui-charts";
 
@@ -29,7 +46,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreRepeater", async () => {
     };
 });
 
-describe.skip("Repeater", () => {
+describe("Repeater", () => {
     const Scenarios: Array<ScenarioAndDescription<IRepeaterProps>> = RepeaterScenarios.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { render, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
@@ -14,13 +14,13 @@ describe("Bubble", () => {
         it("should have correct default align points", async () => {
             renderBubble({});
 
-            await waitFor(
-                () => {
-                    expect(document.querySelector(".target-bl")).toBeInTheDocument();
-                    expect(document.querySelector(".self-tl")).toBeInTheDocument();
-                },
-                { timeout: 100 },
-            );
+            // The align points only land once the overlay has measured and aligned itself, which is
+            // asynchronous; the default waitFor timeout is the budget for it. A shorter one buys
+            // nothing on a passing run and turns a busy CI worker into a failure.
+            await waitFor(() => {
+                expect(document.querySelector(".target-bl")).toBeInTheDocument();
+                expect(document.querySelector(".self-tl")).toBeInTheDocument();
+            });
         });
     });
 });

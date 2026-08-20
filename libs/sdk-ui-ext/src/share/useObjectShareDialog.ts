@@ -7,7 +7,11 @@ import { useIntl } from "react-intl";
 import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
 
 import { objectShareMessages } from "./messages.js";
-import { changesEffectiveLevel, removalChangesEffectiveLevel } from "./objectShareController.helpers.js";
+import {
+    changesEffectiveLevel,
+    levelsBelow,
+    removalChangesEffectiveLevel,
+} from "./objectShareController.helpers.js";
 import {
     type IObjectShareControllerActions,
     type IObjectShareControllerState,
@@ -24,6 +28,16 @@ import { useObjectShareController } from "./useObjectShareController.js";
 interface IPendingSelfChange {
     granteeId: string;
     level: ObjectSharePermissionLevel | "none";
+}
+
+/**
+ * Level picks an inherited grant already covers, which the controller refuses as
+ * no-ops ({@link changesEffectiveLevel}). Lowering a direct grant that sits ABOVE
+ * what is inherited is NOT one of them: that does move the effective level (direct
+ * EDIT under inherited SHARE, picking VIEW yields SHARE).
+ */
+function inheritedCoveredLevels(grantee: IObjectShareGrantee): ObjectSharePermissionLevel[] {
+    return removalChangesEffectiveLevel(grantee) ? [] : levelsBelow(grantee.level);
 }
 
 /**
@@ -68,10 +82,14 @@ export interface IObjectShareDialogViewModel {
     /** The controller's workspace-rule menu policy, forwarded (see `IObjectShareControllerState`). */
     workspaceDisabledLevels: ObjectSharePermissionLevel[] | undefined;
     /**
-     * The controller's self-managed-row policy resolved per row: its disabled levels
-     * for the signed-in user's own sole grant, undefined for every other row.
+     * Level picks a row must render disabled: the self-managed-row policy plus every
+     * pick an inherited grant already covers.
      */
     rowDisabledLevels: (grantee: IObjectShareGrantee) => ObjectSharePermissionLevel[] | undefined;
+    /** Per-level tooltips for the disabled picks an inherited grant covers. */
+    rowDisabledLevelTooltips: (
+        grantee: IObjectShareGrantee,
+    ) => Partial<Record<ObjectSharePermissionLevel, string>> | undefined;
     /**
      * Whether Remove access must render disabled: the grantee holds no grant in this
      * workspace, so there is nothing here to revoke (their access is inherited).
@@ -79,6 +97,8 @@ export interface IObjectShareDialogViewModel {
     isRowRemoveDisabled: (grantee: IObjectShareGrantee) => boolean;
     /** Tooltip explaining why Remove access is disabled on this row. */
     rowRemoveDisabledTooltip: string;
+    /** Whether this row's controls must stay disabled (see `granteeControlsLocked`). */
+    isRowControlsLocked: (grantee: IObjectShareGrantee) => boolean;
 
     /** Close the whole dialog, discarding any staged self-restriction. */
     onClose: () => void;
@@ -202,19 +222,44 @@ export function useObjectShareDialog({
 
     const onSelfRestrictCancel = useCallback(() => setPendingSelfChange(undefined), []);
 
+    const inheritedCoveredTooltip = intl.formatMessage(objectShareMessages.granteeLevelInheritedCovered);
+
     const rowDisabledLevels = useCallback(
-        (grantee: IObjectShareGrantee) =>
-            state.selfManagedGranteeId === grantee.id ? state.selfManagedDisabledLevels : undefined,
+        (grantee: IObjectShareGrantee) => {
+            const self =
+                state.selfManagedGranteeId === grantee.id ? (state.selfManagedDisabledLevels ?? []) : [];
+            // Disjoint: self caps levels ABOVE the row, coverage disables those BELOW.
+            const merged = [...self, ...inheritedCoveredLevels(grantee)];
+            return merged.length > 0 ? merged : undefined;
+        },
         [state.selfManagedGranteeId, state.selfManagedDisabledLevels],
     );
 
-    // Levels below an inherited one are deliberately NOT disabled: lowering the
-    // direct grant still reduces the effective level whenever it sits above what is
-    // inherited (direct EDIT under an inherited SHARE → picking VIEW yields SHARE).
-    // The row's warning badge is what explains the inherited floor.
+    const rowDisabledLevelTooltips = useCallback(
+        (grantee: IObjectShareGrantee) => {
+            const covered = inheritedCoveredLevels(grantee);
+            if (covered.length === 0) {
+                return undefined;
+            }
+            const map: Partial<Record<ObjectSharePermissionLevel, string>> = {};
+            for (const level of covered) {
+                map[level] = inheritedCoveredTooltip;
+            }
+            return map;
+        },
+        [inheritedCoveredTooltip],
+    );
+
     const isRowRemoveDisabled = useCallback(
         (grantee: IObjectShareGrantee) => grantee.directLevel === undefined,
         [],
+    );
+
+    // Only USER rows can be the caller's own, so a group row stays usable while the
+    // profile is unresolved.
+    const isRowControlsLocked = useCallback(
+        (grantee: IObjectShareGrantee) => state.granteeControlsLocked && grantee.kind === "user",
+        [state.granteeControlsLocked],
     );
 
     const isMutable = state.status === "success" && state.labelsResolved;
@@ -231,7 +276,9 @@ export function useObjectShareDialog({
         isLoading,
         workspaceDisabledLevels: state.workspaceDisabledLevels,
         rowDisabledLevels,
+        rowDisabledLevelTooltips,
         isRowRemoveDisabled,
+        isRowControlsLocked,
         rowRemoveDisabledTooltip: intl.formatMessage(objectShareMessages.granteeRemoveInherited),
         onClose,
         onRowPermissionChange,

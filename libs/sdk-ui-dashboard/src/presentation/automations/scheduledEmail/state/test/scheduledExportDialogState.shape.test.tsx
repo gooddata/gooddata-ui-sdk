@@ -84,16 +84,22 @@ import {
 } from "./fixtures.js";
 
 const DRAFT_MEMBERS = [
+    "canSelectScheduleTimezone",
+    "defaultResolvedTimezone",
     "editedAutomation",
     "isCronValid",
     "isOnMessageValid",
     "isSubjectValid",
+    "isTimezoneFeatureEnabled",
     "isTitleValid",
     "originalAutomation",
+    "scheduleTimezoneIsStale",
+    "scheduleTimezoneSelection",
     "startDate",
 ];
 
 const ACTIONS_MEMBERS = [
+    "applyCurrentScheduleTimezone",
     "onCsvRawSettingsChange",
     "onCsvSettingsChange",
     "onDashboardAttachmentsChange",
@@ -103,6 +109,7 @@ const ACTIONS_MEMBERS = [
     "onPdfSettingsChange",
     "onRecipientsChange",
     "onRecurrenceChange",
+    "onScheduleTimezoneChange",
     "onSlidesTemplateIdChange",
     "onSubjectChange",
     "onTitleChange",

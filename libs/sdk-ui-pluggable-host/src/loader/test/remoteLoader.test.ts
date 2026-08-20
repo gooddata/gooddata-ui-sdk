@@ -23,6 +23,10 @@ const remote: IRemotePluggableApplicationModule = {
     routeBase: "/settings",
 };
 
+// Restored in `afterEach`: with isolation off, `window.location` is shared with every other test
+// file in the worker, and a stub that outlives this file leaves them a `location` without an `href`.
+const originalLocation = Object.getOwnPropertyDescriptor(window, "location");
+
 describe("remoteLoader.loadRemotePluggableApplication", () => {
     beforeEach(() => {
         loadRemoteMock.mockReset();
@@ -37,6 +41,11 @@ describe("remoteLoader.loadRemotePluggableApplication", () => {
     });
 
     afterEach(() => {
+        if (originalLocation) {
+            Object.defineProperty(window, "location", originalLocation);
+        } else {
+            delete (window as unknown as Record<string, unknown>)["location"];
+        }
         vi.restoreAllMocks();
     });
 

@@ -451,6 +451,7 @@ export class TigerExecutionResult implements IExecutionResult {
             customOverride: augmented,
             visualizationObject: options.visualizationObjectId,
             visualizationObjectCustomFilters: options.visualizationObjectCustomFilters,
+            ...(options.timezoneId ? { executionSettings: { timezone: options.timezoneId } } : {}),
         };
 
         // For multi-layer geo visualizations the export ships one sheet/file per layer. The main

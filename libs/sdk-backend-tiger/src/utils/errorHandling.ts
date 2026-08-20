@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type AxiosError, type AxiosResponse, isCancel } from "axios";
 
@@ -9,6 +9,7 @@ import {
     DataTooLargeError,
     LimitReached,
     NotAuthenticated,
+    PermissionEscalationRefused,
     UnexpectedError,
     UnexpectedResponseError,
     isAnalyticalBackendError,
@@ -38,6 +39,11 @@ export function convertApiError(error: Error): AnalyticalBackendError {
     const dataTooLarge = createDataTooLargeError(error);
     if (dataTooLarge) {
         return dataTooLarge;
+    }
+
+    const permissionEscalation = createPermissionEscalationRefusedError(error);
+    if (permissionEscalation) {
+        return permissionEscalation;
     }
 
     const unexpectedResponseError = createUnexpectedResponseError(error);
@@ -84,6 +90,25 @@ function createLimitReachedError(error: Error): LimitReached | undefined {
     }
 
     return new LimitReached("The limit reached. Upgrade your plan to create more objects.", error);
+}
+
+// Tiger reports a refused over-grant as a 400 whose detail names the level. Matching the
+// detail is how this file classifies such responses (see the two creators around this one);
+// it belongs here so UI packages can check a typed error instead of a backend's wording.
+function createPermissionEscalationRefusedError(error: Error): PermissionEscalationRefused | undefined {
+    const axiosErrorResponse = (error as AxiosError<any>).response;
+
+    if (
+        axiosErrorResponse?.status !== 400 ||
+        !axiosErrorResponse.data?.detail?.includes("higher level than the current user's")
+    ) {
+        return;
+    }
+
+    return new PermissionEscalationRefused(
+        "The change would grant a permission level the caller does not hold.",
+        error,
+    );
 }
 
 function createContractExpiredError(error: Error): ContractExpired | undefined {

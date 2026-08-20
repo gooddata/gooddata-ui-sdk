@@ -44,15 +44,26 @@ async function _mountChartAndCapture<T extends VisProps>(
 
     render(<Component {...(props as any)} />);
 
-    const interactions = await promisedInteractions;
-
     // When no props extractor is provided, we conveniently use the props passed to the
     // top-most component that is being rendered.
-    interactions.effectiveProps = effectivePropsExtractor ? effectivePropsExtractor() : props;
+    //
+    // The extraction has to happen synchronously right after the render: the extractor is backed by a
+    // single slot that each render overwrites, so awaiting first would make concurrently mounted
+    // scenarios observe each other's props.
+    const capturedProps = effectivePropsExtractor ? effectivePropsExtractor() : props;
+
+    const interactions = await promisedInteractions;
+
+    interactions.effectiveProps = capturedProps;
+    interactions.componentProps = props;
 
     if (!customErrorHandler) {
         // make sure error handler injected by this fun is not included in the captured props
         interactions.effectiveProps = omit(interactions.effectiveProps, "onError");
+        // when no extractor is in play both fields describe the same props, so reuse the cleaned object
+        interactions.componentProps = effectivePropsExtractor
+            ? omit(interactions.componentProps, "onError")
+            : interactions.effectiveProps;
     }
 
     return interactions;

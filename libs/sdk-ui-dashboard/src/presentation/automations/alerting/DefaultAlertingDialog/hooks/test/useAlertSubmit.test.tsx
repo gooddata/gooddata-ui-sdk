@@ -31,7 +31,9 @@ vi.mock("../../utils/getters.js", async (importOriginal: () => Promise<Record<st
     const original = await importOriginal();
     return {
         ...original,
-        getDescription: vi.fn().mockReturnValue("Derived alert title"),
+        // The implementation is passed to vi.fn() rather than attached via mockReturnValue so that
+        // the suite-wide mockReset before each test restores it instead of wiping it.
+        getDescription: vi.fn(() => "Derived alert title"),
     };
 });
 

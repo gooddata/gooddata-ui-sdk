@@ -7,6 +7,16 @@ let { extractProps } = vi.hoisted(() => ({
     extractProps: null as any,
 }));
 
+// The suite runs with `isolate: false`, so the module graph is shared between test files. Any test
+// file executed earlier may have already evaluated `Heatmap` against the real `CoreHeatmap`, and
+// Vitest does not re-execute cached importers when a later file mocks one of their dependencies.
+// Drop the module registry before this file's own imports are evaluated so that the scenarios
+// imported below bind to the mocked `CoreHeatmap` and the props extractor actually observes the
+// core chart props.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 import { defSetSorts } from "@gooddata/sdk-model";
 import { type IHeatmapProps } from "@gooddata/sdk-ui-charts";
 
@@ -29,7 +39,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreHeatmap", async () => {
     };
 });
 
-describe.skip("Heatmap", () => {
+describe("Heatmap", () => {
     const Scenarios: Array<ScenarioAndDescription<IHeatmapProps>> = heatmapScenarios.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );

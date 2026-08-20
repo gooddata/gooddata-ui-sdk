@@ -98,6 +98,10 @@ export class TigerWorkspaceSettings
         return this.setSetting("TIMEZONE", { value: timezone });
     }
 
+    public async setEnableTimezoneChange(enabled: boolean): Promise<void> {
+        return this.setSetting("ENABLE_TIMEZONE_CHANGE", { value: enabled });
+    }
+
     public async setDateFormat(dateFormat: string): Promise<void> {
         return this.setSetting("FORMAT_LOCALE", { value: dateFormat });
     }

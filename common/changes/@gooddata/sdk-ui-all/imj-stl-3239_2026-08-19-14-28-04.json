@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-charts: Do not draw data labels that cannot be displayed on column, bar and waterfall charts with 'auto' data label visibility. Highcharts drew a label for every data point, each one forcing a style recalculation, before the auto-hide rules hid all of them again - which blocked the main thread for seconds on charts with many data points. A 1794-point column chart now renders in 0.2s instead of 6.9s.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "ivan.mjartan@gooddata.com"
+}

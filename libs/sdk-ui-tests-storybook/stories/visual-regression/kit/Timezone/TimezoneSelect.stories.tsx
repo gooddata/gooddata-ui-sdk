@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { action } from "storybook/actions";
 
+import { IntlWrapper } from "@gooddata/sdk-ui";
 import { type ITimezoneSelectSpecialItem, TimezoneSelect, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
@@ -140,7 +141,11 @@ export default {
 };
 
 export function FullFeatured() {
-    return <TimezoneSelectClosedStates />;
+    return (
+        <IntlWrapper>
+            <TimezoneSelectClosedStates />
+        </IntlWrapper>
+    );
 }
 FullFeatured.parameters = {
     kind: "full-featured",
@@ -148,7 +153,11 @@ FullFeatured.parameters = {
 } satisfies IStoryParameters;
 
 export function CustomTrigger() {
-    return <TimezoneSelectCustomTrigger />;
+    return (
+        <IntlWrapper>
+            <TimezoneSelectCustomTrigger />
+        </IntlWrapper>
+    );
 }
 CustomTrigger.parameters = {
     kind: "custom-trigger",
@@ -164,5 +173,10 @@ CustomTrigger.parameters = {
     },
 } satisfies IStoryParameters;
 
-export const Themed = () => wrapWithTheme(<TimezoneSelectClosedStates />);
+export const Themed = () =>
+    wrapWithTheme(
+        <IntlWrapper>
+            <TimezoneSelectClosedStates />
+        </IntlWrapper>,
+    );
 Themed.parameters = { kind: "themed", screenshots: screenshotProps } satisfies IStoryParameters;

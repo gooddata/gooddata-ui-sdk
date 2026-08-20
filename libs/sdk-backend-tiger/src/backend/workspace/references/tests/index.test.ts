@@ -1,13 +1,13 @@
 // (C) 2026 GoodData Corporation
 
 import { type AxiosResponse } from "axios";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import * as api from "@gooddata/api-client-tiger";
 import { idRef } from "@gooddata/sdk-model";
 
 import { type TigerAuthenticatedCallGuard } from "../../../../types/index.js";
-import { TigerReferencesService } from "../index.js";
+import { type TigerReferencesService } from "../index.js";
 
 vi.mock("@gooddata/api-client-tiger", async () => {
     const actual = await vi.importActual<typeof api>("@gooddata/api-client-tiger");
@@ -49,8 +49,12 @@ function graphResponse(nodes: TigerNode[], edges: TigerEdge[]): AxiosResponse {
 
 const mockAuthCall = vi.fn((callback) => callback({ axios: {}, basePath: "" }));
 
+// The service is imported dynamically from a fresh module registry so that it picks up the mock
+// above even when another (non-isolated) test file already imported it without the mock.
+let TigerReferencesServiceCtor: typeof TigerReferencesService;
+
 function makeService() {
-    return new TigerReferencesService(mockAuthCall as TigerAuthenticatedCallGuard, "ws-1");
+    return new TigerReferencesServiceCtor(mockAuthCall as TigerAuthenticatedCallGuard, "ws-1");
 }
 
 function expectGraphRequest(
@@ -68,6 +72,11 @@ function expectGraphRequest(
 }
 
 describe("TigerReferencesService", () => {
+    beforeAll(async () => {
+        vi.resetModules();
+        ({ TigerReferencesService: TigerReferencesServiceCtor } = await import("../index.js"));
+    });
+
     beforeEach(() => {
         vi.clearAllMocks();
     });

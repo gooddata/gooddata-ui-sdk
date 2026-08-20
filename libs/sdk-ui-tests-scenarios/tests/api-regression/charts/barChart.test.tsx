@@ -3,9 +3,15 @@
 import { describe, expect, it, vi } from "vitest";
 
 // Prepare hoisted global extractProps variable which gets its value in hoisted mock and then is used in test.
-let { extractProps } = vi.hoisted(() => ({
-    extractProps: null as any,
-}));
+let { extractProps } = vi.hoisted(() => {
+    // The suite shares a module registry with the other test files (vitest `isolate: false`), so
+    // `BarChart` may already be evaluated - and bound to the real `CoreBarChart` - by the time this
+    // file runs. Dropping the registry here forces the imports below to be re-evaluated against
+    // the mock declared underneath, no matter in which order vitest schedules the test files.
+    vi.resetModules();
+
+    return { extractProps: null as any };
+});
 
 import { defSetSorts } from "@gooddata/sdk-model";
 import { type IBarChartProps } from "@gooddata/sdk-ui-charts";
@@ -29,13 +35,17 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreBarChart", async () => {
     };
 });
 
-describe.skip("BarChart", () => {
+describe("BarChart", () => {
     const Scenarios: Array<ScenarioAndDescription<IBarChartProps>> = barChartScenarios.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 
     describe.each(Scenarios)("with %s", (_desc, scenario) => {
-        const promisedInteractions = mountChartAndCapture(scenario);
+        // A single mount serves all three tests below. The extractor is handed over right here so that the
+        // very same mount yields both the core chart props (`effectiveProps`) and the scenario-level props
+        // (`componentProps`) - previously the core props were obtained by mounting the chart a second time
+        // inside the test, doubling the number of renders this file performs.
+        const promisedInteractions = mountChartAndCapture(scenario, extractProps);
 
         it("should create expected execution definition", async () => {
             const interactions = await promisedInteractions;
@@ -44,8 +54,6 @@ describe.skip("BarChart", () => {
         });
 
         it("should create expected props for core chart", async () => {
-            const promisedInteractions = mountChartAndCapture(scenario, extractProps);
-
             const interactions = await promisedInteractions;
 
             expect(interactions.effectiveProps).toBeDefined();
@@ -56,7 +64,12 @@ describe.skip("BarChart", () => {
         it("should lead to same execution when rendered as insight via plug viz", async () => {
             const interactions = await promisedInteractions;
 
-            const insight = createInsightDefinitionForChart("BarChart", _desc, interactions);
+            // the insight is reconstructed from the props the scenario passed to `BarChart`, not from the
+            // core chart props the extractor captured
+            const insight = createInsightDefinitionForChart("BarChart", _desc, {
+                ...interactions,
+                effectiveProps: interactions.componentProps,
+            });
 
             const plugVizInteractions = await mountInsight(scenario, insight);
 

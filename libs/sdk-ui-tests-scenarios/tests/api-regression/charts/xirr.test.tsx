@@ -7,6 +7,15 @@ let { extractProps } = vi.hoisted(() => ({
     extractProps: null as any,
 }));
 
+// The suite runs with `isolate: false`, so the module graph is shared between test files. Any test
+// file executed earlier may have already evaluated `Xirr` against the real `CoreXirr`, and Vitest
+// does not re-execute cached importers when a later file mocks one of their dependencies. Drop the
+// module registry before this file's own imports are evaluated so that the scenarios imported below
+// bind to the mocked `CoreXirr` and the props extractor actually observes the core chart props.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 import { defSetSorts } from "@gooddata/sdk-model";
 import { type IXirrProps } from "@gooddata/sdk-ui-charts";
 
@@ -28,7 +37,8 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreXirr", async () => {
         CoreXirr: wrap(Original.CoreXirr),
     };
 });
-describe.skip("XIRR", () => {
+
+describe("XIRR", () => {
     const Scenarios: Array<ScenarioAndDescription<IXirrProps>> = xirrScenarios.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );

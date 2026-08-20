@@ -1,6 +1,6 @@
 {
     "name": "gdc-app-template-name-module",
-    "version": "11.53.0-alpha.6",
+    "version": "11.53.0-alpha.7",
     "private": true,
     "description": "{applicationTemplateTitle} pluggable application module",
     "license": "UNLICENSED",
@@ -26,6 +26,7 @@
     },
     "scripts": {
         "_phase:build": "npm run build-check",
+        "_phase:test": "npm run test-once",
         "_phase:validate": "npm run validate",
         "build": "npm-run-all -p build-check dist",
         "build-check": "tsgo",
@@ -38,6 +39,7 @@
         "format-write": "oxfmt .",
         "lint": "oxlint . --quiet && eslint .",
         "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
+        "test-once": "vitest run",
         "validate": "npm run lint && npm run format-check"
     },
     "dependencies": {

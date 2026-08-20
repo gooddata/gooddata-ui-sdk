@@ -906,6 +906,12 @@ export interface IFeatureFlags {
     enablePartialDataResults?: boolean;
 
     /**
+     * This setting controls whether end users may change the timezone in Analytical Designer and, by default,
+     * on dashboards.
+     */
+    enableTimezoneChange?: boolean;
+
+    /**
      * This setting controls whether generated SQL joins coalesce null values before comparing join keys.
      */
     enableNullJoins?: boolean;
@@ -1115,6 +1121,12 @@ export interface IFeatureFlags {
      * Enable interaction intelligence in AI Assistant.
      */
     enableGenAiInteractionIntelligence?: boolean;
+
+    /**
+     * Sub-flag under enableGenAiInteractionIntelligence. When true (and the parent
+     * flag is also true), the interaction intelligence panel shows the timeline bar.
+     */
+    enableGenAiInteractionIntelligence_timeline?: boolean;
 
     /**
      * Enable Anthropic provider in LLM configuration.
