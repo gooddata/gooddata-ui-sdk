@@ -5695,8 +5695,10 @@ export interface ITimezoneSelectButtonRenderProps extends IDropdownButtonRenderP
 
 // @internal
 export interface ITimezoneSelectProps {
+    ariaDescribedBy?: string;
     ariaLabel: string;
     header?: ReactNode;
+    id?: string;
     // (undocumented)
     isDisabled?: boolean;
     noMatchLabel: string;
@@ -6779,6 +6781,7 @@ export interface IUiGranteeRowControlsProps {
     // (undocumented)
     dataTestId?: string;
     disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
+    disabledLevelTooltips?: Partial<Record<PermissionMenuLevel, string>>;
     disabledTooltip?: string;
     effectivePermission?: AccessGranularPermission;
     isDisabled?: boolean;
@@ -7528,6 +7531,7 @@ export interface IUiPermissionMenuProps {
     anchor: ReactElement;
     dataTestId?: string;
     disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
+    disabledLevelTooltips?: Partial<Record<PermissionMenuLevel, string>>;
     disabledTooltip?: string;
     isRemoveDisabled?: boolean;
     labels?: ReadonlyArray<IUiLabelsChecklistItem>;

@@ -1,87 +1,79 @@
 // (C) 2026 GoodData Corporation
 
-import { type PropsWithChildren } from "react";
-
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
+import { withNormalization } from "@gooddata/sdk-backend-base";
+import { compositeBackend, recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+
+import { AG_GRID_MOCK_TEST_ID, resetCapturedAgGridProps } from "../../testUtils/agGridReactMock.js";
+
+import { createExecutionDef } from "./features/data/createExecutionDef.js";
 import { PivotTableNextImplementation } from "./PivotTableNext.js";
 import { type ICorePivotTableNextProps } from "./types/internal.js";
 
-const { useInitExecutionResultMock } = vi.hoisted(() => ({
-    useInitExecutionResultMock: vi.fn(),
-}));
+/*
+ * The real grid needs a layouted DOM, so it is replaced by a marker element. The mock lives in a shared
+ * module because the suite runs without isolation - see the notes in `agGridReactMock.tsx`.
+ */
+vi.mock("ag-grid-react", () => import("../../testUtils/agGridReactMock.js"));
 
-// Switch the component between loading/success/failure branches per test.
-vi.mock("./hooks/init/useInitExecutionResult.js", () => ({
-    useInitExecutionResult: useInitExecutionResultMock,
-}));
+const workspace = "reference-workspace";
 
-// Required only for success branch to keep smoke test focused.
-vi.mock("ag-grid-react", () => ({
-    AgGridReact: () => <div data-testid="ag-grid-react" />,
-}));
+const executionDefinition = createExecutionDef({
+    workspace,
+    columns: [],
+    rows: [ReferenceMd.Product.Name],
+    measures: [ReferenceMd.Amount],
+    filters: [],
+    sortBy: [],
+    totals: [],
+    measureGroupDimension: "columns",
+    execConfig: {},
+});
 
-// Prevent heavy column-def derivation from mocked/empty dataView in this smoke test.
-vi.mock("./context/ColumnDefsContext.js", () => ({
-    ColumnDefsProvider: ({ children }: PropsWithChildren) => children,
-    useColumnDefs: vi.fn(() => ({
-        columnDefinitionByColId: {},
-        columnDefs: [],
-        columnDefsFlat: [],
-        isPivoted: false,
-    })),
-}));
+const recordedDataBackend = compositeBackend({
+    workspace,
+    backend: withNormalization(recordedBackend(ReferenceRecordings.Recordings)),
+});
+
+// No recordings at all, so every execution is rejected - this drives the component into its error branch.
+const noDataBackend = recordedBackend({});
+
+function buildProps(backend: IAnalyticalBackend): ICorePivotTableNextProps {
+    return {
+        execution: backend.workspace(workspace).execution().forDefinition(executionDefinition),
+        locale: "en-US",
+        measures: [ReferenceMd.Amount],
+        rows: [ReferenceMd.Product.Name],
+        columns: [],
+    };
+}
 
 describe("PivotTableNext smoke test", () => {
     beforeEach(() => {
-        vi.clearAllMocks();
+        resetCapturedAgGridProps();
     });
 
-    it("should render default loading component in loading state", () => {
-        useInitExecutionResultMock.mockReturnValue({
-            status: "loading",
-            result: undefined,
-            error: undefined,
-        });
-
-        const { container } = render(<PivotTableNextImplementation execution={createExecutionMock()} />);
+    it("should render default loading component while the initial execution is pending", () => {
+        const { container } = render(<PivotTableNextImplementation {...buildProps(recordedDataBackend)} />);
 
         expect(container.querySelector(".s-loading")).toBeInTheDocument();
-        expect(screen.queryByTestId("ag-grid-react")).not.toBeInTheDocument();
+        expect(screen.queryByTestId(AG_GRID_MOCK_TEST_ID)).not.toBeInTheDocument();
     });
 
-    it("should render table container in success state", () => {
-        useInitExecutionResultMock.mockReturnValue({
-            status: "success",
-            result: {
-                initialExecutionResult: {},
-                initialDataView: {},
-            },
-            error: undefined,
-        });
+    it("should render table container once the initial execution succeeds", async () => {
+        render(<PivotTableNextImplementation {...buildProps(recordedDataBackend)} />);
 
-        render(<PivotTableNextImplementation execution={createExecutionMock()} />);
-
-        expect(screen.getByTestId("ag-grid-react")).toBeInTheDocument();
+        expect(await screen.findByTestId(AG_GRID_MOCK_TEST_ID)).toBeInTheDocument();
     });
 
-    it("should render error component in error state", () => {
-        useInitExecutionResultMock.mockReturnValue({
-            status: "error",
-            result: undefined,
-            error: new Error("test error"),
-        });
+    it("should render error component when the initial execution fails", async () => {
+        const { container } = render(<PivotTableNextImplementation {...buildProps(noDataBackend)} />);
 
-        const { container } = render(<PivotTableNextImplementation execution={createExecutionMock()} />);
-
-        expect(container.querySelector(".s-error")).toBeInTheDocument();
-        expect(screen.queryByTestId("ag-grid-react")).not.toBeInTheDocument();
+        await waitFor(() => expect(container.querySelector(".s-error")).toBeInTheDocument());
+        expect(screen.queryByTestId(AG_GRID_MOCK_TEST_ID)).not.toBeInTheDocument();
     });
 });
-
-function createExecutionMock(): ICorePivotTableNextProps["execution"] {
-    return {
-        fingerprint: () => "test-execution-fingerprint",
-    } as ICorePivotTableNextProps["execution"];
-}

@@ -94,6 +94,7 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -191,6 +192,7 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -288,6 +290,7 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -385,6 +388,7 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -482,6 +486,7 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -579,6 +584,7 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -676,6 +682,7 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -773,6 +780,7 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -870,6 +878,7 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -967,6 +976,7 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1067,6 +1077,7 @@ exports[`PieChart > with 200x200 - without data labels > should create expected 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1164,6 +1175,7 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1261,6 +1273,7 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1358,6 +1371,7 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1455,6 +1469,7 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1552,6 +1567,7 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1652,6 +1668,7 @@ exports[`PieChart > with 300x250 - auto data labels > should create expected pro
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1749,6 +1766,7 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1846,6 +1864,7 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -1943,6 +1962,7 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2040,6 +2060,7 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2137,6 +2158,7 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2234,6 +2256,7 @@ exports[`PieChart > with 610x154 - Force position RIGHT - auto legend > should c
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2331,6 +2354,7 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend at bottom > sho
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2428,6 +2452,7 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend on left > shoul
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2525,6 +2550,7 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend on right > shou
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2622,6 +2648,7 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend on top > should
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2719,6 +2746,7 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2816,6 +2844,7 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -2913,6 +2942,7 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3010,6 +3040,7 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3107,6 +3138,7 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3204,6 +3236,7 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3301,6 +3334,7 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3398,6 +3432,7 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3495,6 +3530,7 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3592,6 +3628,7 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3689,6 +3726,7 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3786,6 +3824,7 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3883,6 +3922,7 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -3980,6 +4020,7 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4077,6 +4118,7 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4232,6 +4274,7 @@ exports[`PieChart > with arithmetic measures > should create expected props for 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4391,6 +4434,7 @@ exports[`PieChart > with assign color to attributes > should create expected pro
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4550,6 +4594,7 @@ exports[`PieChart > with assign color to measures > should create expected props
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4650,6 +4695,7 @@ exports[`PieChart > with coloring - custom colors > should create expected props
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4785,6 +4831,7 @@ exports[`PieChart > with coloring - custom palette > should create expected prop
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -4927,6 +4974,7 @@ exports[`PieChart > with coloring - custom palette preferred over colors > shoul
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5019,6 +5067,7 @@ exports[`PieChart > with coloring - default > should create expected props for c
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5115,6 +5164,7 @@ exports[`PieChart > with data labels - auto visibility > should create expected 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5207,6 +5257,7 @@ exports[`PieChart > with data labels - default > should create expected props fo
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5303,6 +5354,7 @@ exports[`PieChart > with data labels - forced hidden > should create expected pr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5399,6 +5451,7 @@ exports[`PieChart > with data labels - forced visible > should create expected p
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5499,6 +5552,7 @@ exports[`PieChart > with data labels - forced visible and german separators > sh
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5595,6 +5649,7 @@ exports[`PieChart > with legend position - single measure and viewBy - auto lege
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5691,6 +5746,7 @@ exports[`PieChart > with legend position - single measure and viewBy - disabled 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5787,6 +5843,7 @@ exports[`PieChart > with legend position - single measure and viewBy - legend at
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5883,6 +5940,7 @@ exports[`PieChart > with legend position - single measure and viewBy - legend on
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -5979,6 +6037,7 @@ exports[`PieChart > with legend position - single measure and viewBy - legend on
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6075,6 +6134,7 @@ exports[`PieChart > with legend position - single measure and viewBy - legend on
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6175,6 +6235,7 @@ exports[`PieChart > with legend position - two measures - auto legend > should c
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6275,6 +6336,7 @@ exports[`PieChart > with legend position - two measures - disabled > should crea
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6375,6 +6437,7 @@ exports[`PieChart > with legend position - two measures - legend at bottom > sho
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6475,6 +6538,7 @@ exports[`PieChart > with legend position - two measures - legend on left > shoul
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6575,6 +6639,7 @@ exports[`PieChart > with legend position - two measures - legend on right > shou
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6675,6 +6740,7 @@ exports[`PieChart > with legend position - two measures - legend on top > should
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6744,6 +6810,7 @@ exports[`PieChart > with single measure > should create expected props for core 
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6835,6 +6902,7 @@ exports[`PieChart > with single measure with viewBy > should create expected pro
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -6930,6 +6998,7 @@ exports[`PieChart > with two measures > should create expected props for core ch
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7026,6 +7095,7 @@ exports[`PieChart > with vertical alignment - bottom > should create expected pr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7118,6 +7188,7 @@ exports[`PieChart > with vertical alignment - default > should create expected p
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7214,6 +7285,7 @@ exports[`PieChart > with vertical alignment - middle > should create expected pr
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;
 
@@ -7310,5 +7382,6 @@ exports[`PieChart > with vertical alignment - top > should create expected props
   "theme": undefined,
   "themeIsLoading": undefined,
   "themeStatus": "pending",
+  "tooltipExecution": undefined,
 }
 `;

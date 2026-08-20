@@ -233,9 +233,8 @@ export function getUserTimezone(): ITimezoneItem {
 }
 
 /**
- * Returns the display label used by the timezone picker: the friendly name with the GMT offset
- * as a suffix in brackets, e.g. "Prague (GMT+01:00)". The name falls back to the raw IANA ID
- * for zones outside the curated list, and the offset suffix is dropped when not known.
+ * Returns the display label used by the timezone picker: the friendly name, e.g. "Prague".
+ * The name falls back to the raw IANA ID for zones outside the curated list.
  *
  * The friendly name (not the IANA ID) is shown so the picker reads the same as the Home UI
  * timezone settings — the id-to-name mapping is not visible to users anywhere.
@@ -249,7 +248,7 @@ export function getTimezoneDisplayLabel(id: string): string {
 
 /**
  * Tests whether the timezone matches the search string. Matches on the picker display label
- * ("name (offset)"), the friendly title (offset + name) and the IANA ID, with underscores
+ * (the friendly name), the friendly title (offset + name) and the IANA ID, with underscores
  * treated as spaces so that e.g. "Los Angeles" finds "America/Los_Angeles".
  *
  * @internal
@@ -318,5 +317,8 @@ export function getCurrentTimeByTimezoneId(id: string) {
     const hours = date.getHours();
     const minutes = date.getMinutes();
 
-    return hours && minutes ? `${("0" + hours).slice(-2)}:${("0" + minutes).slice(-2)}` : "";
+    // guard against an unparsable date (NaN); zero is a valid hour/minute value
+    return Number.isNaN(hours) || Number.isNaN(minutes)
+        ? ""
+        : `${("0" + hours).slice(-2)}:${("0" + minutes).slice(-2)}`;
 }

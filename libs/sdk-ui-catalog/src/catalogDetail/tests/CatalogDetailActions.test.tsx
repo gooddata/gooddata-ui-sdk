@@ -1,14 +1,15 @@
 // (C) 2026 GoodData Corporation
 
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { PropsWithChildren } from "react";
-import { describe, expect, it, vi } from "vitest";
+import { type Mock, describe, expect, it, vi } from "vitest";
 
 import {
     type IAnalyticalBackend,
     type IUserWorkspaceSettings,
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
+import { idRef } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
@@ -19,23 +20,16 @@ import type {
 } from "../../catalogItem/types.js";
 import { InsightCodecProvider } from "../../insight/insightCodecContext.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
-import type { IParameterMutationPort } from "../../parameter/parameterMutationPort.js";
-import { createTestParameterMutationPort } from "../../parameter/tests/parameterMutationPort.test.utils.js";
 import {
     TestPermissionsProvider,
     defaultPermissionsResult,
 } from "../../permission/TestPermissionsProvider.js";
 import { CatalogDetailActions } from "../CatalogDetailActions.js";
 
-// The component resolves its descriptor from the registry, so the port is injected by faking the
-// adapter; `createWrapper` sets the port per test.
-const { portHolder } = vi.hoisted(() => ({
-    portHolder: { current: undefined as IParameterMutationPort | undefined },
-}));
-vi.mock("../../parameter/parameterMutationPort.js", async (importOriginal) => ({
-    ...(await importOriginal<Record<string, unknown>>()),
-    createParameterMutationAdapter: () => portHolder.current,
-}));
+vi.mock(
+    "../../asCode/AsCodeEditorBody.js",
+    () => import("../../asCode/tests/asCodeEditorBody.test.utils.js"),
+);
 
 const parametersEnabledResult = {
     ...defaultPermissionsResult,
@@ -44,28 +38,48 @@ const parametersEnabledResult = {
 
 const stubBackend = {} as unknown as IAnalyticalBackend;
 
-vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
-    const original = await importOriginal<Record<string, unknown>>();
+/** A parameter as the backend echoes it back from create/update. */
+function savedParameter(id: string, title: string) {
     return {
-        ...original,
-        UiConfigEditor: ({
-            value,
-            onChange,
-            disabled,
-        }: {
-            value: string;
-            onChange: (value: string) => void;
-            disabled?: boolean;
-        }) => (
-            <textarea
-                data-testid="yaml-editor"
-                value={value}
-                disabled={disabled}
-                onChange={(e) => onChange(e.target.value)}
-            />
-        ),
+        type: "parameter",
+        ref: idRef(id, "parameter"),
+        id,
+        title,
+        description: "",
+        tags: [],
+        definition: { type: "NUMBER", defaultValue: 0 },
     };
-});
+}
+
+interface IParameterServiceStub {
+    backend: IAnalyticalBackend;
+    createParameter: Mock;
+    updateParameter: Mock;
+    deleteParameter: Mock;
+}
+
+/**
+ * The component resolves its descriptor from the registry, and the descriptor builds the *real*
+ * parameter mutation adapter over the backend from context — so the backend is the injection seam
+ * and the adapter stays under test. Faking `createParameterMutationAdapter` with `vi.mock` instead
+ * would not survive a non-isolated run: other test files load that module unmocked, and a module
+ * mock cannot be applied to a module graph they already evaluated.
+ */
+function createParameterService(overrides: Partial<Omit<IParameterServiceStub, "backend">> = {}) {
+    const service: Omit<IParameterServiceStub, "backend"> = {
+        createParameter: vi.fn().mockResolvedValue(savedParameter("param.id", "My Param")),
+        updateParameter: vi.fn().mockResolvedValue(savedParameter("param.id", "My Param")),
+        deleteParameter: vi.fn().mockResolvedValue(undefined),
+        ...overrides,
+    };
+
+    return {
+        ...service,
+        backend: {
+            workspace: () => ({ parameters: () => service }),
+        } as unknown as IAnalyticalBackend,
+    };
+}
 
 const dashboardItem: ICatalogItemDashboard = {
     identifier: "dash.id",
@@ -96,12 +110,28 @@ const parameterItem: ICatalogItemParameter = {
     definition: { type: "NUMBER", defaultValue: 0 },
 };
 
-function createWrapper(port: IParameterMutationPort = createTestParameterMutationPort()) {
-    portHolder.current = port;
+/**
+ * Settles the dialog's lazily-loaded editor half and returns its textarea.
+ *
+ * The dialog `lazy()`-loads the editor body, so the first open commits a Suspense fallback. React
+ * then throttles the retry commit by ~300ms so that fallback cannot flash — and RTL's `findBy*`
+ * simply waits that out, because it deliberately drops out of `act()` while polling. Awaiting the
+ * very module the `lazy()` awaits, from inside `act()`, lets React flush the retry right away
+ * instead: it costs one module resolution (already cached after the first call) rather than the
+ * throttle window.
+ */
+async function findYamlEditor() {
+    await act(async () => {
+        await import("../../asCode/AsCodeEditorBody.js");
+    });
+    return screen.getByTestId("yaml-editor") as HTMLTextAreaElement;
+}
+
+function createWrapper(backend: IAnalyticalBackend = createParameterService().backend) {
     function Wrapper({ children }: PropsWithChildren) {
         return (
             <TestIntlProvider>
-                <BackendProvider backend={stubBackend}>
+                <BackendProvider backend={backend}>
                     <WorkspaceProvider workspace="test-workspace">
                         <ToastsCenterContextProvider>
                             <TestPermissionsProvider result={parametersEnabledResult}>
@@ -183,13 +213,9 @@ function createNoCodecHostWrapper() {
 
 describe("CatalogDetailActions", () => {
     describe("parameter edit flow", () => {
-        it("opens the edit dialog on Edit click, calls port.update on save, and fires onCatalogItemUpdate", async () => {
-            const updated: ICatalogItemParameter = {
-                ...parameterItem,
-                title: "Renamed Param",
-            };
-            const port = createTestParameterMutationPort({
-                update: vi.fn().mockResolvedValue(updated),
+        it("opens the edit dialog on Edit click, persists the update, and fires onCatalogItemUpdate", async () => {
+            const service = createParameterService({
+                updateParameter: vi.fn().mockResolvedValue(savedParameter("param.id", "Renamed Param")),
             });
             const onCatalogItemUpdate = vi.fn();
 
@@ -202,12 +228,12 @@ describe("CatalogDetailActions", () => {
                     onCatalogItemUpdate={onCatalogItemUpdate}
                     onCatalogItemDelete={vi.fn()}
                 />,
-                { wrapper: createWrapper(port) },
+                { wrapper: createWrapper(service.backend) },
             );
 
             fireEvent.click(screen.getByRole("button", { name: /^edit$/i }));
 
-            const editor = await screen.findByTestId("yaml-editor");
+            const editor = await findYamlEditor();
             fireEvent.change(editor, {
                 target: {
                     value: `id: param.id
@@ -222,23 +248,26 @@ definition:
             fireEvent.click(screen.getByText("Save", { selector: "button span, button" }));
 
             await waitFor(() => {
-                // Base is the editSeed definition, which carries `id` (not the item's `identifier`).
-                expect(port.update).toHaveBeenCalledWith(
-                    expect.objectContaining({ id: "param.id" }),
-                    expect.objectContaining({ title: "Renamed Param" }),
+                // The identity is pinned to the item the editor started from, not to the edited YAML.
+                expect(service.updateParameter).toHaveBeenCalledWith(
+                    expect.objectContaining({
+                        identifier: "param.id",
+                        title: "Renamed Param",
+                        definition: { type: "NUMBER", defaultValue: 10 },
+                    }),
                 );
             });
             await waitFor(() => {
-                expect(onCatalogItemUpdate).toHaveBeenCalledWith(updated);
+                expect(onCatalogItemUpdate).toHaveBeenCalledWith(
+                    expect.objectContaining({ identifier: "param.id", title: "Renamed Param" }),
+                );
             });
         });
     });
 
     describe("parameter delete flow", () => {
-        it("opens delete confirmation; confirming calls port.delete and fires onCatalogItemDelete with the item ref", async () => {
-            const port = createTestParameterMutationPort({
-                delete: vi.fn().mockResolvedValue(undefined),
-            });
+        it("opens delete confirmation; confirming deletes the parameter and fires onCatalogItemDelete with the item ref", async () => {
+            const service = createParameterService();
             const onCatalogItemDelete = vi.fn();
 
             render(
@@ -250,7 +279,7 @@ definition:
                     onCatalogItemUpdate={vi.fn()}
                     onCatalogItemDelete={onCatalogItemDelete}
                 />,
-                { wrapper: createWrapper(port) },
+                { wrapper: createWrapper(service.backend) },
             );
 
             fireEvent.click(screen.getByRole("button", { name: /actions for/i }));
@@ -262,7 +291,7 @@ definition:
             fireEvent.click(confirmButton);
 
             await waitFor(() => {
-                expect(port.delete).toHaveBeenCalledWith(
+                expect(service.deleteParameter).toHaveBeenCalledWith(
                     expect.objectContaining({
                         identifier: "param.id",
                         type: "parameter",
@@ -281,14 +310,9 @@ definition:
     });
 
     describe("parameter duplicate flow", () => {
-        it("opens a create dialog seeded from the source item; Create triggers port.create and fires onCatalogItemCreate", async () => {
-            const created: ICatalogItemParameter = {
-                ...parameterItem,
-                identifier: "my_param__2_",
-                title: "My Param (2)",
-            };
-            const port = createTestParameterMutationPort({
-                create: vi.fn().mockResolvedValue(created),
+        it("opens a create dialog seeded from the source item; Create persists the copy and fires onCatalogItemCreate", async () => {
+            const service = createParameterService({
+                createParameter: vi.fn().mockResolvedValue(savedParameter("my_param__2_", "My Param (2)")),
             });
             const onCatalogItemCreate = vi.fn();
 
@@ -301,20 +325,20 @@ definition:
                     onCatalogItemUpdate={vi.fn()}
                     onCatalogItemDelete={vi.fn()}
                 />,
-                { wrapper: createWrapper(port) },
+                { wrapper: createWrapper(service.backend) },
             );
 
             fireEvent.click(screen.getByRole("button", { name: /actions for/i }));
             fireEvent.click(screen.getByText("Save as new"));
 
-            const editor = (await screen.findByTestId("yaml-editor")) as HTMLTextAreaElement;
+            const editor = await findYamlEditor();
             expect(editor.value).toContain("title: My Param (2)");
             expect(editor.value).toContain("id: my_param__2_");
 
             fireEvent.click(screen.getByText("Create", { selector: "button span, button" }));
 
             await waitFor(() => {
-                expect(port.create).toHaveBeenCalledWith(
+                expect(service.createParameter).toHaveBeenCalledWith(
                     expect.objectContaining({
                         id: "my_param__2_",
                         title: "My Param (2)",
@@ -322,23 +346,20 @@ definition:
                 );
             });
             await waitFor(() => {
-                expect(onCatalogItemCreate).toHaveBeenCalledWith(created);
+                expect(onCatalogItemCreate).toHaveBeenCalledWith(
+                    expect.objectContaining({ identifier: "my_param__2_", title: "My Param (2)" }),
+                );
             });
         });
     });
 
     describe("parameter duplicate collision handling", () => {
         it("retries create without id when the auto-generated copy id collides", async () => {
-            const created: ICatalogItemParameter = {
-                ...parameterItem,
-                identifier: "my_param__2_",
-                title: "My Param (2)",
-            };
-            const createMock = vi
+            const createParameter = vi
                 .fn()
                 .mockRejectedValueOnce(new UnexpectedResponseError("Duplicate id", 409, {}))
-                .mockResolvedValueOnce(created);
-            const port = createTestParameterMutationPort({ create: createMock });
+                .mockResolvedValueOnce(savedParameter("my_param__2_", "My Param (2)"));
+            const service = createParameterService({ createParameter });
 
             render(
                 <CatalogDetailActions
@@ -349,28 +370,31 @@ definition:
                     onCatalogItemUpdate={vi.fn()}
                     onCatalogItemDelete={vi.fn()}
                 />,
-                { wrapper: createWrapper(port) },
+                { wrapper: createWrapper(service.backend) },
             );
 
             fireEvent.click(screen.getByRole("button", { name: /actions for/i }));
             fireEvent.click(screen.getByText("Save as new"));
 
-            await screen.findByTestId("yaml-editor");
+            await findYamlEditor();
             fireEvent.click(screen.getByText("Create", { selector: "button span, button" }));
 
             await waitFor(() => {
-                expect(createMock).toHaveBeenCalledTimes(2);
+                expect(createParameter).toHaveBeenCalledTimes(2);
             });
-            expect(createMock).toHaveBeenNthCalledWith(1, expect.objectContaining({ id: "my_param__2_" }));
-            const secondCallArg = createMock.mock.calls[1][0] as { id?: unknown };
+            expect(createParameter).toHaveBeenNthCalledWith(
+                1,
+                expect.objectContaining({ id: "my_param__2_" }),
+            );
+            const secondCallArg = createParameter.mock.calls[1][0] as { id?: unknown };
             expect(secondCallArg.id).toBeUndefined();
         });
 
         it("does not retry when a user-edited id collides", async () => {
-            const createMock = vi
+            const createParameter = vi
                 .fn()
                 .mockRejectedValue(new UnexpectedResponseError("Duplicate id", 409, {}));
-            const port = createTestParameterMutationPort({ create: createMock });
+            const service = createParameterService({ createParameter });
 
             render(
                 <CatalogDetailActions
@@ -381,20 +405,20 @@ definition:
                     onCatalogItemUpdate={vi.fn()}
                     onCatalogItemDelete={vi.fn()}
                 />,
-                { wrapper: createWrapper(port) },
+                { wrapper: createWrapper(service.backend) },
             );
 
             fireEvent.click(screen.getByRole("button", { name: /actions for/i }));
             fireEvent.click(screen.getByText("Save as new"));
 
-            const editor = (await screen.findByTestId("yaml-editor")) as HTMLTextAreaElement;
+            const editor = await findYamlEditor();
             fireEvent.change(editor, {
                 target: { value: editor.value.replace("id: my_param__2_", "id: custom_id") },
             });
             fireEvent.click(screen.getByText("Create", { selector: "button span, button" }));
 
             await waitFor(() => {
-                expect(createMock).toHaveBeenCalledTimes(1);
+                expect(createParameter).toHaveBeenCalledTimes(1);
             });
             expect(screen.getByText("Create parameter")).toBeInTheDocument();
         });
@@ -416,7 +440,7 @@ definition:
 
             fireEvent.click(screen.getByRole("button", { name: /^edit$/i }));
 
-            const editor = (await screen.findByTestId("yaml-editor")) as HTMLTextAreaElement;
+            const editor = await findYamlEditor();
             fireEvent.change(editor, {
                 target: {
                     value: `id: param.id

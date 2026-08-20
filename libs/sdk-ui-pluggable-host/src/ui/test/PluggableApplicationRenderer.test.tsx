@@ -18,8 +18,6 @@ import {
 
 import { type AppSecurityFailure } from "../../loader/appSecurityValidation.js";
 import { type IAppLifecycleCallbacks } from "../../types/lifecycle.js";
-import { HostIntlProvider } from "../HostIntlProvider.js";
-import { PluggableApplicationRenderer } from "../PluggableApplicationRenderer.js";
 
 const mocks = vi.hoisted(() => ({
     loadPluggableApplication: vi.fn<(app: PluggableApplicationRegistryItem) => Promise<IPluggableApp>>(),
@@ -77,6 +75,19 @@ const app: ILocalPluggableApplicationRegistryItemV1 = {
 const WS1_PATHNAME = "/workspace/ws1/analyze";
 const WS2_PATHNAME = "/workspace/ws2/analyze";
 
+// The components are also imported by HostUiContainer, so with isolation off a test file that rendered
+// the host container earlier left them cached — wired to the *real* loader and security validation
+// rather than the mocks above. Dropping the cached graph re-imports them through the mocks.
+//
+// This runs while the file is still being imported, not from a `beforeAll`: loading this graph for the
+// first time in a worker costs seconds (the intl/ui-kit/gen-ai dependencies behind the renderer), and
+// on a loaded CI machine that overran the 10s `hookTimeout`. Module loading has no such budget. The
+// reset itself is cheap — only this package's own modules are re-evaluated, its dependencies stay
+// cached by Node — so there is nothing left to move off the import path.
+vi.resetModules();
+const { HostIntlProvider } = await import("../HostIntlProvider.js");
+const { PluggableApplicationRenderer } = await import("../PluggableApplicationRenderer.js");
+
 function renderer(options: {
     pathname: string;
     ctx: IPlatformContext;
@@ -107,6 +118,7 @@ describe("PluggableApplicationRenderer", () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
+
         navigationRequestRef = { current: undefined };
         mocks.validateAppSecurity.mockReturnValue(undefined);
         mocks.getSecuredRemoteAppValidUntil.mockReturnValue(undefined);

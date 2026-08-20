@@ -1085,6 +1085,7 @@ class DummyOrganization implements IOrganization {
             deleteActiveLlmEndpoint: () => Promise.resolve(),
             deleteActiveLlmProvider: () => Promise.resolve(),
             setTimezone: () => Promise.resolve(),
+            setEnableTimezoneChange: () => Promise.resolve(),
             setDateFormat: () => Promise.resolve(),
             setWeekStart: () => Promise.resolve(),
             setFiscalCalendar: () => Promise.resolve(),
@@ -1347,6 +1348,10 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 
     setTimezone(_timezone: string): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setEnableTimezoneChange(_enabled: boolean): Promise<void> {
         return Promise.resolve();
     }
 
@@ -2379,7 +2384,7 @@ class DummyWorkspaceDashboardsService implements IWorkspaceDashboardsService {
         throw new NotSupported("not supported");
     }
 
-    getFilterContextByExportId(
+    getExportDataByExportId(
         _exportId: string,
         _type: "visual" | "slides" | undefined,
         _tabId?: string,
@@ -2388,6 +2393,7 @@ class DummyWorkspaceDashboardsService implements IWorkspaceDashboardsService {
         title?: string;
         hideWidgetTitles?: boolean;
         exportMetadata?: Record<string, string>;
+        timezoneId?: string;
     } | null> {
         throw new NotSupported("not supported");
     }

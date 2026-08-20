@@ -497,6 +497,7 @@ export interface AutomationAlert {
      * Date granularity for the interval of ONCE_PER_INTERVAL trigger. Supported granularities: DAY, WEEK, MONTH, QUARTER, YEAR.
      */
     'interval'?: AutomationAlertIntervalEnum;
+    'settings'?: ExecutionSettings;
     /**
      * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
      */
@@ -5280,6 +5281,7 @@ export interface JsonApiAutomationInAttributesAlert {
      * Date granularity for the interval of ONCE_PER_INTERVAL trigger. Supported granularities: DAY, WEEK, MONTH, QUARTER, YEAR.
      */
     'interval'?: JsonApiAutomationInAttributesAlertIntervalEnum;
+    'settings'?: ExecutionSettings;
     /**
      * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
      */
@@ -5461,6 +5463,7 @@ export interface JsonApiAutomationOutAttributesAlert {
      * Date granularity for the interval of ONCE_PER_INTERVAL trigger. Supported granularities: DAY, WEEK, MONTH, QUARTER, YEAR.
      */
     'interval'?: JsonApiAutomationOutAttributesAlertIntervalEnum;
+    'settings'?: ExecutionSettings;
     /**
      * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
      */
@@ -5702,6 +5705,7 @@ export interface JsonApiAutomationPatchAttributesAlert {
      * Date granularity for the interval of ONCE_PER_INTERVAL trigger. Supported granularities: DAY, WEEK, MONTH, QUARTER, YEAR.
      */
     'interval'?: JsonApiAutomationPatchAttributesAlertIntervalEnum;
+    'settings'?: ExecutionSettings;
     /**
      * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
      */
@@ -13480,6 +13484,7 @@ export interface JsonApiWorkspaceAutomationOutAttributesAlert {
      * Date granularity for the interval of ONCE_PER_INTERVAL trigger. Supported granularities: DAY, WEEK, MONTH, QUARTER, YEAR.
      */
     'interval'?: JsonApiWorkspaceAutomationOutAttributesAlertIntervalEnum;
+    'settings'?: ExecutionSettings;
     /**
      * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
      */

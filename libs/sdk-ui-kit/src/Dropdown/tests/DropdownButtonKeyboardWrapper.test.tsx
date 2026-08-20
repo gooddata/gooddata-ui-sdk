@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { createRef } from "react";
 
@@ -50,11 +50,10 @@ describe("DropdownButtonKeyboardWrapper", () => {
         const onToggle = vi.fn();
         renderWrapper({ onToggle });
 
-        // Mock document.activeElement to be an input
-        Object.defineProperty(document, "activeElement", {
-            get: () => document.createElement("input"),
-            configurable: true,
-        });
+        // Pretend an input holds the focus. Spied rather than redefined outright: `activeElement` is
+        // the document's, not this test's, and a permanent override makes every focus assertion in
+        // the rest of the run read a detached input instead of the real focus.
+        vi.spyOn(document, "activeElement", "get").mockReturnValue(document.createElement("input"));
 
         const button = screen.getByText("Toggle Dropdown");
         fireEvent.keyDown(button, { code: "Space" });

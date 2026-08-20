@@ -208,6 +208,7 @@ export const AnalyticalBackendErrorTypes: {
     NOT_AUTHENTICATED: string;
     LIMIT_REACHED: string;
     CONTRACT_EXPIRED: string;
+    PERMISSION_ESCALATION_REFUSED: string;
     TIMEOUT_ERROR: string;
     ABORT: string;
 };
@@ -1100,7 +1101,7 @@ export interface ICreateKnowledgeDocumentRequest {
 }
 
 // @alpha
-export interface IDashboardExportImageOptions {
+export interface IDashboardExportImageOptions extends IDashboardExportTimezoneOptions {
     filename?: string;
     parametersByTab?: Record<string, IDashboardExportParameter[]>;
     timeout?: number;
@@ -1108,7 +1109,7 @@ export interface IDashboardExportImageOptions {
 }
 
 // @alpha
-export interface IDashboardExportPdfOptions {
+export interface IDashboardExportPdfOptions extends IDashboardExportTimezoneOptions {
     exportMetadata?: Record<string, string>;
     filename?: string;
     parametersByTab?: Record<string, IDashboardExportParameter[]>;
@@ -1116,7 +1117,7 @@ export interface IDashboardExportPdfOptions {
 }
 
 // @beta
-export interface IDashboardExportPresentationOptions {
+export interface IDashboardExportPresentationOptions extends IDashboardExportTimezoneOptions {
     // (undocumented)
     exportMetadata?: Record<string, string>;
     // (undocumented)
@@ -1136,13 +1137,13 @@ export interface IDashboardExportPresentationOptions {
 }
 
 // @alpha
-export interface IDashboardExportRawOptions {
+export interface IDashboardExportRawOptions extends IDashboardExportTimezoneOptions {
     delimiter?: string;
     timeout?: number;
 }
 
 // @alpha
-export interface IDashboardExportTabularOptions {
+export interface IDashboardExportTabularOptions extends IDashboardExportTimezoneOptions {
     dashboardFiltersOverride?: FilterContextItem[];
     dashboardTabsFiltersOverrides?: FiltersByTab;
     dashboardTabsParametersOverrides?: Record<string, IDashboardExportParameter[]>;
@@ -1157,6 +1158,11 @@ export interface IDashboardExportTabularOptions {
     timeout?: number;
     title?: string;
     widgetIds?: string[];
+}
+
+// @alpha
+export interface IDashboardExportTimezoneOptions {
+    timezoneId?: string;
 }
 
 // @alpha
@@ -1540,6 +1546,8 @@ export interface IExportConfig {
     pdfConfiguration?: IExportPdfConfig;
     showFilters?: boolean;
     timeout?: number;
+    // @alpha
+    timezoneId?: string;
     title?: string;
     visualizationObjectCustomFilters?: Array<IFilter>;
     visualizationObjectId?: string;
@@ -2307,6 +2315,8 @@ export interface IOrganizationSettingsService {
     // @alpha
     setEnableQueryTags(enabled: boolean): Promise<void>;
     // @alpha
+    setEnableTimezoneChange(enabled: boolean): Promise<void>;
+    // @alpha
     setExportCsvCustomDelimiter(delimiter: string): Promise<void>;
     setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void>;
     setFormatLocale(locale: string): Promise<void>;
@@ -2674,6 +2684,9 @@ export function isNotImplemented(obj: unknown): obj is NotImplemented;
 // @public
 export function isNotSupported(obj: unknown): obj is NotSupported;
 
+// @alpha
+export function isPermissionEscalationRefused(obj: unknown): obj is PermissionEscalationRefused;
+
 // @public
 export function isProtectedDataError(obj: unknown): obj is ProtectedDataError;
 
@@ -2892,11 +2905,12 @@ export interface IWorkspaceDashboardsService {
     getDashboardSummaryWorkflowStatus?(runId: string): Promise<IDashboardSummaryWorkflowStatusResult>;
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
-    getFilterContextByExportId(exportId: string, type: "visual" | "slides" | undefined, tabId?: string): Promise<{
+    getExportDataByExportId(exportId: string, type: "visual" | "slides" | undefined, tabId?: string): Promise<{
         filterContext?: IFilterContext;
         title?: string;
         hideWidgetTitles?: boolean;
         exportMetadata?: Record<string, string>;
+        timezoneId?: string;
     } | null>;
     getFilterViewsForCurrentUser(dashboardRef: ObjRef): Promise<IDashboardFilterView[]>;
     getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[], attributeFilterConfigs: IDashboardAttributeFilterConfig[]): Promise<IFilter[]>;
@@ -3111,6 +3125,8 @@ export interface IWorkspaceSettingsService {
     // @alpha
     setEnableQueryTags(enabled: boolean): Promise<void>;
     // @alpha
+    setEnableTimezoneChange(enabled: boolean): Promise<void>;
+    // @alpha
     setExportCsvCustomDelimiter(delimiter: string): Promise<void>;
     setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void>;
     setFormatLocale(locale: string): Promise<void>;
@@ -3254,6 +3270,11 @@ export class NotImplemented extends AnalyticalBackendError {
 // @public
 export class NotSupported extends AnalyticalBackendError {
     constructor(message: string);
+}
+
+// @alpha
+export class PermissionEscalationRefused extends AnalyticalBackendError {
+    constructor(message: string, cause?: Error);
 }
 
 // @public

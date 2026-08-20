@@ -27,6 +27,15 @@ import { type AlertAttribute, type AlertMetric, AlertMetricComparatorType } from
 // vi.fn() inline and retrieve spies via vi.mocked() after the import statements.
 // ---------------------------------------------------------------------------
 
+// `isolate: false` shares one module graph per worker, so the modules mocked below may already have
+// been evaluated — against their real dependencies — by a test file that ran earlier in the same
+// worker, which turns those `vi.mock()` calls into no-ops. Dropping the module registry from
+// `vi.hoisted()` (it runs before this file's own imports, unlike any `beforeEach`) makes those
+// imports resolve through the mocks.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 vi.mock(
     "../../DefaultAlertingDialog/utils/transformation.js",
     async (importOriginal: () => Promise<Record<string, unknown>>) => {
@@ -1032,6 +1041,7 @@ describe("useAlertFormState — new-alert init (createDefaultAlert wiring)", () 
             "dashboard-1",
             "Widget Title",
             "tab-1",
+            undefined,
         );
     });
 
@@ -1052,7 +1062,26 @@ describe("useAlertFormState — new-alert init (createDefaultAlert wiring)", () 
             undefined,
             undefined,
             undefined,
+            undefined,
         );
+    });
+
+    it("threads the dashboard-scoped effective timezone into createDefaultAlert", () => {
+        mockUseAutomationsContext.mockReturnValue({
+            ...DEFAULT_AUTOMATIONS_CONTEXT_VALUE,
+            exportTimezones: {
+                isTimezoneFeatureEnabled: true,
+                allowUserOverrideInViewMode: true,
+                configuredTimezoneId: undefined,
+                workspaceTimezone: "America/Argentina/Buenos_Aires",
+                effectiveTimezone: "Europe/Prague",
+                scheduledExportTimezone: "Europe/Prague",
+            },
+        });
+        renderFormStateHook();
+
+        // last arg is the execution timezone baked into the new alert's execution config
+        expect(createDefaultAlertSpy.mock.calls[0]?.at(-1)).toBe("Europe/Prague");
     });
 });
 

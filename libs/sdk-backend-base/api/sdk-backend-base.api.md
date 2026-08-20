@@ -714,11 +714,12 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
     // (undocumented)
-    getFilterContextByExportId: (exportId: string, type: "slides" | "visual" | undefined, tabId?: string | undefined) => Promise<{
+    getExportDataByExportId: (exportId: string, type: "slides" | "visual" | undefined, tabId?: string | undefined) => Promise<{
         filterContext?: IFilterContext | undefined;
         title?: string | undefined;
         hideWidgetTitles?: boolean | undefined;
         exportMetadata?: Record<string, string> | undefined;
+        timezoneId?: string | undefined;
     } | null>;
     // (undocumented)
     getFilterViewsForCurrentUser(dashboardRef: ObjRef): Promise<IDashboardFilterView[]>;
@@ -868,6 +869,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     setEnablePartialDataResults(enabled: boolean): Promise<void>;
     // (undocumented)
     setEnableQueryTags(enabled: boolean): Promise<void>;
+    // (undocumented)
+    setEnableTimezoneChange(enabled: boolean): Promise<void>;
     // (undocumented)
     setExportCsvCustomDelimiter(delimiter: string): Promise<void>;
     // (undocumented)

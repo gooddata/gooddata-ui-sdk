@@ -5,21 +5,12 @@ import { describe, expect, it, vi } from "vitest";
 import { BadRequestSdkError } from "@gooddata/sdk-ui";
 import { suppressConsole } from "@gooddata/util";
 
-import { loadElements as mockLoadElements } from "../internal/redux/elements/loadElements.js";
-
 import {
     newTestAttributeFilterHandlerWithAttributeFilter,
+    newTestAttributeFilterHandlerWithElementsLoadFailures,
     positiveAttributeFilterDefaultDF,
 } from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
-
-vi.mock("../internal/redux/elements/loadElements.js", async () => {
-    const original = await vi.importActual("../internal/redux/elements/loadElements.js");
-    return {
-        ...original,
-        loadElements: vi.fn((original as { loadElements: typeof mockLoadElements }).loadElements),
-    };
-});
 
 describe("AttributeFilterHandler", () => {
     it("loadCustomElements() should trigger onLoadCustomElementsStart() callback", async () => {
@@ -60,14 +51,13 @@ describe("AttributeFilterHandler", () => {
 
     it("loadCustomElements() that failed should trigger onLoadCustomElementsError() callback", async () => {
         const onLoadCustomElementsError = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
-            positiveAttributeFilterDefaultDF,
-        );
+        const { attributeFilterHandler, failNextElementsLoad } =
+            newTestAttributeFilterHandlerWithElementsLoadFailures(positiveAttributeFilterDefaultDF);
 
         attributeFilterHandler.init();
         await waitForAsync();
 
-        vi.mocked(mockLoadElements).mockRejectedValueOnce(new BadRequestSdkError("Elements error"));
+        failNextElementsLoad(new BadRequestSdkError("Elements error"));
         attributeFilterHandler.onLoadCustomElementsError(onLoadCustomElementsError);
         attributeFilterHandler.loadCustomElements({}, "error");
 
@@ -137,17 +127,16 @@ describe("AttributeFilterHandler", () => {
 
     it("loadCustomElements() that was called multiple times should trigger onLoadCustomElementsError() callback multiple times", async () => {
         const onLoadCustomElementsError = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
-            positiveAttributeFilterDefaultDF,
-        );
+        const { attributeFilterHandler, failNextElementsLoad } =
+            newTestAttributeFilterHandlerWithElementsLoadFailures(positiveAttributeFilterDefaultDF);
 
         attributeFilterHandler.init();
         await waitForAsync();
 
         attributeFilterHandler.onLoadCustomElementsError(onLoadCustomElementsError);
-        vi.mocked(mockLoadElements).mockRejectedValueOnce(new BadRequestSdkError("Elements error"));
+        failNextElementsLoad(new BadRequestSdkError("Elements error"));
         attributeFilterHandler.loadCustomElements({}, "1");
-        vi.mocked(mockLoadElements).mockRejectedValueOnce(new BadRequestSdkError("Elements error"));
+        failNextElementsLoad(new BadRequestSdkError("Elements error"));
         attributeFilterHandler.loadCustomElements({}, "2");
 
         await suppressConsole(

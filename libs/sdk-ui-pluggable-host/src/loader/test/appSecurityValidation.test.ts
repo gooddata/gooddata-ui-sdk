@@ -74,14 +74,28 @@ function ctx(orgId: string | undefined): IPlatformContext {
     return { organization: orgId ? { id: orgId } : undefined } as IPlatformContext;
 }
 
-describe("isSecuredRemoteUrl", () => {
-    beforeEach(() => {
-        Object.defineProperty(window, "location", {
-            configurable: true,
-            value: { hostname: "localhost", origin: "https://localhost" },
-        });
-    });
+// Both suites below need `window.location` to look same-origin with the URLs under test. The stub
+// is installed and — crucially — taken back down again for the whole file: `window.location` is
+// shared with every other test file running in the same worker now that isolation is off, and a
+// stub that outlives this file leaves them with a `location` that has no `href`.
+const originalLocation = Object.getOwnPropertyDescriptor(window, "location");
 
+beforeEach(() => {
+    Object.defineProperty(window, "location", {
+        configurable: true,
+        value: { hostname: "localhost", origin: "https://localhost" },
+    });
+});
+
+afterEach(() => {
+    if (originalLocation) {
+        Object.defineProperty(window, "location", originalLocation);
+    } else {
+        delete (window as unknown as Record<string, unknown>)["location"];
+    }
+});
+
+describe("isSecuredRemoteUrl", () => {
     it("returns true for the demo plugins bucket hostname", () => {
         expect(isSecuredRemoteUrl(SECURED_URL)).toBe(true);
     });
@@ -99,13 +113,6 @@ describe("isSecuredRemoteUrl", () => {
 });
 
 describe("validateAppSecurity", () => {
-    beforeEach(() => {
-        Object.defineProperty(window, "location", {
-            configurable: true,
-            value: { hostname: "localhost", origin: "https://localhost" },
-        });
-    });
-
     afterEach(() => {
         vi.restoreAllMocks();
     });

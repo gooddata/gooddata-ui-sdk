@@ -2,6 +2,9 @@
 
 import { useMemo } from "react";
 
+import { useSelector } from "react-redux";
+
+import { interactionIntelligenceTimelineEnabledSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
 import { computeSegments } from "../data/timeline.js";
 import type { IInteractionCategory, IInteractionStepTile } from "../data/types.js";
 import { e } from "../intelligenceBem.js";
@@ -21,6 +24,7 @@ export interface IIntelligenceTimelineProps {
  * The single timeline track shared by the list view and every category's detail view: one tile
  * per interaction step, with a hover tooltip listing that step's activities and its own
  * duration/tokens. Never navigable — highlighting is driven entirely by `highlightedStepIndexes`.
+ * Self-gated on the `enableGenAiInteractionIntelligence_timeline` sub-flag.
  */
 export function IntelligenceTimeline({
     steps,
@@ -28,7 +32,12 @@ export function IntelligenceTimeline({
     categories,
     highlightedStepIndexes,
 }: IIntelligenceTimelineProps) {
+    const timelineEnabled = useSelector(interactionIntelligenceTimelineEnabledSelector);
     const segments = useMemo(() => computeSegments(steps, totalDurationMs), [steps, totalDurationMs]);
+
+    if (!timelineEnabled) {
+        return null;
+    }
 
     return (
         <div className={e("timeline-wrapper")}>

@@ -173,22 +173,10 @@ exports[`PivotTable > with arithmetic measures > should create expected executio
 
 exports[`PivotTable > with arithmetic measures > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -337,22 +325,10 @@ exports[`PivotTable > with empty values > should create expected execution defin
 
 exports[`PivotTable > with empty values > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -501,9 +477,6 @@ exports[`PivotTable > with german number format > should create expected executi
 
 exports[`PivotTable > with german number format > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
     "separators": {
@@ -511,16 +484,7 @@ exports[`PivotTable > with german number format > should create expected props f
       "thousand": ".",
     },
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -671,23 +635,11 @@ exports[`PivotTable > with measure format with colors > should create expected e
 
 exports[`PivotTable > with measure format with colors > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "groupRows": false,
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -876,9 +828,6 @@ exports[`PivotTable > with multiple measures and no columns, with totals > shoul
 
 exports[`PivotTable > with multiple measures and no columns, with totals > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -941,16 +890,7 @@ exports[`PivotTable > with multiple measures and no columns, with totals > shoul
     "measureGroupDimension": "rows",
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -1101,23 +1041,11 @@ exports[`PivotTable > with multiple measures and no rows, with totals > should c
 
 exports[`PivotTable > with multiple measures and no rows, with totals > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "measureGroupDimension": "rows",
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -1292,9 +1220,6 @@ exports[`PivotTable > with multiple measures and row attributes with metrics in 
 
 exports[`PivotTable > with multiple measures and row attributes with metrics in rows, with drilling > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "measureGroupDimension": "rows",
     "menu": {},
@@ -1306,14 +1231,7 @@ exports[`PivotTable > with multiple measures and row attributes with metrics in 
     [Function],
   ],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
   "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -1462,23 +1380,11 @@ exports[`PivotTable > with no totals and max height 200 > should create expected
 
 exports[`PivotTable > with no totals and max height 200 > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "maxHeight": 200,
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -1627,23 +1533,11 @@ exports[`PivotTable > with no totals and max height 300 > should create expected
 
 exports[`PivotTable > with no totals and max height 300 > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "maxHeight": 300,
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -1792,23 +1686,11 @@ exports[`PivotTable > with no totals and no grouping > should create expected ex
 
 exports[`PivotTable > with no totals and no grouping > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "groupRows": false,
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -1937,22 +1819,10 @@ exports[`PivotTable > with one measure and repeating row attributes on different
 
 exports[`PivotTable > with one measure and repeating row attributes on different positions > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -2402,9 +2272,6 @@ exports[`PivotTable > with simple table with attribute and metric column size > 
 
 exports[`PivotTable > with simple table with attribute and metric column size > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -2436,24 +2303,12 @@ exports[`PivotTable > with simple table with attribute and metric column size > 
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
 exports[`PivotTable > with simple table with attribute and metric column size > should create expected props for core chart 2`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -2485,24 +2340,12 @@ exports[`PivotTable > with simple table with attribute and metric column size > 
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
 exports[`PivotTable > with simple table with attribute and metric column size > should create expected props for core chart 3`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -2534,24 +2377,12 @@ exports[`PivotTable > with simple table with attribute and metric column size > 
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
 exports[`PivotTable > with simple table with attribute and metric column size > should create expected props for core chart 4`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -2583,16 +2414,7 @@ exports[`PivotTable > with simple table with attribute and metric column size > 
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -3042,9 +2864,6 @@ exports[`PivotTable > with simple table with custom attribute column size > shou
 
 exports[`PivotTable > with simple table with custom attribute column size > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -3062,24 +2881,12 @@ exports[`PivotTable > with simple table with custom attribute column size > shou
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
 exports[`PivotTable > with simple table with custom attribute column size > should create expected props for core chart 2`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -3097,24 +2904,12 @@ exports[`PivotTable > with simple table with custom attribute column size > shou
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
 exports[`PivotTable > with simple table with custom attribute column size > should create expected props for core chart 3`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -3132,24 +2927,12 @@ exports[`PivotTable > with simple table with custom attribute column size > shou
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
 exports[`PivotTable > with simple table with custom attribute column size > should create expected props for core chart 4`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -3167,16 +2950,7 @@ exports[`PivotTable > with simple table with custom attribute column size > shou
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -3626,9 +3400,6 @@ exports[`PivotTable > with simple table with custom metric column size > should 
 
 exports[`PivotTable > with simple table with custom metric column size > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -3652,24 +3423,12 @@ exports[`PivotTable > with simple table with custom metric column size > should 
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
 exports[`PivotTable > with simple table with custom metric column size > should create expected props for core chart 2`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -3693,24 +3452,12 @@ exports[`PivotTable > with simple table with custom metric column size > should 
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
 exports[`PivotTable > with simple table with custom metric column size > should create expected props for core chart 3`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -3734,24 +3481,12 @@ exports[`PivotTable > with simple table with custom metric column size > should 
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
 exports[`PivotTable > with simple table with custom metric column size > should create expected props for core chart 4`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -3775,16 +3510,7 @@ exports[`PivotTable > with simple table with custom metric column size > should 
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -3845,22 +3571,10 @@ exports[`PivotTable > with single attribute > should create expected execution d
 
 exports[`PivotTable > with single attribute > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -3921,22 +3635,10 @@ exports[`PivotTable > with single column > should create expected execution defi
 
 exports[`PivotTable > with single column > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -4005,22 +3707,10 @@ exports[`PivotTable > with single measure > should create expected execution def
 
 exports[`PivotTable > with single measure > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -4165,9 +3855,6 @@ exports[`PivotTable > with single measure and multiple column grand totals > sho
 
 exports[`PivotTable > with single measure and multiple column grand totals > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -4213,16 +3900,7 @@ exports[`PivotTable > with single measure and multiple column grand totals > sho
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -4381,9 +4059,6 @@ exports[`PivotTable > with single measure and multiple column/row grand totals >
 
 exports[`PivotTable > with single measure and multiple column/row grand totals > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -4429,16 +4104,7 @@ exports[`PivotTable > with single measure and multiple column/row grand totals >
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -4621,22 +4287,10 @@ exports[`PivotTable > with single measure and multiple grand totals > should cre
 
 exports[`PivotTable > with single measure and multiple grand totals > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -4761,9 +4415,6 @@ exports[`PivotTable > with single measure and single column grand total > should
 
 exports[`PivotTable > with single measure and single column grand total > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -4817,16 +4468,7 @@ exports[`PivotTable > with single measure and single column grand total > should
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -4965,9 +4607,6 @@ exports[`PivotTable > with single measure and single column/row grand total > sh
 
 exports[`PivotTable > with single measure and single column/row grand total > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -5013,16 +4652,7 @@ exports[`PivotTable > with single measure and single column/row grand total > sh
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -5185,9 +4815,6 @@ exports[`PivotTable > with single measure and single grand total > should create
 
 exports[`PivotTable > with single measure and single grand total > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -5233,16 +4860,7 @@ exports[`PivotTable > with single measure and single grand total > should create
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -5398,22 +5016,10 @@ exports[`PivotTable > with single measure pivot sorted by first row attr > shoul
 
 exports[`PivotTable > with single measure pivot sorted by first row attr > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -5569,22 +5175,10 @@ exports[`PivotTable > with single measure pivot sorted by second row attr > shou
 
 exports[`PivotTable > with single measure pivot sorted by second row attr > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -5733,23 +5327,11 @@ exports[`PivotTable > with single measure pivot with both attributes and metrics
 
 exports[`PivotTable > with single measure pivot with both attributes and metrics in rows > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "measureGroupDimension": "rows",
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -5866,22 +5448,10 @@ exports[`PivotTable > with single measure pivot with grouping sorted by first ro
 
 exports[`PivotTable > with single measure pivot with grouping sorted by first row attr > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -6004,22 +5574,10 @@ exports[`PivotTable > with single measure pivot with grouping sorted by measure 
 
 exports[`PivotTable > with single measure pivot with grouping sorted by measure > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -6136,22 +5694,10 @@ exports[`PivotTable > with single measure pivot with grouping sorted by second r
 
 exports[`PivotTable > with single measure pivot with grouping sorted by second row attr > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -6241,22 +5787,10 @@ exports[`PivotTable > with single measure with column attribute > should create 
 
 exports[`PivotTable > with single measure with column attribute > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -6367,22 +5901,10 @@ exports[`PivotTable > with single measure with row and column attributes > shoul
 
 exports[`PivotTable > with single measure with row and column attributes > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -6473,22 +5995,10 @@ exports[`PivotTable > with single measure with row attribute > should create exp
 
 exports[`PivotTable > with single measure with row attribute > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -6618,22 +6128,10 @@ exports[`PivotTable > with single measure with two row and one column attributes
 
 exports[`PivotTable > with single measure with two row and one column attributes > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -6782,22 +6280,10 @@ exports[`PivotTable > with single measure with two row and two column attributes
 
 exports[`PivotTable > with single measure with two row and two column attributes > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -7375,9 +6861,6 @@ exports[`PivotTable > with table with multiple measure columns and weak measure 
 
 exports[`PivotTable > with table with multiple measure columns and weak measure size > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -7399,24 +6882,12 @@ exports[`PivotTable > with table with multiple measure columns and weak measure 
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
 exports[`PivotTable > with table with multiple measure columns and weak measure size > should create expected props for core chart 2`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -7438,24 +6909,12 @@ exports[`PivotTable > with table with multiple measure columns and weak measure 
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
 exports[`PivotTable > with table with multiple measure columns and weak measure size > should create expected props for core chart 3`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -7477,24 +6936,12 @@ exports[`PivotTable > with table with multiple measure columns and weak measure 
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
 exports[`PivotTable > with table with multiple measure columns and weak measure size > should create expected props for core chart 4`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -7516,16 +6963,7 @@ exports[`PivotTable > with table with multiple measure columns and weak measure 
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -7724,23 +7162,11 @@ exports[`PivotTable > with totals and max height 200 > should create expected ex
 
 exports[`PivotTable > with totals and max height 200 > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "maxHeight": 200,
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -7939,23 +7365,11 @@ exports[`PivotTable > with totals and max height 300 > should create expected ex
 
 exports[`PivotTable > with totals and max height 300 > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "maxHeight": 300,
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -8118,23 +7532,11 @@ exports[`PivotTable > with totals and max height 800 > should create expected ex
 
 exports[`PivotTable > with totals and max height 800 > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "maxHeight": 800,
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -8229,22 +7631,10 @@ exports[`PivotTable > with two measures > should create expected execution defin
 
 exports[`PivotTable > with two measures > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -8497,9 +7887,6 @@ exports[`PivotTable > with two measures and column grand totals and multiple sub
 
 exports[`PivotTable > with two measures and column grand totals and multiple subtotals > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -8561,16 +7948,7 @@ exports[`PivotTable > with two measures and column grand totals and multiple sub
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -8780,9 +8158,6 @@ exports[`PivotTable > with two measures and column single grand total sorted by 
 
 exports[`PivotTable > with two measures and column single grand total sorted by second attribute > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -8844,16 +8219,7 @@ exports[`PivotTable > with two measures and column single grand total sorted by 
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -9156,9 +8522,6 @@ exports[`PivotTable > with two measures and column/row grand totals and multiple
 
 exports[`PivotTable > with two measures and column/row grand totals and multiple subtotals > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -9220,16 +8583,7 @@ exports[`PivotTable > with two measures and column/row grand totals and multiple
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -9468,9 +8822,6 @@ exports[`PivotTable > with two measures and grand totals and multiple subtotals 
 
 exports[`PivotTable > with two measures and grand totals and multiple subtotals > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -9532,16 +8883,7 @@ exports[`PivotTable > with two measures and grand totals and multiple subtotals 
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -9712,9 +9054,6 @@ exports[`PivotTable > with two measures and multiple column grand totals for eac
 
 exports[`PivotTable > with two measures and multiple column grand totals for each > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -9768,16 +9107,7 @@ exports[`PivotTable > with two measures and multiple column grand totals for eac
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -10000,9 +9330,6 @@ exports[`PivotTable > with two measures and multiple column subtotals > should c
 
 exports[`PivotTable > with two measures and multiple column subtotals > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -10064,16 +9391,7 @@ exports[`PivotTable > with two measures and multiple column subtotals > should c
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -10278,9 +9596,6 @@ exports[`PivotTable > with two measures and multiple column/row grand totals for
 
 exports[`PivotTable > with two measures and multiple column/row grand totals for each > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -10334,16 +9649,7 @@ exports[`PivotTable > with two measures and multiple column/row grand totals for
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -10586,9 +9892,6 @@ exports[`PivotTable > with two measures and multiple column/row subtotals > shou
 
 exports[`PivotTable > with two measures and multiple column/row subtotals > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -10650,16 +9953,7 @@ exports[`PivotTable > with two measures and multiple column/row subtotals > shou
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -10922,9 +10216,6 @@ exports[`PivotTable > with two measures and multiple column/row subtotals with m
 
 exports[`PivotTable > with two measures and multiple column/row subtotals with metrics in rows > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -10987,16 +10278,7 @@ exports[`PivotTable > with two measures and multiple column/row subtotals with m
     "measureGroupDimension": "rows",
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -11205,22 +10487,10 @@ exports[`PivotTable > with two measures and multiple grand totals for each > sho
 
 exports[`PivotTable > with two measures and multiple grand totals for each > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -11429,22 +10699,10 @@ exports[`PivotTable > with two measures and multiple subtotals > should create e
 
 exports[`PivotTable > with two measures and multiple subtotals > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -11633,9 +10891,6 @@ exports[`PivotTable > with two measures and one column subtotal > should create 
 
 exports[`PivotTable > with two measures and one column subtotal > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -11697,16 +10952,7 @@ exports[`PivotTable > with two measures and one column subtotal > should create 
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -11909,9 +11155,6 @@ exports[`PivotTable > with two measures and one column/row subtotal > should cre
 
 exports[`PivotTable > with two measures and one column/row subtotal > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -11973,16 +11216,7 @@ exports[`PivotTable > with two measures and one column/row subtotal > should cre
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -12171,22 +11405,10 @@ exports[`PivotTable > with two measures and one subtotal > should create expecte
 
 exports[`PivotTable > with two measures and one subtotal > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -12406,9 +11628,6 @@ exports[`PivotTable > with two measures and single column grand total and single
 
 exports[`PivotTable > with two measures and single column grand total and single subtotal sorted by second attribute > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -12470,16 +11689,7 @@ exports[`PivotTable > with two measures and single column grand total and single
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -12640,9 +11850,6 @@ exports[`PivotTable > with two measures and single column grand total for each >
 
 exports[`PivotTable > with two measures and single column grand total for each > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -12688,16 +11895,7 @@ exports[`PivotTable > with two measures and single column grand total for each >
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -12862,9 +12060,6 @@ exports[`PivotTable > with two measures and single column grand total for one > 
 
 exports[`PivotTable > with two measures and single column grand total for one > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -12910,16 +12105,7 @@ exports[`PivotTable > with two measures and single column grand total for one > 
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -13104,9 +12290,6 @@ exports[`PivotTable > with two measures and single column/row grand total for ea
 
 exports[`PivotTable > with two measures and single column/row grand total for each > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -13152,16 +12335,7 @@ exports[`PivotTable > with two measures and single column/row grand total for ea
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -13326,9 +12500,6 @@ exports[`PivotTable > with two measures and single column/row grand total for on
 
 exports[`PivotTable > with two measures and single column/row grand total for one > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -13374,16 +12545,7 @@ exports[`PivotTable > with two measures and single column/row grand total for on
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -13582,9 +12744,6 @@ exports[`PivotTable > with two measures and single grand total for each > should
 
 exports[`PivotTable > with two measures and single grand total for each > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "columnWidths": [
@@ -13638,16 +12797,7 @@ exports[`PivotTable > with two measures and single grand total for each > should
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -13836,22 +12986,10 @@ exports[`PivotTable > with two measures and single grand total for one > should 
 
 exports[`PivotTable > with two measures and single grand total for one > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -14047,22 +13185,10 @@ exports[`PivotTable > with two measures and single grand total sorted by second 
 
 exports[`PivotTable > with two measures and single grand total sorted by second attribute > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -14222,9 +13348,6 @@ exports[`PivotTable > with two measures in rows and column attrs on left, with t
 
 exports[`PivotTable > with two measures in rows and column attrs on left, with totals > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnHeadersPosition": "left",
     "columnSizing": {
@@ -14233,16 +13356,7 @@ exports[`PivotTable > with two measures in rows and column attrs on left, with t
     "measureGroupDimension": "rows",
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -14378,9 +13492,6 @@ exports[`PivotTable > with two measures in rows and column attrs on top, with dr
 
 exports[`PivotTable > with two measures in rows and column attrs on top, with drilling on metrics > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnHeadersPosition": "top",
     "measureGroupDimension": "rows",
@@ -14391,14 +13502,7 @@ exports[`PivotTable > with two measures in rows and column attrs on top, with dr
     [Function],
   ],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
   "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -14534,9 +13638,6 @@ exports[`PivotTable > with two measures in rows and column attrs on top, with in
 
 exports[`PivotTable > with two measures in rows and column attrs on top, with invalid drilling on attributes > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnHeadersPosition": "top",
     "measureGroupDimension": "rows",
@@ -14547,14 +13648,7 @@ exports[`PivotTable > with two measures in rows and column attrs on top, with in
     [Function],
   ],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
   "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -14690,24 +13784,12 @@ exports[`PivotTable > with two measures in rows and only column attrs on left > 
 
 exports[`PivotTable > with two measures in rows and only column attrs on left > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnHeadersPosition": "left",
     "measureGroupDimension": "rows",
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -14843,9 +13925,6 @@ exports[`PivotTable > with two measures in rows and only column attrs on left, w
 
 exports[`PivotTable > with two measures in rows and only column attrs on left, with drilling > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnHeadersPosition": "left",
     "measureGroupDimension": "rows",
@@ -14858,14 +13937,7 @@ exports[`PivotTable > with two measures in rows and only column attrs on left, w
     [Function],
   ],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
   "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -15016,24 +14088,12 @@ exports[`PivotTable > with two measures in rows and only column attrs on left, w
 
 exports[`PivotTable > with two measures in rows and only column attrs on left, with totals > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnHeadersPosition": "left",
     "measureGroupDimension": "rows",
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -15149,22 +14209,10 @@ exports[`PivotTable > with two measures with column attribute > should create ex
 
 exports[`PivotTable > with two measures with column attribute > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -15301,22 +14349,10 @@ exports[`PivotTable > with two measures with row and column attributes > should 
 
 exports[`PivotTable > with two measures with row and column attributes > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -15433,22 +14469,10 @@ exports[`PivotTable > with two measures with row attribute > should create expec
 
 exports[`PivotTable > with two measures with row attribute > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -15578,22 +14602,10 @@ exports[`PivotTable > with two measures with single row attr sorted by first mea
 
 exports[`PivotTable > with two measures with single row attr sorted by first measure > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -15723,22 +14735,10 @@ exports[`PivotTable > with two measures with single row attr sorted by second me
 
 exports[`PivotTable > with two measures with single row attr sorted by second measure > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -15854,23 +14854,11 @@ exports[`PivotTable > with two measures with single row attr with metrics in row
 
 exports[`PivotTable > with two measures with single row attr with metrics in rows > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "measureGroupDimension": "rows",
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -16064,22 +15052,10 @@ exports[`PivotTable > with two measures with three rows and two column attribute
 
 exports[`PivotTable > with two measures with three rows and two column attributes > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -16235,22 +15211,10 @@ exports[`PivotTable > with two measures with two row and one column attributes >
 
 exports[`PivotTable > with two measures with two row and one column attributes > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -16425,22 +15389,10 @@ exports[`PivotTable > with two measures with two row and two column attributes >
 
 exports[`PivotTable > with two measures with two row and two column attributes > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -16541,22 +15493,10 @@ exports[`PivotTable > with with attributes without measures > should create expe
 
 exports[`PivotTable > with with attributes without measures > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -16617,25 +15557,13 @@ exports[`PivotTable > with with column attributes only and auto-resizing > shoul
 
 exports[`PivotTable > with with column attributes only and auto-resizing > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "defaultWidth": "autoresizeAll",
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -16821,22 +15749,10 @@ exports[`PivotTable > with with date filter > should create expected execution d
 
 exports[`PivotTable > with with date filter > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -17030,9 +15946,6 @@ exports[`PivotTable > with with drill on all row atributes > should create expec
 
 exports[`PivotTable > with with drill on all row atributes > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
@@ -17042,14 +15955,7 @@ exports[`PivotTable > with with drill on all row atributes > should create expec
     [Function],
   ],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
   "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -17243,9 +16149,6 @@ exports[`PivotTable > with with drill on all row attributes and measures > shoul
 
 exports[`PivotTable > with with drill on all row attributes and measures > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
@@ -17257,14 +16160,7 @@ exports[`PivotTable > with with drill on all row attributes and measures > shoul
     [Function],
   ],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
   "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -17413,25 +16309,14 @@ exports[`PivotTable > with with small page and auto-resizing > should create exp
 
 exports[`PivotTable > with with small page and auto-resizing > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "defaultWidth": "autoresizeAll",
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
   "pageSize": 3,
-  "pushData": [Function],
 }
 `;
 
@@ -17548,25 +16433,13 @@ exports[`PivotTable > with with two measures and row attribute with auto-resizin
 
 exports[`PivotTable > with with two measures and row attribute with auto-resizing > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "defaultWidth": "autoresizeAll",
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -17683,9 +16556,6 @@ exports[`PivotTable > with with two measures and row attribute with auto-resizin
 
 exports[`PivotTable > with with two measures and row attribute with auto-resizing and grow to fit > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "defaultWidth": "autoresizeAll",
@@ -17693,16 +16563,7 @@ exports[`PivotTable > with with two measures and row attribute with auto-resizin
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -17941,25 +16802,13 @@ exports[`PivotTable > with with two measures, grand totals and subtotals with au
 
 exports[`PivotTable > with with two measures, grand totals and subtotals with auto-resizing > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "defaultWidth": "autoresizeAll",
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -18198,9 +17047,6 @@ exports[`PivotTable > with with two measures, grand totals and subtotals with au
 
 exports[`PivotTable > with with two measures, grand totals and subtotals with auto-resizing and grow to fit > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "columnSizing": {
       "defaultWidth": "autoresizeAll",
@@ -18208,16 +17054,7 @@ exports[`PivotTable > with with two measures, grand totals and subtotals with au
     },
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;
 
@@ -18327,21 +17164,9 @@ exports[`PivotTable > with with two same dates > should create expected executio
 
 exports[`PivotTable > with with two same dates > should create expected props for core chart 1`] = `
 {
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
   "config": {
     "menu": {},
   },
-  "drillableItems": [],
   "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDataView": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
 }
 `;

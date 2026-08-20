@@ -1,7 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 
 import { ComparisonColorType, DEFAULT_COMPARISON_PALETTE, type IColorConfig } from "@gooddata/sdk-ui-charts";
 
@@ -14,10 +14,10 @@ import {
     COMPARISON_COLOR_CONFIG_NEGATIVE,
     COMPARISON_COLOR_CONFIG_POSITIVE,
 } from "../../../ComparisonValuePath.js";
-import { ColorCheckbox } from "../ColorCheckbox.js";
-import { ColorItem } from "../ColorItem.js";
-import { ColorResetButton } from "../ColorResetButton.js";
-import { ColorsControl } from "../ColorsControl.js";
+import type * as ColorCheckboxModule from "../ColorCheckbox.js";
+import type * as ColorItemModule from "../ColorItem.js";
+import type * as ColorResetButtonModule from "../ColorResetButton.js";
+import type * as ColorsControlModule from "../ColorsControl.js";
 
 vi.mock("../ColorCheckbox.js", async (importOriginal) => {
     // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -41,6 +41,29 @@ vi.mock("../ColorResetButton.js", async (importOriginal) => {
         ...actual,
         ColorResetButton: vi.fn(actual.ColorResetButton),
     };
+});
+
+/*
+ * Test isolation is disabled for this package, so the module cache is shared between test files:
+ * ColorsControl.js may already have been evaluated - bound to the real children - by another test file, and
+ * the mocked graph this file builds must not outlive it. Re-import all four modules up front so this file
+ * always observes the mocked ones, and drop the mocked graph again on the way out.
+ */
+let ColorCheckbox: typeof ColorCheckboxModule.ColorCheckbox;
+let ColorItem: typeof ColorItemModule.ColorItem;
+let ColorResetButton: typeof ColorResetButtonModule.ColorResetButton;
+let ColorsControl: typeof ColorsControlModule.ColorsControl;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ ColorCheckbox } = await import("../ColorCheckbox.js"));
+    ({ ColorItem } = await import("../ColorItem.js"));
+    ({ ColorResetButton } = await import("../ColorResetButton.js"));
+    ({ ColorsControl } = await import("../ColorsControl.js"));
+});
+
+afterAll(() => {
+    vi.resetModules();
 });
 
 describe("ColorsControl", () => {

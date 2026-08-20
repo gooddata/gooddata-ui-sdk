@@ -7,6 +7,15 @@ import { dummyBackend } from "@gooddata/sdk-backend-base";
 import { type DashboardContext } from "../../../../types/commonTypes.js";
 import { dashboardInitialize } from "../dashboardInitialize.js";
 
+// `isolate: false` shares one module graph per worker, so the modules mocked below may already have
+// been evaluated — against their real dependencies — by a test file that ran earlier in the same
+// worker, which turns those `vi.mock()` calls into no-ops. Dropping the module registry from
+// `vi.hoisted()` (it runs before this file's own imports, unlike any `beforeEach`) makes those
+// imports resolve through the mocks.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 vi.mock("../../../widgets/common/loadInsight.js", () => ({
     loadInsight: (_ctx: DashboardContext, ref: any) => {
         return {

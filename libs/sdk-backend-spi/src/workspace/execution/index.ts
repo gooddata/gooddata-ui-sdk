@@ -611,6 +611,14 @@ export interface IExportConfig {
     grandTotalsPosition?: "pinnedBottom" | "pinnedTop" | "bottom" | "top";
 
     /**
+     * Concrete IANA timezone ID used to resolve relative date filters and render date/time values
+     * in the export. Overrides the workspace/user timezone settings.
+     *
+     * @alpha
+     */
+    timezoneId?: string;
+
+    /**
      * Override the default export result polling timeout (in milliseconds).
      *
      * @remarks

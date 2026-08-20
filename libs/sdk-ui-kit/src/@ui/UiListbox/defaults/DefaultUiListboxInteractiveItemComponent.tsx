@@ -33,19 +33,26 @@ export function DefaultUiListboxInteractiveItemComponent<T>({
                 {item.stringTitle}
             </ShortenedText>
             {item.tooltip ? (
-                <UiTooltip
-                    anchor={
-                        <div className={e("item-explanation")}>
-                            <UiIcon type="question" size={14} color="complementary-7" />
-                        </div>
-                    }
-                    content={item.tooltip}
-                    triggerBy={["hover", "focus"]}
-                    arrowPlacement="left"
-                    optimalPlacement
-                    width={200}
-                    offset={10}
-                />
+                <>
+                    <UiTooltip
+                        anchor={
+                            <div className={e("item-explanation")}>
+                                <UiIcon type="question" size={14} color="complementary-7" />
+                            </div>
+                        }
+                        content={item.tooltip}
+                        triggerBy={["hover"]}
+                        accessibilityHidden
+                        arrowPlacement="left"
+                        optimalPlacement
+                        width={200}
+                        offset={10}
+                    />
+                    {/* the option is never DOM-focused (the listbox drives aria-activedescendant),
+                        so the tooltip text rides along inside the option's content for screen
+                        readers instead of a describedby/focusable-anchor wiring */}
+                    <span className="sr-only">{item.tooltip}</span>
+                </>
             ) : null}
         </div>
     );

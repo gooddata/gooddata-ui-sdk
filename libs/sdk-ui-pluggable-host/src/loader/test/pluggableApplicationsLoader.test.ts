@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
 
@@ -29,6 +29,13 @@ function setConnection(connection: unknown): void {
 }
 
 describe("pluggableApplicationsLoader", () => {
+    beforeEach(() => {
+        // The module under test is imported by the host components, so with isolation off another
+        // test file may already have it cached — bound to the real `localLoader`/`remoteLoader`
+        // instead of the mocks above. Rebuild the graph so every import below is this file's.
+        vi.resetModules();
+    });
+
     afterEach(() => {
         Reflect.deleteProperty(navigator, "connection");
         vi.clearAllMocks();

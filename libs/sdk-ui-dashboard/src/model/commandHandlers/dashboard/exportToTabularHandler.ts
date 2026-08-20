@@ -15,7 +15,11 @@ import {
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
 import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
-import { selectDashboardRef, selectIsFiltersChanged } from "../../store/meta/metaSelectors.js";
+import {
+    selectDashboardRef,
+    selectEffectiveDashboardTimezone,
+    selectIsFiltersChanged,
+} from "../../store/meta/metaSelectors.js";
 import {
     selectFilterContextFilters,
     selectFiltersByTab,
@@ -41,6 +45,7 @@ function exportDashboardToTabular(
         showInfoPage?: boolean;
     },
     timeout?: number,
+    timezoneId?: string,
 ): Promise<IExportResult> {
     const { backend, workspace } = ctx;
     return backend.workspace(workspace).dashboards().exportDashboardToTabular(dashboardRef, {
@@ -54,6 +59,7 @@ function exportDashboardToTabular(
         widgetIds,
         pdfConfiguration,
         timeout,
+        timezoneId,
     });
 }
 
@@ -87,6 +93,11 @@ export function* exportToTabularHandler(
     const timeout: ReturnType<typeof selectExportResultPollingTimeout> = yield select(
         selectExportResultPollingTimeout,
     );
+
+    const timezoneId: ReturnType<typeof selectEffectiveDashboardTimezone> = yield select(
+        selectEffectiveDashboardTimezone,
+    );
+
     const result: PromiseFnReturnType<typeof exportDashboardToTabular> = yield call(
         exportDashboardToTabular,
         ctx,
@@ -101,6 +112,7 @@ export function* exportToTabularHandler(
         format,
         pdfConfiguration,
         timeout,
+        timezoneId,
     );
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted

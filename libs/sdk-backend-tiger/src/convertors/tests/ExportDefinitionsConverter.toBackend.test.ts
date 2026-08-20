@@ -2,7 +2,11 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type DashboardTabularExportRequestV2, type TabularExportRequest } from "@gooddata/api-client-tiger";
+import {
+    type DashboardTabularExportRequestV2,
+    type TabularExportRequest,
+    type VisualExportRequest,
+} from "@gooddata/api-client-tiger";
 import {
     type FilterContextItem,
     type IDashboardAttributeFilter,
@@ -644,6 +648,115 @@ describe("ExportDefinitionsConverter toBackend", () => {
 
         expect(result.dashboardTabsParametersOverrides).toEqual({
             tabOwning: [{ id: "topN", value: "5", title: "Top N" }],
+        });
+    });
+
+    describe("timezoneId propagation", () => {
+        const TIMEZONE = "Europe/Prague";
+        const dashboardRequest: IExportDefinitionDashboardRequestPayload = {
+            type: "dashboard",
+            fileName: "dashboard",
+            format: "PDF",
+            content: { dashboard: "dashboardId" },
+            timezoneId: TIMEZONE,
+        };
+        const widgetRequest: IExportDefinitionVisualizationObjectRequestPayload = {
+            type: "visualizationObject",
+            fileName: "widget",
+            format: "CSV",
+            content: { visualizationObject: "visId", widget: "widgetId", dashboard: "dashboardId" },
+            timezoneId: TIMEZONE,
+        };
+        const widgetExecution: IExecutionDefinition = {
+            workspace: "workspaceId",
+            buckets: [],
+            attributes: [],
+            measures: [],
+            filters: [],
+            sortBy: [],
+            dimensions: [],
+        };
+
+        it("sends timezoneId in visual export request", () => {
+            expect(convertToVisualExportRequest(dashboardRequest).timezoneId).toBe(TIMEZONE);
+        });
+
+        it("mirrors timezoneId into visual and slides export metadata for the headless render", () => {
+            const visual = convertToVisualExportRequest(dashboardRequest);
+            expect((visual.metadata as { timezoneId?: string })?.timezoneId).toBe(TIMEZONE);
+            const slides = convertToSlidesExportRequest({ ...dashboardRequest, format: "PDF_SLIDES" });
+            expect((slides.metadata as { timezoneId?: string })?.timezoneId).toBe(TIMEZONE);
+        });
+
+        it("sends timezoneId in dashboard slides export request", () => {
+            const result = convertToSlidesExportRequest({ ...dashboardRequest, format: "PDF_SLIDES" });
+            expect(result.timezoneId).toBe(TIMEZONE);
+        });
+
+        it("sends timezoneId in widget slides export request", () => {
+            const result = convertToSlidesExportRequest({ ...widgetRequest, format: "PPTX" });
+            expect(result.timezoneId).toBe(TIMEZONE);
+        });
+
+        it("sends executionSettings.timezone in dashboard tabular export request", () => {
+            const result = convertToDashboardTabularExportRequest({ ...dashboardRequest, format: "XLSX" });
+            expect(result.executionSettings?.timezone).toBe(TIMEZONE);
+        });
+
+        it("sends executionSettings.timezone in widget tabular export request", () => {
+            expect(convertToTabularExportRequest(widgetRequest).executionSettings?.timezone).toBe(TIMEZONE);
+        });
+
+        it("sends executionSettings.timezone in widget dashboard tabular export request", () => {
+            const result = convertVisualizationToDashboardTabularExportRequest({
+                ...widgetRequest,
+                format: "XLSX",
+            });
+            expect(result.executionSettings?.timezone).toBe(TIMEZONE);
+        });
+
+        it("sends timezoneId in image export request", () => {
+            const result = convertToImageExportRequest({ ...widgetRequest, format: "PNG" });
+            expect(result.timezoneId).toBe(TIMEZONE);
+        });
+
+        it("mirrors timezoneId into image export metadata for the headless render", () => {
+            const result = convertToImageExportRequest({ ...widgetRequest, format: "PNG" });
+            expect((result.metadata as { timezoneId?: string })?.timezoneId).toBe(TIMEZONE);
+        });
+
+        it("sends executionSettings.timezone in raw export request", () => {
+            const result = convertToRawExportRequest(
+                { ...widgetRequest, format: "CSV_RAW" },
+                widgetExecution,
+            );
+            expect(result.executionSettings?.timezone).toBe(TIMEZONE);
+        });
+
+        it("keeps the execution-config timezone over the stored override in raw export request", () => {
+            const result = convertToRawExportRequest(
+                { ...widgetRequest, format: "CSV_RAW" },
+                { ...widgetExecution, executionConfig: { timezone: "America/New_York" } },
+            );
+            expect(result.executionSettings?.timezone).toBe("America/New_York");
+        });
+
+        it("sends the timezone in standalone export definition payloads", () => {
+            const dashboardResult = convertExportDefinitionRequestPayload(
+                dashboardRequest,
+            ) as VisualExportRequest;
+            expect(dashboardResult.timezoneId).toBe(TIMEZONE);
+            const widgetResult = convertExportDefinitionRequestPayload(widgetRequest) as TabularExportRequest;
+            expect(widgetResult.executionSettings?.timezone).toBe(TIMEZONE);
+        });
+
+        it("omits the timezone when not set", () => {
+            const withoutTimezone = { ...dashboardRequest, timezoneId: undefined };
+            expect(convertToVisualExportRequest(withoutTimezone)).not.toHaveProperty("timezoneId");
+            expect(convertExportDefinitionRequestPayload(withoutTimezone)).not.toHaveProperty("timezoneId");
+            expect(
+                convertToTabularExportRequest({ ...widgetRequest, timezoneId: undefined }),
+            ).not.toHaveProperty("executionSettings");
         });
     });
 });

@@ -7238,6 +7238,8 @@ export interface AutomationAlert {
     // (undocumented)
     'execution': AlertAfm;
     'interval'?: AutomationAlertIntervalEnum;
+    // (undocumented)
+    'settings'?: ExecutionSettings;
     'trigger'?: AutomationAlertTriggerEnum;
 }
 
@@ -7436,6 +7438,8 @@ export interface AutomationAutomationAlert {
     // (undocumented)
     'execution': AutomationAlertAfm;
     'interval'?: AutomationAutomationAlertIntervalEnum;
+    // (undocumented)
+    'settings'?: AutomationExecutionSettings;
     'trigger'?: AutomationAutomationAlertTriggerEnum;
 }
 
@@ -24602,6 +24606,8 @@ export interface JsonApiAutomationInAttributesAlert {
     // (undocumented)
     'execution': AlertAfm;
     'interval'?: JsonApiAutomationInAttributesAlertIntervalEnum;
+    // (undocumented)
+    'settings'?: ExecutionSettings;
     'trigger'?: JsonApiAutomationInAttributesAlertTriggerEnum;
 }
 
@@ -24785,6 +24791,8 @@ export interface JsonApiAutomationOutAttributesAlert {
     // (undocumented)
     'execution': AlertAfm;
     'interval'?: JsonApiAutomationOutAttributesAlertIntervalEnum;
+    // (undocumented)
+    'settings'?: ExecutionSettings;
     'trigger'?: JsonApiAutomationOutAttributesAlertTriggerEnum;
 }
 
@@ -25031,6 +25039,8 @@ export interface JsonApiAutomationPatchAttributesAlert {
     // (undocumented)
     'execution': AlertAfm;
     'interval'?: JsonApiAutomationPatchAttributesAlertIntervalEnum;
+    // (undocumented)
+    'settings'?: ExecutionSettings;
     'trigger'?: JsonApiAutomationPatchAttributesAlertTriggerEnum;
 }
 
@@ -32160,6 +32170,8 @@ export interface JsonApiWorkspaceAutomationOutAttributesAlert {
     // (undocumented)
     'execution': AlertAfm;
     'interval'?: JsonApiWorkspaceAutomationOutAttributesAlertIntervalEnum;
+    // (undocumented)
+    'settings'?: ExecutionSettings;
     'trigger'?: JsonApiWorkspaceAutomationOutAttributesAlertTriggerEnum;
 }
 

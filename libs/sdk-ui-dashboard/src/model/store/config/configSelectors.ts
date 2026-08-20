@@ -925,6 +925,18 @@ export const selectEnableDashboardTimezone: DashboardSelector<boolean> = createS
 );
 
 /**
+ * Returns whether end users may change the timezone in Analytical Designer and, by default, on dashboards.
+ *
+ * @alpha
+ */
+export const selectEnableTimezoneChange: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableTimezoneChange ?? false;
+    },
+);
+
+/**
  * Returns whether dashboard persistent filters across tabs feature flag is enabled.
  *
  * @alpha

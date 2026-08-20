@@ -135,7 +135,9 @@ function ObjectShareDialogSession({
         isLoading,
         workspaceDisabledLevels,
         rowDisabledLevels,
+        rowDisabledLevelTooltips,
         isRowRemoveDisabled,
+        isRowControlsLocked,
         rowRemoveDisabledTooltip,
         onClose: closeDialog,
         onRowPermissionChange,
@@ -196,17 +198,19 @@ function ObjectShareDialogSession({
                     permissionLevel={g.level}
                     effectivePermission={g.effectivePermission}
                     disabledLevels={disabledLevels}
+                    // Row-wide warning is the self row's; covered picks carry their own.
                     disabledTooltip={
-                        disabledLevels
+                        state.selfManagedGranteeId === g.id
                             ? intl.formatMessage(objectShareMessages.selfRestrictWarning)
                             : undefined
                     }
+                    disabledLevelTooltips={rowDisabledLevelTooltips(g)}
                     isRemoveDisabled={isRowRemoveDisabled(g)}
                     removeDisabledTooltip={rowRemoveDisabledTooltip}
                     // Disabled while the row's own write is saving, while mutations are
                     // gated (unresolved label scope would orphan real per-label grants),
                     // and while a sole row's self identity is unknown.
-                    isDisabled={g.pending !== undefined || !isMutable || state.granteeControlsLocked}
+                    isDisabled={g.pending !== undefined || !isMutable || isRowControlsLocked(g)}
                     onLabelsChange={(selectedIds) => {
                         void actions.changeGranteeLabels(g.id, selectedIds);
                     }}

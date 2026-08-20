@@ -32,6 +32,27 @@ import { convertAttribute } from "./afm/AttributeConverter.js";
 import { convertMeasure } from "./afm/MeasureConverter.js";
 import { convertMeasureDefinitionOverrides, convertParameterValues } from "./afm/toAfmResultSpec.js";
 
+/*
+ * Export timezone channels
+ * ------------------------
+ * The effective dashboard timezone travels to the exporters through two sibling properties whose
+ * duplication is deliberate — each has a different consumer:
+ *
+ * - Root `timezoneId` (visual/image/slides requests) is consumed by the backend: Playwright sets
+ *   it as the headless browser's timezone (`setTimezoneId`), which drives the browser-detected
+ *   resolution and client-side date display, and the export-date stamp printed on the document is
+ *   formatted in it. Tabular/raw requests carry the equivalent as `executionSettings.timezone`,
+ *   consumed directly by the server-side computation.
+ * - `metadata.timezoneId` is consumed by the dashboard rendered in the headless browser: the
+ *   metadata blob is the only part of the export request the UI can read back (no endpoint
+ *   returns the request itself), and the dashboard applies the value as its execution timezone
+ *   override before the first widget executions — without it, an explicitly configured dashboard
+ *   timezone would win over the requested one. Image exports run through the slides pipeline, so
+ *   their headless page reads the mirror via the slides metadata channel.
+ *
+ * Sites mirroring the value into `metadata` reference this note as "Export timezone channels".
+ */
+
 export const convertExportDefinitionMdObjectDefinition = (
     exportDefinition: IExportDefinitionMetadataObjectDefinition,
 ): JsonApiExportDefinitionPostOptionalIdDocument => {
@@ -118,7 +139,10 @@ export const convertToRawExportRequest = (
         (value) => value === undefined || (Array.isArray(value) && value.length === 0),
     );
 
-    const executionSettings = isEmpty(settings) ? undefined : settings;
+    // The execution-config timezone (already the effective dashboard timezone) wins over the stored override.
+    const timezone = settings.timezone ?? exportRequest.timezoneId;
+    const settingsWithTimezone = { ...settings, ...(timezone ? { timezone } : {}) };
+    const executionSettings = isEmpty(settingsWithTimezone) ? undefined : settingsWithTimezone;
     const delimiter = exportRequest.settings?.delimiter;
 
     return {
@@ -141,7 +165,8 @@ export const convertToImageExportRequest = (
         if (!widget || !dashboard) {
             throw new UnexpectedError("Export definition must have a widget or dashboard");
         }
-        const isMetadataFilled = title || filters || parametersByTab;
+        const timezoneId = exportRequest.timezoneId;
+        const isMetadataFilled = title || filters || parametersByTab || timezoneId;
         const metadataObj = {
             ...(isMetadataFilled
                 ? {
@@ -152,6 +177,8 @@ export const convertToImageExportRequest = (
                                 }
                               : {}),
                           ...(parametersByTab ? { parametersByTab } : {}),
+                          // metadata copy for the headless render — see "Export timezone channels" above
+                          ...(timezoneId ? { timezoneId } : {}),
                           ...(title ? { title } : {}),
                       },
                   }
@@ -163,6 +190,7 @@ export const convertToImageExportRequest = (
             fileName: exportRequest.fileName,
             format: exportRequest.format,
             widgetIds: [widget],
+            ...(timezoneId ? { timezoneId } : {}),
             ...metadataObj,
         };
     }
@@ -190,7 +218,8 @@ export const convertToSlidesExportRequest = (
               }, {})
             : undefined;
 
-        const isMetadataFilled = title || filters || filtersByTab || parametersByTab;
+        const timezoneId = exportRequest.timezoneId;
+        const isMetadataFilled = title || filters || filtersByTab || parametersByTab || timezoneId;
         const metadataObj = {
             ...(isMetadataFilled
                 ? {
@@ -202,6 +231,8 @@ export const convertToSlidesExportRequest = (
                               : {}),
                           ...(filtersByTabObj ? { filtersByTab: filtersByTabObj } : {}),
                           ...(parametersByTab ? { parametersByTab } : {}),
+                          // metadata copy for the headless render — see "Export timezone channels" above
+                          ...(timezoneId ? { timezoneId } : {}),
                           ...(title ? { title } : {}),
                       },
                   }
@@ -213,6 +244,7 @@ export const convertToSlidesExportRequest = (
             format,
             dashboardId: dashboard,
             ...(exportRequest.templateId ? { templateId: exportRequest.templateId } : {}),
+            ...(timezoneId ? { timezoneId } : {}),
             ...metadataObj,
         };
     }
@@ -229,10 +261,13 @@ export const convertToSlidesExportRequest = (
         dashboardId: dashboard,
         widgetIds: [widget],
         ...(exportRequest.templateId ? { templateId: exportRequest.templateId } : {}),
+        ...(exportRequest.timezoneId ? { timezoneId: exportRequest.timezoneId } : {}),
         metadata: {
             widget,
             ...(filters ? { filters: convertSdkFiltersToTiger(filters) } : {}),
             ...(parametersByTab ? { parametersByTab } : {}),
+            // metadata copy for the headless render — see "Export timezone channels" above
+            ...(exportRequest.timezoneId ? { timezoneId: exportRequest.timezoneId } : {}),
             ...(title ? { title } : {}),
         },
     };
@@ -252,7 +287,8 @@ export const convertToVisualExportRequest = (
           }, {})
         : undefined;
 
-    const isMetadataFilled = title || filters || filtersByTab || parametersByTab;
+    const timezoneId = exportRequest.timezoneId;
+    const isMetadataFilled = title || filters || filtersByTab || parametersByTab || timezoneId;
     const metadataObj = {
         ...(isMetadataFilled
             ? {
@@ -264,6 +300,8 @@ export const convertToVisualExportRequest = (
                           : {}),
                       ...(filtersByTabObj ? { filtersByTab: filtersByTabObj } : {}),
                       ...(parametersByTab ? { parametersByTab } : {}),
+                      // metadata copy for the headless render — see "Export timezone channels" above
+                      ...(timezoneId ? { timezoneId } : {}),
                       ...(title ? { title } : {}),
                   },
               }
@@ -273,6 +311,7 @@ export const convertToVisualExportRequest = (
     return {
         fileName: exportRequest.fileName,
         dashboardId: dashboard,
+        ...(timezoneId ? { timezoneId } : {}),
         ...metadataObj,
     };
 };
@@ -317,6 +356,9 @@ export const convertToDashboardTabularExportRequest = (
             dashboardTabsFiltersOverrides:
                 dashboardTabsFiltersOverrides as unknown as DashboardTabularExportRequestV2["dashboardTabsFiltersOverrides"],
             dashboardTabsParametersOverrides: parametersByTab,
+            ...(exportRequest.timezoneId
+                ? { executionSettings: { timezone: exportRequest.timezoneId } }
+                : {}),
         };
     }
     throw new UnexpectedError("Export definition must be dashboard and XLSX");
@@ -351,6 +393,9 @@ export const convertToTabularExportRequest = (
             ...filtersObj,
             ...parametersObj,
             relatedDashboardId: dashboard,
+            ...(exportRequest.timezoneId
+                ? { executionSettings: { timezone: exportRequest.timezoneId } }
+                : {}),
             settings: {
                 ...(delimiter ? { delimiter } : {}),
                 ...(mergeHeaders ? { mergeHeaders } : {}),
@@ -408,6 +453,7 @@ export const convertVisualizationToDashboardTabularExportRequest = (
         widgetIds: [widget],
         dashboardFiltersOverride: convertSdkFiltersToTiger(filters)?.filter(isTigerFilterContextItem),
         dashboardTabsParametersOverrides: parametersByTab,
+        ...(exportRequest.timezoneId ? { executionSettings: { timezone: exportRequest.timezoneId } } : {}),
         settings,
     };
 };
@@ -427,7 +473,8 @@ export const convertExportDefinitionRequestPayload = (
               }, {})
             : undefined;
 
-        const isMetadataFilled = title || filters || filtersByTab || parametersByTab;
+        const timezoneId = exportRequest.timezoneId;
+        const isMetadataFilled = title || filters || filtersByTab || parametersByTab || timezoneId;
         const metadataObj = {
             ...(isMetadataFilled
                 ? {
@@ -439,6 +486,8 @@ export const convertExportDefinitionRequestPayload = (
                               : {}),
                           ...(filtersByTabObj ? { filtersByTab: filtersByTabObj } : {}),
                           ...(parametersByTab ? { parametersByTab } : {}),
+                          // metadata copy for the headless render — see "Export timezone channels" above
+                          ...(timezoneId ? { timezoneId } : {}),
                           ...(title ? { title } : {}),
                       },
                   }
@@ -448,6 +497,7 @@ export const convertExportDefinitionRequestPayload = (
         return {
             fileName: exportRequest.fileName,
             dashboardId: dashboard,
+            ...(timezoneId ? { timezoneId } : {}),
             ...metadataObj,
         } as VisualExportRequest;
     }
@@ -470,6 +520,7 @@ export const convertExportDefinitionRequestPayload = (
         ...filtersObj,
         ...parametersObj,
         relatedDashboardId: dashboard,
+        ...(exportRequest.timezoneId ? { executionSettings: { timezone: exportRequest.timezoneId } } : {}),
         settings: {
             ...(delimiter ? { delimiter } : {}),
             ...(mergeHeaders ? { mergeHeaders } : {}),

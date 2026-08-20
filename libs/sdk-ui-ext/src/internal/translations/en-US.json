@@ -2519,6 +2519,10 @@
         "text": "This access is inherited from a group or a parent workspace and cannot be removed here.",
         "crowdinContext": "Tooltip on the disabled Remove access action in a grantee row's permission menu, shown when the grantee has no permission granted in this workspace, so there is nothing here to remove."
     },
+    "objectShare.granteeLevel.inheritedCovered": {
+        "text": "This level is already covered by access inherited from a group or a parent workspace.",
+        "crowdinContext": "Tooltip on a disabled permission level in a grantee row's menu, shown when an inherited grant already covers that level, so picking it could not change what the grantee can do."
+    },
     "objectShare.grantee.you": {
         "text": "{name} (you)",
         "crowdinContext": "Display name of the signed-in user's own row in the share dialog grantee list. {name} is the user's full name."
@@ -2546,6 +2550,10 @@
     "objectShare.toast.error": {
         "text": "Access could not be updated.",
         "crowdinContext": "Toast shown when an access change fails."
+    },
+    "objectShare.toast.escalationRefused": {
+        "text": "You can only grant permissions that you have yourself.",
+        "crowdinContext": "Error toast shown when a permission change was refused because the user tried to grant a higher permission level than they hold themselves."
     },
     "objectShare.toast.labelScopePartial": {
         "text": "Some label access could not be saved.",

@@ -313,13 +313,12 @@ describe("bucketsIsEmpty", () => {
 });
 
 describe("bucketsModifyItem", () => {
+    // must not mutate the input item: the items come from shared fixtures reused by other tests
     const modifications: BucketItemModifications = (bucketItem: IAttributeOrMeasure): IAttributeOrMeasure => {
         if (isMeasure(bucketItem)) {
-            (bucketItem as IMeasure).measure.title = "Modified measure title";
-        } else {
-            bucketItem.attribute.alias = "Modified attribute alias";
+            return { measure: { ...bucketItem.measure, title: "Modified measure title" } };
         }
-        return bucketItem;
+        return { attribute: { ...bucketItem.attribute, alias: "Modified attribute alias" } };
     };
 
     it("should return another empty bucket for empty bucket", () => {

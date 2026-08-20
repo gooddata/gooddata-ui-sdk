@@ -12,6 +12,7 @@ import {
 import { type AccessGranteeDetail, idRef } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import type { IObjectAccessSummary } from "@gooddata/sdk-ui-ext";
+import { createTightWaitFor } from "@gooddata/util";
 
 import { TestIntlProvider } from "../../../localization/TestIntlProvider.js";
 import { CatalogItemAccessRow } from "../CatalogItemAccessRow.js";
@@ -64,6 +65,12 @@ const attribute = makeItem("attr.region");
 const target = { kind: "attribute" as const, ref: idRef("attr.region", "attribute") };
 const NO_LABELS = { labels: [], loading: false, error: false };
 
+// The probes below render `null`, so waitFor's MutationObserver never fires and each
+// wait falls back to the default 50ms poll — the whole cost of these tests. Every wait
+// here only bridges an already-resolved promise plus a React state flush, so poll on
+// the next tick instead.
+const settle = createTightWaitFor(waitFor);
+
 function renderProvider(
     backend: IAnalyticalBackend,
     children: React.ReactNode,
@@ -98,7 +105,7 @@ describe("CatalogItemShareProvider", () => {
 
         renderProvider(backend, <Probe />);
 
-        await waitFor(() =>
+        await settle(() =>
             expect(summary).toEqual({
                 generalAccess: "RESTRICTED",
                 workspaceLevel: "VIEW",
@@ -119,7 +126,7 @@ describe("CatalogItemShareProvider", () => {
         }
 
         renderProvider(backend, <Probe />);
-        await waitFor(() => expect(summary?.granteeCount).toBe(1));
+        await settle(() => expect(summary?.granteeCount).toBe(1));
 
         const updated: IObjectAccessSummary = {
             generalAccess: "WORKSPACE",
@@ -162,7 +169,7 @@ describe("CatalogItemShareProvider", () => {
         await act(async () => {
             release({ grants: [USER_GRANT] });
         });
-        await waitFor(() => expect(canShare).toBe(true));
+        await settle(() => expect(canShare).toBe(true));
     });
 
     it("never offers sharing when the access list is not permissionable", async () => {
@@ -247,7 +254,7 @@ describe("CatalogItemShareProvider", () => {
         }
 
         const { rerenderWith } = renderProvider(backend, <Probe />);
-        await waitFor(() => expect(state?.summary).toBeDefined());
+        await settle(() => expect(state?.summary).toBeDefined());
         act(() => open());
         expect(state?.isOpen).toBe(true);
 
@@ -259,7 +266,7 @@ describe("CatalogItemShareProvider", () => {
 
         expect(state?.isOpen).toBe(false);
         expect(state?.summary).toBeUndefined();
-        await waitFor(() => expect(state?.summary).toBeDefined()); // the new item's own fetch lands
+        await settle(() => expect(state?.summary).toBeDefined()); // the new item's own fetch lands
 
         // Regression (found in browser): navigating BACK to the item whose dialog was
         // open must not reopen it — a lingering `dialogFor` would match the key again.
@@ -286,7 +293,7 @@ describe("CatalogItemShareProvider", () => {
             </BackendProvider>
         );
         const { rerender } = render(tree("ws-a"));
-        await waitFor(() => expect(state?.summary).toBeDefined());
+        await settle(() => expect(state?.summary).toBeDefined());
         act(() => open());
         expect(state?.isOpen).toBe(true);
 
@@ -295,7 +302,7 @@ describe("CatalogItemShareProvider", () => {
         rerender(tree("ws-b"));
         expect(state?.isOpen).toBe(false);
         expect(state?.summary).toBeUndefined();
-        await waitFor(() => expect(state?.summary).toBeDefined()); // ws-b's own fetch
+        await settle(() => expect(state?.summary).toBeDefined()); // ws-b's own fetch
     });
 
     it("scopes the session to the backend instance, not just the item key", async () => {
@@ -318,7 +325,7 @@ describe("CatalogItemShareProvider", () => {
             </BackendProvider>
         );
         const { rerender } = render(tree(backendA));
-        await waitFor(() => expect(state?.summary).toBeDefined());
+        await settle(() => expect(state?.summary).toBeDefined());
         act(() => open());
         expect(state?.isOpen).toBe(true);
 
@@ -327,7 +334,7 @@ describe("CatalogItemShareProvider", () => {
         rerender(tree(backendB));
         expect(state?.isOpen).toBe(false);
         expect(state?.summary).toBeUndefined();
-        await waitFor(() => expect(state?.summary).toBeDefined()); // backend B's own fetch
+        await settle(() => expect(state?.summary).toBeDefined()); // backend B's own fetch
     });
 
     it("re-renders state consumers on an open/close tick but not actions-only consumers", async () => {
@@ -355,7 +362,7 @@ describe("CatalogItemShareProvider", () => {
                 <ActionsConsumer />
             </>,
         );
-        await waitFor(() => expect(summaryDefined).toBe(true));
+        await settle(() => expect(summaryDefined).toBe(true));
         const stateRendersBefore = stateRenders.mock.calls.length;
         const actionsRendersBefore = actionsRenders.mock.calls.length;
 
@@ -405,7 +412,7 @@ describe("CatalogItemShareProvider", () => {
 
         renderProvider(backend, <Probe />);
 
-        await waitFor(() => expect(stateActive).toBe(false));
+        await settle(() => expect(stateActive).toBe(false));
         expect(actionsActive).toBe(false);
     });
 
@@ -425,7 +432,7 @@ describe("CatalogItemShareProvider", () => {
 
         renderProvider(backend, <Probe />);
 
-        await waitFor(() => expect(state?.summaryError).toBe(true));
+        await settle(() => expect(state?.summaryError).toBe(true));
         expect(state?.active).toBe(true);
         expect(state?.summary).toBeUndefined();
     });

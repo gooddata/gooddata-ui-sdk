@@ -5,17 +5,14 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { withIntlForTest } from "@gooddata/sdk-ui";
 
-import { FilterButtonCustomIcon as mockFilterButtonCustomIcon } from "../../../../shared/components/internal/FilterButtonCustomIcon.js";
 import {
     AttributeFilterDropdownButton,
     type IAttributeFilterDropdownButtonProps,
 } from "../AttributeFilterDropdownButton.js";
 
-vi.mock("../../../../shared/components/internal/FilterButtonCustomIcon.js", () => ({
-    FilterButtonCustomIcon: vi.fn(() => null),
-}));
-
 const ATTRIBUTE_FILTER_BUTTON_SELECTOR = ".s-attribute-filter";
+const CUSTOM_ICON_WRAPPER_SELECTOR = ".s-gd-filter-button-custom-icon-wrapper";
+const CUSTOM_ICON_SELECTOR = ".s-gd-filter-button-custom-icon";
 
 describe("Test AttributeFilterDropdownButton", () => {
     const renderComponent = (props = {}) => {
@@ -50,12 +47,20 @@ describe("Test AttributeFilterDropdownButton", () => {
 
     it("should render custom icon", () => {
         const customIcon = {
-            icon: "icon",
+            icon: "gd-icon-lock",
             tooltip: "tooltip",
         };
 
-        renderComponent({ customIcon });
-        expect(mockFilterButtonCustomIcon).toHaveBeenCalledWith({ customIcon }, undefined);
+        const { container } = renderComponent({ customIcon });
+
+        expect(container.querySelector(CUSTOM_ICON_WRAPPER_SELECTOR)).toBeInTheDocument();
+        expect(container.querySelector(CUSTOM_ICON_SELECTOR)).toHaveClass(customIcon.icon);
+    });
+
+    it("should not render custom icon when it is not provided", () => {
+        const { container } = renderComponent();
+
+        expect(container.querySelector(CUSTOM_ICON_WRAPPER_SELECTOR)).toBeFalsy();
     });
 
     it("should render the button as disabled", () => {

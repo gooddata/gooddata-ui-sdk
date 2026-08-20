@@ -19,8 +19,11 @@ interface IFormReadyProps {
 
 let formReadyCalled = false;
 
+// The implementation is passed to `vi.fn` rather than added with `mockImplementation`, so the
+// suite-wide `restoreMocks` between tests reinstates it instead of leaving the hook returning
+// undefined.
 vi.mock("@aaronhayes/react-use-hubspot-form", () => ({
-    useHubspotForm: vi.fn().mockImplementation((arg: IFormReadyProps) => {
+    useHubspotForm: vi.fn((arg: IFormReadyProps) => {
         if (!formReadyCalled) {
             arg.onFormReady([
                 {

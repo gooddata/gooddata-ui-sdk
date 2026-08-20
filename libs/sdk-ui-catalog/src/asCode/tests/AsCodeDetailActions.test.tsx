@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import type { PropsWithChildren } from "react";
 import { describe, expect, it, vi } from "vitest";
 
@@ -44,28 +44,7 @@ const metricDescriptor: IAsCodeDescriptor = withMutationPort(
     createTestMetricMutationPort(),
 );
 
-vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
-    const original = await importOriginal<Record<string, unknown>>();
-    return {
-        ...original,
-        UiConfigEditor: ({
-            value,
-            onChange,
-            disabled,
-        }: {
-            value: string;
-            onChange: (value: string) => void;
-            disabled?: boolean;
-        }) => (
-            <textarea
-                data-testid="yaml-editor"
-                value={value}
-                disabled={disabled}
-                onChange={(e) => onChange(e.target.value)}
-            />
-        ),
-    };
-});
+vi.mock("../AsCodeEditorBody.js", () => import("./asCodeEditorBody.test.utils.js"));
 
 const measureItem: ICatalogItemMeasure = {
     identifier: "revenue.total",
@@ -83,6 +62,13 @@ const measureItem: ICatalogItemMeasure = {
 };
 
 const stubBackend = {} as unknown as IAnalyticalBackend;
+
+/**
+ * React's anti-flicker throttle: once a Suspense fallback commits, revealing the resolved content is
+ * deferred by up to 300ms (`FALLBACK_THROTTLE_MS`) on a `setTimeout`. The edit dialog `lazy()`-loads its
+ * editor body, so the first open always pays it — waiting it out in real time is what made this test slow.
+ */
+const SUSPENSE_FALLBACK_THROTTLE_MS = 300;
 
 function Wrapper({ children }: PropsWithChildren) {
     return (
@@ -139,11 +125,23 @@ describe("AsCodeDetailActions (metric)", () => {
     });
 
     it("opens the inline edit dialog on Edit click", async () => {
-        renderActions({ onOpen: vi.fn() });
+        // Warm the module registry first: fake timers cannot drive the loader that resolves the chunk.
+        await import("../AsCodeEditorBody.js");
+        // With the chunk in hand, the reveal waits on nothing but the throttle — skip it forward.
+        vi.useFakeTimers();
+        try {
+            renderActions({ onOpen: vi.fn() });
 
-        fireEvent.click(screen.getByRole("button", { name: /^edit$/i }));
+            fireEvent.click(screen.getByRole("button", { name: /^edit$/i }));
+            await act(async () => {
+                // The timer is armed once the chunk pings, a tick into the advance, so overshoot it.
+                await vi.advanceTimersByTimeAsync(2 * SUSPENSE_FALLBACK_THROTTLE_MS);
+            });
 
-        expect(await screen.findByTestId("yaml-editor")).toBeInTheDocument();
+            expect(screen.getByTestId("yaml-editor")).toBeInTheDocument();
+        } finally {
+            vi.useRealTimers();
+        }
     });
 
     it("opens the delete confirmation from the menu", async () => {

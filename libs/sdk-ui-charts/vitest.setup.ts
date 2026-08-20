@@ -3,7 +3,7 @@
 // oxlint-disable @typescript-eslint/no-empty-object-type
 
 import { cleanup } from "@testing-library/react";
-import { afterEach, expect } from "vitest";
+import { afterEach, expect, vi } from "vitest";
 import * as matchers from "vitest-dom/dist/matchers.js";
 import { type TestingLibraryMatchers } from "vitest-dom/dist/matchers.js";
 
@@ -21,6 +21,8 @@ expect.extend(matchers);
 
 afterEach(() => {
     cleanup();
+    // tests run without isolation, so any fake timers left behind would leak into the other test files
+    vi.useRealTimers();
 });
 
 global.CSS = {

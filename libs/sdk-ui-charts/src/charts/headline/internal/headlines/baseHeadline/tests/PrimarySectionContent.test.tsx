@@ -1,33 +1,23 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { PrimarySectionContent } from "../PrimarySectionContent.js";
 
-import { createMockUseBaseHeadline } from "./BaseHeadline.test.helpers.js";
+import { createBaseHeadlineTestContext } from "./BaseHeadline.test.helpers.js";
 
-const useBaseHeadlineMock = vi.hoisted(() => vi.fn());
-
-vi.mock("../BaseHeadlineContext.js", () => ({
-    useBaseHeadline: useBaseHeadlineMock,
-}));
-
-const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
+const { setBaseHeadline, wrapper } = createBaseHeadlineTestContext();
 
 describe("PrimarySectionContent", () => {
     const renderPrimarySectionContent = (props: { primaryItem: IBaseHeadlineItem }) => {
-        return render(<PrimarySectionContent {...props} />);
+        return render(<PrimarySectionContent {...props} />, { wrapper });
     };
 
     beforeEach(() => {
-        mockUseBaseHeadline();
-    });
-
-    afterAll(() => {
-        vi.clearAllMocks();
+        setBaseHeadline();
     });
 
     it("Should render base headline data item from provided baseHeadlineDataItemComponent property", () => {

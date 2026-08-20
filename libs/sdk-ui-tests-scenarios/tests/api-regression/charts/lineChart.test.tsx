@@ -1,41 +1,29 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { describe, expect, it, vi } from "vitest";
-
-// Prepare hoisted global extractProps variable which gets its value in hoisted mock and then is used in test.
-let { extractProps } = vi.hoisted(() => ({
-    extractProps: null as any,
-}));
+import { describe, expect, it } from "vitest";
 
 import { defSetSorts } from "@gooddata/sdk-model";
 import { type ILineChartProps } from "@gooddata/sdk-ui-charts";
 
 import { type ScenarioAndDescription } from "../../../src/index.js";
 import { lineChart as lineChartScenario } from "../../../src/scenarios/charts/lineChart/index.js";
+import { captureProps } from "../../_infra/coreChartMocks.js";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
 import { mountChartAndCapture } from "../../_infra/render.js";
 import { mountInsight } from "../../_infra/renderPlugVis.js";
 import { cleanupCoreChartProps } from "../../_infra/utils.js";
 
-vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreLineChart", async () => {
-    const Original = await vi.importActual<any>("@gooddata/sdk-ui-charts/internal-tests/CoreLineChart");
-    const { withPropsExtractor } = await import("../../_infra/withProps.js");
-    const { extractProps: originalExtractProps, wrap } = withPropsExtractor();
-    extractProps = originalExtractProps;
-
-    return {
-        ...Original,
-        CoreLineChart: wrap(Original.CoreLineChart),
-    };
-});
-
-describe.skip("LineChart", () => {
+describe("LineChart", () => {
     const Scenarios: Array<ScenarioAndDescription<ILineChartProps>> = lineChartScenario.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 
     describe.each(Scenarios)("with %s", (_desc, scenario) => {
-        const promisedInteractions = mountChartAndCapture(scenario);
+        // Single mount per scenario serves all the assertions below - the props extractor already
+        // captures the core chart props of this very mount, so there is no need to render twice.
+        const promisedInteractions = captureProps((extractProps: () => any) =>
+            mountChartAndCapture(scenario, extractProps),
+        );
 
         it("should create expected execution definition", async () => {
             const interactions = await promisedInteractions;
@@ -44,8 +32,6 @@ describe.skip("LineChart", () => {
         });
 
         it("should create expected props for core chart", async () => {
-            const promisedInteractions = mountChartAndCapture(scenario, extractProps);
-
             const interactions = await promisedInteractions;
 
             expect(interactions.effectiveProps).toBeDefined();

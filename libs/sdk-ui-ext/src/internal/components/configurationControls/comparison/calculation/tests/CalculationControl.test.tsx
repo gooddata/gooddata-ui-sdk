@@ -2,7 +2,7 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
 import { CalculateAs, type CalculationType } from "@gooddata/sdk-ui-charts";
 
@@ -11,9 +11,9 @@ import { type IComparisonControlProperties } from "../../../../../interfaces/Con
 import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
-import { DropdownControl } from "../../../DropdownControl.js";
-import { CalculationControl } from "../CalculationControl.js";
-import { CalculationListItem } from "../CalculationListItem.js";
+import type * as DropdownControlModule from "../../../DropdownControl.js";
+import type * as CalculationControlModule from "../CalculationControl.js";
+import type * as CalculationListItemModule from "../CalculationListItem.js";
 
 vi.mock("../../../DropdownControl.js", async (importOriginal) => {
     // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -35,6 +35,27 @@ vi.mock("../CalculationListItem.js", async (importOriginal) => {
         ...actual,
         CalculationListItem: vi.fn(actual.CalculationListItem),
     };
+});
+
+/*
+ * Test isolation is disabled for this package, so the module cache is shared between test files:
+ * CalculationControl.js may already have been evaluated - bound to the real dependencies - by another test
+ * file, and the mocked graph this file builds must not outlive it. Re-import the whole trio up front so this
+ * file always observes the mocked dependencies, and drop the mocked graph again on the way out.
+ */
+let DropdownControl: typeof DropdownControlModule.DropdownControl;
+let CalculationControl: typeof CalculationControlModule.CalculationControl;
+let CalculationListItem: typeof CalculationListItemModule.CalculationListItem;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ DropdownControl } = await import("../../../DropdownControl.js"));
+    ({ CalculationListItem } = await import("../CalculationListItem.js"));
+    ({ CalculationControl } = await import("../CalculationControl.js"));
+});
+
+afterAll(() => {
+    vi.resetModules();
 });
 
 const CALCULATION_CONTROL_LABEL_TEXT_QUERY = "Calculated as";

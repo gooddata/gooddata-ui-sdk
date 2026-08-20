@@ -4,13 +4,14 @@ import { type PropsWithChildren } from "react";
 
 import { act, renderHook, waitFor as rtlWaitFor } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
-import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
+import { type Mock, afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import {
     type IAnalyticalBackend,
     type IObjectPermissionsObject,
     type IWorkspaceObjectPermissionsService,
+    PermissionEscalationRefused,
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -19,18 +20,20 @@ import {
     type IAvailableAccessGrantee,
     type IGranularAccessGrantee,
     type IUser,
+    type IWorkspacePermissions,
     idRef,
     uriRef,
 } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
+import { createTightWaitFor } from "@gooddata/util";
 
+import { objectShareMessages } from "../messages.js";
 import type {
     IObjectShareController,
     IUseObjectShareOptions,
     ObjectSharePermissionLevel,
 } from "../objectShareController.types.js";
 import type { IObjectShareLabel } from "../types.js";
-import { useObjectShareController } from "../useObjectShareController.js";
 
 // Toast is a side-effect, not the logic under test — stub it so the controller's
 // addSuccess/addError calls are observable no-ops without a ToastsCenter provider.
@@ -45,15 +48,32 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
     };
 });
 
+/*
+ * Test isolation is disabled for this package, so the module cache is shared between test files:
+ * useObjectShareController.js may already have been evaluated - bound to another file's useToastMessage
+ * stub - elsewhere, and the mocked graph this file builds must not outlive it. Re-import it up front so the
+ * toast spies above are the ones the controller calls, and drop the mocked graph again on the way out.
+ *
+ * This runs while the file is still being imported, not from a `beforeAll`: the re-import pulls the whole
+ * ui-kit graph behind the controller through the mock above, and whichever file loads it first in a worker
+ * pays seconds for it - more than the 10s `hookTimeout` allows on a loaded CI machine, which is what made
+ * this suite flake. Module loading carries no such budget, and there is nothing cheaper to move off it:
+ * the reset is what the mock wiring depends on.
+ */
+vi.resetModules();
+const { useObjectShareController } = await import("../useObjectShareController.js");
+
+afterAll(() => {
+    vi.resetModules();
+});
+
 /**
  * `renderHook` mounts a component that renders nothing, so a controller state change
  * mutates no DOM. waitFor's MutationObserver therefore never fires and every await
- * falls through to its 50ms polling interval — a flat 50ms tax per call, even though
- * the controller settles on the next microtask. Poll at 1ms instead of 50ms.
+ * falls through to its default polling interval — a flat tax per call, even though
+ * the controller settles on the next microtask. Poll tightly instead.
  */
-function waitFor<T>(callback: () => T | Promise<T>): Promise<T> {
-    return rtlWaitFor(callback, { interval: 1 });
-}
+const waitFor = createTightWaitFor(rtlWaitFor);
 
 const WORKSPACE = "ws";
 const TARGET: IObjectPermissionsObject = { kind: "label", ref: idRef("label.country") };
@@ -61,6 +81,10 @@ const TARGET: IObjectPermissionsObject = { kind: "label", ref: idRef("label.coun
 // A definitive 404 — the backend's signal that a label isn't independently
 // permissionable. Distinct from a transient error (which must NOT drop the label).
 const notFound = () => new UnexpectedResponseError("Not Found", 404, {});
+
+// The refusal the backend reports for granting more than the caller holds. The tiger
+// converter builds it from the 400 (see its own tests); here it arrives already typed.
+const escalationRefused = () => new PermissionEscalationRefused("refused");
 
 const USER_GRANT: AccessGranteeDetail = {
     type: "granularUser",
@@ -73,6 +97,9 @@ const ASSIGNEES: IAvailableAccessGrantee[] = [
     { type: "user", ref: idRef("u2"), name: "Marek", email: "marek@example.com", status: "ENABLED" },
     { type: "group", ref: idRef("g1"), name: "Marketing" },
 ];
+
+/** How the mocked backend answers the caller's workspace permissions. */
+type ManagePermission = false | "reject" | { canManageProject: boolean };
 
 interface IMockService {
     getAccessList: Mock;
@@ -95,7 +122,12 @@ const getUserMock = vi.fn(
     }),
 );
 
-function makeBackend(svc: IMockService): IAnalyticalBackend {
+// Only `canManageProject` is read; the interface has ~20 required members, so this is
+// a genuine partial mock.
+const workspacePermissionsFor = (canManageProject: boolean) =>
+    ({ canManageProject }) as IWorkspacePermissions;
+
+function makeBackend(svc: IMockService, manage: ManagePermission = false): IAnalyticalBackend {
     const base = dummyBackendEmptyData();
     return {
         ...base,
@@ -105,6 +137,15 @@ function makeBackend(svc: IMockService): IAnalyticalBackend {
         workspace: (id: string) => ({
             ...base.workspace(id),
             objectPermissions: () => svc as unknown as IWorkspaceObjectPermissionsService,
+            // The dummy backend throws NotSupported here; answer deterministically.
+            permissions: () => ({
+                getPermissionsForCurrentUser: async () => {
+                    if (manage === "reject") {
+                        throw new Error("workspace permissions unavailable");
+                    }
+                    return workspacePermissionsFor(manage === false ? false : manage.canManageProject);
+                },
+            }),
         }),
     } as unknown as IAnalyticalBackend;
 }
@@ -121,8 +162,9 @@ function renderController(
     svc: IMockService,
     target: IObjectPermissionsObject | undefined,
     options?: IUseObjectShareOptions,
+    manage: ManagePermission = false,
 ) {
-    const backend = makeBackend(svc);
+    const backend = makeBackend(svc, manage);
     const wrapper = ({ children }: PropsWithChildren) => (
         <IntlProvider locale="en-US" messages={{}}>
             <BackendProvider backend={backend}>
@@ -1479,6 +1521,39 @@ describe("useObjectShareController", () => {
         expect(svc.getAccessList).toHaveBeenCalledTimes(1); // no refetch on failure
     });
 
+    it("says why when the backend refuses a write as an escalation", async () => {
+        // Levels above the caller's own stay enabled on OTHER rows, so a refusal must
+        // explain itself instead of reading like a transient failure.
+        const svc = makeService();
+        svc.manageObjectPermissions.mockRejectedValueOnce(escalationRefused());
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "EDIT");
+        });
+
+        expect(addError).toHaveBeenCalledWith(objectShareMessages.toastEscalationRefused);
+        expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.level).toBe("VIEW");
+    });
+
+    it("keeps the generic message for a failure that is not an escalation", async () => {
+        const svc = makeService();
+        svc.manageObjectPermissions.mockRejectedValueOnce(
+            new UnexpectedResponseError("Boom", 400, {
+                detail: "Something else entirely",
+            }),
+        );
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "SHARE");
+        });
+
+        expect(addError).toHaveBeenCalledWith(objectShareMessages.toastError);
+    });
+
     it("exposes the passed labels in state", async () => {
         const { result } = renderController(makeLabelAwareService(), TARGET, { labels: LABELS });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
@@ -1753,7 +1828,9 @@ describe("useObjectShareController", () => {
         // drops to VIEW.
         const svc = makeLabelAwareService();
         const { result } = renderController(svc, TARGET, { labels: LABELS });
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        // The level change is refused until the per-label probe settles, so wait for
+        // the scope — not just the access list — or the whole test races the probe.
+        await waitFor(() => expect(result.current.state.labelsResolved).toBe(true));
         await act(async () => {
             await result.current.actions.changePermissionLevel("user:u1", "EDIT");
         });
@@ -1793,7 +1870,9 @@ describe("useObjectShareController", () => {
         // EDIT grantee we just failed to remove.
         const svc = makeLabelAwareService();
         const { result } = renderController(svc, TARGET, { labels: LABELS });
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        // Both the level change and the removal below are refused until the per-label
+        // probe settles, so wait for the scope rather than just the access list.
+        await waitFor(() => expect(result.current.state.labelsResolved).toBe(true));
         await act(async () => {
             await result.current.actions.changePermissionLevel("user:u1", "EDIT");
         });
@@ -3152,11 +3231,35 @@ describe("useObjectShareController row classification", () => {
         expect(result.current.state.selfManagedDisabledLevels).toEqual(["EDIT"]);
     });
 
-    it("does not classify a self row as self-managed when other grantees exist", async () => {
+    it("classifies the caller's own row as self-managed alongside other grantees", async () => {
+        // With another grantee present the caller could previously raise themselves
+        // and drop their own access with no confirm.
         const { result } = renderController(makeService([SELF_GRANT, USER_GRANT]), TARGET);
         await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.selfManagedGranteeId).toBe("user:self"));
+        expect(result.current.state.selfManagedDisabledLevels).toEqual(["EDIT"]);
+        // Policy reads the SELF row's level, not the first row's.
+        expect(result.current.state.grantees[0]!.id).toBe("user:self");
+    });
+
+    it("exempts a workspace manager's own row from the self-restriction policy", async () => {
+        // A manager has no ceiling to cap and no lockout to confirm. A SOLE self
+        // grant, the shape that always engaged the policy before.
+        const { result } = renderController(makeService([SELF_GRANT]), TARGET, undefined, {
+            canManageProject: true,
+        });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(getUserMock).toHaveResolved());
+        await act(async () => {});
         expect(result.current.state.selfManagedGranteeId).toBeUndefined();
         expect(result.current.state.selfManagedDisabledLevels).toBeUndefined();
+    });
+
+    it("applies the policy when the workspace permission cannot be read", async () => {
+        // Fail-safe: an unread MANAGE permission must not read as "is a manager".
+        const { result } = renderController(makeService([SELF_GRANT]), TARGET, undefined, "reject");
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.selfManagedGranteeId).toBe("user:self"));
     });
 
     it("locks a sole user row's controls while the profile cannot resolve", async () => {
@@ -3168,6 +3271,27 @@ describe("useObjectShareController row classification", () => {
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         expect(result.current.state.granteeControlsLocked).toBe(true);
         expect(result.current.state.selfManagedGranteeId).toBeUndefined();
+    });
+
+    it("locks user rows in a longer list while the profile cannot resolve", async () => {
+        // The self-restriction policy now follows the caller's row however many are
+        // listed, so its precondition must too: with no identity, any user row could be
+        // theirs, and an unguarded change can lose their access for good.
+        getUserMock.mockRejectedValueOnce(new Error("profile down"));
+        const { result } = renderController(makeService([USER_GRANT, SELF_GRANT]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(result.current.state.granteeControlsLocked).toBe(true);
+        expect(result.current.state.selfManagedGranteeId).toBeUndefined();
+    });
+
+    it("does not lock rows for a known workspace manager", async () => {
+        // A manager's own row carries no confirm, so there is nothing to protect.
+        getUserMock.mockRejectedValueOnce(new Error("profile down"));
+        const { result } = renderController(makeService([USER_GRANT, SELF_GRANT]), TARGET, undefined, {
+            canManageProject: true,
+        });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.granteeControlsLocked).toBe(false));
     });
 
     it("does not lock a sole group row on profile resolution", async () => {
@@ -3285,6 +3409,30 @@ describe("useObjectShareController row classification", () => {
 
         expect(result.current.state.grantees).toEqual([]);
         expect(result.current.state.adminSelfRow).toEqual({ name: "self" });
+    });
+
+    it("does not brand the caller Admin after they restrict workspace access in-session", async () => {
+        // Reproduced in browser: a caller whose way in was a share-capable rule and
+        // who then restricts access must not be rebranded as an Admin.
+        const SHARE_RULE: AccessGranteeDetail = {
+            type: "allWorkspaceUsers",
+            permissions: ["SHARE", "VIEW"],
+            inheritedPermissions: [],
+        };
+        const { result } = renderController(makeService([SHARE_RULE]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(getUserMock).toHaveResolved());
+        expect(result.current.state.adminSelfRow).toBeUndefined(); // rule was the way in
+
+        act(() => result.current.actions.requestGeneralAccessChange("RESTRICTED"));
+        await act(async () => {
+            await result.current.actions.confirmGeneralAccessChange();
+        });
+
+        expect(result.current.state.generalAccess).toBe("RESTRICTED");
+        expect(result.current.state.grantees).toEqual([]);
+        // Still no badge: the SEED said the rule was share-capable.
+        expect(result.current.state.adminSelfRow).toBeUndefined();
     });
 });
 
