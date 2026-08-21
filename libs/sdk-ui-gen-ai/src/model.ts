@@ -37,7 +37,7 @@ export type GenAIAgent = {
  */
 export type TextContentObject = {
     id: string;
-    type: "metric" | "attribute" | "fact" | "date" | "label" | "dashboard" | "visualization";
+    type: "metric" | "attribute" | "fact" | "date" | "label" | "dashboard" | "visualization" | "dataset";
     title: string;
 };
 

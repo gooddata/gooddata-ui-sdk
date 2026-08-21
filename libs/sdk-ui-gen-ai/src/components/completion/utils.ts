@@ -8,6 +8,7 @@ import {
     type CatalogItem,
     type IAttributeDisplayFormMetadataObject,
     type ICatalogDateAttribute,
+    type IDataSetMetadataObject,
     type ObjRef,
     isAttributeDisplayFormMetadataObject,
     isCatalogAttribute,
@@ -15,6 +16,7 @@ import {
     isCatalogDateDataset,
     isCatalogFact,
     isCatalogMeasure,
+    isDataSetMetadataObject,
     isIdentifierRef,
 } from "@gooddata/sdk-model";
 
@@ -84,6 +86,7 @@ const SupportedReferenceTypes = [
     "label",
     "dashboard",
     "visualization",
+    "dataset",
 ] as const;
 
 // Utility: Get regex for references
@@ -244,7 +247,7 @@ export function getCompletionItemId(data: ICompletionItem) {
 
 // Utility: Get catalog item ID
 export function getCatalogItemId(
-    item: CatalogItem | ICatalogDateAttribute | IAttributeDisplayFormMetadataObject,
+    item: CatalogItem | ICatalogDateAttribute | IAttributeDisplayFormMetadataObject | IDataSetMetadataObject,
 ): string | null {
     if (isCatalogFact(item)) {
         return item.fact.id;
@@ -264,12 +267,15 @@ export function getCatalogItemId(
     if (isAttributeDisplayFormMetadataObject(item)) {
         return item.id;
     }
+    if (isDataSetMetadataObject(item)) {
+        return item.id;
+    }
     return null;
 }
 
 // Utility: Get catalog item ID
 export function getCatalogItemTitle(
-    item: CatalogItem | ICatalogDateAttribute | IAttributeDisplayFormMetadataObject,
+    item: CatalogItem | ICatalogDateAttribute | IAttributeDisplayFormMetadataObject | IDataSetMetadataObject,
 ) {
     if (isCatalogFact(item)) {
         return item.fact.title ?? item.fact.id;
@@ -289,12 +295,15 @@ export function getCatalogItemTitle(
     if (isAttributeDisplayFormMetadataObject(item)) {
         return item.title ?? item.id;
     }
+    if (isDataSetMetadataObject(item)) {
+        return item.title ?? item.id;
+    }
     return "Unknown Item";
 }
 
 // Utility: Get a catalog item type
 export function getCatalogItemType(
-    item: CatalogItem | ICatalogDateAttribute | IAttributeDisplayFormMetadataObject,
+    item: CatalogItem | ICatalogDateAttribute | IAttributeDisplayFormMetadataObject | IDataSetMetadataObject,
 ): (typeof SupportedReferenceTypes)[number] | null {
     if (isCatalogFact(item)) {
         return "fact";
@@ -313,6 +322,9 @@ export function getCatalogItemType(
     }
     if (isAttributeDisplayFormMetadataObject(item)) {
         return "label";
+    }
+    if (isDataSetMetadataObject(item)) {
+        return "dataset";
     }
     return null;
 }

@@ -95,7 +95,9 @@ $gd-message-padding-vertical: 4px;
     box-sizing: border-box;
     display: inline-block;
     padding: $gd-message-padding-vertical 8px $gd-message-padding-vertical 10px;
-    @include mixins.clearfix();
+    // min-height: auto instead of the mixin default 1px - 1px overrides the flex automatic
+    // minimum size, letting any flex parent squeeze the message below its content.
+    @include mixins.clearfix(auto);
 
     line-height: 1.4em;
     pointer-events: all;

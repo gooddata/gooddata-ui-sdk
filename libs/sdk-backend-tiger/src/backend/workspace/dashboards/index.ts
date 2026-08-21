@@ -103,6 +103,7 @@ import {
     type IWidget,
     type ObjRef,
     areObjRefsEqual,
+    exportOverrideFilterContextIdentifier,
     idRef,
     isFilterContext,
     isFilterContextDefinition,
@@ -177,6 +178,26 @@ function getExportMetadataFetchCache(authCall: TigerAuthenticatedCallGuard): Map
         exportMetadataFetchCaches.set(authCall, cache);
     }
     return cache;
+}
+
+/**
+ * Builds the filter context that replaces the dashboard's persisted one during an export render,
+ * carrying the filters captured at export-request time. Stamped with the shared export-override
+ * identifier so consumers can recognize it via `isExportOverrideFilterContext`.
+ */
+export function buildExportOverrideFilterContext(
+    exportId: string,
+    filters: FilterContextItem[],
+): IFilterContext {
+    const identifier = exportOverrideFilterContextIdentifier(exportId);
+    return {
+        filters,
+        title: `temp-filter-context-${exportId}`,
+        description: "temp-filter-context-description",
+        ref: { identifier },
+        uri: `uri-${exportId}`,
+        identifier,
+    };
 }
 
 export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
@@ -359,14 +380,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const filterContextFromFilters = convertedExportMetadata?.filters
             ? {
-                  filterContext: {
-                      filters: convertedExportMetadata.filters,
-                      title: `temp-filter-context-${exportId}`,
-                      description: "temp-filter-context-description",
-                      ref: { identifier: `identifier-${exportId}` },
-                      uri: `uri-${exportId}`,
-                      identifier: `identifier-${exportId}`,
-                  },
+                  filterContext: buildExportOverrideFilterContext(exportId, convertedExportMetadata.filters),
               }
             : undefined;
 
@@ -375,14 +389,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             exportTabId &&
             convertedExportMetadata.filtersByTab[exportTabId]
                 ? {
-                      filterContext: {
-                          filters: convertedExportMetadata.filtersByTab[exportTabId],
-                          title: `temp-filter-context-${exportId}`,
-                          description: "temp-filter-context-description",
-                          ref: { identifier: `identifier-${exportId}` },
-                          uri: `uri-${exportId}`,
-                          identifier: `identifier-${exportId}`,
-                      },
+                      filterContext: buildExportOverrideFilterContext(
+                          exportId,
+                          convertedExportMetadata.filtersByTab[exportTabId],
+                      ),
                   }
                 : undefined;
 

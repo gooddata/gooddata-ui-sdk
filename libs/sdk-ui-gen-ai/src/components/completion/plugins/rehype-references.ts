@@ -29,6 +29,7 @@ export function rehypeReferences(references: TextContentObject[], tokens: string
                                     label: obj.type === "label",
                                     fact: obj.type === "fact",
                                     date: obj.type === "date",
+                                    dataset: obj.type === "dataset",
                                     dashboard: obj.type === "dashboard",
                                     visualization: obj.type === "visualization",
                                 }),

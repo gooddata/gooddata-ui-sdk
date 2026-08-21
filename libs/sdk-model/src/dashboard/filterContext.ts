@@ -954,6 +954,46 @@ export function isTempFilterContext(obj: unknown): obj is ITempFilterContext {
 }
 
 /**
+ * Returns the identifier a backend stamps on the filter context it synthesizes from stored export
+ * metadata when a dashboard is loaded for an export render (identified by `exportId`).
+ *
+ * @remarks
+ * The synthesized context replaces the dashboard's persisted filter context so that the export
+ * renders with the filters captured at export-request time. It is structurally a regular
+ * {@link IFilterContext}, so this identifier is its only distinguishing mark; use
+ * {@link isExportOverrideFilterContext} to test for it.
+ *
+ * The literal must stay stable across versions: the host application that loads the dashboard and
+ * the dashboard engine that consumes it may run different SDK versions (module federation).
+ *
+ * @param exportId - identifier of the export the dashboard is being rendered for
+ * @internal
+ */
+export function exportOverrideFilterContextIdentifier(exportId: string): string {
+    return `identifier-${exportId}`;
+}
+
+/**
+ * Tests whether the provided filter context carries filters supplied by export metadata in place
+ * of the dashboard's persisted filter context: either a {@link ITempFilterContext}, or a filter
+ * context stamped with {@link exportOverrideFilterContextIdentifier} for the given export.
+ *
+ * @param obj - object to test
+ * @param exportId - identifier of the export the dashboard is being rendered for, if any
+ * @internal
+ */
+export function isExportOverrideFilterContext(obj: unknown, exportId: string | undefined): boolean {
+    if (isTempFilterContext(obj)) {
+        return true;
+    }
+    return (
+        exportId !== undefined &&
+        isFilterContext(obj) &&
+        obj.identifier === exportOverrideFilterContextIdentifier(exportId)
+    );
+}
+
+/**
  * Reference to a particular dashboard date filter
  * This is commonly used to define filters to ignore
  * for the particular dashboard widget

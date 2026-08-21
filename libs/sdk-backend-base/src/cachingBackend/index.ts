@@ -2910,6 +2910,10 @@ function cacheControl(ctx: CachingContext): CacheControl {
             ctx.caches.workspaceMeasures?.clear();
         },
 
+        resetAutomations: () => {
+            ctx.caches.workspaceAutomations?.clear();
+        },
+
         resetAll: () => {
             control.resetExecutions();
             control.resetCatalogs();
@@ -2922,6 +2926,7 @@ function cacheControl(ctx: CachingContext): CacheControl {
             control.resetExportTemplates();
             control.resetInsights();
             control.resetMeasures();
+            control.resetAutomations();
         },
     };
 
@@ -2996,6 +3001,11 @@ export type CacheControl = {
      * Resets all workspace measures caches.
      */
     resetMeasures: () => void;
+
+    /**
+     * Resets all workspace automation caches.
+     */
+    resetAutomations: () => void;
 
     /**
      * Convenience method to reset all caches (calls all the particular resets).

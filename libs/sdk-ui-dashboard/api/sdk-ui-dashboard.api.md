@@ -236,7 +236,7 @@ import { WeekStart } from '@gooddata/sdk-model';
 import { WritableDraft } from 'immer';
 
 // @beta (undocumented)
-export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR" | "CANCELLED";
+export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
 
 // @beta
 export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string, selectionMode?: DashboardAttributeFilterSelectionMode, mode?: DashboardAttributeFilterConfigMode, initialSelection?: IAttributeElements, initialIsNegativeSelection?: boolean, localIdentifier?: string, primaryDisplayForm?: ObjRef, title?: string): IAddAttributeFilter;

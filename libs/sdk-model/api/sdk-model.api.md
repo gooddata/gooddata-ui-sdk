@@ -733,6 +733,9 @@ export function exportDefinitionTitle(exportDefinition: IExportDefinitionMetadat
 // @alpha
 export function exportDefinitionUpdated(exportDefinition: IExportDefinitionMetadataObject): string | undefined;
 
+// @internal
+export function exportOverrideFilterContextIdentifier(exportId: string): string;
+
 // @beta
 export type ExportTemplateAppliedOn = "PDF" | "PPTX";
 
@@ -5263,6 +5266,9 @@ export function isExportDefinitionDashboardRequestPayload(obj: unknown): obj is 
 
 // @alpha
 export function isExportDefinitionVisualizationObjectRequestPayload(obj: unknown): obj is IExportDefinitionVisualizationObjectRequestPayload;
+
+// @internal
+export function isExportOverrideFilterContext(obj: unknown, exportId: string | undefined): boolean;
 
 // @alpha
 export function isExternalPluggableApplicationRegistryItem(app: PluggableApplicationRegistryItem): app is ExternalPluggableApplicationRegistryItem;

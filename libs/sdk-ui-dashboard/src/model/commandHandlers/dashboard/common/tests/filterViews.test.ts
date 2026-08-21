@@ -8,7 +8,9 @@ import {
     type IDashboardFilterView,
     type IDashboardParameter,
     type IFilterContext,
+    type ITempFilterContext,
     type MeasureValueFilterCondition,
+    exportOverrideFilterContextIdentifier,
     idRef,
 } from "@gooddata/sdk-model";
 
@@ -81,7 +83,7 @@ describe("filterViews", () => {
                 parameters: [{ ...topNParameter, value: 99 }],
             });
 
-            const updated = applyDefaultFilterView(dashboard, [filterView]);
+            const updated = applyDefaultFilterView(dashboard, [filterView], undefined);
 
             expect(updated.tabs?.[0]?.parameters).toEqual([{ ...topNParameter, value: 99 }]);
         });
@@ -102,7 +104,7 @@ describe("filterViews", () => {
                 parameters: [topNParameter],
             });
 
-            const updated = applyDefaultFilterView(dashboard, [filterView]);
+            const updated = applyDefaultFilterView(dashboard, [filterView], undefined);
 
             expect(updated.tabs?.[0]?.parameters).toEqual([topNParameter]);
         });
@@ -127,10 +129,112 @@ describe("filterViews", () => {
                 parameters: [{ ...topNParameter, value: 99 }],
             });
 
-            const updated = applyDefaultFilterView(dashboard, [filterView]);
+            const updated = applyDefaultFilterView(dashboard, [filterView], undefined);
 
             expect(updated.tabs?.[0]?.parameters).toBeUndefined();
             expect(updated.tabs?.[1]?.parameters).toBeUndefined();
+        });
+
+        describe("export override filter context", () => {
+            const liveFilter: FilterContextItem = {
+                attributeFilter: {
+                    attributeElements: { uris: ["live-value"] },
+                    displayForm: { identifier: "df.category", type: "displayForm" },
+                    negativeSelection: false,
+                    localIdentifier: "filter-1",
+                },
+            };
+            const viewFilter: FilterContextItem = {
+                attributeFilter: {
+                    attributeElements: { uris: ["view-value"] },
+                    displayForm: { identifier: "df.category", type: "displayForm" },
+                    negativeSelection: false,
+                    localIdentifier: "filter-1",
+                },
+            };
+
+            const buildExportOverrideContext = (
+                exportId: string,
+                filters: FilterContextItem[],
+            ): IFilterContext => {
+                const identifier = exportOverrideFilterContextIdentifier(exportId);
+                return {
+                    ref: { identifier },
+                    identifier,
+                    uri: `uri-${exportId}`,
+                    title: `temp-filter-context-${exportId}`,
+                    description: "",
+                    filters,
+                };
+            };
+
+            it("does not apply the default view over filters supplied by export metadata", () => {
+                const dashboard = buildDashboard({
+                    filterContext: buildExportOverrideContext("export-1", [liveFilter]),
+                });
+                const filterView = buildFilterView({
+                    filterContext: { title: "", description: "", filters: [viewFilter] },
+                });
+
+                const updated = applyDefaultFilterView(dashboard, [filterView], "export-1");
+
+                expect(updated).toBe(dashboard);
+            });
+
+            it("does not apply per-tab default views or their parameters over export-supplied filters", () => {
+                const overrideContext = buildExportOverrideContext("export-1", [liveFilter]);
+                const dashboard = buildDashboard({
+                    filterContext: overrideContext,
+                    tabs: [
+                        {
+                            localIdentifier: "tab-A",
+                            title: "Tab A",
+                            filterContext: overrideContext,
+                            parameters: [{ ...topNParameter, value: 25 }],
+                        },
+                    ],
+                });
+                const filterView = buildFilterView({
+                    tabLocalIdentifier: "tab-A",
+                    filterContext: { title: "", description: "", filters: [viewFilter] },
+                    parameters: [{ ...topNParameter, value: 99 }],
+                });
+
+                const updated = applyDefaultFilterView(dashboard, [filterView], "export-1");
+
+                expect(updated).toBe(dashboard);
+                expect(updated.tabs?.[0]?.parameters).toEqual([{ ...topNParameter, value: 25 }]);
+            });
+
+            it("applies the default view when the filter context belongs to a different export", () => {
+                const dashboard = buildDashboard({
+                    filterContext: buildExportOverrideContext("another-export", [liveFilter]),
+                });
+                const filterView = buildFilterView({
+                    filterContext: { title: "", description: "", filters: [viewFilter] },
+                });
+
+                const updated = applyDefaultFilterView(dashboard, [filterView], "export-1");
+
+                expect((updated.filterContext as IFilterContext).filters).toEqual([viewFilter]);
+            });
+
+            it("does not apply the default view over a temp filter context", () => {
+                const tempFilterContext: ITempFilterContext = {
+                    ref: { identifier: "temp-fc" },
+                    uri: "/temp-fc",
+                    created: "2026-08-20 00:00:00",
+                    filters: [liveFilter],
+                };
+                const dashboard = buildDashboard({ filterContext: tempFilterContext });
+                const filterView = buildFilterView({
+                    filterContext: { title: "", description: "", filters: [viewFilter] },
+                });
+
+                const updated = applyDefaultFilterView(dashboard, [filterView], undefined);
+
+                expect(updated).toBe(dashboard);
+            });
         });
     });
 

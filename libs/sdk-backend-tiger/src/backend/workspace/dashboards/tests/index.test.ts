@@ -2,9 +2,17 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IDashboardTab, type IFilterContext, idRef } from "@gooddata/sdk-model";
+import {
+    type FilterContextItem,
+    type IDashboardTab,
+    type IFilterContext,
+    idRef,
+    isExportOverrideFilterContext,
+    isFilterContext,
+    isTempFilterContext,
+} from "@gooddata/sdk-model";
 
-import { getOrphanedTabFilterContexts } from "../index.js";
+import { buildExportOverrideFilterContext, getOrphanedTabFilterContexts } from "../index.js";
 
 function makeFilterContext(id: string): IFilterContext {
     return {
@@ -72,5 +80,36 @@ describe("getOrphanedTabFilterContexts", () => {
 
     it("returns empty array when both tab lists are empty", () => {
         expect(getOrphanedTabFilterContexts([], [])).toEqual([]);
+    });
+});
+
+describe("buildExportOverrideFilterContext", () => {
+    const filters: FilterContextItem[] = [
+        {
+            attributeFilter: {
+                attributeElements: { uris: ["live-value"] },
+                displayForm: { identifier: "df.category", type: "displayForm" },
+                negativeSelection: false,
+                localIdentifier: "filter-1",
+            },
+        },
+    ];
+
+    it("carries the export metadata filters", () => {
+        expect(buildExportOverrideFilterContext("export-1", filters).filters).toEqual(filters);
+    });
+
+    it("is recognized as the override for its export and no other", () => {
+        const filterContext = buildExportOverrideFilterContext("export-1", filters);
+
+        expect(isExportOverrideFilterContext(filterContext, "export-1")).toBe(true);
+        expect(isExportOverrideFilterContext(filterContext, "export-2")).toBe(false);
+    });
+
+    it("stays a regular filter context, not a temp one (temp contexts are dropped by KD's load)", () => {
+        const filterContext = buildExportOverrideFilterContext("export-1", filters);
+
+        expect(isFilterContext(filterContext)).toBe(true);
+        expect(isTempFilterContext(filterContext)).toBe(false);
     });
 });
