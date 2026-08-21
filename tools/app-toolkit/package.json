@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/app-toolkit",
-    "version": "11.54.0-alpha.1",
+    "version": "11.54.0-alpha.2",
     "description": "CLI with useful tools for creating and maintaining GoodData web applications.",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData",
@@ -38,8 +38,8 @@
         "lint-fix": "oxlint . --quiet --fix && eslint src --fix",
         "prepack": "cp -f ../../NOTICE ./NOTICE",
         "prepublishOnly": "npm run build",
-        "test": "vitest watch --passWithNoTests",
-        "test-once": "vitest run --passWithNoTests",
+        "test": "vitest watch",
+        "test-once": "vitest run",
         "validate": "npm run dep-cruiser && npm run lint && npm run format-check"
     },
     "dependencies": {

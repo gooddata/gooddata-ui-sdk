@@ -968,6 +968,8 @@
     "userManagement.workspace.permission.createFilterView.tooltip": "Thêm quyền CREATE_FILTER_VIEW để tạo và lưu các tổ hợp bộ lọc bảng điều khiển để tái sử dụng nhanh.",
     "userManagement.workspace.permission.createAutomation": "Cảnh báo và các bản xuất theo lịch biểu",
     "userManagement.workspace.permission.createAutomation.tooltip": "Thêm quyền CREATE_AUTOMATIONS để tạo cảnh báo tự động và các bản xuất theo lịch biểu.",
+    "userManagement.workspace.permission.createMetric": "Chỉ số",
+    "userManagement.workspace.permission.createMetric.tooltip": "Thêm quyền CREATE_METRIC để tạo, chỉnh sửa hoặc xóa chỉ số.",
     "userManagement.workspace.permission.useAiAssistant": "Trợ lý AI",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "Thêm quyền USE_AI_ASSISTANT để truy cập và tương tác với chatbot AI cho các câu hỏi phân tích.",
     "userManagement.workspace.granularPermission.noWorkspace": "Không có không gian làm việc nào được chọn",

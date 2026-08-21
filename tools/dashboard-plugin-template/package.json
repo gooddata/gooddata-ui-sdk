@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/dashboard-plugin-template",
-    "version": "11.54.0-alpha.1",
+    "version": "11.54.0-alpha.2",
     "private": true,
     "description": "GoodData Template for Dashboard Plugins",
     "license": "LicenseRef-LICENSE",
@@ -43,8 +43,8 @@
         "refresh-md": "node ./scripts/refresh-md.js",
         "remove-plugin-params": "gdc-plugins dashboard-plugin remove-params",
         "start": "webpack-cli serve --config-name harness",
-        "test": "vitest --watch --passWithNoTests",
-        "test-once": "vitest run --passWithNoTests",
+        "test": "vitest --watch",
+        "test-once": "vitest run",
         "unlink-plugin": "gdc-plugins dashboard-plugin unlink",
         "update-plugin-params": "gdc-plugins dashboard-plugin update-params",
         "validate": "tsgo && npm run dep-cruiser && npm run lint && npm run format-check"

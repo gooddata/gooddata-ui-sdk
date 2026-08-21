@@ -968,6 +968,8 @@
     "userManagement.workspace.permission.createFilterView.tooltip": "Lisää CREATE_FILTER_VIEW -oikeus luoda ja tallentaa dashboard-suodatinyhdistelmiä nopeaa uudelleenkäyttöä varten.",
     "userManagement.workspace.permission.createAutomation": "Hälytykset ja ajoitetut viennit",
     "userManagement.workspace.permission.createAutomation.tooltip": "Lisää CREATE_AUTOMATIONS oikeus luoda automaattisia hälytyksiä ja ajoitettuja vientejä.",
+    "userManagement.workspace.permission.createMetric": "Mittarit",
+    "userManagement.workspace.permission.createMetric.tooltip": "Lisää CREATE_METRIC-oikeuden mittarien luomiseen, muokkaamiseen tai poistamiseen.",
     "userManagement.workspace.permission.useAiAssistant": "Tekoälyavustaja",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "Lisää USE_AI_ASSISTANT oikeuden käyttää tekoälyä käyttävää chatbottia ja olla vuorovaikutuksessa sen kanssa analytiikkakysymyksissä.",
     "userManagement.workspace.granularPermission.noWorkspace": "Työtilaa ei ole valittu",

@@ -968,6 +968,8 @@
     "userManagement.workspace.permission.createFilterView.tooltip": "Doda dovoljenje USTVARI_FILTER_POGLED za ustvarjanje in shranjevanje kombinacij filtrov nadzornih plošč za hitro ponovno uporabo.",
     "userManagement.workspace.permission.createAutomation": "Opozorila in načrtovani izvozi",
     "userManagement.workspace.permission.createAutomation.tooltip": "Doda dovoljenje USTVARI_AVTOMATIZACIJE za ustvarjanje avtomatskih opozoril in načrtovanih izvozov.",
+    "userManagement.workspace.permission.createMetric": "Metrike",
+    "userManagement.workspace.permission.createMetric.tooltip": "Doda dovoljenje CREATE_METRIC za ustvarjanje, urejanje ali brisanje metrik.",
     "userManagement.workspace.permission.useAiAssistant": "AI pomočnik",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "Doda dovoljenje UPORABI_AI_POMOČNIKA za dostop in interakcijo z AI klepetalnikom za analitična vprašanja.",
     "userManagement.workspace.granularPermission.noWorkspace": "Noben delovni prostor ni izbran",

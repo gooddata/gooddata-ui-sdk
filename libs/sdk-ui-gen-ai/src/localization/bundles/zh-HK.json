@@ -208,7 +208,7 @@
     "gd.gen-ai.interactionIntelligence.close": "關閉",
     "gd.gen-ai.interactionIntelligence.back": "返回",
     "gd.gen-ai.interactionIntelligence.footer.traceId.label": "追蹤 ID：",
-    "gd.gen-ai.interactionIntelligence.footer.traceId.tooltip": "跟蹤識別碼可幫助我哋盡快識別、調查和解決問題。 如果你決定聯繫我哋嘅支持團隊，請向我哋提供此識別碼。",
+    "gd.gen-ai.interactionIntelligence.footer.traceId.tooltip": "追蹤識別碼有助我們盡快識別、調查及解決問題。如果您決定聯絡我們的支援團隊，請向我們提供此識別碼。",
     "gd.gen-ai.interactionIntelligence.summary.tokens": "{count, plural, other {{formattedCount} 個權杖}}",
     "gd.gen-ai.interactionIntelligence.pager": "<b>{current}</b> / {total}",
     "gd.gen-ai.interactionIntelligence.pager.previous": "上一項活動",

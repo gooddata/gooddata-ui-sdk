@@ -968,6 +968,8 @@
     "userManagement.workspace.permission.createFilterView.tooltip": "เพิ่มสิทธิ์ CREATE_FILTER_VIEW เพื่อสร้างและบันทึกชุดค่าผสมของตัวกรองแดชบอร์ดสำหรับการนำกลับมาใช้ใหม่อย่างรวดเร็ว",
     "userManagement.workspace.permission.createAutomation": "การแจ้งเตือนและการส่งออกตามกำหนดการ",
     "userManagement.workspace.permission.createAutomation.tooltip": "เพิ่มสิทธิ์ CREATE_AUTOMATIONS เพื่อสร้างการแจ้งเตือนอัตโนมัติและการส่งออกตามกำหนดการ",
+    "userManagement.workspace.permission.createMetric": "เมตริก",
+    "userManagement.workspace.permission.createMetric.tooltip": "เพิ่มสิทธิ์ CREATE_METRIC เพื่อสร้าง แก้ไข หรือลบเมตริก",
     "userManagement.workspace.permission.useAiAssistant": "AI Assistant",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "เพิ่มสิทธิ์ USE_AI_ASSISTANT เพื่อเข้าถึงและโต้ตอบกับแชตบอต AI สำหรับคำถามด้านการวิเคราะห์",
     "userManagement.workspace.granularPermission.noWorkspace": "ไม่ได้เลือกพื้นที่ทำงาน",

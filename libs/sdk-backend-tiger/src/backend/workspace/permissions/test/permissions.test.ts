@@ -6,7 +6,9 @@ import type { JsonApiWorkspaceOutMetaPermissionsEnum } from "@gooddata/api-clien
 import { EntitiesApi_GetEntityWorkspaces } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import type { IWorkspacePermissions } from "@gooddata/sdk-model";
 
+import { type TigerAuthenticatedCallGuard } from "../../../../types/index.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../../constants.js";
+import { TigerWorkspacePermissionsFactory } from "../index.js";
 
 type TigerPermissionType = JsonApiWorkspaceOutMetaPermissionsEnum;
 
@@ -24,6 +26,7 @@ function getPermission(permissions: Array<TigerPermissionType>) {
     const canCreateFilterView = hasPermission(permissions, "CREATE_FILTER_VIEW");
     const canCreateAutomation = hasPermission(permissions, "CREATE_AUTOMATION");
     const canUseAiAssistant = hasPermission(permissions, "USE_AI_ASSISTANT");
+    const canCreateMetric = hasPermission(permissions, "CREATE_METRIC");
 
     return {
         canViewWorkspace,
@@ -35,6 +38,7 @@ function getPermission(permissions: Array<TigerPermissionType>) {
         canCreateFilterView,
         canCreateAutomation,
         canUseAiAssistant,
+        canCreateMetric,
     };
 }
 
@@ -49,6 +53,7 @@ function processPermissions(permissions: Array<TigerPermissionType>): IWorkspace
         canCreateFilterView,
         canCreateAutomation,
         canUseAiAssistant,
+        canCreateMetric,
     } = getPermission(permissions);
 
     return {
@@ -82,6 +87,7 @@ function processPermissions(permissions: Array<TigerPermissionType>): IWorkspace
         canExportPdf: canExportPdf || canExportReport,
         canCreateFilterView,
         canCreateAutomation,
+        canCreateMetric,
     };
 }
 
@@ -142,6 +148,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canManageACL: false,
             canManageAnalyticalDashboard: false,
             canManageDomain: false,
+            canCreateMetric: false,
             canManageMetric: false,
             canManageProject: false,
             canManageReport: false,
@@ -188,6 +195,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canManageACL: false,
             canManageAnalyticalDashboard: true,
             canManageDomain: false,
+            canCreateMetric: false,
             canManageMetric: true,
             canManageProject: false,
             canManageReport: true,
@@ -234,6 +242,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canManageACL: false,
             canManageAnalyticalDashboard: true,
             canManageDomain: false,
+            canCreateMetric: false,
             canManageMetric: true,
             canManageProject: true,
             canManageReport: true,
@@ -243,5 +252,23 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canCreateFilterView: false,
             canUseAiAssistant: false,
         });
+    });
+
+    it("maps the granular CREATE_METRIC permission", async () => {
+        const createFactory = (permissions: Array<TigerPermissionType>) =>
+            new TigerWorkspacePermissionsFactory(
+                getWithDefinedPermissions(permissions)[0] as unknown as TigerAuthenticatedCallGuard,
+                workspaceId,
+            );
+
+        const granted = await createFactory([
+            "ANALYZE",
+            "VIEW",
+            "CREATE_METRIC",
+        ]).getPermissionsForCurrentUser();
+        const notGranted = await createFactory(["ANALYZE", "VIEW"]).getPermissionsForCurrentUser();
+
+        expect(granted.canCreateMetric).toBe(true);
+        expect(notGranted.canCreateMetric).toBe(false);
     });
 });

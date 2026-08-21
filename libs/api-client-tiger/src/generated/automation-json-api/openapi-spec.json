@@ -1386,6 +1386,9 @@
                             "YEAR"
                         ]
                     },
+                    "settings": {
+                        "$ref": "#/components/schemas/ExecutionSettings"
+                    },
                     "trigger": {
                         "type": "string",
                         "description": "Trigger behavior for the alert.\nALWAYS - alert is triggered every time the condition is met.\nONCE - alert is triggered only once when the condition is met.\nONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS.\n",

@@ -968,6 +968,8 @@
     "userManagement.workspace.permission.createFilterView.tooltip": "대시보드 필터 조합을 빠르게 재사용할 수 있도록 CREATE_FILTER_VIEW 권한을 추가하여 생성 및 저장합니다.",
     "userManagement.workspace.permission.createAutomation": "경고 및 예약된 내보내기",
     "userManagement.workspace.permission.createAutomation.tooltip": "자동화된 경고 및 예약된 내보내기를 생성하기 위한 CREATE_AUTOMATIONS 권한을 추가합니다",
+    "userManagement.workspace.permission.createMetric": "메트릭",
+    "userManagement.workspace.permission.createMetric.tooltip": "메트릭을 생성, 편집 또는 삭제할 수 있도록 CREATE_METRIC 권한을 추가합니다.",
     "userManagement.workspace.permission.useAiAssistant": "AI 어시스턴트",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "USE_AI_ASSISTANT 권한을 추가하여 분석 질문을 위한 AI 챗봇에 접근하고 상호작용합니다.",
     "userManagement.workspace.granularPermission.noWorkspace": "작업 공간이 선택되지 않음",

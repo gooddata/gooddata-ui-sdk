@@ -1,13 +1,15 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
-import { actionChannel, call, take } from "redux-saga/effects";
+import { actionChannel, call, cancelled, flush, take } from "redux-saga/effects";
 
 import { DefaultCommandHandlers } from "../../commandHandlers/index.js";
 import { type IDashboardCommand } from "../../commands/base.js";
 import { type DashboardCommands } from "../../commands/index.js";
 import { isDashboardEvent } from "../../events/base.js";
 import {
+    type IDashboardCommandFailed,
+    commandCancelled,
     commandRejected,
     dashboardCommandStarted,
     internalErrorOccurred,
@@ -30,7 +32,8 @@ export const CommandEnvelopeActionPrefix = "__C";
 type CommandEnvelopeEventHandlers<TCommand extends IDashboardCommand, TResult> = {
     onStart: (command: TCommand) => void;
     onSuccess: (result: TResult) => void;
-    onError: (err: Error) => void;
+    // Command handlers signal failure by throwing the event; a plain Error only arrives from an unexpected throw.
+    onError: (err: Error | IDashboardCommandFailed) => void;
 };
 
 type CommandEnvelope<TCommand extends IDashboardCommand, TResult> = Readonly<
@@ -85,6 +88,29 @@ function ensureCommandWrappedInEnvelope(
     action: DashboardCommands | CommandEnvelope<DashboardCommands, any>,
 ): CommandEnvelope<DashboardCommands, any> {
     return isCommandEnvelope(action) ? action : commandEnvelope(action as DashboardCommands);
+}
+
+/**
+ * Callers wait either on the envelope callbacks or on the COMMAND.FAILED event, so both have to be told.
+ */
+function* reportCommandCancelled(
+    ctx: DashboardContext,
+    envelope: CommandEnvelope<DashboardCommands, any>,
+): SagaIterator<void> {
+    const { command } = envelope;
+    const correlationIdForLog = command.correlationId ?? "(no correlationId provided)";
+    const event = commandCancelled(ctx, command);
+
+    try {
+        envelope.onError(event);
+    } catch (e) {
+        console.warn(
+            `An error has occurred while calling onError function provided for ${command.type}@${correlationIdForLog} processing:`,
+            e,
+        );
+    }
+
+    yield dispatchDashboardEvent(event);
 }
 
 function* processCommand(
@@ -144,6 +170,11 @@ function* processCommand(
                 internalErrorOccurred(ctx, command, `Internal error has occurred while handling ${type}`, e),
             );
         }
+    } finally {
+        // A saga cancellation is not an exception, so it never reaches the catch above.
+        if (yield cancelled()) {
+            yield call(reportCommandCancelled, ctx, envelope);
+        }
     }
 }
 
@@ -164,12 +195,25 @@ export function* rootCommandHandler(): SagaIterator<void> {
             (action.type.startsWith(CommandEnvelopeActionPrefix) || action.type.startsWith("GDC.DASH/CMD")),
     );
 
-    while (true) {
-        const command: DashboardCommands | CommandEnvelope<DashboardCommands, any> =
-            yield take(commandChannel);
-        const envelope = ensureCommandWrappedInEnvelope(command);
-        const ctx: DashboardContext = yield call(getDashboardContext);
+    try {
+        while (true) {
+            const command: DashboardCommands | CommandEnvelope<DashboardCommands, any> =
+                yield take(commandChannel);
+            const envelope = ensureCommandWrappedInEnvelope(command);
+            const ctx: DashboardContext = yield call(getDashboardContext);
 
-        yield call(processCommand, ctx, envelope);
+            yield call(processCommand, ctx, envelope);
+        }
+    } finally {
+        // Whatever is still buffered never reached processCommand, so nothing else can report it.
+        if (yield cancelled()) {
+            const buffered: (DashboardCommands | CommandEnvelope<DashboardCommands, any>)[] =
+                yield flush(commandChannel);
+            const ctx: DashboardContext = yield call(getDashboardContext);
+
+            for (const command of buffered) {
+                yield call(reportCommandCancelled, ctx, ensureCommandWrappedInEnvelope(command));
+            }
+        }
     }
 }

@@ -968,6 +968,8 @@
     "userManagement.workspace.permission.createFilterView.tooltip": "Dodaje uprawnienie CREATE_FILTER_VIEW do tworzenia i zapisywania kombinacji filtrów pulpitu nawigacyjnego do szybkiego ponownego użycia.",
     "userManagement.workspace.permission.createAutomation": "Alerty i zaplanowane eksporty",
     "userManagement.workspace.permission.createAutomation.tooltip": "Dodaje uprawnienie CREATE_AUTOMATIONS do tworzenia automatycznych alertów i zaplanowanych eksportów.",
+    "userManagement.workspace.permission.createMetric": "Metryki",
+    "userManagement.workspace.permission.createMetric.tooltip": "Dodaje uprawnienie CREATE_METRIC do tworzenia, edytowania lub usuwania metryk.",
     "userManagement.workspace.permission.useAiAssistant": "Asystent AI",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "Dodaje uprawnienie USE_AI_ASSISTANT do dostępu i interakcji z chatbotem AI w celu zadawania pytań analitycznych.",
     "userManagement.workspace.granularPermission.noWorkspace": "Nie wybrano obszaru roboczego",

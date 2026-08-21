@@ -106,6 +106,22 @@
 @mixin object-types($type: "user") {
     .gd-gen-ai-chat__message__object {
         font-weight: normal;
+        border-radius: 20px;
+        padding: 0 5px;
+
+        @if $type == "user" {
+            border: 1px solid var(--gd-palette-complementary-0-t10);
+
+            &:hover {
+                border: 1px solid var(--gd-palette-complementary-0-t50);
+            }
+        } @else {
+            border: 1px solid var(--gd-palette-complementary-3);
+
+            &:hover {
+                border: 1px solid var(--gd-palette-complementary-5);
+            }
+        }
 
         &.metric {
             @if $type == "user" {

@@ -1,5 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
+import { act } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { suppressConsole } from "@gooddata/util";
@@ -224,6 +225,57 @@ describe("DateFilter", () => {
             expect(isRelativeFormGranularitySelected("year")).toBe(true);
             expect(getRelativeFormInputFromValue()).toEqual("2 years ago");
             expect(getRelativeFormInputToValue()).toEqual("2 years ahead");
+        });
+    });
+
+    describe("submitting the absolute form with Enter", () => {
+        // the range picker defers the submit by a tick, see DateRangePicker's updateRangeState
+        const flushDeferredSubmit = () =>
+            act(async () => {
+                await new Promise((resolve) => {
+                    setTimeout(resolve, 0);
+                });
+            });
+
+        it("should apply the date just typed into the range picker", async () => {
+            const onApply = vi.fn();
+            createDateFilterWithState({ onApply });
+
+            openAbsoluteFormFilter();
+
+            const absoluteForm = new AbsoluteForm();
+            absoluteForm.submitStartDateWithEnter(dateToAbsoluteInputFormat("2010-04-03"));
+            await flushDeferredSubmit();
+
+            expect(onApply).toHaveBeenCalledTimes(1);
+            expect(onApply).toHaveBeenCalledWith(
+                expect.objectContaining({ type: "absoluteForm", from: "2010-04-03" }),
+                false,
+            );
+            expect(getDateFilterButtonText()).toEqual(`04/03/2010 \u2013 ${getTodayDate()}`);
+        });
+
+        it("should keep the applied start date when the end date is submitted after reopening", async () => {
+            const onApply = vi.fn();
+            createDateFilterWithState({ onApply });
+
+            const absoluteForm = new AbsoluteForm();
+
+            openAbsoluteFormFilter();
+            absoluteForm.submitStartDateWithEnter(dateToAbsoluteInputFormat("2010-04-03"));
+            await flushDeferredSubmit();
+
+            openAbsoluteFormFilter();
+            expect(absoluteForm.getStartDate()).toEqual(dateToAbsoluteInputFormat("2010-04-03"));
+
+            absoluteForm.submitEndDateWithEnter(dateToAbsoluteInputFormat("2018-04-03"));
+            await flushDeferredSubmit();
+
+            expect(onApply).toHaveBeenLastCalledWith(
+                expect.objectContaining({ type: "absoluteForm", from: "2010-04-03", to: "2018-04-03" }),
+                false,
+            );
+            expect(getDateFilterButtonText()).toEqual("04/03/2010 \u2013 04/03/2018");
         });
     });
 

@@ -968,6 +968,8 @@
     "userManagement.workspace.permission.createFilterView.tooltip": "Adds CREATE_FILTER_VIEW permission to create and save dashboard filter combinations for quick reuse.",
     "userManagement.workspace.permission.createAutomation": "Alerts and scheduled exports",
     "userManagement.workspace.permission.createAutomation.tooltip": "Adds CREATE_AUTOMATIONS permission to create automated alerts and scheduled exports.",
+    "userManagement.workspace.permission.createMetric": "Metrics",
+    "userManagement.workspace.permission.createMetric.tooltip": "Adds CREATE_METRIC permission to create, edit or delete metrics.",
     "userManagement.workspace.permission.useAiAssistant": "AI Assistant",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "Adds USE_AI_ASSISTANT permission to access and interact with the AI chatbot for analytics enquiries.",
     "userManagement.workspace.granularPermission.noWorkspace": "No workspace selected",

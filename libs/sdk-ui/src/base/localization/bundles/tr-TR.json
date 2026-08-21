@@ -968,6 +968,8 @@
     "userManagement.workspace.permission.createFilterView.tooltip": "Hızlı yeniden kullanım için pano filtre kombinasyonları oluşturmak ve kaydetmek amacıyla CREATE_FILTER_VIEW izni ekler.",
     "userManagement.workspace.permission.createAutomation": "Uyarılar ve planlanmış dışa aktarımlar",
     "userManagement.workspace.permission.createAutomation.tooltip": "Otomatik uyarılar ve planlanmış dışa aktarımlar oluşturmak için CREATE_AUTOMATIONS izni ekler.",
+    "userManagement.workspace.permission.createMetric": "Metrikler",
+    "userManagement.workspace.permission.createMetric.tooltip": "Metrik oluşturmak, düzenlemek veya silmek için CREATE_METRIC iznini ekler.",
     "userManagement.workspace.permission.useAiAssistant": "AI Asistanı",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "AI sohbet botuyla analitik sorular için etkileşimde bulunmak ve erişim sağlamak amacıyla USE_AI_ASSISTANT izni ekler.",
     "userManagement.workspace.granularPermission.noWorkspace": "Çalışma alanı seçilmedi",

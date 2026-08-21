@@ -229,6 +229,9 @@ function convertChatConversationContentFromBackend(
                                     dashboard: convertToTemporaryFilterContexts(dashboard),
                                 };
                             }
+                            case "dashboardPatch": {
+                                return undefined;
+                            }
                             case "kda":
                                 return {
                                     type: "kda",

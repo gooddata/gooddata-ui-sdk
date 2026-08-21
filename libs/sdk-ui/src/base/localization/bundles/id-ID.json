@@ -968,6 +968,8 @@
     "userManagement.workspace.permission.createFilterView.tooltip": "Menambahkan izin CREATE_FILTER_VIEW untuk membuat dan menyimpan kombinasi filter dasbor untuk penggunaan ulang cepat.",
     "userManagement.workspace.permission.createAutomation": "Peringatan dan ekspor terjadwal",
     "userManagement.workspace.permission.createAutomation.tooltip": "Menambahkan izin CREATE_AUTOMATIONS untuk membuat peringatan otomatis dan ekspor terjadwal.",
+    "userManagement.workspace.permission.createMetric": "Metrik",
+    "userManagement.workspace.permission.createMetric.tooltip": "Menambahkan izin CREATE_METRIC untuk membuat, mengedit, atau menghapus metrik.",
     "userManagement.workspace.permission.useAiAssistant": "Asisten AI",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "Menambahkan izin USE_AI_ASSISTANT untuk mengakses dan berinteraksi dengan chatbot AI untuk pertanyaan analitik.",
     "userManagement.workspace.granularPermission.noWorkspace": "Tidak ada ruang kerja yang dipilih",

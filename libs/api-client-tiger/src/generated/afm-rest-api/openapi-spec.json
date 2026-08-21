@@ -5684,23 +5684,8 @@
                             "nullable": true
                         }
                     },
-                    "xCoord": {
-                        "type": "array",
-                        "writeOnly": true,
-                        "items": {
-                            "type": "number",
-                            "nullable": true
-                        }
-                    },
                     "xcoord": {
                         "type": "array",
-                        "items": {
-                            "type": "number"
-                        }
-                    },
-                    "yCoord": {
-                        "type": "array",
-                        "writeOnly": true,
                         "items": {
                             "type": "number",
                             "nullable": true
@@ -5709,7 +5694,8 @@
                     "ycoord": {
                         "type": "array",
                         "items": {
-                            "type": "number"
+                            "type": "number",
+                            "nullable": true
                         }
                     }
                 }

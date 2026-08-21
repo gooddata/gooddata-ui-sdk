@@ -668,6 +668,8 @@ export interface IDashboardEventing {
      * Specify event handlers to register at the dashboard creation time.
      *
      * @remarks
+     * Changing this prop registers added handlers and unregisters removed ones, matched by identity.
+     *
      * Note: all events that will be emitted during the initial load processing will have the `initialLoad`
      * correlationId.
      */

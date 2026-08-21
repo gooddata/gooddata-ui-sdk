@@ -33,7 +33,6 @@ type InitProps = {
     filterContextRef: ObjRef | undefined;
     clientId: string | undefined;
     dataProductId: string | undefined;
-    initialEventHandlers: DashboardEventHandler[] | undefined;
 };
 
 function dispatchDeinitialized(dashboardStore: IReduxedDashboardStore | null, initProps: InitProps): void {
@@ -74,6 +73,45 @@ function useNotifyDeinitializedOnUnmount(
     }, []);
 }
 
+/**
+ * A change of the `eventHandlers` prop no longer rebuilds the store, so this is the only mechanism by which a
+ * changed handler set takes effect. Handlers are matched by identity, as the emitter unregisters them; a repeat
+ * must never read as a removal, because the emitter drops every copy of a handler at once.
+ */
+function useSyncEventHandlers(
+    dashboardStore: IReduxedDashboardStore | null,
+    eventHandlers: DashboardEventHandler[] | undefined,
+): (seededHandlers: DashboardEventHandler[] | undefined) => void {
+    // What the emitter holds - not what the last render passed: a store is seeded with the handlers of the
+    // render that created it, so creation reports the seed rather than this effect inferring it.
+    const registered = useRef<Set<DashboardEventHandler>>(new Set());
+
+    useEffect(() => {
+        if (!dashboardStore) {
+            return;
+        }
+
+        const handlers = new Set(eventHandlers);
+
+        registered.current.forEach((handler) => {
+            if (!handlers.has(handler)) {
+                dashboardStore.unregisterEventHandler(handler);
+            }
+        });
+        handlers.forEach((handler) => {
+            if (!registered.current.has(handler)) {
+                dashboardStore.registerEventHandler(handler);
+            }
+        });
+
+        registered.current = handlers;
+    }, [dashboardStore, eventHandlers]);
+
+    return (seededHandlers) => {
+        registered.current = new Set(seededHandlers);
+    };
+}
+
 function enrichConfig(
     config: DashboardConfig | undefined,
     mapboxToken?: string,
@@ -110,11 +148,11 @@ export const useInitializeDashboardStore = (
         filterContextRef: props.filterContextRef,
         clientId,
         dataProductId,
-        initialEventHandlers: props.eventHandlers,
     };
     const previousInitProps = usePrevious(currentInitProps);
 
     useNotifyDeinitializedOnUnmount(dashboardStore, currentInitProps);
+    const reportSeededEventHandlers = useSyncEventHandlers(dashboardStore, props.eventHandlers);
 
     useEffect(() => {
         if (dashboardStore) {
@@ -186,6 +224,7 @@ export const useInitializeDashboardStore = (
                 },
                 initialRenderMode: props.initialRenderMode ?? "view",
             });
+            reportSeededEventHandlers(props.eventHandlers);
             newDashboardStore.store.dispatch(
                 initializeDashboardWithPersistedDashboard(
                     enrichConfig(props.config, mapboxToken, agGridToken),

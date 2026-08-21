@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 /**
  * Workspace permission types
@@ -38,6 +38,10 @@ export type WorkspacePermission =
      * Whether the current user has permissions to create a KPI dashboard object via API.
      */
     | "canCreateAnalyticalDashboard"
+    /**
+     * Whether the current user has permissions to create a metric object via API.
+     */
+    | "canCreateMetric"
     /**
      * Whether the current user has permissions to modify and delete a metric, run MAQL DDL, run the MAQL validator, change metric visibility via the `unlisted` flag.
      */

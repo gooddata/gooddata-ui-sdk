@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ISettings, type IWorkspacePermissions, type PlatformEdition } from "@gooddata/sdk-model";
 
@@ -41,6 +41,7 @@ export const getWorkspacePermissionsMock = (
         canListUsersInProject: true,
         canManageAnalyticalDashboard: true,
         canManageDomain: true,
+        canCreateMetric: canManageProject,
         canManageMetric,
         canManageProject,
         canManageReport: true,

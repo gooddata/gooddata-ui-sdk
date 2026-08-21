@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { fireEvent } from "@testing-library/react";
 
 const rangePicker = ".s-date-range-picker";
@@ -15,10 +16,22 @@ export class AbsoluteForm {
         fireEvent.blur(input);
     };
 
+    public submitStartDateWithEnter = (value: string) => {
+        const input = document.querySelector(startDateInput)!;
+        fireEvent.change(input, { target: { value } });
+        fireEvent.keyDown(input, { key: "Enter" });
+    };
+
     public setEndDate = (value: string) => {
         const input = document.querySelector(endDateInput)!;
         fireEvent.change(input, { target: { value } });
         fireEvent.blur(input);
+    };
+
+    public submitEndDateWithEnter = (value: string) => {
+        const input = document.querySelector(endDateInput)!;
+        fireEvent.change(input, { target: { value } });
+        fireEvent.keyDown(input, { key: "Enter" });
     };
 
     public setStartTime = (value: string) => {

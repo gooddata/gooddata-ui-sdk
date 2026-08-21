@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-pluggable-application",
-    "version": "11.54.0-alpha.1",
+    "version": "11.54.0-alpha.2",
     "description": "GoodData SDK React helpers for pluggable applications",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -35,7 +35,7 @@
         "lint": "oxlint . --quiet && eslint .",
         "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
         "test": "vitest watch",
-        "test-once": "vitest run --passWithNoTests",
+        "test-once": "vitest run",
         "validate": "npm run lint && npm run dep-cruiser && npm run format-check",
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-pluggable-application\"'"
     },
