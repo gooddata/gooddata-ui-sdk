@@ -7,6 +7,8 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/Form/mixins" as form-mixins;
 @use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins" as typo-mixins;
 
+$dataset_color: #952f8e;
+
 //MIXINS
 
 @mixin content-markdown($base, $type: "user") {
@@ -107,7 +109,13 @@
     .gd-gen-ai-chat__message__object {
         font-weight: normal;
         border-radius: 20px;
-        padding: 0 5px;
+        padding: 3px 5px;
+        display: inline-flex;
+        align-items: center;
+        position: relative;
+        top: 0.2em;
+        font-size: 12px;
+        line-height: 12px;
 
         @if $type == "user" {
             border: 1px solid var(--gd-palette-complementary-0-t10);
@@ -127,7 +135,7 @@
             @if $type == "user" {
                 color: kit-variables.$gd-color-white;
             } @else {
-                color: kit-variables.$gd-color-object-type-metric;
+                color: kit-variables.$gd-color-link;
                 .gd-gen-ai-chat__message-icon::before {
                     background-color: kit-variables.$gd-color-object-type-metric;
                 }
@@ -138,7 +146,7 @@
             @if $type == "user" {
                 color: kit-variables.$gd-color-white;
             } @else {
-                color: kit-variables.$gd-color-object-type-metric;
+                color: kit-variables.$gd-color-link;
                 .gd-gen-ai-chat__message-icon::before {
                     background-color: kit-variables.$gd-color-object-type-metric;
                 }
@@ -150,7 +158,7 @@
             @if $type == "user" {
                 color: kit-variables.$gd-color-white;
             } @else {
-                color: kit-variables.$gd-color-object-type-attribute;
+                color: kit-variables.$gd-color-link;
                 .gd-gen-ai-chat__message-icon::before {
                     background-color: kit-variables.$gd-color-object-type-attribute;
                 }
@@ -161,9 +169,20 @@
             @if $type == "user" {
                 color: kit-variables.$gd-color-white;
             } @else {
-                color: kit-variables.$gd-color-object-type-date;
+                color: kit-variables.$gd-color-link;
                 .gd-gen-ai-chat__message-icon::before {
                     background-color: kit-variables.$gd-color-object-type-date;
+                }
+            }
+        }
+
+        &.dataset {
+            @if $type == "user" {
+                color: kit-variables.$gd-color-white;
+            } @else {
+                color: kit-variables.$gd-color-link;
+                .gd-gen-ai-chat__message-icon::before {
+                    background-color: $dataset_color;
                 }
             }
         }
@@ -173,7 +192,7 @@
             @if $type == "user" {
                 color: kit-variables.$gd-color-white;
             } @else {
-                color: kit-variables.$gd-color-text;
+                color: kit-variables.$gd-color-link;
                 .gd-gen-ai-chat__message-icon::before {
                     background-color: kit-variables.$gd-color-text;
                 }
@@ -185,7 +204,7 @@
             @if $type == "user" {
                 color: kit-variables.$gd-color-white;
             } @else {
-                color: kit-variables.$gd-color-text;
+                color: kit-variables.$gd-color-link;
                 .gd-gen-ai-chat__message-icon::before {
                     background-color: kit-variables.$gd-color-text;
                 }
@@ -194,9 +213,8 @@
 
         .gd-gen-ai-chat__message-icon {
             display: inline-block;
-            width: 18px;
-            height: 18px;
-            margin-bottom: -0.3em;
+            width: 14px;
+            height: 14px;
             margin-right: 5px;
 
             &::before {
@@ -223,6 +241,10 @@
 
         &.date .gd-gen-ai-chat__message-icon {
             @include variables.gd-svg-mask("date");
+        }
+
+        &.dataset .gd-gen-ai-chat__message-icon {
+            @include variables.gd-svg-mask("dataset");
         }
 
         &.dashboard .gd-gen-ai-chat__message-icon {

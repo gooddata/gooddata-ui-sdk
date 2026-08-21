@@ -990,6 +990,51 @@ describe("withCaching", () => {
         expect(second).not.toBe(first);
     });
 
+    it("resets workspace automations list cache", () => {
+        let cacheControl: CacheControl | undefined;
+
+        const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+        const first = backend.workspace("test").automations().getAutomations();
+        cacheControl?.resetAutomations();
+        const second = backend.workspace("test").automations().getAutomations();
+
+        expect(second).not.toBe(first);
+    });
+
+    it("resets workspace automations query cache", () => {
+        let cacheControl: CacheControl | undefined;
+
+        const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+        const first = backend
+            .workspace("test")
+            .automations()
+            .getAutomationsQuery()
+            .withPage(2)
+            .withSize(5)
+            .query();
+        cacheControl?.resetAutomations();
+        const second = backend
+            .workspace("test")
+            .automations()
+            .getAutomationsQuery()
+            .withPage(2)
+            .withSize(5)
+            .query();
+
+        expect(second).not.toBe(first);
+    });
+
+    it("resets workspace automations cache as part of resetAll", () => {
+        let cacheControl: CacheControl | undefined;
+
+        const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+        const first = backend.workspace("test").automations().getAutomations();
+        cacheControl?.resetAll();
+        const second = backend.workspace("test").automations().getAutomations();
+
+        expect(second).not.toBe(first);
+    });
+
     describe("collection items caching", () => {
         const collectionBaseConfig = {
             collectionId: "geo-collection",

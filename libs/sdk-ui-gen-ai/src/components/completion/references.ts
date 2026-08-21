@@ -4,6 +4,7 @@ import {
     type CatalogItem,
     type IAttributeDisplayFormMetadataObject,
     type ICatalogDateAttribute,
+    type IDataSetMetadataObject,
     isCatalogAttribute,
     isCatalogDateDataset,
 } from "@gooddata/sdk-model";
@@ -30,11 +31,15 @@ export function collectReferences(
             item.dateAttributes.forEach((dateAttribute) => {
                 collectReference(items, where, dateAttribute);
             });
+            collectReference(items, where, item.dataSet);
         }
         if (isCatalogAttribute(item)) {
             item.displayForms.forEach((displayForm) => {
                 collectReference(items, where, displayForm);
             });
+            if (item.dataSet) {
+                collectReference(items, where, item.dataSet);
+            }
         }
     });
 
@@ -44,7 +49,7 @@ export function collectReferences(
 function collectReference(
     items: TextContentObject[],
     where: string | true,
-    item: CatalogItem | ICatalogDateAttribute | IAttributeDisplayFormMetadataObject,
+    item: CatalogItem | ICatalogDateAttribute | IAttributeDisplayFormMetadataObject | IDataSetMetadataObject,
 ): void {
     const id = getCatalogItemId(item);
     const type = getCatalogItemType(item);

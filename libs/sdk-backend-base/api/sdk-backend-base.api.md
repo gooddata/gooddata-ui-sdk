@@ -328,6 +328,7 @@ export type CacheControl = {
     resetExportTemplates: () => void;
     resetInsights: () => void;
     resetMeasures: () => void;
+    resetAutomations: () => void;
     resetAll: () => void;
 };
 

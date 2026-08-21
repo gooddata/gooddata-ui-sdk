@@ -31,6 +31,7 @@ import {
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
     isDashboardTextAttributeFilter,
+    isExportOverrideFilterContext,
     isFilterContext,
     isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
@@ -461,7 +462,17 @@ export const changeFilterContextSelection = (
 export function applyDefaultFilterView(
     dashboard: IDashboard,
     filterViews: IDashboardFilterView[],
+    exportId: string | undefined,
 ): IDashboard {
+    // In an export render, the loaded filter context may be synthesized from export metadata,
+    // carrying the filters captured at export-request time (they replace the persisted context on
+    // the root and on every tab). The user's default filter view must not clobber those filters
+    // (or parameters). Exports whose metadata supplied no filters keep the persisted context and
+    // get the default view applied as usual.
+    if (isExportOverrideFilterContext(dashboard.filterContext, exportId)) {
+        return dashboard;
+    }
+
     // If dashboard has tabs, apply default views per tab
     if (dashboard.tabs && dashboard.tabs.length > 0) {
         // Find legacy global default view (without tabLocalIdentifier) as fallback for first tab

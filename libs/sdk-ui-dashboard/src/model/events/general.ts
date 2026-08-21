@@ -54,7 +54,7 @@ export const isDashboardCommandStarted = eventGuard<IDashboardCommandStarted<any
 /**
  * @beta
  */
-export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR" | "CANCELLED";
+export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
 
 /**
  * Payload of the {@link IDashboardCommandFailed} event.
@@ -83,14 +83,12 @@ export interface IDashboardCommandFailedPayload<TCommand extends IDashboardComma
 }
 
 /**
- * This event is emitted if a particular command processing fails. The failure may be for three general reasons:
+ * This event is emitted if a particular command processing fails. The failure may be for two general reasons:
  *
  * -  A user error was made; dispatched command is found to have bad payload or the dispatched command is not applicable
  *    in the current state of the dashboard
  *
  * -  An internal error has occurred in the dashboard component - highly likely due to a bug.
- *
- * -  The command was discarded before it could finish, because the dashboard store was re-initialized.
  *
  * @beta
  */
@@ -116,22 +114,6 @@ export function internalErrorOccurred<TCommand extends IDashboardCommand>(
             command,
             message,
             error,
-        },
-    };
-}
-
-export function commandCancelled<TCommand extends IDashboardCommand>(
-    ctx: DashboardContext,
-    command: TCommand,
-): IDashboardCommandFailed<TCommand> {
-    return {
-        type: "GDC.DASH/EVT.COMMAND.FAILED",
-        ctx,
-        correlationId: command.correlationId,
-        payload: {
-            reason: "CANCELLED",
-            command,
-            message: `Processing of ${command.type} was cancelled before it could finish.`,
         },
     };
 }

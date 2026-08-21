@@ -34,6 +34,7 @@ $base_path: "@gooddata/sdk-ui-kit/styles";
         mask: url($base_path + "/icons/" + $filename + ".svg");
         mask-repeat: no-repeat;
         mask-position: center;
+        mask-size: contain;
     }
 }
 

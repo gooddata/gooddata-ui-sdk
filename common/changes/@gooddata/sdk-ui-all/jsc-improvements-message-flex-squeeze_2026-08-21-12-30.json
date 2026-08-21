@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-kit: Fix the message component being squeezed below its own content when it is a flex item, which collapsed a message to a few pixels and clipped its text next to a scrollable list in a dialog.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

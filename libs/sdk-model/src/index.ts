@@ -674,6 +674,8 @@ export {
     isFilterContext,
     isFilterContextDefinition,
     isTempFilterContext,
+    exportOverrideFilterContextIdentifier,
+    isExportOverrideFilterContext,
     newAbsoluteDashboardDateFilter,
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
