@@ -21,6 +21,13 @@ export const METRIC_COMMENT = [
     " https://www.gooddata.com/developers/cloud-native/doc/cloud/create-metrics/maql/",
 ].join("\n");
 
+export const PARAMETER_COMMENT = [
+    " A parameter is a named, typed value that metrics reference instead of hardcoding a literal.",
+    " Changing the parameter's default changes every metric that references it, without editing their MAQL.",
+    " Read more about parameters:",
+    " https://www.gooddata.ai/docs/cloud/experimental-features/numeric-parameters/",
+].join("\n");
+
 export const VISUALISATION_COMMENT = [
     " A visualization is a visual representation of a user's analytical view of the data.",
     " You build visualizations from metrics, attributes, and optionally filters that are combined in a way to visualize a particular aspect of your data.",

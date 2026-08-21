@@ -1,7 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
 import { cloneDeep } from "lodash-es";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { newDefForItems } from "@gooddata/sdk-model";
@@ -18,7 +18,14 @@ const SeriesChartTypes = {
 };
 
 describe("Drilldown Eventing", () => {
-    vi.useFakeTimers();
+    beforeEach(() => {
+        vi.useFakeTimers();
+    });
+
+    // the timers have to be restored, otherwise they would leak into the other test files
+    afterEach(() => {
+        vi.useRealTimers();
+    });
 
     const ADHOC_MEASURE_LOCAL_IDENTIFIER = "m1";
     const ADHOC_MEASURE_URI = "/gdc/md/projectId/obj/2";

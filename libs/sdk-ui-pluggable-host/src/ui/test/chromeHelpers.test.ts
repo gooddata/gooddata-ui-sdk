@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { type MouseEvent } from "react";
 
 import { describe, expect, it } from "vitest";

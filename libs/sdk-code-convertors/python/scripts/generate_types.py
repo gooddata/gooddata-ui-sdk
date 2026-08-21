@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import dataclasses
 import hashlib
+import json
 import re
 import subprocess
 import sys
@@ -176,6 +177,124 @@ def post_process(source: str, schema_hash: str, *, require_pydantic: bool = Fals
     return header + "\n" + source
 
 
+# --- Conditional-branch resolution (narrowed schema -> plain oneOf of $refs) -----------
+#
+# refresh-schema.mjs already rewrites the schema's `allOf` + `if`/`then`/`else` unions
+# into `oneOf`, which is enough for json-schema-to-typescript. It is NOT enough for
+# datamodel-code-generator, which produced silently-truncating models until GDAI-2172:
+#
+#   * A branch keeps the `if` alongside its `then` body, and a `then` that is a bare
+#     `$ref` ends up as `{"$ref": ..., "if": ...}`. Sibling keys next to a `$ref` make
+#     datamodel-code-generator try to turn the reference into a BASE CLASS. That works
+#     only when the target is a plain object model; when the target is itself a union
+#     (a RootModel, e.g. Date Filter) there is nothing to inherit from, so it silently
+#     emits a member carrying only the union's own `properties` — a `type`-only stub.
+#     A stub has no `extra='forbid'`, so it validates ANY payload with a matching
+#     `type` and drops every other key on model_dump(). Data loss, not an error.
+#   * `{"not": {}}` (an intentionally unsatisfiable `else`) becomes `Any`, which is the
+#     exact inverse of its meaning and makes the whole union accept anything.
+#
+# So before the generator runs, collapse each conditional branch to the branch body
+# itself. The parent union's `properties`/`required` are dropped with it: they are only
+# the discriminator, every branch restates them, and each branch is already merged with
+# its parent by narrowSchema. That leaves a plain `oneOf` over the real per-type models,
+# which datamodel-code-generator turns into a correct RootModel union.
+#
+# This runs on the narrowed schema in memory. metadata.json (the shared contract with
+# the TS side) and the TypeScript output are both untouched.
+
+# Lifted off a union node whose members are all conditional branches, and pushed down
+# into any branch that does not state its own. Leaving them on the parent is what makes
+# the generator emit stubs; dropping them outright loses constraints, because a branch
+# body is free to omit a keyword while still meaning it. Two worked examples:
+# $defs/queryDateFilter states `additionalProperties: false` once and lets both if/then
+# branches inherit it, and $defs/dashboardAttributeFilter states
+# `required: ["type", "using"]` once while neither branch restates it. In JSON Schema
+# the parent constrains every branch conjunctively, so copying down is exact.
+INHERITED_KEYWORDS = ("properties", "required", "additionalProperties", "type")
+
+# Keywords that describe rather than constrain; a branch holding only these matches
+# anything. `$semantic` is our own editor-completion extension, used for the
+# "no `type` yet" branch of a union — an authoring hint, not a data variant.
+ANNOTATION_KEYWORDS = frozenset(
+    {"$semantic", "$comment", "title", "description", "examples", "default", "deprecated"}
+)
+
+
+def is_dead_branch(branch: object) -> bool:
+    """True for a union member that must not become a generated model.
+
+    Two cases, opposite in meaning, same treatment:
+      * annotation-only — matches everything, so as a union member it swallows payloads
+        that belong to a sibling member;
+      * `{"not": {}}` — matches nothing, an `else` written to make the branch fail.
+    """
+    if not isinstance(branch, dict):
+        return False
+    constraints = set(branch) - ANNOTATION_KEYWORDS
+    if not constraints:
+        return True
+    return constraints == {"not"} and branch["not"] == {}
+
+
+def resolve_conditional_branches(node: object) -> object:
+    """Rewrite narrowed `if`-carrying branches into plain schemas, bottom-up."""
+    if isinstance(node, list):
+        return [resolve_conditional_branches(item) for item in node]
+    if not isinstance(node, dict):
+        return node
+
+    # Read the `if` marker off the raw members: resolving them strips it.
+    members = node.get("oneOf")
+    is_conditional_union = (
+        isinstance(members, list)
+        and bool(members)
+        and all(isinstance(member, dict) and "if" in member for member in members)
+    )
+
+    resolved = {key: resolve_conditional_branches(value) for key, value in node.items()}
+
+    if is_conditional_union:
+        # Identify dead branches BEFORE inheriting anything, and never inherit into
+        # one: a `{"not": {}}` or annotation-only branch that picks up a keyword stops
+        # looking dead to is_dead_branch() and survives into the union as a stub.
+        live = [member for member in resolved["oneOf"] if not is_dead_branch(member)]
+        for keyword in INHERITED_KEYWORDS:
+            inherited = resolved.pop(keyword, None)
+            if inherited is None:
+                continue
+            for member in live:
+                # A `$ref` member carries its own definition; anything beside the
+                # `$ref` is what made the generator emit a stub in the first place.
+                if not isinstance(member, dict) or "$ref" in member:
+                    continue
+                # An empty `properties: {}` counts as unstated. The generator renders a
+                # closed-but-propertyless object as `dict[str, Any]`, which in a union
+                # matches any mapping and swallows payloads meant for its siblings —
+                # e.g. the "All (no condition)" branch of $defs/mvfCondition.
+                if member.get(keyword) in (None, {}) and keyword not in ("type",):
+                    member[keyword] = inherited
+                elif keyword not in member:
+                    member[keyword] = inherited
+        # An all-dead union keeps its members rather than emit an empty `oneOf` the
+        # generator can't read. Nothing was inherited into them, so the node stays
+        # annotation-only and the enclosing union drops it in turn.
+        if live:
+            resolved["oneOf"] = live
+
+    if "if" not in resolved:
+        return resolved
+    # This node is one conditional branch. Its body is the whole truth; `if` and the
+    # parent keys merged into it by narrowSchema only re-state the discriminator.
+    if "$ref" in resolved:
+        return {"$ref": resolved["$ref"]}
+    if "oneOf" in resolved:
+        branches = resolved["oneOf"]
+        return branches[0] if len(branches) == 1 else {"oneOf": branches}
+    resolved.pop("if", None)
+    return resolved
+
+
 def get_narrowed_schema() -> str:
     """Run the Node.js schema script to produce the narrowed JSON Schema."""
     result = subprocess.run(
@@ -188,7 +307,7 @@ def get_narrowed_schema() -> str:
     if result.returncode != 0:
         print(f"Schema narrowing failed:\n{result.stderr}", file=sys.stderr)
         sys.exit(result.returncode)
-    return result.stdout
+    return json.dumps(resolve_conditional_branches(json.loads(result.stdout)))
 
 
 def generate(target: Target, schema_path: str, schema_hash: str) -> str:

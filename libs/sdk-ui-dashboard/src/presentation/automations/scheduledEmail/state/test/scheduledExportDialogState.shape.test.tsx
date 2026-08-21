@@ -38,6 +38,15 @@ const {
     mockUseAutomationExportParameters: vi.fn(),
 }));
 
+// `isolate: false` shares one module graph per worker, so the modules mocked below may already have
+// been evaluated — against their real dependencies — by a test file that ran earlier in the same
+// worker, which turns those `vi.mock()` calls into no-ops. Dropping the module registry from
+// `vi.hoisted()` (it runs before this file's own imports, unlike any `beforeEach`) makes those
+// imports resolve through the mocks.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 vi.mock("../../../shared/automationFilters/useAutomationFiltersSelect.js", async (importOriginal) => {
     const actual = await importOriginal<typeof AutomationFiltersSelectModule>();
     return { ...actual, useAutomationFiltersSelect: mockUseAutomationFiltersSelect };
@@ -84,16 +93,22 @@ import {
 } from "./fixtures.js";
 
 const DRAFT_MEMBERS = [
+    "canSelectScheduleTimezone",
+    "defaultResolvedTimezone",
     "editedAutomation",
     "isCronValid",
     "isOnMessageValid",
     "isSubjectValid",
+    "isTimezoneFeatureEnabled",
     "isTitleValid",
     "originalAutomation",
+    "scheduleTimezoneIsStale",
+    "scheduleTimezoneSelection",
     "startDate",
 ];
 
 const ACTIONS_MEMBERS = [
+    "applyCurrentScheduleTimezone",
     "onCsvRawSettingsChange",
     "onCsvSettingsChange",
     "onDashboardAttachmentsChange",
@@ -103,6 +118,7 @@ const ACTIONS_MEMBERS = [
     "onPdfSettingsChange",
     "onRecipientsChange",
     "onRecurrenceChange",
+    "onScheduleTimezoneChange",
     "onSlidesTemplateIdChange",
     "onSubjectChange",
     "onTitleChange",

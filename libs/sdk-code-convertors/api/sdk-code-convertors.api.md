@@ -29,6 +29,7 @@ import { DeclarativeFact } from '@gooddata/api-client-tiger';
 import { DeclarativeFilterContext } from '@gooddata/api-client-tiger';
 import { DeclarativeLabel } from '@gooddata/api-client-tiger';
 import { DeclarativeMetric } from '@gooddata/api-client-tiger';
+import { DeclarativeParameter } from '@gooddata/api-client-tiger';
 import { DeclarativeReference } from '@gooddata/api-client-tiger';
 import { DeclarativeTable } from '@gooddata/api-client-tiger';
 import { DeclarativeVisualizationObject } from '@gooddata/api-client-tiger';
@@ -83,6 +84,7 @@ import type { MetricField } from '@gooddata/sdk-code-schemas/v1';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
 import { Pair } from 'yaml';
+import type { Parameter } from '@gooddata/sdk-code-schemas/v1';
 import { Permission } from '@gooddata/sdk-code-schemas/v1';
 import type { Plugin as Plugin_2 } from '@gooddata/sdk-code-schemas/v1';
 import type { PoPMetricField } from '@gooddata/sdk-code-schemas/v1';
@@ -93,6 +95,7 @@ import type { RichTextWidget } from '@gooddata/sdk-code-schemas/v1';
 import { Scalar } from 'yaml';
 import type { Section } from '@gooddata/sdk-code-schemas/v1';
 import type { Sorts } from '@gooddata/sdk-code-schemas/v1';
+import { StringParameterDefinition } from '@gooddata/api-client-tiger';
 import type { Total } from '@gooddata/sdk-code-schemas/v1';
 import type { Visualisation } from '@gooddata/sdk-code-schemas/v1';
 import type { VisualisationWidget } from '@gooddata/sdk-code-schemas/v1';
@@ -125,6 +128,9 @@ export type AacMetadata = Metadata;
 
 // @public (undocumented)
 export type AacMetric = Metric;
+
+// @public (undocumented)
+export type AacParameter = Parameter;
 
 // @public (undocumented)
 export type AacPlugin = Plugin_2;
@@ -1366,6 +1372,13 @@ export function declarativeDateInstanceToYaml(dataset: DeclarativeDateDataset): 
 // @internal (undocumented)
 export function declarativeDrillToYaml(drill: InsightDrillDefinition, entities?: FromEntities, sourceVisualizationId?: string, errorContext?: IErrorContext): YAMLMap<unknown, unknown>;
 
+// @public
+export type DeclarativeEntityData = DeclarativeDataset | DeclarativeDateDataset | DeclarativeMetric | DeclarativeStringParameter | DeclarativeVisualizationObject | DeclarativeDashboardPlugin | DeclarativeAttributeHierarchy | {
+    dashboard: DeclarativeAnalyticalDashboard;
+    filterContext?: DeclarativeFilterContext;
+    tabFilterContexts?: DeclarativeFilterContext[];
+};
+
 // @internal (undocumented)
 export function declarativeFilterContextToYaml(dateFilterConfig?: IDashboardDateFilterConfig, filterContext?: DeclarativeFilterContext, errorContext?: IErrorContext): {
     filters: YAMLMap<unknown, unknown>;
@@ -1401,6 +1414,12 @@ export function declarativeNegativeAttributeFilterToYaml(entities: FromEntities,
 // @internal (undocumented)
 export function declarativeNormalMetricToYaml(def: IMeasureBody, metricDefinition: IMeasureDefinition, postProcessors: YamlPostProcessors, errorContext?: IErrorContext): YAMLMap;
 
+// @public (undocumented)
+export function declarativeParameterToYaml(parameter: DeclarativeStringParameter): {
+    content: string;
+    json: Parameter;
+};
+
 // @internal (undocumented)
 export function declarativePluginsToYaml(dashboard: IDashboardDefinition, errorContext?: IErrorContext): YAMLSeq<unknown> | undefined;
 
@@ -1433,6 +1452,11 @@ export function declarativeSectionsToYaml(layout?: IDashboardLayout, entities?: 
 
 // @internal (undocumented)
 export function declarativeSortsToYaml(sorts: ISortItem[], _errorContext?: IErrorContext): YamlSorts;
+
+// @public
+export type DeclarativeStringParameter = DeclarativeParameter & {
+    content: StringParameterDefinition;
+};
 
 // @internal (undocumented)
 export function declarativeTabsToYaml(tabs: DashboardTab[], filterContexts?: DeclarativeFilterContext[], entities?: FromEntities, errorContext?: IErrorContext): YAMLSeq | undefined;
@@ -1650,17 +1674,16 @@ export function donutChartSave(_fields: Visualisation["query"]["fields"] | undef
 // @internal (undocumented)
 export type EmptyValueHandling = NonNullable<IDashboardDateFilter["dateFilter"]["emptyValueHandling"]>;
 
+// @public
+export type EntityData = Dataset | DateDataset | Metric | Parameter | Visualisation | Dashboard | Plugin_2 | AttributeHierarchy;
+
 // @public (undocumented)
 export type ExportEntities = Array<{
     id: string;
     type: Metadata["type"];
     path: string;
-    data: Dataset | DateDataset | Metric | Visualisation | Dashboard | Plugin_2 | AttributeHierarchy;
-    declarative?: DeclarativeDataset | DeclarativeDateDataset | DeclarativeMetric | DeclarativeVisualizationObject | DeclarativeDashboardPlugin | DeclarativeAttributeHierarchy | {
-        dashboard: DeclarativeAnalyticalDashboard;
-        filterContext?: DeclarativeFilterContext;
-        tabFilterContexts?: DeclarativeFilterContext[];
-    };
+    data: EntityData;
+    declarative?: DeclarativeEntityData;
 }>;
 
 // @public (undocumented)
@@ -1690,7 +1713,7 @@ export type FromEntities = Array<{
     id: string;
     type: Metadata["type"];
     path: string;
-    data?: Dataset | DateDataset | Metric | Visualisation | Dashboard | Plugin_2 | AttributeHierarchy;
+    data?: EntityData;
 }>;
 
 // @public (undocumented)
@@ -2612,6 +2635,9 @@ export interface IScatterChartConfig {
 }
 
 // @public (undocumented)
+export function isDeclarativeStringParameter(parameter: DeclarativeParameter): parameter is DeclarativeStringParameter;
+
+// @public (undocumented)
 export interface ISliceMeasureColumnWidthItem {
     // (undocumented)
     sliceMeasureColumnWidthItem: ISliceMeasureColumnWidthItemBody;
@@ -2896,6 +2922,9 @@ export type OverrideDashboardDefinition = Omit<IDashboardDefinition, "filterCont
     tabs?: DashboardTab[];
     activeTabLocalIdentifier?: string;
 };
+
+// @internal (undocumented)
+export const ParameterTypes: string[];
 
 // @public (undocumented)
 export function parseGranularity(gran: DateAttributeGranularity | null): Required<DateDataset>["granularities"][number] | null;
@@ -4232,6 +4261,9 @@ export function yamlInteractionToDeclarative(entities: ExportEntities, visualisa
 
 // @public (undocumented)
 export function yamlMetricToDeclarative(input: Metric): DeclarativeMetric;
+
+// @public (undocumented)
+export function yamlParameterToDeclarative(input: Parameter): DeclarativeStringParameter;
 
 // @internal (undocumented)
 export function yamlPluginsToDeclarative(plugins: Dashboard["plugins"]): IDashboardPluginLink[] | undefined;

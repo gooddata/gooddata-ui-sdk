@@ -1,15 +1,15 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { fireEvent, render } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 
 import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
 import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
-import { CheckboxControl } from "../../../CheckboxControl.js";
+import type * as CheckboxControlModule from "../../../CheckboxControl.js";
 import { COMPARISON_IS_ARROW_ENABLED_PATH } from "../../ComparisonValuePath.js";
-import { ArrowControl } from "../ArrowControl.js";
+import type * as ArrowControlModule from "../ArrowControl.js";
 
 vi.mock("../../../CheckboxControl.js", async (importOriginal) => {
     // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -18,6 +18,25 @@ vi.mock("../../../CheckboxControl.js", async (importOriginal) => {
         ...actual,
         CheckboxControl: vi.fn(actual.CheckboxControl),
     };
+});
+
+/*
+ * Test isolation is disabled for this package, so the module cache is shared between test files:
+ * ArrowControl.js may already have been evaluated - bound to the real CheckboxControl - by another test
+ * file, and the mocked graph this file builds must not outlive it. Re-import both modules up front so this
+ * file always observes the mocked one, and drop the mocked graph again on the way out.
+ */
+let CheckboxControl: typeof CheckboxControlModule.CheckboxControl;
+let ArrowControl: typeof ArrowControlModule.ArrowControl;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ CheckboxControl } = await import("../../../CheckboxControl.js"));
+    ({ ArrowControl } = await import("../ArrowControl.js"));
+});
+
+afterAll(() => {
+    vi.resetModules();
 });
 
 const TITLE_TEXT_QUERY = "Arrow";

@@ -7,6 +7,12 @@ import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace"
 import { withNormalization } from "@gooddata/sdk-backend-base";
 import { compositeBackend, recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 
+import {
+    AG_GRID_MOCK_TEST_ID,
+    capturedAgGridProps,
+    resetCapturedAgGridProps,
+} from "../../testUtils/agGridReactMock.js";
+
 import { createExecutionDef } from "./features/data/createExecutionDef.js";
 import { type IPivotTableExecutionDefinition } from "./features/data/executionDefinition/types.js";
 import { PivotTableNextImplementation } from "./PivotTableNext.js";
@@ -16,14 +22,11 @@ import {
 } from "./types/conditionalFormatting.js";
 import { type ICorePivotTableNextProps } from "./types/internal.js";
 
-const { capturedDatasources } = vi.hoisted(() => ({ capturedDatasources: [] as unknown[] }));
-
-vi.mock("ag-grid-react", () => ({
-    AgGridReact: (props: { serverSideDatasource?: unknown }) => {
-        capturedDatasources.push(props.serverSideDatasource);
-        return <div data-testid="ag-grid-react" />;
-    },
-}));
+/*
+ * The grid is replaced by a marker element that records the props it was rendered with. The mock lives in
+ * a shared module because the suite runs without isolation - see the notes in `agGridReactMock.tsx`.
+ */
+vi.mock("ag-grid-react", () => import("../../testUtils/agGridReactMock.js"));
 
 const workspace = "reference-workspace";
 const backend = compositeBackend({
@@ -48,7 +51,7 @@ beforeAll(() => {
 });
 
 beforeEach(() => {
-    capturedDatasources.length = 0;
+    resetCapturedAgGridProps();
 });
 
 // Rebuilds every field AD churns each render (fresh refs, equal content). Callbacks are omitted on
@@ -77,12 +80,12 @@ describe("server-side data source identity", () => {
         const { rerender } = render(
             <PivotTableNextImplementation {...buildProps({ enabled: true, rules: [] })} />,
         );
-        await screen.findByTestId("ag-grid-react");
+        await screen.findByTestId(AG_GRID_MOCK_TEST_ID);
 
         rerender(<PivotTableNextImplementation {...buildProps({ enabled: true, rules: [] })} />);
-        await screen.findByTestId("ag-grid-react");
+        await screen.findByTestId(AG_GRID_MOCK_TEST_ID);
 
-        const datasources = capturedDatasources.filter(Boolean);
+        const datasources = capturedAgGridProps.map((props) => props.serverSideDatasource).filter(Boolean);
         expect(datasources.length).toBeGreaterThanOrEqual(2);
         expect(new Set(datasources).size).toBe(1);
     });

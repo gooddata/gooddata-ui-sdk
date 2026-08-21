@@ -1,7 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 
 import {
     CalculateAs,
@@ -15,14 +15,14 @@ import { type IComparisonControlProperties } from "../../../../../interfaces/Con
 import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
-import { CheckboxControl } from "../../../CheckboxControl.js";
-import { InputControl } from "../../../InputControl.js";
+import type * as CheckboxControlModule from "../../../CheckboxControl.js";
+import type * as InputControlModule from "../../../InputControl.js";
 import {
     COMPARISON_LABEL_CONDITIONAL_ENABLED_VALUE_PATH,
     COMPARISON_LABEL_POSITIVE_VALUE_PATH,
     COMPARISON_LABEL_UNCONDITIONAL_VALUE_PATH,
 } from "../../ComparisonValuePath.js";
-import { LabelSubSection } from "../LabelSubSection.js";
+import type * as LabelSubSectionModule from "../LabelSubSection.js";
 
 vi.mock("../../../CheckboxControl.js", async (importOriginal) => {
     // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -37,6 +37,27 @@ vi.mock("../../../InputControl.js", async (importOriginal) => {
     // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
     const actual = await importOriginal<typeof import("../../../InputControl.js")>();
     return { ...actual, InputControl: vi.fn(actual.InputControl) };
+});
+
+/*
+ * Test isolation is disabled for this package, so the module cache is shared between test files:
+ * LabelSubSection.js may already have been evaluated - bound to the real controls - by another test file,
+ * and the mocked graph this file builds must not outlive it. Re-import all three modules up front so this
+ * file always observes the mocked ones, and drop the mocked graph again on the way out.
+ */
+let CheckboxControl: typeof CheckboxControlModule.CheckboxControl;
+let InputControl: typeof InputControlModule.InputControl;
+let LabelSubSection: typeof LabelSubSectionModule.LabelSubSection;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ CheckboxControl } = await import("../../../CheckboxControl.js"));
+    ({ InputControl } = await import("../../../InputControl.js"));
+    ({ LabelSubSection } = await import("../LabelSubSection.js"));
+});
+
+afterAll(() => {
+    vi.resetModules();
 });
 
 const TITLE_TEXT_QUERY = "Label";

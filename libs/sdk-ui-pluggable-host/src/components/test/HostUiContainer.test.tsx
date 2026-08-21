@@ -9,20 +9,27 @@ import {
     type IPlatformContext,
 } from "@gooddata/sdk-pluggable-application-model";
 
-import { resolveHostUiModule } from "../../ui/resolveHostUiModule.js";
 import { HostUiContainer } from "../HostUiContainer.js";
-import { runGuardedNavigation } from "../navigationGuard.js";
+
+// `vi.hoisted` is what makes these usable from the `vi.mock` factories: the factories run while the
+// static `HostUiContainer` import above is being evaluated, which is before this file's own top-level
+// `const`s would be initialized. Hoisting them keeps the mocks this file configures and asserts on the
+// very same instances the component under test resolves.
+const { mount, resolveHostUiModuleMock, runGuardedNavigationMock } = vi.hoisted(() => ({
+    mount: vi.fn<(options: IHostUiMountOptions) => IHostUiMountHandle>(),
+    resolveHostUiModuleMock: vi.fn<typeof import("../../ui/resolveHostUiModule.js").resolveHostUiModule>(),
+    runGuardedNavigationMock: vi.fn<typeof import("../navigationGuard.js").runGuardedNavigation>(),
+}));
 
 vi.mock("../../ui/resolveHostUiModule.js", () => ({
-    resolveHostUiModule: vi.fn(),
+    resolveHostUiModule: resolveHostUiModuleMock,
 }));
 
 vi.mock("../navigationGuard.js", async () => {
     const actual = await vi.importActual<typeof import("../navigationGuard.js")>("../navigationGuard.js");
-    return { ...actual, runGuardedNavigation: vi.fn(actual.runGuardedNavigation) };
+    runGuardedNavigationMock.mockImplementation(actual.runGuardedNavigation);
+    return { ...actual, runGuardedNavigation: runGuardedNavigationMock };
 });
-
-const mount = vi.fn<(options: IHostUiMountOptions) => IHostUiMountHandle>();
 
 const userSettings = {} as IPlatformContext["userSettings"];
 const ctx: IPlatformContext = {
@@ -52,11 +59,12 @@ async function flushHostUiMount(): Promise<void> {
 describe("HostUiContainer", () => {
     beforeEach(() => {
         vi.clearAllMocks();
+
         mount.mockImplementation(() => ({
             getAppContainer: () => document.createElement("div"),
             unmount: vi.fn(),
         }));
-        vi.mocked(resolveHostUiModule).mockResolvedValue({ mount });
+        resolveHostUiModuleMock.mockResolvedValue({ mount });
     });
 
     it("keeps the navigate callback given to the host UI module bound to the latest router and pathname", async () => {
@@ -93,7 +101,7 @@ describe("HostUiContainer", () => {
         expect(firstRouterNavigate).not.toHaveBeenCalled();
         expect(secondRouterNavigate).toHaveBeenCalledTimes(1);
         expect(secondRouterNavigate).toHaveBeenCalledWith(TARGET);
-        expect(vi.mocked(runGuardedNavigation).mock.calls[0]![0]).toMatchObject({
+        expect(runGuardedNavigationMock.mock.calls[0]![0]).toMatchObject({
             url: TARGET,
             currentPathname: NEXT_PATHNAME,
         });

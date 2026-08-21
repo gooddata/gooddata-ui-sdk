@@ -3,11 +3,19 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import moment from "moment";
 import { RawIntlProvider } from "react-intl";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { createIntlMock } from "@gooddata/sdk-ui";
 
 import { type TimePickerProps, WrappedTimepicker } from "../Timepicker.js";
+
+// Rendering the component switches moment's *global* locale to the one it is given, and moment has
+// no per-instance locale to scope that to. Left behind, it reformats every later time in the run
+// (`timeUtilities`' "07:15 AM" comes back as "07:15 上午"), so it is put back after each test.
+const MOMENT_LOCALE = moment.locale();
+afterEach(() => {
+    moment.locale(MOMENT_LOCALE);
+});
 
 describe("TimePicker", () => {
     const TEST_TIME = new Date();

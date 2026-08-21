@@ -1,7 +1,7 @@
 // (C) 2024-2026 GoodData Corporation
 
 import { type AxiosResponse } from "axios";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
     type JsonApiLlmProviderOutDocument,
@@ -12,7 +12,7 @@ import * as genAiApi from "@gooddata/api-client-tiger/endpoints/genAI";
 import { type ILlmProvider, type LlmProviderPatch } from "@gooddata/sdk-model";
 
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { OrganizationLlmProvidersService } from "../llmProviders.js";
+import { type OrganizationLlmProvidersService } from "../llmProviders.js";
 
 vi.mock("@gooddata/api-client-tiger/endpoints/entitiesObjects", () => ({
     EntitiesApi_GetAllEntitiesLlmProviders: vi.fn(),
@@ -30,7 +30,15 @@ vi.mock("@gooddata/api-client-tiger/endpoints/genAI", () => ({
 
 describe("OrganizationLlmProvidersService", () => {
     const mockAuthCall = vi.fn((callback) => callback({ axios: {}, basePath: "" }));
-    const service = new OrganizationLlmProvidersService(mockAuthCall as TigerAuthenticatedCallGuard);
+    let service: OrganizationLlmProvidersService;
+
+    // The service is imported dynamically from a fresh module registry so that it picks up the mocks
+    // above even when another (non-isolated) test file already imported it without them.
+    beforeAll(async () => {
+        vi.resetModules();
+        const { OrganizationLlmProvidersService } = await import("../llmProviders.js");
+        service = new OrganizationLlmProvidersService(mockAuthCall as TigerAuthenticatedCallGuard);
+    });
 
     beforeEach(() => {
         vi.clearAllMocks();

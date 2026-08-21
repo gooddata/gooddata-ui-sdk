@@ -259,7 +259,7 @@ export function DefaultDashboardSettingsDialog({
                         )}
                     </div>
                 </div>
-                {settings.enableDashboardTimezone ? (
+                {settings.enableTimezoneChange ? (
                     <div className="gd-dashboard-settings-dialog-section s-dashboard-settings-timezone">
                         <DialogListHeader
                             title={intl.formatMessage({ id: "settingsDashboardDialog.section.timezone" })}

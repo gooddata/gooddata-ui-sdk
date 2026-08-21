@@ -149,9 +149,18 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         const abortController = useRef(new AbortController());
 
         /**
-         * Fingerprint of the last execution definition the initialize was called with.
+         * Identity of the last initialize request.
+         *
+         * This has to identify the REQUEST, not the execution definition it was made with. The same
+         * definition can legitimately be requested again after a different one - Analytical Designer
+         * does exactly that when a saved insight with a persisted sort is opened: it executes the
+         * insight WITH the sort, then once WITHOUT it (the pluggable visualization's initial-properties
+         * push briefly clears the extended reference point) and then WITH it again. Keyed by
+         * definition fingerprint, the first request stops looking superseded the moment the third one
+         * re-registers the same fingerprint, so the cancellation error of that already-aborted request
+         * is reported as a genuine execution failure.
          */
-        const lastInitRequestFingerprint = useRef<string | null>(null);
+        const lastInitRequestId = useRef(0);
 
         const updateState = useCallback((newState: Partial<IDataViewLoadState>) => {
             setState((s) => ({ ...s, ...newState }));
@@ -229,8 +238,8 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             onError(new NegativeValuesSdkError());
         }, [onError]);
 
-        const isRequestStale = useCallback((fingerprint: string): boolean => {
-            return lastInitRequestFingerprint.current !== fingerprint || hasUnmounted.current;
+        const isRequestStale = useCallback((requestId: number): boolean => {
+            return lastInitRequestId.current !== requestId || hasUnmounted.current;
         }, []);
 
         const loadClusteringData = useCallback(
@@ -355,8 +364,8 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         );
 
         const handleLoadingError = useCallback(
-            (error: unknown, fingerprint: string): void => {
-                if (isRequestStale(fingerprint)) {
+            (error: unknown, requestId: number): void => {
+                if (isRequestStale(requestId)) {
                     return;
                 }
 
@@ -392,11 +401,12 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                 onLoadingChanged({ isLoading: true });
                 updateState({ dataView: null });
                 const fingerprint = defFingerprint(execution.definition);
-                lastInitRequestFingerprint.current = fingerprint;
+                const requestId = lastInitRequestId.current + 1;
+                lastInitRequestId.current = requestId;
 
                 try {
                     const executionResult = await execution.execute();
-                    if (isRequestStale(fingerprint)) {
+                    if (isRequestStale(requestId)) {
                         return;
                     }
 
@@ -416,10 +426,14 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                         throw err;
                     });
 
-                    if (isRequestStale(defFingerprint(originalDataView.definition))) {
+                    if (
+                        isRequestStale(requestId) ||
+                        defFingerprint(originalDataView.definition) !== fingerprint
+                    ) {
                         /*
                          * Stop right now if the data are not relevant anymore because there was another
-                         * initialize request in the meantime.
+                         * initialize request in the meantime, or because they do not belong to the
+                         * definition this request asked for.
                          */
                         return;
                     }
@@ -460,7 +474,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                         await loadOutliersData(dataView, executionResult, outliersConfig);
                     }
                 } catch (error) {
-                    handleLoadingError(error, fingerprint);
+                    handleLoadingError(error, requestId);
                 }
             },
             [

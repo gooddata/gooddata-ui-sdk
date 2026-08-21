@@ -8,6 +8,7 @@ export default defineConfig({
         preserveSymlinks: true,
     },
     test: {
+        reporters: ["default"],
         setupFiles: "./vitest.setup.ts",
         isolate: false,
         restoreMocks: true,

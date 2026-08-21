@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { describe, expect, it, vi } from "vitest";
 
 import { UnexpectedResponseError, type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";

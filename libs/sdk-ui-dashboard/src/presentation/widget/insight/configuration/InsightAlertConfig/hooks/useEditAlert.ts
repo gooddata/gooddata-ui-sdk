@@ -32,6 +32,7 @@ import {
     selectWeekStart,
 } from "../../../../../../model/store/config/configSelectors.js";
 import { selectEntitlementMinimumRecurrenceMinutes } from "../../../../../../model/store/entitlements/entitlementsSelectors.js";
+import { selectEffectiveDashboardTimezone } from "../../../../../../model/store/meta/metaSelectors.js";
 import { selectCanUseAiAssistant } from "../../../../../../model/store/permissions/permissionsSelectors.js";
 import { selectCurrentUser } from "../../../../../../model/store/user/userSelectors.js";
 import {
@@ -94,7 +95,11 @@ export const useEditAlert = ({
     const enableAnomalyDetectionAlert = useDashboardSelector(selectEnableAnomalyDetectionAlert);
     const enableAiAssistant = useDashboardSelector(selectCanUseAiAssistant);
     const weekStart = useDashboardSelector(selectWeekStart);
-    const timezone = useDashboardSelector(selectTimezone);
+    // the custom dashboard timezone (view-mode override or dashboard configuration) wins over
+    // the workspace setting for the alert comparison-window computation
+    const workspaceTimezone = useDashboardSelector(selectTimezone);
+    const customTimezone = useDashboardSelector(selectEffectiveDashboardTimezone);
+    const timezone = customTimezone ?? workspaceTimezone;
     const intl = useIntl();
 
     const minimumRecurrenceMinutesEntitlement = useDashboardSelector(

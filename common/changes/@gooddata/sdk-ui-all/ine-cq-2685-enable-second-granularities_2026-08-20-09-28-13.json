@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-backend-tiger: Turn on enableSecondGranularities feature flag by default.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "ivan.nejezchleb@gooddata.com"
+}

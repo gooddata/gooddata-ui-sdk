@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -40,8 +40,12 @@ describe("ReactHeaderMenu", () => {
     });
 
     it("should call click handler on menu item", async () => {
+        // Clicked without an href: the items are real anchors, and the component deliberately leaves
+        // navigation to the browser, so clicking one that points somewhere would send the test
+        // environment's window off to that address — where every later test would then find itself.
+        // What the href renders as is asserted above; here only the handler matters.
         const clickSpy = vi.fn();
-        render(<Wrapped sections={sections} onMenuItemClick={clickSpy} />);
+        render(<Wrapped sections={[[{ isActive: true, key: "dic" }]]} onMenuItemClick={clickSpy} />);
 
         await userEvent.click(screen.getByText(mockTranslation["dic"]));
 

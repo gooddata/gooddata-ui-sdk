@@ -268,6 +268,11 @@ export {
     type IKdSetApiTokenBody,
     type KdSetApiTokenCommand,
     type KdSetApiTokenCommandData,
+    type IKdSetTimezoneBody,
+    type KdSetTimezoneCommand,
+    type KdSetTimezoneCommandData,
+    type IKdSetTimezoneFinishedBody,
+    type KdSetTimezoneFinishedData,
     GdcKdCommandType,
     GdcKdEventType,
     KdSetFilterParentsErrorCode,
@@ -288,6 +293,7 @@ export {
     isKdOpenDeleteDashboardDialogCommandData,
     isKdToggleAIAssistantCommandData,
     isKdSetApiTokenCommandData,
+    isKdSetTimezoneCommandData,
 } from "./iframe/EmbeddedKpiDashboard.js";
 
 // legacyTypes

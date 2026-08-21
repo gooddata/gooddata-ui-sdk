@@ -497,6 +497,7 @@ export interface AutomationAlert {
      * Date granularity for the interval of ONCE_PER_INTERVAL trigger. Supported granularities: DAY, WEEK, MONTH, QUARTER, YEAR.
      */
     'interval'?: AutomationAlertIntervalEnum;
+    'settings'?: ExecutionSettings;
     /**
      * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
      */
@@ -1463,6 +1464,10 @@ export interface DeclarativeAgent {
      */
     'id': string;
     /**
+     * Rules this agent follows when answering.
+     */
+    'instructions'?: Array<Instruction> | null;
+    /**
      * Time of the last entity modification.
      */
     'modifiedAt'?: string | null;
@@ -1487,6 +1492,33 @@ export interface DeclarativeAgent {
 
 export type DeclarativeAgentCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge';
 export type DeclarativeAgentSkillsModeEnum = 'all' | 'custom';
+
+/**
+ * Rule that an agent follows when answering.
+ * @export
+ * @interface Instruction
+ */
+export interface Instruction {
+    /**
+     * The rule the agent follows when answering
+     */
+    'content': string;
+    /**
+     * Whether the instruction is disabled
+     */
+    'isDisabled'?: boolean | null;
+    /**
+     * When an instruction is applied to a request
+     */
+    'strategy': InstructionStrategyEnum;
+    /**
+     * Short name shown in the agent builder.
+     */
+    'title'?: string | null;
+}
+
+export type InstructionStrategyEnum = 'ALWAYS' | 'AUTO';
+
 
 /**
  * AI agent configurations.
@@ -4100,6 +4132,10 @@ export interface JsonApiAgentInAttributes {
     'customSkills'?: Array<JsonApiAgentInAttributesCustomSkillsEnum> | null;
     'description'?: string | null;
     'enabled'?: boolean;
+    /**
+     * Rules this agent follows when answering.
+     */
+    'instructions'?: Array<JsonApiAgentInAttributesInstructionsInner> | null;
     'isPreview'?: boolean;
     'name'?: string | null;
     'personality'?: string | null;
@@ -4108,6 +4144,33 @@ export interface JsonApiAgentInAttributes {
 
 export type JsonApiAgentInAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge';
 export type JsonApiAgentInAttributesSkillsModeEnum = 'all' | 'custom';
+
+/**
+ * Rule that an agent follows when answering.
+ * @export
+ * @interface JsonApiAgentInAttributesInstructionsInner
+ */
+export interface JsonApiAgentInAttributesInstructionsInner {
+    /**
+     * The rule the agent follows when answering
+     */
+    'content': string;
+    /**
+     * Whether the instruction is disabled
+     */
+    'isDisabled'?: boolean | null;
+    /**
+     * When an instruction is applied to a request
+     */
+    'strategy': JsonApiAgentInAttributesInstructionsInnerStrategyEnum;
+    /**
+     * Short name shown in the agent builder.
+     */
+    'title'?: string | null;
+}
+
+export type JsonApiAgentInAttributesInstructionsInnerStrategyEnum = 'ALWAYS' | 'AUTO';
+
 
 export interface JsonApiAgentInDocument {
     'data': JsonApiAgentIn;
@@ -4149,6 +4212,10 @@ export interface JsonApiAgentOutAttributes {
     'customSkills'?: Array<JsonApiAgentOutAttributesCustomSkillsEnum> | null;
     'description'?: string | null;
     'enabled'?: boolean;
+    /**
+     * Rules this agent follows when answering.
+     */
+    'instructions'?: Array<JsonApiAgentOutAttributesInstructionsInner> | null;
     'isPreview'?: boolean;
     'modifiedAt'?: string;
     'name'?: string | null;
@@ -4158,6 +4225,33 @@ export interface JsonApiAgentOutAttributes {
 
 export type JsonApiAgentOutAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge';
 export type JsonApiAgentOutAttributesSkillsModeEnum = 'all' | 'custom';
+
+/**
+ * Rule that an agent follows when answering.
+ * @export
+ * @interface JsonApiAgentOutAttributesInstructionsInner
+ */
+export interface JsonApiAgentOutAttributesInstructionsInner {
+    /**
+     * The rule the agent follows when answering
+     */
+    'content': string;
+    /**
+     * Whether the instruction is disabled
+     */
+    'isDisabled'?: boolean | null;
+    /**
+     * When an instruction is applied to a request
+     */
+    'strategy': JsonApiAgentOutAttributesInstructionsInnerStrategyEnum;
+    /**
+     * Short name shown in the agent builder.
+     */
+    'title'?: string | null;
+}
+
+export type JsonApiAgentOutAttributesInstructionsInnerStrategyEnum = 'ALWAYS' | 'AUTO';
+
 
 export interface JsonApiAgentOutDocument {
     'data': JsonApiAgentOut;
@@ -4251,6 +4345,10 @@ export interface JsonApiAgentPatchAttributes {
     'customSkills'?: Array<JsonApiAgentPatchAttributesCustomSkillsEnum> | null;
     'description'?: string | null;
     'enabled'?: boolean;
+    /**
+     * Rules this agent follows when answering.
+     */
+    'instructions'?: Array<JsonApiAgentPatchAttributesInstructionsInner> | null;
     'isPreview'?: boolean;
     'name'?: string | null;
     'personality'?: string | null;
@@ -4259,6 +4357,33 @@ export interface JsonApiAgentPatchAttributes {
 
 export type JsonApiAgentPatchAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge';
 export type JsonApiAgentPatchAttributesSkillsModeEnum = 'all' | 'custom';
+
+/**
+ * Rule that an agent follows when answering.
+ * @export
+ * @interface JsonApiAgentPatchAttributesInstructionsInner
+ */
+export interface JsonApiAgentPatchAttributesInstructionsInner {
+    /**
+     * The rule the agent follows when answering
+     */
+    'content': string;
+    /**
+     * Whether the instruction is disabled
+     */
+    'isDisabled'?: boolean | null;
+    /**
+     * When an instruction is applied to a request
+     */
+    'strategy': JsonApiAgentPatchAttributesInstructionsInnerStrategyEnum;
+    /**
+     * Short name shown in the agent builder.
+     */
+    'title'?: string | null;
+}
+
+export type JsonApiAgentPatchAttributesInstructionsInnerStrategyEnum = 'ALWAYS' | 'AUTO';
+
 
 export interface JsonApiAgentPatchDocument {
     'data': JsonApiAgentPatch;
@@ -5280,6 +5405,7 @@ export interface JsonApiAutomationInAttributesAlert {
      * Date granularity for the interval of ONCE_PER_INTERVAL trigger. Supported granularities: DAY, WEEK, MONTH, QUARTER, YEAR.
      */
     'interval'?: JsonApiAutomationInAttributesAlertIntervalEnum;
+    'settings'?: ExecutionSettings;
     /**
      * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
      */
@@ -5461,6 +5587,7 @@ export interface JsonApiAutomationOutAttributesAlert {
      * Date granularity for the interval of ONCE_PER_INTERVAL trigger. Supported granularities: DAY, WEEK, MONTH, QUARTER, YEAR.
      */
     'interval'?: JsonApiAutomationOutAttributesAlertIntervalEnum;
+    'settings'?: ExecutionSettings;
     /**
      * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
      */
@@ -5702,6 +5829,7 @@ export interface JsonApiAutomationPatchAttributesAlert {
      * Date granularity for the interval of ONCE_PER_INTERVAL trigger. Supported granularities: DAY, WEEK, MONTH, QUARTER, YEAR.
      */
     'interval'?: JsonApiAutomationPatchAttributesAlertIntervalEnum;
+    'settings'?: ExecutionSettings;
     /**
      * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
      */
@@ -13480,6 +13608,7 @@ export interface JsonApiWorkspaceAutomationOutAttributesAlert {
      * Date granularity for the interval of ONCE_PER_INTERVAL trigger. Supported granularities: DAY, WEEK, MONTH, QUARTER, YEAR.
      */
     'interval'?: JsonApiWorkspaceAutomationOutAttributesAlertIntervalEnum;
+    'settings'?: ExecutionSettings;
     /**
      * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
      */

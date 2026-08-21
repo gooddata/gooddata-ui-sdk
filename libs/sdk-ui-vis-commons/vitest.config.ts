@@ -9,6 +9,7 @@ export default defineConfig({
     },
     test: {
         environment: "happy-dom",
+        reporters: ["default"],
         setupFiles: "./vitest.setup.ts",
         isolate: false,
         restoreMocks: true,

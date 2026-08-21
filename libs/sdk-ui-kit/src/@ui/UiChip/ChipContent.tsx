@@ -7,6 +7,8 @@ import { type IChipContentProps } from "./types.js";
 
 const { e } = bem("gd-ui-kit-chip");
 
+const ICON_SIZE = 14;
+
 export function ChipContent({
     label,
     tag,
@@ -25,8 +27,16 @@ export function ChipContent({
     buttonRef,
     styleObj,
 }: IChipContentProps) {
-    const { isExpanded, popupId, popupType, ariaHaspopup, ariaLabel, ariaLabelledBy, ariaControls } =
-        accessibilityConfig ?? {};
+    const {
+        isExpanded,
+        popupId,
+        popupType,
+        ariaHaspopup,
+        ariaLabel,
+        ariaLabelledBy,
+        ariaControls,
+        iconBeforeAriaLabel,
+    } = accessibilityConfig ?? {};
     const isDropdownTrigger = isExpandable || isExpanded !== undefined || popupId !== undefined;
     const ariaDropdownProps = isDropdownTrigger
         ? {
@@ -40,7 +50,12 @@ export function ChipContent({
     return (
         <button
             data-testid={dataTestId}
-            className={e("trigger", { isDeletable, isActive, isLocked: isLocked || isDisabled })}
+            className={e("trigger", {
+                isDeletable,
+                hasIconAfter: !!iconAfter,
+                isActive,
+                isLocked: isLocked || isDisabled,
+            })}
             disabled={isDisabled}
             onClick={isLocked ? undefined : onClick}
             onKeyDown={onKeyDown}
@@ -53,7 +68,14 @@ export function ChipContent({
         >
             {iconBefore ? (
                 <span className={e("icon-before")}>
-                    <UiIcon type={iconBefore} color={iconColor} size={15} />
+                    <UiIcon
+                        type={iconBefore}
+                        color={iconColor}
+                        size={ICON_SIZE}
+                        accessibilityConfig={
+                            iconBeforeAriaLabel ? { ariaLabel: iconBeforeAriaLabel } : undefined
+                        }
+                    />
                 </span>
             ) : null}
             <span className={e("label")}>{label}</span>
@@ -74,7 +96,7 @@ export function ChipContent({
                         </span>
                     ) : iconAfter ? (
                         <span className={e("icon-after")}>
-                            <UiIcon type={iconAfter} color={iconColor} size={15} />
+                            <UiIcon type={iconAfter} color={iconColor} size={ICON_SIZE} />
                         </span>
                     ) : null}
                 </>

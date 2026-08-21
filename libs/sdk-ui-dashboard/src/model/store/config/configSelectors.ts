@@ -846,7 +846,7 @@ export const selectEnableFiscalCalendars: DashboardSelector<boolean> = createSel
 export const selectEnableSecondGranularities: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableSecondGranularities ?? false;
+        return state.settings?.enableSecondGranularities ?? true;
     },
 );
 
@@ -913,14 +913,14 @@ export const selectEnableDashboardDensitySetting: DashboardSelector<boolean> = c
 );
 
 /**
- * Returns whether dashboard-level timezone configuration is enabled.
+ * Returns whether end users may change the timezone in Analytical Designer and, by default, on dashboards.
  *
  * @alpha
  */
-export const selectEnableDashboardTimezone: DashboardSelector<boolean> = createSelector(
+export const selectEnableTimezoneChange: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableDashboardTimezone ?? false;
+        return state.settings?.enableTimezoneChange ?? false;
     },
 );
 

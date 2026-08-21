@@ -33,6 +33,15 @@ export function convertAgent(agent: JsonApiAgentOutWithLinks, included?: JsonApi
         aiKnowledge: agent.attributes?.aiKnowledge,
         availableToAll: agent.attributes?.availableToAll,
         isPreview: agent.attributes?.isPreview,
+        // Empty must be undefined - see IAgent.instructions.
+        instructions: agent.attributes?.instructions?.length
+            ? agent.attributes.instructions.map((instruction) => ({
+                  title: instruction.title ?? undefined,
+                  content: instruction.content,
+                  strategy: instruction.strategy,
+                  isDisabled: instruction.isDisabled ?? undefined,
+              }))
+            : undefined,
         createdAt: agent.attributes?.createdAt,
         modifiedAt: agent.attributes?.modifiedAt,
         createdBy: convertUserIdentifier(agent.relationships?.createdBy, includedAsUserIdentifiers),

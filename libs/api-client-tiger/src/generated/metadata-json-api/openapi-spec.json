@@ -31101,6 +31101,14 @@
                         "description": "Identifier of an agent.",
                         "example": "default-ai-assistant"
                     },
+                    "instructions": {
+                        "description": "Rules this agent follows when answering.",
+                        "items": {
+                            "$ref": "#/components/schemas/Instruction"
+                        },
+                        "nullable": true,
+                        "type": "array"
+                    },
                     "modifiedAt": {
                         "type": "string",
                         "description": "Time of the last entity modification.",
@@ -36266,6 +36274,41 @@
                 },
                 "description": "Metric defined by the raw MAQL query."
             },
+            "Instruction": {
+                "description": "Rule that an agent follows when answering.",
+                "nullable": true,
+                "properties": {
+                    "content": {
+                        "description": "The rule the agent follows when answering",
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "isDisabled": {
+                        "description": "Whether the instruction is disabled",
+                        "nullable": true,
+                        "type": "boolean"
+                    },
+                    "strategy": {
+                        "description": "When an instruction is applied to a request",
+                        "enum": [
+                            "ALWAYS",
+                            "AUTO"
+                        ],
+                        "type": "string"
+                    },
+                    "title": {
+                        "description": "Short name shown in the agent builder.",
+                        "maxLength": 255,
+                        "nullable": true,
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "content",
+                    "strategy"
+                ],
+                "type": "object"
+            },
             "IntroSlideTemplate": {
                 "type": "object",
                 "properties": {
@@ -36353,6 +36396,45 @@
                             },
                             "enabled": {
                                 "type": "boolean"
+                            },
+                            "instructions": {
+                                "description": "Rules this agent follows when answering.",
+                                "items": {
+                                    "description": "Rule that an agent follows when answering.",
+                                    "properties": {
+                                        "content": {
+                                            "description": "The rule the agent follows when answering",
+                                            "maxLength": 255,
+                                            "type": "string"
+                                        },
+                                        "isDisabled": {
+                                            "description": "Whether the instruction is disabled",
+                                            "nullable": true,
+                                            "type": "boolean"
+                                        },
+                                        "strategy": {
+                                            "description": "When an instruction is applied to a request",
+                                            "enum": [
+                                                "ALWAYS",
+                                                "AUTO"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "title": {
+                                            "description": "Short name shown in the agent builder.",
+                                            "maxLength": 255,
+                                            "nullable": true,
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "content",
+                                        "strategy"
+                                    ],
+                                    "type": "object"
+                                },
+                                "nullable": true,
+                                "type": "array"
                             },
                             "isPreview": {
                                 "type": "boolean"
@@ -36468,6 +36550,45 @@
                             },
                             "enabled": {
                                 "type": "boolean"
+                            },
+                            "instructions": {
+                                "description": "Rules this agent follows when answering.",
+                                "items": {
+                                    "description": "Rule that an agent follows when answering.",
+                                    "properties": {
+                                        "content": {
+                                            "description": "The rule the agent follows when answering",
+                                            "maxLength": 255,
+                                            "type": "string"
+                                        },
+                                        "isDisabled": {
+                                            "description": "Whether the instruction is disabled",
+                                            "nullable": true,
+                                            "type": "boolean"
+                                        },
+                                        "strategy": {
+                                            "description": "When an instruction is applied to a request",
+                                            "enum": [
+                                                "ALWAYS",
+                                                "AUTO"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "title": {
+                                            "description": "Short name shown in the agent builder.",
+                                            "maxLength": 255,
+                                            "nullable": true,
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "content",
+                                        "strategy"
+                                    ],
+                                    "type": "object"
+                                },
+                                "nullable": true,
+                                "type": "array"
                             },
                             "isPreview": {
                                 "type": "boolean"
@@ -36671,6 +36792,45 @@
                             },
                             "enabled": {
                                 "type": "boolean"
+                            },
+                            "instructions": {
+                                "description": "Rules this agent follows when answering.",
+                                "items": {
+                                    "description": "Rule that an agent follows when answering.",
+                                    "properties": {
+                                        "content": {
+                                            "description": "The rule the agent follows when answering",
+                                            "maxLength": 255,
+                                            "type": "string"
+                                        },
+                                        "isDisabled": {
+                                            "description": "Whether the instruction is disabled",
+                                            "nullable": true,
+                                            "type": "boolean"
+                                        },
+                                        "strategy": {
+                                            "description": "When an instruction is applied to a request",
+                                            "enum": [
+                                                "ALWAYS",
+                                                "AUTO"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "title": {
+                                            "description": "Short name shown in the agent builder.",
+                                            "maxLength": 255,
+                                            "nullable": true,
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "content",
+                                        "strategy"
+                                    ],
+                                    "type": "object"
+                                },
+                                "nullable": true,
+                                "type": "array"
                             },
                             "isPreview": {
                                 "type": "boolean"

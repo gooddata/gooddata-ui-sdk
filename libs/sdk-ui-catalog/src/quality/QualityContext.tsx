@@ -16,7 +16,7 @@ import { createQueryId, triggerQualityIssuesCalculationQuery, triggerQualityIssu
 
 type QualityQueryType = "fetch" | "trigger";
 
-interface IQualityState {
+export interface IQualityState {
     status: UseCancelablePromiseStatus;
     issues: ISemanticQualityIssue[];
     updatedAt: ISemanticQualityReport["updatedAt"];
@@ -29,7 +29,11 @@ interface IQualityActions {
     createQualityIssuesCalculation: () => void;
 }
 
-const initialState: IQualityState = {
+/**
+ * The empty report {@link useQualityState} falls back to outside a provider.
+ * @internal
+ */
+export const defaultQualityState: IQualityState = {
     status: "pending",
     issues: [],
     updatedAt: undefined,
@@ -40,7 +44,12 @@ const initialActions: IQualityActions = {
     createQualityIssuesCalculation: () => {},
 };
 
-const QualityStateContext = createContext<IQualityState>(initialState);
+/**
+ * The state context behind {@link useQualityState}. Exported so a test can mount a fixed report
+ * (see `TestQualityProvider`); production code goes through {@link QualityProvider}.
+ * @internal
+ */
+export const QualityStateContext = createContext<IQualityState>(defaultQualityState);
 const QualityActionsContext = createContext<IQualityActions>(initialActions);
 
 type Props = PropsWithChildren<{
@@ -54,7 +63,7 @@ export function QualityProvider({ backend, workspace, children }: Props) {
     const [queryType, setQueryType] = useState<QualityQueryType>("fetch");
     const [queryKey, setQueryKey] = useState<string>(createQueryId);
     const [lastReportStatus, setLastReportStatus] = useState<SemanticQualityIssuesCalculationStatus>(
-        initialState.reportStatus,
+        defaultQualityState.reportStatus,
     );
 
     const qualityReport = useCancelablePromise(
@@ -89,8 +98,9 @@ export function QualityProvider({ backend, workspace, children }: Props) {
             status: qualityReport.status,
             error: qualityReport.error as Error | undefined,
             updatedAt: qualityReport.result?.updatedAt,
-            issues: qualityReport.result?.issues ?? initialState.issues,
-            reportStatus: qualityReport.result?.status ?? lastReportStatus ?? initialState.reportStatus,
+            issues: qualityReport.result?.issues ?? defaultQualityState.issues,
+            reportStatus:
+                qualityReport.result?.status ?? lastReportStatus ?? defaultQualityState.reportStatus,
         }),
         [qualityReport, lastReportStatus],
     );

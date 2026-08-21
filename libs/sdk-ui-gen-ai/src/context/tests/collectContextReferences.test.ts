@@ -201,6 +201,39 @@ describe("collectAvailableReferences", () => {
         ]);
     });
 
+    it("should keep the visualization type of the widgets that carry one", () => {
+        const context = {
+            view: {
+                dashboard: {
+                    ref: idRef("dash1"),
+                    widgets: [
+                        {
+                            widgetType: "insight",
+                            widgetRef: idRef("insight1"),
+                            title: "Insight 1",
+                            visualizationUrl: "local:bar",
+                        },
+                        {
+                            widgetType: "visualizationSwitcher",
+                            visualizations: [
+                                {
+                                    widgetRef: idRef("insight2"),
+                                    title: "Insight 2",
+                                    visualizationUrl: "local:line",
+                                },
+                            ],
+                        },
+                    ],
+                },
+            },
+        } as any;
+
+        const result = collectAvailableReferences(context);
+
+        expect(result[1]).toMatchObject({ id: "insight1", visualizationUrl: "local:bar" });
+        expect(result[2]).toMatchObject({ id: "insight2", visualizationUrl: "local:line" });
+    });
+
     it("should deduplicate widgets with same ref", () => {
         const context = {
             view: {

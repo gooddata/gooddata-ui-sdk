@@ -14,7 +14,7 @@ import { type DashboardTester, preloadedTesterFactory } from "../../../tests/Das
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { SimpleDashboardNoDrillsIdentifier } from "../../../tests/fixtures/SimpleDashboardNoDrills.fixtures.js";
 
-async function createTester(enableDashboardTimezone: boolean): Promise<DashboardTester> {
+async function createTester(enableTimezoneChange: boolean): Promise<DashboardTester> {
     let Tester: DashboardTester;
     await preloadedTesterFactory(
         (tester) => {
@@ -23,7 +23,7 @@ async function createTester(enableDashboardTimezone: boolean): Promise<Dashboard
         SimpleDashboardNoDrillsIdentifier,
         {
             initCommand: initializeDashboard({
-                settings: { enableDashboardTimezone },
+                settings: { enableTimezoneChange },
             }),
         },
     );

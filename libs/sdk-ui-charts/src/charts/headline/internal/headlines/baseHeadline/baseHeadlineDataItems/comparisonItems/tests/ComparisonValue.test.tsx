@@ -3,22 +3,16 @@
 import { type CSSProperties } from "react";
 
 import { render, screen } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 
 import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { type IBaseHeadlineValueItem } from "../../../../../interfaces/BaseHeadlines.js";
 import { TEST_DATA_ITEM, TEST_RENDER_VALUE_SPECS } from "../../../../../tests/TestData.fixtures.js";
-import { createMockUseBaseHeadline } from "../../../tests/BaseHeadline.test.helpers.js";
+import { createBaseHeadlineTestContext } from "../../../tests/BaseHeadline.test.helpers.js";
 import { ComparisonValue } from "../ComparisonValue.js";
 
-const useBaseHeadlineMock = vi.hoisted(() => vi.fn());
-
-vi.mock("../../../BaseHeadlineContext.js", () => ({
-    useBaseHeadline: useBaseHeadlineMock,
-}));
-
-const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
+const { setBaseHeadline, wrapper } = createBaseHeadlineTestContext();
 
 describe("ComparisonValue", () => {
     const renderComparisonDataItem = (props: {
@@ -27,11 +21,11 @@ describe("ComparisonValue", () => {
         isSubItem?: boolean;
     }) => {
         const Component = withIntlForTest(ComparisonValue);
-        return render(<Component {...props} />);
+        return render(<Component {...props} />, { wrapper });
     };
 
     beforeEach(() => {
-        mockUseBaseHeadline({
+        setBaseHeadline({
             config: {
                 comparison: {
                     enabled: true,
@@ -39,10 +33,6 @@ describe("ComparisonValue", () => {
                 },
             },
         });
-    });
-
-    afterEach(() => {
-        vi.clearAllMocks();
     });
 
     it.each<[string, { value: string; format: string }, string]>(TEST_RENDER_VALUE_SPECS)(

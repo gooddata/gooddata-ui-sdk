@@ -58,6 +58,11 @@ export interface IUiPermissionMenuProps {
     /** Tooltip shown on disabled level rows in place of the level's info text. */
     disabledTooltip?: string;
     /**
+     * Per-level override of `disabledTooltip`, for menus whose disabled levels have
+     * different reasons (capped by the caller's own level vs. already inherited).
+     */
+    disabledLevelTooltips?: Partial<Record<PermissionMenuLevel, string>>;
+    /**
      * Non-empty enables a labels row that drills into {@link UiLabelsChecklist}
      * within the menu — for rows whose menu hosts every action (no "⋯" menu).
      */
@@ -115,6 +120,7 @@ export function UiPermissionMenu({
     onPermissionChange,
     disabledLevels,
     disabledTooltip,
+    disabledLevelTooltips,
     labels,
     selectedLabelIds,
     onLabelsChange,
@@ -135,6 +141,7 @@ export function UiPermissionMenu({
                     onPermissionChange={onPermissionChange}
                     disabledLevels={disabledLevels}
                     disabledTooltip={disabledTooltip}
+                    disabledLevelTooltips={disabledLevelTooltips}
                     labels={labels}
                     selectedLabelIds={selectedLabelIds}
                     onLabelsChange={onLabelsChange}
@@ -154,6 +161,7 @@ interface IMenuBodyProps {
     onPermissionChange: (level: PermissionMenuLevel) => void;
     disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
     disabledTooltip?: string;
+    disabledLevelTooltips?: Partial<Record<PermissionMenuLevel, string>>;
     labels?: ReadonlyArray<IUiLabelsChecklistItem>;
     selectedLabelIds?: ReadonlyArray<string>;
     onLabelsChange?: (selectedIds: string[]) => void;
@@ -169,6 +177,7 @@ function MenuBody({
     onPermissionChange,
     disabledLevels,
     disabledTooltip,
+    disabledLevelTooltips,
     labels,
     selectedLabelIds,
     onLabelsChange,
@@ -202,7 +211,8 @@ function MenuBody({
             key: level,
             label,
             // A disabled level explains why it can't be picked instead of what it does.
-            tooltip: disabled && disabledTooltip ? disabledTooltip : tooltip,
+            // `||`, not `??`: an empty explanation must not suppress the info button.
+            tooltip: disabled ? (disabledLevelTooltips?.[level] ?? disabledTooltip) || tooltip : tooltip,
             radioValue: level,
             disabled,
             onClick: disabled ? () => {} : choose(() => onPermissionChange(level)),

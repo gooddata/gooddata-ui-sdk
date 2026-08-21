@@ -119,6 +119,11 @@ export enum GdcKdCommandType {
      * The command to toggle AI assistant dialog visibility
      */
     ToggleAIAssistant = "toggleAIAssistant",
+
+    /**
+     * The command to set the dashboard timezone
+     */
+    SetTimezone = "setTimezone",
 }
 
 /**
@@ -290,6 +295,11 @@ export enum GdcKdEventType {
      * Type notifies embedding application that AI assistant dialog visibility has changed.
      */
     AIAssistantDialogVisibilityChanged = "aiAssistantDialogVisibilityChanged",
+
+    /**
+     * Type represent that the setTimezone command is finished.
+     */
+    SetTimezoneFinished = "setTimezoneFinished",
 }
 
 /**
@@ -1507,3 +1517,94 @@ export function isKdSetApiTokenCommandData(obj: unknown): obj is KdSetApiTokenCo
         getEventType(obj) === (GdcKdCommandType.SetApiToken as string)
     );
 }
+
+/**
+ * Set timezone command body sent by outer application
+ *
+ * @public
+ */
+export interface IKdSetTimezoneBody {
+    /**
+     * Concrete IANA timezone ID (e.g. "Europe/Prague"), or the "$browserDetected" sentinel to use
+     * the timezone detected in the embedded dashboard's browser. Omit the field or pass an empty
+     * string to clear the timezone, so that the dashboard, workspace or organization default
+     * applies again.
+     */
+    timezoneId?: string;
+}
+
+/**
+ * Sets the timezone the dashboard computes its data in.
+ *
+ * Contract:
+ *
+ * -  in edit mode the timezone is stored in the dashboard's configuration, marking the dashboard
+ *      dirty, so it becomes persistent once the dashboard is saved
+ * -  in view mode the timezone is applied as a session-only override, which requires the dashboard
+ *      to allow user overrides in view mode; the override is never persisted
+ * -  omitting `timezoneId` or passing an empty string clears the timezone set by the respective mode
+ * -  the affected widgets are re-executed with the new timezone
+ * -  the command results in CommandFailed when the dashboard timezone feature is disabled, when a
+ *      view-mode override is not allowed, or when the provided timezone ID is not valid
+ *
+ * @public
+ */
+export type KdSetTimezoneCommand = IGdcKdMessageEvent<GdcKdCommandType.SetTimezone, IKdSetTimezoneBody>;
+
+/**
+ * Data type of set timezone command
+ *
+ * Note: The main event data was wrapped to application and product data structure
+ * @remarks See {@link IKdSetTimezoneBody}
+ *
+ * @public
+ */
+export type KdSetTimezoneCommandData = IGdcKdMessageEnvelope<
+    GdcKdCommandType.SetTimezone,
+    IKdSetTimezoneBody
+>;
+
+/**
+ * Type-guard checking whether an object is an instance of {@link KdSetTimezoneCommandData}.
+ *
+ * @param obj - object to test
+ *
+ * @public
+ */
+export function isKdSetTimezoneCommandData(obj: unknown): obj is KdSetTimezoneCommandData {
+    return (
+        obj !== null &&
+        typeof obj === "object" &&
+        getEventType(obj) === (GdcKdCommandType.SetTimezone as string)
+    );
+}
+
+/**
+ * Body of the event that is emitted once the setTimezone command is successfully processed.
+ *
+ * @public
+ */
+export interface IKdSetTimezoneFinishedBody extends IKdAvailableCommands {
+    /**
+     * Where the timezone was stored: the dashboard configuration (edit mode, persisted on save)
+     * or the session-only view-mode override.
+     */
+    target: "configuration" | "override";
+
+    /**
+     * The effective timezone of the dashboard after the command, as a concrete IANA timezone ID.
+     * Undefined when no dashboard timezone applies and the workspace or organization default is
+     * used instead.
+     */
+    effectiveTimezone?: string;
+}
+
+/**
+ * Type that represents the setTimezone command finished event data.
+ *
+ * @public
+ */
+export type KdSetTimezoneFinishedData = IGdcKdMessageEnvelope<
+    GdcKdEventType.SetTimezoneFinished,
+    IKdSetTimezoneFinishedBody
+>;

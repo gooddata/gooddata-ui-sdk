@@ -13,11 +13,16 @@ import { REFERENCE_REGEX } from "./components/completion/references.js";
 import { type IChatConversationLocal } from "./model.js";
 import { type IGenAIContextListItem, type IGenAIContextObject } from "./types.js";
 
-export function toContextListItem(ref: ObjRef, title: string): IGenAIContextListItem {
+export function toContextListItem(
+    ref: ObjRef,
+    title: string,
+    visualizationUrl?: string,
+): IGenAIContextListItem {
     return {
         id: isIdentifierRef(ref) ? ref.identifier : ref.uri,
         ref,
         title,
+        ...(visualizationUrl ? { visualizationUrl } : {}),
     };
 }
 

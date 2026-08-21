@@ -13,12 +13,22 @@ import {
     type IDefaultScheduledEmailDialogProps,
     type IScheduledEmailDialogFiltersProps,
     type ScheduledEmailDialogHeaderDefaultProps,
+    type ScheduledEmailDialogTimezoneDefaultProps,
 } from "../../types.js";
 import { DefaultScheduledEmailDialog } from "../DefaultScheduledEmailDialog.js";
 
 // The one hook unrelated to slot threading, mocked the same way the SE state acceptance test mocks it:
 // useValidateExistingAutomationFilters computes staleness against the dashboard's current filters and is
 // not read by the assertions below.
+// `isolate: false` shares one module graph per worker, so the modules mocked below may already have
+// been evaluated — against their real dependencies — by a test file that ran earlier in the same
+// worker, which turns those `vi.mock()` calls into no-ops. Dropping the module registry from
+// `vi.hoisted()` (it runs before this file's own imports, unlike any `beforeEach`) makes those
+// imports resolve through the mocks.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 const { mockUseValidateExistingAutomationFilters } = vi.hoisted(() => ({
     mockUseValidateExistingAutomationFilters: vi.fn(),
 }));
@@ -43,6 +53,7 @@ vi.mock("../../DefaultScheduledEmailDialog/components/RecipientsSelect/Recipient
 }));
 
 const DEFAULT_HEADER_SELECTOR = ".s-gd-notifications-channels-dialog-title";
+const DEFAULT_TIMEZONE_SELECTOR = ".s-gd-schedule-timezone";
 const SUBMIT_BUTTON_SELECTOR = ".s-dialog-submit-button";
 const OVER_LONG_TITLE = "x".repeat(300);
 
@@ -77,6 +88,22 @@ function WrappingFilters({ Default, defaultProps }: ISlotProps<IScheduledEmailDi
     return (
         <>
             <div data-testid="filters-banner" />
+            <Default {...defaultProps} />
+        </>
+    );
+}
+
+function CustomTimezoneSection() {
+    return <div data-testid="custom-timezone" />;
+}
+
+function WrappingTimezoneSection({
+    Default,
+    defaultProps,
+}: ISlotProps<ScheduledEmailDialogTimezoneDefaultProps>) {
+    return (
+        <>
+            <div data-testid="timezone-slot-banner" data-is-widget={String(defaultProps.isWidget)} />
             <Default {...defaultProps} />
         </>
     );
@@ -134,10 +161,11 @@ beforeEach(() => {
 function renderDialog(
     props?: Partial<IDefaultScheduledEmailDialogProps>,
     dialogContext = SCHEDULED_EMAIL_DIALOG_CONTEXT,
+    automationsContext = AUTOMATIONS_CONTEXT,
 ) {
     return render(
         <IntlWrapper>
-            <AutomationsContextProvider value={AUTOMATIONS_CONTEXT}>
+            <AutomationsContextProvider value={automationsContext}>
                 <ScheduledEmailDialogContextProvider value={dialogContext}>
                     <ScheduledEmailDialogStateProvider>
                         <DefaultScheduledEmailDialog onCancel={() => {}} {...props} />
@@ -287,5 +315,90 @@ describe("DefaultScheduledEmailDialog slots.Filters", () => {
 
         expect(within(baseElement).queryByTestId("custom-filters")).toBeNull();
         expect(within(baseElement).queryByRole("tab", { name: /filters/i })).toBeNull();
+    });
+});
+
+describe("DefaultScheduledEmailDialog slots.Timezone", () => {
+    // the section renders only when the timezone feature is on and the dashboard allows the
+    // view-mode override; the inputs arrive via the automations context (filled by connectors)
+    const TIMEZONE_SECTION_CONTEXT = {
+        ...AUTOMATIONS_CONTEXT,
+        exportTimezones: {
+            isTimezoneFeatureEnabled: true,
+            allowUserOverrideInViewMode: true,
+            configuredTimezoneId: undefined,
+            workspaceTimezone: "Europe/Prague",
+            effectiveTimezone: undefined,
+            scheduledExportTimezone: undefined,
+        },
+    };
+
+    function renderDialogWithTimezoneSection(props?: Partial<IDefaultScheduledEmailDialogProps>) {
+        return renderDialog(props, SCHEDULED_EMAIL_DIALOG_CONTEXT, TIMEZONE_SECTION_CONTEXT);
+    }
+
+    it("renders the default section when no slots are passed", () => {
+        const { baseElement } = renderDialogWithTimezoneSection();
+
+        expect(baseElement.querySelector(DEFAULT_TIMEZONE_SELECTOR)).not.toBeNull();
+    });
+
+    it("replaces the default section when the slot renders its own content", () => {
+        const { baseElement } = renderDialogWithTimezoneSection({
+            slots: { Timezone: CustomTimezoneSection },
+        });
+
+        expect(within(baseElement).getByTestId("custom-timezone")).toBeInTheDocument();
+        expect(baseElement.querySelector(DEFAULT_TIMEZONE_SELECTOR)).toBeNull();
+    });
+
+    it("wraps the default section with the exact props the default dialog would render it with", () => {
+        const { baseElement } = renderDialogWithTimezoneSection({
+            slots: { Timezone: WrappingTimezoneSection },
+        });
+
+        const banner = within(baseElement).getByTestId("timezone-slot-banner");
+        // the dialog context fixture schedules a dashboard export, so defaultProps say so
+        expect(banner).toHaveAttribute("data-is-widget", "false");
+        expect(baseElement.querySelector(DEFAULT_TIMEZONE_SELECTOR)).not.toBeNull();
+    });
+
+    it("associates the section label and hints with the dropdown trigger", () => {
+        const { baseElement } = renderDialogWithTimezoneSection();
+
+        const section = baseElement.querySelector(DEFAULT_TIMEZONE_SELECTOR)!;
+        const label = section.querySelector<HTMLLabelElement>("label.gd-label")!;
+        const trigger = section.querySelector<HTMLButtonElement>(".s-timezone-select-button")!;
+        const note = section.querySelector(".s-gd-schedule-timezone-note")!;
+        const currentTime = section.querySelector(".s-gd-schedule-timezone-current-time")!;
+
+        expect(label.htmlFor).toBe(trigger.id);
+        const describedBy = trigger.getAttribute("aria-describedby")?.split(" ") ?? [];
+        expect(describedBy).toContain(note.id);
+        expect(describedBy).toContain(currentTime.id);
+    });
+
+    it("does not render the slot when the section is hidden (timezone feature off)", () => {
+        const { baseElement } = renderDialog({ slots: { Timezone: CustomTimezoneSection } });
+
+        expect(within(baseElement).queryByTestId("custom-timezone")).toBeNull();
+        expect(baseElement.querySelector(DEFAULT_TIMEZONE_SELECTOR)).toBeNull();
+    });
+
+    it("does not render the slot when the dashboard forbids the view-mode override", () => {
+        const { baseElement } = renderDialog(
+            { slots: { Timezone: CustomTimezoneSection } },
+            SCHEDULED_EMAIL_DIALOG_CONTEXT,
+            {
+                ...TIMEZONE_SECTION_CONTEXT,
+                exportTimezones: {
+                    ...TIMEZONE_SECTION_CONTEXT.exportTimezones,
+                    allowUserOverrideInViewMode: false,
+                },
+            },
+        );
+
+        expect(within(baseElement).queryByTestId("custom-timezone")).toBeNull();
+        expect(baseElement.querySelector(DEFAULT_TIMEZONE_SELECTOR)).toBeNull();
     });
 });

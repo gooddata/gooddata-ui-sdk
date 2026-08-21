@@ -18,8 +18,13 @@ vi.mock("../useRedirectTarget.js", () => ({
     useRedirectTarget: vi.fn().mockReturnValue({ state: "render" }),
 }));
 
-vi.mock("../../ui/resolveHostUiModule.js", () => ({
-    resolveHostUiModule: vi.fn(() => new Promise(() => {})),
+// These tests only cover Root's own branching between loader, error chrome and the host container,
+// so the container is stubbed out. Stubbing the component itself rather than neutering it through
+// `resolveHostUiModule` also keeps the real `HostUiContainer` module out of this file's graph: with
+// isolation off the module registry is shared across test files, and an instance evaluated here would
+// stay bound to *these* mocks in HostUiContainer.test.tsx.
+vi.mock("../HostUiContainer.js", () => ({
+    HostUiContainer: () => <div data-testid="host-ui-container" />,
 }));
 
 const mockNavigate = vi.fn();
@@ -65,7 +70,7 @@ describe("Root", () => {
             </MemoryRouter>,
         );
 
-        // HostUiContainer renders a bare container div for the host UI module to mount into
+        expect(screen.getByTestId("host-ui-container")).toBeInTheDocument();
         expect(container.querySelector(".gd-host-root__loading")).toBeNull();
         expect(screen.queryByRole("heading")).toBeNull();
     });

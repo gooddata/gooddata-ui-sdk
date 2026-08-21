@@ -8,6 +8,7 @@ import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { ComponentType } from 'react';
+import { DashboardSelectorEvaluator } from '@gooddata/sdk-ui-dashboard';
 import { EnhancedStore } from '@reduxjs/toolkit';
 import type { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import type { GenAIChatRoutingUseCase } from '@gooddata/sdk-model';
@@ -281,6 +282,7 @@ export type GenAIAssistantProps = Omit<GenAiStoreProps, "children"> & {
     disableManage?: boolean;
     disableAnalyze?: boolean;
     disableFullControl?: boolean;
+    dashboardSelector?: DashboardSelectorEvaluator;
     LandingScreenComponentProvider?: () => ComponentType;
     DisclaimerComponentProvider?: () => ComponentType | null;
     className?: string;
@@ -627,6 +629,9 @@ export type TextContents = {
 
 // @internal (undocumented)
 export function useGenAiChatAvailability(backend: IAnalyticalBackend, workspaceId?: string, enabled?: boolean, canManage?: boolean): boolean;
+
+// @public
+export function useGenAiDispatcher(): EnhancedStore["dispatch"];
 
 // @public (undocumented)
 export type UserMessage = BaseMessage & {

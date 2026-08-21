@@ -369,6 +369,9 @@ export interface IDashboardTimezoneConfig {
     /**
      * Whether consumers may change the timezone ad-hoc in view mode. The override is session-only
      * and never persisted to the dashboard. Also gates the embedding setTimezone command.
+     *
+     * When unset, the organization/workspace `enableTimezoneChange` setting
+     * is used as the default. An explicit `false` disables the override even when that setting is on.
      */
     readonly allowUserOverrideInViewMode?: boolean;
 }
@@ -378,6 +381,11 @@ export interface IDashboardTimezoneConfig {
  * (false/empty) properties are dropped, and a configuration with no effective values collapses
  * to undefined. Apply before storing the configuration in state or persisting it, so that
  * "all defaults" is always represented as an absent configuration rather than an empty object.
+ *
+ * @remarks
+ * `allowUserOverrideInViewMode` is kept when it is an explicit boolean (including `false`) so that
+ * a dashboard can override the organization/workspace `enableTimezoneChange` default. `showTimezoneInfo`
+ * still drops `false` because its default is always off.
  *
  * @param config - timezone configuration to normalize
  * @alpha

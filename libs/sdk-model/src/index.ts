@@ -1444,12 +1444,15 @@ export type {
     LlmProviderListModelsResults,
 } from "./llmProviders/index.js";
 
-export type {
-    IAgent,
-    IAgentPatch,
-    IAgentSkill,
-    AgentCustomSkill,
-    AgentSkillsMode,
+export {
+    type IAgent,
+    type IAgentInstruction,
+    type IAgentPatch,
+    type IAgentSkill,
+    type AgentCustomSkill,
+    type AgentInstructionStrategy,
+    type AgentSkillsMode,
+    MAX_AGENT_INSTRUCTIONS,
 } from "./agentSkill/index.js";
 
 export {

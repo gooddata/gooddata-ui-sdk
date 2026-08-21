@@ -30,6 +30,15 @@ interface IMockContextState {
 
 let mockState: IMockContextState;
 
+// `isolate: false` shares one module graph per worker, so the modules mocked below may already have
+// been evaluated — against their real dependencies — by a test file that ran earlier in the same
+// worker, which turns the `vi.mock()` below into a no-op. Dropping the module registry from
+// `vi.hoisted()` (it runs before this file's own imports, unlike any `beforeEach`) makes the static
+// imports resolve through the mocks.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 // Three ups: `vi.mock` resolves relative to THIS test file, which sits in
 // shared/automationFilters/test/ — one level deeper than the hook whose import path is
 // "../../contexts/AutomationsContext.js".

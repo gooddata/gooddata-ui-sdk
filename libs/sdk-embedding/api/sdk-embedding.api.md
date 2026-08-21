@@ -331,6 +331,7 @@ export enum GdcKdCommandType {
     SetFilterContext = "setFilterContext",
     SetFilterParents = "setFilterParents",
     SetSize = "setSize",
+    SetTimezone = "setTimezone",
     SwitchToEdit = "switchToEdit",
     ToggleAIAssistant = "toggleAIAssistant"
 }
@@ -364,6 +365,7 @@ export enum GdcKdEventType {
     SetFilterContextFinished = "setFilterContextFinished",
     SetFilterParentsFailed = "setFilterParentsFailed",
     SetFilterParentsFinished = "setFilterParentsFinished",
+    SetTimezoneFinished = "setTimezoneFinished",
     SwitchedToEdit = "switchedToEdit",
     SwitchedToView = "switchedToView",
     WidgetAdded = "widgetAdded"
@@ -772,6 +774,17 @@ export interface IKdSetFilterParentsItemParent {
 // @public (undocumented)
 export interface IKdSetSizeCommandBody {
     height: number;
+}
+
+// @public
+export interface IKdSetTimezoneBody {
+    timezoneId?: string;
+}
+
+// @public
+export interface IKdSetTimezoneFinishedBody extends IKdAvailableCommands {
+    effectiveTimezone?: string;
+    target: "configuration" | "override";
 }
 
 // @public (undocumented)
@@ -1195,6 +1208,9 @@ export function isKdSetFilterParentsCommandData(obj: unknown): obj is KdSetFilte
 export function isKdSetSizeCommandData(obj: unknown): obj is KdSetSizeCommandData;
 
 // @public
+export function isKdSetTimezoneCommandData(obj: unknown): obj is KdSetTimezoneCommandData;
+
+// @public
 export function isKdSwitchToEditCommandData(obj: unknown): obj is KdSwitchToEditCommandData;
 
 // @public
@@ -1583,6 +1599,15 @@ export type KdSetSizeCommand = IGdcKdMessageEvent<GdcKdCommandType.SetSize, IKdS
 
 // @public (undocumented)
 export type KdSetSizeCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SetSize, IKdSetSizeCommandBody>;
+
+// @public
+export type KdSetTimezoneCommand = IGdcKdMessageEvent<GdcKdCommandType.SetTimezone, IKdSetTimezoneBody>;
+
+// @public
+export type KdSetTimezoneCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SetTimezone, IKdSetTimezoneBody>;
+
+// @public
+export type KdSetTimezoneFinishedData = IGdcKdMessageEnvelope<GdcKdEventType.SetTimezoneFinished, IKdSetTimezoneFinishedBody>;
 
 // @public
 export type KdSwitchedToEditData = IGdcKdMessageEnvelope<GdcKdEventType.SwitchedToEdit, KdDashboardBody>;

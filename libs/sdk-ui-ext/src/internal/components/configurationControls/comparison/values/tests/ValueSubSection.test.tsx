@@ -1,7 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 
 import { CalculateAs } from "@gooddata/sdk-ui-charts";
 
@@ -16,9 +16,9 @@ import {
 } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import { COMPARISON_FORMAT_VALUE_PATH, COMPARISON_SUB_FORMAT_VALUE_PATH } from "../../ComparisonValuePath.js";
-import { ComparisonPositionControl } from "../ComparisonPositionControl.js";
-import { NumberFormatControl } from "../numberFormat/NumberFormatControl.js";
-import { ValueSubSection } from "../ValueSubSection.js";
+import type * as ComparisonPositionControlModule from "../ComparisonPositionControl.js";
+import type * as NumberFormatControlModule from "../numberFormat/NumberFormatControl.js";
+import type * as ValueSubSectionModule from "../ValueSubSection.js";
 
 vi.mock("../ComparisonPositionControl.js", async (importOriginal) => {
     // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -36,6 +36,27 @@ vi.mock("../numberFormat/NumberFormatControl.js", async (importOriginal) => {
         ...actual,
         NumberFormatControl: vi.fn(actual.NumberFormatControl),
     };
+});
+
+/*
+ * Test isolation is disabled for this package, so the module cache is shared between test files:
+ * ValueSubSection.js may already have been evaluated - bound to the real controls - by another test file,
+ * and the mocked graph this file builds must not outlive it. Re-import all three modules up front so this
+ * file always observes the mocked ones, and drop the mocked graph again on the way out.
+ */
+let ComparisonPositionControl: typeof ComparisonPositionControlModule.ComparisonPositionControl;
+let NumberFormatControl: typeof NumberFormatControlModule.NumberFormatControl;
+let ValueSubSection: typeof ValueSubSectionModule.ValueSubSection;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ ComparisonPositionControl } = await import("../ComparisonPositionControl.js"));
+    ({ NumberFormatControl } = await import("../numberFormat/NumberFormatControl.js"));
+    ({ ValueSubSection } = await import("../ValueSubSection.js"));
+});
+
+afterAll(() => {
+    vi.resetModules();
 });
 
 const TITLE_TEXT_QUERY = "Value";

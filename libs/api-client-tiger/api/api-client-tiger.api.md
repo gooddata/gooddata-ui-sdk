@@ -7238,6 +7238,8 @@ export interface AutomationAlert {
     // (undocumented)
     'execution': AlertAfm;
     'interval'?: AutomationAlertIntervalEnum;
+    // (undocumented)
+    'settings'?: ExecutionSettings;
     'trigger'?: AutomationAlertTriggerEnum;
 }
 
@@ -7436,6 +7438,8 @@ export interface AutomationAutomationAlert {
     // (undocumented)
     'execution': AutomationAlertAfm;
     'interval'?: AutomationAutomationAlertIntervalEnum;
+    // (undocumented)
+    'settings'?: AutomationExecutionSettings;
     'trigger'?: AutomationAutomationAlertTriggerEnum;
 }
 
@@ -12600,6 +12604,7 @@ export interface DeclarativeAgent {
     'description'?: string;
     'enabled'?: boolean;
     'id': string;
+    'instructions'?: Array<Instruction> | null;
     'modifiedAt'?: string | null;
     // (undocumented)
     'modifiedBy'?: DeclarativeUserIdentifier;
@@ -22448,6 +22453,17 @@ export interface InPlatform {
 export type InPlatformTypeEnum = 'IN_PLATFORM';
 
 // @public
+export interface Instruction {
+    'content': string;
+    'isDisabled'?: boolean | null;
+    'strategy': InstructionStrategyEnum;
+    'title'?: string | null;
+}
+
+// @public (undocumented)
+export type InstructionStrategyEnum = 'ALWAYS' | 'AUTO';
+
+// @public
 export interface IntroSlideTemplate {
     'backgroundImage'?: boolean;
     // (undocumented)
@@ -23429,6 +23445,7 @@ export interface JsonApiAgentInAttributes {
     'description'?: string | null;
     // (undocumented)
     'enabled'?: boolean;
+    'instructions'?: Array<JsonApiAgentInAttributesInstructionsInner> | null;
     // (undocumented)
     'isPreview'?: boolean;
     // (undocumented)
@@ -23441,6 +23458,17 @@ export interface JsonApiAgentInAttributes {
 
 // @public (undocumented)
 export type JsonApiAgentInAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge';
+
+// @public
+export interface JsonApiAgentInAttributesInstructionsInner {
+    'content': string;
+    'isDisabled'?: boolean | null;
+    'strategy': JsonApiAgentInAttributesInstructionsInnerStrategyEnum;
+    'title'?: string | null;
+}
+
+// @public (undocumented)
+export type JsonApiAgentInAttributesInstructionsInnerStrategyEnum = 'ALWAYS' | 'AUTO';
 
 // @public (undocumented)
 export type JsonApiAgentInAttributesSkillsModeEnum = 'all' | 'custom';
@@ -23489,6 +23517,7 @@ export interface JsonApiAgentOutAttributes {
     'description'?: string | null;
     // (undocumented)
     'enabled'?: boolean;
+    'instructions'?: Array<JsonApiAgentOutAttributesInstructionsInner> | null;
     // (undocumented)
     'isPreview'?: boolean;
     // (undocumented)
@@ -23503,6 +23532,17 @@ export interface JsonApiAgentOutAttributes {
 
 // @public (undocumented)
 export type JsonApiAgentOutAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge';
+
+// @public
+export interface JsonApiAgentOutAttributesInstructionsInner {
+    'content': string;
+    'isDisabled'?: boolean | null;
+    'strategy': JsonApiAgentOutAttributesInstructionsInnerStrategyEnum;
+    'title'?: string | null;
+}
+
+// @public (undocumented)
+export type JsonApiAgentOutAttributesInstructionsInnerStrategyEnum = 'ALWAYS' | 'AUTO';
 
 // @public (undocumented)
 export type JsonApiAgentOutAttributesSkillsModeEnum = 'all' | 'custom';
@@ -23603,6 +23643,7 @@ export interface JsonApiAgentPatchAttributes {
     'description'?: string | null;
     // (undocumented)
     'enabled'?: boolean;
+    'instructions'?: Array<JsonApiAgentPatchAttributesInstructionsInner> | null;
     // (undocumented)
     'isPreview'?: boolean;
     // (undocumented)
@@ -23615,6 +23656,17 @@ export interface JsonApiAgentPatchAttributes {
 
 // @public (undocumented)
 export type JsonApiAgentPatchAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge';
+
+// @public
+export interface JsonApiAgentPatchAttributesInstructionsInner {
+    'content': string;
+    'isDisabled'?: boolean | null;
+    'strategy': JsonApiAgentPatchAttributesInstructionsInnerStrategyEnum;
+    'title'?: string | null;
+}
+
+// @public (undocumented)
+export type JsonApiAgentPatchAttributesInstructionsInnerStrategyEnum = 'ALWAYS' | 'AUTO';
 
 // @public (undocumented)
 export type JsonApiAgentPatchAttributesSkillsModeEnum = 'all' | 'custom';
@@ -24602,6 +24654,8 @@ export interface JsonApiAutomationInAttributesAlert {
     // (undocumented)
     'execution': AlertAfm;
     'interval'?: JsonApiAutomationInAttributesAlertIntervalEnum;
+    // (undocumented)
+    'settings'?: ExecutionSettings;
     'trigger'?: JsonApiAutomationInAttributesAlertTriggerEnum;
 }
 
@@ -24785,6 +24839,8 @@ export interface JsonApiAutomationOutAttributesAlert {
     // (undocumented)
     'execution': AlertAfm;
     'interval'?: JsonApiAutomationOutAttributesAlertIntervalEnum;
+    // (undocumented)
+    'settings'?: ExecutionSettings;
     'trigger'?: JsonApiAutomationOutAttributesAlertTriggerEnum;
 }
 
@@ -25031,6 +25087,8 @@ export interface JsonApiAutomationPatchAttributesAlert {
     // (undocumented)
     'execution': AlertAfm;
     'interval'?: JsonApiAutomationPatchAttributesAlertIntervalEnum;
+    // (undocumented)
+    'settings'?: ExecutionSettings;
     'trigger'?: JsonApiAutomationPatchAttributesAlertTriggerEnum;
 }
 
@@ -32160,6 +32218,8 @@ export interface JsonApiWorkspaceAutomationOutAttributesAlert {
     // (undocumented)
     'execution': AlertAfm;
     'interval'?: JsonApiWorkspaceAutomationOutAttributesAlertIntervalEnum;
+    // (undocumented)
+    'settings'?: ExecutionSettings;
     'trigger'?: JsonApiWorkspaceAutomationOutAttributesAlertTriggerEnum;
 }
 

@@ -27,7 +27,7 @@ import { selectTimezoneOverride } from "../../model/store/ui/uiSelectors.js";
  *
  * @remarks
  * The dialog hosts the shared timezone picker with two special items: "Default" (clears the
- * override so the dashboard/workspace configuration applies again) and "From browser". Applying
+ * override so the dashboard/workspace configuration applies again) and "Device time zone". Applying
  * a selection dispatches the ChangeDashboardTimezoneOverride command; its handler resolves the
  * browser-detected sentinel, so the session-only ui state always ends up with a concrete IANA
  * timezone ID. The override is never persisted with the dashboard.
@@ -53,8 +53,6 @@ export function TimezoneDialog(): ReactElement | null {
     const specialItems: ITimezoneSelectSpecialItem[] = useMemo(() => {
         const defaultItemLabel = intl.formatMessage({ id: "timezoneDialog.default" });
 
-        // plain ID here — the label template already brackets the value, so the "id (offset)"
-        // display label would produce nested brackets
         const browserTimezoneId = Intl.DateTimeFormat().resolvedOptions().timeZone;
         const browserTimezoneName = getTimezoneDisplayLabel(browserTimezoneId);
         const browserItemLabel = intl.formatMessage(
@@ -110,24 +108,24 @@ export function TimezoneDialog(): ReactElement | null {
                     ariaLabel={intl.formatMessage({ id: "timezoneDialog.title" })}
                     noMatchLabel={intl.formatMessage({ id: "timezoneDialog.select.noMatch" })}
                 />
-                {currentTimeOfTimezone ? (
-                    <span className="gd-timezone-dialog-current-time">
-                        {intl.formatMessage(
-                            { id: "timezoneDialog.currentTime" },
-                            { time: currentTimeOfTimezone },
-                        )}
-                    </span>
-                ) : null}
+                {/* the live region is always rendered so that time updates on selection change
+                    are announced; only the content is conditional */}
+                <span className="gd-timezone-dialog-current-time" aria-live="polite">
+                    {currentTimeOfTimezone
+                        ? intl.formatMessage(
+                              { id: "timezoneDialog.currentTime" },
+                              { time: currentTimeOfTimezone },
+                          )
+                        : null}
+                </span>
             </div>
             <Message type="progress" className="gd-timezone-dialog-description s-timezone-dialog-description">
-                <span aria-label={intl.formatMessage({ id: "timezoneDialog.description.ariaLabel" })}>
-                    <FormattedMessage
-                        id="timezoneDialog.description"
-                        values={{
-                            b: (chunks: ReactNode) => <strong>{chunks}</strong>,
-                        }}
-                    />
-                </span>
+                <FormattedMessage
+                    id="timezoneDialog.description"
+                    values={{
+                        b: (chunks: ReactNode) => <strong>{chunks}</strong>,
+                    }}
+                />
             </Message>
         </ConfirmDialog>
     );

@@ -1,41 +1,31 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { describe, expect, it, vi } from "vitest";
-
-// Prepare hoisted global extractProps variable which gets its value in hoisted mock and then is used in test.
-let { extractProps } = vi.hoisted(() => ({
-    extractProps: null as any,
-}));
+import { describe, expect, it } from "vitest";
 
 import { defSetSorts } from "@gooddata/sdk-model";
 import { type IBarChartProps } from "@gooddata/sdk-ui-charts";
 
 import { type ScenarioAndDescription } from "../../../src/index.js";
 import { barChart as barChartScenarios } from "../../../src/scenarios/charts/barChart/index.js";
+import { captureProps } from "../../_infra/coreChartMocks.js";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
 import { mountChartAndCapture } from "../../_infra/render.js";
 import { mountInsight } from "../../_infra/renderPlugVis.js";
 import { cleanupCoreChartProps } from "../../_infra/utils.js";
 
-vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreBarChart", async () => {
-    const Original = await vi.importActual<any>("@gooddata/sdk-ui-charts/internal-tests/CoreBarChart");
-    const { withPropsExtractor } = await import("../../_infra/withProps.js");
-    const { extractProps: originalExtractProps, wrap } = withPropsExtractor();
-    extractProps = originalExtractProps;
-
-    return {
-        ...Original,
-        CoreBarChart: wrap(Original.CoreBarChart),
-    };
-});
-
-describe.skip("BarChart", () => {
+describe("BarChart", () => {
     const Scenarios: Array<ScenarioAndDescription<IBarChartProps>> = barChartScenarios.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 
     describe.each(Scenarios)("with %s", (_desc, scenario) => {
-        const promisedInteractions = mountChartAndCapture(scenario);
+        // A single mount serves all three tests below. The extractor is handed over right here so that the
+        // very same mount yields both the core chart props (`effectiveProps`) and the scenario-level props
+        // (`componentProps`) - previously the core props were obtained by mounting the chart a second time
+        // inside the test, doubling the number of renders this file performs.
+        const promisedInteractions = captureProps((extractProps: () => any) =>
+            mountChartAndCapture(scenario, extractProps),
+        );
 
         it("should create expected execution definition", async () => {
             const interactions = await promisedInteractions;
@@ -44,8 +34,6 @@ describe.skip("BarChart", () => {
         });
 
         it("should create expected props for core chart", async () => {
-            const promisedInteractions = mountChartAndCapture(scenario, extractProps);
-
             const interactions = await promisedInteractions;
 
             expect(interactions.effectiveProps).toBeDefined();
@@ -56,7 +44,12 @@ describe.skip("BarChart", () => {
         it("should lead to same execution when rendered as insight via plug viz", async () => {
             const interactions = await promisedInteractions;
 
-            const insight = createInsightDefinitionForChart("BarChart", _desc, interactions);
+            // the insight is reconstructed from the props the scenario passed to `BarChart`, not from the
+            // core chart props the extractor captured
+            const insight = createInsightDefinitionForChart("BarChart", _desc, {
+                ...interactions,
+                effectiveProps: interactions.componentProps,
+            });
 
             const plugVizInteractions = await mountInsight(scenario, insight);
 

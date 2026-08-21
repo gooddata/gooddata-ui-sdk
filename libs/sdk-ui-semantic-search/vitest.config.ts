@@ -9,6 +9,7 @@ export default defineConfig({
     },
     test: {
         environment: "happy-dom",
+        reporters: ["default"],
         setupFiles: "./vitest.setup.ts",
         pool: "threads",
         maxWorkers: 8, // Thread count for CI
@@ -18,8 +19,6 @@ export default defineConfig({
         restoreMocks: true,
         unstubEnvs: true,
         unstubGlobals: true,
-        // Disable slow operations when not needed
-        globals: false,
         // Speed up test runs by avoiding unnecessary operations
         environmentOptions: {
             "happy-dom": {

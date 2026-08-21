@@ -15,6 +15,7 @@ import type {
     Filter,
     Metadata,
     Metric,
+    Parameter,
     Plugin,
     Query,
     Section,
@@ -35,6 +36,8 @@ export type AacDateDataset = DateDataset;
 export type AacMetadata = Metadata;
 /** @public */
 export type AacMetric = Metric;
+/** @public */
+export type AacParameter = Parameter;
 /** @public */
 export type AacPlugin = Plugin;
 /** @public */

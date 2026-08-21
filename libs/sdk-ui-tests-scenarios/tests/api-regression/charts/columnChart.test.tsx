@@ -1,41 +1,52 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { describe, expect, it, vi } from "vitest";
-
-// Prepare hoisted global extractProps variable which gets its value in hoisted mock and then is used in test.
-let { extractProps } = vi.hoisted(() => ({
-    extractProps: null as any,
-}));
+import { describe, expect, it } from "vitest";
 
 import { defSetSorts } from "@gooddata/sdk-model";
 import { type IColumnChartProps } from "@gooddata/sdk-ui-charts";
 
 import { type ScenarioAndDescription } from "../../../src/index.js";
 import { columnChart as columnChartScenarios } from "../../../src/scenarios/charts/columnChart/index.js";
+import { captureProps } from "../../_infra/coreChartMocks.js";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
 import { mountChartAndCapture } from "../../_infra/render.js";
 import { mountInsight } from "../../_infra/renderPlugVis.js";
 import { cleanupCoreChartProps } from "../../_infra/utils.js";
 
-vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreColumnChart", async () => {
-    const Original = await vi.importActual<any>("@gooddata/sdk-ui-charts/internal-tests/CoreColumnChart");
-    const { withPropsExtractor } = await import("../../_infra/withProps.js");
-    const { extractProps: originalExtractProps, wrap } = withPropsExtractor();
-    extractProps = originalExtractProps;
+/**
+ * Every mount resolves only once its capturing backend has debounced (a real timer per mount), so a mount
+ * started inside `it` costs that wait sequentially - once per scenario, per test. Starting all mounts during
+ * collection instead lets those timers run concurrently across scenarios and turns the whole file's
+ * accumulated wait into roughly one debounce.
+ *
+ * The catch handler keeps a rejection from being reported as an unhandled rejection during collection; the
+ * returned promise still rejects, so the test that awaits it is the one that fails.
+ */
+function started<T>(promise: Promise<T>): Promise<T> {
+    promise.catch(() => {
+        /* reported by the test awaiting this promise */
+    });
 
-    return {
-        ...Original,
-        CoreColumnChart: wrap(Original.CoreColumnChart),
-    };
-});
+    return promise;
+}
 
-describe.skip("ColumnChart", () => {
+describe("ColumnChart", () => {
     const Scenarios: Array<ScenarioAndDescription<IColumnChartProps>> = columnChartScenarios.flatMap(
         (group) => group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 
     describe.each(Scenarios)("with %s", (_desc, scenario) => {
-        const promisedInteractions = mountChartAndCapture(scenario);
+        const promisedInteractions = started(mountChartAndCapture(scenario));
+
+        const promisedCorePropsInteractions = started(
+            captureProps((extractProps: () => any) => mountChartAndCapture(scenario, extractProps)),
+        );
+
+        const promisedPlugVizInteractions = started(
+            promisedInteractions.then((interactions) =>
+                mountInsight(scenario, createInsightDefinitionForChart("ColumnChart", _desc, interactions)),
+            ),
+        );
 
         it("should create expected execution definition", async () => {
             const interactions = await promisedInteractions;
@@ -44,9 +55,7 @@ describe.skip("ColumnChart", () => {
         });
 
         it("should create expected props for core chart", async () => {
-            const promisedInteractions = mountChartAndCapture(scenario, extractProps);
-
-            const interactions = await promisedInteractions;
+            const interactions = await promisedCorePropsInteractions;
 
             expect(interactions.effectiveProps).toBeDefined();
             expect(interactions.effectiveProps!.execution).toBeDefined();
@@ -55,10 +64,7 @@ describe.skip("ColumnChart", () => {
 
         it("should lead to same execution when rendered as insight via plug viz", async () => {
             const interactions = await promisedInteractions;
-
-            const insight = createInsightDefinitionForChart("ColumnChart", _desc, interactions);
-
-            const plugVizInteractions = await mountInsight(scenario, insight);
+            const plugVizInteractions = await promisedPlugVizInteractions;
 
             // remove sorts from both original and plug viz exec - simply because plug vis will automatically
             // create sorts

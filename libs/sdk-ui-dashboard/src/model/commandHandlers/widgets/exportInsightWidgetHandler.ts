@@ -39,6 +39,7 @@ import {
     selectIsExecutionResultReadyForExportByRef,
 } from "../../store/executionResults/executionResultsSelectors.js";
 import { selectInsightByWidgetRef } from "../../store/insights/insightsSelectors.js";
+import { selectEffectiveDashboardTimezone } from "../../store/meta/metaSelectors.js";
 import { selectPreloadedAttributesWithReferences } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 
@@ -180,6 +181,10 @@ export function* exportInsightWidgetHandler(
         selectExportResultPollingTimeout,
     );
 
+    const timezoneId: ReturnType<typeof selectEffectiveDashboardTimezone> = yield select(
+        selectEffectiveDashboardTimezone,
+    );
+
     let result: IExportResult;
     if (layerInsights && layerInsights.length > 1) {
         result = yield call(
@@ -194,7 +199,7 @@ export function* exportInsightWidgetHandler(
                     attributeLocalIdMapping: layer.attributeLocalIdMapping,
                 }),
             })),
-            { ...config, timeout },
+            { ...config, timeout, timezoneId },
         );
     } else {
         const exportInsight = insight
@@ -206,7 +211,13 @@ export function* exportInsightWidgetHandler(
             : undefined;
         const exportDefinition =
             exportInsight && exportInsight !== insight ? buildLayerDefinition(exportInsight) : undefined;
-        result = yield call(performExport, ctx, executionResult, { ...config, timeout }, exportDefinition);
+        result = yield call(
+            performExport,
+            ctx,
+            executionResult,
+            { ...config, timeout, timezoneId },
+            exportDefinition,
+        );
     }
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted

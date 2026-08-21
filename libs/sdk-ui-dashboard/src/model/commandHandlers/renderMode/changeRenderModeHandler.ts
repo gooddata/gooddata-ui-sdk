@@ -28,6 +28,8 @@ export function* changeRenderModeHandler(
         correlationId,
     } = cmd;
 
+    const editModeResets = renderMode === "edit" ? [uiActions.setTimezoneOverride(undefined)] : [];
+
     // Reset dashboard and widgets first, as changing the edit mode forces visualizations to re-execute.
     // To avoid sending DashboardWidgetExecutionSucceeded or DashboardWidgetExecutionFailed events
     // for discarded widgets, sanitization must be done before the mode is changed.
@@ -45,6 +47,7 @@ export function* changeRenderModeHandler(
                 // Clear all widgets set to show as table
                 clearShowWidgetAsTable(),
                 uiActions.resetAllInvalidCustomUrlDrillParameterWidgetsWarnings(),
+                ...editModeResets,
                 renderModeActions.setRenderMode(renderMode),
             ]),
         );
@@ -56,6 +59,7 @@ export function* changeRenderModeHandler(
                 uiActions.resetSanitizedDrillWidgetRefs(),
                 clearShowWidgetAsTable(),
                 uiActions.resetAllInvalidCustomUrlDrillParameterWidgetsWarnings(),
+                ...editModeResets,
                 renderModeActions.setRenderMode(renderMode),
             ]),
         );

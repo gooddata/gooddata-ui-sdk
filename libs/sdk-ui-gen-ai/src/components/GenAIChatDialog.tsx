@@ -34,6 +34,7 @@ export type GenAIChatDialogProps = Omit<GenAiStoreProps, "children"> & {
     returnFocusTo?: RefObject<HTMLElement | null> | string;
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
     LandingScreenComponentProvider?: () => ComponentType;
+    DisclaimerComponentProvider?: () => ComponentType | null;
     /**
      * Set to false while the host renders its own overlay above the chat, so that Escape aimed at
      * that overlay does not also close the chat (see GenAIChatOverlayExternalProps.closeOnEscape).
@@ -74,6 +75,7 @@ export function GenAIChatDialog({
     onDispatcher,
     mode,
     LandingScreenComponentProvider,
+    DisclaimerComponentProvider,
     closeOnEscape,
 }: GenAIChatDialogProps) {
     const effectiveBackend = useBackendStrict(backend);
@@ -116,6 +118,7 @@ export function GenAIChatDialog({
                         canAnalyze={canAnalyze}
                         canFullControl={canFullControl}
                         LandingScreenComponentProvider={LandingScreenComponentProvider}
+                        DisclaimerComponentProvider={DisclaimerComponentProvider}
                     />
                 )}
             </GenAiStore>
@@ -141,6 +144,7 @@ type GenAIChatDialogContentProps = {
     canAnalyze: boolean;
     canFullControl: boolean;
     LandingScreenComponentProvider?: () => ComponentType;
+    DisclaimerComponentProvider?: () => ComponentType | null;
     closeOnEscape?: boolean;
 };
 
@@ -162,6 +166,7 @@ function GenAIChatDialogContent({
     canAnalyze,
     canFullControl,
     LandingScreenComponentProvider,
+    DisclaimerComponentProvider,
     closeOnEscape,
 }: GenAIChatDialogContentProps) {
     const open = useRef(onOpen);
@@ -229,6 +234,7 @@ function GenAIChatDialogContent({
                         >
                             <CustomizationProvider
                                 landingScreenComponentProvider={LandingScreenComponentProvider}
+                                disclaimerComponentProvider={DisclaimerComponentProvider}
                             >
                                 <GenAIChatOverlay
                                     className={className}

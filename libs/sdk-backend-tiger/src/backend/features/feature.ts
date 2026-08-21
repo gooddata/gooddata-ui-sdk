@@ -670,6 +670,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableGenAiInteractionIntelligenceTimeline,
+            "enableGenAiInteractionIntelligence_timeline",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAiInteractionIntelligence_timeline,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableAiLlmAnthropicProvider,
             "enableAiLlmAnthropicProvider",
             "BOOLEAN",
@@ -835,6 +842,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableAiHub",
             "BOOLEAN",
             FeatureFlagsValues.enableAiHub,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableAgentInstructions,
+            "enableAgentInstructions",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAgentInstructions,
         ),
         ...loadFeature(
             features,

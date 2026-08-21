@@ -3,36 +3,26 @@
 import { type RefObject } from "react";
 
 import { render } from "@testing-library/react";
-import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { CompareSectionItem } from "../CompareSectionItem.js";
 
-import { createMockUseBaseHeadline } from "./BaseHeadline.test.helpers.js";
+import { createBaseHeadlineTestContext } from "./BaseHeadline.test.helpers.js";
 
-const useBaseHeadlineMock = vi.hoisted(() => vi.fn());
-
-vi.mock("../BaseHeadlineContext.js", () => ({
-    useBaseHeadline: useBaseHeadlineMock,
-}));
-
-const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
+const { setBaseHeadline, wrapper } = createBaseHeadlineTestContext();
 
 describe("CompareSectionItem", () => {
     const renderCompareSectionItem = (props: {
         dataItem: IBaseHeadlineItem;
         titleRef?: RefObject<HTMLDivElement>;
     }) => {
-        return render(<CompareSectionItem {...props} />);
+        return render(<CompareSectionItem {...props} />, { wrapper });
     };
 
     beforeEach(() => {
-        mockUseBaseHeadline();
-    });
-
-    afterAll(() => {
-        vi.clearAllMocks();
+        setBaseHeadline();
     });
 
     it("Should render base headline data item from provided baseHeadlineDataItemComponent property", () => {

@@ -2,7 +2,6 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import process from "process";
 
 import { unionBy } from "lodash-es";
 import { describe, expect, it } from "vitest";
@@ -15,6 +14,7 @@ import { type ChartInteractions } from "../_infra/backendWithCapturing.js";
 import { createInsightDefinitionForChart } from "../_infra/insightFactory.js";
 import { mountChartAndCaptureNormalized } from "../_infra/render.js";
 import { mountInsight } from "../_infra/renderPlugVis.js";
+import { sequentialContainer } from "../_infra/sequentialMount.js";
 
 import { storeDirectoryFor } from "./store.js";
 import { readJsonSync, writeAsJsonSync } from "./utils.js";
@@ -287,6 +287,107 @@ async function scenarioStoreInsight(scenario: IScenario<any>, def: IInsightDefin
 }
 
 /*
+ * Mount memoization.
+ *
+ * Both mounts done by this suite are pure functions of a handful of inputs:
+ *
+ * - the react mount is `component` + `scenario.props` + `workspaceType` + `backendSettings` (the props
+ *   factory built by ScenarioBuilder is exactly `{...scenario.props, backend, workspace}`, and the backend
+ *   is the throw-away capturing one created inside the mount),
+ * - the plug viz mount is the insight + `workspaceType` + `backendSettings` + `props.drillableItems`
+ *   (see `mountInsight`; nothing else about the scenario reaches it).
+ *
+ * Lots of scenarios feed those mounts byte-identical input. The responsive groups are the extreme case:
+ * `responsiveScenarios` repeats one and the same props for every screenshot size, because the size only
+ * ever lands in `visualTestConfig` - so the eight size variants of a legend scenario all mount the very
+ * same component with the very same props. Insights collide even more often, as everything that only
+ * tweaks how a chart is drawn (sizes, legend placement, ...) leaves buckets and properties untouched.
+ *
+ * Around half of the mounts in this suite are such repeats. Mounting is by far the dominant cost here
+ * (the two react trees per scenario are ~95% of the suite's runtime), so the repeats are memoized: the
+ * captured interactions of the first mount are handed to every scenario that would mount the same thing.
+ * Everything derived per scenario - the insight, its title and id, the stored scenario descriptors - is
+ * still computed for each scenario individually, so the recordings written by `populate-ref` do not change.
+ */
+const chartMounts = new Map<string, ChartInteractions>();
+const plugVizMounts = new Map<string, ChartInteractions>();
+
+const identities = new WeakMap<object, string>();
+let identitySeq = 0;
+
+function identityOf(value: object): string {
+    let identity = identities.get(value);
+
+    if (identity === undefined) {
+        identity = ` identity:${identitySeq++}`;
+        identities.set(value, identity);
+    }
+
+    return identity;
+}
+
+/*
+ * Only plain data is compared structurally. Anything else - functions, class instances, Map/Set/RegExp,
+ * i.e. everything JSON would either drop or flatten to `{}` - is keyed by object identity instead. Two
+ * scenarios that share such a value share the reference to it (the props are built from the same module
+ * level constants), so this still matches; what it cannot do is silently equate two distinct values.
+ */
+function mountKeyReplacer(_key: string, value: any): any {
+    if (value === undefined) {
+        // distinguish an explicitly-undefined property from a missing one
+        return " undefined";
+    }
+
+    if (typeof value === "function") {
+        return identityOf(value);
+    }
+
+    if (value !== null && typeof value === "object" && !Array.isArray(value)) {
+        const proto = Object.getPrototypeOf(value);
+
+        if (proto !== Object.prototype && proto !== null) {
+            return identityOf(value);
+        }
+    }
+
+    return value;
+}
+
+/**
+ * Serializes the inputs of a mount. Returns `undefined` if they cannot be serialized (a circular
+ * structure being the realistic case), which makes the caller mount without consulting the cache.
+ */
+function mountKey(inputs: unknown[]): string | undefined {
+    try {
+        return JSON.stringify(inputs, mountKeyReplacer);
+    } catch {
+        return undefined;
+    }
+}
+
+async function memoizedMount(
+    cache: Map<string, ChartInteractions>,
+    key: string | undefined,
+    mount: () => Promise<ChartInteractions>,
+): Promise<ChartInteractions> {
+    if (key === undefined) {
+        return mount();
+    }
+
+    const cached = cache.get(key);
+
+    if (cached) {
+        return cached;
+    }
+
+    // scenarios are mounted strictly one at a time, so there is no need to cache the in-flight promise
+    const interactions = await mount();
+    cache.set(key, interactions);
+
+    return interactions;
+}
+
+/*
  * This is useful when developing new visualization. Typically, react component exists first, and then plug viz
  * implementation appears.
  *
@@ -295,7 +396,7 @@ async function scenarioStoreInsight(scenario: IScenario<any>, def: IInsightDefin
  */
 const PlugVisUnsupported: string[] = [];
 
-describe.skipIf(!process.env["GDC_STORE_DEFS"])("all scenarios", () => {
+describe("all scenarios", () => {
     const Scenarios: AllScenariosType[] = allScenarios.flatMap((s): AllScenariosType[] => {
         const testInputs: Array<IScenario<any>> = s.asScenarioList();
 
@@ -305,7 +406,16 @@ describe.skipIf(!process.env["GDC_STORE_DEFS"])("all scenarios", () => {
     });
 
     it.each(Scenarios)("%s should lead to execution", async (_scenarioFqn, scenario) => {
-        const interactions = await mountChartAndCaptureNormalized(scenario);
+        const interactions = await memoizedMount(
+            chartMounts,
+            mountKey([
+                identityOf(scenario.component),
+                scenario.workspaceType,
+                scenario.backendSettings,
+                scenario.props,
+            ]),
+            () => mountChartAndCaptureNormalized(scenario),
+        );
 
         expect(interactions.triggeredExecution).toBeDefined();
         expect(interactions.normalizationState).toBeDefined();
@@ -339,7 +449,18 @@ describe.skipIf(!process.env["GDC_STORE_DEFS"])("all scenarios", () => {
              * note: to allow PV executions and react component executions to hit the same fingerprints, this function
              * must also use the normalizing backend.
              */
-            const plugVizInteractions = await mountInsight(scenario, insight, true);
+            const plugVizInteractions = await memoizedMount(
+                plugVizMounts,
+                // the title is the only part of the insight that differs per scenario and it does not
+                // reach anything the mount does
+                mountKey([
+                    { ...insight.insight, title: null },
+                    scenario.workspaceType,
+                    scenario.backendSettings,
+                    scenario.props["drillableItems"],
+                ]),
+                () => mountInsight(scenario, insight, true, sequentialContainer("plug-viz")),
+            );
 
             await scenarioSave(scenario, interactions, plugVizInteractions);
             await scenarioStoreInsight(scenario, insight);

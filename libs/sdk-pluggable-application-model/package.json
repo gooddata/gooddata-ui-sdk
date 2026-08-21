@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-pluggable-application-model",
-    "version": "11.53.0-alpha.6",
+    "version": "11.54.0-alpha.1",
     "description": "GoodData SDK model contracts for pluggable applications",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -22,7 +22,6 @@
     "exports": "./esm/index.js",
     "scripts": {
         "_phase:build": "npm run build",
-        "_phase:test": "npm run build-dynamic-files && echo \"No tests for @gooddata/sdk-pluggable-application-model\"",
         "_phase:validate": "npm run build-dynamic-files && npm run validate",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "bash scripts/build.sh",
@@ -35,8 +34,6 @@
         "format-write": "oxfmt .",
         "lint": "oxlint . --quiet && eslint .",
         "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
-        "test": "vitest watch",
-        "test-once": "vitest run --passWithNoTests",
         "validate": "npm run lint && npm run dep-cruiser && npm run format-check",
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-pluggable-application-model\"'"
     },
@@ -67,7 +64,6 @@
         "oxfmt": "0.52.0",
         "oxlint": "1.51.0",
         "oxlint-tsgolint": "0.15.0",
-        "typescript": "5.9.3",
-        "vitest": "4.1.8"
+        "typescript": "5.9.3"
     }
 }

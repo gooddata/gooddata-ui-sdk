@@ -152,3 +152,28 @@ describe("convertAlert (fromBackend) — parameters", () => {
         expect(result?.execution.parameters).toEqual([{ ref: idRef("topN", "parameter"), value: 8 }]);
     });
 });
+
+describe("convertAlert (fromBackend) — execution settings", () => {
+    const baseAlert = (timezone?: string): AutomationAutomationAlert => ({
+        execution: {
+            attributes: [],
+            measures: [],
+            filters: [],
+        },
+        condition: {
+            comparison: { operator: "GREATER_THAN", left: { localIdentifier: "m1" }, right: { value: 5 } },
+        },
+        trigger: "ALWAYS",
+        ...(timezone ? { settings: { timezone } } : {}),
+    });
+
+    it("maps the alert settings timezone back to execution.executionConfig", () => {
+        expect(convertAlert(baseAlert("Europe/Prague"))?.execution.executionConfig).toEqual({
+            timezone: "Europe/Prague",
+        });
+    });
+
+    it("leaves executionConfig undefined when the backend sends no settings", () => {
+        expect(convertAlert(baseAlert())?.execution.executionConfig).toBeUndefined();
+    });
+});

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 // Derived from https://github.com/blacklabel/grouped_categories
 // Original licence https://github.com/blacklabel/grouped_categories/blob/master/license.txt
@@ -44,7 +44,7 @@ export function groupedCategories(HC) {
 
     function Category(obj, parent) {
         this.userOptions = deepClone(obj);
-        this.name = obj.name || obj;
+        this.name = typeof obj === "object" ? (obj.name ?? "") : obj;
         this.parent = parent;
 
         return this;

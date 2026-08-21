@@ -9,10 +9,6 @@
         {
             "operationName": "_phase:validate",
             "outputFolderNames": []
-        },
-        {
-            "operationName": "_phase:test",
-            "outputFolderNames": []
         }
     ]
 }

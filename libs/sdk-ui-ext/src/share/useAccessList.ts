@@ -2,10 +2,11 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
+import { type IObjectPermissionsObject, isPermissionEscalationRefused } from "@gooddata/sdk-backend-spi";
 import {
     type IGranularAccessGrantee,
     type IUser,
+    type IWorkspacePermissions,
     idRef,
     objRefToString,
     serializeObjRef,
@@ -20,6 +21,7 @@ import {
 import { type GeneralAccessValue, type IUiGranteeAsyncOptions, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import {
+    accessListToSummary,
     composeEffectiveWorkspaceAccess,
     deriveGeneralAccess,
     deriveInheritedWorkspaceLevel,
@@ -64,8 +66,26 @@ export interface IAccessList {
      * way in must not read as grant-independent after locally removing it.
      */
     seededWithoutSelfGrant: boolean;
+    /**
+     * Whether the SEED's workspace rule was share-capable (SHARE or EDIT, own or
+     * inherited). Load-time fact like {@link seededWithoutSelfGrant}: the Admin badge
+     * infers how the caller ENTERED, so restricting the rule mid-session must not
+     * start reading as admin access.
+     */
+    seededRuleShareCapable: boolean;
     /** Signed-in user's identity facts + login id, once the profile resolves. */
     selfIdentity: ISelfIdentity | undefined;
+    /**
+     * Whether the caller manages this workspace (org admins arrive through the same
+     * MANAGE permission), or **undefined** while the read is pending or after it failed.
+     *
+     * Read it in the direction the policy needs. A protective policy (the
+     * self-restriction confirm, the row lock) may treat undefined as "not a manager",
+     * since a needless confirm is harmless. A restrictive one (a limit on what may be
+     * granted) must require an explicit `false`, or a failed read would block a caller
+     * the backend would allow.
+     */
+    isWorkspaceManager: boolean | undefined;
     /**
      * Whether the profile resolved. Until then a sole grantee row can't be told apart
      * from the caller's own grant, so its `isSelf` is only an unresolved default.
@@ -194,11 +214,28 @@ export function useAccessList(target: IObjectPermissionsObject | undefined): IAc
     // apart from the caller's own grant, so it must not be treated as safe to mutate.
     const selfIdentityResolved = currentUserStatus === "success";
 
+    // Read straight from the backend, like the profile above, and keyed on it: the shared
+    // per-workspace loader caches one answer for the workspace, so after a backend swap it
+    // would hand back the PREVIOUS user's permissions and the policies below would trust it.
+    const { result: workspacePermissions } = useCancelablePromise<IWorkspacePermissions>(
+        {
+            promise: async () => backend.workspace(workspace).permissions().getPermissionsForCurrentUser(),
+            onError: () => {},
+        },
+        [backend, workspace],
+    );
+    const isWorkspaceManager = workspacePermissions?.canManageProject;
+
     const selfId = currentUser ? granteeId("user", idRef(currentUser.login)) : undefined;
 
     // Derived from the immutable SEED (see the interface doc): a caller whose own
     // grant was the way in must not read as grant-independent after removing it.
     const seededWithoutSelfGrant = hasList && selfIdentityResolved && !base.some((g) => g.id === selfId);
+
+    // Seed only, never the rule overlay; `accessListToSummary` so this cannot drift.
+    const seededSummary = hasList ? accessListToSummary(fetchedList) : undefined;
+    const seededRuleShareCapable =
+        seededSummary?.generalAccess === "WORKSPACE" && seededSummary.workspaceLevel !== "VIEW";
 
     // De-collapsed like every listing fact — on tiger the user id is often the email.
     const selfIdentity = useMemo<ISelfIdentity | undefined>(
@@ -271,8 +308,13 @@ export function useAccessList(target: IObjectPermissionsObject | undefined): IAc
                     .manageObjectPermissions(target, mutate);
                 toast.addSuccess(successMessage);
                 return true;
-            } catch {
-                toast.addError(objectShareMessages.toastError);
+            } catch (error) {
+                // A refused escalation is a deliberate "no", not a failure to retry.
+                toast.addError(
+                    isPermissionEscalationRefused(error)
+                        ? objectShareMessages.toastEscalationRefused
+                        : objectShareMessages.toastError,
+                );
                 return false;
             }
         },
@@ -428,7 +470,9 @@ export function useAccessList(target: IObjectPermissionsObject | undefined): IAc
         hasList,
         grantees,
         seededWithoutSelfGrant,
+        seededRuleShareCapable,
         selfIdentity,
+        isWorkspaceManager,
         selfIdentityResolved,
         generalAccess,
         workspaceLevel,

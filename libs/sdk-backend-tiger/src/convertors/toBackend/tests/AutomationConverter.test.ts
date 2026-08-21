@@ -39,3 +39,29 @@ describe("convertAlert (toBackend) — parameters", () => {
         expect(convertAlert(baseAlert([])).execution.parameters).toBeUndefined();
     });
 });
+
+describe("convertAlert (toBackend) — execution settings", () => {
+    const baseAlert = (timezone?: string): IAutomationAlert => ({
+        execution: {
+            attributes: [],
+            measures: [newMeasure(idRef("m1", "measure"), (m) => m.localId("m1"))],
+            filters: [],
+            ...(timezone ? { executionConfig: { timezone } } : {}),
+        },
+        condition: {
+            type: "comparison",
+            operator: "GREATER_THAN",
+            left: { id: "m1" },
+            right: 5,
+        },
+        trigger: { state: "ACTIVE", mode: "ALWAYS" },
+    });
+
+    it("maps execution.executionConfig.timezone to the alert settings", () => {
+        expect(convertAlert(baseAlert("Europe/Prague")).settings).toEqual({ timezone: "Europe/Prague" });
+    });
+
+    it("omits settings when the execution has no timezone", () => {
+        expect(convertAlert(baseAlert()).settings).toBeUndefined();
+    });
+});

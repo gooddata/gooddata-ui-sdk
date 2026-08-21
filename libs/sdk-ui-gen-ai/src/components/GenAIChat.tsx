@@ -3,7 +3,9 @@
 import { type ComponentType } from "react";
 
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { type DashboardSelectorEvaluator } from "@gooddata/sdk-ui-dashboard";
 
+import { useDashboardAmbientContext } from "../context/hooks/useDashboardAmbientContext.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { PermissionsProvider } from "../permissions/PermissionsContext.js";
 import { usePermissions } from "../permissions/usePermissions.js";
@@ -49,6 +51,13 @@ export type GenAIAssistantProps = Omit<GenAiStoreProps, "children"> & {
      * This will disable full control permissions for the user even if the user has them defined.
      */
     disableFullControl?: boolean;
+
+    /**
+     * Selector that is used to automatically build ambient context for the chat.
+     * If its provided, the chat will automatically load the dashboards and related data
+     * from it.
+     */
+    dashboardSelector?: DashboardSelectorEvaluator;
 
     /**
      * Custom React node rendered when no conversation exists yet.
@@ -157,8 +166,16 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
 export const GenAIChat = GenAIAssistant;
 
 function GenAIContent(props: GenAIChatProps) {
-    const { LandingScreenComponentProvider, DisclaimerComponentProvider, className, catalogItems } = props;
+    const {
+        LandingScreenComponentProvider,
+        DisclaimerComponentProvider,
+        dashboardSelector,
+        className,
+        catalogItems,
+    } = props;
     const { permissions, loading } = usePermissions();
+
+    useDashboardAmbientContext(dashboardSelector);
 
     return (
         <ConfigProvider

@@ -86,6 +86,19 @@
             "if": {
                 "properties": {
                     "type": {
+                        "const": "parameter"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "/gaac/parameter"
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
                         "enum": [
                             "table",
                             "bar_chart",
@@ -162,7 +175,8 @@
                         "geo_area_chart",
                         "repeater_chart",
                         "radar_chart",
-                        "attribute_hierarchy"
+                        "attribute_hierarchy",
+                        "parameter"
                     ]
                 }
             }
@@ -200,7 +214,8 @@
                 "geo_area_chart",
                 "repeater_chart",
                 "radar_chart",
-                "attribute_hierarchy"
+                "attribute_hierarchy",
+                "parameter"
             ]
         }
     },

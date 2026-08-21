@@ -1,7 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
 import { type IInsightDefinition, newMeasure } from "@gooddata/sdk-model";
 import { BucketNames, DefaultLocale } from "@gooddata/sdk-ui";
@@ -10,9 +10,9 @@ import { type HeadlineControlProperties } from "../../../interfaces/ControlPrope
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { createTestProperties, newInsight } from "../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
-import { ComparisonSection } from "../../configurationControls/comparison/ComparisonSection.js";
+import type * as ComparisonSectionModule from "../../configurationControls/comparison/ComparisonSection.js";
 import { type IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
-import { HeadlineConfigurationPanel } from "../HeadlineConfigurationPanel.js";
+import type * as HeadlineConfigurationPanelModule from "../HeadlineConfigurationPanel.js";
 
 vi.mock("../../configurationControls/comparison/ComparisonSection.js", async (importOriginal) => {
     const actual =
@@ -22,6 +22,25 @@ vi.mock("../../configurationControls/comparison/ComparisonSection.js", async (im
         ...actual,
         ComparisonSection: vi.fn(actual.ComparisonSection),
     };
+});
+
+/*
+ * Test isolation is disabled for this package, so the module cache is shared between test files:
+ * HeadlineConfigurationPanel.js may already have been evaluated - bound to the real ComparisonSection - by
+ * another test file, and the mocked graph this file builds must not outlive it. Re-import both modules up
+ * front so this file always observes the mocked one, and drop the mocked graph again on the way out.
+ */
+let ComparisonSection: typeof ComparisonSectionModule.ComparisonSection;
+let HeadlineConfigurationPanel: typeof HeadlineConfigurationPanelModule.HeadlineConfigurationPanel;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ ComparisonSection } = await import("../../configurationControls/comparison/ComparisonSection.js"));
+    ({ HeadlineConfigurationPanel } = await import("../HeadlineConfigurationPanel.js"));
+});
+
+afterAll(() => {
+    vi.resetModules();
 });
 
 describe("HeadlineComparisonPanel", () => {

@@ -212,7 +212,7 @@ export function DashboardInsightMenuBody({
 
     return (
         <UiFocusManager enableAutofocus={{ initialFocus: menuId }} enableFocusTrap enableReturnFocusOnUnmount>
-            <DashboardInsightMenuContainer>
+            <DashboardInsightMenuContainer ariaLabelledBy={menuLabelId}>
                 <UiMenu<IMenuItemData, IMenuData>
                     maxHeight={getMaxHeight}
                     containerBottomPadding="small"
@@ -233,6 +233,7 @@ export function DashboardInsightMenuBody({
                         widget,
                         insight,
                         renderMode,
+                        titleId: menuLabelId,
                     }}
                 />
             </DashboardInsightMenuContainer>

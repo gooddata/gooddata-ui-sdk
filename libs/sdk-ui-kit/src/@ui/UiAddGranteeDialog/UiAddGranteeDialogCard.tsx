@@ -34,6 +34,13 @@ export interface IUiAddGranteeDialogCardProps {
     /** Loader passed straight through to the embedded `UiGranteeAsyncPicker`. */
     loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
     /**
+     * Levels each picked grantee's menu renders disabled — the caller cannot grant a
+     * level they do not hold themselves. Passed through to the picker.
+     */
+    disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
+    /** Tooltip shown on those disabled levels. */
+    disabledTooltip?: string;
+    /**
      * Grantees currently picked. Single source of truth — the card derives all
      * row state from it and emits the next list via `onSelectedGranteesChange`.
      */
@@ -89,6 +96,8 @@ export interface IUiAddGranteeDialogCardProps {
 export function UiAddGranteeDialogCard({
     objectTitle,
     loadOptions,
+    disabledLevels,
+    disabledTooltip,
     selectedGrantees,
     onSelectedGranteesChange,
     initialPermissionLevel = "VIEW",
@@ -123,6 +132,8 @@ export function UiAddGranteeDialogCard({
 
             <UiGranteeAsyncPicker
                 loadOptions={loadOptions}
+                disabledLevels={disabledLevels}
+                disabledTooltip={disabledTooltip}
                 selectedGrantees={selectedGrantees}
                 onSelect={select}
                 onPermissionChange={changePermission}

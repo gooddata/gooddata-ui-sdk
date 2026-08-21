@@ -1,0 +1,37 @@
+// (C) 2026 GoodData Corporation
+
+.gd-schedule-timezone-field {
+    // The section stacks the dropdown row and its helper text in a column next to the label;
+    // top-align the label with the dropdown instead of centering it against the whole column.
+    align-items: flex-start;
+
+    .gd-label {
+        line-height: 28px;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        flex: 1 1 auto;
+    }
+
+    &__row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    &__current-time {
+        white-space: nowrap;
+    }
+
+    &__message {
+        color: var(--gd-palette-complementary-7);
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 21px;
+        margin-top: 5px;
+    }
+}

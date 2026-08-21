@@ -14,7 +14,7 @@ import {
     insightWidgetExportResolved,
 } from "../../events/insight.js";
 import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
-import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
+import { selectDashboardRef, selectEffectiveDashboardTimezone } from "../../store/meta/metaSelectors.js";
 import {
     selectFilterContextFilters,
     selectFiltersByTab,
@@ -54,6 +54,10 @@ export function* exportSlidesInsightWidgetHandler(
         selectExportResultPollingTimeout,
     );
 
+    const timezoneId: ReturnType<typeof selectEffectiveDashboardTimezone> = yield select(
+        selectEffectiveDashboardTimezone,
+    );
+
     const exportDashboardToPresentation = backend
         .workspace(workspace)
         .dashboards().exportDashboardToPresentation;
@@ -69,6 +73,7 @@ export function* exportSlidesInsightWidgetHandler(
             timeout,
             templateId,
             parametersByTab,
+            timezoneId,
         },
     );
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted

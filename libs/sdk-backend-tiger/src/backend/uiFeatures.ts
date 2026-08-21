@@ -93,6 +93,7 @@ export enum TigerFeaturesNames {
     EnableGenAiReasoningEffort = "enableGenAiReasoningEffort",
     EnableGenAiObservability = "enableGenAiObservability",
     EnableGenAiInteractionIntelligence = "enableGenAiInteractionIntelligence",
+    EnableGenAiInteractionIntelligenceTimeline = "enableGenAiInteractionIntelligence_timeline",
     EnableGenAiAgenticDataShareOptOut = "enableGenAiAgenticDataShareOptOut",
     EnableGenAiVisualizationSummarySkill = "enableGenAiVisualizationSummarySkill",
     EnableGenAiDashboardSummarySkill = "enableGenAiDashboardSummarySkill",
@@ -116,6 +117,7 @@ export enum TigerFeaturesNames {
     EnableDashboardDensitySetting = "enableDashboardDensitySetting",
     EnableDashboardsSearch = "enableDashboardsSearch",
     EnableAiHub = "enableAiHub",
+    EnableAgentInstructions = "enableAgentInstructions",
     EnableAutomationTrigger = "enableAutomationTrigger",
     EnableUserDataFiltersUi = "enableUserDataFiltersUi",
     EnableEnhancedInsightPicker = "enableEnhancedInsightPicker",
@@ -225,6 +227,7 @@ export type ITigerFeatureFlags = {
     enableGenAiReasoningEffort: (typeof FeatureFlagsValues)["enableGenAiReasoningEffort"][number];
     enableGenAiObservability: (typeof FeatureFlagsValues)["enableGenAiObservability"][number];
     enableGenAiInteractionIntelligence: (typeof FeatureFlagsValues)["enableGenAiInteractionIntelligence"][number];
+    enableGenAiInteractionIntelligence_timeline: (typeof FeatureFlagsValues)["enableGenAiInteractionIntelligence_timeline"][number];
     enableGenAIReasoningVisibility: (typeof FeatureFlagsValues)["enableGenAIReasoningVisibility"][number];
     aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
     enableRichTextWidgetFilterConfiguration: (typeof FeatureFlagsValues)["enableRichTextWidgetFilterConfiguration"][number];
@@ -246,6 +249,7 @@ export type ITigerFeatureFlags = {
     enableDashboardDensitySetting: (typeof FeatureFlagsValues)["enableDashboardDensitySetting"][number];
     enableDashboardsSearch: (typeof FeatureFlagsValues)["enableDashboardsSearch"][number];
     enableAiHub: (typeof FeatureFlagsValues)["enableAiHub"][number];
+    enableAgentInstructions: (typeof FeatureFlagsValues)["enableAgentInstructions"][number];
     enableAiAgenticConversations: (typeof FeatureFlagsValues)["enableAiAgenticConversations"][number];
     enableAiContextSetup: (typeof FeatureFlagsValues)["enableAiContextSetup"][number];
     enableGenAiDashboardBuilderSkill: (typeof FeatureFlagsValues)["enableGenAiDashboardBuilderSkill"][number];
@@ -353,6 +357,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAiReasoningEffort: false,
     enableGenAiObservability: false,
     enableGenAiInteractionIntelligence: false,
+    enableGenAiInteractionIntelligence_timeline: false,
     enableGenAIReasoningVisibility: false,
     aiChatSearchLimit: undefined,
     enableRichTextWidgetFilterConfiguration: false,
@@ -362,7 +367,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAnomalyDetectionVisualization: true,
     enableAlertOncePerInterval: false,
     enableFiscalCalendars: true,
-    enableSecondGranularities: false,
+    enableSecondGranularities: true,
     enableDashboardFilterGroups: true,
     enableDashboardTimezone: false,
     enableMeasureValueFilterKD: true,
@@ -374,6 +379,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardDensitySetting: false,
     enableDashboardsSearch: false,
     enableAiHub: false,
+    enableAgentInstructions: false,
     enableAiAgenticConversations: false,
     enableAiContextSetup: false,
     enableGenAiDashboardBuilderSkill: false,
@@ -481,6 +487,7 @@ export const FeatureFlagsValues = {
     enableGenAiReasoningEffort: [true, false] as const,
     enableGenAiObservability: [true, false] as const,
     enableGenAiInteractionIntelligence: [true, false] as const,
+    enableGenAiInteractionIntelligence_timeline: [true, false] as const,
     enableGenAIReasoningVisibility: [false, true] as const,
     aiChatSearchLimit: [undefined, {} as number] as const,
     enableRichTextWidgetFilterConfiguration: [true, false] as const,
@@ -502,6 +509,7 @@ export const FeatureFlagsValues = {
     enableDashboardDensitySetting: [true, false] as const,
     enableDashboardsSearch: [false, true] as const,
     enableAiHub: [true, false] as const,
+    enableAgentInstructions: [true, false] as const,
     enableAiAgenticConversations: [true, false] as const,
     enableAiContextSetup: [true, false] as const,
     enableGenAiDashboardBuilderSkill: [true, false] as const,

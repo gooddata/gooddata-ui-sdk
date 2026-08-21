@@ -16,7 +16,12 @@
 export type { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation.js";
 
 // ObjRefMap & factories will be part of the public API.. although in different package
-export { type IObjRefMapConfig, ObjRefMap, newDisplayFormMap } from "./_staging/metadata/objRefMap.js";
+export {
+    type IObjRefMapConfig,
+    ObjRefMap,
+    newDisplayFormMap,
+    newMapForObjectWithIdentity,
+} from "./_staging/metadata/objRefMap.js";
 
 // TODO remove export after values resolver call from KD is obsolete
 export { resolveFilterValues } from "./model/commandHandlers/drill/common/filterValuesResolver.js";
@@ -1328,7 +1333,7 @@ export {
     selectEnableAnomalyDetectionAlert,
     selectEnableFiscalCalendars,
     selectEnableSecondGranularities,
-    selectEnableDashboardTimezone,
+    selectEnableTimezoneChange,
     selectActiveCalendars,
     selectEnableDashboardFilterGroups,
     selectEnableDashboardDensitySetting,
@@ -1702,6 +1707,7 @@ export {
     selectEvaluationFrequency,
     selectDashboardTimezoneConfig,
     selectEffectiveDashboardTimezone,
+    selectScheduledExportTimezone,
     selectPersistedDashboardTimezoneConfig,
     selectPersistedDashboardFilterContextDateFilterConfig,
     selectSectionHeadersDateDataSet,
@@ -2220,6 +2226,9 @@ export type {
     IScheduledEmailDialogHeaderProps,
     ScheduledEmailDialogHeaderDefaultProps,
     IScheduledEmailDialogFiltersProps,
+    IScheduleTimezoneSelection,
+    IScheduledEmailDialogTimezoneProps,
+    ScheduledEmailDialogTimezoneDefaultProps,
     IScheduledEmailDialogSlots,
     IDefaultScheduledEmailDialogProps,
 } from "./presentation/automations/scheduledEmail/types.js";

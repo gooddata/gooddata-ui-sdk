@@ -878,6 +878,11 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
         this.invalidateCache();
     }
 
+    public override async setEnableTimezoneChange(enabled: boolean): Promise<void> {
+        await super.setEnableTimezoneChange(enabled);
+        this.invalidateCache();
+    }
+
     public override async setDateFormat(dateFormat: string): Promise<void> {
         await super.setDateFormat(dateFormat);
         this.invalidateCache();
