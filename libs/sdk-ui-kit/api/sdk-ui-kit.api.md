@@ -5695,8 +5695,10 @@ export interface ITimezoneSelectButtonRenderProps extends IDropdownButtonRenderP
 
 // @internal
 export interface ITimezoneSelectProps {
+    ariaDescribedBy?: string;
     ariaLabel: string;
     header?: ReactNode;
+    id?: string;
     // (undocumented)
     isDisabled?: boolean;
     noMatchLabel: string;
@@ -5761,6 +5763,8 @@ export interface ITypographyProps {
 // @internal (undocumented)
 export interface IUiAddGranteeDialogCardProps {
     dataTestId?: string;
+    disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
+    disabledTooltip?: string;
     initialPermissionLevel?: PermissionMenuLevel;
     labels?: ReadonlyArray<IUiLabelsChecklistItem>;
     loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
@@ -6227,6 +6231,8 @@ export interface IUiChipAccessibilityConfig extends IAccessibilityConfigBase, ID
     deleteAriaDescribedBy?: string;
     // (undocumented)
     deleteAriaLabel?: string;
+    // (undocumented)
+    iconBeforeAriaLabel?: string;
 }
 
 // @internal (undocumented)
@@ -6758,6 +6764,8 @@ export interface IUiGranteeAsyncOptions {
 // @internal (undocumented)
 export interface IUiGranteeAsyncPickerProps {
     dataTestId?: string;
+    disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
+    disabledTooltip?: string;
     labels?: ReadonlyArray<IUiLabelsChecklistItem>;
     loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
     onLabelsChange?: (grantee: IUiPickedGrantee, selectedLabelIds: string[]) => void;
@@ -6779,6 +6787,7 @@ export interface IUiGranteeRowControlsProps {
     // (undocumented)
     dataTestId?: string;
     disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
+    disabledLevelTooltips?: Partial<Record<PermissionMenuLevel, string>>;
     disabledTooltip?: string;
     effectivePermission?: AccessGranularPermission;
     isDisabled?: boolean;
@@ -7528,6 +7537,7 @@ export interface IUiPermissionMenuProps {
     anchor: ReactElement;
     dataTestId?: string;
     disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
+    disabledLevelTooltips?: Partial<Record<PermissionMenuLevel, string>>;
     disabledTooltip?: string;
     isRemoveDisabled?: boolean;
     labels?: ReadonlyArray<IUiLabelsChecklistItem>;

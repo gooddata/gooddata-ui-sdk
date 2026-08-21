@@ -282,6 +282,10 @@ export interface IGenAIWidgetDescriptor {
      */
     visualizations?: IGenAIWidgetDescriptor[];
     /**
+     * Visualization URL of the widget's insight (e.g. `local:bar`).
+     */
+    visualizationUrl?: string;
+    /**
      * Signed result ID for this widget's cached execution result.
      */
     resultId?: string;

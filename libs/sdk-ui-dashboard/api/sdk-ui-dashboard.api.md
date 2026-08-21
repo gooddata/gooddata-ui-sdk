@@ -2615,6 +2615,14 @@ export interface IAutomationsContextValue {
     dateFilterContextConfig: IDashboardDateFilterConfig_2 | undefined;
     // (undocumented)
     defaultSelectedFilters: FilterContextItem[];
+    exportTimezones?: {
+        isTimezoneFeatureEnabled: boolean;
+        allowUserOverrideInViewMode: boolean;
+        configuredTimezoneId: string | undefined;
+        workspaceTimezone: string | undefined;
+        effectiveTimezone: string | undefined;
+        scheduledExportTimezone: string | undefined;
+    };
     // (undocumented)
     externalRecipient: string | undefined;
     // (undocumented)
@@ -2657,7 +2665,6 @@ export interface IAutomationsContextValue {
     // (undocumented)
     settings?: ISettings;
     tabIds: string[];
-    // (undocumented)
     timezone: string | undefined;
     // (undocumented)
     weekStart: WeekStart;
@@ -8036,6 +8043,15 @@ export interface IScheduledEmailDialogProps {
 export interface IScheduledEmailDialogSlots {
     Filters?: ComponentType<ISlotProps<IScheduledEmailDialogFiltersProps>>;
     Header?: ComponentType<ISlotProps<ScheduledEmailDialogHeaderDefaultProps>>;
+    Timezone?: ComponentType<ISlotProps<ScheduledEmailDialogTimezoneDefaultProps>>;
+}
+
+// @alpha
+export interface IScheduledEmailDialogTimezoneProps {
+    defaultResolvedTimezone: string | undefined;
+    isWidget: boolean;
+    onTimezoneChange: (timezoneId: string | undefined) => void;
+    selection: IScheduleTimezoneSelection;
 }
 
 // @alpha
@@ -8073,6 +8089,12 @@ export interface IScheduledEmailManagementDialogProps {
 export interface IScheduleEmailContext {
     schedule?: IAutomationMetadataObject;
     widgetRef?: ObjRef | undefined;
+}
+
+// @alpha
+export interface IScheduleTimezoneSelection {
+    id: string | undefined;
+    shouldSave: boolean;
 }
 
 // @internal
@@ -10045,6 +10067,13 @@ export function newKpiPlaceholderWidget(): IKpiPlaceholderWidget;
 // @internal (undocumented)
 export function newLoadingPlaceholderWidget(): IPlaceholderWidget;
 
+// @alpha
+export function newMapForObjectWithIdentity<T extends {
+    identifier: Identifier;
+    uri: string;
+    ref: ObjRef;
+}>(items: T[], type?: ObjectType, strictTypeCheck?: boolean): ObjRefMap<T>;
+
 // @alpha (undocumented)
 export function newPlaceholderWidget(): IPlaceholderWidget;
 
@@ -10685,6 +10714,9 @@ export type ScheduledEmailDialogHeaderDefaultProps = IScheduledEmailDialogHeader
     ref?: Ref<HTMLInputElement>;
 };
 
+// @alpha
+export type ScheduledEmailDialogTimezoneDefaultProps = IScheduledEmailDialogTimezoneProps;
+
 // @internal (undocumented)
 export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementDialogProps): ReactElement;
 
@@ -11271,9 +11303,6 @@ export const selectEnableDashboardShareDialogLink: DashboardSelector<boolean>;
 // @internal (undocumented)
 export const selectEnableDashboardTabularExport: DashboardSelector<boolean>;
 
-// @alpha
-export const selectEnableDashboardTimezone: DashboardSelector<boolean>;
-
 // @internal (undocumented)
 export const selectEnableExecutionCancelling: DashboardSelector<boolean>;
 
@@ -11318,6 +11347,9 @@ export const selectEnableSnapshotExport: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableSnapshotExportAccessibility: DashboardSelector<boolean>;
+
+// @alpha
+export const selectEnableTimezoneChange: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean>;
@@ -12052,6 +12084,9 @@ export const selectRenderMode: DashboardSelector<RenderMode>;
 
 // @internal
 export const selectSaveAsVisible: DashboardSelector<boolean>;
+
+// @alpha
+export const selectScheduledExportTimezone: DashboardSelector<string | undefined>;
 
 // @alpha (undocumented)
 export const selectScheduleEmailDialogDefaultAttachment: DashboardSelector<ObjRef | undefined>;

@@ -1,7 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 
 import { ComparisonPositionValues } from "@gooddata/sdk-ui-charts";
 
@@ -9,8 +9,8 @@ import { type IComparisonControlProperties } from "../../../../../interfaces/Con
 import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
-import { DropdownControl } from "../../../DropdownControl.js";
-import { ComparisonPositionControl } from "../ComparisonPositionControl.js";
+import type * as DropdownControlModule from "../../../DropdownControl.js";
+import type * as ComparisonPositionControlModule from "../ComparisonPositionControl.js";
 
 vi.mock("../../../DropdownControl.js", async (importOriginal) => {
     // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -23,6 +23,25 @@ vi.mock("../../../DropdownControl.js", async (importOriginal) => {
         ...actual,
         DropdownControl: vi.fn(DropdownControlComponent),
     };
+});
+
+/*
+ * Test isolation is disabled for this package, so the module cache is shared between test files:
+ * ComparisonPositionControl.js may already have been evaluated - bound to the real DropdownControl - by
+ * another test file, and the mocked graph this file builds must not outlive it. Re-import both modules up
+ * front so this file always observes the mocked one, and drop the mocked graph again on the way out.
+ */
+let DropdownControl: typeof DropdownControlModule.DropdownControl;
+let ComparisonPositionControl: typeof ComparisonPositionControlModule.ComparisonPositionControl;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ DropdownControl } = await import("../../../DropdownControl.js"));
+    ({ ComparisonPositionControl } = await import("../ComparisonPositionControl.js"));
+});
+
+afterAll(() => {
+    vi.resetModules();
 });
 
 const TITLE_TEXT_QUERY = "Position";

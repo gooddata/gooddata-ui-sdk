@@ -234,11 +234,24 @@ export interface IRawExportCustomOverrides {
 }
 
 /**
+ * Export options shared by every dashboard export type.
+ *
+ * @alpha
+ */
+export interface IDashboardExportTimezoneOptions {
+    /**
+     * Concrete IANA timezone ID used to resolve relative date filters and render date/time values
+     * in the export. Overrides the workspace/user timezone settings.
+     */
+    timezoneId?: string;
+}
+
+/**
  * Options for exporting dashboard to tabular format.
  *
  * @alpha
  */
-export interface IDashboardExportTabularOptions {
+export interface IDashboardExportTabularOptions extends IDashboardExportTimezoneOptions {
     /**
      * Title for the export. If not provided, the dashboard title will be fetched.
      */
@@ -305,7 +318,7 @@ export interface IDashboardExportTabularOptions {
  *
  * @alpha
  */
-export interface IDashboardExportPdfOptions {
+export interface IDashboardExportPdfOptions extends IDashboardExportTimezoneOptions {
     /**
      * Filename for the export. If not provided, the dashboard title will be fetched.
      */
@@ -338,7 +351,7 @@ export interface IDashboardExportPdfOptions {
  *
  * @alpha
  */
-export interface IDashboardExportRawOptions {
+export interface IDashboardExportRawOptions extends IDashboardExportTimezoneOptions {
     /**
      * CSV delimiter to use for the exported file.
      */
@@ -360,7 +373,7 @@ export interface IDashboardExportRawOptions {
  *
  * @alpha
  */
-export interface IDashboardExportImageOptions {
+export interface IDashboardExportImageOptions extends IDashboardExportTimezoneOptions {
     /**
      * Widgets to export. If not provided, all widgets will be exported.
      */
@@ -394,7 +407,7 @@ export interface IDashboardExportImageOptions {
  *
  * @beta
  */
-export interface IDashboardExportPresentationOptions {
+export interface IDashboardExportPresentationOptions extends IDashboardExportTimezoneOptions {
     widgetIds?: ObjRef[];
     visualizationIds?: ObjRef[];
     templateId?: string;
@@ -531,13 +544,20 @@ export interface IWorkspaceDashboardsService {
     ): Promise<IDashboardReferences>;
 
     /**
-     * Get filter context by provided export id and type
+     * Get the metadata stored with the export identified by the provided export id: the inlined
+     * filter context together with other export-render inputs (title, widget-title visibility,
+     * custom metadata and the explicit timezone).
+     *
+     * @remarks
+     * The timezone is present only when it cannot be derived at export time (an ad-hoc view-mode
+     * override or a resolved browser-detected timezone); otherwise the dashboard's own stored
+     * timezone applies.
      *
      * @param exportId - export id
      * @param type - export type
      * @param tabId - id of the tab to export
      */
-    getFilterContextByExportId(
+    getExportDataByExportId(
         exportId: string,
         type: "visual" | "slides" | undefined,
         tabId?: string,
@@ -546,6 +566,7 @@ export interface IWorkspaceDashboardsService {
         title?: string;
         hideWidgetTitles?: boolean;
         exportMetadata?: Record<string, string>;
+        timezoneId?: string;
     } | null>;
 
     /**

@@ -19,10 +19,13 @@ import type {
     DateDataset,
     Metadata,
     Metric,
+    Parameter,
     Plugin,
     Visualisation,
 } from "@gooddata/sdk-code-schemas/v1";
 import { type IDashboardDefinition, type IDashboardFilterGroupsConfig } from "@gooddata/sdk-model";
+
+import { type DeclarativeStringParameter } from "./utils/parameterUtils.js";
 
 /** @public */
 export type Profile = {
@@ -32,26 +35,41 @@ export type Profile = {
     data_source?: string;
 };
 
+/** The YAML-side shape of any object AAC can carry; shared so entity types cannot drift apart. @public */
+export type EntityData =
+    | Dataset
+    | DateDataset
+    | Metric
+    | Parameter
+    | Visualisation
+    | Dashboard
+    | Plugin
+    | AttributeHierarchy;
+
+/** The declarative-API shape of any object AAC can carry; the counterpart of {@link EntityData}. @public */
+export type DeclarativeEntityData =
+    | DeclarativeDataset
+    | DeclarativeDateDataset
+    | DeclarativeMetric
+    | DeclarativeStringParameter
+    | DeclarativeVisualizationObject
+    | DeclarativeDashboardPlugin
+    | DeclarativeAttributeHierarchy
+    | {
+          dashboard: DeclarativeAnalyticalDashboard;
+          // Undefined for V3 dashboards where tabs are the sole source and no
+          // root-level filter context exists.
+          filterContext?: DeclarativeFilterContext;
+          tabFilterContexts?: DeclarativeFilterContext[];
+      };
+
 /** @public */
 export type ExportEntities = Array<{
     id: string;
     type: Metadata["type"];
     path: string;
-    data: Dataset | DateDataset | Metric | Visualisation | Dashboard | Plugin | AttributeHierarchy;
-    declarative?:
-        | DeclarativeDataset
-        | DeclarativeDateDataset
-        | DeclarativeMetric
-        | DeclarativeVisualizationObject
-        | DeclarativeDashboardPlugin
-        | DeclarativeAttributeHierarchy
-        | {
-              dashboard: DeclarativeAnalyticalDashboard;
-              // Undefined for V3 dashboards where tabs are the sole source and no
-              // root-level filter context exists.
-              filterContext?: DeclarativeFilterContext;
-              tabFilterContexts?: DeclarativeFilterContext[];
-          };
+    data: EntityData;
+    declarative?: DeclarativeEntityData;
 }>;
 
 /** @public */
@@ -59,7 +77,7 @@ export type FromEntities = Array<{
     id: string;
     type: Metadata["type"];
     path: string;
-    data?: Dataset | DateDataset | Metric | Visualisation | Dashboard | Plugin | AttributeHierarchy;
+    data?: EntityData;
 }>;
 
 /** @public */

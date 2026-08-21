@@ -2,8 +2,12 @@
 
 import { v4 as uuidv4 } from "uuid";
 
-import { type JsonApiAgentInDocument, type JsonApiAgentPatchDocument } from "@gooddata/api-client-tiger";
-import { type IAgent, type IAgentPatch, isIdentifierRef } from "@gooddata/sdk-model";
+import {
+    type JsonApiAgentInAttributesInstructionsInner,
+    type JsonApiAgentInDocument,
+    type JsonApiAgentPatchDocument,
+} from "@gooddata/api-client-tiger";
+import { type IAgent, type IAgentInstruction, type IAgentPatch, isIdentifierRef } from "@gooddata/sdk-model";
 
 function buildRelationships(agent: Pick<IAgent, "userGroups">) {
     if (!agent.userGroups?.length) {
@@ -17,6 +21,21 @@ function buildRelationships(agent: Pick<IAgent, "userGroups">) {
             })),
         },
     };
+}
+
+/**
+ * Instructions are an attribute rather than a relationship, and writing an agent replaces the whole
+ * list — so an agent with none must send an empty array to clear what the backend already holds.
+ */
+function convertInstructionsToBackend(
+    instructions: IAgentInstruction[] | undefined,
+): JsonApiAgentInAttributesInstructionsInner[] {
+    return (instructions ?? []).map((instruction) => ({
+        title: instruction.title,
+        content: instruction.content,
+        strategy: instruction.strategy,
+        isDisabled: instruction.isDisabled,
+    }));
 }
 
 export function convertAgentToBackend(agent: IAgent): JsonApiAgentInDocument {
@@ -36,6 +55,7 @@ export function convertAgentToBackend(agent: IAgent): JsonApiAgentInDocument {
                 aiKnowledge: agent.aiKnowledge,
                 availableToAll: agent.availableToAll,
                 isPreview: agent.isPreview,
+                instructions: convertInstructionsToBackend(agent.instructions),
             },
             ...(relationships ? { relationships } : {}),
         },
@@ -60,6 +80,9 @@ export function convertAgentPatchToBackend(agent: IAgentPatch): JsonApiAgentPatc
                     aiKnowledge: agent.aiKnowledge,
                     availableToAll: agent.availableToAll,
                     isPreview: agent.isPreview,
+                    instructions: agent.instructions
+                        ? convertInstructionsToBackend(agent.instructions)
+                        : undefined,
                 }).filter(([_, value]) => value !== undefined),
             ),
             ...(relationships ? { relationships } : {}),

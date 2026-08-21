@@ -30,12 +30,12 @@ function loadedState(dashboard: IDashboard): IDashboardMetaState {
 
 function stateWith(
     timezoneConfig: IDashboardTimezoneConfig | undefined,
-    enableDashboardTimezone: boolean,
+    enableTimezoneChange: boolean,
     timezoneOverride?: string,
 ): DashboardState {
     return {
         meta: loadedState(dashboardWith(timezoneConfig)),
-        config: { config: { settings: { enableDashboardTimezone } } },
+        config: { config: { settings: { enableTimezoneChange } } },
         ui: { ...uiInitialState, timezoneOverride },
     } as unknown as DashboardState;
 }

@@ -112,6 +112,7 @@ export {
 } from "./store/chatWindow/chatWindowSlice.js";
 export { type LinkHandlerEvent, type GenAIAssistantMode } from "./components/ConfigContext.js";
 export { useGenAiChatAvailability } from "./hooks/useGenAiChatAvailability.js";
+export { useGenAiDispatcher } from "./hooks/useGenAiDispatcher.js";
 
 //interaction intelligence
 

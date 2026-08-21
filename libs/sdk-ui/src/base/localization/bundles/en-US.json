@@ -3880,7 +3880,7 @@
         "crowdinContext": "Name of the workspace permission that allows user to create, edit or delete metrics in workspace."
     },
     "userManagement.workspace.permission.createMetric.tooltip": {
-        "text": "Adds CREATE_METRIC permission to create, edit or delete metrics.",
+        "text": "Adds CREATE_METRIC permission to create and manage new metrics. To manage any other metric, the user needs access to it.",
         "crowdinContext": "Create metric permission tooltip"
     },
     "userManagement.workspace.permission.useAiAssistant": {

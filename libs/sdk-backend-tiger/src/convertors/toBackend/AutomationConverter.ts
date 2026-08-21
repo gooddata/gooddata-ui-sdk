@@ -264,6 +264,7 @@ export const convertAlert = (alert: IAutomationAlert): JsonApiAutomationInAttrib
     const { condition, execution } = alert;
 
     const { filters: convertedFilters } = convertAfmFilters(execution.measures, execution.filters, true);
+    const timezone = execution.executionConfig?.timezone;
     const base = {
         execution: {
             filters: convertedFilters,
@@ -282,6 +283,7 @@ export const convertAlert = (alert: IAutomationAlert): JsonApiAutomationInAttrib
         },
         trigger: alert.trigger.mode,
         interval: alert.trigger.interval,
+        ...(timezone ? { settings: { timezone } } : {}),
     };
 
     //comparison

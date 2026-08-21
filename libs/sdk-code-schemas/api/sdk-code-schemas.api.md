@@ -61,7 +61,7 @@ interface AreaChart {
     config?: VisualisationConfig4;
     description?: string;
     // (undocumented)
-    id: Id23;
+    id: Id24;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -71,7 +71,7 @@ interface AreaChart {
     show_in_ai_results?: boolean;
     stack_by?: Bucket[];
     // (undocumented)
-    tags?: Tags16;
+    tags?: Tags17;
     title?: string;
     type: "area_chart";
     view_by?: Bucket[];
@@ -337,7 +337,7 @@ interface BarChart {
     config?: VisualisationConfig1;
     description?: string;
     // (undocumented)
-    id: Id20;
+    id: Id21;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -347,7 +347,7 @@ interface BarChart {
     show_in_ai_results?: boolean;
     stack_by?: Bucket[];
     // (undocumented)
-    tags?: Tags13;
+    tags?: Tags14;
     title?: string;
     type: "bar_chart";
     view_by?: Bucket[];
@@ -374,7 +374,7 @@ interface BubbleChart {
     config?: VisualisationConfig6;
     description?: string;
     // (undocumented)
-    id: Id25;
+    id: Id26;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: (Bucket | EmptyBucket)[];
@@ -384,7 +384,7 @@ interface BubbleChart {
     show_in_ai_results?: boolean;
     size_by?: Bucket[];
     // (undocumented)
-    tags?: Tags18;
+    tags?: Tags19;
     title?: string;
     type: "bubble_chart";
     view_by?: Bucket[];
@@ -423,7 +423,7 @@ interface BulletChart {
     config?: VisualisationConfig13;
     description?: string;
     // (undocumented)
-    id: Id32;
+    id: Id33;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: (Bucket | EmptyBucket)[];
@@ -432,7 +432,7 @@ interface BulletChart {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags25;
+    tags?: Tags26;
     title?: string;
     type: "bullet_chart";
     view_by?: Bucket[];
@@ -522,7 +522,7 @@ interface ColumnChart {
     config?: VisualisationConfig2;
     description?: string;
     // (undocumented)
-    id: Id21;
+    id: Id22;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -532,7 +532,7 @@ interface ColumnChart {
     show_in_ai_results?: boolean;
     stack_by?: Bucket[];
     // (undocumented)
-    tags?: Tags14;
+    tags?: Tags15;
     title?: string;
     type: "column_chart";
     view_by?: Bucket[];
@@ -546,7 +546,7 @@ interface ComboChart {
     config?: VisualisationConfig18;
     description?: string;
     // (undocumented)
-    id: Id37;
+    id: Id38;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -555,7 +555,7 @@ interface ComboChart {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags30;
+    tags?: Tags31;
     title?: string;
     type: "combo_chart";
     view_by?: Bucket[];
@@ -884,7 +884,7 @@ interface DependencyWheelChart {
     // (undocumented)
     from?: Bucket1;
     // (undocumented)
-    id: Id34;
+    id: Id35;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -893,7 +893,7 @@ interface DependencyWheelChart {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags27;
+    tags?: Tags28;
     title?: string;
     // (undocumented)
     to?: Bucket2;
@@ -1070,7 +1070,7 @@ interface FunnelChart {
     config?: VisualisationConfig11;
     description?: string;
     // (undocumented)
-    id: Id30;
+    id: Id31;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -1079,7 +1079,7 @@ interface FunnelChart {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags23;
+    tags?: Tags24;
     title?: string;
     type: "funnel_chart";
     view_by?: Bucket[];
@@ -1098,7 +1098,7 @@ interface GeoAreaChart {
     config?: VisualisationConfig21;
     description?: string;
     // (undocumented)
-    id: Id40;
+    id: Id41;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     layers?: LayerItem[];
@@ -1108,7 +1108,7 @@ interface GeoAreaChart {
     segment_by?: Bucket[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags32;
+    tags?: Tags33;
     title?: string;
     type: "geo_area_chart";
     view_by?: GeoAreaBucket[];
@@ -1132,7 +1132,7 @@ interface GeoChart {
     config?: VisualisationConfig19;
     description?: string;
     // (undocumented)
-    id: Id38;
+    id: Id39;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     layers?: LayerItem[];
@@ -1142,7 +1142,7 @@ interface GeoChart {
     segment_by?: Bucket[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags31;
+    tags?: Tags32;
     title?: string;
     type: "geo_chart";
     view_by?: PushpinLocationBucket[];
@@ -1156,7 +1156,7 @@ interface HeadlineChart {
     config?: VisualisationConfig17;
     description?: string;
     // (undocumented)
-    id: Id36;
+    id: Id37;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -1165,7 +1165,7 @@ interface HeadlineChart {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags29;
+    tags?: Tags30;
     title?: string;
     type: "headline_chart";
     view_by?: unknown[];
@@ -1180,7 +1180,7 @@ interface HeatmapChart {
     config?: VisualisationConfig12;
     description?: string;
     // (undocumented)
-    id: Id31;
+    id: Id32;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -1190,7 +1190,7 @@ interface HeatmapChart {
     segment_by?: Bucket[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags24;
+    tags?: Tags25;
     title?: string;
     type: "heatmap_chart";
     view_by?: Bucket[];
@@ -1385,6 +1385,11 @@ type Id41 = string;
 //
 // @public
 type Id42 = string;
+
+// Warning: (ae-missing-release-tag) "Id43" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Id43 = string;
 
 // Warning: (ae-missing-release-tag) "Id5" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -1762,7 +1767,7 @@ interface LineChart {
     config?: VisualisationConfig3;
     description?: string;
     // (undocumented)
-    id: Id22;
+    id: Id23;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -1771,7 +1776,7 @@ interface LineChart {
     segment_by?: Bucket[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags15;
+    tags?: Tags16;
     title?: string;
     trend_by?: Bucket[];
     type: "line_chart";
@@ -1862,7 +1867,7 @@ interface Metadata1 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy";
+    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata10" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -1872,7 +1877,7 @@ interface Metadata10 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy";
+    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata11" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -1892,7 +1897,7 @@ interface Metadata13 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy";
+    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata14" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -1912,7 +1917,7 @@ interface Metadata16 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy";
+    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata17" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -1932,13 +1937,13 @@ interface Metadata19 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy";
+    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-type Metadata2 = Metadata3 | Metadata6 | Metadata9 | Metadata12 | Metadata15 | Metadata18 | Metadata21 | Metadata24;
+type Metadata2 = Metadata3 | Metadata6 | Metadata9 | Metadata12 | Metadata15 | Metadata18 | Metadata21 | Metadata24 | Metadata27;
 
 // Warning: (ae-missing-release-tag) "Metadata20" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -1957,13 +1962,13 @@ interface Metadata22 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy";
+    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata23" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-type Metadata23 = Visualisation;
+type Metadata23 = Parameter;
 
 // Warning: (ae-missing-release-tag) "Metadata24" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -1977,13 +1982,33 @@ interface Metadata25 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy";
+    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata26" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-type Metadata26 = {
+type Metadata26 = Visualisation;
+
+// Warning: (ae-missing-release-tag) "Metadata27" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Metadata27 = Metadata28 & Metadata29;
+
+// Warning: (ae-missing-release-tag) "Metadata28" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface Metadata28 {
+    // (undocumented)
+    [k: string]: unknown;
+    // (undocumented)
+    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
+}
+
+// Warning: (ae-missing-release-tag) "Metadata29" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+type Metadata29 = {
     [k: string]: unknown;
 };
 
@@ -1999,7 +2024,7 @@ interface Metadata4 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy";
+    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata5" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2019,7 +2044,7 @@ interface Metadata7 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy";
+    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy" | "parameter";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata8" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2604,6 +2629,51 @@ export const metadata_v1: {
                         };
                         minItems: number;
                     };
+                };
+                required: string[];
+            };
+            parameter: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    id: {
+                        $ref: string;
+                        description: string;
+                        $semantic: ({
+                            type: string;
+                            source: string;
+                            code: string;
+                        } | {
+                            code?: undefined;
+                            type: string;
+                            source: string;
+                        })[];
+                    };
+                    type: {
+                        type: string;
+                        enum: string[];
+                    };
+                    title: {
+                        $ref: string;
+                        description: string;
+                    };
+                    description: {
+                        $ref: string;
+                        description: string;
+                    };
+                    tags: {
+                        $ref: string;
+                        description: string;
+                    };
+                    definition: {
+                        $ref: string;
+                        description: string;
+                    };
+                };
+                $semantic: {
+                    type: string;
+                    snippets: string[];
                 };
                 required: string[];
             };
@@ -8400,6 +8470,140 @@ export const metadata_v1: {
             };
             required: string[];
         };
+        parameter: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    $ref: string;
+                    description: string;
+                    $semantic: ({
+                        type: string;
+                        source: string;
+                        code: string;
+                    } | {
+                        code?: undefined;
+                        type: string;
+                        source: string;
+                    })[];
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                title: {
+                    $ref: string;
+                    description: string;
+                };
+                description: {
+                    $ref: string;
+                    description: string;
+                };
+                tags: {
+                    $ref: string;
+                    description: string;
+                };
+                definition: {
+                    $ref: string;
+                    description: string;
+                };
+            };
+            $semantic: {
+                type: string;
+                snippets: string[];
+            };
+            required: string[];
+        };
+        parameterDefinition: {
+            title: string;
+            description: string;
+            allOf: {
+                if: {
+                    properties: {
+                        type: {
+                            const: string;
+                        };
+                    };
+                    required: string[];
+                };
+                then: {
+                    $ref: string;
+                };
+            }[];
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+            };
+            required: string[];
+        };
+        stringParameterDefinition: {
+            title: string;
+            description: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                defaultValue: {
+                    type: string;
+                    description: string;
+                };
+                constraints: {
+                    title: string;
+                    type: string;
+                    additionalProperties: boolean;
+                    description: string;
+                    properties: {
+                        minLength: {
+                            type: string;
+                            minimum: number;
+                            description: string;
+                        };
+                        maxLength: {
+                            type: string;
+                            minimum: number;
+                            description: string;
+                        };
+                        allowedValues: {
+                            type: string;
+                            minItems: number;
+                            description: string;
+                            items: {
+                                $ref: string;
+                            };
+                        };
+                    };
+                    not: {
+                        anyOf: {
+                            required: string[];
+                        }[];
+                    };
+                };
+            };
+            required: string[];
+        };
+        parameterAllowedValue: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                value: {
+                    type: string;
+                    minLength: number;
+                    description: string;
+                };
+                title: {
+                    type: string;
+                    description: string;
+                };
+            };
+            required: string[];
+        };
         plugin: {
             title: string;
             type: string;
@@ -9490,6 +9694,40 @@ interface NormalDataset {
     workspace_data_filters?: WorkspaceDataFilter[];
 }
 
+// Warning: (ae-missing-release-tag) "Parameter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface Parameter {
+    // (undocumented)
+    definition: ParameterDefinition;
+    description?: string;
+    // (undocumented)
+    id: Id19;
+    // (undocumented)
+    tags?: Tags12;
+    title?: string;
+    // (undocumented)
+    type: "parameter";
+}
+
+// Warning: (ae-missing-release-tag) "ParameterAllowedValue" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface ParameterAllowedValue {
+    title?: string;
+    value: string;
+}
+
+// Warning: (ae-missing-release-tag) "ParameterDefinition" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ParameterDefinition = ParameterDefinition1;
+
+// Warning: (ae-missing-release-tag) "ParameterDefinition1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ParameterDefinition1 = StringParameterDefinition;
+
 // Warning: (ae-missing-release-tag) "Permission" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
@@ -9512,7 +9750,7 @@ interface PieChart {
     config?: VisualisationConfig7;
     description?: string;
     // (undocumented)
-    id: Id26;
+    id: Id27;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -9521,7 +9759,7 @@ interface PieChart {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags19;
+    tags?: Tags20;
     title?: string;
     type: "pie_chart";
     view_by?: Bucket[];
@@ -9535,7 +9773,7 @@ interface PieChart1 {
     config?: VisualisationConfig8;
     description?: string;
     // (undocumented)
-    id: Id27;
+    id: Id28;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -9544,7 +9782,7 @@ interface PieChart1 {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags20;
+    tags?: Tags21;
     title?: string;
     type: "donut_chart";
     view_by?: Bucket[];
@@ -9654,7 +9892,7 @@ interface PyramidChart {
     config?: VisualisationConfig10;
     description?: string;
     // (undocumented)
-    id: Id29;
+    id: Id30;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -9663,7 +9901,7 @@ interface PyramidChart {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags22;
+    tags?: Tags23;
     title?: string;
     type: "pyramid_chart";
     view_by?: Bucket[];
@@ -9977,7 +10215,7 @@ interface RadarChart {
     config?: VisualisationConfig23;
     description?: string;
     // (undocumented)
-    id: Id42;
+    id: Id43;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -9986,7 +10224,7 @@ interface RadarChart {
     segment_by?: Bucket[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags34;
+    tags?: Tags35;
     title?: string;
     type: "radar_chart";
     view_by?: Bucket[];
@@ -10049,7 +10287,7 @@ interface RepeaterChart {
     config?: VisualisationConfig22;
     description?: string;
     // (undocumented)
-    id: Id41;
+    id: Id42;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -10059,7 +10297,7 @@ interface RepeaterChart {
     segment_by?: Bucket[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags33;
+    tags?: Tags34;
     title?: string;
     type: "repeater_chart";
     view_by?: Bucket[];
@@ -10086,7 +10324,7 @@ interface SankeyChart {
     // (undocumented)
     from?: Bucket3;
     // (undocumented)
-    id: Id35;
+    id: Id36;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -10095,7 +10333,7 @@ interface SankeyChart {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags28;
+    tags?: Tags29;
     title?: string;
     // (undocumented)
     to?: Bucket4;
@@ -10112,7 +10350,7 @@ interface ScatterChart {
     config?: VisualisationConfig5;
     description?: string;
     // (undocumented)
-    id: Id24;
+    id: Id25;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: (Bucket | EmptyBucket)[];
@@ -10121,7 +10359,7 @@ interface ScatterChart {
     segment_by?: Bucket[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags17;
+    tags?: Tags18;
     title?: string;
     type: "scatter_chart";
     view_by?: Bucket[];
@@ -10220,6 +10458,26 @@ interface State {
     include?: (string | number | boolean)[];
 }
 
+// Warning: (ae-missing-release-tag) "StringParameterConstraints" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface StringParameterConstraints {
+    allowedValues?: [ParameterAllowedValue, ...ParameterAllowedValue[]];
+    maxLength?: number;
+    minLength?: number;
+}
+
+// Warning: (ae-missing-release-tag) "StringParameterDefinition" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface StringParameterDefinition {
+    // (undocumented)
+    constraints?: StringParameterConstraints;
+    defaultValue: string;
+    // (undocumented)
+    type: "STRING";
+}
+
 // Warning: (ae-missing-release-tag) "StructuredField" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
@@ -10246,7 +10504,7 @@ interface Table {
     config?: VisualisationConfig;
     description?: string;
     // (undocumented)
-    id: Id19;
+    id: Id20;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -10256,7 +10514,7 @@ interface Table {
     segment_by?: Bucket[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags12;
+    tags?: Tags13;
     title?: string;
     type: "table";
     view_by?: Bucket[];
@@ -10407,6 +10665,11 @@ type Tags33 = string[];
 // @public
 type Tags34 = string[];
 
+// Warning: (ae-missing-release-tag) "Tags35" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Tags35 = string[];
+
 // Warning: (ae-missing-release-tag) "Tags4" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
@@ -10538,7 +10801,7 @@ interface TreemapChart {
     config?: VisualisationConfig9;
     description?: string;
     // (undocumented)
-    id: Id28;
+    id: Id29;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -10547,7 +10810,7 @@ interface TreemapChart {
     segment_by?: Bucket[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags21;
+    tags?: Tags22;
     title?: string;
     type: "treemap_chart";
     view_by?: Bucket[];
@@ -10652,10 +10915,16 @@ declare namespace v1 {
         AttributeIdentifier6,
         Metadata21,
         Metadata23,
-        Visualisation,
-        Visualisation1,
         Id19,
         Tags12,
+        ParameterDefinition,
+        ParameterDefinition1,
+        Metadata24,
+        Metadata26,
+        Visualisation,
+        Visualisation1,
+        Id20,
+        Tags13,
         Field,
         AttributeIdentifier7,
         Field1,
@@ -10737,83 +11006,83 @@ declare namespace v1 {
         Bucket,
         SimpleBucket,
         Visualisation2,
-        Id20,
-        Tags13,
-        Visualisation3,
         Id21,
         Tags14,
-        Visualisation4,
+        Visualisation3,
         Id22,
         Tags15,
-        Visualisation5,
+        Visualisation4,
         Id23,
         Tags16,
-        Visualisation6,
+        Visualisation5,
         Id24,
         Tags17,
-        EmptyBucket,
-        Visualisation7,
+        Visualisation6,
         Id25,
         Tags18,
-        Visualisation8,
+        EmptyBucket,
+        Visualisation7,
         Id26,
         Tags19,
-        Visualisation9,
+        Visualisation8,
         Id27,
         Tags20,
-        Visualisation10,
+        Visualisation9,
         Id28,
         Tags21,
-        Visualisation11,
+        Visualisation10,
         Id29,
         Tags22,
-        Visualisation12,
+        Visualisation11,
         Id30,
         Tags23,
-        Visualisation13,
+        Visualisation12,
         Id31,
         Tags24,
-        Visualisation14,
+        Visualisation13,
         Id32,
         Tags25,
-        Visualisation15,
+        Visualisation14,
         Id33,
         Tags26,
-        Visualisation16,
+        Visualisation15,
         Id34,
         Tags27,
+        Visualisation16,
+        Id35,
+        Tags28,
         Bucket1,
         Bucket2,
         Visualisation17,
-        Id35,
-        Tags28,
+        Id36,
+        Tags29,
         Bucket3,
         Bucket4,
         Visualisation18,
-        Id36,
-        Tags29,
-        Visualisation19,
         Id37,
         Tags30,
-        Visualisation20,
+        Visualisation19,
         Id38,
         Tags31,
+        Visualisation20,
+        Id39,
+        Tags32,
         PushpinLocationBucket,
         LayerItem,
-        Id39,
+        Id40,
         LocationBucket,
         GeoAreaBucket,
         Visualisation21,
-        Id40,
-        Tags32,
-        Visualisation22,
         Id41,
         Tags33,
-        Visualisation23,
+        Visualisation22,
         Id42,
         Tags34,
-        Metadata24,
-        Metadata26,
+        Visualisation23,
+        Id43,
+        Tags35,
+        Metadata27,
+        Metadata29,
         Metadata1,
         Metadata4,
         NormalDataset,
@@ -10870,6 +11139,11 @@ declare namespace v1 {
         Metadata19,
         AttributeHierarchy,
         Metadata22,
+        Parameter,
+        StringParameterDefinition,
+        StringParameterConstraints,
+        ParameterAllowedValue,
+        Metadata25,
         Table,
         Query,
         Fields3,
@@ -10983,7 +11257,7 @@ declare namespace v1 {
         RadarChart,
         Query22,
         VisualisationConfig23,
-        Metadata25
+        Metadata28
     }
 }
 
@@ -18410,7 +18684,7 @@ interface VisualizationDataLayer {
     // (undocumented)
     config?: VisualisationConfig20;
     // (undocumented)
-    id: Id39;
+    id: Id40;
     metrics?: (Bucket | EmptyBucket)[];
     segment_by?: Bucket[];
     title?: string;
@@ -18437,7 +18711,7 @@ interface WaterfallChart {
     config?: VisualisationConfig14;
     description?: string;
     // (undocumented)
-    id: Id33;
+    id: Id34;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -18446,7 +18720,7 @@ interface WaterfallChart {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags26;
+    tags?: Tags27;
     title?: string;
     type: "waterfall_chart";
     view_by?: Bucket[];

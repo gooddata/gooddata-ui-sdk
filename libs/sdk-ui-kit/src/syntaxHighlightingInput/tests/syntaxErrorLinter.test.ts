@@ -9,12 +9,17 @@ import { describe, expect, it } from "vitest";
 import { getSyntaxErrorDiagnostics } from "../syntaxErrorLinter.js";
 
 const diagnosticsFor = (doc: string, language: Extension) => {
-    const state = EditorState.create({ doc, extensions: [language] });
+    const initial = EditorState.create({ doc, extensions: [language] });
     // The initial parse only gets a small time budget; on a loaded machine a partial tree would
     // make the walk silently miss the error nodes under test.
-    if (ensureSyntaxTree(state, doc.length, 5000) === null && doc.length > 0) {
+    if (ensureSyntaxTree(initial, doc.length, 5000) === null && doc.length > 0) {
         throw new Error("Parse did not finish; the diagnostics under test would not be tree-derived.");
     }
+    // `ensureSyntaxTree` finishes the parse but hands the completed tree back rather than storing it:
+    // the state still carries the snapshot its own budgeted parse ended on, and that is the tree the
+    // linter reads. An empty transaction is what makes the state adopt the finished one — without it,
+    // a truncated initial parse leaves the unparsed tail looking like a syntax error.
+    const state = initial.update({}).state;
     return getSyntaxErrorDiagnostics(state, "Syntax error");
 };
 

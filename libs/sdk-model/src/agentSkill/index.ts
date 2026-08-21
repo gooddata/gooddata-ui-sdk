@@ -30,6 +30,51 @@ export type AgentCustomSkill =
 export type AgentSkillsMode = "all" | "custom";
 
 /**
+ * Determines when an agent instruction is applied to a request.
+ *
+ * @alpha
+ */
+export type AgentInstructionStrategy = "ALWAYS" | "AUTO";
+
+/**
+ * Maximum number of instructions a single agent can carry.
+ *
+ * @alpha
+ */
+export const MAX_AGENT_INSTRUCTIONS = 50;
+
+/**
+ * A rule an agent follows when answering, such as a business definition or how to handle a kind of
+ * request. Carried inside {@link IAgent.instructions}.
+ *
+ * Instructions have no identifier: they live and die with their agent, and the backend addresses them
+ * by position. Writing an agent replaces its whole list.
+ *
+ * @alpha
+ */
+export interface IAgentInstruction {
+    /**
+     * Short name shown in the agent builder.
+     */
+    title?: string;
+
+    /**
+     * The rule the agent follows when answering. Required, must not be blank.
+     */
+    content: string;
+
+    /**
+     * Required — the backend rejects a payload that omits it.
+     */
+    strategy: AgentInstructionStrategy;
+
+    /**
+     * Whether the instruction is disabled.
+     */
+    isDisabled?: boolean;
+}
+
+/**
  * Represents an AI agent entity.
  *
  * @alpha
@@ -115,6 +160,12 @@ export interface IAgent {
      * User groups the agent is associated with.
      */
     userGroups?: IUserGroup[];
+
+    /**
+     * Rules the agent follows when answering. An empty list must be sent as undefined — the backend
+     * omits the field rather than returning `[]`, so `[]` would read as a change against a fresh agent.
+     */
+    instructions?: IAgentInstruction[];
 }
 
 /**

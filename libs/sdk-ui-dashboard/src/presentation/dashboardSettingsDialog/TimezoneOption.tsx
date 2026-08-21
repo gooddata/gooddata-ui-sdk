@@ -6,14 +6,11 @@ import { useIntl } from "react-intl";
 
 import { BROWSER_DETECTED, type IDashboardTimezoneConfig } from "@gooddata/sdk-model";
 import {
-    Bubble,
-    BubbleHoverTrigger,
-    type IAlignPoint,
     type ITimezoneSelectSpecialItem,
     TimezoneSelect,
+    UiTooltip,
+    useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
-
-const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "bc tl" }];
 
 interface ITimezoneOptionProps {
     label: ReactNode;
@@ -24,6 +21,7 @@ interface ITimezoneOptionProps {
 
 export function TimezoneOption({ label, tooltip, timezoneConfig, onChange }: ITimezoneOptionProps) {
     const intl = useIntl();
+    const helpTooltipId = useIdPrefixed("timezone-help-tooltip");
 
     const specialItems: ITimezoneSelectSpecialItem[] = useMemo(() => {
         const workspaceItemLabel = intl.formatMessage({
@@ -50,20 +48,27 @@ export function TimezoneOption({ label, tooltip, timezoneConfig, onChange }: ITi
 
     return (
         <div className="configuration-category-item">
-            <span className="input-label-text">
-                {label}
-                <BubbleHoverTrigger
-                    showDelay={0}
-                    hideDelay={0}
-                    eventsOnBubble
-                    className="configuration-category-item-tooltip-icon"
-                >
-                    <span className="gd-icon-circle-question gd-filter-configuration__help-icon" />
-                    <Bubble alignPoints={BUBBLE_ALIGN_POINTS}>
-                        <div className="gd-filter-configuration__help-tooltip">{tooltip}</div>
-                    </Bubble>
-                </BubbleHoverTrigger>
-            </span>
+            {/* the tooltip anchor wrapper is a div, which must not nest inside the label span */}
+            <span className="input-label-text">{label}</span>
+            <UiTooltip
+                id={helpTooltipId}
+                inlineAnchor
+                anchor={
+                    <span
+                        tabIndex={0}
+                        aria-label={intl.formatMessage({
+                            id: "settingsDashboardDialog.section.timezone.defaultTimezone.help",
+                        })}
+                        aria-describedby={helpTooltipId}
+                        className="gd-icon-circle-question gd-filter-configuration__help-icon configuration-category-item-tooltip-icon"
+                    />
+                }
+                content={<div className="gd-filter-configuration__help-tooltip">{tooltip}</div>}
+                triggerBy={["hover", "focus"]}
+                arrowPlacement="left"
+                optimalPlacement
+                width={200}
+            />
             <TimezoneSelect
                 value={timezoneConfig?.timezoneId}
                 showTooltip

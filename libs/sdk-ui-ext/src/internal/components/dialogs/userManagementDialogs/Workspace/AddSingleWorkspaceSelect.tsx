@@ -116,9 +116,7 @@ export function AddSingleWorkspaceSelect({
                 styles={{
                     dropdownIndicator: (base) => ({
                         ...base,
-                        padding: "0",
-                        marginRight: "-6px",
-                        svg: { height: "14px" },
+                        svg: { width: "14px", height: "14px" },
                     }),
                 }}
                 loadOptions={loadOptions as any}

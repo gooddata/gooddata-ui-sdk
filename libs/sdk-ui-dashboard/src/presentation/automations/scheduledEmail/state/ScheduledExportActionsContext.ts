@@ -2,6 +2,8 @@
 
 import { createContext, useContext } from "react";
 
+import { type useScheduleTimezone } from "../DefaultScheduledEmailDialog/hooks/useScheduleTimezone.js";
+
 import { missingScheduledExportStateProvider } from "./missingScheduledExportStateProvider.js";
 import { type useScheduledEmailExportSettings } from "./useScheduledEmailExportSettings.js";
 import { type useScheduledEmailFormState } from "./useScheduledEmailFormState.js";
@@ -38,7 +40,8 @@ export type IScheduledExportActionsContextValue = Pick<
         | "onCsvSettingsChange"
         | "onCsvRawSettingsChange"
         | "onSlidesTemplateIdChange"
-    >;
+    > &
+    Pick<ReturnType<typeof useScheduleTimezone>, "onScheduleTimezoneChange" | "applyCurrentScheduleTimezone">;
 
 const ScheduledExportActionsContext = createContext<IScheduledExportActionsContextValue | undefined>(
     undefined,

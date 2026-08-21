@@ -90,6 +90,13 @@ export interface IUiGranteeAsyncPickerProps {
     onSelect: (option: IUiGranteeAsyncOption) => void;
     /** Fires when the user changes the permission level on a picked row. */
     onPermissionChange?: (grantee: IUiPickedGrantee, next: PermissionMenuLevel) => void;
+    /**
+     * Levels each picked grantee's menu renders disabled — the caller cannot grant a
+     * level they do not hold themselves. See {@link UiPermissionMenu}.
+     */
+    disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
+    /** Tooltip shown on those disabled levels. */
+    disabledTooltip?: string;
     /** Fires when the user picks Remove access in the row's permission menu. */
     onRemove?: (grantee: IUiPickedGrantee) => void;
     /**
@@ -125,6 +132,8 @@ export function UiGranteeAsyncPicker({
     selectedGrantees = [],
     onSelect,
     onPermissionChange,
+    disabledLevels,
+    disabledTooltip,
     onRemove,
     labels,
     onLabelsChange,
@@ -226,6 +235,8 @@ export function UiGranteeAsyncPicker({
                                         <UiPermissionMenu
                                             selectedLevel={g.permissionLevel}
                                             onPermissionChange={(next) => onPermissionChange?.(g, next)}
+                                            disabledLevels={disabledLevels}
+                                            disabledTooltip={disabledTooltip}
                                             labels={scopeLabels}
                                             selectedLabelIds={g.labelIds ?? allLabelIds}
                                             onLabelsChange={(ids) => onLabelsChange?.(g, ids)}

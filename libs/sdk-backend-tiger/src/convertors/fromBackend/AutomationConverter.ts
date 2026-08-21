@@ -382,6 +382,9 @@ export const convertAlert = (
             auxMeasures: execution.auxMeasures?.map((m: MeasureItem) => convertMeasure(m)) ?? [],
             filters: execution.filters?.map((f) => convertFilter(f as AutomationFilterDefinition)) ?? [],
             ...(parameters.length ? { parameters } : {}),
+            ...("settings" in alert && alert.settings?.timezone
+                ? { executionConfig: { timezone: alert.settings.timezone } }
+                : {}),
         },
         trigger: {
             state: state ?? "ACTIVE",

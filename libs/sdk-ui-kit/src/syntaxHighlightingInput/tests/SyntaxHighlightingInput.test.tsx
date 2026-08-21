@@ -1,93 +1,98 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type ChangeEvent } from "react";
-
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { userEvent } from "@testing-library/user-event";
-import cx from "classnames";
+import { type EditorView } from "@codemirror/view";
+import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-// oxlint-disable-next-line import/no-unassigned-import
-import "vitest-dom/extend-expect";
 
 import { type ISyntaxHighlightingInputProps, SyntaxHighlightingInput } from "../SyntaxHighlightingInput.js";
 
 const multiLineValue = "01234\n01234\n01234";
 
-vi.mock("../SyntaxHighlightingInput.js", () => ({
-    SyntaxHighlightingInput: ({ onChange, value, className, onCursor }: ISyntaxHighlightingInputProps) => {
-        const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-            onChange(e.target.value);
+/** The text on screen, rebuilt from CodeMirror's rendered lines. */
+function displayedText() {
+    return Array.from(document.querySelectorAll(".cm-line"))
+        .map((line) => line.textContent)
+        .join("\n");
+}
 
-            if (value === multiLineValue && onCursor) {
-                onCursor(8, 8);
-            }
-        };
+/**
+ * Renders the real editor and hands back its CodeMirror view, which is how edits and cursor moves are
+ * driven here: there is no typing into a contenteditable in this environment, and what these tests
+ * are about is the component's own reporting of a change once CodeMirror has made one. Stubbing the
+ * editor out instead — as this file used to — left the assertions describing the stub, and replaced a
+ * module the other suites in this worker render for real.
+ */
+function renderComponent(props?: Partial<ISyntaxHighlightingInputProps>) {
+    const captured: { view: EditorView | null } = { view: null };
+    const onChange = vi.fn();
+    const result = render(
+        <SyntaxHighlightingInput
+            value=""
+            onChange={onChange}
+            onApi={(view) => {
+                captured.view = view;
+            }}
+            {...props}
+        />,
+    );
 
-        return (
-            <textarea
-                className={cx(className, "s-input-syntax-highlighting-input")}
-                value={value}
-                onChange={onChangeHandler}
-            />
-        );
-    },
-}));
-
-const defaultProps: ISyntaxHighlightingInputProps = {
-    value: "",
-    onChange: vi.fn(),
-};
-
-(window as any).document.body.createTextRange = vi.fn(() => ({
-    setStart: vi.fn(),
-    setEnd: vi.fn(),
-    getBoundingClientRect: vi.fn(),
-    getClientRects: vi.fn(() => ({ length: null })),
-}));
-
-const renderComponent = (props?: Partial<ISyntaxHighlightingInputProps>) => {
-    return render(<SyntaxHighlightingInput {...defaultProps} {...props} />);
-};
+    return { ...result, onChange, view: captured.view! };
+}
 
 describe("SyntaxHighlightingInput", () => {
-    it("should render CodeMirrorInput component", () => {
-        renderComponent();
+    it("should render a CodeMirror editor, named for screen readers", () => {
+        renderComponent({ label: "Definition" });
 
-        expect(screen.getByRole("textbox")).toBeInTheDocument();
+        expect(document.querySelector(".cm-editor")).toBeInTheDocument();
+        expect(screen.getByRole("textbox", { name: "Definition" })).toBeInTheDocument();
     });
 
     it("should render correct value and classname", () => {
-        const props: ISyntaxHighlightingInputProps = {
-            ...defaultProps,
-            value: "this is a text content",
-            className: "this-is-a-classname",
-        };
-        renderComponent(props);
+        renderComponent({ value: "this is a text content", className: "this-is-a-classname" });
 
-        expect(screen.getByText("this is a text content")).toBeInTheDocument();
-        expect(document.querySelector(`textarea.${props.className}`)).toBeInTheDocument();
+        expect(displayedText()).toBe("this is a text content");
+        expect(
+            document.querySelector("div.this-is-a-classname.gd-input-syntax-highlighting-input"),
+        ).toBeInTheDocument();
     });
 
-    it("should call onChangeHandler function on value change", async () => {
-        const onChange = vi.fn();
-        const newValue = "new text content";
-        renderComponent({ onChange });
+    it("should call onChangeHandler function on value change", () => {
+        const { onChange, view } = renderComponent({ value: "01234" });
 
-        fireEvent.change(screen.getByRole("textbox"), { target: { value: newValue } });
-        await waitFor(() => {
-            expect(onChange).toBeCalledWith(expect.stringContaining(newValue));
-        });
+        view.dispatch({ changes: { from: 0, to: 0, insert: "new text content" } });
+
+        expect(onChange).toHaveBeenCalledWith("new text content01234");
+    });
+
+    it("should not report the controlled value being replaced from outside as a change", () => {
+        // The value sync is annotated `Transaction.remote` precisely so it does not come back out as
+        // an edit — without that, a consumer would be handed its own value again on every render.
+        const onChange = vi.fn();
+        const { rerender } = render(<SyntaxHighlightingInput value="01234" onChange={onChange} />);
+
+        rerender(<SyntaxHighlightingInput value="56789" onChange={onChange} />);
+
+        expect(displayedText()).toBe("56789");
+        expect(onChange).not.toHaveBeenCalled();
     });
 
     describe("onCursor", () => {
-        it("should call onCursor function with expected parameters on cursor position change", async () => {
+        it("should call onCursor function with expected parameters on cursor position change", () => {
             const onCursor = vi.fn();
-            renderComponent({ onCursor, value: multiLineValue });
+            const { view } = renderComponent({ value: multiLineValue, onCursor });
 
-            await userEvent.type(screen.getByRole("textbox"), multiLineValue);
-            await waitFor(() => {
-                expect(onCursor).toHaveBeenCalledWith(8, 8);
-            });
+            view.dispatch({ selection: { anchor: 8 } });
+
+            expect(onCursor).toHaveBeenCalledWith(8, 8);
+        });
+
+        it("should report both ends of a selected range", () => {
+            const onCursor = vi.fn();
+            const { view } = renderComponent({ value: multiLineValue, onCursor });
+
+            view.dispatch({ selection: { anchor: 6, head: 11 } });
+
+            expect(onCursor).toHaveBeenCalledWith(6, 11);
         });
     });
 });

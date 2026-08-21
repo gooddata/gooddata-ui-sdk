@@ -125,6 +125,18 @@ describe("buildWidgetsContext", () => {
         expect(result.referencedObjects).toEqual([{ type: "WIDGET", ref: idRef("w1"), title: "W1" }]);
     });
 
+    it("takes the visualization type from the insights it was handed", () => {
+        const i1 = idRef("i1");
+        const widgetsMap = new Map([
+            [idRef("w1"), { type: "insight", title: "W1", ref: idRef("w1"), insight: i1 }],
+        ]) as any;
+        const insightsMap = new Map([[i1, { insight: { visualizationUrl: "local:bar" } }]]) as any;
+
+        const result = buildWidgetsContext(widgetsMap, undefined, undefined, insightsMap);
+
+        expect(result.widgets[0]).toMatchObject({ visualizationUrl: "local:bar" });
+    });
+
     it("should handle visualization switcher and ignore its child insights", () => {
         const w1Ref = idRef("w1");
         const w1ChildRef = idRef("w1c");

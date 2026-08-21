@@ -106,6 +106,7 @@ export function collectAvailableReferences(
                             type: "widget",
                             context,
                             insightRef: widget.insightRef,
+                            ...(widget.visualizationUrl ? { visualizationUrl: widget.visualizationUrl } : {}),
                         });
                     }
                     break;
@@ -129,6 +130,9 @@ export function collectAvailableReferences(
                                 type: "widget",
                                 context,
                                 insightRef: visualization.insightRef,
+                                ...(visualization.visualizationUrl
+                                    ? { visualizationUrl: visualization.visualizationUrl }
+                                    : {}),
                             });
                         }
                     });

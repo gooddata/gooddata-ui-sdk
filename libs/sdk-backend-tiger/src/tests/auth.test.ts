@@ -1,17 +1,40 @@
 // (C) 2020-2026 GoodData Corporation
 
 import { type AxiosAdapter } from "axios";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type ITigerClient, type IUserProfile, newAxios } from "@gooddata/api-client-tiger";
 import * as profile from "@gooddata/api-client-tiger/endpoints/profile";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-import { ContextDeferredAuthProvider, TigerTokenAuthProvider } from "../auth.js";
-import { TigerBackend } from "../backend/index.js";
+import {
+    type ContextDeferredAuthProvider as ContextDeferredAuthProviderClass,
+    type TigerTokenAuthProvider as TigerTokenAuthProviderClass,
+} from "../auth.js";
 
 vi.mock("@gooddata/api-client-tiger/endpoints/profile", () => ({
     ProfileApi_GetCurrent: vi.fn(),
 }));
+
+// The units under test are imported dynamically from a fresh module registry so that they pick up
+// the profile endpoint mock above even when another (non-isolated) test file already imported them
+// without the mock. Keep this hook cheap: it must only pull in the small `auth.js` graph, never the
+// whole backend barrel - re-evaluating that one here is what used to blow the 10s hook timeout.
+let ContextDeferredAuthProvider: typeof ContextDeferredAuthProviderClass;
+let TigerTokenAuthProvider: typeof TigerTokenAuthProviderClass;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ ContextDeferredAuthProvider, TigerTokenAuthProvider } = await import("../auth.js"));
+});
+
+/**
+ * The auth providers only ever read `config.hostname` off the backend handed to them in the
+ * authentication context, so the tests pass this stand-in instead of a real TigerBackend.
+ */
+function backendStub(hostname?: string): IAnalyticalBackend {
+    return { config: { hostname } } as IAnalyticalBackend;
+}
 
 /**
  * A cache-enabled axios instance (as created by the tiger client factories) whose adapter serves
@@ -86,7 +109,7 @@ describe("TigerTokenAuthProvider", () => {
             const provider = new TigerTokenAuthProvider("token-of-user-a");
             const client = { axios: stub.instance } as ITigerClient;
             provider.initializeClient(client);
-            const context = { backend: new TigerBackend({}), client };
+            const context = { backend: backendStub(), client };
             vi.mocked(profile.ProfileApi_GetCurrent)
                 .mockResolvedValueOnce(userProfile("user-a"))
                 .mockResolvedValueOnce(userProfile("user-b"));
@@ -124,9 +147,8 @@ describe("ContextDeferredAuthProvider", () => {
                 },
             } as any;
             const provider = new ContextDeferredAuthProvider();
-            const backend = new TigerBackend({ hostname });
             const context = {
-                backend,
+                backend: backendStub(hostname),
                 client: null,
             };
             await provider.deauthenticate(context, returnTo);

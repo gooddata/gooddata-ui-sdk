@@ -127,6 +127,38 @@
         "text": "Close add context",
         "crowdinContext": "Accessibility label for the button that closes the AI chatbot add-context dialog"
     },
+    "gd.gen-ai.context.group.ariaLabel": {
+        "text": "Assistant context",
+        "crowdinContext": "Accessible name for the group of chips listing the dashboards and visualizations the AI chatbot answers about"
+    },
+    "gd.gen-ai.context.type.dashboard": {
+        "text": "Dashboard",
+        "crowdinContext": "Accessibility label for the icon marking an AI chatbot context item as a dashboard. Read before the item title."
+    },
+    "gd.gen-ai.context.type.visualization": {
+        "text": "Visualization",
+        "crowdinContext": "Accessibility label for the icon marking an AI chatbot context item as a visualization. Read before the item title."
+    },
+    "gd.gen-ai.context.announcement.added": {
+        "text": "{titles} added to the assistant context.",
+        "crowdinContext": "Screen reader announcement made when items are added to the AI chatbot context. The placeholder is a comma separated list of item titles."
+    },
+    "gd.gen-ai.context.announcement.removed": {
+        "text": "{titles} removed from the assistant context.",
+        "crowdinContext": "Screen reader announcement made when items are removed from the AI chatbot context. The placeholder is a comma separated list of item titles."
+    },
+    "gd.gen-ai.context.announcement.switched": {
+        "text": "Assistant context switched to {titles}.",
+        "crowdinContext": "Screen reader announcement made when the whole AI chatbot context is replaced, e.g. after navigating to another dashboard. The placeholder is a comma separated list of item titles."
+    },
+    "gd.gen-ai.context.announcement.empty": {
+        "text": "The assistant context is now empty.",
+        "crowdinContext": "Screen reader announcement made when the last item is removed from the AI chatbot context"
+    },
+    "gd.gen-ai.context.remove_context": {
+        "text": "Remove {title} from context",
+        "crowdinContext": "Accessibility label for the button that removes one item (a dashboard or a visualization) from the AI chatbot context. The placeholder is the item title."
+    },
     "gd.gen-ai.context.untitled": {
         "text": "Untitled",
         "crowdinContext": "Label for untitled objects in the AI chatbot context"

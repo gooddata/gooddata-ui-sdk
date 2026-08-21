@@ -11,7 +11,7 @@ import {
     type IDashboardTimezoneOverrideChanged,
     dashboardTimezoneOverrideChanged,
 } from "../../events/timezone.js";
-import { selectEnableDashboardTimezone } from "../../store/config/configSelectors.js";
+import { selectEnableTimezoneChange } from "../../store/config/configSelectors.js";
 import {
     selectDashboardTimezoneConfig,
     selectEffectiveDashboardTimezone,
@@ -34,7 +34,7 @@ export function* changeDashboardTimezoneOverrideHandler(
 ): SagaIterator<IDashboardTimezoneOverrideChanged> {
     // the gating protects paths that arrive from outside the UI (e.g. the embedding
     // setTimezone postMessage), which do not go through the menu-item visibility checks
-    const isTimezoneEnabled: boolean = yield select(selectEnableDashboardTimezone);
+    const isTimezoneEnabled: boolean = yield select(selectEnableTimezoneChange);
     if (!isTimezoneEnabled) {
         throw invalidArgumentsProvided(
             ctx,

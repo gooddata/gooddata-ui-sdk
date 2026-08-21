@@ -1,7 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { withIntlForTest } from "@gooddata/sdk-ui";
 
@@ -11,62 +11,52 @@ import {
     TEST_BASE_HEADLINE_ITEM,
 } from "../../../tests/TestData.fixtures.js";
 import { CompareSection } from "../CompareSection.js";
-import { CompareSectionItem } from "../CompareSectionItem.js";
 
-import { createMockUseBaseHeadline } from "./BaseHeadline.test.helpers.js";
+import { createBaseHeadlineTestContext } from "./BaseHeadline.test.helpers.js";
 
-const useBaseHeadlineMock = vi.hoisted(() => vi.fn());
-
-vi.mock("../BaseHeadlineContext.js", () => ({
-    useBaseHeadline: useBaseHeadlineMock,
-}));
-
-vi.mock("../CompareSectionItem.js", async (importOriginal) => {
-    const original = await importOriginal();
-    return {
-        ...(original as object),
-        CompareSectionItem: vi.fn((original as { CompareSectionItem: () => void }).CompareSectionItem),
-    };
-});
-
-const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
+const { setBaseHeadline, wrapper } = createBaseHeadlineTestContext();
 
 describe("CompareSection", () => {
-    const MockCompareItem = vi.mocked(CompareSectionItem);
-    const secondaryItem = TEST_BASE_HEADLINE_ITEM;
-    const tertiaryItem = {
+    /**
+     * The data item component is injected through the compared items, so that the rendering of the
+     * individual compare items can be verified without mocking the CompareSectionItem module.
+     */
+    const MockCompareItemContent = vi.fn().mockReturnValue(null);
+
+    const secondaryItem = {
         ...TEST_BASE_HEADLINE_ITEM,
+        baseHeadlineDataItemComponent: MockCompareItemContent,
+    } as unknown as IBaseHeadlineItem;
+    const tertiaryItem = {
+        ...secondaryItem,
         elementType: "secondaryValue",
         data: {
             ...TEST_BASE_HEADLINE_ITEM.data,
             localIdentifier: "tertiary_local_identifier",
         },
-    } satisfies IBaseHeadlineItem;
+    } as unknown as IBaseHeadlineItem;
 
     const renderCompareSection = (props: {
         secondaryItem: IBaseHeadlineItem;
         tertiaryItem?: IBaseHeadlineItem;
     }) => {
         const WrappedHeadlineCompareSection = withIntlForTest(CompareSection);
-        return render(<WrappedHeadlineCompareSection {...props} />);
+        return render(<WrappedHeadlineCompareSection {...props} />, { wrapper });
     };
 
     beforeEach(() => {
-        vi.clearAllMocks();
-        mockUseBaseHeadline();
-    });
-
-    afterEach(() => {
-        vi.restoreAllMocks();
+        MockCompareItemContent.mockClear();
+        setBaseHeadline();
     });
 
     it("Should render only one compare item when tertiary item is empty", () => {
         const { container } = renderCompareSection({ secondaryItem });
 
         expect(container.querySelector(HEADLINE_PAGINATED_COMPARE_SECTION_SELECTOR)).toBeNull();
-        expect(MockCompareItem).toHaveBeenCalledWith(
+        expect(MockCompareItemContent).toHaveBeenCalledTimes(1);
+        expect(MockCompareItemContent).toHaveBeenCalledWith(
             expect.objectContaining({
-                dataItem: secondaryItem,
+                dataItem: secondaryItem.data,
                 titleRef: expect.anything(),
             }),
             undefined,
@@ -77,17 +67,17 @@ describe("CompareSection", () => {
         const { container } = renderCompareSection({ secondaryItem, tertiaryItem });
 
         expect(container.querySelector(HEADLINE_PAGINATED_COMPARE_SECTION_SELECTOR)).toBeNull();
-        expect(MockCompareItem).toHaveBeenNthCalledWith(
+        expect(MockCompareItemContent).toHaveBeenNthCalledWith(
             1,
             expect.objectContaining({
-                dataItem: tertiaryItem,
+                dataItem: tertiaryItem.data,
             }),
             undefined,
         );
-        expect(MockCompareItem).toHaveBeenNthCalledWith(
+        expect(MockCompareItemContent).toHaveBeenNthCalledWith(
             2,
             expect.objectContaining({
-                dataItem: secondaryItem,
+                dataItem: secondaryItem.data,
                 titleRef: expect.anything(),
             }),
             undefined,
@@ -95,7 +85,7 @@ describe("CompareSection", () => {
     });
 
     it("Should render paginated component for small screen and compact size is enable", () => {
-        mockUseBaseHeadline({
+        setBaseHeadline({
             config: {
                 enableCompactSize: true,
             },
@@ -103,15 +93,14 @@ describe("CompareSection", () => {
             clientWidth: 60,
         });
 
-        const secondaryItem = TEST_BASE_HEADLINE_ITEM;
         const { container } = renderCompareSection({ secondaryItem, tertiaryItem });
 
         expect(container.querySelector(HEADLINE_PAGINATED_COMPARE_SECTION_SELECTOR)).toBeInTheDocument();
-        expect(MockCompareItem).toHaveBeenCalled();
+        expect(MockCompareItemContent).toHaveBeenCalled();
     });
 
     it("Should render only one compare item when tertiary item is empty and pagination is match", () => {
-        mockUseBaseHeadline({
+        setBaseHeadline({
             config: {
                 enableCompactSize: true,
             },
@@ -119,13 +108,12 @@ describe("CompareSection", () => {
             clientWidth: 60,
         });
 
-        const secondaryItem = TEST_BASE_HEADLINE_ITEM;
         const { container } = renderCompareSection({ secondaryItem });
 
         expect(container.querySelector(HEADLINE_PAGINATED_COMPARE_SECTION_SELECTOR)).toBeNull();
-        expect(MockCompareItem).toHaveBeenCalledWith(
+        expect(MockCompareItemContent).toHaveBeenCalledWith(
             expect.objectContaining({
-                dataItem: secondaryItem,
+                dataItem: secondaryItem.data,
                 titleRef: expect.anything(),
             }),
             undefined,

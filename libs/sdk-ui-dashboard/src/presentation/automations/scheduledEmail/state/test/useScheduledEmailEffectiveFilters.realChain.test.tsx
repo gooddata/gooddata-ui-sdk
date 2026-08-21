@@ -26,6 +26,16 @@ import { useScheduledEmailEffectiveFilters } from "../useScheduledEmailEffective
 
 // Deliberately mocks nothing: the point is stability of the real production chain,
 // and any mock in it would stabilize exactly what this test exists to measure.
+//
+// `isolate: false` shares one module graph per worker, so the chain imported above may already have
+// been evaluated — against the mocks of a test file that ran earlier in the same worker (e.g. the
+// `useScheduledEmailEffectiveFilters.test.tsx` sibling, which mocks `shared/filters/index.js`), and
+// the mock registry reset between files does not re-evaluate what those mocks were baked into.
+// Dropping the module registry from `vi.hoisted()` (it runs before this file's own imports, unlike
+// any `beforeEach`) makes the imports resolve to the real production chain this file measures.
+vi.hoisted(() => {
+    vi.resetModules();
+});
 
 const COMMON_DATE_FILTER: FilterContextItem = {
     dateFilter: {

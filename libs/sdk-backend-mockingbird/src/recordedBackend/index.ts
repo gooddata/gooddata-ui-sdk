@@ -293,6 +293,9 @@ function recordedWorkspace(
                 async setTimezone(): Promise<void> {
                     return Promise.resolve();
                 },
+                async setEnableTimezoneChange(): Promise<void> {
+                    return Promise.resolve();
+                },
                 async setDateFormat(): Promise<void> {
                     return Promise.resolve();
                 },
@@ -685,6 +688,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 deleteActiveLlmEndpoint: () => Promise.resolve(),
                 deleteActiveLlmProvider: () => Promise.resolve(),
                 setTimezone: () => Promise.resolve(),
+                setEnableTimezoneChange: () => Promise.resolve(),
                 setDateFormat: () => Promise.resolve(),
                 setWeekStart: () => Promise.resolve(),
                 setFiscalCalendar: () => Promise.resolve(),

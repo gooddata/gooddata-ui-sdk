@@ -126,6 +126,10 @@ export interface IGenAIContextObject {
     where: "view.dashboard" | "referencedObjects";
     context?: IGenAIObjectReference;
     insightRef?: ObjRef;
+    /**
+     * Visualization URL of the insight (e.g. `local:bar`).
+     */
+    visualizationUrl?: string;
 }
 
 /**
@@ -142,6 +146,10 @@ export interface IGenAIContextListItem {
     id: string;
     ref: ObjRef;
     title: string;
+    /**
+     * Visualization URL of the insight (e.g. `local:bar`). Set for the visualizations only.
+     */
+    visualizationUrl?: string;
 }
 
 /**

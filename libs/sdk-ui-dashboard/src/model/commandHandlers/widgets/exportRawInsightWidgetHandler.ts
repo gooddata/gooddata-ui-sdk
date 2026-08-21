@@ -36,6 +36,7 @@ import {
     selectInsightByRef,
     selectRawExportOverridesForInsight,
 } from "../../store/insights/insightsSelectors.js";
+import { selectEffectiveDashboardTimezone } from "../../store/meta/metaSelectors.js";
 import {
     selectFilterContextFilters,
     selectPreloadedAttributesWithReferences,
@@ -118,13 +119,21 @@ export function* exportRawInsightWidgetHandler(
     );
     const effectiveTimeout = options?.timeout ?? timeout;
 
+    const timezoneId: ReturnType<typeof selectEffectiveDashboardTimezone> = yield select(
+        selectEffectiveDashboardTimezone,
+    );
+
     const result: PromiseFnReturnType<typeof exportDashboardToCSVRaw> = yield call(
         exportDashboardToCSVRaw,
         ctx,
         preparedExecutionDefinition,
         filename,
         overrides,
-        { ...options, timeout: effectiveTimeout },
+        {
+            ...options,
+            timeout: effectiveTimeout,
+            timezoneId: options?.timezoneId ?? timezoneId,
+        },
     );
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted

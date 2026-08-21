@@ -17,6 +17,50 @@ export function delay(timeout = 0): Promise<void> {
 }
 
 /**
+ * Property reads that the module plumbing (a mock registry, `await import(...)`, React, ...) performs on
+ * a namespace object without meaning to read an export. They must answer `undefined` rather than trip
+ * the guard in {@link strictBarrel}.
+ */
+const NAMESPACE_PROBES = new Set(["then", "default", "__esModule", "$$typeof", "toJSON", "constructor"]);
+
+/**
+ * Guards a hand-assembled stand-in for a package's barrel so that reaching for an export it does not
+ * carry throws on the spot, naming the package and what is missing.
+ *
+ * @remarks
+ * A test setup can cut a suite's import time by replacing a large barrel with the handful of real modules
+ * it actually uses, reached directly. Left unguarded such a stand-in degrades silently: the day someone
+ * imports something new out of that package the import resolves to `undefined`, and the failure surfaces
+ * somewhere else entirely, in a test that has nothing to do with the change.
+ *
+ * @param packageName - name of the package whose barrel is being stood in for
+ * @param exports - the exports the stand-in carries
+ * @returns the exports, guarded against reads of anything they do not carry
+ * @internal
+ */
+export function strictBarrel<T extends object>(packageName: string, exports: T): T {
+    return new Proxy(exports, {
+        get(target, property, receiver) {
+            // Own properties only: a real module namespace inherits from nothing, so anything reached
+            // through the stand-in's prototype (`toString`, `valueOf`, ...) is not an export it carries.
+            if (
+                typeof property !== "string" ||
+                Object.hasOwn(target, property) ||
+                NAMESPACE_PROBES.has(property)
+            ) {
+                return Reflect.get(target, property, receiver);
+            }
+
+            throw new Error(
+                `"${packageName}" is routed around its barrel in the test setup to keep the suite's ` +
+                    `import time down, and the stand-in does not export "${property}". Add it to the ` +
+                    `stand-in, importing it from its own module inside the package rather than from the barrel.`,
+            );
+        },
+    });
+}
+
+/**
  * A matcher for suppressConsole
  *
  * @internal
@@ -173,4 +217,32 @@ export function suppressConsole<T>(
             return false;
         },
     );
+}
+
+/**
+ * A waitFor-compatible polling function, structurally matching testing-library's waitFor.
+ *
+ * @internal
+ */
+export type WaitForFn = <T>(
+    callback: () => T | Promise<T>,
+    options?: { interval?: number; timeout?: number },
+) => Promise<T>;
+
+/**
+ * Wraps a testing-library waitFor so it polls every millisecond instead of the default 50ms.
+ *
+ * @remarks
+ * Use in tests where the awaited work settles on the next microtask or a resolved promise -
+ * there, every pending assertion would otherwise cost a full default poll interval.
+ *
+ * @param waitFor - the consumer's waitFor (e.g. from `@testing-library/react`)
+ * @param interval - the polling interval in milliseconds, 1 by default
+ * @internal
+ */
+export function createTightWaitFor(
+    waitFor: WaitForFn,
+    interval: number = 1,
+): <T>(callback: () => T | Promise<T>) => Promise<T> {
+    return (callback) => waitFor(callback, { interval });
 }

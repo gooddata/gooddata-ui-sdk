@@ -1,12 +1,12 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 6d258038480244954ee4211084799c8c3e64052909ba7723baa65ccc70cc0de1
+# schema-hash: 25d398513600e32fb0467ba552fd7f25987e0b86be8589a0e7ccaf74a5cb44a4
 
 from __future__ import annotations
 
 from enum import Enum, IntEnum
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, RootModel, confloat, constr
+from pydantic import BaseModel, ConfigDict, Field, RootModel, confloat, conint, constr
 
 import re as _re
 import pydantic as _pydantic
@@ -60,12 +60,6 @@ __all__ = [
     "ComplexColorItem",
     "Condition",
     "Condition1",
-    "Condition10",
-    "Condition11",
-    "Condition12",
-    "Condition13",
-    "Condition14",
-    "Condition15",
     "Condition2",
     "Condition3",
     "Condition4",
@@ -76,6 +70,7 @@ __all__ = [
     "Condition9",
     "ConditionalFormatting",
     "Config",
+    "Constraints",
     "CustomTooltip",
     "Dashboard",
     "Dashboard1",
@@ -85,29 +80,7 @@ __all__ = [
     "DashboardAttributeFilter2",
     "DashboardFilterGroup",
     "DashboardFilters",
-    "DashboardFilters1",
-    "DashboardFilters10",
-    "DashboardFilters11",
-    "DashboardFilters12",
-    "DashboardFilters13",
-    "DashboardFilters14",
-    "DashboardFilters15",
-    "DashboardFilters16",
-    "DashboardFilters2",
-    "DashboardFilters3",
-    "DashboardFilters4",
-    "DashboardFilters5",
-    "DashboardFilters6",
-    "DashboardFilters7",
-    "DashboardFilters8",
-    "DashboardFilters9",
-    "DashboardFiltersModel",
     "DashboardFiltersNoGroups",
-    "DashboardFiltersNoGroups1",
-    "DashboardFiltersNoGroups2",
-    "DashboardFiltersNoGroups3",
-    "DashboardFiltersNoGroups4",
-    "DashboardFiltersNoGroups5",
     "DashboardMetricValueFilter",
     "DashboardRelativeDateFilter",
     "DashboardTextFilter",
@@ -139,15 +112,9 @@ __all__ = [
     "DisplayAsLabelIdentifier",
     "DistinctPointShapes",
     "EmptyValues",
-    "EmptyValues4",
-    "EmptyValues6",
     "Fact",
     "FactIdentifier",
     "Fields",
-    "Fields1",
-    "Fields2",
-    "Fields3",
-    "Fields4",
     "Format",
     "Function",
     "GeoAreaConfig",
@@ -156,7 +123,6 @@ __all__ = [
     "Granularity1",
     "Granularity2",
     "Granularity3",
-    "Granularity4",
     "GridLineShape",
     "Identifier",
     "IgnoredDrillDown",
@@ -190,29 +156,14 @@ __all__ = [
     "MatchType",
     "MaxSize",
     "Metadata",
-    "Metadata1",
-    "Metadata2",
-    "Metadata3",
-    "Metadata4",
-    "Metadata5",
-    "Metadata6",
-    "Metadata7",
-    "Metadata8",
     "Metric",
     "Metric1",
     "MetricIdentifier",
     "Metrics",
     "MinSize",
     "Mode",
-    "Mode11",
-    "Mode13",
-    "Mode16",
-    "Mode18",
     "Mode2",
-    "Mode20",
-    "Mode4",
     "Mode6",
-    "Mode9",
     "MvfCondition",
     "MvfCondition1",
     "MvfCondition2",
@@ -231,6 +182,10 @@ __all__ = [
     "Operator5",
     "Operator6",
     "Operator7",
+    "Parameter",
+    "Parameter1",
+    "ParameterAllowedValue",
+    "ParameterDefinition",
     "Parents",
     "PatternNameMapping",
     "Permission",
@@ -263,12 +218,6 @@ __all__ = [
     "QueryField9",
     "QueryFields",
     "QueryFilter",
-    "QueryFilter1",
-    "QueryFilter2",
-    "QueryFilter3",
-    "QueryFilter4",
-    "QueryFilter5",
-    "QueryFilter6",
     "QueryFilters",
     "QueryMetricSort",
     "QueryMetricValueFilter",
@@ -280,9 +229,6 @@ __all__ = [
     "QueryRankingFilter1",
     "QueryRankingFilter2",
     "QuerySort",
-    "QuerySort1",
-    "QuerySort2",
-    "QuerySort3",
     "QuerySorts",
     "QueryTextFilter",
     "QueryTextFilter1",
@@ -296,17 +242,13 @@ __all__ = [
     "Section",
     "Section1",
     "SelectionType",
-    "SelectionType10",
-    "SelectionType2",
-    "SelectionType4",
-    "SelectionType6",
-    "SelectionType8",
     "ShapeType",
     "SimpleColorItem",
     "SortDirection",
     "Source",
     "SourceColumn",
     "State",
+    "StringParameterDefinition",
     "Style",
     "Tab",
     "Tags",
@@ -321,48 +263,45 @@ __all__ = [
     "Title2",
     "TotalItem",
     "Type",
-    "Type100",
-    "Type101",
-    "Type102",
-    "Type103",
-    "Type104",
-    "Type105",
-    "Type106",
-    "Type107",
-    "Type108",
-    "Type109",
+    "Type1",
     "Type11",
-    "Type110",
-    "Type111",
-    "Type112",
-    "Type113",
-    "Type114",
-    "Type115",
-    "Type116",
-    "Type117",
-    "Type118",
-    "Type119",
-    "Type120",
-    "Type121",
-    "Type13",
-    "Type15",
-    "Type16",
-    "Type17",
-    "Type19",
+    "Type12",
+    "Type14",
+    "Type18",
+    "Type20",
     "Type21",
-    "Type23",
     "Type24",
     "Type25",
+    "Type26",
+    "Type27",
+    "Type28",
+    "Type29",
+    "Type3",
     "Type30",
+    "Type31",
+    "Type32",
+    "Type33",
+    "Type34",
+    "Type35",
     "Type36",
+    "Type37",
     "Type38",
     "Type39",
+    "Type40",
     "Type41",
+    "Type42",
+    "Type43",
+    "Type44",
     "Type45",
+    "Type46",
     "Type47",
     "Type48",
+    "Type49",
+    "Type5",
+    "Type50",
     "Type51",
     "Type52",
+    "Type53",
     "Type56",
     "Type57",
     "Type58",
@@ -377,36 +316,25 @@ __all__ = [
     "Type67",
     "Type68",
     "Type69",
+    "Type7",
     "Type70",
     "Type71",
     "Type72",
     "Type73",
     "Type74",
     "Type75",
+    "Type76",
+    "Type77",
     "Type78",
     "Type79",
     "Type8",
     "Type80",
     "Type81",
     "Type82",
-    "Type83",
-    "Type84",
-    "Type85",
-    "Type87",
-    "Type89",
     "Type9",
-    "Type91",
-    "Type92",
-    "Type93",
-    "Type96",
-    "Type97",
-    "Type98",
-    "Type99",
     "Using",
     "Using1",
     "Using2",
-    "Using3",
-    "Using4",
     "Value",
     "Value1",
     "Value2",
@@ -452,71 +380,6 @@ __all__ = [
 
 
 class Type(Enum):
-    dataset = 'dataset'
-    date = 'date'
-    metric = 'metric'
-    dashboard = 'dashboard'
-    plugin = 'plugin'
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    attribute_hierarchy = 'attribute_hierarchy'
-    dataset_1 = 'dataset'
-    date_1 = 'date'
-    metric_1 = 'metric'
-    dashboard_1 = 'dashboard'
-    plugin_1 = 'plugin'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    attribute_hierarchy_1 = 'attribute_hierarchy'
-
-
-class Metadata8(BaseModel):
-    type: Type
-
-
-class Type8(Enum):
     attribute_hierarchy = 'attribute_hierarchy'
 
 
@@ -600,23 +463,8 @@ class Permission(BaseModel):
     user_groups: list[str] | None = None
 
 
-class Type9(Enum):
+class Type1(Enum):
     date_filter = 'date_filter'
-    attribute_filter = 'attribute_filter'
-    text_filter = 'text_filter'
-    metric_value_filter = 'metric_value_filter'
-    filter_group = 'filter_group'
-    date_filter_1 = 'date_filter'
-    attribute_filter_1 = 'attribute_filter'
-    text_filter_1 = 'text_filter'
-    metric_value_filter_1 = 'metric_value_filter'
-    filter_group_1 = 'filter_group'
-    date_filter_2 = 'date_filter'
-    date_filter_3 = 'date_filter'
-    attribute_filter_2 = 'attribute_filter'
-    text_filter_2 = 'text_filter'
-    metric_value_filter_2 = 'metric_value_filter'
-    filter_group_2 = 'filter_group'
 
 
 class Mode(Enum):
@@ -631,25 +479,9 @@ class EmptyValues(Enum):
     exclude = 'exclude'
 
 
-class Type11(Enum):
-    date_filter = 'date_filter'
+class Type3(Enum):
     attribute_filter = 'attribute_filter'
-    text_filter = 'text_filter'
-    metric_value_filter = 'metric_value_filter'
-    filter_group = 'filter_group'
-    date_filter_1 = 'date_filter'
     attribute_filter_1 = 'attribute_filter'
-    text_filter_1 = 'text_filter'
-    metric_value_filter_1 = 'metric_value_filter'
-    filter_group_1 = 'filter_group'
-    attribute_filter_2 = 'attribute_filter'
-    date_filter_2 = 'date_filter'
-    attribute_filter_3 = 'attribute_filter'
-    text_filter_2 = 'text_filter'
-    metric_value_filter_2 = 'metric_value_filter'
-    filter_group_2 = 'filter_group'
-    attribute_filter_4 = 'attribute_filter'
-    attribute_filter_5 = 'attribute_filter'
 
 
 class Mode2(Enum):
@@ -659,9 +491,6 @@ class Mode2(Enum):
     readonly_1 = 'readonly'
     hidden_1 = 'hidden'
     active_1 = 'active'
-    readonly_2 = 'readonly'
-    hidden_2 = 'hidden'
-    active_2 = 'active'
 
 
 class SelectionType(Enum):
@@ -671,9 +500,6 @@ class SelectionType(Enum):
     list_1 = 'list'
     text_1 = 'text'
     listOrText_1 = 'listOrText'
-    list_2 = 'list'
-    text_2 = 'text'
-    listOrText_2 = 'listOrText'
 
 
 class Parents(BaseModel):
@@ -687,286 +513,19 @@ class Parents(BaseModel):
     )
 
 
-class DashboardFilters2(BaseModel):
-    model_config = ConfigDict(
-        regex_engine="python-re",
-    )
-    type: Type11
-    title: str | None = Field(None, description='Optional title of the filter')
-    using: AttributeIdentifier | LabelIdentifier = Field(
-        ..., description='Attribute or label to use in this filter.'
-    )
-    multiselect: bool | None = Field(
-        None, description='Whether the filter should allow multiple selection'
-    )
-    mode: Mode2 | None = Field(
-        None,
-        description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
-    )
-    display_as: constr(pattern=r'^label/(?!\.)[.A-Za-z0-9_-]{1,255}$') | None = Field(
-        None,
-        description='Configures the label used for representing attribute filter elements in UI.',
-        title='Display As Label Identifier',
-    )
-    selection_type: SelectionType | None = Field(
-        None,
-        description="Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.",
-    )
-    parents: list[str | Parents] | None = Field(
-        None, description='An ids of the parent local attribute or label filter'
-    )
-    metric_filters: list[str] | None = Field(
-        None,
-        description='An id of the attributes, labels, facts or metrics to validate the filter by',
-    )
-    state: Any | None = None
-
-
-class DashboardFilters3(BaseModel):
-    model_config = ConfigDict(
-        regex_engine="python-re",
-    )
-    type: Type11
-    title: str | None = Field(None, description='Optional title of the filter')
-    using: AttributeIdentifier | LabelIdentifier = Field(
-        ..., description='Attribute or label to use in this filter.'
-    )
-    multiselect: bool | None = Field(
-        None, description='Whether the filter should allow multiple selection'
-    )
-    mode: Mode2 | None = Field(
-        None,
-        description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
-    )
-    display_as: constr(pattern=r'^label/(?!\.)[.A-Za-z0-9_-]{1,255}$') | None = Field(
-        None,
-        description='If specified, the attribute filter will display the elements in selected label form.',
-        title='Display As Label Identifier',
-    )
-    selection_type: SelectionType | None = Field(
-        None,
-        description="Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.",
-    )
-    parents: list[str | Parents] | None = Field(
-        None, description='An ids of the parent local attribute or label filter'
-    )
-    metric_filters: list[str] | None = Field(
-        None,
-        description='An id of the attributes, labels, facts or metrics to validate the filter by',
-    )
-    state: Any | None = None
-
-
-class Type13(Enum):
-    date_filter = 'date_filter'
-    attribute_filter = 'attribute_filter'
-    text_filter = 'text_filter'
-    metric_value_filter = 'metric_value_filter'
-    filter_group = 'filter_group'
-    date_filter_1 = 'date_filter'
-    attribute_filter_1 = 'attribute_filter'
-    text_filter_1 = 'text_filter'
-    metric_value_filter_1 = 'metric_value_filter'
-    filter_group_1 = 'filter_group'
-    date_filter_2 = 'date_filter'
-    attribute_filter_2 = 'attribute_filter'
-    text_filter_2 = 'text_filter'
-    metric_value_filter_2 = 'metric_value_filter'
-    filter_group_2 = 'filter_group'
-    text_filter_3 = 'text_filter'
-
-
-class Mode4(Enum):
-    readonly = 'readonly'
-    hidden = 'hidden'
-    active = 'active'
-    readonly_1 = 'readonly'
-    hidden_1 = 'hidden'
-    active_1 = 'active'
-
-
-class SelectionType2(Enum):
-    list = 'list'
-    text = 'text'
-    listOrText = 'listOrText'
-    list_1 = 'list'
-    text_1 = 'text'
-    listOrText_1 = 'listOrText'
-
-
-class Condition(Enum):
-    is_ = 'is'
-    isNot = 'isNot'
-
-
-class DashboardFilters4(BaseModel):
-    model_config = ConfigDict(
-        regex_engine="python-re",
-    )
-    type: Type13
-    title: str | None = Field(None, description='Optional title of the filter')
-    using: AttributeIdentifier | LabelIdentifier = Field(
-        ..., description='Attribute or label to use in this filter.'
-    )
-    case_sensitive: bool | None = None
-    display_as: constr(pattern=r'^label/(?!\.)[.A-Za-z0-9_-]{1,255}$') | None = Field(
-        None,
-        description='Configures the label used for representing attribute filter elements in UI.',
-        title='Display As Label Identifier',
-    )
-    mode: Mode4 | None = Field(
-        None,
-        description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
-    )
-    selection_type: SelectionType2 | None = Field(
-        None,
-        description="Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.",
-    )
-    parents: list[str | Parents] | None = Field(
-        None, description='An ids of the parent local attribute, text, or date filter'
-    )
-    metric_filters: list[str] | None = Field(
-        None,
-        description='An id of the attributes, labels, facts or metrics to validate the filter by',
-    )
-    condition: Condition
-    values: list[str | None]
-
-
-class Condition1(Enum):
-    contains = 'contains'
-    doesNotContain = 'doesNotContain'
-    startsWith = 'startsWith'
-    doesNotStartWith = 'doesNotStartWith'
-    endsWith = 'endsWith'
-    doesNotEndWith = 'doesNotEndWith'
-
-
-class DashboardFilters5(BaseModel):
-    model_config = ConfigDict(
-        regex_engine="python-re",
-    )
-    type: Type13
-    title: str | None = Field(None, description='Optional title of the filter')
-    using: AttributeIdentifier | LabelIdentifier = Field(
-        ..., description='Attribute or label to use in this filter.'
-    )
-    case_sensitive: bool | None = None
-    display_as: constr(pattern=r'^label/(?!\.)[.A-Za-z0-9_-]{1,255}$') | None = Field(
-        None,
-        description='Configures the label used for representing attribute filter elements in UI.',
-        title='Display As Label Identifier',
-    )
-    mode: Mode4 | None = Field(
-        None,
-        description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
-    )
-    selection_type: SelectionType2 | None = Field(
-        None,
-        description="Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.",
-    )
-    parents: list[str | Parents] | None = Field(
-        None, description='An ids of the parent local attribute, text, or date filter'
-    )
-    metric_filters: list[str] | None = Field(
-        None,
-        description='An id of the attributes, labels, facts or metrics to validate the filter by',
-    )
-    condition: Condition1
-    value: str
-
-
-class Type15(Enum):
-    date_filter = 'date_filter'
-    attribute_filter = 'attribute_filter'
-    text_filter = 'text_filter'
-    metric_value_filter = 'metric_value_filter'
-    filter_group = 'filter_group'
-    date_filter_1 = 'date_filter'
-    attribute_filter_1 = 'attribute_filter'
-    text_filter_1 = 'text_filter'
-    metric_value_filter_1 = 'metric_value_filter'
-    filter_group_1 = 'filter_group'
-    metric_value_filter_2 = 'metric_value_filter'
-    date_filter_2 = 'date_filter'
-    attribute_filter_2 = 'attribute_filter'
-    text_filter_2 = 'text_filter'
-    metric_value_filter_3 = 'metric_value_filter'
-    filter_group_2 = 'filter_group'
-
-
-class Mode6(Enum):
-    readonly = 'readonly'
-    hidden = 'hidden'
-    active = 'active'
-
-
-class Type16(Enum):
-    date_filter = 'date_filter'
-    attribute_filter = 'attribute_filter'
-    text_filter = 'text_filter'
-    metric_value_filter = 'metric_value_filter'
-    filter_group = 'filter_group'
-    date_filter_1 = 'date_filter'
-    attribute_filter_1 = 'attribute_filter'
-    text_filter_1 = 'text_filter'
-    metric_value_filter_1 = 'metric_value_filter'
-    filter_group_1 = 'filter_group'
-    filter_group_2 = 'filter_group'
-    date_filter_2 = 'date_filter'
-    attribute_filter_2 = 'attribute_filter'
-    text_filter_2 = 'text_filter'
-    metric_value_filter_2 = 'metric_value_filter'
-    filter_group_3 = 'filter_group'
-
-
-class Type17(Enum):
-    date_filter = 'date_filter'
-
-
-class Type19(Enum):
-    attribute_filter = 'attribute_filter'
-    attribute_filter_1 = 'attribute_filter'
-    attribute_filter_2 = 'attribute_filter'
-
-
-class Mode9(Enum):
-    readonly = 'readonly'
-    hidden = 'hidden'
-    active = 'active'
-    readonly_1 = 'readonly'
-    hidden_1 = 'hidden'
-    active_1 = 'active'
-    readonly_2 = 'readonly'
-    hidden_2 = 'hidden'
-    active_2 = 'active'
-
-
-class SelectionType4(Enum):
-    list = 'list'
-    text = 'text'
-    listOrText = 'listOrText'
-    list_1 = 'list'
-    text_1 = 'text'
-    listOrText_1 = 'listOrText'
-    list_2 = 'list'
-    text_2 = 'text'
-    listOrText_2 = 'listOrText'
-
-
 class DashboardAttributeFilter1(BaseModel):
     model_config = ConfigDict(
         regex_engine="python-re",
     )
     title: str | None = Field(None, description='Optional title of the filter')
-    type: Type19
+    type: Type3
     using: AttributeIdentifier | LabelIdentifier = Field(
         ..., description='Attribute or label to use in this filter.'
     )
     multiselect: bool | None = Field(
         None, description='Whether the filter should allow multiple selection'
     )
-    mode: Mode9 | None = Field(
+    mode: Mode2 | None = Field(
         None,
         description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
     )
@@ -975,7 +534,7 @@ class DashboardAttributeFilter1(BaseModel):
         description='Configures the label used for representing attribute filter elements in UI.',
         title='Display As Label Identifier',
     )
-    selection_type: SelectionType4 | None = Field(
+    selection_type: SelectionType | None = Field(
         None,
         description="Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.",
     )
@@ -994,14 +553,14 @@ class DashboardAttributeFilter2(BaseModel):
         regex_engine="python-re",
     )
     title: str | None = Field(None, description='Optional title of the filter')
-    type: Type19
+    type: Type3
     using: AttributeIdentifier | LabelIdentifier = Field(
         ..., description='Attribute or label to use in this filter.'
     )
     multiselect: bool | None = Field(
         None, description='Whether the filter should allow multiple selection'
     )
-    mode: Mode9 | None = Field(
+    mode: Mode2 | None = Field(
         None,
         description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
     )
@@ -1010,7 +569,7 @@ class DashboardAttributeFilter2(BaseModel):
         description='If specified, the attribute filter will display the elements in selected label form.',
         title='Display As Label Identifier',
     )
-    selection_type: SelectionType4 | None = Field(
+    selection_type: SelectionType | None = Field(
         None,
         description="Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.",
     )
@@ -1034,29 +593,11 @@ class DashboardAttributeFilter(
     )
 
 
-class Mode11(Enum):
-    readonly = 'readonly'
-    hidden = 'hidden'
-    active = 'active'
-    readonly_1 = 'readonly'
-    hidden_1 = 'hidden'
-    active_1 = 'active'
-
-
-class SelectionType6(Enum):
-    list = 'list'
-    text = 'text'
-    listOrText = 'listOrText'
-    list_1 = 'list'
-    text_1 = 'text'
-    listOrText_1 = 'listOrText'
-
-
-class Type21(Enum):
+class Type5(Enum):
     text_filter = 'text_filter'
 
 
-class Condition2(Enum):
+class Condition(Enum):
     is_ = 'is'
     isNot = 'isNot'
 
@@ -1075,11 +616,11 @@ class DashboardTextFilter1(BaseModel):
         description='Configures the label used for representing attribute filter elements in UI.',
         title='Display As Label Identifier',
     )
-    mode: Mode11 | None = Field(
+    mode: Mode2 | None = Field(
         None,
         description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
     )
-    selection_type: SelectionType6 | None = Field(
+    selection_type: SelectionType | None = Field(
         None,
         description="Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.",
     )
@@ -1090,12 +631,12 @@ class DashboardTextFilter1(BaseModel):
         None,
         description='An id of the attributes, labels, facts or metrics to validate the filter by',
     )
-    type: Type21
-    condition: Condition2
+    type: Type5
+    condition: Condition
     values: list[str | None]
 
 
-class Condition3(Enum):
+class Condition1(Enum):
     contains = 'contains'
     doesNotContain = 'doesNotContain'
     startsWith = 'startsWith'
@@ -1118,11 +659,11 @@ class DashboardTextFilter2(BaseModel):
         description='Configures the label used for representing attribute filter elements in UI.',
         title='Display As Label Identifier',
     )
-    mode: Mode11 | None = Field(
+    mode: Mode2 | None = Field(
         None,
         description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
     )
-    selection_type: SelectionType6 | None = Field(
+    selection_type: SelectionType | None = Field(
         None,
         description="Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.",
     )
@@ -1133,8 +674,8 @@ class DashboardTextFilter2(BaseModel):
         None,
         description='An id of the attributes, labels, facts or metrics to validate the filter by',
     )
-    type: Type21
-    condition: Condition3
+    type: Type5
+    condition: Condition1
     value: str
 
 
@@ -1144,37 +685,18 @@ class DashboardTextFilter(RootModel[DashboardTextFilter1 | DashboardTextFilter2]
     )
 
 
-class Type23(Enum):
+class Type7(Enum):
     metric_value_filter = 'metric_value_filter'
 
 
-class Mode13(Enum):
+class Mode6(Enum):
     readonly = 'readonly'
     hidden = 'hidden'
     active = 'active'
 
 
-class Type24(Enum):
+class Type8(Enum):
     filter_group = 'filter_group'
-
-
-class Type25(Enum):
-    date_filter = 'date_filter'
-    attribute_filter = 'attribute_filter'
-    text_filter = 'text_filter'
-    metric_value_filter = 'metric_value_filter'
-    date_filter_1 = 'date_filter'
-    attribute_filter_1 = 'attribute_filter'
-    text_filter_1 = 'text_filter'
-    metric_value_filter_1 = 'metric_value_filter'
-
-
-class DashboardFiltersNoGroups3(BaseModel):
-    type: Type25
-
-
-class DashboardFiltersNoGroups4(BaseModel):
-    type: Type25
 
 
 class DateFilterGranularity(Enum):
@@ -1192,7 +714,7 @@ class DateFilterGranularity(Enum):
     FISCAL_MONTH = 'FISCAL_MONTH'
 
 
-class Condition4(Enum):
+class Condition2(Enum):
     GREATER_THAN = 'GREATER_THAN'
     GREATER_THAN_OR_EQUAL_TO = 'GREATER_THAN_OR_EQUAL_TO'
     LESS_THAN = 'LESS_THAN'
@@ -1201,91 +723,45 @@ class Condition4(Enum):
     NOT_EQUAL_TO = 'NOT_EQUAL_TO'
     BETWEEN = 'BETWEEN'
     NOT_BETWEEN = 'NOT_BETWEEN'
-    GREATER_THAN_1 = 'GREATER_THAN'
-    GREATER_THAN_OR_EQUAL_TO_1 = 'GREATER_THAN_OR_EQUAL_TO'
-    LESS_THAN_1 = 'LESS_THAN'
-    LESS_THAN_OR_EQUAL_TO_1 = 'LESS_THAN_OR_EQUAL_TO'
-    EQUAL_TO_1 = 'EQUAL_TO'
-    NOT_EQUAL_TO_1 = 'NOT_EQUAL_TO'
-    BETWEEN_1 = 'BETWEEN'
-    NOT_BETWEEN_1 = 'NOT_BETWEEN'
 
 
 class MvfCondition1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    condition: Condition4 | None = Field(
+    condition: Condition2 | None = Field(
         None,
         description='Condition to use for this filter. If omitted, the condition represents ALL (no filtering).',
     )
 
 
-class Condition5(Enum):
+class Condition3(Enum):
     GREATER_THAN = 'GREATER_THAN'
     GREATER_THAN_OR_EQUAL_TO = 'GREATER_THAN_OR_EQUAL_TO'
     LESS_THAN = 'LESS_THAN'
     LESS_THAN_OR_EQUAL_TO = 'LESS_THAN_OR_EQUAL_TO'
     EQUAL_TO = 'EQUAL_TO'
     NOT_EQUAL_TO = 'NOT_EQUAL_TO'
-    BETWEEN = 'BETWEEN'
-    NOT_BETWEEN = 'NOT_BETWEEN'
-    GREATER_THAN_1 = 'GREATER_THAN'
-    GREATER_THAN_OR_EQUAL_TO_1 = 'GREATER_THAN_OR_EQUAL_TO'
-    LESS_THAN_1 = 'LESS_THAN'
-    LESS_THAN_OR_EQUAL_TO_1 = 'LESS_THAN_OR_EQUAL_TO'
-    EQUAL_TO_1 = 'EQUAL_TO'
-    NOT_EQUAL_TO_1 = 'NOT_EQUAL_TO'
-    BETWEEN_1 = 'BETWEEN'
-    NOT_BETWEEN_1 = 'NOT_BETWEEN'
-    GREATER_THAN_2 = 'GREATER_THAN'
-    GREATER_THAN_OR_EQUAL_TO_2 = 'GREATER_THAN_OR_EQUAL_TO'
-    LESS_THAN_2 = 'LESS_THAN'
-    LESS_THAN_OR_EQUAL_TO_2 = 'LESS_THAN_OR_EQUAL_TO'
-    EQUAL_TO_2 = 'EQUAL_TO'
-    NOT_EQUAL_TO_2 = 'NOT_EQUAL_TO'
 
 
 class MvfCondition2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    condition: Condition5 = Field(
-        ...,
-        description='Condition to use for this filter. If omitted, the condition represents ALL (no filtering).',
-    )
+    condition: Condition3
     value: float = Field(..., description='Value to use in condition for this filter.')
 
 
-class Condition6(Enum):
-    GREATER_THAN = 'GREATER_THAN'
-    GREATER_THAN_OR_EQUAL_TO = 'GREATER_THAN_OR_EQUAL_TO'
-    LESS_THAN = 'LESS_THAN'
-    LESS_THAN_OR_EQUAL_TO = 'LESS_THAN_OR_EQUAL_TO'
-    EQUAL_TO = 'EQUAL_TO'
-    NOT_EQUAL_TO = 'NOT_EQUAL_TO'
+class Condition4(Enum):
     BETWEEN = 'BETWEEN'
     NOT_BETWEEN = 'NOT_BETWEEN'
-    GREATER_THAN_1 = 'GREATER_THAN'
-    GREATER_THAN_OR_EQUAL_TO_1 = 'GREATER_THAN_OR_EQUAL_TO'
-    LESS_THAN_1 = 'LESS_THAN'
-    LESS_THAN_OR_EQUAL_TO_1 = 'LESS_THAN_OR_EQUAL_TO'
-    EQUAL_TO_1 = 'EQUAL_TO'
-    NOT_EQUAL_TO_1 = 'NOT_EQUAL_TO'
-    BETWEEN_1 = 'BETWEEN'
-    NOT_BETWEEN_1 = 'NOT_BETWEEN'
-    BETWEEN_2 = 'BETWEEN'
-    NOT_BETWEEN_2 = 'NOT_BETWEEN'
 
 
 class MvfCondition3(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    condition: Condition6 = Field(
-        ...,
-        description='Condition to use for this filter. If omitted, the condition represents ALL (no filtering).',
-    )
+    condition: Condition4
     from_: float = Field(
         ..., alias='from', description='From value to use in condition for this filter.'
     )
@@ -1298,27 +774,8 @@ class MvfCondition(RootModel[MvfCondition1 | MvfCondition2 | MvfCondition3]):
     )
 
 
-class Type30(Enum):
+class Type9(Enum):
     date_filter = 'date_filter'
-    attribute_filter = 'attribute_filter'
-    text_filter = 'text_filter'
-    metric_value_filter = 'metric_value_filter'
-    ranking_filter = 'ranking_filter'
-    date_filter_1 = 'date_filter'
-    attribute_filter_1 = 'attribute_filter'
-    text_filter_1 = 'text_filter'
-    metric_value_filter_1 = 'metric_value_filter'
-    ranking_filter_1 = 'ranking_filter'
-
-
-class QueryFilter6(BaseModel):
-    type: Type30
-
-
-class Type36(Enum):
-    date_filter = 'date_filter'
-    date_filter_1 = 'date_filter'
-    date_filter_2 = 'date_filter'
 
 
 class Granularity(Enum):
@@ -1345,116 +802,9 @@ class Granularity(Enum):
     FISCAL_YEAR = 'FISCAL_YEAR'
     FISCAL_QUARTER = 'FISCAL_QUARTER'
     FISCAL_MONTH = 'FISCAL_MONTH'
-    SECOND_1 = 'SECOND'
-    MINUTE_1 = 'MINUTE'
-    HOUR_1 = 'HOUR'
-    DAY_1 = 'DAY'
-    WEEK_1 = 'WEEK'
-    WEEK_US_1 = 'WEEK_US'
-    MONTH_1 = 'MONTH'
-    QUARTER_1 = 'QUARTER'
-    YEAR_1 = 'YEAR'
-    SECOND_OF_MINUTE_1 = 'SECOND_OF_MINUTE'
-    SECOND_OF_DAY_1 = 'SECOND_OF_DAY'
-    MINUTE_OF_HOUR_1 = 'MINUTE_OF_HOUR'
-    MINUTE_OF_DAY_1 = 'MINUTE_OF_DAY'
-    HOUR_OF_DAY_1 = 'HOUR_OF_DAY'
-    DAY_OF_WEEK_1 = 'DAY_OF_WEEK'
-    DAY_OF_MONTH_1 = 'DAY_OF_MONTH'
-    DAY_OF_YEAR_1 = 'DAY_OF_YEAR'
-    WEEK_OF_YEAR_1 = 'WEEK_OF_YEAR'
-    MONTH_OF_YEAR_1 = 'MONTH_OF_YEAR'
-    QUARTER_OF_YEAR_1 = 'QUARTER_OF_YEAR'
-    FISCAL_YEAR_1 = 'FISCAL_YEAR'
-    FISCAL_QUARTER_1 = 'FISCAL_QUARTER'
-    FISCAL_MONTH_1 = 'FISCAL_MONTH'
-    SECOND_2 = 'SECOND'
-    MINUTE_2 = 'MINUTE'
-    HOUR_2 = 'HOUR'
-    DAY_2 = 'DAY'
-    WEEK_2 = 'WEEK'
-    WEEK_US_2 = 'WEEK_US'
-    MONTH_2 = 'MONTH'
-    QUARTER_2 = 'QUARTER'
-    YEAR_2 = 'YEAR'
-    SECOND_OF_MINUTE_2 = 'SECOND_OF_MINUTE'
-    SECOND_OF_DAY_2 = 'SECOND_OF_DAY'
-    MINUTE_OF_HOUR_2 = 'MINUTE_OF_HOUR'
-    MINUTE_OF_DAY_2 = 'MINUTE_OF_DAY'
-    HOUR_OF_DAY_2 = 'HOUR_OF_DAY'
-    DAY_OF_WEEK_2 = 'DAY_OF_WEEK'
-    DAY_OF_MONTH_2 = 'DAY_OF_MONTH'
-    DAY_OF_YEAR_2 = 'DAY_OF_YEAR'
-    WEEK_OF_YEAR_2 = 'WEEK_OF_YEAR'
-    MONTH_OF_YEAR_2 = 'MONTH_OF_YEAR'
-    QUARTER_OF_YEAR_2 = 'QUARTER_OF_YEAR'
-    FISCAL_YEAR_2 = 'FISCAL_YEAR'
-    FISCAL_QUARTER_2 = 'FISCAL_QUARTER'
-    FISCAL_MONTH_2 = 'FISCAL_MONTH'
 
 
-class EmptyValues4(Enum):
-    only = 'only'
-    include = 'include'
-    exclude = 'exclude'
-    only_1 = 'only'
-    include_1 = 'include'
-    exclude_1 = 'exclude'
-    only_2 = 'only'
-    include_2 = 'include'
-    exclude_2 = 'exclude'
-
-
-class Granularity1(Enum):
-    SECOND = 'SECOND'
-    MINUTE = 'MINUTE'
-    HOUR = 'HOUR'
-    DAY = 'DAY'
-    WEEK = 'WEEK'
-    WEEK_US = 'WEEK_US'
-    MONTH = 'MONTH'
-    QUARTER = 'QUARTER'
-    YEAR = 'YEAR'
-    SECOND_OF_MINUTE = 'SECOND_OF_MINUTE'
-    SECOND_OF_DAY = 'SECOND_OF_DAY'
-    MINUTE_OF_HOUR = 'MINUTE_OF_HOUR'
-    MINUTE_OF_DAY = 'MINUTE_OF_DAY'
-    HOUR_OF_DAY = 'HOUR_OF_DAY'
-    DAY_OF_WEEK = 'DAY_OF_WEEK'
-    DAY_OF_MONTH = 'DAY_OF_MONTH'
-    DAY_OF_YEAR = 'DAY_OF_YEAR'
-    WEEK_OF_YEAR = 'WEEK_OF_YEAR'
-    MONTH_OF_YEAR = 'MONTH_OF_YEAR'
-    QUARTER_OF_YEAR = 'QUARTER_OF_YEAR'
-    FISCAL_YEAR = 'FISCAL_YEAR'
-    FISCAL_QUARTER = 'FISCAL_QUARTER'
-    FISCAL_MONTH = 'FISCAL_MONTH'
-    SECOND_1 = 'SECOND'
-    MINUTE_1 = 'MINUTE'
-    HOUR_1 = 'HOUR'
-    DAY_1 = 'DAY'
-    WEEK_1 = 'WEEK'
-    WEEK_US_1 = 'WEEK_US'
-    MONTH_1 = 'MONTH'
-    QUARTER_1 = 'QUARTER'
-    YEAR_1 = 'YEAR'
-    SECOND_OF_MINUTE_1 = 'SECOND_OF_MINUTE'
-    SECOND_OF_DAY_1 = 'SECOND_OF_DAY'
-    MINUTE_OF_HOUR_1 = 'MINUTE_OF_HOUR'
-    MINUTE_OF_DAY_1 = 'MINUTE_OF_DAY'
-    HOUR_OF_DAY_1 = 'HOUR_OF_DAY'
-    DAY_OF_WEEK_1 = 'DAY_OF_WEEK'
-    DAY_OF_MONTH_1 = 'DAY_OF_MONTH'
-    DAY_OF_YEAR_1 = 'DAY_OF_YEAR'
-    WEEK_OF_YEAR_1 = 'WEEK_OF_YEAR'
-    MONTH_OF_YEAR_1 = 'MONTH_OF_YEAR'
-    QUARTER_OF_YEAR_1 = 'QUARTER_OF_YEAR'
-    FISCAL_YEAR_1 = 'FISCAL_YEAR'
-    FISCAL_QUARTER_1 = 'FISCAL_QUARTER'
-    FISCAL_MONTH_1 = 'FISCAL_MONTH'
-
-
-class Type38(Enum):
+class Type11(Enum):
     attribute_filter = 'attribute_filter'
 
 
@@ -1471,7 +821,7 @@ class QueryAttributeFilter(BaseModel):
         extra='forbid',
         regex_engine="python-re",
     )
-    type: Type38
+    type: Type11
     using: AttributeIdentifier | LabelIdentifier = Field(
         ..., description='Attribute or label to use in this filter.'
     )
@@ -1483,12 +833,12 @@ class QueryAttributeFilter(BaseModel):
     state: State | None = Field(None, title='State')
 
 
-class Type39(Enum):
+class Type12(Enum):
     text_filter = 'text_filter'
     text_filter_1 = 'text_filter'
 
 
-class Condition7(Enum):
+class Condition5(Enum):
     is_ = 'is'
     isNot = 'isNot'
 
@@ -1497,7 +847,7 @@ class QueryTextFilter1(BaseModel):
     model_config = ConfigDict(
         regex_engine="python-re",
     )
-    type: Type39
+    type: Type12
     using: AttributeIdentifier | LabelIdentifier = Field(
         ..., description='Attribute or label to use in this filter.'
     )
@@ -1507,11 +857,11 @@ class QueryTextFilter1(BaseModel):
         description='Configures the label used for representing attribute filter elements in UI.',
         title='Display As Label Identifier',
     )
-    condition: Condition7
+    condition: Condition5
     values: list[str | None]
 
 
-class Condition8(Enum):
+class Condition6(Enum):
     contains = 'contains'
     doesNotContain = 'doesNotContain'
     startsWith = 'startsWith'
@@ -1524,7 +874,7 @@ class QueryTextFilter2(BaseModel):
     model_config = ConfigDict(
         regex_engine="python-re",
     )
-    type: Type39
+    type: Type12
     using: AttributeIdentifier | LabelIdentifier = Field(
         ..., description='Attribute or label to use in this filter.'
     )
@@ -1534,7 +884,7 @@ class QueryTextFilter2(BaseModel):
         description='Configures the label used for representing attribute filter elements in UI.',
         title='Display As Label Identifier',
     )
-    condition: Condition8
+    condition: Condition6
     value: str
 
 
@@ -1542,47 +892,19 @@ class QueryTextFilter(RootModel[QueryTextFilter1 | QueryTextFilter2]):
     root: QueryTextFilter1 | QueryTextFilter2 = Field(..., title='Text Filter')
 
 
-class Type41(Enum):
+class Type14(Enum):
     metric_value_filter = 'metric_value_filter'
-    metric_value_filter_1 = 'metric_value_filter'
-    metric_value_filter_2 = 'metric_value_filter'
-
-
-class Condition9(Enum):
-    GREATER_THAN = 'GREATER_THAN'
-    GREATER_THAN_OR_EQUAL_TO = 'GREATER_THAN_OR_EQUAL_TO'
-    LESS_THAN = 'LESS_THAN'
-    LESS_THAN_OR_EQUAL_TO = 'LESS_THAN_OR_EQUAL_TO'
-    EQUAL_TO = 'EQUAL_TO'
-    NOT_EQUAL_TO = 'NOT_EQUAL_TO'
-    BETWEEN = 'BETWEEN'
-    NOT_BETWEEN = 'NOT_BETWEEN'
-    GREATER_THAN_1 = 'GREATER_THAN'
-    GREATER_THAN_OR_EQUAL_TO_1 = 'GREATER_THAN_OR_EQUAL_TO'
-    LESS_THAN_1 = 'LESS_THAN'
-    LESS_THAN_OR_EQUAL_TO_1 = 'LESS_THAN_OR_EQUAL_TO'
-    EQUAL_TO_1 = 'EQUAL_TO'
-    NOT_EQUAL_TO_1 = 'NOT_EQUAL_TO'
-    BETWEEN_1 = 'BETWEEN'
-    NOT_BETWEEN_1 = 'NOT_BETWEEN'
 
 
 class QueryMetricValueFilter1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type41
-    conditions: list[MvfCondition] = Field(
-        ...,
-        description='Optional list of conditions for this filter. Conditions are applied as AND during execution.',
-        min_length=1,
-    )
-    condition: Condition9 | None = Field(
-        None, description='Condition to use for this filter.'
-    )
+    type: Type14
     using: MetricIdentifier | str = Field(
         ..., description='Metric or local metric to use in this filter.'
     )
+    conditions: list[MvfCondition] = Field(..., min_length=1)
     null_values_as_zero: bool | None = Field(
         None, description='Null values will be treated as zero.'
     )
@@ -1592,44 +914,24 @@ class QueryMetricValueFilter1(BaseModel):
     )
 
 
-class Condition10(Enum):
+class Condition7(Enum):
     GREATER_THAN = 'GREATER_THAN'
     GREATER_THAN_OR_EQUAL_TO = 'GREATER_THAN_OR_EQUAL_TO'
     LESS_THAN = 'LESS_THAN'
     LESS_THAN_OR_EQUAL_TO = 'LESS_THAN_OR_EQUAL_TO'
     EQUAL_TO = 'EQUAL_TO'
     NOT_EQUAL_TO = 'NOT_EQUAL_TO'
-    BETWEEN = 'BETWEEN'
-    NOT_BETWEEN = 'NOT_BETWEEN'
-    GREATER_THAN_1 = 'GREATER_THAN'
-    GREATER_THAN_OR_EQUAL_TO_1 = 'GREATER_THAN_OR_EQUAL_TO'
-    LESS_THAN_1 = 'LESS_THAN'
-    LESS_THAN_OR_EQUAL_TO_1 = 'LESS_THAN_OR_EQUAL_TO'
-    EQUAL_TO_1 = 'EQUAL_TO'
-    NOT_EQUAL_TO_1 = 'NOT_EQUAL_TO'
-    BETWEEN_1 = 'BETWEEN'
-    NOT_BETWEEN_1 = 'NOT_BETWEEN'
-    GREATER_THAN_2 = 'GREATER_THAN'
-    GREATER_THAN_OR_EQUAL_TO_2 = 'GREATER_THAN_OR_EQUAL_TO'
-    LESS_THAN_2 = 'LESS_THAN'
-    LESS_THAN_OR_EQUAL_TO_2 = 'LESS_THAN_OR_EQUAL_TO'
-    EQUAL_TO_2 = 'EQUAL_TO'
-    NOT_EQUAL_TO_2 = 'NOT_EQUAL_TO'
 
 
 class QueryMetricValueFilter2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type41
-    conditions: list[MvfCondition] | None = Field(
-        None,
-        description='Optional list of conditions for this filter. Conditions are applied as AND during execution.',
-    )
-    condition: Condition10 = Field(..., description='Condition to use for this filter.')
+    type: Type14
     using: MetricIdentifier | str = Field(
         ..., description='Metric or local metric to use in this filter.'
     )
+    condition: Condition7 = Field(..., description='Condition to use for this filter.')
     value: float = Field(..., description='Value to use in condition for this filter.')
     null_values_as_zero: bool | None = Field(
         None, description='Null values will be treated as zero.'
@@ -1640,40 +942,20 @@ class QueryMetricValueFilter2(BaseModel):
     )
 
 
-class Condition11(Enum):
-    GREATER_THAN = 'GREATER_THAN'
-    GREATER_THAN_OR_EQUAL_TO = 'GREATER_THAN_OR_EQUAL_TO'
-    LESS_THAN = 'LESS_THAN'
-    LESS_THAN_OR_EQUAL_TO = 'LESS_THAN_OR_EQUAL_TO'
-    EQUAL_TO = 'EQUAL_TO'
-    NOT_EQUAL_TO = 'NOT_EQUAL_TO'
+class Condition8(Enum):
     BETWEEN = 'BETWEEN'
     NOT_BETWEEN = 'NOT_BETWEEN'
-    GREATER_THAN_1 = 'GREATER_THAN'
-    GREATER_THAN_OR_EQUAL_TO_1 = 'GREATER_THAN_OR_EQUAL_TO'
-    LESS_THAN_1 = 'LESS_THAN'
-    LESS_THAN_OR_EQUAL_TO_1 = 'LESS_THAN_OR_EQUAL_TO'
-    EQUAL_TO_1 = 'EQUAL_TO'
-    NOT_EQUAL_TO_1 = 'NOT_EQUAL_TO'
-    BETWEEN_1 = 'BETWEEN'
-    NOT_BETWEEN_1 = 'NOT_BETWEEN'
-    BETWEEN_2 = 'BETWEEN'
-    NOT_BETWEEN_2 = 'NOT_BETWEEN'
 
 
 class QueryMetricValueFilter3(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type41
-    conditions: list[MvfCondition] | None = Field(
-        None,
-        description='Optional list of conditions for this filter. Conditions are applied as AND during execution.',
-    )
-    condition: Condition11 = Field(..., description='Condition to use for this filter.')
+    type: Type14
     using: MetricIdentifier | str = Field(
         ..., description='Metric or local metric to use in this filter.'
     )
+    condition: Condition8 = Field(..., description='Condition to use for this filter.')
     from_: float = Field(
         ..., alias='from', description='From value to use in condition for this filter.'
     )
@@ -1687,39 +969,17 @@ class QueryMetricValueFilter3(BaseModel):
     )
 
 
-class Condition12(Enum):
-    GREATER_THAN = 'GREATER_THAN'
-    GREATER_THAN_OR_EQUAL_TO = 'GREATER_THAN_OR_EQUAL_TO'
-    LESS_THAN = 'LESS_THAN'
-    LESS_THAN_OR_EQUAL_TO = 'LESS_THAN_OR_EQUAL_TO'
-    EQUAL_TO = 'EQUAL_TO'
-    NOT_EQUAL_TO = 'NOT_EQUAL_TO'
-    BETWEEN = 'BETWEEN'
-    NOT_BETWEEN = 'NOT_BETWEEN'
-    GREATER_THAN_1 = 'GREATER_THAN'
-    GREATER_THAN_OR_EQUAL_TO_1 = 'GREATER_THAN_OR_EQUAL_TO'
-    LESS_THAN_1 = 'LESS_THAN'
-    LESS_THAN_OR_EQUAL_TO_1 = 'LESS_THAN_OR_EQUAL_TO'
-    EQUAL_TO_1 = 'EQUAL_TO'
-    NOT_EQUAL_TO_1 = 'NOT_EQUAL_TO'
-    BETWEEN_1 = 'BETWEEN'
-    NOT_BETWEEN_1 = 'NOT_BETWEEN'
-
-
 class QueryMetricValueFilter4(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type41
+    type: Type14
+    using: MetricIdentifier | str = Field(
+        ..., description='Metric or local metric to use in this filter.'
+    )
     conditions: list[MvfCondition] | None = Field(
         None,
         description='Optional list of conditions for this filter. Conditions are applied as AND during execution.',
-    )
-    condition: Condition12 | None = Field(
-        None, description='Condition to use for this filter.'
-    )
-    using: MetricIdentifier | str = Field(
-        ..., description='Metric or local metric to use in this filter.'
     )
     dimensionality: list[LabelIdentifier | str] | None = Field(
         None,
@@ -1743,7 +1003,7 @@ class QueryMetricValueFilter(
     ) = Field(..., title='Metric Value Filter')
 
 
-class Type45(Enum):
+class Type18(Enum):
     ranking_filter = 'ranking_filter'
     ranking_filter_1 = 'ranking_filter'
 
@@ -1752,7 +1012,7 @@ class QueryRankingFilter1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type45
+    type: Type18
     using: MetricIdentifier | str = Field(
         ..., description='Metric identifier to use for this filter.'
     )
@@ -1775,7 +1035,7 @@ class QueryRankingFilter2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type45
+    type: Type18
     using: MetricIdentifier | str = Field(
         ..., description='Metric identifier to use for this filter.'
     )
@@ -1870,7 +1130,7 @@ class ComplexColorItem(
     ) = Field(..., title='Color')
 
 
-class Type47(Enum):
+class Type20(Enum):
     dashboard = 'dashboard'
 
 
@@ -2006,7 +1266,7 @@ class InteractionFilters(BaseModel):
     include: InteractionFiltersInclude | None = None
 
 
-class Type48(Enum):
+class Type21(Enum):
     dataset = 'dataset'
     dataset_1 = 'dataset'
 
@@ -2023,11 +1283,11 @@ class DatasetType2(Enum):
     auxiliary = 'auxiliary'
 
 
-class Type51(Enum):
+class Type24(Enum):
     date = 'date'
 
 
-class Granularity2(Enum):
+class Granularity1(Enum):
     SECOND = 'SECOND'
     MINUTE = 'MINUTE'
     HOUR = 'HOUR'
@@ -2059,20 +1319,7 @@ class Granularity2(Enum):
     FISCAL_MONTH = 'FISCAL_MONTH'
 
 
-class Type52(Enum):
-    fact = 'fact'
-    attribute = 'attribute'
-    aggregated_fact = 'aggregated_fact'
-    fact_1 = 'fact'
-    attribute_1 = 'attribute'
-    aggregated_fact_1 = 'aggregated_fact'
-
-
-class Fields4(BaseModel):
-    type: Type52
-
-
-class Type56(Enum):
+class Type25(Enum):
     attribute = 'attribute'
 
 
@@ -2081,11 +1328,11 @@ class SortDirection(Enum):
     DESC = 'DESC'
 
 
-class Type57(Enum):
+class Type26(Enum):
     fact = 'fact'
 
 
-class Type58(Enum):
+class Type27(Enum):
     aggregated_fact = 'aggregated_fact'
 
 
@@ -2177,11 +1424,32 @@ class Source(BaseModel):
     )
 
 
-class Type59(Enum):
+class Type28(Enum):
     metric = 'metric'
 
 
-class Type60(Enum):
+class Type29(Enum):
+    parameter = 'parameter'
+
+
+class Type30(Enum):
+    STRING = 'STRING'
+
+
+class ParameterAllowedValue(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    value: constr(min_length=1) = Field(
+        ..., description='The accepted parameter value.'
+    )
+    title: str | None = Field(
+        None,
+        description='An optional human readable title shown instead of the raw value. Defaults to the value.',
+    )
+
+
+class Type31(Enum):
     plugin = 'plugin'
 
 
@@ -2194,14 +1462,6 @@ class Aggregation(Enum):
     MAX = 'MAX'
     MEDIAN = 'MEDIAN'
     RUNSUM = 'RUNSUM'
-    SUM_1 = 'SUM'
-    COUNT_1 = 'COUNT'
-    APPROXIMATE_COUNT_1 = 'APPROXIMATE_COUNT'
-    AVG_1 = 'AVG'
-    MIN_1 = 'MIN'
-    MAX_1 = 'MAX'
-    MEDIAN_1 = 'MEDIAN'
-    RUNSUM_1 = 'RUNSUM'
 
 
 class Operator(Enum):
@@ -2210,18 +1470,11 @@ class Operator(Enum):
     MULTIPLICATION = 'MULTIPLICATION'
     RATIO = 'RATIO'
     CHANGE = 'CHANGE'
-    SUM_1 = 'SUM'
-    DIFFERENCE_1 = 'DIFFERENCE'
-    MULTIPLICATION_1 = 'MULTIPLICATION'
-    RATIO_1 = 'RATIO'
-    CHANGE_1 = 'CHANGE'
 
 
-class Type61(Enum):
+class Type32(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
 
 
 class Aggregation1(Enum):
@@ -2241,14 +1494,6 @@ class Aggregation1(Enum):
     MAX_1 = 'MAX'
     MEDIAN_1 = 'MEDIAN'
     RUNSUM_1 = 'RUNSUM'
-    SUM_2 = 'SUM'
-    COUNT_2 = 'COUNT'
-    APPROXIMATE_COUNT_2 = 'APPROXIMATE_COUNT'
-    AVG_2 = 'AVG'
-    MIN_2 = 'MIN'
-    MAX_2 = 'MAX'
-    MEDIAN_2 = 'MEDIAN'
-    RUNSUM_2 = 'RUNSUM'
 
 
 class Operator1(Enum):
@@ -2262,20 +1507,13 @@ class Operator1(Enum):
     MULTIPLICATION_1 = 'MULTIPLICATION'
     RATIO_1 = 'RATIO'
     CHANGE_1 = 'CHANGE'
-    SUM_2 = 'SUM'
-    DIFFERENCE_2 = 'DIFFERENCE'
-    MULTIPLICATION_2 = 'MULTIPLICATION'
-    RATIO_2 = 'RATIO'
-    CHANGE_2 = 'CHANGE'
 
 
-class Type62(Enum):
+class Type33(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_2 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_2 = 'PREVIOUS_PERIOD'
 
 
 class QueryField2(BaseModel):
@@ -2287,7 +1525,7 @@ class QueryField2(BaseModel):
     operator: Operator1 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type62 | None = Field(
+    type: Type33 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -2305,14 +1543,6 @@ class Aggregation2(Enum):
     MAX = 'MAX'
     MEDIAN = 'MEDIAN'
     RUNSUM = 'RUNSUM'
-    SUM_1 = 'SUM'
-    COUNT_1 = 'COUNT'
-    APPROXIMATE_COUNT_1 = 'APPROXIMATE_COUNT'
-    AVG_1 = 'AVG'
-    MIN_1 = 'MIN'
-    MAX_1 = 'MAX'
-    MEDIAN_1 = 'MEDIAN'
-    RUNSUM_1 = 'RUNSUM'
 
 
 class Using1(RootModel[str]):
@@ -2332,41 +1562,17 @@ class Using2(RootModel[list[str]]):
     )
 
 
-class Using3(RootModel[str]):
-    model_config = ConfigDict(
-        regex_engine="python-re",
-    )
-    root: constr(pattern=r'^metric/(?!\.)[.A-Za-z0-9_-]{1,255}$') = Field(
-        ..., description='Identifier to use for this field.', title='Metric Identifier'
-    )
-
-
-class Using4(RootModel[list[str]]):
-    root: list[str] = Field(
-        ...,
-        description='List of identifiers to use for this field.',
-        title='Metric Identifier',
-    )
-
-
 class Operator2(Enum):
     SUM = 'SUM'
     DIFFERENCE = 'DIFFERENCE'
     MULTIPLICATION = 'MULTIPLICATION'
     RATIO = 'RATIO'
     CHANGE = 'CHANGE'
-    SUM_1 = 'SUM'
-    DIFFERENCE_1 = 'DIFFERENCE'
-    MULTIPLICATION_1 = 'MULTIPLICATION'
-    RATIO_1 = 'RATIO'
-    CHANGE_1 = 'CHANGE'
 
 
-class Type63(Enum):
+class Type34(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
 
 
 class Aggregation3(Enum):
@@ -2386,14 +1592,6 @@ class Aggregation3(Enum):
     MAX_1 = 'MAX'
     MEDIAN_1 = 'MEDIAN'
     RUNSUM_1 = 'RUNSUM'
-    SUM_2 = 'SUM'
-    COUNT_2 = 'COUNT'
-    APPROXIMATE_COUNT_2 = 'APPROXIMATE_COUNT'
-    AVG_2 = 'AVG'
-    MIN_2 = 'MIN'
-    MAX_2 = 'MAX'
-    MEDIAN_2 = 'MEDIAN'
-    RUNSUM_2 = 'RUNSUM'
 
 
 class Operator3(Enum):
@@ -2407,20 +1605,13 @@ class Operator3(Enum):
     MULTIPLICATION_1 = 'MULTIPLICATION'
     RATIO_1 = 'RATIO'
     CHANGE_1 = 'CHANGE'
-    SUM_2 = 'SUM'
-    DIFFERENCE_2 = 'DIFFERENCE'
-    MULTIPLICATION_2 = 'MULTIPLICATION'
-    RATIO_2 = 'RATIO'
-    CHANGE_2 = 'CHANGE'
 
 
-class Type64(Enum):
+class Type35(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_2 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_2 = 'PREVIOUS_PERIOD'
 
 
 class QueryField4(BaseModel):
@@ -2432,7 +1623,7 @@ class QueryField4(BaseModel):
     operator: Operator3 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type64 | None = Field(
+    type: Type35 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -2447,18 +1638,11 @@ class Operator4(Enum):
     MULTIPLICATION = 'MULTIPLICATION'
     RATIO = 'RATIO'
     CHANGE = 'CHANGE'
-    SUM_1 = 'SUM'
-    DIFFERENCE_1 = 'DIFFERENCE'
-    MULTIPLICATION_1 = 'MULTIPLICATION'
-    RATIO_1 = 'RATIO'
-    CHANGE_1 = 'CHANGE'
 
 
-class Type65(Enum):
+class Type36(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
 
 
 class Operator5(Enum):
@@ -2472,20 +1656,13 @@ class Operator5(Enum):
     MULTIPLICATION_1 = 'MULTIPLICATION'
     RATIO_1 = 'RATIO'
     CHANGE_1 = 'CHANGE'
-    SUM_2 = 'SUM'
-    DIFFERENCE_2 = 'DIFFERENCE'
-    MULTIPLICATION_2 = 'MULTIPLICATION'
-    RATIO_2 = 'RATIO'
-    CHANGE_2 = 'CHANGE'
 
 
-class Type66(Enum):
+class Type37(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_2 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_2 = 'PREVIOUS_PERIOD'
 
 
 class QueryField6(BaseModel):
@@ -2497,7 +1674,7 @@ class QueryField6(BaseModel):
     operator: Operator5 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type66 | None = Field(
+    type: Type37 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -2515,14 +1692,6 @@ class Aggregation6(Enum):
     MAX = 'MAX'
     MEDIAN = 'MEDIAN'
     RUNSUM = 'RUNSUM'
-    SUM_1 = 'SUM'
-    COUNT_1 = 'COUNT'
-    APPROXIMATE_COUNT_1 = 'APPROXIMATE_COUNT'
-    AVG_1 = 'AVG'
-    MIN_1 = 'MIN'
-    MAX_1 = 'MAX'
-    MEDIAN_1 = 'MEDIAN'
-    RUNSUM_1 = 'RUNSUM'
 
 
 class Operator6(Enum):
@@ -2531,18 +1700,11 @@ class Operator6(Enum):
     MULTIPLICATION = 'MULTIPLICATION'
     RATIO = 'RATIO'
     CHANGE = 'CHANGE'
-    SUM_1 = 'SUM'
-    DIFFERENCE_1 = 'DIFFERENCE'
-    MULTIPLICATION_1 = 'MULTIPLICATION'
-    RATIO_1 = 'RATIO'
-    CHANGE_1 = 'CHANGE'
 
 
-class Type67(Enum):
+class Type38(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
 
 
 class Aggregation7(Enum):
@@ -2562,14 +1724,6 @@ class Aggregation7(Enum):
     MAX_1 = 'MAX'
     MEDIAN_1 = 'MEDIAN'
     RUNSUM_1 = 'RUNSUM'
-    SUM_2 = 'SUM'
-    COUNT_2 = 'COUNT'
-    APPROXIMATE_COUNT_2 = 'APPROXIMATE_COUNT'
-    AVG_2 = 'AVG'
-    MIN_2 = 'MIN'
-    MAX_2 = 'MAX'
-    MEDIAN_2 = 'MEDIAN'
-    RUNSUM_2 = 'RUNSUM'
 
 
 class Operator7(Enum):
@@ -2583,20 +1737,13 @@ class Operator7(Enum):
     MULTIPLICATION_1 = 'MULTIPLICATION'
     RATIO_1 = 'RATIO'
     CHANGE_1 = 'CHANGE'
-    SUM_2 = 'SUM'
-    DIFFERENCE_2 = 'DIFFERENCE'
-    MULTIPLICATION_2 = 'MULTIPLICATION'
-    RATIO_2 = 'RATIO'
-    CHANGE_2 = 'CHANGE'
 
 
-class Type68(Enum):
+class Type39(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_2 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_2 = 'PREVIOUS_PERIOD'
 
 
 class QueryField8(BaseModel):
@@ -2608,7 +1755,7 @@ class QueryField8(BaseModel):
     operator: Operator7 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type68 | None = Field(
+    type: Type39 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -2626,21 +1773,11 @@ class Aggregation8(Enum):
     MAX = 'MAX'
     MEDIAN = 'MEDIAN'
     RUNSUM = 'RUNSUM'
-    SUM_1 = 'SUM'
-    COUNT_1 = 'COUNT'
-    APPROXIMATE_COUNT_1 = 'APPROXIMATE_COUNT'
-    AVG_1 = 'AVG'
-    MIN_1 = 'MIN'
-    MAX_1 = 'MAX'
-    MEDIAN_1 = 'MEDIAN'
-    RUNSUM_1 = 'RUNSUM'
 
 
-class Type69(Enum):
+class Type40(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
 
 
 class Aggregation9(Enum):
@@ -2660,23 +1797,13 @@ class Aggregation9(Enum):
     MAX_1 = 'MAX'
     MEDIAN_1 = 'MEDIAN'
     RUNSUM_1 = 'RUNSUM'
-    SUM_2 = 'SUM'
-    COUNT_2 = 'COUNT'
-    APPROXIMATE_COUNT_2 = 'APPROXIMATE_COUNT'
-    AVG_2 = 'AVG'
-    MIN_2 = 'MIN'
-    MAX_2 = 'MAX'
-    MEDIAN_2 = 'MEDIAN'
-    RUNSUM_2 = 'RUNSUM'
 
 
-class Type70(Enum):
+class Type41(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_2 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_2 = 'PREVIOUS_PERIOD'
 
 
 class QueryField10(BaseModel):
@@ -2688,7 +1815,7 @@ class QueryField10(BaseModel):
     operator: Operator7 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type70 | None = Field(
+    type: Type41 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -2706,14 +1833,6 @@ class Aggregation10(Enum):
     MAX = 'MAX'
     MEDIAN = 'MEDIAN'
     RUNSUM = 'RUNSUM'
-    SUM_1 = 'SUM'
-    COUNT_1 = 'COUNT'
-    APPROXIMATE_COUNT_1 = 'APPROXIMATE_COUNT'
-    AVG_1 = 'AVG'
-    MIN_1 = 'MIN'
-    MAX_1 = 'MAX'
-    MEDIAN_1 = 'MEDIAN'
-    RUNSUM_1 = 'RUNSUM'
 
 
 class Operator10(Enum):
@@ -2722,19 +1841,12 @@ class Operator10(Enum):
     MULTIPLICATION = 'MULTIPLICATION'
     RATIO = 'RATIO'
     CHANGE = 'CHANGE'
-    SUM_1 = 'SUM'
-    DIFFERENCE_1 = 'DIFFERENCE'
-    MULTIPLICATION_1 = 'MULTIPLICATION'
-    RATIO_1 = 'RATIO'
-    CHANGE_1 = 'CHANGE'
 
 
-class Type71(Enum):
+class Type42(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_2 = 'PREVIOUS_YEAR'
 
 
 class Aggregation11(Enum):
@@ -2754,14 +1866,6 @@ class Aggregation11(Enum):
     MAX_1 = 'MAX'
     MEDIAN_1 = 'MEDIAN'
     RUNSUM_1 = 'RUNSUM'
-    SUM_2 = 'SUM'
-    COUNT_2 = 'COUNT'
-    APPROXIMATE_COUNT_2 = 'APPROXIMATE_COUNT'
-    AVG_2 = 'AVG'
-    MIN_2 = 'MIN'
-    MAX_2 = 'MAX'
-    MEDIAN_2 = 'MEDIAN'
-    RUNSUM_2 = 'RUNSUM'
 
 
 class Operator11(Enum):
@@ -2775,20 +1879,13 @@ class Operator11(Enum):
     MULTIPLICATION_1 = 'MULTIPLICATION'
     RATIO_1 = 'RATIO'
     CHANGE_1 = 'CHANGE'
-    SUM_2 = 'SUM'
-    DIFFERENCE_2 = 'DIFFERENCE'
-    MULTIPLICATION_2 = 'MULTIPLICATION'
-    RATIO_2 = 'RATIO'
-    CHANGE_2 = 'CHANGE'
 
 
-class Type72(Enum):
+class Type43(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_2 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_2 = 'PREVIOUS_PERIOD'
 
 
 class QueryField12(BaseModel):
@@ -2800,7 +1897,7 @@ class QueryField12(BaseModel):
     operator: Operator11 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type72 | None = Field(
+    type: Type43 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -2818,14 +1915,6 @@ class Aggregation12(Enum):
     MAX = 'MAX'
     MEDIAN = 'MEDIAN'
     RUNSUM = 'RUNSUM'
-    SUM_1 = 'SUM'
-    COUNT_1 = 'COUNT'
-    APPROXIMATE_COUNT_1 = 'APPROXIMATE_COUNT'
-    AVG_1 = 'AVG'
-    MIN_1 = 'MIN'
-    MAX_1 = 'MAX'
-    MEDIAN_1 = 'MEDIAN'
-    RUNSUM_1 = 'RUNSUM'
 
 
 class Operator12(Enum):
@@ -2834,19 +1923,12 @@ class Operator12(Enum):
     MULTIPLICATION = 'MULTIPLICATION'
     RATIO = 'RATIO'
     CHANGE = 'CHANGE'
-    SUM_1 = 'SUM'
-    DIFFERENCE_1 = 'DIFFERENCE'
-    MULTIPLICATION_1 = 'MULTIPLICATION'
-    RATIO_1 = 'RATIO'
-    CHANGE_1 = 'CHANGE'
 
 
-class Type73(Enum):
+class Type44(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
-    PREVIOUS_PERIOD_2 = 'PREVIOUS_PERIOD'
 
 
 class Aggregation13(Enum):
@@ -2866,14 +1948,6 @@ class Aggregation13(Enum):
     MAX_1 = 'MAX'
     MEDIAN_1 = 'MEDIAN'
     RUNSUM_1 = 'RUNSUM'
-    SUM_2 = 'SUM'
-    COUNT_2 = 'COUNT'
-    APPROXIMATE_COUNT_2 = 'APPROXIMATE_COUNT'
-    AVG_2 = 'AVG'
-    MIN_2 = 'MIN'
-    MAX_2 = 'MAX'
-    MEDIAN_2 = 'MEDIAN'
-    RUNSUM_2 = 'RUNSUM'
 
 
 class Operator13(Enum):
@@ -2887,20 +1961,13 @@ class Operator13(Enum):
     MULTIPLICATION_1 = 'MULTIPLICATION'
     RATIO_1 = 'RATIO'
     CHANGE_1 = 'CHANGE'
-    SUM_2 = 'SUM'
-    DIFFERENCE_2 = 'DIFFERENCE'
-    MULTIPLICATION_2 = 'MULTIPLICATION'
-    RATIO_2 = 'RATIO'
-    CHANGE_2 = 'CHANGE'
 
 
-class Type74(Enum):
+class Type45(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
     PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_2 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_2 = 'PREVIOUS_PERIOD'
 
 
 class QueryField14(BaseModel):
@@ -2912,7 +1979,7 @@ class QueryField14(BaseModel):
     operator: Operator13 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type74 | None = Field(
+    type: Type45 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -2921,18 +1988,7 @@ class QueryField14(BaseModel):
     )
 
 
-class Type75(Enum):
-    attribute_sort = 'attribute_sort'
-    metric_sort = 'metric_sort'
-    attribute_sort_1 = 'attribute_sort'
-    metric_sort_1 = 'metric_sort'
-
-
-class QuerySort3(BaseModel):
-    type: Type75
-
-
-class Type78(Enum):
+class Type46(Enum):
     attribute_sort = 'attribute_sort'
 
 
@@ -2945,7 +2001,7 @@ class Aggregation14(Enum):
     SUM = 'SUM'
 
 
-class Type79(Enum):
+class Type47(Enum):
     metric_sort = 'metric_sort'
 
 
@@ -2988,7 +2044,7 @@ class BucketGeoAreaItem(RootModel[str]):
     root: str = Field(..., title='Geo Area Bucket')
 
 
-class Type80(Enum):
+class Type48(Enum):
     SUM = 'SUM'
     AVG = 'AVG'
     MAX = 'MAX'
@@ -3001,12 +2057,12 @@ class BucketLocationItem(RootModel[str]):
     root: str = Field(..., title='Location Bucket')
 
 
-class Type81(Enum):
+class Type49(Enum):
     pushpin = 'pushpin'
     area = 'area'
 
 
-class Type82(Enum):
+class Type50(Enum):
     attribute_hierarchy = 'attribute_hierarchy'
 
 
@@ -3015,7 +2071,7 @@ class DataLabelsStyle(Enum):
     backplate = 'backplate'
 
 
-class Type83(Enum):
+class Type51(Enum):
     solid = 'solid'
     pattern = 'pattern'
     outline = 'outline'
@@ -3049,7 +2105,7 @@ class PatternNameMapping(Enum):
 
 
 class ChartFill(BaseModel):
-    type: Type83 | None = None
+    type: Type51 | None = None
     pattern_name_mapping: dict[str, PatternNameMapping] | None = None
 
 
@@ -3274,7 +2330,7 @@ class Value1(BaseModel):
     )
 
 
-class Granularity3(Enum):
+class Granularity2(Enum):
     minute = 'minute'
     hour = 'hour'
     day = 'day'
@@ -3288,7 +2344,7 @@ class Relative(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    granularity: Granularity3
+    granularity: Granularity2
     from_: int = Field(..., alias='from')
     to: int
 
@@ -3319,7 +2375,7 @@ class Format(BaseModel):
     scope: Scope
 
 
-class Condition13(BaseModel):
+class Condition9(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
@@ -3341,7 +2397,7 @@ class Rule(BaseModel):
         ...,
         description='The measure or attribute the rule targets — exactly one of measure/attribute.',
     )
-    conditions: list[Condition13] = Field(
+    conditions: list[Condition9] = Field(
         ..., description='Stacked conditions; the first matching condition wins.'
     )
 
@@ -3362,395 +2418,11 @@ class ConditionalFormatting(BaseModel):
     )
 
 
-class Type84(Enum):
+class Type52(Enum):
     dashboard = 'dashboard'
 
 
-class Type85(Enum):
-    date_filter = 'date_filter'
-    attribute_filter = 'attribute_filter'
-    text_filter = 'text_filter'
-    metric_value_filter = 'metric_value_filter'
-    filter_group = 'filter_group'
-    date_filter_1 = 'date_filter'
-    attribute_filter_1 = 'attribute_filter'
-    text_filter_1 = 'text_filter'
-    metric_value_filter_1 = 'metric_value_filter'
-    filter_group_1 = 'filter_group'
-    date_filter_2 = 'date_filter'
-    date_filter_3 = 'date_filter'
-    attribute_filter_2 = 'attribute_filter'
-    text_filter_2 = 'text_filter'
-    metric_value_filter_2 = 'metric_value_filter'
-    filter_group_2 = 'filter_group'
-
-
-class EmptyValues6(Enum):
-    only = 'only'
-    include = 'include'
-    exclude = 'exclude'
-
-
-class DashboardFilters9(BaseModel):
-    type: Type85
-    title: str | None = Field(None, description='Optional title of the filter')
-    granularity: DateFilterGranularity | None = None
-    from_: (
-        constr(
-            pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$'
-        )
-        | None
-    ) = Field(
-        None,
-        alias='from',
-        description='A period start as YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities',
-    )
-    to: (
-        constr(
-            pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$'
-        )
-        | None
-    ) = Field(
-        None,
-        description='A period end as YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities',
-    )
-    mode: Mode13 | None = Field(
-        None,
-        description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
-    )
-    empty_values: EmptyValues6 | None = Field(
-        None, description='Controls how empty values are handled in the filter.'
-    )
-    date: Identifier | None = Field(
-        None, description='An id of the date dataset to be used for date filter'
-    )
-
-
-class DashboardFilters10(BaseModel):
-    type: Type85
-    title: str | None = Field(None, description='Optional title of the filter')
-    granularity: DateFilterGranularity | None = None
-    from_: float = Field(
-        ..., alias='from', description='A period start as number, from today'
-    )
-    to: float = Field(..., description='A period end as number, from today')
-    mode: Mode13 | None = Field(
-        None,
-        description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
-    )
-    empty_values: EmptyValues6 | None = Field(
-        None, description='Controls how empty values are handled in the filter.'
-    )
-    date: Identifier | None = Field(
-        None, description='An id of the date dataset to be used for date filter'
-    )
-
-
-class Type87(Enum):
-    date_filter = 'date_filter'
-    attribute_filter = 'attribute_filter'
-    text_filter = 'text_filter'
-    metric_value_filter = 'metric_value_filter'
-    filter_group = 'filter_group'
-    date_filter_1 = 'date_filter'
-    attribute_filter_1 = 'attribute_filter'
-    text_filter_1 = 'text_filter'
-    metric_value_filter_1 = 'metric_value_filter'
-    filter_group_1 = 'filter_group'
-    attribute_filter_2 = 'attribute_filter'
-    date_filter_2 = 'date_filter'
-    attribute_filter_3 = 'attribute_filter'
-    text_filter_2 = 'text_filter'
-    metric_value_filter_2 = 'metric_value_filter'
-    filter_group_2 = 'filter_group'
-    attribute_filter_4 = 'attribute_filter'
-    attribute_filter_5 = 'attribute_filter'
-
-
-class Mode16(Enum):
-    readonly = 'readonly'
-    hidden = 'hidden'
-    active = 'active'
-    readonly_1 = 'readonly'
-    hidden_1 = 'hidden'
-    active_1 = 'active'
-    readonly_2 = 'readonly'
-    hidden_2 = 'hidden'
-    active_2 = 'active'
-
-
-class SelectionType8(Enum):
-    list = 'list'
-    text = 'text'
-    listOrText = 'listOrText'
-    list_1 = 'list'
-    text_1 = 'text'
-    listOrText_1 = 'listOrText'
-    list_2 = 'list'
-    text_2 = 'text'
-    listOrText_2 = 'listOrText'
-
-
-class DashboardFilters11(BaseModel):
-    model_config = ConfigDict(
-        regex_engine="python-re",
-    )
-    type: Type87
-    title: str | None = Field(None, description='Optional title of the filter')
-    using: AttributeIdentifier | LabelIdentifier = Field(
-        ..., description='Attribute or label to use in this filter.'
-    )
-    multiselect: bool | None = Field(
-        None, description='Whether the filter should allow multiple selection'
-    )
-    mode: Mode16 | None = Field(
-        None,
-        description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
-    )
-    display_as: constr(pattern=r'^label/(?!\.)[.A-Za-z0-9_-]{1,255}$') | None = Field(
-        None,
-        description='Configures the label used for representing attribute filter elements in UI.',
-        title='Display As Label Identifier',
-    )
-    selection_type: SelectionType8 | None = Field(
-        None,
-        description="Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.",
-    )
-    parents: list[str | Parents] | None = Field(
-        None, description='An ids of the parent local attribute or label filter'
-    )
-    metric_filters: list[str] | None = Field(
-        None,
-        description='An id of the attributes, labels, facts or metrics to validate the filter by',
-    )
-    state: Any | None = None
-
-
-class DashboardFilters12(BaseModel):
-    model_config = ConfigDict(
-        regex_engine="python-re",
-    )
-    type: Type87
-    title: str | None = Field(None, description='Optional title of the filter')
-    using: AttributeIdentifier | LabelIdentifier = Field(
-        ..., description='Attribute or label to use in this filter.'
-    )
-    multiselect: bool | None = Field(
-        None, description='Whether the filter should allow multiple selection'
-    )
-    mode: Mode16 | None = Field(
-        None,
-        description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
-    )
-    display_as: constr(pattern=r'^label/(?!\.)[.A-Za-z0-9_-]{1,255}$') | None = Field(
-        None,
-        description='If specified, the attribute filter will display the elements in selected label form.',
-        title='Display As Label Identifier',
-    )
-    selection_type: SelectionType8 | None = Field(
-        None,
-        description="Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.",
-    )
-    parents: list[str | Parents] | None = Field(
-        None, description='An ids of the parent local attribute or label filter'
-    )
-    metric_filters: list[str] | None = Field(
-        None,
-        description='An id of the attributes, labels, facts or metrics to validate the filter by',
-    )
-    state: Any | None = None
-
-
-class Type89(Enum):
-    date_filter = 'date_filter'
-    attribute_filter = 'attribute_filter'
-    text_filter = 'text_filter'
-    metric_value_filter = 'metric_value_filter'
-    filter_group = 'filter_group'
-    date_filter_1 = 'date_filter'
-    attribute_filter_1 = 'attribute_filter'
-    text_filter_1 = 'text_filter'
-    metric_value_filter_1 = 'metric_value_filter'
-    filter_group_1 = 'filter_group'
-    date_filter_2 = 'date_filter'
-    attribute_filter_2 = 'attribute_filter'
-    text_filter_2 = 'text_filter'
-    metric_value_filter_2 = 'metric_value_filter'
-    filter_group_2 = 'filter_group'
-    text_filter_3 = 'text_filter'
-
-
-class Mode18(Enum):
-    readonly = 'readonly'
-    hidden = 'hidden'
-    active = 'active'
-    readonly_1 = 'readonly'
-    hidden_1 = 'hidden'
-    active_1 = 'active'
-
-
-class SelectionType10(Enum):
-    list = 'list'
-    text = 'text'
-    listOrText = 'listOrText'
-    list_1 = 'list'
-    text_1 = 'text'
-    listOrText_1 = 'listOrText'
-
-
-class Condition14(Enum):
-    is_ = 'is'
-    isNot = 'isNot'
-
-
-class DashboardFilters13(BaseModel):
-    model_config = ConfigDict(
-        regex_engine="python-re",
-    )
-    type: Type89
-    title: str | None = Field(None, description='Optional title of the filter')
-    using: AttributeIdentifier | LabelIdentifier = Field(
-        ..., description='Attribute or label to use in this filter.'
-    )
-    case_sensitive: bool | None = None
-    display_as: constr(pattern=r'^label/(?!\.)[.A-Za-z0-9_-]{1,255}$') | None = Field(
-        None,
-        description='Configures the label used for representing attribute filter elements in UI.',
-        title='Display As Label Identifier',
-    )
-    mode: Mode18 | None = Field(
-        None,
-        description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
-    )
-    selection_type: SelectionType10 | None = Field(
-        None,
-        description="Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.",
-    )
-    parents: list[str | Parents] | None = Field(
-        None, description='An ids of the parent local attribute, text, or date filter'
-    )
-    metric_filters: list[str] | None = Field(
-        None,
-        description='An id of the attributes, labels, facts or metrics to validate the filter by',
-    )
-    condition: Condition14
-    values: list[str | None]
-
-
-class Condition15(Enum):
-    contains = 'contains'
-    doesNotContain = 'doesNotContain'
-    startsWith = 'startsWith'
-    doesNotStartWith = 'doesNotStartWith'
-    endsWith = 'endsWith'
-    doesNotEndWith = 'doesNotEndWith'
-
-
-class DashboardFilters14(BaseModel):
-    model_config = ConfigDict(
-        regex_engine="python-re",
-    )
-    type: Type89
-    title: str | None = Field(None, description='Optional title of the filter')
-    using: AttributeIdentifier | LabelIdentifier = Field(
-        ..., description='Attribute or label to use in this filter.'
-    )
-    case_sensitive: bool | None = None
-    display_as: constr(pattern=r'^label/(?!\.)[.A-Za-z0-9_-]{1,255}$') | None = Field(
-        None,
-        description='Configures the label used for representing attribute filter elements in UI.',
-        title='Display As Label Identifier',
-    )
-    mode: Mode18 | None = Field(
-        None,
-        description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
-    )
-    selection_type: SelectionType10 | None = Field(
-        None,
-        description="Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.",
-    )
-    parents: list[str | Parents] | None = Field(
-        None, description='An ids of the parent local attribute, text, or date filter'
-    )
-    metric_filters: list[str] | None = Field(
-        None,
-        description='An id of the attributes, labels, facts or metrics to validate the filter by',
-    )
-    condition: Condition15
-    value: str
-
-
-class Type91(Enum):
-    date_filter = 'date_filter'
-    attribute_filter = 'attribute_filter'
-    text_filter = 'text_filter'
-    metric_value_filter = 'metric_value_filter'
-    filter_group = 'filter_group'
-    date_filter_1 = 'date_filter'
-    attribute_filter_1 = 'attribute_filter'
-    text_filter_1 = 'text_filter'
-    metric_value_filter_1 = 'metric_value_filter'
-    filter_group_1 = 'filter_group'
-    metric_value_filter_2 = 'metric_value_filter'
-    date_filter_2 = 'date_filter'
-    attribute_filter_2 = 'attribute_filter'
-    text_filter_2 = 'text_filter'
-    metric_value_filter_3 = 'metric_value_filter'
-    filter_group_2 = 'filter_group'
-
-
-class Mode20(Enum):
-    readonly = 'readonly'
-    hidden = 'hidden'
-    active = 'active'
-
-
-class DashboardFilters15(BaseModel):
-    type: Type91
-    title: str | None = Field(
-        None,
-        description='Optional custom title of the filter to display in the filter bar.',
-    )
-    using: MetricIdentifier = Field(
-        ..., description='Reference to the metric being filtered.'
-    )
-    conditions: list[MvfCondition] | None = Field(
-        None,
-        description='OR-ed list of conditions. Empty or omitted means "All" (no filtering).',
-    )
-    dimensionality: list[LabelIdentifier] | None = Field(
-        None,
-        description='Optional array of label references to apply dimensionality to the filter.',
-    )
-    null_values_as_zero: bool | None = Field(
-        None, description='Null values will be treated as zero during comparisons.'
-    )
-    mode: Mode20 | None = Field(
-        None,
-        description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
-    )
-
-
-class Type92(Enum):
-    date_filter = 'date_filter'
-    attribute_filter = 'attribute_filter'
-    text_filter = 'text_filter'
-    metric_value_filter = 'metric_value_filter'
-    filter_group = 'filter_group'
-    date_filter_1 = 'date_filter'
-    attribute_filter_1 = 'attribute_filter'
-    text_filter_1 = 'text_filter'
-    metric_value_filter_1 = 'metric_value_filter'
-    filter_group_1 = 'filter_group'
-    filter_group_2 = 'filter_group'
-    date_filter_2 = 'date_filter'
-    attribute_filter_2 = 'attribute_filter'
-    text_filter_2 = 'text_filter'
-    metric_value_filter_2 = 'metric_value_filter'
-    filter_group_3 = 'filter_group'
-
-
-class Type93(Enum):
+class Type53(Enum):
     dataset = 'dataset'
     dataset_1 = 'dataset'
 
@@ -3767,11 +2439,11 @@ class DatasetType5(Enum):
     auxiliary = 'auxiliary'
 
 
-class Type96(Enum):
+class Type56(Enum):
     date = 'date'
 
 
-class Granularity4(Enum):
+class Granularity3(Enum):
     SECOND = 'SECOND'
     MINUTE = 'MINUTE'
     HOUR = 'HOUR'
@@ -3807,11 +2479,15 @@ class Description(RootModel[constr(max_length=10000)]):
     root: constr(max_length=10000)
 
 
-class Type97(Enum):
+class Type57(Enum):
     metric = 'metric'
 
 
-class Type98(Enum):
+class Type58(Enum):
+    parameter = 'parameter'
+
+
+class Type59(Enum):
     plugin = 'plugin'
 
 
@@ -3819,1154 +2495,96 @@ class Title(RootModel[constr(max_length=255)]):
     root: constr(max_length=255)
 
 
-class Type99(Enum):
+class Type60(Enum):
     table = 'table'
+
+
+class Type61(Enum):
     bar_chart = 'bar_chart'
+
+
+class Type62(Enum):
     column_chart = 'column_chart'
+
+
+class Type63(Enum):
     line_chart = 'line_chart'
+
+
+class Type64(Enum):
     area_chart = 'area_chart'
+
+
+class Type65(Enum):
     scatter_chart = 'scatter_chart'
+
+
+class Type66(Enum):
     bubble_chart = 'bubble_chart'
+
+
+class Type67(Enum):
     pie_chart = 'pie_chart'
+
+
+class Type68(Enum):
     donut_chart = 'donut_chart'
+
+
+class Type69(Enum):
     treemap_chart = 'treemap_chart'
+
+
+class Type70(Enum):
     pyramid_chart = 'pyramid_chart'
+
+
+class Type71(Enum):
     funnel_chart = 'funnel_chart'
+
+
+class Type72(Enum):
     heatmap_chart = 'heatmap_chart'
+
+
+class Type73(Enum):
     bullet_chart = 'bullet_chart'
+
+
+class Type74(Enum):
     waterfall_chart = 'waterfall_chart'
+
+
+class Type75(Enum):
     dependency_wheel_chart = 'dependency_wheel_chart'
+
+
+class Type76(Enum):
     sankey_chart = 'sankey_chart'
+
+
+class Type77(Enum):
     headline_chart = 'headline_chart'
+
+
+class Type78(Enum):
     combo_chart = 'combo_chart'
+
+
+class Type79(Enum):
     geo_chart = 'geo_chart'
+
+
+class Type80(Enum):
     geo_area_chart = 'geo_area_chart'
+
+
+class Type81(Enum):
     repeater_chart = 'repeater_chart'
+
+
+class Type82(Enum):
     radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    table_2 = 'table'
-
-
-class Type100(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    bar_chart_2 = 'bar_chart'
-
-
-class Type101(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    column_chart_2 = 'column_chart'
-
-
-class Type102(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    line_chart_2 = 'line_chart'
-
-
-class Type103(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    area_chart_2 = 'area_chart'
-
-
-class Type104(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    scatter_chart_2 = 'scatter_chart'
-
-
-class Type105(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    bubble_chart_2 = 'bubble_chart'
-
-
-class Type106(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    pie_chart_2 = 'pie_chart'
-
-
-class Type107(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    donut_chart_2 = 'donut_chart'
-
-
-class Type108(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    treemap_chart_2 = 'treemap_chart'
-
-
-class Type109(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    pyramid_chart_2 = 'pyramid_chart'
-
-
-class Type110(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    funnel_chart_2 = 'funnel_chart'
-
-
-class Type111(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    heatmap_chart_2 = 'heatmap_chart'
-
-
-class Type112(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    bullet_chart_2 = 'bullet_chart'
-
-
-class Type113(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    waterfall_chart_2 = 'waterfall_chart'
-
-
-class Type114(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    dependency_wheel_chart_2 = 'dependency_wheel_chart'
-
-
-class Type115(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    sankey_chart_2 = 'sankey_chart'
-
-
-class Type116(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    headline_chart_2 = 'headline_chart'
-
-
-class Type117(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    combo_chart_2 = 'combo_chart'
-
-
-class Type118(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    geo_chart_2 = 'geo_chart'
-
-
-class Type119(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    geo_area_chart_2 = 'geo_area_chart'
-
-
-class Type120(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    repeater_chart_2 = 'repeater_chart'
-
-
-class Type121(Enum):
-    table = 'table'
-    bar_chart = 'bar_chart'
-    column_chart = 'column_chart'
-    line_chart = 'line_chart'
-    area_chart = 'area_chart'
-    scatter_chart = 'scatter_chart'
-    bubble_chart = 'bubble_chart'
-    pie_chart = 'pie_chart'
-    donut_chart = 'donut_chart'
-    treemap_chart = 'treemap_chart'
-    pyramid_chart = 'pyramid_chart'
-    funnel_chart = 'funnel_chart'
-    heatmap_chart = 'heatmap_chart'
-    bullet_chart = 'bullet_chart'
-    waterfall_chart = 'waterfall_chart'
-    dependency_wheel_chart = 'dependency_wheel_chart'
-    sankey_chart = 'sankey_chart'
-    headline_chart = 'headline_chart'
-    combo_chart = 'combo_chart'
-    geo_chart = 'geo_chart'
-    geo_area_chart = 'geo_area_chart'
-    repeater_chart = 'repeater_chart'
-    radar_chart = 'radar_chart'
-    table_1 = 'table'
-    bar_chart_1 = 'bar_chart'
-    column_chart_1 = 'column_chart'
-    line_chart_1 = 'line_chart'
-    area_chart_1 = 'area_chart'
-    scatter_chart_1 = 'scatter_chart'
-    bubble_chart_1 = 'bubble_chart'
-    pie_chart_1 = 'pie_chart'
-    donut_chart_1 = 'donut_chart'
-    treemap_chart_1 = 'treemap_chart'
-    pyramid_chart_1 = 'pyramid_chart'
-    funnel_chart_1 = 'funnel_chart'
-    heatmap_chart_1 = 'heatmap_chart'
-    bullet_chart_1 = 'bullet_chart'
-    waterfall_chart_1 = 'waterfall_chart'
-    dependency_wheel_chart_1 = 'dependency_wheel_chart'
-    sankey_chart_1 = 'sankey_chart'
-    headline_chart_1 = 'headline_chart'
-    combo_chart_1 = 'combo_chart'
-    geo_chart_1 = 'geo_chart'
-    geo_area_chart_1 = 'geo_area_chart'
-    repeater_chart_1 = 'repeater_chart'
-    radar_chart_1 = 'radar_chart'
-    radar_chart_2 = 'radar_chart'
 
 
 class AttributeHierarchy1(BaseModel):
@@ -4976,7 +2594,7 @@ class AttributeHierarchy1(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the attribute hierarchy.'
     )
-    type: Type8
+    type: Type
     title: Title | None = Field(
         None,
         description='An optional human readable title for the attribute hierarchy. Will be derived from id if not provided explicitly.',
@@ -4995,90 +2613,9 @@ class AttributeHierarchy1(BaseModel):
     )
 
 
-class DashboardFilters(BaseModel):
-    type: Type9
-    title: str | None = Field(None, description='Optional title of the filter')
-    granularity: DateFilterGranularity | None = None
-    from_: (
-        constr(
-            pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$'
-        )
-        | None
-    ) = Field(
-        None,
-        alias='from',
-        description='A period start as YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities',
-    )
-    to: (
-        constr(
-            pattern=r'^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$'
-        )
-        | None
-    ) = Field(
-        None,
-        description='A period end as YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities',
-    )
-    mode: Mode | None = Field(
-        None,
-        description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
-    )
-    empty_values: EmptyValues | None = Field(
-        None, description='Controls how empty values are handled in the filter.'
-    )
-    date: Identifier | None = Field(
-        None, description='An id of the date dataset to be used for date filter'
-    )
-
-
-class DashboardFilters1(BaseModel):
-    type: Type9
-    title: str | None = Field(None, description='Optional title of the filter')
-    granularity: DateFilterGranularity | None = None
-    from_: float = Field(
-        ..., alias='from', description='A period start as number, from today'
-    )
-    to: float = Field(..., description='A period end as number, from today')
-    mode: Mode | None = Field(
-        None,
-        description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
-    )
-    empty_values: EmptyValues | None = Field(
-        None, description='Controls how empty values are handled in the filter.'
-    )
-    date: Identifier | None = Field(
-        None, description='An id of the date dataset to be used for date filter'
-    )
-
-
-class DashboardFilters6(BaseModel):
-    type: Type15
-    title: str | None = Field(
-        None,
-        description='Optional custom title of the filter to display in the filter bar.',
-    )
-    using: MetricIdentifier = Field(
-        ..., description='Reference to the metric being filtered.'
-    )
-    conditions: list[MvfCondition] | None = Field(
-        None,
-        description='OR-ed list of conditions. Empty or omitted means "All" (no filtering).',
-    )
-    dimensionality: list[LabelIdentifier] | None = Field(
-        None,
-        description='Optional array of label references to apply dimensionality to the filter.',
-    )
-    null_values_as_zero: bool | None = Field(
-        None, description='Null values will be treated as zero during comparisons.'
-    )
-    mode: Mode6 | None = Field(
-        None,
-        description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
-    )
-
-
 class DashboardAbsoluteDateFilter(BaseModel):
     title: str | None = Field(None, description='Optional title of the filter')
-    type: Type17
+    type: Type1
     granularity: DateFilterGranularity | None = None
     from_: (
         constr(
@@ -5099,7 +2636,7 @@ class DashboardAbsoluteDateFilter(BaseModel):
         None,
         description='A period end as YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities',
     )
-    mode: Mode6 | None = Field(
+    mode: Mode | None = Field(
         None,
         description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
     )
@@ -5113,13 +2650,13 @@ class DashboardAbsoluteDateFilter(BaseModel):
 
 class DashboardRelativeDateFilter(BaseModel):
     title: str | None = Field(None, description='Optional title of the filter')
-    type: Type17
+    type: Type1
     granularity: DateFilterGranularity | None = None
     from_: float = Field(
         ..., alias='from', description='A period start as number, from today'
     )
     to: float = Field(..., description='A period end as number, from today')
-    mode: Mode6 | None = Field(
+    mode: Mode | None = Field(
         None,
         description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
     )
@@ -5132,7 +2669,7 @@ class DashboardRelativeDateFilter(BaseModel):
 
 
 class DashboardMetricValueFilter(BaseModel):
-    type: Type23
+    type: Type7
     title: str | None = Field(
         None,
         description='Optional custom title of the filter to display in the filter bar.',
@@ -5151,33 +2688,21 @@ class DashboardMetricValueFilter(BaseModel):
     null_values_as_zero: bool | None = Field(
         None, description='Null values will be treated as zero during comparisons.'
     )
-    mode: Mode13 | None = Field(
+    mode: Mode6 | None = Field(
         None,
         description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
     )
-
-
-class DashboardFiltersNoGroups1(DashboardAbsoluteDateFilter):
-    type: Type25
-
-
-class DashboardFiltersNoGroups2(DashboardRelativeDateFilter):
-    type: Type25
-
-
-class DashboardFiltersNoGroups5(DashboardMetricValueFilter):
-    type: Type25
 
 
 class DashboardFiltersNoGroups(
     RootModel[
         dict[
             str,
-            DashboardFiltersNoGroups1
-            | DashboardFiltersNoGroups2
-            | DashboardFiltersNoGroups3
-            | DashboardFiltersNoGroups4
-            | DashboardFiltersNoGroups5,
+            DashboardAbsoluteDateFilter
+            | DashboardRelativeDateFilter
+            | DashboardAttributeFilter
+            | DashboardTextFilter
+            | DashboardMetricValueFilter,
         ]
     ]
 ):
@@ -5186,11 +2711,11 @@ class DashboardFiltersNoGroups(
     )
     root: dict[
         constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'),
-        DashboardFiltersNoGroups1
-        | DashboardFiltersNoGroups2
-        | DashboardFiltersNoGroups3
-        | DashboardFiltersNoGroups4
-        | DashboardFiltersNoGroups5,
+        DashboardAbsoluteDateFilter
+        | DashboardRelativeDateFilter
+        | DashboardAttributeFilter
+        | DashboardTextFilter
+        | DashboardMetricValueFilter,
     ] = Field(
         ...,
         description='Dashboard filters that cannot contain filter groups - only attribute, date, text, and metric value filters',
@@ -5198,28 +2723,12 @@ class DashboardFiltersNoGroups(
     )
 
 
-class QueryFilter2(QueryAttributeFilter):
-    type: Type30
-
-
-class QueryFilter3(BaseModel):
-    type: Type30
-
-
-class QueryFilter4(BaseModel):
-    type: Type30
-
-
-class QueryFilter5(BaseModel):
-    type: Type30
-
-
 class QueryDateFilter1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
         regex_engine="python-re",
     )
-    type: Type36
+    type: Type9
     using: str = Field(
         ..., description='Date dataset identifier to use for this field.'
     )
@@ -5242,7 +2751,7 @@ class QueryDateFilter1(BaseModel):
         alias='with',
         description='Attribute filters to apply together with this date filter.',
     )
-    empty_values: EmptyValues4 | None = Field(
+    empty_values: EmptyValues | None = Field(
         None, description='Controls how empty values are handled in the filter.'
     )
 
@@ -5252,12 +2761,9 @@ class QueryDateFilter2(BaseModel):
         extra='forbid',
         regex_engine="python-re",
     )
-    type: Type36
+    type: Type9
     using: str = Field(
         ..., description='Date dataset identifier to use for this field.'
-    )
-    granularity: Granularity1 | None = Field(
-        None, description='A granularity to use in relative date filter'
     )
     from_: (
         constr(
@@ -5286,7 +2792,7 @@ class QueryDateFilter2(BaseModel):
         alias='with',
         description='Attribute filters to apply together with this date filter.',
     )
-    empty_values: EmptyValues4 | None = Field(
+    empty_values: EmptyValues | None = Field(
         None, description='Controls how empty values are handled in the filter.'
     )
 
@@ -5412,7 +2918,7 @@ class DateDataset1(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the date instance.')
-    type: Type51
+    type: Type24
     title: Title | None = Field(
         None,
         description='An optional human readable title for the date instance. Will be derived from id if not provided explicitly.',
@@ -5429,7 +2935,7 @@ class DateDataset1(BaseModel):
     title_pattern: constr(max_length=255) | None = Field(
         None, description='A pattern for the title formatting'
     )
-    granularities: list[Granularity2] | None = None
+    granularities: list[Granularity1] | None = None
 
 
 class Reference(BaseModel):
@@ -5466,7 +2972,7 @@ class Fact(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type57
+    type: Type26
     title: Title | None = Field(
         None,
         description='A human readable title of the field. Optional, derived from id if not provided explicitly.',
@@ -5505,7 +3011,7 @@ class AggregatedFact(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type58
+    type: Type27
     description: Description | None = Field(
         None, description='An optional description of the field.'
     )
@@ -5589,7 +3095,7 @@ class Metric1(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the metric.')
-    type: Type59
+    type: Type28
     title: Title | None = Field(
         None,
         description='An optional human readable title for the metric. Will be derived from id if not provided explicitly.',
@@ -5613,12 +3119,44 @@ class Metric1(BaseModel):
     )
 
 
+class Constraints(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    minLength: conint(ge=0) | None = Field(
+        None, description='The shortest accepted value length, inclusive.'
+    )
+    maxLength: conint(ge=0) | None = Field(
+        None, description='The longest accepted value length, inclusive.'
+    )
+    allowedValues: list[ParameterAllowedValue] | None = Field(
+        None,
+        description='When present, the parameter value must equal one of the listed values.',
+        min_length=1,
+    )
+
+
+class StringParameterDefinition(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    type: Type30
+    defaultValue: str = Field(
+        ..., description='The value used whenever the parameter is not overridden.'
+    )
+    constraints: Constraints | None = Field(
+        None,
+        description="Optional restrictions the parameter value must satisfy. Length bounds and 'allowedValues' are mutually exclusive.",
+        title='String Parameter Constraints',
+    )
+
+
 class Plugin1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the plugin.')
-    type: Type60
+    type: Type31
     title: Title | None = Field(
         None,
         description='An optional human readable title for the plugin. Will be derived from id if not provided explicitly.',
@@ -5653,7 +3191,7 @@ class QueryField1(BaseModel):
     operator: Operator | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type61 | None = Field(
+    type: Type32 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -5679,7 +3217,7 @@ class QueryField7(BaseModel):
     operator: Operator6 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type67 | None = Field(
+    type: Type38 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -5701,7 +3239,7 @@ class QueryField9(BaseModel):
     operator: Operator7 = Field(
         ..., description='Arithmetic operator to use for this field.'
     )
-    type: Type69 | None = Field(
+    type: Type40 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -5723,7 +3261,7 @@ class QueryField11(BaseModel):
     operator: Operator10 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type71 = Field(
+    type: Type42 = Field(
         ...,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -5743,7 +3281,7 @@ class QueryField13(BaseModel):
     operator: Operator12 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type73 = Field(
+    type: Type44 = Field(
         ...,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -5758,7 +3296,7 @@ class QueryAttributeSort(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type78
+    type: Type46
     by: str | AttributeIdentifier | LabelIdentifier = Field(
         ..., description='Local attribute or label to use in this sort.'
     )
@@ -5787,7 +3325,7 @@ class QueryMetricSort(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type79
+    type: Type47
     direction: Direction = Field(..., description='Sort direction.')
     metrics: list[str | Metrics] = Field(..., min_length=1)
 
@@ -5803,7 +3341,7 @@ class TotalItem(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type80
+    type: Type48
     title: Title | None = Field(None, description='A total title.')
     using: str = Field(
         ..., description='Local metric identifier to use for this total.'
@@ -5817,7 +3355,7 @@ class AttributeHierarchy(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the attribute hierarchy.'
     )
-    type: Type82
+    type: Type50
     title: Title | None = Field(
         None,
         description='An optional human readable title for the attribute hierarchy. Will be derived from id if not provided explicitly.',
@@ -5980,55 +3518,12 @@ class Config(BaseModel):
     )
 
 
-class DashboardFilters16(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-    )
-    type: Type92
-    title: str = Field(..., description='Display title for the filter group')
-    filters: DashboardFiltersNoGroups = Field(
-        ...,
-        description='Filters contained in this group (only attribute and date filters, no nested groups)',
-    )
-
-
-class DashboardFiltersModel(
-    RootModel[
-        dict[
-            str,
-            DashboardFilters9
-            | DashboardFilters10
-            | DashboardFilters11
-            | DashboardFilters12
-            | DashboardFilters13
-            | DashboardFilters14
-            | DashboardFilters15
-            | DashboardFilters16,
-        ]
-    ]
-):
-    model_config = ConfigDict(
-        regex_engine="python-re",
-    )
-    root: dict[
-        constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'),
-        DashboardFilters9
-        | DashboardFilters10
-        | DashboardFilters11
-        | DashboardFilters12
-        | DashboardFilters13
-        | DashboardFilters14
-        | DashboardFilters15
-        | DashboardFilters16,
-    ] = Field(..., title='Dashboard Filters')
-
-
 class DateDataset(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the date instance.')
-    type: Type96
+    type: Type56
     title: Title | None = Field(
         None,
         description='An optional human readable title for the date instance. Will be derived from id if not provided explicitly.',
@@ -6045,7 +3540,7 @@ class DateDataset(BaseModel):
     title_pattern: constr(max_length=255) | None = Field(
         None, description='A pattern for the title formatting'
     )
-    granularities: list[Granularity4] | None = None
+    granularities: list[Granularity3] | None = None
 
 
 class Metric(BaseModel):
@@ -6053,7 +3548,7 @@ class Metric(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the metric.')
-    type: Type97
+    type: Type57
     title: Title | None = Field(
         None,
         description='An optional human readable title for the metric. Will be derived from id if not provided explicitly.',
@@ -6082,7 +3577,7 @@ class Plugin(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the plugin.')
-    type: Type98
+    type: Type59
     title: Title | None = Field(
         None,
         description='An optional human readable title for the plugin. Will be derived from id if not provided explicitly.',
@@ -6098,70 +3593,11 @@ class Plugin(BaseModel):
     ) = Field(..., description='URL of the plugin.')
 
 
-class Metadata2(DateDataset):
-    type: Type
-
-
-class Metadata3(Metric):
-    type: Type
-
-
-class Metadata5(Plugin):
-    type: Type
-
-
-class Metadata6(AttributeHierarchy):
-    type: Type
-
-
-class DashboardFilters7(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-    )
-    type: Type16
-    title: str = Field(..., description='Display title for the filter group')
-    filters: DashboardFiltersNoGroups = Field(
-        ...,
-        description='Filters contained in this group (only attribute and date filters, no nested groups)',
-    )
-
-
-class DashboardFilters8(
-    RootModel[
-        dict[
-            str,
-            DashboardFilters
-            | DashboardFilters1
-            | DashboardFilters2
-            | DashboardFilters3
-            | DashboardFilters4
-            | DashboardFilters5
-            | DashboardFilters6
-            | DashboardFilters7,
-        ]
-    ]
-):
-    model_config = ConfigDict(
-        regex_engine="python-re",
-    )
-    root: dict[
-        constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'),
-        DashboardFilters
-        | DashboardFilters1
-        | DashboardFilters2
-        | DashboardFilters3
-        | DashboardFilters4
-        | DashboardFilters5
-        | DashboardFilters6
-        | DashboardFilters7,
-    ] = Field(..., title='Dashboard Filters')
-
-
 class DashboardFilterGroup(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type24
+    type: Type8
     title: str = Field(..., description='Display title for the filter group')
     filters: DashboardFiltersNoGroups = Field(
         ...,
@@ -6169,51 +3605,37 @@ class DashboardFilterGroup(BaseModel):
     )
 
 
-class QueryFilter1(BaseModel):
-    type: Type30
-
-
 class QueryFilter(
     RootModel[
-        QueryFilter1
-        | QueryFilter2
-        | QueryFilter3
-        | QueryFilter4
-        | QueryFilter5
-        | QueryFilter6
+        QueryDateFilter
+        | QueryAttributeFilter
+        | QueryTextFilter
+        | QueryMetricValueFilter
+        | QueryRankingFilter
     ]
 ):
     root: (
-        QueryFilter1
-        | QueryFilter2
-        | QueryFilter3
-        | QueryFilter4
-        | QueryFilter5
-        | QueryFilter6
+        QueryDateFilter
+        | QueryAttributeFilter
+        | QueryTextFilter
+        | QueryMetricValueFilter
+        | QueryRankingFilter
     ) = Field(..., title='Filter')
 
 
 class Interaction(
     RootModel[
         InteractionOpenPlainUrl
-        | Any
         | InteractionOpenParamUrl
-        | Any
         | InteractionOpenDashboard
-        | Any
         | InteractionOpenVisualization
-        | Any
     ]
 ):
     root: (
         InteractionOpenPlainUrl
-        | Any
         | InteractionOpenParamUrl
-        | Any
         | InteractionOpenDashboard
-        | Any
         | InteractionOpenVisualization
-        | Any
     ) = Field(
         ..., description='An interaction for current widget.', title='Interaction'
     )
@@ -6265,20 +3687,12 @@ class VisualizationWidget(BaseModel):
     )
 
 
-class Fields2(Fact):
-    type: Type52
-
-
-class Fields3(AggregatedFact):
-    type: Type52
-
-
 class Attribute(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
         regex_engine="python-re",
     )
-    type: Type56
+    type: Type25
     title: Title | None = Field(
         None,
         description='A human readable title of the field. Optional, derived from id if not provided explicitly.',
@@ -6325,16 +3739,16 @@ class Attribute(BaseModel):
     labels: dict[constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'), Label] | None = None
 
 
-class QuerySort1(QueryAttributeSort):
-    type: Type75
+class ParameterDefinition(RootModel[StringParameterDefinition]):
+    root: StringParameterDefinition = Field(
+        ...,
+        description='A typed parameter definition. Only textual parameters are supported as code.',
+        title='Parameter Definition',
+    )
 
 
-class QuerySort2(QueryMetricSort):
-    type: Type75
-
-
-class QuerySort(RootModel[QuerySort1 | QuerySort2 | QuerySort3]):
-    root: QuerySort1 | QuerySort2 | QuerySort3 = Field(..., title='Sort')
+class QuerySort(RootModel[QueryAttributeSort | QueryMetricSort]):
+    root: QueryAttributeSort | QueryMetricSort = Field(..., title='Sort')
 
 
 class BucketItem1(BaseModel):
@@ -6371,7 +3785,7 @@ class LayerItemBase(BaseModel):
         None,
         description='An optional human readable title for the layer. Will be derived from id if not provided explicitly.',
     )
-    type: Type81 | None = Field(
+    type: Type49 | None = Field(
         None, description='Type of visualisation for this layer.'
     )
     config: Config | None = Field(
@@ -6385,6 +3799,55 @@ class LayerItemBase(BaseModel):
     )
     segment_by: list[BucketItem] | None = Field(
         None, description='A list of segment by attributes in this layer.'
+    )
+
+
+class DashboardFilters(
+    RootModel[
+        dict[
+            str,
+            DashboardAbsoluteDateFilter
+            | DashboardRelativeDateFilter
+            | DashboardAttributeFilter
+            | DashboardTextFilter
+            | DashboardMetricValueFilter
+            | DashboardFilterGroup,
+        ]
+    ]
+):
+    model_config = ConfigDict(
+        regex_engine="python-re",
+    )
+    root: dict[
+        constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'),
+        DashboardAbsoluteDateFilter
+        | DashboardRelativeDateFilter
+        | DashboardAttributeFilter
+        | DashboardTextFilter
+        | DashboardMetricValueFilter
+        | DashboardFilterGroup,
+    ] = Field(..., title='Dashboard Filters')
+
+
+class Parameter(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: Identifier = Field(..., description='A unique identifier of the parameter.')
+    type: Type58
+    title: Title | None = Field(
+        None,
+        description='An optional human readable title for the parameter. Will be derived from id if not provided explicitly.',
+    )
+    description: Description | None = Field(
+        None, description='An optional description of the parameter.'
+    )
+    tags: Tags | None = Field(
+        None, description='A list of strings - metadata tags of this parameter.'
+    )
+    definition: ParameterDefinition = Field(
+        ...,
+        description='The typed definition of the parameter - its data type, default value and constraints.',
     )
 
 
@@ -6417,18 +3880,36 @@ class Widget2(BaseModel):
     )
 
 
-class Fields1(Attribute):
-    type: Type52
-
-
-class Fields(RootModel[dict[str, Fields1 | Fields2 | Fields3 | Fields4]]):
+class Fields(RootModel[dict[str, Attribute | Fact | AggregatedFact]]):
     model_config = ConfigDict(
         regex_engine="python-re",
     )
     root: dict[
         constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'),
-        Fields1 | Fields2 | Fields3 | Fields4,
+        Attribute | Fact | AggregatedFact,
     ] = Field(..., title='Fields')
+
+
+class Parameter1(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: Identifier = Field(..., description='A unique identifier of the parameter.')
+    type: Type29
+    title: Title | None = Field(
+        None,
+        description='An optional human readable title for the parameter. Will be derived from id if not provided explicitly.',
+    )
+    description: Description | None = Field(
+        None, description='An optional description of the parameter.'
+    )
+    tags: Tags | None = Field(
+        None, description='A list of strings - metadata tags of this parameter.'
+    )
+    definition: ParameterDefinition = Field(
+        ...,
+        description='The typed definition of the parameter - its data type, default value and constraints.',
+    )
 
 
 class QuerySorts(RootModel[list[QuerySort]]):
@@ -6442,7 +3923,7 @@ class QueryField3(BaseModel):
     aggregation: Aggregation2 | None = Field(
         None, description='Aggregation function to use for this field.'
     )
-    using: Using1 | Using2 | Using3 | Using4 = Field(
+    using: Using1 | Using2 = Field(
         ...,
         description='Metric identifier to use for this field.',
         title='Metric Identifier',
@@ -6451,7 +3932,7 @@ class QueryField3(BaseModel):
     operator: Operator2 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type63 | None = Field(
+    type: Type34 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -6486,7 +3967,7 @@ class QueryField5(BaseModel):
     operator: Operator4 | None = Field(
         None, description='Arithmetic operator to use for this field.'
     )
-    type: Type65 | None = Field(
+    type: Type36 | None = Field(
         None,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -6556,7 +4037,7 @@ class Dataset5(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type93
+    type: Type53
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -6602,7 +4083,7 @@ class Dataset6(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type93
+    type: Type53
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -6648,7 +4129,7 @@ class Dataset7(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type93
+    type: Type53
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -6684,17 +4165,13 @@ class Dataset(RootModel[Dataset5 | Dataset6 | Dataset7]):
     root: Dataset5 | Dataset6 | Dataset7 = Field(..., title='Dataset')
 
 
-class Metadata1(BaseModel):
-    type: Type
-
-
 class Dataset2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type48
+    type: Type21
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -6740,7 +4217,7 @@ class Dataset3(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type48
+    type: Type21
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -6786,7 +4263,7 @@ class Dataset4(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type48
+    type: Type21
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -6848,7 +4325,7 @@ class Visualisation1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type99 = Field(..., description='Type of visualisation.')
+    type: Type60 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6894,7 +4371,7 @@ class Visualisation2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type100 = Field(..., description='Type of visualisation.')
+    type: Type61 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6937,7 +4414,7 @@ class Visualisation3(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type101 = Field(..., description='Type of visualisation.')
+    type: Type62 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6980,7 +4457,7 @@ class Visualisation4(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type102 = Field(..., description='Type of visualisation.')
+    type: Type63 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7023,7 +4500,7 @@ class Visualisation5(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type103 = Field(..., description='Type of visualisation.')
+    type: Type64 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7066,7 +4543,7 @@ class Visualisation6(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type104 = Field(..., description='Type of visualisation.')
+    type: Type65 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7109,7 +4586,7 @@ class Visualisation7(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type105 = Field(..., description='Type of visualisation.')
+    type: Type66 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7152,7 +4629,7 @@ class Visualisation8(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type106 = Field(..., description='Type of visualisation.')
+    type: Type67 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7192,7 +4669,7 @@ class Visualisation9(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type107 = Field(..., description='Type of visualisation.')
+    type: Type68 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7232,7 +4709,7 @@ class Visualisation10(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type108 = Field(..., description='Type of visualisation.')
+    type: Type69 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7272,7 +4749,7 @@ class Visualisation11(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type109 = Field(..., description='Type of visualisation.')
+    type: Type70 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7312,7 +4789,7 @@ class Visualisation12(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type110 = Field(..., description='Type of visualisation.')
+    type: Type71 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7352,7 +4829,7 @@ class Visualisation13(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type111 = Field(..., description='Type of visualisation.')
+    type: Type72 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7398,7 +4875,7 @@ class Visualisation14(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type112 = Field(..., description='Type of visualisation.')
+    type: Type73 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7438,7 +4915,7 @@ class Visualisation15(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type113 = Field(..., description='Type of visualisation.')
+    type: Type74 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7478,7 +4955,7 @@ class Visualisation16(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type114 = Field(..., description='Type of visualisation.')
+    type: Type75 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7524,7 +5001,7 @@ class Visualisation17(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type115 = Field(..., description='Type of visualisation.')
+    type: Type76 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7570,7 +5047,7 @@ class Visualisation18(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type116 = Field(..., description='Type of visualisation.')
+    type: Type77 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7608,7 +5085,7 @@ class Visualisation19(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type117 = Field(..., description='Type of visualisation.')
+    type: Type78 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7648,7 +5125,7 @@ class Visualisation20(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type118 = Field(..., description='Type of visualisation.')
+    type: Type79 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7692,7 +5169,7 @@ class Visualisation21(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type119 = Field(..., description='Type of visualisation.')
+    type: Type80 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7736,7 +5213,7 @@ class Visualisation22(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type120 = Field(..., description='Type of visualisation.')
+    type: Type81 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7782,7 +5259,7 @@ class Visualisation23(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type121 = Field(..., description='Type of visualisation.')
+    type: Type82 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7876,16 +5353,12 @@ class Visualisation(
     )
 
 
-class Metadata7(BaseModel):
-    type: Type = Field(..., description='Type of visualisation.')
-
-
 class Dashboard1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the dashboard.')
-    type: Type47
+    type: Type20
     version: Version | None = Field(
         None,
         description='Dashboard model version. "2" (default if omitted) — legacy shape: root-level sections/filters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. "3" — clean shape: tabs are the sole source of layout and filters; root sections/filters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use "3" for new dashboards; "2" exists to keep existing files round-trippable.',
@@ -7931,7 +5404,7 @@ class Dashboard1(BaseModel):
     sections: list[Section] | None = Field(
         None, description='A list of sections in this dashboard.'
     )
-    filters: DashboardFiltersModel | None = None
+    filters: DashboardFilters | None = None
     plugins: list[Plugins | Identifier] | None = Field(
         None, description='A list of plugins in this dashboard.'
     )
@@ -7961,7 +5434,7 @@ class Tab(BaseModel):
     )
     id: Identifier = Field(..., description='A unique identifier of the tab.')
     title: Title = Field(..., description='Display title for the tab.')
-    filters: DashboardFiltersModel | None = Field(
+    filters: DashboardFilters | None = Field(
         None, description='Filters specific to this tab.'
     )
     sections: list[Section] = Field(..., description='A list of sections in this tab.')
@@ -8008,7 +5481,7 @@ class Dashboard(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the dashboard.')
-    type: Type84
+    type: Type52
     version: Version | None = Field(
         None,
         description='Dashboard model version. "2" (default if omitted) — legacy shape: root-level sections/filters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. "3" — clean shape: tabs are the sole source of layout and filters; root sections/filters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use "3" for new dashboards; "2" exists to keep existing files round-trippable.',
@@ -8054,7 +5527,7 @@ class Dashboard(BaseModel):
     sections: list[Section] | None = Field(
         None, description='A list of sections in this dashboard.'
     )
-    filters: DashboardFiltersModel | None = None
+    filters: DashboardFilters | None = None
     plugins: list[Plugins | Identifier] | None = Field(
         None, description='A list of plugins in this dashboard.'
     )
@@ -8071,31 +5544,27 @@ class Widget(RootModel[VisualizationWidget | Widget1 | Widget2 | Widget3]):
     root: VisualizationWidget | Widget1 | Widget2 | Widget3 = Field(..., title='Widget')
 
 
-class Metadata4(Dashboard):
-    type: Type
-
-
 class Metadata(
     RootModel[
-        Metadata1
-        | Metadata2
-        | Metadata3
-        | Metadata4
-        | Metadata5
-        | Metadata6
-        | Metadata7
-        | Metadata8
+        Dataset
+        | DateDataset
+        | Metric
+        | Dashboard
+        | Plugin
+        | AttributeHierarchy
+        | Parameter
+        | Visualisation
     ]
 ):
     root: (
-        Metadata1
-        | Metadata2
-        | Metadata3
-        | Metadata4
-        | Metadata5
-        | Metadata6
-        | Metadata7
-        | Metadata8
+        Dataset
+        | DateDataset
+        | Metric
+        | Dashboard
+        | Plugin
+        | AttributeHierarchy
+        | Parameter
+        | Visualisation
     ) = Field(..., description='JSON schema for Gooddata Analytics', title='Metadata')
 
 

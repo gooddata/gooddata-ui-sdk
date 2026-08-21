@@ -1,0 +1,173 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "ParameterType",
+    "description": "JSON schema for Gooddata Analytics Parameter",
+    "allOf": [
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "parameter"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "#/$defs/parameter"
+            }
+        }
+    ],
+    "properties": {
+        "type": {
+            "type": "string",
+            "enum": ["parameter"]
+        }
+    },
+    "required": ["type"],
+    "$defs": {
+        "parameter": {
+            "$id": "/gaac/parameter",
+            "title": "Parameter",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "/gaac/identifier",
+                    "description": "A unique identifier of the parameter.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "parameter.id",
+                            "code": "core.uniqueness.parameters.id"
+                        },
+                        {
+                            "type": "definition",
+                            "source": "parameter.id"
+                        }
+                    ]
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["parameter"]
+                },
+                "title": {
+                    "$ref": "/gaac/title",
+                    "description": "An optional human readable title for the parameter. Will be derived from id if not provided explicitly."
+                },
+                "description": {
+                    "$ref": "/gaac/description",
+                    "description": "An optional description of the parameter."
+                },
+                "tags": {
+                    "$ref": "/gaac/tags",
+                    "description": "A list of strings - metadata tags of this parameter."
+                },
+                "definition": {
+                    "$ref": "#/$defs/parameterDefinition",
+                    "description": "The typed definition of the parameter - its data type, default value and constraints."
+                }
+            },
+            "$semantic": {
+                "type": "snippet",
+                "snippets": ["parameter"]
+            },
+            "required": ["id", "type", "definition"]
+        },
+        "parameterDefinition": {
+            "title": "Parameter Definition",
+            "description": "A typed parameter definition. Only textual parameters are supported as code.",
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "STRING"
+                            }
+                        },
+                        "required": ["type"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/stringParameterDefinition"
+                    }
+                }
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["STRING"]
+                }
+            },
+            "required": ["type"]
+        },
+        "stringParameterDefinition": {
+            "title": "String Parameter Definition",
+            "description": "A textual parameter definition. Without 'constraints' the parameter accepts any free-text value.",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["STRING"]
+                },
+                "defaultValue": {
+                    "type": "string",
+                    "description": "The value used whenever the parameter is not overridden."
+                },
+                "constraints": {
+                    "title": "String Parameter Constraints",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "Optional restrictions the parameter value must satisfy. Length bounds and 'allowedValues' are mutually exclusive.",
+                    "properties": {
+                        "minLength": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "description": "The shortest accepted value length, inclusive."
+                        },
+                        "maxLength": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "description": "The longest accepted value length, inclusive."
+                        },
+                        "allowedValues": {
+                            "type": "array",
+                            "minItems": 1,
+                            "description": "When present, the parameter value must equal one of the listed values.",
+                            "items": {
+                                "$ref": "#/$defs/parameterAllowedValue"
+                            }
+                        }
+                    },
+                    "not": {
+                        "anyOf": [
+                            {
+                                "required": ["allowedValues", "minLength"]
+                            },
+                            {
+                                "required": ["allowedValues", "maxLength"]
+                            }
+                        ]
+                    }
+                }
+            },
+            "required": ["type", "defaultValue"]
+        },
+        "parameterAllowedValue": {
+            "title": "Parameter Allowed Value",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "value": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The accepted parameter value."
+                },
+                "title": {
+                    "type": "string",
+                    "description": "An optional human readable title shown instead of the raw value. Defaults to the value."
+                }
+            },
+            "required": ["value"]
+        }
+    }
+}

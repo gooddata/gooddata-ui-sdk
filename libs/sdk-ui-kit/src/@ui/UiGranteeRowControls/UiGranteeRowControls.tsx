@@ -49,6 +49,8 @@ export interface IUiGranteeRowControlsProps {
     disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
     /** Tooltip shown on disabled level rows in place of the level's info text. */
     disabledTooltip?: string;
+    /** Per-level override of `disabledTooltip` — see {@link UiPermissionMenu}. */
+    disabledLevelTooltips?: Partial<Record<PermissionMenuLevel, string>>;
     onLabelsChange: (selectedIds: string[]) => void;
     onPermissionChange: (level: PermissionMenuLevel) => void;
     onRemoveAccess?: () => void;
@@ -78,6 +80,7 @@ export function UiGranteeRowControls({
     effectivePermission,
     disabledLevels,
     disabledTooltip,
+    disabledLevelTooltips,
     onLabelsChange,
     onPermissionChange,
     onRemoveAccess,
@@ -132,6 +135,7 @@ export function UiGranteeRowControls({
                 onPermissionChange={onPermissionChange}
                 disabledLevels={disabledLevels}
                 disabledTooltip={disabledTooltip}
+                disabledLevelTooltips={disabledLevelTooltips}
                 labels={hasLabels ? labels : undefined}
                 selectedLabelIds={selectedLabelIds}
                 onLabelsChange={onLabelsChange}

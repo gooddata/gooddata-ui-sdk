@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { type AxiosPromise } from "axios";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
     EntitiesApi_CreateEntityWorkspaceColorPalettes,
@@ -20,7 +20,7 @@ import { idRef } from "@gooddata/sdk-model";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { getSettingsForCurrentUser } from "../settings/index.js";
 
-import { TigerWorkspaceStyling } from "./index.js";
+import { type TigerWorkspaceStyling as TigerWorkspaceStylingClass } from "./index.js";
 import { DefaultColorPalette } from "./mocks/colorPalette.js";
 import { DefaultTheme } from "./mocks/theme.js";
 
@@ -56,6 +56,15 @@ vi.mock("../settings/index.js", () => ({
         return settingsServiceMock;
     }),
 }));
+
+// The service is imported dynamically from a fresh module registry so that it picks up the mocks
+// above even when another (non-isolated) test file already imported it without them.
+let TigerWorkspaceStyling: typeof TigerWorkspaceStylingClass;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ TigerWorkspaceStyling } = await import("./index.js"));
+});
 
 const WORKSPACE = "ws-1";
 

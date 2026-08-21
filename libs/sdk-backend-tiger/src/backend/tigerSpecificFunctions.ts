@@ -678,7 +678,18 @@ export type TigerSpecificFunctions = {
     ) => Promise<ReadCsvFileManifestsResponse[]>;
 };
 
-const getDataSourceErrorMessage = (error: unknown) => {
+// An API rejection carries the actionable reason in the problem `detail` field, while the
+// surrounding AxiosError message only names the status code.
+const getApiProblemDetail = (error: unknown): string | undefined => {
+    const detail = (error as { response?: { data?: { detail?: unknown } } })?.response?.data?.detail;
+    return typeof detail === "string" && detail.trim() !== "" ? detail : undefined;
+};
+
+export const getDataSourceErrorMessage = (error: unknown) => {
+    const detail = getApiProblemDetail(error);
+    if (detail !== undefined) {
+        return detail;
+    }
     if (error instanceof Error) {
         return error.message;
     }
@@ -872,10 +883,7 @@ export const buildTigerSpecificFunctions = (
             });
         } catch (error: any) {
             if (error.response?.status === 400) {
-                const message = error?.response?.data?.detail
-                    ? error?.response?.data?.detail
-                    : "Server error";
-                throw new UnexpectedError(message, error);
+                throw new UnexpectedError(getApiProblemDetail(error) ?? "Server error", error);
             }
             throw convertApiError(error);
         }
@@ -1615,10 +1623,7 @@ export const buildTigerSpecificFunctions = (
             });
         } catch (error: any) {
             if (error.response?.status === 400) {
-                const message = error?.response?.data?.detail
-                    ? error?.response?.data?.detail
-                    : "Server error";
-                throw new UnexpectedError(message, error);
+                throw new UnexpectedError(getApiProblemDetail(error) ?? "Server error", error);
             }
             throw convertApiError(error);
         }
@@ -1642,10 +1647,7 @@ export const buildTigerSpecificFunctions = (
             });
         } catch (error: any) {
             if (error.response?.status === 400) {
-                const message = error?.response?.data?.detail
-                    ? error?.response?.data?.detail
-                    : "Server error";
-                throw new UnexpectedError(message, error);
+                throw new UnexpectedError(getApiProblemDetail(error) ?? "Server error", error);
             }
             throw convertApiError(error);
         }

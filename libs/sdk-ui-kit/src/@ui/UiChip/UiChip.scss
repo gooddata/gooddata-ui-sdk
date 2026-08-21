@@ -97,6 +97,10 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
         border-right: 1px solid transparent;
     }
 
+    #{$root}__trigger--hasIconAfter#{$root}__trigger--isDeletable {
+        padding-right: 3px;
+    }
+
     &__trigger,
     &__delete {
         color: var(--gd-palette-complementary-7);
@@ -164,7 +168,7 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
     &__delete {
         flex-shrink: 0;
         border-radius: 0 $border-radius $border-radius 0;
-        padding: 0 7px 0 5px;
+        padding: 0 7px 0 3px;
 
         &:not(&:disabled) {
             &:hover,
@@ -203,7 +207,7 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-left: 5px;
+        margin-left: 6px;
     }
 
     &__icon-chevron {

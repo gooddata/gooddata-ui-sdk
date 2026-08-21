@@ -62,6 +62,10 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
         return this.decorated.setTimezone(timezone);
     }
 
+    async setEnableTimezoneChange(enabled: boolean): Promise<void> {
+        return this.decorated.setEnableTimezoneChange(enabled);
+    }
+
     async setDateFormat(dateFormat: string): Promise<void> {
         return this.decorated.setDateFormat(dateFormat);
     }

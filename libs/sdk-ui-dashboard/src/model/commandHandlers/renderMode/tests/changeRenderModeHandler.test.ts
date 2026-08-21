@@ -9,6 +9,8 @@ import {
     switchToEditRenderMode,
 } from "../../../commands/renderMode.js";
 import { selectRenderMode } from "../../../store/renderMode/renderModeSelectors.js";
+import { uiActions } from "../../../store/ui/index.js";
+import { selectTimezoneOverride } from "../../../store/ui/uiSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { SimpleDashboardNoDrillsIdentifier } from "../../../tests/fixtures/SimpleDashboardNoDrills.fixtures.js";
@@ -48,6 +50,35 @@ describe("changeRenderModeHandler", () => {
 
             const renderMode = Tester.select(selectRenderMode);
             expect(renderMode).toBe("edit");
+        });
+
+        it("should reset the ad-hoc timezone override when entering edit mode", async () => {
+            Tester.dispatch(uiActions.setTimezoneOverride("Europe/Prague"));
+            expect(Tester.select(selectTimezoneOverride)).toBe("Europe/Prague");
+
+            await Tester.dispatchAndWaitFor(
+                switchToEditRenderMode(TestCorrelation),
+                "GDC.DASH/EVT.RENDER_MODE.CHANGED",
+            );
+
+            expect(Tester.select(selectTimezoneOverride)).toBeUndefined();
+        });
+
+        it("should keep the ad-hoc timezone override when leaving edit mode", async () => {
+            await Tester.dispatchAndWaitFor(
+                switchToEditRenderMode(TestCorrelation),
+                "GDC.DASH/EVT.RENDER_MODE.CHANGED",
+            );
+            // set after the entry reset, so that the assertion below is about leaving edit mode
+            // and not about an override that the entry never cleared
+            Tester.dispatch(uiActions.setTimezoneOverride("Europe/Prague"));
+
+            await Tester.dispatchAndWaitFor(
+                cancelEditRenderMode(TestCorrelation),
+                "GDC.DASH/EVT.RENDER_MODE.CHANGED",
+            );
+
+            expect(Tester.select(selectTimezoneOverride)).toBe("Europe/Prague");
         });
 
         it("should process cancel edit mode", async () => {

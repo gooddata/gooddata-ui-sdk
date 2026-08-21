@@ -129,6 +129,7 @@ function toContextObjects(
             where: "referencedObjects",
             title: item.title || emptyReferenceLabel || item.id,
             nesting: 1,
+            ...(item.visualizationUrl ? { visualizationUrl: item.visualizationUrl } : {}),
         }),
     );
 }

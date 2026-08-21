@@ -13,8 +13,8 @@ import { useDashboardAlerts } from "../../../model/react/useDashboardAlerting/us
 import {
     selectEnableDashboardDensitySetting,
     selectEnableDashboardTabularExport,
-    selectEnableDashboardTimezone,
     selectEnableSnapshotExport,
+    selectEnableTimezoneChange,
     selectIsReadOnly,
     selectSettings,
 } from "../../../model/store/config/configSelectors.js";
@@ -230,11 +230,11 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const openDensityDialog = useCallback(() => dispatch(requestOpenDensityDialog()), [dispatch]);
 
-    const isTimezoneEnabled = useDashboardSelector(selectEnableDashboardTimezone);
+    const isTimezoneEnabled = useDashboardSelector(selectEnableTimezoneChange);
     const timezoneConfig = useDashboardSelector(selectDashboardTimezoneConfig);
     const isInViewMode = useDashboardSelector(selectIsInViewMode);
     const isTimezoneChangeVisible =
-        isTimezoneEnabled && !!timezoneConfig?.allowUserOverrideInViewMode && isInViewMode;
+        isTimezoneEnabled && timezoneConfig?.allowUserOverrideInViewMode === true && isInViewMode;
     const openTimezoneDialog = useCallback(() => dispatch(uiActions.openTimezoneDialog()), [dispatch]);
 
     // Do not show save as new button in menu item when it is already shown as a standalone top bar button.

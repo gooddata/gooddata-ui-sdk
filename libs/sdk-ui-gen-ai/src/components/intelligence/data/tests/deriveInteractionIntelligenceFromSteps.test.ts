@@ -33,7 +33,8 @@ function applyMemoryDetail(overrides: Partial<IChatConversationApplyMemoryDetail
 function skillRoutingDetail(overrides: Partial<IChatConversationSkillRoutingDetail> = {}) {
     return {
         category: "skillRouting" as const,
-        available: [],
+        // At least one configurable skill, or the whole detail is dropped as a non-decision.
+        available: ["Custom skill"],
         activated: [],
         ...overrides,
     };

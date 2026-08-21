@@ -70,7 +70,7 @@ export function DashboardInsightMenuButton({
                     tabIndex={0}
                     aria-label={intl.formatMessage({ id: "controlButtons.options.tooltip" })}
                     aria-expanded={isOpen}
-                    aria-haspopup="menu"
+                    aria-haspopup="dialog"
                     aria-controls={isOpen ? menuId : undefined}
                 >
                     <div className={optionsIconClasses} />

@@ -19,7 +19,7 @@ import {
 } from "../../events/dashboard.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
-import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
+import { selectDashboardRef, selectEffectiveDashboardTimezone } from "../../store/meta/metaSelectors.js";
 import {
     selectFilterContextFilters,
     selectFiltersByTab,
@@ -76,10 +76,15 @@ export function* exportDashboardToPdfHandler(
         selectExportResultPollingTimeout,
     );
 
+    const timezoneId: ReturnType<typeof selectEffectiveDashboardTimezone> = yield select(
+        selectEffectiveDashboardTimezone,
+    );
+
     const options: IDashboardExportPdfOptions = {
         timeout,
         exportMetadata: cmd.payload?.exportMetadata,
         parametersByTab,
+        timezoneId,
     };
 
     const result: PromiseFnReturnType<typeof exportDashboardToPdf> = yield call(

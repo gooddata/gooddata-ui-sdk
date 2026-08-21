@@ -11,6 +11,7 @@ export type {
     AacDateDataset,
     AacMetadata,
     AacMetric,
+    AacParameter,
     AacPlugin,
     AacQuery,
     AacSection,
@@ -20,6 +21,8 @@ export type {
 
 // Core types
 export {
+    type DeclarativeEntityData,
+    type EntityData,
     type ExportEntities,
     type FromEntities,
     type Profile,
@@ -37,6 +40,8 @@ export {
 } from "./to/yamlDatasetToDeclarative.js";
 export { yamlDateDatesetToDeclarative } from "./to/yamlDateDatasetToDeclarative.js";
 export { yamlMetricToDeclarative } from "./to/yamlMetricToDeclarative.js";
+export { yamlParameterToDeclarative } from "./to/yamlParameterToDeclarative.js";
+export { isDeclarativeStringParameter, type DeclarativeStringParameter } from "./utils/parameterUtils.js";
 export {
     yamlVisualisationToDeclarative,
     yamlVisualisationToMetadataObject,
@@ -66,6 +71,7 @@ export { yamlAttributeHierarchyToDeclarative } from "./to/yamlAttributeHierarchy
 export { declarativeDatasetToYaml } from "./from/declarativeDatasetToYaml.js";
 export { declarativeDateInstanceToYaml } from "./from/declarativeDateInstanceToYaml.js";
 export { declarativeMetricToYaml } from "./from/declarativeMetricToYaml.js";
+export { declarativeParameterToYaml } from "./from/declarativeParameterToYaml.js";
 export {
     declarativeVisualisationToYaml,
     declarativeVisTypeToYaml,
@@ -124,6 +130,7 @@ export {
     DatasetTypes,
     DateDatasetTypes,
     MetricTypes,
+    ParameterTypes,
     DashboardTypes,
     PluginTypes,
     AttributeHierarchyTypes,

@@ -4,14 +4,30 @@ import { useRef, useState } from "react";
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
 import { type IUiConfigEditorApi } from "../types.js";
-import { UiConfigEditor } from "../UiConfigEditor.js";
+// Type-only, so the statement is erased and the module stays out of the registry until the dynamic
+// import below puts it there.
+import type { UiConfigEditor as UiConfigEditorComponent } from "../UiConfigEditor.js";
 
-// Deliberately NO grammar preload in this file: these tests are about the window between the
-// editor mounting and its lazily loaded grammar arriving. A fresh test file gets a fresh module
-// registry, so the grammar cache here starts cold.
+// Deliberately NO grammar preload in this file: these tests are about the window between the editor
+// mounting and its lazily loaded grammar arriving. That window only exists while the grammar cache
+// is cold, and the cache is a module singleton shared by every suite in the worker — a suite that
+// rendered an editor earlier would leave these tests passing vacuously against a grammar that had
+// already arrived. Dropping the module registry and importing the component afterwards is what buys
+// a cold cache back without a test-only reset in the production module; dropping it again at the end
+// hands the next file the same registry state it would have had anyway.
+let UiConfigEditor: typeof UiConfigEditorComponent;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ UiConfigEditor } = await import("../UiConfigEditor.js"));
+});
+
+afterAll(() => {
+    vi.resetModules();
+});
 
 function Host() {
     const [value, setValue] = useState('{"a": 1}');
@@ -47,6 +63,10 @@ describe("UiConfigEditor while its grammar is still loading", () => {
         // The editor mounts immediately, without waiting for the grammar chunk.
         const editorBefore = document.querySelector(".cm-editor");
         expect(editorBefore).not.toBeNull();
+        // …and the load window this whole file is about is genuinely open: no highlighting yet. Also
+        // the guard on the cold cache above — warm, this is where the file fails instead of passing
+        // vacuously.
+        expect(document.querySelector(".cm-line span")).toBeNull();
 
         // Edit during the load window: two inserts, the second continuing after the first.
         await userEvent.click(screen.getByTestId("insert"));

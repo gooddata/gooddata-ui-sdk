@@ -34,7 +34,8 @@ export function AssistantItemComponent({ message, groups, isLast }: AssistantIte
     const references = useToolsReferences(groups);
     const [isInteractionIntelligenceOpen, setIsInteractionIntelligenceOpen] = useState(false);
     const interactionIntelligenceEnabled = useSelector(interactionIntelligenceEnabledSelector);
-    const showInteractionIntelligence = interactionIntelligenceEnabled && !!message.responseId;
+    const showInteractionIntelligence =
+        interactionIntelligenceEnabled && !!message.responseId && message.content.type !== "reasoning";
     const interactionIntelligenceTotals = useInteractionIntelligenceTotals(
         showInteractionIntelligence ? message.responseId : "",
     );

@@ -33,6 +33,7 @@ export function createDefaultAlert(
     dashboardId?: string,
     widgetName?: string,
     targetTabIdentifier?: string,
+    executionTimezone?: string,
 ): IAutomationMetadataObjectDefinition | undefined {
     if (!measure) {
         return undefined;
@@ -52,6 +53,11 @@ export function createDefaultAlert(
         attributes: [],
         measures: [measure.measure],
         filters,
+        // The alert evaluation service has only the settings hierarchy available; a timezone
+        // effective from any other source (view-mode override, browser resolution, dashboard
+        // configuration) must be baked into the execution. Downstream transforms spread the
+        // execution, so the config survives metric/attribute changes.
+        ...(executionTimezone ? { executionConfig: { timezone: executionTimezone } } : {}),
     };
     const trigger: IAutomationAlertTrigger = {
         state: "ACTIVE",

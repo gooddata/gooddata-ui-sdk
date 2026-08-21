@@ -14,6 +14,9 @@ export type ConsoleFunction = (...data: any[]) => void;
 export type ConsoleType = "error" | "warn" | "log" | "debug" | "info";
 
 // @internal
+export function createTightWaitFor(waitFor: WaitForFn, interval?: number): <T>(callback: () => T | Promise<T>) => Promise<T>;
+
+// @internal
 export function delay(timeout?: number): Promise<void>;
 
 // @internal (undocumented)
@@ -74,9 +77,18 @@ export function simplifyText(value: string | number | null): string;
 export type SpecificMatcherFunction = (message: string) => boolean;
 
 // @internal
+export function strictBarrel<T extends object>(packageName: string, exports: T): T;
+
+// @internal
 export function suppressConsole<T>(fn: () => T | Promise<T>, type?: ConsoleType | ConsoleType[], matchers?: Matcher[] | SpecificMatcherFunction): T | Promise<T>;
 
 // @internal
 export function suppressConsole<T>(fn: () => T | Promise<T>, matcherFn: MatcherFunction): T | Promise<T>;
+
+// @internal
+export type WaitForFn = <T>(callback: () => T | Promise<T>, options?: {
+    interval?: number;
+    timeout?: number;
+}) => Promise<T>;
 
 ```

@@ -33,6 +33,13 @@ export const objectShareMessages = defineMessages({
      * access is inherited only — there is no grant in this workspace to revoke.
      */
     granteeRemoveInherited: { id: "objectShare.granteeRemove.inherited" },
+    /** Disabled-level tooltip for picks an inherited grant already covers. */
+    granteeLevelInheritedCovered: { id: "objectShare.granteeLevel.inheritedCovered" },
+    /**
+     * Error toast for a write the backend refused as an escalation. Distinct from the
+     * generic failure: the change was rejected on purpose, retrying will not help.
+     */
+    toastEscalationRefused: { id: "objectShare.toast.escalationRefused" },
     granteeYou: { id: "objectShare.grantee.you" },
     adminTagLabel: { id: "objectShare.adminTag.label" },
     adminTagTooltip: { id: "objectShare.adminTag.tooltip" },

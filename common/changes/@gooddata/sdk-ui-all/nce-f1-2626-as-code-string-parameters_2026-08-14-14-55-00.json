@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-code-schemas, sdk-code-convertors: Add the `parameter` object type to analytics-as-code for textual parameters — `type: parameter` YAML with a `definition` of `type: STRING`, a default value and optional constraints (length bounds or a governed allowed-value list), plus `declarativeParameterToYaml` / `yamlParameterToDeclarative` so string parameters clone from and deploy to a workspace; metrics referencing `{parameter/id}` in MAQL now resolve, so the reference is validated, navigable, renameable, and protects the parameter from deletion. Parameters of other data types keep whatever created them and are left untouched by clone and deploy",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "nikola.cech@gooddata.com"
+}

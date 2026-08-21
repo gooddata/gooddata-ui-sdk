@@ -11,8 +11,10 @@ import {
     type IGenAIUserContext,
     type IGenAIUserContextRelativeDateFilter,
     type IGenAIWidgetDescriptor,
+    type IInsight,
     type IWidget,
     type ObjRef,
+    insightVisualizationUrl,
     isAttributeElementsByRef,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
@@ -151,6 +153,7 @@ export function buildWidgetsContext(
     widgetsMap: Pick<Map<ObjRef, IWidget>, "values" | "get"> | undefined,
     resultsIdMap?: Pick<Map<string, string | undefined>, "values" | "get">,
     visualizationSwitcherActiveVisualizations?: Record<string, string>,
+    insightsMap?: Pick<Map<ObjRef, IInsight>, "get">,
 ): { widgets: IGenAIWidgetDescriptor[]; referencedObjects: IGenAIObjectReference[] } {
     const widgets: IGenAIWidgetDescriptor[] = [];
     const referencedObjects: IGenAIObjectReference[] = [];
@@ -175,6 +178,7 @@ export function buildWidgetsContext(
                     buildWidgetContext(widget.title, widget.ref, "insight", {
                         insightRef: widget.insight,
                         resultId: resultsIdMap?.get(serializeObjRef(widget.ref)),
+                        ...visualizationUrlOf(insightsMap, widget.insight),
                     }),
                 );
                 referencedObjects.push({ type: "WIDGET", ref: widget.ref, title: widget.title });
@@ -196,11 +200,13 @@ export function buildWidgetsContext(
                         resultId: activeVisualization
                             ? resultsIdMap?.get(serializeObjRef(activeVisualization.ref))
                             : undefined,
+                        ...visualizationUrlOf(insightsMap, activeVisualization?.insight),
                         // All child insights, so the BE can execute the non-active children
                         // (which have no cached result).
                         visualizations: widget.visualizations.map((v) =>
                             buildWidgetContext(v.title, v.ref, "insight", {
                                 insightRef: v.insight,
+                                ...visualizationUrlOf(insightsMap, v.insight),
                             }),
                         ),
                     },
@@ -225,6 +231,15 @@ export function buildWidgetsContext(
 }
 
 //utils
+
+function visualizationUrlOf(
+    insightsMap: Pick<Map<ObjRef, IInsight>, "get"> | undefined,
+    insightRef: ObjRef | undefined,
+): { visualizationUrl?: string } {
+    const insight = insightRef ? insightsMap?.get(insightRef) : undefined;
+
+    return insight ? { visualizationUrl: insightVisualizationUrl(insight) } : {};
+}
 
 type GenAIRelativeGranularity = IGenAIUserContextRelativeDateFilter["granularity"];
 

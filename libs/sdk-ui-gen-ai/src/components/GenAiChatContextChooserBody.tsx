@@ -23,7 +23,7 @@ import {
 
 import { type IGenAIContextObject } from "../types.js";
 
-import { getIconByType } from "./utils/icons.js";
+import { getIconByObject } from "./utils/icons.js";
 
 const SEARCH_FIELD_VISIBILITY_THRESHOLD = 7;
 const SEARCH_DEBOUNCE_MS = 300;
@@ -215,10 +215,10 @@ export function GenAiChatContextChooserBody({
 }
 
 function ContextChooserItem({ item, onSelect }: { item: IGenAIContextObject; onSelect: () => void }) {
-    const icon = getIconByType(item.type);
+    const icon = getIconByObject(item);
 
     return (
-        <div className="gd-list-item" title={item.title} onClick={onSelect}>
+        <div className="gd-list-item" onClick={onSelect}>
             {icon.iconBefore ? <UiIcon size={16} type={icon.iconBefore} color={icon.iconColor} /> : null}
             <ShortenedText ellipsisPosition="end">{item.title}</ShortenedText>
         </div>

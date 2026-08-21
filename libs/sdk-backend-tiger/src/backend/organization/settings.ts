@@ -55,6 +55,10 @@ export class OrganizationSettingsService
         return this.setSetting("TIMEZONE", { value: timezone });
     }
 
+    public async setEnableTimezoneChange(enabled: boolean): Promise<void> {
+        return this.setSetting("ENABLE_TIMEZONE_CHANGE", { value: enabled });
+    }
+
     public override async setSeparators(separators: ISeparators): Promise<void> {
         return this.setSetting("SEPARATORS", separators);
     }

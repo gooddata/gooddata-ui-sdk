@@ -10,6 +10,9 @@ export const DateDatasetTypes = ["date"];
 export const MetricTypes = ["metric"];
 
 /** @internal */
+export const ParameterTypes = ["parameter"];
+
+/** @internal */
 export const DashboardTypes = ["dashboard"];
 
 /** @internal */
@@ -50,6 +53,7 @@ export const AllTypes = [
     ...DatasetTypes,
     ...DateDatasetTypes,
     ...MetricTypes,
+    ...ParameterTypes,
     ...DashboardTypes,
     ...PluginTypes,
     ...VisualisationsTypes,

@@ -373,7 +373,14 @@ describe("searching", () => {
         expect(dispatched).toContainEqual(
             contextObjectsPageLoadedAction({
                 kind: "visualization",
-                items: [{ id: "v1", ref: idRef("v1", "insight"), title: "Insight v1" }],
+                items: [
+                    {
+                        id: "v1",
+                        ref: idRef("v1", "insight"),
+                        title: "Insight v1",
+                        visualizationUrl: "local:table",
+                    },
+                ],
                 hasNextPage: false,
             }),
         );
@@ -413,7 +420,14 @@ describe("loadContextObjectsNextPage", () => {
         expect(dispatched).toContainEqual(
             contextObjectsPageLoadedAction({
                 kind: "visualization",
-                items: [{ id: "v1", ref: idRef("v1", "insight"), title: "Insight v1" }],
+                items: [
+                    {
+                        id: "v1",
+                        ref: idRef("v1", "insight"),
+                        title: "Insight v1",
+                        visualizationUrl: "local:table",
+                    },
+                ],
                 hasNextPage: false,
             }),
         );
@@ -432,8 +446,18 @@ describe("loadContextObjectsNextPage", () => {
             setContextObjectsAction({
                 kind: "visualization",
                 items: [
-                    { id: "v1", ref: idRef("v1", "insight"), title: "Insight v1" },
-                    { id: "v2", ref: idRef("v2", "insight"), title: "Insight v2" },
+                    {
+                        id: "v1",
+                        ref: idRef("v1", "insight"),
+                        title: "Insight v1",
+                        visualizationUrl: "local:table",
+                    },
+                    {
+                        id: "v2",
+                        ref: idRef("v2", "insight"),
+                        title: "Insight v2",
+                        visualizationUrl: "local:table",
+                    },
                 ],
             }),
         );

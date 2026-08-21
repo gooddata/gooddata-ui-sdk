@@ -145,6 +145,7 @@ export function CustomUiMenuHeaderComponent() {
                 widget={menuCtxData.widget}
                 insight={menuCtxData.insight}
                 renderMode={menuCtxData.renderMode}
+                titleId={menuCtxData.titleId}
             />
             <UiIconButton
                 size={"small"}

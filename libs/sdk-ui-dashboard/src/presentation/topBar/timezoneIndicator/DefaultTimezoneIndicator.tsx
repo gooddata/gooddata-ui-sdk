@@ -3,7 +3,7 @@
 import { type ReactElement } from "react";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
-import { selectEnableDashboardTimezone } from "../../../model/store/config/configSelectors.js";
+import { selectEnableTimezoneChange } from "../../../model/store/config/configSelectors.js";
 import { selectIsInViewMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 
 import { TimezoneIndicator } from "./TimezoneIndicator.js";
@@ -16,9 +16,9 @@ import { type ITimezoneIndicatorProps } from "./types.js";
  * @alpha
  */
 export function DefaultTimezoneIndicator(props: ITimezoneIndicatorProps): ReactElement | null {
-    const enableDashboardTimezone = useDashboardSelector(selectEnableDashboardTimezone);
+    const enableTimezoneChange = useDashboardSelector(selectEnableTimezoneChange);
     const isInViewMode = useDashboardSelector(selectIsInViewMode);
-    if (!enableDashboardTimezone || !isInViewMode) {
+    if (!enableTimezoneChange || !isInViewMode) {
         return null;
     }
     return <TimezoneIndicator {...props} />;

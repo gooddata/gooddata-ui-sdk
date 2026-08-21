@@ -102,7 +102,46 @@ export interface IAutomationsContextValue {
     allowHourlyRecurrence: boolean;
     currentUser: IUser;
     weekStart: WeekStart;
+    /**
+     * Automation timezone to display and compute schedule ("Starts on", alert crons, next-run):
+     * the effective dashboard timezone when one is defined, otherwise the workspace setting.
+     * Initial value for new schedule is same as exportTimezones.effectiveTimezone,
+     * but then can be never changed for existing schedule.
+     * Logic that needs to know where the timezone came from should use {@link IAutomationsContextValue.exportTimezones} instead.
+     */
     timezone: string | undefined;
+    /**
+     * Timezone inputs of the scheduled-export "Time zone" section, read from the dashboard store
+     * by the connectors layer — the scheduledEmail tree must not touch the store itself.
+     */
+    exportTimezones?: {
+        /**
+         * The enableTimezoneChange setting.
+         */
+        isTimezoneFeatureEnabled: boolean;
+        /**
+         * Whether the dashboard allows the view-mode timezone override; gates the whole section.
+         */
+        allowUserOverrideInViewMode: boolean;
+        /**
+         * The dashboard's stored timezone configuration id (may be the browser-detected sentinel).
+         */
+        configuredTimezoneId: string | undefined;
+        /**
+         * The workspace/organization settings-hierarchy timezone.
+         */
+        workspaceTimezone: string | undefined;
+        /**
+         * The effective dashboard execution timezone (override wins over config, sentinel
+         * resolved).
+         */
+        effectiveTimezone: string | undefined;
+        /**
+         * Timezone only when the backend cannot derive it at run time (view-mode override or
+         * resolved browser detection); undefined for an explicitly configured dashboard timezone.
+         */
+        scheduledExportTimezone: string | undefined;
+    };
     isWhiteLabeled: boolean;
     isSecondaryTitleVisible: boolean;
     externalRecipient: string | undefined;

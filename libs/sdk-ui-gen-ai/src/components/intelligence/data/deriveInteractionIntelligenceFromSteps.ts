@@ -39,10 +39,38 @@ interface ICategoryAccumulator {
 /** `stepId` of the memory step. The backend records none for it, so this collides with no real one. */
 const MEMORY_STEP_ID = "memory";
 
+/**
+ * Skills hidden from the skill-routing card. Neither is user-configurable — Object search is
+ * auto-attached to every agent, Knowledge search comes from the agent's "AI knowledge" setting —
+ * so showing them implies a routing decision the model never made. The detail identifies skills
+ * by title only; these literals mirror the backend's `SearchSkill`/`KnowledgeSkill` title constants.
+ */
+const HIDDEN_SKILL_TITLES = ["Object search", "Knowledge search"];
+
+/**
+ * Drops the hidden skills from a skill-routing detail, and the whole detail when no configurable
+ * skill was available — routing over auto-attached skills alone is no decision to display. Other
+ * categories pass through unchanged.
+ */
+function filterHiddenSkills(detail: IChatConversationItemDetail): IChatConversationItemDetail | undefined {
+    if (detail.category !== "skillRouting") {
+        return detail;
+    }
+    const available = detail.available.filter((title) => !HIDDEN_SKILL_TITLES.includes(title));
+    if (available.length === 0) {
+        return undefined;
+    }
+    return {
+        ...detail,
+        available,
+        activated: detail.activated.filter((title) => !HIDDEN_SKILL_TITLES.includes(title)),
+    };
+}
+
 /** The details of the work done before the first step — the memory applied to the turn. */
 function preStepDetails(trace: IChatConversationResponseTrace): IChatConversationItemDetail[] {
     return (trace.responseDetails ?? [])
-        .map(({ detail }) => detail)
+        .map(({ detail }) => (detail ? filterHiddenSkills(detail) : undefined))
         .filter((detail): detail is IChatConversationItemDetail => !!detail);
 }
 
@@ -99,7 +127,8 @@ export function deriveInteractionIntelligenceFromSteps(
         const actions = trace.detailsByStepId[step.stepId] ?? [];
         const categoriesInStep: GenAIInteractionStepCategory[] = [];
 
-        for (const { detail } of actions) {
+        for (const action of actions) {
+            const detail = action.detail ? filterHiddenSkills(action.detail) : undefined;
             if (!detail) {
                 continue;
             }

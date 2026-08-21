@@ -21,6 +21,9 @@ export type AccessGranularPermission = "VIEW" | "EDIT" | "SHARE";
 export type AgentCustomSkill = "alert" | "anomaly_detection" | "clustering" | "dashboard_summary" | "forecasting" | "key_driver_analysis" | "metric" | "schedule_export" | "visualization" | "visualization_summary" | "what_if_analysis" | "knowledge";
 
 // @alpha
+export type AgentInstructionStrategy = "ALWAYS" | "AUTO";
+
+// @alpha
 export type AgentSkillsMode = "all" | "custom";
 
 // @public
@@ -1023,6 +1026,7 @@ export interface IAgent {
     customSkills?: AgentCustomSkill[] | null;
     description?: string;
     enabled?: boolean;
+    instructions?: IAgentInstruction[];
     isPreview?: boolean;
     lastUsedAt?: string;
     modifiedAt?: string;
@@ -1032,6 +1036,14 @@ export interface IAgent {
     ref: ObjRef;
     skillsMode?: AgentSkillsMode;
     userGroups?: IUserGroup[];
+}
+
+// @alpha
+export interface IAgentInstruction {
+    content: string;
+    isDisabled?: boolean;
+    strategy: AgentInstructionStrategy;
+    title?: string;
 }
 
 // @alpha
@@ -1399,7 +1411,7 @@ export interface IAutomationAlertComparisonCondition {
 export type IAutomationAlertCondition = IAutomationAlertComparisonCondition | IAutomationAlertRelativeCondition | IAutomationAnomalyDetectionCondition;
 
 // @alpha (undocumented)
-export type IAutomationAlertExecutionDefinition = Pick<IExecutionDefinition, "attributes" | "measures" | "filters"> & {
+export type IAutomationAlertExecutionDefinition = Pick<IExecutionDefinition, "attributes" | "measures" | "filters" | "executionConfig"> & {
     readonly auxMeasures?: IMeasure[];
     readonly parameters?: IInsightParameterValue[];
 };
@@ -2666,6 +2678,7 @@ export type IExportDefinitionDashboardRequestPayload = {
     settings?: IExportDefinitionDashboardSettings;
     content: IExportDefinitionDashboardContent;
     templateId?: string;
+    timezoneId?: string;
 };
 
 // @alpha
@@ -2712,6 +2725,7 @@ export type IExportDefinitionVisualizationObjectRequestPayload = {
     settings?: IExportDefinitionVisualizationObjectSettings;
     content: IExportDefinitionVisualizationObjectContent;
     templateId?: string;
+    timezoneId?: string;
 };
 
 // @alpha
@@ -2858,6 +2872,7 @@ export interface IFeatureFlags {
     enableAbsoluteDateFilterGranularity?: boolean;
     enableAccessibilityMode?: boolean;
     enableAccessibleChartTooltip?: boolean;
+    enableAgentInstructions?: boolean;
     enableAiAgenticConversations?: boolean;
     enableAiAgenticMultiConversations?: boolean;
     enableAiAgenticSuggestions?: boolean;
@@ -2919,6 +2934,7 @@ export interface IFeatureFlags {
     enableGenAICatalogQualityChecker?: boolean;
     enableGenAIChat?: boolean;
     enableGenAiInteractionIntelligence?: boolean;
+    enableGenAiInteractionIntelligence_timeline?: boolean;
     enableGenAIMemory?: boolean;
     enableGenAiObservability?: boolean;
     enableGenAiReasoningEffort?: boolean;
@@ -2986,6 +3002,7 @@ export interface IFeatureFlags {
     enableStarrocksDataSource?: boolean;
     enableStringParameters?: boolean;
     enableSystemAccountFiltering?: boolean;
+    enableTimezoneChange?: boolean;
     enableUserDataFiltersUi?: boolean;
     enableVisualizationFilteringByTags?: boolean;
     enableVisualizationFineTuning?: boolean;
@@ -3263,6 +3280,7 @@ export interface IGenAIWidgetDescriptor {
     resultId?: string;
     title: string;
     visualizations?: IGenAIWidgetDescriptor[];
+    visualizationUrl?: string;
     widgetRef: ObjRef;
     widgetType: "insight" | "visualizationSwitcher" | "richText";
 }
@@ -6591,6 +6609,9 @@ export type LocalPluggableApplicationsRegistry = ILocalPluggableApplicationsRegi
 
 // @public
 export type MatchFilterOperator = "contains" | "startsWith" | "endsWith";
+
+// @alpha
+export const MAX_AGENT_INSTRUCTIONS = 50;
 
 // @public
 export type MeasureAggregation = "sum" | "count" | "approximate_count" | "avg" | "min" | "max" | "median" | "runsum";

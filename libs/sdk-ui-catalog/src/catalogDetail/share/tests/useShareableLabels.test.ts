@@ -1,29 +1,42 @@
 // (C) 2026 GoodData Corporation
 
-import { renderHook } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { type PropsWithChildren, createElement } from "react";
 
+import { renderHook, waitFor } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+
+import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
-
-// Module mocks are hoisted before imports by vitest.
-vi.mock("@gooddata/sdk-ui", () => ({
-    useBackendStrict: vi.fn(() => ({})),
-    useWorkspaceStrict: vi.fn(() => "test-workspace"),
-    useCancelablePromise: vi.fn(),
-}));
-
-import { type UseCancelablePromiseStatus, useCancelablePromise } from "@gooddata/sdk-ui";
+import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
 import type { ShareableCatalogItem } from "../types.js";
 import { useShareableLabels } from "../useShareableLabels.js";
 
-const mockedPromise = vi.mocked(useCancelablePromise);
-
-function mockPromise(status: UseCancelablePromiseStatus, result?: unknown) {
-    mockedPromise.mockReturnValue({ status, result, error: undefined } as ReturnType<
-        typeof useCancelablePromise
-    >);
+/**
+ * The hook talks to the backend through the real providers on purpose: mocking
+ * `@gooddata/sdk-ui` module-wide leaks into every other test file once the suite
+ * runs without isolation, so the attribute fetch is steered by this stub instead.
+ */
+function createBackend(getAttribute: () => Promise<unknown>): IAnalyticalBackend {
+    return {
+        workspace: () => ({
+            attributes: () => ({ getAttribute }),
+        }),
+    } as unknown as IAnalyticalBackend;
 }
+
+function createWrapper(getAttribute: () => Promise<unknown>) {
+    const backend = createBackend(getAttribute);
+
+    return ({ children }: PropsWithChildren) =>
+        createElement(
+            BackendProvider,
+            { backend },
+            createElement(WorkspaceProvider, { workspace: "test-workspace" }, children),
+        );
+}
+
+const neverSettles = () => new Promise<never>(() => {});
 
 const itemBase = {
     description: "",
@@ -59,43 +72,50 @@ describe("useShareableLabels", () => {
     it("reports a fact as not loading with no labels (no fetch)", () => {
         // A fact never fetches, so useCancelablePromise sits at "pending" forever —
         // but the hook must not treat that as loading, or Add would stay disabled.
-        mockPromise("pending");
-
-        const { result } = renderHook(() => useShareableLabels(fact));
+        const { result } = renderHook(() => useShareableLabels(fact), {
+            wrapper: createWrapper(neverSettles),
+        });
 
         expect(result.current.loading).toBe(false);
         expect(result.current.labels).toEqual([]);
     });
 
     it("reports a measure as not loading with no labels (no fetch)", () => {
-        mockPromise("pending");
-
-        const { result } = renderHook(() => useShareableLabels(measure));
+        const { result } = renderHook(() => useShareableLabels(measure), {
+            wrapper: createWrapper(neverSettles),
+        });
 
         expect(result.current.loading).toBe(false);
         expect(result.current.labels).toEqual([]);
     });
 
     it("reports an attribute as loading until its fetch settles", () => {
-        mockPromise("loading");
-
-        const { result } = renderHook(() => useShareableLabels(attribute));
+        const { result } = renderHook(() => useShareableLabels(attribute), {
+            wrapper: createWrapper(neverSettles),
+        });
 
         expect(result.current.loading).toBe(true);
         expect(result.current.labels).toEqual([]);
     });
 
-    it("maps display forms and stops loading once the attribute resolves", () => {
-        mockPromise("success", {
-            displayForms: [
-                { ref: idRef("attr.region.name"), title: "Name", isPrimary: true, isDefault: false },
-                { ref: idRef("attr.region.code"), title: "Code", isPrimary: false, isDefault: true },
-            ],
+    it("maps display forms and stops loading once the attribute resolves", async () => {
+        const getAttribute = () =>
+            Promise.resolve({
+                displayForms: [
+                    { ref: idRef("attr.region.name"), title: "Name", isPrimary: true, isDefault: false },
+                    { ref: idRef("attr.region.code"), title: "Code", isPrimary: false, isDefault: true },
+                ],
+            });
+
+        const { result } = renderHook(() => useShareableLabels(attribute), {
+            wrapper: createWrapper(getAttribute),
         });
 
-        const { result } = renderHook(() => useShareableLabels(attribute));
+        await waitFor(() => {
+            expect(result.current.loading).toBe(false);
+        });
 
-        expect(result.current.loading).toBe(false);
+        expect(result.current.error).toBe(false);
         expect(result.current.labels).toEqual([
             {
                 ref: idRef("attr.region.name"),
@@ -114,12 +134,16 @@ describe("useShareableLabels", () => {
         ]);
     });
 
-    it("stops loading on a failed attribute fetch so Add isn't stuck disabled", () => {
-        mockPromise("error");
+    it("stops loading on a failed attribute fetch so Add isn't stuck disabled", async () => {
+        const { result } = renderHook(() => useShareableLabels(attribute), {
+            wrapper: createWrapper(() => Promise.reject(new Error("fetch failed"))),
+        });
 
-        const { result } = renderHook(() => useShareableLabels(attribute));
+        await waitFor(() => {
+            expect(result.current.loading).toBe(false);
+        });
 
-        expect(result.current.loading).toBe(false);
+        expect(result.current.error).toBe(true);
         expect(result.current.labels).toEqual([]);
     });
 });

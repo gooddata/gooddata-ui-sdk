@@ -3,7 +3,7 @@
 import { call, cancelled, getContext, put, select } from "redux-saga/effects";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { insightRef, insightTitle } from "@gooddata/sdk-model";
+import { insightRef, insightTitle, insightVisualizationUrl } from "@gooddata/sdk-model";
 
 import { type ContextObjectKind, type ContextObjectsState, type IGenAIContextListItem } from "../../types.js";
 import { toContextListItem } from "../../utils.js";
@@ -118,7 +118,9 @@ function* getExternalItems(kind: ContextObjectKind) {
 
     return options
         .getVisualizations()
-        ?.map((insight) => toContextListItem(insightRef(insight), insightTitle(insight)));
+        ?.map((insight) =>
+            toContextListItem(insightRef(insight), insightTitle(insight), insightVisualizationUrl(insight)),
+        );
 }
 
 function* queryDashboardsPage(page: number, search: string) {
@@ -164,7 +166,9 @@ function* queryVisualizationsPage(page: number, search: string) {
     const result: Awaited<ReturnType<typeof queryCall>> = yield call(queryCall);
 
     return {
-        items: result.items.map((insight) => toContextListItem(insightRef(insight), insightTitle(insight))),
+        items: result.items.map((insight) =>
+            toContextListItem(insightRef(insight), insightTitle(insight), insightVisualizationUrl(insight)),
+        ),
         hasNextPage: hasNextPage(result),
     } satisfies ContextObjectsPage;
 }
