@@ -178,7 +178,13 @@ export function* changeFilterContextSelectionHandler(
     ctx: DashboardContext,
     cmd: ChangeFilterContextSelection,
 ): SagaIterator<void> {
-    const { filters, resetOthers, attributeFilterConfigs = [], tabLocalIdentifier } = cmd.payload;
+    const {
+        filters,
+        resetOthers,
+        attributeFilterConfigs = [],
+        tabLocalIdentifier,
+        matchByLocalIdentifier = false,
+    } = cmd.payload;
 
     // Validate that the target tab exists if tabLocalIdentifier is provided
     if (tabLocalIdentifier) {
@@ -243,6 +249,14 @@ export function* changeFilterContextSelectionHandler(
     ).reverse();
 
     const uniqueFilters = uniqBy(supportedFilters, (filter) => {
+        if (matchByLocalIdentifier && isDashboardAttributeFilter(filter)) {
+            const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
+            if (localIdentifier) {
+                // The prefix keeps localIdentifier keys different from display form keys that have
+                // the same string value.
+                return `localId:${localIdentifier}`;
+            }
+        }
         const identification = isDashboardAttributeFilter(filter)
             ? dashboardAttributeFilterItemDisplayForm(filter)
             : filter.dateFilter.dataSet;
@@ -287,6 +301,7 @@ export function* changeFilterContextSelectionHandler(
                 ctx,
                 tabLocalIdentifier,
                 selectionTypeMap,
+                matchByLocalIdentifier,
             ),
             call(getDateFilterUpdateActions, commonDateFilter, resetOthers, tabLocalIdentifier),
             call(getDateFiltersUpdateActions, dateFiltersWithDimension, resetOthers, tabLocalIdentifier),
@@ -324,6 +339,8 @@ function* getDashboardFilterByAttributeMatching(
     resolvedDisplayForms: DisplayFormResolutionResult,
     ctx: DashboardContext,
     tabLocalIdentifier?: string,
+    isFilterExcluded?: (filter: IDashboardAttributeFilter) => boolean,
+    areDisplayFormsEquivalent: (a: ObjRef, b: ObjRef) => boolean = areObjRefsEqual,
 ) {
     if (isUriRef(filterRef) && !ctx.backend.capabilities.supportsObjectUris) {
         throw new NotSupported("Unsupported filter ObjRef! Please provide IdentifierRef instead of UriRef.");
@@ -338,17 +355,33 @@ function* getDashboardFilterByAttributeMatching(
     const attribute = filterDF?.attribute && resolvedAttribute.resolved.get(filterDF?.attribute);
 
     for (const displayForm of attribute?.displayForms ?? []) {
-        const dashboardFilter: ReturnType<typeof selectFilterContextAttributeFilterByDisplayForm> =
-            yield call(
-                selectFilterContextAttributeFilterByDisplayFormTabAware,
-                displayForm.ref,
-                tabLocalIdentifier,
-            );
-        if (dashboardFilter) {
+        const dashboardFilter: ReturnType<
+            ReturnType<typeof selectFilterContextAttributeFilterByDisplayForm>
+        > = yield call(
+            selectFilterContextAttributeFilterByDisplayFormTabAware,
+            displayForm.ref,
+            tabLocalIdentifier,
+        );
+        if (dashboardFilter && !isFilterExcluded?.(dashboardFilter)) {
             return dashboardFilter;
         }
+        if (dashboardFilter && isFilterExcluded) {
+            // The first match with this display form is excluded. Continue with a free filter.
+            const contextFilters: SagaReturnType<typeof selectFilterContextAttributeFiltersTabAware> =
+                yield call(selectFilterContextAttributeFiltersTabAware, tabLocalIdentifier);
+            const freeFilter = contextFilters.find(
+                (candidate) =>
+                    areDisplayFormsEquivalent(
+                        dashboardAttributeFilterItemDisplayForm(candidate),
+                        dashboardAttributeFilterItemDisplayForm(dashboardFilter),
+                    ) && !isFilterExcluded(candidate),
+            );
+            if (freeFilter) {
+                return freeFilter;
+            }
+        }
     }
-    return null;
+    return undefined;
 }
 
 function* getDashboardFilterByDisplayAsLabelMatching(
@@ -451,6 +484,7 @@ function* getAttributeFiltersUpdateActions(
     ctx: DashboardContext,
     tabLocalIdentifier?: string,
     selectionTypeMap?: Map<string, DashboardAttributeFilterSelectionType | undefined>,
+    matchByLocalIdentifier?: boolean,
 ): SagaIterator<{ actions: AnyAction[]; displayFormsToResolve: ObjRef[] }> {
     const updateActions: AnyAction[] = [];
     const displayFormsToResolve: ObjRef[] = [];
@@ -461,15 +495,134 @@ function* getAttributeFiltersUpdateActions(
         attributeFilters.map((af) => dashboardAttributeFilterItemDisplayForm(af)),
     );
 
+    // A payload can give a display form as a URI ref, and the dashboard can store it as an
+    // identifier ref. The two refs are equal when they point to the same display form metadata.
+    const displayFormsMap: SagaReturnType<typeof selectAttributeFilterDisplayFormsMap> = yield select(
+        selectAttributeFilterDisplayFormsMap,
+    );
+    const areSameDisplayForms = (a: ObjRef, b: ObjRef): boolean => {
+        if (areObjRefsEqual(a, b)) {
+            return true;
+        }
+        const metadataA = displayFormsMap.get(a);
+        const metadataB = displayFormsMap.get(b);
+        return !!metadataA && !!metadataB && metadataA.id === metadataB.id;
+    };
+
+    // The selection type config decides which filter kinds a candidate accepts.
+    const selectionTypeOf = (
+        candidate: DashboardAttributeFilterItem,
+    ): DashboardAttributeFilterSelectionType | undefined => {
+        const candidateLocalId = dashboardAttributeFilterItemLocalIdentifier(candidate);
+        return candidateLocalId ? selectionTypeMap?.get(candidateLocalId) : undefined;
+    };
+
+    // Exact localIdentifier matches claim their targets before the loops start. A payload entry
+    // without an exact match can then not take a claimed filter through its display form fallback.
+    // An element filter's exact match is valid only when the display forms agree, because element
+    // values are valid only for one display form. When the display forms do not agree, the entry
+    // goes through the display form matching below. A text filter entry replaces the full filter,
+    // so its exact match is valid on the localIdentifier alone.
+    const claimedByLocalIdentifier = new Set<string>();
+    if (matchByLocalIdentifier) {
+        const claimEntries = [
+            ...attributeFilters.map((entry) => ({ entry, isElementEntry: true })),
+            ...textAttributeFilters.map((entry) => ({ entry, isElementEntry: false })),
+        ];
+        for (const { entry, isElementEntry } of claimEntries) {
+            const localId = dashboardAttributeFilterItemLocalIdentifier(entry);
+            if (!localId) {
+                continue;
+            }
+            const match: SagaReturnType<typeof selectFilterContextAttributeFilterItemByLocalIdTabAware> =
+                yield call(
+                    selectFilterContextAttributeFilterItemByLocalIdTabAware,
+                    localId,
+                    tabLocalIdentifier,
+                );
+            if (!match) {
+                continue;
+            }
+            if (
+                isElementEntry &&
+                !(
+                    isDashboardAttributeFilter(match) &&
+                    areSameDisplayForms(
+                        dashboardAttributeFilterItemDisplayForm(match),
+                        dashboardAttributeFilterItemDisplayForm(entry),
+                    )
+                )
+            ) {
+                continue;
+            }
+            claimedByLocalIdentifier.add(localId);
+        }
+    }
+
+    // A fallback target is taken in two conditions: a different payload entry claims it exactly,
+    // or an earlier payload entry has updated it. An entry can always use its own localIdentifier.
+    // Thus an exact match is never blocked.
+    const isTakenTarget = (candidateLocalId: string | undefined, ownLocalId: string | undefined): boolean =>
+        !!candidateLocalId &&
+        candidateLocalId !== ownLocalId &&
+        (claimedByLocalIdentifier.has(candidateLocalId) || handledLocalIds.has(candidateLocalId));
+
+    // This function keeps fallback matching one-to-one. It returns a free match unchanged. It
+    // replaces a taken match with the next free accepted filter that has the same display form.
+    // It returns nothing when no free filter exists. A taken target is never used, and it does
+    // not stop the search.
+    function* substituteTakenTarget<TItem extends DashboardAttributeFilterItem>(
+        matched: TItem,
+        ownLocalId: string | undefined,
+        acceptsCandidate: (candidate: DashboardAttributeFilterItem) => candidate is TItem,
+    ): SagaIterator<TItem | undefined> {
+        if (!isTakenTarget(dashboardAttributeFilterItemLocalIdentifier(matched), ownLocalId)) {
+            return matched;
+        }
+        const matchedDisplayForm = dashboardAttributeFilterItemDisplayForm(matched);
+        const contextItems: SagaReturnType<typeof selectFilterContextAttributeFilterItemsTabAware> =
+            yield call(selectFilterContextAttributeFilterItemsTabAware, tabLocalIdentifier);
+        return contextItems.find(
+            (candidate): candidate is TItem =>
+                acceptsCandidate(candidate) &&
+                areSameDisplayForms(dashboardAttributeFilterItemDisplayForm(candidate), matchedDisplayForm) &&
+                !isTakenTarget(dashboardAttributeFilterItemLocalIdentifier(candidate), ownLocalId),
+        );
+    }
+
     for (const attributeFilter of attributeFilters) {
         const filterRef = dashboardAttributeFilterItemDisplayForm(attributeFilter);
-        // only attribute filters with elements are relevant
         let dashboardFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByDisplayForm>> =
-            yield call(
+            undefined;
+
+        // When the option is set, the localIdentifier match must come first. Display form matching
+        // cannot tell apart two filters that use the same display form. The display form check
+        // occurs here again. Thus the exact match is correct on its own, and it does not depend on
+        // how the claimed set was built.
+        const incomingLocalId = dashboardAttributeFilterItemLocalIdentifier(attributeFilter);
+        if (matchByLocalIdentifier && incomingLocalId) {
+            const exactMatch: SagaReturnType<typeof selectFilterContextAttributeFilterByLocalIdTabAware> =
+                yield call(
+                    selectFilterContextAttributeFilterByLocalIdTabAware,
+                    incomingLocalId,
+                    tabLocalIdentifier,
+                );
+            if (
+                exactMatch &&
+                areSameDisplayForms(dashboardAttributeFilterItemDisplayForm(exactMatch), filterRef)
+            ) {
+                dashboardFilter = exactMatch;
+            }
+        }
+
+        if (!dashboardFilter) {
+            // only attribute filters with elements are relevant
+            dashboardFilter = yield call(
                 selectFilterContextAttributeFilterByDisplayFormTabAware,
                 filterRef,
                 tabLocalIdentifier,
             );
+        }
 
         if (!dashboardFilter && canMapDashboardFilterFromAnotherDisplayForm(ctx)) {
             dashboardFilter = yield call(
@@ -494,6 +647,43 @@ function* getAttributeFiltersUpdateActions(
             foundByDisplayAsLabel = result.foundByDisplayAsLabel;
             foundByDashboardFilterDisplayAsLabel = result.foundByDashboardFilterDisplayAsLabel;
             dashboardFilter = result.dashboardFilter;
+        }
+
+        // No fallback result may use a taken target. This applies to the direct display form
+        // match, the attribute matching, and the display-as-label matching. A rejected match is
+        // replaced with the next free filter that has the same display form. On backends that can
+        // match across the display forms of one attribute, a free filter with a different display
+        // form of that attribute is also accepted.
+        if (
+            matchByLocalIdentifier &&
+            dashboardFilter &&
+            isTakenTarget(dashboardAttributeFilterItemLocalIdentifier(dashboardFilter), incomingLocalId)
+        ) {
+            dashboardFilter = yield call(
+                substituteTakenTarget,
+                dashboardFilter,
+                incomingLocalId,
+                isDashboardAttributeFilter,
+            );
+            if (!dashboardFilter && canMapDashboardFilterFromAnotherDisplayForm(ctx)) {
+                dashboardFilter = yield call(
+                    getDashboardFilterByAttributeMatching,
+                    filterRef,
+                    resolvedDisplayForms,
+                    ctx,
+                    tabLocalIdentifier,
+                    (candidate) =>
+                        isTakenTarget(
+                            dashboardAttributeFilterItemLocalIdentifier(candidate),
+                            incomingLocalId,
+                        ),
+                    areSameDisplayForms,
+                );
+            }
+            if (!dashboardFilter) {
+                foundByDisplayAsLabel = false;
+                foundByDashboardFilterDisplayAsLabel = false;
+            }
         }
 
         const displayFormData = resolvedDisplayForms.resolved.get(filterRef);
@@ -591,6 +781,20 @@ function* getAttributeFiltersUpdateActions(
                 }
             }
 
+            // This fallback must not use a taken text target. Only a text filter that accepts a
+            // list entry is a valid substitute, so the search does not stop on a filter that the
+            // migration check below rejects.
+            if (matchByLocalIdentifier && targetTextFilter) {
+                targetTextFilter = yield call(
+                    substituteTakenTarget,
+                    targetTextFilter,
+                    sourceLocalId,
+                    (candidate: DashboardAttributeFilterItem): candidate is DashboardAttributeFilterItem =>
+                        isDashboardTextAttributeFilter(candidate) &&
+                        canApplyFilterTypeToTarget("list", selectionTypeOf(candidate), candidate),
+                );
+            }
+
             if (targetTextFilter && isDashboardTextAttributeFilter(targetTextFilter)) {
                 const targetLocalId = dashboardAttributeFilterItemLocalIdentifier(targetTextFilter)!;
                 const configSelectionType = selectionTypeMap?.get(targetLocalId);
@@ -655,7 +859,25 @@ function* getAttributeFiltersUpdateActions(
             continue;
         }
 
-        const targetLocalId = dashboardAttributeFilterItemLocalIdentifier(existingFilter)!;
+        let targetLocalId = dashboardAttributeFilterItemLocalIdentifier(existingFilter)!;
+        // The display form fallback of this entry must not use a taken target. The entry's own
+        // localIdentifier identifies its exact match, and that match is always permitted. Only a
+        // filter that accepts a text entry is a valid substitute, so the search does not stop on
+        // a filter that the migration check below rejects.
+        if (matchByLocalIdentifier) {
+            existingFilter = yield call(
+                substituteTakenTarget,
+                existingFilter,
+                localId,
+                (candidate: DashboardAttributeFilterItem): candidate is DashboardAttributeFilterItem =>
+                    isDashboardTextAttributeFilter(candidate) ||
+                    canApplyFilterTypeToTarget("text", selectionTypeOf(candidate), candidate),
+            );
+            if (!existingFilter) {
+                continue;
+            }
+            targetLocalId = dashboardAttributeFilterItemLocalIdentifier(existingFilter)!;
+        }
         if (handledLocalIds.has(targetLocalId)) {
             continue;
         }

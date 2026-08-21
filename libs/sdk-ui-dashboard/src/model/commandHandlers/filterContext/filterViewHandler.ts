@@ -184,6 +184,10 @@ export function* applyFilterViewHandler(ctx: DashboardContext, cmd: IApplyFilter
                 attributeFilterConfigs,
                 resetOthers: true,
                 correlationId: cmd.correlationId,
+                // a filter view snapshots this dashboard's own filter context, so its localIdentifiers
+                // are authoritative; display form matching alone cannot tell apart filters that share
+                // a display form
+                matchByLocalIdentifier: true,
             }),
         );
         if (filterView.parameters && filterView.parameters.length > 0) {

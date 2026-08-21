@@ -968,6 +968,8 @@
     "userManagement.workspace.permission.createFilterView.tooltip": "CREATE_FILTER_VIEW-toestemming toevoegen om dashboard filtercombinaties te maken en op te slaan voor snel hergebruik.",
     "userManagement.workspace.permission.createAutomation": "Waarschuwingen en geplande export",
     "userManagement.workspace.permission.createAutomation.tooltip": "CREATE_AUTOMATIONS-toestemming toevoegen om geautomatiseerde waarschuwingen en geplande exports te maken.",
+    "userManagement.workspace.permission.createMetric": "Meetgegevens",
+    "userManagement.workspace.permission.createMetric.tooltip": "Voegt de machtiging CREATE_METRIC toe om metrieken te maken, bewerken of verwijderen.",
     "userManagement.workspace.permission.useAiAssistant": "AI-assistent",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "Voegt USE_AI_ASSISTANT-toestemming toe voor toegang tot en interactie met de AI-chatbot voor analytische vragen.",
     "userManagement.workspace.granularPermission.noWorkspace": "Geen werkruimte geselecteerd",

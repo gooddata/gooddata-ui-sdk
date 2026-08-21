@@ -968,6 +968,8 @@
     "userManagement.workspace.permission.createFilterView.tooltip": "CREATE_FILTER_VIEW権限を追加し、ダッシュボード・フィルタの組み合わせを作成して保存し、すばやく再利用できるようにします。",
     "userManagement.workspace.permission.createAutomation": "アラートと予定されているエクスポート",
     "userManagement.workspace.permission.createAutomation.tooltip": "自動化されたアラートと予定されているエクスポートを作成するためのCREATE_AUTOMATIONS権限を追加します。",
+    "userManagement.workspace.permission.createMetric": "メトリック",
+    "userManagement.workspace.permission.createMetric.tooltip": "メトリックを作成、編集、または削除するための CREATE_METRIC 権限を追加します。",
     "userManagement.workspace.permission.useAiAssistant": "AIアシスタント",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "分析に関する質問のためにAIチャットボットにアクセスし、対話するためのUSE_AI_ASSISTANT権限を追加します。",
     "userManagement.workspace.granularPermission.noWorkspace": "ワークスペースが選択されていません",

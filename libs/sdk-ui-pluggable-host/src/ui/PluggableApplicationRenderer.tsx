@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type RefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type RefObject, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import { FormattedMessage, type MessageDescriptor, defineMessage, useIntl } from "react-intl";
 
@@ -22,6 +22,7 @@ import { LoadingComponent, useAutoupdateRef } from "@gooddata/sdk-ui";
 import { bemFactory } from "@gooddata/sdk-ui-kit";
 
 import { now } from "../debug.js";
+import { setActiveAppAttribute } from "../lib/activeAppAttribute.js";
 import {
     type AppSecurityFailure,
     getSecuredRemoteAppValidUntil,
@@ -341,6 +342,16 @@ export function PluggableApplicationRenderer({
 
         handle.updateContext?.(ctx);
     }, [ctx, intlRef, lifecycle, navigationRequestRef]);
+
+    // Keep the write here, not in the host container: the call site keys this component by app
+    // id, so the attribute changes in the same commit that swaps the app container. Driven from
+    // the container's own root it could name the incoming app while the outgoing app's DOM is
+    // still in the document. Must stay a layout effect — a passive one can run after the browser
+    // has already painted the incoming app under the outgoing app's id.
+    useLayoutEffect(() => {
+        setActiveAppAttribute(app.id);
+        return () => setActiveAppAttribute(undefined);
+    }, [app.id]);
 
     // Forward the host-owned chat open-state to the mounted app once it is ready, and on every
     // change, so app-side assistant controls stay aligned with the real (host) state (LX-2544).

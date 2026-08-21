@@ -1494,33 +1494,6 @@ export type DeclarativeAgentCustomSkillsEnum = 'alert' | 'anomaly_detection' | '
 export type DeclarativeAgentSkillsModeEnum = 'all' | 'custom';
 
 /**
- * Rule that an agent follows when answering.
- * @export
- * @interface Instruction
- */
-export interface Instruction {
-    /**
-     * The rule the agent follows when answering
-     */
-    'content': string;
-    /**
-     * Whether the instruction is disabled
-     */
-    'isDisabled'?: boolean | null;
-    /**
-     * When an instruction is applied to a request
-     */
-    'strategy': InstructionStrategyEnum;
-    /**
-     * Short name shown in the agent builder.
-     */
-    'title'?: string | null;
-}
-
-export type InstructionStrategyEnum = 'ALWAYS' | 'AUTO';
-
-
-/**
  * AI agent configurations.
  */
 export interface DeclarativeAgents {
@@ -4088,6 +4061,30 @@ export interface InlineMeasureDefinitionInline {
 }
 
 /**
+ * Rule that an agent follows when answering.
+ */
+export interface Instruction {
+    /**
+     * The rule the agent follows when answering
+     */
+    'content': string;
+    /**
+     * Whether the instruction is disabled
+     */
+    'isDisabled'?: boolean | null;
+    /**
+     * When an instruction is applied to a request
+     */
+    'strategy': InstructionStrategyEnum;
+    /**
+     * Short name shown in the agent builder.
+     */
+    'title'?: string | null;
+}
+
+export type InstructionStrategyEnum = 'ALWAYS' | 'AUTO';
+
+/**
  * Settings for intro slide.
  */
 export interface IntroSlideTemplate {
@@ -4147,8 +4144,6 @@ export type JsonApiAgentInAttributesSkillsModeEnum = 'all' | 'custom';
 
 /**
  * Rule that an agent follows when answering.
- * @export
- * @interface JsonApiAgentInAttributesInstructionsInner
  */
 export interface JsonApiAgentInAttributesInstructionsInner {
     /**
@@ -4170,7 +4165,6 @@ export interface JsonApiAgentInAttributesInstructionsInner {
 }
 
 export type JsonApiAgentInAttributesInstructionsInnerStrategyEnum = 'ALWAYS' | 'AUTO';
-
 
 export interface JsonApiAgentInDocument {
     'data': JsonApiAgentIn;
@@ -4228,8 +4222,6 @@ export type JsonApiAgentOutAttributesSkillsModeEnum = 'all' | 'custom';
 
 /**
  * Rule that an agent follows when answering.
- * @export
- * @interface JsonApiAgentOutAttributesInstructionsInner
  */
 export interface JsonApiAgentOutAttributesInstructionsInner {
     /**
@@ -4251,7 +4243,6 @@ export interface JsonApiAgentOutAttributesInstructionsInner {
 }
 
 export type JsonApiAgentOutAttributesInstructionsInnerStrategyEnum = 'ALWAYS' | 'AUTO';
-
 
 export interface JsonApiAgentOutDocument {
     'data': JsonApiAgentOut;
@@ -4360,8 +4351,6 @@ export type JsonApiAgentPatchAttributesSkillsModeEnum = 'all' | 'custom';
 
 /**
  * Rule that an agent follows when answering.
- * @export
- * @interface JsonApiAgentPatchAttributesInstructionsInner
  */
 export interface JsonApiAgentPatchAttributesInstructionsInner {
     /**
@@ -4383,7 +4372,6 @@ export interface JsonApiAgentPatchAttributesInstructionsInner {
 }
 
 export type JsonApiAgentPatchAttributesInstructionsInnerStrategyEnum = 'ALWAYS' | 'AUTO';
-
 
 export interface JsonApiAgentPatchDocument {
     'data': JsonApiAgentPatch;

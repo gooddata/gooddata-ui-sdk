@@ -36,6 +36,7 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsSe
             canCreateFilterView,
             canCreateAutomation,
             canUseAiAssistant,
+            canCreateMetric,
         } = getPermission(permissions);
 
         return {
@@ -69,6 +70,7 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsSe
             canExportPdf: canExportPdf || canExportReport,
             canCreateFilterView,
             canCreateAutomation,
+            canCreateMetric,
         };
     }
 }
@@ -83,6 +85,7 @@ function getPermission(permissions: Array<TigerPermissionType>) {
     const canCreateFilterView = hasPermission(permissions, "CREATE_FILTER_VIEW");
     const canCreateAutomation = hasPermission(permissions, "CREATE_AUTOMATION");
     const canUseAiAssistant = hasPermission(permissions, "USE_AI_ASSISTANT");
+    const canCreateMetric = hasPermission(permissions, "CREATE_METRIC");
 
     return {
         canViewWorkspace,
@@ -94,6 +97,7 @@ function getPermission(permissions: Array<TigerPermissionType>) {
         canCreateFilterView,
         canCreateAutomation,
         canUseAiAssistant,
+        canCreateMetric,
     };
 }
 

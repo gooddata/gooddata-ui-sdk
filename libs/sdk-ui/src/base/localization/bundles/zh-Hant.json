@@ -968,6 +968,8 @@
     "userManagement.workspace.permission.createFilterView.tooltip": "新增 CREATE_FILTER_VIEW 權限以建立和儲存儀表板篩選器組合以便快速重複使用。",
     "userManagement.workspace.permission.createAutomation": "警報和預定導出",
     "userManagement.workspace.permission.createAutomation.tooltip": "新增 CREATE_AUTOMATIONS 權限以建立自動警報和計劃匯出。",
+    "userManagement.workspace.permission.createMetric": "指標",
+    "userManagement.workspace.permission.createMetric.tooltip": "新增 CREATE_METRIC 權限，以建立、編輯或刪除指標。",
     "userManagement.workspace.permission.useAiAssistant": "人工智慧助手",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "新增 USE_AI_ASSISTANT 權限以存取和與 AI 聊天機器人互動以進行分析問題。",
     "userManagement.workspace.granularPermission.noWorkspace": "未選擇工作區",

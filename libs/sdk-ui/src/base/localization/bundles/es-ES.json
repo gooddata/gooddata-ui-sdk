@@ -968,6 +968,8 @@
     "userManagement.workspace.permission.createFilterView.tooltip": "Añade el permiso CREATE_FILTER_VIEW para crear y guardar combinaciones de filtros de cuadros de mando para reutilizarlos rápidamente.",
     "userManagement.workspace.permission.createAutomation": "Alertas y exportaciones programadas",
     "userManagement.workspace.permission.createAutomation.tooltip": "Añade el permiso CREATE_AUTOMATIONS para crear alertas automáticas y exportaciones programadas.",
+    "userManagement.workspace.permission.createMetric": "Métricas",
+    "userManagement.workspace.permission.createMetric.tooltip": "Agrega el permiso CREATE_METRIC para crear, editar o eliminar métricas.",
     "userManagement.workspace.permission.useAiAssistant": "Asistente de IA",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "Añade el permiso USE_AI_ASSISTANT para acceder e interactuar con el chatbot de IA para preguntas analíticas.",
     "userManagement.workspace.granularPermission.noWorkspace": "No hay espacio de trabajo seleccionado",

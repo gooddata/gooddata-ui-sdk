@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type ComponentType, PureComponent, type ReactNode } from "react";
+import { type ComponentType, type ReactNode, memo, useCallback, useEffect, useRef, useState } from "react";
 
 import { isEmpty, isEqual } from "lodash-es";
 
@@ -202,260 +202,187 @@ export interface IDateFilterState extends IDateFilterStatePropsIntersection {
     isExcludeCurrentPeriodEnabled: boolean;
 }
 
+function getStateFromProps(props: IDateFilterProps): IDateFilterState {
+    const canExcludeCurrent = canExcludeCurrentPeriod(props.selectedFilterOption);
+    return {
+        initSelectedFilterOption: props.selectedFilterOption,
+        selectedFilterOption: props.selectedFilterOption,
+        initExcludeCurrentPeriod: props.excludeCurrentPeriod,
+        excludeCurrentPeriod: canExcludeCurrent ? props.excludeCurrentPeriod : false,
+        isExcludeCurrentPeriodEnabled: canExcludeCurrent,
+        initWorkingSelectedFilterOption: props.workingSelectedFilterOption ?? props.selectedFilterOption,
+        initWorkingExcludeCurrentPeriod: props.workingExcludeCurrentPeriod ?? props.excludeCurrentPeriod,
+    };
+}
+
+function getStateFromWorkingProps(props: IDateFilterProps): IDateFilterState {
+    const selectedFilterOption = props.workingSelectedFilterOption ?? props.selectedFilterOption;
+    const canExcludeCurrent = canExcludeCurrentPeriod(selectedFilterOption);
+    return {
+        ...getStateFromProps(props),
+        selectedFilterOption: selectedFilterOption,
+        excludeCurrentPeriod: canExcludeCurrent
+            ? (props.workingExcludeCurrentPeriod ?? props.excludeCurrentPeriod)
+            : false,
+        initWorkingExcludeCurrentPeriod: props.workingExcludeCurrentPeriod ?? props.excludeCurrentPeriod,
+        initWorkingSelectedFilterOption: selectedFilterOption,
+        initExcludeCurrentPeriod: props.excludeCurrentPeriod,
+        isExcludeCurrentPeriodEnabled: canExcludeCurrent,
+    };
+}
+
+function getStateFromSelectedOption(
+    selectedFilterOption: DateFilterOption,
+    excludeCurrentPeriod: boolean,
+): Pick<IDateFilterState, "selectedFilterOption" | "excludeCurrentPeriod" | "isExcludeCurrentPeriodEnabled"> {
+    const canExcludeCurrent = canExcludeCurrentPeriod(selectedFilterOption);
+    return {
+        selectedFilterOption,
+        excludeCurrentPeriod: canExcludeCurrent ? excludeCurrentPeriod : false,
+        isExcludeCurrentPeriodEnabled: canExcludeCurrent,
+    };
+}
+
+/**
+ * Equivalent of the former `getDerivedStateFromProps`: re-syncs the state whenever the incoming
+ * props no longer match the `init*` sentinels stored in the state. Returns `null` when the state
+ * is already in sync.
+ */
+function getDerivedStateFromProps(
+    nextProps: IDateFilterProps,
+    prevState: IDateFilterState,
+): IDateFilterState | null {
+    if (
+        nextProps.withoutApply &&
+        nextProps.workingSelectedFilterOption &&
+        nextProps.excludeCurrentPeriod !== undefined &&
+        (!isEqual(nextProps.workingSelectedFilterOption, prevState.initWorkingSelectedFilterOption) ||
+            nextProps.workingExcludeCurrentPeriod !== prevState.initWorkingExcludeCurrentPeriod)
+    ) {
+        return getStateFromWorkingProps(nextProps);
+    }
+    if (
+        !isEqual(nextProps.selectedFilterOption, prevState.initSelectedFilterOption) ||
+        nextProps.excludeCurrentPeriod !== prevState.initExcludeCurrentPeriod
+    ) {
+        return getStateFromProps(nextProps);
+    }
+
+    return null;
+}
+
+function checkInitialFilterOption(filterOption: DateFilterOption) {
+    if (
+        isAbsoluteDateFilterForm(filterOption) &&
+        (filterOption.from === null ||
+            filterOption.from === undefined ||
+            filterOption.to === null ||
+            filterOption.to === undefined)
+    ) {
+        console.warn(
+            "The default filter option is not valid. Values 'from' and 'to' from absoluteForm filter option must be specified.",
+        );
+    }
+
+    if (
+        isUiRelativeDateFilterForm(filterOption) &&
+        (filterOption.from === null ||
+            filterOption.from === undefined ||
+            filterOption.to === null ||
+            filterOption.to === undefined)
+    ) {
+        console.warn(
+            "The default filter option is not valid. Values 'from' and 'to' from relativeForm filter option must be specified.",
+        );
+    }
+}
+
+function isSameOptionExceptEmptyValueHandling(a: DateFilterOption, b: DateFilterOption): boolean {
+    const { emptyValueHandling: _aEmptyValueHandling, ...aWithoutEmptyValueHandling } = a;
+    const { emptyValueHandling: _bEmptyValueHandling, ...bWithoutEmptyValueHandling } = b;
+
+    return isEqual(aWithoutEmptyValueHandling, bWithoutEmptyValueHandling);
+}
+
 /**
  * {@link https://www.gooddata.com/docs/gooddata-ui/latest/references/filters/date_filter | DateFilter} is a component for configuring a date filter value.
  *
  * @public
  */
-export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState> {
-    public static defaultProps: Partial<IDateFilterProps> = {
-        dateFormat: DEFAULT_DATE_FORMAT,
-        isEditMode: false,
-        isTimeForAbsoluteRangeEnabled: false,
-        isSecondsForAbsoluteRangeEnabled: false,
-        locale: "en-US",
-        onCancel: () => {},
-        onOpen: () => {},
-        onClose: () => {},
-        weekStart: "Sunday" as const,
-        withoutApply: false,
-        hideDisabledExclude: false,
-    };
+export const DateFilter = memo(function DateFilter(props: IDateFilterProps) {
+    const {
+        customFilterName,
+        dateFilterMode,
+        dateFormat = DEFAULT_DATE_FORMAT,
+        filterOptions,
+        selectedFilterOption: originalSelectedFilterOption,
+        excludeCurrentPeriod: originalExcludeCurrentPeriod,
+        availableGranularities,
+        isEditMode = false,
+        openOnInit,
+        locale = "en-US",
+        isTimeForAbsoluteRangeEnabled = false,
+        isSecondsForAbsoluteRangeEnabled = false,
+        weekStart = "Sunday",
+        customIcon,
+        showDropDownHeaderMessage,
+        FilterConfigurationComponent,
+        withoutApply = false,
+        ButtonComponent,
+        overlayPositionType,
+        activeCalendars,
+        enableEmptyDateValues,
+        customRangeHint,
+        hideDisabledExclude = false,
+        onApply,
+        onSelect,
+        onCancel = () => {},
+        onOpen = () => {},
+        onClose = () => {},
+    } = props;
 
-    public static getDerivedStateFromProps(
-        nextProps: IDateFilterProps,
-        prevState: IDateFilterState,
-    ): IDateFilterState | null {
-        if (
-            nextProps.withoutApply &&
-            nextProps.workingSelectedFilterOption &&
-            nextProps.excludeCurrentPeriod !== undefined &&
-            (!isEqual(nextProps.workingSelectedFilterOption, prevState.initWorkingSelectedFilterOption) ||
-                nextProps.workingExcludeCurrentPeriod !== prevState.initWorkingExcludeCurrentPeriod)
-        ) {
-            return DateFilter.getStateFromWorkingProps(nextProps);
-        }
-        if (
-            !isEqual(nextProps.selectedFilterOption, prevState.initSelectedFilterOption) ||
-            nextProps.excludeCurrentPeriod !== prevState.initExcludeCurrentPeriod
-        ) {
-            return DateFilter.getStateFromProps(nextProps);
-        }
+    const [storedState, setStoredState] = useState<IDateFilterState>(() => getStateFromProps(props));
 
-        return null;
+    // The class component read `this.state` at call time, so a handler invoked later than the
+    // render that produced it still saw the current state. Handlers of a function component
+    // capture their render instead, and the range picker defers the Enter submit by a tick (see
+    // `updateRangeState` in DateRangePicker) - the deferred `submitForm` therefore calls the
+    // `onApplyClick` of the render that scheduled it, i.e. from before the typed date was stored.
+    // Mirroring the state in a ref and updating it together with the state restores the original
+    // semantics for such deferred calls.
+    const stateRef = useRef(storedState);
+    const setState = useCallback((updater: (prevState: IDateFilterState) => IDateFilterState) => {
+        stateRef.current = updater(stateRef.current);
+        setStoredState(stateRef.current);
+    }, []);
+
+    // The class fired `onSelect` from a `setState` callback, i.e. only after the new state was
+    // committed and re-synced from the (possibly already updated) props. Firing it straight from
+    // the handler would emit the pre-commit option - most visibly on Apply, where the body runs
+    // `onApplyClick(); closeDropdown();` in a single batch, so the discard triggered by closing
+    // would report the option that Apply has just replaced. Handlers therefore only mark a
+    // pending emission here and the effect below fires it once the state has settled.
+    // `selectedFilterOption` is set when the handler already knows the option to report.
+    const pendingSelectRef = useRef<{ selectedFilterOption?: DateFilterOption } | null>(null);
+
+    // Replacement of the former `getDerivedStateFromProps`: the state is adjusted during render
+    // (see https://react.dev/reference/react/useState#storing-information-from-previous-renders)
+    // so that the re-synced option is rendered right away instead of flashing the stale one.
+    // The `isEqual` guard makes the extra render pass a no-op once the state is in sync.
+    let state = storedState;
+    const derivedState = getDerivedStateFromProps(props, storedState);
+    if (derivedState !== null && !isEqual(derivedState, storedState)) {
+        setState(() => derivedState);
+        state = derivedState;
     }
 
-    private static getStateFromProps(props: IDateFilterProps): IDateFilterState {
-        const canExcludeCurrent = canExcludeCurrentPeriod(props.selectedFilterOption);
-        return {
-            initSelectedFilterOption: props.selectedFilterOption,
-            selectedFilterOption: props.selectedFilterOption,
-            initExcludeCurrentPeriod: props.excludeCurrentPeriod,
-            excludeCurrentPeriod: canExcludeCurrent ? props.excludeCurrentPeriod : false,
-            isExcludeCurrentPeriodEnabled: canExcludeCurrent,
-            initWorkingSelectedFilterOption: props.workingSelectedFilterOption ?? props.selectedFilterOption,
-            initWorkingExcludeCurrentPeriod: props.workingExcludeCurrentPeriod ?? props.excludeCurrentPeriod,
-        };
-    }
+    useEffect(() => {
+        checkInitialFilterOption(originalSelectedFilterOption);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    private static getStateFromWorkingProps(props: IDateFilterProps): IDateFilterState {
-        const selectedFilterOption = props.workingSelectedFilterOption ?? props.selectedFilterOption;
-        const canExcludeCurrent = canExcludeCurrentPeriod(selectedFilterOption);
-        return {
-            ...DateFilter.getStateFromProps(props),
-            selectedFilterOption: selectedFilterOption,
-            excludeCurrentPeriod: canExcludeCurrent
-                ? (props.workingExcludeCurrentPeriod ?? props.excludeCurrentPeriod)
-                : false,
-            initWorkingExcludeCurrentPeriod: props.workingExcludeCurrentPeriod ?? props.excludeCurrentPeriod,
-            initWorkingSelectedFilterOption: selectedFilterOption,
-            initExcludeCurrentPeriod: props.excludeCurrentPeriod,
-            isExcludeCurrentPeriodEnabled: canExcludeCurrent,
-        };
-    }
-
-    private static getStateFromSelectedOption = (
-        selectedFilterOption: DateFilterOption,
-        excludeCurrentPeriod: boolean,
-    ) => {
-        const canExcludeCurrent = canExcludeCurrentPeriod(selectedFilterOption);
-        return {
-            selectedFilterOption,
-            excludeCurrentPeriod: canExcludeCurrent ? excludeCurrentPeriod : false,
-            isExcludeCurrentPeriodEnabled: canExcludeCurrent,
-        };
-    };
-
-    private static checkInitialFilterOption = (filterOption: DateFilterOption) => {
-        if (
-            isAbsoluteDateFilterForm(filterOption) &&
-            (filterOption.from === null ||
-                filterOption.from === undefined ||
-                filterOption.to === null ||
-                filterOption.to === undefined)
-        ) {
-            console.warn(
-                "The default filter option is not valid. Values 'from' and 'to' from absoluteForm filter option must be specified.",
-            );
-        }
-
-        if (
-            isUiRelativeDateFilterForm(filterOption) &&
-            (filterOption.from === null ||
-                filterOption.from === undefined ||
-                filterOption.to === null ||
-                filterOption.to === undefined)
-        ) {
-            console.warn(
-                "The default filter option is not valid. Values 'from' and 'to' from relativeForm filter option must be specified.",
-            );
-        }
-    };
-
-    constructor(props: IDateFilterProps) {
-        super(props);
-        this.state = DateFilter.getStateFromProps(props);
-    }
-
-    public override componentDidMount(): void {
-        DateFilter.checkInitialFilterOption(this.props.selectedFilterOption);
-    }
-
-    public override render() {
-        const {
-            customFilterName,
-            dateFilterMode,
-            dateFormat,
-            filterOptions,
-            selectedFilterOption: originalSelectedFilterOption,
-            excludeCurrentPeriod: originalExcludeCurrentPeriod,
-            availableGranularities,
-            isEditMode,
-            openOnInit,
-            locale,
-            isTimeForAbsoluteRangeEnabled,
-            isSecondsForAbsoluteRangeEnabled,
-            weekStart,
-            customIcon,
-            showDropDownHeaderMessage,
-            FilterConfigurationComponent,
-            withoutApply,
-            ButtonComponent,
-            overlayPositionType,
-            activeCalendars,
-            enableEmptyDateValues,
-            customRangeHint,
-        } = this.props;
-        const { excludeCurrentPeriod, selectedFilterOption, isExcludeCurrentPeriodEnabled } = this.state;
-        return dateFilterMode === "hidden" ? null : (
-            <DateFilterCore
-                availableGranularities={availableGranularities}
-                customFilterName={customFilterName}
-                dateFormat={dateFormat ?? DEFAULT_DATE_FORMAT}
-                openOnInit={openOnInit}
-                showDropDownHeaderMessage={showDropDownHeaderMessage}
-                disabled={dateFilterMode === "readonly"}
-                excludeCurrentPeriod={excludeCurrentPeriod}
-                originalExcludeCurrentPeriod={originalExcludeCurrentPeriod}
-                isExcludeCurrentPeriodEnabled={isExcludeCurrentPeriodEnabled}
-                hideDisabledExclude={this.props.hideDisabledExclude}
-                isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled ?? false}
-                isSecondsForAbsoluteRangeEnabled={isSecondsForAbsoluteRangeEnabled ?? false}
-                isEditMode={isEditMode ?? false}
-                filterOptions={filterOptions}
-                selectedFilterOption={selectedFilterOption}
-                originalSelectedFilterOption={originalSelectedFilterOption}
-                locale={locale}
-                onApplyClick={this.handleApplyClick}
-                onCancelClick={this.onCancelClicked}
-                onDropdownOpenChanged={this.onDropdownOpenChanged}
-                onExcludeCurrentPeriodChange={this.handleExcludeCurrentPeriodChange}
-                onSelectedFilterOptionChange={this.handleSelectedFilterOptionChange}
-                errors={validateFilterOption(selectedFilterOption)}
-                weekStart={weekStart}
-                customIcon={customIcon}
-                FilterConfigurationComponent={FilterConfigurationComponent}
-                withoutApply={withoutApply}
-                ButtonComponent={ButtonComponent}
-                overlayPositionType={overlayPositionType}
-                activeCalendars={activeCalendars}
-                enableEmptyDateValues={enableEmptyDateValues}
-                customRangeHint={customRangeHint}
-            />
-        );
-    }
-
-    private handleApplyClick = () => {
-        const normalizedSelectedFilterOption = this.normalizeEmptyValueHandling(
-            normalizeSelectedFilterOption(this.state.selectedFilterOption),
-        );
-        this.props.onApply(normalizedSelectedFilterOption, this.state.excludeCurrentPeriod);
-    };
-
-    private onChangesDiscarded = () => {
-        if (!this.props.withoutApply) {
-            this.setState(() => DateFilter.getStateFromProps(this.props), this.handleSelectChange);
-        } else if (
-            this.props.withoutApply &&
-            !isEmpty(validateFilterOption(this.state.selectedFilterOption))
-        ) {
-            this.setState(() => DateFilter.getStateFromWorkingProps(this.props));
-        }
-    };
-
-    private onCancelClicked = () => {
-        this.props.onCancel?.();
-        this.onChangesDiscarded();
-    };
-
-    private onDropdownOpenChanged = (isOpen: boolean) => {
-        if (isOpen) {
-            this.props.onOpen?.();
-        } else {
-            this.props.onClose?.();
-            this.onChangesDiscarded();
-        }
-    };
-
-    private handleExcludeCurrentPeriodChange = (excludeCurrentPeriod: boolean) => {
-        this.setState({ excludeCurrentPeriod }, this.handleSelectChange);
-    };
-
-    private handleSelectedFilterOptionChange = (selectedFilterOption: DateFilterOption) => {
-        let nextSelectedFilterOption: DateFilterOption;
-        this.setState(
-            (state) => {
-                nextSelectedFilterOption = this.normalizeEmptyValueHandling(
-                    this.mergeEmptyValueHandling(selectedFilterOption, state.selectedFilterOption),
-                );
-
-                return DateFilter.getStateFromSelectedOption(
-                    nextSelectedFilterOption,
-                    state.excludeCurrentPeriod,
-                );
-            },
-            () => this.fireOnSelect(nextSelectedFilterOption),
-        );
-    };
-
-    private handleSelectChange = () => {
-        this.fireOnSelect();
-    };
-
-    private fireOnSelect(
-        selectedFilterOption: DateFilterOption = this.state.selectedFilterOption,
-        excludeCurrentPeriod: boolean = this.state.excludeCurrentPeriod,
-    ) {
-        const normalizedSelectedFilterOption = this.normalizeEmptyValueHandling(
-            normalizeSelectedFilterOption(selectedFilterOption),
-        );
-        if (isEmpty(validateFilterOption(normalizedSelectedFilterOption))) {
-            this.props.onSelect?.(normalizedSelectedFilterOption, excludeCurrentPeriod);
-        }
-    }
-
-    private normalizeEmptyValueHandling = (selectedFilterOption: DateFilterOption): DateFilterOption => {
-        if (!this.props.enableEmptyDateValues) {
+    const normalizeEmptyValueHandling = (selectedFilterOption: DateFilterOption): DateFilterOption => {
+        if (!enableEmptyDateValues) {
             return selectedFilterOption;
         }
 
@@ -476,11 +403,11 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
         return selectedFilterOption;
     };
 
-    private mergeEmptyValueHandling = (
+    const mergeEmptyValueHandling = (
         nextSelectedFilterOption: DateFilterOption,
         currentSelectedFilterOption: DateFilterOption,
     ): DateFilterOption => {
-        if (!this.props.enableEmptyDateValues) {
+        if (!enableEmptyDateValues) {
             return nextSelectedFilterOption;
         }
 
@@ -505,12 +432,7 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
         ) {
             // If the only difference is `emptyValueHandling` (e.g. user unchecks the checkbox),
             // do not carry the previous value back in.
-            if (
-                this.isSameOptionExceptEmptyValueHandling(
-                    nextSelectedFilterOption,
-                    currentSelectedFilterOption,
-                )
-            ) {
+            if (isSameOptionExceptEmptyValueHandling(nextSelectedFilterOption, currentSelectedFilterOption)) {
                 return nextSelectedFilterOption;
             }
 
@@ -523,10 +445,121 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
         return nextSelectedFilterOption;
     };
 
-    private isSameOptionExceptEmptyValueHandling = (a: DateFilterOption, b: DateFilterOption): boolean => {
-        const { emptyValueHandling: _aEmptyValueHandling, ...aWithoutEmptyValueHandling } = a;
-        const { emptyValueHandling: _bEmptyValueHandling, ...bWithoutEmptyValueHandling } = b;
-
-        return isEqual(aWithoutEmptyValueHandling, bWithoutEmptyValueHandling);
+    const fireOnSelect = (selectedFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => {
+        const normalizedSelectedFilterOption = normalizeEmptyValueHandling(
+            normalizeSelectedFilterOption(selectedFilterOption),
+        );
+        if (isEmpty(validateFilterOption(normalizedSelectedFilterOption))) {
+            onSelect?.(normalizedSelectedFilterOption, excludeCurrentPeriod);
+        }
     };
-}
+
+    // Runs after every commit, i.e. after the derived-state block above has re-synced `state` with
+    // the incoming props - the equivalent of the former `setState(updater, callback)` timing.
+    useEffect(() => {
+        const pendingSelect = pendingSelectRef.current;
+        if (!pendingSelect) {
+            return;
+        }
+        pendingSelectRef.current = null;
+        fireOnSelect(
+            pendingSelect.selectedFilterOption ?? state.selectedFilterOption,
+            state.excludeCurrentPeriod,
+        );
+    });
+
+    const handleApplyClick = () => {
+        // `stateRef`, not `state`: this can run from the range picker's deferred submit.
+        const { selectedFilterOption: optionToApply, excludeCurrentPeriod: excludeToApply } =
+            stateRef.current;
+        const normalizedSelectedFilterOption = normalizeEmptyValueHandling(
+            normalizeSelectedFilterOption(optionToApply),
+        );
+        onApply(normalizedSelectedFilterOption, excludeToApply);
+    };
+
+    const onChangesDiscarded = () => {
+        if (!withoutApply) {
+            setState(() => getStateFromProps(props));
+            pendingSelectRef.current = {};
+        } else if (withoutApply && !isEmpty(validateFilterOption(stateRef.current.selectedFilterOption))) {
+            setState(() => getStateFromWorkingProps(props));
+        }
+    };
+
+    const onCancelClicked = () => {
+        onCancel();
+        onChangesDiscarded();
+    };
+
+    const onDropdownOpenChanged = (isOpen: boolean) => {
+        if (isOpen) {
+            onOpen();
+        } else {
+            onClose();
+            onChangesDiscarded();
+        }
+    };
+
+    const handleExcludeCurrentPeriodChange = (excludeCurrentPeriod: boolean) => {
+        setState((prevState) => ({ ...prevState, excludeCurrentPeriod }));
+        pendingSelectRef.current = {};
+    };
+
+    const handleSelectedFilterOptionChange = (selectedFilterOption: DateFilterOption) => {
+        setState((prevState) => {
+            // Merging against `prevState` rather than the render snapshot mirrors the former
+            // updater: two option changes batched into one event must both be taken into account.
+            const nextSelectedFilterOption = normalizeEmptyValueHandling(
+                mergeEmptyValueHandling(selectedFilterOption, prevState.selectedFilterOption),
+            );
+            // Recorded here - as the former updater did with its closure variable - so that the
+            // effect above reports the option this change actually resolved to.
+            pendingSelectRef.current = { selectedFilterOption: nextSelectedFilterOption };
+
+            return {
+                ...prevState,
+                ...getStateFromSelectedOption(nextSelectedFilterOption, prevState.excludeCurrentPeriod),
+            };
+        });
+    };
+
+    const { excludeCurrentPeriod, selectedFilterOption, isExcludeCurrentPeriodEnabled } = state;
+
+    return dateFilterMode === "hidden" ? null : (
+        <DateFilterCore
+            availableGranularities={availableGranularities}
+            customFilterName={customFilterName}
+            dateFormat={dateFormat ?? DEFAULT_DATE_FORMAT}
+            openOnInit={openOnInit}
+            showDropDownHeaderMessage={showDropDownHeaderMessage}
+            disabled={dateFilterMode === "readonly"}
+            excludeCurrentPeriod={excludeCurrentPeriod}
+            originalExcludeCurrentPeriod={originalExcludeCurrentPeriod}
+            isExcludeCurrentPeriodEnabled={isExcludeCurrentPeriodEnabled}
+            hideDisabledExclude={hideDisabledExclude}
+            isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled ?? false}
+            isSecondsForAbsoluteRangeEnabled={isSecondsForAbsoluteRangeEnabled ?? false}
+            isEditMode={isEditMode ?? false}
+            filterOptions={filterOptions}
+            selectedFilterOption={selectedFilterOption}
+            originalSelectedFilterOption={originalSelectedFilterOption}
+            locale={locale}
+            onApplyClick={handleApplyClick}
+            onCancelClick={onCancelClicked}
+            onDropdownOpenChanged={onDropdownOpenChanged}
+            onExcludeCurrentPeriodChange={handleExcludeCurrentPeriodChange}
+            onSelectedFilterOptionChange={handleSelectedFilterOptionChange}
+            errors={validateFilterOption(selectedFilterOption)}
+            weekStart={weekStart}
+            customIcon={customIcon}
+            FilterConfigurationComponent={FilterConfigurationComponent}
+            withoutApply={withoutApply}
+            ButtonComponent={ButtonComponent}
+            overlayPositionType={overlayPositionType}
+            activeCalendars={activeCalendars}
+            enableEmptyDateValues={enableEmptyDateValues}
+            customRangeHint={customRangeHint}
+        />
+    );
+});

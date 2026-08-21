@@ -57,7 +57,6 @@ import { NamedExoticComponent } from 'react';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
 import { OverlayPositionType } from '@gooddata/sdk-ui-kit';
-import { PureComponent } from 'react';
 import { RangeConditionOperator } from '@gooddata/sdk-model';
 import { ReactElement } from 'react';
 import { ReactNode } from 'react';
@@ -237,17 +236,7 @@ export function createEmptyFilterForSelectionType(selectionType: AttributeFilter
 export function createFilterFromOperator(operator: TextFilterOperator, valuesOrLiteral: Array<string | null> | string, displayForm: ObjRef, localIdentifier?: string, caseSensitive?: boolean): IAttributeFilter;
 
 // @public
-export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState> {
-    constructor(props: IDateFilterProps);
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    static defaultProps: Partial<IDateFilterProps>;
-    // (undocumented)
-    static getDerivedStateFromProps(nextProps: IDateFilterProps, prevState: IDateFilterState): IDateFilterState | null;
-    // (undocumented)
-    render(): JSX.Element | null;
-}
+export const DateFilter: NamedExoticComponent<IDateFilterProps>;
 
 // @beta (undocumented)
 export const DateFilterHelpers: {

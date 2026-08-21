@@ -968,6 +968,8 @@
     "userManagement.workspace.permission.createFilterView.tooltip": "Fügt die Berechtigung CREATE_FILTER_VIEW hinzu, um Dashboard-Filterkombinationen für eine schnelle Wiederverwendung zu erstellen und zu speichern.",
     "userManagement.workspace.permission.createAutomation": "Hinweise und geplante Exporte",
     "userManagement.workspace.permission.createAutomation.tooltip": "Fügt die Berechtigung CREATE_AUTOMATIONS hinzu, um automatisierte Hinweise und geplante Exporte zu erstellen.",
+    "userManagement.workspace.permission.createMetric": "Metriken",
+    "userManagement.workspace.permission.createMetric.tooltip": "Fügt die Berechtigung CREATE_METRIC zum Erstellen, Bearbeiten oder Löschen von Metriken hinzu.",
     "userManagement.workspace.permission.useAiAssistant": "KI-Assistent",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "Fügt DIE USE_AI_ASSISTANT-BERECHTIGUNG hinzu, um auf den KI-Chatbot für Analysefragen zuzugreifen und mit ihm zu interagieren.",
     "userManagement.workspace.granularPermission.noWorkspace": "Kein Arbeitsbereich ausgewählt",

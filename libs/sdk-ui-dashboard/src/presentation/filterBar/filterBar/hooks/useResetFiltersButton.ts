@@ -21,7 +21,7 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../../locales.js";
 import {
-    changeFilterContextSelection,
+    changeFilterContextSelectionByParams,
     removeAttributeFilters,
     resetFilterContextWorkingSelection,
 } from "../../../../model/commands/filters.js";
@@ -282,16 +282,22 @@ export const useResetFiltersButton = (): {
             if (isApplyAllAtOnceEnabledAndSet) {
                 dispatch(resetFilterContextWorkingSelection());
             }
-            // Dispatch a command, so it goes through the proper piping and trigger all the events
+            // Dispatch a command, so it goes through the proper piping and trigger all the events.
+            // The original filters come from this dashboard's own filter context, so their
+            // localIdentifiers are authoritative — matching by them keeps filters that share a
+            // display form from clobbering each other during the reset.
             dispatch(
-                changeFilterContextSelection([
-                    commonDateFilter ??
-                        newAllTimeDashboardDateFilter(
-                            undefined,
-                            generateDateFilterLocalIdentifier(0, undefined),
-                        ),
-                    ...otherFilters,
-                ]),
+                changeFilterContextSelectionByParams({
+                    filters: [
+                        commonDateFilter ??
+                            newAllTimeDashboardDateFilter(
+                                undefined,
+                                generateDateFilterLocalIdentifier(0, undefined),
+                            ),
+                        ...otherFilters,
+                    ],
+                    matchByLocalIdentifier: true,
+                }),
             );
         }
 

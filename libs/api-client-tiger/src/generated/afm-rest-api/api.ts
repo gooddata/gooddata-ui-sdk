@@ -965,10 +965,8 @@ export interface ClusteringRequest {
 export interface ClusteringResult {
     'attribute': Array<object>;
     'clusters': Array<number | null>;
-    'xCoord'?: Array<number | null>;
-    'xcoord': Array<number>;
-    'yCoord'?: Array<number | null>;
-    'ycoord': Array<number>;
+    'xcoord': Array<number | null>;
+    'ycoord': Array<number | null>;
 }
 
 /**

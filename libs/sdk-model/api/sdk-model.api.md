@@ -7346,6 +7346,10 @@ export type WorkspacePermission =
 */
 | "canCreateAnalyticalDashboard"
 /**
+* Whether the current user has permissions to create a metric object via API.
+*/
+| "canCreateMetric"
+/**
 * Whether the current user has permissions to modify and delete a metric, run MAQL DDL, run the MAQL validator, change metric visibility via the `unlisted` flag.
 */
 | "canManageMetric"

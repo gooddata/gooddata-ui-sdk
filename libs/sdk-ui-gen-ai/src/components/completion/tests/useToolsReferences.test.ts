@@ -3,18 +3,29 @@
 import { renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { type IChatConversationToolResultContent } from "@gooddata/sdk-backend-spi";
+import {
+    type IChatConversationToolCallContent,
+    type IChatConversationToolResultContent,
+} from "@gooddata/sdk-backend-spi";
 
 import { type IChatMessagesGroup } from "../../utils/groupUtility.js";
 import { useToolsReferences } from "../useToolsReferences.js";
 
 describe("useToolsReferences", () => {
-    function toolResult(result: unknown): IChatConversationToolResultContent {
+    function toolResult(result: unknown, callId = "tool-call-id"): IChatConversationToolResultContent {
         return {
             type: "toolResult",
-            callId: "tool-call-id",
+            callId,
             result: result as object,
         };
+    }
+
+    function toolCall(callId: string, name: string): IChatConversationToolCallContent {
+        return {
+            type: "toolCall",
+            callId,
+            name,
+        } as any;
     }
 
     it("should extract and merge references from parsed_objects, objects and data.metrics", () => {
@@ -150,5 +161,149 @@ describe("useToolsReferences", () => {
         const { result } = renderHook(() => useToolsReferences([group]));
 
         expect(result.current).toEqual([{ type: "metric", id: "m.id", title: "Revenue" }]);
+    });
+
+    it("should extract references from get_dashboard_context tool result", () => {
+        const group = {
+            type: "reasoning",
+            messages: [
+                {
+                    role: "assistant",
+                    content: toolCall("call-1", "get_dashboard_context"),
+                },
+                {
+                    role: "tool",
+                    content: toolResult(
+                        {
+                            dashboard: {
+                                id: "dash-id",
+                                title: "Dashboard Title",
+                                widgets: [
+                                    {
+                                        widget_type: "insight",
+                                        visualization_id: "vis-1",
+                                        title: "Insight Title",
+                                    },
+                                    {
+                                        widget_type: "visualization_switcher",
+                                        active_visualization_id: "vis-active",
+                                        title: "Switcher Title",
+                                        visualization_ids: ["vis-2"],
+                                        visualizations: [
+                                            {
+                                                visualization_id: "vis-3",
+                                                title: "Vis 3 Title",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                        },
+                        "call-1",
+                    ),
+                },
+            ],
+        } as IChatMessagesGroup;
+
+        const { result } = renderHook(() => useToolsReferences([group]));
+
+        expect(result.current).toEqual([
+            { type: "dashboard", id: "dash-id", title: "Dashboard Title" },
+            { type: "visualization", id: "vis-1", title: "Insight Title" },
+            { type: "visualization", id: "vis-active", title: "Switcher Title" },
+            { type: "visualization", id: "vis-2", title: "vis-2" },
+            { type: "visualization", id: "vis-3", title: "Vis 3 Title" },
+        ]);
+    });
+
+    it("should extract references from get_object_with_children tool result", () => {
+        const group = {
+            type: "reasoning",
+            messages: [
+                {
+                    role: "assistant",
+                    content: toolCall("call-2", "get_object_with_children"),
+                },
+                {
+                    role: "tool",
+                    content: toolResult(
+                        {
+                            parent: {
+                                id: "parent-id",
+                                type: "metric",
+                                title: "Parent Metric",
+                            },
+                            children: [
+                                {
+                                    id: "child-id",
+                                    type: "attribute",
+                                    title: "Child Attribute",
+                                },
+                            ],
+                        },
+                        "call-2",
+                    ),
+                },
+            ],
+        } as IChatMessagesGroup;
+
+        const { result } = renderHook(() => useToolsReferences([group]));
+
+        expect(result.current).toEqual([
+            { type: "metric", id: "parent-id", title: "Parent Metric" },
+            { type: "attribute", id: "child-id", title: "Child Attribute" },
+        ]);
+    });
+
+    it("should default title to id if title is missing", () => {
+        const group = {
+            type: "reasoning",
+            messages: [
+                {
+                    role: "tool",
+                    content: toolResult({
+                        objects: [
+                            {
+                                id: "obj-1",
+                                type: "metric",
+                                description: "",
+                            },
+                        ],
+                    }),
+                },
+            ],
+        } as IChatMessagesGroup;
+
+        const { result } = renderHook(() => useToolsReferences([group]));
+
+        expect(result.current).toEqual([{ type: "metric", id: "obj-1", title: "obj-1" }]);
+    });
+
+    it("should correctly map tool results to tool calls by callId", () => {
+        const group = {
+            type: "reasoning",
+            messages: [
+                {
+                    role: "assistant",
+                    content: toolCall("call-1", "get_dashboard_context"),
+                },
+                {
+                    role: "tool",
+                    content: toolResult(
+                        {
+                            dashboard: {
+                                id: "dash-id",
+                                title: "Dashboard Title",
+                            },
+                        },
+                        "call-wrong",
+                    ),
+                },
+            ],
+        } as IChatMessagesGroup;
+
+        const { result } = renderHook(() => useToolsReferences([group]));
+
+        expect(result.current).toEqual([]);
     });
 });

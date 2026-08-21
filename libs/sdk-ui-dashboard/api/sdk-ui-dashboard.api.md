@@ -236,7 +236,7 @@ import { WeekStart } from '@gooddata/sdk-model';
 import { WritableDraft } from 'immer';
 
 // @beta (undocumented)
-export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
+export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR" | "CANCELLED";
 
 // @beta
 export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string, selectionMode?: DashboardAttributeFilterSelectionMode, mode?: DashboardAttributeFilterConfigMode, initialSelection?: IAttributeElements, initialIsNegativeSelection?: boolean, localIdentifier?: string, primaryDisplayForm?: ObjRef, title?: string): IAddAttributeFilter;
@@ -518,10 +518,10 @@ export type ChangeFilterContextSelection = IDashboardCommand & {
     readonly payload: ChangeFilterContextSelectionPayload;
 };
 
-// @public
-export function changeFilterContextSelection(filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean, correlationId?: string): ChangeFilterContextSelection;
+// @public @deprecated
+export function changeFilterContextSelection(filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean, correlationId?: string, matchByLocalIdentifier?: boolean): ChangeFilterContextSelection;
 
-// @internal
+// @public
 export function changeFilterContextSelectionByParams(input: ChangeFilterContextSelectionParams): ChangeFilterContextSelection;
 
 // @public
@@ -531,6 +531,7 @@ export type ChangeFilterContextSelectionParams = {
     resetOthers?: boolean;
     correlationId?: string;
     tabLocalIdentifier?: string;
+    matchByLocalIdentifier?: boolean;
 };
 
 // @public
@@ -539,6 +540,7 @@ export type ChangeFilterContextSelectionPayload = {
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     resetOthers: boolean;
     tabLocalIdentifier?: string;
+    matchByLocalIdentifier?: boolean;
 };
 
 // @alpha

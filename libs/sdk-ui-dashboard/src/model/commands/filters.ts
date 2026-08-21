@@ -1172,6 +1172,20 @@ export type ChangeFilterContextSelectionPayload = {
      * @internal
      */
     tabLocalIdentifier?: string;
+
+    /**
+     * When true, attribute filters from the payload are matched against the dashboard's filter context
+     * by their localIdentifier first, falling back to display form matching for filters without a
+     * localIdentifier or without a localIdentifier match. Payload duplicities are also keyed by
+     * localIdentifier when present. Defaults to false (display form matching only).
+     *
+     * @remarks
+     * Display form matching cannot distinguish between multiple attribute filters that use the same
+     * display form (the first one in the filter context always wins and the other payload entries are
+     * dropped as duplicities). Enable this option when the dashboard contains such filters and the
+     * payload carries localIdentifiers.
+     */
+    matchByLocalIdentifier?: boolean;
 };
 
 /**
@@ -1201,12 +1215,15 @@ export type ChangeFilterContextSelection = IDashboardCommand & {
  * @param filters - attribute filters and date filter to apply.
  * @param resetOthers - If true, filters not mentioned in the payload will be reset to All items selected/All time. Defaults to false.
  * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @param matchByLocalIdentifier - If true, attribute filters are matched by localIdentifier first, with display form matching as a fallback. Defaults to false.
  * @returns change filter selection command
+ * @deprecated Use {@link changeFilterContextSelectionByParams} instead; the positional parameter list no longer covers all command options.
  */
 export function changeFilterContextSelection(
     filters: (IDashboardFilter | FilterContextItem)[],
     resetOthers: boolean = false,
     correlationId?: string,
+    matchByLocalIdentifier?: boolean,
 ): ChangeFilterContextSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION",
@@ -1214,6 +1231,7 @@ export function changeFilterContextSelection(
         payload: {
             filters,
             resetOthers,
+            matchByLocalIdentifier,
         },
     };
 }
@@ -1235,6 +1253,11 @@ export type ChangeFilterContextSelectionParams = {
      * @internal
      */
     tabLocalIdentifier?: string;
+    /**
+     * When true, attribute filters are matched by localIdentifier first, with display form matching
+     * as a fallback. See {@link ChangeFilterContextSelectionPayload}. Defaults to false.
+     */
+    matchByLocalIdentifier?: boolean;
 };
 
 /**
@@ -1248,7 +1271,7 @@ export type ChangeFilterContextSelectionParams = {
  * Date filter that does not match any visible option by the current date filter config will be also omitted.
  *
  * @param params - params for the command creator
- * @internal
+ * @public
  * TODO: next major release can remove ByParams suffix and use this implementation instead of original cmd creator + other creators can be rewritten to use params object
  * https://gooddata.atlassian.net/browse/STL-700
  */
@@ -1258,6 +1281,7 @@ export function changeFilterContextSelectionByParams({
     resetOthers = false,
     correlationId,
     tabLocalIdentifier,
+    matchByLocalIdentifier,
 }: ChangeFilterContextSelectionParams): ChangeFilterContextSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION",
@@ -1267,6 +1291,7 @@ export function changeFilterContextSelectionByParams({
             attributeFilterConfigs,
             resetOthers,
             tabLocalIdentifier,
+            matchByLocalIdentifier,
         },
     };
 }

@@ -72,6 +72,15 @@ const app: ILocalPluggableApplicationRegistryItemV1 = {
     local: { routeBase: "/analyze" },
 };
 
+const catalogApp: ILocalPluggableApplicationRegistryItemV1 = {
+    apiVersion: "1.0",
+    id: "gdc-catalog",
+    title: "Catalog",
+    applicationScope: "workspace",
+    menuOrder: 20,
+    local: { routeBase: "/catalog" },
+};
+
 const WS1_PATHNAME = "/workspace/ws1/analyze";
 const WS2_PATHNAME = "/workspace/ws2/analyze";
 
@@ -92,17 +101,22 @@ function renderer(options: {
     pathname: string;
     ctx: IPlatformContext;
     navigationRequestRef: NavigationGuardRef;
+    app?: PluggableApplicationRegistryItem;
 }): ReactElement {
     return (
         <HostIntlProvider locale="en-US">
             <PluggableApplicationRenderer
-                app={app}
+                app={options.app ?? app}
                 ctx={options.ctx}
                 pathname={options.pathname}
                 navigationRequestRef={options.navigationRequestRef}
             />
         </HostIntlProvider>
     );
+}
+
+function activeAppAttribute(): string | null {
+    return document.documentElement.getAttribute("data-activeApp");
 }
 
 // The mount effect awaits the app load, so the guard is registered a microtask after render.
@@ -209,5 +223,53 @@ describe("PluggableApplicationRenderer", () => {
 
         expect(navigationRequestRef.current).toBeUndefined();
         expect(consoleError).toHaveBeenCalledOnce();
+    });
+
+    describe("data-activeApp", () => {
+        // The document is shared with every other test file in the worker.
+        afterEach(() => {
+            document.documentElement.removeAttribute("data-activeApp");
+        });
+
+        // The write happens on render, not on load, so assert before the load resolves — then
+        // drain it inside `act`.
+        it("names the application on the document element as soon as it renders", async () => {
+            render(renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef }));
+
+            expect(activeAppAttribute()).toBe(app.id);
+
+            await flushMount();
+        });
+
+        it("names the newly rendered application after a switch", async () => {
+            const { rerender } = render(
+                renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef }),
+            );
+            await flushMount();
+
+            rerender(
+                renderer({
+                    pathname: "/workspace/ws1/catalog",
+                    ctx: context(),
+                    navigationRequestRef,
+                    app: catalogApp,
+                }),
+            );
+            await flushMount();
+
+            expect(activeAppAttribute()).toBe(catalogApp.id);
+        });
+
+        it("clears the attribute once the application is gone", async () => {
+            const { unmount } = render(
+                renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef }),
+            );
+            await flushMount();
+            expect(activeAppAttribute()).toBe(app.id);
+
+            unmount();
+
+            expect(activeAppAttribute()).toBeNull();
+        });
     });
 });

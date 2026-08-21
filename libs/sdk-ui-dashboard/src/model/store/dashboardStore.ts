@@ -11,7 +11,7 @@ import { defaultImport } from "default-import";
 import { keyBy, merge } from "lodash-es";
 import { enableBatching } from "redux-batched-actions";
 import defaultReduxSaga, { type Saga, type SagaIterator, type Task } from "redux-saga";
-import { call, fork } from "redux-saga/effects";
+import { call, cancel, fork, take } from "redux-saga/effects";
 import { v4 as uuidv4 } from "uuid";
 
 import { objRefToString } from "@gooddata/sdk-model";
@@ -233,15 +233,20 @@ function* rootSaga(
 ): SagaIterator<void> {
     const dashboardContext: DashboardContext = yield call(getDashboardContext);
 
+    // The emitter has to outlive the sagas that emit events: a discarded command reports itself while
+    // unwinding, so the teardown below cancels it last - explicitly, rather than relying on fork order.
+    const eventEmitterTask: Task = yield fork(eventEmitter);
+    const emittingTasks: Task[] = [yield fork(commandHandler), yield fork(queryProcessor)];
+    for (const worker of backgroundWorkers) {
+        emittingTasks.push(yield fork(worker, dashboardContext));
+    }
+
     try {
-        yield fork(eventEmitter);
-        yield fork(commandHandler);
-        yield fork(queryProcessor);
-        for (const worker of backgroundWorkers) {
-            yield fork(worker, dashboardContext);
-        }
-    } catch (e) {
-        console.error("Root saga failed", e);
+        // Nothing matches this pattern; parking is what makes cancelling this task run the teardown.
+        yield take(() => false);
+    } finally {
+        yield cancel(emittingTasks);
+        yield cancel(eventEmitterTask);
     }
 }
 

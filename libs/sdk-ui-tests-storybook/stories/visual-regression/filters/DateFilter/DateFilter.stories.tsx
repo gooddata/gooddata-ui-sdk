@@ -138,7 +138,7 @@ export function Dateformat() {
         <div style={wrapperStyle} className="screenshot-target">
             <DateFilter
                 {...requiredProps}
-                selectedFilterOption={defaultDateFilterOptions.absoluteForm}
+                selectedFilterOption={defaultDateFilterOptions.absoluteForm!}
                 dateFormat="yyyy/MM/dd"
             />
         </div>
