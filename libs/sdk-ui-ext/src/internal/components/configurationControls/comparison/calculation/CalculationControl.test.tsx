@@ -1,0 +1,238 @@
+// (C) 2023-2026 GoodData Corporation
+
+import { render, screen, waitFor } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+
+import { CalculateAs, type CalculationType } from "@gooddata/sdk-ui-charts";
+
+import { calculationDropdownItems } from "../../../../constants/dropdowns.js";
+import { type IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../../../../interfaces/Visualization.js";
+import { createTestProperties } from "../../../../tests/testDataProvider.js";
+import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
+import type * as DropdownControlModule from "../../DropdownControl.js";
+
+import type * as CalculationControlModule from "./CalculationControl.js";
+import type * as CalculationListItemModule from "./CalculationListItem.js";
+
+vi.mock("../../DropdownControl.js", async (importOriginal) => {
+    // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
+    const actual = await importOriginal<typeof import("../../DropdownControl.js")>();
+    // DropdownControl is a memo component, so mock its inner render function to keep the mock callable
+    const { type: DropdownControlComponent } = actual.DropdownControl as unknown as {
+        type: typeof actual.DropdownControl;
+    };
+    return {
+        ...actual,
+        DropdownControl: vi.fn(DropdownControlComponent),
+    };
+});
+
+vi.mock("./CalculationListItem.js", async (importOriginal) => {
+    // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
+    const actual = await importOriginal<typeof import("./CalculationListItem.js")>();
+    return {
+        ...actual,
+        CalculationListItem: vi.fn(actual.CalculationListItem),
+    };
+});
+
+/*
+ * Test isolation is disabled for this package, so the module cache is shared between test files:
+ * CalculationControl.js may already have been evaluated - bound to the real dependencies - by another test
+ * file, and the mocked graph this file builds must not outlive it. Re-import the whole trio up front so this
+ * file always observes the mocked dependencies, and drop the mocked graph again on the way out.
+ */
+let DropdownControl: typeof DropdownControlModule.DropdownControl;
+let CalculationControl: typeof CalculationControlModule.CalculationControl;
+let CalculationListItem: typeof CalculationListItemModule.CalculationListItem;
+
+beforeAll(async () => {
+    vi.resetModules();
+    ({ DropdownControl } = await import("../../DropdownControl.js"));
+    ({ CalculationListItem } = await import("./CalculationListItem.js"));
+    ({ CalculationControl } = await import("./CalculationControl.js"));
+});
+
+afterAll(() => {
+    vi.resetModules();
+});
+
+const CALCULATION_CONTROL_LABEL_TEXT_QUERY = "Calculated as";
+const CHANGE_ITEM_TEXT_QUERY = "Change";
+const RATIO_ITEM_TEXT_QUERY = "Ratio";
+const DIFFERENCE_ITEM_TEXT_QUERY = "Difference";
+const CHANGE_DIFFERENCE_ITEM_TEXT_QUERY = "Change (difference)";
+const DROPDOWN_BUTTON_SELECTOR = ".button-dropdown";
+
+describe("CalculationControl", () => {
+    const mockPushData = vi.fn();
+
+    const renderCalculationControl = (params?: {
+        properties?: IVisualizationProperties<IComparisonControlProperties>;
+        defaultCalculationType?: CalculationType;
+        disabled?: boolean;
+    }) => {
+        const props = {
+            disabled: params?.disabled ?? false,
+            defaultCalculationType: params?.defaultCalculationType,
+            pushData: mockPushData,
+            properties: params?.properties || {},
+        };
+
+        return render(
+            <InternalIntlWrapper>
+                <CalculationControl {...(props as any)} />
+            </InternalIntlWrapper>,
+        );
+    };
+
+    it("Should render calculation control based on dropdown-control", () => {
+        const MockDropdownControl = vi.mocked(DropdownControl);
+        const disabled = true;
+        const properties = createTestProperties<IComparisonControlProperties>({
+            comparison: {
+                enabled: true,
+                calculationType: CalculateAs.CHANGE,
+            },
+        });
+
+        renderCalculationControl({ properties, disabled: true });
+        expect(MockDropdownControl).toHaveBeenCalledWith(
+            expect.objectContaining({
+                value: properties.controls!.comparison!.calculationType,
+                properties,
+                disabled,
+                pushData: mockPushData,
+                customListItem: CalculationListItem,
+            }),
+            undefined,
+        );
+    });
+
+    it("Should select provided calculation-type", () => {
+        const { container } = renderCalculationControl({
+            defaultCalculationType: CalculateAs.DIFFERENCE,
+            properties: createTestProperties<IComparisonControlProperties>({
+                comparison: {
+                    enabled: true,
+                    calculationType: CalculateAs.RATIO,
+                },
+            }),
+        });
+
+        expect(container.querySelector(DROPDOWN_BUTTON_SELECTOR)!.textContent).toEqual(RATIO_ITEM_TEXT_QUERY);
+    });
+
+    it("Should select default calculation-type while calculation-type is empty", () => {
+        const { container } = renderCalculationControl({
+            defaultCalculationType: CalculateAs.DIFFERENCE,
+        });
+        expect(container.querySelector(DROPDOWN_BUTTON_SELECTOR)!.textContent).toEqual(
+            DIFFERENCE_ITEM_TEXT_QUERY,
+        );
+    });
+
+    it("Should render label correctly", () => {
+        const { getByText } = renderCalculationControl();
+        expect(getByText(CALCULATION_CONTROL_LABEL_TEXT_QUERY)).toBeInTheDocument();
+    });
+
+    it("Should render items correctly", async () => {
+        const MockCalculationListItem = vi.mocked(CalculationListItem);
+        renderCalculationControl();
+        await userEvent.click(screen.getByRole("combobox"));
+
+        await waitFor(() => {
+            expect(screen.getByText(CHANGE_ITEM_TEXT_QUERY)).toBeInTheDocument();
+        });
+
+        expect(MockCalculationListItem).toHaveBeenNthCalledWith(
+            1,
+            expect.objectContaining({
+                info: calculationDropdownItems[0].info,
+                icon: calculationDropdownItems[0].icon,
+                title: expect.anything(),
+            }),
+            undefined,
+        );
+        expect(MockCalculationListItem).toHaveBeenNthCalledWith(
+            2,
+            expect.objectContaining({
+                info: calculationDropdownItems[1].info,
+                icon: calculationDropdownItems[1].icon,
+                title: expect.anything(),
+            }),
+            undefined,
+        );
+        expect(MockCalculationListItem).toHaveBeenNthCalledWith(
+            3,
+            expect.objectContaining({
+                info: calculationDropdownItems[2].info,
+                icon: calculationDropdownItems[2].icon,
+                title: expect.anything(),
+            }),
+            undefined,
+        );
+        expect(MockCalculationListItem).toHaveBeenNthCalledWith(
+            4,
+            expect.objectContaining({
+                info: calculationDropdownItems[3].info,
+                icon: calculationDropdownItems[3].icon,
+                title: expect.anything(),
+            }),
+            undefined,
+        );
+
+        expect(screen.getByText(CHANGE_ITEM_TEXT_QUERY)).toBeInTheDocument();
+        expect(screen.getByText(RATIO_ITEM_TEXT_QUERY)).toBeInTheDocument();
+        expect(screen.getByText(DIFFERENCE_ITEM_TEXT_QUERY)).toBeInTheDocument();
+        expect(screen.getByText(CHANGE_DIFFERENCE_ITEM_TEXT_QUERY)).toBeInTheDocument();
+    });
+
+    it("Should update property calculation-type when select an item", async () => {
+        renderCalculationControl({
+            properties: createTestProperties<IComparisonControlProperties>({ comparison: { enabled: true } }),
+        });
+
+        await userEvent.click(screen.getByRole("combobox"));
+        await waitFor(() => {
+            expect(screen.getByText(RATIO_ITEM_TEXT_QUERY)).toBeInTheDocument();
+        });
+        await userEvent.click(screen.getByText(RATIO_ITEM_TEXT_QUERY));
+        expect(mockPushData).toHaveBeenCalledWith(
+            expect.objectContaining({
+                properties: createTestProperties<IComparisonControlProperties>({
+                    comparison: { enabled: true, calculationType: CalculateAs.RATIO },
+                }),
+            }),
+        );
+
+        await userEvent.click(screen.getByRole("combobox"));
+        await waitFor(() => {
+            expect(screen.getByText(DIFFERENCE_ITEM_TEXT_QUERY)).toBeInTheDocument();
+        });
+        await userEvent.click(screen.getByText(DIFFERENCE_ITEM_TEXT_QUERY));
+        expect(mockPushData).toHaveBeenCalledWith(
+            expect.objectContaining({
+                properties: createTestProperties<IComparisonControlProperties>({
+                    comparison: { enabled: true, calculationType: CalculateAs.DIFFERENCE },
+                }),
+            }),
+        );
+
+        await userEvent.click(screen.getByRole("combobox"));
+        await waitFor(() => {
+            expect(screen.getByText(CHANGE_ITEM_TEXT_QUERY)).toBeInTheDocument();
+        });
+        await userEvent.click(screen.getByText(CHANGE_ITEM_TEXT_QUERY));
+        expect(mockPushData).toHaveBeenCalledWith(
+            expect.objectContaining({
+                properties: createTestProperties<IComparisonControlProperties>({
+                    comparison: { enabled: true, calculationType: CalculateAs.CHANGE },
+                }),
+            }),
+        );
+    });
+});

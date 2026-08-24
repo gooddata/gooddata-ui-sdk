@@ -1,0 +1,90 @@
+// (C) 2021-2026 GoodData Corporation
+
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { idRef } from "@gooddata/sdk-model";
+
+import { setAttributeFilterParents } from "../../../commands/filters.js";
+import { selectFilterContextAttributeFilters } from "../../../store/tabs/filterContext/filterContextSelectors.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
+
+describe("setAttributeFilterParentHandler", () => {
+    let Tester: DashboardTester;
+
+    beforeEach(async () => {
+        await preloadedTesterFactory((tester) => {
+            Tester = tester;
+        }, SimpleDashboardIdentifier);
+    });
+
+    it("should emit the appropriate events for valid set attribute filter parent command", async () => {
+        const [firstFilterLocalId, secondFilterLocalId] = selectFilterContextAttributeFilters(
+            Tester.state(),
+        ).map((item) => item.attributeFilter.localIdentifier!);
+
+        Tester.dispatch(
+            setAttributeFilterParents(firstFilterLocalId, [
+                {
+                    filterLocalIdentifier: secondFilterLocalId,
+                    over: { attributes: [idRef("obj_1057")] },
+                },
+            ]),
+        );
+
+        await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
+
+        expect(Tester.emittedEventsDigest()).toMatchSnapshot();
+    });
+
+    it("should set the appropriate values in state for valid set attribute filter parent command", async () => {
+        const [firstFilterLocalId, secondFilterLocalId] = selectFilterContextAttributeFilters(
+            Tester.state(),
+        ).map((item) => item.attributeFilter.localIdentifier!);
+
+        Tester.dispatch(
+            setAttributeFilterParents(firstFilterLocalId, [
+                {
+                    filterLocalIdentifier: secondFilterLocalId,
+                    over: { attributes: [idRef("obj_1057")] },
+                },
+            ]),
+        );
+
+        await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
+
+        expect(selectFilterContextAttributeFilters(Tester.state())[0]).toMatchSnapshot();
+    });
+
+    it("should emit the appropriate events when trying to set parent of a non-existent attribute filter", async () => {
+        Tester.dispatch(
+            setAttributeFilterParents("NON EXISTENT LOCAL ID", [
+                {
+                    filterLocalIdentifier: "whatever",
+                    over: { attributes: [] },
+                },
+            ]),
+        );
+
+        await Tester.waitFor("GDC.DASH/EVT.COMMAND.FAILED");
+
+        expect(Tester.emittedEventsDigest()).toMatchSnapshot();
+    });
+
+    it("should NOT alter the attribute filter state when trying to set parent of a non-existent attribute filter", async () => {
+        const originalFilters = selectFilterContextAttributeFilters(Tester.state());
+
+        Tester.dispatch(
+            setAttributeFilterParents("NON EXISTENT LOCAL ID", [
+                {
+                    filterLocalIdentifier: "whatever",
+                    over: { attributes: [] },
+                },
+            ]),
+        );
+
+        await Tester.waitFor("GDC.DASH/EVT.COMMAND.FAILED");
+
+        expect(selectFilterContextAttributeFilters(Tester.state())).toEqual(originalFilters);
+    });
+});

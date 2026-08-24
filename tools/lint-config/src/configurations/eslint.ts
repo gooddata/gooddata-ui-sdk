@@ -162,18 +162,6 @@ const eslintRulesCommon = {
     "no-unneeded-ternary": ["error", { defaultAssignment: false }],
     "no-extra-boolean-cast": "error",
     "no-unexpected-multiline": "off",
-};
-
-export const eslintRulesNativeSupported = {
-    ...eslintRulesCommon,
-    "no-duplicate-imports": "error",
-    "prefer-const": "off", // todo: maybe leave this here, both linters seem to turn it on by default and conflict
-};
-
-// todo: https://github.com/oxc-project/oxc/issues/479
-export const eslintRulesNativeNotSupported = {
-    "no-duplicate-imports": ["error", { includeExports: true }],
-    "no-console": [2, { allow: ["warn", "error"] }],
     "no-restricted-exports": [
         2,
         {
@@ -186,6 +174,20 @@ export const eslintRulesNativeNotSupported = {
             },
         },
     ],
+};
+
+export const eslintRulesNativeSupported = {
+    ...eslintRulesCommon,
+    "no-duplicate-imports": "error",
+    "prefer-const": "off", // todo: maybe leave this here, both linters seem to turn it on by default and conflict
+};
+
+// todo: https://github.com/oxc-project/oxc/issues/479
+export const eslintRulesNativeNotSupported = {
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-duplicate-imports
+    "no-duplicate-imports": ["error", { includeExports: true }], // oxlint state: pending fix
+
+    "no-console": [2, { allow: ["warn", "error"] }],
     "no-restricted-syntax": [
         "error",
         {
@@ -197,7 +199,10 @@ export const eslintRulesNativeNotSupported = {
             message: "Do not use `ReactDOM.*`. Use named imports instead.",
         },
     ],
-    "no-negated-condition": "error",
+
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-negated-condition
+    "no-negated-condition": "error", // oxlint state: pending fix
+
     "prefer-const": "off", // todo: maybe leave this here, both linters seem to turn it on by default and conflict
 };
 
@@ -249,8 +254,8 @@ export const eslintOverrides = [
         },
     },
     {
-        // ESLint flat config files require default export
-        files: ["**/eslint.config.ts", "**/eslint.config.js"],
+        // ESLint flat config files & Vite config files require a default export
+        files: ["**/eslint.config.ts", "**/eslint.config.js", "**/vite.config.ts", "**/vite.config.js"],
         rules: {
             "no-restricted-exports": "off",
         },

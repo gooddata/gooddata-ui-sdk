@@ -1,6 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
-
-/* eslint-disable no-restricted-exports */
+// (C) 2007-2026 GoodData Corporation
 
 declare module "*/package.json" {
     export const name: string;

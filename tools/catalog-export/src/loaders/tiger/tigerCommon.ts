@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { keyBy } from "lodash-es";
 
 import {
@@ -57,14 +58,14 @@ export function getReferencedDataset(
     datasetsMap: DatasetMap,
 ): JsonApiDatasetOut | undefined {
     if (!relationships) {
-        return;
+        return undefined;
     }
 
     const datasetsRef: JsonApiDatasetLinkage = (relationships as JsonApiAttributeOutRelationships)?.dataset
         ?.data as JsonApiDatasetLinkage;
 
     if (!datasetsRef) {
-        return;
+        return undefined;
     }
 
     return datasetsMap[datasetsRef.id];
@@ -77,7 +78,7 @@ export function convertLabels(attribute: JsonApiAttributeOutWithLinks, labelsMap
             const label = labelsMap[ref.id];
 
             if (!label) {
-                return;
+                return undefined;
             }
 
             return {

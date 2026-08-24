@@ -1,0 +1,499 @@
+// (C) 2020-2026 GoodData Corporation
+
+import { fireEvent, render } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
+import { newRankingFilter } from "@gooddata/sdk-model";
+import { withIntlForTest } from "@gooddata/sdk-ui";
+
+import { RankingFilterDropdownFragment } from "./fragments/RankingFilterDropdown.js";
+import {
+    attribute1Ref as mockAttribute1Ref,
+    attribute2Ref as mockAttribute2Ref,
+    attributeItems as mockAttributeItems,
+    date1Ref as mockDate1Ref,
+    defaultFilter as mockDefaultFilter,
+    filterWithRichSetting as mockFilterWithRichSetting,
+    measure1Ref as mockMeasure1Ref,
+    measure2Ref as mockMeasure2Ref,
+    measure3Ref as mockMeasure3Ref,
+    measureItems as mockMeasureItems,
+} from "./mocks.js";
+import {
+    type IRankingFilterDropdownProps,
+    RankingFilterDropdown,
+    prepareRankingFilterState,
+} from "./RankingFilterDropdown.js";
+
+const renderComponent = (props?: Partial<IRankingFilterDropdownProps>) => {
+    const defaultProps: IRankingFilterDropdownProps = {
+        measureItems: mockMeasureItems,
+        attributeItems: mockAttributeItems,
+        filter: mockDefaultFilter,
+        onApply: () => {},
+        onCancel: () => {},
+    };
+    const Wrapped = withIntlForTest(RankingFilterDropdown);
+    return render(<Wrapped {...defaultProps} {...props} />);
+};
+
+const component = new RankingFilterDropdownFragment();
+
+describe("RankingFilterDropdown", () => {
+    describe("prepareRankingFilterState", () => {
+        it("should return object without attributes when attributes not provided", () => {
+            const result = prepareRankingFilterState(mockDefaultFilter);
+
+            expect(result).toEqual({
+                rankingFilter: {
+                    measure: mockMeasure1Ref,
+                    operator: "TOP",
+                    value: 10,
+                },
+            });
+        });
+
+        it("should return object with first attribute when attributes provided", () => {
+            const result = prepareRankingFilterState(mockFilterWithRichSetting);
+
+            expect(result).toEqual({
+                rankingFilter: {
+                    measure: mockMeasure3Ref,
+                    attributes: [mockAttribute1Ref],
+                    operator: "BOTTOM",
+                    value: 100,
+                },
+            });
+        });
+    });
+
+    describe("Filter", () => {
+        it("should set correct OperatorDropdown value", () => {
+            renderComponent({ filter: mockFilterWithRichSetting });
+
+            expect(component.getOperator()).toEqual("Bottom");
+        });
+
+        it("should set correct ValueDropdown value", () => {
+            renderComponent({ filter: mockFilterWithRichSetting });
+
+            expect(component.getValue()).toEqual("100");
+        });
+
+        it("should set MeasureDropdown to first measure", () => {
+            renderComponent({ filter: mockFilterWithRichSetting });
+
+            expect(component.getMeasure()).toEqual("Measure 3");
+        });
+
+        it("should set AttributeDropdown to first attribute", () => {
+            renderComponent({ filter: mockFilterWithRichSetting });
+
+            expect(component.getAttribute()).toEqual("Attribute 1");
+        });
+
+        it("should set AttributeDropdown to 'All' when no attributes provided", () => {
+            renderComponent({ filter: mockDefaultFilter });
+
+            expect(component.getAttribute()).toEqual("All");
+        });
+    });
+
+    describe("Buttons", () => {
+        it("should toggle apply button disabled class when operator changed", () => {
+            renderComponent();
+            expect(component.isApplyButtonDisabled()).toEqual(true);
+            component.openOperatorDropdown().setOperator("BOTTOM");
+            expect(component.isApplyButtonDisabled()).toEqual(false);
+        });
+
+        it("should toggle apply button disabled class when value changed", () => {
+            renderComponent();
+            expect(component.isApplyButtonDisabled()).toEqual(true);
+            component.setValue("100");
+            expect(component.isApplyButtonDisabled()).toEqual(false);
+        });
+
+        it("should toggle apply button disabled class when measure changed", () => {
+            renderComponent();
+            expect(component.isApplyButtonDisabled()).toEqual(true);
+            component.openMeasureDropdown().setMeasureItem("Measure 2");
+            expect(component.isApplyButtonDisabled()).toEqual(false);
+        });
+
+        it("should toggle apply button disabled class when attribute changed", () => {
+            renderComponent();
+            expect(component.isApplyButtonDisabled()).toEqual(true);
+            component.openAttributeDropdown().setAttributeItem("Attribute 2");
+            expect(component.isApplyButtonDisabled()).toEqual(false);
+        });
+
+        it("should call onApply with attributes when Apply button clicked", () => {
+            const onApply = vi.fn();
+            renderComponent({ onApply });
+            component.openOperatorDropdown().setOperator("BOTTOM");
+            component.setValue("100");
+            component.openMeasureDropdown().setMeasureItem("Measure 3");
+            component.openAttributeDropdown().setAttributeItem("Attribute 2");
+            component.clickApply();
+
+            expect(onApply).toHaveBeenCalledWith({
+                rankingFilter: {
+                    measure: mockMeasure3Ref,
+                    attributes: [mockAttribute2Ref],
+                    operator: "BOTTOM",
+                    value: 100,
+                },
+            });
+        });
+
+        it("should call onApply without attributes when Apply button clicked", () => {
+            const onApply = vi.fn();
+            renderComponent({ onApply });
+            component.openOperatorDropdown().setOperator("BOTTOM");
+            component.setValue("100");
+            component.openMeasureDropdown().setMeasureItem("Measure 3");
+            component.openAttributeDropdown().setAttributeToAllRecords();
+            component.clickApply();
+
+            expect(onApply).toHaveBeenCalledWith({
+                rankingFilter: {
+                    measure: mockMeasure3Ref,
+                    operator: "BOTTOM",
+                    value: 100,
+                },
+            });
+        });
+
+        it("should call onCancel when Cancel button clicked", () => {
+            const onCancel = vi.fn();
+            renderComponent({ onCancel });
+            component.clickCancel();
+
+            expect(onCancel).toHaveBeenCalled();
+        });
+    });
+
+    describe("AttributeDropdown", () => {
+        it("should call onDropDownItemMouseOver on item mouseOver", () => {
+            const onDropDownItemMouseOver = vi.fn();
+            renderComponent({ onDropDownItemMouseOver });
+            fireEvent.mouseOver(component.openAttributeDropdown().getAttributeItem("Attribute 1")!);
+
+            expect(onDropDownItemMouseOver).toHaveBeenCalled();
+            expect(onDropDownItemMouseOver).toHaveBeenCalledWith({ uri: "attribute1" });
+        });
+
+        it("should call onDropDownItemMouseOut on item mouseOut", () => {
+            const onDropDownItemMouseOut = vi.fn();
+            renderComponent({ onDropDownItemMouseOut });
+
+            fireEvent.mouseOut(component.openAttributeDropdown().getAttributeItem("Attribute 1")!);
+
+            expect(onDropDownItemMouseOut).toHaveBeenCalled();
+        });
+
+        it("should call onDropDownItemMouseOut on dropdown close", () => {
+            const onDropDownItemMouseOut = vi.fn();
+            renderComponent({ onDropDownItemMouseOut });
+            component.openAttributeDropdown().setAttributeItem("Attribute 2");
+
+            expect(onDropDownItemMouseOut).toHaveBeenCalled();
+        });
+
+        it("should not have disabled items when customGranularitySelection is not provided", () => {
+            renderComponent();
+            component.openAttributeDropdown();
+
+            expect(component.getAttributeDropdownDisabledButtons()).toHaveLength(0);
+        });
+
+        it("should not have disabled items when customGranularitySelection 'enable' property is true", () => {
+            const customGranularitySelection = { enable: true, warningMessage: "warning" };
+            renderComponent({ customGranularitySelection });
+
+            component.openAttributeDropdown();
+
+            expect(component.getAttributeDropdownDisabledButtons()).toHaveLength(0);
+        });
+
+        it("should have disabled items when customGranularitySelection 'enable' property is false", () => {
+            const customGranularitySelection = { enable: false, warningMessage: "warning" };
+            renderComponent({ customGranularitySelection });
+            component.openAttributeDropdown();
+
+            expect(component.getAttributeDropdownDisabledButtons()).toHaveLength(5);
+        });
+    });
+
+    describe("MeasureDropdown", () => {
+        it("should call onDropDownItemMouseOver on item mouseOver", () => {
+            const onDropDownItemMouseOver = vi.fn();
+            renderComponent({ onDropDownItemMouseOver });
+
+            fireEvent.mouseOver(component.openMeasureDropdown().getMeasureItem("Measure 1")!);
+
+            expect(onDropDownItemMouseOver).toHaveBeenCalled();
+            expect(onDropDownItemMouseOver).toHaveBeenCalledWith({ localIdentifier: "measure1" });
+        });
+
+        it("should call onDropDownItemMouseOut on item mouseOut", () => {
+            const onDropDownItemMouseOut = vi.fn();
+            renderComponent({ onDropDownItemMouseOut });
+
+            fireEvent.mouseOut(component.openMeasureDropdown().getMeasureItem("Measure 1")!);
+
+            expect(onDropDownItemMouseOut).toHaveBeenCalled();
+        });
+
+        it("should call onDropDownItemMouseOut on dropdown close", () => {
+            const onDropDownItemMouseOut = vi.fn();
+            renderComponent({ onDropDownItemMouseOut });
+
+            component.openMeasureDropdown().setMeasureItem("Measure 2");
+
+            expect(onDropDownItemMouseOut).toHaveBeenCalled();
+        });
+    });
+
+    describe("ValueDropdown", () => {
+        it("should render 8 default items when input value is empty", () => {
+            renderComponent();
+            component.changeInputValue("");
+
+            expect(component.getValueDropdownItems()).toHaveLength(8);
+        });
+
+        it("should render list item with input value as text", () => {
+            renderComponent();
+            component.changeInputValue("100");
+
+            expect(component.getValueDropdown()!.textContent).toEqual("100");
+        });
+
+        it("should render list items with matching items", () => {
+            renderComponent();
+            component.changeInputValue("1");
+
+            // items with label 10, 15, 100
+            expect(component.getValueDropdown()!.textContent).toEqual("1015100");
+        });
+
+        it("should not render list items when none matches the entered value", () => {
+            renderComponent();
+            component.changeInputValue("42");
+
+            expect(component.isValueDropdownVisible()).toBe(false);
+        });
+
+        it("should render error message when input value lower than 1", () => {
+            renderComponent();
+            component.changeInputValue("-100");
+
+            expect(component.getValueDropdown()!.textContent).toEqual(
+                "Input value should be a positive number.",
+            );
+        });
+
+        it("should render error message when input value larger than 999999", () => {
+            renderComponent();
+            component.changeInputValue("1000000");
+
+            expect(component.getValueDropdown()!.textContent).toEqual("Input value too large.");
+        });
+
+        it("should render error message when input value is string without numbers", () => {
+            renderComponent();
+            component.changeInputValue("test");
+
+            expect(component.getValueDropdown()!.textContent).toEqual(
+                "Input value should be a positive number.",
+            );
+        });
+
+        it("should set custom value via input blur handler", () => {
+            const onApply = vi.fn();
+            renderComponent({ onApply });
+            component.setValueByBlur("42");
+            component.clickApply();
+            expect(component.getValue()).toEqual("42");
+            expect(onApply).toHaveBeenCalledWith({
+                rankingFilter: {
+                    measure: mockMeasure1Ref,
+                    operator: "TOP",
+                    value: 42,
+                },
+            });
+        });
+
+        it("should set one of the default values via input blur handler", () => {
+            renderComponent();
+            component.setValueByBlur("10");
+
+            expect(component.getValue()).toEqual("10");
+            expect(component.isValueDropdownVisible()).toBe(false);
+        });
+
+        it("should set custom value via input change handler", () => {
+            const onApply = vi.fn();
+            renderComponent({ onApply });
+
+            expect(component.isApplyButtonDisabled()).toBe(true);
+
+            component.changeInputValue("42");
+
+            expect(component.isApplyButtonDisabled()).toBe(false);
+
+            component.clickApply();
+
+            expect(onApply).toHaveBeenCalledWith({
+                rankingFilter: {
+                    measure: mockMeasure1Ref,
+                    operator: "TOP",
+                    value: 42,
+                },
+            });
+        });
+
+        it.each([["0"], ["1000000"], ["test"]])(
+            "should not set value via input blur handler when invalid value '%s' is entered",
+            (invalidValue) => {
+                renderComponent();
+                component.setValueByBlur(invalidValue);
+                expect(component.getValue()).toEqual("10");
+                expect(component.isApplyButtonDisabled()).toBe(true);
+            },
+        );
+
+        it("should have set non default value", () => {
+            renderComponent({
+                filter: newRankingFilter(mockMeasure1Ref, "TOP", 42),
+            });
+            expect(component.getValue()).toEqual("42");
+        });
+    });
+
+    describe("AttributeDropdown button", () => {
+        it("should be disabled when only one attribute item provided", () => {
+            renderComponent({ attributeItems: [mockAttributeItems[0]] });
+            expect(component.isAttributeButtonDisabled()).toEqual(true);
+        });
+    });
+
+    describe("Condition dropdown (strict limit)", () => {
+        it("should show only two operator options when enableRankingStrictLimit is off", () => {
+            renderComponent();
+            component.openOperatorDropdown();
+            expect(document.querySelectorAll(".s-rf-operator-dropdown-body .gd-list-item")).toHaveLength(2);
+        });
+
+        it("should show four condition options when enableRankingStrictLimit is on", () => {
+            renderComponent({ enableRankingStrictLimit: true });
+            component.openOperatorDropdown();
+            expect(document.querySelectorAll(".s-rf-operator-dropdown-body .gd-list-item")).toHaveLength(4);
+        });
+
+        it("should default a flagless filter to the non-strict 'Top' condition", () => {
+            renderComponent({ enableRankingStrictLimit: true });
+            expect(component.getOperator()).toEqual("Top");
+        });
+
+        it("should call onApply with strictLimitOfRows=false when a 'with ties' condition is picked", () => {
+            const onApply = vi.fn();
+            renderComponent({
+                onApply,
+                enableRankingStrictLimit: true,
+                // start from a strict filter so picking the with-ties condition is an actual change
+                filter: {
+                    rankingFilter: {
+                        measure: mockMeasure1Ref,
+                        operator: "TOP",
+                        value: 10,
+                        strictLimitOfRows: true,
+                    },
+                },
+            });
+
+            component.openOperatorDropdown().setOperator("Top");
+            component.clickApply();
+
+            expect(onApply).toHaveBeenCalledWith({
+                rankingFilter: {
+                    measure: mockMeasure1Ref,
+                    operator: "TOP",
+                    value: 10,
+                    strictLimitOfRows: false,
+                },
+            });
+        });
+
+        it("should call onApply with strictLimitOfRows=true when a strict 'Bottom' condition is picked", () => {
+            const onApply = vi.fn();
+            renderComponent({ onApply, enableRankingStrictLimit: true });
+
+            component.openOperatorDropdown().setOperator("Bottom (strict)");
+            component.clickApply();
+
+            expect(onApply).toHaveBeenCalledWith({
+                rankingFilter: {
+                    measure: mockMeasure1Ref,
+                    operator: "BOTTOM",
+                    value: 10,
+                    strictLimitOfRows: true,
+                },
+            });
+        });
+    });
+
+    describe("Preview", () => {
+        it.each([
+            ["top of measure", newRankingFilter(mockMeasure1Ref, "TOP", 42), "Top 42 records by Measure 1"],
+            [
+                "top out of attribute based on measure",
+                newRankingFilter(mockMeasure2Ref, [mockAttribute1Ref], "TOP", 5),
+                "Top 5 out of Attribute 1 based on Measure 2",
+            ],
+            [
+                "bottom of measure",
+                newRankingFilter(mockMeasure1Ref, "BOTTOM", 3),
+                "Bottom 3 records by Measure 1",
+            ],
+            [
+                "bottom out of attribute based on measure",
+                newRankingFilter(mockMeasure2Ref, [mockDate1Ref], "BOTTOM", 10),
+                "Bottom 10 out of Date based on Measure 2",
+            ],
+        ])("should render expected preview for %s", (_, filter, expectedPreview) => {
+            renderComponent({
+                filter,
+            });
+            expect(component.getPreview()).toEqual(expectedPreview);
+        });
+
+        it("should annotate the preview with '(strict)' for the strict condition", () => {
+            renderComponent({
+                filter: newRankingFilter(mockMeasure1Ref, "TOP", 10),
+                enableRankingStrictLimit: true,
+            });
+            component.openOperatorDropdown().setOperator("Top (strict)");
+
+            expect(component.getPreview()).toEqual("Top 10 (strict) records by Measure 1");
+        });
+
+        it("should not annotate the preview for the non-strict condition", () => {
+            renderComponent({
+                filter: {
+                    rankingFilter: {
+                        measure: mockMeasure1Ref,
+                        operator: "TOP",
+                        value: 10,
+                        strictLimitOfRows: false,
+                    },
+                },
+                enableRankingStrictLimit: true,
+            });
+
+            expect(component.getPreview()).toEqual("Top 10 records by Measure 1");
+        });
+    });
+});

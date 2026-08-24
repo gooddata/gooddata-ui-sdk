@@ -1,0 +1,914 @@
+// (C) 2025-2026 GoodData Corporation
+
+import { fireEvent, render, screen } from "@testing-library/react";
+import cx from "classnames";
+import { IntlProvider } from "react-intl";
+import { describe, expect, it, vi } from "vitest";
+
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
+
+import { typedUiMenuContextStore } from "./context.js";
+import { b } from "./menuBem.js";
+import {
+    type IUiMenuGroupItemProps,
+    type IUiMenuInteractiveItemProps,
+    type IUiMenuItem,
+    type IUiMenuProps,
+    type IUiMenuStaticItemProps,
+} from "./types.js";
+import { UiMenu } from "./UiMenu.js";
+
+describe("UiMenu", () => {
+    const mockItems: IUiMenuItem[] = [
+        { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
+        { type: "interactive", id: "item2", stringTitle: "Item 2", data: "data2" },
+        { type: "interactive", id: "item3", stringTitle: "Item 3", isDisabled: true, data: "data3" },
+        { type: "static", id: "static1", data: "Static Item 1" },
+        {
+            type: "interactive",
+            id: "item4",
+            stringTitle: "Item 4",
+            data: "data4",
+            subItems: [
+                { type: "interactive", id: "subitem1", stringTitle: "SubItem 1", data: "subdata1" },
+                { type: "static", id: "substatic1", data: "SubStatic Item 1" },
+                { type: "interactive", id: "subitem2", stringTitle: "SubItem 2", data: "subdata2" },
+            ],
+        },
+        {
+            type: "group",
+            id: "group1",
+            stringTitle: "Group 1",
+            data: "Group title",
+            subItems: [
+                { type: "interactive", id: "groupitem1", stringTitle: "Group Item 1", data: "groupdata1" },
+                { type: "interactive", id: "groupitem2", stringTitle: "Group Item 2", data: "groupdata2" },
+            ],
+        },
+    ];
+
+    const DefaultLocale = "en-US";
+
+    const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];
+
+    const renderMenu = (props: Partial<IUiMenuProps> = {}) => {
+        const defaultAriaAttributes = {
+            id: "test-dropdown-menu",
+            "aria-labelledby": "test-dropdown-button",
+            role: "menu" as const,
+        };
+
+        return render(
+            <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>
+                <UiMenu
+                    items={mockItems}
+                    onSelect={vi.fn()}
+                    onClose={vi.fn()}
+                    ariaAttributes={defaultAriaAttributes}
+                    {...props}
+                />
+            </IntlProvider>,
+        );
+    };
+
+    it("should render all top-level items", () => {
+        renderMenu();
+
+        expect(screen.getByText("Item 1")).toBeInTheDocument();
+        expect(screen.getByText("Item 2")).toBeInTheDocument();
+        expect(screen.getByText("Item 3")).toBeInTheDocument();
+        expect(screen.getByText("Static Item 1")).toBeInTheDocument();
+        expect(screen.getByText("Item 4")).toBeInTheDocument();
+    });
+
+    it("should mark disabled item", () => {
+        renderMenu();
+
+        const disabledItemLi = screen.getByText("Item 3").closest("li");
+
+        expect(disabledItemLi).toHaveAttribute("aria-disabled", "true");
+    });
+
+    it("should call onSelect when item is clicked", () => {
+        const onSelect = vi.fn();
+        renderMenu({ onSelect });
+
+        fireEvent.click(screen.getByText("Item 1"));
+
+        expect(onSelect).toHaveBeenCalledWith(mockItems[0], expect.anything());
+    });
+
+    it("should not call onSelect when disabled item is clicked", () => {
+        const onSelect = vi.fn();
+        renderMenu({ onSelect });
+
+        fireEvent.click(screen.getByText("Item 3"));
+
+        expect(onSelect).not.toHaveBeenCalled();
+    });
+
+    it("should navigate with keyboard", () => {
+        renderMenu();
+
+        const menu = screen.getByRole("menu");
+
+        // Initial focus is on first item
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item1"));
+
+        // Navigate down
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item2"));
+
+        // Navigate up
+        fireEvent.keyDown(menu, { code: "ArrowUp" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item1"));
+
+        // Navigate to end
+        fireEvent.keyDown(menu, { code: "End" });
+        expect(menu).toHaveAttribute(
+            "aria-activedescendant",
+            expect.stringContaining("item-test-dropdown-menu-groupitem2"),
+        );
+
+        // Navigate to home
+        fireEvent.keyDown(menu, { code: "Home" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item1"));
+    });
+
+    it("should select with Enter key", () => {
+        const onSelect = vi.fn();
+        renderMenu({ onSelect });
+
+        const menu = screen.getByRole("menu");
+
+        // Navigate to second item
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+
+        // Select with Enter
+        fireEvent.keyDown(menu, { code: "Enter" });
+
+        expect(onSelect).toHaveBeenCalledWith(mockItems[1], expect.anything());
+    });
+
+    it("should select with Space key", () => {
+        const onSelect = vi.fn();
+        renderMenu({ onSelect });
+
+        const menu = screen.getByRole("menu");
+
+        // Navigate to second item
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+
+        // Select with Space
+        fireEvent.keyDown(menu, { code: "Space" }); // Space key is represented as "Space" in event.code
+
+        expect(onSelect).toHaveBeenCalledWith(mockItems[1], expect.anything());
+    });
+
+    it("should close with Escape key", () => {
+        const onClose = vi.fn();
+        renderMenu({ onClose });
+
+        const menu = screen.getByRole("menu");
+
+        // Press Escape
+        fireEvent.keyDown(menu, { code: "Escape" });
+
+        expect(onClose).toHaveBeenCalled();
+    });
+
+    it("should call onClose after selection when shouldCloseOnSelect is true", () => {
+        const onSelect = vi.fn();
+        const onClose = vi.fn();
+        renderMenu({ onSelect, onClose, shouldCloseOnSelect: true });
+
+        // Click on an item
+        fireEvent.click(screen.getByText("Item 1"));
+
+        expect(onSelect).toHaveBeenCalledWith(mockItems[0], expect.anything());
+        expect(onClose).toHaveBeenCalled();
+    });
+
+    it("should not call onClose after selection when shouldCloseOnSelect is false", () => {
+        const onSelect = vi.fn();
+        const onClose = vi.fn();
+        renderMenu({ onSelect, onClose, shouldCloseOnSelect: false });
+
+        // Click on an item
+        fireEvent.click(screen.getByText("Item 1"));
+
+        expect(onSelect).toHaveBeenCalledWith(mockItems[0], expect.anything());
+        expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it("should open submenu when item with submenu is selected", () => {
+        renderMenu();
+
+        // Click directly on the item with submenu
+        fireEvent.click(screen.getByText("Item 4"));
+
+        const menu = screen.getByRole("menu");
+
+        // Should focus first item in submenu
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("subitem1"));
+    });
+
+    it("should navigate back to parent menu with left arrow key", () => {
+        renderMenu();
+
+        // Click directly on the item with submenu
+        fireEvent.click(screen.getByText("Item 4"));
+
+        const menu = screen.getByRole("menu");
+
+        // Should be in submenu
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("subitem1"));
+
+        // Navigate back to parent with left arrow
+        fireEvent.keyDown(menu, { code: "ArrowLeft" });
+
+        // Should focus parent item
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item4"));
+    });
+
+    it("should render with custom InteractiveItemComponent", () => {
+        function CustomInteractiveItemComponent({
+            item,
+            isFocused,
+        }: IUiMenuInteractiveItemProps<{ interactive: string }>) {
+            return (
+                <div
+                    className={cx("custom-item", {
+                        "custom-focused": isFocused,
+                        "custom-disabled": item.isDisabled,
+                    })}
+                    data-testid="custom-item"
+                >
+                    {item.stringTitle} - {item.data}
+                </div>
+            );
+        }
+
+        renderMenu({
+            InteractiveItem: CustomInteractiveItemComponent as any,
+        });
+
+        // Check that custom component is rendered
+        const customItems = screen.getAllByTestId("custom-item");
+        expect(customItems.length).toBe(6); // 6 interactive items in mockItems (including group items)
+
+        // Check content of custom component
+        expect(screen.getByText("Item 1 - data1")).toBeInTheDocument();
+    });
+
+    it("should render with custom StaticItemComponent", () => {
+        function CustomStaticItemComponent({ item }: IUiMenuStaticItemProps<{ static: string }>) {
+            return (
+                <div className="custom-static-item" data-testid="custom-static-item">
+                    Static: {item.data}
+                </div>
+            );
+        }
+
+        renderMenu({
+            StaticItem: CustomStaticItemComponent as any,
+        });
+
+        // Check that custom static component is rendered
+        const customStaticItems = screen.getAllByTestId("custom-static-item");
+        expect(customStaticItems.length).toBe(1);
+        expect(screen.getByText("Static: Static Item 1")).toBeInTheDocument();
+    });
+
+    it("should apply maxWidth style when provided", () => {
+        const maxWidth = 300;
+        renderMenu({ maxWidth });
+
+        const menuContainer = document.querySelector(`.${b()}`);
+        expect(menuContainer).toHaveStyle({ maxWidth: `${maxWidth}px` });
+    });
+
+    it("should call onUnhandledKeyDown for unhandled key events", () => {
+        const onUnhandledKeyDown = vi.fn();
+        renderMenu({ onUnhandledKeyDown });
+
+        const menu = screen.getByRole("menu");
+
+        // Press an unhandled key
+        fireEvent.keyDown(menu, { code: "F1" });
+
+        expect(onUnhandledKeyDown).toHaveBeenCalled();
+        expect(onUnhandledKeyDown.mock.calls[0][0].code).toBe("F1");
+        expect(onUnhandledKeyDown.mock.calls[0][1]).toHaveProperty("items", mockItems);
+    });
+
+    it("should maintain proper aria attributes", () => {
+        renderMenu();
+
+        const menu = screen.getByRole("menu");
+
+        // Check that menu has proper ARIA attributes
+        expect(menu).toHaveAttribute("id", "test-dropdown-menu");
+        expect(menu).toHaveAttribute("aria-labelledby", "test-dropdown-button");
+        expect(menu).toHaveAttribute("role", "menu");
+
+        // Check that items have proper ARIA attributes
+        screen.getAllByRole("menuitem");
+
+        // Item with submenu should have aria-haspopup
+        const itemWithSubmenu = screen.getByText("Item 4").closest("li");
+        expect(itemWithSubmenu).toHaveAttribute("aria-haspopup", "menu");
+    });
+
+    it("should render items with a selectionRole as menuitemradio and aria-checked", () => {
+        renderMenu({
+            items: [
+                {
+                    type: "interactive",
+                    id: "selected",
+                    stringTitle: "Selected item",
+                    isSelected: true,
+                    selectionRole: "radio",
+                    data: "a",
+                },
+                {
+                    type: "interactive",
+                    id: "other",
+                    stringTitle: "Other item",
+                    isSelected: false,
+                    selectionRole: "radio",
+                    data: "b",
+                },
+            ],
+        });
+
+        expect(screen.getByRole("menuitemradio", { name: "Selected item" })).toHaveAttribute(
+            "aria-checked",
+            "true",
+        );
+        expect(screen.getByRole("menuitemradio", { name: "Other item" })).toHaveAttribute(
+            "aria-checked",
+            "false",
+        );
+        expect(screen.queryAllByRole("menuitem")).toHaveLength(0);
+    });
+
+    it("should keep isSelected items as plain menuitem without a selectionRole", () => {
+        renderMenu({
+            items: [
+                {
+                    type: "interactive",
+                    id: "selected",
+                    stringTitle: "Selected item",
+                    isSelected: true,
+                    data: "a",
+                },
+            ],
+        });
+
+        const item = screen.getByRole("menuitem", { name: "Selected item" });
+
+        expect(item).not.toHaveAttribute("aria-checked");
+    });
+
+    it("should allow focusing disabled items when isDisabledFocusable is true", () => {
+        const onSelect = vi.fn();
+        renderMenu({
+            isDisabledFocusable: true,
+            onSelect,
+        });
+
+        const menu = screen.getByRole("menu");
+
+        // Initial focus should be on first item
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item1"));
+
+        // Navigate down
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item2"));
+
+        // Navigate down again should focus disabled item
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item3"));
+
+        // Selecting a disabled item should not work
+        fireEvent.keyDown(menu, { code: "Enter" });
+        expect(onSelect).not.toHaveBeenCalled();
+    });
+
+    it("should not allow focusing disabled items when isDisabledFocusable is false", () => {
+        renderMenu({
+            isDisabledFocusable: false,
+        });
+
+        const menu = screen.getByRole("menu");
+
+        // Initial focus should be on first item
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item1"));
+
+        // Navigate down
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item2"));
+
+        // Navigate down again should skip disabled item and focus item4
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item4"));
+    });
+
+    it("should add data-test-id to items", () => {
+        renderMenu({
+            itemDataTestId: "item-data-test-id",
+        });
+
+        const items = screen.getByRole("menu").querySelectorAll("[data-testid]");
+        expect(items).toHaveLength(7);
+    });
+
+    it("should handle mouse interaction to focus items", () => {
+        renderMenu();
+
+        // Simulate mouse movement to set control type to mouse
+        const menuContainer = document.querySelector(`.${b()}`);
+        fireEvent.mouseMove(menuContainer!);
+
+        // Mouse over an item
+        fireEvent.mouseMove(screen.getByText("Item 2").closest("li")!);
+
+        // Check that item is focused
+        const menu = screen.getByRole("menu");
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item2"));
+    });
+
+    it("should render group items with their title", () => {
+        renderMenu();
+
+        // Check that group title is rendered
+        expect(screen.getByText("Group 1")).toBeInTheDocument();
+
+        // Check that group items are rendered
+        expect(screen.getByText("Group Item 1")).toBeInTheDocument();
+        expect(screen.getByText("Group Item 2")).toBeInTheDocument();
+    });
+
+    it("should render with custom GroupItemComponent", () => {
+        function CustomGroupItemComponent({ item }: IUiMenuGroupItemProps<{ group: string }>) {
+            const { ItemComponent } = typedUiMenuContextStore<{ group: string }>().useContextStore((ctx) => ({
+                ItemComponent: ctx.ItemComponent,
+            }));
+
+            return (
+                <div className="custom-group" data-testid="custom-group">
+                    <div className="custom-group-title">{item.data}</div>
+                    <div className="custom-group-items">
+                        {item.subItems.map((groupItem, index) => (
+                            <ItemComponent key={"id" in groupItem ? groupItem.id : index} item={groupItem} />
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+
+        renderMenu({
+            GroupItem: CustomGroupItemComponent as any,
+        });
+
+        // Check that custom component is rendered
+        const customGroups = screen.getAllByTestId("custom-group");
+        expect(customGroups.length).toBe(1);
+
+        // Check that group title is rendered
+        expect(screen.getByText("Group title")).toBeInTheDocument();
+
+        // Check that group items are still rendered
+        expect(screen.getByText("Group Item 1")).toBeInTheDocument();
+        expect(screen.getByText("Group Item 2")).toBeInTheDocument();
+    });
+    it("should handle menu with only group items at top level", () => {
+        // Create a menu with only group items at the top level
+        const onlyGroupItems: IUiMenuItem[] = [
+            {
+                type: "group",
+                id: "group1",
+                stringTitle: "Group 1",
+                data: "Group 1 title",
+                subItems: [
+                    {
+                        type: "interactive",
+                        id: "group1item1",
+                        stringTitle: "Group 1 Item 1",
+                        data: "group1data1",
+                    },
+                    {
+                        type: "interactive",
+                        id: "group1item2",
+                        stringTitle: "Group 1 Item 2",
+                        data: "group1data2",
+                    },
+                ],
+            },
+            {
+                type: "group",
+                id: "group2",
+                stringTitle: "Group 2",
+                data: "Group 2 title",
+                subItems: [
+                    {
+                        type: "interactive",
+                        id: "group2item1",
+                        stringTitle: "Group 2 Item 1",
+                        data: "group2data1",
+                    },
+                    {
+                        type: "interactive",
+                        id: "group2item2",
+                        stringTitle: "Group 2 Item 2",
+                        data: "group2data2",
+                    },
+                ],
+            },
+        ];
+
+        const onSelect = vi.fn();
+        render(
+            <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>
+                <UiMenu
+                    items={onlyGroupItems}
+                    onSelect={onSelect}
+                    onClose={vi.fn()}
+                    ariaAttributes={{
+                        id: "test-group-menu",
+                        "aria-labelledby": "test-group-button",
+                    }}
+                />
+            </IntlProvider>,
+        );
+
+        // Check that all group items are rendered
+        expect(screen.getByText("Group 1")).toBeInTheDocument();
+        expect(screen.getByText("Group 2")).toBeInTheDocument();
+        expect(screen.getByText("Group 1 Item 1")).toBeInTheDocument();
+        expect(screen.getByText("Group 1 Item 2")).toBeInTheDocument();
+        expect(screen.getByText("Group 2 Item 1")).toBeInTheDocument();
+        expect(screen.getByText("Group 2 Item 2")).toBeInTheDocument();
+
+        const menu = screen.getByRole("menu");
+
+        // Initial focus should be on the first interactive item from the first group
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("group1item1"));
+
+        // Navigate down
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("group1item2"));
+
+        // Navigate down again to reach the next group
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("group2item1"));
+
+        // Navigate to end
+        fireEvent.keyDown(menu, { code: "End" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("group2item2"));
+
+        // Navigate to home
+        fireEvent.keyDown(menu, { code: "Home" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("group1item1"));
+
+        // Select an item
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+        fireEvent.keyDown(menu, { code: "Enter" });
+        expect(onSelect).toHaveBeenCalledWith(
+            expect.objectContaining({ id: "group1item2" }),
+            expect.anything(),
+        );
+    });
+
+    it("should open submenu with a group inside when top-level interactive item is clicked", () => {
+        const menuWithInteractiveAndGroup: IUiMenuItem[] = [
+            { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
+            {
+                type: "interactive",
+                id: "item2",
+                stringTitle: "Item with submenu",
+                data: "data2",
+                subItems: [
+                    {
+                        type: "group",
+                        id: "group1",
+                        stringTitle: "Group 1",
+                        data: "Group title",
+                        subItems: [
+                            {
+                                type: "interactive",
+                                id: "groupitem1",
+                                stringTitle: "Group Item 1",
+                                data: "groupdata1",
+                            },
+                            {
+                                type: "interactive",
+                                id: "groupitem2",
+                                stringTitle: "Group Item 2",
+                                data: "groupdata2",
+                            },
+                        ],
+                    },
+                ],
+            },
+            { type: "interactive", id: "item3", stringTitle: "Item 3", data: "data3" },
+        ];
+
+        render(
+            <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>
+                <UiMenu
+                    items={menuWithInteractiveAndGroup}
+                    onSelect={vi.fn()}
+                    onClose={vi.fn()}
+                    ariaAttributes={{
+                        id: "test-interactive-with-group",
+                        "aria-labelledby": "test-interactive-with-group-button",
+                    }}
+                />
+            </IntlProvider>,
+        );
+
+        // Check that top-level items are rendered
+        expect(screen.getByText("Item 1")).toBeInTheDocument();
+        expect(screen.getByText("Item with submenu")).toBeInTheDocument();
+        expect(screen.getByText("Item 3")).toBeInTheDocument();
+
+        // Click on the item with submenu
+        fireEvent.click(screen.getByText("Item with submenu"));
+
+        // Verify that group items are now focused
+        const menu = screen.getByRole("menu");
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("groupitem1"));
+
+        // Verify that we can interact with the group items
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("groupitem2"));
+    });
+
+    describe("separator items", () => {
+        it('should render a separator between items with role="separator"', () => {
+            renderMenu({
+                items: [
+                    { type: "interactive", id: "a", stringTitle: "A", data: "a" },
+                    { type: "separator" },
+                    { type: "interactive", id: "b", stringTitle: "B", data: "b" },
+                ],
+            });
+
+            expect(screen.getByRole("separator")).toBeInTheDocument();
+        });
+
+        it("should collapse leading, trailing and adjacent separators", () => {
+            renderMenu({
+                items: [
+                    { type: "separator" },
+                    { type: "interactive", id: "a", stringTitle: "A", data: "a" },
+                    { type: "separator" },
+                    { type: "separator" },
+                    { type: "interactive", id: "b", stringTitle: "B", data: "b" },
+                    { type: "separator" },
+                ],
+            });
+
+            expect(screen.getAllByRole("separator")).toHaveLength(1);
+        });
+
+        it("should render no separator when only one side of it has items", () => {
+            renderMenu({
+                items: [{ type: "interactive", id: "a", stringTitle: "A", data: "a" }, { type: "separator" }],
+            });
+
+            expect(screen.queryByRole("separator")).not.toBeInTheDocument();
+        });
+
+        it("should skip separators in keyboard navigation", () => {
+            renderMenu({
+                items: [
+                    { type: "interactive", id: "first-item", stringTitle: "A", data: "a" },
+                    { type: "separator" },
+                    { type: "interactive", id: "second-item", stringTitle: "B", data: "b" },
+                ],
+            });
+
+            const menu = screen.getByRole("menu");
+            expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("first-item"));
+
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+            expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("second-item"));
+        });
+    });
+
+    describe("item tooltip", () => {
+        const itemsWithTooltip: IUiMenuItem[] = [
+            { type: "interactive", id: "no-tooltip", stringTitle: "No tooltip", data: "a" },
+            {
+                type: "interactive",
+                id: "with-tooltip",
+                stringTitle: "With tooltip",
+                isDisabled: true,
+                tooltip: "Why this is disabled",
+                data: "b",
+            },
+        ];
+
+        const itemsWithIconTooltip: IUiMenuItem[] = [
+            { type: "interactive", id: "no-tooltip", stringTitle: "No tooltip", data: "a" },
+            {
+                type: "interactive",
+                id: "with-icon-tooltip",
+                stringTitle: "With icon tooltip",
+                tooltip: "Extra details",
+                iconRight: <span data-testid="tooltip-icon">?</span>,
+                data: "b",
+            },
+        ];
+
+        it("should give the tooltip icon its own hover anchor", () => {
+            renderMenu({ items: itemsWithIconTooltip });
+
+            expect(screen.getByTestId("tooltip-icon").parentElement).toHaveClass(
+                "gd-ui-kit-tooltip__anchor--inline",
+            );
+        });
+
+        it("should reveal the row tooltip on keyboard focus when the item has an icon tooltip", () => {
+            renderMenu({ items: itemsWithIconTooltip });
+
+            const menu = screen.getByRole("menu");
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+
+            expect(screen.getByRole("tooltip", { hidden: true })).toHaveTextContent("Extra details");
+        });
+
+        it("should not show the row tooltip while navigating to an icon-tooltip item with the mouse", () => {
+            renderMenu({ items: itemsWithIconTooltip });
+
+            fireEvent.mouseMove(screen.getByText("With icon tooltip"));
+
+            expect(screen.queryByRole("tooltip", { hidden: true })).not.toBeInTheDocument();
+        });
+
+        it("should not show the tooltip while navigating to the item with the mouse", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            fireEvent.mouseMove(screen.getByText("With tooltip"));
+
+            expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+        });
+
+        it("should reveal the tooltip once keyboard navigation focuses the item", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            const menu = screen.getByRole("menu");
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+            expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("with-tooltip"));
+
+            expect(screen.getByRole("tooltip", { hidden: true })).toHaveTextContent("Why this is disabled");
+        });
+
+        it("should hide the tooltip once keyboard navigation moves away from the item", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            const menu = screen.getByRole("menu");
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+            expect(screen.getByRole("tooltip", { hidden: true })).toBeInTheDocument();
+
+            fireEvent.keyDown(menu, { code: "ArrowUp" });
+            expect(screen.queryByRole("tooltip", { hidden: true })).not.toBeInTheDocument();
+        });
+
+        it("should announce tooltip text from the menu item, not a separate tooltip role", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            const menu = screen.getByRole("menu");
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+
+            expect(screen.queryAllByRole("tooltip")).toHaveLength(0);
+            expect(screen.getByText("With tooltip").closest("li")).toHaveTextContent("Why this is disabled");
+        });
+
+        it("should hide the tooltip once the mouse takes over after keyboard focus", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            const menu = screen.getByRole("menu");
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+            expect(screen.getByRole("tooltip", { hidden: true })).toBeInTheDocument();
+
+            fireEvent.mouseMove(screen.getByText("With tooltip"));
+
+            expect(screen.queryByRole("tooltip", { hidden: true })).not.toBeInTheDocument();
+        });
+
+        it("should dismiss just the tooltip on Escape, without closing the menu", () => {
+            const onClose = vi.fn();
+            renderMenu({ items: itemsWithTooltip, onClose });
+
+            const menu = screen.getByRole("menu");
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+            expect(screen.getByRole("tooltip", { hidden: true })).toBeInTheDocument();
+
+            fireEvent.keyDown(document, { key: "Escape" });
+
+            expect(screen.queryByRole("tooltip", { hidden: true })).not.toBeInTheDocument();
+            expect(onClose).not.toHaveBeenCalled();
+        });
+
+        it("should show the tooltip again once focus leaves and returns after an Escape dismissal", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            const menu = screen.getByRole("menu");
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+            fireEvent.keyDown(document, { key: "Escape" });
+            expect(screen.queryByRole("tooltip", { hidden: true })).not.toBeInTheDocument();
+
+            fireEvent.keyDown(menu, { code: "ArrowUp" });
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+
+            expect(screen.getByRole("tooltip", { hidden: true })).toBeInTheDocument();
+        });
+
+        it("should close the menu on the first Escape when the tooltip has its own icon", () => {
+            const onClose = vi.fn();
+            renderMenu({
+                items: [
+                    {
+                        type: "interactive",
+                        id: "with-icon-tooltip",
+                        stringTitle: "With tooltip",
+                        tooltip: "Why this is disabled",
+                        iconRight: <span data-testid="tooltip-icon">?</span>,
+                        data: "b",
+                    },
+                ],
+                onClose,
+            });
+
+            const menu = screen.getByRole("menu");
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+            expect(screen.getByRole("tooltip", { hidden: true })).toBeInTheDocument();
+
+            fireEvent.keyDown(menu, { code: "Escape", key: "Escape" });
+
+            expect(onClose).toHaveBeenCalledTimes(1);
+        });
+
+        it("should close the menu on the first Escape when the focused item has no tooltip", () => {
+            const onClose = vi.fn();
+            renderMenu({ items: itemsWithTooltip, onClose });
+
+            const menu = screen.getByRole("menu");
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+            fireEvent.keyDown(menu, { code: "ArrowUp" });
+            fireEvent.keyDown(menu, { code: "Escape", key: "Escape" });
+
+            expect(onClose).toHaveBeenCalledTimes(1);
+        });
+
+        it("should not use aria-describedby for item tooltips", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            const menu = screen.getByRole("menu");
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+
+            const disabledItemLi = screen.getByText("With tooltip").closest("li");
+
+            expect(disabledItemLi).not.toHaveAttribute("aria-describedby");
+            expect(disabledItemLi).toHaveTextContent("Why this is disabled");
+        });
+
+        it("should not pin aria-label on items with a tooltip", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            const disabledItemLi = screen.getByText("With tooltip").closest("li");
+
+            expect(disabledItemLi).not.toHaveAttribute("aria-label");
+        });
+
+        it("should not set an aria-label on items without a tooltip", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            const plainItemLi = screen.getByText("No tooltip").closest("li");
+
+            expect(plainItemLi).not.toHaveAttribute("aria-label");
+        });
+
+        it("should preserve a caller-supplied aria-label on items without a tooltip", () => {
+            renderMenu({
+                items: [
+                    {
+                        type: "interactive",
+                        id: "labelled-no-tooltip",
+                        stringTitle: "Labelled",
+                        data: "a",
+                        ariaAttributes: { "aria-label": "Custom label" },
+                    },
+                ],
+            });
+
+            const itemLi = screen.getByText("Labelled").closest("li");
+
+            expect(itemLi).toHaveAttribute("aria-label", "Custom label");
+        });
+    });
+});

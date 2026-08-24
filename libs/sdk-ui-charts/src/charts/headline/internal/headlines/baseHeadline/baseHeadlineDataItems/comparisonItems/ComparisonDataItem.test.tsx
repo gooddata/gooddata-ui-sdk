@@ -1,0 +1,137 @@
+// (C) 2023-2026 GoodData Corporation
+
+import { render } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+import { type IColorPalette } from "@gooddata/sdk-model";
+import { withIntlForTest } from "@gooddata/sdk-ui";
+
+import { type IColorConfig } from "../../../../../../../interfaces/comparison.js";
+import {
+    EvaluationType,
+    type IBaseHeadlineDataItemProps,
+    type IComparisonDataItem,
+} from "../../../../interfaces/BaseHeadlines.js";
+import {
+    COMPARISON_HEADLINE_VALUE_SELECTOR,
+    INDICATOR_DOWN_CLASSNAME_SELECTOR,
+    INDICATOR_UP_CLASSNAME_SELECTOR,
+    TEST_DATA_ITEM,
+    TEST_RENDER_COLOR_SPECS,
+    createComparison,
+} from "../../../../TestData.fixtures.js";
+import { createBaseHeadlineTestContext } from "../../BaseHeadline.test.helpers.js";
+
+import { ComparisonDataItem } from "./ComparisonDataItem.js";
+
+const { setBaseHeadline, wrapper } = createBaseHeadlineTestContext();
+
+describe("ComparisonDataItem", () => {
+    const renderComparisonDataItem = (props: IBaseHeadlineDataItemProps<IComparisonDataItem>) => {
+        const WrappedComparisonDataItem = withIntlForTest(ComparisonDataItem);
+        return render(<WrappedComparisonDataItem {...props} />, { wrapper });
+    };
+
+    afterEach(() => {
+        vi.clearAllMocks();
+    });
+
+    describe("Should render color correctly", () => {
+        afterEach(() => {
+            vi.clearAllMocks();
+        });
+
+        it.each<[string, IColorConfig, EvaluationType, string, IColorPalette?]>(TEST_RENDER_COLOR_SPECS)(
+            "%s",
+            (_test, colorConfig, evaluationType, expectedColor, customPalette) => {
+                setBaseHeadline({
+                    config: {
+                        comparison: createComparison({
+                            colorConfig,
+                        }),
+                        ...(customPalette ? { colorPalette: customPalette } : {}),
+                    },
+                });
+
+                const formatColor = "9c46b5";
+                const dataItem = {
+                    ...TEST_DATA_ITEM,
+                    value: "1666.105",
+                    format: `[color=${formatColor}][backgroundColor=d2ccde]$#,##0.00`,
+                };
+                const { container } = renderComparisonDataItem({
+                    dataItem,
+                    evaluationType,
+                });
+
+                const valueWrapper = container.querySelector(COMPARISON_HEADLINE_VALUE_SELECTOR);
+                expect(valueWrapper).toHaveStyle(`color: ${expectedColor || "#" + formatColor}`);
+                expect(valueWrapper).toHaveStyle("background-color: #d2ccde");
+            },
+        );
+    });
+
+    describe("Should render indicator correctly", () => {
+        beforeEach(() => {
+            setBaseHeadline({
+                config: {
+                    comparison: createComparison({
+                        isArrowEnabled: true,
+                    }),
+                },
+            });
+        });
+
+        afterEach(() => {
+            vi.clearAllMocks();
+        });
+
+        it("Should render arrow up indicator", () => {
+            const { container } = renderComparisonDataItem({
+                dataItem: TEST_DATA_ITEM,
+                evaluationType: EvaluationType.POSITIVE_VALUE,
+            });
+
+            expect(container.querySelector(INDICATOR_UP_CLASSNAME_SELECTOR)).toBeInTheDocument();
+            expect(container.querySelector(INDICATOR_DOWN_CLASSNAME_SELECTOR)).not.toBeInTheDocument();
+        });
+
+        it("Should render arrow down indicator", () => {
+            const { container } = renderComparisonDataItem({
+                dataItem: TEST_DATA_ITEM,
+                evaluationType: EvaluationType.NEGATIVE_VALUE,
+            });
+
+            expect(container.querySelector(INDICATOR_UP_CLASSNAME_SELECTOR)).not.toBeInTheDocument();
+            expect(container.querySelector(INDICATOR_DOWN_CLASSNAME_SELECTOR)).toBeInTheDocument();
+        });
+
+        it("Should not render arrow indicator in case item status is equals value", () => {
+            const { container } = renderComparisonDataItem({
+                dataItem: TEST_DATA_ITEM,
+                evaluationType: EvaluationType.EQUALS_VALUE,
+            });
+
+            expect(container.querySelector(INDICATOR_UP_CLASSNAME_SELECTOR)).not.toBeInTheDocument();
+            expect(container.querySelector(INDICATOR_DOWN_CLASSNAME_SELECTOR)).not.toBeInTheDocument();
+        });
+
+        it("Should not render arrow indicator in case is-arrow-enabled property is a falsy value", () => {
+            setBaseHeadline({
+                config: {
+                    comparison: createComparison({
+                        isArrowEnabled: false,
+                    }),
+                },
+            });
+
+            const { container } = renderComparisonDataItem({
+                dataItem: TEST_DATA_ITEM,
+                evaluationType: EvaluationType.NEGATIVE_VALUE,
+            });
+
+            expect(container.querySelector(INDICATOR_UP_CLASSNAME_SELECTOR)).not.toBeInTheDocument();
+            expect(container.querySelector(INDICATOR_DOWN_CLASSNAME_SELECTOR)).not.toBeInTheDocument();
+        });
+    });
+});

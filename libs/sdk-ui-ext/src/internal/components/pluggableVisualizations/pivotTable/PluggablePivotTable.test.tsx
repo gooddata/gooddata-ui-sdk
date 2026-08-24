@@ -1,0 +1,899 @@
+// (C) 2019-2026 GoodData Corporation
+
+import { cloneDeep } from "lodash-es";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { type IBackendCapabilities } from "@gooddata/sdk-backend-spi";
+import { type IInsight, type ISettings, type ISortItem } from "@gooddata/sdk-model";
+import {
+    BucketNames,
+    DefaultLocale,
+    type IDrillableItem,
+    type ILocale,
+    type VisualizationEnvironment,
+} from "@gooddata/sdk-ui";
+import { type ColumnWidthItem, CorePivotTable, type ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
+
+import {
+    type IBucketItem,
+    type IBucketOfFun,
+    type IExtendedReferencePoint,
+    type IFilters,
+    type IGdcConfig,
+    type IReferencePoint,
+    type IVisConstruct,
+    type IVisProps,
+} from "../../../interfaces/Visualization.js";
+import {
+    emptyReferencePoint,
+    measureValueFilterAndInvalidNatTotal,
+    multipleMetricsAndCategoriesReferencePoint,
+    rankingFilterAndInvalidNatTotal,
+    sameCategoryAndStackReferencePoint,
+    simpleStackedReferencePoint,
+    tableGrandAndSubtotalsReferencePoint,
+    tableTotalsReferencePoint,
+    tableWith20MeasuresAndAttributesAnd1Column,
+    tableWith20MeasuresAndAttributesAndNoColumn,
+    tableWith20MeasuresAndDerivedMeasuresNoRowsAnd1Column,
+    tableWithMultipleMeasuresRowsAndColumns,
+    tableWithNativeTotal,
+    tableWithRowColTotalAndRankingFilter,
+} from "../../../tests/mocks/referencePointMocks.js";
+import { dummyInsight, emptyInsight } from "../../../tests/mocks/testMocks.js";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
+import { createDrillEvent, getLastRenderEl } from "../tests/pluggableVisualizations.test.helpers.js";
+
+import { getInsightWithDrillDownApplied } from "./getInsightWithDrillDownAppliedMock.js";
+import { getMockReferencePoint } from "./mockReferencePoint.js";
+import {
+    PluggablePivotTable,
+    createPivotTableConfig,
+    getColumnAttributes,
+    getRowAttributes,
+} from "./PluggablePivotTable.js";
+import {
+    invalidAttributeSort,
+    invalidMeasureSortInvalidAttribute,
+    invalidMeasureSortInvalidMeasure,
+    invalidMeasureSortLocatorsTooShort,
+    invalidMeasureSortTooManyLocators,
+    validAttributeSort,
+    validMeasureSort,
+} from "./sortMocks.js";
+import {
+    invalidAttributeColumnWidthItem,
+    invalidMeasureColumnWidthItem,
+    invalidMeasureColumnWidthItemInvalidAttribute,
+    invalidMeasureColumnWidthItemLocatorsTooShort,
+    invalidMeasureColumnWidthItemTooManyLocators,
+    transformedWeakMeasureColumnWidth,
+    validAttributeColumnWidthItem,
+    validMeasureColumnWidthItem,
+} from "./widthItemsMock.js";
+
+describe("PluggablePivotTable", () => {
+    const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];
+
+    const mockElement = document.createElement("div");
+    const mockConfigElement = document.createElement("div");
+    const mockRenderFun = vi.fn();
+    const backend = dummyBackend();
+    const executionFactory = backend.workspace("PROJECTID").execution();
+
+    const defaultProps = {
+        projectId: "PROJECTID",
+        backend,
+        visualizationProperties: {},
+        element: () => mockElement,
+        configPanelElement: () => mockConfigElement,
+        renderFun: mockRenderFun,
+        unmountFun: vi.fn(),
+        callbacks: {
+            afterRender: () => {},
+            pushData: () => {},
+            onError: () => {},
+            onLoadingChanged: () => {},
+        },
+        messages,
+    };
+
+    function createComponent(props: IVisConstruct = defaultProps) {
+        return new PluggablePivotTable(props);
+    }
+
+    afterEach(() => {
+        mockRenderFun.mockReset();
+    });
+
+    it("should create visualization", () => {
+        const visualization = createComponent();
+        expect(visualization).toBeTruthy();
+    });
+
+    describe("Drill Down", () => {
+        it("should delete intersection filter attributes and sanitize properties", () => {
+            const pivotTable = createComponent();
+            const result: IInsight = pivotTable.getInsightWithDrillDownApplied(
+                getInsightWithDrillDownApplied.sourceInsight,
+                {
+                    drillDefinition: getInsightWithDrillDownApplied.drillConfig,
+                    event: createDrillEvent("column", getInsightWithDrillDownApplied.intersection),
+                },
+                true,
+            );
+
+            expect(result).toEqual(getInsightWithDrillDownApplied.expectedInsight);
+        });
+
+        it("should update totals according to the deleted intersection attribute filters", () => {
+            const pivotTable = createComponent();
+            const result: IInsight = pivotTable.getInsightWithDrillDownApplied(
+                getInsightWithDrillDownApplied.sourceInsightWithTotals,
+                {
+                    drillDefinition: getInsightWithDrillDownApplied.drillConfig,
+                    event: createDrillEvent("column", getInsightWithDrillDownApplied.intersection),
+                },
+                true,
+            );
+
+            expect(result).toEqual(getInsightWithDrillDownApplied.expectedInsightWithTotals);
+        });
+    });
+
+    describe("update", () => {
+        function getDefaultOptions(): IVisProps {
+            const locale: ILocale = DefaultLocale;
+            const drillableItems: IDrillableItem[] = [];
+            return {
+                locale,
+                custom: {
+                    drillableItems,
+                },
+                dimensions: {
+                    width: 123,
+                    height: 234,
+                },
+                messages,
+            };
+        }
+
+        const emptyPropertiesMeta = {};
+
+        it("should not render table when dataSource is missing", () => {
+            const pivotTable = createComponent();
+
+            const options = getDefaultOptions();
+            pivotTable.update({ ...options }, emptyInsight, emptyPropertiesMeta, executionFactory);
+
+            const renderEl = getLastRenderEl(mockRenderFun, mockElement);
+            expect(renderEl).toBeUndefined();
+        });
+
+        it("should have onColumnResized callback", () => {
+            const pivotTable = createComponent();
+
+            const options = getDefaultOptions();
+            pivotTable.update(options, dummyInsight, emptyPropertiesMeta, executionFactory);
+
+            const renderEl = getLastRenderEl<ICorePivotTableProps>(mockRenderFun, mockElement);
+            expect(renderEl).toBeDefined();
+            expect(renderEl!.type).toBe(CorePivotTable);
+
+            expect(renderEl!.props.onColumnResized).toBeInstanceOf(Function);
+        });
+
+        it("should render PivotTable passing down all the necessary properties", () => {
+            const pivotTable = createComponent();
+
+            const options = getDefaultOptions();
+            pivotTable.update(options, dummyInsight, emptyPropertiesMeta, executionFactory);
+
+            const renderEl = getLastRenderEl<ICorePivotTableProps>(mockRenderFun, mockElement);
+            expect(renderEl).toBeDefined();
+            expect(renderEl!.type).toBe(CorePivotTable);
+
+            // TODO should verify props ideally
+        });
+    });
+
+    describe("getExtendedReferencePoint", () => {
+        describe("given simpleStackedReferencePoint", () => {
+            const pivotTable = createComponent();
+            const sourceReferencePoint = simpleStackedReferencePoint;
+            const mockPivotTableReferencePoint = getMockReferencePoint(
+                sourceReferencePoint.buckets[0].items,
+                sourceReferencePoint.buckets[1].items,
+                sourceReferencePoint.buckets[2].items,
+                [],
+                [],
+                true,
+            );
+
+            const extendedReferencePointPromise: Promise<IExtendedReferencePoint> =
+                pivotTable.getExtendedReferencePoint(sourceReferencePoint);
+
+            it("should return a new reference point with adapted buckets", () => {
+                const expectedBuckets: IBucketOfFun[] = mockPivotTableReferencePoint.buckets;
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
+                    expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
+                });
+            });
+
+            it("should return a new reference point with identical filters", () => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
+                    const expectedFilters: IFilters = sourceReferencePoint.filters;
+                    expect(extendedReferencePoint.filters).toEqual(expectedFilters);
+                });
+            });
+
+            it("should return a new reference point with pivotTable UI config", () => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
+                    expect(extendedReferencePoint.uiConfig).toMatchSnapshot();
+                });
+            });
+
+            it("should return reference point with new bucket max size", async () => {
+                const pivotTable = createComponent();
+
+                const extendedReferencePoint = await pivotTable.getExtendedReferencePoint(
+                    tableWithMultipleMeasuresRowsAndColumns,
+                );
+
+                expect(extendedReferencePoint).toMatchSnapshot();
+            });
+
+            it("should return reference point with new bucket max size, when derived measures present", async () => {
+                const pivotTable = createComponent();
+
+                const extendedReferencePoint = await pivotTable.getExtendedReferencePoint(
+                    tableWith20MeasuresAndDerivedMeasuresNoRowsAnd1Column,
+                );
+
+                expect(extendedReferencePoint).toMatchSnapshot();
+            });
+
+            it("should return reference point with new bucket max size, when measures/attributes limit is reached with no columns", async () => {
+                const pivotTable = createComponent();
+
+                const extendedReferencePoint = await pivotTable.getExtendedReferencePoint(
+                    tableWith20MeasuresAndAttributesAndNoColumn,
+                );
+
+                expect(extendedReferencePoint).toMatchSnapshot();
+            });
+
+            it("should return reference point with new bucket max size, when measures/attributes limit is reached with columns", async () => {
+                const pivotTable = createComponent();
+
+                const extendedReferencePoint = await pivotTable.getExtendedReferencePoint(
+                    tableWith20MeasuresAndAttributesAnd1Column,
+                );
+
+                expect(extendedReferencePoint).toMatchSnapshot();
+            });
+
+            it("should return a new reference point with filtered sortItems (in this case identical)", () => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
+                    const expectedSortItems: ISortItem[] = sourceReferencePoint.properties!.sortItems!;
+                    expect(extendedReferencePoint.properties!.sortItems).toEqual(expectedSortItems);
+                });
+            });
+
+            it("should return a new reference point with columnWidths", () => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
+                    const expectedColumnWidths: ColumnWidthItem[] =
+                        sourceReferencePoint.properties!.controls!["columnWidths"];
+                    expect(extendedReferencePoint.properties!.controls!["columnWidths"]).toEqual(
+                        expectedColumnWidths,
+                    );
+                });
+            });
+
+            it("should not generate empty columnWidths in a new reference point", () => {
+                const emptyControlsReferencePoint: IReferencePoint = {
+                    ...sourceReferencePoint,
+                    properties: {
+                        sortItems: sourceReferencePoint.properties!.sortItems,
+                    },
+                };
+                const promise: Promise<IExtendedReferencePoint> =
+                    pivotTable.getExtendedReferencePoint(emptyControlsReferencePoint);
+                return promise.then((extendedReferencePoint) => {
+                    expect(extendedReferencePoint.properties!.controls).toBeUndefined();
+                });
+            });
+        });
+
+        describe("given multipleMetricsAndCategoriesReferencePoint", () => {
+            const pivotTable = createComponent();
+            const sourceReferencePoint = multipleMetricsAndCategoriesReferencePoint;
+            const mockPivotTableReferencePoint = getMockReferencePoint(
+                sourceReferencePoint.buckets[0].items,
+                sourceReferencePoint.buckets[1].items,
+                sourceReferencePoint.buckets[2].items,
+            );
+
+            const extendedReferencePointPromise: Promise<IExtendedReferencePoint> =
+                pivotTable.getExtendedReferencePoint(sourceReferencePoint);
+
+            it("should return a new reference point with adapted buckets", () => {
+                const expectedBuckets: IBucketOfFun[] = mockPivotTableReferencePoint.buckets;
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
+                    expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
+                });
+            });
+
+            it("should return a new reference point with identical filters", () => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
+                    const expectedFilters: IFilters = sourceReferencePoint.filters;
+                    expect(extendedReferencePoint.filters).toEqual(expectedFilters);
+                });
+            });
+
+            it("should return a new reference point with pivotTable UI config", () => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
+                    expect(extendedReferencePoint.uiConfig).toMatchSnapshot();
+                });
+            });
+
+            it("should return a new reference point with filtered sortItems (in this case identical)", () => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
+                    const expectedSortItems: ISortItem[] = sourceReferencePoint.properties!.sortItems!;
+                    expect(extendedReferencePoint.properties!.sortItems).toEqual(expectedSortItems);
+                });
+            });
+        });
+
+        it("should return a new reference point with invalid sortItems removed", () => {
+            const pivotTable = createComponent();
+            const sourceReferencePoint = simpleStackedReferencePoint;
+            const mockPivotTableReferencePoint = getMockReferencePoint(
+                sourceReferencePoint.buckets[0].items,
+                sourceReferencePoint.buckets[1].items,
+                sourceReferencePoint.buckets[2].items,
+                [],
+                [
+                    invalidAttributeSort,
+                    invalidMeasureSortInvalidMeasure,
+                    invalidMeasureSortInvalidAttribute,
+                    invalidMeasureSortLocatorsTooShort,
+                    invalidMeasureSortTooManyLocators,
+                    validAttributeSort,
+                    validMeasureSort,
+                ],
+            );
+            const expectedSortItems: ISortItem[] = [validAttributeSort, validMeasureSort];
+
+            const extendedReferencePointPromise: Promise<IExtendedReferencePoint> =
+                pivotTable.getExtendedReferencePoint(mockPivotTableReferencePoint);
+            return extendedReferencePointPromise.then((extendedReferencePoint) => {
+                expect(extendedReferencePoint.properties!.sortItems).toEqual(expectedSortItems);
+            });
+        });
+
+        it("should return a new reference point with invalid columnWidths removed", () => {
+            const pivotTable = createComponent();
+            const sourceReferencePoint = simpleStackedReferencePoint;
+            const mockPivotTableReferencePoint: IExtendedReferencePoint = getMockReferencePoint(
+                sourceReferencePoint.buckets[0].items,
+                sourceReferencePoint.buckets[1].items,
+                sourceReferencePoint.buckets[2].items,
+                [],
+                [],
+                true,
+                [
+                    invalidAttributeColumnWidthItem,
+                    invalidMeasureColumnWidthItem,
+                    invalidMeasureColumnWidthItemInvalidAttribute,
+                    invalidMeasureColumnWidthItemLocatorsTooShort,
+                    invalidMeasureColumnWidthItemTooManyLocators,
+                    validAttributeColumnWidthItem,
+                    validMeasureColumnWidthItem,
+                ],
+            );
+            const expectedColumnWidthItems: ColumnWidthItem[] = [
+                transformedWeakMeasureColumnWidth,
+                validAttributeColumnWidthItem,
+                validMeasureColumnWidthItem,
+            ];
+
+            const extendedReferencePointPromise: Promise<IExtendedReferencePoint> =
+                pivotTable.getExtendedReferencePoint(mockPivotTableReferencePoint);
+            return extendedReferencePointPromise.then((extendedReferencePoint) => {
+                expect(extendedReferencePoint.properties!.controls!["columnWidths"]).toEqual(
+                    expectedColumnWidthItems,
+                );
+            });
+        });
+
+        describe("given a reference point with duplicate attributes", () => {
+            const pivotTable = createComponent();
+            const sourceReferencePoint = sameCategoryAndStackReferencePoint;
+            const mockReferencePoint = getMockReferencePoint(
+                sourceReferencePoint.buckets[0].items,
+                sourceReferencePoint.buckets[1].items,
+                [],
+                [],
+                [],
+                true,
+            );
+
+            const extendedReferencePointPromise = pivotTable.getExtendedReferencePoint(sourceReferencePoint);
+
+            it("should return a new reference point without duplicates in buckets", () => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
+                    const expectedBuckets: IBucketOfFun[] = mockReferencePoint.buckets;
+                    expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
+                });
+            });
+        });
+
+        describe("given an empty reference point", () => {
+            const pivotTable = createComponent();
+            const mockReferencePoint = getMockReferencePoint();
+
+            const extendedReferencePointPromise = pivotTable.getExtendedReferencePoint(emptyReferencePoint);
+
+            it("should return a new reference point with empty buckets", () => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
+                    const expectedBuckets: IBucketOfFun[] = mockReferencePoint.buckets;
+                    expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
+                });
+            });
+
+            it("should return a new reference point with empty filters", () => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
+                    const expectedFilters: IFilters = { localIdentifier: "filters", items: [] };
+                    expect(extendedReferencePoint.filters).toEqual(expectedFilters);
+                });
+            });
+
+            it("should return a new reference point with pivotTable UI config", () => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
+                    expect(extendedReferencePoint.uiConfig).toMatchSnapshot();
+                });
+            });
+
+            it("should return a new reference point without sortItems (default)", () => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
+                    expect(extendedReferencePoint.properties!.sortItems).toBeUndefined();
+                });
+            });
+        });
+
+        it("should return a new reference point with totals", () => {
+            const pivotTable = createComponent();
+            const expectedBuckets: IBucketOfFun[] = [
+                {
+                    localIdentifier: "measures",
+                    items: cloneDeep(tableTotalsReferencePoint.buckets[0].items),
+                },
+                {
+                    localIdentifier: "attribute",
+                    items: cloneDeep(tableTotalsReferencePoint.buckets[1].items),
+                    totals: [
+                        {
+                            measureIdentifier: "m1",
+                            attributeIdentifier: "a2",
+                            type: "sum",
+                            alias: "Sum",
+                        },
+                        {
+                            measureIdentifier: "m2",
+                            attributeIdentifier: "a1",
+                            type: "nat",
+                        },
+                    ],
+                },
+                {
+                    localIdentifier: "columns",
+                    items: [],
+                },
+            ];
+
+            return pivotTable
+                .getExtendedReferencePoint(tableGrandAndSubtotalsReferencePoint, tableTotalsReferencePoint)
+                .then((extendedReferencePoint) => {
+                    expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
+                });
+        });
+
+        describe("native totals", () => {
+            it("should remove native total if measure value filter is present", () => {
+                const pivotTable = createComponent();
+
+                const expectedTotals = [
+                    {
+                        measureIdentifier: "m1",
+                        attributeIdentifier: "a1",
+                        type: "sum",
+                        alias: "Sum",
+                    },
+                ];
+
+                return pivotTable
+                    .getExtendedReferencePoint(measureValueFilterAndInvalidNatTotal, tableWithNativeTotal)
+                    .then((extendedReferencePoint) => {
+                        expect(extendedReferencePoint.buckets[1].totals).toEqual(expectedTotals);
+                    });
+            });
+
+            it("should remove native total if ranking filter is present", () => {
+                const pivotTable = createComponent();
+
+                const expectedTotals = [
+                    {
+                        measureIdentifier: "m1",
+                        attributeIdentifier: "a1",
+                        type: "sum",
+                        alias: "Sum",
+                    },
+                ];
+
+                return pivotTable
+                    .getExtendedReferencePoint(rankingFilterAndInvalidNatTotal, tableWithNativeTotal)
+                    .then((extendedReferencePoint) => {
+                        expect(extendedReferencePoint.buckets[1].totals).toEqual(expectedTotals);
+                    });
+            });
+        });
+
+        it("should remove native total if ranking filter is present", () => {
+            const pivotTable = createComponent();
+
+            return pivotTable
+                .getExtendedReferencePoint(
+                    tableWithRowColTotalAndRankingFilter,
+                    tableWithRowColTotalAndRankingFilter,
+                )
+                .then((extendedReferencePoint) => {
+                    expect(extendedReferencePoint.buckets[1].totals).toBeUndefined();
+                    expect(extendedReferencePoint.buckets[2].totals).toBeUndefined();
+                });
+        });
+
+        it("should return a new reference point without updating grand totals and subtotals", () => {
+            const expectedBuckets: IBucketOfFun[] = [
+                {
+                    localIdentifier: "measures",
+                    items: cloneDeep(tableGrandAndSubtotalsReferencePoint.buckets[0].items),
+                },
+                {
+                    localIdentifier: "attribute",
+                    items: cloneDeep(tableGrandAndSubtotalsReferencePoint.buckets[1].items),
+                    totals: [
+                        {
+                            measureIdentifier: "m1",
+                            attributeIdentifier: "a2",
+                            type: "sum",
+                            alias: "Sum",
+                        },
+                        {
+                            measureIdentifier: "m2",
+                            attributeIdentifier: "a1",
+                            type: "nat",
+                        },
+                    ],
+                },
+                {
+                    localIdentifier: "columns",
+                    items: [],
+                },
+            ];
+
+            return createComponent()
+                .getExtendedReferencePoint(tableGrandAndSubtotalsReferencePoint)
+                .then((extendedReferencePoint) => {
+                    expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
+                });
+        });
+
+        it("should return a new reference point with ui config supporting mulple date dimensions when turned on", () => {
+            const pivotTable = createComponent();
+
+            return pivotTable
+                .getExtendedReferencePoint(simpleStackedReferencePoint)
+                .then((extendedReferencePoint) => {
+                    expect(extendedReferencePoint.uiConfig).toMatchSnapshot();
+                });
+        });
+
+        it("should return a new reference point with ui config with measures bucket subtitles", () => {
+            const pivotTable = createComponent();
+
+            return pivotTable
+                .getExtendedReferencePoint(simpleStackedReferencePoint)
+                .then((extendedReferencePoint) => {
+                    expect(extendedReferencePoint.uiConfig).toMatchSnapshot();
+                });
+        });
+    });
+});
+
+const measureReferenceBucketItem: IBucketItem = {
+    type: "metric",
+    localIdentifier: "measure",
+    attribute: "aa5JBkFDa7sJ",
+    granularity: undefined,
+    filters: [],
+};
+
+const dateReferenceBucketItem: IBucketItem = {
+    granularity: "GDC.time.year",
+    localIdentifier: "date",
+    type: "date",
+    filters: [],
+    attribute: "attr.datedataset",
+};
+
+const attributeReferenceBucketItem: IBucketItem = {
+    aggregation: undefined,
+    showInPercent: undefined,
+    granularity: "attr.restaurantlocation.locationname",
+    localIdentifier: "attribute",
+    type: "attribute",
+    filters: [],
+    attribute: "attr.restaurantlocation.locationname",
+};
+
+// Creates a theoretical bucket with one of each bucketItemTypes
+const createMockBucket = (type: string): IBucketOfFun => {
+    return {
+        localIdentifier: type,
+        items: [
+            {
+                ...measureReferenceBucketItem,
+                localIdentifier: `${measureReferenceBucketItem.localIdentifier}_${type}`,
+            },
+            {
+                ...dateReferenceBucketItem,
+                localIdentifier: `${dateReferenceBucketItem.localIdentifier}_${type}`,
+            },
+            {
+                ...attributeReferenceBucketItem,
+                localIdentifier: `${attributeReferenceBucketItem.localIdentifier}_${type}`,
+            },
+        ],
+    };
+};
+
+const knownBucketNames = [
+    "measures",
+    "secondary_measures",
+    "tertiary_measures",
+    "attribute",
+    "attributes",
+    "view",
+    "stack",
+    "trend",
+    "segment",
+    "rows",
+    "columns",
+];
+
+const allBucketTypes: IBucketOfFun[] = knownBucketNames.map((bucketName) => createMockBucket(bucketName));
+
+describe("getColumnAttributes", () => {
+    it("should collect common and date attributes from buckets: columns, stack, segment", () => {
+        expect(getColumnAttributes(allBucketTypes)).toEqual([
+            {
+                attribute: "attr.datedataset",
+                filters: [],
+                granularity: "GDC.time.year",
+                localIdentifier: "date_columns",
+                type: "date",
+            },
+            {
+                aggregation: undefined,
+                attribute: "attr.restaurantlocation.locationname",
+                filters: [],
+                granularity: "attr.restaurantlocation.locationname",
+                localIdentifier: "attribute_columns",
+                showInPercent: undefined,
+                type: "attribute",
+            },
+            {
+                attribute: "attr.datedataset",
+                filters: [],
+                granularity: "GDC.time.year",
+                localIdentifier: "date_stack",
+                type: "date",
+            },
+            {
+                aggregation: undefined,
+                attribute: "attr.restaurantlocation.locationname",
+                filters: [],
+                granularity: "attr.restaurantlocation.locationname",
+                localIdentifier: "attribute_stack",
+                showInPercent: undefined,
+                type: "attribute",
+            },
+            {
+                attribute: "attr.datedataset",
+                filters: [],
+                granularity: "GDC.time.year",
+                localIdentifier: "date_segment",
+                type: "date",
+            },
+            {
+                aggregation: undefined,
+                attribute: "attr.restaurantlocation.locationname",
+                filters: [],
+                granularity: "attr.restaurantlocation.locationname",
+                localIdentifier: "attribute_segment",
+                showInPercent: undefined,
+                type: "attribute",
+            },
+        ]);
+    });
+});
+
+describe("getRowAttributes", () => {
+    it("should collect common and date attributes from buckets: attribute, attributes, view, trend", () => {
+        expect(getRowAttributes(allBucketTypes)).toEqual([
+            {
+                attribute: "attr.datedataset",
+                filters: [],
+                granularity: "GDC.time.year",
+                localIdentifier: "date_attribute",
+                type: "date",
+            },
+            {
+                aggregation: undefined,
+                attribute: "attr.restaurantlocation.locationname",
+                filters: [],
+                granularity: "attr.restaurantlocation.locationname",
+                localIdentifier: "attribute_attribute",
+                showInPercent: undefined,
+                type: "attribute",
+            },
+            {
+                attribute: "attr.datedataset",
+                filters: [],
+                granularity: "GDC.time.year",
+                localIdentifier: "date_attributes",
+                type: "date",
+            },
+            {
+                aggregation: undefined,
+                attribute: "attr.restaurantlocation.locationname",
+                filters: [],
+                granularity: "attr.restaurantlocation.locationname",
+                localIdentifier: "attribute_attributes",
+                showInPercent: undefined,
+                type: "attribute",
+            },
+            {
+                attribute: "attr.datedataset",
+                filters: [],
+                granularity: "GDC.time.year",
+                localIdentifier: "date_view",
+                type: "date",
+            },
+            {
+                aggregation: undefined,
+                attribute: "attr.restaurantlocation.locationname",
+                filters: [],
+                granularity: "attr.restaurantlocation.locationname",
+                localIdentifier: "attribute_view",
+                showInPercent: undefined,
+                type: "attribute",
+            },
+            {
+                attribute: "attr.datedataset",
+                filters: [],
+                granularity: "GDC.time.year",
+                localIdentifier: "date_trend",
+                type: "date",
+            },
+            {
+                aggregation: undefined,
+                attribute: "attr.restaurantlocation.locationname",
+                filters: [],
+                granularity: "attr.restaurantlocation.locationname",
+                localIdentifier: "attribute_trend",
+                showInPercent: undefined,
+                type: "attribute",
+            },
+        ]);
+    });
+
+    it("should collect attributes from area bucket", () => {
+        expect(getRowAttributes([createMockBucket(BucketNames.AREA)])).toEqual([
+            {
+                attribute: "attr.datedataset",
+                filters: [],
+                granularity: "GDC.time.year",
+                localIdentifier: "date_area",
+                type: "date",
+            },
+            {
+                aggregation: undefined,
+                attribute: "attr.restaurantlocation.locationname",
+                filters: [],
+                granularity: "attr.restaurantlocation.locationname",
+                localIdentifier: "attribute_area",
+                showInPercent: undefined,
+                type: "attribute",
+            },
+        ]);
+    });
+});
+
+describe("createPivotTableConfig", () => {
+    const columnWidths = [
+        {
+            attributeColumnWidthItem: {
+                width: { value: 740 },
+                attributeIdentifier: "294512a6b2ed4be8bd3948dd14db1950",
+            },
+        },
+    ];
+
+    const Scenarios: Array<
+        [string, IGdcConfig, VisualizationEnvironment | undefined, ISettings, ColumnWidthItem[] | undefined]
+    > = [
+        ["config without menus for dashboard env", {}, "dashboards", {}, undefined],
+        ["config with menus for non-dashboard env", {}, "none", {}, undefined],
+        ["config with menus for undefined env", {}, "none", {}, undefined],
+        ["config with separators", { separators: { decimal: ".", thousand: "-" } }, "none", {}, undefined],
+        ["config with auto-resize if feature flag on", {}, "none", {}, undefined],
+        [
+            "config with growToFit if feature flag on and environment !== dashboards",
+            {},
+            "none",
+            {},
+            undefined,
+        ],
+        [
+            "config with growToFit if feature flag on and environment === dashboards",
+            {},
+            "dashboards",
+            {},
+            undefined,
+        ],
+        [
+            "config with growToFit if feature flag on and environment === analyticalDesigner",
+            {},
+            "analyticalDesigner",
+            {},
+            undefined,
+        ],
+        [
+            "config with manualResizing if feature flag on and configs are not defined",
+            {},
+            "none",
+            {},
+            undefined,
+        ],
+        ["config with manualResizing if feature flag on and configs are empty", {}, "none", {}, []],
+        [
+            "config with manualResizing if feature flag on and configs are provided",
+            {},
+            "none",
+            {},
+            columnWidths,
+        ],
+        [
+            "config with manualResizing if feature flag off and configs are provided",
+            {},
+            "none",
+            {},
+            columnWidths,
+        ],
+    ];
+
+    const AllTotalCapabilities: IBackendCapabilities = {
+        canCalculateTotals: true,
+        canCalculateGrandTotals: true,
+        canCalculateSubTotals: true,
+        canCalculateNativeTotals: true,
+    };
+    it.each(Scenarios)("should create valid %s", (_desc, config, env, settings, columnWidths) => {
+        expect(
+            createPivotTableConfig(config, env!, settings, AllTotalCapabilities, columnWidths),
+        ).toMatchSnapshot();
+    });
+});

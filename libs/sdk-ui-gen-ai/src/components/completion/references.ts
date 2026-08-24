@@ -30,6 +30,7 @@ export function collectReferences(
         if (isCatalogDateDataset(item)) {
             item.dateAttributes.forEach((dateAttribute) => {
                 collectReference(items, where, dateAttribute);
+                collectReference(items, where, dateAttribute.defaultDisplayForm);
             });
             collectReference(items, where, item.dataSet);
         }
