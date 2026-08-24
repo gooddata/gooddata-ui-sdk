@@ -1,0 +1,2439 @@
+// (C) 2007-2026 GoodData Corporation
+
+import { describe, expect, it, vi } from "vitest";
+
+import { ReferenceMd } from "@gooddata/reference-workspace";
+import {
+    type IAnalyticalBackend,
+    type IAttributeWithReferences,
+    type ICollectionItemsConfig,
+    type ICollectionItemsResult,
+    type IDataView,
+    type IElementsQueryResult,
+    type IExecutionResult,
+    type IGeoService,
+    type IGetInsightOptions,
+    type IMeasureExpressionToken,
+    type IMeasureReferencing,
+    type IPreparedExecution,
+    type IWorkspaceAttributesService,
+    type IWorkspaceDatasetsService,
+    type IWorkspaceExportTemplatesService,
+    type IWorkspaceFactsService,
+    type IWorkspaceInsightsService,
+    type IWorkspaceMeasuresService,
+} from "@gooddata/sdk-backend-spi";
+import {
+    type IAttributeDisplayFormMetadataObject,
+    type IAttributeMetadataObject,
+    type IAttributeOrMeasure,
+    type IBucket,
+    type IDataSetMetadataObject,
+    type IExportTemplate,
+    type IExportTemplateDefinition,
+    type IFactMetadataObject,
+    type IGeoJsonFeature,
+    type IInsight,
+    type IMetadataObject,
+    type ObjRef,
+    areObjRefsEqual,
+    geoFeatureId,
+    idRef,
+    isIdentifierRef,
+    isUriRef,
+    newBucket,
+    newInsightDefinition,
+} from "@gooddata/sdk-model";
+
+import { DecoratedWorkspaceAttributesService } from "../decoratedBackend/attributes.js";
+import { DecoratedWorkspaceDatasetsService } from "../decoratedBackend/datasets.js";
+import {
+    DecoratedDataView,
+    DecoratedExecutionFactory,
+    DecoratedExecutionResult,
+    DecoratedPreparedExecution,
+} from "../decoratedBackend/execution.js";
+import { decoratedBackend } from "../decoratedBackend/index.js";
+import { DecoratedWorkspaceInsightsService } from "../decoratedBackend/insights.js";
+import { DecoratedWorkspaceMeasuresService } from "../decoratedBackend/measures.js";
+import { DecoratedWorkspaceExportTemplatesService } from "../decoratedBackend/workspaceExportTemplates.js";
+import { dummyBackend, dummyBackendEmptyData } from "../dummyBackend/index.js";
+import { withEventing } from "../eventingBackend/index.js";
+
+import { type CacheControl, type CachingConfiguration, withCaching } from "./index.js";
+
+const defaultBackend = dummyBackendEmptyData();
+
+function withCachingForTests(
+    realBackend: IAnalyticalBackend = defaultBackend,
+    onCacheReady?: (cacheControl: CacheControl) => void,
+    configOverrides: Partial<CachingConfiguration> = {},
+): IAnalyticalBackend {
+    return withCaching(realBackend, {
+        maxCatalogs: 1,
+        maxCatalogOptions: 1,
+        maxExecutions: 1,
+        maxResultWindows: 1,
+        maxGeoCollectionItemsPerResult: 50,
+        maxSecuritySettingsOrgs: 1,
+        maxSecuritySettingsOrgUrls: 1,
+        maxSecuritySettingsOrgUrlsAge: 300_000,
+        // set to two as one attribute can take up two places (one for id, one for uri)
+        maxAttributeDisplayFormsPerWorkspace: 2,
+        // set to two as one attribute can take up two places (one for id, one for uri)
+        maxAttributesPerWorkspace: 2,
+        maxAttributeElementResultsPerWorkspace: 1,
+        maxAttributeWorkspaces: 1,
+        maxWorkspaceSettings: 1,
+        maxAutomationsWorkspaces: 1,
+        maxInsightsPerWorkspace: 2,
+        maxExportTemplatesWorkspaces: 1,
+        maxFactsWorkspaces: 1,
+        maxFactsPerWorkspace: 2,
+        maxMeasuresWorkspaces: 1,
+        maxMeasuresPerWorkspace: 2,
+        maxDatasetWorkspaces: 1,
+        // set to two as one dataset can take up two places (one for id, one for uri)
+        maxDatasetsPerWorkspace: 2,
+        cacheGeoStyles: true,
+        onCacheReady,
+        ...configOverrides,
+    });
+}
+
+function doExecution(backend: IAnalyticalBackend, items: IAttributeOrMeasure[]): Promise<IExecutionResult> {
+    return backend.workspace("test").execution().forItems(items).execute();
+}
+
+function doInsightExecution(backend: IAnalyticalBackend, buckets: IBucket[]): Promise<IExecutionResult> {
+    const insight = newInsightDefinition("foo", (i) => i.buckets(buckets));
+    return backend.workspace("test").execution().forInsight(insight).execute();
+}
+
+function doGetAttributeDisplayForm(
+    backend: IAnalyticalBackend,
+    ref: ObjRef,
+): Promise<IAttributeDisplayFormMetadataObject> {
+    return backend.workspace("test").attributes().getAttributeDisplayForm(ref);
+}
+
+function doGetAttributeDisplayForms(
+    backend: IAnalyticalBackend,
+    refs: ObjRef[],
+): Promise<IAttributeDisplayFormMetadataObject[]> {
+    return backend.workspace("test").attributes().getAttributeDisplayForms(refs);
+}
+
+function doGetAttributeByDisplayForm(
+    backend: IAnalyticalBackend,
+    ref: ObjRef,
+): Promise<IAttributeMetadataObject> {
+    return backend.workspace("test").attributes().getAttributeByDisplayForm(ref);
+}
+
+function doGetAttributeElements(backend: IAnalyticalBackend, ref: ObjRef): Promise<IElementsQueryResult> {
+    return backend.workspace("test").attributes().elements().forDisplayForm(ref).query();
+}
+
+function doGetMeasureExpressionTokens(
+    backend: IAnalyticalBackend,
+    ref: ObjRef,
+): Promise<IMeasureExpressionToken[]> {
+    return backend.workspace("test").measures().getMeasureExpressionTokens(ref);
+}
+
+function doGetMeasureReferencingObjects(
+    backend: IAnalyticalBackend,
+    ref: ObjRef,
+): Promise<IMeasureReferencing> {
+    return backend.workspace("test").measures().getMeasureReferencingObjects(ref);
+}
+
+type MeasureProviders = {
+    getMeasureExpressionTokens?: (ref: ObjRef) => Promise<IMeasureExpressionToken[]>;
+    getMeasureReferencingObjects?: (ref: ObjRef) => Promise<IMeasureReferencing>;
+};
+
+/**
+ * Call-counting decorator over the measures service - used to assert that concurrent same-ref calls collapse
+ * to a single underlying call once the caching decorator is in place.
+ */
+class CountingMeasuresService extends DecoratedWorkspaceMeasuresService {
+    constructor(
+        decorated: IWorkspaceMeasuresService,
+        private readonly providers: MeasureProviders,
+    ) {
+        super(decorated);
+    }
+
+    public override getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]> {
+        return this.providers.getMeasureExpressionTokens
+            ? this.providers.getMeasureExpressionTokens(ref)
+            : super.getMeasureExpressionTokens(ref);
+    }
+
+    public override getMeasureReferencingObjects(ref: ObjRef): Promise<IMeasureReferencing> {
+        return this.providers.getMeasureReferencingObjects
+            ? this.providers.getMeasureReferencingObjects(ref)
+            : super.getMeasureReferencingObjects(ref);
+    }
+}
+
+function createMeasuresBackend(providers: MeasureProviders): IAnalyticalBackend {
+    const backend = dummyBackendEmptyData();
+
+    return decoratedBackend(backend, {
+        measures: (decorated) => new CountingMeasuresService(decorated, providers),
+    });
+}
+
+type AttributeCallCounts = {
+    getAttribute: number;
+    getAttributes: number;
+    getAttributeDisplayForms: number;
+    getCommonAttributes: number;
+    getCommonAttributesBatch: number;
+    getConnectedAttributesByDisplayForm: number;
+};
+
+function makeAttributeCallCounts(): AttributeCallCounts {
+    return {
+        getAttribute: 0,
+        getAttributes: 0,
+        getAttributeDisplayForms: 0,
+        getCommonAttributes: 0,
+        getCommonAttributesBatch: 0,
+        getConnectedAttributesByDisplayForm: 0,
+    };
+}
+
+function makeAttribute(ref: ObjRef): IAttributeMetadataObject {
+    const identifier = isIdentifierRef(ref) ? ref.identifier : "dummyAttribute";
+    const uri = isUriRef(ref) ? ref.uri : `/gdc/md/${identifier}`;
+    return {
+        type: "attribute",
+        ref,
+        id: identifier,
+        uri,
+        title: "Counting attribute",
+        description: "",
+        production: true,
+        deprecated: false,
+        unlisted: false,
+        displayForms: [],
+    };
+}
+
+function makeDisplayForm(ref: ObjRef): IAttributeDisplayFormMetadataObject {
+    const identifier = isIdentifierRef(ref) ? ref.identifier : "dummyDisplayForm";
+    const uri = isUriRef(ref) ? ref.uri : `/gdc/md/${identifier}`;
+    return {
+        type: "displayForm",
+        ref,
+        id: identifier,
+        uri,
+        title: "Counting display form",
+        description: "",
+        attribute: idRef(`${identifier}.attr`, "attribute"),
+        production: true,
+        deprecated: false,
+        unlisted: false,
+    };
+}
+
+/**
+ * Attributes service that counts how many times each (uncached) read method reached the network and
+ * returns resolvable data, so tests can verify in-flight de-duplication and error eviction.
+ */
+class CountingAttributesService extends DecoratedWorkspaceAttributesService {
+    constructor(
+        decorated: IWorkspaceAttributesService,
+        private readonly counts: AttributeCallCounts,
+        private readonly opts: { failGetAttribute?: boolean; omitDisplayFormRefs?: ObjRef[] } = {},
+    ) {
+        super(decorated);
+    }
+
+    public override getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject> {
+        this.counts.getAttribute++;
+        if (this.opts.failGetAttribute) {
+            return Promise.reject(new Error("getAttribute failed"));
+        }
+        return Promise.resolve(makeAttribute(ref));
+    }
+
+    public override getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]> {
+        this.counts.getAttributes++;
+        return Promise.resolve(refs.map(makeAttribute));
+    }
+
+    public override getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {
+        this.counts.getAttributeDisplayForms++;
+        const omitted = this.opts.omitDisplayFormRefs ?? [];
+        return Promise.resolve(
+            refs.filter((ref) => !omitted.some((omit) => areObjRefsEqual(omit, ref))).map(makeDisplayForm),
+        );
+    }
+
+    public override getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]> {
+        this.counts.getCommonAttributes++;
+        return Promise.resolve(attributeRefs);
+    }
+
+    public override getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]> {
+        this.counts.getCommonAttributesBatch++;
+        return Promise.resolve(attributesRefsBatch);
+    }
+
+    public override getConnectedAttributesByDisplayForm(ref: ObjRef): Promise<ObjRef[]> {
+        this.counts.getConnectedAttributesByDisplayForm++;
+        return Promise.resolve([ref]);
+    }
+}
+
+function makeCountingBackend(
+    counts: AttributeCallCounts,
+    opts: {
+        failGetAttribute?: boolean;
+        omitDisplayFormRefs?: ObjRef[];
+        allowsInconsistentRelations?: boolean;
+    } = {},
+): IAnalyticalBackend {
+    const backend = decoratedBackend(dummyBackendEmptyData(), {
+        attributes: (attributes) => new CountingAttributesService(attributes, counts, opts),
+    });
+
+    if (opts.allowsInconsistentRelations) {
+        // capabilities is a plain field on the decorated backend; withCaching reads it when it builds its
+        // caching context, so overriding it here is enough to flip the flag for the test. The interface
+        // marks it readonly, hence the cast.
+        (backend as { capabilities: IAnalyticalBackend["capabilities"] }).capabilities = {
+            ...backend.capabilities,
+            allowsInconsistentRelations: true,
+        };
+    }
+
+    return backend;
+}
+
+type CollectionItemsProvider = (config: ICollectionItemsConfig) => ICollectionItemsResult;
+
+function createGeoCollectionBackend(provider: CollectionItemsProvider): IAnalyticalBackend {
+    const backend = dummyBackendEmptyData();
+
+    return decoratedBackend(backend, {
+        execution: (factory) =>
+            new DecoratedExecutionFactory(
+                factory,
+                (execution) => new GeoPreparedExecution(execution, provider),
+            ),
+    });
+}
+
+function createGeoStyleBackend(
+    getDefaultStyle: IGeoService["getDefaultStyle"],
+    getDefaultStyleSpriteIcons: IGeoService["getDefaultStyleSpriteIcons"] = async () => [],
+): IAnalyticalBackend {
+    const backend = dummyBackendEmptyData();
+
+    return {
+        ...backend,
+        geo: () => ({
+            ...backend.geo(),
+            getDefaultStyle,
+            getDefaultStyleSpriteIcons,
+        }),
+    };
+}
+
+const FACT_REF: ObjRef = idRef("fact.foo", "fact");
+
+const SAMPLE_FACT = {
+    type: "fact",
+    id: "fact.foo",
+    uri: "/facts/fact.foo",
+    ref: FACT_REF,
+    title: "Foo fact",
+    description: "",
+    production: true,
+    deprecated: false,
+    unlisted: false,
+} as IFactMetadataObject;
+
+const SAMPLE_FACT_DATASET = {
+    type: "dataSet",
+    id: "dataset.foo",
+    uri: "/datasets/dataset.foo",
+    ref: idRef("dataset.foo", "dataSet"),
+    title: "Foo dataset",
+    description: "",
+    production: true,
+    deprecated: false,
+    unlisted: false,
+} as IMetadataObject;
+
+/**
+ * Builds a backend whose facts service delegates to the provided (typically call-counting) implementations.
+ * The default dummy backend's facts service throws NotSupported, so tests need to supply their own.
+ */
+function createFactsBackend(
+    getFact: IWorkspaceFactsService["getFact"],
+    getFactDatasetMeta: IWorkspaceFactsService["getFactDatasetMeta"] = () =>
+        Promise.resolve(SAMPLE_FACT_DATASET),
+): IAnalyticalBackend {
+    const backend = dummyBackendEmptyData();
+
+    return {
+        ...backend,
+        workspace: (id: string) => ({
+            ...backend.workspace(id),
+            facts: () => ({
+                ...backend.workspace(id).facts(),
+                getFact,
+                getFactDatasetMeta,
+            }),
+        }),
+    };
+}
+
+const AWR_DF_REF: ObjRef = idRef("df.account.name", "displayForm");
+// a sibling display form of the same attribute; used to assert cross-display-form cache coverage
+const AWR_DF_REF_2: ObjRef = idRef("df.account.id", "displayForm");
+const AWR_ATTR_REF: ObjRef = idRef("attr.account", "attribute");
+const AWR_DATASET_REF: ObjRef = idRef("dataset.account", "dataSet");
+
+const SAMPLE_ATTRIBUTE_WITH_REFERENCES = {
+    attribute: {
+        type: "attribute",
+        id: "attr.account",
+        uri: "/attributes/attr.account",
+        ref: AWR_ATTR_REF,
+        title: "Account",
+        description: "",
+        production: true,
+        deprecated: false,
+        unlisted: false,
+        displayForms: [
+            {
+                type: "displayForm",
+                id: "df.account.name",
+                uri: "/displayForms/df.account.name",
+                ref: AWR_DF_REF,
+                attribute: AWR_ATTR_REF,
+                title: "Name",
+                description: "",
+                production: true,
+                deprecated: false,
+                unlisted: false,
+            },
+            {
+                type: "displayForm",
+                id: "df.account.id",
+                uri: "/displayForms/df.account.id",
+                ref: AWR_DF_REF_2,
+                attribute: AWR_ATTR_REF,
+                title: "Id",
+                description: "",
+                production: true,
+                deprecated: false,
+                unlisted: false,
+            },
+        ],
+    },
+    dataSet: {
+        type: "dataSet",
+        id: "dataset.account",
+        uri: "/datasets/dataset.account",
+        ref: AWR_DATASET_REF,
+        title: "Account dataset",
+        description: "",
+        production: true,
+        deprecated: false,
+        unlisted: false,
+    },
+} as IAttributeWithReferences;
+
+type AttributesProviders = {
+    getAttributesWithReferences?: IWorkspaceAttributesService["getAttributesWithReferences"];
+    getAttributeByDisplayForm?: IWorkspaceAttributesService["getAttributeByDisplayForm"];
+    getAttributeDatasetMeta?: IWorkspaceAttributesService["getAttributeDatasetMeta"];
+};
+
+/**
+ * Builds a backend whose attributes service delegates to the provided (typically call-counting)
+ * implementations. The default dummy backend's getAttributesWithReferences / getAttributeDatasetMeta throw
+ * NotSupported, so tests need to supply their own to assert de-duplication and secondary caching.
+ */
+function createAttributesBackend(providers: AttributesProviders): IAnalyticalBackend {
+    const backend = dummyBackendEmptyData();
+
+    return {
+        ...backend,
+        workspace: (id: string) => ({
+            ...backend.workspace(id),
+            attributes: () => ({
+                ...backend.workspace(id).attributes(),
+                ...providers,
+            }),
+        }),
+    };
+}
+
+function createGeoFeature(value: string): IGeoJsonFeature {
+    return {
+        type: "Feature",
+        id: value,
+        properties: {},
+        geometry: {
+            type: "Point",
+            coordinates: [0, 0],
+        },
+    };
+}
+
+type InsightGetter = (ref: ObjRef, options?: IGetInsightOptions) => Promise<IInsight>;
+
+/**
+ * A call-counting decorator for the insights service. It counts how many times the underlying
+ * (decorated) getInsight gets invoked - used to assert that the caching layer de-duplicates
+ * concurrent reads of the same insight into a single underlying call.
+ */
+class CallCountingInsightsService extends DecoratedWorkspaceInsightsService {
+    constructor(
+        decorated: IWorkspaceInsightsService,
+        workspace: string,
+        private readonly counter: { calls: number },
+        private readonly getter: InsightGetter,
+    ) {
+        super(decorated, workspace);
+    }
+
+    public override getInsight = (ref: ObjRef, options?: IGetInsightOptions): Promise<IInsight> => {
+        this.counter.calls += 1;
+        return this.getter(ref, options);
+    };
+
+    public override async updateInsight(insight: IInsight): Promise<IInsight> {
+        return insight;
+    }
+}
+
+function createInsightCountingBackend(getter: InsightGetter): {
+    backend: IAnalyticalBackend;
+    counter: { calls: number };
+} {
+    const counter = { calls: 0 };
+    const backend = decoratedBackend(dummyBackendEmptyData(), {
+        insights: (decorated, workspace) =>
+            new CallCountingInsightsService(decorated, workspace, counter, getter),
+    });
+
+    return { backend, counter };
+}
+
+/**
+ * A call-counting decorator for the workspace export templates service. It counts how many times the
+ * underlying (decorated) getExportTemplates gets invoked - used to assert that the caching layer
+ * de-duplicates reads and invalidates on writes.
+ */
+class CallCountingWorkspaceExportTemplatesService extends DecoratedWorkspaceExportTemplatesService {
+    constructor(
+        decorated: IWorkspaceExportTemplatesService,
+        private readonly counter: { calls: number },
+        private readonly getter: () => Promise<IExportTemplate[]>,
+    ) {
+        super(decorated);
+    }
+
+    public override getExportTemplates = (): Promise<IExportTemplate[]> => {
+        this.counter.calls += 1;
+        return this.getter();
+    };
+
+    public override async createExportTemplate(
+        template: IExportTemplateDefinition,
+    ): Promise<IExportTemplate> {
+        return { ...template, ref: idRef("created") };
+    }
+
+    public override async patchExportTemplate(ref: ObjRef): Promise<IExportTemplate> {
+        return { name: "patched", ref };
+    }
+
+    public override async deleteExportTemplate(): Promise<void> {
+        return undefined;
+    }
+}
+
+function createWorkspaceExportTemplatesCountingBackend(getter: () => Promise<IExportTemplate[]>): {
+    backend: IAnalyticalBackend;
+    counter: { calls: number };
+} {
+    const counter = { calls: 0 };
+    const backend = decoratedBackend(dummyBackendEmptyData(), {
+        workspaceExportTemplates: (decorated) =>
+            new CallCountingWorkspaceExportTemplatesService(decorated, counter, getter),
+    });
+
+    return { backend, counter };
+}
+
+function createTestInsight(id: string): IInsight {
+    return {
+        insight: {
+            ...newInsightDefinition("local:table").insight,
+            identifier: id,
+            uri: `/insights/${id}`,
+            ref: idRef(id, "insight"),
+            title: id,
+        },
+    };
+}
+
+type DatasetsCallCounters = {
+    getDataset: number;
+    getDataSets: number;
+};
+
+type DatasetsBackendOptions = {
+    counters?: DatasetsCallCounters;
+    // when provided, only refs for which this returns true will be returned by the bulk call
+    // (used to simulate inconsistent relations where the backend omits some refs)
+    shouldReturn?: (ref: ObjRef) => boolean;
+};
+
+/**
+ * Datasets service decorator that counts how many times the underlying read methods are invoked
+ * and can simulate a backend that omits some of the requested refs.
+ */
+class CallCountingDatasetsService extends DecoratedWorkspaceDatasetsService {
+    constructor(
+        decorated: IWorkspaceDatasetsService,
+        private readonly options: DatasetsBackendOptions,
+    ) {
+        super(decorated);
+    }
+
+    public override getDataset = (ref: ObjRef): Promise<IDataSetMetadataObject> => {
+        if (this.options.counters) {
+            this.options.counters.getDataset += 1;
+        }
+        return this.decorated.getDataset(ref);
+    };
+
+    public override getDataSets = (refs: ObjRef[]): Promise<IDataSetMetadataObject[]> => {
+        if (this.options.counters) {
+            this.options.counters.getDataSets += 1;
+        }
+        const refsToReturn = this.options.shouldReturn ? refs.filter(this.options.shouldReturn) : refs;
+        return this.decorated.getDataSets(refsToReturn);
+    };
+}
+
+function createCountingDatasetsBackend(options: DatasetsBackendOptions = {}): IAnalyticalBackend {
+    return decoratedBackend(dummyBackendEmptyData(), {
+        datasets: (decorated) => new CallCountingDatasetsService(decorated, options),
+    });
+}
+
+function doGetDataset(backend: IAnalyticalBackend, ref: ObjRef): Promise<IDataSetMetadataObject> {
+    return backend.workspace("test").datasets().getDataset(ref);
+}
+
+function doGetDataSets(backend: IAnalyticalBackend, refs: ObjRef[]): Promise<IDataSetMetadataObject[]> {
+    return backend.workspace("test").datasets().getDataSets(refs);
+}
+
+describe("withCaching", () => {
+    it("caches executions calls", async () => {
+        const backend = withCachingForTests();
+
+        const first = await doExecution(backend, [ReferenceMd.Won]);
+        const second = await doExecution(backend, [ReferenceMd.Won]);
+        const firstData = await first.readAll();
+        const secondData = await second.readAll();
+
+        expect((firstData as any).decorated).toBe((secondData as any).decorated);
+    });
+
+    it("maintains the caching decorator", async () => {
+        const backend = withCachingForTests();
+
+        const result = await doExecution(backend, [ReferenceMd.Won]);
+        const dataView = await result.readAll();
+
+        expect(dataView.result).toBe(result);
+    });
+
+    it("caches insight executions calls with different buckets with the same measures and sanitizes the definition", async () => {
+        const backend = withCachingForTests();
+
+        const firstBuckets = [newBucket("measures", ReferenceMd.Won, ReferenceMd.WinRate)];
+
+        const secondBuckets = [
+            newBucket("measures", ReferenceMd.Won),
+            newBucket("secondary_measures", ReferenceMd.WinRate),
+        ];
+
+        const first = await doInsightExecution(backend, firstBuckets);
+        const second = await doInsightExecution(backend, secondBuckets);
+
+        // they have the same fingerprint...
+        expect(second.equals(first)).toBe(true);
+        // ... but different definitions (as the buckets are different)...
+        expect(second.definition).not.toEqual(first.definition);
+
+        const firstAll = await first.readAll();
+        const secondAll = await second.readAll();
+
+        // ...yet still result in equal data views...
+        expect(secondAll.equals(firstAll)).toBe(true);
+        // ... with different definitions
+        expect(secondAll.definition).not.toEqual(firstAll.definition);
+        expect(firstAll.definition).toBe(first.definition);
+        expect(secondAll.definition).toBe(second.definition);
+    });
+
+    it("keeps the cached data views' methods intact", async () => {
+        const backend = withCachingForTests();
+
+        const firstBuckets = [newBucket("measures", ReferenceMd.Won, ReferenceMd.WinRate)];
+
+        const secondBuckets = [
+            newBucket("measures", ReferenceMd.Won),
+            newBucket("secondary_measures", ReferenceMd.WinRate),
+        ];
+
+        const first = await doInsightExecution(backend, firstBuckets);
+        const second = await doInsightExecution(backend, secondBuckets);
+
+        const firstAll = await first.readAll();
+        // the secondAll object is from cache but has an altered definition, let's check the methods are still there and work
+        const secondAll = await second.readAll();
+
+        expect(secondAll.fingerprint).toBeDefined();
+        expect(secondAll.equals(firstAll)).toBe(true);
+    });
+
+    it("evicts when execution cache limit hit (count-based)", () => {
+        const backend = withCachingForTests();
+
+        const first = doExecution(backend, [ReferenceMd.Won]);
+        void doExecution(backend, [ReferenceMd.Amount]);
+        const second = doExecution(backend, [ReferenceMd.Won]);
+
+        expect(second).not.toBe(first);
+    });
+
+    it("evicts least recently used geo styles when the geo style cache reaches its max size", async () => {
+        const getDefaultStyle = vi.fn<IGeoService["getDefaultStyle"]>(async (params) => ({
+            language: params?.language,
+        }));
+        const backend = withCachingForTests(createGeoStyleBackend(getDefaultStyle));
+
+        for (let i = 0; i < 10; i += 1) {
+            await backend.geo().getDefaultStyle({ language: `lang-${i}` });
+        }
+
+        expect(getDefaultStyle).toHaveBeenCalledTimes(10);
+
+        await backend.geo().getDefaultStyle({ language: "lang-10" });
+        await backend.geo().getDefaultStyle({ language: "lang-0" });
+
+        expect(getDefaultStyle).toHaveBeenCalledTimes(12);
+    });
+
+    it("caches default style sprite icons", async () => {
+        const getDefaultStyleSpriteIcons = vi.fn<IGeoService["getDefaultStyleSpriteIcons"]>(async () => [
+            "airport",
+            "harbor",
+        ]);
+        const backend = withCachingForTests(
+            createGeoStyleBackend(async () => ({}), getDefaultStyleSpriteIcons),
+        );
+
+        const first = await backend.geo().getDefaultStyleSpriteIcons();
+        const second = await backend.geo().getDefaultStyleSpriteIcons();
+
+        expect(first).toEqual(["airport", "harbor"]);
+        expect(second).toEqual(["airport", "harbor"]);
+        expect(getDefaultStyleSpriteIcons).toHaveBeenCalledTimes(1);
+    });
+
+    it("evicts when execution cache TTL expires (time-based)", async () => {
+        vi.useFakeTimers();
+        const ttl = 1000; // 1 second TTL for test
+        const backend = withCaching(defaultBackend, {
+            maxExecutionsAge: ttl,
+            maxCatalogs: 1,
+            maxCatalogOptions: 1,
+            maxResultWindows: 1,
+            maxGeoCollectionItemsPerResult: 50,
+            maxSecuritySettingsOrgs: 1,
+            maxSecuritySettingsOrgUrls: 1,
+            maxSecuritySettingsOrgUrlsAge: 300_000,
+            maxAttributeDisplayFormsPerWorkspace: 2,
+            maxAttributesPerWorkspace: 2,
+            maxAttributeElementResultsPerWorkspace: 1,
+            maxAttributeWorkspaces: 1,
+            maxWorkspaceSettings: 1,
+            maxAutomationsWorkspaces: 1,
+        });
+
+        const first = await doExecution(backend, [ReferenceMd.Won]);
+
+        // Advance time past TTL
+        vi.advanceTimersByTime(ttl + 100);
+
+        const second = await doExecution(backend, [ReferenceMd.Won]);
+
+        // After TTL expiration, should get a new execution result (not the same reference)
+        expect(second).not.toBe(first);
+
+        vi.useRealTimers();
+    });
+
+    it("uses count-based eviction when maxExecutions is set (takes precedence over maxExecutionsAge)", () => {
+        const backend = withCaching(defaultBackend, {
+            maxExecutions: 1, // This takes precedence over maxExecutionsAge
+            maxExecutionsAge: 900_000,
+            maxCatalogs: 1,
+            maxCatalogOptions: 1,
+            maxResultWindows: 1,
+            maxGeoCollectionItemsPerResult: 50,
+            maxSecuritySettingsOrgs: 1,
+            maxSecuritySettingsOrgUrls: 1,
+            maxSecuritySettingsOrgUrlsAge: 300_000,
+            maxAttributeDisplayFormsPerWorkspace: 2,
+            maxAttributesPerWorkspace: 2,
+            maxAttributeElementResultsPerWorkspace: 1,
+            maxAttributeWorkspaces: 1,
+            maxWorkspaceSettings: 1,
+            maxAutomationsWorkspaces: 1,
+        });
+
+        // With maxExecutions: 1, this should evict the first execution when the second one is cached
+        const first = doExecution(backend, [ReferenceMd.Won]);
+        void doExecution(backend, [ReferenceMd.Amount]);
+        const third = doExecution(backend, [ReferenceMd.Won]);
+
+        // Should NOT be the same cached result (evicted by count-based LRU)
+        expect(third).not.toBe(first);
+    });
+
+    it("caches readWindow calls", async () => {
+        const backend = withCachingForTests();
+
+        const result = await doExecution(backend, [ReferenceMd.Won]);
+        const first = await result.readWindow([0, 0], [1, 1]);
+        const second = await result.readWindow([0, 0], [1, 1]);
+
+        expect((second as any).decorated).toBe((first as any).decorated);
+    });
+
+    it("evicts when readWindow limit hit", async () => {
+        const backend = withCachingForTests();
+
+        const result = await doExecution(backend, [ReferenceMd.Won]);
+        const first = result.readWindow([0, 0], [1, 1]);
+        void result.readWindow([0, 0], [2, 2]);
+        const second = result.readWindow([0, 0], [1, 1]);
+
+        expect(second).not.toBe(first);
+    });
+
+    it("deletes from cache if error occurs", async () => {
+        const backend = withCachingForTests(dummyBackend());
+
+        const result = await doExecution(backend, [ReferenceMd.Won]);
+
+        // backend will throw no data
+        const first = result.readWindow([0, 0], [1, 1]);
+
+        // as the promise completes, the catch should clean up anything that is cached
+        try {
+            await first;
+        } catch {
+            // ignored
+        }
+
+        // and the second attempt will give new promise
+        const second = result.readWindow([0, 0], [1, 1]);
+
+        try {
+            await second;
+        } catch {
+            // ignored
+        }
+
+        expect(second).not.toBe(first);
+    });
+
+    it("caches workspace catalogs", () => {
+        const backend = withCachingForTests();
+
+        const first = backend.workspace("test").catalog().load();
+        const second = backend.workspace("test").catalog().load();
+
+        expect(second).toBe(first);
+    });
+
+    it("evicts workspace catalogs", () => {
+        const backend = withCachingForTests();
+
+        const first = backend.workspace("test").catalog().load();
+        void backend.workspace("someOtherWorkspace").catalog().load();
+        const second = backend.workspace("test").catalog().load();
+
+        expect(second).not.toBe(first);
+    });
+
+    it("evicts workspace catalogs options", () => {
+        const backend = withCachingForTests();
+
+        // first call caches result when getting catalog with default options
+        const first = backend.workspace("test").catalog().load();
+
+        // second call done explicitly with different options => evict previous entry
+        void backend.workspace("test").catalog().forTypes(["attribute"]).load();
+
+        // now back to default options, will be new promise
+        const second = backend.workspace("test").catalog().load();
+
+        expect(second).not.toBe(first);
+    });
+
+    it("evicts workspace automations list", () => {
+        const backend = withCachingForTests();
+
+        const first = backend.workspace("test").automations().getAutomations();
+        const second = backend.workspace("test").automations().getAutomations();
+
+        expect(second).toBe(first);
+    });
+
+    it("evicts workspace automations query with same settings", () => {
+        const backend = withCachingForTests();
+
+        const first = backend
+            .workspace("test")
+            .automations()
+            .getAutomationsQuery()
+            .withPage(2)
+            .withSize(5)
+            .query();
+        const second = backend
+            .workspace("test")
+            .automations()
+            .getAutomationsQuery()
+            .withPage(2)
+            .withSize(5)
+            .query();
+
+        expect(second).toBe(first);
+    });
+
+    it("evicts workspace automations query with different settings", () => {
+        const backend = withCachingForTests();
+
+        const first = backend
+            .workspace("test")
+            .automations()
+            .getAutomationsQuery()
+            .withPage(2)
+            .withSize(5)
+            .query();
+        const second = backend
+            .workspace("test")
+            .automations()
+            .getAutomationsQuery()
+            .withPage(2)
+            .withSize(3)
+            .query();
+
+        expect(second).not.toBe(first);
+    });
+
+    it("calls onCacheReady during construction", () => {
+        let cacheControl: CacheControl | undefined;
+
+        withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+
+        expect(cacheControl).toBeDefined();
+    });
+
+    it("resets execution cache", async () => {
+        /*
+         * Execution caching is fully transparent. To verify effective executions, this test uses backend
+         * decorated with eventing in order to figure out how many executions fell through the caching.
+         */
+
+        let cacheControl: CacheControl | undefined;
+        let effectiveExecutions: number = 0;
+        const realBackend = withEventing(defaultBackend, { successfulExecute: () => effectiveExecutions++ });
+        const cachingBackend = withCachingForTests(realBackend, (cc) => (cacheControl = cc));
+
+        await doExecution(cachingBackend, [ReferenceMd.Won]);
+        cacheControl?.resetExecutions();
+        await doExecution(cachingBackend, [ReferenceMd.Won]);
+
+        expect(effectiveExecutions).toEqual(2);
+    });
+
+    it("resets catalog cache", () => {
+        let cacheControl: CacheControl | undefined;
+
+        const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+        const first = backend.workspace("test").catalog().load();
+        cacheControl?.resetCatalogs();
+        const second = backend.workspace("test").catalog().load();
+
+        expect(second).not.toBe(first);
+    });
+
+    it("resets workspace automations list cache", () => {
+        let cacheControl: CacheControl | undefined;
+
+        const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+        const first = backend.workspace("test").automations().getAutomations();
+        cacheControl?.resetAutomations();
+        const second = backend.workspace("test").automations().getAutomations();
+
+        expect(second).not.toBe(first);
+    });
+
+    it("resets workspace automations query cache", () => {
+        let cacheControl: CacheControl | undefined;
+
+        const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+        const first = backend
+            .workspace("test")
+            .automations()
+            .getAutomationsQuery()
+            .withPage(2)
+            .withSize(5)
+            .query();
+        cacheControl?.resetAutomations();
+        const second = backend
+            .workspace("test")
+            .automations()
+            .getAutomationsQuery()
+            .withPage(2)
+            .withSize(5)
+            .query();
+
+        expect(second).not.toBe(first);
+    });
+
+    it("resets workspace automations cache as part of resetAll", () => {
+        let cacheControl: CacheControl | undefined;
+
+        const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+        const first = backend.workspace("test").automations().getAutomations();
+        cacheControl?.resetAll();
+        const second = backend.workspace("test").automations().getAutomations();
+
+        expect(second).not.toBe(first);
+    });
+
+    describe("collection items caching", () => {
+        const collectionBaseConfig = {
+            collectionId: "geo-collection",
+        };
+
+        it("reuses cached geo collection values for overlapping requests", async () => {
+            const provider = vi.fn((config: ICollectionItemsConfig) => {
+                const features = config.values?.map((value) => createGeoFeature(value)) ?? [];
+
+                return {
+                    type: "FeatureCollection",
+                    features,
+                    bbox: [0, 0, 0, 0],
+                };
+            });
+
+            const backend = withCachingForTests(createGeoCollectionBackend(provider));
+            const result = await doExecution(backend, [ReferenceMd.Won]);
+            const dataView = await result.readAll();
+
+            const first = await dataView.readCollectionItems({
+                ...collectionBaseConfig,
+                values: ["alpha", "beta"],
+            });
+
+            expect(first.features.map(geoFeatureId)).toEqual(["alpha", "beta"]);
+
+            const second = await dataView.readCollectionItems({
+                ...collectionBaseConfig,
+                values: ["beta", "gamma"],
+            });
+
+            expect(provider).toHaveBeenCalledTimes(2);
+            expect(provider.mock.calls[0][0].values).toEqual(["alpha", "beta"]);
+            expect(provider.mock.calls[1][0].values).toEqual(["gamma"]);
+            expect(second.features.map(geoFeatureId)).toEqual(["beta", "gamma"]);
+
+            await dataView.readCollectionItems({
+                ...collectionBaseConfig,
+                values: ["gamma"],
+            });
+
+            expect(provider).toHaveBeenCalledTimes(2);
+        });
+
+        it("remembers empty geo collection responses per value", async () => {
+            const provider = vi.fn((config: ICollectionItemsConfig) => {
+                const features =
+                    config.values
+                        ?.filter((value) => value === "alpha")
+                        .map((value) => createGeoFeature(value)) ?? [];
+
+                return {
+                    type: "FeatureCollection",
+                    features,
+                };
+            });
+
+            const backend = withCachingForTests(createGeoCollectionBackend(provider));
+            const result = await doExecution(backend, [ReferenceMd.Won]);
+            const dataView = await result.readAll();
+
+            await dataView.readCollectionItems({
+                ...collectionBaseConfig,
+                values: ["alpha", "missing"],
+            });
+
+            const second = await dataView.readCollectionItems({
+                ...collectionBaseConfig,
+                values: ["missing"],
+            });
+
+            expect(second.features).toHaveLength(0);
+            expect(provider).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    describe("security settings", () => {
+        const ORGANIZATION_ID = "org";
+        const URL = "https://gooddata.com";
+
+        it("caches organization security settings URL validation result", () => {
+            const backend = withCachingForTests();
+
+            const first = backend
+                .organization(ORGANIZATION_ID)
+                .securitySettings()
+                .isUrlValid(URL, "UI_EVENT");
+            const second = backend
+                .organization(ORGANIZATION_ID)
+                .securitySettings()
+                .isUrlValid(URL, "UI_EVENT");
+
+            expect(second).toBe(first);
+        });
+
+        it("evicts organization security settings", () => {
+            const backend = withCachingForTests();
+
+            const first = backend
+                .organization(ORGANIZATION_ID)
+                .securitySettings()
+                .isUrlValid(URL, "UI_EVENT");
+            void backend.organization("someOtherOrg").securitySettings().isUrlValid(URL, "UI_EVENT");
+            const second = backend
+                .organization(ORGANIZATION_ID)
+                .securitySettings()
+                .isUrlValid(URL, "UI_EVENT");
+
+            expect(second).not.toBe(first);
+        });
+
+        it("evicts organization security settings URL validation result", () => {
+            const backend = withCachingForTests();
+
+            // first call caches result when getting security settings with default options
+            const first = backend
+                .organization(ORGANIZATION_ID)
+                .securitySettings()
+                .isUrlValid(URL, "UI_EVENT");
+
+            // second call done explicitly with different options => evict previous entry
+            void backend
+                .organization(ORGANIZATION_ID)
+                .securitySettings()
+                .isUrlValid("https://example.com", "UI_EVENT");
+
+            // now back to default options, will be new promise
+            const second = backend
+                .organization(ORGANIZATION_ID)
+                .securitySettings()
+                .isUrlValid(URL, "UI_EVENT");
+
+            expect(second).not.toBe(first);
+        });
+
+        it("resets security settings cache", () => {
+            let cacheControl: CacheControl | undefined;
+
+            const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+            const first = backend
+                .organization(ORGANIZATION_ID)
+                .securitySettings()
+                .isUrlValid(URL, "UI_EVENT");
+            cacheControl?.resetSecuritySettings();
+            const second = backend
+                .organization(ORGANIZATION_ID)
+                .securitySettings()
+                .isUrlValid(URL, "UI_EVENT");
+
+            expect(second).not.toBe(first);
+        });
+    });
+
+    describe("workspace settings", () => {
+        it("caches workspace settings", () => {
+            const backend = withCachingForTests();
+
+            const first = backend.workspace("test").settings().getSettings();
+            const second = backend.workspace("test").settings().getSettings();
+
+            expect(second).toBe(first);
+        });
+
+        it("evicts workspace settings", () => {
+            const backend = withCachingForTests();
+
+            const first = backend.workspace("test").settings().getSettings();
+            void backend.workspace("other").settings().getSettings();
+            const second = backend.workspace("test").settings().getSettings();
+
+            expect(second).not.toBe(first);
+        });
+
+        it("caches user workspace settings", () => {
+            const backend = withCachingForTests();
+
+            const first = backend.workspace("test").settings().getSettingsForCurrentUser();
+            const second = backend.workspace("test").settings().getSettingsForCurrentUser();
+
+            expect(second).toBe(first);
+        });
+
+        it("evicts user workspace settings", () => {
+            const backend = withCachingForTests();
+
+            const first = backend.workspace("test").settings().getSettingsForCurrentUser();
+            void backend.workspace("other").settings().getSettingsForCurrentUser();
+            const second = backend.workspace("test").settings().getSettingsForCurrentUser();
+
+            expect(second).not.toBe(first);
+        });
+
+        it("resets workspace settings cache", () => {
+            let cacheControl: CacheControl | undefined;
+
+            const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+            const first = backend.workspace("test").settings().getSettingsForCurrentUser();
+            cacheControl?.resetWorkspaceSettings();
+            const second = backend.workspace("test").settings().getSettingsForCurrentUser();
+
+            expect(second).not.toBe(first);
+        });
+    });
+
+    describe("insights", () => {
+        const REF = idRef("insight-1", "insight");
+
+        it("caches getInsight", async () => {
+            const insight = createTestInsight("insight-1");
+            const { backend, counter } = createInsightCountingBackend(async () => insight);
+            const cachedBackend = withCachingForTests(backend);
+
+            const first = await cachedBackend.workspace("test").insights().getInsight(REF);
+            const second = await cachedBackend.workspace("test").insights().getInsight(REF);
+
+            expect(second).toBe(first);
+            expect(counter.calls).toEqual(1);
+        });
+
+        it("de-duplicates concurrent getInsight calls for the same ref into a single underlying call", async () => {
+            const insight = createTestInsight("insight-1");
+            // resolve only after all concurrent callers have registered on the in-flight promise
+            const { backend, counter } = createInsightCountingBackend(
+                () => new Promise<IInsight>((resolve) => setTimeout(() => resolve(insight), 10)),
+            );
+            const cachedBackend = withCachingForTests(backend);
+
+            const service = cachedBackend.workspace("test").insights();
+            const results = await Promise.all([
+                service.getInsight(REF),
+                service.getInsight(REF),
+                service.getInsight(REF),
+                service.getInsight(REF),
+                service.getInsight(REF),
+            ]);
+
+            // a single underlying call serves all concurrent callers
+            expect(counter.calls).toEqual(1);
+            // and they all observe identical results
+            results.forEach((result) => expect(result).toBe(insight));
+        });
+
+        it("does not share cache entries for different options", async () => {
+            const insight = createTestInsight("insight-1");
+            const { backend, counter } = createInsightCountingBackend(async () => insight);
+            const cachedBackend = withCachingForTests(backend);
+
+            const service = cachedBackend.workspace("test").insights();
+            await service.getInsight(REF);
+            await service.getInsight(REF, { loadUserData: true });
+
+            expect(counter.calls).toEqual(2);
+        });
+
+        it("evicts the cache entry when getInsight fails", async () => {
+            let shouldFail = true;
+            const insight = createTestInsight("insight-1");
+            const { backend, counter } = createInsightCountingBackend(async () => {
+                if (shouldFail) {
+                    throw new Error("boom");
+                }
+                return insight;
+            });
+            const cachedBackend = withCachingForTests(backend);
+            const service = cachedBackend.workspace("test").insights();
+
+            await expect(service.getInsight(REF)).rejects.toThrow("boom");
+
+            // the failed entry is evicted, so a subsequent call hits the backend again
+            shouldFail = false;
+            const result = await service.getInsight(REF);
+
+            expect(result).toBe(insight);
+            expect(counter.calls).toEqual(2);
+        });
+
+        it("invalidates the getInsight cache after updateInsight so edits are not served stale", async () => {
+            const insight = createTestInsight("insight-1");
+            const { backend, counter } = createInsightCountingBackend(async () => insight);
+            const cachedBackend = withCachingForTests(backend);
+            const service = cachedBackend.workspace("test").insights();
+
+            await service.getInsight(REF);
+            await service.updateInsight(insight);
+            await service.getInsight(REF);
+
+            // the edit invalidated the cache, so the second read hits the backend again
+            expect(counter.calls).toEqual(2);
+        });
+
+        it("resets insights cache", async () => {
+            let cacheControl: CacheControl | undefined;
+            const insight = createTestInsight("insight-1");
+            const { backend, counter } = createInsightCountingBackend(async () => insight);
+            const cachedBackend = withCachingForTests(backend, (cc) => (cacheControl = cc));
+            const service = cachedBackend.workspace("test").insights();
+
+            await service.getInsight(REF);
+            cacheControl?.resetInsights();
+            await service.getInsight(REF);
+
+            expect(counter.calls).toEqual(2);
+        });
+    });
+
+    describe("workspace export templates", () => {
+        const template: IExportTemplate = { name: "template-1", ref: idRef("template-1") };
+
+        it("caches getExportTemplates", async () => {
+            const { backend, counter } = createWorkspaceExportTemplatesCountingBackend(async () => [
+                template,
+            ]);
+            const cachedBackend = withCachingForTests(backend);
+
+            const first = await cachedBackend.workspace("test").exportTemplates().getExportTemplates();
+            const second = await cachedBackend.workspace("test").exportTemplates().getExportTemplates();
+
+            expect(second).toBe(first);
+            expect(counter.calls).toEqual(1);
+        });
+
+        it("does not share cache entries across workspaces", async () => {
+            const { backend, counter } = createWorkspaceExportTemplatesCountingBackend(async () => [
+                template,
+            ]);
+            const cachedBackend = withCachingForTests(backend);
+
+            await cachedBackend.workspace("ws-1").exportTemplates().getExportTemplates();
+            await cachedBackend.workspace("ws-2").exportTemplates().getExportTemplates();
+
+            expect(counter.calls).toEqual(2);
+        });
+
+        it("invalidates other workspaces' cached lists on a write (inherited templates may change)", async () => {
+            const { backend, counter } = createWorkspaceExportTemplatesCountingBackend(async () => [
+                template,
+            ]);
+            const cachedBackend = withCachingForTests(backend);
+
+            // ws-child caches its list (which may include templates inherited from ws-parent)
+            await cachedBackend.workspace("ws-child").exportTemplates().getExportTemplates();
+            // a write in ws-parent must not leave ws-child serving a stale inherited list
+            await cachedBackend.workspace("ws-parent").exportTemplates().createExportTemplate(template);
+            await cachedBackend.workspace("ws-child").exportTemplates().getExportTemplates();
+
+            // ws-child: 1 initial read + 1 re-read after the parent write invalidated the cache
+            expect(counter.calls).toEqual(2);
+        });
+
+        it("evicts the cache entry when getExportTemplates fails", async () => {
+            let shouldFail = true;
+            const { backend, counter } = createWorkspaceExportTemplatesCountingBackend(async () => {
+                if (shouldFail) {
+                    throw new Error("boom");
+                }
+                return [template];
+            });
+            const cachedBackend = withCachingForTests(backend);
+            const service = cachedBackend.workspace("test").exportTemplates();
+
+            await expect(service.getExportTemplates()).rejects.toThrow("boom");
+
+            // the failed entry is evicted, so a subsequent call hits the backend again
+            shouldFail = false;
+            const result = await service.getExportTemplates();
+
+            expect(result).toEqual([template]);
+            expect(counter.calls).toEqual(2);
+        });
+
+        it.each([
+            [
+                "createExportTemplate",
+                (s: IWorkspaceExportTemplatesService) => s.createExportTemplate(template),
+            ],
+            [
+                "patchExportTemplate",
+                (s: IWorkspaceExportTemplatesService) => s.patchExportTemplate(template.ref, template),
+            ],
+            [
+                "deleteExportTemplate",
+                (s: IWorkspaceExportTemplatesService) => s.deleteExportTemplate(template.ref),
+            ],
+        ])("invalidates the cache after %s so edits are not served stale", async (_label, mutate) => {
+            const { backend, counter } = createWorkspaceExportTemplatesCountingBackend(async () => [
+                template,
+            ]);
+            const cachedBackend = withCachingForTests(backend);
+            const service = cachedBackend.workspace("test").exportTemplates();
+
+            await service.getExportTemplates();
+            await mutate(service);
+            await service.getExportTemplates();
+
+            // the write invalidated the cache, so the second read hits the backend again
+            expect(counter.calls).toEqual(2);
+        });
+
+        it("resets export templates cache", async () => {
+            let cacheControl: CacheControl | undefined;
+            const { backend, counter } = createWorkspaceExportTemplatesCountingBackend(async () => [
+                template,
+            ]);
+            const cachedBackend = withCachingForTests(backend, (cc) => (cacheControl = cc));
+            const service = cachedBackend.workspace("test").exportTemplates();
+
+            await service.getExportTemplates();
+            cacheControl?.resetExportTemplates();
+            await service.getExportTemplates();
+
+            expect(counter.calls).toEqual(2);
+        });
+    });
+
+    describe("attributes", () => {
+        describe("getAttributeDisplayForm and getAttributeDisplayForms", () => {
+            it("should cache the scalar calls", () => {
+                const backend = withCachingForTests();
+
+                const first = doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+                const second = doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).toBe(first);
+            });
+
+            it("should cache the vector calls", async () => {
+                const backend = withCachingForTests();
+
+                const first = await doGetAttributeDisplayForms(backend, [
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                ]);
+                const second = await doGetAttributeDisplayForms(backend, [
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                ]);
+
+                expect(second[0]).toBe(first[0]);
+            });
+
+            it("should use cached results from scalar version in the vector version", async () => {
+                const backend = withCachingForTests();
+
+                const scalar = await doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+                const vector = await doGetAttributeDisplayForms(backend, [
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                    ReferenceMd.Activity.Default.attribute.displayForm,
+                ]);
+
+                expect(vector[0]).toBe(scalar);
+            });
+
+            it("should use cached results from vector version in the scalar version", async () => {
+                const backend = withCachingForTests();
+
+                const vector = await doGetAttributeDisplayForms(backend, [
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                ]);
+                const scalar = await doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(scalar).toBe(vector[0]);
+            });
+
+            it("should evict cache items when the limit is hit", () => {
+                const backend = withCachingForTests();
+
+                const first = doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                // other 3 calls with different display form to replace the first one
+                // the LRU we use starts evicting at maxSize * 2
+                void doGetAttributeDisplayForm(backend, ReferenceMd.Activity.Default.attribute.displayForm);
+                void doGetAttributeDisplayForm(backend, ReferenceMd.Activity.Subject.attribute.displayForm);
+                void doGetAttributeDisplayForm(backend, ReferenceMd.Account.Default.attribute.displayForm);
+
+                const second = doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).not.toBe(first);
+            });
+
+            it("should reset attributes cache with resetAttributes", () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+
+                const first = doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                cacheControl?.resetAttributes();
+
+                const second = doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).not.toBe(first);
+            });
+
+            it("should reset attributes cache with resetAll", () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+
+                const first = doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                cacheControl?.resetAll();
+
+                const second = doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).not.toBe(first);
+            });
+        });
+
+        describe("getAttributeByDisplayForm", () => {
+            it("should cache the calls", async () => {
+                const backend = withCachingForTests();
+
+                const first = await doGetAttributeByDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+                const second = await doGetAttributeByDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).toBe(first);
+            });
+
+            it("should evict cache items when the limit is hit", () => {
+                const backend = withCachingForTests();
+
+                const first = doGetAttributeByDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                // other 3 calls with different display form to replace the first one
+                // the LRU we use starts evicting at maxSize * 2
+                void doGetAttributeByDisplayForm(backend, ReferenceMd.Activity.Default.attribute.displayForm);
+                void doGetAttributeByDisplayForm(backend, ReferenceMd.Activity.Subject.attribute.displayForm);
+                void doGetAttributeByDisplayForm(backend, ReferenceMd.Account.Default.attribute.displayForm);
+
+                const second = doGetAttributeByDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).not.toBe(first);
+            });
+
+            it("should reset attributes cache with resetAttributes", () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+
+                const first = doGetAttributeByDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                cacheControl?.resetAttributes();
+
+                const second = doGetAttributeByDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).not.toBe(first);
+            });
+
+            it("should reset attributes cache with resetAll", () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+
+                const first = doGetAttributeByDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                cacheControl?.resetAll();
+
+                const second = doGetAttributeByDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).not.toBe(first);
+            });
+        });
+
+        describe("de-duplication of uncached reads", () => {
+            it("collapses concurrent getAttributes calls to a single underlying call", async () => {
+                const counts = makeAttributeCallCounts();
+                const backend = withCachingForTests(makeCountingBackend(counts));
+                const refs = [idRef("a1"), idRef("a2")];
+
+                const [first, second] = await Promise.all([
+                    backend.workspace("test").attributes().getAttributes(refs),
+                    backend.workspace("test").attributes().getAttributes(refs),
+                ]);
+
+                expect(counts.getAttributes).toBe(1);
+                expect(second).toEqual(first);
+                expect(second[0]).toBe(first[0]);
+            });
+
+            it("collapses concurrent getAttributeDisplayForms calls to a single underlying call", async () => {
+                const counts = makeAttributeCallCounts();
+                const backend = withCachingForTests(makeCountingBackend(counts));
+                const refs = [idRef("df1"), idRef("df2")];
+
+                const [first, second] = await Promise.all([
+                    backend.workspace("test").attributes().getAttributeDisplayForms(refs),
+                    backend.workspace("test").attributes().getAttributeDisplayForms(refs),
+                ]);
+
+                // de-duplication: only one underlying bulk request despite two concurrent callers
+                expect(counts.getAttributeDisplayForms).toBe(1);
+                expect(second).toEqual(first);
+                // callers share the exact same result references, in the same order
+                expect(second[0]).toBe(first[0]);
+                expect(second[1]).toBe(first[1]);
+            });
+
+            it("drops a server-omitted display form ref shared via an in-flight promise (inconsistent relations)", async () => {
+                const counts = makeAttributeCallCounts();
+                const present = idRef("df-present");
+                const missing = idRef("df-missing");
+                const backend = withCachingForTests(
+                    makeCountingBackend(counts, {
+                        omitDisplayFormRefs: [missing],
+                        allowsInconsistentRelations: true,
+                    }),
+                );
+
+                // Two concurrent callers: the first requests both refs, the second shares the in-flight
+                // promise for the omitted ref. Neither may trip the result invariant.
+                const [first, second] = await Promise.all([
+                    backend.workspace("test").attributes().getAttributeDisplayForms([present, missing]),
+                    backend.workspace("test").attributes().getAttributeDisplayForms([missing, present]),
+                ]);
+
+                // single underlying bulk request, omitted ref dropped from both results
+                expect(counts.getAttributeDisplayForms).toBe(1);
+                expect(first.map((df) => df.id)).toEqual(["df-present"]);
+                expect(second.map((df) => df.id)).toEqual(["df-present"]);
+                expect(second[0]).toBe(first[0]);
+            });
+
+            it("collapses concurrent getAttribute calls to a single underlying call", async () => {
+                const counts = makeAttributeCallCounts();
+                const backend = withCachingForTests(makeCountingBackend(counts));
+                const ref = idRef("a1");
+
+                const [first, second] = await Promise.all([
+                    backend.workspace("test").attributes().getAttribute(ref),
+                    backend.workspace("test").attributes().getAttribute(ref),
+                ]);
+
+                expect(counts.getAttribute).toBe(1);
+                expect(second).toBe(first);
+            });
+
+            it("shares a cached getAttributes result with getAttribute", async () => {
+                const counts = makeAttributeCallCounts();
+                const backend = withCachingForTests(makeCountingBackend(counts));
+                const ref = idRef("a1");
+
+                const [fromBulk] = await backend.workspace("test").attributes().getAttributes([ref]);
+                const fromScalar = await backend.workspace("test").attributes().getAttribute(ref);
+
+                expect(counts.getAttributes).toBe(1);
+                expect(counts.getAttribute).toBe(0);
+                expect(fromScalar).toBe(fromBulk);
+            });
+
+            it("collapses concurrent getCommonAttributes calls to a single underlying call", async () => {
+                const counts = makeAttributeCallCounts();
+                const backend = withCachingForTests(makeCountingBackend(counts));
+                const refs = [idRef("a1"), idRef("a2")];
+
+                const [first, second] = await Promise.all([
+                    backend.workspace("test").attributes().getCommonAttributes(refs),
+                    // same set, different order - must hit the same (sorted) cache key
+                    backend.workspace("test").attributes().getCommonAttributes([refs[1], refs[0]]),
+                ]);
+
+                expect(counts.getCommonAttributes).toBe(1);
+                expect(second).toBe(first);
+            });
+
+            it("collapses concurrent getCommonAttributesBatch calls to a single underlying call", async () => {
+                const counts = makeAttributeCallCounts();
+                const backend = withCachingForTests(makeCountingBackend(counts));
+                const batch = [[idRef("a1"), idRef("a2")], [idRef("a3")]];
+
+                const [first, second] = await Promise.all([
+                    backend.workspace("test").attributes().getCommonAttributesBatch(batch),
+                    backend.workspace("test").attributes().getCommonAttributesBatch(batch),
+                ]);
+
+                expect(counts.getCommonAttributesBatch).toBe(1);
+                expect(second).toBe(first);
+            });
+
+            it("collapses concurrent getConnectedAttributesByDisplayForm calls to a single underlying call", async () => {
+                const counts = makeAttributeCallCounts();
+                const backend = withCachingForTests(makeCountingBackend(counts));
+                const ref = idRef("df1");
+
+                const [first, second] = await Promise.all([
+                    backend.workspace("test").attributes().getConnectedAttributesByDisplayForm(ref),
+                    backend.workspace("test").attributes().getConnectedAttributesByDisplayForm(ref),
+                ]);
+
+                expect(counts.getConnectedAttributesByDisplayForm).toBe(1);
+                expect(second).toBe(first);
+            });
+
+            it("evicts the getAttribute cache entry on error so it is retried", async () => {
+                const counts = makeAttributeCallCounts();
+                const backend = withCachingForTests(makeCountingBackend(counts, { failGetAttribute: true }));
+                const ref = idRef("a1");
+
+                await expect(backend.workspace("test").attributes().getAttribute(ref)).rejects.toThrow();
+                await expect(backend.workspace("test").attributes().getAttribute(ref)).rejects.toThrow();
+
+                // a non-evicting cache would have reused the rejected promise and kept the count at 1
+                expect(counts.getAttribute).toBe(2);
+            });
+
+            it("resets the new attribute caches with resetAttributes", async () => {
+                let cacheControl: CacheControl | undefined;
+                const counts = makeAttributeCallCounts();
+                const backend = withCachingForTests(makeCountingBackend(counts), (cc) => (cacheControl = cc));
+                const ref = idRef("a1");
+
+                await backend.workspace("test").attributes().getConnectedAttributesByDisplayForm(ref);
+                cacheControl?.resetAttributes();
+                await backend.workspace("test").attributes().getConnectedAttributesByDisplayForm(ref);
+
+                expect(counts.getConnectedAttributesByDisplayForm).toBe(2);
+            });
+        });
+
+        describe("getAttributesWithReferences", () => {
+            it("collapses N concurrent same-ref calls into one underlying call with identical results", async () => {
+                // resolve only after all concurrent callers have registered on the in-flight promise
+                const underlying = vi.fn(
+                    () =>
+                        new Promise<IAttributeWithReferences[]>((resolve) =>
+                            setTimeout(() => resolve([{ ...SAMPLE_ATTRIBUTE_WITH_REFERENCES }]), 10),
+                        ),
+                );
+                const backend = withCachingForTests(
+                    createAttributesBackend({ getAttributesWithReferences: underlying }),
+                );
+                const service = backend.workspace("test").attributes();
+
+                const results = await Promise.all(
+                    Array.from({ length: 5 }, () => service.getAttributesWithReferences([AWR_DF_REF])),
+                );
+
+                // de-duplication: a single underlying call serves all concurrent callers
+                expect(underlying).toHaveBeenCalledTimes(1);
+                // and they all observe identical result references
+                results.forEach((result) => {
+                    expect(result).toHaveLength(1);
+                    expect(result[0]).toBe(results[0][0]);
+                });
+            });
+
+            it("populates the secondary caches so follow-up scalar reads are served from cache", async () => {
+                const getAttributesWithReferences = vi.fn(async () => [
+                    { ...SAMPLE_ATTRIBUTE_WITH_REFERENCES },
+                ]);
+                const getAttributeByDisplayForm = vi.fn();
+                const getAttributeDatasetMeta = vi.fn();
+                const backend = withCachingForTests(
+                    createAttributesBackend({
+                        getAttributesWithReferences,
+                        getAttributeByDisplayForm,
+                        getAttributeDatasetMeta,
+                    }),
+                );
+                const service = backend.workspace("test").attributes();
+
+                await service.getAttributesWithReferences([AWR_DF_REF]);
+
+                // attribute-by-display-form cache is populated -> underlying scalar read is not hit
+                const attribute = await service.getAttributeByDisplayForm(AWR_DF_REF);
+                expect(attribute).toBe(SAMPLE_ATTRIBUTE_WITH_REFERENCES.attribute);
+                expect(getAttributeByDisplayForm).not.toHaveBeenCalled();
+
+                // dataset-by-attribute cache is populated -> underlying scalar read is not hit
+                const dataSet = await service.getAttributeDatasetMeta(AWR_ATTR_REF);
+                expect(dataSet).toBe(SAMPLE_ATTRIBUTE_WITH_REFERENCES.dataSet);
+                expect(getAttributeDatasetMeta).not.toHaveBeenCalled();
+            });
+
+            it("evicts the cache entry on error so a subsequent call retries", async () => {
+                const underlying = vi
+                    .fn<IWorkspaceAttributesService["getAttributesWithReferences"]>()
+                    .mockRejectedValueOnce(new Error("boom"))
+                    .mockResolvedValueOnce([{ ...SAMPLE_ATTRIBUTE_WITH_REFERENCES }]);
+                const backend = withCachingForTests(
+                    createAttributesBackend({ getAttributesWithReferences: underlying }),
+                );
+                const service = backend.workspace("test").attributes();
+
+                await expect(service.getAttributesWithReferences([AWR_DF_REF])).rejects.toThrow("boom");
+
+                // the failed entry is evicted, so a subsequent call hits the backend again and succeeds
+                const result = await service.getAttributesWithReferences([AWR_DF_REF]);
+                expect(result[0].attribute.id).toEqual("attr.account");
+                expect(underlying).toHaveBeenCalledTimes(2);
+            });
+
+            it("reuses cached results for a subsequent call for the same ref", async () => {
+                const underlying = vi.fn(async () => [{ ...SAMPLE_ATTRIBUTE_WITH_REFERENCES }]);
+                const backend = withCachingForTests(
+                    createAttributesBackend({ getAttributesWithReferences: underlying }),
+                );
+                const service = backend.workspace("test").attributes();
+
+                const first = await service.getAttributesWithReferences([AWR_DF_REF]);
+                const second = await service.getAttributesWithReferences([AWR_DF_REF]);
+
+                expect(underlying).toHaveBeenCalledTimes(1);
+                expect(second[0]).toBe(first[0]);
+            });
+
+            it("serves a sibling display form of an already-loaded attribute from cache", async () => {
+                // e2e-representative (drillToDashboard): the source and the drilled-to filter reference
+                // different display forms of the same attribute. Loading the attribute for one display form
+                // must make any other display form of that attribute a cache hit - no second request - so
+                // the outgoing request set stays identical to master.
+                const underlying = vi.fn(async () => [{ ...SAMPLE_ATTRIBUTE_WITH_REFERENCES }]);
+                const backend = withCachingForTests(
+                    createAttributesBackend({ getAttributesWithReferences: underlying }),
+                );
+                const service = backend.workspace("test").attributes();
+
+                // load the attribute via its first display form
+                await service.getAttributesWithReferences([AWR_DF_REF]);
+
+                // then request a DIFFERENT display form of the same attribute
+                const sibling = await service.getAttributesWithReferences([AWR_DF_REF_2]);
+
+                // served from cache - no second underlying call - and the attribute is returned
+                expect(underlying).toHaveBeenCalledTimes(1);
+                expect(sibling).toHaveLength(1);
+                expect(sibling[0].attribute.id).toEqual("attr.account");
+            });
+
+            it("resets attributes cache with resetAttributes", async () => {
+                let cacheControl: CacheControl | undefined;
+                const underlying = vi.fn(async () => [{ ...SAMPLE_ATTRIBUTE_WITH_REFERENCES }]);
+                const backend = withCachingForTests(
+                    createAttributesBackend({ getAttributesWithReferences: underlying }),
+                    (cc) => (cacheControl = cc),
+                );
+                const service = backend.workspace("test").attributes();
+
+                await service.getAttributesWithReferences([AWR_DF_REF]);
+                cacheControl?.resetAttributes();
+                await service.getAttributesWithReferences([AWR_DF_REF]);
+
+                expect(underlying).toHaveBeenCalledTimes(2);
+            });
+
+            it("resets attributes cache with resetAll", async () => {
+                let cacheControl: CacheControl | undefined;
+                const underlying = vi.fn(async () => [{ ...SAMPLE_ATTRIBUTE_WITH_REFERENCES }]);
+                const backend = withCachingForTests(
+                    createAttributesBackend({ getAttributesWithReferences: underlying }),
+                    (cc) => (cacheControl = cc),
+                );
+                const service = backend.workspace("test").attributes();
+
+                await service.getAttributesWithReferences([AWR_DF_REF]);
+                cacheControl?.resetAll();
+                await service.getAttributesWithReferences([AWR_DF_REF]);
+
+                expect(underlying).toHaveBeenCalledTimes(2);
+            });
+        });
+
+        describe("elements", () => {
+            it("should cache the calls", async () => {
+                const backend = withCachingForTests();
+
+                const first = await doGetAttributeElements(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+                const second = await doGetAttributeElements(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).toBe(first);
+            });
+
+            it("should evict cache items when the limit is hit", async () => {
+                const backend = withCachingForTests();
+
+                const first = await doGetAttributeElements(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                void doGetAttributeElements(backend, ReferenceMd.Activity.Default.attribute.displayForm);
+
+                const second = await doGetAttributeElements(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).not.toBe(first);
+            });
+
+            it("should reset attribute elements cache with resetAttributes", async () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+
+                const first = await doGetAttributeElements(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                cacheControl?.resetAttributes();
+
+                const second = await doGetAttributeElements(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).not.toBe(first);
+            });
+
+            it("should reset attribute elements cache with resetAll", async () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+
+                const first = await doGetAttributeElements(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                cacheControl?.resetAll();
+
+                const second = await doGetAttributeElements(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).not.toBe(first);
+            });
+        });
+    });
+
+    describe("facts", () => {
+        describe("getFact", () => {
+            it("collapses concurrent same-ref calls into a single underlying call", async () => {
+                const underlying = vi.fn(async () => ({ ...SAMPLE_FACT }) as IFactMetadataObject);
+                const backend = withCachingForTests(createFactsBackend(underlying));
+
+                const [a, b, c] = await Promise.all([
+                    backend.workspace("test").facts().getFact(FACT_REF),
+                    backend.workspace("test").facts().getFact(FACT_REF),
+                    backend.workspace("test").facts().getFact(FACT_REF),
+                ]);
+
+                // de-duplication: only one underlying request despite three concurrent callers
+                expect(underlying).toHaveBeenCalledTimes(1);
+                // all callers share the exact same result
+                expect(a).toBe(b);
+                expect(b).toBe(c);
+            });
+
+            it("evicts the cached entry when the underlying call fails", async () => {
+                const underlying = vi
+                    .fn<IWorkspaceFactsService["getFact"]>()
+                    .mockRejectedValueOnce(new Error("boom"))
+                    .mockResolvedValueOnce({ ...SAMPLE_FACT } as IFactMetadataObject);
+                const backend = withCachingForTests(createFactsBackend(underlying));
+
+                await expect(backend.workspace("test").facts().getFact(FACT_REF)).rejects.toThrow("boom");
+
+                // failed promise must not be cached - a retry hits the backend again and succeeds
+                await expect(backend.workspace("test").facts().getFact(FACT_REF)).resolves.toMatchObject({
+                    id: "fact.foo",
+                });
+
+                expect(underlying).toHaveBeenCalledTimes(2);
+            });
+
+            it("does not collapse calls with different include options", async () => {
+                const underlying = vi.fn(async () => ({ ...SAMPLE_FACT }) as IFactMetadataObject);
+                const backend = withCachingForTests(createFactsBackend(underlying));
+
+                await Promise.all([
+                    backend.workspace("test").facts().getFact(FACT_REF),
+                    backend
+                        .workspace("test")
+                        .facts()
+                        .getFact(FACT_REF, { include: ["dataset"] }),
+                ]);
+
+                expect(underlying).toHaveBeenCalledTimes(2);
+            });
+
+            it("resets facts cache with resetFacts", async () => {
+                let cacheControl: CacheControl | undefined;
+                const underlying = vi.fn(async () => ({ ...SAMPLE_FACT }) as IFactMetadataObject);
+                const backend = withCachingForTests(
+                    createFactsBackend(underlying),
+                    (cc) => (cacheControl = cc),
+                );
+
+                await backend.workspace("test").facts().getFact(FACT_REF);
+                cacheControl?.resetFacts();
+                await backend.workspace("test").facts().getFact(FACT_REF);
+
+                expect(underlying).toHaveBeenCalledTimes(2);
+            });
+
+            it("resets facts cache with resetAll", async () => {
+                let cacheControl: CacheControl | undefined;
+                const underlying = vi.fn(async () => ({ ...SAMPLE_FACT }) as IFactMetadataObject);
+                const backend = withCachingForTests(
+                    createFactsBackend(underlying),
+                    (cc) => (cacheControl = cc),
+                );
+
+                await backend.workspace("test").facts().getFact(FACT_REF);
+                cacheControl?.resetAll();
+                await backend.workspace("test").facts().getFact(FACT_REF);
+
+                expect(underlying).toHaveBeenCalledTimes(2);
+            });
+        });
+
+        describe("getFactDatasetMeta", () => {
+            it("collapses concurrent same-ref calls into a single underlying call", async () => {
+                const underlying = vi.fn(async () => ({ ...SAMPLE_FACT_DATASET }) as IMetadataObject);
+                const backend = withCachingForTests(createFactsBackend(vi.fn(), underlying));
+
+                const [a, b, c] = await Promise.all([
+                    backend.workspace("test").facts().getFactDatasetMeta(FACT_REF),
+                    backend.workspace("test").facts().getFactDatasetMeta(FACT_REF),
+                    backend.workspace("test").facts().getFactDatasetMeta(FACT_REF),
+                ]);
+
+                expect(underlying).toHaveBeenCalledTimes(1);
+                expect(a).toBe(b);
+                expect(b).toBe(c);
+            });
+
+            it("evicts the cached entry when the underlying call fails", async () => {
+                const underlying = vi
+                    .fn<IWorkspaceFactsService["getFactDatasetMeta"]>()
+                    .mockRejectedValueOnce(new Error("boom"))
+                    .mockResolvedValueOnce({ ...SAMPLE_FACT_DATASET } as IMetadataObject);
+                const backend = withCachingForTests(createFactsBackend(vi.fn(), underlying));
+
+                await expect(backend.workspace("test").facts().getFactDatasetMeta(FACT_REF)).rejects.toThrow(
+                    "boom",
+                );
+
+                await expect(
+                    backend.workspace("test").facts().getFactDatasetMeta(FACT_REF),
+                ).resolves.toMatchObject({ id: "dataset.foo" });
+
+                expect(underlying).toHaveBeenCalledTimes(2);
+            });
+        });
+    });
+
+    describe("measures", () => {
+        const measureRef = idRef("my_measure", "measure");
+
+        describe("getMeasureExpressionTokens", () => {
+            it("should cache the calls", () => {
+                const backend = withCachingForTests();
+
+                const first = doGetMeasureExpressionTokens(backend, measureRef);
+                const second = doGetMeasureExpressionTokens(backend, measureRef);
+
+                expect(second).toBe(first);
+            });
+
+            it("collapses N concurrent same-ref calls into one underlying call with identical results", async () => {
+                const tokens: IMeasureExpressionToken[] = [{ type: "text", value: "1" }];
+                const underlying = vi.fn(async () => tokens);
+                const backend = withCachingForTests(
+                    createMeasuresBackend({ getMeasureExpressionTokens: underlying }),
+                );
+
+                const promises = Array.from({ length: 5 }, () =>
+                    doGetMeasureExpressionTokens(backend, measureRef),
+                );
+                const results = await Promise.all(promises);
+
+                expect(underlying).toHaveBeenCalledTimes(1);
+                results.forEach((result) => expect(result).toBe(results[0]));
+            });
+
+            it("evicts the cache entry on error so a subsequent call retries", async () => {
+                const underlying = vi
+                    .fn<(ref: ObjRef) => Promise<IMeasureExpressionToken[]>>()
+                    .mockRejectedValueOnce(new Error("boom"))
+                    .mockResolvedValue([]);
+                const backend = withCachingForTests(
+                    createMeasuresBackend({ getMeasureExpressionTokens: underlying }),
+                );
+
+                const first = doGetMeasureExpressionTokens(backend, measureRef);
+                await expect(first).rejects.toThrow("boom");
+
+                const second = doGetMeasureExpressionTokens(backend, measureRef);
+                await expect(second).resolves.toEqual([]);
+
+                expect(second).not.toBe(first);
+                expect(underlying).toHaveBeenCalledTimes(2);
+            });
+
+            it("should reset measures cache with resetMeasures", () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+
+                const first = doGetMeasureExpressionTokens(backend, measureRef);
+                cacheControl?.resetMeasures();
+                const second = doGetMeasureExpressionTokens(backend, measureRef);
+
+                expect(second).not.toBe(first);
+            });
+
+            it("should reset measures cache with resetAll", () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+
+                const first = doGetMeasureExpressionTokens(backend, measureRef);
+                cacheControl?.resetAll();
+                const second = doGetMeasureExpressionTokens(backend, measureRef);
+
+                expect(second).not.toBe(first);
+            });
+        });
+
+        describe("getMeasureReferencingObjects", () => {
+            it("should cache the calls", () => {
+                const backend = withCachingForTests();
+
+                const first = doGetMeasureReferencingObjects(backend, measureRef);
+                const second = doGetMeasureReferencingObjects(backend, measureRef);
+
+                expect(second).toBe(first);
+            });
+
+            it("collapses N concurrent same-ref calls into one underlying call with identical results", async () => {
+                const referencing: IMeasureReferencing = { measures: [], insights: [] };
+                const underlying = vi.fn(async () => referencing);
+                const backend = withCachingForTests(
+                    createMeasuresBackend({ getMeasureReferencingObjects: underlying }),
+                );
+
+                const promises = Array.from({ length: 5 }, () =>
+                    doGetMeasureReferencingObjects(backend, measureRef),
+                );
+                const results = await Promise.all(promises);
+
+                expect(underlying).toHaveBeenCalledTimes(1);
+                results.forEach((result) => expect(result).toBe(results[0]));
+            });
+
+            it("evicts the cache entry on error so a subsequent call retries", async () => {
+                const underlying = vi
+                    .fn<(ref: ObjRef) => Promise<IMeasureReferencing>>()
+                    .mockRejectedValueOnce(new Error("boom"))
+                    .mockResolvedValue({});
+                const backend = withCachingForTests(
+                    createMeasuresBackend({ getMeasureReferencingObjects: underlying }),
+                );
+
+                const first = doGetMeasureReferencingObjects(backend, measureRef);
+                await expect(first).rejects.toThrow("boom");
+
+                const second = doGetMeasureReferencingObjects(backend, measureRef);
+                await expect(second).resolves.toEqual({});
+
+                expect(second).not.toBe(first);
+                expect(underlying).toHaveBeenCalledTimes(2);
+            });
+        });
+    });
+
+    describe("datasets", () => {
+        describe("getDataset", () => {
+            it("should cache the calls", async () => {
+                const backend = withCachingForTests();
+                const ref = idRef("dataset.a", "dataSet");
+
+                const first = await doGetDataset(backend, ref);
+                const second = await doGetDataset(backend, ref);
+
+                expect(second).toBe(first);
+            });
+
+            it("should de-duplicate concurrent same-ref calls into a single underlying call", async () => {
+                const counters: DatasetsCallCounters = { getDataset: 0, getDataSets: 0 };
+                const backend = withCachingForTests(createCountingDatasetsBackend({ counters }));
+                const ref = idRef("dataset.a", "dataSet");
+
+                const [first, second, third] = await Promise.all([
+                    doGetDataset(backend, ref),
+                    doGetDataset(backend, ref),
+                    doGetDataset(backend, ref),
+                ]);
+
+                expect(counters.getDataset).toBe(1);
+                expect(second).toBe(first);
+                expect(third).toBe(first);
+            });
+
+            it("should reset datasets cache with resetDatasets", () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+                const ref = idRef("dataset.a", "dataSet");
+
+                const first = doGetDataset(backend, ref);
+
+                cacheControl?.resetDatasets();
+
+                const second = doGetDataset(backend, ref);
+
+                expect(second).not.toBe(first);
+            });
+
+            it("should reset datasets cache with resetAll", () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+                const ref = idRef("dataset.a", "dataSet");
+
+                const first = doGetDataset(backend, ref);
+
+                cacheControl?.resetAll();
+
+                const second = doGetDataset(backend, ref);
+
+                expect(second).not.toBe(first);
+            });
+        });
+
+        describe("getDataSets", () => {
+            it("should de-duplicate concurrent same-ref bulk calls into a single underlying call", async () => {
+                const counters: DatasetsCallCounters = { getDataset: 0, getDataSets: 0 };
+                const backend = withCachingForTests(createCountingDatasetsBackend({ counters }));
+                const refs = [idRef("dataset.a", "dataSet"), idRef("dataset.b", "dataSet")];
+
+                const [first, second, third] = await Promise.all([
+                    doGetDataSets(backend, refs),
+                    doGetDataSets(backend, refs),
+                    doGetDataSets(backend, refs),
+                ]);
+
+                expect(counters.getDataSets).toBe(1);
+                // the per-ref results are shared instances across concurrent callers
+                expect(second[0]).toBe(first[0]);
+                expect(third[0]).toBe(first[0]);
+                expect(second[1]).toBe(first[1]);
+                // ordering is preserved
+                expect(first.map((d) => d.id)).toEqual(["dataset.a", "dataset.b"]);
+            });
+
+            it("should reuse the scalar cache in the bulk call", async () => {
+                const counters: DatasetsCallCounters = { getDataset: 0, getDataSets: 0 };
+                const backend = withCachingForTests(createCountingDatasetsBackend({ counters }));
+                const refA = idRef("dataset.a", "dataSet");
+                const refB = idRef("dataset.b", "dataSet");
+
+                const scalar = await doGetDataset(backend, refA);
+                const bulk = await doGetDataSets(backend, [refA, refB]);
+
+                expect(bulk[0]).toBe(scalar);
+                // scalar caused one scalar call; bulk only needed to load the missing ref
+                expect(counters.getDataset).toBe(1);
+                expect(counters.getDataSets).toBe(1);
+            });
+
+            it("should omit and evict refs the backend does not return (inconsistent relations)", async () => {
+                const counters: DatasetsCallCounters = { getDataset: 0, getDataSets: 0 };
+                const presentRef = idRef("dataset.present", "dataSet");
+                const missingRef = idRef("dataset.missing", "dataSet");
+                const backend = withCachingForTests(
+                    createCountingDatasetsBackend({
+                        counters,
+                        shouldReturn: (ref) => ref !== missingRef,
+                    }),
+                );
+
+                const result = await doGetDataSets(backend, [presentRef, missingRef]);
+
+                // omitted ref is dropped from the output, ordering of the rest preserved
+                expect(result).toHaveLength(1);
+                expect(result[0].id).toBe("dataset.present");
+
+                // the omitted ref was evicted, so requesting it again triggers another underlying load
+                await doGetDataSets(backend, [missingRef]);
+                expect(counters.getDataSets).toBe(2);
+            });
+        });
+    });
+});
+
+class GeoPreparedExecution extends DecoratedPreparedExecution {
+    constructor(
+        decorated: IPreparedExecution,
+        private readonly provider: CollectionItemsProvider,
+    ) {
+        super(decorated);
+    }
+
+    public override async execute(): Promise<IExecutionResult> {
+        const result = await this.decorated.execute();
+        return new GeoExecutionResult(result, this.provider);
+    }
+
+    protected createNew(decorated: IPreparedExecution): IPreparedExecution {
+        return new GeoPreparedExecution(decorated, this.provider);
+    }
+}
+
+class GeoExecutionResult extends DecoratedExecutionResult {
+    constructor(
+        decorated: IExecutionResult,
+        private readonly provider: CollectionItemsProvider,
+    ) {
+        super(decorated, (execution) => new GeoPreparedExecution(execution, provider));
+    }
+
+    public override async readAll(): Promise<IDataView> {
+        const dataView = await super.readAll();
+        return new GeoDataView(dataView, this.provider);
+    }
+
+    public override async readWindow(offset: number[], size: number[]): Promise<IDataView> {
+        const dataView = await super.readWindow(offset, size);
+        return new GeoDataView(dataView, this.provider);
+    }
+
+    protected createNew(decorated: IExecutionResult): IExecutionResult {
+        return new GeoExecutionResult(decorated, this.provider);
+    }
+}
+
+class GeoDataView extends DecoratedDataView {
+    constructor(
+        decorated: IDataView,
+        private readonly provider: CollectionItemsProvider,
+    ) {
+        super(decorated);
+    }
+
+    public override readCollectionItems(config: ICollectionItemsConfig): Promise<ICollectionItemsResult> {
+        return Promise.resolve(this.provider(config));
+    }
+}

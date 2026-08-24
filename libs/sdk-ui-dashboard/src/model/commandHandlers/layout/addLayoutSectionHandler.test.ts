@@ -1,0 +1,396 @@
+// (C) 2021-2026 GoodData Corporation
+
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import { type IAnalyticalWidget, type IDashboard, idRef, uriRef } from "@gooddata/sdk-model";
+
+import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultFilterContext.js";
+import { defaultDateFilterConfig } from "../../../_staging/dateFilterConfig/defaultConfig.js";
+import { type IAddLayoutSection, addLayoutSection, undoLayoutChanges } from "../../commands/layout.js";
+import { type IDashboardCommandFailed } from "../../events/general.js";
+import { type IDashboardLayoutChanged, type IDashboardLayoutSectionAdded } from "../../events/layout.js";
+import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
+import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
+import { ActivityDateDatasetRef } from "../../tests/fixtures/CatalogAvailability.fixtures.js";
+import {
+    EmptyDashboardIdentifier,
+    EmptyDashboardWithReferences,
+    TestCorrelation,
+    TestStash,
+} from "../../tests/fixtures/Dashboard.fixtures.js";
+import {
+    TestInsightItem,
+    TestInsightPlaceholderItem,
+    TestKpiPlaceholderItem,
+    TestRichTextItem,
+    TestVisualizationSwitcherItem,
+    createTestInsightItem,
+    testItemWithDateDataset,
+    testItemWithFilterIgnoreList,
+} from "../../tests/fixtures/Layout.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { type PrivateDashboardContext } from "../../types/commonTypes.js";
+import { EmptyDashboardLayout } from "../dashboard/common/dashboardInitialize.js";
+
+type StoreOptions = Record<string, unknown>;
+type GetDefaultMiddleware = (options?: StoreOptions) => unknown;
+type MiddlewareBuilder = (getDefaultMiddleware: GetDefaultMiddleware) => unknown;
+
+/**
+ * Every test here builds a fresh dashboard store in `beforeEach` (19 full dashboard initializations).
+ * Redux Toolkit's `getDefaultMiddleware` adds the `immutableCheck` and `serializableCheck` invariant
+ * middlewares outside of production builds; both deep-walk the whole dashboard state on every single
+ * dispatched action, which dominated the runtime of this file (~55% of the samples went into
+ * `isNestedFrozen` and `findNonSerializableValue`).
+ *
+ * These middlewares are development-only sanity checks that never run in production, and this file
+ * asserts on emitted events and selector output rather than on store immutability, so switching them
+ * off here costs no coverage and roughly halves the runtime of the whole file.
+ */
+vi.mock("@reduxjs/toolkit", async (importOriginal) => {
+    const actual = (await importOriginal()) as StoreOptions & {
+        configureStore: (options: StoreOptions) => unknown;
+    };
+
+    return {
+        ...actual,
+        configureStore: (options: StoreOptions) => {
+            const middleware = options["middleware"] as MiddlewareBuilder | undefined;
+
+            if (!middleware) {
+                return actual.configureStore(options);
+            }
+
+            return actual.configureStore({
+                ...options,
+                middleware: (getDefaultMiddleware: GetDefaultMiddleware) =>
+                    middleware((getDefaultMiddlewareOptions) =>
+                        getDefaultMiddleware({
+                            ...getDefaultMiddlewareOptions,
+                            immutableCheck: false,
+                            serializableCheck: false,
+                        }),
+                    ),
+            });
+        },
+    };
+});
+
+describe("add layout section handler", () => {
+    describe("for an empty dashboard", () => {
+        let Tester: DashboardTester;
+
+        const dashboardWithDefaults: IDashboard = {
+            ...EmptyDashboardWithReferences.dashboard,
+            ref: idRef(EmptyDashboardIdentifier),
+            identifier: EmptyDashboardIdentifier,
+            layout: EmptyDashboardLayout,
+            filterContext: createDefaultFilterContext(
+                defaultDateFilterConfig,
+                true,
+            ) as IDashboard["filterContext"],
+        };
+
+        const customizationFnsWithPreload: PrivateDashboardContext = {
+            preloadedDashboard: dashboardWithDefaults,
+        };
+
+        beforeEach(async () => {
+            await preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                EmptyDashboardIdentifier,
+                {
+                    backendConfig: {
+                        useRefType: "id",
+                    },
+                    customizationFns: customizationFnsWithPreload,
+                },
+            );
+        });
+
+        it("should add a new empty section at relative index 0", async () => {
+            const event: IDashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+                addLayoutSection(0),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+            expect(event.payload.index).toEqual(0);
+            expect(event.payload.section).toMatchSnapshot();
+
+            const layout = selectLayout(Tester.state());
+            expect(layout.sections[0]).toEqual(event.payload.section);
+        });
+
+        it("should add a new empty section at relative index -1", async () => {
+            const event: IDashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+                addLayoutSection(0),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+            expect(event.payload.index).toEqual(0);
+            expect(event.payload.section).toMatchSnapshot();
+
+            const layout = selectLayout(Tester.state());
+            expect(layout.sections[0]).toEqual(event.payload.section);
+        });
+
+        it("should add a new section and initialize its header", async () => {
+            const event: IDashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+                addLayoutSection(0, { title: "My Section", description: "My Section Description" }),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+            expect(event.payload.section).toMatchSnapshot();
+
+            const layout = selectLayout(Tester.state());
+            expect(layout.sections[0]).toEqual(event.payload.section);
+        });
+
+        it("should add a new section and initialize its items", async () => {
+            const event: IDashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+                addLayoutSection(0, undefined, [
+                    TestKpiPlaceholderItem,
+                    TestInsightPlaceholderItem,
+                    TestRichTextItem,
+                    TestVisualizationSwitcherItem,
+                ]),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+            expect(event.payload.section.items).toMatchObject([
+                TestKpiPlaceholderItem,
+                TestInsightPlaceholderItem,
+                TestRichTextItem,
+                TestVisualizationSwitcherItem,
+            ]);
+
+            const layout = selectLayout(Tester.state());
+            expect(layout.sections[0]).toEqual(event.payload.section);
+        });
+
+        it("should load and add insight when adding new section insight widget", async () => {
+            await Tester.dispatchAndWaitFor(
+                addLayoutSection(0, {}, [TestInsightItem], false, TestCorrelation),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+
+            const insight = selectInsightByRef(TestInsightItem.widget!.insight)(Tester.state());
+            expect(insight).toBeDefined();
+        });
+
+        it("should auto-resolve insight's date dataset when adding insight widget", async () => {
+            const event: IDashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+                addLayoutSection(0, {}, [TestInsightItem], true, TestCorrelation),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+
+            expect((event.payload.section.items[0].widget as IAnalyticalWidget).dateDataSet).toEqual(
+                ActivityDateDatasetRef,
+            );
+        });
+
+        it("should be undoable and revert to empty layout", async () => {
+            await Tester.dispatchAndWaitFor(addLayoutSection(0), "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED");
+
+            const event: IDashboardLayoutChanged = await Tester.dispatchAndWaitFor(
+                undoLayoutChanges(),
+                "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
+            );
+            expect(event.payload.layout.sections).toEqual([]);
+
+            const layout = selectLayout(Tester.state());
+            expect(layout.sections).toEqual([]);
+        });
+
+        it("should not remove loaded insight during layouting undo", async () => {
+            await Tester.dispatchAndWaitFor(
+                addLayoutSection(0, {}, [TestInsightItem], false, TestCorrelation),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+
+            await Tester.dispatchAndWaitFor(undoLayoutChanges(), "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED");
+
+            const insight = selectInsightByRef(TestInsightItem.widget!.insight)(Tester.state());
+            expect(insight).toBeDefined();
+        });
+
+        it("should fail if bad section placement index is provided", async () => {
+            const event: IDashboardCommandFailed<IAddLayoutSection> = await Tester.dispatchAndWaitFor(
+                addLayoutSection(1, undefined, undefined, false, TestCorrelation),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(event.payload.reason).toEqual("USER_ERROR");
+            expect(event.correlationId).toEqual(TestCorrelation);
+        });
+
+        it("should fail if attempting to add item with non-existent insight", async () => {
+            const event: IDashboardCommandFailed<IAddLayoutSection> = await Tester.dispatchAndWaitFor(
+                addLayoutSection(
+                    0,
+                    {},
+                    [createTestInsightItem(uriRef("does-not-exist"))],
+                    false,
+                    TestCorrelation,
+                ),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(event.payload.reason).toEqual("USER_ERROR");
+            expect(event.correlationId).toEqual(TestCorrelation);
+        });
+
+        it("should fail if attempting to add insight widget with bad date dataset setting", async () => {
+            const event: IDashboardCommandFailed<IAddLayoutSection> = await Tester.dispatchAndWaitFor(
+                addLayoutSection(
+                    0,
+                    {},
+                    [testItemWithDateDataset(TestInsightItem, uriRef("does-not-exist"))],
+                    false,
+                    TestCorrelation,
+                ),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(event.payload.reason).toEqual("USER_ERROR");
+            expect(event.correlationId).toEqual(TestCorrelation);
+        });
+
+        it("should fail if attempting to add insight widget with bad filter ignore list", async () => {
+            const event: IDashboardCommandFailed<IAddLayoutSection> = await Tester.dispatchAndWaitFor(
+                addLayoutSection(
+                    0,
+                    {},
+                    [testItemWithFilterIgnoreList(TestInsightItem, [uriRef("does-not-exist")])],
+                    false,
+                    TestCorrelation,
+                ),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(event.payload.reason).toEqual("USER_ERROR");
+            expect(event.correlationId).toEqual(TestCorrelation);
+        });
+
+        it("should fail if bad stash identifier is provided", async () => {
+            const event: IDashboardCommandFailed<IAddLayoutSection> = await Tester.dispatchAndWaitFor(
+                addLayoutSection(0, undefined, [TestStash], false, TestCorrelation),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(event.payload.reason).toEqual("USER_ERROR");
+            expect(event.correlationId).toEqual(TestCorrelation);
+        });
+
+        it("should correctly pass correlationId", async () => {
+            const event: IDashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+                addLayoutSection(
+                    0,
+                    undefined,
+                    [TestKpiPlaceholderItem, TestInsightPlaceholderItem],
+                    false,
+                    TestCorrelation,
+                ),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+
+            expect(event.correlationId).toEqual(TestCorrelation);
+        });
+    });
+
+    // Note: the SimpleDashboard contains a single two sections
+    describe("for a dashboard with existing sections", () => {
+        let Tester: DashboardTester;
+
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, SimpleDashboardIdentifier);
+        });
+
+        it("should add new last section by using relative index -1", async () => {
+            const originalLayout = selectLayout(Tester.state());
+            const event: IDashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+                addLayoutSection(-1),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+            expect(event.payload.index).toEqual(originalLayout.sections.length);
+            expect(event.payload.section).toMatchSnapshot();
+
+            const layout = selectLayout(Tester.state());
+            expect(layout.sections[originalLayout.sections.length]).toEqual(event.payload.section);
+        });
+
+        it("should add new first section by using index 0", async () => {
+            const event: IDashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+                addLayoutSection(0),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+            expect(event.payload.index).toEqual(0);
+            expect(event.payload.section).toMatchSnapshot();
+
+            const layout = selectLayout(Tester.state());
+            expect(layout.sections[0]).toEqual(event.payload.section);
+        });
+
+        it("should add a new section between two existing sections", async () => {
+            const originalLayout = selectLayout(Tester.state());
+
+            await Tester.dispatchAndWaitFor(
+                addLayoutSection(-1, undefined, [TestKpiPlaceholderItem]),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+
+            await Tester.dispatchAndWaitFor(
+                addLayoutSection(1, undefined, [TestInsightPlaceholderItem]),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+
+            const layout = selectLayout(Tester.state());
+            expect(layout.sections.length).toBe(originalLayout.sections.length + 2);
+        });
+
+        it("should be undoable and revert to original layout", async () => {
+            const originalLayout = selectLayout(Tester.state());
+
+            await Tester.dispatchAndWaitFor(
+                addLayoutSection(-1, undefined, [TestKpiPlaceholderItem]),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+
+            const updatedLayout = selectLayout(Tester.state());
+            expect(originalLayout).not.toEqual(updatedLayout);
+
+            const event: IDashboardLayoutChanged = await Tester.dispatchAndWaitFor(
+                undoLayoutChanges(),
+                "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
+            );
+            expect(event.payload.layout).toEqual(originalLayout);
+
+            const layoutAfterRevert = selectLayout(Tester.state());
+            expect(layoutAfterRevert).toEqual(originalLayout);
+        });
+
+        it("should be undoable when multiple sections are added", async () => {
+            const originalLayout = selectLayout(Tester.state());
+
+            await Tester.dispatchAndWaitFor(
+                addLayoutSection(-1, undefined, [TestKpiPlaceholderItem]),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+            const layoutAfterFirst = selectLayout(Tester.state());
+
+            await Tester.dispatchAndWaitFor(
+                addLayoutSection(-1, undefined, [TestInsightPlaceholderItem]),
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+            );
+
+            // now undo command by command
+
+            await Tester.dispatchAndWaitFor(undoLayoutChanges(), "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED");
+            expect(selectLayout(Tester.state())).toEqual(layoutAfterFirst);
+
+            await Tester.dispatchAndWaitFor(undoLayoutChanges(), "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED");
+            expect(selectLayout(Tester.state())).toEqual(originalLayout);
+        });
+    });
+});

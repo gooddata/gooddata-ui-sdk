@@ -1,4 +1,7 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
+/* eslint-disable no-console */
+
 import chalk from "chalk";
 import stripAnsi from "strip-ansi";
 

@@ -1,12 +1,10 @@
 {
     "extends": "../tsconfig.base.json",
-    "exclude": ["**/tests", "**/test"],
-    "include": ["src/**/*", "src/**/*.json"],
+    "exclude": ["**/*.test.ts"],
+    "include": ["src/**/*"],
     "compilerOptions": {
+        "noCheck": true,
         "rootDir": "./src",
-        "outDir": "./esm",
-        "strict": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true
+        "outDir": "./esm"
     }
 }

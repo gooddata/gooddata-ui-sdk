@@ -6,7 +6,7 @@
         "**/*.fixture.ts",
         "**/*.fixtures.ts",
         "**/test/helper.ts",
-        "**/tests/MockProvider.ts",
+        "**/MockProvider.ts",
         "**/tests/*Mock.ts"
     ],
     "include": ["src/**/*"],

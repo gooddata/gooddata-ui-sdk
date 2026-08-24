@@ -1,6 +1,6 @@
 {
     "extends": "../tsconfig.react.json",
-    "exclude": ["**/test", "**/tests", "**/*.test.ts", "**/*.test.tsx"],
+    "exclude": ["**/test", "**/tests", "**/*.test.ts", "**/*.test.tsx", "**/*.fixture.ts"],
     "include": ["src/**/*"],
     "compilerOptions": {
         "noCheck": true,
