@@ -10,11 +10,10 @@ import {
     modifyDrillsForInsightWidget,
     removeDrillsForInsightWidget,
 } from "../../commands/insight.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardCommandFailed } from "../../events/general.js";
 import { type IDashboardInsightWidgetDrillsRemoved } from "../../events/insight.js";
-import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
-import { BeforeTestCorrelation, TestCorrelation } from "../../tests/fixtures/Dashboard.fixtures.js";
+import { BeforeTestCorrelation, TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
 import {
     DrillToDashboardFromProductAttributeDefinition,
     DrillToDashboardWithThreeSectionsLocalIdentifier,
@@ -22,7 +21,8 @@ import {
     SimpleDashboardIdentifier,
     SimpleDashboardSimpleSortedTableWidgetDrillTargets,
     SimpleSortedTableWidgetRef,
-} from "../../tests/fixtures/SimpleDashboard.fixtures.js";
+} from "../../fixtures/SimpleDashboard.fixtures.js";
+import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 
 describe("removeDrillsForInsightWidgetHandler", () => {
     const localIdentifier = localIdRef(DrillToDashboardWithThreeSectionsLocalIdentifier);

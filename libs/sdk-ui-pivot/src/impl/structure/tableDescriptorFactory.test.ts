@@ -1,5 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { type ColDef, type ColGroupDef } from "ag-grid-community";
 import { describe, expect, it } from "vitest";
 

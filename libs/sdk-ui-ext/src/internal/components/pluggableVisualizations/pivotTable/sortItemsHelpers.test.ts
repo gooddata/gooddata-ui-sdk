@@ -10,7 +10,7 @@ import {
     type IBucketItem,
     type IExtendedReferencePoint,
 } from "../../../interfaces/Visualization.js";
-import { simpleStackedReferencePoint } from "../../../tests/mocks/referencePointMocks.js";
+import { simpleStackedReferencePoint } from "../../../mocks/referencePointMocks.js";
 
 import { getMockReferencePoint } from "./mockReferencePoint.js";
 import {

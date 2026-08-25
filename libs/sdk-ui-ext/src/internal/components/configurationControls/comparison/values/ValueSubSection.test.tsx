@@ -13,7 +13,7 @@ import {
     TEST_DEFAULT_SEPARATOR,
     TEST_PERCENT_ROUNDED_FORMAT_PRESET,
     createTestProperties,
-} from "../../../../tests/testDataProvider.js";
+} from "../../../../testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
 import { COMPARISON_FORMAT_VALUE_PATH, COMPARISON_SUB_FORMAT_VALUE_PATH } from "../ComparisonValuePath.js";
 

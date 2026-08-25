@@ -40,8 +40,8 @@ import {
     oneAttributeTwoFiltersReferencePoint,
     twoMeasureBucketsReferencePoint,
     wrongBucketsOrderReferencePoint,
-} from "../tests/mocks/referencePointMocks.js";
-import { oneMeasureOneStack, oneMeasureOneView } from "../tests/mocks/visualizationObjectMocks.js";
+} from "../mocks/referencePointMocks.js";
+import { oneMeasureOneStack, oneMeasureOneView } from "../mocks/visualizationObjectMocks.js";
 
 import {
     type IMeasureBucketItemsLimit,

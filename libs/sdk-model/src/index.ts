@@ -1014,6 +1014,8 @@ export {
     BROWSER_DETECTED,
     isBrowserDetectedTimezone,
     resolveTimezoneId,
+    isValidIanaTimezoneId,
+    isValidDashboardTimezoneId,
     normalizeDashboardTimezoneConfig,
     DashboardDateFilterConfigModeValues,
     DashboardAttributeFilterConfigModeValues,

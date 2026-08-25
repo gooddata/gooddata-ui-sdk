@@ -19,8 +19,10 @@ import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 import { type IAutomationFiltersTab } from "../../../model/store/filtering/types.js";
 import { type IAutomationParameter } from "../shared/automationFilters/automationParameters.js";
 import {
+    type IAutomationDialogDestinationProps,
     type IAutomationDialogFiltersProps,
     type IAutomationDialogHeaderProps,
+    type IAutomationDialogRecipientsProps,
     type ISlotProps,
 } from "../shared/slots/types.js";
 
@@ -343,6 +345,18 @@ export interface IScheduledEmailDialogTimezoneProps {
 export type ScheduledEmailDialogTimezoneDefaultProps = IScheduledEmailDialogTimezoneProps;
 
 /**
+ * Props of the default scheduled email dialog's recipients region.
+ *
+ * @alpha
+ */
+export interface IScheduledEmailDialogRecipientsProps extends IAutomationDialogRecipientsProps {
+    /**
+     * Submits the dialog from the recipients input. The default dialog always supplies it.
+     */
+    onKeyDownSubmit: (e: KeyboardEvent) => void;
+}
+
+/**
  * Section-level overrides of the default scheduled email dialog.
  *
  * @alpha
@@ -379,6 +393,26 @@ export interface IScheduledEmailDialogSlots {
      * hidden, the slot is not rendered either.
      */
     Timezone?: ComponentType<ISlotProps<ScheduledEmailDialogTimezoneDefaultProps>>;
+
+    /**
+     * Wraps or replaces the dialog's destination region (the notification-channel select on the
+     * General tab). Must have a stable reference identity — see {@link ISlotProps}.
+     *
+     * Renders only in the fully rendered dialog **and only while the General tab is selected**:
+     * not while the dialog context reports loading, and not while the stale-filters confirmation
+     * step is shown. It unmounts — losing any local state — on every switch to the Filters tab.
+     */
+    Destination?: ComponentType<ISlotProps<IAutomationDialogDestinationProps>>;
+
+    /**
+     * Wraps or replaces the dialog's recipients region on the General tab. Must have a stable
+     * reference identity — see {@link ISlotProps}.
+     *
+     * Renders only in the fully rendered dialog **and only while the General tab is selected**:
+     * not while the dialog context reports loading, and not while the stale-filters confirmation
+     * step is shown. It unmounts — losing any local state — on every switch to the Filters tab.
+     */
+    Recipients?: ComponentType<ISlotProps<IScheduledEmailDialogRecipientsProps>>;
 }
 
 /**
@@ -388,8 +422,8 @@ export interface IScheduledEmailDialogSlots {
  * Extends the shared {@link IScheduledEmailDialogProps} with customization only the default implementation
  * supports. Slots render only in the fully rendered dialog: not while the dialog context reports
  * loading, and not while the stale-filters confirmation step is shown. The Filters slot
- * additionally renders only while the Filters tab is selected — see
- * {@link IScheduledEmailDialogSlots.Filters}.
+ * additionally renders only while the Filters tab is selected; the Destination and Recipients
+ * slots only while the General tab is — see {@link IScheduledEmailDialogSlots}.
  *
  * @alpha
  */
@@ -397,6 +431,26 @@ export interface IDefaultScheduledEmailDialogProps extends IScheduledEmailDialog
     /**
      * Section-level overrides. Each slot receives `{ Default, defaultProps }` and may render its own
      * content (replace) or `<Default {...defaultProps} />` inside its own markup (wrap).
+     *
+     * @example
+     * The dialog is reached through the `Dashboard` component override; define slot components at
+     * module scope (see {@link ISlotProps}):
+     * ```tsx
+     * function RecipientsWithNote({ Default, defaultProps }: ISlotProps<IScheduledEmailDialogRecipientsProps>) {
+     *     return (
+     *         <>
+     *             <Default {...defaultProps} />
+     *             <Note>External recipients receive a public link.</Note>
+     *         </>
+     *     );
+     * }
+     *
+     * <Dashboard
+     *     ScheduledEmailDialogComponent={(props) => (
+     *         <DefaultScheduledEmailDialog {...props} slots={{ Recipients: RecipientsWithNote }} />
+     *     )}
+     * />;
+     * ```
      */
     slots?: IScheduledEmailDialogSlots;
 }

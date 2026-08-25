@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { COMBO_CHART_UICONFIG } from "../../constants/uiConfig.js";
-import { twoMeasureBucketsReferencePoint } from "../../tests/mocks/referencePointMocks.js";
+import { twoMeasureBucketsReferencePoint } from "../../mocks/referencePointMocks.js";
 import { createInternalIntl } from "../internalIntlProvider.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../translations.js";
 

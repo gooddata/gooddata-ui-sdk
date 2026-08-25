@@ -1,5 +1,7 @@
 // (C) 2024-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-base";

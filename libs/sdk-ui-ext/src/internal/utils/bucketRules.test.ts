@@ -23,7 +23,7 @@ import {
     sliceByWeekBucketItem,
     thresholdMeasure,
     twoDateFiltersBucket,
-} from "../tests/mocks/referencePointMocks.js";
+} from "../mocks/referencePointMocks.js";
 
 import {
     comparisonAndTrendingRecommendationEnabled,

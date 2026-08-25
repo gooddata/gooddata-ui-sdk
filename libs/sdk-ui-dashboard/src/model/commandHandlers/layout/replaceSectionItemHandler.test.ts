@@ -1,30 +1,32 @@
 // (C) 2021-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { uriRef } from "@gooddata/sdk-model";
 
 import { type IReplaceSectionItem, replaceSectionItem, undoLayoutChanges } from "../../commands/layout.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardCommandFailed } from "../../events/general.js";
 import {
     type IDashboardLayoutChanged,
     type IDashboardLayoutSectionItemReplaced,
 } from "../../events/layout.js";
-import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
-import { selectLayout, selectStash } from "../../store/tabs/layout/layoutSelectors.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWithReferences,
-} from "../../tests/fixtures/ComplexDashboard.fixtures.js";
-import { TestCorrelation, TestStash } from "../../tests/fixtures/Dashboard.fixtures.js";
+} from "../../fixtures/ComplexDashboard.fixtures.js";
+import { TestCorrelation, TestStash } from "../../fixtures/Dashboard.fixtures.js";
 import {
     TestInsightItem,
     TestKpiPlaceholderItem,
     testItemWithDateDataset,
     testItemWithFilterIgnoreList,
-} from "../../tests/fixtures/Layout.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../tests/fixtures/SimpleDashboard.fixtures.js";
+} from "../../fixtures/Layout.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../fixtures/SimpleDashboard.fixtures.js";
+import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
+import { selectLayout, selectStash } from "../../store/tabs/layout/layoutSelectors.js";
 
 describe("replace section item handler", () => {
     describe("for any dashboard", () => {

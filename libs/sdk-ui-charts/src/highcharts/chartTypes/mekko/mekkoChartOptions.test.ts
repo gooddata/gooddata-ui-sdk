@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { describe, expect, it } from "vitest";
 
 import { type IMeasureDescriptor, type IMeasureGroupDescriptor, newMeasureSort } from "@gooddata/sdk-model";

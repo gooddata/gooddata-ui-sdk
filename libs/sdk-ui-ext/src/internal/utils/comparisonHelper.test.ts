@@ -7,8 +7,8 @@ import { CalculateAs, type CalculationType } from "@gooddata/sdk-ui-charts";
 
 import { type IComparisonControlProperties } from "../interfaces/ControlProperties.js";
 import { type IVisualizationProperties } from "../interfaces/Visualization.js";
-import { createTestProperties } from "../tests/testDataProvider.js";
-import { createIntlMock } from "../tests/testIntlProvider.js";
+import { createTestProperties } from "../testDataProvider.js";
+import { createIntlMock } from "../testIntlProvider.js";
 
 import {
     getComparisonDefaultValues,

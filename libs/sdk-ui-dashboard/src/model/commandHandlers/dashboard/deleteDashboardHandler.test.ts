@@ -1,19 +1,21 @@
 // (C) 2021-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { deleteDashboard } from "../../commands/dashboard.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardDeleted } from "../../events/dashboard.js";
 import { type IDashboardCommandFailed } from "../../events/general.js";
+import { TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../fixtures/SimpleDashboard.fixtures.js";
 import { selectDateFilterConfig } from "../../store/config/configSelectors.js";
 import { selectInsights } from "../../store/insights/insightsSelectors.js";
 import { selectDashboardTitle, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
 import { selectEffectiveDateFilterConfig } from "../../store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 import { selectFilterContextAttributeFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
-import { TestCorrelation } from "../../tests/fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 describe("delete dashboard handler", () => {
     describe("for unsaved dashboard", () => {

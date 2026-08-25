@@ -130,11 +130,6 @@ export interface IRecipientsSelectRendererProps {
     value: IAutomationRecipient[];
 
     /**
-     * Originally selected recipients of a edited schedule
-     */
-    originalValue: IAutomationRecipient[];
-
-    /**
      * Recipients to display in the autocomplete.
      */
     options: IAutomationRecipient[];

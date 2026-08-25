@@ -1,5 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { describe, expect, it } from "vitest";
 
 import { HeaderPredicates, createIntlMock } from "@gooddata/sdk-ui";

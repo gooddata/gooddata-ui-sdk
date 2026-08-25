@@ -1,5 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -8,7 +10,7 @@ import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { type ChartFillType } from "@gooddata/sdk-ui-vis-commons";
 
 import { recordedDataFacade } from "../../../../testUtils/recordings.js";
-import { getMVS } from "../_util/test/helper.js";
+import { getMVS } from "../_util/helper.js";
 
 import { WaterfallChartColorStrategy } from "./waterfallChartColoring.js";
 import { getWaterfallChartSeries } from "./waterfallChartsSeries.js";

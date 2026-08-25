@@ -199,6 +199,33 @@ describe("dashboard conversion", () => {
             expect(content.timezoneConfig).toBeUndefined();
         });
 
+        it("should reject an unknown IANA timezone id", () => {
+            const input = makeDashboard({
+                timezone_config: {
+                    timezone_id: "Europe/Vi",
+                },
+            });
+
+            expect(() => yamlDashboardToDeclarative(emptyEntities, input)).toThrow(
+                '"Europe/Vi" is not a valid IANA timezone ID. Use a real timezone such as Europe/Prague or $browserDetected.',
+            );
+        });
+
+        it("should convert a valid IANA timezone id", () => {
+            const input = makeDashboard({
+                timezone_config: {
+                    timezone_id: "Europe/Prague",
+                },
+            });
+
+            const result = yamlDashboardToDeclarative(emptyEntities, input);
+            const content = result.dashboard.content as any;
+
+            expect(content.timezoneConfig).toEqual({
+                timezoneId: "Europe/Prague",
+            });
+        });
+
         it("should derive title from id when not provided", () => {
             const input = makeDashboard({ id: "sales_overview" });
 

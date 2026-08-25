@@ -11,7 +11,7 @@ import {
     dateItem,
     derivedMeasureItems,
     masterMeasureItems,
-} from "../../../tests/mocks/referencePointMocks.js";
+} from "../../../mocks/referencePointMocks.js";
 
 import { getXirrBuckets } from "./xirrBucketHelper.js";
 

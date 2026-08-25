@@ -1,4 +1,6 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
+// @vitest-environment node
 
 import { createIntl, createIntlCache } from "react-intl";
 import { describe, expect, it } from "vitest";

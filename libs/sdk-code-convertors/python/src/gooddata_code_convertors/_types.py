@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 25d398513600e32fb0467ba552fd7f25987e0b86be8589a0e7ccaf74a5cb44a4
+# schema-hash: dd7fd6ed1784480f941225b7c41c043e572cd15b7cc010aede85a1995b9855ca
 
 from __future__ import annotations
 

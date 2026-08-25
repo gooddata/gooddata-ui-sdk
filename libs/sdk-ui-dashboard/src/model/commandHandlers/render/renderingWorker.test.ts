@@ -1,5 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IDashboard, idRef } from "@gooddata/sdk-model";
@@ -8,11 +10,8 @@ import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultF
 import { defaultDateFilterConfig } from "../../../_staging/dateFilterConfig/defaultConfig.js";
 import { initializeDashboard } from "../../commands/dashboard.js";
 import { requestAsyncRender, resolveAsyncRender } from "../../commands/render.js";
-import { DashboardTester } from "../../tests/DashboardTester.js";
-import {
-    EmptyDashboardIdentifier,
-    EmptyDashboardWithReferences,
-} from "../../tests/fixtures/Dashboard.fixtures.js";
+import { DashboardTester } from "../../DashboardTester.js";
+import { EmptyDashboardIdentifier, EmptyDashboardWithReferences } from "../../fixtures/Dashboard.fixtures.js";
 import { type PrivateDashboardContext } from "../../types/commonTypes.js";
 import { EmptyDashboardLayout } from "../dashboard/common/dashboardInitialize.js";
 

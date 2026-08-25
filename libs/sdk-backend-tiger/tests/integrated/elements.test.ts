@@ -11,9 +11,9 @@ import {
 } from "@gooddata/sdk-model";
 
 import { Account, AccountId, Product } from "../../src/fixtures/full.js";
-import { productName } from "../../src/fixtures/referenceObjects.js";
 
 import { testBackend, testWorkspace } from "./backend.js";
+import { productName } from "./referenceObjects.test.helpers.js";
 
 const backend = testBackend();
 

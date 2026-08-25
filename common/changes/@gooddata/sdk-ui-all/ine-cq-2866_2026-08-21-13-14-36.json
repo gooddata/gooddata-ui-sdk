@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "sdk-ui-dashboard: Restore the timezone baked into an alert or scheduled export when the dashboard is opened from its notification link.",
+      "type": "none",
+      "packageName": "@gooddata/sdk-ui-all"
+    }
+  ],
+  "packageName": "@gooddata/sdk-ui-all",
+  "email": "ivan.nejezchleb@gooddata.com"
+}

@@ -1,5 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
+// @vitest-environment node
+
 // import moment from "moment";
 import { describe, expect, it, vi } from "vitest";
 

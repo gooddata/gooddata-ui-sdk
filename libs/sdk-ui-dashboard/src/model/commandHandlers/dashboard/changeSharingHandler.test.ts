@@ -1,16 +1,18 @@
 // (C) 2021-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { type IChangeSharing, changeSharing } from "../../commands/dashboard.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type DashboardSharingChanged } from "../../events/dashboard.js";
 import { type IDashboardCommandFailed } from "../../events/general.js";
+import { TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../fixtures/SimpleDashboard.fixtures.js";
 import { selectDashboardPermissions } from "../../store/dashboardPermissions/dashboardPermissionsSelectors.js";
 import { dashboardPermissionsActions } from "../../store/dashboardPermissions/index.js";
 import { selectDashboardShareStatus } from "../../store/meta/metaSelectors.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
-import { TestCorrelation } from "../../tests/fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 describe("change dashboard sharing handler", () => {
     describe("for a existing dashboard", () => {

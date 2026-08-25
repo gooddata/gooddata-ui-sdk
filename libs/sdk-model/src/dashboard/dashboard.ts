@@ -349,6 +349,35 @@ export function resolveTimezoneId(timezoneId: DashboardTimezoneId | undefined): 
 }
 
 /**
+ * Tests whether `timezoneId` is a valid IANA timezone identifier according to
+ * the runtime ICU data (via `Intl.DateTimeFormat`). The {@link BROWSER_DETECTED}
+ * sentinel is not a valid IANA ID — use {@link isValidDashboardTimezoneId} for
+ * values stored on the dashboard.
+ *
+ * @param timezoneId - timezone identifier to test
+ * @alpha
+ */
+export function isValidIanaTimezoneId(timezoneId: string): boolean {
+    try {
+        new Intl.DateTimeFormat(undefined, { timeZone: timezoneId });
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+/**
+ * Tests whether a dashboard timezone value is allowed in dashboard content:
+ * {@link BROWSER_DETECTED}, or a valid IANA timezone ID.
+ *
+ * @param timezoneId - timezone value from the dashboard content
+ * @alpha
+ */
+export function isValidDashboardTimezoneId(timezoneId: DashboardTimezoneId): boolean {
+    return isBrowserDetectedTimezone(timezoneId) || isValidIanaTimezoneId(timezoneId);
+}
+
+/**
  * Dashboard-level timezone configuration.
  *
  * @alpha

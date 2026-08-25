@@ -1,5 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { expectType } from "tsd";
 import { describe, it } from "vitest";
 

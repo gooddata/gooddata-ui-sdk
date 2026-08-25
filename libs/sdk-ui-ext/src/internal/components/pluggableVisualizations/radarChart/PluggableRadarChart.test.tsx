@@ -32,22 +32,22 @@ import {
     twoMeasureBucketsReferencePoint,
     twoMetricAndOneTrendAndOneSegmentByRefPoint,
     twoMetricAndOneTrendByRefPoint,
-} from "../../../tests/mocks/referencePointMocks.js";
-import { insightWithSingleMeasure } from "../../../tests/mocks/testMocks.js";
+} from "../../../mocks/referencePointMocks.js";
+import { insightWithSingleMeasure } from "../../../mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
 import {
     createDrillDefinition,
     createDrillEvent,
     getLastRenderEl,
     insightDefinitionToInsight,
-} from "../tests/pluggableVisualizations.test.helpers.js";
+} from "../pluggableVisualizations.test.helpers.js";
 import {
     expectedInsightDefDepartment,
     expectedInsightDefRegion,
     intersection,
     sourceInsightDef,
     targetUri,
-} from "../treeMap/tests/getInsightWithDrillDownAppliedMock.js";
+} from "../treeMap/getInsightWithDrillDownAppliedMock.js";
 
 import { PluggableRadarChart } from "./PluggableRadarChart.js";
 

@@ -1,5 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import {
@@ -15,22 +17,19 @@ import { defaultDateFilterConfig } from "../../_staging/dateFilterConfig/default
 import { EmptyDashboardLayout } from "../commandHandlers/dashboard/common/dashboardInitialize.js";
 import { initializeDashboard } from "../commands/dashboard.js";
 import { addLayoutSection } from "../commands/layout.js";
-import { type IInsightDateDatasets, queryDateDatasetsForInsight } from "../queries/insights.js";
-import { DashboardTester, preloadedTesterFactory } from "../tests/DashboardTester.js";
+import { DashboardTester, preloadedTesterFactory } from "../DashboardTester.js";
 import {
     MockAvailabilityWithDifferentRelevance,
     MockAvailabilityWithSameRelevance,
-} from "../tests/fixtures/CatalogAvailability.fixtures.js";
-import {
-    EmptyDashboardIdentifier,
-    EmptyDashboardWithReferences,
-} from "../tests/fixtures/Dashboard.fixtures.js";
+} from "../fixtures/CatalogAvailability.fixtures.js";
+import { EmptyDashboardIdentifier, EmptyDashboardWithReferences } from "../fixtures/Dashboard.fixtures.js";
 import {
     PivotTableWithDateFilter,
     PivotTableWithRowAndColumnAttributes,
     TreemapWithOneMeasureAndViewByDateAndSegmentByDate,
-} from "../tests/fixtures/Insights.fixtures.js";
-import { TestSectionHeader, createTestInsightItem } from "../tests/fixtures/Layout.fixtures.js";
+} from "../fixtures/Insights.fixtures.js";
+import { TestSectionHeader, createTestInsightItem } from "../fixtures/Layout.fixtures.js";
+import { type IInsightDateDatasets, queryDateDatasetsForInsight } from "../queries/insights.js";
 import { type PrivateDashboardContext } from "../types/commonTypes.js";
 
 function datasetsDigest(

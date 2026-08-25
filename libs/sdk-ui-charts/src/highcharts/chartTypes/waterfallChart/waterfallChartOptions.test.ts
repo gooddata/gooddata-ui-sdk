@@ -1,5 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -12,7 +14,7 @@ import { recordedDataFacade } from "../../../../testUtils/recordings.js";
 import { type IChartConfig, type ITotalConfig } from "../../../interfaces/chartConfig.js";
 import { type ISeriesItem } from "../../typings/unsafe.js";
 import { getDrillableSeries } from "../_chartOptions/chartDrilling.js";
-import { getMVS } from "../_util/test/helper.js";
+import { getMVS } from "../_util/helper.js";
 
 import { WaterfallChartColorStrategy } from "./waterfallChartColoring.js";
 import { buildWaterfallChartSeries, getColorAssignment } from "./waterfallChartOptions.js";

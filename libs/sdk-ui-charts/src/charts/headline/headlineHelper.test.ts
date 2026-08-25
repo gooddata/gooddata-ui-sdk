@@ -1,5 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { describe, expect, it } from "vitest";
 
 import { type IColorFromPalette, type IRgbColor } from "@gooddata/sdk-model";

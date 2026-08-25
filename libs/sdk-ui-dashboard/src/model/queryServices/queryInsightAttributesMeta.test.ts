@@ -1,5 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { type IDashboard, idRef, insightRef } from "@gooddata/sdk-model";
@@ -8,18 +10,15 @@ import { createDefaultFilterContext } from "../../_staging/dashboard/defaultFilt
 import { defaultDateFilterConfig } from "../../_staging/dateFilterConfig/defaultConfig.js";
 import { EmptyDashboardLayout } from "../commandHandlers/dashboard/common/dashboardInitialize.js";
 import { addLayoutSection } from "../commands/layout.js";
-import { type IInsightAttributesMeta, queryInsightAttributesMeta } from "../queries/insights.js";
-import { type DashboardTester, preloadedTesterFactory } from "../tests/DashboardTester.js";
-import {
-    EmptyDashboardIdentifier,
-    EmptyDashboardWithReferences,
-} from "../tests/fixtures/Dashboard.fixtures.js";
+import { type DashboardTester, preloadedTesterFactory } from "../DashboardTester.js";
+import { EmptyDashboardIdentifier, EmptyDashboardWithReferences } from "../fixtures/Dashboard.fixtures.js";
 import {
     PivotTableWithRowAndColumnAttributes,
     TreemapWithOneMeasureAndViewByDateAndSegmentByDate,
     TreemapWithSingleMeasureAndViewByFilteredToOneElement,
-} from "../tests/fixtures/Insights.fixtures.js";
-import { TestSectionHeader, createTestInsightItem } from "../tests/fixtures/Layout.fixtures.js";
+} from "../fixtures/Insights.fixtures.js";
+import { TestSectionHeader, createTestInsightItem } from "../fixtures/Layout.fixtures.js";
+import { type IInsightAttributesMeta, queryInsightAttributesMeta } from "../queries/insights.js";
 import { type PrivateDashboardContext } from "../types/commonTypes.js";
 
 describe("query insight attributes meta", () => {

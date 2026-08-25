@@ -7,13 +7,13 @@ import { type IDashboardParameter, type IDrillToDashboard, idRef } from "@goodda
 import { type IDashboardDrillEvent } from "../../../types.js";
 import { drillToDashboard } from "../../commands/drill.js";
 import { createDashboardTab, switchDashboardTab } from "../../commands/tabs.js";
-import { tabsActions } from "../../store/tabs/index.js";
-import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import {
     SimpleDashboardIdentifier,
     SimpleSortedTableWidgetRef,
-} from "../../tests/fixtures/SimpleDashboard.fixtures.js";
+} from "../../fixtures/SimpleDashboard.fixtures.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 
 describe("drillToDashboardHandler parameter inheritance", () => {
     const topNRef = idRef("topN", "parameter");

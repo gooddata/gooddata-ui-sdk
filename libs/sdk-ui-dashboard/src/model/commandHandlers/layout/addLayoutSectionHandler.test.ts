@@ -1,5 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IAnalyticalWidget, type IDashboard, idRef, uriRef } from "@gooddata/sdk-model";
@@ -7,18 +9,16 @@ import { type IAnalyticalWidget, type IDashboard, idRef, uriRef } from "@gooddat
 import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultFilterContext.js";
 import { defaultDateFilterConfig } from "../../../_staging/dateFilterConfig/defaultConfig.js";
 import { type IAddLayoutSection, addLayoutSection, undoLayoutChanges } from "../../commands/layout.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardCommandFailed } from "../../events/general.js";
 import { type IDashboardLayoutChanged, type IDashboardLayoutSectionAdded } from "../../events/layout.js";
-import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
-import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
-import { ActivityDateDatasetRef } from "../../tests/fixtures/CatalogAvailability.fixtures.js";
+import { ActivityDateDatasetRef } from "../../fixtures/CatalogAvailability.fixtures.js";
 import {
     EmptyDashboardIdentifier,
     EmptyDashboardWithReferences,
     TestCorrelation,
     TestStash,
-} from "../../tests/fixtures/Dashboard.fixtures.js";
+} from "../../fixtures/Dashboard.fixtures.js";
 import {
     TestInsightItem,
     TestInsightPlaceholderItem,
@@ -28,8 +28,10 @@ import {
     createTestInsightItem,
     testItemWithDateDataset,
     testItemWithFilterIgnoreList,
-} from "../../tests/fixtures/Layout.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../tests/fixtures/SimpleDashboard.fixtures.js";
+} from "../../fixtures/Layout.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../fixtures/SimpleDashboard.fixtures.js";
+import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
+import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { type PrivateDashboardContext } from "../../types/commonTypes.js";
 import { EmptyDashboardLayout } from "../dashboard/common/dashboardInitialize.js";
 

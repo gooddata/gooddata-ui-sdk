@@ -1,5 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import {
@@ -9,14 +11,14 @@ import {
     removeSectionItem,
     replaceSectionItem,
 } from "../../commands/layout.js";
-import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWithReferences,
-} from "../../tests/fixtures/ComplexDashboard.fixtures.js";
-import { TestStash } from "../../tests/fixtures/Dashboard.fixtures.js";
-import { TestKpiPlaceholderItem } from "../../tests/fixtures/Layout.fixtures.js";
+} from "../../fixtures/ComplexDashboard.fixtures.js";
+import { TestStash } from "../../fixtures/Dashboard.fixtures.js";
+import { TestKpiPlaceholderItem } from "../../fixtures/Layout.fixtures.js";
+import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
 
 describe("stashing", () => {
     let Tester: DashboardTester;

@@ -1,0 +1,160 @@
+// (C) 2019-2026 GoodData Corporation
+
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
+import { type IDataLabelsVisible } from "@gooddata/sdk-ui-charts";
+
+import { InternalIntlWrapper } from "../../utils/internalIntlProvider.js";
+
+import { DataLabelsControl, type IDataLabelsControlProps } from "./DataLabelsControl.js";
+
+describe("DataLabelsControl", () => {
+    const HIDE_LABEL = "hide";
+    const VISIBLE_LABEL = "show";
+    const AUTO_LABEL = "auto (default)";
+    const TOTAL_LABELS_TEXT = "Total Labels";
+    const DISABLED_TOOLTIP = "Property is not applicable for this configuration of the visualization";
+    // BubbleHoverTrigger delays showing the bubble by SHOW_DELAY (425ms) via setTimeout,
+    // so the hover test drives that timer instead of waiting for it in real time.
+    const BUBBLE_SHOW_DELAY = 425;
+
+    const defaultProps = {
+        properties: {},
+        pushData: () => {},
+        isDisabled: false,
+    };
+
+    function createComponent(customProps: Partial<IDataLabelsControlProps> = {}) {
+        const props = { ...defaultProps, ...customProps };
+        return render(
+            <InternalIntlWrapper>
+                <DataLabelsControl {...props} />
+            </InternalIntlWrapper>,
+        );
+    }
+
+    const visibleValueToText = (value: IDataLabelsVisible) => {
+        switch (value) {
+            case true:
+                return VISIBLE_LABEL;
+            case false:
+                return HIDE_LABEL;
+            case "auto":
+                return AUTO_LABEL;
+            default:
+                return ""; // Todo: fix this
+        }
+    };
+
+    describe("Rendering", () => {
+        it("should render data labels control", () => {
+            createComponent();
+            expect(screen.getByText("Display")).toBeInTheDocument();
+        });
+
+        it("should render dropdown as disabled when disabled", () => {
+            createComponent({
+                isDisabled: true,
+            });
+            const buttons = screen.getAllByRole("combobox");
+            // Both Data Labels and Labels Style dropdowns should be disabled
+            expect(buttons[0]).toHaveClass("disabled");
+            expect(buttons[1]).toHaveClass("disabled");
+        });
+
+        it("should have `auto` by default", () => {
+            createComponent();
+            // Both Data Labels and Labels Style dropdowns have "auto (default)" by default
+            const autoLabels = screen.queryAllByText(AUTO_LABEL);
+            expect(autoLabels.length).toBeGreaterThanOrEqual(1);
+        });
+
+        it("should show value that was passed", () => {
+            createComponent({
+                properties: {
+                    controls: {
+                        dataLabels: {
+                            visible: true,
+                        },
+                    },
+                },
+            });
+
+            expect(screen.queryByText(VISIBLE_LABEL)).toBeInTheDocument();
+        });
+
+        it.each([
+            [true, true],
+            [true, false],
+            ["auto", true],
+            [false, "auto"],
+        ])(
+            "should render dropdowns based on the provided values (visible: %s, totalsVisible: %s)",
+            (visible: IDataLabelsVisible, totalsVisible: IDataLabelsVisible) => {
+                const { getAllByRole } = createComponent({
+                    enableSeparateTotalLabels: true,
+                    properties: {
+                        controls: {
+                            dataLabels: {
+                                visible,
+                                totalsVisible,
+                            },
+                        },
+                    },
+                });
+                const buttons = getAllByRole("combobox");
+                expect(buttons[0]).toHaveTextContent(visibleValueToText(visible));
+                expect(buttons[1]).toHaveTextContent(visibleValueToText(totalsVisible));
+            },
+        );
+
+        it("should render total labels dropdown as disabled when isTotalsDisabled is true", () => {
+            createComponent({
+                isTotalsDisabled: true,
+                enableSeparateTotalLabels: true,
+            });
+
+            const buttons = screen.getAllByRole("combobox");
+            expect(buttons[0]).not.toHaveClass("disabled");
+            expect(buttons[1]).toHaveClass("disabled");
+        });
+
+        it("should show the tooltip while hover on the disabled total labels control", () => {
+            vi.useFakeTimers();
+
+            try {
+                createComponent({
+                    isTotalsDisabled: true,
+                    enableSeparateTotalLabels: true,
+                });
+
+                fireEvent.mouseEnter(screen.queryByText(TOTAL_LABELS_TEXT)!);
+                expect(screen.queryByText(DISABLED_TOOLTIP)).not.toBeInTheDocument();
+
+                act(() => {
+                    vi.advanceTimersByTime(BUBBLE_SHOW_DELAY);
+                });
+
+                expect(screen.getByText(DISABLED_TOOLTIP)).toBeInTheDocument();
+            } finally {
+                vi.useRealTimers();
+            }
+        });
+
+        it("should not render Position dropdown by default", () => {
+            createComponent();
+            expect(screen.queryByText("Position")).not.toBeInTheDocument();
+        });
+
+        it("should render Position dropdown with inside/outside options when enablePositionSelector is true", () => {
+            createComponent({ enablePositionSelector: true });
+            expect(screen.getByText("Position")).toBeInTheDocument();
+            // Open the Position dropdown (last combobox after Display and Style) and verify options
+            const combos = screen.getAllByRole("combobox");
+            fireEvent.click(combos[combos.length - 1]);
+            expect(screen.getByText("inside")).toBeInTheDocument();
+            expect(screen.getByText("outside")).toBeInTheDocument();
+        });
+    });
+});

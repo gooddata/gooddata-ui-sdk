@@ -10,7 +10,7 @@ import {
     fixWidgetLegacyElementUris,
 } from "../fixLegacyElementUris.js";
 
-import { mockInsight, mockWidget } from "./fixLegacyElementUris.fixtures.js";
+import { mockInsight, mockWidget } from "./fixLegacyElementUris.test.helpers.js";
 
 describe("fixInsightLegacyElementUris", () => {
     const insightWithUris = mockInsight([

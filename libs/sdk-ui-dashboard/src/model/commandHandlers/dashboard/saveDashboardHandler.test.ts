@@ -6,17 +6,17 @@ import { type IDashboardDefinition } from "@gooddata/sdk-model";
 
 import { saveDashboard } from "../../commands/dashboard.js";
 import { addLayoutSection } from "../../commands/layout.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type DashboardSaved } from "../../events/dashboard.js";
-import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
-import { selectFilterContextIdentity } from "../../store/tabs/filterContext/filterContextSelectors.js";
-import { selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
-import { TestCorrelation } from "../../tests/fixtures/Dashboard.fixtures.js";
-import { TestInsightItem } from "../../tests/fixtures/Layout.fixtures.js";
+import { TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
+import { TestInsightItem } from "../../fixtures/Layout.fixtures.js";
 import {
     SimpleDashboardFilterContext,
     SimpleDashboardWithReferences,
-} from "../../tests/fixtures/SimpleDashboard.fixtures.js";
+} from "../../fixtures/SimpleDashboard.fixtures.js";
+import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
+import { selectFilterContextIdentity } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { isTemporaryIdentity } from "../../utils/dashboardItemUtils.js";
 
 import { getDashboardWithSharing } from "./saveDashboardHandler.js";

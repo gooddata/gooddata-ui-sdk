@@ -635,7 +635,6 @@ export function declarativeRichTextWidgetToYaml(
     return yamlWidget;
 }
 
-// TODO: NEN (CQ-2761) Update with proper regex/validation after final decision on timezone config IANA id format.
 function declarativeTimezoneConfigToYaml(
     config: IDashboardTimezoneConfig,
 ): NonNullable<Dashboard["timezone_config"]> {

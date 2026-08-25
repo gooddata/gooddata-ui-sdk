@@ -1,12 +1,14 @@
 // (C) 2021-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { changeDateFilterSelection, clearDateFilterSelection } from "../../../commands/filters.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../DashboardTester.js";
+import { TestCorrelation } from "../../../fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../../fixtures/SimpleDashboard.fixtures.js";
 import { selectFilterContextDateFilter } from "../../../store/tabs/filterContext/filterContextSelectors.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 describe("changeDateFilterSelectionHandler", () => {
     let Tester: DashboardTester;

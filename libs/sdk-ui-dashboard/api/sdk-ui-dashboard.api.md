@@ -59,6 +59,7 @@ import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IAttributeWithReferences } from '@gooddata/sdk-backend-spi';
 import { IAutomationMetadataObject } from '@gooddata/sdk-model';
 import { IAutomationMetadataObjectDefinition } from '@gooddata/sdk-model';
+import { IAutomationRecipient } from '@gooddata/sdk-model';
 import { IAvailableDrillTargets } from '@gooddata/sdk-ui';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { IBaseWidget } from '@gooddata/sdk-model';
@@ -498,7 +499,7 @@ export type ChangeAttributeFilterSelectionPayload = {
 export function changeDashboardDensity(density: DashboardDensity, correlationId?: string): IChangeDashboardDensity;
 
 // @alpha
-export function changeDashboardTimezoneOverride(timezoneId: string | undefined, correlationId?: string): IChangeDashboardTimezoneOverride;
+export function changeDashboardTimezoneOverride(timezoneId: string | undefined, correlationId?: string, bypassUserOverrideCheck?: boolean): IChangeDashboardTimezoneOverride;
 
 // @public
 export type ChangeDateFilterSelection = IDashboardCommand & {
@@ -2423,8 +2424,10 @@ export interface IAlertingDialogProps {
 
 // @alpha
 export interface IAlertingDialogSlots {
+    Destination?: ComponentType<ISlotProps<IAutomationDialogDestinationProps>>;
     Filters?: ComponentType<ISlotProps<IAlertingDialogFiltersProps>>;
     Header?: ComponentType<ISlotProps<AlertingDialogHeaderDefaultProps>>;
+    Recipients?: ComponentType<ISlotProps<IAutomationDialogRecipientsProps>>;
 }
 
 // @alpha
@@ -2537,6 +2540,13 @@ export interface IAttributesDropdownProps extends IDashboardAttributeFilterPlace
 }
 
 // @alpha
+export interface IAutomationDialogDestinationProps {
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
+    onChange: (notificationChannelId: string) => void;
+    selectedNotificationChannelId: string | undefined;
+}
+
+// @alpha
 export interface IAutomationDialogFiltersProps {
     availableFilters: FilterContextItem[] | undefined;
     availableParameters?: IAutomationParameter[];
@@ -2556,6 +2566,20 @@ export interface IAutomationDialogHeaderProps {
     secondaryTitle?: string;
     secondaryTitleIcon: ReactNode;
     title: string;
+}
+
+// @alpha
+export interface IAutomationDialogRecipientsProps {
+    allowEmptySelection?: boolean;
+    allowExternalRecipients?: boolean;
+    allowOnlyLoggedUserRecipients?: boolean;
+    externalRecipientOverride?: string;
+    loggedUser?: IAutomationRecipient;
+    maxRecipients?: number;
+    notificationChannelId?: string;
+    notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
+    onChange: (recipients: IAutomationRecipient[]) => void;
+    value: IAutomationRecipient[];
 }
 
 // @alpha
@@ -2861,6 +2885,7 @@ export interface IChangeDashboardTimezoneOverride extends IDashboardCommand {
 
 // @alpha
 export interface IChangeDashboardTimezoneOverridePayload {
+    readonly bypassUserOverrideCheck?: boolean;
     readonly timezoneId: string | undefined;
 }
 
@@ -8042,9 +8067,16 @@ export interface IScheduledEmailDialogProps {
 }
 
 // @alpha
+export interface IScheduledEmailDialogRecipientsProps extends IAutomationDialogRecipientsProps {
+    onKeyDownSubmit: (e: KeyboardEvent_2) => void;
+}
+
+// @alpha
 export interface IScheduledEmailDialogSlots {
+    Destination?: ComponentType<ISlotProps<IAutomationDialogDestinationProps>>;
     Filters?: ComponentType<ISlotProps<IScheduledEmailDialogFiltersProps>>;
     Header?: ComponentType<ISlotProps<ScheduledEmailDialogHeaderDefaultProps>>;
+    Recipients?: ComponentType<ISlotProps<IScheduledEmailDialogRecipientsProps>>;
     Timezone?: ComponentType<ISlotProps<ScheduledEmailDialogTimezoneDefaultProps>>;
 }
 

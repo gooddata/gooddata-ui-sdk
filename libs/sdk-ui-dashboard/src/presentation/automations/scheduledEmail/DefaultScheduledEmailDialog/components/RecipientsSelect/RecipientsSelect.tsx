@@ -25,11 +25,6 @@ interface IRecipientsSelectProps {
     value: IAutomationRecipient[];
 
     /**
-     * Originally selected recipients of a edited schedule
-     */
-    originalValue: IAutomationRecipient[];
-
-    /**
      * Callback to be called, when recipients are changed.
      */
     onChange: (recipientEmails: IAutomationRecipient[]) => void;
@@ -97,7 +92,6 @@ interface IRecipientsSelectProps {
 export function RecipientsSelect({
     id,
     value,
-    originalValue,
     onChange,
     loggedUser,
     allowEmptySelection,
@@ -163,7 +157,6 @@ export function RecipientsSelect({
                 isMulti
                 options={options}
                 value={value}
-                originalValue={originalValue}
                 onChange={onChange}
                 onSearch={onSearch}
                 onActivate={onActivate}

@@ -1,5 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { beforeAll, describe, expect, it } from "vitest";
 
 import { OverTimeComparisonTypes } from "../interfaces/OverTimeComparison.js";

@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IAttributeDisplayFormMetadataObject, type ObjRef, idRef, uriRef } from "@gooddata/sdk-model";

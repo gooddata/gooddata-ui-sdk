@@ -3,6 +3,9 @@
 This is documentation of various decisions we made during design and development, together with the rationale
 behind them.
 
+> Newer decisions are recorded as RFCs in [`dev_docs/rfcs`](../../dev_docs/rfcs/README.md); this log is kept
+> for the entries below.
+
 ## Monorepo - Rush vs Lerna / Yarn workspaces
 
 Several reasons:

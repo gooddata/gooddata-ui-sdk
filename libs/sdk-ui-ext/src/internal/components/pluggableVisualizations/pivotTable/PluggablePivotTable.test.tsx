@@ -40,10 +40,10 @@ import {
     tableWithMultipleMeasuresRowsAndColumns,
     tableWithNativeTotal,
     tableWithRowColTotalAndRankingFilter,
-} from "../../../tests/mocks/referencePointMocks.js";
-import { dummyInsight, emptyInsight } from "../../../tests/mocks/testMocks.js";
+} from "../../../mocks/referencePointMocks.js";
+import { dummyInsight, emptyInsight } from "../../../mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
-import { createDrillEvent, getLastRenderEl } from "../tests/pluggableVisualizations.test.helpers.js";
+import { createDrillEvent, getLastRenderEl } from "../pluggableVisualizations.test.helpers.js";
 
 import { getInsightWithDrillDownApplied } from "./getInsightWithDrillDownAppliedMock.js";
 import { getMockReferencePoint } from "./mockReferencePoint.js";

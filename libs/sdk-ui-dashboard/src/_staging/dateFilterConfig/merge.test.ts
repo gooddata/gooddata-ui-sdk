@@ -1,5 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { describe, expect, it } from "vitest";
 
 import { type IDashboardDateFilterConfig, type IDateFilterConfig, idRef } from "@gooddata/sdk-model";

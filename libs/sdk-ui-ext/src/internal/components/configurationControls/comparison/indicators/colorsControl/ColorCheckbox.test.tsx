@@ -4,7 +4,7 @@ import { fireEvent, render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
-import { createTestProperties } from "../../../../../tests/testDataProvider.js";
+import { createTestProperties } from "../../../../../testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 
 import { ColorCheckbox } from "./ColorCheckbox.js";

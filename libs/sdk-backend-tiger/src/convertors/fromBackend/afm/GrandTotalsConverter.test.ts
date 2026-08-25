@@ -8,6 +8,7 @@ import { type IDimensionDescriptor, type IExecutionDefinition } from "@gooddata/
 import { defaultDateFormatter } from "../dateFormatting/defaultDateFormatter.js";
 
 import { getTransformDimensionHeaders } from "./DimensionHeaderConverter.js";
+import { transformGrandTotalData } from "./GrandTotalsConverter.js";
 import {
     mockDefinition1,
     mockDefinition2,
@@ -18,8 +19,7 @@ import {
     mockResult1,
     mockResult2,
     mockResult3,
-} from "./GrandTotalsConverter.fixture.js";
-import { transformGrandTotalData } from "./GrandTotalsConverter.js";
+} from "./GrandTotalsConverter.test.helpers.js";
 
 describe("transformGrandTotalData", () => {
     const Scenarios: Array<[string, IExecutionDefinition, ExecutionResult, IDimensionDescriptor[]]> = [

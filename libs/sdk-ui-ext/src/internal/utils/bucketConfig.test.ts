@@ -22,7 +22,7 @@ import {
     dateItemWithDateDataset,
     derivedMeasureItems,
     masterMeasureItems,
-} from "../tests/mocks/referencePointMocks.js";
+} from "../mocks/referencePointMocks.js";
 
 import { configureOverTimeComparison, configurePercent } from "./bucketConfig.js";
 

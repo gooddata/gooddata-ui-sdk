@@ -1,5 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { type Column, type GridApi } from "ag-grid-community";
 import { describe, expect, it } from "vitest";
 

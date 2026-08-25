@@ -17,7 +17,7 @@ import {
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 
-import { defWithAlias, defWithoutFilters } from "./InvalidInputs.fixture.js";
+import { defWithAlias, defWithoutFilters } from "./InvalidInputs.test.helpers.js";
 import { toAfmExecution } from "./toAfmResultSpec.js";
 
 const workspace = "test workspace";
