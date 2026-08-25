@@ -1,5 +1,7 @@
 // (C) 2022-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -37,13 +39,13 @@ import {
     removeSectionItem,
     replaceSectionItem,
 } from "../../commands/layout.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import {
     ComplexDashboardFilters,
     ComplexDashboardIdentifier,
     ComplexDashboardWidgets,
-} from "../../tests/fixtures/ComplexDashboard.fixtures.js";
-import { TestCorrelation, TestStash } from "../../tests/fixtures/Dashboard.fixtures.js";
+} from "../../fixtures/ComplexDashboard.fixtures.js";
+import { TestCorrelation, TestStash } from "../../fixtures/Dashboard.fixtures.js";
 import { type ExtendedDashboardItem } from "../../types/layoutTypes.js";
 
 import { selectIsDashboardDirty } from "./metaSelectors.js";

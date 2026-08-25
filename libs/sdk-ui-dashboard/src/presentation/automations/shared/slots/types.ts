@@ -2,7 +2,14 @@
 
 import { type ComponentType, type ReactNode } from "react";
 
-import { type FilterContextItem, type IdentifierRef, type ParameterValue } from "@gooddata/sdk-model";
+import {
+    type FilterContextItem,
+    type IAutomationRecipient,
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
+    type IdentifierRef,
+    type ParameterValue,
+} from "@gooddata/sdk-model";
 
 import { type IAutomationParameter } from "../automationFilters/automationParameters.js";
 
@@ -116,4 +123,83 @@ export interface IAutomationDialogFiltersProps {
      * Called when a parameter chip is removed.
      */
     onParameterDelete: (ref: IdentifierRef) => void;
+}
+
+/**
+ * Members shared by both automation dialogs' destination regions.
+ *
+ * @alpha
+ */
+export interface IAutomationDialogDestinationProps {
+    /**
+     * Notification channels the automation can target.
+     */
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
+
+    /**
+     * Id of the automation's currently selected notification channel.
+     */
+    selectedNotificationChannelId: string | undefined;
+
+    /**
+     * Called with the id of the newly selected notification channel.
+     */
+    onChange: (notificationChannelId: string) => void;
+}
+
+/**
+ * Members shared by both automation dialogs' recipients regions.
+ *
+ * @alpha
+ */
+export interface IAutomationDialogRecipientsProps {
+    /**
+     * Currently selected recipients.
+     */
+    value: IAutomationRecipient[];
+
+    /**
+     * Replaces the selection with the complete updated array.
+     */
+    onChange: (recipients: IAutomationRecipient[]) => void;
+
+    /**
+     * The logged-in user as a recipient candidate.
+     */
+    loggedUser?: IAutomationRecipient;
+
+    /**
+     * Restricts the selection to the logged-in user.
+     */
+    allowOnlyLoggedUserRecipients?: boolean;
+
+    /**
+     * Allows removing the last recipient.
+     */
+    allowEmptySelection?: boolean;
+
+    /**
+     * Allows recipients that are not workspace users.
+     */
+    allowExternalRecipients?: boolean;
+
+    /**
+     * Maximum number of recipients.
+     */
+    maxRecipients?: number;
+
+    /**
+     * Notification channels, used to derive channel-specific recipient constraints.
+     */
+    notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
+
+    /**
+     * Id of the automation's currently selected notification channel.
+     */
+    notificationChannelId?: string;
+
+    /**
+     * When set, the only addable recipient is this external address.
+     */
+    externalRecipientOverride?: string;
 }

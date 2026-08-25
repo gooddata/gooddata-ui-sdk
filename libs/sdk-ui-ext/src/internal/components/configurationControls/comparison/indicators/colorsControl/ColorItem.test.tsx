@@ -9,7 +9,7 @@ import { ComparisonColorType, DEFAULT_COMPARISON_PALETTE, type IColorConfig } fr
 
 import { comparisonMessages } from "../../../../../../locales.js";
 import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
-import { createTestProperties } from "../../../../../tests/testDataProvider.js";
+import { createTestProperties } from "../../../../../testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import { COMPARISON_COLOR_CONFIG_POSITIVE } from "../../ComparisonValuePath.js";
 

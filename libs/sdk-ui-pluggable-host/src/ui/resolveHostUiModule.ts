@@ -2,6 +2,7 @@
 
 import { type IPlatformContext, type IHostUiModule } from "@gooddata/sdk-pluggable-application-model";
 
+import { reserveHostStylesheetScope } from "../lib/stylesheetRegistry.js";
 import { loadRemoteHostUiModule } from "../loader/remoteLoader.js";
 import { getRemoteRegistry } from "../registry/pluggableApplicationsRegistry.js";
 
@@ -17,6 +18,7 @@ export async function resolveHostUiModule(ctx: IPlatformContext): Promise<IHostU
     const remoteRegistry = getRemoteRegistry(ctx);
 
     if (remoteRegistry?.uiModule) {
+        reserveHostStylesheetScope(remoteRegistry.uiModule.url);
         try {
             return await loadRemoteHostUiModule(remoteRegistry.uiModule);
         } catch (error) {

@@ -9,6 +9,7 @@ import {
 import { type IPluggableApp } from "@gooddata/sdk-pluggable-application-model";
 
 import { now } from "../debug.js";
+import { registerAppStylesheetScope } from "../lib/stylesheetRegistry.js";
 import { type IAppLifecycleCallbacks } from "../types/lifecycle.js";
 
 import { loadLocalPluggableApplication } from "./localLoader.js";
@@ -110,6 +111,7 @@ export async function loadPluggableApplication(
     }
 
     if (isRemotePluggableApplicationRegistryItem(app)) {
+        registerAppStylesheetScope(app.id, app.remote.url);
         return loadRemotePluggableApplication(app.remote);
     }
 

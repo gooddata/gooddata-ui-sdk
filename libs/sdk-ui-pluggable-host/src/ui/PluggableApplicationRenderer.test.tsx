@@ -1,0 +1,339 @@
+// (C) 2026 GoodData Corporation
+
+import { type ReactElement } from "react";
+
+import { act, render } from "@testing-library/react";
+import { type Mock, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+import {
+    type ILocalPluggableApplicationRegistryItemV1,
+    type PluggableApplicationRegistryItem,
+} from "@gooddata/sdk-model";
+import {
+    type IHostNavigationRequest,
+    type IPlatformContext,
+    type IPluggableApp,
+    type IPluggableApplicationMountHandle,
+} from "@gooddata/sdk-pluggable-application-model";
+
+import { type AppSecurityFailure } from "../loader/appSecurityValidation.js";
+import { type IAppLifecycleCallbacks } from "../types/lifecycle.js";
+
+const mocks = vi.hoisted(() => ({
+    loadPluggableApplication: vi.fn<(app: PluggableApplicationRegistryItem) => Promise<IPluggableApp>>(),
+    getAppLifecycleCallbacks: vi.fn<() => IAppLifecycleCallbacks | undefined>(),
+    validateAppSecurity:
+        vi.fn<
+            (
+                app: PluggableApplicationRegistryItem,
+                loadedApp: IPluggableApp,
+                ctx: IPlatformContext,
+            ) => AppSecurityFailure | undefined
+        >(),
+    getSecuredRemoteAppValidUntil:
+        vi.fn<(app: PluggableApplicationRegistryItem, loadedApp: IPluggableApp) => number | undefined>(),
+    registerAppStylesheetScope: vi.fn<(appId: string, remoteEntryUrl: string) => void>(),
+    activateAppStylesheets: vi.fn<(appId: string) => void>(),
+    deactivateAppStylesheets: vi.fn<(appId: string) => void>(),
+    resetStylesheetRegistry: vi.fn<() => void>(),
+}));
+
+vi.mock("../loader/pluggableApplicationsLoader.js", () => ({
+    loadPluggableApplication: mocks.loadPluggableApplication,
+    getAppLifecycleCallbacks: mocks.getAppLifecycleCallbacks,
+}));
+
+vi.mock("../loader/appSecurityValidation.js", () => ({
+    validateAppSecurity: mocks.validateAppSecurity,
+    getSecuredRemoteAppValidUntil: mocks.getSecuredRemoteAppValidUntil,
+}));
+
+vi.mock("../lib/stylesheetRegistry.js", () => ({
+    registerAppStylesheetScope: mocks.registerAppStylesheetScope,
+    activateAppStylesheets: mocks.activateAppStylesheets,
+    deactivateAppStylesheets: mocks.deactivateAppStylesheets,
+    resetStylesheetRegistry: mocks.resetStylesheetRegistry,
+}));
+
+type NavigationGuard = (request: IHostNavigationRequest) => boolean;
+type NavigationGuardRef = { current: NavigationGuard | undefined };
+
+const userSettings = {} as IPlatformContext["userSettings"];
+
+function context(): IPlatformContext {
+    return {
+        version: "1.0",
+        embeddingMode: "none",
+        auth: { type: "contextDeferred" },
+        user: { login: "john.doe" } as IPlatformContext["user"],
+        userSettings,
+        settings: userSettings,
+        whiteLabeling: undefined,
+        organization: { id: "org1", title: "Acme Corp" },
+        preferredLocale: "en-US",
+    };
+}
+
+const app: ILocalPluggableApplicationRegistryItemV1 = {
+    apiVersion: "1.0",
+    id: "gdc-analytical-designer",
+    title: "Analytical Designer",
+    applicationScope: "workspace",
+    menuOrder: 10,
+    local: { routeBase: "/analyze" },
+};
+
+const catalogApp: ILocalPluggableApplicationRegistryItemV1 = {
+    apiVersion: "1.0",
+    id: "gdc-catalog",
+    title: "Catalog",
+    applicationScope: "workspace",
+    menuOrder: 20,
+    local: { routeBase: "/catalog" },
+};
+
+const WS1_PATHNAME = "/workspace/ws1/analyze";
+const WS2_PATHNAME = "/workspace/ws2/analyze";
+
+// The components are also imported by HostUiContainer, so with isolation off a test file that rendered
+// the host container earlier left them cached — wired to the *real* loader and security validation
+// rather than the mocks above. Dropping the cached graph re-imports them through the mocks.
+//
+// This runs while the file is still being imported, not from a `beforeAll`: loading this graph for the
+// first time in a worker costs seconds (the intl/ui-kit/gen-ai dependencies behind the renderer), and
+// on a loaded CI machine that overran the 10s `hookTimeout`. Module loading has no such budget. The
+// reset itself is cheap — only this package's own modules are re-evaluated, its dependencies stay
+// cached by Node — so there is nothing left to move off the import path.
+vi.resetModules();
+const { HostIntlProvider } = await import("./HostIntlProvider.js");
+const { PluggableApplicationRenderer } = await import("./PluggableApplicationRenderer.js");
+
+function renderer(options: {
+    pathname: string;
+    ctx: IPlatformContext;
+    navigationRequestRef: NavigationGuardRef;
+    app?: PluggableApplicationRegistryItem;
+}): ReactElement {
+    return (
+        <HostIntlProvider locale="en-US">
+            <PluggableApplicationRenderer
+                app={options.app ?? app}
+                ctx={options.ctx}
+                pathname={options.pathname}
+                navigationRequestRef={options.navigationRequestRef}
+            />
+        </HostIntlProvider>
+    );
+}
+
+function activeAppAttribute(): string | null {
+    return document.documentElement.getAttribute("data-activeApp");
+}
+
+// The mount effect awaits the app load, so the guard is registered a microtask after render.
+async function flushMount(): Promise<void> {
+    await act(async () => {
+        await Promise.resolve();
+    });
+}
+
+describe("PluggableApplicationRenderer", () => {
+    let onHostNavigationRequested: Mock<NavigationGuard>;
+    let navigationRequestRef: NavigationGuardRef;
+
+    beforeEach(() => {
+        vi.clearAllMocks();
+
+        navigationRequestRef = { current: undefined };
+        mocks.validateAppSecurity.mockReturnValue(undefined);
+        mocks.getSecuredRemoteAppValidUntil.mockReturnValue(undefined);
+        mocks.getAppLifecycleCallbacks.mockReturnValue(undefined);
+        onHostNavigationRequested = vi.fn<NavigationGuard>().mockReturnValue(true);
+        mocks.loadPluggableApplication.mockResolvedValue({
+            mount: (): IPluggableApplicationMountHandle => ({
+                unmount: vi.fn(),
+                onHostNavigationRequested,
+            }),
+        });
+    });
+
+    // A console spy must be undone even when the assertions after it fail.
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
+    it("asks the mounted application whether the host may navigate away", async () => {
+        render(renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef }));
+        await flushMount();
+
+        const request: IHostNavigationRequest = { url: WS2_PATHNAME, proceed: vi.fn() };
+
+        expect(navigationRequestRef.current?.(request)).toBe(true);
+        expect(onHostNavigationRequested).toHaveBeenCalledWith(request);
+    });
+
+    it("registers a new guard when the application remounts", async () => {
+        const { rerender } = render(
+            renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef }),
+        );
+        await flushMount();
+        const firstGuard = navigationRequestRef.current;
+        expect(firstGuard).toBeDefined();
+
+        // A workspace switch changes the base path, remounting inside the same renderer instance.
+        rerender(renderer({ pathname: WS2_PATHNAME, ctx: context(), navigationRequestRef }));
+        await flushMount();
+
+        expect(navigationRequestRef.current).toBeDefined();
+        expect(navigationRequestRef.current).not.toBe(firstGuard);
+    });
+
+    it("leaves no guard registered once the application is gone", async () => {
+        const { unmount } = render(
+            renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef }),
+        );
+        await flushMount();
+        expect(navigationRequestRef.current).toBeDefined();
+
+        unmount();
+
+        expect(navigationRequestRef.current).toBeUndefined();
+    });
+
+    it("leaves no guard registered when the application fails after it was mounted", async () => {
+        let guardWhenFailed: NavigationGuard | undefined;
+        // Held in one object so the renderer's lifecycle dependency stays referentially stable.
+        const lifecycle: IAppLifecycleCallbacks = {
+            onRendered: () => {
+                guardWhenFailed = navigationRequestRef.current;
+                throw new Error("lifecycle callback failed");
+            },
+        };
+        mocks.getAppLifecycleCallbacks.mockReturnValue(lifecycle);
+        const consoleError = vi.spyOn(console, "error").mockImplementation(() => undefined);
+
+        render(renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef }));
+        await flushMount();
+
+        expect(guardWhenFailed).toBeDefined();
+        expect(navigationRequestRef.current).toBeUndefined();
+        expect(consoleError).toHaveBeenCalledOnce();
+    });
+
+    it("leaves no guard registered when a context change unmounts the application as insecure", async () => {
+        const { rerender } = render(
+            renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef }),
+        );
+        await flushMount();
+        expect(navigationRequestRef.current).toBeDefined();
+
+        const consoleError = vi.spyOn(console, "error").mockImplementation(() => undefined);
+        mocks.validateAppSecurity.mockReturnValue({ kind: "organization-not-allowed" });
+        rerender(renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef }));
+        await flushMount();
+
+        expect(navigationRequestRef.current).toBeUndefined();
+        expect(consoleError).toHaveBeenCalledOnce();
+    });
+
+    describe("data-activeApp", () => {
+        // The document is shared with every other test file in the worker.
+        afterEach(() => {
+            document.documentElement.removeAttribute("data-activeApp");
+        });
+
+        // The write happens on render, not on load, so assert before the load resolves — then
+        // drain it inside `act`.
+        it("names the application on the document element as soon as it renders", async () => {
+            render(renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef }));
+
+            expect(activeAppAttribute()).toBe(app.id);
+
+            await flushMount();
+        });
+
+        it("names the newly rendered application after a switch", async () => {
+            const { rerender } = render(
+                renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef }),
+            );
+            await flushMount();
+
+            rerender(
+                renderer({
+                    pathname: "/workspace/ws1/catalog",
+                    ctx: context(),
+                    navigationRequestRef,
+                    app: catalogApp,
+                }),
+            );
+            await flushMount();
+
+            expect(activeAppAttribute()).toBe(catalogApp.id);
+        });
+
+        it("clears the attribute once the application is gone", async () => {
+            const { unmount } = render(
+                renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef }),
+            );
+            await flushMount();
+            expect(activeAppAttribute()).toBe(app.id);
+
+            unmount();
+
+            expect(activeAppAttribute()).toBeNull();
+        });
+    });
+
+    describe("stylesheet lifecycle", () => {
+        it("enables the application's stylesheets while it is mounted and disables them once it is gone", async () => {
+            const { unmount } = render(
+                renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef }),
+            );
+            expect(mocks.activateAppStylesheets).toHaveBeenCalledWith(app.id);
+            await flushMount();
+            expect(mocks.deactivateAppStylesheets).not.toHaveBeenCalled();
+
+            unmount();
+
+            expect(mocks.deactivateAppStylesheets).toHaveBeenCalledWith(app.id);
+        });
+
+        it("disables the stylesheets of an application the security check refuses to mount", async () => {
+            mocks.validateAppSecurity.mockReturnValue({ kind: "organization-not-allowed" });
+            const consoleError = vi.spyOn(console, "error").mockImplementation(() => undefined);
+
+            render(renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef }));
+            await flushMount();
+
+            expect(mocks.deactivateAppStylesheets).toHaveBeenCalledWith(app.id);
+            expect(consoleError).toHaveBeenCalledOnce();
+        });
+
+        it("disables the stylesheets of an application that fails to load", async () => {
+            mocks.loadPluggableApplication.mockRejectedValue(new Error("remote entry unreachable"));
+            const consoleError = vi.spyOn(console, "error").mockImplementation(() => undefined);
+
+            render(renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef }));
+            await flushMount();
+
+            expect(mocks.deactivateAppStylesheets).toHaveBeenCalledWith(app.id);
+            expect(consoleError).toHaveBeenCalledOnce();
+        });
+
+        it("disables the stylesheets of an application evicted by a security re-check after a context change", async () => {
+            const { rerender } = render(
+                renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef }),
+            );
+            await flushMount();
+            expect(mocks.deactivateAppStylesheets).not.toHaveBeenCalled();
+
+            const consoleError = vi.spyOn(console, "error").mockImplementation(() => undefined);
+            mocks.validateAppSecurity.mockReturnValue({ kind: "organization-not-allowed" });
+            rerender(renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef }));
+            await flushMount();
+
+            expect(mocks.deactivateAppStylesheets).toHaveBeenCalledWith(app.id);
+            expect(consoleError).toHaveBeenCalledOnce();
+        });
+    });
+});

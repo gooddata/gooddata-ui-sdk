@@ -25,7 +25,7 @@ export {
     type IVisualizationCatalog,
 } from "./components/VisualizationCatalog.js";
 export { resolveMessages, DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "./utils/translations.js";
-export { createIntlMock } from "./tests/testIntlProvider.js";
+export { createIntlMock } from "./testIntlProvider.js";
 export {
     type IVisualization,
     type IVisConstruct,

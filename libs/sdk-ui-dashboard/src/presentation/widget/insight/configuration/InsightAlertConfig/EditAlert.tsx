@@ -409,7 +409,6 @@ export function EditAlert({
                             id="alert.recipients"
                             loggedUser={defaultUser}
                             value={updatedAlert.recipients ?? []}
-                            originalValue={alert.recipients || []}
                             onChange={changeRecipients}
                             allowEmptySelection
                             allowOnlyLoggedUserRecipients={allowOnlyLoggedUserRecipients}

@@ -1,5 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { pick } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 

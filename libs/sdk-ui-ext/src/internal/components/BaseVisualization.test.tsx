@@ -22,14 +22,14 @@ import {
     type IVisualizationMeta,
     type PluggableVisualizationFactory,
 } from "../interfaces/VisualizationDescriptor.js";
-import { emptyReferencePoint, justViewByReferencePoint } from "../tests/mocks/referencePointMocks.js";
+import { emptyReferencePoint, justViewByReferencePoint } from "../mocks/referencePointMocks.js";
 import {
     dummyColumnVisualizationClass,
     dummyInsight,
     dummyTableVisualizationClass,
     dummyUnknownTypeVisualizationClass,
     emptyInsight,
-} from "../tests/mocks/testMocks.js";
+} from "../mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../utils/translations.js";
 
 import {
@@ -39,7 +39,7 @@ import {
 } from "./BaseVisualization.js";
 import { AbstractPluggableVisualization } from "./pluggableVisualizations/AbstractPluggableVisualization.js";
 import { BaseChartDescriptor } from "./pluggableVisualizations/baseChart/BaseChartDescriptor.js";
-import { DummyVisConstruct } from "./pluggableVisualizations/tests/visConstruct.fixture.js";
+import { DummyVisConstruct } from "./pluggableVisualizations/visConstruct.fixture.js";
 import { CatalogViaTypeToClassMap, type IVisualizationCatalog } from "./VisualizationCatalog.js";
 
 const pluggableVisualizationGetExecutionMock = vi.fn(() => ({}) as IPreparedExecution);

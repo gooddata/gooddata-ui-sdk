@@ -7048,6 +7048,9 @@ export const metadata_v1: {
                 type: string;
                 pattern: string;
             })[];
+            $semantic: {
+                type: string;
+            };
         };
         widget: {
             title: string;

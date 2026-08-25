@@ -1,5 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { afterEach, describe, expect, it } from "vitest";
 
 import { areaAdapter } from "../area/adapter.js";

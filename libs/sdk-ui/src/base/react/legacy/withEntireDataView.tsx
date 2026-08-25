@@ -531,6 +531,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             //  we need strict equality here in case only the buckets changed (not measures or attributes)
             if (
                 !prev.execution.equals(execution) ||
+                !isEqual(prev.execution.definition.buckets, execution.definition.buckets) ||
                 !isEqual(prev.forecastConfig, forecastConfig) ||
                 !isEqual(prev.clusteringConfig, clusteringConfig) ||
                 !isEqual(prev.outliersConfig, outliersConfig)

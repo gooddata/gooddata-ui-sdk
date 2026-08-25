@@ -1,5 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -24,16 +26,13 @@ import {
     changeFilterContextSelectionByParams,
     removeAttributeFilter,
 } from "../../commands/filters.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
+import { EmptyDashboardIdentifier, EmptyDashboardWithReferences } from "../../fixtures/Dashboard.fixtures.js";
 import {
     selectFilterContextAttributeFilterItemByDisplayForm,
     selectFilterContextAttributeFilterItemByLocalId,
     selectFilterContextAttributeFilters,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
-import {
-    EmptyDashboardIdentifier,
-    EmptyDashboardWithReferences,
-} from "../../tests/fixtures/Dashboard.fixtures.js";
 import { type PrivateDashboardContext } from "../../types/commonTypes.js";
 import { EmptyDashboardLayout } from "../dashboard/common/dashboardInitialize.js";
 

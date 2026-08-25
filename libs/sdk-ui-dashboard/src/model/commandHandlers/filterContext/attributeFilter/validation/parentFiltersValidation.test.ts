@@ -1,5 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -12,7 +14,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type ObjRefMap, newDisplayFormMap } from "../../../../../_staging/metadata/objRefMap.js";
-import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../../../fixtures/SimpleDashboard.fixtures.js";
 import { type DashboardContext } from "../../../../types/commonTypes.js";
 
 import {

@@ -9,7 +9,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type IAutomationsContextValue } from "../../contexts/AutomationsContext.js";
-import { workspaceStringParameter } from "../automationFilters/test/parameterFixtures.js";
+import { workspaceStringParameter } from "../automationFilters/parameterFixtures.js";
 
 export const CURRENT_USER: IUser = {
     ref: idRef("user-1"),

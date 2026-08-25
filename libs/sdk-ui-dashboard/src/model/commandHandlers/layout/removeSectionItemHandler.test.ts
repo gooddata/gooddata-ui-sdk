@@ -1,5 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import {
@@ -8,21 +10,21 @@ import {
     removeSectionItem,
     undoLayoutChanges,
 } from "../../commands/layout.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardCommandFailed } from "../../events/general.js";
 import {
     type IDashboardLayoutChanged,
     type IDashboardLayoutSectionItemRemoved,
     type IDashboardLayoutSectionRemoved,
 } from "../../events/layout.js";
-import { selectLayout, selectStash } from "../../store/tabs/layout/layoutSelectors.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardLayout,
     ComplexDashboardWithReferences,
-} from "../../tests/fixtures/ComplexDashboard.fixtures.js";
-import { TestCorrelation, TestStash } from "../../tests/fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../tests/fixtures/SimpleDashboard.fixtures.js";
+} from "../../fixtures/ComplexDashboard.fixtures.js";
+import { TestCorrelation, TestStash } from "../../fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../fixtures/SimpleDashboard.fixtures.js";
+import { selectLayout, selectStash } from "../../store/tabs/layout/layoutSelectors.js";
 
 describe("remove layout section item handler", () => {
     describe("for any dashboard", () => {

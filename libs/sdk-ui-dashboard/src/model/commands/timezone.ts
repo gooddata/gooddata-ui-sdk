@@ -14,6 +14,13 @@ export interface IChangeDashboardTimezoneOverridePayload {
      * the dashboard/workspace configuration applies again.
      */
     readonly timezoneId: string | undefined;
+
+    /**
+     * Skips the check that the dashboard's timezone configuration allows user overrides in view
+     * mode, for restoring a timezone the platform already committed to (an export render, an
+     * automation deep link). The dashboard timezone feature flag is still honored.
+     */
+    readonly bypassUserOverrideCheck?: boolean;
 }
 
 /**
@@ -34,24 +41,28 @@ export interface IChangeDashboardTimezoneOverride extends IDashboardCommand {
  *
  * The command is rejected when the ad-hoc override is not allowed: the dashboard timezone
  * feature is disabled or the dashboard's timezone configuration does not allow user overrides
- * in view mode.
+ * in view mode — the latter bypassable via `bypassUserOverrideCheck`.
  *
  * @param timezoneId - concrete IANA timezone id, the BROWSER_DETECTED sentinel (resolved to the
  *  viewer's browser timezone by the handler), or undefined to clear the override
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
+ * @param bypassUserOverrideCheck - see
+ *  {@link IChangeDashboardTimezoneOverridePayload.bypassUserOverrideCheck}
  *
  * @alpha
  */
 export function changeDashboardTimezoneOverride(
     timezoneId: string | undefined,
     correlationId?: string,
+    bypassUserOverrideCheck?: boolean,
 ): IChangeDashboardTimezoneOverride {
     return {
         type: "GDC.DASH/CMD.CHANGE_TIMEZONE_OVERRIDE",
         correlationId,
         payload: {
             timezoneId,
+            ...(bypassUserOverrideCheck ? { bypassUserOverrideCheck } : {}),
         },
     };
 }

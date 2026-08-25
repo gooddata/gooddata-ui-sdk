@@ -5,7 +5,7 @@ import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest
 
 import { type IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
 import { type IVisualizationProperties } from "../../../../interfaces/Visualization.js";
-import { createTestProperties } from "../../../../tests/testDataProvider.js";
+import { createTestProperties } from "../../../../testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
 import type * as CheckboxControlModule from "../../CheckboxControl.js";
 import { COMPARISON_IS_ARROW_ENABLED_PATH } from "../ComparisonValuePath.js";

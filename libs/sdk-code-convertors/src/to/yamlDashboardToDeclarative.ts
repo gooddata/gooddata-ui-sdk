@@ -57,13 +57,14 @@ import {
     type IInsightWidgetDefinition,
     type InsightDrillDefinition,
     type MeasureValueFilterCondition,
+    isValidDashboardTimezoneId,
 } from "@gooddata/sdk-model";
 
 import { VisualisationsTypes } from "../conts.js";
 import { type OverrideDashboardDefinition } from "../from/declarativeDashboardToYaml.js";
 import { type DashboardTab, type ExportEntities } from "../types.js";
 import { parseUrlTarget } from "../utils/customUrl.js";
-import { CoreErrorCode, newError } from "../utils/errors.js";
+import { CoreErrorCode, type IErrorContext, newError, updateErrorContext } from "../utils/errors.js";
 import { yamlConditionToMatch } from "../utils/filterUtils.js";
 import { convertGranularity } from "../utils/granularityUtils.js";
 import { toDeclarativePermissions } from "../utils/permissionUtils.js";
@@ -929,9 +930,18 @@ function yamlPluginToDeclarative(input: Required<Dashboard>["plugins"][number]):
 
 function yamlTimezoneConfigToDeclarative(
     input: YamlTimezoneConfig | undefined,
+    errorContext?: IErrorContext,
 ): IDashboardTimezoneConfig | undefined {
     if (!input) {
         return undefined;
+    }
+
+    if (input.timezone_id !== undefined && !isValidDashboardTimezoneId(input.timezone_id)) {
+        throw newError(
+            CoreErrorCode.InvalidIanaTimezoneId,
+            [input.timezone_id],
+            updateErrorContext(errorContext, { path: ["timezone_config", "timezone_id"] }),
+        );
     }
 
     return {

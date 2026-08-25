@@ -9,7 +9,7 @@ import {
     bulletChartWithMeasureInPrimaryBucket,
     bulletChartWithMeasureInSecondaryBucket,
     threeMeasuresBucketsReferencePoint,
-} from "../../tests/mocks/referencePointMocks.js";
+} from "../../mocks/referencePointMocks.js";
 import { createInternalIntl } from "../internalIntlProvider.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../translations.js";
 

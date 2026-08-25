@@ -17,11 +17,11 @@ import {
     oneMetricAndCategoryAndStackReferencePoint,
     simpleStackedReferencePoint,
     twoMeasureBucketsReferencePoint,
-} from "../tests/mocks/referencePointMocks.js";
+} from "../mocks/referencePointMocks.js";
 import {
     multipleMetricsAndCategoriesBaseUiConfig,
     simpleStackedBaseUiConfig,
-} from "../tests/mocks/uiConfigMocks.js";
+} from "../mocks/uiConfigMocks.js";
 
 import {
     getColumnWidthsFromProperties,

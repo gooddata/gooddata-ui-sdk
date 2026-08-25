@@ -7,7 +7,7 @@ import { CalculateAs, type CalculationType, DEFAULT_COMPARISON_PALETTE } from "@
 
 import { type IComparisonControlProperties } from "../../../interfaces/ControlProperties.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
-import { TEST_DEFAULT_SEPARATOR, createTestProperties } from "../../../tests/testDataProvider.js";
+import { TEST_DEFAULT_SEPARATOR, createTestProperties } from "../../../testDataProvider.js";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
 import type * as ConfigSectionModule from "../ConfigSection.js";
 

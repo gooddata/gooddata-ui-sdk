@@ -1,11 +1,13 @@
 // (C) 2021-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { describe, expect, it } from "vitest";
 
 import { uriRef } from "@gooddata/sdk-model";
 
-import { EmptyDashboardWithReferences } from "../../model/tests/fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardWithReferences } from "../../model/tests/fixtures/SimpleDashboard.fixtures.js";
+import { EmptyDashboardWithReferences } from "../../model/fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardWithReferences } from "../../model/fixtures/SimpleDashboard.fixtures.js";
 import { defaultDateFilterConfig } from "../dateFilterConfig/defaultConfig.js";
 
 import { TestFilterContext, TestFilterContextWithInvalidParents } from "./dashboardFilterContext.fixture.js";

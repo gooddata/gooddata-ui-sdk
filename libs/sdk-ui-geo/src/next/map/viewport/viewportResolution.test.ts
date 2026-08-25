@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { describe, expect, it } from "vitest";
 
 import { computeViewportFromConfig, getViewportConfigKey } from "./viewportResolution.js";

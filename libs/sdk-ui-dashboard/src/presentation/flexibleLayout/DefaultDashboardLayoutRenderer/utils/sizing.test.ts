@@ -1,5 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { chunk } from "lodash-es";
 import { describe, expect, it } from "vitest";
 

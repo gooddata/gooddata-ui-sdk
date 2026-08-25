@@ -8,7 +8,7 @@ import {
     dateFilter,
     measureValueFilter,
     rankingFilter,
-} from "../tests/mocks/referencePointMocks.js";
+} from "../mocks/referencePointMocks.js";
 import {
     isAttributeFilter,
     isDateFilter,

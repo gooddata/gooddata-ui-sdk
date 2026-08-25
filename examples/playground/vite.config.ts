@@ -244,10 +244,12 @@ export default defineConfig(({ mode }) => {
         },
         resolve: {
             alias: [
-                // This is required to make fonts work
+                // Styles reference sdk-ui-kit sources explicitly (e.g. "@gooddata/sdk-ui-kit/src/@ui/defaultTheme.scss").
+                // Without this the generic package alias below would resolve them to "src/src/...".
+                // This is also required to make fonts work.
                 {
-                    find: "@gooddata/sdk-ui-kit/src/@ui",
-                    replacement: path.resolve(__dirname, "./../../libs/sdk-ui-kit/src/@ui"),
+                    find: "@gooddata/sdk-ui-kit/src",
+                    replacement: path.resolve(__dirname, "./../../libs/sdk-ui-kit/src"),
                 },
                 ...packagesWithoutStyles.map(makePackageSourceAlias),
                 ...packagesWithStyles.flatMap((pkg) => [

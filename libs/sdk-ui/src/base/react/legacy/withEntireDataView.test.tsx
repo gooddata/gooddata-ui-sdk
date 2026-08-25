@@ -10,10 +10,10 @@ import { type ILoadingInjectedProps, withEntireDataView } from "./withEntireData
  * same id are `equals()` and share a definition fingerprint. `execute()` resolves on the next tick
  * and, when cancelling is on, rejects with an AbortError as soon as its signal is aborted.
  */
-function makeExecution(defId: string, cancellable: boolean) {
+function makeExecution(defId: string, cancellable: boolean, buckets: any[] = []) {
     const definition: any = {
         workspace: "ws",
-        buckets: [],
+        buckets,
         attributes: [],
         measures: [{ measure: { localIdentifier: defId, definition: {} } }],
         filters: [],
@@ -125,5 +125,54 @@ describe("withEntireDataView", () => {
         const outcome = await renderExecutionSequence(["sorted", "unsorted", "sorted"], false);
 
         expect(outcome).toEqual({ reportedErrors: [], error: "null", definition: "sorted" });
+    });
+
+    /**
+     * Regression for F1-2779. Moving a lone measure between two buckets (Mekko Width/Height,
+     * scatter X/Y, ...) keeps the flat measures/attributes lists unchanged, so the executions are
+     * `equals()` (Tiger compares bucket-blind fingerprints) and no reload used to happen — chart
+     * code deriving measure roles from the data view's buckets kept the pre-move roles.
+     */
+    it("should reload when only the buckets of a fingerprint-equal execution change", async () => {
+        const measure = { measure: { localIdentifier: "m1", definition: {} } };
+        const first = makeExecution("same", false, [{ localIdentifier: "measures", items: [measure] }]);
+        const second = makeExecution("same", false, [
+            { localIdentifier: "secondary_measures", items: [measure] },
+        ]);
+        const firstExecute = vi.spyOn(first, "execute");
+        const secondExecute = vi.spyOn(second, "execute");
+
+        const baseProps = { onError: vi.fn(), onLoadingChanged: vi.fn(), locale: "en-US" };
+        const { rerender, getByTestId } = render(<Wrapped {...baseProps} execution={first} />);
+        await waitFor(() => {
+            expect(getByTestId("loading").textContent).toBe("false");
+        });
+
+        rerender(<Wrapped {...baseProps} execution={second} />);
+
+        await waitFor(() => {
+            expect(secondExecute).toHaveBeenCalledTimes(1);
+        });
+        expect(firstExecute).toHaveBeenCalledTimes(1);
+    });
+
+    it("should not reload when a fingerprint-equal execution keeps deep-equal buckets", async () => {
+        const bucketsOf = () => [
+            { localIdentifier: "measures", items: [{ measure: { localIdentifier: "m1", definition: {} } }] },
+        ];
+        const first = makeExecution("same", false, bucketsOf());
+        const second = makeExecution("same", false, bucketsOf());
+        const secondExecute = vi.spyOn(second, "execute");
+
+        const baseProps = { onError: vi.fn(), onLoadingChanged: vi.fn(), locale: "en-US" };
+        const { rerender, getByTestId } = render(<Wrapped {...baseProps} execution={first} />);
+        await waitFor(() => {
+            expect(getByTestId("loading").textContent).toBe("false");
+        });
+
+        rerender(<Wrapped {...baseProps} execution={second} />);
+        await new Promise((resolve) => setTimeout(resolve, 30));
+
+        expect(secondExecute).not.toHaveBeenCalled();
     });
 });

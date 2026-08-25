@@ -36,6 +36,7 @@ import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
 import { ApplyCurrentFiltersConfirmDialog } from "../../shared/automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
+import { type IAutomationDialogDestinationProps } from "../../shared/slots/types.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
 import { useScheduledExportActions } from "../state/ScheduledExportActionsContext.js";
@@ -47,6 +48,7 @@ import { useScheduledExportDialogValidity } from "../state/useScheduledExportDia
 import {
     type IDefaultScheduledEmailDialogProps,
     type IScheduledEmailDialogFiltersProps,
+    type IScheduledEmailDialogRecipientsProps,
     type ScheduledEmailDialogHeaderDefaultProps,
     type ScheduledEmailDialogTimezoneDefaultProps,
 } from "../types.js";
@@ -56,12 +58,12 @@ import { TIMEZONE_DEFAULT } from "../utils/timezone.js";
 
 import { DashboardAttachments } from "./components/Attachments/DashboardAttachments.js";
 import { WidgetAttachments } from "./components/Attachments/WidgetAttachments.js";
-import { DestinationSelect } from "./components/DestinationSelect/DestinationSelect.js";
 import { EvaluationModeCheckbox } from "./components/EvaluationModeCheckbox/EvaluationModeCheckbox.js";
 import { ScheduledEmailDialogHeader } from "./components/Header/ScheduleEmailDialogHeader.js";
 import { MessageForm } from "./components/MessageForm/MessageForm.js";
-import { RecipientsSelect } from "./components/RecipientsSelect/RecipientsSelect.js";
+import { ScheduledEmailDialogDestination } from "./components/ScheduledEmailDialogDestination.js";
 import { ScheduledEmailDialogFilters } from "./components/ScheduledEmailDialogFilters.js";
+import { ScheduledEmailDialogRecipients } from "./components/ScheduledEmailDialogRecipients.js";
 import { ScheduleTimezoneSelect } from "./components/ScheduleTimezoneSelect/ScheduleTimezoneSelect.js";
 import { SubjectForm } from "./components/SubjectForm/SubjectForm.js";
 import { SCHEDULED_EMAIL_DIALOG_ID } from "./constants.js";
@@ -69,7 +71,6 @@ import { DefaultLoadingScheduledEmailDialog } from "./DefaultLoadingScheduledEma
 import { useElementHeightSnapshot } from "./hooks/useElementHeightSnapshot.js";
 import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToBackend.js";
 
-const OVERLAY_POSITION_TYPE = "sameAsTarget";
 const CLOSE_ON_PARENT_SCROLL = true;
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
@@ -128,6 +129,8 @@ export function ScheduledMailDialogRenderer({
     const HeaderSlot = slots?.Header;
     const FiltersSlot = slots?.Filters;
     const TimezoneSlot = slots?.Timezone;
+    const DestinationSlot = slots?.Destination;
+    const RecipientsSlot = slots?.Recipients;
 
     const intl = useIntl();
 
@@ -177,7 +180,6 @@ export function ScheduledMailDialogRenderer({
 
     const {
         editedAutomation,
-        originalAutomation,
         startDate,
         isTimezoneFeatureEnabled,
         canSelectScheduleTimezone,
@@ -399,6 +401,27 @@ export function ScheduledMailDialogRenderer({
         onParameterDeleteByTab,
         parametersEnabled,
     };
+
+    const destinationDefaultProps: IAutomationDialogDestinationProps = {
+        notificationChannels,
+        selectedNotificationChannelId: editedAutomation.notificationChannel,
+        onChange: onDestinationChange,
+    };
+
+    const recipientsDefaultProps: IScheduledEmailDialogRecipientsProps = {
+        loggedUser: defaultUser,
+        value: editedAutomation.recipients ?? [],
+        onChange: onRecipientsChange,
+        allowEmptySelection: true,
+        allowOnlyLoggedUserRecipients,
+        allowExternalRecipients,
+        maxRecipients: maxAutomationsRecipients,
+        notificationChannels,
+        notificationChannelId: editedAutomation.notificationChannel,
+        onKeyDownSubmit: handleSubmitForm,
+        externalRecipientOverride,
+    };
+
     return (
         <>
             <Overlay
@@ -567,29 +590,23 @@ export function ScheduledMailDialogRenderer({
                                             onKeyDownSubmit={handleSubmitForm}
                                         />
                                         <ContentDivider className="gd-divider-with-margin" />
-                                        <DestinationSelect
-                                            notificationChannels={notificationChannels}
-                                            selectedItemId={editedAutomation.notificationChannel}
-                                            onChange={onDestinationChange}
-                                            closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
-                                            overlayPositionType={OVERLAY_POSITION_TYPE}
-                                        />
+                                        {DestinationSlot ? (
+                                            <DestinationSlot
+                                                Default={ScheduledEmailDialogDestination}
+                                                defaultProps={destinationDefaultProps}
+                                            />
+                                        ) : (
+                                            <ScheduledEmailDialogDestination {...destinationDefaultProps} />
+                                        )}
                                         <ContentDivider className="gd-divider-with-margin" />
-                                        <RecipientsSelect
-                                            id="schedule.email.recipients"
-                                            loggedUser={defaultUser}
-                                            value={editedAutomation.recipients ?? []}
-                                            originalValue={originalAutomation.recipients || []}
-                                            onChange={onRecipientsChange}
-                                            allowEmptySelection
-                                            allowOnlyLoggedUserRecipients={allowOnlyLoggedUserRecipients}
-                                            allowExternalRecipients={allowExternalRecipients}
-                                            maxRecipients={maxAutomationsRecipients}
-                                            notificationChannels={notificationChannels}
-                                            notificationChannelId={editedAutomation.notificationChannel}
-                                            onKeyDownSubmit={handleSubmitForm}
-                                            externalRecipientOverride={externalRecipientOverride}
-                                        />
+                                        {RecipientsSlot ? (
+                                            <RecipientsSlot
+                                                Default={ScheduledEmailDialogRecipients}
+                                                defaultProps={recipientsDefaultProps}
+                                            />
+                                        ) : (
+                                            <ScheduledEmailDialogRecipients {...recipientsDefaultProps} />
+                                        )}
                                         {isInPlatformChannel ? null : (
                                             <>
                                                 <SubjectForm

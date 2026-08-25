@@ -1,5 +1,7 @@
 // (C) 2022-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { parseISO } from "date-fns";
 import { beforeEach, describe, expect, it } from "vitest";
 

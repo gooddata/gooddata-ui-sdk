@@ -1,18 +1,20 @@
 // (C) 2021-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { type IMoveLayoutSection, moveLayoutSection, undoLayoutChanges } from "../../commands/layout.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardCommandFailed } from "../../events/general.js";
 import { type IDashboardLayoutChanged, type IDashboardLayoutSectionMoved } from "../../events/layout.js";
-import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWithReferences,
-} from "../../tests/fixtures/ComplexDashboard.fixtures.js";
-import { TestCorrelation } from "../../tests/fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../tests/fixtures/SimpleDashboard.fixtures.js";
+} from "../../fixtures/ComplexDashboard.fixtures.js";
+import { TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../fixtures/SimpleDashboard.fixtures.js";
+import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
 
 describe("move section command handler", () => {
     describe("for any dashboard", () => {

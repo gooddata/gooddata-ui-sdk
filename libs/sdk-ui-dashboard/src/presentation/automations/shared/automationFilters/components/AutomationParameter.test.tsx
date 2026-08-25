@@ -1,0 +1,110 @@
+// (C) 2026 GoodData Corporation
+
+import { type ComponentProps } from "react";
+
+import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
+import { idRef } from "@gooddata/sdk-model";
+
+import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
+
+import { AutomationParameter } from "./AutomationParameter.js";
+
+function renderChip(custom: Partial<ComponentProps<typeof AutomationParameter>> = {}) {
+    const props: ComponentProps<typeof AutomationParameter> = {
+        parameter: {
+            ref: idRef("topN", "parameter"),
+            title: "Top N",
+            value: 5,
+            mode: "active",
+            definition: { type: "NUMBER", defaultValue: 5, constraints: { min: 1, max: 10 } },
+        },
+        onChange: vi.fn(),
+        onDelete: vi.fn(),
+        ...custom,
+    };
+    render(
+        <IntlWrapper>
+            <AutomationParameter {...props} />
+        </IntlWrapper>,
+    );
+    return props;
+}
+
+describe("AutomationParameter", () => {
+    it("renders the chip label as '{title} is {value}'", () => {
+        renderChip();
+
+        expect(screen.getByText("Top N is 5")).toBeInTheDocument();
+    });
+
+    it("renders the allowed value's title in the chip label, never the raw value", () => {
+        renderChip({
+            parameter: {
+                ref: idRef("scenario", "parameter"),
+                title: "Scenario",
+                value: "budget",
+                mode: "active",
+                definition: {
+                    type: "STRING",
+                    defaultValue: "actual",
+                    constraints: {
+                        allowedValues: [
+                            { value: "actual", title: "Actual" },
+                            { value: "budget", title: "Budget Plan" },
+                        ],
+                    },
+                },
+            },
+        });
+
+        expect(screen.getByText("Scenario is Budget Plan")).toBeInTheDocument();
+        expect(screen.queryByText("Scenario is budget")).toBeNull();
+    });
+
+    it("renders the raw value in the chip label for a free-text STRING parameter", () => {
+        renderChip({
+            parameter: {
+                ref: idRef("scenario", "parameter"),
+                title: "Scenario",
+                value: "budget",
+                mode: "active",
+                definition: { type: "STRING", defaultValue: "actual" },
+            },
+        });
+
+        expect(screen.getByText("Scenario is budget")).toBeInTheDocument();
+    });
+
+    it("calls onDelete with the parameter ref when the delete button is clicked (active mode)", () => {
+        const { onDelete } = renderChip();
+
+        fireEvent.click(screen.getByTestId("automation-parameter-topN-delete-button"));
+
+        expect(onDelete).toHaveBeenCalledWith(idRef("topN", "parameter"));
+    });
+
+    it("renders a readonly parameter as locked, without a delete button", () => {
+        renderChip({
+            parameter: {
+                ref: idRef("topN", "parameter"),
+                title: "Top N",
+                value: 5,
+                mode: "readonly",
+                definition: { type: "NUMBER", defaultValue: 5 },
+            },
+        });
+
+        expect(screen.getByText("Top N is 5")).toBeInTheDocument();
+        expect(screen.queryByTestId("automation-parameter-topN-delete-button")).toBeNull();
+    });
+
+    it("renders a disabled, non-focusable chip when isReadOnly (store filters off): no delete", () => {
+        renderChip({ isReadOnly: true });
+
+        expect(screen.getByText("Top N is 5")).toBeInTheDocument();
+        expect(screen.queryByTestId("automation-parameter-topN-delete-button")).toBeNull();
+        expect(screen.getByRole("button")).toBeDisabled();
+    });
+});

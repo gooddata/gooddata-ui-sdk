@@ -7,7 +7,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { type IFormatPreset, type IToggleButtonProps } from "@gooddata/sdk-ui-kit";
 
-import { TEST_PERCENT_ROUNDED_FORMAT_PRESET } from "../../../../../tests/testDataProvider.js";
+import { TEST_PERCENT_ROUNDED_FORMAT_PRESET } from "../../../../../testDataProvider.js";
 
 import { NumberFormatToggleButton } from "./NumberFormatToggleButton.js";
 

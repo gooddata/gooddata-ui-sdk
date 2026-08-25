@@ -23,6 +23,7 @@ import { bemFactory } from "@gooddata/sdk-ui-kit";
 
 import { now } from "../debug.js";
 import { setActiveAppAttribute } from "../lib/activeAppAttribute.js";
+import { activateAppStylesheets, deactivateAppStylesheets } from "../lib/stylesheetRegistry.js";
 import {
     type AppSecurityFailure,
     getSecuredRemoteAppValidUntil,
@@ -201,6 +202,7 @@ export function PluggableApplicationRenderer({
         mountHandleRef.current = undefined;
         mountedAppRef.current = undefined;
         setViewState({ state: "loading" });
+        activateAppStylesheets(app.id);
 
         // unmount() is synchronous, so calling it inline can re-enter React while the parent render
         // that swapped this application out is still in progress.
@@ -227,6 +229,7 @@ export function PluggableApplicationRenderer({
                         securityFailure,
                     );
                     lifecycle?.onLoadFailed?.(app.id, securityFailure.kind);
+                    deactivateAppStylesheets(app.id);
                     setViewState({ state: "error", message });
                     return;
                 }
@@ -276,6 +279,7 @@ export function PluggableApplicationRenderer({
                     mountError instanceof Error ? mountError.message : "Unknown module loading error.";
                 console.error(`[host-runtime/renderer] Failed to mount app "${app.id}".`, mountError);
                 lifecycle?.onLoadFailed?.(app.id, errorMessage);
+                deactivateAppStylesheets(app.id);
                 setViewState({
                     state: "error",
                     message: errorMessage,
@@ -288,6 +292,7 @@ export function PluggableApplicationRenderer({
             if (navigationRequestRef?.current === navigationRequest) {
                 navigationRequestRef.current = undefined;
             }
+            deactivateAppStylesheets(app.id);
             const handle = mountHandleRef.current;
             if (handle) {
                 mountHandleRef.current = undefined;
@@ -333,6 +338,7 @@ export function PluggableApplicationRenderer({
             if (navigationRequestRef) {
                 navigationRequestRef.current = undefined;
             }
+            deactivateAppStylesheets(mounted.app.id);
             handle.unmount();
             lifecycle?.onUnmounted?.(mounted.app.id);
             lifecycle?.onLoadFailed?.(mounted.app.id, securityFailure.kind);

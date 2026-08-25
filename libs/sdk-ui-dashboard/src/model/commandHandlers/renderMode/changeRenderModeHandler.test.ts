@@ -1,15 +1,17 @@
 // (C) 2021-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { initializeDashboard } from "../../commands/dashboard.js";
 import { cancelEditRenderMode, changeRenderMode, switchToEditRenderMode } from "../../commands/renderMode.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
+import { TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardNoDrillsIdentifier } from "../../fixtures/SimpleDashboardNoDrills.fixtures.js";
 import { selectRenderMode } from "../../store/renderMode/renderModeSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
 import { selectTimezoneOverride } from "../../store/ui/uiSelectors.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
-import { TestCorrelation } from "../../tests/fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardNoDrillsIdentifier } from "../../tests/fixtures/SimpleDashboardNoDrills.fixtures.js";
 
 describe("changeRenderModeHandler", () => {
     let Tester: DashboardTester;

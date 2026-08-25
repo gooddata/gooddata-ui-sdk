@@ -1,0 +1,98 @@
+// (C) 2019-2026 GoodData Corporation
+
+import { describe, expect, it } from "vitest";
+
+import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { type IInsight, type IInsightDefinition } from "@gooddata/sdk-model";
+import { BucketNames } from "@gooddata/sdk-ui";
+
+import {
+    type IDrillDownContext,
+    type IVisConstruct,
+    type IVisProps,
+} from "../../interfaces/Visualization.js";
+import {
+    derivedMeasureItems,
+    masterMeasureItems,
+    multipleMetricsNoCategoriesReferencePoint,
+} from "../../mocks/referencePointMocks.js";
+
+import { AbstractPluggableVisualization } from "./AbstractPluggableVisualization.js";
+import { DummyVisConstruct } from "./visConstruct.fixture.js";
+
+describe("AbstractPluggableVisualization", () => {
+    class DummyPluggableVisualization extends AbstractPluggableVisualization {
+        constructor() {
+            super(DummyVisConstruct as unknown as IVisConstruct);
+        }
+
+        public getExtendedReferencePoint(): Promise<any> {
+            return Promise.resolve({});
+        }
+
+        public unmount() {
+            return;
+        }
+
+        protected renderConfigurationPanel(_insight: IInsightDefinition): void {
+            return;
+        }
+
+        public override getInsightWithDrillDownApplied(
+            sourceVisualization: IInsight,
+            _drillDownContext: IDrillDownContext,
+        ): IInsight {
+            return sourceVisualization;
+        }
+
+        protected renderVisualization(
+            _options: IVisProps,
+            _insight: IInsightDefinition,
+            _executionFactory: IExecutionFactory,
+        ): void {
+            return;
+        }
+
+        public getExecution(
+            _options: IVisProps,
+            insight: IInsightDefinition,
+            executionFactory: IExecutionFactory,
+        ) {
+            return executionFactory.forInsight(insight);
+        }
+    }
+
+    function createComponent() {
+        return new DummyPluggableVisualization();
+    }
+
+    it("should add new DerivedBucketItems before each related masterBucketItem in referencePoint", async () => {
+        const component = createComponent();
+
+        const referencePointWithDerivedItems = await component.addNewDerivedBucketItems(
+            multipleMetricsNoCategoriesReferencePoint,
+            [derivedMeasureItems[0], derivedMeasureItems[1]],
+        );
+
+        expect(referencePointWithDerivedItems).toEqual({
+            ...multipleMetricsNoCategoriesReferencePoint,
+            ...{
+                buckets: [
+                    {
+                        localIdentifier: BucketNames.MEASURES,
+                        items: [
+                            derivedMeasureItems[0],
+                            masterMeasureItems[0],
+                            derivedMeasureItems[1],
+                            masterMeasureItems[1],
+                            masterMeasureItems[2],
+                            masterMeasureItems[3],
+                        ],
+                    },
+                    multipleMetricsNoCategoriesReferencePoint.buckets[1],
+                    multipleMetricsNoCategoriesReferencePoint.buckets[2],
+                ],
+            },
+        });
+    });
+});

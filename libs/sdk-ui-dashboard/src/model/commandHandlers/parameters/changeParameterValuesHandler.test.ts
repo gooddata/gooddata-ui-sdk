@@ -1,15 +1,17 @@
 // (C) 2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { type IDashboardParameter, idRef } from "@gooddata/sdk-model";
 
 import { changeParameterValues } from "../../commands/parameters.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
+import { SimpleDashboardIdentifier } from "../../fixtures/SimpleDashboard.fixtures.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectParameterRuntimeOverrideByRef } from "../../store/tabs/parameters/parametersSelectors.js";
 import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
-import { SimpleDashboardIdentifier } from "../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 describe("changeParameterValues handler", () => {
     const topNRef = idRef("topN", "parameter");

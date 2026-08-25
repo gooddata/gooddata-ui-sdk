@@ -21,6 +21,7 @@ export enum CoreErrorCode {
     DuplicateLayerIdentifier = "core.duplicateLayerIdentifier",
     DuplicateTabIdentifier = "core.duplicateTabIdentifier",
     TabsAndRootContentMutuallyExclusive = "core.tabsAndRootContentMutuallyExclusive",
+    InvalidIanaTimezoneId = "core.invalidIanaTimezoneId",
 }
 
 /**
@@ -43,6 +44,7 @@ export const CoreErrorMessages: Record<CoreErrorCode, string> = {
     [CoreErrorCode.DuplicateLayerIdentifier]: `Duplicate layer id "{0}". Each layer of a visualisation must have a unique id.`,
     [CoreErrorCode.DuplicateTabIdentifier]: `Duplicate tab identifier "{0}". Each tab must have a unique identifier within the dashboard.`,
     [CoreErrorCode.TabsAndRootContentMutuallyExclusive]: `Dashboard "{0}" defines both "tabs" and root-level "sections" or "filters". These are mutually exclusive — keep all content inside tabs or at the root, not both.`,
+    [CoreErrorCode.InvalidIanaTimezoneId]: `"{0}" is not a valid IANA timezone ID. Use a real timezone such as Europe/Prague or $browserDetected.`,
 };
 
 /**
@@ -65,6 +67,7 @@ export const CoreErrorTypes: Record<CoreErrorCode, string> = {
     [CoreErrorCode.DuplicateLayerIdentifier]: "DuplicateLayerIdentifier",
     [CoreErrorCode.DuplicateTabIdentifier]: "DuplicateTabIdentifier",
     [CoreErrorCode.TabsAndRootContentMutuallyExclusive]: "TabsAndRootContentMutuallyExclusive",
+    [CoreErrorCode.InvalidIanaTimezoneId]: "InvalidIanaTimezoneId",
 };
 
 /**

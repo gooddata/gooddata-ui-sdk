@@ -1,6 +1,12 @@
 {
     "extends": "../tsconfig.base.json",
-    "exclude": ["**/*.test.ts", "**/*.fixture.ts", "**/*.fixtures.ts", "**/fixtures/**"],
+    "exclude": [
+        "**/*.test.ts",
+        "**/*.test.helpers.ts",
+        "**/*.fixture.ts",
+        "**/*.fixtures.ts",
+        "**/fixtures/**"
+    ],
     "include": ["src/**/*"],
     "compilerOptions": {
         "noCheck": true,

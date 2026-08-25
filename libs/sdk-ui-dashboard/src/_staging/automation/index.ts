@@ -38,6 +38,17 @@ export const isDashboardAutomation = (
     });
 };
 
+/**
+ * The timezone baked into an automation at creation time, when it could not be derived at run
+ * time. Alerts store it in the alert execution config, schedules in their export definitions —
+ * all of which carry the same value. Undefined means the dashboard/workspace timezone applies.
+ */
+export const getAutomationTimezone = (
+    automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
+): string | undefined =>
+    automation?.alert?.execution?.executionConfig?.timezone ??
+    automation?.exportDefinitions?.[0]?.requestPayload.timezoneId;
+
 export const isVisualisationAutomation = (
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
 ) => {

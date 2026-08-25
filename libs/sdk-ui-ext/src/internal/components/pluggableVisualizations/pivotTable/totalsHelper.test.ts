@@ -5,11 +5,7 @@ import { describe, expect, it } from "vitest";
 import { type ITotal } from "@gooddata/sdk-model";
 
 import { type IBucketFilter } from "../../../interfaces/Visualization.js";
-import {
-    attributeFilter,
-    measureValueFilter,
-    rankingFilter,
-} from "../../../tests/mocks/referencePointMocks.js";
+import { attributeFilter, measureValueFilter, rankingFilter } from "../../../mocks/referencePointMocks.js";
 
 import { removeInvalidTotals } from "./totalsHelpers.js";
 

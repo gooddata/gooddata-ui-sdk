@@ -28,7 +28,7 @@ import {
     convertFilter,
     newFilterWithApplyOnResult,
 } from "./FilterConverter.js";
-import { absoluteFilter, relativeFilter } from "./InvalidInputs.fixture.js";
+import { absoluteFilter, relativeFilter } from "./InvalidInputs.test.helpers.js";
 
 describe("tiger filter converter from model to AFM", () => {
     describe("convert measure value filter", () => {

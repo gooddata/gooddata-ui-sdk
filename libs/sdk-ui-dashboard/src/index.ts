@@ -2229,6 +2229,7 @@ export type {
     IScheduleTimezoneSelection,
     IScheduledEmailDialogTimezoneProps,
     ScheduledEmailDialogTimezoneDefaultProps,
+    IScheduledEmailDialogRecipientsProps,
     IScheduledEmailDialogSlots,
     IDefaultScheduledEmailDialogProps,
 } from "./presentation/automations/scheduledEmail/types.js";
@@ -2249,8 +2250,10 @@ export type {
     IDefaultAlertingDialogProps,
 } from "./presentation/automations/alerting/types.js";
 export type {
+    IAutomationDialogDestinationProps,
     IAutomationDialogFiltersProps,
     IAutomationDialogHeaderProps,
+    IAutomationDialogRecipientsProps,
     ISlotProps,
 } from "./presentation/automations/shared/slots/types.js";
 export type { IAutomationParameter } from "./presentation/automations/shared/automationFilters/automationParameters.js";

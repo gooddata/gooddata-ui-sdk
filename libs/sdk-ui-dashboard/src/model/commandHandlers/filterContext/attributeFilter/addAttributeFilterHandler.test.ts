@@ -1,20 +1,22 @@
 // (C) 2021-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { DashboardAttributeFilterConfigModeValues, uriRef } from "@gooddata/sdk-model";
 
 import { addAttributeFilter } from "../../../commands/filters.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../DashboardTester.js";
 import { type IDashboardCommandFailed } from "../../../events/general.js";
+import { TestCorrelation } from "../../../fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../../fixtures/SimpleDashboard.fixtures.js";
 import { selectAttributeFilterConfigsModeMap } from "../../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectAttributeFilterDisplayFormsMap,
     selectFilterContextAttributeFilters,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 describe("addAttributeFilterHandler", () => {
     let Tester: DashboardTester;

@@ -1,0 +1,34 @@
+// (C) 2019-2026 GoodData Corporation
+
+import { describe, expect, it } from "vitest";
+
+import { InvalidInputTestCases } from "../../__mocks__/typeGuards.js";
+
+import { kpiWithComparison, kpiWithoutComparison } from "./kpi.fixtures.js";
+import { isKpiWithComparison, isKpiWithoutComparison } from "./kpi.js";
+
+describe("kpi type guards", () => {
+    describe("isKpiWithComparison", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "kpi with comparison", kpiWithComparison],
+            [false, "kpi without comparison", kpiWithoutComparison],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isKpiWithComparison(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isKpiWithoutComparison", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "kpi with comparison", kpiWithComparison],
+            [true, "kpi without comparison", kpiWithoutComparison],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isKpiWithoutComparison(input)).toBe(expectedResult);
+        });
+    });
+});

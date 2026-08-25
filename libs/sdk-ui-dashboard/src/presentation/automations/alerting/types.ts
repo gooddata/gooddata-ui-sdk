@@ -16,8 +16,10 @@ import {
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import {
+    type IAutomationDialogDestinationProps,
     type IAutomationDialogFiltersProps,
     type IAutomationDialogHeaderProps,
+    type IAutomationDialogRecipientsProps,
     type ISlotProps,
 } from "../shared/slots/types.js";
 
@@ -177,6 +179,26 @@ export interface IAlertingDialogSlots {
      * updated array, not a delta.
      */
     Filters?: ComponentType<ISlotProps<IAlertingDialogFiltersProps>>;
+
+    /**
+     * Wraps or replaces the dialog's destination region (the "Action" row selecting the
+     * notification channel). Must have a stable reference identity — see {@link ISlotProps}.
+     *
+     * Renders only in the fully rendered dialog — not while the dialog context reports loading,
+     * not while the stale-filters confirmation step is shown — **and only when more than one
+     * notification channel exists**: with a single channel the default dialog hides the whole
+     * row, and the slot with it.
+     */
+    Destination?: ComponentType<ISlotProps<IAutomationDialogDestinationProps>>;
+
+    /**
+     * Wraps or replaces the dialog's recipients region. Must have a stable reference identity —
+     * see {@link ISlotProps}.
+     *
+     * Renders only in the fully rendered dialog: not while the dialog context reports loading,
+     * and not while the stale-filters confirmation step is shown.
+     */
+    Recipients?: ComponentType<ISlotProps<IAutomationDialogRecipientsProps>>;
 }
 
 /**
@@ -185,7 +207,9 @@ export interface IAlertingDialogSlots {
  * @remarks
  * Extends the shared {@link IAlertingDialogProps} with customization only the default implementation
  * supports. Slots render only in the fully rendered dialog: not while the dialog context reports
- * loading, and not while the stale-filters confirmation step is shown.
+ * loading, and not while the stale-filters confirmation step is shown. The Destination slot
+ * additionally renders only when more than one notification channel exists — see
+ * {@link IAlertingDialogSlots.Destination}.
  *
  * @alpha
  */
@@ -193,6 +217,26 @@ export interface IDefaultAlertingDialogProps extends IAlertingDialogProps {
     /**
      * Section-level overrides. Each slot receives `{ Default, defaultProps }` and may render its own
      * content (replace) or `<Default {...defaultProps} />` inside its own markup (wrap).
+     *
+     * @example
+     * The dialog is reached through the `Dashboard` component override; define slot components at
+     * module scope (see {@link ISlotProps}):
+     * ```tsx
+     * function HeaderWithBanner({ Default, defaultProps }: ISlotProps<AlertingDialogHeaderDefaultProps>) {
+     *     return (
+     *         <>
+     *             <WarningBanner>Alerts may take up to 5 minutes.</WarningBanner>
+     *             <Default {...defaultProps} />
+     *         </>
+     *     );
+     * }
+     *
+     * <Dashboard
+     *     AlertingDialogComponent={(props) => (
+     *         <DefaultAlertingDialog {...props} slots={{ Header: HeaderWithBanner }} />
+     *     )}
+     * />;
+     * ```
      */
     slots?: IAlertingDialogSlots;
 }

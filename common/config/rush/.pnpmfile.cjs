@@ -3,7 +3,7 @@
 "use strict";
 
 // baseline-browser-mapping needs to be updated to the latest version every 14 days
-const baselineBrowserMappingVersion = "2.11.14";
+const baselineBrowserMappingVersion = "2.11.18";
 
 // browserslist needs to be updated every 6 months
 const browserslistVersion = "4.28.8";

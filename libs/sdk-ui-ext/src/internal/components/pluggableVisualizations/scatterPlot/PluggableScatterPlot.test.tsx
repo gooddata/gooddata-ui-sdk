@@ -16,10 +16,10 @@ import {
     overTimeComparisonDateItem,
     secondaryMeasureReferencePoint,
     simpleGeoPushpinReferencePoint,
-} from "../../../tests/mocks/referencePointMocks.js";
-import { insightWithSingleMeasure } from "../../../tests/mocks/testMocks.js";
+} from "../../../mocks/referencePointMocks.js";
+import { insightWithSingleMeasure } from "../../../mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
-import { getLastRenderEl } from "../tests/pluggableVisualizations.test.helpers.js";
+import { getLastRenderEl } from "../pluggableVisualizations.test.helpers.js";
 
 import { PluggableScatterPlot } from "./PluggableScatterPlot.js";
 

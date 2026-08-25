@@ -1,5 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -20,10 +22,10 @@ import {
     exportDashboardToPptPresentation,
     initializeDashboard,
 } from "../../commands/dashboard.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardExportToPdfResolved } from "../../events/dashboard.js";
+import { SimpleDashboardIdentifier } from "../../fixtures/SimpleDashboard.fixtures.js";
 import { HeadlessDashboard } from "../../headlessDashboard/HeadlessDashboard.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
-import { SimpleDashboardIdentifier } from "../../tests/fixtures/SimpleDashboard.fixtures.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 
 class TestHeadlessDashboard extends HeadlessDashboard {

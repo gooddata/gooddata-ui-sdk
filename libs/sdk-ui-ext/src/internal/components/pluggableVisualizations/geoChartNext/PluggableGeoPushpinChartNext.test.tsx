@@ -29,14 +29,14 @@ import {
     firstMeasureArithmeticNoAttributeReferencePoint,
     samePeriodPreviousYearRefPoint,
     twoMeasuresWithShowInPercentOnSecondaryAxisReferencePoint,
-} from "../../../tests/mocks/referencePointMocks.js";
+} from "../../../mocks/referencePointMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
 import { GeoPushpinConfigurationPanel } from "../../configurationPanels/GeoPushpinConfigurationPanel.js";
 import {
     type ICreateComponentOverrides,
     fireAndExpectNoViewportSync,
     fireAndExpectViewportSync,
-} from "../geoCommon/tests/viewportSync.test.helpers.js";
+} from "../geoCommon/viewportSync.test.helpers.js";
 
 import { PluggableGeoPushpinChartNext } from "./PluggableGeoPushpinChartNext.js";
 

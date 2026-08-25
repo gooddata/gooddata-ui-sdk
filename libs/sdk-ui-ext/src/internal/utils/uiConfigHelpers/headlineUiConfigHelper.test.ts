@@ -18,8 +18,8 @@ import { type IVisualizationProperties } from "../../interfaces/Visualization.js
 import {
     headlineWithMeasureInPrimaryBucket,
     headlineWithMeasureInSecondaryBucket,
-} from "../../tests/mocks/referencePointMocks.js";
-import { createTestProperties, newInsight } from "../../tests/testDataProvider.js";
+} from "../../mocks/referencePointMocks.js";
+import { createTestProperties, newInsight } from "../../testDataProvider.js";
 import { createInternalIntl } from "../internalIntlProvider.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../translations.js";
 

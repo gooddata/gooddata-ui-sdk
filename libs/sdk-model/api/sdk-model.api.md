@@ -5709,6 +5709,12 @@ export const isUserGroupWorkspaceAccessGrantee: (obj: unknown) => obj is IUserGr
 export const isUserWorkspaceAccessGrantee: (obj: unknown) => obj is IUserWorkspaceAccessGrantee;
 
 // @alpha
+export function isValidDashboardTimezoneId(timezoneId: DashboardTimezoneId): boolean;
+
+// @alpha
+export function isValidIanaTimezoneId(timezoneId: string): boolean;
+
+// @alpha
 export function isValidNumberParameterValue(value: number, constraints?: INumberParameterConstraints): boolean;
 
 // @alpha

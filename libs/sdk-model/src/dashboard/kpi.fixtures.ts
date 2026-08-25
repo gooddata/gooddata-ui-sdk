@@ -1,0 +1,16 @@
+// (C) 2019-2026 GoodData Corporation
+
+import { uriRef } from "../objRef/factory.js";
+
+import { type IKpiWithComparison, type IKpiWithoutComparison } from "./kpi.js";
+
+export const kpiWithoutComparison: IKpiWithoutComparison = {
+    comparisonType: "none",
+    metric: uriRef("/measure"),
+};
+
+export const kpiWithComparison: IKpiWithComparison = {
+    comparisonDirection: "growIsGood",
+    comparisonType: "previousPeriod",
+    metric: uriRef("/measure"),
+};

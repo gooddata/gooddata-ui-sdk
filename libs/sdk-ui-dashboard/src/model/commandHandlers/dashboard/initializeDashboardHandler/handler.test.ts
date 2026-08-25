@@ -1,5 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
 import { type IDashboard, idRef } from "@gooddata/sdk-model";
@@ -7,7 +9,14 @@ import { type IDashboard, idRef } from "@gooddata/sdk-model";
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
 import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
 import { initializeDashboard } from "../../../commands/dashboard.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../DashboardTester.js";
 import { type DashboardInitialized } from "../../../events/dashboard.js";
+import {
+    EmptyDashboardIdentifier,
+    EmptyDashboardWithReferences,
+    TestCorrelation,
+} from "../../../fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../../fixtures/SimpleDashboard.fixtures.js";
 import { selectConfig } from "../../../store/config/configSelectors.js";
 import { selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
 import { selectPermissions } from "../../../store/permissions/permissionsSelectors.js";
@@ -17,13 +26,6 @@ import {
     selectFilterContextIdentity,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
-import {
-    EmptyDashboardIdentifier,
-    EmptyDashboardWithReferences,
-    TestCorrelation,
-} from "../../../tests/fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 import { type PrivateDashboardContext } from "../../../types/commonTypes.js";
 import { EmptyDashboardLayout } from "../../dashboard/common/dashboardInitialize.js";
 

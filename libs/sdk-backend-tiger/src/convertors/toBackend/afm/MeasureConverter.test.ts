@@ -13,7 +13,7 @@ import {
     newRelativeDateFilter,
 } from "@gooddata/sdk-model";
 
-import { invalidMeasureDefinition, invalidObjQualifier } from "./InvalidInputs.fixture.js";
+import { invalidMeasureDefinition, invalidObjQualifier } from "./InvalidInputs.test.helpers.js";
 import { convertMeasure } from "./MeasureConverter.js";
 
 describe("measure converter", () => {

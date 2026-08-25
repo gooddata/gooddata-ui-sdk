@@ -1,13 +1,15 @@
 // (C) 2023-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { describe, expect, it } from "vitest";
 
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import { recordedDataFacade } from "../../../../testUtils/recordings.js";
 import { ColorFactory } from "../_chartOptions/colorFactory.js";
-import { CUSTOM_COLOR_PALETTE } from "../_util/test/colorPalette.fixture.js";
-import { getMVSForViewByTwoAttributes } from "../_util/test/helper.js";
+import { CUSTOM_COLOR_PALETTE } from "../_util/colorPalette.fixture.js";
+import { getMVSForViewByTwoAttributes } from "../_util/helper.js";
 
 import { CHART_TYPE, COLOR_MAPPINGS, EMPTY_HEADER_TITLE_VALUE, RECORDS } from "./sankeyChart.fixture.js";
 import { buildSankeyChartSeries } from "./sankeyChartOptions.js";

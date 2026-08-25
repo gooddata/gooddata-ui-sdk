@@ -1,5 +1,7 @@
 // (C) 2022-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { type DashboardState } from "../types.js";

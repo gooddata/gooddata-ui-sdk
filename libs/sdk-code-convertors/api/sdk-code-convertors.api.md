@@ -1242,6 +1242,8 @@ export enum CoreErrorCode {
     // (undocumented)
     FilterItemTypeNotSupported = "core.filterItemTypeNotSupported",
     // (undocumented)
+    InvalidIanaTimezoneId = "core.invalidIanaTimezoneId",
+    // (undocumented)
     ItemNotSupported = "core.itemNotSupported",
     // (undocumented)
     LayerTypeNotSupported = "core.layerTypeNotSupported",

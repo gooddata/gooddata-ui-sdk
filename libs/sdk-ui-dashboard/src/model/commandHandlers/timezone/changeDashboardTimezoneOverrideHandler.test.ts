@@ -1,18 +1,20 @@
 // (C) 2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { BROWSER_DETECTED } from "@gooddata/sdk-model";
 
 import { initializeDashboard } from "../../commands/dashboard.js";
 import { changeDashboardTimezoneOverride } from "../../commands/timezone.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardTimezoneOverrideChanged } from "../../events/timezone.js";
+import { TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardNoDrillsIdentifier } from "../../fixtures/SimpleDashboardNoDrills.fixtures.js";
 import { metaActions } from "../../store/meta/index.js";
 import { selectEffectiveDashboardTimezone } from "../../store/meta/metaSelectors.js";
 import { selectTimezoneOverride } from "../../store/ui/uiSelectors.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
-import { TestCorrelation } from "../../tests/fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardNoDrillsIdentifier } from "../../tests/fixtures/SimpleDashboardNoDrills.fixtures.js";
 
 async function createTester(enableTimezoneChange: boolean): Promise<DashboardTester> {
     let Tester: DashboardTester;
@@ -123,6 +125,40 @@ describe("changeDashboardTimezoneOverrideHandler", () => {
 
             await Tester.dispatchAndWaitFor(
                 changeDashboardTimezoneOverride("Europe/Prague", TestCorrelation),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(Tester.select(selectTimezoneOverride)).toBeUndefined();
+        });
+
+        it("should set the override despite the configuration not allowing user overrides when the check is bypassed", async () => {
+            const Tester = await createTester(true);
+            Tester.dispatch(
+                metaActions.setDashboardTimezoneConfig({
+                    timezoneId: "Europe/Prague",
+                }),
+            );
+
+            const event: IDashboardTimezoneOverrideChanged = await Tester.dispatchAndWaitFor(
+                changeDashboardTimezoneOverride("America/New_York", TestCorrelation, true),
+                "GDC.DASH/EVT.TIMEZONE_OVERRIDE.CHANGED",
+            );
+
+            expect(event.payload.timezoneOverride).toBe("America/New_York");
+            expect(Tester.select(selectTimezoneOverride)).toBe("America/New_York");
+            expect(Tester.select(selectEffectiveDashboardTimezone)).toBe("America/New_York");
+        });
+
+        it("should fail the command when the feature flag is off even if the check is bypassed", async () => {
+            const Tester = await createTester(false);
+            Tester.dispatch(
+                metaActions.setDashboardTimezoneConfig({
+                    timezoneId: "Europe/Prague",
+                }),
+            );
+
+            await Tester.dispatchAndWaitFor(
+                changeDashboardTimezoneOverride("America/New_York", TestCorrelation, true),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 

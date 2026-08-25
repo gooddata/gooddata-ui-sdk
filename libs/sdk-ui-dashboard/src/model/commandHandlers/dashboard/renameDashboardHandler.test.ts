@@ -1,13 +1,15 @@
 // (C) 2021-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { renameDashboard } from "../../commands/dashboard.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardRenamed } from "../../events/dashboard.js";
+import { TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../fixtures/SimpleDashboard.fixtures.js";
 import { selectDashboardTitle, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
-import { TestCorrelation } from "../../tests/fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 describe("rename dashboard handler", () => {
     const TestTitle = "newTitle";

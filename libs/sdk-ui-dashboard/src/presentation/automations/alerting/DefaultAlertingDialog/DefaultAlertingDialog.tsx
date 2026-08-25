@@ -34,8 +34,11 @@ import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../constants/zIndex.js";
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { useAlertingDialogContext } from "../../contexts/AlertingDialogContext.js";
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
-import { RecipientsSelect } from "../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
 import { ApplyCurrentFiltersConfirmDialog } from "../../shared/automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
+import {
+    type IAutomationDialogDestinationProps,
+    type IAutomationDialogRecipientsProps,
+} from "../../shared/slots/types.js";
 import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/components/DeleteAlertConfirmDialog.js";
 import { useAlertActions } from "../state/AlertActionsContext.js";
 import { useAlertData } from "../state/AlertDataContext.js";
@@ -49,14 +52,15 @@ import {
     type IDefaultAlertingDialogProps,
 } from "../types.js";
 
+import { AlertingDialogDestination } from "./AlertingDialogDestination.js";
 import { AlertingDialogFilters } from "./AlertingDialogFilters.js";
 import { AlertingDialogHeader } from "./AlertingDialogHeader.js";
+import { AlertingDialogRecipients } from "./AlertingDialogRecipients.js";
 import { AlertAttributeSelect } from "./components/AlertAttributeSelect.js";
 import { AlertComparisonOperatorSelect } from "./components/AlertComparisonOperatorSelect.js";
 //
 //
 import { AlertComparisonPeriodSelect } from "./components/AlertComparisonPeriodSelect.js";
-import { AlertDestinationSelect } from "./components/AlertDestinationSelect.js";
 import { AlertGranularitySelect } from "./components/AlertGranularitySelect.js";
 import { AlertMeasureSelect } from "./components/AlertMeasureSelect.js";
 import { AlertSensitivitySelect } from "./components/AlertSensitivitySelect.js";
@@ -65,6 +69,7 @@ import { AlertTriggerIntervalSelect } from "./components/AlertTriggerIntervalSel
 import { AlertTriggerModeSelect } from "./components/AlertTriggerModeSelect.js";
 import { ALERTING_DIALOG_ID } from "./constants.js";
 import { DefaultLoadingAlertingDialog } from "./DefaultLoadingAlertingDialog.js";
+import { FormField } from "./FormField.js";
 import { useAlertSubmit } from "./hooks/useAlertSubmit.js";
 import { useAlertThreshold } from "./hooks/useAlertThreshold.js";
 import { getValueSuffix } from "./utils/getters.js";
@@ -88,6 +93,8 @@ export function AlertingDialogRenderer({
 }: IDefaultAlertingDialogProps) {
     const HeaderSlot = slots?.Header;
     const FiltersSlot = slots?.Filters;
+    const DestinationSlot = slots?.Destination;
+    const RecipientsSlot = slots?.Recipients;
 
     const intl = useIntl();
 
@@ -118,7 +125,7 @@ export function AlertingDialogRenderer({
         setAlertToDelete(null);
     };
 
-    const { editedAutomation, originalAutomation, warningMessage } = useAlertDraft();
+    const { editedAutomation, warningMessage } = useAlertDraft();
 
     const {
         onTitleChange,
@@ -274,6 +281,25 @@ export function AlertingDialogRenderer({
         onParameterAdd,
         onParameterChange,
         onParameterDelete,
+    };
+
+    const destinationDefaultProps: IAutomationDialogDestinationProps = {
+        notificationChannels,
+        selectedNotificationChannelId: editedAutomation?.notificationChannel,
+        onChange: onDestinationChange,
+    };
+
+    const recipientsDefaultProps: IAutomationDialogRecipientsProps = {
+        loggedUser: defaultUser,
+        value: editedAutomation?.recipients ?? [],
+        onChange: onRecipientsChange,
+        allowEmptySelection: true,
+        allowOnlyLoggedUserRecipients,
+        allowExternalRecipients,
+        maxRecipients: maxAutomationsRecipients,
+        notificationChannels,
+        notificationChannelId: editedAutomation?.notificationChannel,
+        externalRecipientOverride,
     };
 
     return (
@@ -526,21 +552,16 @@ export function AlertingDialogRenderer({
                                 </FormFieldGroup>
                                 <ContentDivider className="gd-divider-with-margin" />
                                 <FormFieldGroup label={<FormattedMessage id="insightAlert.config.do" />}>
-                                    {notificationChannels.length > 1 && (
-                                        <FormField
-                                            label={<FormattedMessage id="insightAlert.config.action" />}
-                                            htmlFor="alert.destination"
-                                        >
-                                            <AlertDestinationSelect
-                                                id="alert.destination"
-                                                selectedDestination={editedAutomation?.notificationChannel}
-                                                onDestinationChange={onDestinationChange}
-                                                destinations={notificationChannels}
-                                                overlayPositionType={OVERLAY_POSITION_TYPE}
-                                                closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
+                                    {notificationChannels.length > 1 ? (
+                                        DestinationSlot ? (
+                                            <DestinationSlot
+                                                Default={AlertingDialogDestination}
+                                                defaultProps={destinationDefaultProps}
                                             />
-                                        </FormField>
-                                    )}
+                                        ) : (
+                                            <AlertingDialogDestination {...destinationDefaultProps} />
+                                        )
+                                    ) : null}
                                     <FormField
                                         label={<FormattedMessage id="insightAlert.config.trigger" />}
                                         htmlFor="alert.trigger"
@@ -598,27 +619,14 @@ export function AlertingDialogRenderer({
                                             />
                                         </FormField>
                                     ) : null}
-                                    <FormField
-                                        label={<FormattedMessage id="insightAlert.config.recipients" />}
-                                        htmlFor="alert.recipients"
-                                        fullWidth
-                                    >
-                                        <RecipientsSelect
-                                            id="alert.recipients"
-                                            loggedUser={defaultUser}
-                                            value={editedAutomation?.recipients ?? []}
-                                            originalValue={originalAutomation?.recipients || []}
-                                            onChange={onRecipientsChange}
-                                            allowEmptySelection
-                                            allowOnlyLoggedUserRecipients={allowOnlyLoggedUserRecipients}
-                                            allowExternalRecipients={allowExternalRecipients}
-                                            maxRecipients={maxAutomationsRecipients}
-                                            notificationChannels={notificationChannels}
-                                            notificationChannelId={editedAutomation?.notificationChannel}
-                                            showLabel={false}
-                                            externalRecipientOverride={externalRecipientOverride}
+                                    {RecipientsSlot ? (
+                                        <RecipientsSlot
+                                            Default={AlertingDialogRecipients}
+                                            defaultProps={recipientsDefaultProps}
                                         />
-                                    </FormField>
+                                    ) : (
+                                        <AlertingDialogRecipients {...recipientsDefaultProps} />
+                                    )}
                                 </FormFieldGroup>
                                 {warningMessage ? (
                                     <Message
@@ -727,37 +735,6 @@ function AlertingDialogFooter({
                     disabled={isSavingAlert}
                 />
             ) : null}
-        </div>
-    );
-}
-
-function FormField({
-    label,
-    children,
-    htmlFor,
-    fullWidth = false,
-}: {
-    label: ReactNode;
-    children: ReactNode;
-    htmlFor?: string;
-    fullWidth?: boolean;
-}) {
-    return (
-        <div className="gd-input-component gd-input-component--no-last-child-margin gd-dashboard-alerting-dialog-form-field">
-            <div className="gd-dashboard-alerting-dialog-form-field__label-container">
-                <label className="gd-label gd-dashboard-alerting-dialog-form-field__label" htmlFor={htmlFor}>
-                    {label}
-                </label>
-            </div>
-            <div
-                className={
-                    fullWidth
-                        ? "gd-dashboard-alerting-dialog-form-field__content-container-full-width"
-                        : "gd-dashboard-alerting-dialog-form-field__content-container"
-                }
-            >
-                {children}
-            </div>
         </div>
     );
 }

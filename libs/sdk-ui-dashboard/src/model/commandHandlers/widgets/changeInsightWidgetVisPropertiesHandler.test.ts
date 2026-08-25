@@ -8,15 +8,15 @@ import {
     type IChangeInsightWidgetVisProperties,
     changeInsightWidgetVisProperties,
 } from "../../commands/insight.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardCommandFailed } from "../../events/general.js";
 import { type IDashboardInsightWidgetVisPropertiesChanged } from "../../events/insight.js";
-import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWidgets,
-} from "../../tests/fixtures/ComplexDashboard.fixtures.js";
-import { TestCorrelation } from "../../tests/fixtures/Dashboard.fixtures.js";
+} from "../../fixtures/ComplexDashboard.fixtures.js";
+import { TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
+import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 
 describe("change insight widget vis properties handler", () => {
     describe("for dashboard with KPIs and insights", () => {

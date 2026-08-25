@@ -29,6 +29,7 @@ import {
     createDisplayFormMapFromCatalog,
 } from "../../../../_staging/catalog/displayFormMap.js";
 import { type InitializeDashboard } from "../../../commands/dashboard.js";
+import { changeDashboardTimezoneOverride } from "../../../commands/timezone.js";
 import { type DashboardInitialized, dashboardInitialized } from "../../../events/dashboard.js";
 import { getPrivateContext } from "../../../store/_infra/contexts.js";
 import { accessibleDashboardsActions } from "../../../store/accessibleDashboards/index.js";
@@ -55,12 +56,14 @@ import {
     type ResolvedDashboardConfig,
 } from "../../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../../types/sagas.js";
+import { changeDashboardTimezoneOverrideHandler } from "../../timezone/changeDashboardTimezoneOverrideHandler.js";
 import { applyDefaultFilterView } from "../common/filterViews.js";
 import {
     actionsToInitializeExistingDashboard,
     actionsToInitializeNewDashboard,
 } from "../common/stateInitializers.js";
 
+import { loadAutomationTimezone } from "./loadAutomationTimezone.js";
 import { loadCatalog } from "./loadCatalog.js";
 import { loadDashboardList } from "./loadDashboardList.js";
 import { loadDashboardParameters } from "./loadDashboardParameters.js";
@@ -188,6 +191,11 @@ async function loadInsightsForPersistedDashboard(
 type DashboardLoadResult = {
     batch: BatchAction;
     event: DashboardInitialized;
+    /**
+     * Timezone of the deep-linked automation, restored after the batch has landed — unlike the
+     * export timezone it goes through the timezone command, which needs the initialized state.
+     */
+    automationTimezone?: string;
 };
 
 function resolveActiveTabId(
@@ -266,6 +274,7 @@ function* loadExistingDashboard(
         call(loadDateHierarchyTemplates, ctx),
         call(loadFilterViews, ctx),
         call(loadExportTimezone, ctx),
+        call(loadAutomationTimezone, ctx),
     ];
 
     const [
@@ -281,6 +290,7 @@ function* loadExistingDashboard(
         dateHierarchyTemplates,
         filterViews,
         exportTimezone,
+        automationTimezone,
     ]: [
         PromiseFnReturnType<typeof loadDashboardFromBackend>,
         SagaReturnType<typeof resolveDashboardConfigAndFeatureFlagDependentCalls>,
@@ -291,6 +301,7 @@ function* loadExistingDashboard(
         PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
         PromiseFnReturnType<typeof loadFilterViews>,
         PromiseFnReturnType<typeof loadExportTimezone>,
+        PromiseFnReturnType<typeof loadAutomationTimezone>,
     ] = yield all(calls);
 
     const {
@@ -377,6 +388,8 @@ function* loadExistingDashboard(
     return {
         batch,
         event,
+        // an export render takes its timezone from the export itself
+        automationTimezone: exportTimezone ? undefined : automationTimezone,
     };
 }
 
@@ -579,6 +592,28 @@ function* advancedLoader(
     ]);
 }
 
+/**
+ * Applies a deep-linked automation's timezone as the dashboard's timezone override. A rejection
+ * (feature disabled, invalid stored timezone) leaves the dashboard on its own timezone rather
+ * than failing the initialization.
+ */
+function* restoreAutomationTimezone(
+    ctx: DashboardContext,
+    timezoneId: string,
+    correlationId: string | undefined,
+): SagaIterator<void> {
+    try {
+        const event: SagaReturnType<typeof changeDashboardTimezoneOverrideHandler> = yield call(
+            changeDashboardTimezoneOverrideHandler,
+            ctx,
+            changeDashboardTimezoneOverride(timezoneId, correlationId, true),
+        );
+        yield put(event);
+    } catch (reason) {
+        console.error(`Restoring the timezone "${timezoneId}" of the deep-linked automation failed`, reason);
+    }
+}
+
 export function* initializeDashboardHandler(ctx: DashboardContext, cmd: InitializeDashboard): SagaIterator {
     const { dashboardRef } = ctx;
     try {
@@ -593,6 +628,13 @@ export function* initializeDashboardHandler(ctx: DashboardContext, cmd: Initiali
         }
 
         yield put(result.batch);
+
+        // before the loading success that lets the widgets render and execute, so the notification
+        // recipient never sees the dashboard's own timezone first. The view-mode override check is
+        // bypassed: the automation was evaluated in this timezone, whatever the dashboard says now.
+        if (result.automationTimezone) {
+            yield call(restoreAutomationTimezone, ctx, result.automationTimezone, cmd.correlationId);
+        }
 
         yield put(loadingActions.setLoadingSuccess());
 
