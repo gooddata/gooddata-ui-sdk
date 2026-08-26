@@ -4,13 +4,14 @@
 
 import { describe, expect, it } from "vitest";
 
-import { createColumnLocator, createTransposedColumnLocator } from "./colLocatorFactory.js";
 import {
     MultipleMeasuresAndNoColumnsWithMetricsInRows,
     SingleMeasureWithRowAttribute,
     SingleMeasureWithTwoRowAndTwoColumnAttributes,
     TwoMeasuresWithSingleRowAttrWithMetricsInRows,
-} from "./table.fixture.js";
+} from "../tests/table.test.helpers.js";
+
+import { createColumnLocator, createTransposedColumnLocator } from "./colLocatorFactory.js";
 import { TableDescriptor } from "./tableDescriptor.js";
 import { type IScopeCol } from "./tableDescriptorTypes.js";
 

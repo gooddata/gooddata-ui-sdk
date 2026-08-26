@@ -17,7 +17,7 @@ import {
     drillToDashboard,
     drillToInsight,
     drillToLegacyDashboard,
-} from "./drills.fixtures.js";
+} from "./drills.test.helpers.js";
 
 describe("dashboard drills type guards", () => {
     describe("isDrillToLegacyDashboard", () => {

@@ -9,8 +9,8 @@ import {
     attributeAndColumnsReferencePoint,
     attributesAndColumnsReferencePoint,
     attributesAndColumnsWithDatesReferencePoint,
-} from "../../../mocks/referencePointMocks.js";
-import { insightWithOneColumnAndOneAttribute } from "../../../mocks/testMocks.js";
+} from "../../../tests/referencePointMocks.test.helpers.js";
+import { insightWithOneColumnAndOneAttribute } from "../../../tests/testMocks.test.helpers.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
 import { getLastRenderEl } from "../pluggableVisualizations.test.helpers.js";
 

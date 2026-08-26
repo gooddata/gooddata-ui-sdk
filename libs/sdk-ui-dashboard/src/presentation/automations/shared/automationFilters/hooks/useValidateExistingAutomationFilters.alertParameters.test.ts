@@ -10,7 +10,7 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
-import { workspaceNumberParameter } from "../parameterFixtures.js";
+import { workspaceNumberParameter } from "../../../tests/parameterFixtures.test.helpers.js";
 
 import { useValidateExistingAutomationFilters } from "./useValidateExistingAutomationFilters.js";
 

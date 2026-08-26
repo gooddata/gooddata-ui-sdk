@@ -141,7 +141,7 @@ describe("ChatConversationThreadQuery.stream", () => {
             userQuestion: "Hello",
         });
 
-        const reader = query.stream().getReader();
+        const reader = query.stream([]).getReader();
 
         const firstEvent = await reader.read();
         expect(firstEvent.done).toBe(false);
@@ -195,7 +195,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
             },
         });
 
-        query.stream();
+        query.stream([]);
 
         const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
         const widgets = request.aiSendMessageRequest.userContext?.view?.dashboard?.widgets;
@@ -248,7 +248,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
             },
         });
 
-        query.stream();
+        query.stream([]);
 
         const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
         const widget = request.aiSendMessageRequest.userContext?.view?.dashboard?.widgets?.[0];
@@ -282,7 +282,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
             },
         });
 
-        query.stream();
+        query.stream([]);
 
         const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
         const widget = request.aiSendMessageRequest.userContext?.view?.dashboard?.widgets?.[0];
@@ -305,7 +305,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
             },
         });
 
-        query.stream();
+        query.stream([]);
 
         const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
         const dashboard = request.aiSendMessageRequest.userContext?.view?.dashboard;
@@ -327,7 +327,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
             },
         });
 
-        query.stream();
+        query.stream([]);
 
         const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
         const dashboard = request.aiSendMessageRequest.userContext?.view?.dashboard;

@@ -36,6 +36,12 @@ describe("sanitizeEffort", () => {
     });
 });
 
+describe("DEFAULT_EFFORT", () => {
+    it("is Quick, so a conversation with no stored mode starts there (SC-01)", () => {
+        expect(DEFAULT_EFFORT).toBe("LOW");
+    });
+});
+
 describe("deriveConversationEffort", () => {
     it("returns nothing for a conversation with no history", () => {
         expect(deriveConversationEffort([])).toBeUndefined();
@@ -59,8 +65,8 @@ describe("deriveConversationEffort", () => {
         expect(deriveConversationEffort(items)).toBe(DEFAULT_EFFORT);
     });
 
-    it("resolves an effort with no UI option to the default", () => {
-        expect(deriveConversationEffort([makeItem("1", "user", "HIGH")])).toBe(DEFAULT_EFFORT);
+    it("resolves an effort with no UI option to the deepest one, rather than back to Quick", () => {
+        expect(deriveConversationEffort([makeItem("1", "user", "HIGH")])).toBe("MEDIUM");
     });
 
     it("ignores optimistic messages that have no server id yet", () => {

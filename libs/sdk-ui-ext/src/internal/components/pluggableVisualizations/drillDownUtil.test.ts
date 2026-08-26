@@ -19,7 +19,7 @@ import { type IDrillDownDefinition } from "../../interfaces/Visualization.js";
 
 import { modifyBucketsAttributesForDrillDown, reverseAndTrimIntersection } from "./drillDownUtil.js";
 import { insightDefinitionToInsight } from "./pluggableVisualizations.test.helpers.js";
-import { reverseAndTrimIntersectionMock } from "./reverseAndTrimIntersectionMock.js";
+import { reverseAndTrimIntersectionMock } from "./reverseAndTrimIntersectionMock.test.helpers.js";
 
 const { Account, Department, Region, Status, Won } = ReferenceMd;
 

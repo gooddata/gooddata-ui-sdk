@@ -6,8 +6,8 @@ import { describe, expect, it } from "vitest";
 
 import { type IInsightWidget, idRef } from "@gooddata/sdk-model";
 
-import { availableDrillTargets, globalDrillDowns } from "./drillConfigMapper.fixture.js";
 import { getGlobalDrillDownMappedConfigForWidget } from "./drillConfigMapper.js";
+import { availableDrillTargets, globalDrillDowns } from "./drillConfigMapper.test.helpers.js";
 
 describe("drillConfigMapper", () => {
     describe("getGlobalDrillDownMappedConfigForWidget", () => {

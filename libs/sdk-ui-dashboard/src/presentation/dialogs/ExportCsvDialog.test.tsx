@@ -42,23 +42,10 @@ function getPreviewChar(optionId: string): HTMLElement | null {
 }
 
 describe("ExportCsvDialog", () => {
-    it("should initialize from the resolved default delimiter", () => {
-        renderComponent({ initialDelimiter: ";" });
-
-        expect(document.querySelector(".s-csv-delimiter-dropdown")).toHaveTextContent("Semicolon");
-    });
-
-    it("should initialize custom delimiter when the resolved default is custom", () => {
-        renderComponent({ initialDelimiter: "^" });
-
-        expect(document.querySelector(".s-csv-delimiter-dropdown")).toHaveTextContent("Custom");
-        expect(getCustomInput()).toHaveValue("^");
-    });
-
-    it("should default to comma when no resolved delimiter is provided", () => {
+    it("should default to inherit when no resolved delimiter is provided", () => {
         renderComponent();
 
-        expect(document.querySelector(".s-csv-delimiter-dropdown")).toHaveTextContent("Comma");
+        expect(document.querySelector(".s-csv-delimiter-dropdown")).toHaveTextContent("Inherit");
     });
 
     it("should render delimiter previews separately from the label", () => {

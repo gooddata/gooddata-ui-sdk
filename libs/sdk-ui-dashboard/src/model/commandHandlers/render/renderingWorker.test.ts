@@ -8,10 +8,13 @@ import { type IDashboard, idRef } from "@gooddata/sdk-model";
 
 import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultFilterContext.js";
 import { defaultDateFilterConfig } from "../../../_staging/dateFilterConfig/defaultConfig.js";
+import {
+    EmptyDashboardIdentifier,
+    EmptyDashboardWithReferences,
+} from "../../../tests/Dashboard.test.helpers.js";
 import { initializeDashboard } from "../../commands/dashboard.js";
 import { requestAsyncRender, resolveAsyncRender } from "../../commands/render.js";
 import { DashboardTester } from "../../DashboardTester.js";
-import { EmptyDashboardIdentifier, EmptyDashboardWithReferences } from "../../fixtures/Dashboard.fixtures.js";
 import { type PrivateDashboardContext } from "../../types/commonTypes.js";
 import { EmptyDashboardLayout } from "../dashboard/common/dashboardInitialize.js";
 

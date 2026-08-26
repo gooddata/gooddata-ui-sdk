@@ -4,9 +4,9 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
+import { SimpleDashboardIdentifier } from "../../../tests/SimpleDashboard.test.helpers.js";
 import { setDashboardAttributeFilterConfigMode } from "../../commands/dashboard.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
-import { SimpleDashboardIdentifier } from "../../fixtures/SimpleDashboard.fixtures.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectFilterContextAttributeFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
 

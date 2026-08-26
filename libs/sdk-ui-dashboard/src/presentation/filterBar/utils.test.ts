@@ -12,7 +12,7 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
 } from "@gooddata/sdk-model";
 
-import { filterBarAttributeFilterIndexes } from "./filterBar.fixture.js";
+import { filterBarAttributeFilterIndexes } from "./filterBar.test.helpers.js";
 import { areAllFiltersHidden, getVisibilityIcon } from "./utils.js";
 
 describe("utils", () => {

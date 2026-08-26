@@ -13,10 +13,8 @@ import {
 } from "@gooddata/sdk-model";
 import { ValidationContextStore, createInvalidNode, useValidationContextValue } from "@gooddata/sdk-ui";
 import {
-    Button,
     ConfirmDialogBase,
     ContentDivider,
-    Hyperlink,
     type IUiTab,
     Message,
     Overlay,
@@ -36,7 +34,14 @@ import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
 import { ApplyCurrentFiltersConfirmDialog } from "../../shared/automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
-import { type IAutomationDialogDestinationProps } from "../../shared/slots/types.js";
+import {
+    AutomationDialogActionBar,
+    AutomationDialogFooterLeft,
+} from "../../shared/slots/AutomationDialogActionBar.js";
+import {
+    type IAutomationDialogActionBarProps,
+    type IAutomationDialogDestinationProps,
+} from "../../shared/slots/types.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
 import { useScheduledExportActions } from "../state/ScheduledExportActionsContext.js";
@@ -75,44 +80,6 @@ const CLOSE_ON_PARENT_SCROLL = true;
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
-interface IScheduledEmailDialogFooterProps {
-    isWhiteLabeled: boolean;
-    helpTextId: string;
-    scheduledExportToEdit?: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null;
-    isSavingScheduledEmail: boolean;
-    onDeleteClick: () => void;
-}
-
-function ScheduledEmailDialogFooter({
-    isWhiteLabeled,
-    helpTextId,
-    scheduledExportToEdit,
-    isSavingScheduledEmail,
-    onDeleteClick,
-}: IScheduledEmailDialogFooterProps) {
-    const intl = useIntl();
-
-    return (
-        <div className="gd-notifications-channels-dialog-footer-link">
-            {isWhiteLabeled ? null : (
-                <Hyperlink
-                    text={intl.formatMessage({ id: helpTextId })}
-                    href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#ScheduleExportsinDashboards-ScheduleExport"
-                    iconClass="gd-icon-circle-question"
-                />
-            )}
-            {scheduledExportToEdit ? (
-                <Button
-                    className="gd-button-link-dimmed"
-                    value={intl.formatMessage({ id: "delete" })}
-                    onClick={onDeleteClick}
-                    disabled={isSavingScheduledEmail}
-                />
-            ) : null}
-        </div>
-    );
-}
-
 export function ScheduledMailDialogRenderer({
     onBack,
     onCancel,
@@ -125,12 +92,15 @@ export function ScheduledMailDialogRenderer({
     onSubmit,
     onSuccess,
     slots,
+    topContent,
+    bottomContent,
 }: IDefaultScheduledEmailDialogProps) {
     const HeaderSlot = slots?.Header;
     const FiltersSlot = slots?.Filters;
     const TimezoneSlot = slots?.Timezone;
     const DestinationSlot = slots?.Destination;
     const RecipientsSlot = slots?.Recipients;
+    const ActionBarSlot = slots?.ActionBar;
 
     const intl = useIntl();
 
@@ -422,6 +392,33 @@ export function ScheduledMailDialogRenderer({
         externalRecipientOverride,
     };
 
+    const actionBarDefaultProps: IAutomationDialogActionBarProps = {
+        cancelButtonText: intl.formatMessage({ id: "cancel" }),
+        submitButtonText: scheduledExportToEdit
+            ? intl.formatMessage({ id: "dialogs.schedule.email.save" })
+            : intl.formatMessage({ id: "dialogs.schedule.email.create" }),
+        onCancel: () => onCancel?.(),
+        onSubmit: handleSaveScheduledEmail,
+        isSubmitDisabled: submitDisabled,
+        isSaving: isSavingScheduledEmail,
+        submitButtonTooltipText: isExecutionTimestampMode
+            ? intl.formatMessage({ id: "dialogs.schedule.email.save.executionTimestampMode" })
+            : undefined,
+        ...(isWhiteLabeled
+            ? {}
+            : {
+                  helpLinkText: intl.formatMessage({ id: helpTextId }),
+                  helpLinkHref:
+                      "https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#ScheduleExportsinDashboards-ScheduleExport",
+              }),
+        ...(scheduledExportToEdit
+            ? {
+                  deleteButtonText: intl.formatMessage({ id: "delete" }),
+                  onDelete: () => setScheduledEmailToDelete(editedAutomation),
+              }
+            : {}),
+    };
+
     return (
         <>
             <Overlay
@@ -453,15 +450,29 @@ export function ScheduledMailDialogRenderer({
                             showProgressIndicator={isSavingScheduledEmail}
                             returnFocusTo={returnFocusTo}
                             returnFocusAfterClose={false}
-                            footerLeftRenderer={() => (
-                                <ScheduledEmailDialogFooter
-                                    isWhiteLabeled={isWhiteLabeled}
-                                    helpTextId={helpTextId}
-                                    scheduledExportToEdit={scheduledExportToEdit}
-                                    isSavingScheduledEmail={isSavingScheduledEmail}
-                                    onDeleteClick={() => setScheduledEmailToDelete(editedAutomation)}
-                                />
-                            )}
+                            footerLeftRenderer={
+                                ActionBarSlot
+                                    ? undefined
+                                    : () => (
+                                          <AutomationDialogFooterLeft
+                                              helpLinkText={actionBarDefaultProps.helpLinkText}
+                                              helpLinkHref={actionBarDefaultProps.helpLinkHref}
+                                              deleteButtonText={actionBarDefaultProps.deleteButtonText}
+                                              onDelete={actionBarDefaultProps.onDelete}
+                                              isDeleteDisabled={isSavingScheduledEmail}
+                                          />
+                                      )
+                            }
+                            footerRenderer={
+                                ActionBarSlot
+                                    ? () => (
+                                          <ActionBarSlot
+                                              Default={AutomationDialogActionBar}
+                                              defaultProps={actionBarDefaultProps}
+                                          />
+                                      )
+                                    : undefined
+                            }
                             isSubmitDisabled={submitDisabled}
                             submitButtonTooltipText={
                                 isExecutionTimestampMode
@@ -526,6 +537,7 @@ export function ScheduledMailDialogRenderer({
                                     "gd-notification-channel-dialog-with-tabs": tabs.length > 1,
                                 })}
                             >
+                                {topContent}
                                 <div className="gd-divider-with-margin" />
                                 {selectedTabId === "filters" ? (
                                     <div
@@ -702,6 +714,7 @@ export function ScheduledMailDialogRenderer({
                                             ))}
                                     </div>
                                 )}
+                                {bottomContent}
                             </ScrollablePanel>
                         </ConfirmDialogBase>
                     </ValidationContextStore>

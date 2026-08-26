@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui: Added an `Inherit` option to the CSV delimiter picker used in scheduled exports, alerts, and ad-hoc CSV exports. When selected (the new default when no delimiter is saved), no delimiter is sent and the workspace/organization default applies.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

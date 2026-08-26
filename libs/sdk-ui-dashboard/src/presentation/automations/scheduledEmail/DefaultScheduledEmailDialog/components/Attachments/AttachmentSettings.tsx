@@ -5,7 +5,6 @@ import { type Ref, useId, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
-    DEFAULT_CSV_DELIMITER,
     type IExportDefinitionVisualizationObjectSettings,
     getCsvDelimiterState,
     getCsvDelimiterValidationError,
@@ -90,7 +89,6 @@ export function AttachmentSettings({ type, settings, onSettingsChange }: IAttach
     const legacyOrientation = settings.orientation;
     const legacyPageOrientation = mapLegacyOrientationToPageOrientation(legacyOrientation);
     const resolvedDefaultPageSize = settings.pageSize ?? DEFAULT_PDF_PAGE_SIZE;
-    const resolvedCsvDelimiter = settings.delimiter ?? DEFAULT_CSV_DELIMITER;
     const resolvedCsvState = getCsvDelimiterState(settings.delimiter);
     const [mergeHeaders, setMergeHeaders] = useState(settings.mergeHeaders ?? true);
     const [exportInfo, setExportInfo] = useState(settings.exportInfo ?? true);
@@ -181,7 +179,7 @@ export function AttachmentSettings({ type, settings, onSettingsChange }: IAttach
         csvDelimiterValue.selectedPreset === "custom"
             ? getCsvDelimiterValidationError(csvDelimiterValue.customDelimiter)
             : undefined;
-    const isCsvSettingsDirty = selectedDelimiter !== resolvedCsvDelimiter;
+    const isCsvSettingsDirty = selectedDelimiter !== settings.delimiter;
     const isSettingsDirty = isPdfTabular
         ? isPdfSettingsDirty
         : isCsv

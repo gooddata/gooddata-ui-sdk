@@ -12,7 +12,7 @@ import {
     HEADLINE_VALUE_WRAPPER_SELECTOR,
     TEST_DATA_ITEM,
     TEST_RENDER_VALUE_SPECS,
-} from "../../../TestData.fixtures.js";
+} from "../../../tests/TestData.test.helpers.js";
 import { createBaseHeadlineTestContext } from "../BaseHeadline.test.helpers.js";
 
 import { BaseHeadlineDataItem } from "./BaseHeadlineDataItem.js";

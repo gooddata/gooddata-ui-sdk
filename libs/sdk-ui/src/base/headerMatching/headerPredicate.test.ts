@@ -11,8 +11,8 @@ import { DataViewFacade } from "../results/facade.js";
 import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from "../vis/drilling.js";
 
 import { type IHeaderPredicate } from "./HeaderPredicate.js";
-import { context, measureDescriptors } from "./HeaderPredicateFactory.fixtures.js";
 import { identifierMatch, uriMatch } from "./HeaderPredicateFactory.js";
+import { context, measureDescriptors } from "./HeaderPredicateFactory.test.helpers.js";
 import { type IMappingHeader } from "./MappingHeader.js";
 
 const emptyFacade = DataViewFacade.for(dummyDataView(newDefForBuckets("testWorkspace", [])));

@@ -9,6 +9,7 @@ import type {
     AttributeSort,
     CalculatedMetricField,
     Comparison,
+    ComputedAttribute,
     ContainerWidget,
     DashboardAbsoluteDateFilter,
     DashboardAttributeFilter,
@@ -487,6 +488,7 @@ export function isContainerWidget(obj: unknown): obj is ContainerWidget {
 const DatasetTypes: Dataset["type"][] = ["dataset"];
 const DateDatasetTypes: DateDataset["type"][] = ["date"];
 const MetricEntityTypes: Metric["type"][] = ["metric"];
+const ComputedAttributeEntityTypes: ComputedAttribute["type"][] = ["computed_attribute"];
 const FactTypes: Fact["type"][] = ["fact"];
 
 export function isDataset(obj: unknown): obj is Dataset {
@@ -522,5 +524,15 @@ export function isMetricEntity(obj: unknown): obj is Metric {
         "id" in obj &&
         "type" in obj &&
         MetricEntityTypes.includes(obj.type as Metric["type"]),
+    );
+}
+
+export function isComputedAttributeEntity(obj: unknown): obj is ComputedAttribute {
+    return Boolean(
+        typeof obj === "object" &&
+        obj &&
+        "id" in obj &&
+        "type" in obj &&
+        ComputedAttributeEntityTypes.includes(obj.type as ComputedAttribute["type"]),
     );
 }

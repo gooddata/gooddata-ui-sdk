@@ -302,6 +302,7 @@ export const MEKKO_SUPPORTED_PROPERTIES = [
     ...BASE_X_AXIS_PROPERTIES,
     ...BASE_PRIMARY_AXIS_PROPERTIES,
     "colorMapping",
+    "zoomInsight",
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",

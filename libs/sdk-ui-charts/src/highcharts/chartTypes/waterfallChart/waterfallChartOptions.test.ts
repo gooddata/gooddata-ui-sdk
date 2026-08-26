@@ -10,8 +10,8 @@ import { type IColorDescriptor } from "@gooddata/sdk-model";
 import { DefaultColorPalette, type IColorAssignment, localIdentifierMatch } from "@gooddata/sdk-ui";
 import { type ChartFillType } from "@gooddata/sdk-ui-vis-commons";
 
-import { recordedDataFacade } from "../../../../testUtils/recordings.js";
 import { type IChartConfig, type ITotalConfig } from "../../../interfaces/chartConfig.js";
+import { recordedDataFacade } from "../../../testUtils/recordings.fixture.js";
 import { type ISeriesItem } from "../../typings/unsafe.js";
 import { getDrillableSeries } from "../_chartOptions/chartDrilling.js";
 import { getMVS } from "../_util/helper.js";

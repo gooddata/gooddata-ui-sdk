@@ -44,13 +44,13 @@ import {
     type IScheduledEmailDialogContextValue,
     ScheduledEmailDialogContextProvider,
 } from "../../contexts/ScheduledEmailDialogContext.js";
-
 import {
     AUTOMATIONS_CONTEXT,
     DATA_FIXTURE,
     DRAFT_FIXTURE,
     SCHEDULED_EMAIL_DIALOG_CONTEXT,
-} from "./fixtures.js";
+} from "../tests/scheduledEmail.test.helpers.js";
+
 import { ScheduledExportDataContextProvider } from "./ScheduledExportDataContext.js";
 import { ScheduledExportDraftContextProvider } from "./ScheduledExportDraftContext.js";
 import { useScheduledExportDialogValidity } from "./useScheduledExportDialogValidity.js";

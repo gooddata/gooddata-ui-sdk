@@ -41,6 +41,7 @@ import { IAvailableAccessGrantee } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
 import { ICatalogAttributeHierarchy } from '@gooddata/sdk-model';
+import { ICatalogComputedAttribute } from '@gooddata/sdk-model';
 import { ICatalogDateDataset } from '@gooddata/sdk-model';
 import { ICatalogFact } from '@gooddata/sdk-model';
 import { ICatalogGroup } from '@gooddata/sdk-model';
@@ -48,6 +49,8 @@ import { ICatalogMeasure } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IColorPaletteDefinition } from '@gooddata/sdk-model';
 import { IColorPaletteMetadataObject } from '@gooddata/sdk-model';
+import type { IComputedAttributeMetadataObject } from '@gooddata/sdk-model';
+import type { IComputedAttributeMetadataObjectDefinition } from '@gooddata/sdk-model';
 import type { IDashboard } from '@gooddata/sdk-model';
 import type { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
 import type { IDashboardBase } from '@gooddata/sdk-model';
@@ -375,6 +378,7 @@ export interface IAnalyticalWorkspace {
     // @alpha
     automations(): IWorkspaceAutomationService;
     catalog(): IWorkspaceCatalogFactory;
+    computedAttributes(): IWorkspaceComputedAttributesService;
     dashboards(): IWorkspaceDashboardsService;
     // @alpha
     dataFilters(): IDataFiltersService;
@@ -762,9 +766,11 @@ export type IChatConversationCreateOptions = {
 // @internal
 export type IChatConversationDashboardContent = {
     type: "dashboard";
-    dashboard: IDashboard | null;
     insights: IInsight[] | null;
-    saved: boolean;
+    dashboard?: IDashboard | null;
+    saved?: string | null;
+    base?: object | null;
+    patchError?: Error | null;
 };
 
 // @internal
@@ -936,7 +942,7 @@ export interface IChatConversationThread {
 
 // @internal
 export interface IChatConversationThreadQuery {
-    stream(): ReadableStream<IChatConversationItem | IChatConversationError | IChatConversationInteractionStep>;
+    stream(history: IChatConversationItem[]): ReadableStream<IChatConversationItem | IChatConversationError | IChatConversationInteractionStep>;
     withAllowedRelationshipTypes(relationshipTypes?: IAllowedRelationshipType[]): IChatConversationThreadQuery;
     withCreateLimit(createLimit: number): IChatConversationThreadQuery;
     withEffort(effort?: GenAIChatEffort): IChatConversationThreadQuery;
@@ -1093,6 +1099,22 @@ export interface ICommentExpressionToken {
     type: "comment";
     value: string;
 }
+
+// @public
+export interface IComputedAttributesQuery {
+    query(): Promise<IComputedAttributesQueryResult>;
+    withFilter(filter: IFilterBaseOptions): IComputedAttributesQuery;
+    withInclude(include: string[]): IComputedAttributesQuery;
+    // @beta
+    withMethod(method: QueryMethod): IComputedAttributesQuery;
+    withOrigin(origin: ObjectOrigin | (string & {})): IComputedAttributesQuery;
+    withPage(page: number): IComputedAttributesQuery;
+    withSize(size: number): IComputedAttributesQuery;
+    withSorting(sort: string[]): IComputedAttributesQuery;
+}
+
+// @public
+export type IComputedAttributesQueryResult = IPagedResource<IComputedAttributeMetadataObject>;
 
 // @internal
 export interface ICreateKnowledgeDocumentRequest {
@@ -1754,6 +1776,11 @@ export interface IGetAutomationsOptions {
 // @alpha
 export interface IGetAutomationsQueryOptions {
     includeAutomationResult?: boolean;
+}
+
+// @public
+export interface IGetComputedAttributeOptions {
+    loadUserData?: boolean;
 }
 
 // @alpha
@@ -2854,6 +2881,7 @@ export interface IWorkspaceCatalogMethods {
     allItems(): CatalogItem[];
     attributeHierarchies(): ICatalogAttributeHierarchy[];
     attributes(): ICatalogAttribute[];
+    computedAttributes(): ICatalogComputedAttribute[];
     dateDatasets(): ICatalogDateDataset[];
     facts(): ICatalogFact[];
     groups(): ICatalogGroup[];
@@ -2865,6 +2893,7 @@ export interface IWorkspaceCatalogWithAvailableItems extends IWorkspaceCatalogMe
     allAvailableItems(): CatalogItem[];
     availableAttributeHierarchies(): ICatalogAttributeHierarchy[];
     availableAttributes(): ICatalogAttribute[];
+    availableComputedAttributes(): ICatalogComputedAttribute[];
     availableDateDatasets(): ICatalogDateDataset[];
     availableFacts(): ICatalogFact[];
     availableMeasures(): ICatalogMeasure[];
@@ -2874,6 +2903,17 @@ export interface IWorkspaceCatalogWithAvailableItems extends IWorkspaceCatalogMe
 export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWorkspaceCatalogFactoryOptions {
     insight?: IInsightDefinition;
     items?: IAttributeOrMeasure[];
+}
+
+// @public
+export interface IWorkspaceComputedAttributesService {
+    createComputedAttribute(computedAttribute: IComputedAttributeMetadataObjectDefinition): Promise<IComputedAttributeMetadataObject>;
+    deleteComputedAttribute(ref: ObjRef): Promise<void>;
+    getComputedAttribute(ref: ObjRef, options?: IGetComputedAttributeOptions): Promise<IComputedAttributeMetadataObject>;
+    getComputedAttributeExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
+    getComputedAttributesQuery(): IComputedAttributesQuery;
+    updateComputedAttribute(computedAttribute: IComputedAttributeMetadataObject): Promise<IComputedAttributeMetadataObject>;
+    updateComputedAttributeMeta(computedAttribute: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IComputedAttributeMetadataObject>;
 }
 
 // @alpha

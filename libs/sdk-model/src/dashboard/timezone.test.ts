@@ -8,8 +8,23 @@ describe("dashboard timezone validation", () => {
     describe("isValidIanaTimezoneId", () => {
         it("accepts real IANA identifiers", () => {
             expect(isValidIanaTimezoneId("UTC")).toBe(true);
+            expect(isValidIanaTimezoneId("Etc/UTC")).toBe(true);
             expect(isValidIanaTimezoneId("Europe/Prague")).toBe(true);
             expect(isValidIanaTimezoneId("America/New_York")).toBe(true);
+            expect(isValidIanaTimezoneId("America/Indiana/Indianapolis")).toBe(true);
+        });
+
+        it("rejects non valid IANA identifiers ", () => {
+            expect(isValidIanaTimezoneId("america/new_york")).toBe(false);
+            expect(isValidIanaTimezoneId("Australia/eucla")).toBe(false);
+        });
+
+        it("rejects offset-style identifiers", () => {
+            expect(isValidIanaTimezoneId("+01")).toBe(false);
+            expect(isValidIanaTimezoneId("+0100")).toBe(false);
+            expect(isValidIanaTimezoneId("-2359")).toBe(false);
+            expect(isValidIanaTimezoneId("+23")).toBe(false);
+            expect(isValidIanaTimezoneId("+01:00")).toBe(false);
         });
 
         it("rejects unknown or malformed identifiers", () => {

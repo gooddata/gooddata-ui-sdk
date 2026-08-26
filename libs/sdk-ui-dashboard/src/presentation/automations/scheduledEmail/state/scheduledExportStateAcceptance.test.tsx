@@ -41,8 +41,12 @@ import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { AutomationsContextProvider } from "../../contexts/AutomationsContext.js";
 import { ScheduledEmailDialogContextProvider } from "../../contexts/ScheduledEmailDialogContext.js";
 import { useAutomationFiltersSelect } from "../../shared/automationFilters/useAutomationFiltersSelect.js";
+import {
+    AUTOMATIONS_CONTEXT,
+    NEXT_FILTER,
+    SCHEDULED_EMAIL_DIALOG_CONTEXT,
+} from "../tests/scheduledEmail.test.helpers.js";
 
-import { AUTOMATIONS_CONTEXT, NEXT_FILTER, SCHEDULED_EMAIL_DIALOG_CONTEXT } from "./fixtures.js";
 import { ScheduledEmailDialogStateProvider } from "./ScheduledEmailDialogStateProvider.js";
 import { useScheduledExportActions } from "./ScheduledExportActionsContext.js";
 import { useScheduledExportDraft } from "./ScheduledExportDraftContext.js";

@@ -2,12 +2,6 @@
 
 import {
     type AfmValidObjectsQuery,
-    type JsonApiAttributeOut,
-    type JsonApiFactOut,
-    type JsonApiLabelOut,
-    type JsonApiMetricOut,
-    type JsonApiMetricOutDocument,
-    type JsonApiParameterOut,
     type KeyDriversDimension,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
@@ -41,8 +35,6 @@ import {
     type IMetadataObjectIdentity,
     type IObjectCertificationWrite,
     type ObjRef,
-    type ObjectType,
-    idRef,
     isIdentifierRef,
 } from "@gooddata/sdk-model";
 
@@ -54,7 +46,7 @@ import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConv
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
 
-import { type IExpressionToken, tokenizeExpression } from "./measureExpressionTokens.js";
+import { resolveExpressionToken, tokenizeExpression } from "./measureExpressionTokens.js";
 import { MeasuresQuery } from "./measuresQuery.js";
 
 const findDimensionality = (
@@ -123,74 +115,24 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             EntitiesApi_GetEntityMetrics(client.axios, client.basePath, {
                 objectId: ref.identifier,
                 workspaceId: this.workspace,
-                include: ["facts", "metrics", "attributes", "labels", "datasets", "parameters"],
+                include: [
+                    "facts",
+                    "metrics",
+                    "attributes",
+                    "labels",
+                    "datasets",
+                    "parameters",
+                    "computedAttributes",
+                ],
             }),
         );
         const metric = metricMetadata.data;
         const maql = metric.data.attributes.content.maql || "";
 
         const regexTokens = tokenizeExpression(maql);
-        return regexTokens.map((regexToken) => this.resolveToken(regexToken, metric));
-    }
-
-    private resolveToken(
-        regexToken: IExpressionToken,
-        metric: JsonApiMetricOutDocument,
-    ): IMeasureExpressionToken {
-        if (
-            regexToken.type === "text" ||
-            regexToken.type === "quoted_text" ||
-            regexToken.type === "comment" ||
-            regexToken.type === "number" ||
-            regexToken.type === "bracket"
-        ) {
-            return { type: regexToken.type, value: regexToken.value };
-        }
-        const [type, id] = regexToken.value.split("/");
-        if (
-            type === "metric" ||
-            type === "fact" ||
-            type === "attribute" ||
-            type === "label" ||
-            type === "dataset" ||
-            type === "parameter"
-        ) {
-            return this.resolveObjectToken(id, type, metric.included || [], metric.data.id);
-        }
-        throw new Error(`Cannot resolve title of object type ${type}`);
-    }
-
-    private resolveObjectToken(
-        objectId: string,
-        objectType: "metric" | "fact" | "attribute" | "label" | "dataset" | "parameter",
-        includedObjects: ReadonlyArray<any>,
-        identifier: string,
-    ): IMeasureExpressionToken {
-        const includedObject = includedObjects.find((includedObject) => {
-            return includedObject.id === objectId && includedObject.type === objectType;
-        }) as JsonApiMetricOut | JsonApiLabelOut | JsonApiAttributeOut | JsonApiFactOut | JsonApiParameterOut;
-
-        interface ITypeMapping {
-            [tokenObjectType: string]: ObjectType;
-        }
-        const typeMapping: ITypeMapping = {
-            metric: "measure",
-            fact: "fact",
-            attribute: "attribute",
-            label: "attribute",
-            dataset: "dataSet",
-            parameter: "parameter",
-        };
-
-        const value = includedObject?.attributes?.title || `${objectType}/${objectId}`;
-        const token: IMeasureExpressionToken = {
-            type: typeMapping[objectType],
-            value,
-            id: objectId,
-            ref: idRef(identifier),
-        };
-
-        return token;
+        return regexTokens.map((regexToken) =>
+            resolveExpressionToken(regexToken, metric.included ?? [], metric.data.id),
+        );
     }
 
     async createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject> {

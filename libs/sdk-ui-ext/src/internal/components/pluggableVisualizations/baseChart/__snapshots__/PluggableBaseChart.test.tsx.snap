@@ -86,6 +86,7 @@ exports[`PluggableBaseChart > should cut out measures tail when getting nM 0Vb 1
       "stack": {
         "accepts": [
           "attribute",
+          "computedAttribute",
         ],
         "allowsReordering": false,
         "allowsSwapping": true,
@@ -99,6 +100,7 @@ exports[`PluggableBaseChart > should cut out measures tail when getting nM 0Vb 1
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -220,6 +222,7 @@ exports[`PluggableBaseChart > should handle wrong order of buckets in reference 
       "stack": {
         "accepts": [
           "attribute",
+          "computedAttribute",
         ],
         "allowsReordering": false,
         "allowsSwapping": true,
@@ -233,6 +236,7 @@ exports[`PluggableBaseChart > should handle wrong order of buckets in reference 
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -399,6 +403,7 @@ exports[`PluggableBaseChart > should return ref. point with multiple metrics and
       "stack": {
         "accepts": [
           "attribute",
+          "computedAttribute",
         ],
         "allowsReordering": false,
         "allowsSwapping": true,
@@ -413,6 +418,7 @@ exports[`PluggableBaseChart > should return ref. point with multiple metrics and
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -513,6 +519,7 @@ exports[`PluggableBaseChart > should return reference point with base recommenda
       "stack": {
         "accepts": [
           "attribute",
+          "computedAttribute",
         ],
         "allowsReordering": false,
         "allowsSwapping": true,
@@ -526,6 +533,7 @@ exports[`PluggableBaseChart > should return reference point with base recommenda
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -684,6 +692,7 @@ exports[`PluggableBaseChart > should return reference point with multiple metric
       "stack": {
         "accepts": [
           "attribute",
+          "computedAttribute",
         ],
         "allowsReordering": false,
         "allowsSwapping": true,
@@ -698,6 +707,7 @@ exports[`PluggableBaseChart > should return reference point with multiple metric
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -820,6 +830,7 @@ exports[`PluggableBaseChart > should return reference point with one metric and 
       "stack": {
         "accepts": [
           "attribute",
+          "computedAttribute",
         ],
         "allowsReordering": false,
         "allowsSwapping": true,
@@ -833,6 +844,7 @@ exports[`PluggableBaseChart > should return reference point with one metric and 
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -1008,6 +1020,7 @@ exports[`PluggableBaseChart > should return reference point with one metric and 
       "stack": {
         "accepts": [
           "attribute",
+          "computedAttribute",
         ],
         "allowsReordering": false,
         "allowsSwapping": true,
@@ -1021,6 +1034,7 @@ exports[`PluggableBaseChart > should return reference point with one metric and 
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -1187,6 +1201,7 @@ exports[`PluggableBaseChart > should return reference point with one metric, one
       "stack": {
         "accepts": [
           "attribute",
+          "computedAttribute",
         ],
         "allowsReordering": false,
         "allowsSwapping": true,
@@ -1200,6 +1215,7 @@ exports[`PluggableBaseChart > should return reference point with one metric, one
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -1321,6 +1337,7 @@ exports[`PluggableBaseChart > should return reference point without Date in stac
       "stack": {
         "accepts": [
           "attribute",
+          "computedAttribute",
         ],
         "allowsReordering": false,
         "allowsSwapping": true,
@@ -1334,6 +1351,7 @@ exports[`PluggableBaseChart > should return reference point without Date in stac
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -1455,6 +1473,7 @@ exports[`PluggableBaseChart > should use second non-date attribute when switchin
       "stack": {
         "accepts": [
           "attribute",
+          "computedAttribute",
         ],
         "allowsReordering": false,
         "allowsSwapping": true,
@@ -1468,6 +1487,7 @@ exports[`PluggableBaseChart > should use second non-date attribute when switchin
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,

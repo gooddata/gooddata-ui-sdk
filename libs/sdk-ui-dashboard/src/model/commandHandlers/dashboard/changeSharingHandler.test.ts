@@ -4,12 +4,12 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
+import { TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
+import { SimpleDashboardIdentifier } from "../../../tests/SimpleDashboard.test.helpers.js";
 import { type IChangeSharing, changeSharing } from "../../commands/dashboard.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type DashboardSharingChanged } from "../../events/dashboard.js";
 import { type IDashboardCommandFailed } from "../../events/general.js";
-import { TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../fixtures/SimpleDashboard.fixtures.js";
 import { selectDashboardPermissions } from "../../store/dashboardPermissions/dashboardPermissionsSelectors.js";
 import { dashboardPermissionsActions } from "../../store/dashboardPermissions/index.js";
 import { selectDashboardShareStatus } from "../../store/meta/metaSelectors.js";

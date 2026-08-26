@@ -2,16 +2,16 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
+import { TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
+import { SimpleDashboardIdentifier } from "../../../tests/SimpleDashboard.test.helpers.js";
 import { saveDashboard, saveDashboardAs } from "../../commands/dashboard.js";
 import { addLayoutSection } from "../../commands/layout.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type DashboardCopySaved, type DashboardSaved } from "../../events/dashboard.js";
-import { TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
-import { TestInsightItem } from "../../fixtures/Layout.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../fixtures/SimpleDashboard.fixtures.js";
 import { selectDashboardTitle, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
 import { selectFilterContextIdentity } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
+import { TestInsightItem } from "../../tests/Layout.test.helpers.js";
 import { isTemporaryIdentity } from "../../utils/dashboardItemUtils.js";
 
 describe("save as dashboard handler", () => {

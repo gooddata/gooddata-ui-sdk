@@ -19,14 +19,14 @@ import { SORT_DIR_DESC } from "../constants/sort.js";
 import { DEFAULT_BASE_CHART_UICONFIG } from "../constants/uiConfig.js";
 import { newAvailableSortsGroup } from "../interfaces/SortConfig.js";
 import { type IExtendedReferencePoint } from "../interfaces/Visualization.js";
-import { multipleMetricBucketsAndCategoryReferencePoint } from "../mocks/referencePointMocks.js";
+import { multipleMetricBucketsAndCategoryReferencePoint } from "../tests/referencePointMocks.test.helpers.js";
 import {
     insightWithSingleMeasureAndStack,
     insightWithSingleMeasureAndTwoViewBy,
     insightWithSingleMeasureAndViewBy,
     insightWithSingleMeasureAndViewByAndStack,
     insightWithTwoMeasuresAndTwoViewBy,
-} from "../mocks/testMocks.js";
+} from "../tests/testMocks.test.helpers.js";
 
 import {
     createSorts,

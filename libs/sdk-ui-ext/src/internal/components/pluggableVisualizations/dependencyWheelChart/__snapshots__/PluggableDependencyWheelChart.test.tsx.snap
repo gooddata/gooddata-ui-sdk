@@ -79,6 +79,7 @@ exports[`PluggableDependencyWheelChart > dependency wheel should allow date attr
       "attribute_from": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -97,6 +98,7 @@ exports[`PluggableDependencyWheelChart > dependency wheel should allow date attr
       "attribute_to": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -215,6 +217,7 @@ exports[`PluggableDependencyWheelChart > should return reference point with one 
       "attribute_from": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -233,6 +236,7 @@ exports[`PluggableDependencyWheelChart > should return reference point with one 
       "attribute_to": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -403,6 +407,7 @@ exports[`PluggableDependencyWheelChart > should reuse one measure and order attr
       "attribute_from": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -421,6 +426,7 @@ exports[`PluggableDependencyWheelChart > should reuse one measure and order attr
       "attribute_to": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,

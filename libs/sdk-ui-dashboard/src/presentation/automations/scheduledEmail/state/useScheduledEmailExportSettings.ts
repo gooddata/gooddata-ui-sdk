@@ -282,14 +282,18 @@ export function useScheduledEmailExportSettings({
                         return exportDefinition;
                     }
 
+                    const { delimiter: _delimiter, ...restSettings } =
+                        exportDefinition.requestPayload.settings ?? {};
+                    const nextSettings =
+                        settings.delimiter === undefined
+                            ? restSettings
+                            : { ...restSettings, delimiter: settings.delimiter };
+
                     return {
                         ...exportDefinition,
                         requestPayload: {
                             ...exportDefinition.requestPayload,
-                            settings: {
-                                ...exportDefinition.requestPayload.settings,
-                                delimiter: settings.delimiter,
-                            },
+                            settings: nextSettings,
                         },
                     };
                 }),
@@ -307,14 +311,18 @@ export function useScheduledEmailExportSettings({
                         return exportDefinition;
                     }
 
+                    const { delimiter: _delimiter, ...restSettings } =
+                        exportDefinition.requestPayload.settings ?? {};
+                    const nextSettings =
+                        settings.delimiter === undefined
+                            ? restSettings
+                            : { ...restSettings, delimiter: settings.delimiter };
+
                     return {
                         ...exportDefinition,
                         requestPayload: {
                             ...exportDefinition.requestPayload,
-                            settings: {
-                                ...exportDefinition.requestPayload.settings,
-                                delimiter: settings.delimiter,
-                            },
+                            settings: nextSettings,
                         },
                     };
                 }),

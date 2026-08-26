@@ -13,7 +13,7 @@ import {
     twoAttributesTwoMeasuresEvenGroupsFristPage,
     twoAttributesTwoMeasuresEvenGroupsSecondPage,
     twoAttributesTwoMeasuresUnEvenGroups,
-} from "./GroupingProvider.fixtures.js";
+} from "./GroupingProvider.test.helpers.js";
 import { GroupingProviderFactory, type IGroupingProvider } from "./rowGroupingProvider.js";
 
 function expectBoundaries(groupingProvider: IGroupingProvider, expectedBoundaries: boolean[]) {

@@ -4,6 +4,7 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
+import { TestStash } from "../../../tests/Dashboard.test.helpers.js";
 import {
     addLayoutSection,
     addSectionItem,
@@ -12,13 +13,12 @@ import {
     replaceSectionItem,
 } from "../../commands/layout.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
+import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWithReferences,
-} from "../../fixtures/ComplexDashboard.fixtures.js";
-import { TestStash } from "../../fixtures/Dashboard.fixtures.js";
-import { TestKpiPlaceholderItem } from "../../fixtures/Layout.fixtures.js";
-import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
+} from "../../tests/ComplexDashboard.test.helpers.js";
+import { TestKpiPlaceholderItem } from "../../tests/Layout.test.helpers.js";
 
 describe("stashing", () => {
     let Tester: DashboardTester;

@@ -10,7 +10,10 @@ import { type IGridRow } from "../data/resultTypes.js";
 import { type AnyCol } from "../structure/tableDescriptorTypes.js";
 
 import { createDrillHeaders } from "./colDrillHeadersFactory.js";
-import { TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor, createTestRow } from "./drilling.fixture.js";
+import {
+    TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
+    createTestRow,
+} from "./drilling.test.helpers.js";
 
 describe("createDrillHeaders", () => {
     const TestTable = TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor;

@@ -7,12 +7,12 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { type ExplicitDrill, createIntlMock } from "@gooddata/sdk-ui";
 
-import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { type IChartConfig } from "../../../../interfaces/chartConfig.js";
 import { type IComparison } from "../../../../interfaces/comparison.js";
+import { recordedDataFacade } from "../../../../testUtils/recordings.fixture.js";
 import { type IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import { BaseHeadline } from "../headlines/baseHeadline/BaseHeadline.js";
-import { TEST_COMPARISON_TRANSFORMATIONS, TEST_DEFAULT_COMPARISON } from "../TestData.fixtures.js";
+import { TEST_COMPARISON_TRANSFORMATIONS, TEST_DEFAULT_COMPARISON } from "../tests/TestData.test.helpers.js";
 import { getComparisonBaseHeadlineData } from "../utils/ComparisonTransformationUtils.js";
 
 import { ComparisonTransformation } from "./ComparisonTransformation.js";

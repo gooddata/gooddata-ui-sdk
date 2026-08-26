@@ -20,7 +20,8 @@ export type Metadata2 =
     | Metadata18
     | Metadata21
     | Metadata24
-    | Metadata27;
+    | Metadata27
+    | Metadata30;
 /**
  * JSON schema for Gooddata Analytics
  */
@@ -116,25 +117,38 @@ export type Tags8 = string[];
  * JSON schema for Gooddata Analytics
  */
 export type Metadata12 = Metadata13 & Metadata14;
-export type Metadata14 = Dashboard;
+export type Metadata14 = ComputedAttribute;
 /**
- * A unique identifier of the dashboard.
+ * A unique identifier of the computed attribute. Must not collide with the identifier of an attribute or a label.
  */
 export type Id8 = string;
 /**
- * A list of strings - metadata tags of this dashboard.
+ * A list of strings - metadata tags of this computed attribute.
  */
 export type Tags9 = string[];
+/**
+ * JSON schema for Gooddata Analytics
+ */
+export type Metadata15 = Metadata16 & Metadata17;
+export type Metadata17 = Dashboard;
+/**
+ * A unique identifier of the dashboard.
+ */
+export type Id9 = string;
+/**
+ * A list of strings - metadata tags of this dashboard.
+ */
+export type Tags10 = string[];
 export type Widget = Widget1 | Widget2 | Widget3 | Widget4;
 export type Widget1 = VisualisationWidget;
 /**
  * A unique identifier of the widget.
  */
-export type Id9 = string;
+export type Id10 = string;
 /**
  * An id of the date dataset to be used for date filtering in this widget
  */
-export type Id10 = string;
+export type Id11 = string;
 /**
  * An interaction for current widget.
  */
@@ -247,17 +261,17 @@ export type Widget2 = RichTextWidget;
 /**
  * A unique identifier of the widget.
  */
-export type Id11 = string;
+export type Id12 = string;
 export type Widget3 = VisualizationSwitcherWidget;
 /**
  * A unique identifier of the widget.
  */
-export type Id12 = string;
+export type Id13 = string;
 export type Widget4 = ContainerWidget;
 /**
  * A unique identifier of the widget.
  */
-export type Id13 = string;
+export type Id14 = string;
 /**
  * A dashboard attribute filter
  */
@@ -405,41 +419,41 @@ export type DisplayAsLabelIdentifier3 = string;
 /**
  * An unique identifier of the plugin.
  */
-export type Id14 = string;
+export type Id15 = string;
 /**
  * An unique identifier of the plugin.
  */
-export type Id15 = string;
+export type Id16 = string;
 /**
  * A unique identifier of the tab.
  */
-export type Id16 = string;
-/**
- * JSON schema for Gooddata Analytics
- */
-export type Metadata15 = Metadata16 & Metadata17;
-export type Metadata17 = Plugin;
-/**
- * A unique identifier of the plugin.
- */
 export type Id17 = string;
-/**
- * A list of strings - metadata tags of this plugin.
- */
-export type Tags10 = string[];
 /**
  * JSON schema for Gooddata Analytics
  */
 export type Metadata18 = Metadata19 & Metadata20;
-export type Metadata20 = AttributeHierarchy;
+export type Metadata20 = Plugin;
 /**
- * A unique identifier of the attribute hierarchy.
+ * A unique identifier of the plugin.
  */
 export type Id18 = string;
 /**
- * A list of strings - metadata tags of this attribute hierarchy.
+ * A list of strings - metadata tags of this plugin.
  */
 export type Tags11 = string[];
+/**
+ * JSON schema for Gooddata Analytics
+ */
+export type Metadata21 = Metadata22 & Metadata23;
+export type Metadata23 = AttributeHierarchy;
+/**
+ * A unique identifier of the attribute hierarchy.
+ */
+export type Id19 = string;
+/**
+ * A list of strings - metadata tags of this attribute hierarchy.
+ */
+export type Tags12 = string[];
 /**
  * A attribute identifier in the form of attribute/\{id\}.
  */
@@ -447,16 +461,16 @@ export type AttributeIdentifier6 = string;
 /**
  * JSON schema for Gooddata Analytics
  */
-export type Metadata21 = Metadata22 & Metadata23;
-export type Metadata23 = Parameter;
+export type Metadata24 = Metadata25 & Metadata26;
+export type Metadata26 = Parameter;
 /**
  * A unique identifier of the parameter.
  */
-export type Id19 = string;
+export type Id20 = string;
 /**
  * A list of strings - metadata tags of this parameter.
  */
-export type Tags12 = string[];
+export type Tags13 = string[];
 /**
  * The typed definition of the parameter - its data type, default value and constraints.
  */
@@ -468,8 +482,8 @@ export type ParameterDefinition1 = StringParameterDefinition;
 /**
  * JSON schema for Gooddata Analytics
  */
-export type Metadata24 = Metadata25 & Metadata26;
-export type Metadata26 = Visualisation;
+export type Metadata27 = Metadata28 & Metadata29;
+export type Metadata29 = Visualisation;
 /**
  * JSON schema for Gooddata Analytics Visualisation
  */
@@ -504,11 +518,11 @@ export type Visualisation1 = Table;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id20 = string;
+export type Id21 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
-export type Tags13 = string[];
+export type Tags14 = string[];
 /**
  * This interface was referenced by `Fields3`'s JSON-Schema definition
  * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
@@ -801,18 +815,6 @@ export type Visualisation2 = BarChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id21 = string;
-/**
- * A list of strings - metadata tags of this visualisation.
- */
-export type Tags14 = string[];
-/**
- * JSON schema for Gooddata Analytics Visualisation
- */
-export type Visualisation3 = ColumnChart;
-/**
- * A unique identifier of the visualisation.
- */
 export type Id22 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
@@ -821,7 +823,7 @@ export type Tags15 = string[];
 /**
  * JSON schema for Gooddata Analytics Visualisation
  */
-export type Visualisation4 = LineChart;
+export type Visualisation3 = ColumnChart;
 /**
  * A unique identifier of the visualisation.
  */
@@ -833,7 +835,7 @@ export type Tags16 = string[];
 /**
  * JSON schema for Gooddata Analytics Visualisation
  */
-export type Visualisation5 = AreaChart;
+export type Visualisation4 = LineChart;
 /**
  * A unique identifier of the visualisation.
  */
@@ -845,7 +847,7 @@ export type Tags17 = string[];
 /**
  * JSON schema for Gooddata Analytics Visualisation
  */
-export type Visualisation6 = ScatterChart;
+export type Visualisation5 = AreaChart;
 /**
  * A unique identifier of the visualisation.
  */
@@ -854,11 +856,10 @@ export type Id25 = string;
  * A list of strings - metadata tags of this visualisation.
  */
 export type Tags18 = string[];
-export type EmptyBucket = null;
 /**
  * JSON schema for Gooddata Analytics Visualisation
  */
-export type Visualisation7 = BubbleChart;
+export type Visualisation6 = ScatterChart;
 /**
  * A unique identifier of the visualisation.
  */
@@ -867,10 +868,11 @@ export type Id26 = string;
  * A list of strings - metadata tags of this visualisation.
  */
 export type Tags19 = string[];
+export type EmptyBucket = null;
 /**
  * JSON schema for Gooddata Analytics Visualisation
  */
-export type Visualisation8 = PieChart;
+export type Visualisation7 = BubbleChart;
 /**
  * A unique identifier of the visualisation.
  */
@@ -882,7 +884,7 @@ export type Tags20 = string[];
 /**
  * JSON schema for Gooddata Analytics Visualisation
  */
-export type Visualisation9 = PieChart1;
+export type Visualisation8 = PieChart;
 /**
  * A unique identifier of the visualisation.
  */
@@ -894,7 +896,7 @@ export type Tags21 = string[];
 /**
  * JSON schema for Gooddata Analytics Visualisation
  */
-export type Visualisation10 = TreemapChart;
+export type Visualisation9 = PieChart1;
 /**
  * A unique identifier of the visualisation.
  */
@@ -906,7 +908,7 @@ export type Tags22 = string[];
 /**
  * JSON schema for Gooddata Analytics Visualisation
  */
-export type Visualisation11 = PyramidChart;
+export type Visualisation10 = TreemapChart;
 /**
  * A unique identifier of the visualisation.
  */
@@ -918,7 +920,7 @@ export type Tags23 = string[];
 /**
  * JSON schema for Gooddata Analytics Visualisation
  */
-export type Visualisation12 = FunnelChart;
+export type Visualisation11 = PyramidChart;
 /**
  * A unique identifier of the visualisation.
  */
@@ -930,7 +932,7 @@ export type Tags24 = string[];
 /**
  * JSON schema for Gooddata Analytics Visualisation
  */
-export type Visualisation13 = HeatmapChart;
+export type Visualisation12 = FunnelChart;
 /**
  * A unique identifier of the visualisation.
  */
@@ -942,7 +944,7 @@ export type Tags25 = string[];
 /**
  * JSON schema for Gooddata Analytics Visualisation
  */
-export type Visualisation14 = BulletChart;
+export type Visualisation13 = HeatmapChart;
 /**
  * A unique identifier of the visualisation.
  */
@@ -954,7 +956,7 @@ export type Tags26 = string[];
 /**
  * JSON schema for Gooddata Analytics Visualisation
  */
-export type Visualisation15 = WaterfallChart;
+export type Visualisation14 = BulletChart;
 /**
  * A unique identifier of the visualisation.
  */
@@ -966,7 +968,7 @@ export type Tags27 = string[];
 /**
  * JSON schema for Gooddata Analytics Visualisation
  */
-export type Visualisation16 = DependencyWheelChart;
+export type Visualisation15 = WaterfallChart;
 /**
  * A unique identifier of the visualisation.
  */
@@ -975,6 +977,18 @@ export type Id35 = string;
  * A list of strings - metadata tags of this visualisation.
  */
 export type Tags28 = string[];
+/**
+ * JSON schema for Gooddata Analytics Visualisation
+ */
+export type Visualisation16 = DependencyWheelChart;
+/**
+ * A unique identifier of the visualisation.
+ */
+export type Id36 = string;
+/**
+ * A list of strings - metadata tags of this visualisation.
+ */
+export type Tags29 = string[];
 /**
  * A from attribute in this visualisation.
  */
@@ -990,11 +1004,11 @@ export type Visualisation17 = SankeyChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id36 = string;
+export type Id37 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
-export type Tags29 = string[];
+export type Tags30 = string[];
 /**
  * A from attribute in this visualisation.
  */
@@ -1010,18 +1024,6 @@ export type Visualisation18 = HeadlineChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id37 = string;
-/**
- * A list of strings - metadata tags of this visualisation.
- */
-export type Tags30 = string[];
-/**
- * JSON schema for Gooddata Analytics Visualisation
- */
-export type Visualisation19 = ComboChart;
-/**
- * A unique identifier of the visualisation.
- */
 export type Id38 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
@@ -1030,7 +1032,7 @@ export type Tags31 = string[];
 /**
  * JSON schema for Gooddata Analytics Visualisation
  */
-export type Visualisation20 = GeoChart;
+export type Visualisation19 = ComboChart;
 /**
  * A unique identifier of the visualisation.
  */
@@ -1039,6 +1041,18 @@ export type Id39 = string;
  * A list of strings - metadata tags of this visualisation.
  */
 export type Tags32 = string[];
+/**
+ * JSON schema for Gooddata Analytics Visualisation
+ */
+export type Visualisation20 = GeoChart;
+/**
+ * A unique identifier of the visualisation.
+ */
+export type Id40 = string;
+/**
+ * A list of strings - metadata tags of this visualisation.
+ */
+export type Tags33 = string[];
 export type PushpinLocationBucket = string;
 export type LayerItem =
     | VisualizationDataLayer
@@ -1063,25 +1077,13 @@ export type LayerItem =
 /**
  * A unique identifier of the visualization data layer.
  */
-export type Id40 = string;
+export type Id41 = string;
 export type LocationBucket = string;
 export type GeoAreaBucket = string;
 /**
  * JSON schema for Gooddata Analytics Visualisation
  */
 export type Visualisation21 = GeoAreaChart;
-/**
- * A unique identifier of the visualisation.
- */
-export type Id41 = string;
-/**
- * A list of strings - metadata tags of this visualisation.
- */
-export type Tags33 = string[];
-/**
- * JSON schema for Gooddata Analytics Visualisation
- */
-export type Visualisation22 = RepeaterChart;
 /**
  * A unique identifier of the visualisation.
  */
@@ -1093,7 +1095,7 @@ export type Tags34 = string[];
 /**
  * JSON schema for Gooddata Analytics Visualisation
  */
-export type Visualisation23 = RadarChart;
+export type Visualisation22 = RepeaterChart;
 /**
  * A unique identifier of the visualisation.
  */
@@ -1103,10 +1105,22 @@ export type Id43 = string;
  */
 export type Tags35 = string[];
 /**
+ * JSON schema for Gooddata Analytics Visualisation
+ */
+export type Visualisation23 = RadarChart;
+/**
+ * A unique identifier of the visualisation.
+ */
+export type Id44 = string;
+/**
+ * A list of strings - metadata tags of this visualisation.
+ */
+export type Tags36 = string[];
+/**
  * JSON schema for Gooddata Analytics
  */
-export type Metadata27 = Metadata28 & Metadata29;
-export type Metadata29 = {
+export type Metadata30 = Metadata31 & Metadata32;
+export type Metadata32 = {
     [k: string]: unknown;
 };
 
@@ -1115,6 +1129,7 @@ export interface Metadata1 {
         | "dataset"
         | "date"
         | "metric"
+        | "computed_attribute"
         | "dashboard"
         | "plugin"
         | "table"
@@ -1149,6 +1164,7 @@ export interface Metadata4 {
         | "dataset"
         | "date"
         | "metric"
+        | "computed_attribute"
         | "dashboard"
         | "plugin"
         | "table"
@@ -1611,6 +1627,7 @@ export interface Metadata7 {
         | "dataset"
         | "date"
         | "metric"
+        | "computed_attribute"
         | "dashboard"
         | "plugin"
         | "table"
@@ -1697,6 +1714,7 @@ export interface Metadata10 {
         | "dataset"
         | "date"
         | "metric"
+        | "computed_attribute"
         | "dashboard"
         | "plugin"
         | "table"
@@ -1761,6 +1779,63 @@ export interface Metadata13 {
         | "dataset"
         | "date"
         | "metric"
+        | "computed_attribute"
+        | "dashboard"
+        | "plugin"
+        | "table"
+        | "bar_chart"
+        | "column_chart"
+        | "line_chart"
+        | "area_chart"
+        | "scatter_chart"
+        | "bubble_chart"
+        | "pie_chart"
+        | "donut_chart"
+        | "treemap_chart"
+        | "pyramid_chart"
+        | "funnel_chart"
+        | "heatmap_chart"
+        | "bullet_chart"
+        | "waterfall_chart"
+        | "dependency_wheel_chart"
+        | "sankey_chart"
+        | "headline_chart"
+        | "combo_chart"
+        | "geo_chart"
+        | "geo_area_chart"
+        | "repeater_chart"
+        | "radar_chart"
+        | "attribute_hierarchy"
+        | "parameter";
+    [k: string]: unknown;
+}
+export interface ComputedAttribute {
+    id: Id8;
+    type: "computed_attribute";
+    /**
+     * An optional human readable title for the computed attribute. Will be derived from id if not provided explicitly.
+     */
+    title?: string;
+    /**
+     * An optional description of the computed attribute.
+     */
+    description?: string;
+    tags?: Tags9;
+    /**
+     * Define MAQL syntax for the computed attribute. Values are assigned with break points written as CASE WHEN branches over a metric, and the first matching branch wins.
+     */
+    maql: string;
+    /**
+     * An optional locale whose collation order the computed values are sorted by.
+     */
+    locale?: string;
+}
+export interface Metadata16 {
+    type:
+        | "dataset"
+        | "date"
+        | "metric"
+        | "computed_attribute"
         | "dashboard"
         | "plugin"
         | "table"
@@ -1791,7 +1866,7 @@ export interface Metadata13 {
     [k: string]: unknown;
 }
 export interface Dashboard {
-    id: Id8;
+    id: Id9;
     type: "dashboard";
     /**
      * Dashboard model version. "2" (default if omitted) — legacy shape: root-level sections/filters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. "3" — clean shape: tabs are the sole source of layout and filters; root sections/filters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use "3" for new dashboards; "2" exists to keep existing files round-trippable.
@@ -1805,7 +1880,7 @@ export interface Dashboard {
      * An optional description of the dashboard.
      */
     description?: string;
-    tags?: Tags9;
+    tags?: Tags10;
     /**
      * Whether cross filtering is enabled for this dashboard. Defaults to true.
      */
@@ -1841,7 +1916,7 @@ export interface Dashboard {
      */
     plugins?: (
         | {
-              id: Id14;
+              id: Id15;
               /**
                * Parameter that will be passed to the plugin. Everything other than string will be serialized to JSON automatically.
                */
@@ -1849,7 +1924,7 @@ export interface Dashboard {
                   [k: string]: unknown;
               };
           }
-        | Id15
+        | Id16
     )[];
     /**
      * A list of tabs in this dashboard. Each tab has its own layout, filters, and filter configurations. Mutually exclusive with sections and filters at dashboard level.
@@ -1896,7 +1971,7 @@ export interface Section {
     widgets: Widget[];
 }
 export interface VisualisationWidget {
-    id?: Id9;
+    id?: Id10;
     /**
      * An id of the visualization to be rendered with the widget
      */
@@ -1911,7 +1986,7 @@ export interface VisualisationWidget {
      * An optional height of the widget in the grid, each row being ~20px high
      */
     rows?: number;
-    date?: Id10;
+    date?: Id11;
     /**
      * A list of dashboard filters to be ignored for this widget
      */
@@ -2008,7 +2083,7 @@ export interface IgnoredDrillDownIntersection {
     [k: string]: unknown;
 }
 export interface RichTextWidget {
-    id?: Id11;
+    id?: Id12;
     /**
      * A markdown content of the widget
      */
@@ -2023,7 +2098,7 @@ export interface RichTextWidget {
     rows?: number;
 }
 export interface VisualizationSwitcherWidget {
-    id?: Id12;
+    id?: Id13;
     /**
      * An optional width of the widget in the grid, total width being 12 columns
      */
@@ -2038,7 +2113,7 @@ export interface VisualizationSwitcherWidget {
     visualizations: VisualisationWidget1[];
 }
 export interface VisualisationWidget1 {
-    id?: Id9;
+    id?: Id10;
     /**
      * An id of the visualization to be rendered with the widget
      */
@@ -2053,7 +2128,7 @@ export interface VisualisationWidget1 {
      * An optional height of the widget in the grid, each row being ~20px high
      */
     rows?: number;
-    date?: Id10;
+    date?: Id11;
     /**
      * A list of dashboard filters to be ignored for this widget
      */
@@ -2077,7 +2152,7 @@ export interface VisualisationWidget1 {
     ignored_cross_filtering?: boolean;
 }
 export interface ContainerWidget {
-    container: Id13;
+    container: Id14;
     /**
      * An optional width of the widget within the grid. When the parent container's direction is set to 'row', widget widths can vary up to the width of the container. Widgets are placed next to each other and wrap to the next row when their combined width exceeds that of the container. When the direction is set to 'column', the width does not need to be set, or it should match the width of the container.
      */
@@ -2268,7 +2343,7 @@ export interface DashboardFilterGroup {
     type: "date_filter" | "attribute_filter" | "text_filter" | "metric_value_filter" | "filter_group";
 }
 export interface Tab {
-    id: Id16;
+    id: Id17;
     /**
      * Display title for the tab.
      */
@@ -2306,11 +2381,12 @@ export interface Permission {
     user_groups?: string[];
     [k: string]: unknown;
 }
-export interface Metadata16 {
+export interface Metadata19 {
     type:
         | "dataset"
         | "date"
         | "metric"
+        | "computed_attribute"
         | "dashboard"
         | "plugin"
         | "table"
@@ -2341,7 +2417,7 @@ export interface Metadata16 {
     [k: string]: unknown;
 }
 export interface Plugin {
-    id: Id17;
+    id: Id18;
     type: "plugin";
     /**
      * An optional human readable title for the plugin. Will be derived from id if not provided explicitly.
@@ -2351,17 +2427,18 @@ export interface Plugin {
      * An optional description of the plugin.
      */
     description?: string;
-    tags?: Tags10;
+    tags?: Tags11;
     /**
      * URL of the plugin.
      */
     url: string;
 }
-export interface Metadata19 {
+export interface Metadata22 {
     type:
         | "dataset"
         | "date"
         | "metric"
+        | "computed_attribute"
         | "dashboard"
         | "plugin"
         | "table"
@@ -2392,7 +2469,7 @@ export interface Metadata19 {
     [k: string]: unknown;
 }
 export interface AttributeHierarchy {
-    id: Id18;
+    id: Id19;
     type: "attribute_hierarchy";
     /**
      * An optional human readable title for the attribute hierarchy. Will be derived from id if not provided explicitly.
@@ -2402,17 +2479,18 @@ export interface AttributeHierarchy {
      * An optional description of the attribute hierarchy.
      */
     description?: string;
-    tags?: Tags11;
+    tags?: Tags12;
     /**
      * A list of sorted attributes use in attribute hierarchy. The first attribute is the top level attribute.
      */
     attributes: [AttributeIdentifier6, ...AttributeIdentifier6[]];
 }
-export interface Metadata22 {
+export interface Metadata25 {
     type:
         | "dataset"
         | "date"
         | "metric"
+        | "computed_attribute"
         | "dashboard"
         | "plugin"
         | "table"
@@ -2443,7 +2521,7 @@ export interface Metadata22 {
     [k: string]: unknown;
 }
 export interface Parameter {
-    id: Id19;
+    id: Id20;
     type: "parameter";
     /**
      * An optional human readable title for the parameter. Will be derived from id if not provided explicitly.
@@ -2453,7 +2531,7 @@ export interface Parameter {
      * An optional description of the parameter.
      */
     description?: string;
-    tags?: Tags12;
+    tags?: Tags13;
     definition: ParameterDefinition;
 }
 /**
@@ -2494,11 +2572,12 @@ export interface ParameterAllowedValue {
      */
     title?: string;
 }
-export interface Metadata25 {
+export interface Metadata28 {
     type:
         | "dataset"
         | "date"
         | "metric"
+        | "computed_attribute"
         | "dashboard"
         | "plugin"
         | "table"
@@ -2533,7 +2612,7 @@ export interface Table {
      * Type of visualisation.
      */
     type: "table";
-    id: Id20;
+    id: Id21;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -2542,7 +2621,7 @@ export interface Table {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags13;
+    tags?: Tags14;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -3580,7 +3659,7 @@ export interface BarChart {
      * Type of visualisation.
      */
     type: "bar_chart";
-    id: Id21;
+    id: Id22;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -3589,7 +3668,7 @@ export interface BarChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags14;
+    tags?: Tags15;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -3959,7 +4038,7 @@ export interface ColumnChart {
      * Type of visualisation.
      */
     type: "column_chart";
-    id: Id22;
+    id: Id23;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -3968,7 +4047,7 @@ export interface ColumnChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags15;
+    tags?: Tags16;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -4338,7 +4417,7 @@ export interface LineChart {
      * Type of visualisation.
      */
     type: "line_chart";
-    id: Id23;
+    id: Id24;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -4347,7 +4426,7 @@ export interface LineChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags16;
+    tags?: Tags17;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -4717,7 +4796,7 @@ export interface AreaChart {
      * Type of visualisation.
      */
     type: "area_chart";
-    id: Id24;
+    id: Id25;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -4726,7 +4805,7 @@ export interface AreaChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags17;
+    tags?: Tags18;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -5096,7 +5175,7 @@ export interface ScatterChart {
      * Type of visualisation.
      */
     type: "scatter_chart";
-    id: Id25;
+    id: Id26;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -5105,7 +5184,7 @@ export interface ScatterChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags18;
+    tags?: Tags19;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -5475,7 +5554,7 @@ export interface BubbleChart {
      * Type of visualisation.
      */
     type: "bubble_chart";
-    id: Id26;
+    id: Id27;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -5484,7 +5563,7 @@ export interface BubbleChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags19;
+    tags?: Tags20;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -5854,7 +5933,7 @@ export interface PieChart {
      * Type of visualisation.
      */
     type: "pie_chart";
-    id: Id27;
+    id: Id28;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -5863,7 +5942,7 @@ export interface PieChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags20;
+    tags?: Tags21;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -6229,7 +6308,7 @@ export interface PieChart1 {
      * Type of visualisation.
      */
     type: "donut_chart";
-    id: Id28;
+    id: Id29;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -6238,7 +6317,7 @@ export interface PieChart1 {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags21;
+    tags?: Tags22;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -6604,7 +6683,7 @@ export interface TreemapChart {
      * Type of visualisation.
      */
     type: "treemap_chart";
-    id: Id29;
+    id: Id30;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -6613,7 +6692,7 @@ export interface TreemapChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags22;
+    tags?: Tags23;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -6979,7 +7058,7 @@ export interface PyramidChart {
      * Type of visualisation.
      */
     type: "pyramid_chart";
-    id: Id30;
+    id: Id31;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -6988,7 +7067,7 @@ export interface PyramidChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags23;
+    tags?: Tags24;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -7354,7 +7433,7 @@ export interface FunnelChart {
      * Type of visualisation.
      */
     type: "funnel_chart";
-    id: Id31;
+    id: Id32;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -7363,7 +7442,7 @@ export interface FunnelChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags24;
+    tags?: Tags25;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -7729,7 +7808,7 @@ export interface HeatmapChart {
      * Type of visualisation.
      */
     type: "heatmap_chart";
-    id: Id32;
+    id: Id33;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -7738,7 +7817,7 @@ export interface HeatmapChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags25;
+    tags?: Tags26;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -8112,7 +8191,7 @@ export interface BulletChart {
      * Type of visualisation.
      */
     type: "bullet_chart";
-    id: Id33;
+    id: Id34;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -8121,7 +8200,7 @@ export interface BulletChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags26;
+    tags?: Tags27;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -8487,7 +8566,7 @@ export interface WaterfallChart {
      * Type of visualisation.
      */
     type: "waterfall_chart";
-    id: Id34;
+    id: Id35;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -8496,7 +8575,7 @@ export interface WaterfallChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags27;
+    tags?: Tags28;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -8862,7 +8941,7 @@ export interface DependencyWheelChart {
      * Type of visualisation.
      */
     type: "dependency_wheel_chart";
-    id: Id35;
+    id: Id36;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -8871,7 +8950,7 @@ export interface DependencyWheelChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags28;
+    tags?: Tags29;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -9239,7 +9318,7 @@ export interface SankeyChart {
      * Type of visualisation.
      */
     type: "sankey_chart";
-    id: Id36;
+    id: Id37;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -9248,7 +9327,7 @@ export interface SankeyChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags29;
+    tags?: Tags30;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -9616,7 +9695,7 @@ export interface HeadlineChart {
      * Type of visualisation.
      */
     type: "headline_chart";
-    id: Id37;
+    id: Id38;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -9625,7 +9704,7 @@ export interface HeadlineChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags30;
+    tags?: Tags31;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -9991,7 +10070,7 @@ export interface ComboChart {
      * Type of visualisation.
      */
     type: "combo_chart";
-    id: Id38;
+    id: Id39;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -10000,7 +10079,7 @@ export interface ComboChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags31;
+    tags?: Tags32;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -10366,7 +10445,7 @@ export interface GeoChart {
      * Type of visualisation.
      */
     type: "geo_chart";
-    id: Id39;
+    id: Id40;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -10375,7 +10454,7 @@ export interface GeoChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags32;
+    tags?: Tags33;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -10741,7 +10820,7 @@ export interface VisualisationConfig19 {
     [k: string]: unknown;
 }
 export interface VisualizationDataLayer {
-    id: Id40;
+    id: Id41;
     /**
      * An optional human readable title for the layer. Will be derived from id if not provided explicitly.
      */
@@ -11097,7 +11176,7 @@ export interface GeoAreaChart {
      * Type of visualisation.
      */
     type: "geo_area_chart";
-    id: Id41;
+    id: Id42;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -11106,7 +11185,7 @@ export interface GeoAreaChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags33;
+    tags?: Tags34;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -11476,7 +11555,7 @@ export interface RepeaterChart {
      * Type of visualisation.
      */
     type: "repeater_chart";
-    id: Id42;
+    id: Id43;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -11485,7 +11564,7 @@ export interface RepeaterChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags34;
+    tags?: Tags35;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -11859,7 +11938,7 @@ export interface RadarChart {
      * Type of visualisation.
      */
     type: "radar_chart";
-    id: Id43;
+    id: Id44;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -11868,7 +11947,7 @@ export interface RadarChart {
      * An optional description of the visualisation.
      */
     description?: string;
-    tags?: Tags35;
+    tags?: Tags36;
     /**
      * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
      */
@@ -12229,11 +12308,12 @@ export interface VisualisationConfig23 {
     };
     [k: string]: unknown;
 }
-export interface Metadata28 {
+export interface Metadata31 {
     type:
         | "dataset"
         | "date"
         | "metric"
+        | "computed_attribute"
         | "dashboard"
         | "plugin"
         | "table"

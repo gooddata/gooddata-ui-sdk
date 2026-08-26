@@ -5,7 +5,7 @@ import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { type DataViewFacade, type IHeaderPredicate } from "@gooddata/sdk-ui";
 
-import { recordedDataFacade } from "../../../../testUtils/recordings.js";
+import { recordedDataFacade } from "../../../testUtils/recordings.fixture.js";
 import {
     PARENT_ATTRIBUTE_INDEX,
     PRIMARY_ATTRIBUTE_INDEX,

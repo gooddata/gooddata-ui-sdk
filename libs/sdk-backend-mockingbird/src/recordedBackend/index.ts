@@ -44,6 +44,7 @@ import {
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
     type IWorkspaceCatalogFactory,
+    type IWorkspaceComputedAttributesService,
     type IWorkspaceDashboardsService,
     type IWorkspaceDatasetsService,
     type IWorkspaceDescriptor,
@@ -242,6 +243,9 @@ function recordedWorkspace(
         },
         parameters(): IWorkspaceParametersService {
             return new RecordedParameters();
+        },
+        computedAttributes(): IWorkspaceComputedAttributesService {
+            throw new NotSupported("not supported");
         },
         facts(): IWorkspaceFactsService {
             return new RecordedFacts();

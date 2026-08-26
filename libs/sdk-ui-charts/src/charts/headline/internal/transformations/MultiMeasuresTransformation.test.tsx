@@ -6,9 +6,9 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { type ExplicitDrill, withIntlForTest } from "@gooddata/sdk-ui";
 
-import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
+import { recordedDataFacade } from "../../../../testUtils/recordings.fixture.js";
 import { type IHeadlineTransformationProps } from "../../HeadlineProvider.js";
-import { TEST_MULTI_MEASURE_TRANSFORMATION } from "../TestData.fixtures.js";
+import { TEST_MULTI_MEASURE_TRANSFORMATION } from "../tests/TestData.test.helpers.js";
 
 vi.mock("../headlines/baseHeadline/BaseHeadline.js", async (importOriginal) => {
     const original = await importOriginal();

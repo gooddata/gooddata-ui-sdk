@@ -59,3 +59,47 @@ describe("convertInsight with parameter values", () => {
         expect(restored.insight.parameters).toEqual(params);
     });
 });
+
+describe("convertInsight with a computed attribute", () => {
+    it("should persist a computed attribute in the buckets by its own type", () => {
+        // A computed attribute reaches the insight as an attribute whose display form ref carries
+        // the COMPUTED ATTRIBUTE type - it has no real labels, so the fabricated display form
+        // points at the computed attribute itself.
+        const insight: IInsight = {
+            insight: {
+                ...emptyInsight.insight,
+                buckets: [
+                    {
+                        localIdentifier: "view",
+                        items: [
+                            {
+                                attribute: {
+                                    localIdentifier: "ca1",
+                                    displayForm: idRef("rep_performance", "computedAttribute"),
+                                },
+                            },
+                        ],
+                    },
+                ],
+            },
+        };
+
+        const tigerObj = convertInsight(insight);
+
+        expect(tigerObj.buckets).toEqual([
+            {
+                localIdentifier: "view",
+                items: [
+                    {
+                        attribute: {
+                            localIdentifier: "ca1",
+                            displayForm: {
+                                identifier: { id: "rep_performance", type: "computedAttribute" },
+                            },
+                        },
+                    },
+                ],
+            },
+        ]);
+    });
+});

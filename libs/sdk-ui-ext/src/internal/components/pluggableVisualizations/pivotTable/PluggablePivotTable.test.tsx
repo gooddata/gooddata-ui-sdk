@@ -40,13 +40,13 @@ import {
     tableWithMultipleMeasuresRowsAndColumns,
     tableWithNativeTotal,
     tableWithRowColTotalAndRankingFilter,
-} from "../../../mocks/referencePointMocks.js";
-import { dummyInsight, emptyInsight } from "../../../mocks/testMocks.js";
+} from "../../../tests/referencePointMocks.test.helpers.js";
+import { dummyInsight, emptyInsight } from "../../../tests/testMocks.test.helpers.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
 import { createDrillEvent, getLastRenderEl } from "../pluggableVisualizations.test.helpers.js";
 
-import { getInsightWithDrillDownApplied } from "./getInsightWithDrillDownAppliedMock.js";
-import { getMockReferencePoint } from "./mockReferencePoint.js";
+import { getInsightWithDrillDownApplied } from "./getInsightWithDrillDownAppliedMock.test.helpers.js";
+import { getMockReferencePoint } from "./mockReferencePoint.test.helpers.js";
 import {
     PluggablePivotTable,
     createPivotTableConfig,
@@ -61,7 +61,7 @@ import {
     invalidMeasureSortTooManyLocators,
     validAttributeSort,
     validMeasureSort,
-} from "./sortMocks.js";
+} from "./sortMocks.test.helpers.js";
 import {
     invalidAttributeColumnWidthItem,
     invalidMeasureColumnWidthItem,
@@ -71,7 +71,7 @@ import {
     transformedWeakMeasureColumnWidth,
     validAttributeColumnWidthItem,
     validMeasureColumnWidthItem,
-} from "./widthItemsMock.js";
+} from "./widthItemsMock.test.helpers.js";
 
 describe("PluggablePivotTable", () => {
     const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];

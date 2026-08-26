@@ -2,8 +2,6 @@
 
 Pluggable application module for **gdc-app-template-name**.
 
-This is a template. Run `rush init-pluggable-app` to scaffold a new application from it.
-
 ## Structure
 
 - `src/pluggableApp.tsx` — mount/unmount lifecycle, forwards `onEvent` and `onTelemetryEvent` callbacks

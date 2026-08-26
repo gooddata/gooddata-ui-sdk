@@ -6,8 +6,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
-import { recordedDataFacade } from "../../../testUtils/recordings.js";
 import { type ICoreChartProps } from "../../interfaces/chartProps.js";
+import { recordedDataFacade } from "../../testUtils/recordings.fixture.js";
 
 import { CoreHeadline, type ICoreHeadlineExtendedProps } from "./CoreHeadline.js";
 

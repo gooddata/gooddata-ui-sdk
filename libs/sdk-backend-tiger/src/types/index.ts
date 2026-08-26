@@ -20,7 +20,14 @@ export type TigerAuthenticatedCallGuard = AuthenticatedCallGuard<ITigerClientBas
  *
  * @public
  */
-export type TigerAfmType = "label" | "metric" | "dataset" | "fact" | "attribute" | "prompt";
+export type TigerAfmType =
+    | "label"
+    | "metric"
+    | "dataset"
+    | "fact"
+    | "attribute"
+    | "computedAttribute"
+    | "prompt";
 
 /**
  * Tiger metadata types

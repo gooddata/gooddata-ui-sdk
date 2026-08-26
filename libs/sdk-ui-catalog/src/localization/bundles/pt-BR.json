@@ -10,7 +10,7 @@
     "analyticsCatalog.objectType.fact.button.ariaLabel": "Fato: {count}",
     "analyticsCatalog.objectType.attribute.button.ariaLabel": "Atributo: {count}",
     "analyticsCatalog.objectType.dateDataset.button.ariaLabel": "Conjunto de dados de data: {count}",
-    "analyticsCatalog.objectType.dashboard.name": "Dashboard",
+    "analyticsCatalog.objectType.dashboard.name": "Painel",
     "analyticsCatalog.objectType.visualization.name": "Visualização",
     "analyticsCatalog.objectType.metric.name": "Métrica",
     "analyticsCatalog.objectType.attribute.name": "Atributo",

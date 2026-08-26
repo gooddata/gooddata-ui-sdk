@@ -11,10 +11,10 @@ import {
     isDashboardMatchAttributeFilter,
 } from "@gooddata/sdk-model";
 
+import { TestCorrelation } from "../../../../tests/Dashboard.test.helpers.js";
+import { SimpleDashboardIdentifier } from "../../../../tests/SimpleDashboard.test.helpers.js";
 import { addTextAttributeFilter } from "../../../commands/filters.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../DashboardTester.js";
-import { TestCorrelation } from "../../../fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../../fixtures/SimpleDashboard.fixtures.js";
 import { selectFilterContextAttributeFilterItemByDisplayForm } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 
 describe("addTextAttributeFilterHandler", () => {

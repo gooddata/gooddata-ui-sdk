@@ -425,6 +425,7 @@ export const objectTypeToTigerIdType: {
     attributeHierarchy: TigerObjectType;
     automation: TigerObjectType;
     colorPalette: TigerObjectType;
+    computedAttribute: TigerObjectType;
     dashboardPlugin: TigerObjectType;
     dataSet: TigerObjectType;
     dateAttributeHierarchy: TigerObjectType;
@@ -474,7 +475,7 @@ export type ScanSqlResult = ScanSqlResponse;
 export type SetJwtCallback = (jwt: string, secondsBeforeTokenExpirationToCallReminder?: number) => void;
 
 // @public
-export type TigerAfmType = "label" | "metric" | "dataset" | "fact" | "attribute" | "prompt";
+export type TigerAfmType = "label" | "metric" | "dataset" | "fact" | "attribute" | "computedAttribute" | "prompt";
 
 // @public
 export abstract class TigerAuthProviderBase implements IAuthenticationProvider {

@@ -213,7 +213,7 @@ export interface AfmObjectIdentifierCoreIdentifier {
     'type': AfmObjectIdentifierCoreIdentifierTypeEnum;
 }
 
-export type AfmObjectIdentifierCoreIdentifierTypeEnum = 'attribute' | 'label' | 'fact' | 'metric';
+export type AfmObjectIdentifierCoreIdentifierTypeEnum = 'attribute' | 'label' | 'fact' | 'metric' | 'computedAttribute';
 
 /**
  * Reference to the date dataset to which the filter should be applied.
@@ -234,7 +234,7 @@ export interface AfmObjectIdentifierIdentifier {
     'type': AfmObjectIdentifierIdentifierTypeEnum;
 }
 
-export type AfmObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
+export type AfmObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'computedAttribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
 
 export interface AfmObjectIdentifierLabel {
     'identifier': AfmObjectIdentifierLabelIdentifier;
@@ -245,7 +245,7 @@ export interface AfmObjectIdentifierLabelIdentifier {
     'type': AfmObjectIdentifierLabelIdentifierTypeEnum;
 }
 
-export type AfmObjectIdentifierLabelIdentifierTypeEnum = 'label';
+export type AfmObjectIdentifierLabelIdentifierTypeEnum = 'label' | 'computedAttribute';
 
 /**
  * Reference to the parameter.

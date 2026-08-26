@@ -14,7 +14,7 @@ import {
     TEST_EXECUTION_FACTORY,
     TEST_FILTERS,
     TEST_SORT_ITEMS,
-} from "./TestData.fixtures.js";
+} from "./TestData.test.helpers.js";
 
 describe("ComparisonProvider", () => {
     const newProvider = (comparison: IComparison) => {

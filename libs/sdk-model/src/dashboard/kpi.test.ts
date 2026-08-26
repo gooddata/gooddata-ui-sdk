@@ -4,8 +4,8 @@ import { describe, expect, it } from "vitest";
 
 import { InvalidInputTestCases } from "../../__mocks__/typeGuards.js";
 
-import { kpiWithComparison, kpiWithoutComparison } from "./kpi.fixtures.js";
 import { isKpiWithComparison, isKpiWithoutComparison } from "./kpi.js";
+import { kpiWithComparison, kpiWithoutComparison } from "./kpi.test.helpers.js";
 
 describe("kpi type guards", () => {
     describe("isKpiWithComparison", () => {

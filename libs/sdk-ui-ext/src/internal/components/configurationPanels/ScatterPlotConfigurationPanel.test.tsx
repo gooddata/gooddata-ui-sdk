@@ -7,7 +7,7 @@ import { describe, expect, it } from "vitest";
 import { type IInsightDefinition, newMeasure } from "@gooddata/sdk-model";
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { insightWithSingleAttribute } from "../../mocks/testMocks.js";
+import { insightWithSingleAttribute } from "../../tests/testMocks.test.helpers.js";
 
 import { type IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
 import { ScatterPlotConfigurationPanel } from "./ScatterPlotConfigurationPanel.js";

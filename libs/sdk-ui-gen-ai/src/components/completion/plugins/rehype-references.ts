@@ -34,6 +34,9 @@ export function rehypeReferences(references: TextContentObject[], tokens: string
                                     visualization: obj.type === "visualization",
                                 }),
                                 style: {},
+                                "data-id": obj.id,
+                                "data-type": obj.type,
+                                tabIndex: 0,
                             },
                             position: text?.position ?? undefined,
                             children: [

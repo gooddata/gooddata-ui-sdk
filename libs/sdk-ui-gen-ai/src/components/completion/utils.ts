@@ -9,7 +9,9 @@ import {
     type IAttributeDisplayFormMetadataObject,
     type ICatalogDateAttribute,
     type IDataSetMetadataObject,
+    type IMetadataObjectBase,
     type ObjRef,
+    type ObjectType,
     isAttributeDisplayFormMetadataObject,
     isCatalogAttribute,
     isCatalogDateAttribute,
@@ -301,6 +303,34 @@ export function getCatalogItemTitle(
     return "Unknown Item";
 }
 
+// Utility: Get catalog item description
+export function getCatalogItemDescription(
+    item: CatalogItem | ICatalogDateAttribute | IAttributeDisplayFormMetadataObject | IDataSetMetadataObject,
+) {
+    if (isCatalogFact(item)) {
+        return item.fact.description;
+    }
+    if (isCatalogAttribute(item)) {
+        return item.attribute.description;
+    }
+    if (isCatalogMeasure(item)) {
+        return item.measure.description;
+    }
+    if (isCatalogDateDataset(item)) {
+        return item.dataSet.description;
+    }
+    if (isCatalogDateAttribute(item)) {
+        return item.attribute.description;
+    }
+    if (isAttributeDisplayFormMetadataObject(item)) {
+        return item.description;
+    }
+    if (isDataSetMetadataObject(item)) {
+        return item.description;
+    }
+    return undefined;
+}
+
 // Utility: Get a catalog item type
 export function getCatalogItemType(
     item: CatalogItem | ICatalogDateAttribute | IAttributeDisplayFormMetadataObject | IDataSetMetadataObject,
@@ -375,4 +405,73 @@ export function matchTags(item: CatalogItem, includeTags?: string[], excludeTags
         return hasIncludeTags && !hasExcludeTags;
     }
     return true;
+}
+
+// Utility: Get object type by ref type
+export function getObjectTypeByRefType(type: TextContentObject["type"]): ObjectType {
+    switch (type) {
+        case "metric":
+            return "measure";
+        case "dataset":
+            return "dataSet";
+        case "label":
+            return "displayForm";
+        case "date":
+            return "dataSet";
+        case "dashboard":
+            return "analyticalDashboard";
+        case "visualization":
+            return "insight";
+        default:
+            return type;
+    }
+}
+
+export type IMetadataObjectBaseWithId = IMetadataObjectBase & { id: string };
+
+// Utility: Find catalog item or reference
+export function findCatalogItemOrReference(
+    references: TextContentObject[],
+    catalogItems: CatalogItem[],
+    id: string,
+    type: string,
+): IMetadataObjectBaseWithId | undefined {
+    const ref = references
+        .filter((r) => r.id === id && r.type === type)
+        .reduce<IMetadataObjectBaseWithId | undefined>((_, curr) => {
+            return {
+                type: getObjectTypeByRefType(curr.type),
+                id: curr.id,
+                title: curr.title,
+                description: "",
+                deprecated: false,
+                production: true,
+                unlisted: false,
+            };
+        }, undefined);
+
+    const catalogItem = catalogItems
+        .filter((c) => {
+            return (
+                c.type === getObjectTypeByRefType(type as TextContentObject["type"]) &&
+                getCatalogItemId(c) === id
+            );
+        })
+        .reduce<IMetadataObjectBaseWithId | undefined>((_, curr) => {
+            const type = getCatalogItemType(curr);
+            if (!type) {
+                return undefined;
+            }
+            return {
+                type: getObjectTypeByRefType(type),
+                id: getCatalogItemId(curr) ?? "",
+                title: getCatalogItemTitle(curr) ?? "",
+                description: getCatalogItemDescription(curr) ?? "",
+                deprecated: false,
+                production: true,
+                unlisted: false,
+            };
+        }, undefined);
+
+    return catalogItem ?? ref;
 }

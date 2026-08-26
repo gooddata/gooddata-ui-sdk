@@ -44,11 +44,11 @@ import {
     threeDifferentDatesReferencePoint,
     twoIdenticalDatesInRows,
     twoMeasuresOneCategoryWithStackMeasuresToPercent,
-} from "../../mocks/referencePointMocks.js";
+} from "../../tests/referencePointMocks.test.helpers.js";
 import {
     insightWithSingleMeasureAndTwoViewBy,
     insightWithTwoMeasuresAndViewBy,
-} from "../../mocks/testMocks.js";
+} from "../../tests/testMocks.test.helpers.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../utils/translations.js";
 
 import { PluggableColumnChart } from "./columnChart/PluggableColumnChart.js";
@@ -60,7 +60,7 @@ import {
     insightDefinitionWithStackBy,
     intersection,
     targetUri,
-} from "./getInsightWithDrillDownAppliedMock.js";
+} from "./getInsightWithDrillDownAppliedMock.test.helpers.js";
 import {
     createDrillDefinition,
     createDrillEvent,

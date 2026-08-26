@@ -18,6 +18,7 @@ import {
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
     type IWorkspaceCatalogFactory,
+    type IWorkspaceComputedAttributesService,
     type IWorkspaceDashboardsService,
     type IWorkspaceDatasetsService,
     type IWorkspaceDescriptor,
@@ -54,6 +55,7 @@ import { TigerAttributeHierarchiesService } from "./attributeHierarchies/index.j
 import { TigerWorkspaceAttributes } from "./attributes/index.js";
 import { TigerWorkspaceAutomationService } from "./automations/index.js";
 import { TigerWorkspaceCatalogFactory } from "./catalog/factory.js";
+import { TigerWorkspaceComputedAttributes } from "./computedAttributes/index.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "./constants.js";
 import { TigerWorkspaceDashboards } from "./dashboards/index.js";
 import { TigerDataFiltersService } from "./dataFilters/index.js";
@@ -172,6 +174,10 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
 
     public facts(): IWorkspaceFactsService {
         return new TigerWorkspaceFacts(this.authCall, this.workspace);
+    }
+
+    public computedAttributes(): IWorkspaceComputedAttributesService {
+        return new TigerWorkspaceComputedAttributes(this.authCall, this.workspace);
     }
 
     public styling(): IWorkspaceStylingService {

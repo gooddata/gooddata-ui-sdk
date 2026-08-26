@@ -4,7 +4,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { MockProvider } from "./MockProvider.js";
+import { MockProvider } from "./MockProvider.test.helpers.js";
 import {
     TEST_BUCKETS,
     TEST_DATE_FORMAT,
@@ -12,7 +12,7 @@ import {
     TEST_EXECUTION_FACTORY,
     TEST_FILTERS,
     TEST_SORT_ITEMS,
-} from "./TestData.fixtures.js";
+} from "./TestData.test.helpers.js";
 
 describe("AbstractProvider", () => {
     const provider = new MockProvider();

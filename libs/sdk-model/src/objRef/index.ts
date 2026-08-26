@@ -40,6 +40,7 @@ export type ObjectType =
     | "measure"
     | "fact"
     | "attribute"
+    | "computedAttribute"
     | "displayForm"
     | "dataSet"
     | "tag"

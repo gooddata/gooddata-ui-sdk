@@ -9,7 +9,7 @@ import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { type ChartFillType } from "@gooddata/sdk-ui-vis-commons";
 
-import { recordedDataFacade } from "../../../../testUtils/recordings.js";
+import { recordedDataFacade } from "../../../testUtils/recordings.fixture.js";
 import { getMVS } from "../_util/helper.js";
 
 import { WaterfallChartColorStrategy } from "./waterfallChartColoring.js";

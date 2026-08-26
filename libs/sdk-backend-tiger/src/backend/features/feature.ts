@@ -906,6 +906,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableAbsoluteDateFilterGranularity,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableComputedAttributes,
+            "enableComputedAttributes",
+            "BOOLEAN",
+            FeatureFlagsValues.enableComputedAttributes,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableBusinessBriefingReportsApp,
+            "enableBusinessBriefingReportsApp",
+            "BOOLEAN",
+            FeatureFlagsValues.enableBusinessBriefingReportsApp,
+        ),
     };
 }
 

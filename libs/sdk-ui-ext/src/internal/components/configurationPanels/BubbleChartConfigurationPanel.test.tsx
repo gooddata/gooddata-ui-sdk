@@ -6,7 +6,7 @@ import { describe, expect, it } from "vitest";
 import { type IInsightDefinition, newMeasure } from "@gooddata/sdk-model";
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { insightWithSingleAttribute, insightWithSingleMeasure } from "../../mocks/testMocks.js";
+import { insightWithSingleAttribute, insightWithSingleMeasure } from "../../tests/testMocks.test.helpers.js";
 
 import { BubbleChartConfigurationPanel } from "./BubbleChartConfigurationPanel.js";
 import { type IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";

@@ -6,11 +6,11 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { DashboardAttributeFilterConfigModeValues, idRef } from "@gooddata/sdk-model";
 
+import { TestCorrelation } from "../../../../tests/Dashboard.test.helpers.js";
+import { SimpleDashboardIdentifier } from "../../../../tests/SimpleDashboard.test.helpers.js";
 import { addMeasureValueFilter } from "../../../commands/filters.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../DashboardTester.js";
 import { type IDashboardCommandFailed } from "../../../events/general.js";
-import { TestCorrelation } from "../../../fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../../fixtures/SimpleDashboard.fixtures.js";
 import { selectMeasureValueFilterConfigsModeMap } from "../../../store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
 
 describe("addMeasureValueFilterHandler", () => {

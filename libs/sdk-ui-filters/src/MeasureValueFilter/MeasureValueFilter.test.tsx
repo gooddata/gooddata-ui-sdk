@@ -11,8 +11,8 @@ import {
 } from "@gooddata/sdk-model";
 import { withIntlForTest } from "@gooddata/sdk-ui";
 
-import { MeasureValueFilterFragment as MVFDropdownFragment } from "./fragments/MeasureValueFilterDropdown.js";
 import { type IMeasureValueFilterProps, MeasureValueFilter } from "./MeasureValueFilter.js";
+import { MeasureValueFilterFragment as MVFDropdownFragment } from "./MeasureValueFilterDropdown.test.utils.js";
 
 // we cannot use factory here, it does not allow creating empty filters
 const emptyFilter: IMeasureValueFilter = {

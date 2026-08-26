@@ -6,8 +6,8 @@ import { describe, expect, it } from "vitest";
 import { type IBucket, type IInsightDefinition } from "@gooddata/sdk-model";
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { emptyInsight } from "../../mocks/testMocks.js";
-import { attributeItemA1, attributeItemA2 } from "../../mocks/visualizationObjectMocks.js";
+import { emptyInsight } from "../../tests/testMocks.test.helpers.js";
+import { attributeItemA1, attributeItemA2 } from "../../tests/visualizationObjectMocks.test.helpers.js";
 
 import { BulletChartConfigurationPanel } from "./BulletChartConfigurationPanel.js";
 import { type IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";

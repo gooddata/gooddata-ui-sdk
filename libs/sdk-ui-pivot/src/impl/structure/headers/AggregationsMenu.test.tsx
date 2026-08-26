@@ -19,7 +19,7 @@ import {
 } from "@gooddata/sdk-model";
 import { createIntlMock } from "@gooddata/sdk-ui";
 
-import { recordedDataFacade } from "../../../../testUtils/recordings.js";
+import { recordedDataFacade } from "../../../testUtils/recordings.fixture.js";
 import { AVAILABLE_TOTALS } from "../../base/constants.js";
 import { TableDescriptor } from "../tableDescriptor.js";
 

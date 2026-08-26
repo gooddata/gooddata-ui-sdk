@@ -19,7 +19,7 @@ import {
     insightWithMultipleMeasureBuckets,
     insightWithPoP,
     insightWithPoPAndAlias,
-} from "../../../testUtils/fixtures.js";
+} from "../../testUtils/dataViews.fixtures.js";
 
 import { fillMissingTitles } from "./fillMissingTitles.js";
 

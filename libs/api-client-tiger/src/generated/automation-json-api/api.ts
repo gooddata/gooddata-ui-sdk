@@ -179,7 +179,7 @@ export interface AutomationAfmObjectIdentifierCoreIdentifier {
     'type': AutomationAfmObjectIdentifierCoreIdentifierTypeEnum;
 }
 
-export type AutomationAfmObjectIdentifierCoreIdentifierTypeEnum = 'attribute' | 'label' | 'fact' | 'metric';
+export type AutomationAfmObjectIdentifierCoreIdentifierTypeEnum = 'attribute' | 'label' | 'fact' | 'metric' | 'computedAttribute';
 
 /**
  * Date dataset used for anomaly detection.
@@ -200,7 +200,7 @@ export interface AutomationAfmObjectIdentifierIdentifier {
     'type': AutomationAfmObjectIdentifierIdentifierTypeEnum;
 }
 
-export type AutomationAfmObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
+export type AutomationAfmObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'computedAttribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
 
 export interface AutomationAfmObjectIdentifierLabel {
     'identifier': AutomationAfmObjectIdentifierLabelIdentifier;
@@ -211,7 +211,7 @@ export interface AutomationAfmObjectIdentifierLabelIdentifier {
     'type': AutomationAfmObjectIdentifierLabelIdentifierTypeEnum;
 }
 
-export type AutomationAfmObjectIdentifierLabelIdentifierTypeEnum = 'label';
+export type AutomationAfmObjectIdentifierLabelIdentifierTypeEnum = 'label' | 'computedAttribute';
 
 /**
  * Reference to the parameter.

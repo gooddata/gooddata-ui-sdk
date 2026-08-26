@@ -17,12 +17,12 @@ import {
     derivedMeasureItems,
     emptyReferencePoint,
     masterMeasureItems,
-} from "../../../mocks/referencePointMocks.js";
+} from "../../../tests/referencePointMocks.test.helpers.js";
 import {
     insightWithSingleMeasure,
     insightWithSingleMeasureAndViewBy,
     insightWithSingleMeasureAndViewByAndStack,
-} from "../../../mocks/testMocks.js";
+} from "../../../tests/testMocks.test.helpers.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
 import { getLastRenderEl } from "../pluggableVisualizations.test.helpers.js";
 

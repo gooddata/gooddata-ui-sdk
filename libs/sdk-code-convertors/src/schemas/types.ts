@@ -8,6 +8,7 @@
 
 import type {
     AttributeHierarchy,
+    ComputedAttribute,
     Dashboard,
     DashboardFilters,
     Dataset,
@@ -24,6 +25,8 @@ import type {
 
 /** @public */
 export type AacAttributeHierarchy = AttributeHierarchy;
+/** @public */
+export type AacComputedAttribute = ComputedAttribute;
 /** @public */
 export type AacDashboard = Dashboard;
 /** @public */

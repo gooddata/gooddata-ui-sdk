@@ -1,5 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type ObjRef, objRefToString } from "@gooddata/sdk-model";
@@ -8,14 +10,14 @@ import { type Matcher, suppressConsole } from "@gooddata/util";
 import { selectDrillTargetsByWidgetRef } from "../drillTargets/drillTargetsSelectors.js";
 import { selectIgnoredDrillDownHierarchiesByWidgetRef } from "../tabs/layout/layoutSelectors.js";
 
+import { selectGlobalDrillsDownAttributeHierarchyByWidgetRef } from "./widgetDrillSelectors.js";
 import {
     availableDrillTargets,
     catalogAttributeHierarchies,
     ignoredHierarchies,
     widgetRef,
     widgetRefWithoutAvailableDrillTargets,
-} from "./widgetDrillSelectors.fixture.js";
-import { selectGlobalDrillsDownAttributeHierarchyByWidgetRef } from "./widgetDrillSelectors.js";
+} from "./widgetDrillSelectors.test.helpers.js";
 
 // `isolate: false` shares one module graph per worker, so the modules mocked below may already have
 // been evaluated — against their real dependencies — by a test file that ran earlier in the same

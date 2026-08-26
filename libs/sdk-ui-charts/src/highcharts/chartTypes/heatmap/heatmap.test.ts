@@ -11,11 +11,11 @@ import { type IColorPalette, type ITheme } from "@gooddata/sdk-model";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { type IColorMapping, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
-import { recordedDataFacade } from "../../../../testUtils/recordings.js";
+import { recordedDataFacade } from "../../../testUtils/recordings.fixture.js";
 import { ColorFactory } from "../_chartOptions/colorFactory.js";
 import { HEATMAP_BLUE_COLOR_PALETTE } from "../_util/color.js";
-import { CUSTOM_COLOR_PALETTE } from "../_util/colorPalette.fixture.js";
 import { getMVS } from "../_util/helper.js";
+import { CUSTOM_COLOR_PALETTE } from "../tests/colorPalette.test.helpers.js";
 
 import { HeatmapColorStrategy } from "./heatmapColoring.js";
 

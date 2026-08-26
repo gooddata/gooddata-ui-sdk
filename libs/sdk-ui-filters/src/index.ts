@@ -96,6 +96,14 @@ export { isFiscalGranularity } from "@gooddata/sdk-model";
 
 // DateFilter body types
 export type { IFilterConfigurationProps } from "./DateFilter/DateFilterBody/types.js";
+
+// PeriodRangePicker: Week/Month/Quarter/Year period grid picker (not yet wired into DateFilter)
+export { PeriodRangePicker } from "./DateFilter/PeriodRangePicker/PeriodRangePicker.js";
+export type {
+    IPeriodRange,
+    IPeriodRangePickerProps,
+    PeriodRangePickerGranularity,
+} from "./DateFilter/PeriodRangePicker/types.js";
 export {
     type IMeasureValueFilterProps,
     type IMeasureValueFilterState,

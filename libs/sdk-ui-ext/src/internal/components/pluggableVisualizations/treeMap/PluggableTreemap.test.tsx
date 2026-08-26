@@ -30,8 +30,8 @@ import {
     threeDatesInColumnChart,
     twoDatesInColumnChart,
     twoIdenticalDatesInRowsWithSingleMeasure,
-} from "../../../mocks/referencePointMocks.js";
-import { insightWithSingleMeasure } from "../../../mocks/testMocks.js";
+} from "../../../tests/referencePointMocks.test.helpers.js";
+import { insightWithSingleMeasure } from "../../../tests/testMocks.test.helpers.js";
 import { DEFAULT_MESSAGES } from "../../../utils/translations.js";
 import {
     createDrillDefinition,
@@ -39,14 +39,14 @@ import {
     getLastRenderEl,
     insightDefinitionToInsight,
 } from "../pluggableVisualizations.test.helpers.js";
-
 import {
     expectedInsightDefDepartment,
     expectedInsightDefRegion,
     intersection,
     sourceInsightDef,
     targetUri,
-} from "./getInsightWithDrillDownAppliedMock.js";
+} from "../tests/getInsightWithDrillDownAppliedMock.test.helpers.js";
+
 import { PluggableTreemap } from "./PluggableTreemap.js";
 
 const { Department, Region } = ReferenceMd;

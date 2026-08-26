@@ -12,6 +12,7 @@
 @use "conversations";
 @use "animation";
 @use "intelligence";
+@use "tooltip";
 
 .gd-gen-ai-chat__context-chooser {
     display: flex;

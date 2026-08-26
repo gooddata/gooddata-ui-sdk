@@ -5,8 +5,8 @@ import { describe, expect, it } from "vitest";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
-import { recordedDataFacade } from "../../../../testUtils/recordings.js";
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
+import { recordedDataFacade } from "../../../testUtils/recordings.fixture.js";
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { type IAxis, type IUnsafeHighchartsTooltipPoint } from "../../typings/unsafe.js";
 import { getMVS } from "../_util/helper.js";

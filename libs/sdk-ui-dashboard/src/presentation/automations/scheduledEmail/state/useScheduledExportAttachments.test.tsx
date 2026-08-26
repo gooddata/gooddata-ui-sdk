@@ -15,7 +15,6 @@ import {
     type IScheduledEmailDialogContextValue,
     ScheduledEmailDialogContextProvider,
 } from "../../contexts/ScheduledEmailDialogContext.js";
-
 import {
     AUTOMATIONS_CONTEXT,
     DRAFT_FIXTURE,
@@ -25,7 +24,8 @@ import {
     makeAutomation,
     makeDashboardExportDefinition,
     makeWidgetExportDefinition,
-} from "./fixtures.js";
+} from "../tests/scheduledEmail.test.helpers.js";
+
 import { ScheduledExportDraftContextProvider } from "./ScheduledExportDraftContext.js";
 import { useScheduledExportAttachments } from "./useScheduledExportAttachments.js";
 
@@ -118,10 +118,20 @@ describe("useScheduledExportAttachments", () => {
         expect(result.current.xlsxSettings).toEqual({ mergeHeaders: false, exportInfo: false });
     });
 
-    it("csvSettings falls back to the workspace custom delimiter when absent", () => {
+    it("csvSettings.delimiter stays undefined when no CSV export definition is present, regardless of a workspace default", () => {
         const { result } = renderAttachments(makeAutomation({ exportDefinitions: [] }), {
             settings: { exportCsvCustomDelimiter: ";" },
         });
+
+        expect(result.current.csvSettings).toEqual({ delimiter: undefined });
+    });
+
+    it("csvSettings reads the delimiter off the present CSV definition", () => {
+        const { result } = renderAttachments(
+            makeAutomation({
+                exportDefinitions: [makeWidgetExportDefinition("CSV", { settings: { delimiter: ";" } })],
+            }),
+        );
 
         expect(result.current.csvSettings).toEqual({ delimiter: ";" });
     });

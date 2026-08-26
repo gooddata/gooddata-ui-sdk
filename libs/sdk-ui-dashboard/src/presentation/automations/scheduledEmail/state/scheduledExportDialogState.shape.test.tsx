@@ -77,13 +77,13 @@ import {
     type IScheduledEmailDialogContextValue,
     ScheduledEmailDialogContextProvider,
 } from "../../contexts/ScheduledEmailDialogContext.js";
-
 import {
     AUTOMATIONS_CONTEXT,
     SCHEDULED_EMAIL_DIALOG_CONTEXT,
     SENTINEL_INSIGHT,
     SENTINEL_WIDGET,
-} from "./fixtures.js";
+} from "../tests/scheduledEmail.test.helpers.js";
+
 import { ScheduledEmailDialogStateProvider } from "./ScheduledEmailDialogStateProvider.js";
 import { useScheduledExportActions } from "./ScheduledExportActionsContext.js";
 import { useScheduledExportData } from "./ScheduledExportDataContext.js";

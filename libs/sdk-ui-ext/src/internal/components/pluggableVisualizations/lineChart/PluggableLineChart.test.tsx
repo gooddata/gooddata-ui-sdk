@@ -49,8 +49,8 @@ import {
     twoSegmentedMetricAndOneTrendByRefPoint,
     twoSegmentedMetricAndTwoTrendByRefPoint,
     wrongBucketsOrderInLineReferencePoint,
-} from "../../../mocks/referencePointMocks.js";
-import { insightWithSingleMeasure } from "../../../mocks/testMocks.js";
+} from "../../../tests/referencePointMocks.test.helpers.js";
+import { insightWithSingleMeasure } from "../../../tests/testMocks.test.helpers.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
 import {
     createDrillDefinition,
@@ -64,7 +64,7 @@ import {
     intersection,
     sourceInsightDef,
     targetUri,
-} from "../treeMap/getInsightWithDrillDownAppliedMock.js";
+} from "../tests/getInsightWithDrillDownAppliedMock.test.helpers.js";
 
 import { PluggableLineChart } from "./PluggableLineChart.js";
 

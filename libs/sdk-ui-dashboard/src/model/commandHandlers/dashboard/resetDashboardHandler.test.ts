@@ -7,17 +7,17 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { attributeDisplayFormRef } from "@gooddata/sdk-model";
 
+import { TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
+import {
+    SimpleDashboardFilterContext,
+    SimpleDashboardIdentifier,
+    SimpleDashboardLayout,
+} from "../../../tests/SimpleDashboard.test.helpers.js";
 import { renameDashboard, resetDashboard } from "../../commands/dashboard.js";
 import { addAttributeFilter } from "../../commands/filters.js";
 import { addLayoutSection } from "../../commands/layout.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardWasReset } from "../../events/dashboard.js";
-import { TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
-import {
-    SimpleDashboardFilterContext,
-    SimpleDashboardIdentifier,
-    SimpleDashboardLayout,
-} from "../../fixtures/SimpleDashboard.fixtures.js";
 import { selectDashboardTitle } from "../../store/meta/metaSelectors.js";
 import {
     selectFilterContextAttributeFilters,

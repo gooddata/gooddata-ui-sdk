@@ -969,7 +969,7 @@
     "userManagement.workspace.permission.createAutomation": "Сповіщення та заплановані експорти",
     "userManagement.workspace.permission.createAutomation.tooltip": "Додає дозвіл CREATE_AUTOMATIONS для створення автоматичних сповіщень і запланованих експортів.",
     "userManagement.workspace.permission.createMetric": "Метрики",
-    "userManagement.workspace.permission.createMetric.tooltip": "Надає дозвіл CREATE_METRIC на створення, редагування або видалення метрик.",
+    "userManagement.workspace.permission.createMetric.tooltip": "Додає дозвіл CREATE_METRIC для створення та керування новими метриками. Щоб керувати будь-якою іншою метрикою, користувачеві потрібен доступ до неї.",
     "userManagement.workspace.permission.useAiAssistant": "AI Assistant",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "Додає дозвіл USE_AI_ASSISTANT для доступу до чат-бота AI та взаємодії з ним для аналітичних запитань.",
     "userManagement.workspace.granularPermission.noWorkspace": "Робочий простір не вибрано",

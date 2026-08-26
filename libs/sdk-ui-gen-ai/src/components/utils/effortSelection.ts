@@ -9,7 +9,9 @@ export const SUPPORTED_EFFORTS = ["LOW", "MEDIUM"] as const satisfies ReadonlyAr
 
 export type SupportedEffort = (typeof SUPPORTED_EFFORTS)[number];
 
-export const DEFAULT_EFFORT: SupportedEffort = "MEDIUM";
+export const DEFAULT_EFFORT: SupportedEffort = "LOW";
+
+const DEEPEST_EFFORT: SupportedEffort = "MEDIUM";
 
 export function sanitizeEffort(effort: GenAIChatEffort | undefined): SupportedEffort | undefined {
     return SUPPORTED_EFFORTS.find((supported) => supported === effort);
@@ -27,5 +29,9 @@ export function deriveConversationEffort(
         return undefined;
     }
 
-    return sanitizeEffort(lastUserItem.reasoningEffort) ?? DEFAULT_EFFORT;
+    if (lastUserItem.reasoningEffort === undefined) {
+        return DEFAULT_EFFORT;
+    }
+
+    return sanitizeEffort(lastUserItem.reasoningEffort) ?? DEEPEST_EFFORT;
 }

@@ -18,7 +18,11 @@ import {
     newMeasure,
 } from "@gooddata/sdk-model";
 
-import { filterAvailableItems, sanitizeFiltersForValidObjects } from "./availableItemsFactory.js";
+import {
+    filterAvailableItems,
+    isComputedAttributeRef,
+    sanitizeFiltersForValidObjects,
+} from "./availableItemsFactory.js";
 
 describe("available item filtering", () => {
     describe("item filtering", () => {
@@ -47,6 +51,70 @@ describe("available item filtering", () => {
 
             expect(result).toHaveLength(1);
             expect((result[0] as ICatalogDateDataset).dataSet.id).toEqual("dt_activity_timestamp");
+        });
+    });
+
+    describe("computed attributes", () => {
+        const displayForm = {
+            type: "displayForm" as const,
+            id: "rep_performance",
+            uri: "rep_performance",
+            ref: idRef("rep_performance", "computedAttribute"),
+            title: "Rep performance",
+            description: "",
+            production: true,
+            deprecated: false,
+            unlisted: false,
+            attribute: idRef("rep_performance", "computedAttribute"),
+        };
+        const computedAttribute: CatalogItem = {
+            type: "computedAttribute",
+            groups: [],
+            computedAttribute: {
+                type: "computedAttribute",
+                ref: idRef("rep_performance", "computedAttribute"),
+                id: "rep_performance",
+                uri: "rep_performance",
+                title: "Rep performance",
+                description: "",
+                production: true,
+                deprecated: false,
+                unlisted: false,
+                expression: "SELECT 1",
+                displayForms: [displayForm],
+            },
+            defaultDisplayForm: displayForm,
+            displayForms: [displayForm],
+        };
+
+        it("should recognise a computed attribute reference for the validObjects query", () => {
+            const ids = new Set(["rep_performance"]);
+
+            // says what it is
+            expect(isComputedAttributeRef(idRef("rep_performance", "computedAttribute"), ids)).toBe(true);
+            // does NOT say what it is - an insight built before the reference carried the computed
+            // attribute type points at one as a plain label, and it must be dropped all the same
+            expect(isComputedAttributeRef(idRef("rep_performance", "displayForm"), ids)).toBe(true);
+            expect(isComputedAttributeRef(idRef("rep_performance"), ids)).toBe(true);
+            // a real attribute is untouched
+            expect(isComputedAttributeRef(idRef("region", "displayForm"), ids)).toBe(false);
+        });
+
+        it("should filter-in a computed attribute when its own ref matches", () => {
+            const result = filterAvailableItems(
+                [idRef("rep_performance", "computedAttribute")],
+                [computedAttribute],
+            );
+
+            expect(result).toEqual([computedAttribute]);
+        });
+
+        it("should filter-out a computed attribute the response does not mention", () => {
+            // the validObjects action cannot evaluate a computed attribute yet, so one never comes
+            // back in the response - which is why the factory passes them through separately
+            expect(filterAvailableItems([idRef("of_activities", "measure")], [computedAttribute])).toEqual(
+                [],
+            );
         });
     });
 

@@ -5,6 +5,7 @@
 // AAC schema types (curated public surface — isolates api-extractor from generated internals)
 export type {
     AacAttributeHierarchy,
+    AacComputedAttribute,
     AacDashboard,
     AacDashboardFilters,
     AacDataset,
@@ -42,6 +43,7 @@ export { yamlDateDatesetToDeclarative } from "./to/yamlDateDatasetToDeclarative.
 export { yamlMetricToDeclarative } from "./to/yamlMetricToDeclarative.js";
 export { yamlParameterToDeclarative } from "./to/yamlParameterToDeclarative.js";
 export { isDeclarativeStringParameter, type DeclarativeStringParameter } from "./utils/parameterUtils.js";
+export { yamlComputedAttributeToDeclarative } from "./to/yamlComputedAttributeToDeclarative.js";
 export {
     yamlVisualisationToDeclarative,
     yamlVisualisationToMetadataObject,
@@ -72,6 +74,7 @@ export { declarativeDatasetToYaml } from "./from/declarativeDatasetToYaml.js";
 export { declarativeDateInstanceToYaml } from "./from/declarativeDateInstanceToYaml.js";
 export { declarativeMetricToYaml } from "./from/declarativeMetricToYaml.js";
 export { declarativeParameterToYaml } from "./from/declarativeParameterToYaml.js";
+export { declarativeComputedAttributeToYaml } from "./from/declarativeComputedAttributeToYaml.js";
 export {
     declarativeVisualisationToYaml,
     declarativeVisTypeToYaml,
@@ -131,6 +134,7 @@ export {
     DateDatasetTypes,
     MetricTypes,
     ParameterTypes,
+    ComputedAttributeTypes,
     DashboardTypes,
     PluginTypes,
     AttributeHierarchyTypes,

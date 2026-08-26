@@ -4,12 +4,12 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
+import { SimpleDashboardIdentifier } from "../../../tests/SimpleDashboard.test.helpers.js";
 import { changeVisualizationSwitcherActiveVisualization } from "../../commands/visualizationSwitcher.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import type { IDashboardVisualizationSwitcherWidgetActiveVisualizationChanged } from "../../events/visualizationSwitcher.js";
-import { TestVisualizationSwitcherItem } from "../../fixtures/Layout.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../fixtures/SimpleDashboard.fixtures.js";
 import { selectVisualizationSwitcherActiveVisualizationByWidgetRef } from "../../store/ui/uiSelectors.js";
+import { TestVisualizationSwitcherItem } from "../../tests/Layout.test.helpers.js";
 
 describe("change visualization switcher active visualization handler", () => {
     let Tester: DashboardTester;

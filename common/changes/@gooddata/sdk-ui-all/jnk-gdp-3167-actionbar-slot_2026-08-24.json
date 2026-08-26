@@ -1,0 +1,15 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-kit: ConfirmDialogBase accepts a footerRenderer prop replacing the whole footer; the default footer is extracted into ConfirmDialogFooter (internal)",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        },
+        {
+            "comment": "sdk-ui-dashboard: Added an ActionBar slot and topContent/bottomContent props to the default alerting and scheduled email dialogs (alpha)",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

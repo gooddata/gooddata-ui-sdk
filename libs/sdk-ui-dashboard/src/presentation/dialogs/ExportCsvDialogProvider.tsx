@@ -12,7 +12,6 @@ export function ExportCsvDialogProvider() {
 
     return isOpen && dialogConfig ? (
         <ExportCsvDialog
-            initialDelimiter={dialogConfig.initialDelimiter}
             onCancel={closeDialog}
             onSubmit={(data) => {
                 closeDialog();

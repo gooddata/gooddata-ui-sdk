@@ -47,6 +47,19 @@
             "if": {
                 "properties": {
                     "type": {
+                        "const": "computed_attribute"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "/gaac/computed_attribute"
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
                         "const": "dashboard"
                     }
                 },
@@ -149,6 +162,7 @@
                     "snippets": [
                         "dataset",
                         "metric",
+                        "computed_attribute",
                         "date",
                         "dashboard",
                         "plugin",
@@ -189,6 +203,7 @@
                 "dataset",
                 "date",
                 "metric",
+                "computed_attribute",
                 "dashboard",
                 "plugin",
                 "table",

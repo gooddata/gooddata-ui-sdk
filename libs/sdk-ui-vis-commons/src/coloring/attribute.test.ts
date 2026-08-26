@@ -1,5 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceData, ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -7,11 +9,10 @@ import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { type IColorPalette, type IColorPaletteItem, type RgbType } from "@gooddata/sdk-model";
 import { type DataViewFacade, DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
 
-import { recordedDataFacade } from "../../testUtils/recordings.js";
-
 import { AttributeColorStrategy } from "./attribute.js";
 import { getRgbString } from "./color.js";
 import { getColorsFromStrategy } from "./helper.js";
+import { recordedDataFacade } from "./recordings.test.helpers.js";
 import { type IColorMapping } from "./types.js";
 
 const RgbPalette: IColorPalette = [

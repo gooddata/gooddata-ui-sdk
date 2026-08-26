@@ -21,7 +21,7 @@ import {
     availableUserGroupAccessGrantee,
     defaultUser,
     groupAll,
-} from "./GranteeMock.js";
+} from "./Grantee.test.helpers.js";
 import { type IAddGranteeSelectProps } from "./types.js";
 
 const defaultProps: IAddGranteeSelectProps = {

@@ -27,6 +27,7 @@ __all__ = [
     "yaml_dataset_to_declarative",
     "yaml_date_dataset_to_declarative",
     "yaml_metric_to_declarative",
+    "yaml_computed_attribute_to_declarative",
     "yaml_visualisation_to_declarative",
     "yaml_dashboard_to_declarative",
     "yaml_plugin_to_declarative",
@@ -35,6 +36,7 @@ __all__ = [
     "declarative_dataset_to_yaml",
     "declarative_date_instance_to_yaml",
     "declarative_metric_to_yaml",
+    "declarative_computed_attribute_to_yaml",
     "declarative_visualisation_to_yaml",
     "declarative_dashboard_to_yaml",
     "declarative_plugin_to_yaml",
@@ -60,6 +62,11 @@ def yaml_date_dataset_to_declarative(*args) -> dict:
 def yaml_metric_to_declarative(*args) -> dict:
     """Convert a parsed metric YAML dict to a declarative API dict."""
     return _call("yamlMetricToDeclarative", *args)
+
+
+def yaml_computed_attribute_to_declarative(*args) -> dict:
+    """Convert a parsed computed attribute YAML dict to a declarative API dict."""
+    return _call("yamlComputedAttributeToDeclarative", *args)
 
 
 def yaml_visualisation_to_declarative(*args) -> dict:
@@ -98,6 +105,11 @@ def declarative_date_instance_to_yaml(*args) -> dict:
 def declarative_metric_to_yaml(*args) -> dict:
     """Convert a declarative metric dict to YAML format."""
     return _call("declarativeMetricToYaml", *args)
+
+
+def declarative_computed_attribute_to_yaml(*args) -> dict:
+    """Convert a declarative computed attribute dict to YAML format."""
+    return _call("declarativeComputedAttributeToYaml", *args)
 
 
 def declarative_visualisation_to_yaml(*args) -> dict:

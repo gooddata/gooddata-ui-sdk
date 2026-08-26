@@ -4,12 +4,13 @@ import { type MetadataObject } from "../metadata/index.js";
 
 import { type ICatalogAttribute, isCatalogAttribute } from "./attribute/index.js";
 import { type ICatalogAttributeHierarchy, isCatalogAttributeHierarchy } from "./attributeHierarchy/index.js";
+import { type ICatalogComputedAttribute, isCatalogComputedAttribute } from "./computedAttribute/index.js";
 import { type ICatalogDateDataset } from "./dateDataset/index.js";
 import { type ICatalogFact, isCatalogFact } from "./fact/index.js";
 import { type ICatalogMeasure, isCatalogMeasure } from "./measure/index.js";
 
 /**
- * Type representing catalog item - attribute, measure, fact or dateDataset
+ * Type representing catalog item - attribute, measure, fact, dateDataset or computedAttribute
  *
  * @public
  */
@@ -18,7 +19,8 @@ export type CatalogItem =
     | ICatalogMeasure
     | ICatalogFact
     | ICatalogDateDataset
-    | ICatalogAttributeHierarchy;
+    | ICatalogAttributeHierarchy
+    | ICatalogComputedAttribute;
 
 /**
  * Get metadata object that catalog item represents
@@ -38,6 +40,8 @@ export const catalogItemMetadataObject = (catalogItem: CatalogItem): MetadataObj
         item = catalogItem.fact;
     } else if (isCatalogAttributeHierarchy(catalogItem)) {
         item = catalogItem.attributeHierarchy;
+    } else if (isCatalogComputedAttribute(catalogItem)) {
+        item = catalogItem.computedAttribute;
     } else {
         item = catalogItem.dataSet;
     }
@@ -54,4 +58,8 @@ export const catalogItemMetadataObject = (catalogItem: CatalogItem): MetadataObj
  *
  * @public
  */
-export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
+export type GroupableCatalogItem =
+    | ICatalogAttribute
+    | ICatalogMeasure
+    | ICatalogFact
+    | ICatalogComputedAttribute;

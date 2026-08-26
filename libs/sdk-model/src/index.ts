@@ -611,6 +611,7 @@ export {
     type IRelativeDateFilterForm,
     type IRelativeDateFilterPreset,
     type IRelativeDateFilterPresetOfGranularity,
+    DEFAULT_ABSOLUTE_DATE_FILTER_GRANULARITIES,
     isAbsoluteDateFilterForm,
     isAbsoluteDateFilterPreset,
     isAllTimeDateFilterOption,
@@ -814,6 +815,11 @@ export type { ICatalogGroup, IGroupableCatalogItemBase } from "./ldm/catalog/gro
 
 export { type ICatalogAttribute, isCatalogAttribute } from "./ldm/catalog/attribute/index.js";
 
+export {
+    type ICatalogComputedAttribute,
+    isCatalogComputedAttribute,
+} from "./ldm/catalog/computedAttribute/index.js";
+
 export { type ICatalogFact, isCatalogFact } from "./ldm/catalog/fact/index.js";
 
 export { type ICatalogMeasure, isCatalogMeasure } from "./ldm/catalog/measure/index.js";
@@ -840,6 +846,14 @@ export {
     type IDateHierarchyTemplate,
     isAttributeHierarchyMetadataObject,
 } from "./ldm/metadata/attributeHierarchy/index.js";
+export {
+    type ComputedAttributeDataType,
+    type IComputedAttributeMetadataObject,
+    type IComputedAttributeMetadataObjectBase,
+    type IComputedAttributeMetadataObjectDefinition,
+    isComputedAttributeMetadataObject,
+    isComputedAttributeMetadataObjectDefinition,
+} from "./ldm/metadata/computedAttribute/index.js";
 export { type IDashboardMetadataObject, isDashboardMetadataObject } from "./ldm/metadata/dashboard/index.js";
 export {
     type IDataSetAttributeMetadataObject,

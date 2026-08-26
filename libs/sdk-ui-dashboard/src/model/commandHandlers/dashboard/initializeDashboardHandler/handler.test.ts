@@ -8,15 +8,15 @@ import { type IDashboard, idRef } from "@gooddata/sdk-model";
 
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
 import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
-import { initializeDashboard } from "../../../commands/dashboard.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../DashboardTester.js";
-import { type DashboardInitialized } from "../../../events/dashboard.js";
 import {
     EmptyDashboardIdentifier,
     EmptyDashboardWithReferences,
     TestCorrelation,
-} from "../../../fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../../fixtures/SimpleDashboard.fixtures.js";
+} from "../../../../tests/Dashboard.test.helpers.js";
+import { SimpleDashboardIdentifier } from "../../../../tests/SimpleDashboard.test.helpers.js";
+import { initializeDashboard } from "../../../commands/dashboard.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../DashboardTester.js";
+import { type DashboardInitialized } from "../../../events/dashboard.js";
 import { selectConfig } from "../../../store/config/configSelectors.js";
 import { selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
 import { selectPermissions } from "../../../store/permissions/permissionsSelectors.js";

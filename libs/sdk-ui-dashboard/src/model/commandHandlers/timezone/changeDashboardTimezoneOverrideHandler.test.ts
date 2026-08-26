@@ -6,15 +6,15 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { BROWSER_DETECTED } from "@gooddata/sdk-model";
 
+import { TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
 import { initializeDashboard } from "../../commands/dashboard.js";
 import { changeDashboardTimezoneOverride } from "../../commands/timezone.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardTimezoneOverrideChanged } from "../../events/timezone.js";
-import { TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardNoDrillsIdentifier } from "../../fixtures/SimpleDashboardNoDrills.fixtures.js";
 import { metaActions } from "../../store/meta/index.js";
 import { selectEffectiveDashboardTimezone } from "../../store/meta/metaSelectors.js";
 import { selectTimezoneOverride } from "../../store/ui/uiSelectors.js";
+import { SimpleDashboardNoDrillsIdentifier } from "../tests/SimpleDashboardNoDrills.test.helpers.js";
 
 async function createTester(enableTimezoneChange: boolean): Promise<DashboardTester> {
     let Tester: DashboardTester;

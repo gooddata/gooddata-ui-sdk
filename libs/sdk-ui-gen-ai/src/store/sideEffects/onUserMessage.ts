@@ -550,9 +550,14 @@ function* evaluateUserConversationMessage(
     }
 
     try {
+        const currentMessages: IChatConversationLocalItem[] = yield select(
+            conversationMessagesByIdSelector,
+            conversation.localId,
+        );
+
         const results: ReadableStream<
             IChatConversationItem | IChatConversationError | IChatConversationInteractionStep
-        > = yield call([queryBuilder, queryBuilder.stream]);
+        > = yield call(queryBuilder.stream.bind(queryBuilder, currentMessages as IChatConversationItem[]));
 
         reader = results.getReader();
         while (true) {

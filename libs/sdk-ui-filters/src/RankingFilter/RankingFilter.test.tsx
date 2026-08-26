@@ -5,12 +5,12 @@ import { describe, expect, it } from "vitest";
 
 import { withIntlForTest } from "@gooddata/sdk-ui";
 
+import { type IRankingFilterProps, RankingFilter } from "./RankingFilter.js";
 import {
     attributeItems as mockAttributeItems,
     defaultFilter as mockDefaultFilter,
     measureItems as mockMeasureItems,
-} from "./mocks.js";
-import { type IRankingFilterProps, RankingFilter } from "./RankingFilter.js";
+} from "./RankingFilter.test.helpers.js";
 
 const DROPDOWN_BODY = ".s-rf-dropdown-body";
 

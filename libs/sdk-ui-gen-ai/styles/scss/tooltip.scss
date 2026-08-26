@@ -1,0 +1,83 @@
+// (C) 2024-2025 GoodData Corporation
+// stylelint-disable max-nesting-depth
+
+@use "sass:color";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-gen-ai-chat__chip__tooltip {
+    min-width: 220px;
+    background: kit-variables.$gd-color-white;
+    border: 1px solid kit-variables.$gd-border-color;
+    box-shadow: 0 1px 10px var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.2));
+    border-radius: 3px;
+    padding: 0;
+    margin: -10px;
+
+    .gd-gen-ai-chat__autocomplete__info {
+        max-width: 350px;
+    }
+}
+
+.gd-gen-ai-chat__autocomplete__info {
+    display: flex;
+    min-width: 220px;
+    max-width: 220px;
+    padding: 15px;
+    gap: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    font-family: kit-variables.$gd-font-primary;
+    word-break: break-word;
+
+    h3 {
+        align-self: stretch;
+        padding: 0;
+        margin: 0;
+        color: kit-variables.$gd-color-text;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 23px;
+    }
+
+    p {
+        margin: 0;
+        padding: 0;
+        line-clamp: 4;
+        align-self: stretch;
+        overflow: hidden;
+        color: kit-variables.$gd-color-link;
+        text-overflow: ellipsis;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 18px;
+    }
+
+    &__item {
+        display: flex;
+        gap: 3px;
+        padding-top: 5px;
+        flex-direction: column;
+        align-items: flex-start;
+        align-self: stretch;
+
+        &__title {
+            color: kit-variables.$gd-color-state-blank;
+            align-self: stretch;
+            font-size: 10px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            text-transform: uppercase;
+        }
+
+        &__value {
+            color: kit-variables.$gd-color-text;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 19px;
+        }
+    }
+}

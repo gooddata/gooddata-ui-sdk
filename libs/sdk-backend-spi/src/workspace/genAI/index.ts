@@ -1571,9 +1571,12 @@ export function isChatConversationSearchContent(
  */
 export type IChatConversationDashboardContent = {
     type: "dashboard";
-    dashboard: IDashboard | null;
     insights: IInsight[] | null;
-    saved: boolean;
+    dashboard?: IDashboard | null;
+    saved?: string | null;
+    //patch related
+    base?: object | null;
+    patchError?: Error | null;
 };
 
 /**
@@ -1693,7 +1696,7 @@ export interface IChatConversationThreadQuery {
     /**
      * Execute the chat thread and stream the results.
      */
-    stream(): ReadableStream<
-        IChatConversationItem | IChatConversationError | IChatConversationInteractionStep
-    >;
+    stream(
+        history: IChatConversationItem[],
+    ): ReadableStream<IChatConversationItem | IChatConversationError | IChatConversationInteractionStep>;
 }

@@ -4,7 +4,7 @@
 
 import { describe, expect, it, vi } from "vitest";
 
-import { newTestAttributeFilterHandler } from "./fixtures.js";
+import { newTestAttributeFilterHandler } from "./AttributeFilterHandler.test.helpers.js";
 
 const changedSelection = {
     isInverted: true,

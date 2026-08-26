@@ -6,15 +6,6 @@ import { InvalidInputTestCases } from "../../__mocks__/typeGuards.js";
 import { type ObjRef } from "../objRef/index.js";
 
 import {
-    dashboardAttributeFilter,
-    dashboardAttributeFilterReference,
-    dashboardDateFilter,
-    dashboardDateFilterReference,
-    filterContext,
-    filterContextDefinition,
-    tempFilterContext,
-} from "./filterContext.fixtures.js";
-import {
     type IDashboardFilterReference,
     type IFilterContext,
     type ITempFilterContext,
@@ -29,6 +20,15 @@ import {
     isFilterContextDefinition,
     isTempFilterContext,
 } from "./filterContext.js";
+import {
+    dashboardAttributeFilter,
+    dashboardAttributeFilterReference,
+    dashboardDateFilter,
+    dashboardDateFilterReference,
+    filterContext,
+    filterContextDefinition,
+    tempFilterContext,
+} from "./filterContext.test.helpers.js";
 
 describe("filter context type guards", () => {
     describe("isDashboardAttributeFilter", () => {

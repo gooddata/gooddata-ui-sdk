@@ -410,9 +410,9 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
             effort,
         });
     }
-    stream(): ReadableStream<
-        IChatConversationItem | IChatConversationError | IChatConversationInteractionStep
-    > {
+    stream(
+        history: IChatConversationItem[],
+    ): ReadableStream<IChatConversationItem | IChatConversationError | IChatConversationInteractionStep> {
         // We are using Axios <1.7, which does not support streaming,
         // as it can't use fetch API instead of XHR.
         // This method can be simplified once we upgrade to Axios >=1.7.
@@ -494,7 +494,9 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
         return textStream
             .pipeThrough(new EventSourceParserStream())
             .pipeThrough(new ServerSentEventsDataParser())
-            .pipeThrough(new ServerSentEventsDataConverter(this.dateNormalizer, () => responseTraceId));
+            .pipeThrough(
+                new ServerSentEventsDataConverter(this.dateNormalizer, history, () => responseTraceId),
+            );
     }
 }
 
@@ -536,10 +538,12 @@ class ServerSentEventsDataConverter extends TransformStream<
 > {
     constructor(
         dateNormalizer: DateNormalizer,
+        history: IChatConversationItem[],
         traceIdProvider: () => string | undefined,
         locale?: FormattingLocale,
         timezone?: string,
     ) {
+        const current: IChatConversationItem[] = [];
         super({
             transform(event, controller) {
                 if (event.type === "error") {
@@ -550,6 +554,7 @@ class ServerSentEventsDataConverter extends TransformStream<
                     const item = convertChatConversationItemFromBackend(
                         event.data.item as AiConversationItemResponse,
                         undefined,
+                        [...history, ...current],
                         dateNormalizer,
                         locale,
                         timezone,
@@ -557,6 +562,7 @@ class ServerSentEventsDataConverter extends TransformStream<
                     // Item is dropped (undefined) when its content type is unrecognized by
                     // this frontend version - do not enqueue anything for it.
                     if (item) {
+                        current.push(item);
                         controller.enqueue(item);
                     }
                 } else if (event.type === "interaction_step" && "step" in event.data) {

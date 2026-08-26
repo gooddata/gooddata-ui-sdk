@@ -7,13 +7,13 @@ import { describe, expect, it } from "vitest";
 import { isAttributeDescriptor, isMeasureDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
 
 import { isHeaderPredicate } from "./HeaderPredicate.js";
+import { uriMatch } from "./HeaderPredicateFactory.js";
 import {
     attributeDescriptor,
     attributeHeaderItem,
     attributeHeaderItemWithFormattedName,
     measureDescriptors,
-} from "./HeaderPredicateFactory.fixtures.js";
-import { uriMatch } from "./HeaderPredicateFactory.js";
+} from "./HeaderPredicateFactory.test.helpers.js";
 import {
     getAttributeHeaderItemName,
     getMappingHeaderFormattedName,

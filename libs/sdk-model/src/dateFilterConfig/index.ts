@@ -110,6 +110,18 @@ export const isDateFilterGranularity = (obj: unknown): obj is DateFilterGranular
     !isEmpty(obj) && dateFilterGranularity.some((granularity) => granularity === obj);
 
 /**
+ * Standard-calendar granularities that an absolute (static) date filter can be configured with.
+ * @alpha
+ */
+export const DEFAULT_ABSOLUTE_DATE_FILTER_GRANULARITIES: DateFilterGranularity[] = [
+    "GDC.time.date",
+    "GDC.time.week_us",
+    "GDC.time.month",
+    "GDC.time.quarter",
+    "GDC.time.year",
+];
+
+/**
  * Runs {@link getGranularities} and narrows the result to the {@link DateFilterGranularity} subset.
  * @alpha
  */
@@ -215,6 +227,13 @@ export interface IAbsoluteDateFilterForm extends IDateFilterOption {
      * Type to identify the global absolute date filter
      */
     type: DateFilterOptionAbsoluteFormType;
+    /**
+     * Available granularities for the global absolute date filter.
+     *
+     * @remarks
+     * When not set, the absolute date filter behaves exactly as it does today: day-level selection only.
+     */
+    availableGranularities?: DateFilterGranularity[];
     /**
      * Optional configuration for how this option should treat empty date values.
      */

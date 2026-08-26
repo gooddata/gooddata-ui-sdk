@@ -5,7 +5,7 @@
 import { describe, expect, it } from "vitest";
 
 import { EvaluationType } from "../interfaces/BaseHeadlines.js";
-import { TEST_COLOR_CONFIGS, TEST_COMPARISON_PALETTE } from "../TestData.fixtures.js";
+import { TEST_COLOR_CONFIGS, TEST_COMPARISON_PALETTE } from "../tests/TestData.test.helpers.js";
 
 import { getComparisonColor } from "./ComparisonDataItemUtils.js";
 

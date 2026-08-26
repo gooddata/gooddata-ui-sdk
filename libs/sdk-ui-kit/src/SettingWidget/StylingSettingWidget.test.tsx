@@ -9,7 +9,7 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { useMediaQuery } from "../responsive/useMediaQuery.js";
 
-import { customItemsMock, defaultItemMock } from "./mocks.js";
+import { customItemsMock, defaultItemMock } from "./SettingWidget.test.helpers.js";
 import {
     type IStylingSettingWidgetProps,
     StylingSettingWidget,

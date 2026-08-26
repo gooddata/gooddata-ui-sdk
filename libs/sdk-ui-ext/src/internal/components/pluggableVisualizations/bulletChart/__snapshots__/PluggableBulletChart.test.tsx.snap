@@ -554,6 +554,7 @@ exports[`PluggableBulletChart > should return reference point with target and co
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -737,6 +738,7 @@ exports[`PluggableBulletChart > should return reference point with three measure
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -973,6 +975,7 @@ exports[`PluggableBulletChart > should return reference point with three measure
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,

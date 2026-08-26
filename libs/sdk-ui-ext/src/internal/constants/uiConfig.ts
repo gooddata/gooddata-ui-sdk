@@ -4,7 +4,7 @@ import { BucketNames, OverTimeComparisonTypes, VisualizationTypes } from "@goodd
 
 import { type IUiConfig } from "../interfaces/Visualization.js";
 
-import { ATTRIBUTE, DATE, FACT, GEO_ATTRIBUTE, METRIC } from "./bucket.js";
+import { ATTRIBUTE, COMPUTED_ATTRIBUTE, DATE, FACT, GEO_ATTRIBUTE, METRIC } from "./bucket.js";
 
 export const MAX_METRICS_COUNT = 40;
 export const DEFAULT_PIE_METRICS_COUNT = 1;
@@ -42,7 +42,7 @@ export const measuresBase = {
 };
 
 export const viewBase = {
-    accepts: [ATTRIBUTE, DATE],
+    accepts: [ATTRIBUTE, COMPUTED_ATTRIBUTE, DATE],
     itemsLimit: MAX_CATEGORIES_COUNT,
     itemsLimitByType: {
         date: 1,
@@ -54,7 +54,7 @@ export const viewBase = {
 };
 
 const stackBase = {
-    accepts: [ATTRIBUTE],
+    accepts: [ATTRIBUTE, COMPUTED_ATTRIBUTE],
     itemsLimit: MAX_STACKS_COUNT,
     allowsSwapping: true,
     allowsReordering: false,
@@ -64,7 +64,7 @@ const stackBase = {
 
 const stackBaseWithDate = {
     ...stackBase,
-    accepts: [ATTRIBUTE, DATE],
+    accepts: [ATTRIBUTE, COMPUTED_ATTRIBUTE, DATE],
 };
 
 export const defaultFilters = {
@@ -610,7 +610,7 @@ export const DEFAULT_HEATMAP_UICONFIG: IUiConfig = {
             allowsDuplicateItems: true,
         },
         view: {
-            accepts: [ATTRIBUTE, DATE],
+            accepts: [ATTRIBUTE, COMPUTED_ATTRIBUTE, DATE],
             itemsLimit: 1,
             allowsSwapping: true,
             allowsReordering: false,
@@ -620,7 +620,7 @@ export const DEFAULT_HEATMAP_UICONFIG: IUiConfig = {
             canAddItems: true,
         },
         stack: {
-            accepts: [ATTRIBUTE, DATE],
+            accepts: [ATTRIBUTE, COMPUTED_ATTRIBUTE, DATE],
             itemsLimit: 1,
             allowsSwapping: true,
             allowsReordering: false,
@@ -793,7 +793,7 @@ const geoMeasuresBase = {
 
 const geoAttributesBase = {
     ...viewBase,
-    accepts: [ATTRIBUTE],
+    accepts: [ATTRIBUTE, COMPUTED_ATTRIBUTE],
     canAddItems: true,
     itemsLimit: DEFAULT_GEO_ATTRIBUTES_COUNT,
 };
@@ -882,7 +882,7 @@ export const DEFAULT_REPEATER_UI_CONFIG: IUiConfig = {
     buckets: {
         attribute: {
             ...viewBase,
-            accepts: [ATTRIBUTE],
+            accepts: [ATTRIBUTE, COMPUTED_ATTRIBUTE],
             itemsLimit: 1,
             canAddItems: true,
             allowsSwapping: true,

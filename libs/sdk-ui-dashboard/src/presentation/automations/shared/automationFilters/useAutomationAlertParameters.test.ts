@@ -17,7 +17,8 @@ import {
     dashboardParameter,
     workspaceNumberParameter,
     workspaceStringParameter,
-} from "./parameterFixtures.js";
+} from "../../tests/parameterFixtures.test.helpers.js";
+
 import { useAutomationAlertParameters } from "./useAutomationAlertParameters.js";
 
 interface IMockContextState {

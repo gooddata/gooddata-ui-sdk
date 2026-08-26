@@ -4,6 +4,7 @@ import { sortBy, uniqBy } from "lodash-es";
 
 import { MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
 import {
+    EntitiesApi_GetAllEntitiesComputedAttributes,
     EntitiesApi_GetAllEntitiesFacts,
     EntitiesApi_GetAllEntitiesMetrics,
 } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
@@ -15,6 +16,7 @@ import {
 import {
     type CatalogItem,
     type CatalogItemType,
+    type ICatalogComputedAttribute,
     type ICatalogFact,
     type ICatalogGroup,
     type ICatalogMeasure,
@@ -22,11 +24,16 @@ import {
     type IdentifierRef,
     type ObjRef,
     isCatalogAttribute,
+    isCatalogComputedAttribute,
     isCatalogFact,
     isCatalogMeasure,
 } from "@gooddata/sdk-model";
 
-import { convertFact, convertMeasure } from "../../../convertors/fromBackend/CatalogConverter.js";
+import {
+    convertComputedAttributeToCatalogItem,
+    convertFact,
+    convertMeasure,
+} from "../../../convertors/fromBackend/CatalogConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 import { TigerWorkspaceCatalog } from "./catalog.js";
@@ -97,6 +104,9 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         if (this.options.types.includes("fact")) {
             promises.push(this.loadFacts());
         }
+        if (this.options.types.includes("computedAttribute")) {
+            promises.push(this.loadComputedAttributes());
+        }
 
         const includeAttributes = this.options.types.includes("attribute");
         const includeDateDatasets = this.options.types.includes("dateDataset");
@@ -131,6 +141,9 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         }
         if (isCatalogMeasure(item)) {
             return item.measure.title;
+        }
+        if (isCatalogComputedAttribute(item)) {
+            return item.computedAttribute.title;
         }
         return undefined;
     };
@@ -191,6 +204,30 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         });
 
         return facts.data.map(convertFact);
+    };
+
+    private loadComputedAttributes = async (): Promise<ICatalogComputedAttribute[]> => {
+        const rsqlTagFilter = tagsToRsqlFilter(this.options);
+        const rsqlSearchFilter = searchToRsqlFilter(this.options);
+        const params = addRsqlFilterToParams(
+            { workspaceId: this.workspace },
+            rsqlAnd(rsqlTagFilter, rsqlSearchFilter),
+        );
+
+        const computedAttributes = await this.authCall((client) => {
+            return MetadataUtilities.getAllPagesOf(
+                client,
+                EntitiesApi_GetAllEntitiesComputedAttributes,
+                params,
+                {
+                    signal: this.signal,
+                },
+            ).then(MetadataUtilities.mergeEntitiesResults);
+        });
+
+        return computedAttributes.data.map((computedAttribute) =>
+            convertComputedAttributeToCatalogItem(computedAttribute, computedAttributes.included),
+        );
     };
 
     // Groups are collected from all catalog entities.

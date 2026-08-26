@@ -6,7 +6,6 @@ import { describe, expect, it } from "vitest";
 
 import { type IParameterMetadataObject, idRef } from "@gooddata/sdk-model";
 
-import { catalogDateDatasets, defaultDateHierarchyTemplates } from "./catalogSelectors.fixture.js";
 import {
     selectAdhocDateHierarchies,
     selectCatalogMeasureParameters,
@@ -15,6 +14,7 @@ import {
     selectCatalogParametersIsLoaded,
     selectCatalogParametersStatus,
 } from "./catalogSelectors.js";
+import { catalogDateDatasets, defaultDateHierarchyTemplates } from "./catalogSelectors.test.helpers.js";
 import { type ICatalogMeasureParametersState, type ICatalogParametersState } from "./catalogState.js";
 
 describe("catalogSelectors", () => {

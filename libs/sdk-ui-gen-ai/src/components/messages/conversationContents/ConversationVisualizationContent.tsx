@@ -95,6 +95,7 @@ export function ConversationVisualizationContent({
     className,
 }: ConversationVisualizationContentProps) {
     const colorPalette = useSelector((state: RootState) => colorPaletteSelector(state));
+    const separators = useSelector((state: RootState) => settingsSelector(state)?.separators);
     const agGridToken = useSelector((state: RootState) => settingsSelector(state)?.agGridToken);
     const enableNewPivotTable = useSelector(
         (state: RootState) => settingsSelector(state)?.enableNewPivotTable,
@@ -189,6 +190,7 @@ export function ConversationVisualizationContent({
                     <VisualisationWrapper
                         message={message}
                         colorPalette={colorPalette}
+                        separators={separators}
                         isTable={isTable}
                         visualization={visualization}
                         agGridToken={agGridToken}

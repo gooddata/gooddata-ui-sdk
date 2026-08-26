@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { type IResultHeader, isResultAttributeHeader } from "@gooddata/sdk-model";
 
 import { transformResultHeaders } from "./afm/result.js";
-import { resultHeaders, transformedResultHeaders } from "./AfmResultConverter.fixtures.js";
+import { resultHeaders, transformedResultHeaders } from "./AfmResultConverter.test.helpers.js";
 
 const transformResultHeader = (resultHeader: IResultHeader): IResultHeader => {
     if (!isResultAttributeHeader(resultHeader)) {

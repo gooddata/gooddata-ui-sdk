@@ -315,6 +315,13 @@ export type {
 export type { IWorkspaceFactsService, IFactsQuery, IFactsQueryResult } from "./workspace/facts/index.js";
 
 export type {
+    IWorkspaceComputedAttributesService,
+    IGetComputedAttributeOptions,
+    IComputedAttributesQuery,
+    IComputedAttributesQueryResult,
+} from "./workspace/computedAttributes/index.js";
+
+export type {
     IWorkspaceDashboardsService,
     IGetDashboardOptions,
     IGetDashboardPluginOptions,

@@ -7,7 +7,7 @@ import { describe, expect, it } from "vitest";
 
 import { type ICatalogAttributeHierarchy, type IParameterMetadataObject, idRef } from "@gooddata/sdk-model";
 
-import { catalogAttributeHierarchies } from "./catalog.fixture.js";
+import { catalogAttributeHierarchies } from "./catalog.test.helpers.js";
 import { catalogReducers } from "./catalogReducers.js";
 import { type CatalogState } from "./catalogState.js";
 import { catalogActions } from "./index.js";

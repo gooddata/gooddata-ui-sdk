@@ -7,16 +7,16 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { uriRef } from "@gooddata/sdk-model";
 import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
+import { TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
+import {
+    SimpleDashboardIdentifier,
+    SimpleSortedTableWidgetRef,
+} from "../../../tests/SimpleDashboard.test.helpers.js";
 import { type IAddDrillTargets, addDrillTargets } from "../../commands/drillTargets.js";
 import { changeRenderMode } from "../../commands/renderMode.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDrillTargetsAdded } from "../../events/drillTargets.js";
 import { type IDashboardCommandFailed } from "../../events/general.js";
-import { TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
-import {
-    SimpleDashboardIdentifier,
-    SimpleSortedTableWidgetRef,
-} from "../../fixtures/SimpleDashboard.fixtures.js";
 import { selectDrillTargetsByWidgetRef } from "../../store/drillTargets/drillTargetsSelectors.js";
 import { selectInvalidDrillWidgetRefs } from "../../store/ui/uiSelectors.js";
 

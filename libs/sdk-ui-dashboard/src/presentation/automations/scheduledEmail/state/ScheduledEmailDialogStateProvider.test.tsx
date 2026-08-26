@@ -86,8 +86,12 @@ function PassthroughDecoratorComponent({ children }: { children?: ReactNode }) {
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
 import { ScheduledEmailDialog } from "../ScheduledEmailDialog.js";
+import {
+    AUTOMATIONS_CONTEXT,
+    CURRENT_USER,
+    SCHEDULED_EMAIL_DIALOG_CONTEXT,
+} from "../tests/scheduledEmail.test.helpers.js";
 
-import { AUTOMATIONS_CONTEXT, CURRENT_USER, SCHEDULED_EMAIL_DIALOG_CONTEXT } from "./fixtures.js";
 import { useScheduledExportActions } from "./ScheduledExportActionsContext.js";
 import { useScheduledExportData } from "./ScheduledExportDataContext.js";
 import { useScheduledExportDraft } from "./ScheduledExportDraftContext.js";

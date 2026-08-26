@@ -39,7 +39,7 @@ import {
     samePeriodPreviousYearAndAttributesRefPoint,
     simpleStackedReferencePoint,
     wrongBucketsOrderReferencePoint,
-} from "../../../mocks/referencePointMocks.js";
+} from "../../../tests/referencePointMocks.test.helpers.js";
 import {
     emptyInsight,
     insightWithSingleAttribute,
@@ -47,7 +47,7 @@ import {
     insightWithSingleMeasureAndStack,
     insightWithSingleMeasureAndViewBy,
     insightWithStacking,
-} from "../../../mocks/testMocks.js";
+} from "../../../tests/testMocks.test.helpers.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
 import { BaseChartConfigurationPanel } from "../../configurationPanels/BaseChartConfigurationPanel.js";
 import {
@@ -62,7 +62,7 @@ import {
     intersection,
     sourceInsightDef,
     targetUri,
-} from "./getInsightWithDrillDownAppliedMock.js";
+} from "./getInsightWithDrillDownAppliedMock.test.helpers.js";
 import { PluggableBaseChart } from "./PluggableBaseChart.js";
 
 const { Region } = ReferenceMd;

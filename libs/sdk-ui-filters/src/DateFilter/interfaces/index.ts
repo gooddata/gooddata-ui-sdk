@@ -28,6 +28,10 @@ import {
  */
 export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
     /**
+     * Selected global absolute date filter granularity. Absent means "Day", for backward compatibility.
+     */
+    granularity?: DateFilterGranularity;
+    /**
      * Selected global absolute date filter start date
      */
     from?: DateString;

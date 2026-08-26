@@ -36,11 +36,16 @@ const SUPPORTED_CSV_DELIMITER_REGEXP = /^[\t !#$%&()*+\-.,/:;<=>?@\[\]\\^_{|}~]$
 export type CsvDelimiterPresetId = keyof typeof CSV_DELIMITER_PRESETS;
 
 /**
- * Identifier of a CSV delimiter preset, or "custom" when the user provides their own character.
+ * Identifier of a CSV delimiter preset, "custom" when the user provides their own character,
+ * or "inherit" when no delimiter should be sent and the backend-resolved default should apply.
+ *
+ * @remarks
+ * "custom" and "inherit" are sentinels with no delimiter character of their own; only
+ * {@link CsvDelimiterPresetId} members are valid keys into {@link CSV_DELIMITER_PRESETS}.
  *
  * @alpha
  */
-export type CsvDelimiterPreset = CsvDelimiterPresetId | "custom";
+export type CsvDelimiterPreset = CsvDelimiterPresetId | "custom" | "inherit";
 
 /**
  * Validation error codes returned by {@link getCsvDelimiterValidationError}.
@@ -75,10 +80,10 @@ export function getCsvDelimiterValidationError(delimiter: string): CsvDelimiterV
  * Resolves a delimiter character to its corresponding preset identifier.
  *
  * Returns `"custom"` when the delimiter does not match any built-in preset,
- * or the default preset id (`"comma"`) when no delimiter is provided.
+ * or `"inherit"` when the delimiter is `undefined` or an empty string.
  *
- * @param delimiter - delimiter character to look up
- * @returns the matching preset id, `"custom"`, or the default
+ * @param delimiter - delimiter character to look up; `undefined` or empty resolves to `"inherit"`
+ * @returns the matching preset id, `"custom"`, or `"inherit"`
  * @alpha
  */
 export function getCsvDelimiterPreset(delimiter?: string): CsvDelimiterPreset {
@@ -89,25 +94,35 @@ export function getCsvDelimiterPreset(delimiter?: string): CsvDelimiterPreset {
         }
     }
 
-    return delimiter ? "custom" : DEFAULT_CSV_DELIMITER_PRESET_ID;
+    return delimiter ? "custom" : "inherit";
 }
 
 /**
  * Returns the actual delimiter character for a given preset selection.
  *
  * When the preset is `"custom"`, the provided custom delimiter string is returned as-is.
+ * When the preset is `"inherit"`, `undefined` is returned so the `delimiter` field is omitted
+ * from the saved settings, letting the backend-resolved default (workspace or organization
+ * setting) apply instead.
  *
  * @param selectedPreset - the selected preset identifier
  * @param customDelimiter - the user-provided custom delimiter (used only when preset is `"custom"`)
- * @returns the resolved delimiter character
+ * @returns the resolved delimiter character, or `undefined` when the preset is `"inherit"`
  * @alpha
  */
-export function getCsvDelimiterValue(selectedPreset: CsvDelimiterPreset, customDelimiter: string): string {
+export function getCsvDelimiterValue(
+    selectedPreset: CsvDelimiterPreset,
+    customDelimiter: string,
+): string | undefined {
+    if (selectedPreset === "inherit") {
+        return undefined;
+    }
+
     if (selectedPreset === "custom") {
         return customDelimiter;
     }
 
-    return CSV_DELIMITER_PRESETS[selectedPreset]?.delimiter ?? DEFAULT_CSV_DELIMITER;
+    return CSV_DELIMITER_PRESETS[selectedPreset].delimiter;
 }
 
 /**

@@ -146,6 +146,7 @@ exports[`PluggablePieChart > should return reference point with multiple metrics
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -239,6 +240,7 @@ exports[`PluggablePieChart > should return reference point with one metric and n
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -340,6 +342,7 @@ exports[`PluggablePieChart > should return reference point with one metric and o
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -474,6 +477,7 @@ exports[`PluggablePieChart > should return reference point with only one metric 
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,

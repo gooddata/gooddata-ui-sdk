@@ -9,7 +9,7 @@ import {
     colorPalette,
     colorPaletteWithOneColor,
     getLargePalette,
-} from "../../../../mocks/testColorHelper.js";
+} from "../tests/testColorHelper.test.helpers.js";
 
 import { ColorPalette, type IColorPaletteProps } from "./ColorPalette.js";
 

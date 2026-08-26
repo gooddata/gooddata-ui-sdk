@@ -9,7 +9,7 @@ import { type IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
 import {
     HEADLINE_PAGINATED_COMPARE_SECTION_SELECTOR,
     TEST_BASE_HEADLINE_ITEM,
-} from "../../TestData.fixtures.js";
+} from "../../tests/TestData.test.helpers.js";
 
 import { createBaseHeadlineTestContext } from "./BaseHeadline.test.helpers.js";
 import { CompareSection } from "./CompareSection.js";

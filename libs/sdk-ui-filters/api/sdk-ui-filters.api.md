@@ -1405,6 +1405,31 @@ export type InvertableSelection<T> = {
     irrelevantKeys?: T[];
 };
 
+// @alpha
+export interface IPeriodRange {
+    // (undocumented)
+    from?: DateString;
+    // (undocumented)
+    to?: DateString;
+}
+
+// @alpha (undocumented)
+export interface IPeriodRangePickerProps {
+    // (undocumented)
+    granularity: PeriodRangePickerGranularity;
+    // (undocumented)
+    isMobile: boolean;
+    // (undocumented)
+    onRangeChange: (newRange: IPeriodRange) => void;
+    // (undocumented)
+    range: IPeriodRange;
+    // (undocumented)
+    submitForm: () => void;
+    weekStart?: WeekStart;
+    // (undocumented)
+    withoutApply?: boolean;
+}
+
 // @beta (undocumented)
 export interface IRankingFilterDropdownProps {
     // (undocumented)
@@ -1587,6 +1612,7 @@ export interface ITextFilterStateSummaryProps {
 export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
     emptyValueHandling?: EmptyValues;
     from?: DateString;
+    granularity?: DateFilterGranularity;
     to?: DateString;
 }
 
@@ -1801,6 +1827,12 @@ export type OnSelectionCommittedCallbackPayload<T> = {
 
 // @public (undocumented)
 export type ParentFilterOverAttributeType = ObjRef | ((parentFilter: IAttributeFilter, index: number) => ObjRef);
+
+// @alpha
+export function PeriodRangePicker(props: IPeriodRangePickerProps): JSX.Element;
+
+// @alpha
+export type PeriodRangePickerGranularity = Extract<DateFilterGranularity, "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year">;
 
 // @beta (undocumented)
 export function RankingFilter(input: IRankingFilterProps): JSX.Element;

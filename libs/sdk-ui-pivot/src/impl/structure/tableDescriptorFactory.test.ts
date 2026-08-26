@@ -17,7 +17,8 @@ import {
     TwoMeasures,
     TwoMeasuresAndGrandTotalsAndMultipleSubtotals,
     TwoMeasuresWithColumnAttribute,
-} from "./table.fixture.js";
+} from "../tests/table.test.helpers.js";
+
 import { createHeadersAndColDefs } from "./tableDescriptorFactory.js";
 
 describe("createTableDescriptor", () => {

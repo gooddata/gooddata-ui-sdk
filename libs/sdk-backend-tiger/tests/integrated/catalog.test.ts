@@ -4,9 +4,8 @@ import { beforeAll, describe, expect, it } from "vitest";
 
 import { measureLocalId, newArithmeticMeasure, newPopMeasure } from "@gooddata/sdk-model";
 
-import { WinRate } from "../../src/fixtures/full.js";
-
 import { sanitizeWorkspace, sortToOrder, testBackend, testWorkspace } from "./backend.js";
+import { WinRate } from "./full.test.helpers.js";
 
 const backend = testBackend();
 

@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-8-24
+Date generated: 2026-8-26
 
-Revision ID: b0716addf9b4740b3ab90ad05ec818dc8246ff37
+Revision ID: 801e4736307fbb28cf5d9d0a6566fc45d596c003
 
 ================================================================================
 ================================================================================
@@ -272,6 +272,13 @@ No first party licenses found in gooddata-ui-sdk
 - @peculiar/utils (2.0.3) [MIT]
 - @peculiar/x509 (1.14.3) [MIT]
 - @playwright/test (1.62.1) [Apache-2.0]
+- @rc-component/motion (1.3.3) [MIT]
+- @rc-component/overflow (1.0.1) [MIT]
+- @rc-component/picker (1.12.0) [MIT]
+- @rc-component/portal (2.2.1) [MIT]
+- @rc-component/resize-observer (1.1.2) [MIT]
+- @rc-component/trigger (3.10.1) [MIT]
+- @rc-component/util (1.12.0) [MIT]
 - @react-aria/interactions (3.28.1) [Apache-2.0]
 - @react-dnd/asap (4.0.1) [MIT]
 - @react-dnd/asap (5.0.2) [MIT]
@@ -466,7 +473,7 @@ No first party licenses found in gooddata-ui-sdk
 - cosmiconfig (9.0.2) [MIT]
 - cosmiconfig (7.1.0) [MIT]
 - crelt (1.0.7) [MIT]
-- cron-parser (5.6.2) [MIT]
+- cron-parser (5.9.0) [MIT]
 - cross-spawn (7.0.6) [MIT]
 - css-functions-list (3.3.3) [MIT]
 - css-mediaquery (0.1.2) [BSD-3-Clause]
@@ -543,6 +550,7 @@ No first party licenses found in gooddata-ui-sdk
 - fast-defer (1.1.9) [MIT]
 - fast-equals (5.4.1) [MIT]
 - fast-glob (3.3.3) [MIT]
+- fast-json-patch (3.1.1) [MIT]
 - fast-uri (3.1.4) [BSD-3-Clause, bsd-2-clause-views]
 - fastest-levenshtein (1.0.16) [MIT]
 - fastq (1.20.1) [ISC]
@@ -656,6 +664,7 @@ No first party licenses found in gooddata-ui-sdk
 - is-hexadecimal (2.0.1) [MIT]
 - is-inside-container (1.0.0) [MIT]
 - is-interactive (1.0.0) [MIT]
+- is-mobile (5.0.0) [MIT]
 - is-network-error (1.3.2) [MIT]
 - is-number (7.0.0) [MIT]
 - is-obj (1.0.1) [MIT]
@@ -875,6 +884,7 @@ No first party licenses found in gooddata-ui-sdk
 - react-fast-compare (3.2.2) [MIT]
 - react-intl (7.1.11) [BSD-3-Clause]
 - react-is (16.13.1) [MIT]
+- react-is (19.2.8) [MIT]
 - react-lines-ellipsis (0.16.1) [MIT]
 - react-loading-skeleton (3.5.0) [MIT]
 - react-markdown (10.1.0) [MIT]
@@ -4991,6 +5001,88 @@ available under the Apache 2.0 license (https://github.com/puppeteer/puppeteer/b
 
 
 --------------------------------------------------------------------------------
+Package Title: @rc-component/picker (1.12.0)
+
+Package Locator: npm+@rc-component/picker$1.12.0
+
+Package Depth: Direct
+--------------------------------------------------------------------------------
+
+React date & time picker
+
+* Declared Licenses *
+MIT
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE
+  - Copyright (c) 2019 present react-component
+- LICENSE.md
+  - Copyright (c) 2019 present afc163
+- package.json
+--------------------------------------------------------------------------------
+
+MIT License
+
+Copyright (c) 2019-present react-component
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+* License Header *
+MIT License
+
+Copyright (c) 2019-present react-component
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+* Copyrights *
+MIT
+- Copyright (c) 2019 present react-component
+- Copyright (c) 2019 present afc163
+
+* Package Info *
+
+Authors: 1075746765@qq.com, afc163@gmail.com, scdzwyxst@gmail.com, smith3816@gmail.com, wasd2144@hotmail.com
+Package Manager: NPM
+Project URL: https://react-component.github.io/picker
+Package Download URL: https://registry.npmjs.org/@rc-component/picker/-/picker-1.12.0.tgz
+Dependency Path: @rc-component/picker
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
 Package Title: @react-aria/interactions (3.28.1)
 
 Package Locator: npm+@react-aria/interactions$3.28.1
@@ -6879,9 +6971,9 @@ Dependency Path: copy-to-clipboard
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: cron-parser (5.6.2)
+Package Title: cron-parser (5.9.0)
 
-Package Locator: npm+cron-parser$5.6.2
+Package Locator: npm+cron-parser$5.9.0
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -6953,7 +7045,7 @@ MIT
 Authors: harri@siirak.ee
 Package Manager: NPM
 Project URL: https://github.com/harrisiirak/cron-parser#readme
-Package Download URL: https://registry.npmjs.org/cron-parser/-/cron-parser-5.6.2.tgz
+Package Download URL: https://registry.npmjs.org/cron-parser/-/cron-parser-5.9.0.tgz
 Dependency Path: cron-parser
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
@@ -8150,6 +8242,92 @@ Package Manager: NPM
 Project URL: https://github.com/mrmlnc/fast-glob#readme
 Package Download URL: https://registry.npmjs.org/fast-glob/-/fast-glob-3.3.3.tgz
 Dependency Path: @formatjs/cli-lib > fast-glob > fast-glob > stylelint > fast-glob > stylelint > globby > fast-glob > stylelint-config-standard > stylelint > fast-glob > stylelint-config-standard > stylelint-config-recommended > stylelint > fast-glob > stylelint-config-standard > stylelint-config-recommended > stylelint > globby > fast-glob > stylelint-order > stylelint > fast-glob > stylelint-plugin-defensive-css > stylelint > fast-glob > stylelint-scss > stylelint > fast-glob
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: fast-json-patch (3.1.1)
+
+Package Locator: npm+fast-json-patch$3.1.1
+
+Package Depth: Direct
+--------------------------------------------------------------------------------
+
+Fast implementation of JSON-Patch (RFC-6902) with duplex (observe changes) capabilities
+
+* Declared Licenses *
+MIT
+--------------------------------------------------------------------------------
+File matches:
+- dist/fast-json-patch.js
+  - Copyright (c) 2017 Evgeny Poberezkin
+- LICENSE.txt
+  - Copyright (c) 2013, 2014, 2020 Joachim Wester
+- module/core.mjs
+  - Copyright (c) 2017 Evgeny Poberezkin
+- package.json
+--------------------------------------------------------------------------------
+
+(The MIT License)
+
+Copyright (c) 2013, 2014, 2020 Joachim Wester
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* License Header *
+(The MIT License)
+
+Copyright (c) 2013, 2014, 2020 Joachim Wester
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* Copyrights *
+MIT
+- Copyright (c) 2013, 2014, 2020 Joachim Wester
+- Copyright (c) 2017 Evgeny Poberezkin
+
+* Package Info *
+
+Authors: joachimwester@me.com, marcin.warpechowski@handsontable.com, omar@omaralshaker.com, tomalecwp@gmail.com
+Package Manager: NPM
+Project URL: https://github.com/Starcounter-Jack/JSON-Patch
+Package Download URL: https://registry.npmjs.org/fast-json-patch/-/fast-json-patch-3.1.1.tgz
+Dependency Path: fast-json-patch
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -11793,7 +11971,7 @@ Authors: opensource+npm@fb.com, react-core@meta.com
 Package Manager: NPM
 Project URL: https://react.dev/
 Package Download URL: https://registry.npmjs.org/react/-/react-19.1.1.tgz
-Dependency Path: @aaronhayes/react-use-hubspot-form > react > @evil-internetmann/react-dnd > react > @floating-ui/react > @floating-ui/react-dom > react > @floating-ui/react > react > @floating-ui/react-dom > react > @react-aria/interactions > @react-types/shared > react > @react-aria/interactions > react > react > react-select > @emotion/react > @emotion/use-insertion-effect-with-fallbacks > react > react-select > @emotion/react > react
+Dependency Path: @aaronhayes/react-use-hubspot-form > react > @evil-internetmann/react-dnd > react > @floating-ui/react > @floating-ui/react-dom > react > @floating-ui/react > react > @floating-ui/react-dom > react > @rc-component/picker > @rc-component/overflow > react > @rc-component/picker > @rc-component/trigger > @rc-component/motion > react > react > react-select > @emotion/react > @emotion/use-insertion-effect-with-fallbacks > react > react-select > @emotion/react > react
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -12185,7 +12363,7 @@ Authors: opensource+npm@fb.com, react-core@meta.com
 Package Manager: NPM
 Project URL: https://react.dev/
 Package Download URL: https://registry.npmjs.org/react-dom/-/react-dom-19.1.1.tgz
-Dependency Path: @aaronhayes/react-use-hubspot-form > react-dom > @floating-ui/react > @floating-ui/react-dom > react-dom > @floating-ui/react > react-dom > @floating-ui/react-dom > react-dom > @react-aria/interactions > react-aria > react-dom > @react-aria/interactions > react-dom > @tanstack/react-virtual > react-dom > ag-grid-react > react-dom > react-dom > react-lines-ellipsis > react-dom
+Dependency Path: @aaronhayes/react-use-hubspot-form > react-dom > @floating-ui/react > @floating-ui/react-dom > react-dom > @floating-ui/react > react-dom > @floating-ui/react-dom > react-dom > @rc-component/picker > @rc-component/overflow > @rc-component/resize-observer > react-dom > @rc-component/picker > @rc-component/overflow > react-dom > @rc-component/picker > @rc-component/trigger > @rc-component/motion > react-dom > @rc-component/picker > @rc-component/trigger > @rc-component/portal > react-dom > @rc-component/picker > react-dom > react-dom
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -22358,7 +22536,7 @@ Authors: bng412@gmail.com, hello+npm@nicr.dev, hi@henryzoo.com, jlhwung@gmail.co
 Package Manager: NPM
 Project URL: https://babel.dev/docs/en/next/babel-runtime
 Package Download URL: https://registry.npmjs.org/@babel/runtime/-/runtime-7.29.7.tgz
-Dependency Path: downshift > @babel/runtime > polished > @babel/runtime > react-measure > @babel/runtime > react-select > @babel/runtime > react-select > @emotion/react > @babel/runtime > react-select > @emotion/react > @emotion/babel-plugin > @babel/runtime > react-select > @emotion/react > @emotion/babel-plugin > babel-plugin-macros > @babel/runtime > react-select > react-transition-group > dom-helpers > @babel/runtime > react-textarea-autosize > @babel/runtime > redux-saga > @redux-saga/core > @babel/runtime
+Dependency Path: @rc-component/picker > @rc-component/overflow > @babel/runtime > downshift > @babel/runtime > polished > @babel/runtime > react-measure > @babel/runtime > react-select > @babel/runtime > react-select > @emotion/react > @babel/runtime > react-select > @emotion/react > @emotion/babel-plugin > @babel/runtime > react-select > @emotion/react > @emotion/babel-plugin > babel-plugin-macros > @babel/runtime > react-select > react-transition-group > dom-helpers > @babel/runtime > redux-saga > @redux-saga/core > @babel/runtime
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -26471,6 +26649,276 @@ Package Manager: NPM
 Project URL: https://www.npmjs.com/package/@nodelib/fs.walk
 Package Download URL: https://registry.npmjs.org/@nodelib/fs.walk/-/fs.walk-1.2.8.tgz
 Dependency Path: @formatjs/cli-lib > fast-glob > @nodelib/fs.walk > fast-glob > @nodelib/fs.walk > stylelint > fast-glob > @nodelib/fs.walk > stylelint > globby > fast-glob > @nodelib/fs.walk > stylelint-config-standard > stylelint > fast-glob > @nodelib/fs.walk > stylelint-config-standard > stylelint-config-recommended > stylelint > fast-glob > @nodelib/fs.walk > stylelint-config-standard > stylelint-config-recommended > stylelint > globby > fast-glob > @nodelib/fs.walk > stylelint-order > stylelint > fast-glob > @nodelib/fs.walk > stylelint-plugin-defensive-css > stylelint > fast-glob > @nodelib/fs.walk > stylelint-scss > stylelint > fast-glob > @nodelib/fs.walk
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: @rc-component/overflow (1.0.1)
+
+Package Locator: npm+@rc-component/overflow$1.0.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+Auto collapse box when overflow
+
+* Declared Licenses *
+MIT
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE.md
+  - Copyright (c) 2019 present afc163
+- package.json
+--------------------------------------------------------------------------------
+
+The MIT License (MIT)
+
+Copyright (c) 2019-present afc163
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* License Header *
+The MIT License (MIT)
+
+Copyright (c) 2019-present afc163
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* Copyrights *
+MIT
+- Copyright (c) 2019 present afc163
+
+* Package Info *
+
+Authors: 1075746765@qq.com, afc163@gmail.com, scdzwyxst@gmail.com, smith3816@gmail.com, wasd2144@hotmail.com
+Package Manager: NPM
+Project URL: https://react-component.github.io/overflow
+Package Download URL: https://registry.npmjs.org/@rc-component/overflow/-/overflow-1.0.1.tgz
+Dependency Path: @rc-component/picker > @rc-component/overflow
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: @rc-component/resize-observer (1.1.2)
+
+Package Locator: npm+@rc-component/resize-observer$1.1.2
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+Resize observer for React
+
+* Declared Licenses *
+MIT
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE.md
+  - Copyright (c) 2019 present afc163
+- package.json
+--------------------------------------------------------------------------------
+
+The MIT License (MIT)
+
+Copyright (c) 2019-present afc163
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* License Header *
+The MIT License (MIT)
+
+Copyright (c) 2019-present afc163
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* Copyrights *
+MIT
+- Copyright (c) 2019 present afc163
+
+* Package Info *
+
+Authors: 1075746765@qq.com, afc163@gmail.com, scdzwyxst@gmail.com, smith3816@gmail.com, wasd2144@hotmail.com
+Package Manager: NPM
+Project URL: https://www.npmjs.com/package/@rc-component/resize-observer
+Package Download URL: https://registry.npmjs.org/@rc-component/resize-observer/-/resize-observer-1.1.2.tgz
+Dependency Path: @rc-component/picker > @rc-component/overflow > @rc-component/resize-observer > @rc-component/picker > @rc-component/resize-observer > @rc-component/picker > @rc-component/trigger > @rc-component/resize-observer
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: @rc-component/trigger (3.10.1)
+
+Package Locator: npm+@rc-component/trigger$3.10.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+Popup trigger and alignment primitive for React.
+
+* Declared Licenses *
+MIT
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE
+  - Copyright (c) 2015 present Alipay.com, https://www.alipay.com/
+- package.json
+--------------------------------------------------------------------------------
+
+The MIT License (MIT)
+Copyright (c) 2015-present Alipay.com, https://www.alipay.com/
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS 
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY 
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* License Header *
+The MIT License (MIT)
+Copyright (c) 2015-present Alipay.com, https://www.alipay.com/
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS 
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY 
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* Copyrights *
+MIT
+- Copyright (c) 2015 present Alipay.com, https://www.alipay.com/
+
+* Package Info *
+
+Authors: 1075746765@qq.com, afc163@gmail.com, scdzwyxst@gmail.com, smith3816@gmail.com, wasd2144@hotmail.com
+Package Manager: NPM
+Project URL: https://react-component.github.io/trigger
+Package Download URL: https://registry.npmjs.org/@rc-component/trigger/-/trigger-3.10.1.tgz
+Dependency Path: @rc-component/picker > @rc-component/trigger
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: @rc-component/util (1.12.0)
+
+Package Locator: npm+@rc-component/util$1.12.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+Shared React utilities for rc-component packages.
+
+* Declared Licenses *
+MIT
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE
+  - Copyright (c) 2014 present yiminghe
+  - Copyright (c) 2015 present Alipay.com, https://www.alipay.com/
+- package.json
+--------------------------------------------------------------------------------
+
+The MIT License (MIT)
+
+Copyright (c) 2014-present yiminghe
+Copyright (c) 2015-present Alipay.com, https://www.alipay.com/
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS 
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY 
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* License Header *
+The MIT License (MIT)
+
+Copyright (c) 2014-present yiminghe
+Copyright (c) 2015-present Alipay.com, https://www.alipay.com/
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS 
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY 
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* Copyrights *
+MIT
+- Copyright (c) 2014 present yiminghe
+- Copyright (c) 2015 present Alipay.com, https://www.alipay.com/
+
+* Package Info *
+
+Authors: 1075746765@qq.com, afc163@gmail.com, scdzwyxst@gmail.com, smith3816@gmail.com, wasd2144@hotmail.com
+Package Manager: NPM
+Project URL: https://react-component.github.io/util
+Package Download URL: https://registry.npmjs.org/@rc-component/util/-/util-1.12.0.tgz
+Dependency Path: @rc-component/picker > @rc-component/overflow > @rc-component/resize-observer > @rc-component/util > @rc-component/picker > @rc-component/overflow > @rc-component/util > @rc-component/picker > @rc-component/resize-observer > @rc-component/util > @rc-component/picker > @rc-component/trigger > @rc-component/motion > @rc-component/util > @rc-component/picker > @rc-component/trigger > @rc-component/portal > @rc-component/util > @rc-component/picker > @rc-component/trigger > @rc-component/resize-observer > @rc-component/util > @rc-component/picker > @rc-component/trigger > @rc-component/util > @rc-component/picker > @rc-component/util
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -32872,6 +33320,79 @@ Package Manager: NPM
 Project URL: https://github.com/knownasilya/cli-width
 Package Download URL: https://registry.npmjs.org/cli-width/-/cli-width-4.1.0.tgz
 Dependency Path: inquirer > cli-width
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: clsx (2.1.1)
+
+Package Locator: npm+clsx$2.1.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+A tiny (239B) utility for constructing className strings conditionally.
+
+* Declared Licenses *
+MIT
+--------------------------------------------------------------------------------
+File matches:
+- license
+  - Copyright (c)  Luke Edwards <luke.edwards05@gmail.com> (lukeed.com)
+- package.json
+--------------------------------------------------------------------------------
+
+MIT License
+Copyright (c) <year> <copyright holders>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+* License Header *
+Copyright (c)  Luke Edwards <luke.edwards05@gmail.com> (lukeed.com)
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+* Copyrights *
+MIT
+- Copyright (c)  Luke Edwards <luke.edwards05@gmail.com> (lukeed.com)
+
+* Package Info *
+
+Authors: luke@lukeed.com
+Package Manager: NPM
+Project URL: https://github.com/lukeed/clsx#readme
+Package Download URL: https://registry.npmjs.org/clsx/-/clsx-2.1.1.tgz
+Dependency Path: @rc-component/picker > @rc-component/overflow > clsx > @rc-component/picker > @rc-component/trigger > @rc-component/motion > clsx > @rc-component/picker > @rc-component/trigger > @rc-component/portal > clsx > @rc-component/picker > @rc-component/trigger > clsx > @rc-component/picker > clsx > @react-aria/interactions > react-aria > clsx
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -47349,7 +47870,7 @@ Authors: opensource+npm@fb.com, react-core@meta.com
 Package Manager: NPM
 Project URL: https://react.dev/
 Package Download URL: https://registry.npmjs.org/scheduler/-/scheduler-0.26.0.tgz
-Dependency Path: @aaronhayes/react-use-hubspot-form > react-dom > scheduler > @floating-ui/react > @floating-ui/react-dom > react-dom > scheduler > @floating-ui/react > react-dom > scheduler > @floating-ui/react-dom > react-dom > scheduler > @react-aria/interactions > react-aria > react-dom > scheduler > @react-aria/interactions > react-dom > scheduler > @tanstack/react-virtual > react-dom > scheduler > ag-grid-react > react-dom > scheduler > react-dom > scheduler > react-lines-ellipsis > react-dom > scheduler
+Dependency Path: @aaronhayes/react-use-hubspot-form > react-dom > scheduler > @floating-ui/react > @floating-ui/react-dom > react-dom > scheduler > @floating-ui/react > react-dom > scheduler > @floating-ui/react-dom > react-dom > scheduler > @rc-component/picker > @rc-component/overflow > @rc-component/resize-observer > react-dom > scheduler > @rc-component/picker > @rc-component/overflow > react-dom > scheduler > @rc-component/picker > @rc-component/trigger > @rc-component/motion > react-dom > scheduler > @rc-component/picker > @rc-component/trigger > @rc-component/portal > react-dom > scheduler > @rc-component/picker > react-dom > scheduler > react-dom > scheduler
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -55473,6 +55994,138 @@ Dependency Path: webpack-dev-server > selfsigned > @peculiar/x509
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
+Package Title: @rc-component/motion (1.3.3)
+
+Package Locator: npm+@rc-component/motion$1.3.3
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+React lifecycle controlled motion library
+
+* Declared Licenses *
+MIT
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE.md
+  - Copyright (c) 2019 present afc163
+- package.json
+--------------------------------------------------------------------------------
+
+The MIT License (MIT)
+
+Copyright (c) 2019-present afc163
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* License Header *
+The MIT License (MIT)
+
+Copyright (c) 2019-present afc163
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* Copyrights *
+MIT
+- Copyright (c) 2019 present afc163
+
+* Package Info *
+
+Authors: 1075746765@qq.com, afc163@gmail.com, scdzwyxst@gmail.com, smith3816@gmail.com, wasd2144@hotmail.com
+Package Manager: NPM
+Project URL: https://react-component.github.io/motion
+Package Download URL: https://registry.npmjs.org/@rc-component/motion/-/motion-1.3.3.tgz
+Dependency Path: @rc-component/picker > @rc-component/trigger > @rc-component/motion
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: @rc-component/portal (2.2.1)
+
+Package Locator: npm+@rc-component/portal$2.2.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+React Portal Component
+
+* Declared Licenses *
+MIT
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE
+  - Copyright (c) 2019 present react-component
+- package.json
+--------------------------------------------------------------------------------
+
+MIT License
+
+Copyright (c) 2019-present react-component
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+* License Header *
+MIT License
+
+Copyright (c) 2019-present react-component
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+* Copyrights *
+MIT
+- Copyright (c) 2019 present react-component
+
+* Package Info *
+
+Authors: 1075746765@qq.com, afc163@gmail.com, scdzwyxst@gmail.com, smith3816@gmail.com, wasd2144@hotmail.com
+Package Manager: NPM
+Project URL: https://github.com/react-component/portal
+Package Download URL: https://registry.npmjs.org/@rc-component/portal/-/portal-2.2.1.tgz
+Dependency Path: @rc-component/picker > @rc-component/trigger > @rc-component/portal
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
 Package Title: @react-dnd/asap (4.0.1)
 
 Package Locator: npm+@react-dnd/asap$4.0.1
@@ -61168,79 +61821,6 @@ Dependency Path: webpack-cli > webpack-merge > clone-deep
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: clsx (2.1.1)
-
-Package Locator: npm+clsx$2.1.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-A tiny (239B) utility for constructing className strings conditionally.
-
-* Declared Licenses *
-MIT
---------------------------------------------------------------------------------
-File matches:
-- license
-  - Copyright (c)  Luke Edwards <luke.edwards05@gmail.com> (lukeed.com)
-- package.json
---------------------------------------------------------------------------------
-
-MIT License
-Copyright (c) <year> <copyright holders>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-* License Header *
-Copyright (c)  Luke Edwards <luke.edwards05@gmail.com> (lukeed.com)
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-* Copyrights *
-MIT
-- Copyright (c)  Luke Edwards <luke.edwards05@gmail.com> (lukeed.com)
-
-* Package Info *
-
-Authors: luke@lukeed.com
-Package Manager: NPM
-Project URL: https://github.com/lukeed/clsx#readme
-Package Download URL: https://registry.npmjs.org/clsx/-/clsx-2.1.1.tgz
-Dependency Path: @react-aria/interactions > react-aria > clsx
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
 Package Title: combined-stream (1.0.8)
 
 Package Locator: npm+combined-stream$1.0.8
@@ -66484,6 +67064,79 @@ Package Manager: NPM
 Project URL: https://www.npmjs.com/package/is-inside-container
 Package Download URL: https://registry.npmjs.org/is-inside-container/-/is-inside-container-1.0.0.tgz
 Dependency Path: webpack-dev-server > open > is-inside-container > webpack-dev-server > open > wsl-utils > is-wsl > is-inside-container
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: is-mobile (5.0.0)
+
+Package Locator: npm+is-mobile$5.0.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+Check if mobile browser.
+
+* Declared Licenses *
+MIT
+--------------------------------------------------------------------------------
+File matches:
+- package.json
+- README.md
+  - Copyright (c) 2013 Julian Gruber &lt;julian@juliangruber.com&gt;
+--------------------------------------------------------------------------------
+
+MIT License
+Copyright (c) <year> <copyright holders>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+* License Header *
+Copyright (c) 2013 Julian Gruber &lt;julian@juliangruber.com&gt;
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+* Copyrights *
+MIT
+- Copyright (c) 2013 Julian Gruber &lt;julian@juliangruber.com&gt;
+
+* Package Info *
+
+Authors: julian@juliangruber.com
+Package Manager: NPM
+Project URL: https://github.com/juliangruber/is-mobile
+Package Download URL: https://registry.npmjs.org/is-mobile/-/is-mobile-5.0.0.tgz
+Dependency Path: @rc-component/picker > @rc-component/overflow > @rc-component/resize-observer > @rc-component/util > is-mobile > @rc-component/picker > @rc-component/overflow > @rc-component/util > is-mobile > @rc-component/picker > @rc-component/resize-observer > @rc-component/util > is-mobile > @rc-component/picker > @rc-component/trigger > @rc-component/motion > @rc-component/util > is-mobile > @rc-component/picker > @rc-component/trigger > @rc-component/portal > @rc-component/util > is-mobile > @rc-component/picker > @rc-component/trigger > @rc-component/resize-observer > @rc-component/util > is-mobile > @rc-component/picker > @rc-component/trigger > @rc-component/util > is-mobile > @rc-component/picker > @rc-component/util > is-mobile
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -73339,6 +73992,88 @@ Package Manager: NPM
 Project URL: https://github.com/jshttp/range-parser#readme
 Package Download URL: https://registry.npmjs.org/range-parser/-/range-parser-1.3.0.tgz
 Dependency Path: webpack-dev-server > webpack-dev-middleware > range-parser
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: react-is (19.2.8)
+
+Package Locator: npm+react-is$19.2.8
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+Brand checking of React Elements.
+
+* Declared Licenses *
+MIT
+--------------------------------------------------------------------------------
+File matches:
+- cjs/react-is.development.js
+  - Copyright (c)  Meta Platforms, Inc. and affiliates.
+- cjs/react-is.production.js
+  - Copyright (c)  Meta Platforms, Inc. and affiliates.
+- LICENSE
+  - Copyright (c)  Meta Platforms, Inc. and affiliates.
+- package.json
+--------------------------------------------------------------------------------
+
+MIT License
+
+Copyright (c) Meta Platforms, Inc. and affiliates.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+* License Header *
+MIT License
+
+Copyright (c) Meta Platforms, Inc. and affiliates.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+* Copyrights *
+MIT
+- Copyright (c)  Meta Platforms, Inc. and affiliates.
+
+* Package Info *
+
+Authors: opensource+npm@fb.com, react-core@meta.com
+Package Manager: NPM
+Project URL: https://react.dev/
+Dependency Path: @rc-component/picker > @rc-component/overflow > @rc-component/resize-observer > @rc-component/util > react-is > @rc-component/picker > @rc-component/overflow > @rc-component/util > react-is > @rc-component/picker > @rc-component/resize-observer > @rc-component/util > react-is > @rc-component/picker > @rc-component/trigger > @rc-component/motion > @rc-component/util > react-is > @rc-component/picker > @rc-component/trigger > @rc-component/portal > @rc-component/util > react-is > @rc-component/picker > @rc-component/trigger > @rc-component/resize-observer > @rc-component/util > react-is > @rc-component/picker > @rc-component/trigger > @rc-component/util > react-is > @rc-component/picker > @rc-component/util > react-is
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -100056,9 +100791,9 @@ MIT
 
 * Package Info *
 
-Authors: brian.woodward@gmail.com, github@sellside.com, trysound@yandex.ru
+Authors: brian.woodward@gmail.com, github@sellside.com, opensource@trysound.io
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/isobject
+Project URL: https://github.com/jonschlinkert/isobject
 Package Download URL: https://registry.npmjs.org/isobject/-/isobject-3.0.1.tgz
 Dependency Path: webpack-cli > webpack-merge > clone-deep > is-plain-object > isobject
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -104997,4 +105732,4 @@ File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-8-24
+Report Generated by FOSSA on 2026-8-26

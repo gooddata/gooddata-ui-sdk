@@ -1,11 +1,18 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 /**
- * Type representing catalog item type - attribute, measure, fact, dateDataset or attributeHierarchy
+ * Type representing catalog item type - attribute, measure, fact, dateDataset, attributeHierarchy
+ * or computedAttribute
  *
  * @public
  */
-export type CatalogItemType = "attribute" | "measure" | "fact" | "dateDataset" | "attributeHierarchy";
+export type CatalogItemType =
+    | "attribute"
+    | "measure"
+    | "fact"
+    | "dateDataset"
+    | "attributeHierarchy"
+    | "computedAttribute";
 
 /**
  * Properties contained in each catalog item

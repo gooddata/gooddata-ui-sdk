@@ -13,6 +13,7 @@ import {
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
     type IWorkspaceCatalogFactory,
+    type IWorkspaceComputedAttributesService,
     type IWorkspaceDashboardsService,
     type IWorkspaceDatasetsService,
     type IWorkspaceDescriptor,
@@ -104,6 +105,10 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public parameters(): IWorkspaceParametersService {
         return this.decorated.parameters();
+    }
+
+    public computedAttributes(): IWorkspaceComputedAttributesService {
+        return this.decorated.computedAttributes();
     }
 
     public facts(): IWorkspaceFactsService {

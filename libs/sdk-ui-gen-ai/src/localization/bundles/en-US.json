@@ -724,8 +724,20 @@
         "crowdinContext": "Column header in autocomplete suggestions showing the fact name"
     },
     "gd.gen-ai.autocomplete.date": {
-        "text": "Date",
-        "crowdinContext": "Column header in autocomplete suggestions showing the date"
+        "text": "Dataset",
+        "crowdinContext": "Column header in autocomplete suggestions showing the dataset"
+    },
+    "gd.gen-ai.autocomplete.insight": {
+        "text": "Visualization",
+        "crowdinContext": "Column header in autocomplete suggestions showing the visualization"
+    },
+    "gd.gen-ai.autocomplete.analyticalDashboard": {
+        "text": "Dashboard",
+        "crowdinContext": "Column header in autocomplete suggestions showing the analytical dashboard"
+    },
+    "gd.gen-ai.autocomplete.displayForm": {
+        "text": "Label",
+        "crowdinContext": "Column header in autocomplete suggestions showing the display form / label"
     },
     "gd.gen-ai.autocomplete.input-info.mac": {
         "text": "Type <code>@</code> for suggestions",

@@ -11,12 +11,14 @@ import {
     type CatalogItem,
     type ICatalogAttribute,
     type ICatalogAttributeHierarchy,
+    type ICatalogComputedAttribute,
     type ICatalogDateDataset,
     type ICatalogFact,
     type ICatalogGroup,
     type ICatalogMeasure,
     isCatalogAttribute,
     isCatalogAttributeHierarchy,
+    isCatalogComputedAttribute,
     isCatalogDateDataset,
     isCatalogFact,
     isCatalogMeasure,
@@ -62,6 +64,10 @@ export class TigerWorkspaceCatalog implements IWorkspaceCatalog {
 
     public attributeHierarchies(): ICatalogAttributeHierarchy[] {
         return this.items.filter(isCatalogAttributeHierarchy);
+    }
+
+    public computedAttributes(): ICatalogComputedAttribute[] {
+        return this.items.filter(isCatalogComputedAttribute);
     }
 
     public availableItems(): IWorkspaceCatalogAvailableItemsFactory {

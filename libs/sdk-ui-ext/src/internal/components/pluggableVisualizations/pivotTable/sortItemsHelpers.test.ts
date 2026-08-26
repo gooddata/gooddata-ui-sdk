@@ -10,9 +10,9 @@ import {
     type IBucketItem,
     type IExtendedReferencePoint,
 } from "../../../interfaces/Visualization.js";
-import { simpleStackedReferencePoint } from "../../../mocks/referencePointMocks.js";
+import { simpleStackedReferencePoint } from "../../../tests/referencePointMocks.test.helpers.js";
 
-import { getMockReferencePoint } from "./mockReferencePoint.js";
+import { getMockReferencePoint } from "./mockReferencePoint.test.helpers.js";
 import {
     adaptReferencePointSortItemsToPivotTable,
     addDefaultSort,
@@ -26,7 +26,7 @@ import {
     invalidMeasureSortTooManyLocators,
     validAttributeSort,
     validMeasureSort,
-} from "./sortMocks.js";
+} from "./sortMocks.test.helpers.js";
 
 const createAttributeBucketItem = (localIdentifier: string, attributeName: string): IBucketItem => ({
     aggregation: null as unknown as undefined,

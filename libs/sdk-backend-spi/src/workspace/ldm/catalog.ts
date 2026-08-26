@@ -1,10 +1,12 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import {
     type CatalogItem,
     type CatalogItemType,
     type IAttributeOrMeasure,
     type ICatalogAttribute,
     type ICatalogAttributeHierarchy,
+    type ICatalogComputedAttribute,
     type ICatalogDateDataset,
     type ICatalogFact,
     type ICatalogGroup,
@@ -214,6 +216,13 @@ export interface IWorkspaceCatalogWithAvailableItems extends IWorkspaceCatalogMe
      * @returns array of available catalog attribute hierarchies
      */
     availableAttributeHierarchies(): ICatalogAttributeHierarchy[];
+
+    /**
+     * Get all available catalog computed attributes
+     *
+     * @returns array of available catalog computed attributes
+     */
+    availableComputedAttributes(): ICatalogComputedAttribute[];
 }
 
 /**
@@ -334,4 +343,11 @@ export interface IWorkspaceCatalogMethods {
      * @returns array of catalog attribute hierarchies
      */
     attributeHierarchies(): ICatalogAttributeHierarchy[];
+
+    /**
+     * Get all catalog computed attributes
+     *
+     * @returns array of catalog computed attributes
+     */
+    computedAttributes(): ICatalogComputedAttribute[];
 }

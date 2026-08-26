@@ -5,8 +5,10 @@
         "**/*.test.tsx",
         "**/*.fixture.ts",
         "**/*.fixtures.ts",
+        "**/*.test.helpers.ts",
+        "**/*.test.helpers.tsx",
         "**/test/helper.ts",
-        "**/MockProvider.ts",
+        "**/*.test.helpers.ts",
         "**/tests/*Mock.ts"
     ],
     "include": ["src/**/*"],

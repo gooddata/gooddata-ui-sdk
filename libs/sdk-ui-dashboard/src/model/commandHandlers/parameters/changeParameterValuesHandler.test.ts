@@ -6,9 +6,9 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { type IDashboardParameter, idRef } from "@gooddata/sdk-model";
 
+import { SimpleDashboardIdentifier } from "../../../tests/SimpleDashboard.test.helpers.js";
 import { changeParameterValues } from "../../commands/parameters.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
-import { SimpleDashboardIdentifier } from "../../fixtures/SimpleDashboard.fixtures.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectParameterRuntimeOverrideByRef } from "../../store/tabs/parameters/parametersSelectors.js";
 import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";

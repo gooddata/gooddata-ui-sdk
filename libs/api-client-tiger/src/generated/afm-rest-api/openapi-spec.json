@@ -4093,6 +4093,7 @@
                                 "enum": [
                                     "analyticalDashboard",
                                     "attribute",
+                                    "computedAttribute",
                                     "dashboardPlugin",
                                     "dataset",
                                     "fact",
@@ -4161,7 +4162,8 @@
                                     "attribute",
                                     "label",
                                     "fact",
-                                    "metric"
+                                    "metric",
+                                    "computedAttribute"
                                 ]
                             }
                         }
@@ -4219,7 +4221,8 @@
                             "type": {
                                 "type": "string",
                                 "enum": [
-                                    "label"
+                                    "label",
+                                    "computedAttribute"
                                 ]
                             }
                         }

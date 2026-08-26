@@ -6,6 +6,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type IAutomationUserRecipient, type INotificationChannelIdentifier } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
+import { type ISlotProps } from "@gooddata/sdk-ui-kit";
 
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { AlertingDialogContextProvider } from "../../contexts/AlertingDialogContext.js";
@@ -13,7 +14,6 @@ import { AutomationsContextProvider } from "../../contexts/AutomationsContext.js
 import {
     type IAutomationDialogDestinationProps,
     type IAutomationDialogRecipientsProps,
-    type ISlotProps,
 } from "../../shared/slots/types.js";
 import { AlertingDialogStateProvider } from "../state/AlertingDialogStateProvider.js";
 import {
@@ -21,7 +21,7 @@ import {
     AUTOMATIONS_CONTEXT,
     SENTINEL_CHANNEL,
     SENTINEL_MEASURE,
-} from "../state/fixtures.js";
+} from "../tests/alerting.test.helpers.js";
 import { type AlertAttribute, type IDefaultAlertingDialogProps } from "../types.js";
 
 import { DefaultAlertingDialog } from "./DefaultAlertingDialog.js";

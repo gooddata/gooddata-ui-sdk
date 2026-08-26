@@ -4,14 +4,14 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { type IDashboardParameter, type IDrillToDashboard, idRef } from "@gooddata/sdk-model";
 
+import {
+    SimpleDashboardIdentifier,
+    SimpleSortedTableWidgetRef,
+} from "../../../tests/SimpleDashboard.test.helpers.js";
 import { type IDashboardDrillEvent } from "../../../types.js";
 import { drillToDashboard } from "../../commands/drill.js";
 import { createDashboardTab, switchDashboardTab } from "../../commands/tabs.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
-import {
-    SimpleDashboardIdentifier,
-    SimpleSortedTableWidgetRef,
-} from "../../fixtures/SimpleDashboard.fixtures.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 

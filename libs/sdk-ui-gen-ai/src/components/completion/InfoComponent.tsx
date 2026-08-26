@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { createRoot } from "react-dom/client";
 import { type IntlShape } from "react-intl";
@@ -20,7 +20,15 @@ interface IInfoComponentProps {
     canAnalyze?: boolean;
 }
 
-function InfoComponent({ item, intl, canManage, canAnalyze, dataset, group, id }: IInfoComponentProps) {
+export function InfoComponent({
+    item,
+    intl,
+    canManage,
+    canAnalyze,
+    dataset,
+    group,
+    id,
+}: IInfoComponentProps) {
     return (
         <div className="gd-gen-ai-chat__autocomplete__info">
             <h3>{item.title}</h3>
@@ -39,6 +47,15 @@ function InfoComponent({ item, intl, canManage, canAnalyze, dataset, group, id }
                         : null}
                     {item.type === "dataSet"
                         ? intl.formatMessage({ id: "gd.gen-ai.autocomplete.date" })
+                        : null}
+                    {item.type === "insight"
+                        ? intl.formatMessage({ id: "gd.gen-ai.autocomplete.insight" })
+                        : null}
+                    {item.type === "analyticalDashboard"
+                        ? intl.formatMessage({ id: "gd.gen-ai.autocomplete.analyticalDashboard" })
+                        : null}
+                    {item.type === "displayForm"
+                        ? intl.formatMessage({ id: "gd.gen-ai.autocomplete.displayForm" })
                         : null}
                 </div>
             </div>

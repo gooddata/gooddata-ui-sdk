@@ -7,6 +7,7 @@ import { type IWorkspaceAgentsService } from "./agents/index.js";
 import { type IAttributeHierarchiesService } from "./attributeHierarchies/index.js";
 import { type IWorkspaceAttributesService } from "./attributes/index.js";
 import { type IWorkspaceAutomationService } from "./automations/index.js";
+import { type IWorkspaceComputedAttributesService } from "./computedAttributes/index.js";
 import { type IWorkspaceDashboardsService } from "./dashboards/index.js";
 import { type IDataFiltersService } from "./dataFilter/index.js";
 import { type IDateFilterConfigsQuery } from "./dateFilterConfigs/index.js";
@@ -114,6 +115,11 @@ export interface IAnalyticalWorkspace {
      * Returns service that can be used to query additional facts data.
      */
     facts(): IWorkspaceFactsService;
+
+    /**
+     * Returns service that can be used to manage and query computed attributes.
+     */
+    computedAttributes(): IWorkspaceComputedAttributesService;
 
     /**
      * Returns service that can be used to query data sets defined in this workspace.

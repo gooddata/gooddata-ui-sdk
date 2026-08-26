@@ -1,0 +1,349 @@
+// (C) 2021-2026 GoodData Corporation
+
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { type IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import {
+    type IAttributeDescriptor,
+    type IDrillToAttributeUrl,
+    type IDrillToCustomUrl,
+    type IDrillToDashboard,
+    type IDrillToInsight,
+    type IFilterContext,
+    type IKpiWidget,
+    type IListedDashboard,
+    idRef,
+} from "@gooddata/sdk-model";
+import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
+
+import { ComplexDashboardIdentifier } from "../model/tests/ComplexDashboard.test.helpers.js";
+import { type IInaccessibleDashboard } from "../model/types/inaccessibleDashboardTypes.js";
+
+export const SimpleDashboardIdentifier = "adb4fefa-c5ad-410e-bb2c-d6933e0ec7a0";
+export const SimpleDashboardWithReferences = ReferenceRecordings.Recordings.metadata?.dashboards?.[
+    "dash_adb4fefa_c5ad_410e_bb2c_d6933e0ec7a0"
+].obj as IDashboardWithReferences;
+export const SimpleDashboardLayout = SimpleDashboardWithReferences.dashboard.layout!;
+export const SimpleDashboardFilterContext = SimpleDashboardWithReferences.dashboard
+    .filterContext as IFilterContext;
+
+/**
+ * drillToAttributeUrl on simple dashboard
+ */
+export const drillToAttributeUrlWidgetRef = (SimpleDashboardLayout.sections[2].items[0].widget as any).ref;
+
+/**
+ * First widget from first section
+ */
+export const KpiWidgetRef = (SimpleDashboardLayout.sections[0].items[0].widget as IKpiWidget).ref;
+/**
+ * First widget from second section
+ */
+export const SimpleSortedTableWidgetRef = (SimpleDashboardLayout.sections[1].items[0].widget as any).ref;
+export const SimpleSortedTableWidgetInsightRef =
+    SimpleDashboardWithReferences.references.insights[2].insight.ref;
+export const SimpleSortedTableWidgetInsightIdentifier =
+    SimpleDashboardWithReferences.references.insights[2].insight.identifier;
+export const SimpleSortedTableWidgetInsight = SimpleDashboardWithReferences.references.insights[2];
+/**
+ * localIdentifier of Won Measure of Simple SortedTable Widget on Simple Dashboard
+ */
+export const SimpleDashboardSimpleSortedTableWonMeasureLocalIdentifier = "31c22194386b408aa80ab90b966e85a7";
+export const SimpleDashboardSimpleSortedTableProductAttributeLocalIdentifier =
+    "3b196b9f8de04b61ba37762fa28fcf4f";
+
+/**
+ * simple dashboard drillToAttributeUrl NumOfOpportunities measure identifier
+ */
+export const NumOfOpportunitiesMeasureIdentifier = "8e874c44107d41809d0d5e7bbd1c19ff";
+
+/**
+ * This mock is real reported drillTargets after firs render
+ */
+export const SimpleDashboardSimpleSortedTableWidgetDrillTargets: IAvailableDrillTargets = {
+    measures: [
+        {
+            measure: {
+                measureHeaderItem: {
+                    name: "Won",
+                    format: "$#,##0.00",
+                    localIdentifier: SimpleDashboardSimpleSortedTableWonMeasureLocalIdentifier,
+                    uri: "obj_1272",
+                    identifier: "acugFHNJgsBy",
+                    ref: {
+                        identifier: "obj_1272",
+                    },
+                },
+            },
+            attributes: [
+                {
+                    attributeHeader: {
+                        name: "Product Name",
+                        localIdentifier: "3b196b9f8de04b61ba37762fa28fcf4f",
+                        uri: "obj_1055",
+                        identifier: "label.product.id.name",
+                        formOf: {
+                            name: "Product",
+                            uri: "obj_1054",
+                            identifier: "attr.product.id",
+                            ref: {
+                                identifier: "obj_1054",
+                            },
+                        },
+                        ref: {
+                            identifier: "obj_1055",
+                        },
+                    },
+                } as unknown as IAttributeDescriptor,
+                {
+                    attributeHeader: {
+                        name: "Department",
+                        localIdentifier: "d25f36e4914f4ed18ee6b057d18decd9",
+                        uri: "obj_1089",
+                        identifier: "label.owner.department",
+                        formOf: {
+                            name: "Department",
+                            uri: "obj_1088",
+                            identifier: "attr.owner.department",
+                            ref: {
+                                identifier: "obj_1088",
+                            },
+                        },
+                        ref: {
+                            identifier: "obj_1089",
+                        },
+                    },
+                } as unknown as IAttributeDescriptor,
+            ],
+        },
+    ],
+    attributes: [
+        {
+            attribute: {
+                attributeHeader: {
+                    name: "Product Name",
+                    localIdentifier: SimpleDashboardSimpleSortedTableProductAttributeLocalIdentifier,
+                    uri: "obj_1055",
+                    identifier: "label.product.id.name",
+                    formOf: {
+                        name: "Product",
+                        uri: "obj_1054",
+                        identifier: "attr.product.id",
+                        ref: {
+                            identifier: "obj_1054",
+                        },
+                    },
+                    ref: {
+                        identifier: "obj_1055",
+                    },
+                },
+            } as unknown as IAttributeDescriptor,
+            intersectionAttributes: [
+                {
+                    attributeHeader: {
+                        name: "Product Name",
+                        localIdentifier: "3b196b9f8de04b61ba37762fa28fcf4f",
+                        uri: "obj_1055",
+                        identifier: "label.product.id.name",
+                        formOf: {
+                            name: "Product",
+                            uri: "obj_1054",
+                            identifier: "attr.product.id",
+                            ref: {
+                                identifier: "obj_1054",
+                            },
+                        },
+                        ref: {
+                            identifier: "obj_1055",
+                        },
+                    },
+                } as unknown as IAttributeDescriptor,
+            ],
+        },
+    ],
+};
+
+export const SimpleDashboarddrillToAttributeUrlWidgetDrillTargets: IAvailableDrillTargets = {
+    measures: [
+        {
+            measure: {
+                measureHeaderItem: {
+                    name: "# Of Opportunities",
+                    format: "#,##0.00",
+                    localIdentifier: "8e874c44107d41809d0d5e7bbd1c19ff",
+                    uri: "obj_1268",
+                    identifier: "abQgDWx4gOUu",
+                    ref: {
+                        identifier: "obj_1268",
+                    },
+                },
+            },
+            attributes: [
+                {
+                    attributeHeader: {
+                        name: "Opportunity Name",
+                        localIdentifier: "a75a78a7e2194c339b4f6b8694777803",
+                        uri: "obj_1067",
+                        identifier: "label.opportunity.id.name",
+                        formOf: {
+                            name: "Opportunity",
+                            uri: "obj_1066",
+                            identifier: "attr.opportunity.id",
+                            ref: {
+                                identifier: "obj_1066",
+                            },
+                        },
+                        ref: {
+                            identifier: "obj_1067",
+                        },
+                    },
+                } as unknown as IAttributeDescriptor,
+            ],
+        },
+    ],
+    attributes: [
+        {
+            attribute: {
+                attributeHeader: {
+                    name: "Opportunity Name",
+                    localIdentifier: "a75a78a7e2194c339b4f6b8694777803",
+                    uri: "obj_1067",
+                    identifier: "label.opportunity.id.name",
+                    formOf: {
+                        name: "Opportunity",
+                        uri: "obj_1066",
+                        identifier: "attr.opportunity.id",
+                        ref: {
+                            identifier: "obj_1066",
+                        },
+                    },
+                    ref: {
+                        identifier: "obj_1067",
+                    },
+                },
+            } as unknown as IAttributeDescriptor,
+            intersectionAttributes: [
+                {
+                    attributeHeader: {
+                        name: "Opportunity Name",
+                        localIdentifier: "a75a78a7e2194c339b4f6b8694777803",
+                        uri: "obj_1067",
+                        identifier: "label.opportunity.id.name",
+                        formOf: {
+                            name: "Opportunity",
+                            uri: "obj_1066",
+                            identifier: "attr.opportunity.id",
+                            ref: {
+                                identifier: "obj_1066",
+                            },
+                        },
+                        ref: {
+                            identifier: "obj_1067",
+                        },
+                    },
+                } as unknown as IAttributeDescriptor,
+            ],
+        },
+    ],
+};
+
+export const DrillToDashboardWithThreeSectionsLocalIdentifier = "b4c6999557164163a9e0e75ec74cb8db";
+
+export const DrillToDashboardFromWonMeasureDefinition: IDrillToDashboard = {
+    localIdentifier: "b4c6999557164163a9e0e75ec74cb854",
+    type: "drillToDashboard",
+    origin: {
+        type: "drillFromMeasure",
+        measure: {
+            localIdentifier: SimpleDashboardSimpleSortedTableWonMeasureLocalIdentifier,
+        },
+    },
+    target: {
+        identifier: ComplexDashboardIdentifier,
+        type: "analyticalDashboard",
+    },
+    transition: "in-place",
+};
+
+export const DrillToDashboardFromProductAttributeDefinition: IDrillToDashboard = {
+    localIdentifier: "b4c6999557164163a9e0e75ec74cb8d4",
+    type: "drillToDashboard",
+    origin: {
+        type: "drillFromAttribute",
+        attribute: {
+            localIdentifier: SimpleDashboardSimpleSortedTableProductAttributeLocalIdentifier,
+        },
+    },
+    target: {
+        identifier: ComplexDashboardIdentifier,
+        type: "analyticalDashboard",
+    },
+    transition: "in-place",
+};
+
+export const DrillToToInsightFromWonMeasureDefinition: IDrillToInsight = {
+    localIdentifier: DrillToDashboardWithThreeSectionsLocalIdentifier,
+    type: "drillToInsight",
+    origin: {
+        type: "drillFromMeasure",
+        measure: {
+            localIdentifier: SimpleDashboardSimpleSortedTableWonMeasureLocalIdentifier,
+        },
+    },
+    transition: "pop-up",
+    target: SimpleSortedTableWidgetInsightRef,
+};
+
+export const DrillToCustomUrlFromMeasureDefinition: IDrillToCustomUrl = {
+    localIdentifier: DrillToDashboardWithThreeSectionsLocalIdentifier,
+    type: "drillToCustomUrl",
+    transition: "new-window",
+    origin: {
+        type: "drillFromMeasure",
+        measure: {
+            localIdentifier: SimpleDashboardSimpleSortedTableWonMeasureLocalIdentifier,
+        },
+    },
+    target: {
+        url: "https://www.example.org?dep={attribute_title(label.owner.department)}",
+    },
+};
+
+export const DrillToAttributeUrlFromMeasureDefinition: IDrillToAttributeUrl = {
+    localIdentifier: "b4c6999557164163a9e0e75ec74cb8d3",
+    type: "drillToAttributeUrl",
+    transition: "new-window",
+    origin: {
+        type: "drillFromMeasure",
+        measure: {
+            localIdentifier: NumOfOpportunitiesMeasureIdentifier,
+        },
+    },
+    target: {
+        displayForm: {
+            identifier: "obj_1067",
+        },
+        hyperlinkDisplayForm: {
+            identifier: "obj_1069",
+        },
+    },
+};
+
+export const InaccessibleDashboard: IInaccessibleDashboard = {
+    title: "Inaccessible Dashboard",
+    ref: idRef("inaccessibleDashboardId"),
+    uri: "inaccessibleDashboardUri",
+    identifier: "inaccessibleDashboardId",
+};
+
+export const SimpleDashboardListed: IListedDashboard = {
+    ref: SimpleDashboardWithReferences.dashboard.ref,
+    identifier: SimpleDashboardWithReferences.dashboard.identifier,
+    uri: SimpleDashboardWithReferences.dashboard.uri,
+    title: SimpleDashboardWithReferences.dashboard.title,
+    description: SimpleDashboardWithReferences.dashboard.description,
+    updated: SimpleDashboardWithReferences.dashboard.updated,
+    created: SimpleDashboardWithReferences.dashboard.created,
+    tags: SimpleDashboardWithReferences.dashboard.tags,
+    shareStatus: SimpleDashboardWithReferences.dashboard.shareStatus,
+    availability: "full",
+};

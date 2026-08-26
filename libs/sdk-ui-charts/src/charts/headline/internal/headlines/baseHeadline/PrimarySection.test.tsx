@@ -4,7 +4,7 @@ import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
-import { TEST_BASE_HEADLINE_ITEM } from "../../TestData.fixtures.js";
+import { TEST_BASE_HEADLINE_ITEM } from "../../tests/TestData.test.helpers.js";
 
 import { createBaseHeadlineTestContext } from "./BaseHeadline.test.helpers.js";
 import { PrimarySection } from "./PrimarySection.js";

@@ -19,7 +19,7 @@ import {
     getDateFilterOptionGranularity,
     sanitizePresetIntervals,
 } from "./OptionUtils.js";
-import { absoluteFormFilter, relativePresetFilter } from "./Translations/fixtures.js";
+import { absoluteFormFilter, relativePresetFilter } from "./Translations.test.helpers.js";
 
 describe("optionUtils", () => {
     describe("getDateFilterOptionGranularity", () => {

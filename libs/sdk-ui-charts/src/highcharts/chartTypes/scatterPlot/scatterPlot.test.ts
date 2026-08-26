@@ -10,10 +10,10 @@ import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { type IColorMapping, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
-import { recordedDataFacade } from "../../../../testUtils/recordings.js";
+import { recordedDataFacade } from "../../../testUtils/recordings.fixture.js";
 import { ColorFactory } from "../_chartOptions/colorFactory.js";
-import { CUSTOM_COLOR_PALETTE } from "../_util/colorPalette.fixture.js";
 import { getMVS } from "../_util/helper.js";
+import { CUSTOM_COLOR_PALETTE } from "../tests/colorPalette.test.helpers.js";
 
 import { ScatterPlotColorStrategy } from "./scatterPlotColoring.js";
 

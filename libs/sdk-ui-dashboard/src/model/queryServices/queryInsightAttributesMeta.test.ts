@@ -8,17 +8,20 @@ import { type IDashboard, idRef, insightRef } from "@gooddata/sdk-model";
 
 import { createDefaultFilterContext } from "../../_staging/dashboard/defaultFilterContext.js";
 import { defaultDateFilterConfig } from "../../_staging/dateFilterConfig/defaultConfig.js";
+import {
+    EmptyDashboardIdentifier,
+    EmptyDashboardWithReferences,
+} from "../../tests/Dashboard.test.helpers.js";
 import { EmptyDashboardLayout } from "../commandHandlers/dashboard/common/dashboardInitialize.js";
 import { addLayoutSection } from "../commands/layout.js";
 import { type DashboardTester, preloadedTesterFactory } from "../DashboardTester.js";
-import { EmptyDashboardIdentifier, EmptyDashboardWithReferences } from "../fixtures/Dashboard.fixtures.js";
+import { type IInsightAttributesMeta, queryInsightAttributesMeta } from "../queries/insights.js";
 import {
     PivotTableWithRowAndColumnAttributes,
     TreemapWithOneMeasureAndViewByDateAndSegmentByDate,
     TreemapWithSingleMeasureAndViewByFilteredToOneElement,
-} from "../fixtures/Insights.fixtures.js";
-import { TestSectionHeader, createTestInsightItem } from "../fixtures/Layout.fixtures.js";
-import { type IInsightAttributesMeta, queryInsightAttributesMeta } from "../queries/insights.js";
+} from "../tests/Insights.test.helpers.js";
+import { TestSectionHeader, createTestInsightItem } from "../tests/Layout.test.helpers.js";
 import { type PrivateDashboardContext } from "../types/commonTypes.js";
 
 describe("query insight attributes meta", () => {

@@ -6,6 +6,8 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { type ObjRef, idRef } from "@gooddata/sdk-model";
 
+import { TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
+import { SimpleDashboardIdentifier } from "../../../tests/SimpleDashboard.test.helpers.js";
 import {
     type IRemoveSectionItemByWidgetRef,
     eagerRemoveSectionItemByWidgetRef,
@@ -19,14 +21,12 @@ import {
     type IDashboardLayoutSectionItemRemoved,
     type IDashboardLayoutSectionRemoved,
 } from "../../events/layout.js";
+import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardLayout,
     ComplexDashboardWithReferences,
-} from "../../fixtures/ComplexDashboard.fixtures.js";
-import { TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../fixtures/SimpleDashboard.fixtures.js";
-import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
+} from "../../tests/ComplexDashboard.test.helpers.js";
 
 describe("remove layout section item handler", () => {
     describe("for any dashboard", () => {

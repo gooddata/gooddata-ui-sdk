@@ -84,6 +84,10 @@ export interface IUiTooltipProps {
      * Occurs when the tooltip is closed
      */
     onClose?: () => void;
+    /**
+     * The component to use for the tooltip.
+     */
+    component?: "div" | "span";
 
     /**
      * Controls the open state of the tooltip, overrides the triggerBy prop if set.

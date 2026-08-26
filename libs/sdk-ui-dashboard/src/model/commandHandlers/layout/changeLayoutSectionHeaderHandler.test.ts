@@ -4,6 +4,8 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
+import { TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
+import { SimpleDashboardIdentifier } from "../../../tests/SimpleDashboard.test.helpers.js";
 import {
     type ChangeLayoutSectionHeader,
     changeLayoutSectionHeader,
@@ -15,8 +17,6 @@ import {
     type IDashboardLayoutChanged,
     type IDashboardLayoutSectionHeaderChanged,
 } from "../../events/layout.js";
-import { TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../fixtures/SimpleDashboard.fixtures.js";
 import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
 
 const FullHeader = { title: "My Section", description: "My Section Description" };

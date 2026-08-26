@@ -109,13 +109,14 @@ $dataset_color: #952f8e;
     .gd-gen-ai-chat__message__object {
         font-weight: normal;
         border-radius: 20px;
-        padding: 3px 5px;
+        padding: 3px 7px;
         display: inline-flex;
         align-items: center;
         position: relative;
         top: 0.2em;
         font-size: 12px;
         line-height: 12px;
+        cursor: pointer;
 
         @if $type == "user" {
             border: 1px solid var(--gd-palette-complementary-0-t10);
@@ -254,6 +255,10 @@ $dataset_color: #952f8e;
         &.visualization .gd-gen-ai-chat__message-icon {
             @include variables.gd-svg-mask("visualization");
         }
+    }
+
+    .gd-ui-kit-tooltip__anchor {
+        display: inline-flex;
     }
 }
 

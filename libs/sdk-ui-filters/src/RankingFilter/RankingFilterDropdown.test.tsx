@@ -6,7 +6,6 @@ import { describe, expect, it, vi } from "vitest";
 import { newRankingFilter } from "@gooddata/sdk-model";
 import { withIntlForTest } from "@gooddata/sdk-ui";
 
-import { RankingFilterDropdownFragment } from "./fragments/RankingFilterDropdown.js";
 import {
     attribute1Ref as mockAttribute1Ref,
     attribute2Ref as mockAttribute2Ref,
@@ -18,12 +17,13 @@ import {
     measure2Ref as mockMeasure2Ref,
     measure3Ref as mockMeasure3Ref,
     measureItems as mockMeasureItems,
-} from "./mocks.js";
+} from "./RankingFilter.test.helpers.js";
 import {
     type IRankingFilterDropdownProps,
     RankingFilterDropdown,
     prepareRankingFilterState,
 } from "./RankingFilterDropdown.js";
+import { RankingFilterDropdownFragment } from "./RankingFilterDropdown.test.utils.js";
 
 const renderComponent = (props?: Partial<IRankingFilterDropdownProps>) => {
     const defaultProps: IRankingFilterDropdownProps = {

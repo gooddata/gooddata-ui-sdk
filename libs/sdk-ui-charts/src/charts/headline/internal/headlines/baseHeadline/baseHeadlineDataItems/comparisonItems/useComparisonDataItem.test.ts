@@ -9,7 +9,7 @@ import {
     TEST_COLOR_CONFIGS,
     TEST_COMPARISON_PALETTE,
     createComparison,
-} from "../../../../TestData.fixtures.js";
+} from "../../../../tests/TestData.test.helpers.js";
 import { createBaseHeadlineTestContext } from "../../BaseHeadline.test.helpers.js";
 
 import { useComparisonDataItem } from "./useComparisonDataItem.js";

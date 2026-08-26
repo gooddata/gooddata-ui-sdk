@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: dd7fd6ed1784480f941225b7c41c043e572cd15b7cc010aede85a1995b9855ca
+# schema-hash: 1a228ad9d85d72f6d8675b3fc00d16c7ea093c33b33ae944dc0938e13259225e
 
 from __future__ import annotations
 
@@ -25,6 +25,7 @@ __all__ = [
     "ColorItems",
     "ColumnOverride",
     "ComplexColorItem",
+    "ComputedAttribute",
     "Condition",
     "ConditionalFormatting",
     "Config",
@@ -787,6 +788,16 @@ QueryDateFilter2 = TypedDict(
 
 
 QueryDateFilter: TypeAlias = QueryDateFilter1 | QueryDateFilter2
+
+
+class ComputedAttribute(TypedDict):
+    id: Identifier
+    type: Literal['computed_attribute']
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    maql: str
+    locale: NotRequired[str]
 
 
 ColorItems: TypeAlias = dict[str, ComplexColorItem]
@@ -1882,6 +1893,7 @@ Metadata: TypeAlias = Union[
     Dataset,
     DateDataset,
     Metric,
+    ComputedAttribute,
     "Dashboard",
     Plugin,
     AttributeHierarchy,
