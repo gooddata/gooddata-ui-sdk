@@ -4,17 +4,17 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { type IInsightWidget, insightRef, uriRef } from "@gooddata/sdk-model";
 
+import { TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
+import {
+    SimpleDashboardIdentifier,
+    SimpleSortedTableWidgetRef,
+} from "../../../tests/SimpleDashboard.test.helpers.js";
 import { type IChangeInsightWidgetInsight, changeInsightWidgetInsight } from "../../commands/insight.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardCommandFailed } from "../../events/general.js";
 import { type IDashboardInsightWidgetInsightSwitched } from "../../events/insight.js";
-import { TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
-import { PivotTableWithRowAndColumnAttributes } from "../../fixtures/Insights.fixtures.js";
-import {
-    SimpleDashboardIdentifier,
-    SimpleSortedTableWidgetRef,
-} from "../../fixtures/SimpleDashboard.fixtures.js";
 import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
+import { PivotTableWithRowAndColumnAttributes } from "../../tests/Insights.test.helpers.js";
 
 describe("change insight widget vis properties handler", () => {
     let Tester: DashboardTester;

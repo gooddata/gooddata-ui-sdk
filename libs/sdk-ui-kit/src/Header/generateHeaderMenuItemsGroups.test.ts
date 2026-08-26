@@ -3,7 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import { generateHeaderMenuItemsGroups } from "./generateHeaderMenuItemsGroups.js";
-import { getAccountMenuFeatureFlagsMock, getWorkspacePermissionsMock } from "./mock.js";
+import { getAccountMenuFeatureFlagsMock, getWorkspacePermissionsMock } from "./Header.test.helpers.js";
 
 describe("generateHeaderMenuItemsGroups", () => {
     it("should not return dashboards and report item", () => {

@@ -49,15 +49,15 @@ import {
     type IScheduledEmailDialogContextValue,
     ScheduledEmailDialogContextProvider,
 } from "../../contexts/ScheduledEmailDialogContext.js";
-import { dashboardParameter } from "../../shared/automationFilters/parameterFixtures.js";
-
+import { dashboardParameter } from "../../tests/parameterFixtures.test.helpers.js";
 import {
     AUTOMATIONS_CONTEXT,
     SCHEDULED_EMAIL_DIALOG_CONTEXT,
     SENTINEL_INSIGHT,
     SENTINEL_WIDGET,
     WORKSPACE_PARAMETER,
-} from "./fixtures.js";
+} from "../tests/scheduledEmail.test.helpers.js";
+
 import { ScheduledEmailDialogStateProvider } from "./ScheduledEmailDialogStateProvider.js";
 import { useScheduledExportActions } from "./ScheduledExportActionsContext.js";
 import { useScheduledExportDraft } from "./ScheduledExportDraftContext.js";

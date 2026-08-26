@@ -5,11 +5,11 @@ import { userEvent } from "@testing-library/user-event";
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
-import { colorPalette } from "../../../../mocks/testColorHelper.js";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
+import { colorPalette } from "../tests/testColorHelper.test.helpers.js";
 
 import { ColoredItemsList, type IColoredItemsListProps } from "./ColoredItemsList.js";
-import { inputItemsMock } from "./mock.js";
+import { inputItemsMock } from "./coloredItemsList.test.helpers.js";
 
 const defaultProps: IColoredItemsListProps = {
     colorPalette,

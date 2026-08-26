@@ -3,7 +3,6 @@
 import { useMemo } from "react";
 
 import {
-    DEFAULT_CSV_DELIMITER,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
@@ -31,7 +30,6 @@ export function useScheduledExportAttachments() {
     const { widget, insight } = useScheduledEmailDialogContext();
     const { editedAutomation } = useScheduledExportDraft();
 
-    const resolvedDefaultCsvDelimiter = settings?.exportCsvCustomDelimiter ?? DEFAULT_CSV_DELIMITER;
     const defaultPdfPageSize = getDefaultPdfPageSize(settings?.formatLocale);
     const isWidget = !!widget && !!insight;
 
@@ -101,7 +99,7 @@ export function useScheduledExportAttachments() {
             ? csvExportDefinition.requestPayload.settings
             : undefined;
     const csvSettings = {
-        delimiter: csvExportSettings?.delimiter ?? resolvedDefaultCsvDelimiter,
+        delimiter: csvExportSettings?.delimiter,
     };
 
     const csvRawExportDefinition = editedAutomation.exportDefinitions?.find(
@@ -115,7 +113,7 @@ export function useScheduledExportAttachments() {
             ? csvRawExportDefinition.requestPayload.settings
             : undefined;
     const csvRawSettings = {
-        delimiter: csvRawExportSettings?.delimiter ?? resolvedDefaultCsvDelimiter,
+        delimiter: csvRawExportSettings?.delimiter,
     };
 
     // Extract templateId per slides format, scoped to the current dialog mode

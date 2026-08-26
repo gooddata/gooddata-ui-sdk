@@ -9,7 +9,7 @@ import {
     widgetAlert,
     widgetAlertDefinitionToCreate,
     widgetAlertDefinitionToUpdate,
-} from "./alerts.fixtures.js";
+} from "./alerts.test.helpers.js";
 
 describe("dashboard widget alerts type guards", () => {
     describe("isWidgetAlert", () => {

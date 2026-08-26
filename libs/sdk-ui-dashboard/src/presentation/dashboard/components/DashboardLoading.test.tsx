@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { render } from "../../../../test/render.js";
+import { render } from "../tests/render.test.utils.js";
 
 import { DashboardLoading } from "./DashboardLoading.js";
 

@@ -12,7 +12,10 @@ import {
     type ICatalogMeasure,
 } from "@gooddata/sdk-model";
 
+import { type TextContentObject } from "../../model.js";
+
 import {
+    findCatalogItemOrReference,
     getCatalogItemId,
     getCatalogItemTitle,
     getCatalogItemType,
@@ -284,5 +287,82 @@ describe("objRefToTextContentObject", () => {
                 uri: "/gdc/md/demo/obj/123",
             }),
         ).toBeNull();
+    });
+});
+
+describe("findCatalogItemOrReference", () => {
+    const references: TextContentObject[] = [
+        { id: "m1", title: "Metric 1", type: "metric" },
+        { id: "a1", title: "Attribute 1", type: "label" },
+    ];
+    const catalogItems: CatalogItem[] = [measure, attribute];
+
+    it("should find item in references when not in catalog", () => {
+        const result = findCatalogItemOrReference(references, [], "m1", "metric");
+        expect(result).toEqual({
+            type: "measure",
+            id: "m1",
+            title: "Metric 1",
+            description: "",
+            deprecated: false,
+            production: true,
+            unlisted: false,
+        });
+    });
+
+    it("should find item in catalog when not in references", () => {
+        const result = findCatalogItemOrReference([], catalogItems, "measure.id", "metric");
+        expect(result).toEqual({
+            type: "measure",
+            id: "measure.id",
+            title: "Measure Title",
+            description: "Measure Description",
+            deprecated: false,
+            production: true,
+            unlisted: false,
+        });
+    });
+
+    it("should prefer catalog item when present in both", () => {
+        const refs: TextContentObject[] = [{ id: "measure.id", title: "Ref Title", type: "metric" }];
+        const result = findCatalogItemOrReference(refs, catalogItems, "measure.id", "metric");
+        expect(result?.title).toBe("Measure Title");
+        expect(result?.description).toBe("Measure Description");
+    });
+
+    it("should return undefined when not found", () => {
+        const result = findCatalogItemOrReference(references, catalogItems, "nonexistent", "metric");
+        expect(result).toBeUndefined();
+    });
+
+    it("should correctly map all TextContentObject types", () => {
+        const types: Array<[TextContentObject["type"], string]> = [
+            ["metric", "measure"],
+            ["dataset", "dataSet"],
+            ["label", "displayForm"],
+            ["date", "dataSet"],
+            ["dashboard", "analyticalDashboard"],
+            ["visualization", "insight"],
+        ];
+
+        types.forEach(([refType, expectedType]) => {
+            const refs: TextContentObject[] = [{ id: "id1", title: "Title", type: refType }];
+            const result = findCatalogItemOrReference(refs, [], "id1", refType);
+            expect(result?.type).toBe(expectedType);
+        });
+    });
+
+    it("should distinguish between items with same ID but different type", () => {
+        const refs: TextContentObject[] = [
+            { id: "id1", title: "Metric", type: "metric" },
+            { id: "id1", title: "Label", type: "label" },
+        ];
+        const result1 = findCatalogItemOrReference(refs, [], "id1", "metric");
+        expect(result1?.title).toBe("Metric");
+        expect(result1?.type).toBe("measure");
+
+        const result2 = findCatalogItemOrReference(refs, [], "id1", "label");
+        expect(result2?.title).toBe("Label");
+        expect(result2?.type).toBe("displayForm");
     });
 });

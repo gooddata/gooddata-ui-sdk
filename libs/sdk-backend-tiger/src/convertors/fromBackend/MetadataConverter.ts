@@ -8,6 +8,7 @@ import {
     type JsonApiAttributeOutDocument,
     type JsonApiAttributeOutList,
     type JsonApiAttributeOutWithLinks,
+    type JsonApiComputedAttributeOutWithLinks,
     type JsonApiDatasetOutWithLinks,
     type JsonApiFactOut,
     type JsonApiFactOutDocument,
@@ -43,6 +44,7 @@ import { isInheritedObject } from "./ObjectInheritance.js";
 
 export type MetadataObjectFromApi =
     | JsonApiAttributeOutWithLinks
+    | JsonApiComputedAttributeOutWithLinks
     | JsonApiFactOutWithLinks
     | JsonApiMetricOutWithLinks
     | JsonApiLabelOutWithLinks

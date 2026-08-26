@@ -7,6 +7,12 @@ import { describe, expect, it } from "vitest";
 import { idRef } from "@gooddata/sdk-model";
 
 import {
+    dashboardParameter,
+    workspaceNumberParameter,
+    workspaceStringParameter,
+} from "../../tests/parameterFixtures.test.helpers.js";
+
+import {
     type IAutomationParameter,
     automationParametersToExportParameters,
     availableAutomationParameters,
@@ -15,11 +21,6 @@ import {
     reconstructAutomationParametersFromExportParameters,
     reconstructAutomationParametersFromValues,
 } from "./automationParameters.js";
-import {
-    dashboardParameter,
-    workspaceNumberParameter,
-    workspaceStringParameter,
-} from "./parameterFixtures.js";
 
 describe("availableAutomationParameters — addable workspace parameters", () => {
     const catalog = [

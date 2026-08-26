@@ -8,8 +8,8 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { DataViewFacade, type ExplicitDrill, type HeadlineElementType } from "@gooddata/sdk-ui";
 
-import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
-import { TEST_MULTI_MEASURE_TRANSFORMATION } from "../TestData.fixtures.js";
+import { recordedDataFacade } from "../../../../testUtils/recordings.fixture.js";
+import { TEST_MULTI_MEASURE_TRANSFORMATION } from "../tests/TestData.test.helpers.js";
 
 import { createBaseHeadlineItem, getBaseHeadlineData } from "./BaseHeadlineTransformationUtils.js";
 import { getExecutionData } from "./HeadlineTransformationUtils.js";

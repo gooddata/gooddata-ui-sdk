@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type ComponentType, type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import {
     type FilterContextItem,
@@ -12,33 +12,6 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type IAutomationParameter } from "../automationFilters/automationParameters.js";
-
-/**
- * Contract of a section-level slot: the default implementation and the exact props the default
- * dialog would render it with.
- *
- * The component a customer assigns to a slot is rendered as an element type, so its reference
- * identity is load-bearing: define it at module scope (or memoize it), never inline in a render
- * function — an inline definition gets a fresh identity on every render of the declaring
- * component, which unmounts and remounts the region, losing focus and transient DOM state.
- *
- * Render `<Default {...defaultProps} />` inside your own markup to wrap the region rather than
- * replace it; a slot that does not spread `defaultProps` onto `Default` loses the default
- * behavior wired through them (including the dialog's initial-focus ref).
- *
- * @alpha
- */
-export interface ISlotProps<TProps> {
-    /**
-     * The default implementation of the region.
-     */
-    Default: ComponentType<TProps>;
-
-    /**
-     * The exact props the default dialog would render {@link ISlotProps.Default} with.
-     */
-    defaultProps: TProps;
-}
 
 /**
  * Members shared by both automation dialogs' header regions.
@@ -202,4 +175,67 @@ export interface IAutomationDialogRecipientsProps {
      * When set, the only addable recipient is this external address.
      */
     externalRecipientOverride?: string;
+}
+
+/**
+ * Members shared by both automation dialogs' action-bar regions (the footer row).
+ *
+ * @alpha
+ */
+export interface IAutomationDialogActionBarProps {
+    /**
+     * Label of the cancel button.
+     */
+    cancelButtonText: string;
+
+    /**
+     * Label of the submit button ("Create" / "Save" per mode).
+     */
+    submitButtonText: string;
+
+    /**
+     * Closes the dialog without saving.
+     */
+    onCancel: () => void;
+
+    /**
+     * Submits the automation.
+     */
+    onSubmit: () => void;
+
+    /**
+     * Whether submitting is currently disabled (validation, saving, execution-timestamp mode).
+     */
+    isSubmitDisabled: boolean;
+
+    /**
+     * Whether a save is in flight; drives the progress spinner and disables Delete.
+     */
+    isSaving: boolean;
+
+    /**
+     * Tooltip shown on the disabled submit button, when there is one.
+     */
+    submitButtonTooltipText?: string;
+
+    /**
+     * Text of the documentation link. Absent (with {@link IAutomationDialogActionBarProps.helpLinkHref})
+     * when the workspace is white-labeled.
+     */
+    helpLinkText?: string;
+
+    /**
+     * Target of the documentation link. Absent when the workspace is white-labeled.
+     */
+    helpLinkHref?: string;
+
+    /**
+     * Opens the delete confirmation. Absent when creating a new automation.
+     */
+    onDelete?: () => void;
+
+    /**
+     * Label of the delete button. Present with {@link IAutomationDialogActionBarProps.onDelete}.
+     */
+    deleteButtonText?: string;
 }

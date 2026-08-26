@@ -37,8 +37,8 @@ vi.mock("../../shared/automationFilters/hooks/useValidateExistingAutomationFilte
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { AutomationsContextProvider } from "../../contexts/AutomationsContext.js";
 import { ScheduledEmailDialogContextProvider } from "../../contexts/ScheduledEmailDialogContext.js";
+import { AUTOMATIONS_CONTEXT, SCHEDULED_EMAIL_DIALOG_CONTEXT } from "../tests/scheduledEmail.test.helpers.js";
 
-import { AUTOMATIONS_CONTEXT, SCHEDULED_EMAIL_DIALOG_CONTEXT } from "./fixtures.js";
 import { ScheduledEmailDialogStateProvider } from "./ScheduledEmailDialogStateProvider.js";
 import { useScheduledExportActions } from "./ScheduledExportActionsContext.js";
 import { useScheduledExportData } from "./ScheduledExportDataContext.js";

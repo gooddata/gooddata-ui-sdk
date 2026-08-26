@@ -6,8 +6,8 @@ import { describe, expect, it, vi } from "vitest";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
-import { recordedDataFacade } from "../../../../testUtils/recordings.js";
-import { SingleColumn } from "../table.fixture.js";
+import { recordedDataFacade } from "../../../testUtils/recordings.fixture.js";
+import { SingleColumn } from "../../tests/table.test.helpers.js";
 import { TableDescriptor } from "../tableDescriptor.js";
 
 import { ColumnHeader } from "./ColumnHeader.js";

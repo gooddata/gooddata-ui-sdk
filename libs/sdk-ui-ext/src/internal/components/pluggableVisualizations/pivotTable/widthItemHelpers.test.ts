@@ -6,7 +6,7 @@ import { uriRef } from "@gooddata/sdk-model";
 import { type ColumnWidthItem, type MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
 
 import { type IBucketFilter, type IBucketItem } from "../../../interfaces/Visualization.js";
-import { simpleStackedReferencePoint } from "../../../mocks/referencePointMocks.js";
+import { simpleStackedReferencePoint } from "../../../tests/referencePointMocks.test.helpers.js";
 
 import { adaptReferencePointWidthItemsToPivotTable } from "./widthItemsHelpers.js";
 import {
@@ -23,7 +23,7 @@ import {
     validMixedValuesColumnWidthItem,
     validSliceMeasureColumnWidthItem,
     validWeakMeasureColumnWidthItem,
-} from "./widthItemsMock.js";
+} from "./widthItemsMock.test.helpers.js";
 
 describe("adaptReferencePointWidthItemsToPivotTable", () => {
     const sourceReferencePoint = simpleStackedReferencePoint;

@@ -2144,7 +2144,7 @@ export interface AfmModelObjectIdentifierCoreIdentifier {
 }
 
 // @public (undocumented)
-export type AfmModelObjectIdentifierCoreIdentifierTypeEnum = 'attribute' | 'label' | 'fact' | 'metric';
+export type AfmModelObjectIdentifierCoreIdentifierTypeEnum = 'attribute' | 'label' | 'fact' | 'metric' | 'computedAttribute';
 
 // @public
 export interface AfmModelObjectIdentifierDataset {
@@ -2172,7 +2172,7 @@ export interface AfmModelObjectIdentifierIdentifier {
 }
 
 // @public (undocumented)
-export type AfmModelObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
+export type AfmModelObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'computedAttribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
 
 // @public (undocumented)
 export interface AfmModelObjectIdentifierLabel {
@@ -2189,7 +2189,7 @@ export interface AfmModelObjectIdentifierLabelIdentifier {
 }
 
 // @public (undocumented)
-export type AfmModelObjectIdentifierLabelIdentifierTypeEnum = 'label';
+export type AfmModelObjectIdentifierLabelIdentifierTypeEnum = 'label' | 'computedAttribute';
 
 // @public
 export interface AfmNegativeAttributeFilter {
@@ -2248,7 +2248,7 @@ export interface AfmObjectIdentifierCoreIdentifier {
 }
 
 // @public (undocumented)
-export type AfmObjectIdentifierCoreIdentifierTypeEnum = 'attribute' | 'label' | 'fact' | 'metric';
+export type AfmObjectIdentifierCoreIdentifierTypeEnum = 'attribute' | 'label' | 'fact' | 'metric' | 'computedAttribute';
 
 // @public
 export interface AfmObjectIdentifierDataset {
@@ -2276,7 +2276,7 @@ export interface AfmObjectIdentifierIdentifier {
 }
 
 // @public (undocumented)
-export type AfmObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
+export type AfmObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'computedAttribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
 
 // @public (undocumented)
 export interface AfmObjectIdentifierLabel {
@@ -2293,7 +2293,7 @@ export interface AfmObjectIdentifierLabelIdentifier {
 }
 
 // @public (undocumented)
-export type AfmObjectIdentifierLabelIdentifierTypeEnum = 'label';
+export type AfmObjectIdentifierLabelIdentifierTypeEnum = 'label' | 'computedAttribute';
 
 // @public
 export interface AfmObjectIdentifierParameter {
@@ -11129,7 +11129,7 @@ export interface AutomationAfmObjectIdentifierCoreIdentifier {
 }
 
 // @public (undocumented)
-export type AutomationAfmObjectIdentifierCoreIdentifierTypeEnum = 'attribute' | 'label' | 'fact' | 'metric';
+export type AutomationAfmObjectIdentifierCoreIdentifierTypeEnum = 'attribute' | 'label' | 'fact' | 'metric' | 'computedAttribute';
 
 // @public
 export interface AutomationAfmObjectIdentifierDataset {
@@ -11157,7 +11157,7 @@ export interface AutomationAfmObjectIdentifierIdentifier {
 }
 
 // @public (undocumented)
-export type AutomationAfmObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
+export type AutomationAfmObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'computedAttribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
 
 // @public (undocumented)
 export interface AutomationAfmObjectIdentifierLabel {
@@ -11174,7 +11174,7 @@ export interface AutomationAfmObjectIdentifierLabelIdentifier {
 }
 
 // @public (undocumented)
-export type AutomationAfmObjectIdentifierLabelIdentifierTypeEnum = 'label';
+export type AutomationAfmObjectIdentifierLabelIdentifierTypeEnum = 'label' | 'computedAttribute';
 
 // @public
 export interface AutomationAfmObjectIdentifierParameter {
@@ -39870,7 +39870,7 @@ export type MetadataGetEntitiesOptions = {
 export type MetadataGetEntitiesParams = MetadataGetEntitiesWorkspaceParams | MetadataGetEntitiesUserParams | MetadataGetEntitiesThemeParams | MetadataGetEntitiesColorPaletteParams;
 
 // @internal
-export type MetadataGetEntitiesResult = JsonApiVisualizationObjectOutList | JsonApiAnalyticalDashboardOutList | JsonApiDashboardPluginOutList | JsonApiDatasetOutList | JsonApiAttributeOutList | JsonApiLabelOutList | JsonApiMetricOutList | JsonApiFactOutList | JsonApiFilterContextOutList | JsonApiApiTokenOutList | JsonApiThemeOutList | JsonApiColorPaletteOutList | JsonApiWorkspaceThemeOutList | JsonApiWorkspaceColorPaletteOutList | JsonApiExportDefinitionOutList | JsonApiAutomationOutList | JsonApiUserOutList | JsonApiNotificationChannelOutList | JsonApiNotificationChannelIdentifierOutList;
+export type MetadataGetEntitiesResult = JsonApiVisualizationObjectOutList | JsonApiAnalyticalDashboardOutList | JsonApiDashboardPluginOutList | JsonApiDatasetOutList | JsonApiAttributeOutList | JsonApiComputedAttributeOutList | JsonApiLabelOutList | JsonApiMetricOutList | JsonApiFactOutList | JsonApiFilterContextOutList | JsonApiApiTokenOutList | JsonApiThemeOutList | JsonApiColorPaletteOutList | JsonApiWorkspaceThemeOutList | JsonApiWorkspaceColorPaletteOutList | JsonApiExportDefinitionOutList | JsonApiAutomationOutList | JsonApiUserOutList | JsonApiNotificationChannelOutList | JsonApiNotificationChannelIdentifierOutList;
 
 // @internal
 export type MetadataGetEntitiesThemeParams = {

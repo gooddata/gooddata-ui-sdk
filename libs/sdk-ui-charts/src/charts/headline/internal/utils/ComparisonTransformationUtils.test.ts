@@ -7,9 +7,9 @@ import { describe, expect, it } from "vitest";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { type ExplicitDrill, createIntlMock } from "@gooddata/sdk-ui";
 
-import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { type IComparison } from "../../../../interfaces/comparison.js";
-import { TEST_COMPARISON_TRANSFORMATIONS, TEST_DEFAULT_COMPARISON } from "../TestData.fixtures.js";
+import { recordedDataFacade } from "../../../../testUtils/recordings.fixture.js";
+import { TEST_COMPARISON_TRANSFORMATIONS, TEST_DEFAULT_COMPARISON } from "../tests/TestData.test.helpers.js";
 
 import { getComparisonBaseHeadlineData } from "./ComparisonTransformationUtils.js";
 

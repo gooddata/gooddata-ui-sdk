@@ -9,11 +9,11 @@ import { describe, expect, it } from "vitest";
 import { type ITheme } from "@gooddata/sdk-model";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 
-import { SingleMeasureWithRowAndColumnAttributes } from "../structure/table.fixture.js";
-import { createTestTableFacade } from "../tableFacade.fixture.js";
+import { SingleMeasureWithRowAndColumnAttributes } from "../tests/table.test.helpers.js";
 
 import { createCellRenderer } from "./cellRenderer.js";
 import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "./cellUtils.js";
+import { createTestTableFacade } from "./tableFacade.test.helpers.js";
 
 async function createTestRenderer() {
     const [TestFacade] = await createTestTableFacade(SingleMeasureWithRowAndColumnAttributes);

@@ -7,8 +7,11 @@ import { type IDrillableItem } from "@gooddata/sdk-ui";
 import { CoreXirr, type ICoreChartProps } from "@gooddata/sdk-ui-charts";
 
 import { type IVisConstruct, type IVisProps } from "../../../interfaces/Visualization.js";
-import { emptyReferencePoint, measuresAndDateReferencePoint } from "../../../mocks/referencePointMocks.js";
-import { emptyInsight, insightWithSingleMeasure } from "../../../mocks/testMocks.js";
+import {
+    emptyReferencePoint,
+    measuresAndDateReferencePoint,
+} from "../../../tests/referencePointMocks.test.helpers.js";
+import { emptyInsight, insightWithSingleMeasure } from "../../../tests/testMocks.test.helpers.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
 import { getLastRenderEl } from "../pluggableVisualizations.test.helpers.js";
 

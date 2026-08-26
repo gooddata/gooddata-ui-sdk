@@ -969,7 +969,7 @@
     "userManagement.workspace.permission.createAutomation": "警示和排程匯出",
     "userManagement.workspace.permission.createAutomation.tooltip": "添加CREATE_AUTOMATIONS權限以創建自動警示和排程匯出。",
     "userManagement.workspace.permission.createMetric": "計量",
-    "userManagement.workspace.permission.createMetric.tooltip": "新增 CREATE_METRIC 權限，以建立、編輯或刪除指標。",
+    "userManagement.workspace.permission.createMetric.tooltip": "新增 CREATE_METRIC 權限，以建立及管理新指標。若要管理任何其他指標，使用者需要擁有其存取權。",
     "userManagement.workspace.permission.useAiAssistant": "AI助手",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "添加USE_AI_ASSISTANT權限，以訪問AI聊天機械人並與之交互以處理分析問題。",
     "userManagement.workspace.granularPermission.noWorkspace": "未選擇工作區",

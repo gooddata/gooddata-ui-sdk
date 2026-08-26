@@ -14,7 +14,7 @@ import {
     lastYear,
     relativeForm,
     year2019,
-} from "./fixtures.js";
+} from "./dateFilterConfig.test.helpers.js";
 import { mergeDateFilterConfigs } from "./merge.js";
 
 describe("mergeProjectConfigWithDashboardConfig", () => {

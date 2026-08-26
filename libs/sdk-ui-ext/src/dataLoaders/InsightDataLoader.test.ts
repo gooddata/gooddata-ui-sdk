@@ -6,7 +6,7 @@ import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IInsight, type ObjRef, idRef } from "@gooddata/sdk-model";
 
-import { noopWorkspaceInsightsService } from "./dataLoaders.mock.js";
+import { noopWorkspaceInsightsService } from "./dataLoaders.test.helpers.js";
 import { clearInsightViewCacheForInsight } from "./index.js";
 import { insightDataLoaderFactory } from "./InsightDataLoader.js";
 

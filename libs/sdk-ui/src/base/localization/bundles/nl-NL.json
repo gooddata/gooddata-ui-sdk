@@ -969,7 +969,7 @@
     "userManagement.workspace.permission.createAutomation": "Waarschuwingen en geplande export",
     "userManagement.workspace.permission.createAutomation.tooltip": "CREATE_AUTOMATIONS-toestemming toevoegen om geautomatiseerde waarschuwingen en geplande exports te maken.",
     "userManagement.workspace.permission.createMetric": "Meetgegevens",
-    "userManagement.workspace.permission.createMetric.tooltip": "Voegt de machtiging CREATE_METRIC toe om metrieken te maken, bewerken of verwijderen.",
+    "userManagement.workspace.permission.createMetric.tooltip": "Voegt de machtiging CREATE_METRIC toe om nieuwe metrieken te maken en te beheren. Om andere metrieken te beheren, moet de gebruiker er toegang toe hebben.",
     "userManagement.workspace.permission.useAiAssistant": "AI-assistent",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "Voegt USE_AI_ASSISTANT-toestemming toe voor toegang tot en interactie met de AI-chatbot voor analytische vragen.",
     "userManagement.workspace.granularPermission.noWorkspace": "Geen werkruimte geselecteerd",

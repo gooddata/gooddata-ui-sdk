@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { invariant } from "ts-invariant";
 
 import {
@@ -9,12 +10,14 @@ import {
     type CatalogItem,
     type ICatalogAttribute,
     type ICatalogAttributeHierarchy,
+    type ICatalogComputedAttribute,
     type ICatalogDateDataset,
     type ICatalogFact,
     type ICatalogGroup,
     type ICatalogMeasure,
     isCatalogAttribute,
     isCatalogAttributeHierarchy,
+    isCatalogComputedAttribute,
     isCatalogDateDataset,
     isCatalogFact,
     isCatalogMeasure,
@@ -57,6 +60,10 @@ export class TigerWorkspaceCatalogWithAvailableItems implements IWorkspaceCatalo
         return this.items.filter(isCatalogAttributeHierarchy);
     }
 
+    public computedAttributes(): ICatalogComputedAttribute[] {
+        return this.items.filter(isCatalogComputedAttribute);
+    }
+
     public allAvailableItems(): CatalogItem[] {
         return this.availableItems;
     }
@@ -79,5 +86,9 @@ export class TigerWorkspaceCatalogWithAvailableItems implements IWorkspaceCatalo
 
     public availableAttributeHierarchies(): ICatalogAttributeHierarchy[] {
         return this.availableItems.filter(isCatalogAttributeHierarchy);
+    }
+
+    public availableComputedAttributes(): ICatalogComputedAttribute[] {
+        return this.availableItems.filter(isCatalogComputedAttribute);
     }
 }

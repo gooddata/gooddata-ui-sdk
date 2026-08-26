@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type IWorkspaceCatalog,
@@ -11,6 +11,7 @@ import {
     type CatalogItemType,
     type ICatalogAttribute,
     type ICatalogAttributeHierarchy,
+    type ICatalogComputedAttribute,
     type ICatalogDateDataset,
     type ICatalogFact,
     type ICatalogGroup,
@@ -118,5 +119,9 @@ export abstract class DecoratedWorkspaceCatalog implements IWorkspaceCatalog {
 
     public attributeHierarchies(): ICatalogAttributeHierarchy[] {
         return this.decorated.attributeHierarchies();
+    }
+
+    public computedAttributes(): ICatalogComputedAttribute[] {
+        return this.decorated.computedAttributes();
     }
 }

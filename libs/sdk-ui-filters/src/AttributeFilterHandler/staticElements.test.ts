@@ -13,8 +13,8 @@ import {
     limitingMeasures,
     newTestAttributeFilterHandlerWithAttributeFilter,
     staticElements,
-} from "./fixtures.js";
-import { waitForAsync } from "./testUtils.js";
+} from "./AttributeFilterHandler.test.helpers.js";
+import { waitForAsync } from "./waitForAsync.test.utils.js";
 
 describe("AttributeFilterHandler", () => {
     it("staticElements option should replace loaded elements on init", async () => {

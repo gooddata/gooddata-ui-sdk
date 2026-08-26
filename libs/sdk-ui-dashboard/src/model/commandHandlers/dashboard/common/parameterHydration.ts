@@ -5,6 +5,7 @@ import {
     type IDashboardTab,
     type IParameterMetadataObject,
     type ParameterValue,
+    areObjRefsEqual,
     objRefToString,
 } from "@gooddata/sdk-model";
 
@@ -12,6 +13,7 @@ import {
     buildWorkspaceParametersByRef,
     computeHydratedRuntimeOverride,
 } from "../../../store/tabs/parameters/parametersHelpers.js";
+import { type ISetParameterRuntimeValuePayload } from "../../../store/tabs/parameters/parametersReducers.js";
 import {
     type IDashboardParameterEntry,
     pickTabParametersSource,
@@ -74,6 +76,30 @@ export function distributeParametersToTabs(
                 : entries;
     }
     return result;
+}
+
+/**
+ * A filter view holds only the parameters that existed when the user saved it. A parameter that the
+ * view omits gets the same value that {@link hydrateParameterEntries} gave it at load time. No value
+ * from an earlier view stays applied.
+ */
+export function resolveParameterValuesForFilterView(
+    entries: ReadonlyArray<IDashboardParameterEntry>,
+    filterViewParameters: ReadonlyArray<IDashboardParameter>,
+    workspaceParameters: IParameterMetadataObject[],
+): ISetParameterRuntimeValuePayload[] {
+    const workspaceByRef = buildWorkspaceParametersByRef(workspaceParameters);
+    return entries.map((entry) => {
+        const { ref } = entry.parameter;
+        const fromView = filterViewParameters.find((item) => areObjRefsEqual(item.ref, ref));
+        return {
+            ref,
+            value: computeHydratedRuntimeOverride(
+                fromView ?? entry.parameter,
+                workspaceByRef.get(objRefToString(ref)),
+            ),
+        };
+    });
 }
 
 function applyRuntimeOverrides(

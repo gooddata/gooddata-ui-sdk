@@ -2250,12 +2250,13 @@ export type {
     IDefaultAlertingDialogProps,
 } from "./presentation/automations/alerting/types.js";
 export type {
+    IAutomationDialogActionBarProps,
     IAutomationDialogDestinationProps,
     IAutomationDialogFiltersProps,
     IAutomationDialogHeaderProps,
     IAutomationDialogRecipientsProps,
-    ISlotProps,
 } from "./presentation/automations/shared/slots/types.js";
+export type { ISlotProps } from "@gooddata/sdk-ui-kit";
 export type { IAutomationParameter } from "./presentation/automations/shared/automationFilters/automationParameters.js";
 export {
     useAutomationsContext,

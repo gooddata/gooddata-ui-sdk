@@ -7,7 +7,6 @@ import { describe, expect, it } from "vitest";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 
 import { newWidthForAttributeColumn } from "../../columnWidths.js";
-
 import {
     SingleAttribute,
     SingleColumn,
@@ -15,7 +14,8 @@ import {
     SingleMeasureWithRowAttribute,
     SingleMeasureWithTwoRowAndTwoColumnAttributes,
     TwoMeasures,
-} from "./table.fixture.js";
+} from "../tests/table.test.helpers.js";
+
 import { TableDescriptor } from "./tableDescriptor.js";
 import { type IScopeCol, type ISeriesCol } from "./tableDescriptorTypes.js";
 

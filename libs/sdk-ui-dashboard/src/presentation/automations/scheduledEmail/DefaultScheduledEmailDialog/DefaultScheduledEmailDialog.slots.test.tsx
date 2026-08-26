@@ -3,12 +3,13 @@
 import { fireEvent, render, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { type ISlotProps } from "@gooddata/sdk-ui-kit";
+
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { AutomationsContextProvider } from "../../contexts/AutomationsContext.js";
 import { ScheduledEmailDialogContextProvider } from "../../contexts/ScheduledEmailDialogContext.js";
-import { type ISlotProps } from "../../shared/slots/types.js";
-import { AUTOMATIONS_CONTEXT, SCHEDULED_EMAIL_DIALOG_CONTEXT } from "../state/fixtures.js";
 import { ScheduledEmailDialogStateProvider } from "../state/ScheduledEmailDialogStateProvider.js";
+import { AUTOMATIONS_CONTEXT, SCHEDULED_EMAIL_DIALOG_CONTEXT } from "../tests/scheduledEmail.test.helpers.js";
 import {
     type IDefaultScheduledEmailDialogProps,
     type IScheduledEmailDialogFiltersProps,

@@ -6,7 +6,7 @@ import { describe, expect, it } from "vitest";
 
 import { type IInsight, idMatchMeasure, insightMeasures } from "@gooddata/sdk-model";
 
-import { insightWithComplexArithmeticMeasureTree } from "../../../testUtils/fixtures.js";
+import { insightWithComplexArithmeticMeasureTree } from "../../testUtils/dataViews.fixtures.js";
 
 import { ignoreTitlesForSimpleMeasures } from "./ignoreTitlesForSimpleMeasures.js";
 

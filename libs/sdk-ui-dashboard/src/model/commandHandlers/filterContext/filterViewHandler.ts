@@ -42,14 +42,17 @@ import {
     selectWorkingFilterContextDefinition,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
-import { selectFilterViewParameters } from "../../store/tabs/parameters/parametersSelectors.js";
+import {
+    selectDashboardParameterEntries,
+    selectFilterViewParameters,
+} from "../../store/tabs/parameters/parametersSelectors.js";
 import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
+import { resolveParameterValuesForFilterView } from "../dashboard/common/parameterHydration.js";
 import { loadFilterViews } from "../dashboard/initializeDashboardHandler/loadFilterViews.js";
 
 import { resetCrossFiltering } from "./common.js";
-import { resolveFilterViewParameterValues } from "./filterViewParameters.js";
 
 function createFilterView(
     ctx: DashboardContext,
@@ -190,12 +193,20 @@ export function* applyFilterViewHandler(ctx: DashboardContext, cmd: IApplyFilter
                 matchByLocalIdentifier: true,
             }),
         );
-        if (filterView.parameters && filterView.parameters.length > 0) {
-            const workspaceParameters: ReturnType<typeof selectCatalogParameters> =
-                yield select(selectCatalogParameters);
-            const values = resolveFilterViewParameterValues(filterView.parameters, workspaceParameters);
-            yield put(tabsActions.setParameterRuntimeValues({ values }));
-        }
+        const parameterEntries: ReturnType<typeof selectDashboardParameterEntries> = yield select(
+            selectDashboardParameterEntries,
+        );
+        const workspaceParameters: ReturnType<typeof selectCatalogParameters> =
+            yield select(selectCatalogParameters);
+        yield put(
+            tabsActions.setParameterRuntimeValues({
+                values: resolveParameterValuesForFilterView(
+                    parameterEntries,
+                    filterView.parameters ?? [],
+                    workspaceParameters,
+                ),
+            }),
+        );
         yield put(filterViewApplicationSucceeded(ctx, filterView, cmd.correlationId));
     } else {
         yield put(filterViewApplicationFailed(ctx));

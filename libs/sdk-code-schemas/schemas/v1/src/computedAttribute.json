@@ -1,0 +1,84 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "ComputedAttributeType",
+    "description": "JSON schema for Gooddata Analytics Computed Attribute",
+    "allOf": [
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "computed_attribute"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "#/$defs/computed_attribute"
+            }
+        }
+    ],
+    "properties": {
+        "type": {
+            "type": "string",
+            "enum": ["computed_attribute"]
+        }
+    },
+    "required": ["type"],
+    "$defs": {
+        "computed_attribute": {
+            "$id": "/gaac/computed_attribute",
+            "title": "ComputedAttribute",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "/gaac/identifier",
+                    "description": "A unique identifier of the computed attribute. Must not collide with the identifier of an attribute or a label.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "computedAttribute.id",
+                            "code": "core.uniqueness.computedAttributes.id"
+                        },
+                        {
+                            "type": "definition",
+                            "source": "computedAttribute.id"
+                        }
+                    ]
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["computed_attribute"]
+                },
+                "title": {
+                    "$ref": "/gaac/title",
+                    "description": "An optional human readable title for the computed attribute. Will be derived from id if not provided explicitly."
+                },
+                "description": {
+                    "$ref": "/gaac/description",
+                    "description": "An optional description of the computed attribute."
+                },
+                "tags": {
+                    "$ref": "/gaac/tags",
+                    "description": "A list of strings - metadata tags of this computed attribute."
+                },
+                "maql": {
+                    "type": "string",
+                    "description": "Define MAQL syntax for the computed attribute. Values are assigned with break points written as CASE WHEN branches over a metric, and the first matching branch wins.",
+                    "$semantic": {
+                        "type": "maql"
+                    }
+                },
+                "locale": {
+                    "type": "string",
+                    "description": "An optional locale whose collation order the computed values are sorted by."
+                }
+            },
+            "$semantic": {
+                "type": "snippet",
+                "snippets": ["computed_attribute"]
+            },
+            "required": ["id", "type", "maql"]
+        }
+    }
+}

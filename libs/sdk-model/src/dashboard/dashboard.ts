@@ -349,18 +349,38 @@ export function resolveTimezoneId(timezoneId: DashboardTimezoneId | undefined): 
 }
 
 /**
+ * Signed offset-style identifiers (`±HH`, `±HHMM`, `±HH:MM`, optionally with seconds).
+ * Some `Intl` implementations accept these as `timeZone` values, but they are not named
+ * IANA timezone IDs. Named IDs such as `"Etc/GMT+1"` do not match this pattern.
+ */
+const OFFSET_STYLE_TIMEZONE_ID = /^[+-]\d{2}(?:\d{2}|:\d{2}(?::\d{2}(?:\.\d+)?)?)?$/;
+
+/**
  * Tests whether `timezoneId` is a valid IANA timezone identifier according to
  * the runtime ICU data (via `Intl.DateTimeFormat`). The {@link BROWSER_DETECTED}
  * sentinel is not a valid IANA ID — use {@link isValidDashboardTimezoneId} for
  * values stored on the dashboard.
  *
+ * Identifiers are case-sensitive. `Intl` accepts timezones case-insensitively, so
+ * a value that only differs in case from the canonical form (e.g. `"america/new_york"`)
+ * is rejected. Aliases that resolve to a different identifier (e.g. `"Etc/UTC"` → `"UTC"`)
+ * are still accepted as ICU-known IDs. Offset-style identifiers (e.g. `"+01"`, `"+0100"`,
+ * `"+01:00"`) are rejected.
+ *
  * @param timezoneId - timezone identifier to test
  * @alpha
  */
 export function isValidIanaTimezoneId(timezoneId: string): boolean {
+    if (OFFSET_STYLE_TIMEZONE_ID.test(timezoneId)) {
+        return false;
+    }
     try {
-        new Intl.DateTimeFormat(undefined, { timeZone: timezoneId });
-        return true;
+        const canonical = new Intl.DateTimeFormat(undefined, { timeZone: timezoneId }).resolvedOptions()
+            .timeZone;
+        // Intl accepts IDs case-insensitively; IANA identifiers are case-sensitive.
+        // Reject values that only differ in case from the canonical form. Aliases
+        // that resolve to a different identifier still pass.
+        return canonical === timezoneId || canonical.toLowerCase() !== timezoneId.toLowerCase();
     } catch {
         return false;
     }

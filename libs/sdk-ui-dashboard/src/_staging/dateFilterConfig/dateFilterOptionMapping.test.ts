@@ -11,8 +11,8 @@ import {
     defaultDateFilterOptions,
 } from "@gooddata/sdk-ui-filters";
 
+import { allTime, last30days } from "./dateFilterConfig.test.helpers.js";
 import { matchDateFilterToDateFilterOption } from "./dateFilterOptionMapping.js";
-import { allTime, last30days } from "./fixtures.js";
 
 describe("matchDateFilterToDateFilterOption", () => {
     it.each<

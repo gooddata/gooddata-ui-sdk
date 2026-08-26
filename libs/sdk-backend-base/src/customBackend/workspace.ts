@@ -13,6 +13,7 @@ import {
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
     type IWorkspaceCatalogFactory,
+    type IWorkspaceComputedAttributesService,
     type IWorkspaceDashboardsService,
     type IWorkspaceDatasetsService,
     type IWorkspaceDescriptor,
@@ -102,6 +103,10 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
 
     public parameters(): IWorkspaceParametersService {
         throw new NotSupported("parameters service is not supported");
+    }
+
+    public computedAttributes(): IWorkspaceComputedAttributesService {
+        throw new NotSupported("computed attributes service is not supported");
     }
 
     public facts(): IWorkspaceFactsService {

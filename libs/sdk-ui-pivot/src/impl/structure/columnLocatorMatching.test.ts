@@ -12,8 +12,6 @@ import {
     newAttributeColumnLocator,
     newMeasureColumnLocator,
 } from "../../columnWidths.js";
-
-import { searchForLocatorMatch, searchForTransposedLocatorMatch } from "./colLocatorMatching.js";
 import {
     MultipleMeasuresAndNoColumnsWithMetricsInRows,
     SingleColumn,
@@ -21,7 +19,9 @@ import {
     SingleMeasureWithTwoRowAndTwoColumnAttributes,
     TwoMeasures,
     TwoMeasuresWithSingleRowAttrWithMetricsInRows,
-} from "./table.fixture.js";
+} from "../tests/table.test.helpers.js";
+
+import { searchForLocatorMatch, searchForTransposedLocatorMatch } from "./colLocatorMatching.js";
 import { createHeadersAndColDefs } from "./tableDescriptorFactory.js";
 
 describe("searchForLocatorMatch", () => {

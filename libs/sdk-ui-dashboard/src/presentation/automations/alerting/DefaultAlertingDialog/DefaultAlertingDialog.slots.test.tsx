@@ -3,17 +3,18 @@
 import { fireEvent, render, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { type ISlotProps } from "@gooddata/sdk-ui-kit";
+
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { AlertingDialogContextProvider } from "../../contexts/AlertingDialogContext.js";
 import { AutomationsContextProvider } from "../../contexts/AutomationsContext.js";
-import { type ISlotProps } from "../../shared/slots/types.js";
 import { AlertingDialogStateProvider } from "../state/AlertingDialogStateProvider.js";
 import {
     ALERTING_DIALOG_CONTEXT,
     AUTOMATIONS_CONTEXT,
     NEXT_FILTER,
     SENTINEL_MEASURE,
-} from "../state/fixtures.js";
+} from "../tests/alerting.test.helpers.js";
 import {
     type AlertAttribute,
     type AlertingDialogHeaderDefaultProps,

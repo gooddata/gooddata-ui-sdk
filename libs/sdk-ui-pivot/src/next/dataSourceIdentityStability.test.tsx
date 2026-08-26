@@ -11,7 +11,7 @@ import {
     AG_GRID_MOCK_TEST_ID,
     capturedAgGridProps,
     resetCapturedAgGridProps,
-} from "../../testUtils/agGridReactMock.js";
+} from "../testUtils/agGridReactMock.fixture.js";
 
 import { createExecutionDef } from "./features/data/createExecutionDef.js";
 import { type IPivotTableExecutionDefinition } from "./features/data/executionDefinition/types.js";
@@ -26,7 +26,7 @@ import { type ICorePivotTableNextProps } from "./types/internal.js";
  * The grid is replaced by a marker element that records the props it was rendered with. The mock lives in
  * a shared module because the suite runs without isolation - see the notes in `agGridReactMock.tsx`.
  */
-vi.mock("ag-grid-react", () => import("../../testUtils/agGridReactMock.js"));
+vi.mock("ag-grid-react", () => import("../testUtils/agGridReactMock.fixture.js"));
 
 const workspace = "reference-workspace";
 const backend = compositeBackend({

@@ -7,7 +7,7 @@ import { createIntlMock } from "@gooddata/sdk-ui";
 
 import { type CurrentUserPermissions } from "../types.js";
 
-import { current, granularRule, groupAll, owner, user } from "./GranteeMock.js";
+import { current, granularRule, groupAll, owner, user } from "./Grantee.test.helpers.js";
 import {
     getGranteeItemTestId,
     getGranteeLabel,

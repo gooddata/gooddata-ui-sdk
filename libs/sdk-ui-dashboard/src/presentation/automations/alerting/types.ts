@@ -14,13 +14,14 @@ import {
     type IWidget,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type ISlotProps } from "@gooddata/sdk-ui-kit";
 
 import {
+    type IAutomationDialogActionBarProps,
     type IAutomationDialogDestinationProps,
     type IAutomationDialogFiltersProps,
     type IAutomationDialogHeaderProps,
     type IAutomationDialogRecipientsProps,
-    type ISlotProps,
 } from "../shared/slots/types.js";
 
 ///
@@ -163,13 +164,13 @@ export interface IAlertingDialogFiltersProps extends IAutomationDialogFiltersPro
 export interface IAlertingDialogSlots {
     /**
      * Wraps or replaces the dialog header (the title input row). Must have a stable reference
-     * identity — see {@link ISlotProps}.
+     * identity — see {@link @gooddata/sdk-ui-kit#ISlotProps}.
      */
     Header?: ComponentType<ISlotProps<AlertingDialogHeaderDefaultProps>>;
 
     /**
      * Wraps or replaces the dialog's filters region (the filter and parameter chips). Must have
-     * a stable reference identity — see {@link ISlotProps}.
+     * a stable reference identity — see {@link @gooddata/sdk-ui-kit#ISlotProps}.
      *
      * Renders only in the fully rendered dialog: not while the dialog context reports loading,
      * and not while the stale-filters confirmation step is shown.
@@ -182,7 +183,7 @@ export interface IAlertingDialogSlots {
 
     /**
      * Wraps or replaces the dialog's destination region (the "Action" row selecting the
-     * notification channel). Must have a stable reference identity — see {@link ISlotProps}.
+     * notification channel). Must have a stable reference identity — see {@link @gooddata/sdk-ui-kit#ISlotProps}.
      *
      * Renders only in the fully rendered dialog — not while the dialog context reports loading,
      * not while the stale-filters confirmation step is shown — **and only when more than one
@@ -193,12 +194,29 @@ export interface IAlertingDialogSlots {
 
     /**
      * Wraps or replaces the dialog's recipients region. Must have a stable reference identity —
-     * see {@link ISlotProps}.
+     * see {@link @gooddata/sdk-ui-kit#ISlotProps}.
      *
      * Renders only in the fully rendered dialog: not while the dialog context reports loading,
      * and not while the stale-filters confirmation step is shown.
      */
     Recipients?: ComponentType<ISlotProps<IAutomationDialogRecipientsProps>>;
+
+    /**
+     * Wraps or replaces the dialog's action bar (the footer row: documentation link, Delete in
+     * edit mode, Cancel and the submit button). Must have a stable reference identity — see
+     * {@link @gooddata/sdk-ui-kit#ISlotProps}.
+     *
+     * Renders only in the fully rendered dialog: not while the dialog context reports loading
+     * (the loading dialog keeps its own footer), and not while the stale-filters confirmation
+     * step is shown.
+     *
+     * A replacement that does not render `Default` loses the submit button's Enter-key detection
+     * id (Enter no longer submits), the validation aria wiring, and the default row's ordering.
+     * Wraps that render `<Default {...defaultProps} />` keep everything; note the Enter-key path
+     * invokes the dialog's own submit handler and disabled state, so `defaultProps` overrides
+     * affect the buttons only.
+     */
+    ActionBar?: ComponentType<ISlotProps<IAutomationDialogActionBarProps>>;
 }
 
 /**
@@ -220,7 +238,7 @@ export interface IDefaultAlertingDialogProps extends IAlertingDialogProps {
      *
      * @example
      * The dialog is reached through the `Dashboard` component override; define slot components at
-     * module scope (see {@link ISlotProps}):
+     * module scope (see {@link @gooddata/sdk-ui-kit#ISlotProps}):
      * ```tsx
      * function HeaderWithBanner({ Default, defaultProps }: ISlotProps<AlertingDialogHeaderDefaultProps>) {
      *     return (
@@ -239,6 +257,19 @@ export interface IDefaultAlertingDialogProps extends IAlertingDialogProps {
      * ```
      */
     slots?: IAlertingDialogSlots;
+
+    /**
+     * Content rendered as the first child of the dialog's scrollable content area, above the
+     * form. Rendered only in the fully rendered dialog: not while the dialog context reports
+     * loading, and not while the stale-filters confirmation step is shown.
+     */
+    topContent?: ReactNode;
+
+    /**
+     * Content rendered as the last child of the dialog's scrollable content area, below the
+     * form. Same rendering conditions as {@link IDefaultAlertingDialogProps.topContent}.
+     */
+    bottomContent?: ReactNode;
 }
 
 /**

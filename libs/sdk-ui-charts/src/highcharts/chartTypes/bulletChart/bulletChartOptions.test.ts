@@ -11,7 +11,7 @@ import { type IColorPalette } from "@gooddata/sdk-model";
 import { type DataViewFacade } from "@gooddata/sdk-ui";
 import { type ChartFillType } from "@gooddata/sdk-ui-vis-commons";
 
-import { recordedDataFacade } from "../../../../testUtils/recordings.js";
+import { recordedDataFacade } from "../../../testUtils/recordings.fixture.js";
 
 import { BulletChartColorStrategy } from "./bulletChartColoring.js";
 import { getBulletChartSeries } from "./bulletChartSeries.js";

@@ -179,6 +179,7 @@ import { ISettings } from '@gooddata/sdk-model';
 import { IShareDialogInteractionData } from '@gooddata/sdk-ui-kit';
 import { ISharedObject } from '@gooddata/sdk-ui-kit';
 import { ISharingApplyPayload as ISharingApplyPayload_2 } from '@gooddata/sdk-ui-kit';
+import { ISlotProps } from '@gooddata/sdk-ui-kit';
 import { ITableDataAttributeScope } from '@gooddata/sdk-ui';
 import { ITempFilterContext } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
@@ -2424,6 +2425,7 @@ export interface IAlertingDialogProps {
 
 // @alpha
 export interface IAlertingDialogSlots {
+    ActionBar?: ComponentType<ISlotProps<IAutomationDialogActionBarProps>>;
     Destination?: ComponentType<ISlotProps<IAutomationDialogDestinationProps>>;
     Filters?: ComponentType<ISlotProps<IAlertingDialogFiltersProps>>;
     Header?: ComponentType<ISlotProps<AlertingDialogHeaderDefaultProps>>;
@@ -2537,6 +2539,21 @@ export interface IAttributesDropdownProps extends IDashboardAttributeFilterPlace
     // (undocumented)
     onParameterSelect?: (ref: IdentifierRef) => void;
     parameters?: IParameterDropdownListItem[];
+}
+
+// @alpha
+export interface IAutomationDialogActionBarProps {
+    cancelButtonText: string;
+    deleteButtonText?: string;
+    helpLinkHref?: string;
+    helpLinkText?: string;
+    isSaving: boolean;
+    isSubmitDisabled: boolean;
+    onCancel: () => void;
+    onDelete?: () => void;
+    onSubmit: () => void;
+    submitButtonText: string;
+    submitButtonTooltipText?: string;
 }
 
 // @alpha
@@ -5775,7 +5792,9 @@ export interface IDateFiltersCustomizer {
 
 // @alpha
 export interface IDefaultAlertingDialogProps extends IAlertingDialogProps {
+    bottomContent?: ReactNode;
     slots?: IAlertingDialogSlots;
+    topContent?: ReactNode;
 }
 
 // @alpha (undocumented)
@@ -5808,7 +5827,9 @@ export interface IDefaultDashboardToolbarGroupProps {
 
 // @alpha
 export interface IDefaultScheduledEmailDialogProps extends IScheduledEmailDialogProps {
+    bottomContent?: ReactNode;
     slots?: IScheduledEmailDialogSlots;
+    topContent?: ReactNode;
 }
 
 // @internal
@@ -8073,6 +8094,7 @@ export interface IScheduledEmailDialogRecipientsProps extends IAutomationDialogR
 
 // @alpha
 export interface IScheduledEmailDialogSlots {
+    ActionBar?: ComponentType<ISlotProps<IAutomationDialogActionBarProps>>;
     Destination?: ComponentType<ISlotProps<IAutomationDialogDestinationProps>>;
     Filters?: ComponentType<ISlotProps<IScheduledEmailDialogFiltersProps>>;
     Header?: ComponentType<ISlotProps<ScheduledEmailDialogHeaderDefaultProps>>;
@@ -9088,11 +9110,7 @@ export function isLayoutSectionPath(obj: unknown): obj is ILayoutSectionPath;
 // @internal
 export function isLoadingPlaceholderWidget(obj: unknown): obj is IPlaceholderWidget;
 
-// @alpha
-export interface ISlotProps<TProps> {
-    Default: ComponentType<TProps>;
-    defaultProps: TProps;
-}
+export { ISlotProps }
 
 // @internal (undocumented)
 export function isMeasureValueFilterDraggableItem(item: DraggableContentItem): item is MeasureValueFilterDraggableItem;

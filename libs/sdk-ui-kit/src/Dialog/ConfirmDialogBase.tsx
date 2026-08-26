@@ -4,15 +4,11 @@ import { memo, useMemo } from "react";
 
 import cx from "classnames";
 
-import { Bubble } from "../Bubble/Bubble.js";
-import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
-import { Button } from "../Button/Button.js";
-import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner.js";
 import { Typography } from "../Typography/Typography.js";
 import { useId } from "../utils/useId.js";
 
+import { ConfirmDialogFooter } from "./ConfirmDialogFooter.js";
 import { DialogBase } from "./DialogBase.js";
-import { CONFIRM_DIALOG_BASE_ID } from "./elementId.js";
 import { type IConfirmDialogBaseProps } from "./typings.js";
 
 /**
@@ -34,6 +30,7 @@ export const ConfirmDialogBase = memo<IConfirmDialogBaseProps>(function ConfirmD
     showProgressIndicator,
     headerLeftButtonRenderer,
     footerLeftRenderer,
+    footerRenderer,
     dialogHeaderClassName,
     initialFocus,
     returnFocusTo,
@@ -43,12 +40,6 @@ export const ConfirmDialogBase = memo<IConfirmDialogBaseProps>(function ConfirmD
     ...dialogBaseProps
 }) {
     const dialogClasses = cx("gd-confirm", dialogBaseProps.className);
-
-    const submitButtonClasses = cx({
-        "s-dialog-submit-button": true,
-        "gd-button-action": isPositive,
-        "gd-button-negative": !isPositive,
-    });
 
     const headerClassNames = cx("gd-dialog-header", dialogHeaderClassName);
 
@@ -98,39 +89,25 @@ export const ConfirmDialogBase = memo<IConfirmDialogBaseProps>(function ConfirmD
 
             <div className="gd-dialog-content">{dialogBaseProps.children}</div>
 
-            <div className="gd-dialog-footer">
-                {footerLeftRenderer?.()}
-                {showProgressIndicator ? <LoadingSpinner className="gd-dialog-spinner small" /> : null}
-
-                <Button
-                    onClick={dialogBaseProps.onCancel}
-                    className="gd-button-secondary s-dialog-cancel-button"
-                    value={cancelButtonText}
-                    disabled={isCancelDisabled}
+            {footerRenderer ? (
+                footerRenderer()
+            ) : (
+                <ConfirmDialogFooter
+                    footerLeft={footerLeftRenderer?.()}
+                    showProgressIndicator={showProgressIndicator}
+                    cancelButtonText={cancelButtonText}
+                    onCancel={dialogBaseProps.onCancel}
+                    isCancelDisabled={isCancelDisabled}
+                    submitButtonText={submitButtonText}
+                    onSubmit={dialogBaseProps.onSubmit}
+                    isSubmitDisabled={isSubmitDisabled}
+                    submitButtonTooltipText={submitButtonTooltipText}
+                    submitButtonTooltipAlignPoints={submitButtonTooltipAlignPoints}
+                    submitButtonTooltipArrowOffsets={submitButtonTooltipArrowOffsets}
+                    hideSubmitButton={hideSubmitButton}
+                    isPositive={isPositive}
                 />
-
-                {submitButtonText && !hideSubmitButton ? (
-                    <BubbleHoverTrigger className="gd-button" showDelay={0} hideDelay={0}>
-                        <Button
-                            id={CONFIRM_DIALOG_BASE_ID}
-                            onClick={dialogBaseProps.onSubmit}
-                            className={submitButtonClasses}
-                            value={submitButtonText}
-                            disabled={isSubmitDisabled}
-                            describedByFromValidation
-                        />
-                        {submitButtonTooltipText ? (
-                            <Bubble
-                                className="bubble-primary"
-                                alignPoints={submitButtonTooltipAlignPoints || [{ align: "bc tc" }]}
-                                arrowOffsets={submitButtonTooltipArrowOffsets || { "bc tc": [0, 15] }}
-                            >
-                                {submitButtonTooltipText}
-                            </Bubble>
-                        ) : null}
-                    </BubbleHoverTrigger>
-                ) : null}
-            </div>
+            )}
         </DialogBase>
     );
 });

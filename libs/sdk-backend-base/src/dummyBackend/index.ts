@@ -116,6 +116,7 @@ import {
     type IWorkspaceCatalogFactoryOptions,
     type IWorkspaceCatalogWithAvailableItems,
     type IWorkspaceCatalogWithAvailableItemsFactoryOptions,
+    type IWorkspaceComputedAttributesService,
     type IWorkspaceDashboardsService,
     type IWorkspaceDatasetsService,
     type IWorkspaceDescriptor,
@@ -160,6 +161,7 @@ import {
     type IBucket,
     type ICatalogAttribute,
     type ICatalogAttributeHierarchy,
+    type ICatalogComputedAttribute,
     type ICatalogDateDataset,
     type ICatalogFact,
     type ICatalogGroup,
@@ -479,6 +481,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
         },
         parameters(): IWorkspaceParametersService {
             return new DummyWorkspaceParametersService(workspace);
+        },
+        computedAttributes(): IWorkspaceComputedAttributesService {
+            throw new NotSupported("not supported");
         },
         facts(): IWorkspaceFactsService {
             return new DummyWorkspaceFactsService(workspace);
@@ -831,6 +836,10 @@ class DummyWorkspaceCatalog implements IWorkspaceCatalog {
     public attributeHierarchies(): ICatalogAttributeHierarchy[] {
         return [];
     }
+
+    public computedAttributes(): ICatalogComputedAttribute[] {
+        return [];
+    }
 }
 
 class DummyWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCatalogAvailableItemsFactory {
@@ -966,6 +975,14 @@ class DummyWorkspaceCatalogWithAvailableItems implements IWorkspaceCatalogWithAv
     }
 
     public availableAttributeHierarchies(): ICatalogAttributeHierarchy[] {
+        return [];
+    }
+
+    public computedAttributes(): ICatalogComputedAttribute[] {
+        return [];
+    }
+
+    public availableComputedAttributes(): ICatalogComputedAttribute[] {
         return [];
     }
 }

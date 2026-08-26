@@ -7,7 +7,14 @@ import { describe, expect, it } from "vitest";
 import { type IDateFilterConfig, type ISettings, idRef } from "@gooddata/sdk-model";
 import { suppressConsole } from "@gooddata/util";
 
-import { absoluteForm, allTime, emptyValues, lastMonth, relativeForm, year2019 } from "./fixtures.js";
+import {
+    absoluteForm,
+    allTime,
+    emptyValues,
+    lastMonth,
+    relativeForm,
+    year2019,
+} from "./dateFilterConfig.test.helpers.js";
 import { getValidDateFilterConfig, validateDateFilterConfig } from "./validation.js";
 
 describe("validateDateFilterConfig", () => {

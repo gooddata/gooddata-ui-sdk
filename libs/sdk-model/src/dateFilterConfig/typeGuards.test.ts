@@ -14,12 +14,13 @@ import {
 } from "./index.js";
 import {
     absoluteDateFilterForm,
+    absoluteDateFilterFormWithGranularities,
     absoluteDateFilterPreset,
     allTimeDateFilter,
     emptyValuesDateFilterOption,
     relativeDateFilterForm,
     relativeDateFilterPreset,
-} from "./typeGuards.fixtures.js";
+} from "./typeGuards.test.helpers.js";
 
 describe("dashboard extended date filters type guards", () => {
     describe("isAllTimeDateFilterOption", () => {
@@ -44,6 +45,11 @@ describe("dashboard extended date filters type guards", () => {
             [false, "all time date filter", allTimeDateFilter],
             [false, "empty values date filter option", emptyValuesDateFilterOption],
             [true, "absolute date filter form", absoluteDateFilterForm],
+            [
+                true,
+                "absolute date filter form with availableGranularities",
+                absoluteDateFilterFormWithGranularities,
+            ],
             [false, "absolute date filter preset", absoluteDateFilterPreset],
             [false, "relative date filter form", relativeDateFilterForm],
             [false, "relative date filter preset", relativeDateFilterPreset],

@@ -10,7 +10,7 @@ import { measureLocalId } from "@gooddata/sdk-model";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { DEFAULT_LEGEND_CONFIG } from "@gooddata/sdk-ui-vis-commons";
 
-import { recordedDataFacade } from "../../../testUtils/recordings.js";
+import { recordedDataFacade } from "../../testUtils/recordings.fixture.js";
 import { generateChartOptions } from "../chartTypes/_util/helper.js";
 
 import { buildLegendOptions, getLegendItems, shouldLegendBeEnabled } from "./legendBuilder.js";

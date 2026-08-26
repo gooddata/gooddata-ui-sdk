@@ -1,5 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { type ContentRect } from "react-measure";
 import { describe, expect, it } from "vitest";
 

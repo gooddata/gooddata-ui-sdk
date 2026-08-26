@@ -58,9 +58,13 @@ vi.mock("../../../../_staging/automation/index.js", () => ({
 // ---------------------------------------------------------------------------
 
 import * as stagingAutomationModule from "../../../../_staging/automation/index.js";
+import {
+    makeAutomation,
+    makeDashboardExportDefinition,
+    makeWidgetExportDefinition,
+} from "../tests/scheduledEmail.test.helpers.js";
 
 import * as exportDefinitionsUtilsModule from "./exportDefinitions.js";
-import { makeAutomation, makeDashboardExportDefinition, makeWidgetExportDefinition } from "./fixtures.js";
 import {
     type IUseScheduledEmailExportSettingsProps,
     useScheduledEmailExportSettings,
@@ -387,6 +391,24 @@ describe("useScheduledEmailExportSettings — per-format settings setters", () =
 
         expect(returned.exportDefinitions?.[1].requestPayload.settings).toEqual({ delimiter: "|" });
         expect(returned.exportDefinitions?.[0]).toBe(csvDef);
+    });
+
+    it("onCsvSettingsChange removes the delimiter key instead of writing undefined for Inherit", () => {
+        const stateBefore = makeAutomation({ exportDefinitions: [csvDef] });
+        const returned = applySetter("onCsvSettingsChange", { delimiter: undefined }, stateBefore);
+
+        const settings = returned.exportDefinitions?.[0].requestPayload.settings;
+        expect(settings).toEqual({});
+        expect(settings).not.toHaveProperty("delimiter");
+    });
+
+    it("onCsvRawSettingsChange removes the delimiter key instead of writing undefined for Inherit", () => {
+        const stateBefore = makeAutomation({ exportDefinitions: [csvRawDef] });
+        const returned = applySetter("onCsvRawSettingsChange", { delimiter: undefined }, stateBefore);
+
+        const settings = returned.exportDefinitions?.[0].requestPayload.settings;
+        expect(settings).toEqual({});
+        expect(settings).not.toHaveProperty("delimiter");
     });
 });
 

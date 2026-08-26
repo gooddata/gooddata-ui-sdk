@@ -21,14 +21,6 @@ import { COLUMN_ATTRIBUTE_COLUMN, MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from ".
 import { type TableDescriptor } from "../structure/tableDescriptor.js";
 
 import {
-    ColumnOnlyResultDescriptor,
-    SingleMeasureWithRowAttributeDescriptor,
-    TwoMeasuresWithRowAttributeDescriptor,
-    TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
-    getFakeColumn,
-    testStore,
-} from "./columnSizing.fixture.js";
-import {
     type IWeakMeasureColumnWidthItemsMap,
     MANUALLY_SIZED_MAX_WIDTH,
     MIN_WIDTH,
@@ -38,6 +30,14 @@ import {
     getMaxWidthCached,
     getUpdatedColumnDefs,
 } from "./columnSizing.js";
+import {
+    ColumnOnlyResultDescriptor,
+    SingleMeasureWithRowAttributeDescriptor,
+    TwoMeasuresWithRowAttributeDescriptor,
+    TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
+    getFakeColumn,
+    testStore,
+} from "./columnSizing.test.helpers.js";
 
 // This cannot be created using factory functions & it's very awkward case for which
 export const ColumnOnlyWidth: IMeasureColumnWidthItem = {

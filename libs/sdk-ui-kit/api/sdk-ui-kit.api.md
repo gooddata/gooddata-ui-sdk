@@ -299,6 +299,9 @@ export const ConfirmDialog: NamedExoticComponent<IConfirmDialogBaseProps>;
 export const ConfirmDialogBase: NamedExoticComponent<IConfirmDialogBaseProps>;
 
 // @internal
+export function ConfirmDialogFooter(input: IConfirmDialogFooterProps): JSX.Element;
+
+// @internal
 export type ConfirmDialogVariant = VariantPrimary | VariantDanger;
 
 // @internal (undocumented)
@@ -1667,8 +1670,8 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
     cancelButtonText?: string;
     // (undocumented)
     dialogHeaderClassName?: string;
-    // (undocumented)
     footerLeftRenderer?: () => ReactElement;
+    footerRenderer?: () => ReactElement;
     // (undocumented)
     headerLeftButtonRenderer?: () => ReactElement;
     // (undocumented)
@@ -1701,6 +1704,35 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
     titleRightIconRenderer?: () => ReactElement;
     // (undocumented)
     warning?: string | ReactElement;
+}
+
+// @internal
+export interface IConfirmDialogFooterProps {
+    // (undocumented)
+    cancelButtonText?: string;
+    footerLeft?: ReactNode;
+    // (undocumented)
+    hideSubmitButton?: boolean;
+    // (undocumented)
+    isCancelDisabled?: boolean;
+    // (undocumented)
+    isPositive?: boolean;
+    // (undocumented)
+    isSubmitDisabled?: boolean;
+    // (undocumented)
+    onCancel?: () => void;
+    // (undocumented)
+    onSubmit?: () => void;
+    // (undocumented)
+    showProgressIndicator?: boolean;
+    // (undocumented)
+    submitButtonText?: string;
+    // (undocumented)
+    submitButtonTooltipAlignPoints?: IAlignPoint[];
+    // (undocumented)
+    submitButtonTooltipArrowOffsets?: ArrowOffsets;
+    // (undocumented)
+    submitButtonTooltipText?: string;
 }
 
 // @internal (undocumented)
@@ -1912,6 +1944,7 @@ export function IconWidget(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
 export interface ICsvDelimiterPickerProps {
+    hideInherit?: boolean;
     label?: string;
     layout?: "row" | "column";
     onChange: (value: ICsvDelimiterPickerValue) => void;
@@ -5360,6 +5393,12 @@ export interface ISingleSelectListItemProps {
 // @internal
 export const isLabelsChecklistItemChecked: (item: IUiLabelsChecklistItem, selectedIds: readonly string[]) => boolean;
 
+// @alpha
+export interface ISlotProps<TProps> {
+    Default: ComponentType<TProps>;
+    defaultProps: TProps;
+}
+
 // @internal (undocumented)
 export interface ISnapPoints {
     // (undocumented)
@@ -7980,6 +8019,7 @@ export interface IUiTooltipProps {
     anchorWrapperStyles?: CSSProperties;
     arrowPlacement?: TooltipArrowPlacement;
     behaviour?: "tooltip" | "popover";
+    component?: "div" | "span";
     content: ReactNode | ((args: {
         onClose: () => void;
         type: "screen-reader" | "live";

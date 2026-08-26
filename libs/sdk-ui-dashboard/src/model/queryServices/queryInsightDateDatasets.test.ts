@@ -14,22 +14,25 @@ import {
 
 import { createDefaultFilterContext } from "../../_staging/dashboard/defaultFilterContext.js";
 import { defaultDateFilterConfig } from "../../_staging/dateFilterConfig/defaultConfig.js";
+import {
+    EmptyDashboardIdentifier,
+    EmptyDashboardWithReferences,
+} from "../../tests/Dashboard.test.helpers.js";
 import { EmptyDashboardLayout } from "../commandHandlers/dashboard/common/dashboardInitialize.js";
 import { initializeDashboard } from "../commands/dashboard.js";
 import { addLayoutSection } from "../commands/layout.js";
 import { DashboardTester, preloadedTesterFactory } from "../DashboardTester.js";
+import { type IInsightDateDatasets, queryDateDatasetsForInsight } from "../queries/insights.js";
 import {
     MockAvailabilityWithDifferentRelevance,
     MockAvailabilityWithSameRelevance,
-} from "../fixtures/CatalogAvailability.fixtures.js";
-import { EmptyDashboardIdentifier, EmptyDashboardWithReferences } from "../fixtures/Dashboard.fixtures.js";
+} from "../tests/CatalogAvailability.test.helpers.js";
 import {
     PivotTableWithDateFilter,
     PivotTableWithRowAndColumnAttributes,
     TreemapWithOneMeasureAndViewByDateAndSegmentByDate,
-} from "../fixtures/Insights.fixtures.js";
-import { TestSectionHeader, createTestInsightItem } from "../fixtures/Layout.fixtures.js";
-import { type IInsightDateDatasets, queryDateDatasetsForInsight } from "../queries/insights.js";
+} from "../tests/Insights.test.helpers.js";
+import { TestSectionHeader, createTestInsightItem } from "../tests/Layout.test.helpers.js";
 import { type PrivateDashboardContext } from "../types/commonTypes.js";
 
 function datasetsDigest(

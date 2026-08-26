@@ -135,6 +135,8 @@ export enum TigerFeaturesNames {
     EnableDashboardPersistentFiltersAcrossTabs = "enableDashboardPersistentFiltersAcrossTabs",
     EnableGenAiDashboardBuilderSkill = "enableGenAiDashboardBuilderSkill",
     EnableAbsoluteDateFilterGranularity = "enableAbsoluteDateFilterGranularity",
+    EnableComputedAttributes = "enableComputedAttributes",
+    EnableBusinessBriefingReportsApp = "enableBusinessBriefingReportsApp",
 }
 
 export type ITigerFeatureFlags = {
@@ -265,6 +267,8 @@ export type ITigerFeatureFlags = {
     enableExportTimeoutFix: (typeof FeatureFlagsValues)["enableExportTimeoutFix"][number];
     enableDashboardPersistentFiltersAcrossTabs: (typeof FeatureFlagsValues)["enableDashboardPersistentFiltersAcrossTabs"][number];
     enableAbsoluteDateFilterGranularity: (typeof FeatureFlagsValues)["enableAbsoluteDateFilterGranularity"][number];
+    enableComputedAttributes: (typeof FeatureFlagsValues)["enableComputedAttributes"][number];
+    enableBusinessBriefingReportsApp: (typeof FeatureFlagsValues)["enableBusinessBriefingReportsApp"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -395,6 +399,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableExportTimeoutFix: false,
     enableDashboardPersistentFiltersAcrossTabs: false,
     enableAbsoluteDateFilterGranularity: false,
+    enableComputedAttributes: false,
+    enableBusinessBriefingReportsApp: false,
 };
 
 export const FeatureFlagsValues = {
@@ -525,4 +531,6 @@ export const FeatureFlagsValues = {
     enableExportTimeoutFix: [true, false] as const,
     enableDashboardPersistentFiltersAcrossTabs: [true, false] as const,
     enableAbsoluteDateFilterGranularity: [true, false] as const,
+    enableComputedAttributes: [true, false] as const,
+    enableBusinessBriefingReportsApp: [false, true] as const,
 };

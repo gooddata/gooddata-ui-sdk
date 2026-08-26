@@ -7,11 +7,11 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { DashboardAttributeFilterConfigModeValues, uriRef } from "@gooddata/sdk-model";
 
+import { TestCorrelation } from "../../../../tests/Dashboard.test.helpers.js";
+import { SimpleDashboardIdentifier } from "../../../../tests/SimpleDashboard.test.helpers.js";
 import { addAttributeFilter } from "../../../commands/filters.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../DashboardTester.js";
 import { type IDashboardCommandFailed } from "../../../events/general.js";
-import { TestCorrelation } from "../../../fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../../fixtures/SimpleDashboard.fixtures.js";
 import { selectAttributeFilterConfigsModeMap } from "../../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectAttributeFilterDisplayFormsMap,

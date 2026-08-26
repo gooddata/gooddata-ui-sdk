@@ -8,7 +8,7 @@ import { withNormalization } from "@gooddata/sdk-backend-base";
 import { compositeBackend, recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-import { AG_GRID_MOCK_TEST_ID, resetCapturedAgGridProps } from "../../testUtils/agGridReactMock.js";
+import { AG_GRID_MOCK_TEST_ID, resetCapturedAgGridProps } from "../testUtils/agGridReactMock.fixture.js";
 
 import { createExecutionDef } from "./features/data/createExecutionDef.js";
 import { PivotTableNextImplementation } from "./PivotTableNext.js";
@@ -18,7 +18,7 @@ import { type ICorePivotTableNextProps } from "./types/internal.js";
  * The real grid needs a layouted DOM, so it is replaced by a marker element. The mock lives in a shared
  * module because the suite runs without isolation - see the notes in `agGridReactMock.tsx`.
  */
-vi.mock("ag-grid-react", () => import("../../testUtils/agGridReactMock.js"));
+vi.mock("ag-grid-react", () => import("../testUtils/agGridReactMock.fixture.js"));
 
 const workspace = "reference-workspace";
 

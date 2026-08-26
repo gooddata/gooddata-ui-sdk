@@ -5,6 +5,7 @@ import {
     type AfmObjectIdentifier,
     type DeclarativeAnalyticalDashboard,
     type DeclarativeAttributeHierarchy,
+    type DeclarativeComputedAttribute,
     type DeclarativeDashboardPlugin,
     type DeclarativeDataset,
     type DeclarativeDateDataset,
@@ -14,6 +15,7 @@ import {
 } from "@gooddata/api-client-tiger";
 import type {
     AttributeHierarchy,
+    ComputedAttribute,
     Dashboard,
     Dataset,
     DateDataset,
@@ -40,6 +42,7 @@ export type EntityData =
     | Dataset
     | DateDataset
     | Metric
+    | ComputedAttribute
     | Parameter
     | Visualisation
     | Dashboard
@@ -51,6 +54,7 @@ export type DeclarativeEntityData =
     | DeclarativeDataset
     | DeclarativeDateDataset
     | DeclarativeMetric
+    | DeclarativeComputedAttribute
     | DeclarativeStringParameter
     | DeclarativeVisualizationObject
     | DeclarativeDashboardPlugin

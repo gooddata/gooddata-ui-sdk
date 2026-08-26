@@ -340,13 +340,13 @@ export type CalendarContext = {
 export type CalendarType = "STANDARD" | "FISCAL";
 
 // @public
-export type CatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact | ICatalogDateDataset | ICatalogAttributeHierarchy;
+export type CatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact | ICatalogDateDataset | ICatalogAttributeHierarchy | ICatalogComputedAttribute;
 
 // @public
 export const catalogItemMetadataObject: (catalogItem: CatalogItem) => MetadataObject;
 
 // @public
-export type CatalogItemType = "attribute" | "measure" | "fact" | "dateDataset" | "attributeHierarchy";
+export type CatalogItemType = "attribute" | "measure" | "fact" | "dateDataset" | "attributeHierarchy" | "computedAttribute";
 
 // @internal
 export type CertificationStatus = "CERTIFIED";
@@ -362,6 +362,9 @@ export type ComparatorDirection = "asc" | "desc";
 
 // @public (undocumented)
 export type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
+
+// @public
+export type ComputedAttributeDataType = "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN" | "HLL";
 
 // @public
 export enum ComputeRatioRule {
@@ -433,7 +436,7 @@ export const CSV_DELIMITER_PRESETS: {
 };
 
 // @alpha
-export type CsvDelimiterPreset = CsvDelimiterPresetId | "custom";
+export type CsvDelimiterPreset = CsvDelimiterPresetId | "custom" | "inherit";
 
 // @alpha
 export type CsvDelimiterPresetId = keyof typeof CSV_DELIMITER_PRESETS;
@@ -581,6 +584,9 @@ export const DateGranularity: {
 
 // @beta
 export type DateString = string;
+
+// @alpha
+export const DEFAULT_ABSOLUTE_DATE_FILTER_GRANULARITIES: DateFilterGranularity[];
 
 // @alpha
 export const DEFAULT_CSV_DELIMITER: ",";
@@ -903,7 +909,7 @@ export function getCsvDelimiterState(delimiter?: string): {
 export function getCsvDelimiterValidationError(delimiter: string): CsvDelimiterValidationError | undefined;
 
 // @alpha
-export function getCsvDelimiterValue(selectedPreset: CsvDelimiterPreset, customDelimiter: string): string;
+export function getCsvDelimiterValue(selectedPreset: CsvDelimiterPreset, customDelimiter: string): string | undefined;
 
 // @alpha
 export const getDateFilterGranularities: (query: IGranularitiesQuery) => DateFilterGranularity[];
@@ -954,7 +960,7 @@ export const GRANULARITY_DESCRIPTORS: Record<DateAttributeGranularity, IGranular
 export type GranularityFamily = "chronological" | "generic";
 
 // @public
-export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
+export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact | ICatalogComputedAttribute;
 
 // @public (undocumented)
 export type GuidType = "guid";
@@ -978,6 +984,7 @@ export interface IAbsoluteDateFilterBody extends IIdentifiableFilter {
 
 // @alpha
 export interface IAbsoluteDateFilterForm extends IDateFilterOption {
+    availableGranularities?: DateFilterGranularity[];
     emptyValueHandling?: EmptyValues;
     type: DateFilterOptionAbsoluteFormType;
 }
@@ -1657,6 +1664,14 @@ export interface ICatalogAttributeHierarchy {
 }
 
 // @public
+export interface ICatalogComputedAttribute extends IGroupableCatalogItemBase {
+    computedAttribute: IComputedAttributeMetadataObject;
+    defaultDisplayForm: IAttributeDisplayFormMetadataObject;
+    displayForms: IAttributeDisplayFormMetadataObject[];
+    type: "computedAttribute";
+}
+
+// @public
 export interface ICatalogDateAttribute {
     attribute: IAttributeMetadataObject;
     defaultDisplayForm: IAttributeDisplayFormMetadataObject;
@@ -1787,6 +1802,30 @@ export interface IComparisonConditionBody {
     // (undocumented)
     value: number;
 }
+
+// @public
+export type IComputedAttributeMetadataObject = IMetadataObject & IComputedAttributeMetadataObjectBase & IAuditable & {
+    displayForms: IAttributeDisplayFormMetadataObject[];
+    isLocked?: boolean;
+    dataSet?: IDataSetMetadataObject;
+    certification?: IObjectCertification;
+};
+
+// @public (undocumented)
+export interface IComputedAttributeMetadataObjectBase {
+    dataType?: ComputedAttributeDataType;
+    expression: string;
+    format?: string;
+    isNullable?: boolean;
+    locale?: string;
+    metricType?: MetricType;
+    nullValue?: string;
+    // (undocumented)
+    type: "computedAttribute";
+}
+
+// @public
+export type IComputedAttributeMetadataObjectDefinition = IMetadataObjectDefinition & IComputedAttributeMetadataObjectBase;
 
 // @alpha
 export interface IConditionalFormatting {
@@ -2895,12 +2934,14 @@ export interface IFeatureFlags {
     enableAnomalyDetectionAlert?: boolean;
     enableAnomalyDetectionVisualization?: boolean;
     enableAutomationTrigger?: boolean;
+    enableBusinessBriefingReportsApp?: boolean;
     enableCacheRetentionPolicy?: boolean;
     enableCatalogSmartSearchResults?: boolean;
     enableCatalogTrendingObjects?: boolean;
     enableCertification?: boolean;
     enableChangeAnalysis?: boolean;
     enableColumnLevelPermissions?: boolean;
+    enableComputedAttributes?: boolean;
     enableConditionalFormatting?: boolean;
     enableCustomGeoCollection?: boolean;
     // @alpha
@@ -4955,6 +4996,9 @@ export function isCatalogAttribute(obj: unknown): obj is ICatalogAttribute;
 export function isCatalogAttributeHierarchy(obj: unknown): obj is ICatalogAttributeHierarchy;
 
 // @public
+export function isCatalogComputedAttribute(obj: unknown): obj is ICatalogComputedAttribute;
+
+// @public
 export function isCatalogDateAttribute(obj: unknown): obj is ICatalogDateAttribute;
 
 // @internal (undocumented)
@@ -5030,6 +5074,12 @@ export function isComparisonCondition(obj: unknown): obj is IComparisonCondition
 
 // @public
 export function isComparisonConditionOperator(obj: unknown): obj is ComparisonConditionOperator;
+
+// @public
+export function isComputedAttributeMetadataObject(obj: unknown): obj is IComputedAttributeMetadataObject;
+
+// @public
+export function isComputedAttributeMetadataObjectDefinition(obj: unknown): obj is IComputedAttributeMetadataObjectDefinition;
 
 // @alpha
 export function isCrossFiltering(obj: unknown): obj is ICrossFiltering;
@@ -6782,7 +6832,7 @@ export type MemoryItemStrategy = "ALWAYS" | "AUTO";
 export function mergeFilters(originalFilters: IFilter[], addedFilters: INullableFilter[] | undefined, commonDateFilterId?: string): IFilter[];
 
 // @public
-export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IParameterMetadataObject | IDataSetMetadataObject | IVariableMetadataObject | IDashboardMetadataObject | IAttributeHierarchyMetadataObject | IMemoryItemMetadataObject;
+export type MetadataObject = IAttributeMetadataObject | IComputedAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IParameterMetadataObject | IDataSetMetadataObject | IVariableMetadataObject | IDashboardMetadataObject | IAttributeHierarchyMetadataObject | IMemoryItemMetadataObject;
 
 // @public
 export const metadataObjectId: (metadataObject: MetadataObject) => string;
@@ -6941,7 +6991,7 @@ export type ObjectOrigin = "ALL" | "PARENTS" | "NATIVE";
 export type ObjectPermissionsObjectKind = "attribute" | "fact" | "label" | "measure";
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "workspaceTheme" | "workspaceColorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "userDataFilter" | "notificationChannel" | "memoryItem" | "parameter";
+export type ObjectType = "measure" | "fact" | "attribute" | "computedAttribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "workspaceTheme" | "workspaceColorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "userDataFilter" | "notificationChannel" | "memoryItem" | "parameter";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;

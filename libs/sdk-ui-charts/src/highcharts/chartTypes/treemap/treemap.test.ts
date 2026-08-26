@@ -10,11 +10,11 @@ import { type IColorPalette, type IColorPaletteItem } from "@gooddata/sdk-model"
 import { DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
 import { type IColorMapping, getRgbString } from "@gooddata/sdk-ui-vis-commons";
 
-import { recordedDataFacade } from "../../../../testUtils/recordings.js";
-import { TwoColorPalette } from "../_chartColoring/color.fixture.js";
+import { recordedDataFacade } from "../../../testUtils/recordings.fixture.js";
 import { getColorsFromStrategy } from "../_chartColoring/helper.js";
 import { ColorFactory } from "../_chartOptions/colorFactory.js";
 import { getMVS } from "../_util/helper.js";
+import { TwoColorPalette } from "../tests/color.test.helpers.js";
 
 import { TreemapColorStrategy } from "./treemapColoring.js";
 

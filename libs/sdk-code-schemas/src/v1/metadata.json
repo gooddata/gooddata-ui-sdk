@@ -17,6 +17,10 @@
             "then": { "$ref": "#/$global/gaac/metric" }
         },
         {
+            "if": { "properties": { "type": { "const": "computed_attribute" } }, "required": ["type"] },
+            "then": { "$ref": "#/$global/gaac/computed_attribute" }
+        },
+        {
             "if": { "properties": { "type": { "const": "dashboard" } }, "required": ["type"] },
             "then": { "$ref": "#/$global/gaac/dashboard" }
         },
@@ -75,6 +79,7 @@
                     "snippets": [
                         "dataset",
                         "metric",
+                        "computed_attribute",
                         "date",
                         "dashboard",
                         "plugin",
@@ -115,6 +120,7 @@
                 "dataset",
                 "date",
                 "metric",
+                "computed_attribute",
                 "dashboard",
                 "plugin",
                 "table",
@@ -420,6 +426,49 @@
                     }
                 },
                 "$semantic": { "type": "snippet", "snippets": ["metric"] },
+                "required": ["id", "type", "maql"]
+            },
+            "computed_attribute": {
+                "title": "ComputedAttribute",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "$ref": "#/$global/gaac/identifier",
+                        "description": "A unique identifier of the computed attribute. Must not collide with the identifier of an attribute or a label.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "computedAttribute.id",
+                                "code": "core.uniqueness.computedAttributes.id"
+                            },
+                            { "type": "definition", "source": "computedAttribute.id" }
+                        ]
+                    },
+                    "type": { "type": "string", "enum": ["computed_attribute"] },
+                    "title": {
+                        "$ref": "#/$global/gaac/title",
+                        "description": "An optional human readable title for the computed attribute. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "#/$global/gaac/description",
+                        "description": "An optional description of the computed attribute."
+                    },
+                    "tags": {
+                        "$ref": "#/$global/gaac/tags",
+                        "description": "A list of strings - metadata tags of this computed attribute."
+                    },
+                    "maql": {
+                        "type": "string",
+                        "description": "Define MAQL syntax for the computed attribute. Values are assigned with break points written as CASE WHEN branches over a metric, and the first matching branch wins.",
+                        "$semantic": { "type": "maql" }
+                    },
+                    "locale": {
+                        "type": "string",
+                        "description": "An optional locale whose collation order the computed values are sorted by."
+                    }
+                },
+                "$semantic": { "type": "snippet", "snippets": ["computed_attribute"] },
                 "required": ["id", "type", "maql"]
             },
             "dashboard": {
@@ -4753,6 +4802,49 @@
                 "source": "current.widget.visualization.query.filter.localId",
                 "mode": "property"
             }
+        },
+        "computed_attribute": {
+            "title": "ComputedAttribute",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "#/$global/gaac/identifier",
+                    "description": "A unique identifier of the computed attribute. Must not collide with the identifier of an attribute or a label.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "computedAttribute.id",
+                            "code": "core.uniqueness.computedAttributes.id"
+                        },
+                        { "type": "definition", "source": "computedAttribute.id" }
+                    ]
+                },
+                "type": { "type": "string", "enum": ["computed_attribute"] },
+                "title": {
+                    "$ref": "#/$global/gaac/title",
+                    "description": "An optional human readable title for the computed attribute. Will be derived from id if not provided explicitly."
+                },
+                "description": {
+                    "$ref": "#/$global/gaac/description",
+                    "description": "An optional description of the computed attribute."
+                },
+                "tags": {
+                    "$ref": "#/$global/gaac/tags",
+                    "description": "A list of strings - metadata tags of this computed attribute."
+                },
+                "maql": {
+                    "type": "string",
+                    "description": "Define MAQL syntax for the computed attribute. Values are assigned with break points written as CASE WHEN branches over a metric, and the first matching branch wins.",
+                    "$semantic": { "type": "maql" }
+                },
+                "locale": {
+                    "type": "string",
+                    "description": "An optional locale whose collation order the computed values are sorted by."
+                }
+            },
+            "$semantic": { "type": "snippet", "snippets": ["computed_attribute"] },
+            "required": ["id", "type", "maql"]
         },
         "widthItem": {
             "title": "Width",

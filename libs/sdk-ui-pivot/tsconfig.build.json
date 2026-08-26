@@ -3,8 +3,11 @@
     "exclude": [
         "**/*.test.ts",
         "**/*.test.tsx",
+        "**/*.test.helpers.ts",
+        "**/*.test.helpers.tsx",
         "**/*.fixture.ts",
         "**/*.fixtures.ts",
+        "**/*.test.helpers.ts",
         "**/tests/dataSourceUtils.ts"
     ],
     "include": ["src/**/*"],

@@ -3,6 +3,7 @@
 import { type IAttributeMetadataObject } from "./attribute/index.js";
 import { type IAttributeDisplayFormMetadataObject } from "./attributeDisplayForm/index.js";
 import { type IAttributeHierarchyMetadataObject } from "./attributeHierarchy/index.js";
+import { type IComputedAttributeMetadataObject } from "./computedAttribute/index.js";
 import { type IDashboardMetadataObject } from "./dashboard/index.js";
 import { type IDataSetMetadataObject } from "./dataSet/index.js";
 import { type IFactMetadataObject } from "./fact/index.js";
@@ -18,6 +19,7 @@ import { type IVariableMetadataObject } from "./variable/index.js";
  */
 export type MetadataObject =
     | IAttributeMetadataObject
+    | IComputedAttributeMetadataObject
     | IAttributeDisplayFormMetadataObject
     | IFactMetadataObject
     | IMeasureMetadataObject

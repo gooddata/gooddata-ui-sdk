@@ -8,7 +8,7 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { type IAttributeDescriptor, type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 
-import { recordedDataFacade } from "../../../../testUtils/recordings.js";
+import { recordedDataFacade } from "../../../testUtils/recordings.fixture.js";
 
 import { findAttributeInDimension, findMeasureGroupInDimensions } from "./executionResultHelper.js";
 

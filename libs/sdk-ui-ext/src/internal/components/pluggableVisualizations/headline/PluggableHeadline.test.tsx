@@ -30,14 +30,14 @@ import {
     overTimeComparisonDateItem,
     samePeriodPrevYearFiltersBucket,
     simpleStackedReferencePoint,
-} from "../../../mocks/referencePointMocks.js";
+} from "../../../tests/referencePointMocks.test.helpers.js";
 import {
     emptyInsight,
     insightWithSingleMeasure,
     insightWithSinglePrimaryAndSecondaryMeasure,
     insightWithSinglePrimaryAndSecondaryMeasureNoIdentifier,
     insightWithSingleSecondaryMeasure,
-} from "../../../mocks/testMocks.js";
+} from "../../../tests/testMocks.test.helpers.js";
 import { getMeasureItems } from "../../../utils/bucketHelper.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
 import { getLastRenderEl } from "../pluggableVisualizations.test.helpers.js";

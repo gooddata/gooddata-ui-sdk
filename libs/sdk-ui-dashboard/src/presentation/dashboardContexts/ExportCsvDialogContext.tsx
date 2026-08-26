@@ -3,11 +3,10 @@
 import { type ReactNode, createContext, useCallback, useContext, useMemo, useState } from "react";
 
 export interface IExportCsvDialogData {
-    delimiter: string;
+    delimiter?: string;
 }
 
 export interface IExportCsvDialogConfig {
-    initialDelimiter?: string;
     onSubmit: (data: IExportCsvDialogData) => void;
 }
 

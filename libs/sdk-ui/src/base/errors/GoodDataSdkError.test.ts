@@ -4,7 +4,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { InvalidInputTestCases } from "../../../testUtils/typeGuards.js";
+import { InvalidInputTestCases } from "../../testUtils/typeGuards.fixtures.js";
 
 import { isGoodDataSdkError } from "./GoodDataSdkError.js";
 

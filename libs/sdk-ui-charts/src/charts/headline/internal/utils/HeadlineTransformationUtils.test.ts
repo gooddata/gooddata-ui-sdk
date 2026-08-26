@@ -18,7 +18,7 @@ import {
     headlineWithTwoMeasuresSecondEmpty,
     headlineWithTwoMeasuresSecondZero,
     headlineWithTwoMeasuresWithIdentifier,
-} from "../../../../../testUtils/fixtures.js";
+} from "../../../../testUtils/charts.fixtures.js";
 import { type IHeadlineData } from "../interfaces/Headlines.js";
 
 import {

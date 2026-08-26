@@ -87,6 +87,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should cut out measures 
       "stack": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -105,6 +106,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should cut out measures 
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -306,6 +308,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should place third attri
       "stack": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -324,6 +327,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should place third attri
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -455,6 +459,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should return reference 
       "stack": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -473,6 +478,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should return reference 
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -690,6 +696,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse all measure
       "stack": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -709,6 +716,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse all measure
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -910,6 +918,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse one measure
       "stack": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -928,6 +937,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse one measure
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,

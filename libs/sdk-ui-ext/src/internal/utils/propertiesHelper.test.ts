@@ -17,11 +17,7 @@ import {
     oneMetricAndCategoryAndStackReferencePoint,
     simpleStackedReferencePoint,
     twoMeasureBucketsReferencePoint,
-} from "../mocks/referencePointMocks.js";
-import {
-    multipleMetricsAndCategoriesBaseUiConfig,
-    simpleStackedBaseUiConfig,
-} from "../mocks/uiConfigMocks.js";
+} from "../tests/referencePointMocks.test.helpers.js";
 
 import {
     getColumnWidthsFromProperties,
@@ -32,6 +28,10 @@ import {
     isDualAxisOrSomeSecondaryAxisMeasure,
     removeImmutableOptionalStackingProperties,
 } from "./propertiesHelper.js";
+import {
+    multipleMetricsAndCategoriesBaseUiConfig,
+    simpleStackedBaseUiConfig,
+} from "./uiConfigMocks.test.helpers.js";
 
 describe("propertiesHelper", () => {
     describe("getSupportedPropertiesControls", () => {

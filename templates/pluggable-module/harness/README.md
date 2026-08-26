@@ -2,8 +2,6 @@
 
 Standalone development harness for **gdc-app-template-name-module**.
 
-This is a template. Run `rush init-pluggable-app` to scaffold a new application from it.
-
 ## What this does
 
 The harness runs the pluggable application module outside of the full host shell. It provides:

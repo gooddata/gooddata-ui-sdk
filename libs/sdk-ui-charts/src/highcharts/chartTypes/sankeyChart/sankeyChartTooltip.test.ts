@@ -6,11 +6,11 @@ import { describe, expect, it } from "vitest";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
-import { recordedDataFacade } from "../../../../testUtils/recordings.js";
+import { recordedDataFacade } from "../../../testUtils/recordings.fixture.js";
 import { generateTooltipSankeyChartFn } from "../_chartOptions/chartTooltips.js";
 import { getMVSForViewByTwoAttributes } from "../_util/helper.js";
 
-import { DEFAULT_TOOLTIP_CONTENT_WIDTH } from "./sankeyChart.fixture.js";
+import { DEFAULT_TOOLTIP_CONTENT_WIDTH } from "./sankeyChart.test.helpers.js";
 
 describe("SankeyChart tooltip", () => {
     it("should render tooltip for node correctly", () => {

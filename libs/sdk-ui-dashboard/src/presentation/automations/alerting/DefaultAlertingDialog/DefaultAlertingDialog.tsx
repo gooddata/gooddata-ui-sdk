@@ -4,10 +4,7 @@ import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 
-import {
-    type IAutomationMetadataObject,
-    type IAutomationMetadataObjectDefinition,
-} from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import {
     ValidationContextStore,
     createInvalidDatapoint,
@@ -15,10 +12,8 @@ import {
     useValidationContextValue,
 } from "@gooddata/sdk-ui";
 import {
-    Button,
     ConfirmDialogBase,
     ContentDivider,
-    Hyperlink,
     Message,
     Overlay,
     OverlayController,
@@ -36,6 +31,11 @@ import { useAlertingDialogContext } from "../../contexts/AlertingDialogContext.j
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { ApplyCurrentFiltersConfirmDialog } from "../../shared/automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
 import {
+    AutomationDialogActionBar,
+    AutomationDialogFooterLeft,
+} from "../../shared/slots/AutomationDialogActionBar.js";
+import {
+    type IAutomationDialogActionBarProps,
     type IAutomationDialogDestinationProps,
     type IAutomationDialogRecipientsProps,
 } from "../../shared/slots/types.js";
@@ -90,11 +90,14 @@ export function AlertingDialogRenderer({
     onSaveError,
     onSaveSuccess,
     slots,
+    topContent,
+    bottomContent,
 }: IDefaultAlertingDialogProps) {
     const HeaderSlot = slots?.Header;
     const FiltersSlot = slots?.Filters;
     const DestinationSlot = slots?.Destination;
     const RecipientsSlot = slots?.Recipients;
+    const ActionBarSlot = slots?.ActionBar;
 
     const intl = useIntl();
 
@@ -302,6 +305,33 @@ export function AlertingDialogRenderer({
         externalRecipientOverride,
     };
 
+    const submitDisabled = isSubmitDisabled || isSaving || isExecutionTimestampMode;
+    const actionBarDefaultProps: IAutomationDialogActionBarProps = {
+        cancelButtonText: intl.formatMessage({ id: "cancel" }),
+        submitButtonText: alertToEdit
+            ? intl.formatMessage({ id: "save" })
+            : intl.formatMessage({ id: "create" }),
+        onCancel: () => onCancel?.(),
+        onSubmit: () => void submit(),
+        isSubmitDisabled: submitDisabled,
+        isSaving,
+        submitButtonTooltipText: isExecutionTimestampMode
+            ? intl.formatMessage({ id: "dialogs.alert.save.executionTimestampMode" })
+            : undefined,
+        ...(isWhiteLabeled
+            ? {}
+            : {
+                  helpLinkText: intl.formatMessage({ id: helpTextId }),
+                  helpLinkHref: "https://www.gooddata.com/docs/cloud/create-dashboards/automation/alerts/",
+              }),
+        ...(alertToEdit
+            ? {
+                  deleteButtonText: intl.formatMessage({ id: "delete" }),
+                  onDelete: () => setAlertToDelete(alertToEdit as IAutomationMetadataObject),
+              }
+            : {}),
+    };
+
     return (
         <>
             <Overlay
@@ -330,18 +360,30 @@ export function AlertingDialogRenderer({
                             }}
                             showProgressIndicator={isSaving}
                             returnFocusAfterClose={false}
-                            footerLeftRenderer={() => (
-                                <AlertingDialogFooter
-                                    isWhiteLabeled={isWhiteLabeled}
-                                    helpTextId={helpTextId}
-                                    alertToEdit={alertToEdit}
-                                    isSavingAlert={isSaving}
-                                    onDeleteClick={() =>
-                                        setAlertToDelete(alertToEdit as IAutomationMetadataObject)
-                                    }
-                                />
-                            )}
-                            isSubmitDisabled={isSubmitDisabled || isSaving || isExecutionTimestampMode}
+                            footerLeftRenderer={
+                                ActionBarSlot
+                                    ? undefined
+                                    : () => (
+                                          <AutomationDialogFooterLeft
+                                              helpLinkText={actionBarDefaultProps.helpLinkText}
+                                              helpLinkHref={actionBarDefaultProps.helpLinkHref}
+                                              deleteButtonText={actionBarDefaultProps.deleteButtonText}
+                                              onDelete={actionBarDefaultProps.onDelete}
+                                              isDeleteDisabled={isSaving}
+                                          />
+                                      )
+                            }
+                            footerRenderer={
+                                ActionBarSlot
+                                    ? () => (
+                                          <ActionBarSlot
+                                              Default={AutomationDialogActionBar}
+                                              defaultProps={actionBarDefaultProps}
+                                          />
+                                      )
+                                    : undefined
+                            }
+                            isSubmitDisabled={submitDisabled}
                             submitButtonTooltipText={
                                 isExecutionTimestampMode
                                     ? intl.formatMessage({
@@ -383,6 +425,7 @@ export function AlertingDialogRenderer({
                                 {intl.formatMessage({ id: "dialogs.alert.accessibility.label.title" })}
                             </h2>
                             <ScrollablePanel className="gd-notifications-channel-dialog-content-wrapper gd-notification-channel-dialog-with-automation-filters">
+                                {topContent}
                                 <div className="gd-divider-with-margin" />
                                 <>
                                     {FiltersSlot ? (
@@ -646,6 +689,7 @@ export function AlertingDialogRenderer({
                                         {datapoint.message}
                                     </Message>
                                 ))}
+                                {bottomContent}
                             </ScrollablePanel>
                         </ConfirmDialogBase>
                     </ValidationContextStore>
@@ -698,44 +742,6 @@ export function DefaultAlertingDialog(props: IDefaultAlertingDialogProps) {
         <IntlWrapper locale={locale}>
             <AlertingDialogRenderer {...props} />
         </IntlWrapper>
-    );
-}
-
-interface IAlertingDialogFooterProps {
-    isWhiteLabeled: boolean;
-    helpTextId: string;
-    alertToEdit?: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null;
-    isSavingAlert: boolean;
-    onDeleteClick: () => void;
-}
-
-function AlertingDialogFooter({
-    isWhiteLabeled,
-    helpTextId,
-    alertToEdit,
-    isSavingAlert,
-    onDeleteClick,
-}: IAlertingDialogFooterProps) {
-    const intl = useIntl();
-
-    return (
-        <div className="gd-notifications-channels-dialog-footer-link">
-            {isWhiteLabeled ? null : (
-                <Hyperlink
-                    text={intl.formatMessage({ id: helpTextId })}
-                    href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/alerts/"
-                    iconClass="gd-icon-circle-question"
-                />
-            )}
-            {alertToEdit ? (
-                <Button
-                    className="gd-button-link-dimmed"
-                    value={intl.formatMessage({ id: "delete" })}
-                    onClick={onDeleteClick}
-                    disabled={isSavingAlert}
-                />
-            ) : null}
-        </div>
     );
 }
 

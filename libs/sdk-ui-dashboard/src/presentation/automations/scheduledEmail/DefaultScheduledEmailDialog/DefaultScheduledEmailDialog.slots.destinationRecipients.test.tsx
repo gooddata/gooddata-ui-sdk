@@ -6,13 +6,18 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type IAutomationUserRecipient, type INotificationChannelIdentifier } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
+import { type ISlotProps } from "@gooddata/sdk-ui-kit";
 
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { AutomationsContextProvider } from "../../contexts/AutomationsContext.js";
 import { ScheduledEmailDialogContextProvider } from "../../contexts/ScheduledEmailDialogContext.js";
-import { type IAutomationDialogDestinationProps, type ISlotProps } from "../../shared/slots/types.js";
-import { AUTOMATIONS_CONTEXT, SCHEDULED_EMAIL_DIALOG_CONTEXT, SENTINEL_CHANNEL } from "../state/fixtures.js";
+import { type IAutomationDialogDestinationProps } from "../../shared/slots/types.js";
 import { ScheduledEmailDialogStateProvider } from "../state/ScheduledEmailDialogStateProvider.js";
+import {
+    AUTOMATIONS_CONTEXT,
+    SCHEDULED_EMAIL_DIALOG_CONTEXT,
+    SENTINEL_CHANNEL,
+} from "../tests/scheduledEmail.test.helpers.js";
 import {
     type IDefaultScheduledEmailDialogProps,
     type IScheduledEmailDialogRecipientsProps,

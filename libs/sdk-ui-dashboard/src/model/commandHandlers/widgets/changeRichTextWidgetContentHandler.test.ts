@@ -6,18 +6,18 @@ import { type IDashboard, type IRichTextWidgetDefinition, idRef } from "@gooddat
 
 import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultFilterContext.js";
 import { defaultDateFilterConfig } from "../../../_staging/dateFilterConfig/defaultConfig.js";
+import {
+    EmptyDashboardIdentifier,
+    EmptyDashboardWithReferences,
+    TestCorrelation,
+} from "../../../tests/Dashboard.test.helpers.js";
 import { addLayoutSection } from "../../commands/layout.js";
 import { type IChangeRichTextWidgetContent, changeRichTextWidgetContent } from "../../commands/richText.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardCommandFailed } from "../../events/general.js";
 import { type IDashboardRichTextWidgetContentChanged } from "../../events/richText.js";
-import {
-    EmptyDashboardIdentifier,
-    EmptyDashboardWithReferences,
-    TestCorrelation,
-} from "../../fixtures/Dashboard.fixtures.js";
-import { TestRichTextItem } from "../../fixtures/Layout.fixtures.js";
 import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
+import { TestRichTextItem } from "../../tests/Layout.test.helpers.js";
 import { type PrivateDashboardContext } from "../../types/commonTypes.js";
 import { EmptyDashboardLayout } from "../dashboard/common/dashboardInitialize.js";
 

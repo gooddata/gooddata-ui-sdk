@@ -4,19 +4,19 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { type IDashboardDefinition } from "@gooddata/sdk-model";
 
+import { TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
+import {
+    SimpleDashboardFilterContext,
+    SimpleDashboardWithReferences,
+} from "../../../tests/SimpleDashboard.test.helpers.js";
 import { saveDashboard } from "../../commands/dashboard.js";
 import { addLayoutSection } from "../../commands/layout.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type DashboardSaved } from "../../events/dashboard.js";
-import { TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
-import { TestInsightItem } from "../../fixtures/Layout.fixtures.js";
-import {
-    SimpleDashboardFilterContext,
-    SimpleDashboardWithReferences,
-} from "../../fixtures/SimpleDashboard.fixtures.js";
 import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
 import { selectFilterContextIdentity } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
+import { TestInsightItem } from "../../tests/Layout.test.helpers.js";
 import { isTemporaryIdentity } from "../../utils/dashboardItemUtils.js";
 
 import { getDashboardWithSharing } from "./saveDashboardHandler.js";

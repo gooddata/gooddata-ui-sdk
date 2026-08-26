@@ -4,12 +4,13 @@
 
 import { describe, expect, it } from "vitest";
 
-import { createSortItemForCol } from "./colSortItemFactory.js";
 import {
     SingleMeasureWithColumnAttribute,
     SingleMeasureWithRowAttribute,
     SingleMeasureWithTwoRowAndTwoColumnAttributes,
-} from "./table.fixture.js";
+} from "../tests/table.test.helpers.js";
+
+import { createSortItemForCol } from "./colSortItemFactory.js";
 import { TableDescriptor } from "./tableDescriptor.js";
 
 describe("createSortItem", () => {

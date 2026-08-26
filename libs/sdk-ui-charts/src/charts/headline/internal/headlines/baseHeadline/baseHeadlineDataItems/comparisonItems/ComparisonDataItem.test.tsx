@@ -19,7 +19,7 @@ import {
     TEST_DATA_ITEM,
     TEST_RENDER_COLOR_SPECS,
     createComparison,
-} from "../../../../TestData.fixtures.js";
+} from "../../../../tests/TestData.test.helpers.js";
 import { createBaseHeadlineTestContext } from "../../BaseHeadline.test.helpers.js";
 
 import { ComparisonDataItem } from "./ComparisonDataItem.js";

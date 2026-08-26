@@ -8,9 +8,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IColor } from "@gooddata/sdk-model";
 
-import { colorPalette } from "../../../../mocks/testColorHelper.js";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
 import { type IColoredItemContentProps } from "../coloredItemsList/ColoredItemContent.js";
+import { colorPalette } from "../tests/testColorHelper.test.helpers.js";
 
 import {
     ColorDropdown,

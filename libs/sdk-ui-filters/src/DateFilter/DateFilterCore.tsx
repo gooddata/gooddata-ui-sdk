@@ -325,6 +325,7 @@ export function DateFilterCore({
                                 ignoreClicksOnByClass={[
                                     ".s-do-not-close-dropdown-on-click",
                                     ".rdp-day", // absolute range picker calendar items
+                                    ".rc-picker-cell-inner", // PeriodRangePicker (rc-picker) period grid cells
                                 ]}
                                 renderBody={({ closeDropdown, ariaAttributes }) => {
                                     return isConfigurationOpen && FilterConfigurationComponent ? (

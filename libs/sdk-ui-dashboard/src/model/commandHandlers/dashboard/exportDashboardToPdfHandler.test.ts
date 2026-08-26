@@ -16,6 +16,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { type FilterContextItem, type ObjRef, idRef } from "@gooddata/sdk-model";
 
+import { SimpleDashboardIdentifier } from "../../../tests/SimpleDashboard.test.helpers.js";
 import {
     exportDashboardToPdf,
     exportDashboardToPdfPresentation,
@@ -24,7 +25,6 @@ import {
 } from "../../commands/dashboard.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardExportToPdfResolved } from "../../events/dashboard.js";
-import { SimpleDashboardIdentifier } from "../../fixtures/SimpleDashboard.fixtures.js";
 import { HeadlessDashboard } from "../../headlessDashboard/HeadlessDashboard.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 

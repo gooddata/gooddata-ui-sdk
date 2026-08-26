@@ -1,4 +1,5 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 // Buckets
 export const FILTERS = "filters";
 
@@ -21,4 +22,5 @@ export const METRIC = "metric";
 export const FACT = "fact";
 export const DATE = "date";
 export const ATTRIBUTE = "attribute";
+export const COMPUTED_ATTRIBUTE = "computedAttribute";
 export const GEO_ATTRIBUTE = "geo_attribute";

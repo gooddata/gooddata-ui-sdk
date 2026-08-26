@@ -1165,4 +1165,14 @@ export interface IFeatureFlags {
      * Enable granularity selection for the absolute (static) date filter.
      */
     enableAbsoluteDateFilterGranularity?: boolean;
+
+    /**
+     * Enable computed attributes.
+     */
+    enableComputedAttributes?: boolean;
+
+    /**
+     * Enable the Business Briefing reports application.
+     */
+    enableBusinessBriefingReportsApp?: boolean;
 }

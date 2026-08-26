@@ -13,6 +13,7 @@ import {
     type IExecutionConfig,
     type IFilter,
     type IKeyDriveAnalysis,
+    type ISeparators,
     type ISortItem,
     type ITheme,
     isAttribute,
@@ -76,6 +77,7 @@ export type ConversationVisualisationProps = {
     message: IChatConversationLocalItem;
     visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
     colorPalette?: IColorPalette;
+    separators?: ISeparators;
     execConfig?: IExecutionConfig;
     agGridToken?: string;
     isTable?: boolean;
@@ -96,6 +98,7 @@ export type ConversationVisualisationProps = {
 export function ConversationVisualisation({
     message,
     colorPalette,
+    separators,
     visualization,
     execConfig,
     agGridToken,
@@ -224,6 +227,7 @@ export function ConversationVisualisation({
                     enableAccessibleChartTooltip,
                     agGridToken: resolvedAgGridToken,
                     execConfig,
+                    separators,
                 },
             );
         }
@@ -243,6 +247,7 @@ export function ConversationVisualisation({
                         enableChangeAnalysis,
                         enableAccessibleChartTooltip,
                         execConfig,
+                        separators,
                     },
                 );
             case "local:column":
@@ -260,6 +265,7 @@ export function ConversationVisualisation({
                         enableChangeAnalysis,
                         enableAccessibleChartTooltip,
                         execConfig,
+                        separators,
                     },
                 );
             case "local:line":
@@ -278,6 +284,7 @@ export function ConversationVisualisation({
                         enableChangeAnalysis,
                         enableAccessibleChartTooltip,
                         execConfig,
+                        separators,
                     },
                 );
             case "local:pie":
@@ -295,6 +302,7 @@ export function ConversationVisualisation({
                         enableChangeAnalysis,
                         enableAccessibleChartTooltip,
                         execConfig,
+                        separators,
                     },
                 );
             case "local:scatter":
@@ -312,6 +320,7 @@ export function ConversationVisualisation({
                         drillableItems,
                         enableAccessibleChartTooltip,
                         execConfig,
+                        separators,
                     },
                 );
             case "local:table":
@@ -330,6 +339,7 @@ export function ConversationVisualisation({
                         enableAccessibleChartTooltip,
                         agGridToken: resolvedAgGridToken,
                         execConfig,
+                        separators,
                     },
                 );
             case "local:headline":
@@ -346,6 +356,7 @@ export function ConversationVisualisation({
                         drillableItems,
                         enableChangeAnalysis,
                         execConfig,
+                        separators,
                     },
                 );
             default:
@@ -388,6 +399,7 @@ const renderBarChart = (
         enableAccessibleChartTooltip?: boolean;
         enableChangeAnalysis?: boolean;
         execConfig?: IExecutionConfig;
+        separators?: ISeparators;
     },
 ) => {
     const { metrics, view, stack } = buckets;
@@ -404,6 +416,7 @@ const renderBarChart = (
                 ...visualizationTooltipOptions,
                 ...legendTooltipOptions,
                 colorPalette,
+                separators: props.separators,
                 // Better visibility with stacked bars if there are multiple metrics and dimensions
                 stackMeasures: stack.length >= 1,
                 enableAccessibleTooltip: props.enableAccessibleChartTooltip,
@@ -432,6 +445,7 @@ const renderColumnChart = (
         enableAccessibleChartTooltip?: boolean;
         enableChangeAnalysis?: boolean;
         execConfig?: IExecutionConfig;
+        separators?: ISeparators;
     },
 ) => {
     const { metrics, view, stack } = buckets;
@@ -448,6 +462,7 @@ const renderColumnChart = (
                 ...visualizationTooltipOptions,
                 ...legendTooltipOptions,
                 colorPalette,
+                separators: props.separators,
                 // Better visibility with stacked bars if there are multiple metrics and dimensions
                 stackMeasures: stack.length >= 1,
                 enableAccessibleTooltip: props.enableAccessibleChartTooltip,
@@ -477,6 +492,7 @@ const renderLineChart = (
         enableAccessibleChartTooltip?: boolean;
         enableChangeAnalysis?: boolean;
         execConfig?: IExecutionConfig;
+        separators?: ISeparators;
     },
 ) => {
     const forecast = mapVisualizationForecastToChartConfig(visualization.insight.properties["controls"]);
@@ -506,6 +522,7 @@ const renderLineChart = (
                 ...visualizationTooltipOptions,
                 ...legendTooltipOptions,
                 colorPalette,
+                separators: props.separators,
                 enableAccessibleTooltip: props.enableAccessibleChartTooltip,
                 ...(forecastConfig && forecast ? { forecast } : {}),
                 ...(outliersConfig && anomalies ? { anomalies } : {}),
@@ -535,6 +552,7 @@ const renderPieChart = (
         enableAccessibleChartTooltip?: boolean;
         enableChangeAnalysis?: boolean;
         execConfig?: IExecutionConfig;
+        separators?: ISeparators;
     },
 ) => {
     const { metrics, view } = buckets;
@@ -550,6 +568,7 @@ const renderPieChart = (
             config={{
                 ...visualizationTooltipOptions,
                 colorPalette,
+                separators: props.separators,
                 enableAccessibleTooltip: props.enableAccessibleChartTooltip,
             }}
             drillableItems={props.drillableItems}
@@ -575,6 +594,7 @@ const renderScatterPlot = (
         drillableItems?: ExplicitDrill[];
         enableAccessibleChartTooltip?: boolean;
         execConfig?: IExecutionConfig;
+        separators?: ISeparators;
     },
 ) => {
     const clustering = mapVisualizationClusteringToChartConfig(visualization.insight.properties["controls"]);
@@ -598,6 +618,7 @@ const renderScatterPlot = (
                 ...visualizationTooltipOptions,
                 ...legendTooltipOptions,
                 colorPalette,
+                separators: props.separators,
                 enableAccessibleTooltip: props.enableAccessibleChartTooltip,
                 ...(clusteringConfig && clustering ? { clustering } : {}),
             }}
@@ -625,6 +646,7 @@ const renderTable = (
         enableChangeAnalysis?: boolean;
         agGridToken?: string;
         execConfig?: IExecutionConfig;
+        separators?: ISeparators;
     },
 ) => {
     const TableComponent = props.enableNewPivotTable ? PivotTableNext : PivotTable;
@@ -638,7 +660,11 @@ const renderTable = (
             sortBy={sortBy}
             columns={[...columns, ...stack, ...segment].filter(Boolean)}
             rows={[...attribute, ...trend, ...view].filter(Boolean)}
-            config={props.enableNewPivotTable ? { agGridToken: props.agGridToken } : undefined}
+            config={
+                props.enableNewPivotTable
+                    ? { agGridToken: props.agGridToken, separators: props.separators }
+                    : { separators: props.separators }
+            }
             drillableItems={props.drillableItems}
             onDrill={onDrill}
             onError={onError}
@@ -661,6 +687,7 @@ const renderHeadline = (
         drillableItems?: ExplicitDrill[];
         enableChangeAnalysis?: boolean;
         execConfig?: IExecutionConfig;
+        separators?: ISeparators;
     },
 ) => {
     const { metrics, secondary_metrics } = buckets;
@@ -676,6 +703,7 @@ const renderHeadline = (
                     ...visualizationTooltipOptions,
                     ...getHeadlineComparison(metrics),
                     colorPalette,
+                    separators: props.separators,
                 }}
                 drillableItems={props.drillableItems}
                 onDrill={onDrill}

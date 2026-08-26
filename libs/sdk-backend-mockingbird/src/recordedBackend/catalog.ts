@@ -15,6 +15,7 @@ import {
     type IAttributeOrMeasure,
     type ICatalogAttribute,
     type ICatalogAttributeHierarchy,
+    type ICatalogComputedAttribute,
     type ICatalogDateDataset,
     type ICatalogFact,
     type ICatalogGroup,
@@ -23,6 +24,7 @@ import {
     type ObjRef,
     isCatalogAttribute,
     isCatalogAttributeHierarchy,
+    isCatalogComputedAttribute,
     isCatalogDateDataset,
     isCatalogFact,
     isCatalogMeasure,
@@ -158,6 +160,10 @@ class RecordedCatalogBase {
     public attributeHierarchies(): ICatalogAttributeHierarchy[] {
         return this.items.filter(isCatalogAttributeHierarchy);
     }
+
+    public computedAttributes(): ICatalogComputedAttribute[] {
+        return this.items.filter(isCatalogComputedAttribute);
+    }
 }
 
 class RecordedCatalog extends RecordedCatalogBase implements IWorkspaceCatalog {
@@ -278,6 +284,7 @@ class RecordedAvailableCatalog extends RecordedCatalogBase implements IWorkspace
     private readonly filteredFacts: ICatalogFact[];
     private readonly filteredDateDatasets: ICatalogDateDataset[];
     private readonly filteredAttributeHierarchies: ICatalogAttributeHierarchy[];
+    private readonly filteredComputedAttributes: ICatalogComputedAttribute[];
 
     constructor(
         public readonly workspace: string,
@@ -295,6 +302,7 @@ class RecordedAvailableCatalog extends RecordedCatalogBase implements IWorkspace
             availableFacts = typedIdentity,
             availableDateDatasets = typedIdentity,
             availableAttributeHierarchies = typedIdentity,
+            availableComputedAttributes = typedIdentity,
         } = this.config.catalogAvailability ?? {};
 
         this.filteredAttributes = availableAttributes(this.attributes());
@@ -302,6 +310,7 @@ class RecordedAvailableCatalog extends RecordedCatalogBase implements IWorkspace
         this.filteredFacts = availableFacts(this.facts());
         this.filteredDateDatasets = availableDateDatasets(this.dateDatasets());
         this.filteredAttributeHierarchies = availableAttributeHierarchies(this.attributeHierarchies());
+        this.filteredComputedAttributes = availableComputedAttributes(this.computedAttributes());
     }
 
     public allAvailableItems = (): CatalogItem[] => {
@@ -311,6 +320,7 @@ class RecordedAvailableCatalog extends RecordedCatalogBase implements IWorkspace
             ...this.filteredFacts,
             ...this.filteredDateDatasets,
             ...this.filteredAttributeHierarchies,
+            ...this.filteredComputedAttributes,
         ];
     };
     public availableAttributes = (): ICatalogAttribute[] => {
@@ -327,5 +337,8 @@ class RecordedAvailableCatalog extends RecordedCatalogBase implements IWorkspace
     }
     public availableAttributeHierarchies(): ICatalogAttributeHierarchy[] {
         return this.filteredAttributeHierarchies;
+    }
+    public availableComputedAttributes(): ICatalogComputedAttribute[] {
+        return this.filteredComputedAttributes;
     }
 }

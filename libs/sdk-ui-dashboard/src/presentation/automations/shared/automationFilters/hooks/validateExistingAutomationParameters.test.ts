@@ -8,7 +8,7 @@ import {
     dashboardParameter,
     workspaceNumberParameter,
     workspaceStringParameter,
-} from "../parameterFixtures.js";
+} from "../../../tests/parameterFixtures.test.helpers.js";
 
 import { validateExistingAutomationParameters } from "./useValidateExistingAutomationFilters.js";
 

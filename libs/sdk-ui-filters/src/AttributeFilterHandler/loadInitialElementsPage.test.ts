@@ -17,8 +17,8 @@ import {
     newTestAttributeFilterHandlerWithAttributeFilter,
     newTestAttributeFilterHandlerWithElementsLoadFailures,
     positiveAttributeFilterDefaultDF,
-} from "./fixtures.js";
-import { waitForAsync } from "./testUtils.js";
+} from "./AttributeFilterHandler.test.helpers.js";
+import { waitForAsync } from "./waitForAsync.test.utils.js";
 
 describe("AttributeFilterHandler", () => {
     it("loadInitialElementsPage() should trigger onLoadInitialElementsPageStart() callback", async () => {

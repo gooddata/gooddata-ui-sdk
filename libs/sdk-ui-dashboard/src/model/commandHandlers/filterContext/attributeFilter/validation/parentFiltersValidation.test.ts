@@ -14,7 +14,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type ObjRefMap, newDisplayFormMap } from "../../../../../_staging/metadata/objRefMap.js";
-import { SimpleDashboardIdentifier } from "../../../../fixtures/SimpleDashboard.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../../../../tests/SimpleDashboard.test.helpers.js";
 import { type DashboardContext } from "../../../../types/commonTypes.js";
 
 import {

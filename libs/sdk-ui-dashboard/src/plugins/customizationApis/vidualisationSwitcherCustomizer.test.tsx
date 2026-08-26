@@ -6,7 +6,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IVisualizationSwitcherWidget, idRef } from "@gooddata/sdk-model";
 
-import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
+import { TestingDashboardCustomizationLogger } from "./TestingDashboardCustomizationLogger.test.helpers.js";
 import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "./types.js";
 import { EMPTY_MUTATIONS } from "./utils.js";
 import { DefaultVisualizationSwitcherCustomizer } from "./visualizationSwitcherCustomizer.js";

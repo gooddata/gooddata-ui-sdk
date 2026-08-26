@@ -7,7 +7,7 @@ import { describe, expect, it } from "vitest";
 import {
     OneMeasureAndRepeatingRowAttributesOnDifferentPositions,
     TwoMeasuresWithTwoRowAndTwoColumnAttributes,
-} from "./drilling.fixture.js";
+} from "./drilling.test.helpers.js";
 import { getAvailableDrillTargets } from "./drillTargets.js";
 
 describe("getAvailableDrillTargets", () => {

@@ -84,6 +84,30 @@ export interface IDialogProps extends IDialogBaseProps {
 }
 
 /**
+ * Props of {@link ConfirmDialogFooter} — the default footer of {@link ConfirmDialogBase}.
+ *
+ * @internal
+ */
+export interface IConfirmDialogFooterProps {
+    /**
+     * Content rendered before the buttons (the footer-left area).
+     */
+    footerLeft?: ReactNode;
+    showProgressIndicator?: boolean;
+    cancelButtonText?: string;
+    onCancel?: () => void;
+    isCancelDisabled?: boolean;
+    submitButtonText?: string;
+    onSubmit?: () => void;
+    isSubmitDisabled?: boolean;
+    submitButtonTooltipText?: string;
+    submitButtonTooltipAlignPoints?: IAlignPoint[];
+    submitButtonTooltipArrowOffsets?: ArrowOffsets;
+    hideSubmitButton?: boolean;
+    isPositive?: boolean;
+}
+
+/**
  * @internal
  */
 export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessibilityConfig"> {
@@ -99,7 +123,19 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
     warning?: string | ReactElement;
     showProgressIndicator?: boolean;
     headerLeftButtonRenderer?: () => ReactElement;
+    /**
+     * Called on the default footer path to render footer-left content. Ignored when
+     * {@link IConfirmDialogBaseProps.footerRenderer} is set — {@link IConfirmDialogBaseProps.footerRenderer}
+     * takes precedence and replaces the whole footer, including this content.
+     */
     footerLeftRenderer?: () => ReactElement;
+    /**
+     * When set, replaces the whole footer element ({@link ConfirmDialogFooter}). Takes precedence
+     * over {@link IConfirmDialogBaseProps.footerLeftRenderer}. A renderer that does not render
+     * {@link ConfirmDialogFooter} loses the submit-button contracts it carries (Enter-key submit
+     * detection via its element id, and the validation aria wiring).
+     */
+    footerRenderer?: () => ReactElement;
     dialogHeaderClassName?: string;
     titleRightIconRenderer?: () => ReactElement;
     headline?: string;

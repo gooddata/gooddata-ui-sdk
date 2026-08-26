@@ -13,6 +13,7 @@ import {
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 
+import { TestCorrelation, TestStash } from "../../../tests/Dashboard.test.helpers.js";
 import { renameDashboard, setDashboardMeasureValueFilterConfigMode } from "../../commands/dashboard.js";
 import {
     addAttributeFilter,
@@ -44,8 +45,7 @@ import {
     ComplexDashboardFilters,
     ComplexDashboardIdentifier,
     ComplexDashboardWidgets,
-} from "../../fixtures/ComplexDashboard.fixtures.js";
-import { TestCorrelation, TestStash } from "../../fixtures/Dashboard.fixtures.js";
+} from "../../tests/ComplexDashboard.test.helpers.js";
 import { type ExtendedDashboardItem } from "../../types/layoutTypes.js";
 
 import { selectIsDashboardDirty } from "./metaSelectors.js";

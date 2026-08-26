@@ -50,7 +50,7 @@ export class MekkoDescriptor extends BigChartDescriptor {
     public getMeta(): IVisualizationMeta {
         return {
             supportsExport: true,
-            supportsZooming: false,
+            supportsZooming: true,
         };
     }
 }

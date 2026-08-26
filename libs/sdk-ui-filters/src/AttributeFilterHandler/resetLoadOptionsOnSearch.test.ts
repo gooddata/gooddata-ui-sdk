@@ -7,8 +7,8 @@ import { describe, expect, it, vi } from "vitest";
 import {
     negativeAttributeFilterDefaultDF,
     newTestAttributeFilterHandlerWithAttributeFilter,
-} from "./fixtures.js";
-import { waitForAsync } from "./testUtils.js";
+} from "./AttributeFilterHandler.test.helpers.js";
+import { waitForAsync } from "./waitForAsync.test.utils.js";
 
 describe("AttributeFilterHandler", () => {
     it("scroll and search to reset offset", async () => {

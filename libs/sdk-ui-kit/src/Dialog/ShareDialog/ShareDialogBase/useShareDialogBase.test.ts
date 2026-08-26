@@ -14,7 +14,7 @@ import {
     granularGranteeUser,
     granularGranteeUser2,
     granularGranteesAccess,
-} from "./GranteeMock.js";
+} from "./Grantee.test.helpers.js";
 import { type IGranularGranteeUser, type IShareDialogBaseProps } from "./types.js";
 import { useShareDialogBase } from "./useShareDialogBase.js";
 

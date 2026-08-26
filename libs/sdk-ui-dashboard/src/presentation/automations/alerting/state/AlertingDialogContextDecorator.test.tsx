@@ -77,9 +77,13 @@ import {
     useAlertingDialogContext,
 } from "../../contexts/AlertingDialogContext.js";
 import { AlertingDialog } from "../AlertingDialog.js";
+import {
+    ALERTING_DIALOG_CONTEXT,
+    SENTINEL_CHANNEL,
+    SENTINEL_MEASURE,
+} from "../tests/alerting.test.helpers.js";
 
 import { useAlertDraft } from "./AlertDraftContext.js";
-import { ALERTING_DIALOG_CONTEXT, SENTINEL_CHANNEL, SENTINEL_MEASURE } from "./fixtures.js";
 
 // ---------------------------------------------------------------------------
 // Fixtures

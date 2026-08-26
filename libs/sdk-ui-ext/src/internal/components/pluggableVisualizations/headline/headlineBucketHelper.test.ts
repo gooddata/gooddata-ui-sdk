@@ -13,7 +13,7 @@ import {
     dateItem,
     derivedMeasureItems,
     masterMeasureItems,
-} from "../../../mocks/referencePointMocks.js";
+} from "../../../tests/referencePointMocks.test.helpers.js";
 
 import {
     findComplementaryOverTimeComparisonMeasure,

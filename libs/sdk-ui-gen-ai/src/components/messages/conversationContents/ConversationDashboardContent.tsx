@@ -20,7 +20,7 @@ export type ConversationDashboardContentProps = {
     part: IChatConversationMultipartLocalPart;
     dashboard?: IDashboard | null;
     insights?: IInsight[] | null;
-    saved?: boolean;
+    saved?: string | null;
     className?: string;
 };
 

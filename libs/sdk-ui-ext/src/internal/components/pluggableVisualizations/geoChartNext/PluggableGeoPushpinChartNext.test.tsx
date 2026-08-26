@@ -29,7 +29,7 @@ import {
     firstMeasureArithmeticNoAttributeReferencePoint,
     samePeriodPreviousYearRefPoint,
     twoMeasuresWithShowInPercentOnSecondaryAxisReferencePoint,
-} from "../../../mocks/referencePointMocks.js";
+} from "../../../tests/referencePointMocks.test.helpers.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
 import { GeoPushpinConfigurationPanel } from "../../configurationPanels/GeoPushpinConfigurationPanel.js";
 import {

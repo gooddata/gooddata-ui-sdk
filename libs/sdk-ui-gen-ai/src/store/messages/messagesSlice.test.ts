@@ -191,20 +191,20 @@ describe("messagesSlice", () => {
                     conversations: [conversation],
                     conversationsData: {},
                 },
-                setSelectedEffortAction({ effort: "LOW" }),
+                setSelectedEffortAction({ effort: "MEDIUM" }),
             );
 
-            expect(state.conversationsData[conversation.localId].reasoningEffort).toBe("LOW");
-            expect(state.selectedEffort).toBe("MEDIUM");
+            expect(state.conversationsData[conversation.localId].reasoningEffort).toBe("MEDIUM");
+            expect(state.selectedEffort).toBe("LOW");
         });
 
         it("keeps the selection global while no conversation is selected", () => {
             const state = messagesSliceReducer(
                 messagesSliceReducer(undefined, { type: "test/init" }),
-                setSelectedEffortAction({ effort: "LOW" }),
+                setSelectedEffortAction({ effort: "MEDIUM" }),
             );
 
-            expect(state.selectedEffort).toBe("LOW");
+            expect(state.selectedEffort).toBe("MEDIUM");
         });
 
         it("seeds the effort from the loaded history", () => {

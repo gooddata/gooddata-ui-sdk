@@ -8,17 +8,17 @@ import { type IDashboard, idRef } from "@gooddata/sdk-model";
 
 import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultFilterContext.js";
 import { defaultDateFilterConfig } from "../../../_staging/dateFilterConfig/defaultConfig.js";
-import { type IRemoveLayoutSection, removeLayoutSection, undoLayoutChanges } from "../../commands/layout.js";
-import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
-import { type IDashboardCommandFailed } from "../../events/general.js";
-import { type IDashboardLayoutChanged, type IDashboardLayoutSectionRemoved } from "../../events/layout.js";
 import {
     EmptyDashboardIdentifier,
     EmptyDashboardWithReferences,
     TestCorrelation,
     TestStash,
-} from "../../fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../fixtures/SimpleDashboard.fixtures.js";
+} from "../../../tests/Dashboard.test.helpers.js";
+import { SimpleDashboardIdentifier } from "../../../tests/SimpleDashboard.test.helpers.js";
+import { type IRemoveLayoutSection, removeLayoutSection, undoLayoutChanges } from "../../commands/layout.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
+import { type IDashboardCommandFailed } from "../../events/general.js";
+import { type IDashboardLayoutChanged, type IDashboardLayoutSectionRemoved } from "../../events/layout.js";
 import { selectLayout, selectStash } from "../../store/tabs/layout/layoutSelectors.js";
 import { type PrivateDashboardContext } from "../../types/commonTypes.js";
 import { EmptyDashboardLayout } from "../dashboard/common/dashboardInitialize.js";

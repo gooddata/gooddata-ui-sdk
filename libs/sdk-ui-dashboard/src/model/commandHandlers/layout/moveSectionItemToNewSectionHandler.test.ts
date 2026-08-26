@@ -4,6 +4,8 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
+import { TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
+import { SimpleDashboardIdentifier } from "../../../tests/SimpleDashboard.test.helpers.js";
 import {
     type IMoveLayoutSection,
     moveSectionItemToNewSection,
@@ -13,13 +15,11 @@ import {
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardCommandFailed } from "../../events/general.js";
 import { type IDashboardLayoutChanged, type IDashboardLayoutSectionItemMoved } from "../../events/layout.js";
+import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWithReferences,
-} from "../../fixtures/ComplexDashboard.fixtures.js";
-import { TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../fixtures/SimpleDashboard.fixtures.js";
-import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
+} from "../../tests/ComplexDashboard.test.helpers.js";
 
 describe("move layout section item to new section handler", () => {
     describe("for any dashboard", () => {

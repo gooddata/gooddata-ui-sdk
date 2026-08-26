@@ -3,7 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import { generateHeaderHelpMenuItems } from "./generateHeaderHelpMenuItems.js";
-import { getHelpMenuFeatureFlagsMock } from "./mock.js";
+import { getHelpMenuFeatureFlagsMock } from "./Header.test.helpers.js";
 
 describe("generateHeaderHelpMenuItems", () => {
     it("should return documentation, portal and ticket item if documentationUrl and supportForumUrl is specified", () => {

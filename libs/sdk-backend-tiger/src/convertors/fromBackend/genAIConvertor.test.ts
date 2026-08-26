@@ -83,7 +83,7 @@ describe("genAIConvertor", () => {
                 },
             };
 
-            const converted = convertChatConversationItemFromBackend(item, [], dateNormalizer)!;
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
             const whatIfPart = (converted.content as IChatConversationMultipartContent)
                 .parts[0] as IChatConversationWhatIfContent;
 
@@ -148,7 +148,7 @@ describe("genAIConvertor", () => {
         });
 
         const getFirstResult = (item: AiConversationItemResponse) => {
-            const converted = convertChatConversationItemFromBackend(item, [], dateNormalizer)!;
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
             const content = (converted.content as { parts: IChatConversationMultipartPart[] }).parts[0];
             if (!isChatConversationSearchContent(content)) {
                 throw new Error("Expected searchResults content");
@@ -271,7 +271,7 @@ describe("genAIConvertor", () => {
                 },
             };
 
-            const converted = convertChatConversationItemFromBackend(item, [], dateNormalizer)!;
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
 
             expect(converted.content).toEqual({
                 type: "toolResult",
@@ -299,7 +299,7 @@ describe("genAIConvertor", () => {
                 },
             };
 
-            const converted = convertChatConversationItemFromBackend(item, [], dateNormalizer)!;
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
 
             expect(converted.content).toEqual({
                 type: "toolResult",
@@ -321,7 +321,7 @@ describe("genAIConvertor", () => {
                 content: { type: "somethingNew" } as unknown as AiConversationItemResponse["content"],
             };
 
-            const converted = convertChatConversationItemFromBackend(item, [], dateNormalizer);
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer);
 
             expect(converted).toBeUndefined();
             expect(errorSpy).toHaveBeenCalled();
@@ -346,7 +346,7 @@ describe("genAIConvertor", () => {
                 },
             } as unknown as AiConversationItemResponse;
 
-            const converted = convertChatConversationItemFromBackend(item, [], dateNormalizer)!;
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
 
             expect((converted.content as IChatConversationMultipartContent).parts).toEqual([
                 { type: "text", text: "known part" },

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "analytics-as-code: Support computed attributes as code - new computed_attribute YAML type with its JSON schema, TS and Python types, YAML/declarative converters both ways, deploy and clone wiring, MAQL reference resolution, snippet and init rules",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -8,7 +8,7 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { createIntlMock } from "@gooddata/sdk-ui";
 
-import { recordedDataFacade } from "../../../testUtils/recordings.js";
+import { recordedDataFacade } from "../../testUtils/recordings.fixture.js";
 import { TableDescriptor } from "../structure/tableDescriptor.js";
 
 import { getRow, getRowTotals } from "./rowFactory.js";

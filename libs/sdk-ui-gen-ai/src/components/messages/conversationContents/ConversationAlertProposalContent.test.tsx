@@ -1,26 +1,36 @@
 // (C) 2024-2026 GoodData Corporation
 
+import { configureStore } from "@reduxjs/toolkit";
 import { render, screen } from "@testing-library/react";
 import type { ReactElement } from "react";
 import { IntlProvider } from "react-intl";
+import { Provider } from "react-redux";
 import { describe, expect, it } from "vitest";
 
 import type { IChatConversationLocalItem, IChatConversationMultipartLocalPart } from "../../../model.js";
+import { chatWindowSliceName, chatWindowSliceReducer } from "../../../store/chatWindow/chatWindowSlice.js";
 
 import { ConversationAlertProposalContent } from "./ConversationAlertProposalContent.js";
 
 describe("ConversationAlertProposalContent", () => {
-    const renderWithIntl = (ui: ReactElement) => {
+    const renderWithStoreAndIntl = (ui: ReactElement) => {
+        const store = configureStore({
+            reducer: {
+                [chatWindowSliceName]: chatWindowSliceReducer,
+            },
+        });
         return render(
-            <IntlProvider
-                locale="en"
-                messages={{
-                    "gd.gen-ai.alert-proposal.title": "Alert Proposal",
-                    "gd.gen-ai.alert-proposal.summary.title": "Summary Title",
-                }}
-            >
-                {ui}
-            </IntlProvider>,
+            <Provider store={store}>
+                <IntlProvider
+                    locale="en"
+                    messages={{
+                        "gd.gen-ai.alert-proposal.title": "Alert Proposal",
+                        "gd.gen-ai.alert-proposal.summary.title": "Summary Title",
+                    }}
+                >
+                    {ui}
+                </IntlProvider>
+            </Provider>,
         );
     };
 
@@ -45,7 +55,7 @@ describe("ConversationAlertProposalContent", () => {
             cta: "Click me",
         };
 
-        renderWithIntl(
+        renderWithStoreAndIntl(
             <ConversationAlertProposalContent
                 message={mockMessage}
                 part={mockPart}
@@ -62,7 +72,7 @@ describe("ConversationAlertProposalContent", () => {
             description: "Test Description",
         };
 
-        renderWithIntl(
+        renderWithStoreAndIntl(
             <ConversationAlertProposalContent
                 message={mockMessage}
                 part={mockPart}

@@ -65,12 +65,12 @@ describe("AttachmentSettings", () => {
         expect(orientationLabel).toHaveAttribute("for", orientationDropdown.id);
     });
 
-    it("should default CSV settings to comma", () => {
+    it("should default CSV settings to inherit", () => {
         renderComponent();
 
         openSettings();
 
-        expect(document.querySelector(".s-csv-delimiter-dropdown")).toHaveTextContent("Comma");
+        expect(document.querySelector(".s-csv-delimiter-dropdown")).toHaveTextContent("Inherit");
     });
 
     it("should prefill existing custom CSV delimiter", () => {

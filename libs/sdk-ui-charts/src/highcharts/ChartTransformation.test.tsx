@@ -8,10 +8,10 @@ import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { DataViewFacade, IntlWrapper, VisualizationTypes, withIntlForTest } from "@gooddata/sdk-ui";
 
-import { PieChartWithMetricsOnlyFundata } from "../../testUtils/fixturesData/PieChartWithMetricsOnlyFundata.js";
-import { localDataView } from "../../testUtils/localDataView.js";
-import { recordedDataFacade } from "../../testUtils/recordings.js";
 import { type IChartConfig } from "../interfaces/chartConfig.js";
+import { PieChartWithMetricsOnlyFundata } from "../testUtils/fixturesData/PieChartWithMetricsOnlyFundata.fixture.js";
+import { localDataView } from "../testUtils/localDataView.fixture.js";
+import { recordedDataFacade } from "../testUtils/recordings.fixture.js";
 
 import { HighChartsRenderer } from "./adapter/HighChartsRenderer.js";
 import { ChartTransformation } from "./ChartTransformation.js";

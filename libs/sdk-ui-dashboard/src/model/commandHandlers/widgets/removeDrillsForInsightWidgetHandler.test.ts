@@ -4,6 +4,15 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { localIdRef, uriRef } from "@gooddata/sdk-model";
 
+import { BeforeTestCorrelation, TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
+import {
+    DrillToDashboardFromProductAttributeDefinition,
+    DrillToDashboardWithThreeSectionsLocalIdentifier,
+    DrillToToInsightFromWonMeasureDefinition,
+    SimpleDashboardIdentifier,
+    SimpleDashboardSimpleSortedTableWidgetDrillTargets,
+    SimpleSortedTableWidgetRef,
+} from "../../../tests/SimpleDashboard.test.helpers.js";
 import { addDrillTargets } from "../../commands/drillTargets.js";
 import {
     type IRemoveDrillsForInsightWidget,
@@ -13,15 +22,6 @@ import {
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardCommandFailed } from "../../events/general.js";
 import { type IDashboardInsightWidgetDrillsRemoved } from "../../events/insight.js";
-import { BeforeTestCorrelation, TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
-import {
-    DrillToDashboardFromProductAttributeDefinition,
-    DrillToDashboardWithThreeSectionsLocalIdentifier,
-    DrillToToInsightFromWonMeasureDefinition,
-    SimpleDashboardIdentifier,
-    SimpleDashboardSimpleSortedTableWidgetDrillTargets,
-    SimpleSortedTableWidgetRef,
-} from "../../fixtures/SimpleDashboard.fixtures.js";
 import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 
 describe("removeDrillsForInsightWidgetHandler", () => {

@@ -5,15 +5,34 @@ import { describe, expect, it } from "vitest";
 import { extractReferences } from "./plugins/reference-placeholder.js";
 import { rehypeReferences } from "./plugins/rehype-references.js";
 
-function classNameOf(transformed: unknown): string {
+function propertiesOf(transformed: unknown): Record<string, any> {
     return (
         (transformed as { children: unknown[] }).children[0] as {
-            properties: { className: string };
+            properties: Record<string, any>;
         }
-    ).properties.className;
+    ).properties;
+}
+
+function classNameOf(transformed: unknown): string {
+    return propertiesOf(transformed)["className"];
 }
 
 describe("rehypeReferences", () => {
+    it("should render label references with label css class and data attributes", () => {
+        const { text, tokens } = extractReferences("{label/product.name}");
+        const tree = { type: "root", children: [{ type: "text", value: text }] };
+        const plugin = rehypeReferences(
+            [{ id: "product.name", type: "label", title: "Product Name" }],
+            tokens,
+        );
+
+        const properties = propertiesOf(plugin()(tree as unknown as never));
+        expect(properties["className"]).toContain("label");
+        expect(properties["data-id"]).toBe("product.name");
+        expect(properties["data-type"]).toBe("label");
+        expect(properties["tabIndex"]).toBe(0);
+    });
+
     it("should render label references with label css class", () => {
         const { text, tokens } = extractReferences("{label/product.name}");
         const tree = { type: "root", children: [{ type: "text", value: text }] };

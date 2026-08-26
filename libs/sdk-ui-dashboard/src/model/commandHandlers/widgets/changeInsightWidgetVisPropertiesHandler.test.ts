@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { type IInsightWidget, idRef, uriRef } from "@gooddata/sdk-model";
 
+import { TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
 import {
     type IChangeInsightWidgetVisProperties,
     changeInsightWidgetVisProperties,
@@ -11,12 +12,11 @@ import {
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardCommandFailed } from "../../events/general.js";
 import { type IDashboardInsightWidgetVisPropertiesChanged } from "../../events/insight.js";
+import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWidgets,
-} from "../../fixtures/ComplexDashboard.fixtures.js";
-import { TestCorrelation } from "../../fixtures/Dashboard.fixtures.js";
-import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
+} from "../../tests/ComplexDashboard.test.helpers.js";
 
 describe("change insight widget vis properties handler", () => {
     describe("for dashboard with KPIs and insights", () => {

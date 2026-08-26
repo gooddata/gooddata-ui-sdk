@@ -65,8 +65,6 @@ rush-logs
 
 Standalone development harness for **gdc-snap-test-module**.
 
-This is a template. Run \`rush init-pluggable-app\` to scaffold a new application from it.
-
 ## What this does
 
 The harness runs the pluggable application module outside of the full host shell. It provides:
@@ -527,8 +525,6 @@ rush-logs
   "module/README.md": "# gdc-snap-test-module
 
 Pluggable application module for **gdc-snap-test**.
-
-This is a template. Run \`rush init-pluggable-app\` to scaffold a new application from it.
 
 ## Structure
 

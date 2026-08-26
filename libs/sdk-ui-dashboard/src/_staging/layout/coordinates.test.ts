@@ -30,7 +30,7 @@ import {
     updateItemIndex,
     updateSectionIndex,
 } from "./coordinates.js";
-import { NESTED_LAYOUT } from "./coordinates.mock.js";
+import { NESTED_LAYOUT } from "./coordinates.test.helpers.js";
 
 describe("coordinates", () => {
     describe("areSameCoordinates", () => {

@@ -3,7 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import { generateHeaderAccountMenuItems } from "./generateHeaderAccountMenuItems.js";
-import { getWorkspacePermissionsMock } from "./mock.js";
+import { getWorkspacePermissionsMock } from "./Header.test.helpers.js";
 
 describe("generateHeaderAccountMenuItems", () => {
     it("should return workspace link and logout item if feature flag is on and permission is available", () => {

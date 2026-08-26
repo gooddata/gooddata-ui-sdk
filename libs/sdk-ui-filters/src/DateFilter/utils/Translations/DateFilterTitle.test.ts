@@ -13,8 +13,6 @@ import {
     TIME_FORMAT_WITH_SECONDS_WITH_SEPARATOR,
 } from "../../constants/Platform.js";
 import { type IUiRelativeDateFilterForm } from "../../interfaces/index.js";
-
-import { getDateFilterRepresentation, getDateFilterTitleUsingTranslator } from "./DateFilterTitle.js";
 import {
     absoluteFormFilter,
     absoluteFormFilterOneDay,
@@ -28,7 +26,9 @@ import {
     absolutePresetFilter,
     allTimeFilter,
     relativePresetFilter,
-} from "./fixtures.js";
+} from "../Translations.test.helpers.js";
+
+import { getDateFilterRepresentation, getDateFilterTitleUsingTranslator } from "./DateFilterTitle.js";
 import { type IDateAndMessageTranslator } from "./Translators.js";
 
 const DEFAULT_DATE_FORMAT_WITH_SECONDS = DEFAULT_DATE_FORMAT + TIME_FORMAT_WITH_SECONDS_WITH_SEPARATOR;

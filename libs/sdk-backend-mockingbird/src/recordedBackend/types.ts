@@ -17,6 +17,7 @@ import {
     type IAvailableAccessGrantee,
     type ICatalogAttribute,
     type ICatalogAttributeHierarchy,
+    type ICatalogComputedAttribute,
     type ICatalogDateDataset,
     type ICatalogFact,
     type ICatalogGroup,
@@ -123,6 +124,9 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
         availableAttributeHierarchies?: (
             attributeHierarchies: ICatalogAttributeHierarchy[],
         ) => ICatalogAttributeHierarchy[];
+        availableComputedAttributes?: (
+            computedAttributes: ICatalogComputedAttribute[],
+        ) => ICatalogComputedAttribute[];
     };
 
     /**

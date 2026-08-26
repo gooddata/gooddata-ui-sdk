@@ -10,11 +10,11 @@ import { type IColorPalette, type ITheme } from "@gooddata/sdk-model";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
-import { recordedDataFacade } from "../../../../testUtils/recordings.js";
+import { recordedDataFacade } from "../../../testUtils/recordings.fixture.js";
 import { ColorFactory } from "../_chartOptions/colorFactory.js";
 import { getMVS } from "../_util/helper.js";
+import { TwoColorPalette } from "../tests/color.test.helpers.js";
 
-import { TwoColorPalette } from "./color.fixture.js";
 import { getColorsFromStrategy } from "./helper.js";
 import { MeasureColorStrategy } from "./measure.js";
 

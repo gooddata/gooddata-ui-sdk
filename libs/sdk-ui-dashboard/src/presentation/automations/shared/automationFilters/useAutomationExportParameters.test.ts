@@ -12,12 +12,12 @@ import {
 } from "@gooddata/sdk-model";
 
 import type { ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
-
 import {
     dashboardParameter,
     workspaceNumberParameter,
     workspaceStringParameter,
-} from "./parameterFixtures.js";
+} from "../../tests/parameterFixtures.test.helpers.js";
+
 import {
     type IUseAutomationExportParametersProps,
     useAutomationExportParameters,

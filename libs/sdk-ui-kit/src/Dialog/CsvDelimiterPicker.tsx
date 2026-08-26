@@ -10,6 +10,7 @@ import {
     type CsvDelimiterPreset,
     type CsvDelimiterPresetId,
     type CsvDelimiterValidationError,
+    DEFAULT_CSV_DELIMITER_PRESET_ID,
 } from "@gooddata/sdk-model";
 import {
     ValidationContextStore,
@@ -28,6 +29,7 @@ import { useIdPrefixed } from "../utils/useId.js";
 const DEFAULT_MENU_MIN_WIDTH = 260;
 
 const messages = defineMessages({
+    optionInherit: { id: "csvDelimiterPicker.option.inherit" },
     optionComma: { id: "csvDelimiterPicker.option.comma" },
     optionSemicolon: { id: "csvDelimiterPicker.option.semicolon" },
     optionPipe: { id: "csvDelimiterPicker.option.pipe" },
@@ -43,6 +45,7 @@ const messages = defineMessages({
 type CsvDelimiterMenuData = { interactive: CsvDelimiterPreset };
 
 const getPresetLabels = (intl: IntlShape) => ({
+    inherit: intl.formatMessage(messages.optionInherit),
     comma: intl.formatMessage(messages.optionComma),
     semicolon: intl.formatMessage(messages.optionSemicolon),
     pipe: intl.formatMessage(messages.optionPipe),
@@ -50,10 +53,23 @@ const getPresetLabels = (intl: IntlShape) => ({
     custom: intl.formatMessage(messages.optionCustom),
 });
 
+// "custom" and "inherit" have no fixed delimiter character, so there's nothing to preview.
+const getPresetPreview = (preset: CsvDelimiterPreset) =>
+    preset === "custom" || preset === "inherit" ? undefined : CSV_DELIMITER_PRESETS[preset];
+
 const getMenuItems = (
     presetLabels: Record<CsvDelimiterPreset, string>,
+    hideInherit: boolean,
 ): IUiMenuInteractiveItem<CsvDelimiterMenuData>[] => {
     const items: IUiMenuInteractiveItem<CsvDelimiterMenuData>[] = [];
+    if (!hideInherit) {
+        items.push({
+            type: "interactive",
+            id: "inherit",
+            stringTitle: presetLabels.inherit,
+            data: "inherit",
+        });
+    }
     let id: CsvDelimiterPresetId;
     for (id in CSV_DELIMITER_PRESETS) {
         items.push({
@@ -77,12 +93,12 @@ const getButtonLabel = (
     selectedPreset: CsvDelimiterPreset,
 ): string => {
     const label = presetLabels[selectedPreset];
-    const preset = selectedPreset === "custom" ? undefined : CSV_DELIMITER_PRESETS[selectedPreset];
+    const preset = getPresetPreview(selectedPreset);
     return preset ? `${label} (${preset.previewSymbol})` : label;
 };
 
 function CsvDelimiterMenuItem({ item, isFocused }: IUiMenuInteractiveItemProps<CsvDelimiterMenuData>) {
-    const preset = item.data === "custom" ? undefined : CSV_DELIMITER_PRESETS[item.data];
+    const preset = getPresetPreview(item.data);
 
     return (
         <div
@@ -133,6 +149,8 @@ export interface ICsvDelimiterPickerProps {
      * - `"row"`: dropdown auto-sizes, custom input sits beside it.
      */
     layout?: "row" | "column";
+    /** When true, hides the "Inherit" preset — there's nothing above this level to inherit from. */
+    hideInherit?: boolean;
 }
 
 /**
@@ -150,9 +168,12 @@ export function CsvDelimiterPicker({
     label,
     onEnterKeyPress,
     layout = "column",
+    hideInherit = false,
 }: ICsvDelimiterPickerProps) {
     const intl = useIntl();
-    const { selectedPreset, customDelimiter } = value;
+    const { selectedPreset: rawSelectedPreset, customDelimiter } = value;
+    const selectedPreset =
+        hideInherit && rawSelectedPreset === "inherit" ? DEFAULT_CSV_DELIMITER_PRESET_ID : rawSelectedPreset;
 
     const buttonId = useIdPrefixed("csv-delimiter-button");
     const errorId = useIdPrefixed("csv-delimiter-error");
@@ -189,7 +210,7 @@ export function CsvDelimiterPicker({
     }, [validationErrorMessage, errorPrefix, errorId, setInvalidDatapoints]);
 
     const presetLabels = getPresetLabels(intl);
-    const menuItems = getMenuItems(presetLabels);
+    const menuItems = getMenuItems(presetLabels, hideInherit);
 
     const customInputLabel = intl.formatMessage(messages.customInput);
     const menuAriaLabel = intl.formatMessage(messages.menuLabel);

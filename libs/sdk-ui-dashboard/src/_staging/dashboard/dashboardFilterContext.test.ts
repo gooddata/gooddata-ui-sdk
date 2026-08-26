@@ -6,15 +6,18 @@ import { describe, expect, it } from "vitest";
 
 import { uriRef } from "@gooddata/sdk-model";
 
-import { EmptyDashboardWithReferences } from "../../model/fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardWithReferences } from "../../model/fixtures/SimpleDashboard.fixtures.js";
+import { EmptyDashboardWithReferences } from "../../tests/Dashboard.test.helpers.js";
+import { SimpleDashboardWithReferences } from "../../tests/SimpleDashboard.test.helpers.js";
 import { defaultDateFilterConfig } from "../dateFilterConfig/defaultConfig.js";
 
-import { TestFilterContext, TestFilterContextWithInvalidParents } from "./dashboardFilterContext.fixture.js";
 import {
     dashboardFilterContextDefinition,
     dashboardFilterContextSanitize,
 } from "./dashboardFilterContext.js";
+import {
+    TestFilterContext,
+    TestFilterContextWithInvalidParents,
+} from "./dashboardFilterContext.test.helpers.js";
 // TODO RAIL-3383 move the fixtures?
 
 describe("dashboardFilterContextDefinition", () => {

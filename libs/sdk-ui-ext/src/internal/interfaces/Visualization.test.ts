@@ -2,19 +2,20 @@
 
 import { describe, expect, it } from "vitest";
 
-import { InvalidInputTestCases } from "../../../testUtils/typeGuards.js";
 import {
     attributeFilter,
     dateFilter,
     measureValueFilter,
     rankingFilter,
-} from "../mocks/referencePointMocks.js";
+} from "../tests/referencePointMocks.test.helpers.js";
 import {
     isAttributeFilter,
     isDateFilter,
     isMeasureValueFilter,
     isRankingFilter,
 } from "../utils/bucketHelper.js";
+
+import { InvalidInputTestCases } from "./typeGuards.test.helpers.js";
 
 describe("Visualization typeguards", () => {
     describe("isDateFilter", () => {

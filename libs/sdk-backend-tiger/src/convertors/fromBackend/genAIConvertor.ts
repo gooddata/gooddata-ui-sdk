@@ -1,5 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
+import fastJsonPatch from "fast-json-patch";
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -10,6 +11,7 @@ import {
     type AiConversationResponse,
     type AiConversationResponseList,
     type AiConversationTurnResponse,
+    type AiDashboardPatchPart,
     type AiInteractionStepResponse,
     type AiKeyDriverAnalysis,
     type AiSearchObject,
@@ -27,6 +29,7 @@ import {
     type IAlertProposal,
     type IChatConversation,
     type IChatConversationContent,
+    type IChatConversationDashboardContent,
     type IChatConversationError,
     type IChatConversationFeedback,
     type IChatConversationInteractionStep,
@@ -55,7 +58,9 @@ import {
     type ISemanticSearchResultItem,
     type ITempFilterContext,
     type IdentifierRef,
+    type ObjRef,
     type ObjectType,
+    areObjRefsEqual,
     assertNever,
 } from "@gooddata/sdk-model";
 
@@ -87,11 +92,18 @@ export function convertChatConversationFromBackend(conversation: AiConversationR
 export function convertChatConversationItemFromBackend(
     item: AiConversationItemResponse,
     responses: AiConversationResponseList["responses"] | undefined,
+    history: IChatConversationItem[],
     dateNormalizer: DateNormalizer,
     locale?: FormattingLocale,
     timezone?: string,
 ): IChatConversationItem | undefined {
-    const content = convertChatConversationContentFromBackend(item.content, dateNormalizer, locale, timezone);
+    const content = convertChatConversationContentFromBackend(
+        item.content,
+        history,
+        dateNormalizer,
+        locale,
+        timezone,
+    );
     if (!content) {
         return undefined;
     }
@@ -122,10 +134,22 @@ export function convertChatConversationItemsFromBackend(
     locale?: FormattingLocale,
     timezone?: string,
 ): IChatConversationItem[] {
+    const history: IChatConversationItem[] = [];
     return items
-        .map((item) =>
-            convertChatConversationItemFromBackend(item, responses, dateNormalizer, locale, timezone),
-        )
+        .map((itm) => {
+            const item = convertChatConversationItemFromBackend(
+                itm,
+                responses,
+                history,
+                dateNormalizer,
+                locale,
+                timezone,
+            );
+            if (item) {
+                history.push(item);
+            }
+            return item;
+        })
         .filter((item): item is IChatConversationItem => item !== undefined);
 }
 
@@ -146,6 +170,7 @@ function convertChatConversationFeedbackFromBackend(
 
 function convertChatConversationContentFromBackend(
     content: AiContent,
+    history: IChatConversationItem[],
     dateNormalizer: DateNormalizer,
     locale?: FormattingLocale,
     timezone?: string,
@@ -220,17 +245,23 @@ function convertChatConversationContentFromBackend(
                                       )
                                     : null;
 
-                                const saved = !!part.saved_dashboard_id;
-
                                 return {
                                     type: "dashboard",
-                                    saved,
                                     insights,
+                                    base: part.dashboard,
+                                    saved: part.saved_dashboard_id,
                                     dashboard: convertToTemporaryFilterContexts(dashboard),
                                 };
                             }
                             case "dashboardPatch": {
-                                return undefined;
+                                if (!part.patch) {
+                                    return undefined;
+                                }
+
+                                return {
+                                    type: "dashboard",
+                                    ...applyDashboardPatch(history, part.patch),
+                                };
                             }
                             case "kda":
                                 return {
@@ -640,4 +671,85 @@ function asNonPersistedFilterContext<T>(
             uri: undefined,
         },
     };
+}
+
+// Apply dashboard patch to the items
+
+function applyDashboardPatch(items: IChatConversationItem[], patch: AiDashboardPatchPart["patch"]) {
+    if (!patch?.dashboard_id) {
+        return {
+            dashboard: null,
+            insights: null,
+        };
+    }
+
+    const related = collectRelatedItems(items, {
+        identifier: patch.dashboard_id,
+        type: "analyticalDashboard",
+    });
+    const last = related[related.length - 1];
+    const base = last?.base;
+    const saved = last?.saved;
+    const previousInsights = last?.insights ?? [];
+
+    if (!base) {
+        return {
+            dashboard: null,
+            insights: null,
+        };
+    }
+
+    let newDocument: AacDashboard | null = null;
+    try {
+        const patchResult = fastJsonPatch.applyPatch<AacDashboard>(
+            base as AacDashboard,
+            patch.operations as readonly fastJsonPatch.Operation[],
+            undefined,
+            false,
+        );
+        newDocument = patchResult.newDocument;
+    } catch (e) {
+        console.error(e);
+        return {
+            dashboard: null,
+            insights: null,
+            patchError: e as Error,
+        };
+    }
+
+    const data = newDocument ? yamlDashboardToDeclarative([], newDocument) : null;
+
+    const filters = data?.filterContext
+        ? convertFilterContextFromBackend(buildFilterContextWrapper(data.filterContext))
+        : undefined;
+
+    const insights =
+        patch.references?.visualizations.map((vis) => {
+            return visualizationObjectsItemToInsight(
+                yamlVisualisationToMetadataObject([], vis as AacVisualisation),
+            );
+        }) ?? [];
+
+    const dashboard = data
+        ? convertDashboard(buildDashboardWrapper(data.dashboard, data.tabFilterContexts, saved), filters)
+        : null;
+
+    return {
+        dashboard: convertToTemporaryFilterContexts(dashboard),
+        insights: [...previousInsights, ...insights],
+    };
+}
+
+function collectRelatedItems(items: IChatConversationItem[], ref: ObjRef) {
+    const related: IChatConversationDashboardContent[] = [];
+    items.forEach((item) => {
+        if (item.content.type === "multipart") {
+            item.content.parts.forEach((part) => {
+                if (part.type === "dashboard" && part.dashboard && areObjRefsEqual(part.dashboard.ref, ref)) {
+                    related.push(part);
+                }
+            });
+        }
+    });
+    return related;
 }

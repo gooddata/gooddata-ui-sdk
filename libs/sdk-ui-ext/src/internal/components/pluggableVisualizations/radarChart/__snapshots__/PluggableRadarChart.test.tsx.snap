@@ -227,6 +227,7 @@ exports[`PluggableRadarChart > should return reference point with Date in trend 
       "segment": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -245,6 +246,7 @@ exports[`PluggableRadarChart > should return reference point with Date in trend 
       "trend": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -365,6 +367,7 @@ exports[`PluggableRadarChart > should return reference point with one trend and 
       "segment": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -383,6 +386,7 @@ exports[`PluggableRadarChart > should return reference point with one trend and 
       "trend": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -548,6 +552,7 @@ exports[`PluggableRadarChart > should reuse all measures, only one category and 
       "segment": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -567,6 +572,7 @@ exports[`PluggableRadarChart > should reuse all measures, only one category and 
       "trend": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,

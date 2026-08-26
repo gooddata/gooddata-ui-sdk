@@ -163,6 +163,10 @@ export {
 export { type IWidgetBaseBuilder, WidgetBaseBuilder } from "./ldmFactories/dashboard/widgetFactory.js";
 export { CatalogAttributeBuilder, newCatalogAttribute } from "./ldmFactories/catalog/attributeFactory.js";
 export {
+    CatalogComputedAttributeBuilder,
+    newCatalogComputedAttribute,
+} from "./ldmFactories/catalog/computedAttributeFactory.js";
+export {
     CatalogDateAttributeBuilder,
     CatalogDateDatasetBuilder,
     newCatalogDateAttribute,

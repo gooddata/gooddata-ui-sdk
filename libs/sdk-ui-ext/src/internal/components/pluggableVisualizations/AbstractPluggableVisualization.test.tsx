@@ -15,10 +15,10 @@ import {
     derivedMeasureItems,
     masterMeasureItems,
     multipleMetricsNoCategoriesReferencePoint,
-} from "../../mocks/referencePointMocks.js";
+} from "../../tests/referencePointMocks.test.helpers.js";
+import { DummyVisConstruct } from "../visConstruct.test.helpers.js";
 
 import { AbstractPluggableVisualization } from "./AbstractPluggableVisualization.js";
-import { DummyVisConstruct } from "./visConstruct.fixture.js";
 
 describe("AbstractPluggableVisualization", () => {
     class DummyPluggableVisualization extends AbstractPluggableVisualization {

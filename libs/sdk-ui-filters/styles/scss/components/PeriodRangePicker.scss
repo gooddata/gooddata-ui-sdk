@@ -1,0 +1,431 @@
+// (C) 2026 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+// Complete stylesheet for rc-picker (@rc-component/picker) as rendered by PeriodRangePicker.tsx.
+// rc-picker ships no production stylesheet (its assets/index.css is a garish demo sheet), so this file
+// carries BOTH the structural rules the widget needs to function (dropdown positioning, panel layout,
+// hidden state) and the GoodData skin. Everything is scoped under .gd-period-range-picker — the popup is
+// rendered inside the wrapper via getPopupContainer, so the dropdown is covered by this scope too.
+
+$period-picker-cell-height: 28px;
+$period-picker-radius: 3px;
+$period-picker-shadow: 0 2px 5px 0 var(--gd-shadow-color-from-theme, rgba(31, 53, 74, 0.15));
+
+.gd-period-range-picker {
+    position: relative;
+    display: block;
+    font-family: kit-variables.$gd-font-primary;
+    font-size: 13px;
+    color: kit-variables.$gd-color-text;
+
+    // ---------------------------------------------------------------------------------------------
+    // Range input
+    // ---------------------------------------------------------------------------------------------
+
+    .rc-picker {
+        position: relative;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0 10px;
+        border: 1px solid kit-variables.$gd-border-color;
+        border-radius: $period-picker-radius;
+        background: kit-variables.$gd-color-white;
+        transition: border-color 0.2s;
+
+        &:hover {
+            border-color: kit-variables.$gd-color-state-blank;
+        }
+
+        &.rc-picker-focused {
+            border-color: kit-variables.$gd-palette-primary-base;
+        }
+    }
+
+    .rc-picker-input {
+        position: relative;
+        display: inline-flex;
+        flex: auto;
+
+        > input {
+            width: 100%;
+            height: 28px;
+            padding: 0;
+            border: 0;
+            outline: none;
+            background: transparent;
+            color: kit-variables.$gd-color-text;
+            font-family: inherit;
+            font-size: inherit;
+            text-overflow: ellipsis;
+            cursor: pointer;
+
+            &::placeholder {
+                color: kit-variables.$gd-color-state-blank;
+            }
+        }
+    }
+
+    .rc-picker-range-separator {
+        flex: none;
+        padding: 0 8px;
+        color: kit-variables.$gd-color-state-blank;
+        line-height: 1;
+    }
+
+    .rc-picker-prefix,
+    .rc-picker-suffix {
+        display: flex;
+        flex: none;
+        align-items: center;
+        margin-left: 6px;
+        color: kit-variables.$gd-palette-primary-base;
+        font-size: 14px;
+        pointer-events: none;
+    }
+
+    // Clear button overlays the suffix icon and is revealed on hover, so the input corner serves both
+    // as the calendar affordance and, once hovered with a value present, the clear affordance.
+    .rc-picker-clear {
+        position: absolute;
+        top: 50%;
+        inset-inline-end: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        transform: translateY(-50%);
+        background: kit-variables.$gd-color-white;
+        color: kit-variables.$gd-color-state-blank;
+        font-size: 14px;
+        line-height: 1;
+        cursor: pointer;
+        opacity: 0;
+        transition:
+            opacity 0.2s,
+            color 0.2s;
+
+        &:hover {
+            color: kit-variables.$gd-color-text;
+        }
+    }
+
+    .rc-picker:hover .rc-picker-clear,
+    .rc-picker-focused .rc-picker-clear {
+        opacity: 1;
+    }
+
+    .rc-picker-clear-btn::after {
+        content: "\00d7";
+    }
+
+    // rc-picker positions the bar under the active input via inline left/width styles.
+    .rc-picker-active-bar {
+        position: absolute;
+        bottom: -1px;
+        height: 2px;
+        background: kit-variables.$gd-palette-primary-base;
+        opacity: 0;
+        transition: all 0.3s;
+        pointer-events: none;
+    }
+
+    .rc-picker-focused .rc-picker-active-bar {
+        opacity: 1;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Dropdown & panels
+    // ---------------------------------------------------------------------------------------------
+
+    .rc-picker-dropdown {
+        position: absolute;
+        z-index: 10;
+
+        &-hidden {
+            display: none;
+        }
+    }
+
+    .rc-picker-dropdown-range {
+        padding: 4px 0;
+    }
+
+    // GoodData dropdowns do not use pointer arrows.
+    .rc-picker-range-arrow {
+        display: none;
+    }
+
+    .rc-picker-panel-container {
+        overflow: hidden;
+        background: kit-variables.$gd-color-white;
+        border: 1px solid kit-variables.$gd-border-color;
+        border-radius: $period-picker-radius;
+        box-shadow: $period-picker-shadow;
+    }
+
+    .rc-picker-panel-layout {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: stretch;
+    }
+
+    .rc-picker-panels {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+    .rc-picker-panel {
+        display: inline-block;
+        vertical-align: top;
+        padding: 8px;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Panel header
+    // ---------------------------------------------------------------------------------------------
+
+    .rc-picker-header {
+        display: flex;
+        align-items: center;
+        padding: 0 0 6px;
+
+        > button {
+            flex: none;
+            min-width: 24px;
+            height: 24px;
+            padding: 0;
+            border: 0;
+            border-radius: $period-picker-radius;
+            background: transparent;
+            color: kit-variables.$gd-color-state-blank;
+            font-size: 14px;
+            line-height: 24px;
+            cursor: pointer;
+            transition:
+                color 0.2s,
+                background 0.2s;
+
+            &:hover {
+                color: kit-variables.$gd-color-text;
+                background: kit-variables.$is-focused-background;
+            }
+        }
+
+        &-view {
+            flex: auto;
+            min-height: 24px;
+            text-align: center;
+            font-weight: 700;
+            line-height: 24px;
+
+            > button {
+                padding: 0 4px;
+                border: 0;
+                background: transparent;
+                color: inherit;
+                font: inherit;
+                font-weight: 700;
+                cursor: pointer;
+
+                &:hover {
+                    color: kit-variables.$gd-palette-primary-base;
+                }
+            }
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Grid
+    // ---------------------------------------------------------------------------------------------
+
+    .rc-picker-content {
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+
+        th {
+            height: 24px;
+            color: kit-variables.$gd-color-state-blank;
+            font-size: 12px;
+            font-weight: 400;
+            text-align: center;
+        }
+    }
+
+    .rc-picker-cell {
+        padding: 2px 0;
+        color: kit-variables.$gd-color-disabled;
+        text-align: center;
+        cursor: pointer;
+
+        &-in-view {
+            color: kit-variables.$gd-color-text;
+        }
+
+        &-inner {
+            display: block;
+            box-sizing: border-box;
+            width: 100%;
+            height: $period-picker-cell-height;
+            margin: 0;
+            padding: 0 4px;
+            border: 0;
+            border-radius: $period-picker-radius;
+            background: transparent;
+            line-height: $period-picker-cell-height;
+            outline: none;
+            transition: background 0.2s;
+        }
+
+        &:hover > .rc-picker-cell-inner {
+            background: kit-variables.$is-focused-background;
+        }
+
+        &-today > .rc-picker-cell-inner {
+            box-shadow: inset 0 0 0 1px kit-variables.$gd-palette-primary-base;
+        }
+
+        // The dimmed fill runs edge-to-edge between the two selected ends.
+        &-in-range > .rc-picker-cell-inner,
+        &-range-hover > .rc-picker-cell-inner,
+        &-range-hover-start > .rc-picker-cell-inner,
+        &-range-hover-end > .rc-picker-cell-inner {
+            border-radius: 0;
+            background: kit-variables.$gd-palette-primary-dimmed;
+        }
+
+        &-selected > .rc-picker-cell-inner,
+        &-range-start > .rc-picker-cell-inner,
+        &-range-end > .rc-picker-cell-inner {
+            border-radius: $period-picker-radius;
+            background: kit-variables.$gd-palette-primary-base;
+            color: kit-variables.$gd-color-text-light;
+        }
+
+        &-range-start:not(.rc-picker-cell-range-end) > .rc-picker-cell-inner {
+            border-start-end-radius: 0;
+            border-end-end-radius: 0;
+        }
+
+        &-range-end:not(.rc-picker-cell-range-start) > .rc-picker-cell-inner {
+            border-start-start-radius: 0;
+            border-end-start-radius: 0;
+        }
+
+        &-disabled {
+            color: kit-variables.$gd-color-disabled;
+            cursor: default;
+            pointer-events: none;
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Per-panel sizing
+    // ---------------------------------------------------------------------------------------------
+
+    .rc-picker-date-panel,
+    .rc-picker-week-panel {
+        .rc-picker-content {
+            width: 7 * 32px;
+        }
+    }
+
+    .rc-picker-week-panel .rc-picker-content {
+        width: 8 * 32px; // extra week-number column
+    }
+
+    .rc-picker-month-panel,
+    .rc-picker-quarter-panel,
+    .rc-picker-year-panel,
+    .rc-picker-decade-panel {
+        .rc-picker-content {
+            width: 3 * 74px;
+        }
+
+        .rc-picker-cell-inner {
+            height: 32px;
+            line-height: 32px;
+        }
+    }
+
+    .rc-picker-quarter-panel .rc-picker-content {
+        width: 4 * 62px;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Week panel: selection works on whole rows
+    // ---------------------------------------------------------------------------------------------
+
+    .rc-picker-week-panel {
+        .rc-picker-cell-week {
+            color: kit-variables.$gd-color-state-blank;
+            font-size: 11px;
+        }
+
+        // Row-level treatment replaces the cell-level one.
+        .rc-picker-cell:hover > .rc-picker-cell-inner,
+        .rc-picker-cell-selected > .rc-picker-cell-inner,
+        .rc-picker-cell-range-start > .rc-picker-cell-inner,
+        .rc-picker-cell-range-end > .rc-picker-cell-inner,
+        .rc-picker-cell-in-range > .rc-picker-cell-inner {
+            border-radius: $period-picker-radius;
+            background: transparent;
+            color: inherit;
+            box-shadow: none;
+        }
+
+        .rc-picker-week-panel-row {
+            td {
+                transition: background 0.2s;
+            }
+
+            &:hover td {
+                background: kit-variables.$is-focused-background;
+            }
+
+            &-range-hover td {
+                background: kit-variables.$gd-palette-primary-dimmed;
+            }
+
+            &-selected,
+            &-range-start,
+            &-range-end {
+                td {
+                    background: kit-variables.$gd-palette-primary-base;
+                }
+
+                .rc-picker-cell,
+                .rc-picker-cell-week,
+                .rc-picker-cell-inner {
+                    color: kit-variables.$gd-color-text-light;
+                }
+            }
+
+            td:first-child {
+                border-start-start-radius: $period-picker-radius;
+                border-end-start-radius: $period-picker-radius;
+            }
+
+            td:last-child {
+                border-start-end-radius: $period-picker-radius;
+                border-end-end-radius: $period-picker-radius;
+            }
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Mobile
+    // ---------------------------------------------------------------------------------------------
+
+    &.gd-period-range-picker-mobile {
+        .rc-picker-input > input {
+            font-size: 16px; // Prevent iPhone zoom on focus
+        }
+    }
+}

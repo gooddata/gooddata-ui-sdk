@@ -15,11 +15,11 @@ import { CalculateAs, DEFAULT_COMPARISON_PALETTE, type IChartConfig } from "@goo
 
 import { type HeadlineControlProperties } from "../../interfaces/ControlProperties.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { createTestProperties, newInsight } from "../../testDataProvider.js";
 import {
     headlineWithMeasureInPrimaryBucket,
     headlineWithMeasureInSecondaryBucket,
-} from "../../mocks/referencePointMocks.js";
-import { createTestProperties, newInsight } from "../../testDataProvider.js";
+} from "../../tests/referencePointMocks.test.helpers.js";
 import { createInternalIntl } from "../internalIntlProvider.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../translations.js";
 

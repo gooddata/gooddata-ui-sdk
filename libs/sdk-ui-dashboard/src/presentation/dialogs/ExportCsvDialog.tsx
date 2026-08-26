@@ -24,18 +24,13 @@ const messages = defineMessages({
 });
 
 export interface IExportCsvDialogProps {
-    initialDelimiter?: string;
     onCancel: () => void;
     onSubmit: (data: IExportCsvDialogData) => void;
 }
 
-export const ExportCsvDialog = memo(function ExportCsvDialog({
-    initialDelimiter,
-    onCancel,
-    onSubmit,
-}: IExportCsvDialogProps) {
+export const ExportCsvDialog = memo(function ExportCsvDialog({ onCancel, onSubmit }: IExportCsvDialogProps) {
     const intl = useIntl();
-    const [value, setValue] = useState(() => getCsvDelimiterState(initialDelimiter));
+    const [value, setValue] = useState(() => getCsvDelimiterState());
     const validationContextValue = useValidationContextValue(createInvalidNode());
 
     const validationError =

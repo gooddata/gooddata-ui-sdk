@@ -158,6 +158,7 @@ exports[`PluggableBubbleChart > should return reference point with secondary met
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -312,6 +313,7 @@ exports[`PluggableBubbleChart > should return reference point with three measure
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -499,6 +501,7 @@ exports[`PluggableBubbleChart > should return reference point with three measure
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,

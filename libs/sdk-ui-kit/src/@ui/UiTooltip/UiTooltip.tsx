@@ -60,6 +60,7 @@ export function UiTooltip({
     onOpen,
     onClose,
     onOpenChange,
+    component = "div",
     inlineAnchor = false,
     anchorWrapperStyles,
 }: IUiTooltipProps) {
@@ -189,16 +190,18 @@ export function UiTooltip({
 
     const { getReferenceProps, getFloatingProps } = useInteractions([hover, focus, click]);
 
+    const Component = component === "div" ? "div" : "span";
+
     return (
         <>
-            <div
+            <Component
                 className={e("anchor", { inline: inlineAnchor })}
                 ref={refs.setReference}
                 style={anchorWrapperStyles}
                 {...getReferenceProps()}
             >
                 {anchor}
-            </div>
+            </Component>
 
             {/* Screen-reader copy of the content; skipped when accessibilityHidden (anchor conveys it). */}
             {accessibilityHidden ? null : (

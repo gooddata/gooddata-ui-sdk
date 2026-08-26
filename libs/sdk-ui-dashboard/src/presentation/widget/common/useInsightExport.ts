@@ -167,7 +167,6 @@ export const useInsightExport = (config: {
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportFunction);
         openCsvDialog({
-            initialDelimiter: settings?.exportCsvCustomDelimiter,
             onSubmit: ({ delimiter }) => {
                 setIsExporting(true);
                 const exportConfig: IExtendedExportConfig = {
@@ -180,13 +179,12 @@ export const useInsightExport = (config: {
                 void exportHandler(exportFunction, exportConfig).finally(() => setIsExporting(false));
             },
         });
-    }, [exportFunction, exportHandler, grandTotalsPosition, openCsvDialog, settings, setIsExporting, title]);
+    }, [exportFunction, exportHandler, grandTotalsPosition, openCsvDialog, setIsExporting, title]);
 
     const onExportRawCSV = useCallback(() => {
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportRawFunction);
         openCsvDialog({
-            initialDelimiter: settings?.exportCsvCustomDelimiter,
             onSubmit: ({ delimiter }) => {
                 setIsExporting(true);
                 const exportOptions: IDashboardExportRawOptions = { delimiter };
@@ -196,7 +194,7 @@ export const useInsightExport = (config: {
                 );
             },
         });
-    }, [exportRawFunction, exportRawHandler, openCsvDialog, settings, title]);
+    }, [exportRawFunction, exportRawHandler, openCsvDialog, title]);
 
     const onExportPowerPointPresentation = useCallback(() => {
         // if this bombs there is an issue with the logic enabling the buttons

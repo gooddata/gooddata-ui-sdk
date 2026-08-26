@@ -15,15 +15,16 @@ import {
     type ParameterValue,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type ISlotProps } from "@gooddata/sdk-ui-kit";
 
 import { type IAutomationFiltersTab } from "../../../model/store/filtering/types.js";
 import { type IAutomationParameter } from "../shared/automationFilters/automationParameters.js";
 import {
+    type IAutomationDialogActionBarProps,
     type IAutomationDialogDestinationProps,
     type IAutomationDialogFiltersProps,
     type IAutomationDialogHeaderProps,
     type IAutomationDialogRecipientsProps,
-    type ISlotProps,
 } from "../shared/slots/types.js";
 
 ///
@@ -364,13 +365,13 @@ export interface IScheduledEmailDialogRecipientsProps extends IAutomationDialogR
 export interface IScheduledEmailDialogSlots {
     /**
      * Wraps or replaces the dialog header (the title input row). Must have a stable reference
-     * identity — see {@link ISlotProps}.
+     * identity — see {@link @gooddata/sdk-ui-kit#ISlotProps}.
      */
     Header?: ComponentType<ISlotProps<ScheduledEmailDialogHeaderDefaultProps>>;
 
     /**
      * Wraps or replaces the Filters tab content (the filter and parameter chips). Must have a
-     * stable reference identity — see {@link ISlotProps}.
+     * stable reference identity — see {@link @gooddata/sdk-ui-kit#ISlotProps}.
      *
      * Renders only in the fully rendered dialog **and only while the Filters tab is selected**:
      * not while the dialog context reports loading, not while the stale-filters confirmation
@@ -386,7 +387,7 @@ export interface IScheduledEmailDialogSlots {
 
     /**
      * Wraps or replaces the "Time zone" section on the General tab. Must have a stable reference
-     * identity — see {@link ISlotProps}.
+     * identity — see {@link @gooddata/sdk-ui-kit#ISlotProps}.
      *
      * Renders only when the dialog shows the section at all: the dashboard-timezone feature is
      * enabled and the dashboard allows the view-mode timezone override. When the section is
@@ -396,7 +397,7 @@ export interface IScheduledEmailDialogSlots {
 
     /**
      * Wraps or replaces the dialog's destination region (the notification-channel select on the
-     * General tab). Must have a stable reference identity — see {@link ISlotProps}.
+     * General tab). Must have a stable reference identity — see {@link @gooddata/sdk-ui-kit#ISlotProps}.
      *
      * Renders only in the fully rendered dialog **and only while the General tab is selected**:
      * not while the dialog context reports loading, and not while the stale-filters confirmation
@@ -406,13 +407,31 @@ export interface IScheduledEmailDialogSlots {
 
     /**
      * Wraps or replaces the dialog's recipients region on the General tab. Must have a stable
-     * reference identity — see {@link ISlotProps}.
+     * reference identity — see {@link @gooddata/sdk-ui-kit#ISlotProps}.
      *
      * Renders only in the fully rendered dialog **and only while the General tab is selected**:
      * not while the dialog context reports loading, and not while the stale-filters confirmation
      * step is shown. It unmounts — losing any local state — on every switch to the Filters tab.
      */
     Recipients?: ComponentType<ISlotProps<IScheduledEmailDialogRecipientsProps>>;
+
+    /**
+     * Wraps or replaces the dialog's action bar (the footer row: documentation link, Delete in
+     * edit mode, Cancel and the submit button). Must have a stable reference identity — see
+     * {@link @gooddata/sdk-ui-kit#ISlotProps}.
+     *
+     * Renders only in the fully rendered dialog: not while the dialog context reports loading
+     * (the loading dialog keeps its own footer), and not while the stale-filters confirmation
+     * step is shown. Unlike the Filters and Destination slots it renders on **both** tabs — the
+     * footer is tab-independent.
+     *
+     * A replacement that does not render `Default` loses the submit button's Enter-key detection
+     * id (Enter no longer submits), the validation aria wiring, and the default row's ordering.
+     * Wraps that render `<Default {...defaultProps} />` keep everything; note the Enter-key path
+     * invokes the dialog's own submit handler and disabled state, so `defaultProps` overrides
+     * affect the buttons only.
+     */
+    ActionBar?: ComponentType<ISlotProps<IAutomationDialogActionBarProps>>;
 }
 
 /**
@@ -434,7 +453,7 @@ export interface IDefaultScheduledEmailDialogProps extends IScheduledEmailDialog
      *
      * @example
      * The dialog is reached through the `Dashboard` component override; define slot components at
-     * module scope (see {@link ISlotProps}):
+     * module scope (see {@link @gooddata/sdk-ui-kit#ISlotProps}):
      * ```tsx
      * function RecipientsWithNote({ Default, defaultProps }: ISlotProps<IScheduledEmailDialogRecipientsProps>) {
      *     return (
@@ -453,6 +472,21 @@ export interface IDefaultScheduledEmailDialogProps extends IScheduledEmailDialog
      * ```
      */
     slots?: IScheduledEmailDialogSlots;
+
+    /**
+     * Content rendered as the first child of the dialog's scrollable content area, above the
+     * form. Rendered only in the fully rendered dialog: not while the dialog context reports
+     * loading, and not while the stale-filters confirmation step is shown. Rendered on both
+     * tabs — it is a content-area child, not a tab child.
+     */
+    topContent?: ReactNode;
+
+    /**
+     * Content rendered as the last child of the dialog's scrollable content area, below the
+     * form. Same rendering conditions as {@link IDefaultScheduledEmailDialogProps.topContent}.
+     * Rendered on both tabs — it is a content-area child, not a tab child.
+     */
+    bottomContent?: ReactNode;
 }
 
 /**

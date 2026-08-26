@@ -20,6 +20,10 @@ import {
 import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultFilterContext.js";
 import { defaultDateFilterConfig } from "../../../_staging/dateFilterConfig/defaultConfig.js";
 import {
+    EmptyDashboardIdentifier,
+    EmptyDashboardWithReferences,
+} from "../../../tests/Dashboard.test.helpers.js";
+import {
     addAttributeFilter,
     addTextAttributeFilter,
     changeFilterContextSelection,
@@ -27,7 +31,6 @@ import {
     removeAttributeFilter,
 } from "../../commands/filters.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
-import { EmptyDashboardIdentifier, EmptyDashboardWithReferences } from "../../fixtures/Dashboard.fixtures.js";
 import {
     selectFilterContextAttributeFilterItemByDisplayForm,
     selectFilterContextAttributeFilterItemByLocalId,

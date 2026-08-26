@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { type IBucketItem } from "../../../interfaces/Visualization.js";
-import { derivedMeasureItems, masterMeasureItems } from "../../../mocks/referencePointMocks.js";
+import { derivedMeasureItems, masterMeasureItems } from "../../../tests/referencePointMocks.test.helpers.js";
 
 import { transformBuckets } from "./bucketHelper.js";
 

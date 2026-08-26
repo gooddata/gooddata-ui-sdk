@@ -4771,6 +4771,10 @@
         "text": "Remove {fileName}",
         "crowdinContext": "Accessible label for the remove button including the file name, e.g. Remove data.csv"
     },
+    "csvDelimiterPicker.option.inherit": {
+        "text": "Inherit",
+        "crowdinContext": "Label for the option in the CSV delimiter picker that sends no delimiter, so the workspace or organization default applies"
+    },
     "csvDelimiterPicker.option.comma": {
         "text": "Comma",
         "crowdinContext": "Label for the comma delimiter option in the CSV delimiter picker"

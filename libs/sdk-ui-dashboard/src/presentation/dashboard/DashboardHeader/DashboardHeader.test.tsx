@@ -4,7 +4,7 @@ import { screen } from "@testing-library/react";
 import { PointerEventsCheckLevel, userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
-import { render } from "../../../../test/render.js";
+import { render } from "../tests/render.test.utils.js";
 
 import { DashboardTabsWrapper } from "./DashboardHeader.js";
 

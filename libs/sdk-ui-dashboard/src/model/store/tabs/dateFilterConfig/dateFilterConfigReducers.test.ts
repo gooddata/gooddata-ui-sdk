@@ -1,5 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
+// @vitest-environment node
+
 import { produce } from "immer";
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";

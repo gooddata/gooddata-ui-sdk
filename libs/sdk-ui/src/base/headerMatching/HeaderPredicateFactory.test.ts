@@ -8,12 +8,6 @@ import { attributeDisplayFormRef, measureItem, newAttribute, newMeasure, uriRef 
 
 import { type IHeaderPredicate } from "./HeaderPredicate.js";
 import {
-    attributeDescriptor,
-    attributeHeaderItem,
-    context,
-    measureDescriptors,
-} from "./HeaderPredicateFactory.fixtures.js";
-import {
     attributeItemNameMatch,
     composedFromIdentifier,
     composedFromUri,
@@ -23,6 +17,12 @@ import {
     objRefMatch,
     uriMatch,
 } from "./HeaderPredicateFactory.js";
+import {
+    attributeDescriptor,
+    attributeHeaderItem,
+    context,
+    measureDescriptors,
+} from "./HeaderPredicateFactory.test.helpers.js";
 
 describe("uriMatch", () => {
     describe("measure headers", () => {

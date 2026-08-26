@@ -969,7 +969,7 @@
     "userManagement.workspace.permission.createAutomation": "Alertas e exportações programadas",
     "userManagement.workspace.permission.createAutomation.tooltip": "Adiciona CREATE_AUTOMATIONS permissão para criar alertas automatizados e exportações agendadas.",
     "userManagement.workspace.permission.createMetric": "Métricas",
-    "userManagement.workspace.permission.createMetric.tooltip": "Adiciona a permissão CREATE_METRIC para criar, editar ou eliminar métricas.",
+    "userManagement.workspace.permission.createMetric.tooltip": "Adiciona a permissão CREATE_METRIC para criar e gerir novas métricas. Para gerir qualquer outra métrica, o utilizador precisa de ter acesso a ela.",
     "userManagement.workspace.permission.useAiAssistant": "Assistente de IA",
     "userManagement.workspace.permission.useAiAssistant.tooltip": "Adiciona USE_AI_ASSISTANT permissão para acessar e interagir com o chatbot de IA para perguntas de análise.",
     "userManagement.workspace.granularPermission.noWorkspace": "Nenhum espaço de trabalho selecionado",

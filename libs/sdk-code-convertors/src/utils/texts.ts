@@ -14,6 +14,13 @@ export const DATE_INSTANCE_COMMENT = [
     " https://www.gooddata.com/developers/cloud-native/doc/cloud/model-data/concepts/dataset/#date-datasets",
 ].join("\n");
 
+export const COMPUTED_ATTRIBUTE_COMMENT = [
+    ' A computed attribute turns numbers into named groups, for example "Small", "Medium", "Large".',
+    " Write the break points in MAQL - the first matching branch wins - and use it like any attribute.",
+    " Read more about MAQL:",
+    " https://www.gooddata.com/developers/cloud-native/doc/cloud/create-metrics/maql/",
+].join("\n");
+
 export const METRIC_COMMENT = [
     " A metric is a computational expression of numerical data (facts or other metrics).",
     " Use MAQL to create reusable multidimensional queries that combine multiple facts and attributes.",

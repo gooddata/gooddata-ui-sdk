@@ -16,7 +16,7 @@ export type TigerCompatibleObjectType = Exclude<ObjectType, "tag">;
  */
 export type TigerAfmCompatibleObjectType = Extract<
     TigerCompatibleObjectType,
-    "attribute" | "measure" | "displayForm" | "dataSet" | "fact" | "variable"
+    "attribute" | "computedAttribute" | "measure" | "displayForm" | "dataSet" | "fact" | "variable"
 >;
 
 /**
@@ -26,6 +26,7 @@ export const tigerIdTypeToObjectType: {
     [tigerType in TigerObjectType]: TigerCompatibleObjectType;
 } = {
     attribute: "attribute",
+    computedAttribute: "computedAttribute",
     metric: "measure",
     label: "displayForm",
     dataset: "dataSet",
@@ -50,6 +51,8 @@ export const objectTypeToTigerIdType = invert(tigerIdTypeToObjectType) as {
  */
 export const objectTypeToTigerAfmType: Record<TigerAfmCompatibleObjectType, TigerAfmType> = {
     attribute: "attribute",
+    // a computed attribute is referenced by its own type, not as a label - it has no real labels
+    computedAttribute: "computedAttribute",
     measure: "metric",
     displayForm: "label",
     dataSet: "dataset",

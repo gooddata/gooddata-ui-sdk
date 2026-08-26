@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-filters",
-    "version": "11.54.0-alpha.5",
+    "version": "11.54.0-alpha.6",
     "description": "GoodData.UI SDK - Filter Components",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -60,6 +60,7 @@
         "@gooddata/sdk-ui": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/util": "workspace:*",
+        "@rc-component/picker": "1.12.0",
         "@reduxjs/toolkit": "2.9.0",
         "classnames": "2.5.1",
         "date-fns": "4.1.0",

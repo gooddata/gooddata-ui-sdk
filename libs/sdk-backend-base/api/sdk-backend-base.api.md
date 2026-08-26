@@ -37,6 +37,7 @@ import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IBucket } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
 import { ICatalogAttributeHierarchy } from '@gooddata/sdk-model';
+import { ICatalogComputedAttribute } from '@gooddata/sdk-model';
 import { ICatalogDateAttribute } from '@gooddata/sdk-model';
 import { ICatalogDateDataset } from '@gooddata/sdk-model';
 import { ICatalogFact } from '@gooddata/sdk-model';
@@ -52,6 +53,7 @@ import { IChatThreadQuery } from '@gooddata/sdk-backend-spi';
 import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
 import { IClusteringResult } from '@gooddata/sdk-backend-spi';
 import { ICollectionItemsConfig } from '@gooddata/sdk-backend-spi';
+import { IComputedAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IDashboard } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardBase } from '@gooddata/sdk-model';
@@ -381,6 +383,16 @@ export class CatalogAttributeBuilder<T extends ICatalogAttribute = ICatalogAttri
 }
 
 // @beta
+export class CatalogComputedAttributeBuilder<T extends ICatalogComputedAttribute = ICatalogComputedAttribute> extends GroupableCatalogItemBuilder<T> {
+    // (undocumented)
+    computedAttribute(computedAttribute: IComputedAttributeMetadataObject): this;
+    // (undocumented)
+    defaultDisplayForm(displayForm: IAttributeDisplayFormMetadataObject): this;
+    // (undocumented)
+    displayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this;
+}
+
+// @beta
 export class CatalogDateAttributeBuilder<T extends ICatalogDateAttribute = ICatalogDateAttribute> extends Builder<T> {
     // (undocumented)
     attribute(attributeOrRef: IAttributeMetadataObject | ObjRef, modifications?: BuilderModifications<AttributeMetadataObjectBuilder>): this;
@@ -619,6 +631,8 @@ export abstract class DecoratedWorkspaceCatalog implements IWorkspaceCatalog {
     attributes(): ICatalogAttribute[];
     // (undocumented)
     availableItems(): IWorkspaceCatalogAvailableItemsFactory;
+    // (undocumented)
+    computedAttributes(): ICatalogComputedAttribute[];
     // (undocumented)
     dateDatasets(): ICatalogDateDataset[];
     // (undocumented)
@@ -1308,6 +1322,9 @@ export const newAttributeMetadataObject: (ref: ObjRef, modifications?: BuilderMo
 
 // @beta
 export const newCatalogAttribute: (modifications?: BuilderModifications<CatalogAttributeBuilder<ICatalogAttribute>>) => ICatalogAttribute;
+
+// @beta
+export const newCatalogComputedAttribute: (modifications: BuilderModifications<CatalogComputedAttributeBuilder<ICatalogComputedAttribute>>) => ICatalogComputedAttribute;
 
 // @beta
 export const newCatalogDateAttribute: (modifications?: BuilderModifications<CatalogDateAttributeBuilder<ICatalogDateAttribute>>) => ICatalogDateAttribute;

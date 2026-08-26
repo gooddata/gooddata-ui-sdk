@@ -21,6 +21,7 @@ import {
     getRgbString,
 } from "@gooddata/sdk-ui-vis-commons";
 
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import {
     areaChartWith3MetricsAndViewByAttribute,
     areaChartWithMeasureViewByAndStackBy,
@@ -51,9 +52,8 @@ import {
     treemapWithMetricAndViewByAttribute,
     treemapWithMetricViewByAndStackByAttribute,
     treemapWithTwoMetricsAndStackByAttribute,
-} from "../../../../testUtils/fixtures.js";
-import { recordedDataFacade } from "../../../../testUtils/recordings.js";
-import { type IChartConfig } from "../../../interfaces/chartConfig.js";
+} from "../../../testUtils/charts.fixtures.js";
+import { recordedDataFacade } from "../../../testUtils/recordings.fixture.js";
 import {
     DEFAULT_CATEGORIES_LIMIT,
     PIE_CHART_LIMIT,

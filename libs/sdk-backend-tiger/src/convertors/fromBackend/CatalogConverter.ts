@@ -3,6 +3,7 @@
 import {
     type JsonApiAttributeOutWithLinks,
     type JsonApiComputedAttributeOutIncludes,
+    type JsonApiComputedAttributeOutWithLinks,
     type JsonApiDatasetOutWithLinks,
     type JsonApiFactOutWithLinks,
     type JsonApiLabelOutWithLinks,
@@ -13,6 +14,7 @@ import {
     type IGroupableCatalogItemBuilder,
     newAttributeDisplayFormMetadataObject,
     newCatalogAttribute,
+    newCatalogComputedAttribute,
     newCatalogDateAttribute,
     newCatalogDateDataset,
     newCatalogFact,
@@ -21,6 +23,7 @@ import {
 import {
     type IAttributeDisplayFormMetadataObject,
     type ICatalogAttribute,
+    type ICatalogComputedAttribute,
     type ICatalogDateAttribute,
     type ICatalogDateDataset,
     type ICatalogFact,
@@ -31,6 +34,7 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
+import { convertComputedAttributeFromBackend } from "./ComputedAttributeConverter.js";
 import { convertDataSetItem } from "./DataSetConverter.js";
 import { toSdkGranularity } from "./dateGranularityConversions.js";
 import { convertLabelType } from "./LabelTypeConverter.js";
@@ -120,6 +124,21 @@ export const convertMeasure = (
                     .updatedBy(convertUserIdentifier(measure.relationships?.modifiedBy, included)),
             )
             .modify(commonGroupableCatalogItemModifications(measure)),
+    );
+};
+
+export const convertComputedAttributeToCatalogItem = (
+    computedAttribute: JsonApiComputedAttributeOutWithLinks,
+    included: JsonApiComputedAttributeOutIncludes[] = [],
+): ICatalogComputedAttribute => {
+    const metadataObject = convertComputedAttributeFromBackend(computedAttribute, included);
+
+    return newCatalogComputedAttribute((catalogCa) =>
+        catalogCa
+            .computedAttribute(metadataObject)
+            .defaultDisplayForm(metadataObject.displayForms[0]!)
+            .displayForms(metadataObject.displayForms)
+            .modify(commonGroupableCatalogItemModifications(computedAttribute)),
     );
 };
 

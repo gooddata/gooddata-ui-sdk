@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-ext",
-    "version": "11.54.0-alpha.5",
+    "version": "11.54.0-alpha.6",
     "description": "GoodData.UI SDK - Extensions",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -84,7 +84,7 @@
         "@gooddata/util": "workspace:*",
         "@lezer/highlight": "~1.2.3",
         "classnames": "2.5.1",
-        "cron-parser": "^5.1.1",
+        "cron-parser": "5.9.0",
         "date-fns": "4.1.0",
         "debounce-promise": "^3.1.2",
         "default-import": "1.1.5",

@@ -8,7 +8,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { type IBaseHeadlineValueItem } from "../../../../interfaces/BaseHeadlines.js";
-import { TEST_DATA_ITEM, TEST_RENDER_VALUE_SPECS } from "../../../../TestData.fixtures.js";
+import { TEST_DATA_ITEM, TEST_RENDER_VALUE_SPECS } from "../../../../tests/TestData.test.helpers.js";
 import { createBaseHeadlineTestContext } from "../../BaseHeadline.test.helpers.js";
 
 import { ComparisonValue } from "./ComparisonValue.js";

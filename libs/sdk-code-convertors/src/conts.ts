@@ -13,6 +13,9 @@ export const MetricTypes = ["metric"];
 export const ParameterTypes = ["parameter"];
 
 /** @internal */
+export const ComputedAttributeTypes = ["computed_attribute"];
+
+/** @internal */
 export const DashboardTypes = ["dashboard"];
 
 /** @internal */
@@ -54,6 +57,7 @@ export const AllTypes = [
     ...DateDatasetTypes,
     ...MetricTypes,
     ...ParameterTypes,
+    ...ComputedAttributeTypes,
     ...DashboardTypes,
     ...PluginTypes,
     ...VisualisationsTypes,

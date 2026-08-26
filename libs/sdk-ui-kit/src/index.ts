@@ -36,6 +36,7 @@ export type {
     IMenuAccessibilityConfig,
     IMenuContainerAccessibilityConfig,
 } from "./typings/accessibility.js";
+export type { ISlotProps } from "./typings/slots.js";
 export {
     GD_COLOR_HIGHLIGHT,
     GD_COLOR_WHITE,
@@ -349,6 +350,7 @@ export type {
     IDialogBaseProps,
     IDialogProps,
     IConfirmDialogBaseProps,
+    IConfirmDialogFooterProps,
     IExportDialogProps,
     IExportDialogBaseProps,
     IDialogCloseButtonProps,
@@ -361,6 +363,7 @@ export type {
 export { BackButton, type IBackButtonProps } from "./Dialog/BackButton.js";
 export { ConfirmDialog } from "./Dialog/ConfirmDialog.js";
 export { ConfirmDialogBase } from "./Dialog/ConfirmDialogBase.js";
+export { ConfirmDialogFooter } from "./Dialog/ConfirmDialogFooter.js";
 export { ContentDivider } from "./Dialog/ContentDivider.js";
 export {
     CsvDelimiterPicker,

@@ -10,6 +10,7 @@ import {
     type JsonApiAttributeOutList,
     type JsonApiAutomationOutList,
     type JsonApiColorPaletteOutList,
+    type JsonApiComputedAttributeOutList,
     type JsonApiDashboardPluginOutList,
     type JsonApiDatasetOutList,
     type JsonApiExportDefinitionOutList,
@@ -117,6 +118,7 @@ export type MetadataGetEntitiesResult =
     | JsonApiDashboardPluginOutList
     | JsonApiDatasetOutList
     | JsonApiAttributeOutList
+    | JsonApiComputedAttributeOutList
     | JsonApiLabelOutList
     | JsonApiMetricOutList
     | JsonApiFactOutList

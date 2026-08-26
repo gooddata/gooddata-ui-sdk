@@ -4,10 +4,10 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
+import { TestCorrelation } from "../../../../tests/Dashboard.test.helpers.js";
+import { SimpleDashboardIdentifier } from "../../../../tests/SimpleDashboard.test.helpers.js";
 import { setAttributeFilterTitle } from "../../../commands/filters.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../DashboardTester.js";
-import { TestCorrelation } from "../../../fixtures/Dashboard.fixtures.js";
-import { SimpleDashboardIdentifier } from "../../../fixtures/SimpleDashboard.fixtures.js";
 import { selectFilterContextAttributeFilters } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 
 describe("changeAttributeTitleHandler", () => {

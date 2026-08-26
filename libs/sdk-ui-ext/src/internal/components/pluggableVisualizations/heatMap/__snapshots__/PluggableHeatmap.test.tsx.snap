@@ -219,6 +219,7 @@ exports[`PluggableHeatmap > heatmap should allow date attribute in column bucket
       "stack": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -233,6 +234,7 @@ exports[`PluggableHeatmap > heatmap should allow date attribute in column bucket
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -399,6 +401,7 @@ exports[`PluggableHeatmap > should return reference point with one metric, categ
       "stack": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -413,6 +416,7 @@ exports[`PluggableHeatmap > should return reference point with one metric, categ
       "view": {
         "accepts": [
           "attribute",
+          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,

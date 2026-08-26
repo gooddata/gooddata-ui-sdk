@@ -13,6 +13,7 @@ import type { AttributeHierarchy } from '@gooddata/sdk-code-schemas/v1';
 import type { Bucket } from '@gooddata/sdk-code-schemas/v1';
 import type { CalculatedMetricField } from '@gooddata/sdk-code-schemas/v1';
 import type { Color } from '@gooddata/sdk-code-schemas/v1';
+import type { ComputedAttribute } from '@gooddata/sdk-code-schemas/v1';
 import type { ContainerWidget } from '@gooddata/sdk-code-schemas/v1';
 import type { Dashboard } from '@gooddata/sdk-code-schemas/v1';
 import type { DashboardFilters } from '@gooddata/sdk-code-schemas/v1';
@@ -22,6 +23,7 @@ import type { DateDataset } from '@gooddata/sdk-code-schemas/v1';
 import { DeclarativeAnalyticalDashboard } from '@gooddata/api-client-tiger';
 import { DeclarativeAttribute } from '@gooddata/api-client-tiger';
 import { DeclarativeAttributeHierarchy } from '@gooddata/api-client-tiger';
+import { DeclarativeComputedAttribute } from '@gooddata/api-client-tiger';
 import { DeclarativeDashboardPlugin } from '@gooddata/api-client-tiger';
 import { DeclarativeDataset } from '@gooddata/api-client-tiger';
 import { DeclarativeDateDataset } from '@gooddata/api-client-tiger';
@@ -107,6 +109,9 @@ import { YAMLSeq } from 'yaml';
 
 // @public (undocumented)
 export type AacAttributeHierarchy = AttributeHierarchy;
+
+// @public (undocumented)
+export type AacComputedAttribute = ComputedAttribute;
 
 // @public (undocumented)
 export type AacDashboard = Dashboard;
@@ -1218,6 +1223,9 @@ export function comboChartSave(_fields: Visualisation["query"]["fields"] | undef
 } | undefined;
 
 // @internal (undocumented)
+export const ComputedAttributeTypes: string[];
+
+// @internal (undocumented)
 export type ConfigDefaults<T> = {
     [key in keyof T]: T[key];
 };
@@ -1354,6 +1362,12 @@ export function declarativeAttributeToYaml(def: IAttributeBody, errorContext?: I
 export function declarativeBucketsToYaml(entities: FromEntities, buckets: IBucket[], errorContext?: IErrorContext): YamlBuckets;
 
 // @public (undocumented)
+export function declarativeComputedAttributeToYaml(computedAttribute: DeclarativeComputedAttribute): {
+    content: string;
+    json: ComputedAttribute;
+};
+
+// @public (undocumented)
 export function declarativeDashboardToYaml(entities: FromEntities, dashboard: DeclarativeAnalyticalDashboard, filterContexts?: DeclarativeFilterContext[], context?: IErrorContext): {
     content: string;
     json: Dashboard;
@@ -1375,7 +1389,7 @@ export function declarativeDateInstanceToYaml(dataset: DeclarativeDateDataset): 
 export function declarativeDrillToYaml(drill: InsightDrillDefinition, entities?: FromEntities, sourceVisualizationId?: string, errorContext?: IErrorContext): YAMLMap<unknown, unknown>;
 
 // @public
-export type DeclarativeEntityData = DeclarativeDataset | DeclarativeDateDataset | DeclarativeMetric | DeclarativeStringParameter | DeclarativeVisualizationObject | DeclarativeDashboardPlugin | DeclarativeAttributeHierarchy | {
+export type DeclarativeEntityData = DeclarativeDataset | DeclarativeDateDataset | DeclarativeMetric | DeclarativeComputedAttribute | DeclarativeStringParameter | DeclarativeVisualizationObject | DeclarativeDashboardPlugin | DeclarativeAttributeHierarchy | {
     dashboard: DeclarativeAnalyticalDashboard;
     filterContext?: DeclarativeFilterContext;
     tabFilterContexts?: DeclarativeFilterContext[];
@@ -1677,7 +1691,7 @@ export function donutChartSave(_fields: Visualisation["query"]["fields"] | undef
 export type EmptyValueHandling = NonNullable<IDashboardDateFilter["dateFilter"]["emptyValueHandling"]>;
 
 // @public
-export type EntityData = Dataset | DateDataset | Metric | Parameter | Visualisation | Dashboard | Plugin_2 | AttributeHierarchy;
+export type EntityData = Dataset | DateDataset | Metric | ComputedAttribute | Parameter | Visualisation | Dashboard | Plugin_2 | AttributeHierarchy;
 
 // @public (undocumented)
 export type ExportEntities = Array<{
@@ -4210,6 +4224,9 @@ export function yamlBucketsToDeclarative(entities: ExportEntities, input: Visual
     }>;
     attrFilterConfig: IAttributeFilterConfigs;
 };
+
+// @public (undocumented)
+export function yamlComputedAttributeToDeclarative(input: ComputedAttribute): DeclarativeComputedAttribute;
 
 // @public (undocumented)
 export function yamlDashboardToDeclarative(entities: ExportEntities, input: Dashboard): {
