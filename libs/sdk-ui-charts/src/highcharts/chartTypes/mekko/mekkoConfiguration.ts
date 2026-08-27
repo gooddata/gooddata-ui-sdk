@@ -3,14 +3,14 @@
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type HighchartsOptions } from "../../lib/index.js";
 import { getCommonResponsiveConfig } from "../_chartCreators/responsive.js";
-import { getAxesCounts } from "../_util/common.js";
+import { MEKKO_SERIES_TYPE, getAxesCounts } from "../_util/common.js";
 
 export function getMekkoConfiguration(config: IChartConfig): HighchartsOptions {
     const mekkoConfiguration: HighchartsOptions = {
         // Mekko (Marimekko) is rendered as a stacked `variwide` series: column height comes
         // from the height measure, column width from the per-column width value (point.z).
         chart: {
-            type: "variwide",
+            type: MEKKO_SERIES_TYPE,
             spacingTop: 20,
         },
         plotOptions: {

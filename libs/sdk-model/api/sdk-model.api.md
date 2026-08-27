@@ -336,6 +336,9 @@ export const BuiltInReportPageLayoutViz6TextLeft: IReportPageLayout;
 export const BuiltInReportSlotTypes: string[];
 
 // @alpha
+export const BuiltInReportTextSlotKinds: ReportTextSlotKind[];
+
+// @alpha
 export const BuiltInWidgetTypes: string[];
 
 // @alpha

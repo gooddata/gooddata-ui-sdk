@@ -19,7 +19,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { type DrilldownEventObject } from "../../lib/index.js";
-import { isBulletChart, isComboChart, isHeatmap, isTreemap } from "../_util/common.js";
+import { MEKKO_SERIES_TYPE, isBulletChart, isComboChart, isHeatmap, isTreemap } from "../_util/common.js";
 
 import { type IHighchartsPointObject, isGroupHighchartsDrillEvent } from "./isGroupHighchartsDrillEvent.js";
 
@@ -67,7 +67,7 @@ const getElementChartType = (chartType: ChartType, point: IHighchartsPointObject
     const seriesType = point?.series?.type as ChartType;
     // Mekko renders as a `variwide` series; map that series type back to the logical Mekko type so
     // VisualizationType-based consumers (e.g. getClickableElementNameByChartType) recognize it.
-    if ((seriesType as string) === "variwide") {
+    if ((seriesType as string) === MEKKO_SERIES_TYPE) {
         return VisualizationTypes.MEKKO as ChartType;
     }
     return seriesType ?? chartType;

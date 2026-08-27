@@ -2,6 +2,169 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.54.0",
+            "tag": "@gooddata/sdk-ui-all_v11.54.0",
+            "date": "Thu, 27 Aug 2026 07:57:31 GMT",
+            "comments": {
+                "patch": [
+                    {
+                        "comment": "sdk-model, sdk-backend-spi: Add reportPageLayout, reportTemplate and report model objects with built-in page layouts and the workspace reports SPI"
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Add the new PeriodRangePicker date picker component (with a Storybook story per granularity), along with the supporting static date filter granularity types and period-boundary conversion utilities (not yet wired into DateFilter)"
+                    },
+                    {
+                        "comment": "sdk-model: Add the enableBusinessBriefingReportsApp feature flag"
+                    },
+                    {
+                        "comment": "sdk-ui: Stop reporting the cancellation of a superseded execution as an execution failure. withEntireDataView decided whether a response was still relevant by comparing execution definition fingerprints, which does not identify a request: when the same definition is requested again after a different one, an already-cancelled earlier request stops looking superseded and its AbortError is delivered through onError. Analytical Designer showed \"Sorry, we can't display this visualization\" over a chart that had loaded, whenever a saved insight carrying a sort was opened. The staleness check now keys on the request itself."
+                    }
+                ],
+                "none": [
+                    {
+                        "comment": "sdk-ui-dashboard: Reset parameters omitted by an applied filter view instead of keeping the previously applied value"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Added data-activeapp attribute to the html tag."
+                    },
+                    {
+                        "comment": "sdk-ui: Added an `Inherit` option to the CSV delimiter picker used in scheduled exports, alerts, and ad-hoc CSV exports. When selected (the new default when no delimiter is saved), no delimiter is sent and the workspace/organization default applies."
+                    },
+                    {
+                        "comment": "sdk-backend-base: CacheControl now exposes resetAutomations to invalidate the workspace automations cache, and resetAll clears it together with the other caches."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Turn on enableSecondGranularities feature flag by default."
+                    },
+                    {
+                        "comment": "analytics-as-code: Support computed attributes as code - new computed_attribute YAML type with its JSON schema, TS and Python types, YAML/declarative converters both ways, deploy and clone wiring, MAQL reference resolution, snippet and init rules"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: computed attributes can be created, edited and deleted from the Analytics Catalog via the YAML editor, behind the enableComputedAttributes feature flag."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Restore the timezone baked into an alert or scheduled export when the dashboard is opened from its notification link."
+                    },
+                    {
+                        "comment": "sdk-code-convertors: the generated Python models no longer truncate schema unions. A union member that carried only the `type` discriminator validated any payload with a matching type and dropped every other key on model_dump(); QueryFilter, QuerySort, Metadata, Fields, DashboardFilters, DashboardFiltersNoGroups and Interaction now resolve to the real per-type models in both pydantic_models.py and _types.py."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: ConfirmDialogBase accepts a footerRenderer prop replacing the whole footer; the default footer is extracted into ConfirmDialogFooter (internal)"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Added an ActionBar slot and topContent/bottomContent props to the default alerting and scheduled email dialogs (alpha)"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Add alpha Destination and Recipients slots to DefaultAlertingDialog and DefaultScheduledEmailDialog for wrap-or-replace customization of the notification-channel and recipients regions"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Added the ISlotProps slot contract (alpha), moved from sdk-ui-dashboard"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: ISlotProps is now re-exported from sdk-ui-kit; the sdk-ui-dashboard export is unchanged for consumers"
+                    },
+                    {
+                        "comment": "sdk-model, sdk-backend-tiger: Add the canCreateMetric workspace permission, resolved from the granular CREATE_METRIC backend permission."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Fix the message component being squeezed below its own content when it is a flex item, which collapsed a message to a few pixels and clipped its text next to a scrollable list in a dialog."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Apply the workspace number separators to visualizations embedded in the AI chat, so they match the same insight in Analyze"
+                    },
+                    {
+                        "comment": "Add the setTimezone postMessage command for embedded dashboards"
+                    },
+                    {
+                        "comment": "sdk-model: Pin the @types/stringify-object dependency to the exact version 3.3.1 instead of the ^3.2.0 range."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Pin the @types/tinycolor2 dependency to the exact version 1.4.6 instead of the ^1.4.2 range."
+                    },
+                    {
+                        "comment": "sdk-ui-kit, sdk-ui-ext: Pin the cron-parser dependency to the exact version 5.9.0 instead of the ^5.1.1 range."
+                    },
+                    {
+                        "comment": "sdk-ui, sdk-ui-charts, sdk-ui-filters, sdk-ui-pivot, sdk-ui-ext: Pin the full-icu dependency to the exact version 1.6.0 instead of the ^1.3.0 range."
+                    },
+                    {
+                        "comment": "sdk-code-schemas: Pin the json-schema-to-typescript dependency to the exact version 13.1.2 instead of the ^13.0.1 range."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Pin the kefir dependency to the exact version 3.8.8 instead of the ^3.8.8 range."
+                    },
+                    {
+                        "comment": "api-client-tiger, i18n-toolkit: Pin the mkdirp dependency to the exact version 1.0.4 instead of the ^1.0.4 range."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai, sdk-ui-dashboard, sdk-ui-kit, sdk-ui-ext: Pin the svgo dependency to the exact version 2.8.3 instead of the ^2.8.0 range."
+                    },
+                    {
+                        "comment": "sdk-ui: Pin the tsd dependency to the exact version 0.32.0 instead of the ^0.32.0 range."
+                    },
+                    {
+                        "comment": "plugin-toolkit, app-toolkit: Pin the validate-npm-package-name dependency to the exact version 5.0.1 instead of the ^5.0.0 range."
+                    },
+                    {
+                        "comment": "sdk-code-schemas, sdk-code-convertors: Add the `parameter` object type to analytics-as-code for textual parameters — `type: parameter` YAML with a `definition` of `type: STRING`, a default value and optional constraints (length bounds or a governed allowed-value list), plus `declarativeParameterToYaml` / `yamlParameterToDeclarative` so string parameters clone from and deploy to a workspace; metrics referencing `{parameter/id}` in MAQL now resolve, so the reference is validated, navigable, renameable, and protects the parameter from deletion. Parameters of other data types keep whatever created them and are left untouched by clone and deploy"
+                    },
+                    {
+                        "comment": "sdk-code-schemas, maql-language-server: Render a metric's MAQL template with its parameters' default values, so a template can be previewed as the MAQL that would execute, and reject string parameter definitions whose values contradict each other — a default outside the allowed values, a duplicated allowed value or title, bounds describing an empty range, or a default outside those bounds"
+                    },
+                    {
+                        "comment": "sdk-ui: reload chart data when only the execution buckets change, so charts deriving measure roles from buckets (Mekko Width/Height, scatter and bubble axes, bullet series) re-render when a lone measure moves between buckets"
+                    },
+                    {
+                        "comment": "sdk-ui-charts: fix Mekko chart data label color being inconsistent between AD and KD when points are drillable"
+                    },
+                    {
+                        "comment": "sdk-ui-ext: add zoom and pan support to Mekko chart"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: ChangeFilterContextSelection accepts matchByLocalIdentifier to match attribute filters by localIdentifier first (display form fallback); filter view application and the reset filters button use it, so filters sharing a display form no longer clobber each other. changeFilterContextSelectionByParams is now public and the positional changeFilterContextSelection factory is deprecated in its favor."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai, sdk-ui-kit: Accessibility fixes for the assistant context — named chip group with spoken context changes, chip type and delete button names (UiChip can now name its leading icon)"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai, sdk-model: The AI assistant context picker shows the visualization type icon for the offered visualizations and dashboard widgets."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: A new AI assistant conversation starts in the Quick reasoning mode instead of Thinking."
+                    },
+                    {
+                        "comment": "sdk-ui-charts: fix grouped category label resolving to an object instead of a string when the category's name is empty"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Add dashboard select as prop for auto update ambient context."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Update design of references in ai assistant."
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-host: Disable module app stylesheets on unmount so app CSS no longer bleeds across apps"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Enhance reference handling and update UI for tooltips over them."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Introduce slot-based customization for Gen AI assistant."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Visual exports (PDF, PPTX) keep the filters applied on screen even when a default saved filter view exists"
+                    },
+                    {
+                        "comment": "sdk-ui-ext: the share dialog now disables permission levels that the user cannot grant, instead of letting the server refuse them."
+                    }
+                ],
+                "minor": [
+                    {
+                        "comment": "sdk-ui-all: Add support for computed attributes in model and AD."
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.53.0",
             "tag": "@gooddata/sdk-ui-all_v11.53.0",
             "date": "Thu, 20 Aug 2026 07:31:50 GMT",

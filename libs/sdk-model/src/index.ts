@@ -1504,6 +1504,7 @@ export {
     type IReportImageSlot,
     type ReportSlot,
     BuiltInReportSlotTypes,
+    BuiltInReportTextSlotKinds,
     isReportVisualizationSlot,
     isReportTextSlot,
     isReportImageSlot,

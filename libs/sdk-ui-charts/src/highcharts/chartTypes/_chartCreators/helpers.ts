@@ -13,7 +13,7 @@ import {
     type ISeriesItem,
     type UnsafeInternals,
 } from "../../typings/unsafe.js";
-import { isInvertedChartType } from "../_util/common.js";
+import { MEKKO_SERIES_TYPE, isInvertedChartType } from "../_util/common.js";
 
 export interface IRectByPoints {
     left: number;
@@ -140,7 +140,8 @@ export function getShapeAttributes({ series, shapeArgs }: any): IRectBySize {
         };
     } else if (
         options.chart.type === VisualizationTypes.COLUMN ||
-        options.chart.type === VisualizationTypes.WATERFALL
+        options.chart.type === VisualizationTypes.WATERFALL ||
+        options.chart.type === MEKKO_SERIES_TYPE
     ) {
         return {
             x: shapeArgs.x + series.group.translateX,
