@@ -235,6 +235,21 @@ export type ReportSlot = IReportVisualizationSlot | IReportTextSlot | IReportIma
 export const BuiltInReportSlotTypes: string[] = ["visualization", "text", "image"];
 
 /**
+ * All semantic kinds a text slot can carry.
+ *
+ * @alpha
+ */
+export const BuiltInReportTextSlotKinds: ReportTextSlotKind[] = [
+    "title",
+    "subtitle",
+    "sectionTitle",
+    "description",
+    "summary",
+    "body",
+    "custom",
+];
+
+/**
  * Type-guard testing whether the provided object is an instance of {@link IReportVisualizationSlot}.
  *
  * @alpha

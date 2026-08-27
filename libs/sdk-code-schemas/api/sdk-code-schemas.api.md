@@ -8734,6 +8734,9 @@ export const metadata_v1: {
                 };
             };
             required: string[];
+            $semantic: {
+                type: string;
+            };
         };
         parameterAllowedValue: {
             title: string;

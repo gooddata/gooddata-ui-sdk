@@ -12,7 +12,7 @@ import {
     getVisibleSeries,
     isStacked,
 } from "../../chartTypes/_chartCreators/helpers.js";
-import { isOneOfTypes } from "../../chartTypes/_util/common.js";
+import { MEKKO_SERIES_TYPE, isOneOfTypes } from "../../chartTypes/_util/common.js";
 import { getBlackLabelStyle, getWhiteLabelStyle } from "../../constants/label.js";
 import { isHighContrastMode } from "../../utils/highContrastMode.js";
 
@@ -207,6 +207,7 @@ function applyNormalModeColorLogic(chart: any, type: string | undefined, theme: 
             VisualizationTypes.PIE,
             VisualizationTypes.FUNNEL,
             VisualizationTypes.PYRAMID,
+            MEKKO_SERIES_TYPE,
         ])
     ) {
         setTimeout(() => {
