@@ -7,6 +7,7 @@ import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 import { DefaultLandingContainer, DefaultLandingQuestions } from "./LandingContainer.js";
 import { DefaultLandingQuestion } from "./LandingQuestion.js";
 import { DefaultLandingTitle, DefaultLandingTitleAscent } from "./LandingTitle.js";
+import { type IGenAIAssistantLandingScreenProps } from "./types.js";
 
 const quickOptions = [
     {
@@ -32,11 +33,12 @@ const quickOptions = [
 /**
  * @beta
  */
-export type LandingScreenProps = {
+export type LandingScreenProps = IGenAIAssistantLandingScreenProps & {
+    /**
+     * Custom React node rendered when no conversation exists yet.
+     * @deprecated Use slots.LandingScreen instead.
+     */
     LandingScreen?: ComponentType;
-    isFullscreen?: boolean;
-    isBigScreen?: boolean;
-    isSmallScreen?: boolean;
 };
 
 /**

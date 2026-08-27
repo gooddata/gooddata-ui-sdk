@@ -87,6 +87,10 @@ const ENTITY_FACTORIES: Record<ObjectType, (id: string) => unknown> = {
         ...metadataEntity(id, "parameter"),
         definition: { type: "NUMBER", defaultValue: 0 },
     }),
+    [ObjectTypes.COMPUTED_ATTRIBUTE]: (id) => ({
+        ...metadataEntity(id, "computedAttribute"),
+        expression: "SELECT 1",
+    }),
     [ObjectTypes.ATTRIBUTE]: (id) => metadataEntity(id, "attribute"),
     [ObjectTypes.FACT]: (id) => metadataEntity(id, "fact"),
     [ObjectTypes.DATASET]: (id) => metadataEntity(id, "dataSet"),
@@ -148,6 +152,7 @@ const QUERY_SERVICES = {
     [ObjectTypes.VISUALIZATION]: ["insights", "getInsightsQuery"],
     [ObjectTypes.METRIC]: ["measures", "getMeasuresQuery"],
     [ObjectTypes.PARAMETER]: ["parameters", "getParametersQuery"],
+    [ObjectTypes.COMPUTED_ATTRIBUTE]: ["computedAttributes", "getComputedAttributesQuery"],
     [ObjectTypes.ATTRIBUTE]: ["attributes", "getAttributesQuery"],
     [ObjectTypes.FACT]: ["facts", "getFactsQuery"],
     [ObjectTypes.DATASET]: ["datasets", "getDatasetsQuery"],

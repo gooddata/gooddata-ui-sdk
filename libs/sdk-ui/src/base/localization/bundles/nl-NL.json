@@ -1192,6 +1192,7 @@
     "fileUpload.list.label": "Bestanden uploaden",
     "fileUpload.action.retryFile": "{fileName} opnieuw proberen",
     "fileUpload.action.removeFile": "{fileName} verwijderen",
+    "csvDelimiterPicker.option.inherit": "Erven",
     "csvDelimiterPicker.option.comma": "Komma",
     "csvDelimiterPicker.option.semicolon": "Puntkomma",
     "csvDelimiterPicker.option.pipe": "Pipe",

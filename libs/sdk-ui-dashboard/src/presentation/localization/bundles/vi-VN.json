@@ -259,7 +259,6 @@
     "dialogs.automation.applyCurrentFilters.schedule.filtersAndTimezone.confirm": "<b>Cảnh báo</b>: Một số bộ lọc và múi giờ được sử dụng khi lịch biểu này được tạo không còn khả dụng hoặc hợp lệ. Việc chỉnh sửa sẽ áp dụng các bộ lọc bảng điều khiển và múi giờ hiện tại.",
     "dialogs.automation.filters.schedule.ariaLabel": "Thông tin về tùy chọn: Luôn sử dụng các bộ lọc này cho các lần xuất trong tương lai.",
     "dialogs.schedule.management.title": "Các mục xuất theo lịch",
-    "dialogs.schedule.management.delete": "Xóa lịch biểu.",
     "dialogs.schedule.management.delete.dialog": "Xóa lịch biểu?",
     "dialogs.schedule.management.delete.dialog.confirm": "<b>Lịch biểu</b> sẽ bị xóa vĩnh viễn.",
     "dialogs.schedule.management.list.title": "Các mục xuất theo lịch của bạn",

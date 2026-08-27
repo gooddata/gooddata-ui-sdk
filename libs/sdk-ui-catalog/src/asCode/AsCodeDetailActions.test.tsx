@@ -38,7 +38,7 @@ const metricDescriptor: IAsCodeDescriptor = withMutationPort(
         seed: { load: async () => loadedMeasure, loadError: metricSeed.loadError },
         referenceCounted: {
             ...typedMetricDescriptor.referenceCounted!,
-            count: async () => 0,
+            load: async () => [],
         },
     },
     createTestMetricMutationPort(),

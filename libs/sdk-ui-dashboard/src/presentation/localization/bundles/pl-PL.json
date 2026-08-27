@@ -259,7 +259,6 @@
     "dialogs.automation.applyCurrentFilters.schedule.filtersAndTimezone.confirm": "<b>Ostrzeżenie</b>: Niektóre filtry i strefa czasowa używane podczas tworzenia tego harmonogramu nie są już dostępne lub prawidłowe. Edycja spowoduje zastosowanie bieżących filtrów pulpitu i strefy czasowej.",
     "dialogs.automation.filters.schedule.ariaLabel": "Informacje o opcji: Zawsze używaj tych filtrów do przyszłych eksportów.",
     "dialogs.schedule.management.title": "Zaplanowane eksporty",
-    "dialogs.schedule.management.delete": "Usuń harmonogram.",
     "dialogs.schedule.management.delete.dialog": "Usunąć harmonogram?",
     "dialogs.schedule.management.delete.dialog.confirm": "<b>Harmonogram</b> zostanie trwale usunięty.",
     "dialogs.schedule.management.list.title": "Twoje zaplanowane eksporty",

@@ -259,7 +259,6 @@
     "dialogs.automation.applyCurrentFilters.schedule.filtersAndTimezone.confirm": "<b>Uyarı</b>: Bu program oluşturulduğunda kullanılan bazı filtreler ve saat dilimi artık kullanılamıyor veya geçerli değil. Düzenleme, geçerli gösterge tablosu filtrelerini ve saat dilimini uygulayacaktır.",
     "dialogs.automation.filters.schedule.ariaLabel": "Seçenek hakkında bilgi: Gelecekteki dışa aktarımlar için bu filtreleri her zaman kullan.",
     "dialogs.schedule.management.title": "Zamanlanmış dışa aktarımlar",
-    "dialogs.schedule.management.delete": "Programı sil.",
     "dialogs.schedule.management.delete.dialog": "Program silinsin mi?",
     "dialogs.schedule.management.delete.dialog.confirm": "<b>Zamanlama</b> kalıcı olarak silinecek.",
     "dialogs.schedule.management.list.title": "Planlanmış dışa aktarımlarınız",

@@ -66,7 +66,10 @@ export type ObjectType =
     | "userDataFilter"
     | "notificationChannel"
     | "memoryItem"
-    | "parameter";
+    | "parameter"
+    | "reportPageLayout"
+    | "reportTemplate"
+    | "report";
 
 /**
  * Model object reference using object's unique identifier.

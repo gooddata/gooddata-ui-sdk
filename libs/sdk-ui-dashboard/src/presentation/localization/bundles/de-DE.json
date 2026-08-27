@@ -259,7 +259,6 @@
     "dialogs.automation.applyCurrentFilters.schedule.filtersAndTimezone.confirm": "<b>Warnung</b>: Einige Filter und die beim Erstellen dieses Zeitplans verwendete Zeitzone sind nicht mehr verfügbar oder gültig. Beim Bearbeiten werden die aktuellen Dashboard-Filter und die aktuelle Zeitzone angewendet.",
     "dialogs.automation.filters.schedule.ariaLabel": "Informationen zur Option: Verwenden Sie diese Filter immer für zukünftige Exporte.",
     "dialogs.schedule.management.title": "Geplante exporte",
-    "dialogs.schedule.management.delete": "Löschen Sie den Zeitplan.",
     "dialogs.schedule.management.delete.dialog": "Zeitplan löschen?",
     "dialogs.schedule.management.delete.dialog.confirm": "<b>Der Zeitplan</b> wird unwiderruflich gelöscht.",
     "dialogs.schedule.management.list.title": "Ihre geplanten Exporte",

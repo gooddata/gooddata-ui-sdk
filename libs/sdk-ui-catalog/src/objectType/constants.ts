@@ -10,20 +10,26 @@ export const ObjectTypes = {
     VISUALIZATION: "insight",
     METRIC: "measure",
     PARAMETER: "parameter",
+    COMPUTED_ATTRIBUTE: "computedAttribute",
     ATTRIBUTE: "attribute",
     FACT: "fact",
     DATASET: "dataSet",
 } as const satisfies Record<string, ObjectType>;
 
 /**
- * Analytics Catalog default object type order.
+ * Analytics Catalog object type filter groups in display order.
  */
-export const OBJECT_TYPE_ORDER: ObjectType[] = [
-    ObjectTypes.DASHBOARD,
-    ObjectTypes.VISUALIZATION,
-    ObjectTypes.METRIC,
-    ObjectTypes.PARAMETER,
-    ObjectTypes.ATTRIBUTE,
-    ObjectTypes.FACT,
-    ObjectTypes.DATASET,
-];
+export const FILTER_GROUPS = [
+    { id: ObjectTypes.DASHBOARD, types: [ObjectTypes.DASHBOARD] },
+    { id: ObjectTypes.VISUALIZATION, types: [ObjectTypes.VISUALIZATION] },
+    { id: ObjectTypes.METRIC, types: [ObjectTypes.METRIC] },
+    { id: ObjectTypes.PARAMETER, types: [ObjectTypes.PARAMETER] },
+    { id: ObjectTypes.ATTRIBUTE, types: [ObjectTypes.ATTRIBUTE, ObjectTypes.COMPUTED_ATTRIBUTE] },
+    { id: ObjectTypes.FACT, types: [ObjectTypes.FACT] },
+    { id: ObjectTypes.DATASET, types: [ObjectTypes.DATASET] },
+] as const satisfies readonly { id: ObjectType; types: readonly ObjectType[] }[];
+
+/**
+ * Object types offered as filter group buttons.
+ */
+export type FilterableObjectType = (typeof FILTER_GROUPS)[number]["id"];

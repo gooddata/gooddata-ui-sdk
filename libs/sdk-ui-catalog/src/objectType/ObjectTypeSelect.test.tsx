@@ -13,6 +13,15 @@ const wrapper = TestIntlProvider;
 describe("ObjectTypeSelect", () => {
     const commonProps: Parameters<typeof ObjectTypeSelect>[0] = {
         selectedTypes: [],
+        enabledObjectTypes: [
+            "analyticalDashboard",
+            "insight",
+            "measure",
+            "computedAttribute",
+            "attribute",
+            "fact",
+            "dataSet",
+        ],
         onSelect: vi.fn(),
         counter: {
             measure: 0,
@@ -22,6 +31,7 @@ describe("ObjectTypeSelect", () => {
             insight: 0,
             analyticalDashboard: 0,
             parameter: 0,
+            computedAttribute: 0,
         },
     };
 
@@ -34,16 +44,31 @@ describe("ObjectTypeSelect", () => {
             fact: 4,
             attribute: 5,
             dataSet: 6,
+            // Counted under the attribute button: a computed attribute has none of its own.
+            computedAttribute: 2,
         };
-        render(<ObjectTypeSelect {...commonProps} counter={counter} showParameter />, { wrapper });
+        render(
+            <ObjectTypeSelect
+                {...commonProps}
+                counter={counter}
+                enabledObjectTypes={[...commonProps.enabledObjectTypes, "parameter"]}
+            />,
+            { wrapper },
+        );
 
         expect(screen.getByRole("button", { name: "Dashboard: 1" })).toBeInTheDocument();
         expect(screen.getByRole("button", { name: "Visualization: 2" })).toBeInTheDocument();
         expect(screen.getByRole("button", { name: "Metric: 3" })).toBeInTheDocument();
         expect(screen.getByRole("button", { name: "Parameter: 4" })).toBeInTheDocument();
         expect(screen.getByRole("button", { name: "Fact: 4" })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: "Attribute: 5" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Attribute: 7" })).toBeInTheDocument();
         expect(screen.getByRole("button", { name: "Date dataset: 6" })).toBeInTheDocument();
+    });
+
+    it("has no button of its own for computed attributes", () => {
+        render(<ObjectTypeSelect {...commonProps} />, { wrapper });
+
+        expect(screen.queryByTestId(`${objectType}/computedAttribute`)).not.toBeInTheDocument();
     });
 
     it("calls onSelect with added type when clicking an unselected type", () => {
@@ -54,6 +79,16 @@ describe("ObjectTypeSelect", () => {
         fireEvent.click(screen.getByRole("button", { name: /Dashboard/ }));
 
         expect(onSelect).toHaveBeenCalledWith(["analyticalDashboard"]);
+    });
+
+    it("calls onSelect with every type in the selected group", () => {
+        const onSelect = vi.fn();
+
+        render(<ObjectTypeSelect {...commonProps} onSelect={onSelect} />, { wrapper });
+
+        fireEvent.click(screen.getByRole("button", { name: /Attribute/ }));
+
+        expect(onSelect).toHaveBeenCalledWith(["attribute", "computedAttribute"]);
     });
 
     it("calls onSelect with removed type when clicking an already selected type", () => {
@@ -88,7 +123,12 @@ describe("ObjectTypeSelect", () => {
 
         expect(screen.queryByTestId(`${objectType}/parameter`)).not.toBeInTheDocument();
 
-        rerender(<ObjectTypeSelect {...commonProps} showParameter />);
+        rerender(
+            <ObjectTypeSelect
+                {...commonProps}
+                enabledObjectTypes={[...commonProps.enabledObjectTypes, "parameter"]}
+            />,
+        );
 
         expect(screen.getByTestId(`${objectType}/parameter`)).toBeVisible();
     });

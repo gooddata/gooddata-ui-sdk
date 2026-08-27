@@ -16,7 +16,7 @@ import {
     useRequestInsightCodec,
 } from "./insightCodecContext.js";
 import { createCopiedInsight } from "./insightCopy.js";
-import { countInsightReferences, createInsightMutationAdapter, loadInsight } from "./insightMutationPort.js";
+import { createInsightMutationAdapter, listInsightReferences, loadInsight } from "./insightMutationPort.js";
 
 const VISUALIZATION_DOCS_URL =
     "https://www.gooddata.ai/docs/cloud/api-and-sdk/vs-code-extension/structures/#visualisation";
@@ -78,7 +78,7 @@ export const visualizationDescriptor = defineAsCodeDescriptor<IInsightDefinition
     }),
     seed: { load: loadInsight, loadError: capabilityMessages.loadError },
     referenceCounted: {
-        count: countInsightReferences,
+        load: listInsightReferences,
         usageWarning: capabilityMessages.deleteUsageWarning,
     },
     // No identity: an insight definition has no id field, and creates never carry one (backend-assigned).

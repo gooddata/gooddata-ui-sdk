@@ -259,7 +259,6 @@
     "dialogs.automation.applyCurrentFilters.schedule.filtersAndTimezone.confirm": "<b>警告</b>：创建此计划时使用的某些筛选器和时区不再可用或有效。编辑将应用仪表板当前的筛选器和时区。",
     "dialogs.automation.filters.schedule.ariaLabel": "有关该选项的信息：将来导出时始终使用这些过滤器。",
     "dialogs.schedule.management.title": "计划的导出",
-    "dialogs.schedule.management.delete": "删除此计划。",
     "dialogs.schedule.management.delete.dialog": "删除计划？",
     "dialogs.schedule.management.delete.dialog.confirm": "<b>此计划</b>将被永久删除。",
     "dialogs.schedule.management.list.title": "您的预定出口",

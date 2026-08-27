@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/util",
-    "version": "11.54.0-alpha.6",
+    "version": "11.54.0-alpha.7",
     "description": "GoodData Utility Functions",
     "license": "MIT",
     "author": "GoodData",
@@ -47,7 +47,7 @@
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/oxlint-config": "workspace:*",
-        "@microsoft/api-documenter": "^7.17.0",
+        "@microsoft/api-documenter": "7.30.10",
         "@microsoft/api-extractor": "^7.55.2",
         "@types/lodash-es": "^4.17.12",
         "@typescript-eslint/eslint-plugin": "8.58.0",

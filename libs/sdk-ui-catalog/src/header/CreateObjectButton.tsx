@@ -30,6 +30,7 @@ const icons: Record<CatalogCreateObjectType, IconType> = {
     [ObjectTypes.VISUALIZATION]: "visualization",
     [ObjectTypes.METRIC]: "metric",
     [ObjectTypes.PARAMETER]: "parameter",
+    [ObjectTypes.COMPUTED_ATTRIBUTE]: "ldmAttribute",
 };
 
 type Props = {

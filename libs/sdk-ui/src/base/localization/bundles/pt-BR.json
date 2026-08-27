@@ -1192,6 +1192,7 @@
     "fileUpload.list.label": "Fazer upload de arquivos",
     "fileUpload.action.retryFile": "Tentar novamente {fileName}",
     "fileUpload.action.removeFile": "Remover {fileName}",
+    "csvDelimiterPicker.option.inherit": "Herdado",
     "csvDelimiterPicker.option.comma": "Vírgula",
     "csvDelimiterPicker.option.semicolon": "Ponto e vírgula",
     "csvDelimiterPicker.option.pipe": "Barra vertical",

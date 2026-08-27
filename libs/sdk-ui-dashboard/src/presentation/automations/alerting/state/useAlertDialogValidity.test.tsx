@@ -56,8 +56,9 @@ import {
 } from "../../contexts/AlertingDialogContext.js";
 import { useAutomationsContext, type IAutomationsContextValue } from "../../contexts/AutomationsContext.js";
 
-import { useAlertData, type IAlertDataContextValue } from "./AlertDataContext.js";
-import { useAlertDraft, type IAlertDraftContextValue } from "./AlertDraftContext.js";
+import { useAlertData } from "./AlertDataContext.js";
+import { useAlertDraft } from "./AlertDraftContext.js";
+import { type IAlertDataContextValue, type IAlertDraftContextValue } from "./types.js";
 import { useAlertDialogValidity } from "./useAlertDialogValidity.js";
 import { useAlertFormValidation } from "./useAlertFormValidation.js";
 

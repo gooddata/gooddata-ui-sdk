@@ -569,6 +569,17 @@ const messagesSlice = createSlice({
                 conversationId?: string;
             }>,
         ) => {
+            // Always clear the async process first to avoid stranding the UI
+            const data = getConversationData(state.conversationsData, payload.conversationId);
+            if (data) {
+                delete data.asyncProcess;
+            }
+            delete state.messageAsyncProcess;
+
+            if (!getMessageExists(state, payload.assistantMessageId, payload.conversationId)) {
+                return;
+            }
+
             const assistantMessage = getAssistantMessageStrict(
                 state,
                 payload.assistantMessageId,
@@ -579,12 +590,9 @@ const messagesSlice = createSlice({
                 assistantMessage.complete = true;
                 assistantMessage.streaming = false;
                 assistantMessage.content = makeErrorContent(payload.error);
-                const data = getConversationData(state.conversationsData, payload.conversationId);
-                delete data?.asyncProcess;
             } else {
                 assistantMessage.complete = true;
                 assistantMessage.content.push(makeErrorContents(payload.error));
-                delete state.messageAsyncProcess;
             }
         },
         /**
@@ -708,19 +716,31 @@ const messagesSlice = createSlice({
             }: PayloadAction<{
                 assistantMessageId: string;
                 conversationId?: string;
+                cancelled?: boolean;
             }>,
         ) => {
+            // Always clear the async process first to avoid stranding the UI
+            setConversationInProgress(state, false, payload.conversationId);
+            const data = getConversationData(state.conversationsData, payload.conversationId);
+            if (data) {
+                delete data.asyncProcess;
+            }
+            delete state.messageAsyncProcess;
+
+            if (!getMessageExists(state, payload.assistantMessageId, payload.conversationId)) {
+                return;
+            }
+
             const assistantMessage = getAssistantMessageStrict(
                 state,
                 payload.assistantMessageId,
                 payload.conversationId,
             );
             assistantMessage.complete = true;
-            setConversationInProgress(state, false, payload.conversationId);
-
-            const data = getConversationData(state.conversationsData, payload.conversationId);
-            delete data?.asyncProcess;
-            delete state.messageAsyncProcess;
+            assistantMessage.cancelled = payload.cancelled ?? assistantMessage.cancelled;
+            if (isChatConversationLocalItem(assistantMessage)) {
+                assistantMessage.streaming = false;
+            }
         },
         setMessagesAction: (
             state,

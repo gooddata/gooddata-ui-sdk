@@ -12,6 +12,7 @@ import {
     getExportDefinitionsTimezone,
     withExportDefinitionsTimezone,
 } from "../../state/exportDefinitions.js";
+import { type IScheduleTimezoneState } from "../../state/types.js";
 import { type IScheduleTimezoneSelection } from "../../types.js";
 
 import { useExportTimezones } from "./useExportTimezones.js";
@@ -36,7 +37,7 @@ export function useScheduleTimezone({
     scheduledExportToEdit,
     widget,
     setEditedAutomation,
-}: IUseScheduleTimezoneProps) {
+}: IUseScheduleTimezoneProps): IScheduleTimezoneState {
     const isWidget = !!widget;
     const { isTimezoneFeatureEnabled, canSelectScheduleTimezone, initialSelection, defaultResolvedTimezone } =
         useExportTimezones(isWidget);
@@ -101,29 +102,13 @@ export function useScheduleTimezone({
         isTimezoneFeatureEnabled,
         canSelectScheduleTimezone,
         scheduleTimezoneSelection: selection,
-        /**
-         * Concrete timezone the dashboard-schedule Default option currently resolves to
-         * (display only).
-         */
         defaultResolvedTimezone,
         onScheduleTimezoneChange,
-        /**
-         * True when the edited schedule cannot behave correctly as stored (widget schedule
-         * missing a dashboard-scoped timezone); feeds the apply-current-state confirmation.
-         */
         scheduleTimezoneIsStale,
         applyCurrentScheduleTimezone,
-        /**
-         * Live value for export definitions created after the dialog opened (attachment changes).
-         * Active when the section is interactive, and also when an edited schedule carries a
-         * stored timezone while the section is hidden — new definitions must then inherit the
-         * stored value instead of the store-derived default.
-         */
         scheduleTimezone: {
             active: canSelectScheduleTimezone || !!storedTimezoneId,
             timezoneId: selection.shouldSave ? selection.id : undefined,
         },
     };
 }
-
-export type ScheduleTimezoneState = ReturnType<typeof useScheduleTimezone>;

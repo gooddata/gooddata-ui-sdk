@@ -259,7 +259,6 @@
     "dialogs.automation.applyCurrentFilters.schedule.filtersAndTimezone.confirm": "<b>Warning</b>: Some filters and the time zone used when this schedule was created are no longer available or valid. Editing will apply the current dashboard filters and time zone.",
     "dialogs.automation.filters.schedule.ariaLabel": "Information about the option: Always apply these filters for future exports",
     "dialogs.schedule.management.title": "Scheduled exports",
-    "dialogs.schedule.management.delete": "Delete the schedule.",
     "dialogs.schedule.management.delete.dialog": "Delete schedule?",
     "dialogs.schedule.management.delete.dialog.confirm": "<b>The schedule</b> will be permanently deleted.",
     "dialogs.schedule.management.list.title": "Your scheduled exports",

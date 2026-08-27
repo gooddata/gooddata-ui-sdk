@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "plugin-toolkit, app-toolkit: Pin the validate-npm-package-name dependency to the exact version 5.0.1 instead of the ^5.0.0 range.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

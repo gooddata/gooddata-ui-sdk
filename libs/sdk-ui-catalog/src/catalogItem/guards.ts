@@ -3,6 +3,7 @@
 import type {
     ICatalogItem,
     ICatalogItemAttribute,
+    ICatalogItemComputedAttribute,
     ICatalogItemDashboard,
     ICatalogItemDataSet,
     ICatalogItemFact,
@@ -40,6 +41,15 @@ export function isCatalogItemMeasure(item: ICatalogItem | undefined | null): ite
  */
 export function isCatalogItemParameter(item: ICatalogItem | undefined | null): item is ICatalogItemParameter {
     return item?.type === "parameter";
+}
+
+/**
+ * @internal
+ */
+export function isCatalogItemComputedAttribute(
+    item: ICatalogItem | undefined | null,
+): item is ICatalogItemComputedAttribute {
+    return item?.type === "computedAttribute";
 }
 
 /**

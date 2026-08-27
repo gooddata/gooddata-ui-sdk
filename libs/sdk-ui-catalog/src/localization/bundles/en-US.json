@@ -71,6 +71,10 @@
         "text": "Parameter",
         "crowdinContext": "Canonical display name for the Parameter object type, used in tooltips, menus, and labels."
     },
+    "analyticsCatalog.objectType.computedAttribute.name": {
+        "text": "Computed attribute",
+        "crowdinContext": "Canonical display name for the Computed attribute object type, used in tooltips, menus, and labels."
+    },
     "analyticsCatalog.visualizationType.table.tooltip": {
         "text": "Table",
         "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type table."
@@ -775,6 +779,102 @@
         "text": "Parameter could not be deleted.",
         "crowdinContext": "Error toast shown when parameter deletion fails."
     },
+    "analyticsCatalog.computedAttribute.dialog.create.title": {
+        "text": "Create computed attribute",
+        "crowdinContext": "Title of the dialog for creating a new computed attribute as code."
+    },
+    "analyticsCatalog.computedAttribute.dialog.edit.title": {
+        "text": "Edit computed attribute",
+        "crowdinContext": "Title of the dialog for editing an existing computed attribute."
+    },
+    "analyticsCatalog.computedAttribute.dialog.edit.duplicate": {
+        "text": "Save as new",
+        "crowdinContext": "Label for the duplicate action button in the edit computed attribute dialog."
+    },
+    "analyticsCatalog.computedAttribute.dialog.edit.idImmutable": {
+        "text": "Computed attribute id cannot be changed when saving an existing computed attribute. Use Save as new instead.",
+        "crowdinContext": "Error shown when the user tries to change the computed attribute id while saving an existing computed attribute."
+    },
+    "analyticsCatalog.computedAttribute.dialog.sectionHeader": {
+        "text": "Computed attribute definition",
+        "crowdinContext": "Header above the as-code editor in the computed attribute dialog."
+    },
+    "analyticsCatalog.computedAttribute.dialog.sectionHeader.tooltip": {
+        "text": "Write a MAQL expression that assigns each row a value, using CASE WHEN branches over a metric or a fact.",
+        "crowdinContext": "Tooltip shown for the help icon next to the computed attribute definition section header."
+    },
+    "analyticsCatalog.computedAttribute.dialog.help": {
+        "text": "How to create a computed attribute?",
+        "crowdinContext": "Label for the help link in the computed attribute dialog footer."
+    },
+    "analyticsCatalog.computedAttribute.dialog.submit.error": {
+        "text": "Computed attribute could not be saved.",
+        "crowdinContext": "Fallback error shown in the computed attribute dialog when saving fails without a specific backend error message."
+    },
+    "analyticsCatalog.computedAttribute.validation.empty": {
+        "text": "Computed attribute definition cannot be empty.",
+        "crowdinContext": "Error message shown when attempting to save an empty computed attribute definition."
+    },
+    "analyticsCatalog.computedAttribute.validation.syntax": {
+        "text": "YAML syntax error",
+        "crowdinContext": "Inline error tooltip shown in the YAML editor when the syntax is invalid."
+    },
+    "analyticsCatalog.computedAttribute.validation.invalidStructure": {
+        "text": "The computed attribute definition has an invalid structure.",
+        "crowdinContext": "Validation error shown when the computed attribute YAML does not match the expected structure."
+    },
+    "analyticsCatalog.computedAttribute.validation.missingMaql": {
+        "text": "The computed attribute must define a MAQL expression.",
+        "crowdinContext": "Validation error shown when the computed attribute YAML is missing the maql field."
+    },
+    "analyticsCatalog.computedAttribute.validation.invalidTags": {
+        "text": "Tags must be a list of text values.",
+        "crowdinContext": "Validation error shown when the computed attribute tags are not a list of strings."
+    },
+    "analyticsCatalog.computedAttribute.create.defaultTitle": {
+        "text": "My computed attribute",
+        "crowdinContext": "Default placeholder title seeded into the new computed attribute as-code editor before the user types their own."
+    },
+    "analyticsCatalog.computedAttribute.create.success": {
+        "text": "Computed attribute created.",
+        "crowdinContext": "Toast shown after a computed attribute is created successfully from the Analytics Catalog."
+    },
+    "analyticsCatalog.computedAttribute.update.success": {
+        "text": "Computed attribute saved.",
+        "crowdinContext": "Toast shown after a computed attribute is updated successfully from the Analytics Catalog."
+    },
+    "analyticsCatalog.computedAttribute.load.error": {
+        "text": "The computed attribute could not be loaded.",
+        "crowdinContext": "Error toast shown when loading a computed attribute for editing or duplication fails."
+    },
+    "analyticsCatalog.computedAttribute.dialog.delete.title": {
+        "text": "Delete computed attribute?",
+        "crowdinContext": "Title of the confirmation dialog shown when deleting a computed attribute."
+    },
+    "analyticsCatalog.computedAttribute.dialog.delete.body": {
+        "text": "Are you sure you want to delete <b>{name}</b>?",
+        "crowdinContext": "Body text of the computed attribute delete confirmation dialog. {name} is the computed attribute title or fallback ID. <b>...</b> wraps the name in bold."
+    },
+    "analyticsCatalog.computedAttribute.dialog.delete.usageWarning": {
+        "text": "This attribute is used in <b>{count, plural, one {# visualization} other {# visualizations}}</b>",
+        "crowdinContext": "Warning banner in the computed attribute delete dialog when visualizations still reference it. {count} is the number of referencing visualizations, wrapped in <b>. Followed by a Show more toggle that lists their titles."
+    },
+    "analyticsCatalog.computedAttribute.dialog.delete.blocked": {
+        "text": "The computed attribute <b>{name}</b> cannot be deleted because it is used in some visualizations. To delete this attribute, remove it from all visualizations first.",
+        "crowdinContext": "Body of the computed attribute delete dialog when visualizations still reference it, so deletion is refused. {name} is the computed attribute title or fallback ID. <b>...</b> wraps the name in bold."
+    },
+    "analyticsCatalog.computedAttribute.dialog.delete.submit": {
+        "text": "Delete",
+        "crowdinContext": "Label for the Delete button in the computed attribute delete confirmation dialog."
+    },
+    "analyticsCatalog.computedAttribute.delete.success": {
+        "text": "Computed attribute deleted.",
+        "crowdinContext": "Toast shown after a computed attribute is deleted successfully from the Analytics Catalog."
+    },
+    "analyticsCatalog.computedAttribute.delete.error": {
+        "text": "Computed attribute could not be deleted.",
+        "crowdinContext": "Error toast shown when computed attribute deletion fails."
+    },
     "analyticsCatalog.metric.dialog.create.title": {
         "text": "Create metric",
         "crowdinContext": "Title of the dialog for creating a new metric as code."
@@ -850,6 +950,14 @@
     "analyticsCatalog.asCode.dialog.unrepresentable": {
         "text": "This object uses content that cannot be represented as code. It is shown read-only; use the standard editor to change it.",
         "crowdinContext": "Notice shown above the as-code editor when the object's stored content has no code representation, so the editor is read-only and saving is unavailable."
+    },
+    "analyticsCatalog.asCode.dialog.delete.showMore": {
+        "text": "Show more",
+        "crowdinContext": "Toggle in the as-code delete dialog that reveals the list of objects referencing the one being deleted."
+    },
+    "analyticsCatalog.asCode.dialog.delete.showLess": {
+        "text": "Show less",
+        "crowdinContext": "Toggle in the as-code delete dialog that hides the list of objects referencing the one being deleted."
     },
     "analyticsCatalog.asCode.dialog.autoFormat": {
         "text": "Auto-format",

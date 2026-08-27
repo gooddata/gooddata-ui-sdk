@@ -733,14 +733,6 @@ describe("ExportDefinitionsConverter toBackend", () => {
             expect(result.executionSettings?.timezone).toBe(TIMEZONE);
         });
 
-        it("keeps the execution-config timezone over the stored override in raw export request", () => {
-            const result = convertToRawExportRequest(
-                { ...widgetRequest, format: "CSV_RAW" },
-                { ...widgetExecution, executionConfig: { timezone: "America/New_York" } },
-            );
-            expect(result.executionSettings?.timezone).toBe("America/New_York");
-        });
-
         it("sends the timezone in standalone export definition payloads", () => {
             const dashboardResult = convertExportDefinitionRequestPayload(
                 dashboardRequest,

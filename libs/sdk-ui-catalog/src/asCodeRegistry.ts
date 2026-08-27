@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 
 import type { AsCodeObjectType, IAsCodeDescriptor } from "./asCode/descriptor.js";
+import { computedAttributeDescriptor } from "./computedAttribute/computedAttributeDescriptor.js";
 import { visualizationDescriptor } from "./insight/insightDescriptor.js";
 import { metricDescriptor } from "./metric/metricDescriptor.js";
 import { ObjectTypes } from "./objectType/constants.js";
@@ -13,6 +14,8 @@ import { useFeatureFlags, useWorkspacePermission } from "./permission/Permission
 /** @internal */
 export const asCodeDescriptors: Record<AsCodeObjectType, IAsCodeDescriptor> = {
     [ObjectTypes.METRIC]: metricDescriptor,
+    // Key order drives the create-menu order.
+    [ObjectTypes.COMPUTED_ATTRIBUTE]: computedAttributeDescriptor,
     [ObjectTypes.PARAMETER]: parameterDescriptor,
     [ObjectTypes.VISUALIZATION]: visualizationDescriptor,
 };
@@ -47,14 +50,16 @@ export function useCreatableObjectTypes(): ReadonlySet<AsCodeObjectType> {
     // One unconditional hook call per registered type (fixed count for the rules of hooks).
     const metric = useIsAsCodeTypeCreatable(asCodeDescriptors[ObjectTypes.METRIC]);
     const parameter = useIsAsCodeTypeCreatable(asCodeDescriptors[ObjectTypes.PARAMETER]);
+    const computedAttribute = useIsAsCodeTypeCreatable(asCodeDescriptors[ObjectTypes.COMPUTED_ATTRIBUTE]);
     const visualization = useIsAsCodeTypeCreatable(asCodeDescriptors[ObjectTypes.VISUALIZATION]);
     return useMemo(() => {
         // The `Record<AsCodeObjectType, …>` makes a newly registered type a compile error until listed here.
         const creatable: Record<AsCodeObjectType, boolean> = {
             [ObjectTypes.METRIC]: metric,
+            [ObjectTypes.COMPUTED_ATTRIBUTE]: computedAttribute,
             [ObjectTypes.PARAMETER]: parameter,
             [ObjectTypes.VISUALIZATION]: visualization,
         };
         return new Set((Object.keys(creatable) as AsCodeObjectType[]).filter((type) => creatable[type]));
-    }, [metric, parameter, visualization]);
+    }, [computedAttribute, metric, parameter, visualization]);
 }

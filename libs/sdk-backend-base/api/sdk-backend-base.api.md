@@ -138,6 +138,12 @@ import { IPostProcessing } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IPreparedExecutionOptions } from '@gooddata/sdk-backend-spi';
 import { IRawExportCustomOverrides } from '@gooddata/sdk-backend-spi';
+import { IReport } from '@gooddata/sdk-model';
+import { IReportDefinition } from '@gooddata/sdk-model';
+import { IReportPageLayout } from '@gooddata/sdk-model';
+import { IReportPageLayoutDefinition } from '@gooddata/sdk-model';
+import { IReportTemplate } from '@gooddata/sdk-model';
+import { IReportTemplateDefinition } from '@gooddata/sdk-model';
 import { IRequestCorrelationMetadata } from '@gooddata/sdk-backend-spi';
 import { IResultHeader } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-model';
@@ -169,6 +175,7 @@ import { IWorkspaceExportTemplatesService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceFactsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceInsightsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceMeasuresService } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceReportsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceSettingsService } from '@gooddata/sdk-backend-spi';
 import { KpiDrillDefinition } from '@gooddata/sdk-model';
@@ -825,6 +832,43 @@ export abstract class DecoratedWorkspaceInsightsService implements IWorkspaceIns
     readonly workspace: string;
 }
 
+// @alpha
+export abstract class DecoratedWorkspaceReportsService implements IWorkspaceReportsService {
+    protected constructor(decorated: IWorkspaceReportsService);
+    // (undocumented)
+    createReport(report: IReportDefinition): Promise<IReport>;
+    // (undocumented)
+    createReportPageLayout(page: IReportPageLayoutDefinition): Promise<IReportPageLayout>;
+    // (undocumented)
+    createReportTemplate(template: IReportTemplateDefinition): Promise<IReportTemplate>;
+    // (undocumented)
+    protected readonly decorated: IWorkspaceReportsService;
+    // (undocumented)
+    deleteReport(ref: ObjRef): Promise<void>;
+    // (undocumented)
+    deleteReportPageLayout(ref: ObjRef): Promise<void>;
+    // (undocumented)
+    deleteReportTemplate(ref: ObjRef): Promise<void>;
+    // (undocumented)
+    getReport(ref: ObjRef): Promise<IReport>;
+    // (undocumented)
+    getReportPageLayout(ref: ObjRef): Promise<IReportPageLayout>;
+    // (undocumented)
+    getReportPageLayouts(): Promise<IReportPageLayout[]>;
+    // (undocumented)
+    getReports(): Promise<IReport[]>;
+    // (undocumented)
+    getReportTemplate(ref: ObjRef): Promise<IReportTemplate>;
+    // (undocumented)
+    getReportTemplates(): Promise<IReportTemplate[]>;
+    // (undocumented)
+    updateReport(report: IReport): Promise<IReport>;
+    // (undocumented)
+    updateReportPageLayout(page: IReportPageLayout): Promise<IReportPageLayout>;
+    // (undocumented)
+    updateReportTemplate(template: IReportTemplate): Promise<IReportTemplate>;
+}
+
 // @alpha (undocumented)
 export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSettingsService {
     protected constructor(decorated: IWorkspaceSettingsService);
@@ -924,6 +968,7 @@ export type DecoratorFactories = {
     geo?: GeoDecoratorFactory;
     organizationExportTemplates?: OrganizationExportTemplatesDecoratorFactory;
     workspaceExportTemplates?: WorkspaceExportTemplatesDecoratorFactory;
+    workspaceReports?: WorkspaceReportsDecoratorFactory;
 };
 
 // @internal (undocumented)
@@ -1162,6 +1207,41 @@ export class InMemoryPaging<T> implements IPagedResource<T> {
     readonly totalCount: number;
 }
 
+// @alpha
+export class InMemoryWorkspaceReportsService implements IWorkspaceReportsService {
+    constructor(persistence?: IWorkspaceReportsPersistence | undefined);
+    // (undocumented)
+    createReport(report: IReportDefinition): Promise<IReport>;
+    // (undocumented)
+    createReportPageLayout(layout: IReportPageLayoutDefinition): Promise<IReportPageLayout>;
+    // (undocumented)
+    createReportTemplate(template: IReportTemplateDefinition): Promise<IReportTemplate>;
+    // (undocumented)
+    deleteReport(ref: ObjRef): Promise<void>;
+    // (undocumented)
+    deleteReportPageLayout(ref: ObjRef): Promise<void>;
+    // (undocumented)
+    deleteReportTemplate(ref: ObjRef): Promise<void>;
+    // (undocumented)
+    getReport(ref: ObjRef): Promise<IReport>;
+    // (undocumented)
+    getReportPageLayout(ref: ObjRef): Promise<IReportPageLayout>;
+    // (undocumented)
+    getReportPageLayouts(): Promise<IReportPageLayout[]>;
+    // (undocumented)
+    getReports(): Promise<IReport[]>;
+    // (undocumented)
+    getReportTemplate(ref: ObjRef): Promise<IReportTemplate>;
+    // (undocumented)
+    getReportTemplates(): Promise<IReportTemplate[]>;
+    // (undocumented)
+    updateReport(report: IReport): Promise<IReport>;
+    // (undocumented)
+    updateReportPageLayout(layout: IReportPageLayout): Promise<IReportPageLayout>;
+    // (undocumented)
+    updateReportTemplate(template: IReportTemplate): Promise<IReportTemplate>;
+}
+
 // @internal (undocumented)
 export interface INormalizerOptions {
     keepRemovableProperties?: boolean;
@@ -1223,6 +1303,14 @@ export interface IWidgetBaseBuilder<T extends IWidget> extends IBuilder<T> {
     title(valueOrUpdateCallback: ValueOrUpdateCallback<string>): this;
     // (undocumented)
     uri(valueOrUpdateCallback: ValueOrUpdateCallback<string>): this;
+}
+
+// @alpha
+export interface IWorkspaceReportsPersistence {
+    // (undocumented)
+    load(): string | null;
+    // (undocumented)
+    save(value: string): void;
 }
 
 // @beta
@@ -1529,6 +1617,9 @@ export type WorkspaceCatalogWrapper = (catalog: IWorkspaceCatalog) => IWorkspace
 
 // @alpha (undocumented)
 export type WorkspaceExportTemplatesDecoratorFactory = (exportTemplates: IWorkspaceExportTemplatesService, workspace: string) => IWorkspaceExportTemplatesService;
+
+// @alpha (undocumented)
+export type WorkspaceReportsDecoratorFactory = (reports: IWorkspaceReportsService, workspace: string) => IWorkspaceReportsService;
 
 // @alpha (undocumented)
 export type WorkspaceSettingsDecoratorFactory = (settings: IWorkspaceSettingsService, workspace: string) => IWorkspaceSettingsService;

@@ -1192,6 +1192,7 @@
     "fileUpload.list.label": "Naloži datoteke",
     "fileUpload.action.retryFile": "Poskusi znova {fileName}",
     "fileUpload.action.removeFile": "Odstrani {fileName}",
+    "csvDelimiterPicker.option.inherit": "Dediščina",
     "csvDelimiterPicker.option.comma": "Vejica",
     "csvDelimiterPicker.option.semicolon": "Podpičje",
     "csvDelimiterPicker.option.pipe": "Navpična črta",

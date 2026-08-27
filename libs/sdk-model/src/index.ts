@@ -1474,6 +1474,86 @@ export {
 } from "./agentSkill/index.js";
 
 export {
+    type ReportDateString,
+    type ReportBuiltInVariable,
+    type IReportVariableDefinition,
+    ReportBuiltInVariables,
+    getReportTextPlaceholders,
+    resolveReportTextPlaceholders,
+} from "./reports/variables.js";
+
+export {
+    type ReportPageLayoutNode,
+    type IReportLayoutNodeBase,
+    type IReportLayoutSection,
+    type IReportLayoutSlotRef,
+    isReportLayoutSection,
+    isReportLayoutSlotRef,
+} from "./reports/layout.js";
+
+export {
+    type IReportSlotPlaceholder,
+    type IReportSlotBase,
+    type IReportVisualizationSlot,
+    type ReportTextSlotKind,
+    type IReportStaticTextSource,
+    type IReportAiTextSource,
+    type ReportTextSource,
+    type IReportTextSlot,
+    type ReportImageSource,
+    type IReportImageSlot,
+    type ReportSlot,
+    BuiltInReportSlotTypes,
+    isReportVisualizationSlot,
+    isReportTextSlot,
+    isReportImageSlot,
+    isReportSlot,
+} from "./reports/slot.js";
+
+export {
+    type IReportPageBody,
+    type IReportPageLayoutContent,
+    type IReportPageLayoutDefinition,
+    type IReportPageLayout,
+    type IReportPageBodyValidationIssue,
+    isReportPageLayoutDefinition,
+    isReportPageLayout,
+    isReportPageLayoutContentV1,
+    validateReportPageBody,
+} from "./reports/pageLayout.js";
+
+export { type IReportContentPage, type IReportContent, isReportContentV1 } from "./reports/content.js";
+
+export {
+    type IReportTemplateDefinition,
+    type IReportTemplate,
+    type IReportBase,
+    type IReportDefinition,
+    type IReport,
+    isReportTemplateDefinition,
+    isReportTemplate,
+    isReportDefinition,
+    isReport,
+} from "./reports/report.js";
+
+export {
+    newReportPageLayoutDefinition,
+    newReportContentPageFromLayout,
+    newReportContent,
+    newReportTemplateDefinition,
+    newReportDefinitionFromTemplate,
+    newAdHocReportDefinition,
+    reportContentPage,
+} from "./reports/factory.js";
+
+export {
+    BuiltInReportPageLayoutCover,
+    BuiltInReportPageLayoutSection,
+    BuiltInReportPageLayoutViz6TextLeft,
+    BuiltInReportPageLayouts,
+} from "./reports/builtinPageLayouts.js";
+
+export {
     type ISemanticQualityReport,
     type ISemanticQualityIssue,
     type ISemanticQualityIssueObject,

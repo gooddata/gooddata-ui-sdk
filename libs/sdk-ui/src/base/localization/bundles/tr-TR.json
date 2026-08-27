@@ -1192,6 +1192,7 @@
     "fileUpload.list.label": "Dosyaları yükle",
     "fileUpload.action.retryFile": "{fileName} öğesini yeniden dene",
     "fileUpload.action.removeFile": "{fileName} öğesini kaldır",
+    "csvDelimiterPicker.option.inherit": "Devral",
     "csvDelimiterPicker.option.comma": "Virgül",
     "csvDelimiterPicker.option.semicolon": "Noktalı virgül",
     "csvDelimiterPicker.option.pipe": "Dikey çizgi",

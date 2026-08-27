@@ -28,12 +28,31 @@ vi.hoisted(() => {
     vi.resetModules();
 });
 
+// What the mocked contexts return; each test sets it through renderAlertSubmitHook.
+const contextState = vi.hoisted(() => ({
+    editedAutomation: undefined as IAutomationMetadataObjectDefinition | undefined,
+    alertToEdit: undefined as IAutomationMetadataObject | undefined,
+}));
+
 vi.mock("../../../contexts/AlertingDialogContext.js", () => ({
     useAlertingDialogContext: () => ({
         createAlert: createAlertMock,
         saveAlert: saveAlertMock,
         deleteAlert: vi.fn(),
+        alertToEdit: contextState.alertToEdit,
     }),
+}));
+
+vi.mock("../../../contexts/AutomationsContext.js", () => ({
+    useAutomationsContext: () => ({ separators: undefined }),
+}));
+
+vi.mock("../../state/AlertDraftContext.js", () => ({
+    useAlertDraft: () => ({ editedAutomation: contextState.editedAutomation }),
+}));
+
+vi.mock("../../state/AlertDataContext.js", () => ({
+    useAlertData: () => ({ supportedMeasures: [] }),
 }));
 
 vi.mock("../utils/getters.js", async (importOriginal: () => Promise<Record<string, unknown>>) => {
@@ -46,7 +65,7 @@ vi.mock("../utils/getters.js", async (importOriginal: () => Promise<Record<strin
     };
 });
 
-import { useAlertSubmit, type IUseAlertSubmitProps } from "./useAlertSubmit.js";
+import { useAlertSubmit, type IUseAlertSubmitCallbacks } from "./useAlertSubmit.js";
 
 // ---------------------------------------------------------------------------
 // Reset mocks between tests
@@ -97,13 +116,17 @@ const createdAlert: IAutomationMetadataObject = {
 // Helper
 // ---------------------------------------------------------------------------
 
-function renderAlertSubmitHook(props: Partial<IUseAlertSubmitProps> = {}) {
-    const mergedProps: IUseAlertSubmitProps = {
-        editedAutomation: baseAutomation,
-        supportedMeasures: [],
-        ...props,
-    };
-    return renderHook(() => useAlertSubmit(mergedProps), { wrapper: IntlWrapper });
+type RenderInput = IUseAlertSubmitCallbacks & {
+    editedAutomation?: IAutomationMetadataObjectDefinition;
+    alertToEdit?: IAutomationMetadataObject;
+};
+
+function renderAlertSubmitHook(input: RenderInput = {}) {
+    const { editedAutomation, alertToEdit, ...callbacks } = input;
+    // an explicit `editedAutomation: undefined` must reach the hook as undefined (the no-draft case)
+    contextState.editedAutomation = "editedAutomation" in input ? editedAutomation : baseAutomation;
+    contextState.alertToEdit = alertToEdit;
+    return renderHook(() => useAlertSubmit(callbacks), { wrapper: IntlWrapper });
 }
 
 // ---------------------------------------------------------------------------

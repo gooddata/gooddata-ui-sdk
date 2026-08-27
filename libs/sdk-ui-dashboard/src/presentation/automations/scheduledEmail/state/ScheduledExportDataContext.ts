@@ -3,22 +3,7 @@
 import { createContext, useContext } from "react";
 
 import { missingScheduledExportStateProvider } from "./missingScheduledExportStateProvider.js";
-import { type useScheduledEmailFormState } from "./useScheduledEmailFormState.js";
-
-/**
- * The scheduled-export dialog's recipient defaults: the logged-in user as a recipient, and the
- * recipient a new schedule is seeded with, which an external-recipient override replaces.
- *
- * Changes when the current user or the override changes, so not while the draft is edited. Two
- * members is the whole of it: this dialog loads no execution data. The shape is derived from
- * `useScheduledEmailFormState`, which owns these values.
- *
- * @internal
- */
-export type IScheduledExportDataContextValue = Pick<
-    ReturnType<typeof useScheduledEmailFormState>,
-    "defaultUser" | "defaultRecipient"
->;
+import { type IScheduledExportDataContextValue } from "./types.js";
 
 const ScheduledExportDataContext = createContext<IScheduledExportDataContextValue | undefined>(undefined);
 ScheduledExportDataContext.displayName = "ScheduledExportDataContext";

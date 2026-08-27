@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-vis-commons",
-    "version": "11.54.0-alpha.6",
+    "version": "11.54.0-alpha.7",
     "description": "GoodData.UI SDK - common functionality for different types of visualizations",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -70,7 +70,7 @@
         "@gooddata/reference-workspace": "workspace:*",
         "@gooddata/sdk-backend-mockingbird": "workspace:*",
         "@gooddata/stylelint-config": "workspace:*",
-        "@microsoft/api-documenter": "^7.17.0",
+        "@microsoft/api-documenter": "7.30.10",
         "@microsoft/api-extractor": "^7.55.2",
         "@testing-library/dom": "10.4.1",
         "@testing-library/react": "16.3.0",

@@ -1,8 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 
-import { FormattedMessage, defineMessage, useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import {
@@ -19,7 +19,6 @@ import {
     OverlayController,
     OverlayControllerProvider,
     ScrollablePanel,
-    UiIcon,
     UiIconButton,
     UiTooltip,
     useId,
@@ -34,23 +33,21 @@ import {
     AutomationDialogActionBar,
     AutomationDialogFooterLeft,
 } from "../../shared/slots/AutomationDialogActionBar.js";
-import {
-    type IAutomationDialogActionBarProps,
-    type IAutomationDialogDestinationProps,
-    type IAutomationDialogRecipientsProps,
-} from "../../shared/slots/types.js";
 import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/components/DeleteAlertConfirmDialog.js";
 import { useAlertActions } from "../state/AlertActionsContext.js";
 import { useAlertData } from "../state/AlertDataContext.js";
 import { useAlertDraft } from "../state/AlertDraftContext.js";
 import { useAlertFilters } from "../state/AlertFiltersContext.js";
 import { useAlertDialogValidity } from "../state/useAlertDialogValidity.js";
-import { useAlertSelectedValues } from "../state/useAlertSelectedValues.js";
 import {
-    type AlertingDialogHeaderDefaultProps,
-    type IAlertingDialogFiltersProps,
-    type IDefaultAlertingDialogProps,
-} from "../types.js";
+    useAlertingDialogActionBarProps,
+    useAlertingDialogDestinationProps,
+    useAlertingDialogFiltersProps,
+    useAlertingDialogHeaderProps,
+    useAlertingDialogRecipientsProps,
+} from "../state/useAlertingDialogRegionProps.js";
+import { useAlertSelectedValues } from "../state/useAlertSelectedValues.js";
+import { type IDefaultAlertingDialogProps } from "../types.js";
 
 import { AlertingDialogDestination } from "./AlertingDialogDestination.js";
 import { AlertingDialogFilters } from "./AlertingDialogFilters.js";
@@ -74,7 +71,6 @@ import { useAlertSubmit } from "./hooks/useAlertSubmit.js";
 import { useAlertThreshold } from "./hooks/useAlertThreshold.js";
 import { getValueSuffix } from "./utils/getters.js";
 import { isAnomalyDetection, isChangeOrDifferenceOperator } from "./utils/guards.js";
-import { isMobileView } from "./utils/responsive.js";
 
 const OVERLAY_POSITION_TYPE = "sameAsTarget";
 const CLOSE_ON_PARENT_SCROLL = true;
@@ -104,11 +100,6 @@ export function AlertingDialogRenderer({
     const dialogTitleRef = useRef<HTMLInputElement | null>(null);
 
     const {
-        isWhiteLabeled,
-        isSecondaryTitleVisible,
-        externalRecipient: externalRecipientOverride,
-        maxAutomationsRecipients,
-        isExecutionTimestampMode,
         features: {
             enableAlertOncePerInterval,
             enableAnomalyDetectionAlert,
@@ -116,10 +107,9 @@ export function AlertingDialogRenderer({
         },
         catalogAttributes,
         catalogDateDatasets,
-        separators,
         allowHourlyRecurrence,
     } = useAutomationsContext();
-    const { widgetTitle, alertToEdit, notificationChannels } = useAlertingDialogContext();
+    const { alertToEdit, notificationChannels } = useAlertingDialogContext();
 
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
 
@@ -131,15 +121,12 @@ export function AlertingDialogRenderer({
     const { editedAutomation, warningMessage } = useAlertDraft();
 
     const {
-        onTitleChange,
-        onRecipientsChange,
         onMeasureChange,
         onAttributeChange,
         onComparisonOperatorChange,
         onRelativeOperatorChange,
         onAnomalyDetectionChange,
         onComparisonTypeChange,
-        onDestinationChange,
         onTriggerModeChange,
         onTriggerIntervalChange,
         onSensitivityChange,
@@ -147,29 +134,11 @@ export function AlertingDialogRenderer({
         setEditedAutomation,
     } = useAlertActions();
 
-    const {
-        supportedMeasures,
-        supportedAttributes,
-        isResultLoading,
-        getAttributeValues,
-        defaultUser,
-        getMetricValue,
-    } = useAlertData();
+    const { supportedMeasures, supportedAttributes, isResultLoading, getAttributeValues, getMetricValue } =
+        useAlertData();
 
-    const {
-        selectedFilters,
-        availableFilters,
-        onFiltersChange,
-        onApplyCurrentFilters,
-        automationIsValid,
-        filtersAreStale,
-        automationParameters,
-        availableParameters,
-        onParameterChange,
-        onParameterDelete,
-        onParameterAdd,
-        dropStaleParameters,
-    } = useAlertFilters();
+    const { onApplyCurrentFilters, automationIsValid, filtersAreStale, dropStaleParameters } =
+        useAlertFilters();
 
     const {
         selectedMeasure,
@@ -181,8 +150,6 @@ export function AlertingDialogRenderer({
         selectedGranularity,
         selectedAttribute,
         selectedValue,
-        allowExternalRecipients,
-        allowOnlyLoggedUserRecipients,
     } = useAlertSelectedValues();
 
     const { value, onChange, onBlur, thresholdErrorMessage } = useAlertThreshold({
@@ -196,26 +163,23 @@ export function AlertingDialogRenderer({
         selectedValue,
     });
 
-    const {
-        isSubmitDisabled,
-        validationErrorMessage,
-        isParentValid,
-        canChangeMeasure,
-        isInvalidConnectionToInsight,
-    } = useAlertDialogValidity();
+    const { validationErrorMessage, canChangeMeasure, isInvalidConnectionToInsight } =
+        useAlertDialogValidity();
 
     const [isApplyCurrentFiltersDialogOpen, setIsApplyCurrentFiltersDialogOpen] =
         useState(!automationIsValid);
 
-    const { isSaving, submit } = useAlertSubmit({
-        editedAutomation,
-        supportedMeasures,
-        separators,
-        alertToEdit,
-        onSuccess,
-        onError,
-        onSaveSuccess,
-        onSaveError,
+    const { isSaving, submit } = useAlertSubmit({ onSuccess, onError, onSaveSuccess, onSaveError });
+
+    const headerDefaultProps = useAlertingDialogHeaderProps({ onCancel, ref: dialogTitleRef });
+    const filtersDefaultProps = useAlertingDialogFiltersProps();
+    const destinationDefaultProps = useAlertingDialogDestinationProps();
+    const recipientsDefaultProps = useAlertingDialogRecipientsProps();
+    const actionBarDefaultProps = useAlertingDialogActionBarProps({
+        onCancel,
+        onSubmit: () => void submit(),
+        isSaving,
+        onDelete: () => setAlertToDelete(alertToEdit as IAutomationMetadataObject),
     });
 
     const validationContextValue = useValidationContextValue(createInvalidNode({ id: "AlertingDialog" }));
@@ -232,29 +196,7 @@ export function AlertingDialogRenderer({
         ]);
     }, [validationErrorMessage, isInvalidConnectionToInsight, setInvalidDatapoints]);
 
-    const helpTextId = isMobileView()
-        ? defineMessage({ id: "dialogs.alerting.footer.title.short" }).id
-        : defineMessage({ id: "dialogs.alerting.footer.title" }).id;
-
     const titleElementId = useId();
-
-    const { secondaryTitle, secondaryTitleIcon } = useMemo(() => {
-        return {
-            secondaryTitle: widgetTitle,
-            secondaryTitleIcon: (
-                <UiIcon
-                    type="visualization"
-                    size={16}
-                    color="complementary-6"
-                    accessibilityConfig={{
-                        ariaLabel: intl.formatMessage({
-                            id: "dialogs.automation.icon.ariaLabel.sourceVisualization",
-                        }),
-                    }}
-                />
-            ),
-        };
-    }, [widgetTitle, intl]);
 
     if (isApplyCurrentFiltersDialogOpen) {
         return (
@@ -274,64 +216,6 @@ export function AlertingDialogRenderer({
         );
     }
 
-    const filtersDefaultProps: IAlertingDialogFiltersProps = {
-        availableFilters,
-        selectedFilters,
-        onFiltersChange,
-        disableDateFilters: isAnomalyDetection(editedAutomation?.alert),
-        parameters: automationParameters,
-        availableParameters,
-        onParameterAdd,
-        onParameterChange,
-        onParameterDelete,
-    };
-
-    const destinationDefaultProps: IAutomationDialogDestinationProps = {
-        notificationChannels,
-        selectedNotificationChannelId: editedAutomation?.notificationChannel,
-        onChange: onDestinationChange,
-    };
-
-    const recipientsDefaultProps: IAutomationDialogRecipientsProps = {
-        loggedUser: defaultUser,
-        value: editedAutomation?.recipients ?? [],
-        onChange: onRecipientsChange,
-        allowEmptySelection: true,
-        allowOnlyLoggedUserRecipients,
-        allowExternalRecipients,
-        maxRecipients: maxAutomationsRecipients,
-        notificationChannels,
-        notificationChannelId: editedAutomation?.notificationChannel,
-        externalRecipientOverride,
-    };
-
-    const submitDisabled = isSubmitDisabled || isSaving || isExecutionTimestampMode;
-    const actionBarDefaultProps: IAutomationDialogActionBarProps = {
-        cancelButtonText: intl.formatMessage({ id: "cancel" }),
-        submitButtonText: alertToEdit
-            ? intl.formatMessage({ id: "save" })
-            : intl.formatMessage({ id: "create" }),
-        onCancel: () => onCancel?.(),
-        onSubmit: () => void submit(),
-        isSubmitDisabled: submitDisabled,
-        isSaving,
-        submitButtonTooltipText: isExecutionTimestampMode
-            ? intl.formatMessage({ id: "dialogs.alert.save.executionTimestampMode" })
-            : undefined,
-        ...(isWhiteLabeled
-            ? {}
-            : {
-                  helpLinkText: intl.formatMessage({ id: helpTextId }),
-                  helpLinkHref: "https://www.gooddata.com/docs/cloud/create-dashboards/automation/alerts/",
-              }),
-        ...(alertToEdit
-            ? {
-                  deleteButtonText: intl.formatMessage({ id: "delete" }),
-                  onDelete: () => setAlertToDelete(alertToEdit as IAutomationMetadataObject),
-              }
-            : {}),
-    };
-
     return (
         <>
             <Overlay
@@ -345,12 +229,8 @@ export function AlertingDialogRenderer({
                         <ConfirmDialogBase
                             className="gd-notifications-channels-dialog s-gd-notifications-channels-dialog gd-dialog--wide gd-notifications-channels-dialog--wide"
                             isPositive
-                            cancelButtonText={intl.formatMessage({ id: "cancel" })}
-                            submitButtonText={
-                                alertToEdit
-                                    ? intl.formatMessage({ id: `save` })
-                                    : intl.formatMessage({ id: `create` })
-                            }
+                            cancelButtonText={actionBarDefaultProps.cancelButtonText}
+                            submitButtonText={actionBarDefaultProps.submitButtonText}
                             accessibilityConfig={{
                                 closeButton: {
                                     ariaLabel: intl.formatMessage({ id: "dialogs.alert.closeLabel" }),
@@ -358,7 +238,7 @@ export function AlertingDialogRenderer({
                                 titleElementId,
                                 dialogId: ALERTING_DIALOG_ID,
                             }}
-                            showProgressIndicator={isSaving}
+                            showProgressIndicator={actionBarDefaultProps.isSaving}
                             returnFocusAfterClose={false}
                             footerLeftRenderer={
                                 ActionBarSlot
@@ -369,7 +249,7 @@ export function AlertingDialogRenderer({
                                               helpLinkHref={actionBarDefaultProps.helpLinkHref}
                                               deleteButtonText={actionBarDefaultProps.deleteButtonText}
                                               onDelete={actionBarDefaultProps.onDelete}
-                                              isDeleteDisabled={isSaving}
+                                              isDeleteDisabled={actionBarDefaultProps.isSaving}
                                           />
                                       )
                             }
@@ -383,34 +263,14 @@ export function AlertingDialogRenderer({
                                       )
                                     : undefined
                             }
-                            isSubmitDisabled={submitDisabled}
-                            submitButtonTooltipText={
-                                isExecutionTimestampMode
-                                    ? intl.formatMessage({
-                                          id: "dialogs.alert.save.executionTimestampMode",
-                                      })
-                                    : undefined
-                            }
+                            isSubmitDisabled={actionBarDefaultProps.isSubmitDisabled}
+                            submitButtonTooltipText={actionBarDefaultProps.submitButtonTooltipText}
                             initialFocus={dialogTitleRef}
                             submitOnEnterKey={false}
                             onCancel={onCancel}
-                            onSubmit={() => void submit()}
+                            onSubmit={actionBarDefaultProps.onSubmit}
                             headline={undefined}
                             headerLeftButtonRenderer={() => {
-                                const headerDefaultProps: AlertingDialogHeaderDefaultProps = {
-                                    title: editedAutomation?.title ?? "",
-                                    onChange: onTitleChange,
-                                    onCancel,
-                                    placeholder: intl.formatMessage({
-                                        id: "dialogs.alert.title.placeholder",
-                                    }),
-                                    ref: dialogTitleRef,
-                                    secondaryTitle,
-                                    secondaryTitleIcon,
-                                    isSecondaryTitleVisible: isSecondaryTitleVisible
-                                        ? isParentValid
-                                        : undefined,
-                                };
                                 return HeaderSlot ? (
                                     <HeaderSlot
                                         Default={AlertingDialogHeader}

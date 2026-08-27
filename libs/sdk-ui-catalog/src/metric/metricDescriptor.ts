@@ -23,7 +23,7 @@ import {
     reconcileMetricDefinition,
 } from "./metricConverter.js";
 import { createCopiedMetric } from "./metricCopy.js";
-import { countMetricReferences, createMetricMutationAdapter, loadMetric } from "./metricMutationPort.js";
+import { createMetricMutationAdapter, listMetricReferences, loadMetric } from "./metricMutationPort.js";
 import { serializeMetricToYaml } from "./metricSerialization.js";
 import { validateMetricYaml } from "./metricValidation.js";
 
@@ -104,7 +104,7 @@ export const metricDescriptor = defineAsCodeDescriptor<IMeasureMetadataObjectDef
             metricYamlToDefinition({ type: "metric", title: defaultTitle, maql: "SELECT 1" }),
         seed: { load: loadMetric, loadError: capabilityMessages.loadError },
         referenceCounted: {
-            count: countMetricReferences,
+            load: listMetricReferences,
             usageWarning: capabilityMessages.deleteUsageWarning,
         },
         // A copied metric derives a human-readable id that can collide on create; identity lets the dialog retry without it.

@@ -12,7 +12,7 @@ export function convertToLocalContent(content: IChatConversationContent): IChatC
         ...content,
         ...(content.type === "multipart"
             ? {
-                  parts: convertToLocalMultipartContent(content.parts),
+                  parts: convertToLocalMultipartContent(content.parts ?? []),
               }
             : {}),
     };

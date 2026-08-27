@@ -56,6 +56,7 @@ export type ICatalogItem =
     | ICatalogItemInsight
     | ICatalogItemMeasure
     | ICatalogItemParameter
+    | ICatalogItemComputedAttribute
     | ICatalogItemAttribute
     | ICatalogItemFact
     | ICatalogItemDataSet;
@@ -122,6 +123,19 @@ export interface ICatalogItemMeasure extends ICatalogItemBase {
 export interface ICatalogItemParameter extends ICatalogItemBase {
     type: "parameter";
     definition: IParameterDefinition;
+}
+
+/**
+ * Catalog item for computed attributes.
+ *
+ * @remarks
+ * The MAQL expression and the value-shaping fields are not carried here; the editor loads the full
+ * computed attribute on demand.
+ *
+ * @public
+ */
+export interface ICatalogItemComputedAttribute extends ICatalogItemBase {
+    type: "computedAttribute";
 }
 
 /**

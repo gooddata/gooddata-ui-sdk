@@ -2,46 +2,8 @@
 
 import { createContext, useContext } from "react";
 
-import { type useScheduleTimezone } from "../DefaultScheduledEmailDialog/hooks/useScheduleTimezone.js";
-
 import { missingScheduledExportStateProvider } from "./missingScheduledExportStateProvider.js";
-import { type useScheduledEmailExportSettings } from "./useScheduledEmailExportSettings.js";
-import { type useScheduledEmailFormState } from "./useScheduledEmailFormState.js";
-
-/**
- * The scheduled-export dialog's draft mutators: the form fields' change handlers, the raw draft
- * setter, and the attachment handlers, which rebuild the automation's export definitions while
- * carrying the stored export-parameter wire across the rebuild.
- *
- * Every handler holds its identity across a keystroke, so a consumer that only mutates does not
- * re-render while the draft changes. The two attachment handlers are rebuilt when the filters they
- * write into a new export definition change. The shape is derived from `useScheduledEmailFormState`
- * and `useScheduledEmailExportSettings`, which own these handlers.
- *
- * @internal
- */
-export type IScheduledExportActionsContextValue = Pick<
-    ReturnType<typeof useScheduledEmailFormState>,
-    | "setEditedAutomation"
-    | "onTitleChange"
-    | "onRecurrenceChange"
-    | "onEvaluationModeChange"
-    | "onDestinationChange"
-    | "onRecipientsChange"
-    | "onSubjectChange"
-    | "onMessageChange"
-> &
-    Pick<
-        ReturnType<typeof useScheduledEmailExportSettings>,
-        | "onDashboardAttachmentsChange"
-        | "onWidgetAttachmentsChange"
-        | "onXlsxSettingsChange"
-        | "onPdfSettingsChange"
-        | "onCsvSettingsChange"
-        | "onCsvRawSettingsChange"
-        | "onSlidesTemplateIdChange"
-    > &
-    Pick<ReturnType<typeof useScheduleTimezone>, "onScheduleTimezoneChange" | "applyCurrentScheduleTimezone">;
+import { type IScheduledExportActionsContextValue } from "./types.js";
 
 const ScheduledExportActionsContext = createContext<IScheduledExportActionsContextValue | undefined>(
     undefined,

@@ -83,17 +83,17 @@ export function parseReferences<
         case "reasoning":
             return {
                 ...content,
-                objects: collectReferences(content.summary, catalogItems),
+                objects: collectReferences(content.summary ?? "", catalogItems),
             };
         case "text":
             return {
                 ...content,
-                objects: collectReferences(content.text, catalogItems),
+                objects: collectReferences(content.text ?? "", catalogItems),
             };
         case "multipart":
             return {
                 ...content,
-                parts: content.parts.map((part: IChatConversationMultipartLocalPart) =>
+                parts: (content.parts ?? []).map((part: IChatConversationMultipartLocalPart) =>
                     parseReferences(part, catalogItems),
                 ),
             };

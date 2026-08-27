@@ -259,7 +259,6 @@
     "dialogs.automation.applyCurrentFilters.schedule.filtersAndTimezone.confirm": "<b>Advertencia</b>: Algunos filtros y la zona horaria utilizados cuando se creó este horario ya no están disponibles o no son válidos. La edición aplicará los filtros y la zona horaria actuales del panel.",
     "dialogs.automation.filters.schedule.ariaLabel": "Información sobre la opción: Utilice siempre estos filtros para futuras exportaciones.",
     "dialogs.schedule.management.title": "Exportaciones programadas",
-    "dialogs.schedule.management.delete": "Eliminar la programación",
     "dialogs.schedule.management.delete.dialog": "¿Eliminar la programación?",
     "dialogs.schedule.management.delete.dialog.confirm": "<b>La programación</b> se eliminará permanentemente.",
     "dialogs.schedule.management.list.title": "Sus exportaciones programadas",

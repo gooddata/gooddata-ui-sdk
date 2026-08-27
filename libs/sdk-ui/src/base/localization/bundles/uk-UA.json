@@ -1192,6 +1192,7 @@
     "fileUpload.list.label": "Завантажити файли",
     "fileUpload.action.retryFile": "Повторити {fileName}",
     "fileUpload.action.removeFile": "Видалити {fileName}",
+    "csvDelimiterPicker.option.inherit": "Успадкувати",
     "csvDelimiterPicker.option.comma": "Кома",
     "csvDelimiterPicker.option.semicolon": "Крапка з комою",
     "csvDelimiterPicker.option.pipe": "Вертикальна риска",

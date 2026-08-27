@@ -30,6 +30,7 @@ import {
     newWidgetExportDefinitionMetadataObjectDefinition,
     withRebuiltExportDefinitions,
 } from "./exportDefinitions.js";
+import { type IScheduledEmailExportSettings } from "./types.js";
 
 export interface IUseScheduledEmailExportSettingsProps {
     editedAutomation: IAutomationMetadataObjectDefinition;
@@ -72,7 +73,7 @@ export function useScheduledEmailExportSettings({
     effectiveWidgetFiltersWithInsight,
     defaultPdfPageSize,
     scheduleTimezone,
-}: IUseScheduledEmailExportSettingsProps) {
+}: IUseScheduledEmailExportSettingsProps): IScheduledEmailExportSettings {
     const { dashboardId, dashboardTitle } = useScheduledEmailDialogContext();
 
     const { exportTimezoneId: defaultExportTimezoneId } = useExportTimezones(!!widget && !!insight);

@@ -152,7 +152,7 @@ function* threadUserMessage(message: Message) {
 
         // Mark the last assistant message as complete
         const messageToComplete = lastAssistantMessage ?? initialAssistantMessage;
-        if (messageToComplete && !wasCanceled) {
+        if (messageToComplete) {
             // Check if the message still exists before marking it complete
             // (it may have been removed if the chat was cleared)
             const currentMessages: Message[] = yield select(messagesSelector);
@@ -162,6 +162,7 @@ function* threadUserMessage(message: Message) {
                 yield put(
                     evaluateMessageCompleteAction({
                         assistantMessageId: messageToComplete.localId,
+                        cancelled: wasCanceled,
                     }),
                 );
             }
@@ -467,7 +468,7 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
 
         // Mark the last assistant message as complete
         const messageToComplete = lastAssistantMessage ?? initialAssistantMessage;
-        if (messageToComplete && !wasCanceled) {
+        if (messageToComplete) {
             // Check if the message still exists before marking it complete
             // (it may have been removed if the chat was cleared)
             const currentMessages: Message[] = yield select(
@@ -481,6 +482,7 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
                     evaluateMessageCompleteAction({
                         assistantMessageId: messageToComplete.localId,
                         conversationId: conversation?.localId,
+                        cancelled: wasCanceled,
                     }),
                 );
             }

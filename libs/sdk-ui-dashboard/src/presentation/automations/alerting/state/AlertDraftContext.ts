@@ -3,21 +3,7 @@
 import { createContext, useContext } from "react";
 
 import { missingAlertStateProvider } from "./missingAlertStateProvider.js";
-import { type useAlertFormState } from "./useAlertFormState.js";
-
-/**
- * The alerting dialog's edit draft: the automation being edited, the baseline it is compared
- * against, and the form-level warning and title-validity flag that move with it.
- *
- * Changes on every keystroke; consumers re-render by design. The shape is derived from
- * `useAlertFormState`, which owns these values.
- *
- * @internal
- */
-export type IAlertDraftContextValue = Pick<
-    ReturnType<typeof useAlertFormState>,
-    "editedAutomation" | "originalAutomation" | "warningMessage" | "isTitleValid"
->;
+import { type IAlertDraftContextValue } from "./types.js";
 
 const AlertDraftContext = createContext<IAlertDraftContextValue | undefined>(undefined);
 AlertDraftContext.displayName = "AlertDraftContext";

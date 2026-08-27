@@ -19,10 +19,7 @@ import { shallowEqualObjects } from "@gooddata/util";
 import type { IAutomationFiltersTab } from "../../../../model/store/filtering/types.js";
 import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
 import { useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
-import {
-    type IUseAutomationExportParameters,
-    useAutomationExportParameters,
-} from "../../shared/automationFilters/useAutomationExportParameters.js";
+import { useAutomationExportParameters } from "../../shared/automationFilters/useAutomationExportParameters.js";
 import { getDefaultSelectedFiltersFromFiltersByTab } from "../../shared/automationFilters/useAutomationFiltersSelect.js";
 import {
     getAppliedDashboardFilters,
@@ -30,6 +27,8 @@ import {
     getVisibleFiltersByFilters,
     getVisibleFiltersByFiltersByTab,
 } from "../../shared/filters/index.js";
+
+import { type IScheduledExportFiltersContextValue } from "./types.js";
 
 export interface IUseScheduledEmailFiltersModelProps {
     setEditedAutomation: Dispatch<SetStateAction<IAutomationMetadataObjectDefinition>>;
@@ -81,7 +80,7 @@ export function useScheduledEmailFiltersModel({
     setStoreFilters,
     filtersForNewAutomation,
     setParametersWire,
-}: IUseScheduledEmailFiltersModelProps): IUseScheduledEmailFiltersModel {
+}: IUseScheduledEmailFiltersModelProps): IScheduledExportFiltersContextValue {
     const {
         hiddenFilters: dashboardHiddenFilters,
         commonDateFilterId,
@@ -340,7 +339,7 @@ export function useScheduledEmailFiltersModel({
     // Held stable member-wise, not just internally: this whole object is the filter context's value,
     // so its identity is what every consumer re-renders on. The model never reads the draft, so a
     // keystroke changes no member — and without this a fresh literal would re-render every consumer.
-    return useShallowStable({
+    return useShallowStable<IScheduledExportFiltersContextValue>({
         selectedFilters: editedAutomationFilters,
         availableFilters,
         storeFilters,
@@ -370,30 +369,4 @@ function useShallowStable<T extends object>(value: T): T {
     }
 
     return previous.current;
-}
-
-/**
- * Return type of {@link useScheduledEmailFiltersModel}: its own filter model plus the whole absorbed
- * {@link useAutomationExportParameters} model, spread in verbatim so its member names stay canonical.
- * @internal
- */
-export interface IUseScheduledEmailFiltersModel extends IUseAutomationExportParameters {
-    selectedFilters: FilterContextItem[];
-    availableFilters: FilterContextItem[] | undefined;
-    storeFilters: boolean;
-    filtersByTab: IAutomationFiltersTab[] | undefined;
-    editedFiltersByTab: Record<string, FilterContextItem[]> | undefined;
-    onFiltersChange: (filters: FilterContextItem[], storeFiltersParam?: boolean) => void;
-    onFiltersByTabChange: (
-        newFiltersByTab: Record<string, FilterContextItem[]>,
-        storeFiltersParam?: boolean,
-    ) => void;
-    onApplyCurrentFilters: () => void;
-    onStoreFiltersChange: (
-        value: boolean,
-        filters?: FilterContextItem[],
-        filtersByTabParam?: Record<string, FilterContextItem[]>,
-    ) => void;
-    automationIsValid: boolean;
-    filtersAreStale: boolean;
 }

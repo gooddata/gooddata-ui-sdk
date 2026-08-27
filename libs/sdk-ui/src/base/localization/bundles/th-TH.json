@@ -1192,6 +1192,7 @@
     "fileUpload.list.label": "อัปโหลดไฟล์",
     "fileUpload.action.retryFile": "ลองใหม่ {fileName}",
     "fileUpload.action.removeFile": "นำ {fileName} ออก",
+    "csvDelimiterPicker.option.inherit": "สืบทอด",
     "csvDelimiterPicker.option.comma": "จุลภาค",
     "csvDelimiterPicker.option.semicolon": "อัฒภาค",
     "csvDelimiterPicker.option.pipe": "ไปป์",

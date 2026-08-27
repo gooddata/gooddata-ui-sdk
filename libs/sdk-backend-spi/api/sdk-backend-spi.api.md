@@ -139,6 +139,12 @@ import { IOrganizationUserGroup } from '@gooddata/sdk-model';
 import { IParameterMetadataObject } from '@gooddata/sdk-model';
 import { IParameterMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
+import { IReport } from '@gooddata/sdk-model';
+import { IReportDefinition } from '@gooddata/sdk-model';
+import { IReportPageLayout } from '@gooddata/sdk-model';
+import { IReportPageLayoutDefinition } from '@gooddata/sdk-model';
+import { IReportTemplate } from '@gooddata/sdk-model';
+import { IReportTemplateDefinition } from '@gooddata/sdk-model';
 import { IResultHeader } from '@gooddata/sdk-model';
 import { IResultWarning } from '@gooddata/sdk-model';
 import type { IScheduledMail } from '@gooddata/sdk-model';
@@ -404,6 +410,8 @@ export interface IAnalyticalWorkspace {
     parameters(): IWorkspaceParametersService;
     permissions(): IWorkspacePermissionsService;
     references(): IReferencesService;
+    // @alpha
+    reports(): IWorkspaceReportsService;
     settings(): IWorkspaceSettingsService;
     styling(): IWorkspaceStylingService;
     updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<IWorkspaceDescriptor>;
@@ -1098,6 +1106,14 @@ export interface ICollectionItemsResult {
 export interface ICommentExpressionToken {
     type: "comment";
     value: string;
+}
+
+// @public
+export interface IComputedAttributeReferencing {
+    // (undocumented)
+    insights?: IInsight[];
+    // (undocumented)
+    measures?: IMetadataObject[];
 }
 
 // @public
@@ -2911,6 +2927,7 @@ export interface IWorkspaceComputedAttributesService {
     deleteComputedAttribute(ref: ObjRef): Promise<void>;
     getComputedAttribute(ref: ObjRef, options?: IGetComputedAttributeOptions): Promise<IComputedAttributeMetadataObject>;
     getComputedAttributeExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
+    getComputedAttributeReferencingObjects(ref: ObjRef): Promise<IComputedAttributeReferencing>;
     getComputedAttributesQuery(): IComputedAttributesQuery;
     updateComputedAttribute(computedAttribute: IComputedAttributeMetadataObject): Promise<IComputedAttributeMetadataObject>;
     updateComputedAttributeMeta(computedAttribute: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IComputedAttributeMetadataObject>;
@@ -3115,6 +3132,25 @@ export interface IWorkspaceParametersService {
 // @public
 export interface IWorkspacePermissionsService {
     getPermissionsForCurrentUser(): Promise<IWorkspacePermissions>;
+}
+
+// @alpha
+export interface IWorkspaceReportsService {
+    createReport(report: IReportDefinition): Promise<IReport>;
+    createReportPageLayout(page: IReportPageLayoutDefinition): Promise<IReportPageLayout>;
+    createReportTemplate(template: IReportTemplateDefinition): Promise<IReportTemplate>;
+    deleteReport(ref: ObjRef): Promise<void>;
+    deleteReportPageLayout(ref: ObjRef): Promise<void>;
+    deleteReportTemplate(ref: ObjRef): Promise<void>;
+    getReport(ref: ObjRef): Promise<IReport>;
+    getReportPageLayout(ref: ObjRef): Promise<IReportPageLayout>;
+    getReportPageLayouts(): Promise<IReportPageLayout[]>;
+    getReports(): Promise<IReport[]>;
+    getReportTemplate(ref: ObjRef): Promise<IReportTemplate>;
+    getReportTemplates(): Promise<IReportTemplate[]>;
+    updateReport(report: IReport): Promise<IReport>;
+    updateReportPageLayout(page: IReportPageLayout): Promise<IReportPageLayout>;
+    updateReportTemplate(template: IReportTemplate): Promise<IReportTemplate>;
 }
 
 export { IWorkspaceSettings }

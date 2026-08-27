@@ -1192,6 +1192,7 @@
     "fileUpload.list.label": "Cargar archivos",
     "fileUpload.action.retryFile": "Reintentar {fileName}",
     "fileUpload.action.removeFile": "Eliminar {fileName}",
+    "csvDelimiterPicker.option.inherit": "Heredado",
     "csvDelimiterPicker.option.comma": "Coma",
     "csvDelimiterPicker.option.semicolon": "Punto y coma",
     "csvDelimiterPicker.option.pipe": "Barra vertical",

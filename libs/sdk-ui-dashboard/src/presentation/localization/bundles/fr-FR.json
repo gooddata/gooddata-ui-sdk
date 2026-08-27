@@ -259,7 +259,6 @@
     "dialogs.automation.applyCurrentFilters.schedule.filtersAndTimezone.confirm": "<b>Avertissement</b> : Certains filtres et le fuseau horaire utilisés lors de la création de cette programmation ne sont plus disponibles ou valides. La modification appliquera les filtres et le fuseau horaire actuels du tableau de bord.",
     "dialogs.automation.filters.schedule.ariaLabel": "Informations sur l'option : Utilisez toujours ces filtres pour les exportations futures.",
     "dialogs.schedule.management.title": "Exportations programmées",
-    "dialogs.schedule.management.delete": "Supprimer la planification.",
     "dialogs.schedule.management.delete.dialog": "Supprimer la planification ?",
     "dialogs.schedule.management.delete.dialog.confirm": "<b>La planification</b> sera supprimée de façon définitive.",
     "dialogs.schedule.management.list.title": "Vos exportations programmées",

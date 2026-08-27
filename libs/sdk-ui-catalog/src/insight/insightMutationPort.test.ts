@@ -7,7 +7,7 @@ import type { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 
 import type { ICatalogItemInsight } from "../catalogItem/types.js";
 
-import { countInsightReferences, createInsightMutationAdapter, loadInsight } from "./insightMutationPort.js";
+import { createInsightMutationAdapter, listInsightReferences, loadInsight } from "./insightMutationPort.js";
 
 const insightItem = { identifier: "revenue.bar", type: "insight" } as ICatalogItemInsight;
 
@@ -150,18 +150,23 @@ describe("loadInsight", () => {
     });
 });
 
-describe("insight reference count", () => {
-    it("countInsightReferences counts referencing dashboards", async () => {
+describe("insight references", () => {
+    it("listInsightReferences titles the referencing dashboards", async () => {
         const { backend, getInsightReferencingObjects } = createFakeBackend();
-        getInsightReferencingObjects.mockResolvedValueOnce({ analyticalDashboards: [{}, {}] });
+        getInsightReferencingObjects.mockResolvedValueOnce({
+            analyticalDashboards: [{ title: "Sales overview" }, { title: "Exec summary" }],
+        });
 
-        expect(await countInsightReferences(backend, "ws-1", insightItem)).toBe(2);
+        expect(await listInsightReferences(backend, "ws-1", insightItem)).toEqual([
+            "Sales overview",
+            "Exec summary",
+        ]);
     });
 
-    it("countInsightReferences reports zero when the response carries no dashboard array", async () => {
+    it("listInsightReferences reports nothing when the response carries no dashboard array", async () => {
         const { backend, getInsightReferencingObjects } = createFakeBackend();
         getInsightReferencingObjects.mockResolvedValueOnce({});
 
-        expect(await countInsightReferences(backend, "ws-1", insightItem)).toBe(0);
+        expect(await listInsightReferences(backend, "ws-1", insightItem)).toEqual([]);
     });
 });

@@ -321,6 +321,21 @@ export function bucketsTotals(buckets: IBucket[]): ITotal[];
 export function bucketTotals(bucket: IBucket): ITotal[];
 
 // @alpha
+export const BuiltInReportPageLayoutCover: IReportPageLayout;
+
+// @alpha
+export const BuiltInReportPageLayouts: readonly IReportPageLayout[];
+
+// @alpha
+export const BuiltInReportPageLayoutSection: IReportPageLayout;
+
+// @alpha
+export const BuiltInReportPageLayoutViz6TextLeft: IReportPageLayout;
+
+// @alpha
+export const BuiltInReportSlotTypes: string[];
+
+// @alpha
 export const BuiltInWidgetTypes: string[];
 
 // @alpha
@@ -946,6 +961,9 @@ export function getParameterAllowedValueTitle(allowedValue: IParameterAllowedVal
 
 // @alpha
 export function getParameterValueTitle(definition: IParameterDefinition, value: ParameterValue): string;
+
+// @alpha
+export function getReportTextPlaceholders(text: string): string[];
 
 // @alpha
 export function getSelectedElementsCount(filter: IDashboardAttributeFilter): number;
@@ -4766,6 +4784,207 @@ export interface IRemotePluggableApplicationsRegistryV1 {
     uiModule?: IRemotePluggableApplicationModule;
 }
 
+// @alpha
+export interface IReport extends IReportDefinition, IAuditableDates, IAuditableUsers {
+    isLocked?: boolean;
+    // (undocumented)
+    ref: ObjRef;
+}
+
+// @alpha
+export interface IReportAiTextSource {
+    content?: string;
+    generatedAt?: string;
+    prompt: string;
+    // (undocumented)
+    type: "ai";
+}
+
+// @alpha
+export interface IReportBase {
+    content: IReportContent;
+    // (undocumented)
+    description?: string;
+    periodEnd: ReportDateString;
+    periodStart: ReportDateString;
+    // (undocumented)
+    tags?: string[];
+    // (undocumented)
+    title: string;
+    variableValues?: Record<string, string>;
+}
+
+// @alpha
+export interface IReportContent {
+    filters?: FilterContextItem[];
+    pages: IReportContentPage[];
+    variables?: IReportVariableDefinition[];
+    version: "1";
+}
+
+// @alpha
+export interface IReportContentPage extends IReportPageBody {
+    localIdentifier: string;
+}
+
+// @alpha
+export interface IReportDefinition extends IReportBase {
+    ref?: ObjRef;
+    // (undocumented)
+    type: "report";
+}
+
+// @alpha
+export interface IReportImageSlot extends IReportSlotBase {
+    // (undocumented)
+    altText?: string;
+    fit?: "contain" | "cover" | "fill";
+    source?: ReportImageSource;
+    // (undocumented)
+    type: "image";
+}
+
+// @alpha
+export interface IReportLayoutNodeBase {
+    weight?: number;
+}
+
+// @alpha
+export interface IReportLayoutSection extends IReportLayoutNodeBase {
+    // (undocumented)
+    children: ReportPageLayoutNode[];
+    direction: "row" | "column";
+    // (undocumented)
+    type: "section";
+}
+
+// @alpha
+export interface IReportLayoutSlotRef extends IReportLayoutNodeBase {
+    slotId: string;
+    // (undocumented)
+    type: "slotRef";
+}
+
+// @alpha
+export interface IReportPageBody {
+    filters?: FilterContextItem[];
+    kind?: "cover" | "section" | "content";
+    layout: ReportPageLayoutNode;
+    slots: ReportSlot[];
+}
+
+// @alpha
+export interface IReportPageBodyValidationIssue {
+    // (undocumented)
+    message: string;
+    // (undocumented)
+    severity: "error" | "warning";
+}
+
+// @alpha
+export interface IReportPageLayout extends IReportPageLayoutDefinition, IAuditableDates, IAuditableUsers {
+    isBuiltIn?: boolean;
+    isLocked?: boolean;
+    // (undocumented)
+    ref: ObjRef;
+}
+
+// @alpha
+export interface IReportPageLayoutContent extends IReportPageBody {
+    version: "1";
+}
+
+// @alpha
+export interface IReportPageLayoutDefinition {
+    // (undocumented)
+    content: IReportPageLayoutContent;
+    // (undocumented)
+    description?: string;
+    ref?: ObjRef;
+    // (undocumented)
+    tags?: string[];
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    type: "reportPageLayout";
+}
+
+// @alpha
+export interface IReportSlotBase {
+    localIdentifier: string;
+    placeholder?: IReportSlotPlaceholder;
+    // (undocumented)
+    type: string;
+}
+
+// @alpha
+export interface IReportSlotPlaceholder {
+    hint?: string;
+    required?: boolean;
+}
+
+// @alpha
+export interface IReportStaticTextSource {
+    content: string;
+    // (undocumented)
+    type: "static";
+}
+
+// @alpha
+export interface IReportTemplate extends IReportTemplateDefinition, IAuditableDates, IAuditableUsers {
+    isLocked?: boolean;
+    // (undocumented)
+    ref: ObjRef;
+}
+
+// @alpha
+export interface IReportTemplateDefinition {
+    // (undocumented)
+    content: IReportContent;
+    // (undocumented)
+    description?: string;
+    ref?: ObjRef;
+    // (undocumented)
+    tags?: string[];
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    type: "reportTemplate";
+}
+
+// @alpha
+export interface IReportTextSlot extends IReportSlotBase {
+    // (undocumented)
+    kind: ReportTextSlotKind;
+    source?: ReportTextSource;
+    // (undocumented)
+    type: "text";
+}
+
+// @alpha
+export interface IReportVariableDefinition {
+    defaultValue?: string;
+    // (undocumented)
+    description?: string;
+    name: string;
+    title?: string;
+}
+
+// @alpha
+export interface IReportVisualizationSlot extends IReportSlotBase {
+    dateDataSet?: ObjRef;
+    filters?: FilterContextItem[];
+    ignoredFilters?: IDashboardFilterReference[];
+    ignoreReportPeriod?: boolean;
+    insight?: ObjRef;
+    properties?: VisualizationProperties;
+    // (undocumented)
+    showTitle?: boolean;
+    title?: string;
+    // (undocumented)
+    type: "visualization";
+}
+
 // @public
 export interface IResultAttributeHeader {
     // (undocumented)
@@ -5638,6 +5857,48 @@ export function isRelativeUpperBoundedDateFilterBody(obj: unknown): obj is IRela
 
 // @alpha
 export function isRemotePluggableApplicationRegistryItem(app: PluggableApplicationRegistryItem): app is RemotePluggableApplicationRegistryItem;
+
+// @alpha
+export function isReport(obj: unknown): obj is IReport;
+
+// @alpha
+export function isReportContentV1(obj: unknown): obj is IReportContent;
+
+// @alpha
+export function isReportDefinition(obj: unknown): obj is IReportDefinition;
+
+// @alpha
+export function isReportImageSlot(obj: unknown): obj is IReportImageSlot;
+
+// @alpha
+export function isReportLayoutSection(obj: unknown): obj is IReportLayoutSection;
+
+// @alpha
+export function isReportLayoutSlotRef(obj: unknown): obj is IReportLayoutSlotRef;
+
+// @alpha
+export function isReportPageLayout(obj: unknown): obj is IReportPageLayout;
+
+// @alpha
+export function isReportPageLayoutContentV1(obj: unknown): obj is IReportPageLayoutContent;
+
+// @alpha
+export function isReportPageLayoutDefinition(obj: unknown): obj is IReportPageLayoutDefinition;
+
+// @alpha
+export function isReportSlot(obj: unknown): obj is ReportSlot;
+
+// @alpha
+export function isReportTemplate(obj: unknown): obj is IReportTemplate;
+
+// @alpha
+export function isReportTemplateDefinition(obj: unknown): obj is IReportTemplateDefinition;
+
+// @alpha
+export function isReportTextSlot(obj: unknown): obj is IReportTextSlot;
+
+// @alpha
+export function isReportVisualizationSlot(obj: unknown): obj is IReportVisualizationSlot;
 
 // @public
 export function isResultAttributeHeader(obj: unknown): obj is IResultAttributeHeader;
@@ -6865,6 +7126,14 @@ export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString,
 export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: string, to: string, localIdentifier?: string, emptyValueHandling?: EmptyValues): IAbsoluteDateFilter;
 
 // @alpha
+export function newAdHocReportDefinition(options: {
+    title: string;
+    periodStart: ReportDateString;
+    periodEnd: ReportDateString;
+    pages?: IReportContentPage[];
+}, modifications?: Partial<Omit<IReportDefinition, "type" | "title" | "periodStart" | "periodEnd" | "content">>): IReportDefinition;
+
+// @alpha
 export function newAllTimeDashboardDateFilter(dataSet?: ObjRef, localIdentifier?: string, emptyValueHandling?: EmptyValues): IDashboardDateFilter;
 
 // @public
@@ -6960,6 +7229,25 @@ export function newRelativeDashboardDateFilter(granularity: DateFilterGranularit
 // @public
 export function newRelativeDateFilter(dateDataSet: ObjRef | Identifier, granularity: DateAttributeGranularity, from: number, to: number, localIdentifier?: string, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter, emptyValueHandling?: EmptyValues): IRelativeDateFilter;
 
+// @alpha
+export function newReportContent(pages: IReportContentPage[], modifications?: Partial<Omit<IReportContent, "version" | "pages">>): IReportContent;
+
+// @alpha
+export function newReportContentPageFromLayout(page: IReportPageLayout | IReportPageLayoutDefinition, localIdentifier?: string): IReportContentPage;
+
+// @alpha
+export function newReportDefinitionFromTemplate(template: IReportTemplate | IReportTemplateDefinition, options: {
+    title: string;
+    periodStart: ReportDateString;
+    periodEnd: ReportDateString;
+}, modifications?: Partial<Omit<IReportDefinition, "type" | "title" | "periodStart" | "periodEnd" | "content">>): IReportDefinition;
+
+// @alpha
+export function newReportPageLayoutDefinition(title: string, body: IReportPageBody, modifications?: Partial<Omit<IReportPageLayoutDefinition, "type" | "title" | "content">>): IReportPageLayoutDefinition;
+
+// @alpha
+export function newReportTemplateDefinition(title: string, content: IReportContent, modifications?: Partial<Omit<IReportTemplateDefinition, "type" | "title" | "content">>): IReportTemplateDefinition;
+
 // @public
 export function newTotal(type: TotalType, measureOrId: IMeasure | Identifier, attributeOrId: IAttribute | Identifier, alias?: string): ITotal;
 
@@ -6991,7 +7279,7 @@ export type ObjectOrigin = "ALL" | "PARENTS" | "NATIVE";
 export type ObjectPermissionsObjectKind = "attribute" | "fact" | "label" | "measure";
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "computedAttribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "workspaceTheme" | "workspaceColorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "userDataFilter" | "notificationChannel" | "memoryItem" | "parameter";
+export type ObjectType = "measure" | "fact" | "attribute" | "computedAttribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "workspaceTheme" | "workspaceColorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "userDataFilter" | "notificationChannel" | "memoryItem" | "parameter" | "reportPageLayout" | "reportTemplate" | "report";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;
@@ -7157,6 +7445,39 @@ export type RemotePluggableApplicationRegistryItem = IRemotePluggableApplication
 export type RemotePluggableApplicationsRegistry = IRemotePluggableApplicationsRegistryV1;
 
 // @alpha
+export type ReportBuiltInVariable = "reportTitle" | "periodStart" | "periodEnd" | "workspaceName" | "generatedAt" | "pageNumber" | "totalPages" | "logo";
+
+// @alpha
+export const ReportBuiltInVariables: ReportBuiltInVariable[];
+
+// @alpha
+export function reportContentPage(reportOrTemplate: IReport | IReportDefinition | IReportTemplate | IReportTemplateDefinition, pageLocalIdentifier: string): IReportContentPage | undefined;
+
+// @alpha
+export type ReportDateString = string;
+
+// @alpha
+export type ReportImageSource = {
+    type: "url";
+    url: string;
+} | {
+    type: "asset";
+    ref: ObjRef;
+};
+
+// @alpha
+export type ReportPageLayoutNode = IReportLayoutSection | IReportLayoutSlotRef;
+
+// @alpha
+export type ReportSlot = IReportVisualizationSlot | IReportTextSlot | IReportImageSlot;
+
+// @alpha
+export type ReportTextSlotKind = "title" | "subtitle" | "sectionTitle" | "description" | "summary" | "body" | "custom";
+
+// @alpha
+export type ReportTextSource = IReportStaticTextSource | IReportAiTextSource;
+
+// @alpha
 export type RequiredEntitlements = Condition<Partial<{
     [entitlement in IEntitlementsName]: string | boolean;
 }>>;
@@ -7169,6 +7490,9 @@ export type RequiredSettings = Condition<Partial<IPermanentSettings | IFeatureFl
 
 // @alpha
 export type RequiredWorkspacePermissions = Condition<Partial<IPluggableApplicationWorkspacePermissions>>;
+
+// @alpha
+export function resolveReportTextPlaceholders(text: string, values: Record<string, string>): string;
 
 // @alpha
 export function resolveTimezoneId(timezoneId: DashboardTimezoneId | undefined): string | undefined;
@@ -7308,6 +7632,9 @@ export type UserDataFilterDefinition = IUserDataFilterDefinition | IUserGroupDat
 
 // @public
 export function userFullName(user: IUser): string | undefined;
+
+// @alpha
+export function validateReportPageBody(body: IReportPageBody): IReportPageBodyValidationIssue[];
 
 // @internal
 export class VirtualArithmeticMeasureBuilder extends ArithmeticMeasureBuilder {

@@ -1192,6 +1192,7 @@
     "fileUpload.list.label": "Загрузить файлы",
     "fileUpload.action.retryFile": "Повторить {fileName}",
     "fileUpload.action.removeFile": "Удалить {fileName}",
+    "csvDelimiterPicker.option.inherit": "Унаследованное",
     "csvDelimiterPicker.option.comma": "Запятая",
     "csvDelimiterPicker.option.semicolon": "Точка с запятой",
     "csvDelimiterPicker.option.pipe": "Вертикальная черта",

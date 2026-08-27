@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "api-client-tiger, i18n-toolkit: Pin the mkdirp dependency to the exact version 1.0.4 instead of the ^1.0.4 range.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

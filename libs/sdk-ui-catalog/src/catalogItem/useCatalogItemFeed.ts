@@ -105,6 +105,7 @@ function getTotalCountByType(endpoints: FeedEndpoint[], totalCounts: number[]) {
         [ObjectTypes.FACT]: 0,
         [ObjectTypes.DATASET]: 0,
         [ObjectTypes.PARAMETER]: 0,
+        [ObjectTypes.COMPUTED_ATTRIBUTE]: 0,
     };
 
     endpoints.forEach((endpoint, idx) => {

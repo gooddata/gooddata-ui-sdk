@@ -259,7 +259,6 @@
     "dialogs.automation.applyCurrentFilters.schedule.filtersAndTimezone.confirm": "<b>Opozorilo</b>: Nekateri filtri in časovni pas, uporabljeni pri ustvarjanju tega urnika, niso več na voljo ali veljavni. Urejanje bo uporabilo trenutne filtre in časovni pas nadzorne plošče.",
     "dialogs.automation.filters.schedule.ariaLabel": "Informacije o možnosti: Vedno uporabi te filtre za prihodnje izvoze.",
     "dialogs.schedule.management.title": "Načrtovani izvozi",
-    "dialogs.schedule.management.delete": "Izbriši urnik.",
     "dialogs.schedule.management.delete.dialog": "Izbrisati urnik?",
     "dialogs.schedule.management.delete.dialog.confirm": "<b>Urnik</b> bo trajno odstranjen.",
     "dialogs.schedule.management.list.title": "Vaši načrtovani izvozi",

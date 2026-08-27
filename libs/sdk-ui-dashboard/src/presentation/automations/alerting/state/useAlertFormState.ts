@@ -53,6 +53,8 @@ import {
 } from "../DefaultAlertingDialog/utils/transformation.js";
 import { type AlertAttribute, type AlertMetric, type AlertMetricComparatorType } from "../types.js";
 
+import { type IAlertFormState } from "./types.js";
+
 /**
  * Props for {@link useAlertFormState}.
  * @internal
@@ -92,7 +94,7 @@ export function useAlertFormState({
     supportedMeasures,
     supportedAttributes,
     measureFormatMap,
-}: IUseAlertFormStateProps) {
+}: IUseAlertFormStateProps): IAlertFormState {
     const intl = useIntl();
 
     const {

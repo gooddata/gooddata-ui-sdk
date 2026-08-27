@@ -3,20 +3,7 @@
 import { createContext, useContext } from "react";
 
 import { missingScheduledExportStateProvider } from "./missingScheduledExportStateProvider.js";
-import { type useScheduledEmailFiltersModel } from "./useScheduledEmailFiltersModel.js";
-
-/**
- * The scheduled-export dialog's filter and export-parameter model: the current selection and the
- * available filters, flat and per-tab, the handlers that mutate them and mirror the result into the
- * draft, the store-filters toggle, the staleness gate that opens the apply-current-filters dialog,
- * and the parameter chips with their add, change, delete and apply-latest handlers.
- *
- * The model's whole return is the context value rather than a selection from it, because the model
- * is the unit a replacement reads: a member cannot be dropped from it.
- *
- * @internal
- */
-export type IScheduledExportFiltersContextValue = ReturnType<typeof useScheduledEmailFiltersModel>;
+import { type IScheduledExportFiltersContextValue } from "./types.js";
 
 const ScheduledExportFiltersContext = createContext<IScheduledExportFiltersContextValue | undefined>(
     undefined,

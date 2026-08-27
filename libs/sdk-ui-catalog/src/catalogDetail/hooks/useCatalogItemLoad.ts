@@ -11,6 +11,7 @@ import {
 
 import {
     convertAttributeToCatalogItem,
+    convertComputedAttributeToCatalogItem,
     convertDashboardToCatalogItem,
     convertDataSetToCatalogItem,
     convertFactToCatalogItem,
@@ -160,6 +161,19 @@ async function loadObjectDefinition(
                     identifier: id,
                 })
                 .then(convertParameterToCatalogItem);
+        case "computedAttribute":
+            return workspace
+                .computedAttributes()
+                .getComputedAttribute(
+                    {
+                        type: "computedAttribute",
+                        identifier: id,
+                    },
+                    {
+                        loadUserData: true,
+                    },
+                )
+                .then(convertComputedAttributeToCatalogItem);
         case "fact":
             return workspace
                 .facts()
