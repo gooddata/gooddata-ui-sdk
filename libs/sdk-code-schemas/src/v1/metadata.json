@@ -6546,7 +6546,8 @@
                     }
                 }
             },
-            "required": ["type", "defaultValue"]
+            "required": ["type", "defaultValue"],
+            "$semantic": { "type": "parameter_constraints" }
         },
         "parameterAllowedValue": {
             "title": "Parameter Allowed Value",

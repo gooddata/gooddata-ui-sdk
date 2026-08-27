@@ -161,6 +161,13 @@ export const isRadarChart = (type: string | undefined): boolean => type === Visu
 export const isMekko = (type: string | undefined): boolean => type === VisualizationTypes.MEKKO;
 
 /**
+ * The Highcharts series type Mekko renders as — code dispatching on `chart.options.chart.type` must match this, not VisualizationTypes.MEKKO.
+ *
+ * @internal
+ */
+export const MEKKO_SERIES_TYPE = "variwide";
+
+/**
  * @internal
  */
 export const isSupportingJoinedAttributeAxisName = (type: string | undefined): boolean =>
