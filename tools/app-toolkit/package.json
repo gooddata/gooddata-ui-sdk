@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/app-toolkit",
-    "version": "11.54.0-alpha.6",
+    "version": "11.54.0-alpha.7",
     "description": "CLI with useful tools for creating and maintaining GoodData web applications.",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData",
@@ -64,7 +64,7 @@
         "strip-ansi": "^6.0.0",
         "tar": "^7.5.11",
         "tslib": "2.8.1",
-        "validate-npm-package-name": "^5.0.0",
+        "validate-npm-package-name": "5.0.1",
         "webpack-cli": "7.0.3",
         "webpack-dev-server": "5.2.4"
     },
@@ -73,7 +73,7 @@
         "@gooddata/oxlint-config": "workspace:*",
         "@types/columnify": "^1.5.1",
         "@types/cross-spawn": "^6.0.2",
-        "@types/fs-extra": "^9.0.13",
+        "@types/fs-extra": "9.0.13",
         "@types/inquirer": "^9.0.3",
         "@types/lodash-es": "^4.17.12",
         "@types/node": "24.12.0",

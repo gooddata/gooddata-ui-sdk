@@ -440,6 +440,9 @@ export const objectTypeToTigerIdType: {
     memoryItem: TigerObjectType;
     notificationChannel: TigerObjectType;
     parameter: TigerObjectType;
+    report: TigerObjectType;
+    reportPageLayout: TigerObjectType;
+    reportTemplate: TigerObjectType;
     theme: TigerObjectType;
     user: TigerObjectType;
     userDataFilter: TigerObjectType;

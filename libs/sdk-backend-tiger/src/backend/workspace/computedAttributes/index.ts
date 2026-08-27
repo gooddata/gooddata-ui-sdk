@@ -1,13 +1,17 @@
 // (C) 2026 GoodData Corporation
 
+import { MetadataUtilities } from "@gooddata/api-client-tiger";
 import {
     EntitiesApi_CreateEntityComputedAttributes,
     EntitiesApi_DeleteEntityComputedAttributes,
+    EntitiesApi_GetAllEntitiesMetrics,
+    EntitiesApi_GetAllEntitiesVisualizationObjects,
     EntitiesApi_GetEntityComputedAttributes,
     EntitiesApi_PatchEntityComputedAttributes,
     EntitiesApi_UpdateEntityComputedAttributes,
 } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import type {
+    IComputedAttributeReferencing,
     IGetComputedAttributeOptions,
     IMeasureExpressionToken,
     IWorkspaceComputedAttributesService,
@@ -22,6 +26,8 @@ import {
 } from "@gooddata/sdk-model";
 
 import { convertComputedAttributeFromBackend } from "../../../convertors/fromBackend/ComputedAttributeConverter.js";
+import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter.js";
+import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter.js";
 import { convertComputedAttributeToBackend } from "../../../convertors/toBackend/ComputedAttributeConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
@@ -163,6 +169,42 @@ export class TigerWorkspaceComputedAttributes implements IWorkspaceComputedAttri
         return tokenizeExpression(maql).map((regexToken) =>
             resolveExpressionToken(regexToken, computedAttribute.included ?? [], computedAttribute.data.id),
         );
+    }
+
+    public async getComputedAttributeReferencingObjects(ref: ObjRef): Promise<IComputedAttributeReferencing> {
+        const id = objRefToIdentifier(ref, this.authCall);
+
+        // A visualization grouping by a computed attribute is the referent that exists today. The
+        // backend allows the delete; the catalog refuses it and lists these titles instead.
+        const insights = this.authCall((client) =>
+            MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesVisualizationObjects, {
+                workspaceId: this.workspace,
+                // return only visualizationObjects that have a link to the given computed attribute
+                filter: `computedAttributes.id==${id}`,
+            })
+                .then(MetadataUtilities.mergeEntitiesResults)
+                .then((visualizationObjects) =>
+                    visualizationObjects.data.map((visualizationObject) =>
+                        visualizationObjectsItemToInsight(visualizationObject, visualizationObjects.included),
+                    ),
+                ),
+        );
+
+        // Reports nothing until a metric can reference a computed attribute (pending backend support).
+        const measures = this.authCall((client) =>
+            MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesMetrics, {
+                workspaceId: this.workspace,
+                include: ["computedAttributes"],
+                filter: `computedAttributes.id==${id}`,
+            })
+                .then(MetadataUtilities.mergeEntitiesResults)
+                .then((metrics) =>
+                    metrics.data.map((metric) => convertMetricFromBackend(metric, metrics.included)),
+                ),
+        );
+
+        const [insightList, measureList] = await Promise.all([insights, measures]);
+        return { insights: insightList, measures: measureList };
     }
 
     public getComputedAttributesQuery(): ComputedAttributesQuery {

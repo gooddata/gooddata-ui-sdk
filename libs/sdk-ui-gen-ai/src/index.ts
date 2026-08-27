@@ -139,3 +139,8 @@ export {
     DefaultLandingContainer,
     type ILandingContentProps,
 } from "./components/customized/LandingContainer.js";
+export {
+    type IGenAIAssistantSlots,
+    type IGenAIAssistantLandingScreenProps,
+    type IGenAIAssistantDisclaimerProps,
+} from "./components/customized/types.js";

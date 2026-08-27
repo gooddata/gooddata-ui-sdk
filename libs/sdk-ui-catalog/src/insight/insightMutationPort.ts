@@ -25,17 +25,17 @@ export function loadInsight(
         .getInsight(idRef(item.identifier, "insight"), { loadUserData: true });
 }
 
-/** Counts the dashboards referencing an insight. @internal */
-export async function countInsightReferences(
+/** Titles of the dashboards referencing an insight. @internal */
+export async function listInsightReferences(
     backend: IAnalyticalBackend,
     workspace: string,
     item: ICatalogItemInsight,
-): Promise<number> {
+): Promise<string[]> {
     const referencing = await backend
         .workspace(workspace)
         .insights()
         .getInsightReferencingObjects(idRef(item.identifier, "insight"));
-    return referencing.analyticalDashboards?.length ?? 0;
+    return (referencing.analyticalDashboards ?? []).map((dashboard) => dashboard.title);
 }
 
 function pickInsightIdentity(

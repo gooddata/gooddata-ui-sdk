@@ -139,8 +139,7 @@ export const convertToRawExportRequest = (
         (value) => value === undefined || (Array.isArray(value) && value.length === 0),
     );
 
-    // The execution-config timezone (already the effective dashboard timezone) wins over the stored override.
-    const timezone = settings.timezone ?? exportRequest.timezoneId;
+    const timezone = exportRequest.timezoneId;
     const settingsWithTimezone = { ...settings, ...(timezone ? { timezone } : {}) };
     const executionSettings = isEmpty(settingsWithTimezone) ? undefined : settingsWithTimezone;
     const delimiter = exportRequest.settings?.delimiter;

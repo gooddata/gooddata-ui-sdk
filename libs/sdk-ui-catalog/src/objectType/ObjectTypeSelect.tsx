@@ -8,10 +8,10 @@ import { type IconType, UiButtonSegmentedControl, UiIconButton, UiTooltip } from
 
 import { objectType } from "../automation/testIds.js";
 
-import { OBJECT_TYPE_ORDER, ObjectTypes } from "./constants.js";
+import { FILTER_GROUPS, type FilterableObjectType, ObjectTypes } from "./constants.js";
 import type { ObjectType } from "./types.js";
 
-const icons: Record<ObjectType, IconType> = {
+const icons: Record<FilterableObjectType, IconType> = {
     [ObjectTypes.DASHBOARD]: "dashboard",
     [ObjectTypes.VISUALIZATION]: "visualization",
     [ObjectTypes.METRIC]: "metric",
@@ -21,7 +21,7 @@ const icons: Record<ObjectType, IconType> = {
     [ObjectTypes.PARAMETER]: "parameter",
 };
 
-const messages: Record<ObjectType, MessageDescriptor> = defineMessages({
+const messages: Record<FilterableObjectType, MessageDescriptor> = defineMessages({
     [ObjectTypes.DASHBOARD]: { id: "analyticsCatalog.objectType.dashboard.button.ariaLabel" },
     [ObjectTypes.VISUALIZATION]: { id: "analyticsCatalog.objectType.visualization.button.ariaLabel" },
     [ObjectTypes.METRIC]: { id: "analyticsCatalog.objectType.metric.button.ariaLabel" },
@@ -34,42 +34,43 @@ const messages: Record<ObjectType, MessageDescriptor> = defineMessages({
 type Props = {
     counter: Record<ObjectType, number>;
     selectedTypes: ObjectType[];
+    enabledObjectTypes: readonly ObjectType[];
     onSelect: (selectedTypes: ObjectType[]) => void;
-    showParameter?: boolean;
     ariaLabelledBy?: string;
 };
 
 export function ObjectTypeSelect({
     selectedTypes,
+    enabledObjectTypes,
     onSelect,
     counter,
-    showParameter = false,
     ariaLabelledBy,
 }: Props) {
     const intl = useIntl();
-    const visibleObjectTypes = showParameter
-        ? OBJECT_TYPE_ORDER
-        : OBJECT_TYPE_ORDER.filter((type) => type !== ObjectTypes.PARAMETER);
+    const visibleGroups = FILTER_GROUPS.filter(({ types }) =>
+        types.some((type) => enabledObjectTypes.includes(type)),
+    );
 
-    const handleSelect = (type: ObjectType) => {
-        if (selectedTypes.includes(type)) {
-            onSelect(selectedTypes.filter((selectedType) => selectedType !== type));
+    const handleSelect = (types: readonly ObjectType[]) => {
+        if (types.every((type) => selectedTypes.includes(type))) {
+            onSelect(selectedTypes.filter((selectedType) => !types.includes(selectedType)));
         } else {
-            onSelect([...selectedTypes, type]);
+            onSelect([...new Set([...selectedTypes, ...types])]);
         }
     };
 
     return (
         <UiButtonSegmentedControl role="group" aria-labelledby={ariaLabelledBy}>
-            {visibleObjectTypes.map((type) => {
-                const isSelected = selectedTypes.includes(type);
-                const ariaLabel = intl.formatMessage(messages[type], { count: counter[type] });
+            {visibleGroups.map(({ id, types }) => {
+                const isSelected = types.every((type) => selectedTypes.includes(type));
+                const count = types.reduce((sum, type) => sum + counter[type], 0);
+                const ariaLabel = intl.formatMessage(messages[id], { count });
                 return (
                     <div
-                        key={type}
+                        key={id}
                         className="gd-analytics-catalog__object-type"
                         data-testid={objectType}
-                        data-object-type={type}
+                        data-object-type={id}
                     >
                         <UiTooltip
                             triggerBy={["hover", "focus"]}
@@ -77,12 +78,12 @@ export function ObjectTypeSelect({
                                 <UiIconButton
                                     size="small"
                                     variant="secondary"
-                                    icon={icons[type]}
+                                    icon={icons[id]}
                                     isActive={isSelected}
                                     accessibilityConfig={{ ariaLabel, ariaPressed: isSelected }}
-                                    onClick={() => handleSelect(type)}
+                                    onClick={() => handleSelect(types)}
                                     // Since object types are stable, dynamic testing ID is acceptable.
-                                    dataTestId={`${objectType}/${type}`}
+                                    dataTestId={`${objectType}/${id}`}
                                 />
                             }
                             content={ariaLabel}

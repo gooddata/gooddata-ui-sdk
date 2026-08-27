@@ -1192,6 +1192,7 @@
     "fileUpload.list.label": "파일 업로드",
     "fileUpload.action.retryFile": "{fileName} 재시도",
     "fileUpload.action.removeFile": "{fileName} 제거",
+    "csvDelimiterPicker.option.inherit": "상속",
     "csvDelimiterPicker.option.comma": "쉼표",
     "csvDelimiterPicker.option.semicolon": "세미콜론",
     "csvDelimiterPicker.option.pipe": "파이프",

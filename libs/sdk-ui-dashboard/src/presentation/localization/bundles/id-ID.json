@@ -259,7 +259,6 @@
     "dialogs.automation.applyCurrentFilters.schedule.filtersAndTimezone.confirm": "<b>Peringatan</b>: Beberapa filter dan zona waktu yang digunakan saat jadwal ini dibuat tidak lagi tersedia atau valid. Pengeditan akan menerapkan filter dan zona waktu dasbor saat ini.",
     "dialogs.automation.filters.schedule.ariaLabel": "Informasi tentang opsi: Selalu gunakan filter ini untuk ekspor di masa mendatang.",
     "dialogs.schedule.management.title": "Ekspor terjadwal",
-    "dialogs.schedule.management.delete": "Hapus jadwal.",
     "dialogs.schedule.management.delete.dialog": "Hapus jadwal?",
     "dialogs.schedule.management.delete.dialog.confirm": "<b>Jadwal</b> akan dihapus secara permanen.",
     "dialogs.schedule.management.list.title": "Ekspor terjadwal Anda",

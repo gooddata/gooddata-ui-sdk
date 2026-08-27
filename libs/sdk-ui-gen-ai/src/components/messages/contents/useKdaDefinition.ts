@@ -34,7 +34,7 @@ export function useKdaDefinition(content: ChangeAnalysisContents, format?: strin
         return createKdaDefinition(
             measure,
             content.params.dateAttribute,
-            content.params.filters
+            (content.params.filters ?? [])
                 .map(getDashboardAttributeFilter)
                 .filter(Boolean) as IDashboardAttributeFilter[],
             "previous_period",
@@ -83,7 +83,7 @@ export function createKdaDefinition(
             ...measure,
             measure: {
                 ...measure.measure,
-                title: measure.measure.title ?? measure.measure.alias ?? measure.measure.localIdentifier,
+                title: measure.measure?.title ?? measure.measure?.alias ?? measure.measure?.localIdentifier,
             },
         },
         metrics: [],

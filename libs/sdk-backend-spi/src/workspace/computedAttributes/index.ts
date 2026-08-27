@@ -3,6 +3,8 @@
 import type {
     IComputedAttributeMetadataObject,
     IComputedAttributeMetadataObjectDefinition,
+    IInsight,
+    IMetadataObject,
     IMetadataObjectBase,
     IMetadataObjectIdentity,
     ObjRef,
@@ -13,6 +15,22 @@ import type { IFilterBaseOptions } from "../../common/filtering.js";
 import type { IPagedResource } from "../../common/paging.js";
 import type { QueryMethod } from "../../common/query.js";
 import type { IMeasureExpressionToken } from "../measures/measure.js";
+
+/**
+ * Contains information about objects that may be referencing a computed attribute. See
+ * {@link IWorkspaceComputedAttributesService.getComputedAttributeReferencingObjects}.
+ *
+ * @remarks
+ * Insights that group by the computed attribute are the referents that exist today. Measures are
+ * also reported; a metric cannot reference a computed attribute yet, so that list is empty until
+ * the backend supports it.
+ *
+ * @public
+ */
+export interface IComputedAttributeReferencing {
+    measures?: IMetadataObject[];
+    insights?: IInsight[];
+}
 
 /**
  * Options for getting a computed attribute.
@@ -94,6 +112,14 @@ export interface IWorkspaceComputedAttributesService {
      * @returns promise of the expression tokens
      */
     getComputedAttributeExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
+
+    /**
+     * Get objects that reference the computed attribute.
+     *
+     * @param ref - ref of the computed attribute
+     * @returns promise of the referencing objects
+     */
+    getComputedAttributeReferencingObjects(ref: ObjRef): Promise<IComputedAttributeReferencing>;
 
     /**
      * Computed attributes query factory.

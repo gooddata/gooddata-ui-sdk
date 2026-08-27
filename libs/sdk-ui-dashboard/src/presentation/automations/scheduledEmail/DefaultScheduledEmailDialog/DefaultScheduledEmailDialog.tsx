@@ -3,7 +3,7 @@
 import { type KeyboardEvent, useCallback, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
-import { defineMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import {
     type DashboardAttachmentType,
@@ -22,7 +22,6 @@ import {
     OverlayControllerProvider,
     RecurrenceForm,
     ScrollablePanel,
-    UiIcon,
     UiTabs,
     getTimezoneDisplayLabel,
     isEnterKey,
@@ -38,27 +37,23 @@ import {
     AutomationDialogActionBar,
     AutomationDialogFooterLeft,
 } from "../../shared/slots/AutomationDialogActionBar.js";
-import {
-    type IAutomationDialogActionBarProps,
-    type IAutomationDialogDestinationProps,
-} from "../../shared/slots/types.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
 import { useScheduledExportActions } from "../state/ScheduledExportActionsContext.js";
-import { useScheduledExportData } from "../state/ScheduledExportDataContext.js";
 import { useScheduledExportDraft } from "../state/ScheduledExportDraftContext.js";
 import { useScheduledExportFilters } from "../state/ScheduledExportFiltersContext.js";
+import {
+    useScheduledEmailDialogActionBarProps,
+    useScheduledEmailDialogDestinationProps,
+    useScheduledEmailDialogFiltersProps,
+    useScheduledEmailDialogHeaderProps,
+    useScheduledEmailDialogRecipientsProps,
+    useScheduledEmailDialogTimezoneProps,
+} from "../state/useScheduledEmailDialogRegionProps.js";
 import { useScheduledExportAttachments } from "../state/useScheduledExportAttachments.js";
 import { useScheduledExportDialogValidity } from "../state/useScheduledExportDialogValidity.js";
-import {
-    type IDefaultScheduledEmailDialogProps,
-    type IScheduledEmailDialogFiltersProps,
-    type IScheduledEmailDialogRecipientsProps,
-    type ScheduledEmailDialogHeaderDefaultProps,
-    type ScheduledEmailDialogTimezoneDefaultProps,
-} from "../types.js";
+import { type IDefaultScheduledEmailDialogProps } from "../types.js";
 import { getDefaultCronExpression } from "../utils/cron.js";
-import { isMobileView } from "../utils/responsive.js";
 import { TIMEZONE_DEFAULT } from "../utils/timezone.js";
 
 import { DashboardAttachments } from "./components/Attachments/DashboardAttachments.js";
@@ -114,20 +109,9 @@ export function ScheduledMailDialogRenderer({
 
     const [selectedTabId, setSelectedTabId] = useState<"general" | "filters">("general");
 
-    const {
-        isWhiteLabeled,
-        externalRecipient: externalRecipientOverride,
-        isSecondaryTitleVisible,
-        tabIds,
-    } = useAutomationsContext();
-    const {
-        exportTemplates,
-        widgetTitle,
-        scheduledExportToEdit,
-        widget,
-        dashboardFilters,
-        notificationChannels,
-    } = useScheduledEmailDialogContext();
+    const { isWhiteLabeled, tabIds } = useAutomationsContext();
+    const { exportTemplates, widget, dashboardFilters, notificationChannels } =
+        useScheduledEmailDialogContext();
 
     const handleScheduleDeleteSuccess = () => {
         onDeleteSuccess?.();
@@ -139,10 +123,8 @@ export function ScheduledMailDialogRenderer({
         dashboardTitle,
         dateFormat,
         weekStart,
-        maxAutomationsRecipients,
         allowHourlyRecurrence,
         isCrossFiltering,
-        isExecutionTimestampMode,
         isSlidesExportEnabled,
         isAccessibilityModeEnabled,
         enableAutomationEvaluationMode,
@@ -153,16 +135,11 @@ export function ScheduledMailDialogRenderer({
         startDate,
         isTimezoneFeatureEnabled,
         canSelectScheduleTimezone,
-        scheduleTimezoneSelection,
-        defaultResolvedTimezone,
         scheduleTimezoneIsStale,
     } = useScheduledExportDraft();
     const {
-        onTitleChange,
         onRecurrenceChange,
         onEvaluationModeChange,
-        onDestinationChange,
-        onRecipientsChange,
         onSubjectChange,
         onMessageChange,
         onDashboardAttachmentsChange,
@@ -172,42 +149,16 @@ export function ScheduledMailDialogRenderer({
         onCsvSettingsChange,
         onCsvRawSettingsChange,
         onSlidesTemplateIdChange,
-        onScheduleTimezoneChange,
         applyCurrentScheduleTimezone,
     } = useScheduledExportActions();
-    const { defaultUser } = useScheduledExportData();
     const {
-        selectedFilters,
-        availableFilters,
-        storeFilters,
-        filtersByTab,
-        editedFiltersByTab,
-        onFiltersChange,
-        onFiltersByTabChange,
         onApplyCurrentFilters,
-        onStoreFiltersChange,
         automationIsValid,
-        parametersEnabled,
-        visibleParametersByTab,
-        availableParametersByTab,
-        flatTabId,
-        onParameterAdd,
-        onParameterChange,
-        onParameterDelete,
-        onParameterAddByTab,
-        onParameterChangeByTab,
-        onParameterDeleteByTab,
         applyLatest: applyLatestParameters,
     } = useScheduledExportFilters();
     const { selectedAttachments, xlsxSettings, pdfSettings, csvSettings, csvRawSettings, slidesTemplateIds } =
         useScheduledExportAttachments();
-    const {
-        isSubmitDisabled,
-        validationErrorMessage,
-        isParentValid,
-        allowExternalRecipients,
-        allowOnlyLoggedUserRecipients,
-    } = useScheduledExportDialogValidity();
+    const { isSubmitDisabled, validationErrorMessage } = useScheduledExportDialogValidity();
 
     // a stale schedule timezone repairs through the same consent dialog as stale filters
     const [isApplyCurrentFiltersDialogOpen, setIsApplyCurrentFiltersDialogOpen] = useState(
@@ -215,14 +166,7 @@ export function ScheduledMailDialogRenderer({
     );
 
     const { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage } =
-        useSaveScheduledEmailToBackend(editedAutomation, {
-            onSuccess,
-            onError,
-            onSubmit,
-            onSaveSuccess,
-            onSaveError,
-            onSave,
-        });
+        useSaveScheduledEmailToBackend({ onSuccess, onError, onSubmit, onSaveSuccess, onSaveError, onSave });
 
     const { returnFocusTo } = useScheduleEmailDialogAccessibility();
 
@@ -237,13 +181,15 @@ export function ScheduledMailDialogRenderer({
 
     const errorMessage = savingErrorMessage ?? validationErrorMessage ?? missingAttachmentsErrorMessage;
 
-    const helpTextId = isMobileView()
-        ? defineMessage({ id: "dialogs.schedule.email.footer.title.short" }).id
-        : defineMessage({ id: "dialogs.schedule.email.footer.title" }).id;
-
     const titleElementId = useIdPrefixed("title");
 
-    const submitDisabled = isSubmitDisabled || isSavingScheduledEmail || isExecutionTimestampMode;
+    const actionBarDefaultProps = useScheduledEmailDialogActionBarProps({
+        onCancel,
+        onSubmit: handleSaveScheduledEmail,
+        isSaving: isSavingScheduledEmail,
+        onDelete: () => setScheduledEmailToDelete(editedAutomation),
+    });
+    const submitDisabled = actionBarDefaultProps.isSubmitDisabled;
 
     const handleSubmitForm = useCallback(
         (e: KeyboardEvent) => {
@@ -254,49 +200,17 @@ export function ScheduledMailDialogRenderer({
         [submitDisabled, handleSaveScheduledEmail],
     );
 
-    // the exact props the default dialog renders the "Time zone" section with; also handed to the
-    // Timezone slot so a wrap keeps the default behavior
-    const timezoneDefaultProps: ScheduledEmailDialogTimezoneDefaultProps = {
-        isWidget: !!widget,
-        selection: scheduleTimezoneSelection,
-        defaultResolvedTimezone,
-        onTimezoneChange: onScheduleTimezoneChange,
-    };
-
-    const { secondaryTitle, secondaryTitleIcon } = useMemo(() => {
-        if (widget) {
-            return {
-                secondaryTitle: widgetTitle,
-                secondaryTitleIcon: (
-                    <UiIcon
-                        type="visualization"
-                        size={16}
-                        color="complementary-6"
-                        accessibilityConfig={{
-                            ariaLabel: intl.formatMessage({
-                                id: "dialogs.automation.icon.ariaLabel.sourceVisualization",
-                            }),
-                        }}
-                    />
-                ),
-            };
-        }
-        return {
-            secondaryTitle: dashboardTitle,
-            secondaryTitleIcon: (
-                <UiIcon
-                    type="dashboard"
-                    size={16}
-                    color="complementary-6"
-                    accessibilityConfig={{
-                        ariaLabel: intl.formatMessage({
-                            id: "dialogs.automation.icon.ariaLabel.sourceDashboard",
-                        }),
-                    }}
-                />
-            ),
-        };
-    }, [widget, widgetTitle, dashboardTitle, intl]);
+    const headerDefaultProps = useScheduledEmailDialogHeaderProps({
+        onBack,
+        onTitleKeyDown: handleSubmitForm,
+        ref: dialogTitleRef,
+    });
+    const filtersDefaultProps = useScheduledEmailDialogFiltersProps();
+    const destinationDefaultProps = useScheduledEmailDialogDestinationProps();
+    const recipientsDefaultProps = useScheduledEmailDialogRecipientsProps({
+        onKeyDownSubmit: handleSubmitForm,
+    });
+    const timezoneDefaultProps = useScheduledEmailDialogTimezoneProps();
 
     const tabs: IUiTab[] = useMemo(
         () => [
@@ -349,76 +263,6 @@ export function ScheduledMailDialogRenderer({
     );
     const isInPlatformChannel = selectedChannel?.destinationType === "inPlatform";
 
-    const filtersDefaultProps: IScheduledEmailDialogFiltersProps = {
-        availableFilters,
-        selectedFilters,
-        onFiltersChange,
-        storeFilters,
-        onStoreFiltersChange,
-        isDashboardAutomation: !widget,
-        filtersByTab,
-        editedFiltersByTab,
-        onFiltersByTabChange,
-        parameters: flatTabId ? visibleParametersByTab[flatTabId] : undefined,
-        availableParameters: flatTabId ? availableParametersByTab[flatTabId] : undefined,
-        onParameterAdd,
-        onParameterChange,
-        onParameterDelete,
-        parametersByTab: visibleParametersByTab,
-        availableParametersByTab,
-        onParameterAddByTab,
-        onParameterChangeByTab,
-        onParameterDeleteByTab,
-        parametersEnabled,
-    };
-
-    const destinationDefaultProps: IAutomationDialogDestinationProps = {
-        notificationChannels,
-        selectedNotificationChannelId: editedAutomation.notificationChannel,
-        onChange: onDestinationChange,
-    };
-
-    const recipientsDefaultProps: IScheduledEmailDialogRecipientsProps = {
-        loggedUser: defaultUser,
-        value: editedAutomation.recipients ?? [],
-        onChange: onRecipientsChange,
-        allowEmptySelection: true,
-        allowOnlyLoggedUserRecipients,
-        allowExternalRecipients,
-        maxRecipients: maxAutomationsRecipients,
-        notificationChannels,
-        notificationChannelId: editedAutomation.notificationChannel,
-        onKeyDownSubmit: handleSubmitForm,
-        externalRecipientOverride,
-    };
-
-    const actionBarDefaultProps: IAutomationDialogActionBarProps = {
-        cancelButtonText: intl.formatMessage({ id: "cancel" }),
-        submitButtonText: scheduledExportToEdit
-            ? intl.formatMessage({ id: "dialogs.schedule.email.save" })
-            : intl.formatMessage({ id: "dialogs.schedule.email.create" }),
-        onCancel: () => onCancel?.(),
-        onSubmit: handleSaveScheduledEmail,
-        isSubmitDisabled: submitDisabled,
-        isSaving: isSavingScheduledEmail,
-        submitButtonTooltipText: isExecutionTimestampMode
-            ? intl.formatMessage({ id: "dialogs.schedule.email.save.executionTimestampMode" })
-            : undefined,
-        ...(isWhiteLabeled
-            ? {}
-            : {
-                  helpLinkText: intl.formatMessage({ id: helpTextId }),
-                  helpLinkHref:
-                      "https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#ScheduleExportsinDashboards-ScheduleExport",
-              }),
-        ...(scheduledExportToEdit
-            ? {
-                  deleteButtonText: intl.formatMessage({ id: "delete" }),
-                  onDelete: () => setScheduledEmailToDelete(editedAutomation),
-              }
-            : {}),
-    };
-
     return (
         <>
             <Overlay
@@ -432,12 +276,8 @@ export function ScheduledMailDialogRenderer({
                         <ConfirmDialogBase
                             className="gd-notifications-channels-dialog s-gd-notifications-channels-dialog gd-dialog--wide gd-notifications-channels-dialog--wide"
                             isPositive
-                            cancelButtonText={intl.formatMessage({ id: "cancel" })}
-                            submitButtonText={
-                                scheduledExportToEdit
-                                    ? intl.formatMessage({ id: `dialogs.schedule.email.save` })
-                                    : intl.formatMessage({ id: `dialogs.schedule.email.create` })
-                            }
+                            cancelButtonText={actionBarDefaultProps.cancelButtonText}
+                            submitButtonText={actionBarDefaultProps.submitButtonText}
                             accessibilityConfig={{
                                 closeButton: {
                                     ariaLabel: intl.formatMessage({
@@ -447,7 +287,7 @@ export function ScheduledMailDialogRenderer({
                                 titleElementId,
                                 dialogId: SCHEDULED_EMAIL_DIALOG_ID,
                             }}
-                            showProgressIndicator={isSavingScheduledEmail}
+                            showProgressIndicator={actionBarDefaultProps.isSaving}
                             returnFocusTo={returnFocusTo}
                             returnFocusAfterClose={false}
                             footerLeftRenderer={
@@ -459,7 +299,7 @@ export function ScheduledMailDialogRenderer({
                                               helpLinkHref={actionBarDefaultProps.helpLinkHref}
                                               deleteButtonText={actionBarDefaultProps.deleteButtonText}
                                               onDelete={actionBarDefaultProps.onDelete}
-                                              isDeleteDisabled={isSavingScheduledEmail}
+                                              isDeleteDisabled={actionBarDefaultProps.isSaving}
                                           />
                                       )
                             }
@@ -473,35 +313,14 @@ export function ScheduledMailDialogRenderer({
                                       )
                                     : undefined
                             }
-                            isSubmitDisabled={submitDisabled}
-                            submitButtonTooltipText={
-                                isExecutionTimestampMode
-                                    ? intl.formatMessage({
-                                          id: "dialogs.schedule.email.save.executionTimestampMode",
-                                      })
-                                    : undefined
-                            }
+                            isSubmitDisabled={actionBarDefaultProps.isSubmitDisabled}
+                            submitButtonTooltipText={actionBarDefaultProps.submitButtonTooltipText}
                             initialFocus={dialogTitleRef}
                             submitOnEnterKey={false}
                             onCancel={onCancel}
-                            onSubmit={handleSaveScheduledEmail}
+                            onSubmit={actionBarDefaultProps.onSubmit}
                             headline={undefined}
                             headerLeftButtonRenderer={() => {
-                                const headerDefaultProps: ScheduledEmailDialogHeaderDefaultProps = {
-                                    title: editedAutomation.title ?? "",
-                                    onChange: onTitleChange,
-                                    onBack,
-                                    placeholder: intl.formatMessage({
-                                        id: "dialogs.schedule.email.title.placeholder",
-                                    }),
-                                    ref: dialogTitleRef,
-                                    onTitleKeyDown: handleSubmitForm,
-                                    secondaryTitle,
-                                    secondaryTitleIcon,
-                                    isSecondaryTitleVisible: isSecondaryTitleVisible
-                                        ? isParentValid
-                                        : undefined,
-                                };
                                 return HeaderSlot ? (
                                     <HeaderSlot
                                         Default={ScheduledEmailDialogHeader}
@@ -785,9 +604,7 @@ function useDefaultScheduledEmailDialogData() {
         locale,
         settings,
         weekStart,
-        maxAutomationsRecipients,
         allowHourlyRecurrence,
-        isExecutionTimestampMode,
         features: { enableSlideshowExports, enableAutomationEvaluationMode },
     } = useAutomationsContext();
     const { dashboardTitle, dateFormat, isCrossFiltering } = useScheduledEmailDialogContext();
@@ -797,10 +614,8 @@ function useDefaultScheduledEmailDialogData() {
         dashboardTitle,
         dateFormat,
         weekStart,
-        maxAutomationsRecipients,
         allowHourlyRecurrence,
         isCrossFiltering,
-        isExecutionTimestampMode,
         isSlidesExportEnabled: enableSlideshowExports,
         isAccessibilityModeEnabled: settings?.enableAccessibilityMode === true,
         enableAutomationEvaluationMode,

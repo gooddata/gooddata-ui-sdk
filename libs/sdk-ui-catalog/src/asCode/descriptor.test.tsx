@@ -4,9 +4,15 @@ import { renderHook } from "@testing-library/react";
 import type { PropsWithChildren } from "react";
 import { describe, expect, it } from "vitest";
 
-import type { IMeasureMetadataObject, IMeasureMetadataObjectDefinition } from "@gooddata/sdk-model";
+import type {
+    IComputedAttributeMetadataObject,
+    IComputedAttributeMetadataObjectDefinition,
+    IMeasureMetadataObject,
+    IMeasureMetadataObjectDefinition,
+} from "@gooddata/sdk-model";
 
 import { getAsCodeDescriptor } from "../asCodeRegistry.js";
+import { computedAttributeDescriptor } from "../computedAttribute/computedAttributeDescriptor.js";
 import { TestIntlProvider } from "../localization/TestIntlProvider.js";
 import { metricDescriptor } from "../metric/metricDescriptor.js";
 import { ObjectTypes } from "../objectType/constants.js";
@@ -28,6 +34,9 @@ describe("registry", () => {
     it("resolves the descriptor for each as-code type", () => {
         expect(getAsCodeDescriptor(ObjectTypes.METRIC)?.objectType).toBe(ObjectTypes.METRIC);
         expect(getAsCodeDescriptor(ObjectTypes.PARAMETER)?.objectType).toBe(ObjectTypes.PARAMETER);
+        expect(getAsCodeDescriptor(ObjectTypes.COMPUTED_ATTRIBUTE)?.objectType).toBe(
+            ObjectTypes.COMPUTED_ATTRIBUTE,
+        );
     });
 
     it("returns undefined for a type that is not editable as code", () => {
@@ -93,6 +102,72 @@ describe("metricDescriptor", () => {
             title: "Edited",
             expression: "SELECT 2",
             metricType: "CURRENCY",
+        });
+    });
+});
+
+describe("computedAttributeDescriptor", () => {
+    it("emptyDefinition seeds a blank computed attribute with the given title and no maql", () => {
+        expect(computedAttributeDescriptor.emptyDefinition("New CA")).toMatchObject({
+            type: "computedAttribute",
+            title: "New CA",
+            expression: "",
+        });
+    });
+
+    it("loads the full object for editing — the catalog item carries no MAQL", () => {
+        expect(isLoadSeed(computedAttributeDescriptor.seed)).toBe(true);
+    });
+
+    it("toCopy bumps the title and preserves the non-YAML fields of the source", () => {
+        const source: IComputedAttributeMetadataObject = {
+            id: "rep_performance",
+            uri: "rep_performance",
+            ref: { identifier: "rep_performance", type: "computedAttribute" },
+            type: "computedAttribute",
+            title: "Rep Performance",
+            description: "Band",
+            tags: [],
+            production: true,
+            deprecated: false,
+            unlisted: false,
+            expression: 'SELECT CASE WHEN {metric/x} > 1 THEN "High" ELSE "Low" END',
+            dataType: "STRING",
+            displayForms: [],
+        };
+        expect(computedAttributeDescriptor.toCopy(source)).toMatchObject({
+            title: "Rep Performance (2)",
+            expression: 'SELECT CASE WHEN {metric/x} > 1 THEN "High" ELSE "Low" END',
+            dataType: "STRING",
+        });
+    });
+
+    it("reconcile overlays the parsed YAML onto the base definition, keeping non-YAML fields", () => {
+        const base: IComputedAttributeMetadataObjectDefinition = {
+            id: "rep_performance",
+            type: "computedAttribute",
+            title: "Original",
+            description: "",
+            tags: [],
+            expression: "SELECT 1",
+            dataType: "STRING",
+        };
+        const parsed: IComputedAttributeMetadataObjectDefinition = {
+            id: "rep_performance",
+            type: "computedAttribute",
+            title: "Edited",
+            description: "",
+            tags: [],
+            expression: "SELECT 2",
+        };
+        const { result } = renderHook(() => computedAttributeDescriptor.useEditing(), {
+            wrapper: EditingWrapper,
+        });
+        expect(result.current?.reconcile?.(base, parsed)).toMatchObject({
+            id: "rep_performance",
+            title: "Edited",
+            expression: "SELECT 2",
+            dataType: "STRING",
         });
     });
 });

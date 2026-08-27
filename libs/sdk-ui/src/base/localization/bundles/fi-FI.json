@@ -1192,6 +1192,7 @@
     "fileUpload.list.label": "Lataa tiedostoja",
     "fileUpload.action.retryFile": "Yritä uudelleen {fileName}",
     "fileUpload.action.removeFile": "Poista {fileName}",
+    "csvDelimiterPicker.option.inherit": "Peri",
     "csvDelimiterPicker.option.comma": "Pilkku",
     "csvDelimiterPicker.option.semicolon": "Puolipiste",
     "csvDelimiterPicker.option.pipe": "Pystyviiva",

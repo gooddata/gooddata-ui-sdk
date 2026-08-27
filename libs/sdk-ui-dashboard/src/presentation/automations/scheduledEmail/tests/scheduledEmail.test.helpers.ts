@@ -20,8 +20,10 @@ import {
     SENTINEL_WIDGET as SHARED_SENTINEL_WIDGET,
     WORKSPACE_PARAMETER as SHARED_WORKSPACE_PARAMETER,
 } from "../../tests/shared.test.helpers.js";
-import { type IScheduledExportDataContextValue } from "../state/ScheduledExportDataContext.js";
-import { type IScheduledExportDraftContextValue } from "../state/ScheduledExportDraftContext.js";
+import {
+    type IScheduledExportDataContextValue,
+    type IScheduledExportDraftContextValue,
+} from "../state/types.js";
 
 export const AUTOMATIONS_CONTEXT = SHARED_AUTOMATIONS_CONTEXT;
 export const CURRENT_USER = SHARED_CURRENT_USER;

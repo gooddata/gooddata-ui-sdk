@@ -259,7 +259,6 @@
     "dialogs.automation.applyCurrentFilters.schedule.filtersAndTimezone.confirm": "<b>คำเตือน</b>: ตัวกรองบางรายการและเขตเวลาที่ใช้เมื่อสร้างกำหนดการนี้ไม่พร้อมใช้งานหรือไม่ถูกต้องอีกต่อไป การแก้ไขจะนำตัวกรองและเขตเวลาปัจจุบันของแดชบอร์ดไปใช้",
     "dialogs.automation.filters.schedule.ariaLabel": "ข้อมูลเกี่ยวกับตัวเลือก: ใช้ตัวกรองเหล่านี้เสมอสำหรับการส่งออกในอนาคต",
     "dialogs.schedule.management.title": "การส่งออกตามกำหนดการ",
-    "dialogs.schedule.management.delete": "ลบกำหนดการ",
     "dialogs.schedule.management.delete.dialog": "ลบกำหนดการหรือไม่?",
     "dialogs.schedule.management.delete.dialog.confirm": "<b>กำหนดการ</b>จะถูกลบอย่างถาวร",
     "dialogs.schedule.management.list.title": "การส่งออกตามกำหนดการของคุณ",

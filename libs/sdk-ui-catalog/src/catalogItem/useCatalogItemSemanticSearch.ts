@@ -95,7 +95,8 @@ function convertTypesToGenAiTypes(types: ObjectType[]): GenAIObjectType[] {
     }
     return types
         .map((a) => {
-            if (a === "parameter") {
+            // Neither type is indexed for semantic search.
+            if (a === "parameter" || a === "computedAttribute") {
                 return null;
             }
             return mapGenAIObjectType(a);

@@ -1192,6 +1192,7 @@
     "fileUpload.list.label": "Téléverser des fichiers",
     "fileUpload.action.retryFile": "Réessayer {fileName}",
     "fileUpload.action.removeFile": "Supprimer {fileName}",
+    "csvDelimiterPicker.option.inherit": "Hériter",
     "csvDelimiterPicker.option.comma": "Virgule",
     "csvDelimiterPicker.option.semicolon": "Point-virgule",
     "csvDelimiterPicker.option.pipe": "Barre verticale",

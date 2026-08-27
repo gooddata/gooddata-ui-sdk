@@ -7,7 +7,7 @@ import type { IMeasureMetadataObject, IMeasureMetadataObjectDefinition } from "@
 
 import type { ICatalogItemMeasure } from "../catalogItem/types.js";
 
-import { countMetricReferences, createMetricMutationAdapter } from "./metricMutationPort.js";
+import { createMetricMutationAdapter, listMetricReferences } from "./metricMutationPort.js";
 import { createTestMetricMutationPort } from "./metricMutationPort.test.utils.js";
 
 const measureItem = { identifier: "revenue.total", type: "measure" } as ICatalogItemMeasure;
@@ -170,20 +170,25 @@ describe("metricMutationPort adapter", () => {
     });
 });
 
-describe("metric reference count", () => {
-    it("countMetricReferences sums the referencing insights and measures", async () => {
+describe("metric references", () => {
+    it("listMetricReferences titles the referencing insights and measures", async () => {
         const { backend, getMeasureReferencingObjects } = createFakeBackend();
-        getMeasureReferencingObjects.mockResolvedValueOnce({ insights: [{}, {}], measures: [{}] });
+        getMeasureReferencingObjects.mockResolvedValueOnce({
+            insights: [{ insight: { title: "Revenue trend" } }, { insight: { title: "Top accounts" } }],
+            measures: [{ title: "Revenue per account" }],
+        });
 
-        const count = await countMetricReferences(backend, "ws-1", measureItem);
-
-        expect(count).toBe(3);
+        expect(await listMetricReferences(backend, "ws-1", measureItem)).toEqual([
+            "Revenue trend",
+            "Top accounts",
+            "Revenue per account",
+        ]);
     });
 
-    it("countMetricReferences reports zero when the response carries neither array", async () => {
+    it("listMetricReferences reports nothing when the response carries neither array", async () => {
         const { backend, getMeasureReferencingObjects } = createFakeBackend();
         getMeasureReferencingObjects.mockResolvedValueOnce({});
 
-        expect(await countMetricReferences(backend, "ws-1", measureItem)).toBe(0);
+        expect(await listMetricReferences(backend, "ws-1", measureItem)).toEqual([]);
     });
 });

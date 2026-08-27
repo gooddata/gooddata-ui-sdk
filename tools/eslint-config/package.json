@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/eslint-config",
-    "version": "11.54.0-alpha.6",
+    "version": "11.54.0-alpha.7",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -165,7 +165,7 @@
         "react-dom": "19.1.1",
         "storybook": "^10.5.6",
         "typescript": "5.9.3",
-        "vite-node": "^5.2.0"
+        "vite-node": "5.3.0"
     },
     "peerDependencies": {
         "@typescript-eslint/eslint-plugin": "8.58.0",

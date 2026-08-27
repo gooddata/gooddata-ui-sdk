@@ -40,6 +40,7 @@ export type {
     GeoDecoratorFactory,
     OrganizationExportTemplatesDecoratorFactory,
     WorkspaceExportTemplatesDecoratorFactory,
+    WorkspaceReportsDecoratorFactory,
 } from "./decoratedBackend/types.js";
 
 export {
@@ -64,6 +65,13 @@ export { DecoratedSecuritySettingsService } from "./decoratedBackend/securitySet
 export { DecoratedOrganizationExportTemplatesService } from "./decoratedBackend/organizationExportTemplates.js";
 
 export { DecoratedWorkspaceExportTemplatesService } from "./decoratedBackend/workspaceExportTemplates.js";
+
+export { DecoratedWorkspaceReportsService } from "./decoratedBackend/workspaceReports.js";
+
+export {
+    type IWorkspaceReportsPersistence,
+    InMemoryWorkspaceReportsService,
+} from "./dummyBackend/InMemoryWorkspaceReportsService.js";
 
 export { DecoratedWorkspaceSettingsService } from "./decoratedBackend/workspaceSettings.js";
 

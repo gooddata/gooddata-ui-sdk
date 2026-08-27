@@ -41,8 +41,9 @@ import * as AlertingDialogContextModule from "../../contexts/AlertingDialogConte
 import * as gettersModule from "../DefaultAlertingDialog/utils/getters.js";
 import { type AlertAttribute, type AlertMetric } from "../types.js";
 
-import { AlertDataContextProvider, type IAlertDataContextValue } from "./AlertDataContext.js";
-import { AlertDraftContextProvider, type IAlertDraftContextValue } from "./AlertDraftContext.js";
+import { AlertDataContextProvider } from "./AlertDataContext.js";
+import { AlertDraftContextProvider } from "./AlertDraftContext.js";
+import { type IAlertDataContextValue, type IAlertDraftContextValue } from "./types.js";
 import {
     getAlertSelectedValues,
     type IGetAlertSelectedValuesProps,

@@ -21,6 +21,8 @@ import {
 } from "../DefaultAlertingDialog/utils/transformation.js";
 import { type AlertAttribute, type AlertMetric } from "../types.js";
 
+import { type IAlertFiltersModel } from "./types.js";
+
 /**
  * Props for {@link useAlertFiltersModel}.
  * @internal
@@ -80,14 +82,7 @@ export function useAlertFiltersModel({
     selectedValue,
     weekStart,
     timezone,
-}: IUseAlertFiltersModelProps): {
-    selectedFilters: FilterContextItem[];
-    availableFilters: FilterContextItem[] | undefined;
-    onFiltersChange: (filters: FilterContextItem[]) => void;
-    onApplyCurrentFilters: () => void;
-    automationIsValid: boolean;
-    filtersAreStale: boolean;
-} {
+}: IUseAlertFiltersModelProps): IAlertFiltersModel {
     const onFiltersChange = useCallback(
         (filters: FilterContextItem[]) => {
             setEditedAutomationFilters(filters);

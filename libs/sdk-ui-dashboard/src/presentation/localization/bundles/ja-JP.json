@@ -259,7 +259,6 @@
     "dialogs.automation.applyCurrentFilters.schedule.filtersAndTimezone.confirm": "<b>警告</b>: このスケジュールの作成時に使用された一部のフィルターとタイムゾーンは、利用できなくなったか無効です。編集すると、現在のダッシュボードフィルターとタイムゾーンが適用されます。",
     "dialogs.automation.filters.schedule.ariaLabel": "オプションに関する情報：今後のエクスポートには常にこれらのフィルタを使用します。",
     "dialogs.schedule.management.title": "エクスポート予定",
-    "dialogs.schedule.management.delete": "スケジュールを削除。",
     "dialogs.schedule.management.delete.dialog": "スケジュールを削除しますか？",
     "dialogs.schedule.management.delete.dialog.confirm": "<b>スケジュール</b>は完全に削除されます。",
     "dialogs.schedule.management.list.title": "スケジュールされたエクスポート",

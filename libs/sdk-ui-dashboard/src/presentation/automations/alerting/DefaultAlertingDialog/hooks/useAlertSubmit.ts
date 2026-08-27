@@ -4,43 +4,51 @@ import { useRef, useState } from "react";
 
 import { useIntl } from "react-intl";
 
-import {
-    type IAutomationMetadataObject,
-    type IAutomationMetadataObjectDefinition,
-    type ISeparators,
-} from "@gooddata/sdk-model";
-import { type GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { convertError } from "@gooddata/sdk-ui";
 
 import { useAlertingDialogContext } from "../../../contexts/AlertingDialogContext.js";
-import { type AlertMetric } from "../../types.js";
+import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
+import { useAlertData } from "../../state/AlertDataContext.js";
+import { useAlertDraft } from "../../state/AlertDraftContext.js";
+import { type IAlertingDialogProps } from "../../types.js";
 import { getDescription } from "../utils/getters.js";
 
-export interface IUseAlertSubmitProps {
-    editedAutomation: IAutomationMetadataObjectDefinition | undefined;
-    supportedMeasures: AlertMetric[];
-    separators?: ISeparators;
-    alertToEdit?: IAutomationMetadataObject;
-    onSuccess?: (alert: IAutomationMetadataObject) => void;
-    onError?: (error: GoodDataSdkError) => void;
-    onSaveSuccess?: (alert: IAutomationMetadataObject) => void;
-    onSaveError?: (error: GoodDataSdkError) => void;
-}
+/**
+ * Lifecycle callbacks of {@link useAlertSubmit}: the dialog's own `onSuccess`/`onError` (create) and
+ * `onSaveSuccess`/`onSaveError` (edit).
+ *
+ * @internal
+ */
+export type IUseAlertSubmitCallbacks = Pick<
+    IAlertingDialogProps,
+    "onSuccess" | "onError" | "onSaveSuccess" | "onSaveError"
+>;
 
+/**
+ * Submits the alerting dialog's draft: creates a new alert or saves the edited one, deriving a title
+ * when the draft has none, and routes the result to the matching callback. Guards against a second
+ * submit while one is in flight.
+ *
+ * Reads the draft, the supported measures, the edited alert and the separators from the alerting
+ * contexts, so it throws outside the alerting dialog's state providers.
+ *
+ * @internal
+ */
 export function useAlertSubmit({
-    editedAutomation,
-    supportedMeasures,
-    separators,
-    alertToEdit,
     onSuccess,
     onError,
     onSaveSuccess,
     onSaveError,
-}: IUseAlertSubmitProps): {
+}: IUseAlertSubmitCallbacks): {
     isSaving: boolean;
     submit: () => Promise<void>;
 } {
     const intl = useIntl();
-    const { createAlert, saveAlert } = useAlertingDialogContext();
+    const { separators } = useAutomationsContext();
+    const { createAlert, saveAlert, alertToEdit } = useAlertingDialogContext();
+    const { editedAutomation } = useAlertDraft();
+    const { supportedMeasures } = useAlertData();
     const [isSaving, setIsSaving] = useState(false);
     const submitInFlight = useRef(false);
 

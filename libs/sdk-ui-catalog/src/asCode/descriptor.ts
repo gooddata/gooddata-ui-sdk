@@ -15,6 +15,7 @@ export type AsCodeFeatureFlag = Parameters<typeof useFeatureFlag>[0];
 export type AsCodeObjectType =
     | typeof ObjectTypes.METRIC
     | typeof ObjectTypes.PARAMETER
+    | typeof ObjectTypes.COMPUTED_ATTRIBUTE
     | typeof ObjectTypes.VISUALIZATION;
 
 export interface IAsCodeMessages {
@@ -112,8 +113,16 @@ export function loadErrorOf(descriptor: IAsCodeDescriptor): MessageDescriptor | 
 
 /** @internal */
 export type AsCodeReferenceCount<TItem extends ICatalogItem> = {
-    count(backend: IAnalyticalBackend, workspace: string, item: TItem): Promise<number>;
+    /** Titles of the objects referencing the item; the count in the warning is their number. */
+    load(backend: IAnalyticalBackend, workspace: string, item: TItem): Promise<string[]>;
     usageWarning: MessageDescriptor;
+    /** Discloses the referencing titles behind a Show more/Show less toggle. */
+    listReferences?: boolean;
+    /**
+     * Refuses the deletion while any reference exists — for a type the backend rejects rather than
+     * cascades — and replaces the delete body with this text.
+     */
+    blockedBody?: MessageDescriptor;
 };
 
 /**

@@ -1192,6 +1192,7 @@
     "fileUpload.list.label": "Unggah file",
     "fileUpload.action.retryFile": "Coba lagi {fileName}",
     "fileUpload.action.removeFile": "Hapus {fileName}",
+    "csvDelimiterPicker.option.inherit": "Wariskan",
     "csvDelimiterPicker.option.comma": "Koma",
     "csvDelimiterPicker.option.semicolon": "Titik koma",
     "csvDelimiterPicker.option.pipe": "Garis vertikal",

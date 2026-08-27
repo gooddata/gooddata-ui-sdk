@@ -6,10 +6,16 @@ import { useAlertingDialogContext } from "../../contexts/AlertingDialogContext.j
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { useAutomationFiltersSelect } from "../../shared/automationFilters/useAutomationFiltersSelect.js";
 
-import { AlertActionsContextProvider, type IAlertActionsContextValue } from "./AlertActionsContext.js";
-import { AlertDataContextProvider, type IAlertDataContextValue } from "./AlertDataContext.js";
-import { AlertDraftContextProvider, type IAlertDraftContextValue } from "./AlertDraftContext.js";
-import { AlertFiltersContextProvider, type IAlertFiltersContextValue } from "./AlertFiltersContext.js";
+import { AlertActionsContextProvider } from "./AlertActionsContext.js";
+import { AlertDataContextProvider } from "./AlertDataContext.js";
+import { AlertDraftContextProvider } from "./AlertDraftContext.js";
+import { AlertFiltersContextProvider } from "./AlertFiltersContext.js";
+import {
+    type IAlertActionsContextValue,
+    type IAlertDataContextValue,
+    type IAlertDraftContextValue,
+    type IAlertFiltersContextValue,
+} from "./types.js";
 import { useAlertFiltersModel } from "./useAlertFiltersModel.js";
 import { useAlertFormState } from "./useAlertFormState.js";
 import { getAlertSelectedValues } from "./useAlertSelectedValues.js";

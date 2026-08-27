@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-application-header",
-    "version": "11.54.0-alpha.6",
+    "version": "11.54.0-alpha.7",
     "description": "GoodData SDK application header components — workspace picker, notifications dropdown",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -52,7 +52,7 @@
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/oxlint-config": "workspace:*",
         "@gooddata/sdk-ui-theme-provider": "workspace:*",
-        "@microsoft/api-documenter": "^7.17.0",
+        "@microsoft/api-documenter": "7.30.10",
         "@microsoft/api-extractor": "^7.55.2",
         "@testing-library/dom": "10.4.1",
         "@testing-library/react": "16.3.0",

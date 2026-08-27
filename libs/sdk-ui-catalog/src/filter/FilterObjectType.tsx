@@ -5,8 +5,8 @@ import { memo, useId } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { useCatalogFeedCounter } from "../catalogItem/CatalogFeedContext.js";
+import { useEnabledObjectTypes } from "../catalogItem/useCatalogEndpoints.js";
 import { ObjectTypeSelectMemo } from "../objectType/ObjectTypeSelect.js";
-import { useIsParametersEnabled } from "../parameter/gate.js";
 
 import { useFilterActions, useFilterState } from "./FilterContext.js";
 import { FilterGroupLayout } from "./FilterGroupLayout.js";
@@ -15,7 +15,7 @@ export function FilterObjectType() {
     const counter = useCatalogFeedCounter();
     const { types } = useFilterState();
     const { setTypes } = useFilterActions();
-    const isParametersEnabled = useIsParametersEnabled();
+    const enabledObjectTypes = useEnabledObjectTypes();
     const id = useId();
     const titleId = `filter-object-type-title/${id}`;
 
@@ -28,8 +28,8 @@ export function FilterObjectType() {
             <ObjectTypeSelectMemo
                 counter={counter}
                 selectedTypes={types}
+                enabledObjectTypes={enabledObjectTypes}
                 onSelect={setTypes}
-                showParameter={isParametersEnabled}
                 ariaLabelledBy={titleId}
             />
         </FilterGroupLayout>

@@ -4,6 +4,7 @@ import type { IAnalyticsCatalogTrendingObject } from "@gooddata/sdk-backend-spi"
 import {
     type GenAIObjectType,
     type IAttributeMetadataObject,
+    type IComputedAttributeMetadataObject,
     type IDashboard,
     type IDataSetMetadataObject,
     type IFactMetadataObject,
@@ -14,6 +15,7 @@ import {
     type IParameterMetadataObject,
     type IUser,
     isAttributeMetadataObject,
+    isComputedAttributeMetadataObject,
     isDashboard,
     isDataSetMetadataObject,
     isFactMetadataObject,
@@ -29,6 +31,7 @@ import { parseBackendDate } from "../utils/date.js";
 import type {
     ICatalogItem,
     ICatalogItemAttribute,
+    ICatalogItemComputedAttribute,
     ICatalogItemDashboard,
     ICatalogItemDataSet,
     ICatalogItemFact,
@@ -44,6 +47,7 @@ export function convertEntityToCatalogItem(
         | IListedDashboard
         | IMeasureMetadataObject
         | IParameterMetadataObject
+        | IComputedAttributeMetadataObject
         | IFactMetadataObject
         | IAttributeMetadataObject
         | IDataSetMetadataObject
@@ -60,6 +64,9 @@ export function convertEntityToCatalogItem(
     }
     if (isParameterMetadataObject(entity)) {
         return convertParameterToCatalogItem(entity);
+    }
+    if (isComputedAttributeMetadataObject(entity)) {
+        return convertComputedAttributeToCatalogItem(entity);
     }
     if (isFactMetadataObject(entity)) {
         return convertFactToCatalogItem(entity);
@@ -172,6 +179,26 @@ export function convertParameterToCatalogItem(parameter: IParameterMetadataObjec
         isLocked: parameter.isLocked ?? false,
         isEditable: true,
         definition: parameter.definition,
+    };
+}
+
+export function convertComputedAttributeToCatalogItem(
+    computedAttribute: IComputedAttributeMetadataObject,
+): ICatalogItemComputedAttribute {
+    const updatedAt = computedAttribute.updated || computedAttribute.created;
+
+    return {
+        identifier: computedAttribute.id,
+        type: "computedAttribute",
+        title: computedAttribute.title,
+        description: computedAttribute.description,
+        tags: computedAttribute.tags ?? [],
+        createdBy: getDisplayName(computedAttribute.createdBy),
+        createdAt: computedAttribute.created ? parseBackendDate(computedAttribute.created) : null,
+        updatedBy: getDisplayName(computedAttribute.updatedBy),
+        updatedAt: updatedAt ? parseBackendDate(updatedAt) : null,
+        isLocked: computedAttribute.isLocked ?? false,
+        isEditable: true,
     };
 }
 

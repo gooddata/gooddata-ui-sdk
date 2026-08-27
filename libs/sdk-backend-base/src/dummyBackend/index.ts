@@ -130,6 +130,7 @@ import {
     type IWorkspaceObjectPermissionsService,
     type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
+    type IWorkspaceReportsService,
     type IWorkspaceSettings,
     type IWorkspaceSettingsService,
     type IWorkspaceStylingService,
@@ -236,6 +237,7 @@ import { DummyAnalyticsCatalogService } from "./DummyAnalyticsCatalogService.js"
 import { DummyChatConversations, DummyGenAIChatThread } from "./DummyGenAIChatThread.js";
 import { DummySemanticQualityService } from "./DummySemanticQualityService.js";
 import { DummySemanticSearchQueryBuilder } from "./DummySemanticSearch.js";
+import { InMemoryWorkspaceReportsService } from "./InMemoryWorkspaceReportsService.js";
 
 /**
  * @internal
@@ -276,6 +278,7 @@ export const defaultDummyBackendConfig: DummyBackendConfig = {
  * @internal
  */
 export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendConfig): IAnalyticalBackend {
+    const reportsServices = new Map<string, InMemoryWorkspaceReportsService>();
     const noopBackend: IAnalyticalBackend = {
         capabilities: {
             canCalculateTotals: true,
@@ -310,7 +313,12 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
             throw new NotSupported("not supported");
         },
         workspace(id: string): IAnalyticalWorkspace {
-            return dummyWorkspace(id, config);
+            let reportsService = reportsServices.get(id);
+            if (!reportsService) {
+                reportsService = new InMemoryWorkspaceReportsService();
+                reportsServices.set(id, reportsService);
+            }
+            return dummyWorkspace(id, config, reportsService);
         },
         entitlements(): IEntitlements {
             throw new NotSupported("not supported");
@@ -455,7 +463,11 @@ export function dummyDataView(
 // Internals
 //
 
-function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyticalWorkspace {
+function dummyWorkspace(
+    workspace: string,
+    config: DummyBackendConfig,
+    reportsService: InMemoryWorkspaceReportsService,
+): IAnalyticalWorkspace {
     return {
         workspace,
         async getDescriptor(): Promise<IWorkspaceDescriptor> {
@@ -592,6 +604,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
                 patchExportTemplate: (ref, template) => Promise.resolve({ ref, name: "", ...template }),
                 deleteExportTemplate: () => Promise.resolve(),
             };
+        },
+        reports(): IWorkspaceReportsService {
+            return reportsService;
         },
     };
 }

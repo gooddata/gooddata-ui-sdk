@@ -3,37 +3,7 @@
 import { createContext, useContext } from "react";
 
 import { missingAlertStateProvider } from "./missingAlertStateProvider.js";
-import { type useAlertFiltersModel } from "./useAlertFiltersModel.js";
-import { type useAlertFormState } from "./useAlertFormState.js";
-
-/**
- * The alerting dialog's filter and export-parameter model: the current selection, the available
- * filters, the two filter mutators and the staleness flags, plus the automation's execution
- * parameters and their mutators.
- *
- * Changes when a filter or a parameter is edited. The shape is derived from
- * `useAlertFiltersModel` and from the parameter members `useAlertFormState` re-exports.
- *
- * @internal
- */
-export type IAlertFiltersContextValue = Pick<
-    ReturnType<typeof useAlertFiltersModel>,
-    | "selectedFilters"
-    | "availableFilters"
-    | "onFiltersChange"
-    | "onApplyCurrentFilters"
-    | "automationIsValid"
-    | "filtersAreStale"
-> &
-    Pick<
-        ReturnType<typeof useAlertFormState>,
-        | "automationParameters"
-        | "availableParameters"
-        | "onParameterChange"
-        | "onParameterDelete"
-        | "onParameterAdd"
-        | "dropStaleParameters"
-    >;
+import { type IAlertFiltersContextValue } from "./types.js";
 
 const AlertFiltersContext = createContext<IAlertFiltersContextValue | undefined>(undefined);
 AlertFiltersContext.displayName = "AlertFiltersContext";

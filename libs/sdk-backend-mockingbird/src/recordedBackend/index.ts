@@ -58,6 +58,7 @@ import {
     type IWorkspaceObjectPermissionsService,
     type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
+    type IWorkspaceReportsService,
     type IWorkspaceSettings,
     type IWorkspaceSettingsService,
     type IWorkspaceStylingService,
@@ -65,9 +66,11 @@ import {
     type IWorkspaceUsersQuery,
     type IWorkspacesQueryFactory,
     NotSupported,
+    UnexpectedResponseError,
     type ValidationContext,
 } from "@gooddata/sdk-backend-spi";
 import {
+    BuiltInReportPageLayouts,
     type IColorPalette,
     type IColorPaletteDefinition,
     type IColorPaletteMetadataObject,
@@ -83,6 +86,7 @@ import {
     type IUser,
     type IWorkspacePermissions,
     type ObjRef,
+    areObjRefsEqual,
     idRef,
     isIdentifierRef,
 } from "@gooddata/sdk-model";
@@ -559,6 +563,51 @@ function recordedWorkspace(
                     Promise.resolve({ ref: idRef("recordedExportTemplate"), ...template }),
                 patchExportTemplate: (ref, template) => Promise.resolve({ ref, name: "", ...template }),
                 deleteExportTemplate: () => Promise.resolve(),
+            };
+        },
+        reports(): IWorkspaceReportsService {
+            return {
+                getReportPageLayouts: () => Promise.resolve([...BuiltInReportPageLayouts]),
+                getReportPageLayout: (ref) => {
+                    const page = BuiltInReportPageLayouts.find((candidate) =>
+                        areObjRefsEqual(candidate.ref, ref),
+                    );
+                    if (!page) {
+                        throw new UnexpectedResponseError("Report page not found", 404, {});
+                    }
+                    return Promise.resolve(page);
+                },
+                createReportPageLayout: (page) =>
+                    Promise.resolve({ ...page, ref: idRef("recordedReportPage") }),
+                updateReportPageLayout: (page) => {
+                    if (
+                        BuiltInReportPageLayouts.some((candidate) => areObjRefsEqual(candidate.ref, page.ref))
+                    ) {
+                        throw new NotSupported("Built-in report page layouts cannot be updated.");
+                    }
+                    return Promise.resolve(page);
+                },
+                deleteReportPageLayout: (ref) => {
+                    if (BuiltInReportPageLayouts.some((candidate) => areObjRefsEqual(candidate.ref, ref))) {
+                        throw new NotSupported("Built-in report page layouts cannot be deleted.");
+                    }
+                    return Promise.resolve();
+                },
+                getReportTemplates: () => Promise.resolve([]),
+                getReportTemplate: () => {
+                    throw new UnexpectedResponseError("Report template not found", 404, {});
+                },
+                createReportTemplate: (template) =>
+                    Promise.resolve({ ...template, ref: idRef("recordedReportTemplate") }),
+                updateReportTemplate: (template) => Promise.resolve(template),
+                deleteReportTemplate: () => Promise.resolve(),
+                getReports: () => Promise.resolve([]),
+                getReport: () => {
+                    throw new UnexpectedResponseError("Report not found", 404, {});
+                },
+                createReport: (report) => Promise.resolve({ ...report, ref: idRef("recordedReport") }),
+                updateReport: (report) => Promise.resolve(report),
+                deleteReport: () => Promise.resolve(),
             };
         },
     };

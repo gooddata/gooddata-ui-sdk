@@ -17,6 +17,7 @@ import type { ObjectType } from "../objectType/types.js";
 import type {
     ICatalogItem,
     ICatalogItemAttribute,
+    ICatalogItemComputedAttribute,
     ICatalogItemDashboard,
     ICatalogItemDataSet,
     ICatalogItemFact,
@@ -194,6 +195,40 @@ export function getParametersQuery({
         .withMethod("POST");
 }
 
+export function getComputedAttributesQuery({
+    backend,
+    workspace,
+    search,
+    origin,
+    id,
+    excludeId,
+    createdBy,
+    excludeCreatedBy,
+    tags,
+    excludeTags,
+    pageSize = PAGE_SIZE,
+}: ICatalogItemQueryOptions) {
+    return backend
+        .workspace(workspace)
+        .computedAttributes()
+        .getComputedAttributesQuery()
+        .withPage(0)
+        .withSize(pageSize)
+        .withInclude(["createdBy", "modifiedBy"])
+        .withSorting(["title,asc"])
+        .withOrigin(origin)
+        .withFilter({
+            search,
+            id,
+            excludeId,
+            tags,
+            excludeTags,
+            createdBy,
+            excludeCreatedBy,
+        })
+        .withMethod("POST");
+}
+
 export function getAttributesQuery({
     backend,
     workspace,
@@ -318,6 +353,8 @@ export function updateCatalogItem(backend: IAnalyticalBackend, workspace: string
             return updateDataSetCatalogItemMeta(backend, workspace, item);
         case "parameter":
             return updateParameterCatalogItemMeta(backend, workspace, item);
+        case "computedAttribute":
+            return updateComputedAttributeCatalogItemMeta(backend, workspace, item);
         default:
             throw new Error(`Unsupported catalog item type`);
     }
@@ -463,6 +500,22 @@ export function updateParameterCatalogItem(
 
 export function deleteParameterCatalogItem(backend: IAnalyticalBackend, workspace: string, ref: ObjRef) {
     return backend.workspace(workspace).parameters().deleteParameter(ref);
+}
+
+function updateComputedAttributeCatalogItemMeta(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    item: ICatalogItemComputedAttribute,
+) {
+    return backend
+        .workspace(workspace)
+        .computedAttributes()
+        .updateComputedAttributeMeta({
+            ...buildIdentity(item),
+            title: item.title,
+            description: item.description,
+            tags: item.tags,
+        });
 }
 
 export function createMeasureCatalogItem(

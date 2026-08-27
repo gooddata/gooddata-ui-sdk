@@ -3,33 +3,7 @@
 import { createContext, useContext } from "react";
 
 import { missingAlertStateProvider } from "./missingAlertStateProvider.js";
-import { type useAlertFormState } from "./useAlertFormState.js";
-
-/**
- * The alerting dialog's mutators: the draft setter and every form change-handler.
- *
- * Changes rarely: `onGranularityChange` is re-created when `triggerIntervalDirty` toggles or the
- * supported measures load. The shape is derived from `useAlertFormState`, which owns them.
- *
- * @internal
- */
-export type IAlertActionsContextValue = Pick<
-    ReturnType<typeof useAlertFormState>,
-    | "setEditedAutomation"
-    | "onTitleChange"
-    | "onMeasureChange"
-    | "onAttributeChange"
-    | "onComparisonOperatorChange"
-    | "onRelativeOperatorChange"
-    | "onAnomalyDetectionChange"
-    | "onComparisonTypeChange"
-    | "onSensitivityChange"
-    | "onTriggerIntervalChange"
-    | "onGranularityChange"
-    | "onDestinationChange"
-    | "onTriggerModeChange"
-    | "onRecipientsChange"
->;
+import { type IAlertActionsContextValue } from "./types.js";
 
 const AlertActionsContext = createContext<IAlertActionsContextValue | undefined>(undefined);
 AlertActionsContext.displayName = "AlertActionsContext";

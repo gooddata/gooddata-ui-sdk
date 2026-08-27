@@ -27,6 +27,11 @@ vi.hoisted(() => {
     vi.resetModules();
 });
 
+// What the mocked draft context returns; each test sets it through renderSaveHook.
+const draftState = vi.hoisted(() => ({
+    editedAutomation: undefined as unknown as IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
+}));
+
 vi.mock("../../../contexts/ScheduledEmailDialogContext.js", () => ({
     useScheduledEmailDialogContext: () => ({
         createScheduledEmail: createScheduledEmailMock,
@@ -36,7 +41,14 @@ vi.mock("../../../contexts/ScheduledEmailDialogContext.js", () => ({
     }),
 }));
 
-import { useSaveScheduledEmailToBackend } from "./useSaveScheduledEmailToBackend.js";
+vi.mock("../../state/ScheduledExportDraftContext.js", () => ({
+    useScheduledExportDraft: () => ({ editedAutomation: draftState.editedAutomation }),
+}));
+
+import {
+    useSaveScheduledEmailToBackend,
+    type IUseSaveScheduledEmailCallbacks,
+} from "./useSaveScheduledEmailToBackend.js";
 
 // ---------------------------------------------------------------------------
 // Fixtures
@@ -73,9 +85,10 @@ const createdAutomation: IAutomationMetadataObject = {
 
 function renderSaveHook(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
-    callbacks: Parameters<typeof useSaveScheduledEmailToBackend>[1] = {},
+    callbacks: IUseSaveScheduledEmailCallbacks = {},
 ) {
-    return renderHook(() => useSaveScheduledEmailToBackend(automation, callbacks), {
+    draftState.editedAutomation = automation;
+    return renderHook(() => useSaveScheduledEmailToBackend(callbacks), {
         wrapper: IntlWrapper,
     });
 }

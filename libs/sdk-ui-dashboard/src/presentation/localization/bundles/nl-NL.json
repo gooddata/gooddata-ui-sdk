@@ -259,7 +259,6 @@
     "dialogs.automation.applyCurrentFilters.schedule.filtersAndTimezone.confirm": "<b>Waarschuwing</b>: Sommige filters en de tijdzone die werden gebruikt toen dit schema werd gemaakt, zijn niet langer beschikbaar of geldig. Bewerken past de huidige dashboardfilters en tijdzone toe.",
     "dialogs.automation.filters.schedule.ariaLabel": "Informatie over de optie: Gebruik deze filters altijd voor toekomstige exports.",
     "dialogs.schedule.management.title": "Geplande export",
-    "dialogs.schedule.management.delete": "Verwijder het schema.",
     "dialogs.schedule.management.delete.dialog": "Schema verwijderen?",
     "dialogs.schedule.management.delete.dialog.confirm": "<b>Het schema</b> wordt voorgoed verwijderd.",
     "dialogs.schedule.management.list.title": "Uw geplande export",

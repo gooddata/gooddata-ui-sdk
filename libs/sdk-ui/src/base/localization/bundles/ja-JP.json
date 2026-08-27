@@ -1192,6 +1192,7 @@
     "fileUpload.list.label": "ファイルをアップロード",
     "fileUpload.action.retryFile": "{fileName} を再試行",
     "fileUpload.action.removeFile": "{fileName} を削除",
+    "csvDelimiterPicker.option.inherit": "継承",
     "csvDelimiterPicker.option.comma": "コンマ",
     "csvDelimiterPicker.option.semicolon": "セミコロン",
     "csvDelimiterPicker.option.pipe": "パイプ",

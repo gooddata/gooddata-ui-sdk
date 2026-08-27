@@ -37,7 +37,7 @@ export function ObjectTypeIcon({
             className={cx("gd-analytics-catalog__object-type", className)}
             data-object-type={type}
         >
-            {type === "attribute" ? (
+            {type === "attribute" || type === "computedAttribute" ? (
                 <UiIcon type="ldmAttribute" accessibilityConfig={{ ariaLabel: label }} {...sizes} />
             ) : null}
             {type === "fact" ? (

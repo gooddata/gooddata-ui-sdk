@@ -259,7 +259,6 @@
     "dialogs.automation.applyCurrentFilters.schedule.filtersAndTimezone.confirm": "<b>Avviso</b>: Alcuni filtri e il fuso orario utilizzati quando è stata creata questa programmazione non sono più disponibili o validi. La modifica applicherà i filtri correnti del cruscotto e il fuso orario corrente.",
     "dialogs.automation.filters.schedule.ariaLabel": "Informazioni sull'opzione: Utilizzare sempre questi filtri per le esportazioni future.",
     "dialogs.schedule.management.title": "Esportazioni programmate",
-    "dialogs.schedule.management.delete": "Eliminare la programmazione.",
     "dialogs.schedule.management.delete.dialog": "Eliminare la programmazione?",
     "dialogs.schedule.management.delete.dialog.confirm": "<b>La programmazione</b> verrà eliminata in modo permanente.",
     "dialogs.schedule.management.list.title": "Le tue esportazioni programmate",

@@ -39,6 +39,7 @@ import {
     newDashboardExportDefinitionMetadataObjectDefinition,
     newWidgetExportDefinitionMetadataObjectDefinition,
 } from "./exportDefinitions.js";
+import { type IScheduledEmailFormState } from "./types.js";
 
 export interface IUseScheduledEmailFormStateProps {
     scheduledExportToEdit?: IAutomationMetadataObject;
@@ -86,7 +87,7 @@ export function useScheduledEmailFormState({
     effectiveVisibleDashboardFiltersByTab,
     parametersByTabForNewAutomation,
     defaultPdfPageSize,
-}: IUseScheduledEmailFormStateProps) {
+}: IUseScheduledEmailFormStateProps): IScheduledEmailFormState {
     const { timezone, currentUser, widgetLocalIdToTabIdMap: widgetTabMap } = useAutomationsContext();
     const { dashboardId, dashboardTitle } = useScheduledEmailDialogContext();
 

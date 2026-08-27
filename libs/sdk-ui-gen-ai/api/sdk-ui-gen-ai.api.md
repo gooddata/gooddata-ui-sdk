@@ -30,6 +30,7 @@ import { IInsight } from '@gooddata/sdk-model';
 import { IListedDashboard } from '@gooddata/sdk-model';
 import type { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import type { ISemanticSearchResultItem } from '@gooddata/sdk-model';
+import { ISlotProps } from '@gooddata/sdk-ui-kit';
 import { IUiButtonProps } from '@gooddata/sdk-ui-kit';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { JSX } from 'react/jsx-runtime';
@@ -283,8 +284,7 @@ export type GenAIAssistantProps = Omit<GenAiStoreProps, "children"> & {
     disableAnalyze?: boolean;
     disableFullControl?: boolean;
     dashboardSelector?: DashboardSelectorEvaluator;
-    LandingScreenComponentProvider?: () => ComponentType;
-    DisclaimerComponentProvider?: () => ComponentType | null;
+    slots?: IGenAIAssistantSlots;
     className?: string;
     mode?: GenAIAssistantMode;
     onModeChange?: (mode: GenAIAssistantMode) => void;
@@ -385,6 +385,22 @@ export type IChatConversationMultipartLocalPart = IChatConversationMultipartPart
 export type IChatConversationSystemContent = {
     type: "system";
 };
+
+// @public
+export type IGenAIAssistantDisclaimerProps = Record<string, never>;
+
+// @public
+export type IGenAIAssistantLandingScreenProps = {
+    isFullscreen?: boolean;
+    isBigScreen?: boolean;
+    isSmallScreen?: boolean;
+};
+
+// @public
+export interface IGenAIAssistantSlots {
+    Disclaimer?: ComponentType<ISlotProps<IGenAIAssistantDisclaimerProps>>;
+    LandingScreen?: ComponentType<ISlotProps<IGenAIAssistantLandingScreenProps>>;
+}
 
 // @public
 export interface IGenAiInteractionIntelligenceProps {
@@ -502,11 +518,8 @@ export const isChatUserMessageEvent: (event: ChatEvent) => event is ChatUserMess
 export const isChatVisualizationErrorEvent: (event: ChatEvent) => event is ChatVisualizationErrorEvent;
 
 // @beta (undocumented)
-export type LandingScreenProps = {
+export type LandingScreenProps = IGenAIAssistantLandingScreenProps & {
     LandingScreen?: ComponentType;
-    isFullscreen?: boolean;
-    isBigScreen?: boolean;
-    isSmallScreen?: boolean;
 };
 
 // @public (undocumented)

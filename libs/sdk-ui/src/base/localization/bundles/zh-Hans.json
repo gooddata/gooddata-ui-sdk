@@ -1192,6 +1192,7 @@
     "fileUpload.list.label": "上传文件",
     "fileUpload.action.retryFile": "重试 {fileName}",
     "fileUpload.action.removeFile": "移除 {fileName}",
+    "csvDelimiterPicker.option.inherit": "继承",
     "csvDelimiterPicker.option.comma": "逗号",
     "csvDelimiterPicker.option.semicolon": "分号",
     "csvDelimiterPicker.option.pipe": "竖线",

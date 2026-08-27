@@ -259,7 +259,6 @@
     "dialogs.automation.applyCurrentFilters.schedule.filtersAndTimezone.confirm": "<b>Попередження</b>: Деякі фільтри та часовий пояс, використані під час створення цього розкладу, більше недоступні або недійсні. Під час редагування буде застосовано поточні фільтри та часовий пояс інформаційної панелі.",
     "dialogs.automation.filters.schedule.ariaLabel": "Інформація про параметр: Завжди використовувати ці фільтри для майбутніх експортів.",
     "dialogs.schedule.management.title": "Заплановані експорти",
-    "dialogs.schedule.management.delete": "Видалити розклад.",
     "dialogs.schedule.management.delete.dialog": "Видалити розклад?",
     "dialogs.schedule.management.delete.dialog.confirm": "<b>Розклад</b> буде видалено назавжди.",
     "dialogs.schedule.management.list.title": "Ваші заплановані експорти",

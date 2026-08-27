@@ -9,7 +9,14 @@ import type { ObjectType as ModelObjectType } from "@gooddata/sdk-model";
  */
 export type ObjectType = Extract<
     ModelObjectType,
-    "analyticalDashboard" | "insight" | "measure" | "parameter" | "fact" | "attribute" | "dataSet"
+    | "analyticalDashboard"
+    | "insight"
+    | "measure"
+    | "parameter"
+    | "computedAttribute"
+    | "fact"
+    | "attribute"
+    | "dataSet"
 >;
 
 /**
@@ -19,5 +26,5 @@ export type ObjectType = Extract<
  */
 export type CatalogCreateObjectType = Extract<
     ObjectType,
-    "analyticalDashboard" | "insight" | "measure" | "parameter"
+    "analyticalDashboard" | "insight" | "measure" | "parameter" | "computedAttribute"
 >;

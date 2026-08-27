@@ -3,27 +3,7 @@
 import { createContext, useContext } from "react";
 
 import { missingAlertStateProvider } from "./missingAlertStateProvider.js";
-import { type useAlertFormState } from "./useAlertFormState.js";
-import { type useAlertSupportedMetrics } from "./useAlertSupportedMetrics.js";
-
-/**
- * The data the alerting dialog loads asynchronously: the supported measures and attributes with
- * their formats, the execution-result readers, and the current user's default recipients.
- *
- * Changes when an async load resolves, not per keystroke.
- *
- * @internal
- */
-export type IAlertDataContextValue = Pick<
-    ReturnType<typeof useAlertSupportedMetrics>,
-    | "supportedMeasures"
-    | "supportedAttributes"
-    | "measureFormatMap"
-    | "isResultLoading"
-    | "getAttributeValues"
-    | "getMetricValue"
-> &
-    Pick<ReturnType<typeof useAlertFormState>, "defaultUser" | "defaultRecipient">;
+import { type IAlertDataContextValue } from "./types.js";
 
 const AlertDataContext = createContext<IAlertDataContextValue | undefined>(undefined);
 AlertDataContext.displayName = "AlertDataContext";

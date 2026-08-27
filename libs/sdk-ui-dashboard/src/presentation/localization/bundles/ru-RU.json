@@ -259,7 +259,6 @@
     "dialogs.automation.applyCurrentFilters.schedule.filtersAndTimezone.confirm": "<b>Предупреждение</b>: Некоторые фильтры и часовой пояс, использованные при создании этого расписания, больше недоступны или недействительны. При редактировании будут применены текущие фильтры и часовой пояс дашборда.",
     "dialogs.automation.filters.schedule.ariaLabel": "Информация о параметре: Всегда использовать эти фильтры для будущих экспортов.",
     "dialogs.schedule.management.title": "Запланированные экспорты",
-    "dialogs.schedule.management.delete": "Удалить расписание.",
     "dialogs.schedule.management.delete.dialog": "Удалить расписание?",
     "dialogs.schedule.management.delete.dialog.confirm": "<b>Расписание</b> будет удалено навсегда.",
     "dialogs.schedule.management.list.title": "Ваши запланированные экспорты",

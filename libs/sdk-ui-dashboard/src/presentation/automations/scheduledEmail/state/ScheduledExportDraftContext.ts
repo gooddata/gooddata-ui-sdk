@@ -2,41 +2,8 @@
 
 import { createContext, useContext } from "react";
 
-import { type useScheduleTimezone } from "../DefaultScheduledEmailDialog/hooks/useScheduleTimezone.js";
-
 import { missingScheduledExportStateProvider } from "./missingScheduledExportStateProvider.js";
-import { type useScheduledEmailFormState } from "./useScheduledEmailFormState.js";
-
-/**
- * The scheduled-export dialog's edit draft: the automation being edited, the baseline it is
- * compared against for the submit gate, the normalized start date, and the per-field validity
- * flags the form fields report back.
- *
- * Changes on every keystroke; consumers re-render by design. The shape is derived from
- * `useScheduledEmailFormState`, which owns these values, and `useScheduleTimezone`, which owns the
- * "Time zone" section's view state (a timezone pick also edits the draft's export definitions, so
- * the selection changes together with the draft).
- *
- * @internal
- */
-export type IScheduledExportDraftContextValue = Pick<
-    ReturnType<typeof useScheduledEmailFormState>,
-    | "editedAutomation"
-    | "originalAutomation"
-    | "startDate"
-    | "isCronValid"
-    | "isTitleValid"
-    | "isSubjectValid"
-    | "isOnMessageValid"
-> &
-    Pick<
-        ReturnType<typeof useScheduleTimezone>,
-        | "isTimezoneFeatureEnabled"
-        | "canSelectScheduleTimezone"
-        | "scheduleTimezoneSelection"
-        | "defaultResolvedTimezone"
-        | "scheduleTimezoneIsStale"
-    >;
+import { type IScheduledExportDraftContextValue } from "./types.js";
 
 const ScheduledExportDraftContext = createContext<IScheduledExportDraftContextValue | undefined>(undefined);
 ScheduledExportDraftContext.displayName = "ScheduledExportDraftContext";

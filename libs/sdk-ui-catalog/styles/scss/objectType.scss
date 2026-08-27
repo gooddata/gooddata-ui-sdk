@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
@@ -21,7 +21,8 @@
         --catalog-object-type-icon-color: #{kit-variables.$gd-color-object-type-metric};
     }
 
-    &[data-object-type="attribute"] {
+    &[data-object-type="attribute"],
+    &[data-object-type="computedAttribute"] {
         --catalog-object-type-icon-color: #{kit-variables.$gd-color-object-type-attribute};
     }
 }

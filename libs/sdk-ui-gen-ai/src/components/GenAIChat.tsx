@@ -1,7 +1,5 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type ComponentType } from "react";
-
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { type DashboardSelectorEvaluator } from "@gooddata/sdk-ui-dashboard";
 
@@ -12,6 +10,7 @@ import { usePermissions } from "../permissions/usePermissions.js";
 
 import { ConfigProvider, type GenAIAssistantMode, type LinkHandlerEvent } from "./ConfigContext.js";
 import { CustomizationProvider } from "./CustomizationProvider.js";
+import { type IGenAIAssistantSlots } from "./customized/types.js";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { GenAiStore, type GenAiStoreProps } from "./GenAiStore.js";
 
@@ -60,14 +59,9 @@ export type GenAIAssistantProps = Omit<GenAiStoreProps, "children"> & {
     dashboardSelector?: DashboardSelectorEvaluator;
 
     /**
-     * Custom React node rendered when no conversation exists yet.
+     * Customizations for the Gen AI assistant.
      */
-    LandingScreenComponentProvider?: () => ComponentType;
-
-    /**
-     * Custom React component rendered below the input as a disclaimer.
-     */
-    DisclaimerComponentProvider?: () => ComponentType | null;
+    slots?: IGenAIAssistantSlots;
 
     /**
      * Additional class name applied to the root element.
@@ -166,13 +160,7 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
 export const GenAIChat = GenAIAssistant;
 
 function GenAIContent(props: GenAIChatProps) {
-    const {
-        LandingScreenComponentProvider,
-        DisclaimerComponentProvider,
-        dashboardSelector,
-        className,
-        catalogItems,
-    } = props;
+    const { slots, dashboardSelector, className, catalogItems } = props;
     const { permissions, loading } = usePermissions();
 
     useDashboardAmbientContext(dashboardSelector);
@@ -184,10 +172,7 @@ function GenAIContent(props: GenAIChatProps) {
             canManage={props.disableManage ? false : (permissions.canManageProject ?? false)}
             canAnalyze={props.disableAnalyze ? false : (permissions.canCreateVisualization ?? false)}
         >
-            <CustomizationProvider
-                landingScreenComponentProvider={LandingScreenComponentProvider}
-                disclaimerComponentProvider={DisclaimerComponentProvider}
-            >
+            <CustomizationProvider slots={slots}>
                 <GenAIChatWrapper initializing={loading} className={className} />
             </CustomizationProvider>
         </ConfigProvider>

@@ -8,15 +8,13 @@ import { fillMissingTitles } from "@gooddata/sdk-ui";
 import { useAlertingDialogContext } from "../../contexts/AlertingDialogContext.js";
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { useAttributeValuesFromExecResults } from "../DefaultAlertingDialog/hooks/useAttributeValuesFromExecResults.js";
-import {
-    type IMeasureFormatMap,
-    getMeasureFormatsFromExecution,
-} from "../DefaultAlertingDialog/utils/getters.js";
+import { getMeasureFormatsFromExecution } from "../DefaultAlertingDialog/utils/getters.js";
 import {
     getSupportedInsightAttributesByInsight,
     getSupportedInsightMeasuresByInsight,
 } from "../DefaultAlertingDialog/utils/items.js";
-import { type AlertAttribute, type AlertMetric } from "../types.js";
+
+import { type IAlertSupportedMetrics } from "./types.js";
 
 export interface IUseAlertSupportedMetricsProps {
     insight?: IInsight;
@@ -34,14 +32,11 @@ export interface IUseAlertSupportedMetricsProps {
  *
  * @internal
  */
-export function useAlertSupportedMetrics({ insight, widget, alertToEdit }: IUseAlertSupportedMetricsProps): {
-    measureFormatMap: IMeasureFormatMap;
-    supportedMeasures: AlertMetric[];
-    supportedAttributes: AlertAttribute[];
-    isResultLoading: boolean;
-    getAttributeValues: ReturnType<typeof useAttributeValuesFromExecResults>["getAttributeValues"];
-    getMetricValue: ReturnType<typeof useAttributeValuesFromExecResults>["getMetricValue"];
-} {
+export function useAlertSupportedMetrics({
+    insight,
+    widget,
+    alertToEdit,
+}: IUseAlertSupportedMetricsProps): IAlertSupportedMetrics {
     const { locale, catalogDateDatasets, catalogAttributes } = useAutomationsContext();
 
     const { executionResultByRef } = useAlertingDialogContext();

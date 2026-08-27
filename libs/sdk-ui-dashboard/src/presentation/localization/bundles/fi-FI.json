@@ -259,7 +259,6 @@
     "dialogs.automation.applyCurrentFilters.schedule.filtersAndTimezone.confirm": "<b>Varoitus</b>: Jotkin tätä aikataulua luotaessa käytetyt suodattimet ja aikavyöhyke eivät ole enää käytettävissä tai kelvollisia. Muokkauksessa käytetään koontinäytön nykyisiä suodattimia ja nykyistä aikavyöhykettä.",
     "dialogs.automation.filters.schedule.ariaLabel": "Tietoja vaihtoehdosta: Käytä näitä suodattimia aina tulevassa viennissä.",
     "dialogs.schedule.management.title": "Suunnitellut viennit",
-    "dialogs.schedule.management.delete": "Poista aikataulu.",
     "dialogs.schedule.management.delete.dialog": "Poista aikataulu?",
     "dialogs.schedule.management.delete.dialog.confirm": "<b>Aikataulu</b> poistetaan pysyvästi.",
     "dialogs.schedule.management.list.title": "Ajoitetut vientisi",

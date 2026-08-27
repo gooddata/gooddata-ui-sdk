@@ -259,7 +259,6 @@
     "dialogs.automation.applyCurrentFilters.schedule.filtersAndTimezone.confirm": "<b>警告</b>：建立此計劃時所用的部分篩選器和時區不再可用或有效。編輯將套用目前的儀表板篩選器和時區。",
     "dialogs.automation.filters.schedule.ariaLabel": "有關選項嘅信息：將來導出時，請始終使用呢啲過濾器。",
     "dialogs.schedule.management.title": "排程匯出",
-    "dialogs.schedule.management.delete": "刪除排程。",
     "dialogs.schedule.management.delete.dialog": "刪除排程？",
     "dialogs.schedule.management.delete.dialog.confirm": "<b>該排程</b> 將被永久刪除。",
     "dialogs.schedule.management.list.title": "您的排程匯出",

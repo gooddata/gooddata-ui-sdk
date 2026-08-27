@@ -5,6 +5,7 @@ import {
     type IMeasureMetadataObject,
     type IMeasureMetadataObjectDefinition,
     idRef,
+    insightTitle,
     isMeasureMetadataObject,
 } from "@gooddata/sdk-model";
 
@@ -43,18 +44,21 @@ export function loadMetric(
     return getMeasureCatalogItem(backend, workspace, idRef(item.identifier, "measure"));
 }
 
-/** Counts the insights and measures referencing a measure. @internal */
-export async function countMetricReferences(
+/** Titles of the insights and measures referencing a measure. @internal */
+export async function listMetricReferences(
     backend: IAnalyticalBackend,
     workspace: string,
     item: ICatalogItemMeasure,
-): Promise<number> {
+): Promise<string[]> {
     const referencing = await getMeasureReferencingObjectsCatalogItem(
         backend,
         workspace,
         idRef(item.identifier, "measure"),
     );
-    return (referencing.insights?.length ?? 0) + (referencing.measures?.length ?? 0);
+    return [
+        ...(referencing.insights ?? []).map((insight) => insightTitle(insight)),
+        ...(referencing.measures ?? []).map((measure) => measure.title),
+    ];
 }
 
 /**

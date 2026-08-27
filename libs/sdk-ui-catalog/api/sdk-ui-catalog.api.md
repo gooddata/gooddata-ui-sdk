@@ -56,7 +56,7 @@ export type AsCodeValidationContext = {
 };
 
 // @public
-export type CatalogCreateObjectType = Extract<ObjectType, "analyticalDashboard" | "insight" | "measure" | "parameter">;
+export type CatalogCreateObjectType = Extract<ObjectType, "analyticalDashboard" | "insight" | "measure" | "parameter" | "computedAttribute">;
 
 // @public (undocumented)
 export type EditHandlerEvent = OpenHandlerEvent;
@@ -144,7 +144,7 @@ export interface ICatalogDetailProps extends ICatalogDetailContentProps {
 }
 
 // @public
-export type ICatalogItem = ICatalogItemDashboard | ICatalogItemInsight | ICatalogItemMeasure | ICatalogItemParameter | ICatalogItemAttribute | ICatalogItemFact | ICatalogItemDataSet;
+export type ICatalogItem = ICatalogItemDashboard | ICatalogItemInsight | ICatalogItemMeasure | ICatalogItemParameter | ICatalogItemComputedAttribute | ICatalogItemAttribute | ICatalogItemFact | ICatalogItemDataSet;
 
 // @public
 export interface ICatalogItemAttribute extends ICatalogItemBase {
@@ -183,6 +183,12 @@ export interface ICatalogItemBase extends ICatalogItemRef {
     updatedAt: Date | null;
     // (undocumented)
     updatedBy: string;
+}
+
+// @public
+export interface ICatalogItemComputedAttribute extends ICatalogItemBase {
+    // (undocumented)
+    type: "computedAttribute";
 }
 
 // @public
@@ -255,6 +261,9 @@ export function InsightCodecProvider(input: PropsWithChildren<{
 export function isCatalogItemAttribute(item: ICatalogItem | undefined | null): item is ICatalogItemAttribute;
 
 // @internal (undocumented)
+export function isCatalogItemComputedAttribute(item: ICatalogItem | undefined | null): item is ICatalogItemComputedAttribute;
+
+// @internal (undocumented)
 export function isCatalogItemDashboard(item: ICatalogItem | undefined | null): item is ICatalogItemDashboard;
 
 // @internal (undocumented)
@@ -273,7 +282,7 @@ export function isCatalogItemMeasure(item: ICatalogItem | undefined | null): ite
 export function isCatalogItemParameter(item: ICatalogItem | undefined | null): item is ICatalogItemParameter;
 
 // @public
-export type ObjectType = Extract<ObjectType_2, "analyticalDashboard" | "insight" | "measure" | "parameter" | "fact" | "attribute" | "dataSet">;
+export type ObjectType = Extract<ObjectType_2, "analyticalDashboard" | "insight" | "measure" | "parameter" | "computedAttribute" | "fact" | "attribute" | "dataSet">;
 
 // @public (undocumented)
 export type OpenHandlerEvent = {

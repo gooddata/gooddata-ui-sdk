@@ -1192,6 +1192,7 @@
     "fileUpload.list.label": "Prześlij pliki",
     "fileUpload.action.retryFile": "Ponów próbę: {fileName}",
     "fileUpload.action.removeFile": "Usuń {fileName}",
+    "csvDelimiterPicker.option.inherit": "Dziedziczenie",
     "csvDelimiterPicker.option.comma": "Przecinek",
     "csvDelimiterPicker.option.semicolon": "Średnik",
     "csvDelimiterPicker.option.pipe": "Pionowa kreska",

@@ -4,6 +4,7 @@ import { useMemo } from "react";
 
 import type {
     IAttributesQueryResult,
+    IComputedAttributesQueryResult,
     IDashboardsQueryResult,
     IDatasetsQueryResult,
     IFactsQueryResult,
@@ -13,11 +14,14 @@ import type {
 } from "@gooddata/sdk-backend-spi";
 import type { IFeatureFlags, Identifier, ObjectOrigin } from "@gooddata/sdk-model";
 
+import { COMPUTED_ATTRIBUTE_FEATURE_FLAG } from "../computedAttribute/gate.js";
 import { ObjectTypes } from "../objectType/constants.js";
 import { type ObjectType } from "../objectType/types.js";
+import { useFeatureFlags } from "../permission/PermissionsContext.js";
 
 import {
     getAttributesQuery,
+    getComputedAttributesQuery,
     getDashboardsQuery,
     getDateDatasetsQuery,
     getFactsQuery,
@@ -34,7 +38,8 @@ export type EndpointResult =
     | IInsightsQueryResult
     | IAttributesQueryResult
     | IDatasetsQueryResult
-    | IParametersQueryResult;
+    | IParametersQueryResult
+    | IComputedAttributesQueryResult;
 
 export type FeedEndpoint = {
     type: ObjectType;
@@ -133,6 +138,12 @@ const ENDPOINTS: readonly ICatalogEndpoint[] = [
         gatedBy: ["enableParameters"],
     },
     {
+        type: ObjectTypes.COMPUTED_ATTRIBUTE,
+        query: (opts) => getComputedAttributesQuery(opts).query(),
+        gatedBy: [COMPUTED_ATTRIBUTE_FEATURE_FLAG],
+        cannotFilterBy: ["certification"],
+    },
+    {
         type: ObjectTypes.ATTRIBUTE,
         query: (opts) => getAttributesQuery(opts).query(),
         cannotFilterBy: ["createdBy", "excludeCreatedBy", "certification"],
@@ -157,6 +168,14 @@ export function useCatalogEndpoints(
     return useMemo(() => selectCatalogEndpoints(types, queryOptions, flags), [flags, queryOptions, types]);
 }
 
+export function useEnabledObjectTypes(): ObjectType[] {
+    const flags = useFeatureFlags();
+    return useMemo(
+        () => ENDPOINTS.filter((endpoint) => isEndpointEnabled(endpoint, flags)).map(({ type }) => type),
+        [flags],
+    );
+}
+
 export function selectCatalogEndpoints(
     types: readonly ObjectType[],
     options: ICatalogItemQueryOptions,
@@ -173,7 +192,7 @@ export function selectCatalogEndpoints(
             continue;
         }
         // gates rule: every listed flag must be on
-        if (endpoint.gatedBy?.some((flag) => !flags?.[flag])) {
+        if (!isEndpointEnabled(endpoint, flags)) {
             continue;
         }
         // compatibility rule: backend rejects these filters on this endpoint
@@ -183,6 +202,10 @@ export function selectCatalogEndpoints(
         result.push({ type: endpoint.type, query: () => endpoint.query(options) });
     }
     return result;
+}
+
+function isEndpointEnabled(endpoint: ICatalogEndpoint, flags: IFeatureFlags | undefined): boolean {
+    return !endpoint.gatedBy?.some((flag) => !flags?.[flag]);
 }
 
 const isSlotActive: Record<FilterSlot, (opts: ICatalogItemQueryOptions) => boolean> = {

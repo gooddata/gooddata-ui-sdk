@@ -18,27 +18,47 @@ import {
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { useScheduledEmailDialogContext } from "../../../contexts/ScheduledEmailDialogContext.js";
+import { useScheduledExportDraft } from "../../state/ScheduledExportDraftContext.js";
 import { type IScheduledEmailDialogProps } from "../../types.js";
 
-export function useSaveScheduledEmailToBackend(
-    automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
-    {
-        onSuccess,
-        onError,
-        onSubmit,
-        onSaveSuccess,
-        onSaveError,
-        onSave,
-    }: Pick<
-        IScheduledEmailDialogProps,
-        "onSuccess" | "onError" | "onSubmit" | "onSaveSuccess" | "onSaveError" | "onSave"
-    >,
-) {
+/**
+ * Lifecycle callbacks of {@link useSaveScheduledEmailToBackend}: `onSubmit`/`onSuccess`/`onError`
+ * (create) and `onSave`/`onSaveSuccess`/`onSaveError` (edit).
+ *
+ * @internal
+ */
+export type IUseSaveScheduledEmailCallbacks = Pick<
+    IScheduledEmailDialogProps,
+    "onSuccess" | "onError" | "onSubmit" | "onSaveSuccess" | "onSaveError" | "onSave"
+>;
+
+/**
+ * Saves the scheduled-export dialog's draft: creates a new schedule or updates the edited one after
+ * sanitizing it, keeps a 400 response's detail as an in-dialog error message, and routes everything
+ * else to the matching callback.
+ *
+ * Reads the draft from the scheduled-export state contexts, so it throws outside them.
+ *
+ * @internal
+ */
+export function useSaveScheduledEmailToBackend({
+    onSuccess,
+    onError,
+    onSubmit,
+    onSaveSuccess,
+    onSaveError,
+    onSave,
+}: IUseSaveScheduledEmailCallbacks): {
+    handleSaveScheduledEmail: () => void;
+    isSavingScheduledEmail: boolean;
+    savingErrorMessage: string | undefined;
+} {
     const intl = useIntl();
     const [savingErrorMessage, setSavingErrorMessage] = useState<string | undefined>(undefined);
     const [isSavingScheduledEmail, setIsSavingScheduledEmail] = useState(false);
 
     const { createScheduledEmail, saveScheduledEmail } = useScheduledEmailDialogContext();
+    const { editedAutomation } = useScheduledExportDraft();
 
     const handleCreateScheduledEmail = useCallback(
         async (scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
@@ -96,12 +116,12 @@ export function useSaveScheduledEmailToBackend(
     );
 
     const handleSaveScheduledEmail = useCallback((): void => {
-        if (automation.id) {
-            void handleUpdateScheduledEmail(automation);
+        if (editedAutomation.id) {
+            void handleUpdateScheduledEmail(editedAutomation);
         } else {
-            void handleCreateScheduledEmail(automation);
+            void handleCreateScheduledEmail(editedAutomation);
         }
-    }, [automation, handleUpdateScheduledEmail, handleCreateScheduledEmail]);
+    }, [editedAutomation, handleUpdateScheduledEmail, handleCreateScheduledEmail]);
 
     return { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage };
 }

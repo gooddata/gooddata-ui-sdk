@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type ComponentType, type RefObject, useCallback, useEffect, useMemo, useRef } from "react";
+import { type RefObject, useCallback, useEffect, useMemo, useRef } from "react";
 
 import { type EnhancedStore } from "@reduxjs/toolkit";
 
@@ -16,6 +16,7 @@ import { getIsOpened } from "../store/localStorage.js";
 
 import { ConfigProvider, type LinkHandlerEvent } from "./ConfigContext.js";
 import { CustomizationProvider } from "./CustomizationProvider.js";
+import { type IGenAIAssistantSlots } from "./customized/types.js";
 import { GenAIChatOverlay } from "./GenAIChatOverlay.js";
 import { GenAiStore, type GenAiStoreProps } from "./GenAiStore.js";
 import { KeyDriverAnalysis } from "./KeyDriverAnalysis.js";
@@ -33,8 +34,12 @@ export type GenAIChatDialogProps = Omit<GenAiStoreProps, "children"> & {
     onClose: () => void;
     returnFocusTo?: RefObject<HTMLElement | null> | string;
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
-    LandingScreenComponentProvider?: () => ComponentType;
-    DisclaimerComponentProvider?: () => ComponentType | null;
+
+    /**
+     * Customizations for the Gen AI assistant.
+     */
+    slots?: IGenAIAssistantSlots;
+
     /**
      * Set to false while the host renders its own overlay above the chat, so that Escape aimed at
      * that overlay does not also close the chat (see GenAIChatOverlayExternalProps.closeOnEscape).
@@ -74,8 +79,7 @@ export function GenAIChatDialog({
     onLinkClick,
     onDispatcher,
     mode,
-    LandingScreenComponentProvider,
-    DisclaimerComponentProvider,
+    slots,
     closeOnEscape,
 }: GenAIChatDialogProps) {
     const effectiveBackend = useBackendStrict(backend);
@@ -117,8 +121,7 @@ export function GenAIChatDialog({
                         canManage={canManage}
                         canAnalyze={canAnalyze}
                         canFullControl={canFullControl}
-                        LandingScreenComponentProvider={LandingScreenComponentProvider}
-                        DisclaimerComponentProvider={DisclaimerComponentProvider}
+                        slots={slots}
                     />
                 )}
             </GenAiStore>
@@ -143,8 +146,7 @@ type GenAIChatDialogContentProps = {
     canManage: boolean;
     canAnalyze: boolean;
     canFullControl: boolean;
-    LandingScreenComponentProvider?: () => ComponentType;
-    DisclaimerComponentProvider?: () => ComponentType | null;
+    slots?: IGenAIAssistantSlots;
     closeOnEscape?: boolean;
 };
 
@@ -165,8 +167,7 @@ function GenAIChatDialogContent({
     canManage,
     canAnalyze,
     canFullControl,
-    LandingScreenComponentProvider,
-    DisclaimerComponentProvider,
+    slots,
     closeOnEscape,
 }: GenAIChatDialogContentProps) {
     const open = useRef(onOpen);
@@ -232,10 +233,7 @@ function GenAIChatDialogContent({
                             canAnalyze={canAnalyze}
                             canFullControl={canFullControl}
                         >
-                            <CustomizationProvider
-                                landingScreenComponentProvider={LandingScreenComponentProvider}
-                                disclaimerComponentProvider={DisclaimerComponentProvider}
-                            >
+                            <CustomizationProvider slots={slots}>
                                 <GenAIChatOverlay
                                     className={className}
                                     dialogPosition={dialogPosition}

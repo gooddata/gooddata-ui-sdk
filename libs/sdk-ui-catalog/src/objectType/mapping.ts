@@ -7,7 +7,9 @@ import type { ObjectType } from "./types.js";
 /**
  * Maps the catalog ObjectType to the GenAIObjectType.
  */
-export function mapGenAIObjectType(type: Exclude<ObjectType, "parameter">): GenAIObjectType {
+export function mapGenAIObjectType(
+    type: Exclude<ObjectType, "parameter" | "computedAttribute">,
+): GenAIObjectType {
     if (type === "analyticalDashboard") {
         return "dashboard";
     }

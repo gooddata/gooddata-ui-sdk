@@ -26,6 +26,7 @@ import { type IWorkspaceObjectPermissionsService } from "./objectPermissions/ind
 import { type IWorkspaceParametersService } from "./parameters/index.js";
 import { type IWorkspacePermissionsService } from "./permissions/index.js";
 import { type IReferencesService } from "./references/index.js";
+import { type IWorkspaceReportsService } from "./reports/index.js";
 import { type IWorkspaceSettingsService } from "./settings/index.js";
 import { type IWorkspaceStylingService } from "./styling/index.js";
 import { type IWorkspaceUserGroupsQuery } from "./userGroups/index.js";
@@ -217,6 +218,13 @@ export interface IAnalyticalWorkspace {
      * @beta
      */
     exportTemplates(): IWorkspaceExportTemplatesService;
+
+    /**
+     * Returns service that can be used to manage report page layouts, report templates and reports.
+     *
+     * @alpha
+     */
+    reports(): IWorkspaceReportsService;
 }
 
 /**

@@ -76,30 +76,29 @@ const App = () => {
 
 ### Props
 
-| Name                           | Type                                          | Default  | Description                                                                                                                                                             |
-| ------------------------------ | --------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| locale                         | ILocale                                       | "en-US"  | Specifies the locale for internationalization                                                                                                                           |
-| backend                        | IAnalyticalBackend                            | -        | Backend instance. Falls back to BackendProvider context if not specified                                                                                                |
-| workspace                      | string                                        | -        | Workspace ID. Falls back to WorkspaceProvider context if not specified                                                                                                  |
-| colorPalette                   | IColorPalette                                 | -        | Color palette used for rendering the visualizations. If not provided, the default color palette will be used                                                            |
-| catalogItems                   | CatalogItem[]                                 | -        | Catalog items used for autocompletion. If not provided - will be lazy-loaded when needed                                                                                |
-| settings                       | IUserWorkspaceSettings                        | -        | Workspace settings used by the assistant UI                                                                                                                             |
-| eventHandlers                  | ChatEventHandler[]                            | -        | Event handlers for user interactions with the chat UI                                                                                                                   |
-| onLinkClick                    | (LinkHandlerEvent) => void                    | -        | Handle user clicks on the catalog items mentioned in chat.                                                                                                              |
-| allowNativeLinks               | boolean                                       | false    | Whether to allow native links in chat messages. If false, `onLinkClick` handler will be fired when clicking on links                                                    |
-| disableManage                  | boolean                                       | false    | This will disable manage permissions for the user even if the user has them defined.                                                                                    |
-| disableAnalyze                 | boolean                                       | false    | This will disable analyze permissions for the user even if the user has them defined.                                                                                   |
-| disableFullControl             | boolean                                       | false    | This will disable full control permissions for the user even if the user has them defined.                                                                              |
-| objectTypes                    | GenAIObjectType[]                             | -        | Restricts object types used by assistant search and suggestions.                                                                                                        |
-| includeTags                    | string[]                                      | -        | Includes only tagged metadata objects when assistant resolves relevant content.                                                                                         |
-| excludeTags                    | string[]                                      | -        | Excludes tagged metadata objects when assistant resolves relevant content.                                                                                              |
-| onDispatcher                   | (dispatch: EnhancedStore["dispatch"]) => void | -        | Dispatcher callback for assistant actions and state changes.                                                                                                            |
-| dashboardSelector              | DashboardSelectorEvaluator                    | -        | Selector that is used to automatically build ambient context for the chat. If it is provided, the chat will automatically load the dashboards and related data from it. |
-| LandingScreenComponentProvider | () => ComponentType                           | -        | Factory for providing a custom initial assistant experience component. When omitted, the default landing screen with quick questions is displayed.                      |
-| DisclaimerComponentProvider    | () => ComponentType \| null                   | -        | Factory for providing a custom disclaimer component shown in the assistant UI. Return `null` to hide disclaimer rendering.                                              |
-| className                      | string                                        | -        | Additional class name applied to the root assistant element.                                                                                                            |
-| mode                           | "docked" \| "fullscreen"                      | "docked" | Display mode of the assistant. Adapts its internal layout to a compact docked container or to a wide fullscreen one. Does not resize the component.                     |
-| isPreview                      | boolean                                       | false    | Internal preview mode. Uses workspace preview agent and preview conversations. Toggling resets assistant state.                                                         |
+| Name               | Type                                          | Default  | Description                                                                                                                                                             |
+| ------------------ | --------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| locale             | ILocale                                       | "en-US"  | Specifies the locale for internationalization                                                                                                                           |
+| backend            | IAnalyticalBackend                            | -        | Backend instance. Falls back to BackendProvider context if not specified                                                                                                |
+| workspace          | string                                        | -        | Workspace ID. Falls back to WorkspaceProvider context if not specified                                                                                                  |
+| colorPalette       | IColorPalette                                 | -        | Color palette used for rendering the visualizations. If not provided, the default color palette will be used                                                            |
+| catalogItems       | CatalogItem[]                                 | -        | Catalog items used for autocompletion. If not provided - will be lazy-loaded when needed                                                                                |
+| settings           | IUserWorkspaceSettings                        | -        | Workspace settings used by the assistant UI                                                                                                                             |
+| eventHandlers      | ChatEventHandler[]                            | -        | Event handlers for user interactions with the chat UI                                                                                                                   |
+| onLinkClick        | (LinkHandlerEvent) => void                    | -        | Handle user clicks on the catalog items mentioned in chat.                                                                                                              |
+| allowNativeLinks   | boolean                                       | false    | Whether to allow native links in chat messages. If false, `onLinkClick` handler will be fired when clicking on links                                                    |
+| disableManage      | boolean                                       | false    | This will disable manage permissions for the user even if the user has them defined.                                                                                    |
+| disableAnalyze     | boolean                                       | false    | This will disable analyze permissions for the user even if the user has them defined.                                                                                   |
+| disableFullControl | boolean                                       | false    | This will disable full control permissions for the user even if the user has them defined.                                                                              |
+| objectTypes        | GenAIObjectType[]                             | -        | Restricts object types used by assistant search and suggestions.                                                                                                        |
+| includeTags        | string[]                                      | -        | Includes only tagged metadata objects when assistant resolves relevant content.                                                                                         |
+| excludeTags        | string[]                                      | -        | Excludes tagged metadata objects when assistant resolves relevant content.                                                                                              |
+| onDispatcher       | (dispatch: EnhancedStore["dispatch"]) => void | -        | Dispatcher callback for assistant actions and state changes.                                                                                                            |
+| dashboardSelector  | DashboardSelectorEvaluator                    | -        | Selector that is used to automatically build ambient context for the chat. If it is provided, the chat will automatically load the dashboards and related data from it. |
+| slots              | IGenAIAssistantSlots                          | -        | Customizations for the Gen AI assistant.                                                                                                                                |
+| className          | string                                        | -        | Additional class name applied to the root assistant element.                                                                                                            |
+| mode               | "docked" \| "fullscreen"                      | "docked" | Display mode of the assistant. Adapts its internal layout to a compact docked container or to a wide fullscreen one. Does not resize the component.                     |
+| isPreview          | boolean                                       | false    | Internal preview mode. Uses workspace preview agent and preview conversations. Toggling resets assistant state.                                                         |
 
 ### Display mode
 
@@ -444,8 +443,8 @@ The initial assistant experience defines what users see before they send their f
 
 ### Customizing the initial assistant experience
 
-To replace the default initial experience, provide the `LandingScreenComponentProvider` prop.
-This prop accepts a factory function that returns a React component type, which is rendered as the initial assistant experience. The provider must return a component type, not JSX.
+To replace the default initial experience, provide the `slots.LandingScreen` prop.
+This prop accepts a React component type, which is rendered as the initial assistant experience.
 
 ```tsx
 import { GenAIAssistant } from "@gooddata/sdk-ui-gen-ai";
@@ -458,7 +457,13 @@ const CustomLandingScreen = () => (
     </div>
 );
 
-export const App = () => <GenAIAssistant LandingScreenComponentProvider={() => CustomLandingScreen} />;
+export const App = () => (
+    <GenAIAssistant
+        slots={{
+            LandingScreen: CustomLandingScreen,
+        }}
+    />
+);
 ```
 
 The package exports building blocks used by the default initial assistant experience.
@@ -472,18 +477,19 @@ Available components:
 - `DefaultLandingQuestion`
 
 To extend the default experience (for example, to customize the suggested questions), wrap
-`DefaultLandingScreen` in your own component and provide custom children:
+the `Default` component provided in the slot props in your own component and provide custom children:
 
 ```tsx
 import {
-    DefaultLandingScreen,
     DefaultLandingQuestion,
     DefaultLandingTitle,
     DefaultLandingTitleAscent,
+    type IGenAIAssistantLandingScreenProps,
 } from "@gooddata/sdk-ui-gen-ai";
+import { type ISlotProps } from "@gooddata/sdk-ui-kit";
 
-const CustomDefaultLanding = () => (
-    <DefaultLandingScreen>
+const CustomDefaultLanding = ({ Default, defaultProps }: ISlotProps<IGenAIAssistantLandingScreenProps>) => (
+    <Default {...defaultProps}>
         <DefaultLandingTitle>
             <DefaultLandingTitleAscent>Ask AI to explore your workspace</DefaultLandingTitleAscent>
             <br />
@@ -494,10 +500,16 @@ const CustomDefaultLanding = () => (
             answer="Here is the revenue by product for 2024"
         />
         <DefaultLandingQuestion question="What is our YoY trend?" answer="Here is the year-over-year trend" />
-    </DefaultLandingScreen>
+    </Default>
 );
 
-export const App = () => <GenAIAssistant LandingScreenComponentProvider={() => CustomDefaultLanding} />;
+export const App = () => (
+    <GenAIAssistant
+        slots={{
+            LandingScreen: CustomDefaultLanding,
+        }}
+    />
+);
 ```
 
 You can also reuse individual building blocks, such as `DefaultLandingQuestion`, inside a fully custom layout.
@@ -529,6 +541,40 @@ const CustomLandingScreen = () => (
 
 Use these building blocks to mix default styling and accessibility features with your own branding,
 while still benefiting from the automated assistant interactions.
+
+### Customizing the disclaimer
+
+You can also customize or hide the disclaimer rendered below the chat input using `slots.Disclaimer`.
+
+```tsx
+import { GenAIAssistant } from "@gooddata/sdk-ui-gen-ai";
+
+const CustomDisclaimer = () => (
+    <div style={{ color: "gray", textAlign: "center", fontSize: 10, padding: 4 }}>
+        Please note that AI-generated content may be inaccurate.
+    </div>
+);
+
+export const App = () => (
+    <GenAIAssistant
+        slots={{
+            Disclaimer: CustomDisclaimer,
+        }}
+    />
+);
+```
+
+To hide the disclaimer entirely, return `null`:
+
+```tsx
+export const App = () => (
+    <GenAIAssistant
+        slots={{
+            Disclaimer: () => null,
+        }}
+    />
+);
+```
 
 ## Resetting the chat thread
 
