@@ -4609,6 +4609,8 @@ export interface IParameterControlButtonProps {
     // (undocumented)
     className?: string;
     // (undocumented)
+    definition: IParameterDefinition;
+    // (undocumented)
     dropdownId?: string;
     // (undocumented)
     isActive: boolean;
@@ -7297,6 +7299,8 @@ export interface IUiMenuInteractiveItemProps<T extends IUiMenuItemData = object>
 
 // @internal (undocumented)
 export interface IUiMenuInteractiveItemWrapperProps<T extends IUiMenuItemData = object> {
+    // (undocumented)
+    Component?: ComponentType<IUiMenuInteractiveItemProps<T>>;
     // (undocumented)
     item: IUiMenuInteractiveItem<T>;
 }

@@ -171,6 +171,26 @@
         "text": "is not",
         "crowdinContext": "Used in filter expressions to indicate exclusion, e.g., 'Product is not Shoes'. Appears in filter component descriptions."
     },
+    "gs.list.selectionStatus.all": {
+        "text": "<label>is</label><b>All</b>",
+        "crowdinContext": "Selection summary shown under the list of filter values. Reorder the whole phrase freely - e.g. Japanese puts the values first and ends with a verb. <label> wraps connective words and renders them with spacing around them; <b> marks the emphasised value; text left outside any tag gets no extra spacing. This variant is used when every value is selected."
+    },
+    "gs.list.selectionStatus.none": {
+        "text": "<label>is</label><b>None</b>",
+        "crowdinContext": "Selection summary shown under the list of filter values. Reorder the whole phrase freely - e.g. Japanese puts the values first and ends with a verb. <label> wraps connective words and renders them with spacing around them; <b> marks the emphasised value; text left outside any tag gets no extra spacing. This variant is used when no value is selected."
+    },
+    "gs.list.selectionStatus.is": {
+        "text": "<label>is</label>{selection}",
+        "crowdinContext": "Selection summary shown under the list of filter values. Reorder the whole phrase freely - e.g. Japanese puts the values first and ends with a verb. <label> wraps connective words and renders them with spacing around them; <b> marks the emphasised value; text left outside any tag gets no extra spacing. {selection} is the list of selected values followed by their count."
+    },
+    "gs.list.selectionStatus.isNot": {
+        "text": "<label>is not</label>{selection}",
+        "crowdinContext": "Selection summary shown under the list of filter values. Reorder the whole phrase freely - e.g. Japanese puts the values first and ends with a verb. <label> wraps connective words and renders them with spacing around them; <b> marks the emphasised value; text left outside any tag gets no extra spacing. {selection} is the list of excluded values followed by their count; everything else is selected."
+    },
+    "gs.list.subtitle.isNot": {
+        "text": "is not {selection}",
+        "crowdinContext": "Subtitle of the attribute filter button when everything except the listed values is selected. {selection} is the comma separated list of excluded values. Reorder freely - e.g. Japanese puts the values first."
+    },
     "gs.list.search.placeholder": {
         "text": "Search…",
         "crowdinContext": "Placeholder text displayed in search input fields within list components, prompting users to enter search terms."
@@ -4458,6 +4478,10 @@
     "timePicker.accessibility.label": {
         "text": "Select starting time",
         "crowdinContext": "Accessibility label for the time picker component, indicating it's used to select a starting time. Used by screen readers."
+    },
+    "timezoneSelect.search.accessibility.label": {
+        "text": "Search time zones",
+        "crowdinContext": "Accessibility label for the search input in the timezone select component. Used by screen readers."
     },
     "menu.close": {
         "text": "Close menu",

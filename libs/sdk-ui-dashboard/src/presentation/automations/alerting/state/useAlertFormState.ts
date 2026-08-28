@@ -39,8 +39,9 @@ import {
     convertExternalRecipientToAutomationRecipient,
     convertUserToAutomationRecipient,
 } from "../../shared/utils/automationUtils.js";
-import { createDefaultAlert } from "../DefaultAlertingDialog/utils/convertors.js";
-import { type IMeasureFormatMap } from "../DefaultAlertingDialog/utils/getters.js";
+import { type AlertAttribute, type AlertMetric, type AlertMetricComparatorType } from "../types.js";
+import { createDefaultAlert } from "../utils/convertors.js";
+import { type IMeasureFormatMap } from "../utils/getters.js";
 import {
     transformAlertByAnomalyDetection,
     transformAlertByAttribute,
@@ -50,8 +51,7 @@ import {
     transformAlertByMetric,
     transformAlertByRelativeOperator,
     transformAlertBySensitivity,
-} from "../DefaultAlertingDialog/utils/transformation.js";
-import { type AlertAttribute, type AlertMetric, type AlertMetricComparatorType } from "../types.js";
+} from "../utils/transformation.js";
 
 import { type IAlertFormState } from "./types.js";
 

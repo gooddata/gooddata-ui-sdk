@@ -1012,7 +1012,7 @@ export interface ConditionalFormattingRelativeDateValue {
     'to': number;
 }
 
-export type ConditionalFormattingRelativeDateValueGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.minute_in_day' | 'GDC.time.second' | 'GDC.time.second_in_minute' | 'GDC.time.second_in_day' | 'GDC.time.fiscal_week' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_semester' | 'GDC.time.fiscal_year' | 'GDC.time.fiscal_day_in_fiscal_week' | 'GDC.time.fiscal_day_in_fiscal_month' | 'GDC.time.fiscal_day_in_fiscal_quarter' | 'GDC.time.fiscal_day_in_fiscal_semester' | 'GDC.time.fiscal_day_in_fiscal_year' | 'GDC.time.fiscal_week_in_fiscal_month' | 'GDC.time.fiscal_week_in_fiscal_quarter' | 'GDC.time.fiscal_week_in_fiscal_semester' | 'GDC.time.fiscal_week_in_fiscal_year' | 'GDC.time.fiscal_month_in_fiscal_quarter' | 'GDC.time.fiscal_month_in_fiscal_semester' | 'GDC.time.fiscal_month_in_fiscal_year' | 'GDC.time.fiscal_quarter_in_fiscal_semester' | 'GDC.time.fiscal_quarter_in_fiscal_year' | 'GDC.time.fiscal_semester_in_fiscal_year';
+export type ConditionalFormattingRelativeDateValueGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 export type ConditionalFormattingRelativeDateValueKindEnum = 'relativeDate';
 
 /**
@@ -11001,7 +11001,13 @@ export interface JsonApiMetricOutListMeta {
 
 export interface JsonApiMetricOutMeta {
     'origin'?: JsonApiMetricOutMetaOrigin;
+    /**
+     * List of valid permissions for a logged-in user.
+     */
+    'permissions'?: Array<JsonApiMetricOutMetaPermissionsEnum>;
 }
+
+export type JsonApiMetricOutMetaPermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
 
 export interface JsonApiMetricOutMetaOrigin {
     /**
@@ -13312,14 +13318,9 @@ export interface JsonApiVisualizationObjectOutDocument {
     /**
      * Included resources
      */
-    'included'?: Array<JsonApiVisualizationObjectOutIncludes>;
+    'included'?: Array<JsonApiComputedAttributeOutIncludes>;
     'links'?: ObjectLinks;
 }
-
-/**
- * @type JsonApiVisualizationObjectOutIncludes
- */
-export type JsonApiVisualizationObjectOutIncludes = JsonApiAttributeOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFactOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiParameterOutWithLinks | JsonApiUserIdentifierOutWithLinks;
 
 /**
  * A JSON:API document with a list of resources
@@ -13329,7 +13330,7 @@ export interface JsonApiVisualizationObjectOutList {
     /**
      * Included resources
      */
-    'included'?: Array<JsonApiVisualizationObjectOutIncludes>;
+    'included'?: Array<JsonApiComputedAttributeOutIncludes>;
     'links'?: ListLinks;
     'meta'?: JsonApiVisualizationObjectOutListMeta;
 }
@@ -13358,6 +13359,7 @@ export type JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum = 'NATIVE' | '
 export interface JsonApiVisualizationObjectOutRelationships {
     'attributes'?: JsonApiVisualizationObjectOutRelationshipsAttributes;
     'certifiedBy'?: JsonApiVisualizationObjectOutRelationshipsCertifiedBy;
+    'computedAttributes'?: JsonApiVisualizationObjectOutRelationshipsComputedAttributes;
     'createdBy'?: JsonApiVisualizationObjectOutRelationshipsCreatedBy;
     'datasets'?: JsonApiVisualizationObjectOutRelationshipsDatasets;
     'facts'?: JsonApiVisualizationObjectOutRelationshipsFacts;
@@ -13376,6 +13378,13 @@ export interface JsonApiVisualizationObjectOutRelationshipsAttributes {
 
 export interface JsonApiVisualizationObjectOutRelationshipsCertifiedBy {
     'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiVisualizationObjectOutRelationshipsComputedAttributes {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiComputedAttributeLinkage>;
 }
 
 export interface JsonApiVisualizationObjectOutRelationshipsCreatedBy {
@@ -16465,6 +16474,7 @@ export interface TabularExportExecution {
  * Export request object describing the export properties and overrides for tabular exports.
  */
 export interface TabularExportRequest {
+    'conditionalFormatting'?: ConditionalFormatting | null;
     'customOverride'?: CustomOverride;
     /**
      * Execution result identifier.
@@ -60833,13 +60843,13 @@ export async function EntitiesApiAxiosParamCreator_CreateEntityMemoryItems(
  * @param {string} workspaceId 
  * @param {JsonApiMetricPostOptionalIdDocument} jsonApiMetricPostOptionalIdDocument 
  * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {Array<'permissions' | 'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_CreateEntityMetrics(
-    workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -61483,14 +61493,14 @@ export async function EntitiesApiAxiosParamCreator_CreateEntityUsers(
  * @summary Post Visualization Objects
  * @param {string} workspaceId 
  * @param {JsonApiVisualizationObjectPostOptionalIdDocument} jsonApiVisualizationObjectPostOptionalIdDocument 
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_CreateEntityVisualizationObjects(
-    workspaceId: string, jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -66524,13 +66534,13 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesMemoryItems(
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
- * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {Array<'permissions' | 'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_GetAllEntitiesMetrics(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'permissions' | 'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -67387,7 +67397,7 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesUsers(
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -67398,7 +67408,7 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesUsers(
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_GetAllEntitiesVisualizationObjects(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -70093,13 +70103,13 @@ export async function EntitiesApiAxiosParamCreator_GetEntityMemoryItems(
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
  * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
- * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {Array<'permissions' | 'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_GetEntityMetrics(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -70827,7 +70837,7 @@ export async function EntitiesApiAxiosParamCreator_GetEntityUsers(
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -70835,7 +70845,7 @@ export async function EntitiesApiAxiosParamCreator_GetEntityUsers(
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_GetEntityVisualizationObjects(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -74004,13 +74014,13 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityUsers(
  * @param {string} objectId 
  * @param {JsonApiVisualizationObjectPatchDocument} jsonApiVisualizationObjectPatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_PatchEntityVisualizationObjects(
-    workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -78840,13 +78850,13 @@ export async function EntitiesApiAxiosParamCreator_UpdateEntityUsers(
  * @param {string} objectId 
  * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_UpdateEntityVisualizationObjects(
-    workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -91014,10 +91024,10 @@ export interface EntitiesApiCreateEntityMetricsRequest {
 
     /**
      * Include Meta objects.
-     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @type {Array<'permissions' | 'origin' | 'all' | 'ALL'>}
      * @memberof EntitiesApiCreateEntityMetrics
      */
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+    readonly metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>
 }
 
 /**
@@ -91238,10 +91248,10 @@ export interface EntitiesApiCreateEntityVisualizationObjectsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof EntitiesApiCreateEntityVisualizationObjects
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 
     /**
      * Include Meta objects.
@@ -94122,10 +94132,10 @@ export interface EntitiesApiGetAllEntitiesMetricsRequest {
 
     /**
      * Include Meta objects.
-     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @type {Array<'permissions' | 'origin' | 'page' | 'all' | 'ALL'>}
      * @memberof EntitiesApiGetAllEntitiesMetrics
      */
-    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
+    readonly metaInclude?: Array<'permissions' | 'origin' | 'page' | 'all' | 'ALL'>
 }
 
 /**
@@ -94703,10 +94713,10 @@ export interface EntitiesApiGetAllEntitiesVisualizationObjectsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof EntitiesApiGetAllEntitiesVisualizationObjects
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -96404,10 +96414,10 @@ export interface EntitiesApiGetEntityMetricsRequest {
 
     /**
      * Include Meta objects.
-     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @type {Array<'permissions' | 'origin' | 'all' | 'ALL'>}
      * @memberof EntitiesApiGetEntityMetrics
      */
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+    readonly metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>
 }
 
 /**
@@ -96789,10 +96799,10 @@ export interface EntitiesApiGetEntityVisualizationObjectsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof EntitiesApiGetEntityVisualizationObjects
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 
     /**
      * 
@@ -98434,10 +98444,10 @@ export interface EntitiesApiPatchEntityVisualizationObjectsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof EntitiesApiPatchEntityVisualizationObjects
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 }
 
 /**
@@ -100786,10 +100796,10 @@ export interface EntitiesApiUpdateEntityVisualizationObjectsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof EntitiesApiUpdateEntityVisualizationObjects
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 }
 
 /**
@@ -139162,13 +139172,13 @@ export class MetadataSynchronizationApi extends BaseAPI implements MetadataSynch
  * @param {string} workspaceId 
  * @param {JsonApiMetricPostOptionalIdDocument} jsonApiMetricPostOptionalIdDocument 
  * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {Array<'permissions' | 'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function MetricControllerApiAxiosParamCreator_CreateEntityMetrics(
-    workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -139289,13 +139299,13 @@ export async function MetricControllerApiAxiosParamCreator_DeleteEntityMetrics(
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
- * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {Array<'permissions' | 'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function MetricControllerApiAxiosParamCreator_GetAllEntitiesMetrics(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'permissions' | 'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -139371,13 +139381,13 @@ export async function MetricControllerApiAxiosParamCreator_GetAllEntitiesMetrics
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
  * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
- * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {Array<'permissions' | 'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function MetricControllerApiAxiosParamCreator_GetEntityMetrics(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -139947,10 +139957,10 @@ export interface MetricControllerApiCreateEntityMetricsRequest {
 
     /**
      * Include Meta objects.
-     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @type {Array<'permissions' | 'origin' | 'all' | 'ALL'>}
      * @memberof MetricControllerApiCreateEntityMetrics
      */
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+    readonly metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>
 }
 
 /**
@@ -140038,10 +140048,10 @@ export interface MetricControllerApiGetAllEntitiesMetricsRequest {
 
     /**
      * Include Meta objects.
-     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @type {Array<'permissions' | 'origin' | 'page' | 'all' | 'ALL'>}
      * @memberof MetricControllerApiGetAllEntitiesMetrics
      */
-    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
+    readonly metaInclude?: Array<'permissions' | 'origin' | 'page' | 'all' | 'ALL'>
 }
 
 /**
@@ -140087,10 +140097,10 @@ export interface MetricControllerApiGetEntityMetricsRequest {
 
     /**
      * Include Meta objects.
-     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @type {Array<'permissions' | 'origin' | 'all' | 'ALL'>}
      * @memberof MetricControllerApiGetEntityMetrics
      */
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+    readonly metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>
 }
 
 /**
@@ -140312,13 +140322,13 @@ export class MetricControllerApi extends BaseAPI implements MetricControllerApiI
  * @param {string} workspaceId 
  * @param {JsonApiMetricPostOptionalIdDocument} jsonApiMetricPostOptionalIdDocument 
  * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
- * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {Array<'permissions' | 'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function MetricsApiAxiosParamCreator_CreateEntityMetrics(
-    workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -140439,13 +140449,13 @@ export async function MetricsApiAxiosParamCreator_DeleteEntityMetrics(
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
- * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {Array<'permissions' | 'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function MetricsApiAxiosParamCreator_GetAllEntitiesMetrics(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'permissions' | 'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -140521,13 +140531,13 @@ export async function MetricsApiAxiosParamCreator_GetAllEntitiesMetrics(
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
  * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
- * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {Array<'permissions' | 'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function MetricsApiAxiosParamCreator_GetEntityMetrics(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -141097,10 +141107,10 @@ export interface MetricsApiCreateEntityMetricsRequest {
 
     /**
      * Include Meta objects.
-     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @type {Array<'permissions' | 'origin' | 'all' | 'ALL'>}
      * @memberof MetricsApiCreateEntityMetrics
      */
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+    readonly metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>
 }
 
 /**
@@ -141188,10 +141198,10 @@ export interface MetricsApiGetAllEntitiesMetricsRequest {
 
     /**
      * Include Meta objects.
-     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @type {Array<'permissions' | 'origin' | 'page' | 'all' | 'ALL'>}
      * @memberof MetricsApiGetAllEntitiesMetrics
      */
-    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
+    readonly metaInclude?: Array<'permissions' | 'origin' | 'page' | 'all' | 'ALL'>
 }
 
 /**
@@ -141237,10 +141247,10 @@ export interface MetricsApiGetEntityMetricsRequest {
 
     /**
      * Include Meta objects.
-     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @type {Array<'permissions' | 'origin' | 'all' | 'ALL'>}
      * @memberof MetricsApiGetEntityMetrics
      */
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+    readonly metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>
 }
 
 /**
@@ -167803,14 +167813,14 @@ export class UsersEntityAPIsApi extends BaseAPI implements UsersEntityAPIsApiInt
  * @summary Post Visualization Objects
  * @param {string} workspaceId 
  * @param {JsonApiVisualizationObjectPostOptionalIdDocument} jsonApiVisualizationObjectPostOptionalIdDocument 
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function VisualizationObjectApiAxiosParamCreator_CreateEntityVisualizationObjects(
-    workspaceId: string, jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -167926,7 +167936,7 @@ export async function VisualizationObjectApiAxiosParamCreator_DeleteEntityVisual
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -167937,7 +167947,7 @@ export async function VisualizationObjectApiAxiosParamCreator_DeleteEntityVisual
  * @throws {RequiredError}
  */
 export async function VisualizationObjectApiAxiosParamCreator_GetAllEntitiesVisualizationObjects(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -168011,7 +168021,7 @@ export async function VisualizationObjectApiAxiosParamCreator_GetAllEntitiesVisu
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -168019,7 +168029,7 @@ export async function VisualizationObjectApiAxiosParamCreator_GetAllEntitiesVisu
  * @throws {RequiredError}
  */
 export async function VisualizationObjectApiAxiosParamCreator_GetEntityVisualizationObjects(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -168081,13 +168091,13 @@ export async function VisualizationObjectApiAxiosParamCreator_GetEntityVisualiza
  * @param {string} objectId 
  * @param {JsonApiVisualizationObjectPatchDocument} jsonApiVisualizationObjectPatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function VisualizationObjectApiAxiosParamCreator_PatchEntityVisualizationObjects(
-    workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -168230,13 +168240,13 @@ export async function VisualizationObjectApiAxiosParamCreator_SearchEntitiesVisu
  * @param {string} objectId 
  * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function VisualizationObjectApiAxiosParamCreator_UpdateEntityVisualizationObjects(
-    workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -168582,10 +168592,10 @@ export interface VisualizationObjectApiCreateEntityVisualizationObjectsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof VisualizationObjectApiCreateEntityVisualizationObjects
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 
     /**
      * Include Meta objects.
@@ -168645,10 +168655,10 @@ export interface VisualizationObjectApiGetAllEntitiesVisualizationObjectsRequest
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof VisualizationObjectApiGetAllEntitiesVisualizationObjects
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -168715,10 +168725,10 @@ export interface VisualizationObjectApiGetEntityVisualizationObjectsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof VisualizationObjectApiGetEntityVisualizationObjects
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 
     /**
      * 
@@ -168771,10 +168781,10 @@ export interface VisualizationObjectApiPatchEntityVisualizationObjectsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof VisualizationObjectApiPatchEntityVisualizationObjects
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 }
 
 /**
@@ -168848,10 +168858,10 @@ export interface VisualizationObjectApiUpdateEntityVisualizationObjectsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof VisualizationObjectApiUpdateEntityVisualizationObjects
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 }
 
 /**
@@ -168953,14 +168963,14 @@ export class VisualizationObjectApi extends BaseAPI implements VisualizationObje
  * @summary Post Visualization Objects
  * @param {string} workspaceId 
  * @param {JsonApiVisualizationObjectPostOptionalIdDocument} jsonApiVisualizationObjectPostOptionalIdDocument 
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function VisualizationObjectControllerApiAxiosParamCreator_CreateEntityVisualizationObjects(
-    workspaceId: string, jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -169076,7 +169086,7 @@ export async function VisualizationObjectControllerApiAxiosParamCreator_DeleteEn
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -169087,7 +169097,7 @@ export async function VisualizationObjectControllerApiAxiosParamCreator_DeleteEn
  * @throws {RequiredError}
  */
 export async function VisualizationObjectControllerApiAxiosParamCreator_GetAllEntitiesVisualizationObjects(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -169161,7 +169171,7 @@ export async function VisualizationObjectControllerApiAxiosParamCreator_GetAllEn
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -169169,7 +169179,7 @@ export async function VisualizationObjectControllerApiAxiosParamCreator_GetAllEn
  * @throws {RequiredError}
  */
 export async function VisualizationObjectControllerApiAxiosParamCreator_GetEntityVisualizationObjects(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -169231,13 +169241,13 @@ export async function VisualizationObjectControllerApiAxiosParamCreator_GetEntit
  * @param {string} objectId 
  * @param {JsonApiVisualizationObjectPatchDocument} jsonApiVisualizationObjectPatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function VisualizationObjectControllerApiAxiosParamCreator_PatchEntityVisualizationObjects(
-    workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -169380,13 +169390,13 @@ export async function VisualizationObjectControllerApiAxiosParamCreator_SearchEn
  * @param {string} objectId 
  * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function VisualizationObjectControllerApiAxiosParamCreator_UpdateEntityVisualizationObjects(
-    workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -169732,10 +169742,10 @@ export interface VisualizationObjectControllerApiCreateEntityVisualizationObject
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof VisualizationObjectControllerApiCreateEntityVisualizationObjects
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 
     /**
      * Include Meta objects.
@@ -169795,10 +169805,10 @@ export interface VisualizationObjectControllerApiGetAllEntitiesVisualizationObje
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof VisualizationObjectControllerApiGetAllEntitiesVisualizationObjects
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -169865,10 +169875,10 @@ export interface VisualizationObjectControllerApiGetEntityVisualizationObjectsRe
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof VisualizationObjectControllerApiGetEntityVisualizationObjects
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 
     /**
      * 
@@ -169921,10 +169931,10 @@ export interface VisualizationObjectControllerApiPatchEntityVisualizationObjects
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof VisualizationObjectControllerApiPatchEntityVisualizationObjects
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 }
 
 /**
@@ -169998,10 +170008,10 @@ export interface VisualizationObjectControllerApiUpdateEntityVisualizationObject
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>}
      * @memberof VisualizationObjectControllerApiUpdateEntityVisualizationObjects
      */
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>
 }
 
 /**

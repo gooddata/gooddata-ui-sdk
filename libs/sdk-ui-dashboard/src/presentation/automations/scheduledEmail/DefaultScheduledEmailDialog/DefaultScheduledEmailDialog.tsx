@@ -34,14 +34,15 @@ import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
 import { ApplyCurrentFiltersConfirmDialog } from "../../shared/automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
 import {
-    AutomationDialogActionBar,
     AutomationDialogFooterLeft,
-} from "../../shared/slots/AutomationDialogActionBar.js";
+    DefaultAutomationDialogActionBar,
+} from "../../shared/slots/DefaultAutomationDialogActionBar.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
 import { useScheduledExportActions } from "../state/ScheduledExportActionsContext.js";
 import { useScheduledExportDraft } from "../state/ScheduledExportDraftContext.js";
 import { useScheduledExportFilters } from "../state/ScheduledExportFiltersContext.js";
+import { useSaveScheduledEmailToBackend } from "../state/useSaveScheduledEmailToBackend.js";
 import {
     useScheduledEmailDialogActionBarProps,
     useScheduledEmailDialogDestinationProps,
@@ -58,18 +59,17 @@ import { TIMEZONE_DEFAULT } from "../utils/timezone.js";
 
 import { DashboardAttachments } from "./components/Attachments/DashboardAttachments.js";
 import { WidgetAttachments } from "./components/Attachments/WidgetAttachments.js";
+import { DefaultScheduledEmailDialogDestination } from "./components/DefaultScheduledEmailDialogDestination.js";
+import { DefaultScheduledEmailDialogFilters } from "./components/DefaultScheduledEmailDialogFilters.js";
+import { DefaultScheduledEmailDialogHeader } from "./components/DefaultScheduledEmailDialogHeader.js";
+import { DefaultScheduledEmailDialogRecipients } from "./components/DefaultScheduledEmailDialogRecipients.js";
+import { DefaultScheduledEmailDialogTimezone } from "./components/DefaultScheduledEmailDialogTimezone.js";
 import { EvaluationModeCheckbox } from "./components/EvaluationModeCheckbox/EvaluationModeCheckbox.js";
-import { ScheduledEmailDialogHeader } from "./components/Header/ScheduleEmailDialogHeader.js";
 import { MessageForm } from "./components/MessageForm/MessageForm.js";
-import { ScheduledEmailDialogDestination } from "./components/ScheduledEmailDialogDestination.js";
-import { ScheduledEmailDialogFilters } from "./components/ScheduledEmailDialogFilters.js";
-import { ScheduledEmailDialogRecipients } from "./components/ScheduledEmailDialogRecipients.js";
-import { ScheduleTimezoneSelect } from "./components/ScheduleTimezoneSelect/ScheduleTimezoneSelect.js";
 import { SubjectForm } from "./components/SubjectForm/SubjectForm.js";
 import { SCHEDULED_EMAIL_DIALOG_ID } from "./constants.js";
 import { DefaultLoadingScheduledEmailDialog } from "./DefaultLoadingScheduledEmailDialog.js";
 import { useElementHeightSnapshot } from "./hooks/useElementHeightSnapshot.js";
-import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToBackend.js";
 
 const CLOSE_ON_PARENT_SCROLL = true;
 
@@ -307,7 +307,7 @@ export function ScheduledMailDialogRenderer({
                                 ActionBarSlot
                                     ? () => (
                                           <ActionBarSlot
-                                              Default={AutomationDialogActionBar}
+                                              Default={DefaultAutomationDialogActionBar}
                                               defaultProps={actionBarDefaultProps}
                                           />
                                       )
@@ -323,11 +323,11 @@ export function ScheduledMailDialogRenderer({
                             headerLeftButtonRenderer={() => {
                                 return HeaderSlot ? (
                                     <HeaderSlot
-                                        Default={ScheduledEmailDialogHeader}
+                                        Default={DefaultScheduledEmailDialogHeader}
                                         defaultProps={headerDefaultProps}
                                     />
                                 ) : (
-                                    <ScheduledEmailDialogHeader {...headerDefaultProps} />
+                                    <DefaultScheduledEmailDialogHeader {...headerDefaultProps} />
                                 );
                             }}
                         >
@@ -370,11 +370,11 @@ export function ScheduledMailDialogRenderer({
                                     >
                                         {FiltersSlot ? (
                                             <FiltersSlot
-                                                Default={ScheduledEmailDialogFilters}
+                                                Default={DefaultScheduledEmailDialogFilters}
                                                 defaultProps={filtersDefaultProps}
                                             />
                                         ) : (
-                                            <ScheduledEmailDialogFilters {...filtersDefaultProps} />
+                                            <DefaultScheduledEmailDialogFilters {...filtersDefaultProps} />
                                         )}
                                     </div>
                                 ) : (
@@ -423,20 +423,24 @@ export function ScheduledMailDialogRenderer({
                                         <ContentDivider className="gd-divider-with-margin" />
                                         {DestinationSlot ? (
                                             <DestinationSlot
-                                                Default={ScheduledEmailDialogDestination}
+                                                Default={DefaultScheduledEmailDialogDestination}
                                                 defaultProps={destinationDefaultProps}
                                             />
                                         ) : (
-                                            <ScheduledEmailDialogDestination {...destinationDefaultProps} />
+                                            <DefaultScheduledEmailDialogDestination
+                                                {...destinationDefaultProps}
+                                            />
                                         )}
                                         <ContentDivider className="gd-divider-with-margin" />
                                         {RecipientsSlot ? (
                                             <RecipientsSlot
-                                                Default={ScheduledEmailDialogRecipients}
+                                                Default={DefaultScheduledEmailDialogRecipients}
                                                 defaultProps={recipientsDefaultProps}
                                             />
                                         ) : (
-                                            <ScheduledEmailDialogRecipients {...recipientsDefaultProps} />
+                                            <DefaultScheduledEmailDialogRecipients
+                                                {...recipientsDefaultProps}
+                                            />
                                         )}
                                         {isInPlatformChannel ? null : (
                                             <>
@@ -492,11 +496,13 @@ export function ScheduledMailDialogRenderer({
                                         {canSelectScheduleTimezone ? (
                                             TimezoneSlot ? (
                                                 <TimezoneSlot
-                                                    Default={ScheduleTimezoneSelect}
+                                                    Default={DefaultScheduledEmailDialogTimezone}
                                                     defaultProps={timezoneDefaultProps}
                                                 />
                                             ) : (
-                                                <ScheduleTimezoneSelect {...timezoneDefaultProps} />
+                                                <DefaultScheduledEmailDialogTimezone
+                                                    {...timezoneDefaultProps}
+                                                />
                                             )
                                         ) : null}
                                         {enableAutomationEvaluationMode ? (
@@ -568,6 +574,15 @@ export function ScheduledMailDialogRenderer({
  * The providers are intentionally hoisted above the slot rather than built inside this component:
  * that is what lets a wholesale replacement receive the same contexts. Rendering this component
  * outside those providers throws at runtime.
+ *
+ * The dialog is composed from the exported region renders — {@link DefaultScheduledEmailDialogHeader},
+ * {@link DefaultScheduledEmailDialogFilters}, {@link DefaultScheduledEmailDialogDestination},
+ * {@link DefaultScheduledEmailDialogRecipients}, {@link DefaultScheduledEmailDialogTimezone},
+ * {@link DefaultAutomationDialogActionBar} — fed by the matching `use*Props` hooks
+ * ({@link useScheduledEmailDialogFiltersProps} and siblings). A custom `ScheduledEmailDialogComponent`
+ * that keeps our regions but owns the markup places the connected blocks
+ * ({@link ScheduledEmailDialogFilters} and siblings) instead of this component, and reads or writes
+ * the same draft through {@link useScheduledExportDraft} and {@link useScheduledExportActions}.
  *
  * Slots render only in the fully rendered dialog: not while the dialog context reports loading,
  * and not while the stale-filters confirmation step is shown. The Filters slot additionally

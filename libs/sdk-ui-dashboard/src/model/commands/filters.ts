@@ -1789,7 +1789,7 @@ export function reloadFilterViews(correlationId?: string): IReloadFilterViews {
 }
 
 /**
- * Command for applying all working filters staged for application.
+ * Command for applying all working filters and working parameter values staged for application.
  * Usually used with setting dashboardApplyFiltersMode: ALL_AT_ONCE
  *
  * @remarks
@@ -1819,8 +1819,8 @@ export function applyFilterContextWorkingSelection(
 }
 
 /**
- * Command for resetting all working filters.
- * It resets the working filters in to  same state as applied filters.
+ * Command for resetting all working filters and working parameter values.
+ * It resets the working filters and parameters to the same state as the applied ones.
  *
  * @remarks
  * This command ot usually used with setting dashboardApplyFiltersMode: ALL_AT_ONCE

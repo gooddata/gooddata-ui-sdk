@@ -30,9 +30,9 @@ import { useAlertingDialogContext } from "../../contexts/AlertingDialogContext.j
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { ApplyCurrentFiltersConfirmDialog } from "../../shared/automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
 import {
-    AutomationDialogActionBar,
     AutomationDialogFooterLeft,
-} from "../../shared/slots/AutomationDialogActionBar.js";
+    DefaultAutomationDialogActionBar,
+} from "../../shared/slots/DefaultAutomationDialogActionBar.js";
 import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/components/DeleteAlertConfirmDialog.js";
 import { useAlertActions } from "../state/AlertActionsContext.js";
 import { useAlertData } from "../state/AlertDataContext.js";
@@ -47,12 +47,11 @@ import {
     useAlertingDialogRecipientsProps,
 } from "../state/useAlertingDialogRegionProps.js";
 import { useAlertSelectedValues } from "../state/useAlertSelectedValues.js";
+import { useAlertSubmit } from "../state/useAlertSubmit.js";
 import { type IDefaultAlertingDialogProps } from "../types.js";
+import { getValueSuffix } from "../utils/getters.js";
+import { isAnomalyDetection, isChangeOrDifferenceOperator } from "../utils/guards.js";
 
-import { AlertingDialogDestination } from "./AlertingDialogDestination.js";
-import { AlertingDialogFilters } from "./AlertingDialogFilters.js";
-import { AlertingDialogHeader } from "./AlertingDialogHeader.js";
-import { AlertingDialogRecipients } from "./AlertingDialogRecipients.js";
 import { AlertAttributeSelect } from "./components/AlertAttributeSelect.js";
 import { AlertComparisonOperatorSelect } from "./components/AlertComparisonOperatorSelect.js";
 //
@@ -65,12 +64,13 @@ import { AlertThresholdInput } from "./components/AlertThresholdInput.js";
 import { AlertTriggerIntervalSelect } from "./components/AlertTriggerIntervalSelect.js";
 import { AlertTriggerModeSelect } from "./components/AlertTriggerModeSelect.js";
 import { ALERTING_DIALOG_ID } from "./constants.js";
+import { DefaultAlertingDialogDestination } from "./DefaultAlertingDialogDestination.js";
+import { DefaultAlertingDialogFilters } from "./DefaultAlertingDialogFilters.js";
+import { DefaultAlertingDialogHeader } from "./DefaultAlertingDialogHeader.js";
+import { DefaultAlertingDialogRecipients } from "./DefaultAlertingDialogRecipients.js";
 import { DefaultLoadingAlertingDialog } from "./DefaultLoadingAlertingDialog.js";
 import { FormField } from "./FormField.js";
-import { useAlertSubmit } from "./hooks/useAlertSubmit.js";
 import { useAlertThreshold } from "./hooks/useAlertThreshold.js";
-import { getValueSuffix } from "./utils/getters.js";
-import { isAnomalyDetection, isChangeOrDifferenceOperator } from "./utils/guards.js";
 
 const OVERLAY_POSITION_TYPE = "sameAsTarget";
 const CLOSE_ON_PARENT_SCROLL = true;
@@ -257,7 +257,7 @@ export function AlertingDialogRenderer({
                                 ActionBarSlot
                                     ? () => (
                                           <ActionBarSlot
-                                              Default={AutomationDialogActionBar}
+                                              Default={DefaultAutomationDialogActionBar}
                                               defaultProps={actionBarDefaultProps}
                                           />
                                       )
@@ -273,11 +273,11 @@ export function AlertingDialogRenderer({
                             headerLeftButtonRenderer={() => {
                                 return HeaderSlot ? (
                                     <HeaderSlot
-                                        Default={AlertingDialogHeader}
+                                        Default={DefaultAlertingDialogHeader}
                                         defaultProps={headerDefaultProps}
                                     />
                                 ) : (
-                                    <AlertingDialogHeader {...headerDefaultProps} />
+                                    <DefaultAlertingDialogHeader {...headerDefaultProps} />
                                 );
                             }}
                         >
@@ -290,11 +290,11 @@ export function AlertingDialogRenderer({
                                 <>
                                     {FiltersSlot ? (
                                         <FiltersSlot
-                                            Default={AlertingDialogFilters}
+                                            Default={DefaultAlertingDialogFilters}
                                             defaultProps={filtersDefaultProps}
                                         />
                                     ) : (
-                                        <AlertingDialogFilters {...filtersDefaultProps} />
+                                        <DefaultAlertingDialogFilters {...filtersDefaultProps} />
                                     )}
                                     <ContentDivider className="gd-divider-with-margin" />
                                 </>
@@ -458,11 +458,11 @@ export function AlertingDialogRenderer({
                                     {notificationChannels.length > 1 ? (
                                         DestinationSlot ? (
                                             <DestinationSlot
-                                                Default={AlertingDialogDestination}
+                                                Default={DefaultAlertingDialogDestination}
                                                 defaultProps={destinationDefaultProps}
                                             />
                                         ) : (
-                                            <AlertingDialogDestination {...destinationDefaultProps} />
+                                            <DefaultAlertingDialogDestination {...destinationDefaultProps} />
                                         )
                                     ) : null}
                                     <FormField
@@ -524,11 +524,11 @@ export function AlertingDialogRenderer({
                                     ) : null}
                                     {RecipientsSlot ? (
                                         <RecipientsSlot
-                                            Default={AlertingDialogRecipients}
+                                            Default={DefaultAlertingDialogRecipients}
                                             defaultProps={recipientsDefaultProps}
                                         />
                                     ) : (
-                                        <AlertingDialogRecipients {...recipientsDefaultProps} />
+                                        <DefaultAlertingDialogRecipients {...recipientsDefaultProps} />
                                     )}
                                 </FormFieldGroup>
                                 {warningMessage ? (
@@ -583,6 +583,14 @@ export function AlertingDialogRenderer({
  * The providers are intentionally hoisted above the slot rather than built inside this component:
  * that is what lets a wholesale replacement receive the same contexts. Rendering this component
  * outside those providers throws at runtime.
+ *
+ * The dialog is composed from the exported region renders — {@link DefaultAlertingDialogHeader},
+ * {@link DefaultAlertingDialogFilters}, {@link DefaultAlertingDialogDestination},
+ * {@link DefaultAlertingDialogRecipients}, {@link DefaultAutomationDialogActionBar} — fed by the
+ * matching `use*Props` hooks ({@link useAlertingDialogFiltersProps} and siblings). A custom
+ * `AlertingDialogComponent` that keeps our regions but owns the markup places the connected blocks
+ * ({@link AlertingDialogFilters} and siblings) instead of this component, and reads or writes the
+ * same draft through {@link useAlertDraft} and {@link useAlertActions}.
  *
  * Slots render only in the fully rendered dialog: not while the dialog context reports loading,
  * and not while the stale-filters confirmation step is shown.

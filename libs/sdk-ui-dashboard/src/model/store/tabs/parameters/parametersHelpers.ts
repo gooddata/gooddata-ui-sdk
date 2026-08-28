@@ -339,15 +339,41 @@ export function buildWorkspaceParametersByRef(
 }
 
 /**
+ * The value the parameter control shows: the staged one when the entry has it, otherwise the
+ * applied one.
+ *
+ * @internal
+ */
+export function displayOverride(entry: IDashboardParameterEntry): ParameterValue | undefined {
+    return entry.workingOverride ?? entry.runtimeOverride;
+}
+
+/**
  * Folds an entry's ephemeral `runtimeOverride` into the persisted parameter shape's `value`.
  *
  * @internal
  */
 export function applyRuntimeOverride(entry: IDashboardParameterEntry): IDashboardParameter {
-    if (entry.runtimeOverride === undefined) {
+    return foldOverride(entry, entry.runtimeOverride);
+}
+
+/**
+ * Folds an entry's display value into the persisted parameter shape's `value`.
+ *
+ * @internal
+ */
+export function applyDisplayOverride(entry: IDashboardParameterEntry): IDashboardParameter {
+    return foldOverride(entry, displayOverride(entry));
+}
+
+function foldOverride(
+    entry: IDashboardParameterEntry,
+    value: ParameterValue | undefined,
+): IDashboardParameter {
+    if (value === undefined) {
         return entry.parameter;
     }
-    return { ...entry.parameter, value: entry.runtimeOverride };
+    return { ...entry.parameter, value };
 }
 
 /**
@@ -464,10 +490,10 @@ export function computeParameterResetValue(
 }
 
 /**
- * Only `mode: "active"` entries with a defined `runtimeOverride` are considered resettable;
- * HIDDEN and READONLY entries are skipped, and entries with `runtimeOverride === undefined`
- * (chip hidden, execution falls back to `insight.parameters`) are preserved as-is — symmetric
- * with per-chip behavior in `DashboardParameterFilter`.
+ * Only `mode: "active"` entries with a defined display value are considered resettable;
+ * HIDDEN and READONLY entries are skipped, and entries with no display value (control hidden,
+ * execution falls back to `insight.parameters`) are preserved as-is — symmetric with the
+ * per-control behavior in `DashboardParameterFilter`.
  *
  * @internal
  */
@@ -483,12 +509,16 @@ export function computeParameterResetTargets(
         if (entry.parameter.mode !== DashboardParameterModeValues.ACTIVE) {
             continue;
         }
-        if (entry.runtimeOverride === undefined) {
+        if (displayOverride(entry) === undefined) {
             continue;
         }
         const workspaceParameter = workspaceParameterByRef.get(objRefToString(entry.parameter.ref));
         const resetValue = computeParameterResetValue(entry, workspaceParameter, isInEditMode);
-        if (resetValue !== undefined && resetValue !== entry.runtimeOverride) {
+        if (resetValue === undefined) {
+            continue;
+        }
+        const isAlreadyReset = entry.workingOverride === undefined && entry.runtimeOverride === resetValue;
+        if (!isAlreadyReset) {
             result.push({ ref: entry.parameter.ref, value: resetValue });
         }
     }

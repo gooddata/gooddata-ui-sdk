@@ -16,6 +16,7 @@ import {
     insightRef,
     insightUri,
     isIdentifierRef,
+    isUriRef,
 } from "@gooddata/sdk-model";
 
 /**
@@ -265,6 +266,30 @@ export function newAttributeMap(
         type: "attribute",
         strictTypeCheck,
         ...metadataObjectExtractors,
+    });
+
+    return map.fromItems(items);
+}
+
+/**
+ * Creates {@link ObjRefMap} for objects that carry only their `ref`; the identifier/uri keys are derived from it.
+ *
+ * @param items - items to add to mapping
+ * @param type - type of the objects, optional
+ * @param strictTypeCheck - whether to do strict type checking when getting by identifierRef
+ * @alpha
+ */
+export function newMapForObjectWithRef<T extends { ref: ObjRef }>(
+    items: ReadonlyArray<T>,
+    type?: ObjectType,
+    strictTypeCheck: boolean = false,
+): ObjRefMap<T> {
+    const map = new ObjRefMap<T>({
+        type,
+        strictTypeCheck,
+        idExtract: (i) => (isIdentifierRef(i.ref) ? i.ref.identifier : ""),
+        uriExtract: (i) => (isUriRef(i.ref) ? i.ref.uri : ""),
+        refExtract: (i) => i.ref,
     });
 
     return map.fromItems(items);

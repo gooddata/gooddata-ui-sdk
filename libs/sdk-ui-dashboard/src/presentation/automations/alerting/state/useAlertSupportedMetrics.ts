@@ -7,12 +7,12 @@ import { fillMissingTitles } from "@gooddata/sdk-ui";
 
 import { useAlertingDialogContext } from "../../contexts/AlertingDialogContext.js";
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
-import { useAttributeValuesFromExecResults } from "../DefaultAlertingDialog/hooks/useAttributeValuesFromExecResults.js";
-import { getMeasureFormatsFromExecution } from "../DefaultAlertingDialog/utils/getters.js";
+import { useAttributeValuesFromExecResults } from "../hooks/useAttributeValuesFromExecResults.js";
+import { getMeasureFormatsFromExecution } from "../utils/getters.js";
 import {
     getSupportedInsightAttributesByInsight,
     getSupportedInsightMeasuresByInsight,
-} from "../DefaultAlertingDialog/utils/items.js";
+} from "../utils/items.js";
 
 import { type IAlertSupportedMetrics } from "./types.js";
 

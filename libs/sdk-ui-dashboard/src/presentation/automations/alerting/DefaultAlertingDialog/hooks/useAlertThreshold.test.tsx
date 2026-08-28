@@ -30,7 +30,7 @@ vi.mock("./useThresholdValue.js", () => ({
     useThresholdValue: vi.fn(),
 }));
 
-vi.mock("../utils/transformation.js", async (importOriginal: () => Promise<Record<string, unknown>>) => {
+vi.mock("../../utils/transformation.js", async (importOriginal: () => Promise<Record<string, unknown>>) => {
     const actual = await importOriginal();
     return {
         ...actual,
@@ -42,7 +42,7 @@ vi.mock("../utils/transformation.js", async (importOriginal: () => Promise<Recor
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
 // ---------------------------------------------------------------------------
 
-import * as transformationModule from "../utils/transformation.js";
+import * as transformationModule from "../../utils/transformation.js";
 
 import { useAlertThreshold, type IUseAlertThresholdProps } from "./useAlertThreshold.js";
 import * as useThresholdValueModule from "./useThresholdValue.js";

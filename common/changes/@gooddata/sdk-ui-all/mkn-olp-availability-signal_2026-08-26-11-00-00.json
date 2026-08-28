@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: Added the dashboard reference availability signal (IDashboardReferences.unavailable, selectUnavailableObjects, selectUnavailableObjectsMapByType) behind enableDashboardPartialRendering; no rendering change.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

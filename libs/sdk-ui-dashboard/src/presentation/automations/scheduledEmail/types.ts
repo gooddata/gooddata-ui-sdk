@@ -448,8 +448,10 @@ export interface IScheduledEmailDialogSlots {
  */
 export interface IDefaultScheduledEmailDialogProps extends IScheduledEmailDialogProps {
     /**
-     * Section-level overrides. Each slot receives `{ Default, defaultProps }` and may render its own
-     * content (replace) or `<Default {...defaultProps} />` inside its own markup (wrap).
+     * Section-level overrides. Each slot receives `{ Default, defaultProps }` — `Default` is the region's
+     * exported render component ({@link DefaultScheduledEmailDialogHeader} for `Header`, and so on) and `defaultProps` the
+     * return of the region's props hook ({@link useScheduledEmailDialogHeaderProps}) — and may render its own content
+     * (replace) or `<Default {...defaultProps} />` inside its own markup (wrap).
      *
      * @example
      * The dialog is reached through the `Dashboard` component override; define slot components at

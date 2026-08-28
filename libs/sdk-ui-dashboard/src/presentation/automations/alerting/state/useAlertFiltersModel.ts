@@ -14,12 +14,9 @@ import {
 
 import { useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import { getAppliedWidgetFilters, getVisibleFiltersByFilters } from "../../shared/filters/index.js";
-import { type IMeasureFormatMap } from "../DefaultAlertingDialog/utils/getters.js";
-import {
-    transformAlertByAttribute,
-    transformAlertByMetric,
-} from "../DefaultAlertingDialog/utils/transformation.js";
 import { type AlertAttribute, type AlertMetric } from "../types.js";
+import { type IMeasureFormatMap } from "../utils/getters.js";
+import { transformAlertByAttribute, transformAlertByMetric } from "../utils/transformation.js";
 
 import { type IAlertFiltersModel } from "./types.js";
 

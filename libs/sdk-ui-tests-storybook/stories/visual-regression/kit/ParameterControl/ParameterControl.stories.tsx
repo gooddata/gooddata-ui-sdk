@@ -50,6 +50,7 @@ function ParameterControlExamples() {
                     <Section title="Inactive (current value)">
                         <ParameterControlButton
                             name="Threshold"
+                            definition={numberDefinitionWithoutConstraints}
                             value={25}
                             isActive={false}
                             isDraggable
@@ -59,6 +60,7 @@ function ParameterControlExamples() {
                     <Section title="Active (open)">
                         <ParameterControlButton
                             name="Threshold"
+                            definition={numberDefinitionWithoutConstraints}
                             value={25}
                             isActive
                             isDraggable
@@ -68,6 +70,7 @@ function ParameterControlExamples() {
                     <Section title="Long parameter name">
                         <ParameterControlButton
                             name="A very long parameter name that should ellipsise"
+                            definition={numberDefinitionWithoutConstraints}
                             value={1234}
                             isActive={false}
                             isDraggable

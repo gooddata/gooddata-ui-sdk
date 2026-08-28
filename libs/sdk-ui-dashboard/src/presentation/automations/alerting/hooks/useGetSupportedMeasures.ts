@@ -6,8 +6,8 @@ import { type IInsight } from "@gooddata/sdk-model";
 import { fillMissingTitles } from "@gooddata/sdk-ui";
 
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
-import { getSupportedInsightMeasuresByInsight } from "../DefaultAlertingDialog/utils/items.js";
 import { type AlertMetric } from "../types.js";
+import { getSupportedInsightMeasuresByInsight } from "../utils/items.js";
 
 /**
  * Hook that calculates supported alertable measures for an insight.

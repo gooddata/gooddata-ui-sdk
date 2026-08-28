@@ -22,13 +22,29 @@ import type {
 } from "@gooddata/sdk-model";
 
 /**
- * @internal
+ * @public
+ * Describes an AI assistant agent.
  */
 export type GenAIAgent = {
+    /**
+     * Unique identifier of the agent.
+     */
     id: string;
+    /**
+     * Title of the agent.
+     */
     title: string;
+    /**
+     * Description of the agent.
+     */
     description?: string;
+    /**
+     * The date and time when the agent was last modified.
+     */
     modifiedAt?: string;
+    /**
+     * The date and time when the agent was last used.
+     */
     lastUsedAt?: string;
 };
 

@@ -28,9 +28,9 @@ import { useAlertingManagementDialogContext } from "../../contexts/AlertingManag
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { computeUseHostRoute } from "../../shared/utils/automationUtils.js";
 import { ALERTING_DIALOG_ID } from "../DefaultAlertingDialog/constants.js";
-import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
 import { useAlertingDialogAccessibility } from "../hooks/useAlertingDialogAccessibility.js";
 import { useGetSupportedMeasures } from "../hooks/useGetSupportedMeasures.js";
+import { isMobileView } from "../utils/responsive.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 

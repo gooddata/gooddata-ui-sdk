@@ -324,6 +324,15 @@ export function bucketTotals(bucket: IBucket): ITotal[];
 export const BuiltInReportPageLayoutCover: IReportPageLayout;
 
 // @alpha
+export const BuiltInReportPageLayoutPortraitCover: IReportPageLayout;
+
+// @alpha
+export const BuiltInReportPageLayoutPortraitSection: IReportPageLayout;
+
+// @alpha
+export const BuiltInReportPageLayoutPortraitSummary: IReportPageLayout;
+
+// @alpha
 export const BuiltInReportPageLayouts: readonly IReportPageLayout[];
 
 // @alpha
@@ -617,6 +626,9 @@ export function defaultDimensionsGenerator(definition: IExecutionDefinition): ID
 
 // @public
 export const DefaultLocale: ILocale;
+
+// @alpha
+export const DefaultReportPageFormat: ReportPageFormat;
 
 // @public
 export function defFingerprint(def: IExecutionDefinition): string;
@@ -2970,6 +2982,7 @@ export interface IFeatureFlags {
     enableDashboardDensitySetting?: boolean;
     enableDashboardDescriptionDynamicHeight?: boolean;
     enableDashboardFilterGroups?: boolean;
+    enableDashboardPartialRendering?: boolean;
     enableDashboardPersistentFiltersAcrossTabs?: boolean;
     // @alpha
     enableDashboardSectionHeadersDateDataSet?: boolean;
@@ -3895,6 +3908,7 @@ export interface IMeasureLocatorItemBody {
 // @public
 export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBase & IAuditable & {
     certification?: IObjectCertification;
+    permissions?: AccessGranularPermission[];
 };
 
 // @public (undocumented)
@@ -4818,6 +4832,19 @@ export interface IReportBase {
 }
 
 // @alpha
+export interface IReportBoxStyle {
+    // (undocumented)
+    background?: ReportBackground;
+}
+
+// @alpha
+export interface IReportColorBackground {
+    color: string;
+    // (undocumented)
+    type: "color";
+}
+
+// @alpha
 export interface IReportContent {
     filters?: FilterContextItem[];
     pages: IReportContentPage[];
@@ -4838,13 +4865,29 @@ export interface IReportDefinition extends IReportBase {
 }
 
 // @alpha
+export interface IReportImageBackground {
+    slotId: string;
+    // (undocumented)
+    type: "image";
+}
+
+// @alpha
 export interface IReportImageSlot extends IReportSlotBase {
     // (undocumented)
     altText?: string;
     fit?: "contain" | "cover" | "fill";
     source?: ReportImageSource;
+    style?: IReportImageStyle;
     // (undocumented)
     type: "image";
+}
+
+// @alpha
+export interface IReportImageStyle {
+    // (undocumented)
+    horizontalAlign?: ReportContentAlignment;
+    // (undocumented)
+    verticalAlign?: ReportContentAlignment;
 }
 
 // @alpha
@@ -4857,6 +4900,7 @@ export interface IReportLayoutSection extends IReportLayoutNodeBase {
     // (undocumented)
     children: ReportPageLayoutNode[];
     direction: "row" | "column";
+    style?: IReportBoxStyle;
     // (undocumented)
     type: "section";
 }
@@ -4871,9 +4915,11 @@ export interface IReportLayoutSlotRef extends IReportLayoutNodeBase {
 // @alpha
 export interface IReportPageBody {
     filters?: FilterContextItem[];
+    format?: ReportPageFormat;
     kind?: "cover" | "section" | "content";
     layout: ReportPageLayoutNode;
     slots: ReportSlot[];
+    style?: IReportBoxStyle;
 }
 
 // @alpha
@@ -4960,8 +5006,18 @@ export interface IReportTextSlot extends IReportSlotBase {
     // (undocumented)
     kind: ReportTextSlotKind;
     source?: ReportTextSource;
+    style?: IReportTextStyle;
     // (undocumented)
     type: "text";
+}
+
+// @alpha
+export interface IReportTextStyle {
+    color?: string;
+    // (undocumented)
+    horizontalAlign?: ReportContentAlignment;
+    // (undocumented)
+    verticalAlign?: ReportContentAlignment;
 }
 
 // @alpha
@@ -5296,6 +5352,9 @@ export function isComparisonCondition(obj: unknown): obj is IComparisonCondition
 
 // @public
 export function isComparisonConditionOperator(obj: unknown): obj is ComparisonConditionOperator;
+
+// @public
+export function isComputedAttribute(attribute: IAttribute): boolean;
 
 // @public
 export function isComputedAttributeMetadataObject(obj: unknown): obj is IComputedAttributeMetadataObject;
@@ -5865,10 +5924,16 @@ export function isRemotePluggableApplicationRegistryItem(app: PluggableApplicati
 export function isReport(obj: unknown): obj is IReport;
 
 // @alpha
+export function isReportColorBackground(obj: unknown): obj is IReportColorBackground;
+
+// @alpha
 export function isReportContentV1(obj: unknown): obj is IReportContent;
 
 // @alpha
 export function isReportDefinition(obj: unknown): obj is IReportDefinition;
+
+// @alpha
+export function isReportImageBackground(obj: unknown): obj is IReportImageBackground;
 
 // @alpha
 export function isReportImageSlot(obj: unknown): obj is IReportImageSlot;
@@ -5878,6 +5943,9 @@ export function isReportLayoutSection(obj: unknown): obj is IReportLayoutSection
 
 // @alpha
 export function isReportLayoutSlotRef(obj: unknown): obj is IReportLayoutSlotRef;
+
+// @alpha
+export function isReportPageFormat(value: unknown): value is ReportPageFormat;
 
 // @alpha
 export function isReportPageLayout(obj: unknown): obj is IReportPageLayout;
@@ -7448,10 +7516,16 @@ export type RemotePluggableApplicationRegistryItem = IRemotePluggableApplication
 export type RemotePluggableApplicationsRegistry = IRemotePluggableApplicationsRegistryV1;
 
 // @alpha
+export type ReportBackground = IReportColorBackground | IReportImageBackground;
+
+// @alpha
 export type ReportBuiltInVariable = "reportTitle" | "periodStart" | "periodEnd" | "workspaceName" | "generatedAt" | "pageNumber" | "totalPages" | "logo";
 
 // @alpha
 export const ReportBuiltInVariables: ReportBuiltInVariable[];
+
+// @alpha
+export type ReportContentAlignment = "start" | "center" | "end";
 
 // @alpha
 export function reportContentPage(reportOrTemplate: IReport | IReportDefinition | IReportTemplate | IReportTemplateDefinition, pageLocalIdentifier: string): IReportContentPage | undefined;
@@ -7467,6 +7541,15 @@ export type ReportImageSource = {
     type: "asset";
     ref: ObjRef;
 };
+
+// @alpha
+export type ReportPageFormat = "widescreen" | "a4Portrait" | "letterPortrait";
+
+// @alpha
+export const ReportPageFormatAspectRatios: Record<ReportPageFormat, number>;
+
+// @alpha
+export const ReportPageFormats: ReportPageFormat[];
 
 // @alpha
 export type ReportPageLayoutNode = IReportLayoutSection | IReportLayoutSlotRef;

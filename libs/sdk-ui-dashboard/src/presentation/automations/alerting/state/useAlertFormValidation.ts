@@ -18,8 +18,8 @@ import {
 } from "@gooddata/sdk-model";
 
 import { isEmail } from "../../scheduledEmail/utils/validate.js";
-import { useAlertValidation } from "../DefaultAlertingDialog/hooks/useAlertValidation.js";
-import { isAlertValueDefined } from "../DefaultAlertingDialog/utils/guards.js";
+import { useAlertValidation } from "../hooks/useAlertValidation.js";
+import { isAlertValueDefined } from "../utils/guards.js";
 
 export interface IUseAlertFormValidationProps {
     editedAutomation: IAutomationMetadataObjectDefinition | undefined;

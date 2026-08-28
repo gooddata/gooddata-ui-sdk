@@ -22,9 +22,9 @@ import {
     UiMenu,
 } from "@gooddata/sdk-ui-kit";
 
+import { type AttributeValue } from "../../hooks/useAttributeValuesFromExecResults.js";
 import { type AlertAttribute } from "../../types.js";
-import { type AttributeValue } from "../hooks/useAttributeValuesFromExecResults.js";
-import { getSelectedCatalogAttribute, getSelectedCatalogAttributeValue } from "../utils/getters.js";
+import { getSelectedCatalogAttribute, getSelectedCatalogAttributeValue } from "../../utils/getters.js";
 
 export interface IAlertAttributeSelectProps {
     id: string;

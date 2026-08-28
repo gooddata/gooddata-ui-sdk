@@ -233,8 +233,10 @@ export interface IAlertingDialogSlots {
  */
 export interface IDefaultAlertingDialogProps extends IAlertingDialogProps {
     /**
-     * Section-level overrides. Each slot receives `{ Default, defaultProps }` and may render its own
-     * content (replace) or `<Default {...defaultProps} />` inside its own markup (wrap).
+     * Section-level overrides. Each slot receives `{ Default, defaultProps }` — `Default` is the region's
+     * exported render component ({@link DefaultAlertingDialogHeader} for `Header`, and so on) and `defaultProps` the
+     * return of the region's props hook ({@link useAlertingDialogHeaderProps}) — and may render its own content
+     * (replace) or `<Default {...defaultProps} />` inside its own markup (wrap).
      *
      * @example
      * The dialog is reached through the `Dashboard` component override; define slot components at
@@ -408,7 +410,9 @@ export interface IAlertDropdownProps {
 //
 
 /**
- * @internal
+ * The period a relative alert condition compares the measure against.
+ *
+ * @alpha
  */
 export enum AlertMetricComparatorType {
     PreviousPeriod,
@@ -416,30 +420,67 @@ export enum AlertMetricComparatorType {
 }
 
 /**
- * @internal
+ * A comparison the alerting dialog can offer for a measure: the derived period-over-period measure
+ * and the date dataset and granularity it is computed over.
+ *
+ * @alpha
  */
 export type AlertMetricComparator = {
+    /**
+     * The derived measure (previous period / same period previous year) the condition compares against.
+     */
     measure: IMeasure;
+    /**
+     * Whether the derived measure is itself a primary measure of the insight.
+     */
     isPrimary: boolean;
+    /**
+     * Which period the derived measure shifts by.
+     */
     comparator: AlertMetricComparatorType;
-    //date attribute related
+    /**
+     * The date dataset the period shift is computed over, when the insight resolves one.
+     */
     dataset?: IDataSetMetadataObject;
+    /**
+     * The granularity of the period shift, when the insight resolves one.
+     */
     granularity?: DateAttributeGranularity;
 };
 
 /**
- * @internal
+ * A measure of the insight the alerting dialog can build a condition on, with the comparisons
+ * available for it.
+ *
+ * @alpha
  */
 export type AlertMetric = {
+    /**
+     * The insight measure.
+     */
     measure: IMeasure;
+    /**
+     * Whether the measure is a primary (non-derived) measure of the insight.
+     */
     isPrimary: boolean;
+    /**
+     * The period-over-period comparisons the dialog offers for this measure; empty when none apply.
+     */
     comparators: AlertMetricComparator[];
 };
 
 /**
- * @internal
+ * An attribute of the insight the alert can be sliced by (the "for" row of the condition).
+ *
+ * @alpha
  */
 export type AlertAttribute = {
+    /**
+     * The insight attribute.
+     */
     attribute: IAttribute;
+    /**
+     * Whether the attribute is a date attribute.
+     */
     type: "dateAttribute" | "attribute";
 };

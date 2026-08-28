@@ -23,6 +23,7 @@ import {
 
 import { type GenAIAgent, type IChatConversationLocal } from "../model.js";
 
+import { useCustomization } from "./CustomizationProvider.js";
 import {
     GenAIChatReasoningMenuRow,
     REASONING_MENU_ITEM_ID,
@@ -97,6 +98,37 @@ export function GenAIChatAgentDropdown({
     const reasoningValueLabel = useSelectedReasoningLabel(selectedEffort, "short");
     const agentsTitleId = useIdPrefixed("agents-menu-title");
     const agentTriggerId = useIdPrefixed("agent-dropdown-trigger");
+    const { AgentItemComponent } = useCustomization();
+
+    const AgentMenuItemWrapper = useCallback(
+        (props: IUiMenuInteractiveItemWrapperProps<AgentMenuItemData>) => {
+            if (props.item.id === REASONING_MENU_ITEM_ID) {
+                return (
+                    <GenAIChatReasoningMenuRow
+                        item={
+                            props.item as unknown as IUiMenuInteractiveItem<{
+                                interactive: ReasoningMenuItemData;
+                            }>
+                        }
+                    />
+                );
+            }
+
+            const data = props.item.data;
+            if (data?.type === "agent") {
+                return (
+                    <AgentItemComponent
+                        agent={data.agent}
+                        isSelected={!!props.item.isSelected}
+                        menuItemProps={props as IUiMenuInteractiveItemWrapperProps}
+                    />
+                );
+            }
+
+            return <DefaultUiMenuInteractiveItemWrapper {...props} />;
+        },
+        [AgentItemComponent],
+    );
 
     useEffect(() => {
         const isConversationAgentAvailable =
@@ -295,16 +327,4 @@ function AgentMenuHeader({ titleId }: { titleId: string }) {
             closeAriaLabel={intl.formatMessage(msgs.closeAgents)}
         />
     );
-}
-
-function AgentMenuItemWrapper(props: IUiMenuInteractiveItemWrapperProps<AgentMenuItemData>) {
-    if (props.item.id === REASONING_MENU_ITEM_ID) {
-        return (
-            <GenAIChatReasoningMenuRow
-                item={props.item as unknown as IUiMenuInteractiveItem<{ interactive: ReasoningMenuItemData }>}
-            />
-        );
-    }
-
-    return <DefaultUiMenuInteractiveItemWrapper {...props} />;
 }

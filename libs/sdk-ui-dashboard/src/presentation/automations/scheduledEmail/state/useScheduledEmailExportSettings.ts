@@ -23,7 +23,7 @@ import {
     setExportParametersByTab,
 } from "../../../../_staging/automation/index.js";
 import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
-import { useExportTimezones } from "../DefaultScheduledEmailDialog/hooks/useExportTimezones.js";
+import { useExportTimezones } from "../hooks/useExportTimezones.js";
 
 import {
     newDashboardExportDefinitionMetadataObjectDefinition,

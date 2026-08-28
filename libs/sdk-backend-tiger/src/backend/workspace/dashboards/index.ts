@@ -144,6 +144,11 @@ import { getSettingsForCurrentUser } from "../settings/index.js";
 import { type TigerDashboardPermissionType, buildDashboardPermissions } from "./dashboardPermissions.js";
 import { DashboardsQuery } from "./dashboardsQuery.js";
 import { getParametersMetadata, patchDashboardParametersFromExport } from "./parameters.js";
+import {
+    dashboardSideloadIncludes,
+    fetchUnavailableFilterDisplayForms,
+    resolveUnavailableDashboardReferences,
+} from "./referenceAvailability.js";
 import { resolveWidgetFilters, resolveWidgetFiltersWithMultipleDateFilters } from "./widgetFilters.js";
 
 export function getOrphanedTabFilterContexts(
@@ -297,6 +302,15 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 insights,
                 plugins,
                 dataSets,
+                unavailable: [
+                    ...resolveUnavailableDashboardReferences(dashboard, updatedDashboard, types),
+                    ...(await fetchUnavailableFilterDisplayForms(
+                        this.authCall,
+                        this.workspace,
+                        updatedDashboard,
+                        types,
+                    )),
+                ],
             },
         };
     };
@@ -305,7 +319,11 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         dashboard: IDashboard,
         types: SupportedDashboardReferenceTypes[] = ["insight"],
     ): Promise<IDashboardReferences> => {
-        return this.getDashboardWithSideloads(dashboard.ref, types).then((result) => {
+        // the label request depends only on the given dashboard, so it does not wait for the side-loads
+        return Promise.all([
+            this.getDashboardWithSideloads(dashboard.ref, types),
+            fetchUnavailableFilterDisplayForms(this.authCall, this.workspace, dashboard, types),
+        ]).then(([result, unavailableLabels]) => {
             const included = result.included || [];
 
             return {
@@ -316,6 +334,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     .filter(isDashboardPluginsItem)
                     .map((plugin) => convertDashboardPluginWithLinksFromBackend(plugin, included)),
                 dataSets: included.filter(isDataSetItem).map((dataSet) => convertDataSetItem(dataSet)),
+                unavailable: [
+                    ...resolveUnavailableDashboardReferences(result, dashboard, types),
+                    ...unavailableLabels,
+                ],
             };
         });
     };
@@ -422,22 +444,12 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         options?: IGetDashboardOptions,
     ): Promise<JsonApiAnalyticalDashboardOutDocument> => {
         const includeUser = options?.loadUserData ? ["createdBy" as const, "modifiedBy" as const] : [];
+        const [filterContexts, ...typeIncludes] = dashboardSideloadIncludes(types);
         const include: EntitiesApiGetEntityAnalyticalDashboardsRequest["include"] = [
-            "filterContexts",
+            filterContexts!,
             ...includeUser,
+            ...typeIncludes,
         ];
-
-        if (types.includes("insight")) {
-            include.push("visualizationObjects");
-        }
-
-        if (types.includes("dataSet")) {
-            include.push("datasets");
-        }
-
-        if (types.includes("dashboardPlugin")) {
-            include.push("dashboardPlugins");
-        }
 
         const id = objRefToIdentifier(ref, this.authCall);
 

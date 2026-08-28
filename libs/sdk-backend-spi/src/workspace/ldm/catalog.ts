@@ -69,6 +69,13 @@ export interface IWorkspaceCatalogFactoryOptions {
      * Search for catalog items by title or identifier.
      */
     search?: string;
+
+    /**
+     * Should catalog ask the backend for object-level permissions of the loaded items?
+     * Only measures carry them at the moment.
+     * Default: false
+     */
+    loadPermissions?: boolean;
 }
 
 /**

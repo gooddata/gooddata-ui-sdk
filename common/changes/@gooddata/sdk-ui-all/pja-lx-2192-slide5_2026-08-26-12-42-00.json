@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-kit, sdk-ui-filters: turn the attribute filter selection summary and the filter button's is-not subtitle into single translatable phrases, so locales can reorder them (fixes the Japanese \"は すべて\" / \"次と一致しない …\" word order); English rendering is unchanged",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

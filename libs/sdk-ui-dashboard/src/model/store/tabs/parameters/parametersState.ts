@@ -21,6 +21,13 @@ export interface IDashboardParameterEntry {
      * execution overrides so the backend keeps using the parameter's own default.
      */
     runtimeOverride: ParameterValue | undefined;
+    /**
+     * Staged (not yet applied) value under the apply-all-at-once mode. Presence means the entry
+     * is dirty: staging a value equal to `runtimeOverride` deletes the field instead of storing
+     * it, and every direct runtime write deletes it too. Executions read `runtimeOverride` only;
+     * "Apply All" folds this into `runtimeOverride`.
+     */
+    workingOverride?: ParameterValue;
 }
 
 /**

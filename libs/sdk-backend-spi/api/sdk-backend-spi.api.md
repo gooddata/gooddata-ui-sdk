@@ -1208,6 +1208,7 @@ export interface IDashboardReferences {
     dataSets?: IDataSetMetadataObject[];
     insights: IInsight[];
     plugins: IDashboardPlugin[];
+    unavailable?: IUnavailableDashboardReference[];
 }
 
 // @public
@@ -2603,6 +2604,11 @@ export function isAbortError(obj: unknown): obj is AbortError;
 // @public
 export function isAnalyticalBackendError(obj: unknown): obj is AnalyticalBackendError;
 
+// @public
+export interface ISaveMeasureOptions {
+    loadPermissions?: boolean;
+}
+
 // @internal
 export function isChatConversationAlertProposalContent(content: IChatConversationMultipartPart): content is IChatConversationAlertProposalContent;
 
@@ -2751,6 +2757,13 @@ export interface ITextExpressionToken {
     value: string;
 }
 
+// @alpha
+export interface IUnavailableDashboardReference {
+    reason: UnavailableReferenceReason;
+    ref: ObjRef;
+    type: ObjectType;
+}
+
 // @internal
 export interface IUpsertKnowledgeDocumentRequest {
     // (undocumented)
@@ -2887,6 +2900,7 @@ export interface IWorkspaceCatalogFactoryOptions {
     includeDateGranularities?: string[];
     includeTags: ObjRef[];
     loadGroups?: boolean;
+    loadPermissions?: boolean;
     production?: boolean;
     search?: string;
     types: CatalogItemType[];
@@ -3101,7 +3115,7 @@ export interface IWorkspaceMeasuresService {
     computeKeyDrivers: (measure: IMeasure, options?: {
         sortDirection: "ASC" | "DESC";
     }) => Promise<IMeasureKeyDrivers>;
-    createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject>;
+    createMeasure(measure: IMeasureMetadataObjectDefinition, options?: ISaveMeasureOptions): Promise<IMeasureMetadataObject>;
     deleteMeasure(measureRef: ObjRef): Promise<void>;
     getConnectedAttributes(definition: IMeasure, auxMeasures?: IMeasure[]): Promise<ObjRef[]>;
     getMeasure(ref: ObjRef, options?: IGetMeasureOptions): Promise<IMeasureMetadataObject>;
@@ -3364,8 +3378,8 @@ export class ProtectedDataError extends AnalyticalBackendError {
 // @beta
 export type QueryMethod = "GET" | "POST";
 
-// @alpha (undocumented)
-export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin" | "dataSet";
+// @alpha
+export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin" | "dataSet" | "displayForm" | "analyticalDashboard";
 
 // @public
 export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;
@@ -3377,6 +3391,9 @@ export type SupportedWidgetReferenceTypes = Exclude<ObjectType, "fact" | "attrib
 export class TimeoutError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
+
+// @alpha
+export type UnavailableReferenceReason = "forbidden" | "notFound";
 
 // @public
 export class UnexpectedError extends AnalyticalBackendError {

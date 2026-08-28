@@ -49,10 +49,12 @@ export {
     type FilterViewsApiPatchEntityFilterViewsRequest,
     // ContextFiltersApi
     FilterContextApi_CreateEntityFilterContexts,
+    FilterContextApi_GetAllEntitiesFilterContexts,
     FilterContextApi_GetEntityFilterContexts,
     FilterContextApi_UpdateEntityFilterContexts,
     FilterContextApi_DeleteEntityFilterContexts,
     type FilterContextApiCreateEntityFilterContextsRequest,
+    type FilterContextApiGetAllEntitiesFilterContextsRequest,
     type FilterContextApiGetEntityFilterContextsRequest,
     type FilterContextApiUpdateEntityFilterContextsRequest,
     // EntitiesApi - Workspaces

@@ -5,7 +5,7 @@ import { type ReactNode, useMemo } from "react";
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
 import { useAutomationFiltersSelect } from "../../shared/automationFilters/useAutomationFiltersSelect.js";
-import { useScheduleTimezone } from "../DefaultScheduledEmailDialog/hooks/useScheduleTimezone.js";
+import { useScheduleTimezone } from "../hooks/useScheduleTimezone.js";
 import { getDefaultPdfPageSize } from "../utils/pdfPageSize.js";
 
 import { ScheduledExportActionsContextProvider } from "./ScheduledExportActionsContext.js";

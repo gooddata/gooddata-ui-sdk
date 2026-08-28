@@ -40,6 +40,39 @@ import type { QueryMethod } from "../../common/query.js";
 import type { IExportResult } from "../execution/index.js";
 
 /**
+ * Reason why a referenced object could not be returned with the dashboard.
+ *
+ * @alpha
+ */
+export type UnavailableReferenceReason = "forbidden" | "notFound";
+
+/**
+ * A dashboard reference that was requested but could not be returned.
+ *
+ * @remarks
+ * "forbidden" means the object exists but the current user lacks permission to read it;
+ * "notFound" means the object does not exist (deleted or dangling reference).
+ *
+ * @alpha
+ */
+export interface IUnavailableDashboardReference {
+    /**
+     * Reference to the unavailable object.
+     */
+    ref: ObjRef;
+
+    /**
+     * Type of the unavailable object.
+     */
+    type: ObjectType;
+
+    /**
+     * Why the object could not be returned.
+     */
+    reason: UnavailableReferenceReason;
+}
+
+/**
  * Dashboard referenced objects
  * @alpha
  */
@@ -58,6 +91,22 @@ export interface IDashboardReferences {
      * Referenced dataSets. Only direct references, does not include dataSets linked from filter context.
      */
     dataSets?: IDataSetMetadataObject[];
+
+    /**
+     * Referenced objects that were requested but could not be returned, each with the reason
+     * (see {@link IUnavailableDashboardReference}): the current user is not allowed to read the
+     * object, or the object no longer exists.
+     *
+     * How to use it: for a reference that IS listed, you know why it is missing and can show
+     * something better than a generic error (for example a "no access" placeholder). For a
+     * reference that is NOT listed, keep doing what you did before this field existed — load the
+     * object and handle a failure the usual way. The list is not guaranteed to be complete: when the
+     * backend fails while checking one kind of reference, it logs the failure and leaves those
+     * references out of the list rather than failing the whole dashboard load.
+     *
+     * Undefined means the backend does not perform this check at all; treat it like an empty list.
+     */
+    unavailable?: IUnavailableDashboardReference[];
 }
 
 /**
@@ -200,9 +249,21 @@ export interface IGetScheduledMailOptions {
 }
 
 /**
+ * Types of referenced objects the dashboard services resolve and report on.
+ *
+ * `insight`, `dashboardPlugin`, `dataSet` and `analyticalDashboard` (drill targets) are loaded together
+ * with the dashboard and returned in {@link IDashboardReferences}. `displayForm` loads nothing: it only
+ * asks for the availability of the display forms used by the dashboard's filter contexts, reported via
+ * {@link IDashboardReferences.unavailable}.
+ *
  * @alpha
  */
-export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin" | "dataSet";
+export type SupportedDashboardReferenceTypes =
+    | "insight"
+    | "dashboardPlugin"
+    | "dataSet"
+    | "displayForm"
+    | "analyticalDashboard";
 
 /**
  * Custom title override for raw exports.

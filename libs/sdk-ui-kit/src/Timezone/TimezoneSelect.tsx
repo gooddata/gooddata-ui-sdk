@@ -2,6 +2,8 @@
 
 import { type ReactElement, type ReactNode, useMemo, useState } from "react";
 
+import { useIntl } from "react-intl";
+
 import { type IUiListboxInteractiveItem, type IUiListboxItem } from "../@ui/UiListbox/types.js";
 import { UiListbox } from "../@ui/UiListbox/UiListbox.js";
 import {
@@ -106,7 +108,7 @@ export interface ITimezoneSelectProps {
     searchPlaceholder: string;
 
     /**
-     * Accessibility label of the search input and the listbox.
+     * Accessibility label of the listbox.
      */
     ariaLabel: string;
 
@@ -233,6 +235,7 @@ export function TimezoneSelect({
     showTooltip = false,
     renderButton,
 }: ITimezoneSelectProps): ReactElement {
+    const intl = useIntl();
     const [searchString, setSearchString] = useState("");
 
     const selectedSpecialItem = specialItems.find((item) => item.id === value);
@@ -287,6 +290,11 @@ export function TimezoneSelect({
                             ariaDescribedBy,
                             ariaExpanded: renderProps.isOpen,
                             popupType: "listbox",
+                            // A plain button that toggles a listbox popup. Using role="button" (rather
+                            // than the DropdownButton default of "combobox") avoids the WCAG 4.1.2
+                            // requirement that a combobox always expose aria-controls — our listbox only
+                            // exists in the DOM while open.
+                            role: "button",
                         }}
                         className="gd-timezone-select__button s-timezone-select-button customizable"
                     />
@@ -312,7 +320,9 @@ export function TimezoneSelect({
                                 }
                             }}
                             accessibilityConfig={{
-                                ariaLabel,
+                                ariaLabel: intl.formatMessage({
+                                    id: "timezoneSelect.search.accessibility.label",
+                                }),
                             }}
                         />
                     </div>

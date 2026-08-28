@@ -2,7 +2,7 @@
 
 import { defineMessages, useIntl } from "react-intl";
 
-import { type ParameterValue } from "@gooddata/sdk-model";
+import { type IParameterDefinition, type ParameterValue, getParameterValueTitle } from "@gooddata/sdk-model";
 
 import { UiControlButton } from "../@ui/UiControlButton/UiControlButton.js";
 import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
@@ -16,6 +16,7 @@ const messages = defineMessages({
  */
 export interface IParameterControlButtonProps {
     name: string;
+    definition: IParameterDefinition;
     value: ParameterValue;
     isActive: boolean;
     isDraggable?: boolean;
@@ -32,6 +33,7 @@ export interface IParameterControlButtonProps {
  */
 export function ParameterControlButton({
     name,
+    definition,
     value,
     isActive,
     isDraggable,
@@ -43,7 +45,9 @@ export function ParameterControlButton({
     "data-testid": dataTestId,
 }: IParameterControlButtonProps) {
     const intl = useIntl();
-    const subtitle = intl.formatMessage(messages.valueSubtitle, { value });
+    const subtitle = intl.formatMessage(messages.valueSubtitle, {
+        value: getParameterValueTitle(definition, value),
+    });
 
     return (
         <UiControlButton

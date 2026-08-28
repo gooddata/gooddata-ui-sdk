@@ -6,6 +6,8 @@ import { type FilterContextItem, type IDashboardFilterReference } from "../dashb
 import { type VisualizationProperties } from "../insight/index.js";
 import { type ObjRef } from "../objRef/index.js";
 
+import { type IReportImageStyle, type IReportTextStyle } from "./styling.js";
+
 /**
  * Metadata of a slot that is intentionally left unfilled in a report page or template.
  *
@@ -171,6 +173,11 @@ export interface IReportTextSlot extends IReportSlotBase {
     kind: ReportTextSlotKind;
 
     /**
+     * Ink and placement overrides on top of the kind's defaults.
+     */
+    style?: IReportTextStyle;
+
+    /**
      * Undefined = declared-but-empty slot.
      */
     source?: ReportTextSource;
@@ -218,6 +225,11 @@ export interface IReportImageSlot extends IReportSlotBase {
      * How the image fills the slot area. Defaults to "contain".
      */
     fit?: "contain" | "cover" | "fill";
+
+    /**
+     * Placement overrides for the drawn image; centered on both axes by default.
+     */
+    style?: IReportImageStyle;
 }
 
 /**

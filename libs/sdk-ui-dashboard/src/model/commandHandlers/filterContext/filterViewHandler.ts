@@ -44,7 +44,7 @@ import {
 import { tabsActions } from "../../store/tabs/index.js";
 import {
     selectDashboardParameterEntries,
-    selectFilterViewParameters,
+    selectFilterViewDisplayParameters,
 } from "../../store/tabs/parameters/parametersSelectors.js";
 import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
@@ -97,8 +97,9 @@ export function* saveFilterViewHandler(ctx: DashboardContext, cmd: ISaveFilterVi
         ),
     };
 
-    const parameters: ReturnType<typeof selectFilterViewParameters> =
-        yield select(selectFilterViewParameters);
+    const parameters: ReturnType<typeof selectFilterViewDisplayParameters> = yield select(
+        selectFilterViewDisplayParameters,
+    );
 
     const filterView: IDashboardFilterViewSaveRequest = {
         name: cmd.payload.name,

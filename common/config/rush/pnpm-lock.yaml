@@ -79,7 +79,7 @@ importers:
         specifier: workspace:*
         version: link:../../libs/sdk-ui-theme-provider
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/react':
         specifier: 19.1.11
@@ -136,7 +136,7 @@ importers:
         specifier: ^4.7.1
         version: 4.7.1
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -287,7 +287,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -423,7 +423,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -559,7 +559,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -695,7 +695,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -831,7 +831,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -967,7 +967,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -1103,7 +1103,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -1239,7 +1239,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -1384,7 +1384,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -1520,7 +1520,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -1656,7 +1656,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -1792,7 +1792,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -1928,7 +1928,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -2064,7 +2064,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -2119,13 +2119,13 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@openapitools/openapi-generator-cli':
         specifier: 2.40.1
         version: 2.40.1
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@typescript-eslint/eslint-plugin':
         specifier: 8.58.0
@@ -2176,7 +2176,7 @@ importers:
         specifier: 1.0.4
         version: 1.0.4
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -2243,10 +2243,10 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/spark-md5':
         specifier: 3.0.5
@@ -2288,7 +2288,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -2346,10 +2346,10 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@typescript-eslint/eslint-plugin':
         specifier: 8.58.0
@@ -2388,7 +2388,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -2431,10 +2431,10 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@typescript-eslint/eslint-plugin':
         specifier: 8.58.0
@@ -2473,7 +2473,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -2570,10 +2570,10 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/spark-md5':
         specifier: 3.0.5
@@ -2618,7 +2618,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -2661,7 +2661,7 @@ importers:
         specifier: workspace:*
         version: link:../../tools/oxlint-config
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@typescript-eslint/eslint-plugin':
         specifier: 8.58.0
@@ -2700,7 +2700,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -2727,7 +2727,7 @@ importers:
         specifier: workspace:*
         version: link:../../tools/oxlint-config
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@typescript-eslint/eslint-plugin':
         specifier: 8.58.0
@@ -2772,7 +2772,7 @@ importers:
         specifier: ^4.17.23
         version: 4.18.1
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -2809,7 +2809,7 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@types/node':
         specifier: 24.12.0
@@ -2866,7 +2866,7 @@ importers:
         specifier: 2.6.1
         version: 2.6.1
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -2906,10 +2906,10 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@typescript-eslint/eslint-plugin':
         specifier: 8.58.0
@@ -2948,7 +2948,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -3000,10 +3000,10 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/spark-md5':
         specifier: 3.0.5
@@ -3048,7 +3048,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -3088,7 +3088,7 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@types/node':
         specifier: 24.12.0
@@ -3130,7 +3130,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -3215,7 +3215,7 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@testing-library/dom':
         specifier: 10.4.1
@@ -3224,10 +3224,10 @@ importers:
         specifier: 16.3.0
         version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@types/hoist-non-react-statics':
-        specifier: ^3.3.1
+        specifier: 3.3.7
         version: 3.3.7(@types/react@19.1.11)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -3296,7 +3296,7 @@ importers:
         specifier: 20.9.0
         version: 20.9.0
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -3317,7 +3317,7 @@ importers:
         specifier: 19.1.1
         version: 19.1.1(react@19.1.1)
       stylelint:
-        specifier: ^16.26.1
+        specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
       tsd:
         specifier: 0.32.0
@@ -3372,7 +3372,7 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@types/node':
         specifier: 24.12.0
@@ -3414,7 +3414,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -3466,7 +3466,7 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@testing-library/dom':
         specifier: 10.4.1
@@ -3475,7 +3475,7 @@ importers:
         specifier: 16.3.0
         version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -3547,7 +3547,7 @@ importers:
         specifier: 2.6.1
         version: 2.6.1
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -3668,7 +3668,7 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@testing-library/dom':
         specifier: 10.4.1
@@ -3677,7 +3677,7 @@ importers:
         specifier: 16.3.0
         version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/raf':
         specifier: 3.4.3
@@ -3740,7 +3740,7 @@ importers:
         specifier: 20.9.0
         version: 20.9.0
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -3764,7 +3764,7 @@ importers:
         specifier: 1.70.0
         version: 1.70.0
       stylelint:
-        specifier: ^16.26.1
+        specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
       typescript:
         specifier: 5.9.3
@@ -3876,7 +3876,7 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@testing-library/dom':
         specifier: 10.4.1
@@ -3885,13 +3885,13 @@ importers:
         specifier: 16.3.0
         version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@types/hoist-non-react-statics':
-        specifier: ^3.3.1
+        specifier: 3.3.7
         version: 3.3.7(@types/react@19.1.11)
       '@types/js-yaml':
         specifier: 4.0.9
         version: 4.0.9
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -3963,7 +3963,7 @@ importers:
         specifier: 20.9.0
         version: 20.9.0
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -3987,7 +3987,7 @@ importers:
         specifier: 1.70.0
         version: 1.70.0
       stylelint:
-        specifier: ^16.26.1
+        specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
       typescript:
         specifier: 5.9.3
@@ -4144,7 +4144,7 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@testing-library/dom':
         specifier: 10.4.1
@@ -4156,7 +4156,7 @@ importers:
         specifier: 14.6.1
         version: 14.6.1(@testing-library/dom@10.4.1)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -4231,7 +4231,7 @@ importers:
         specifier: 20.9.0
         version: 20.9.0
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -4255,7 +4255,7 @@ importers:
         specifier: 1.70.0
         version: 1.70.0
       stylelint:
-        specifier: ^16.26.1
+        specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
       svgo:
         specifier: 2.8.3
@@ -4418,7 +4418,7 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@testing-library/dom':
         specifier: 10.4.1
@@ -4430,13 +4430,13 @@ importers:
         specifier: 14.6.1
         version: 14.6.1(@testing-library/dom@10.4.1)
       '@types/debounce-promise':
-        specifier: ^3.1.4
+        specifier: 3.1.9
         version: 3.1.9
       '@types/js-yaml':
         specifier: 4.0.9
         version: 4.0.9
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -4511,7 +4511,7 @@ importers:
         specifier: 20.9.0
         version: 20.9.0
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -4535,7 +4535,7 @@ importers:
         specifier: 1.70.0
         version: 1.70.0
       stylelint:
-        specifier: ^16.26.1
+        specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
       svgo:
         specifier: 2.8.3
@@ -4638,7 +4638,7 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@testing-library/dom':
         specifier: 10.4.1
@@ -4647,7 +4647,7 @@ importers:
         specifier: 16.3.0
         version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -4716,7 +4716,7 @@ importers:
         specifier: 20.9.0
         version: 20.9.0
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -4740,7 +4740,7 @@ importers:
         specifier: 1.70.0
         version: 1.70.0
       stylelint:
-        specifier: ^16.26.1
+        specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
       typescript:
         specifier: 5.9.3
@@ -4882,7 +4882,7 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@testing-library/dom':
         specifier: 10.4.1
@@ -4891,7 +4891,7 @@ importers:
         specifier: 16.3.0
         version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -4960,7 +4960,7 @@ importers:
         specifier: 20.9.0
         version: 20.9.0
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -4984,7 +4984,7 @@ importers:
         specifier: 1.70.0
         version: 1.70.0
       stylelint:
-        specifier: ^16.26.1
+        specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
       svgo:
         specifier: 2.8.3
@@ -5069,7 +5069,7 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@testing-library/dom':
         specifier: 10.4.1
@@ -5081,13 +5081,13 @@ importers:
         specifier: ^7946.0.16
         version: 7946.0.16
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/mapbox-gl':
         specifier: 2.7.21
         version: 2.7.21
       '@types/maplibre-gl':
-        specifier: ^1.14.0
+        specifier: 1.14.0
         version: 1.14.0
       '@types/node':
         specifier: 24.12.0
@@ -5150,7 +5150,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -5174,7 +5174,7 @@ importers:
         specifier: 1.70.0
         version: 1.70.0
       stylelint:
-        specifier: ^16.26.1
+        specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
       typescript:
         specifier: 5.9.3
@@ -5352,7 +5352,7 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@testing-library/dom':
         specifier: 10.4.1
@@ -5364,13 +5364,13 @@ importers:
         specifier: 14.6.1
         version: 14.6.1(@testing-library/dom@10.4.1)
       '@types/debounce-promise':
-        specifier: ^3.1.4
+        specifier: 3.1.9
         version: 3.1.9
       '@types/kefir':
         specifier: 3.8.11
         version: 3.8.11
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -5448,7 +5448,7 @@ importers:
         specifier: 3.8.8
         version: 3.8.8
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -5472,7 +5472,7 @@ importers:
         specifier: 1.70.0
         version: 1.70.0
       stylelint:
-        specifier: ^16.26.1
+        specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
       svgo:
         specifier: 2.8.3
@@ -5530,10 +5530,10 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -5596,7 +5596,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -5693,7 +5693,7 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@testing-library/dom':
         specifier: 10.4.1
@@ -5702,7 +5702,7 @@ importers:
         specifier: 16.3.0
         version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -5771,7 +5771,7 @@ importers:
         specifier: 20.9.0
         version: 20.9.0
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -5795,7 +5795,7 @@ importers:
         specifier: 1.70.0
         version: 1.70.0
       stylelint:
-        specifier: ^16.26.1
+        specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
       typescript:
         specifier: 5.9.3
@@ -5847,7 +5847,7 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@types/node':
         specifier: 24.12.0
@@ -5907,7 +5907,7 @@ importers:
         specifier: 20.9.0
         version: 20.9.0
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -5992,7 +5992,7 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@testing-library/dom':
         specifier: 10.4.1
@@ -6001,7 +6001,7 @@ importers:
         specifier: 16.3.0
         version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -6064,7 +6064,7 @@ importers:
         specifier: 2.6.1
         version: 2.6.1
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -6161,7 +6161,7 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@testing-library/dom':
         specifier: 10.4.1
@@ -6170,7 +6170,7 @@ importers:
         specifier: 16.3.0
         version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/raf':
         specifier: 3.4.3
@@ -6233,7 +6233,7 @@ importers:
         specifier: 20.9.0
         version: 20.9.0
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -6257,7 +6257,7 @@ importers:
         specifier: 1.70.0
         version: 1.70.0
       stylelint:
-        specifier: ^16.26.1
+        specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
       typescript:
         specifier: 5.9.3
@@ -6377,7 +6377,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -6434,7 +6434,7 @@ importers:
         specifier: 1.62.1
         version: 1.62.1
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -6488,7 +6488,7 @@ importers:
         specifier: ^4.17.23
         version: 4.18.1
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -6557,7 +6557,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -6620,7 +6620,7 @@ importers:
         specifier: 16.3.0
         version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -6701,7 +6701,7 @@ importers:
         specifier: ^2.29.4
         version: 2.30.1
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -6815,7 +6815,7 @@ importers:
         specifier: 10.5.6
         version: 10.5.6(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(esbuild@0.28.1)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(rollup@4.62.3)(storybook@10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1))(typescript@5.9.3)(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))(webpack@5.107.2(esbuild@0.28.1))
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -6893,7 +6893,7 @@ importers:
         specifier: ^2.29.4
         version: 2.30.1
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -6923,7 +6923,7 @@ importers:
         specifier: ^10.5.6
         version: 10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1)
       stylelint:
-        specifier: ^16.26.1
+        specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
       ts-invariant:
         specifier: 0.10.3
@@ -6974,7 +6974,7 @@ importers:
         specifier: 8.5.10
         version: 8.5.10
       postcss-value-parser:
-        specifier: ^4.2.0
+        specifier: 4.2.0
         version: 4.2.0
       ts-invariant:
         specifier: 0.10.3
@@ -6999,7 +6999,7 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@testing-library/dom':
         specifier: 10.4.1
@@ -7008,7 +7008,7 @@ importers:
         specifier: 16.3.0
         version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -7074,7 +7074,7 @@ importers:
         specifier: 20.9.0
         version: 20.9.0
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -7159,7 +7159,7 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@testing-library/dom':
         specifier: 10.4.1
@@ -7168,7 +7168,7 @@ importers:
         specifier: 16.3.0
         version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -7234,7 +7234,7 @@ importers:
         specifier: 20.9.0
         version: 20.9.0
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -7258,7 +7258,7 @@ importers:
         specifier: 1.70.0
         version: 1.70.0
       stylelint:
-        specifier: ^16.26.1
+        specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
       typescript:
         specifier: 5.9.3
@@ -7340,10 +7340,10 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -7406,7 +7406,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -7467,10 +7467,10 @@ importers:
         specifier: 7.30.10
         version: 7.30.10(@types/node@24.12.0)
       '@microsoft/api-extractor':
-        specifier: ^7.55.2
+        specifier: 7.58.12
         version: 7.58.12(@types/node@24.12.0)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@typescript-eslint/eslint-plugin':
         specifier: 8.58.0
@@ -7509,7 +7509,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -7612,7 +7612,7 @@ importers:
         specifier: 2.6.1
         version: 2.6.1
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -7676,7 +7676,7 @@ importers:
         specifier: 16.3.0
         version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -7736,7 +7736,7 @@ importers:
         specifier: 2.6.1
         version: 2.6.1
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -7851,19 +7851,19 @@ importers:
         specifier: workspace:*
         version: link:../oxlint-config
       '@types/columnify':
-        specifier: ^1.5.1
+        specifier: 1.5.4
         version: 1.5.4
       '@types/cross-spawn':
-        specifier: ^6.0.2
+        specifier: 6.0.6
         version: 6.0.6
       '@types/fs-extra':
         specifier: 9.0.13
         version: 9.0.13
       '@types/inquirer':
-        specifier: ^9.0.3
+        specifier: 9.0.10
         version: 9.0.10
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -7984,10 +7984,10 @@ importers:
         specifier: 7.20.5
         version: 7.20.5
       '@types/inquirer':
-        specifier: ^9.0.3
+        specifier: 9.0.10
         version: 9.0.10
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -8032,7 +8032,7 @@ importers:
         specifier: 20.9.0
         version: 20.9.0
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxlint:
         specifier: 1.51.0
@@ -8098,7 +8098,7 @@ importers:
         specifier: workspace:*
         version: link:../../templates/pluggable-module/module
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -8192,7 +8192,7 @@ importers:
         specifier: workspace:*
         version: link:../../libs/sdk-ui-pivot
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -8457,7 +8457,7 @@ importers:
         specifier: workspace:*
         version: link:../oxlint-config
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -8505,7 +8505,7 @@ importers:
         specifier: 1.0.4
         version: 1.0.4
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -8529,7 +8529,7 @@ importers:
         specifier: 7.0.0-dev.20260202.1
         version: 7.0.0-dev.20260202.1
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -8584,10 +8584,10 @@ importers:
         specifier: workspace:*
         version: link:../oxlint-config
       '@types/inquirer':
-        specifier: ^9.0.3
+        specifier: 9.0.10
         version: 9.0.10
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -8629,7 +8629,7 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       oxfmt:
         specifier: 0.52.0
@@ -8819,19 +8819,19 @@ importers:
         specifier: workspace:*
         version: link:../oxlint-config
       '@types/columnify':
-        specifier: ^1.5.1
+        specifier: 1.5.4
         version: 1.5.4
       '@types/cross-spawn':
-        specifier: ^6.0.2
+        specifier: 6.0.6
         version: 6.0.6
       '@types/fs-extra':
         specifier: 9.0.13
         version: 9.0.13
       '@types/inquirer':
-        specifier: ^9.0.3
+        specifier: 9.0.10
         version: 9.0.10
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -9073,7 +9073,7 @@ importers:
         specifier: workspace:*
         version: link:../oxlint-config
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -9152,7 +9152,7 @@ importers:
         specifier: workspace:*
         version: link:../oxlint-config
       '@types/lodash-es':
-        specifier: ^4.17.12
+        specifier: 4.17.12
         version: 4.17.12
       '@types/node':
         specifier: 24.12.0
@@ -9218,7 +9218,7 @@ importers:
         specifier: ^4.0.9
         version: 4.0.9(postcss@8.5.10)
       stylelint:
-        specifier: ^16.26.1
+        specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
       stylelint-config-standard:
         specifier: ^38.0.0
@@ -9230,7 +9230,7 @@ importers:
         specifier: ^2.4.2
         version: 2.9.4(stylelint@16.26.1(typescript@5.9.3))
       stylelint-scss:
-        specifier: ^6.12.0
+        specifier: 6.14.0
         version: 6.14.0(stylelint@16.26.1(typescript@5.9.3))
 
 packages:

@@ -307,6 +307,7 @@ export type {
 export type {
     IWorkspaceMeasuresService,
     IGetMeasureOptions,
+    ISaveMeasureOptions,
     IMeasureReferencing,
     IMeasureKeyDrivers,
     IMeasuresQueryResult,
@@ -334,6 +335,8 @@ export type {
     SupportedWidgetReferenceTypes,
     IDashboardReferences,
     IDashboardWithReferences,
+    IUnavailableDashboardReference,
+    UnavailableReferenceReason,
     IDashboardsQuery,
     IDashboardsQueryResult,
     IRawExportCustomOverride,

@@ -3873,7 +3873,7 @@ export interface ValidateByItem {
      */
     'id': string;
     /**
-     * Specifies entity type which could be label, attribute, fact, or metric.
+     * Specifies entity type which could be label, attribute, computedAttribute, fact, or metric.
      */
     'type': string;
 }

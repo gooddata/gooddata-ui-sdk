@@ -159,7 +159,10 @@ export function getAttributeFilterSubtitle(
 
     let subtitle = intl.formatMessage({ id: "gs.list.all" });
     if (isNegativeSelection) {
-        subtitle = `${intl.formatMessage({ id: "gs.list.isNot" })} ${getElementTitles(committedSelectionElements, intl)}`;
+        subtitle = intl.formatMessage(
+            { id: "gs.list.subtitle.isNot" },
+            { selection: getElementTitles(committedSelectionElements, intl) },
+        );
     } else if (isPositiveSelection) {
         subtitle = getElementTitles(committedSelectionElements, intl);
     } else if (isNone) {

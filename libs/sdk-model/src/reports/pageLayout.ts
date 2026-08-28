@@ -7,7 +7,9 @@ import { type FilterContextItem } from "../dashboard/filterContext.js";
 import { type ObjRef, isObjRef } from "../objRef/index.js";
 
 import { type ReportPageLayoutNode, isReportLayoutSection, isReportLayoutSlotRef } from "./layout.js";
-import { type ReportSlot } from "./slot.js";
+import { type ReportPageFormat, isReportPageFormat } from "./pageFormat.js";
+import { type ReportSlot, isReportImageSlot } from "./slot.js";
+import { type IReportBoxStyle, isReportImageBackground } from "./styling.js";
 
 /**
  * Body of a report page: geometry (flex split tree) plus the slots it places.
@@ -28,6 +30,17 @@ export interface IReportPageBody {
      * Renderers must not branch layout logic on it — geometry always comes from `layout`.
      */
     kind?: "cover" | "section" | "content";
+
+    /**
+     * Page proportions the layout was authored for. Defaults to
+     * {@link DefaultReportPageFormat}.
+     */
+    format?: ReportPageFormat;
+
+    /**
+     * Paint of the page itself, behind everything the layout places.
+     */
+    style?: IReportBoxStyle;
 
     /**
      * Root of the page layout tree.
@@ -144,15 +157,20 @@ export interface IReportPageBodyValidationIssue {
 }
 
 /**
- * Validates the structural invariants of a page body the type system cannot express:
- * slot localIdentifiers are unique, layout weights are positive, every slot is placed
- * by the layout, and every layout slotId resolves (unresolved ones are warnings —
- * they render as empty areas).
+ * Validates the structural invariants of a page body beyond what its types guarantee for content
+ * arriving from the wire: the page format is known, slot localIdentifiers are unique, layout
+ * weights are positive, every slot is placed (by the layout or as a background), every layout
+ * slotId resolves (unresolved ones are warnings — they render as empty areas), and background
+ * references resolve to image slots.
  *
  * @alpha
  */
 export function validateReportPageBody(body: IReportPageBody): IReportPageBodyValidationIssue[] {
     const issues: IReportPageBodyValidationIssue[] = [];
+
+    if (body.format !== undefined && !isReportPageFormat(body.format)) {
+        issues.push({ severity: "error", message: `Unknown page format "${body.format}".` });
+    }
 
     const slotIds = new Set<string>();
     for (const slot of body.slots) {
@@ -164,6 +182,33 @@ export function validateReportPageBody(body: IReportPageBody): IReportPageBodyVa
         }
         slotIds.add(slot.localIdentifier);
     }
+
+    const slotsById = new Map(body.slots.map((slot) => [slot.localIdentifier, slot]));
+    const backgroundIds = new Set<string>();
+    const checkBackground = (style: IReportBoxStyle | undefined): void => {
+        if (!style?.background || !isReportImageBackground(style.background)) {
+            return;
+        }
+        const { slotId } = style.background;
+        const slot = slotsById.get(slotId);
+        if (slot === undefined) {
+            issues.push({
+                severity: "warning",
+                message: `Background references slot "${slotId}" which has no definition; no background renders.`,
+            });
+            return;
+        }
+        if (!isReportImageSlot(slot)) {
+            issues.push({
+                severity: "error",
+                message: `Background references slot "${slotId}" which is not an image slot.`,
+            });
+            return;
+        }
+        // Only a reference that actually renders counts as placing its slot.
+        backgroundIds.add(slotId);
+    };
+    checkBackground(body.style);
 
     const referencedIds = new Set<string>();
     const visit = (node: ReportPageLayoutNode): void => {
@@ -182,13 +227,14 @@ export function validateReportPageBody(body: IReportPageBody): IReportPageBodyVa
                 });
             }
         } else if (isReportLayoutSection(node)) {
+            checkBackground(node.style);
             node.children.forEach(visit);
         }
     };
     visit(body.layout);
 
     for (const slotId of slotIds) {
-        if (!referencedIds.has(slotId)) {
+        if (!referencedIds.has(slotId) && !backgroundIds.has(slotId)) {
             issues.push({
                 severity: "warning",
                 message: `Slot "${slotId}" is not placed by the layout and never renders.`,

@@ -27,7 +27,7 @@ import {
     convertExternalRecipientToAutomationRecipient,
     convertUserToAutomationRecipient,
 } from "../../shared/utils/automationUtils.js";
-import { useExportTimezones } from "../DefaultScheduledEmailDialog/hooks/useExportTimezones.js";
+import { useExportTimezones } from "../hooks/useExportTimezones.js";
 import {
     toModifiedISOStringToTimezone,
     toNormalizedFirstRunAndCron,

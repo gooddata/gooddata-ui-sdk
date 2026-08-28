@@ -15,6 +15,7 @@ import {
     type IReportTemplateDefinition,
 } from "./report.js";
 import { type ReportSlot } from "./slot.js";
+import { type IReportBoxStyle, isReportImageBackground } from "./styling.js";
 import { type ReportDateString } from "./variables.js";
 
 function generateReportLocalId(prefix: string): string {
@@ -29,10 +30,24 @@ function deepClone<T>(value: T): T {
     return JSON.parse(JSON.stringify(value)) as T;
 }
 
+function prefixBackgroundSlotId(
+    style: IReportBoxStyle | undefined,
+    prefix: string,
+): IReportBoxStyle | undefined {
+    if (!style?.background || !isReportImageBackground(style.background)) {
+        return style;
+    }
+    return {
+        ...style,
+        background: { ...style.background, slotId: `${prefix}_${style.background.slotId}` },
+    };
+}
+
 function prefixLayoutSlotIds(node: ReportPageLayoutNode, prefix: string): ReportPageLayoutNode {
     if (isReportLayoutSection(node)) {
         return {
             ...node,
+            ...(node.style === undefined ? {} : { style: prefixBackgroundSlotId(node.style, prefix) }),
             children: node.children.map((child) => prefixLayoutSlotIds(child, prefix)),
         };
     }
@@ -79,6 +94,7 @@ export function newReportContentPageFromLayout(
     return {
         ...body,
         localIdentifier,
+        ...(body.style === undefined ? {} : { style: prefixBackgroundSlotId(body.style, localIdentifier) }),
         layout: prefixLayoutSlotIds(body.layout, localIdentifier),
         slots: body.slots.map(
             (slot): ReportSlot => ({

@@ -124,5 +124,4 @@ export const SEPARATOR: OperatorItemType<string> = {
 
 export const DROPDOWN_ITEM_HEIGHT = 28;
 export const DROPDOWN_SEPARATOR_ITEM_HEIGHT = 10;
-export const DEFAULT_MEASURE_FORMAT = "#,##0.00";
 export const ALERTING_DIALOG_ID = "alerting-dialog";

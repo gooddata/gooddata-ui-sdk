@@ -18,7 +18,7 @@ export const AlertDraftContextProvider = AlertDraftContext.Provider;
  * must check that flag before calling this. On the alerting side that state is reached only by an
  * automations refresh while the dialog is open, so it will not appear in manual testing.
  *
- * @internal
+ * @alpha
  */
 export function useAlertDraft(): IAlertDraftContextValue {
     return useContext(AlertDraftContext) ?? missingAlertStateProvider("useAlertDraft");

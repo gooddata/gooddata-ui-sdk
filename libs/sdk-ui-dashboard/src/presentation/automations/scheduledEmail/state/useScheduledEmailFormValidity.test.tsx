@@ -26,7 +26,7 @@ vi.hoisted(() => {
     vi.resetModules();
 });
 
-vi.mock("../DefaultScheduledEmailDialog/hooks/useScheduleValidation.js", () => ({
+vi.mock("../hooks/useScheduleValidation.js", () => ({
     useScheduleValidation: vi.fn(),
 }));
 
@@ -45,7 +45,7 @@ vi.mock("react-intl", async () => {
 // ---------------------------------------------------------------------------
 
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
-import * as useScheduleValidationModule from "../DefaultScheduledEmailDialog/hooks/useScheduleValidation.js";
+import * as useScheduleValidationModule from "../hooks/useScheduleValidation.js";
 
 import {
     useScheduledEmailFormValidity,

@@ -9,6 +9,8 @@ import { Action } from '@reduxjs/toolkit';
 import { ActionCreatorWithOptionalPayload } from '@reduxjs/toolkit';
 import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
+import { AI_OPERATOR } from '@gooddata/sdk-ui-ext';
+import { AI_OPERATORS } from '@gooddata/sdk-ui-ext';
 import { AnyAction } from '@reduxjs/toolkit';
 import { CaseReducer } from '@reduxjs/toolkit';
 import { CaseReducerActions } from '@reduxjs/toolkit';
@@ -16,6 +18,7 @@ import { ComponentPropsWithRef } from 'react';
 import { ComponentType } from 'react';
 import { Context } from 'react';
 import { CurrentUserPermissions } from '@gooddata/sdk-ui-kit';
+import { DashboardAttachmentType } from '@gooddata/sdk-model';
 import { DashboardAttributeFilterConfigMode } from '@gooddata/sdk-model';
 import { DashboardAttributeFilterItem } from '@gooddata/sdk-model';
 import { DashboardAttributeFilterSelectionMode } from '@gooddata/sdk-model';
@@ -39,14 +42,22 @@ import { EntityState } from '@reduxjs/toolkit';
 import { ExecutionResultLimitType } from '@gooddata/sdk-model';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FilterContextItem } from '@gooddata/sdk-model';
+import { ForwardRefExoticComponent } from 'react';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessControlAware } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
 import { IActiveCalendars } from '@gooddata/sdk-model';
+import { IAlertAnomalyDetectionGranularity } from '@gooddata/sdk-model';
+import { IAlertAnomalyDetectionSensitivity } from '@gooddata/sdk-model';
+import { IAlertComparisonOperator } from '@gooddata/sdk-model';
+import { IAlertRelativeArithmeticOperator } from '@gooddata/sdk-model';
+import { IAlertRelativeOperator } from '@gooddata/sdk-model';
+import { IAlertTriggerInterval } from '@gooddata/sdk-model';
 import { IAlertTriggerMode } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IArbitraryAttributeFilter } from '@gooddata/sdk-model';
+import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeDescriptorBody } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
@@ -102,6 +113,7 @@ import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IDashboardReferences } from '@gooddata/sdk-backend-spi';
 import { IDashboardTimezoneConfig } from '@gooddata/sdk-model';
 import { IDashboardWidget } from '@gooddata/sdk-model';
+import { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDateFilter } from '@gooddata/sdk-model';
 import { IDateFilterButtonProps } from '@gooddata/sdk-ui-filters';
@@ -127,6 +139,7 @@ import { IExecutionConfiguration } from '@gooddata/sdk-ui';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IExecutionResultLimitBreak } from '@gooddata/sdk-model';
+import { IExportDefinitionVisualizationObjectSettings } from '@gooddata/sdk-model';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
 import type { IExportTemplate } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
@@ -184,6 +197,7 @@ import { ITableDataAttributeScope } from '@gooddata/sdk-ui';
 import { ITempFilterContext } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import type { ITranslations } from '@gooddata/sdk-ui';
+import { IUnavailableDashboardReference } from '@gooddata/sdk-backend-spi';
 import { IUpperBoundedFilter } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
@@ -220,6 +234,7 @@ import { ReactNode } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
 import { Reducer } from '@reduxjs/toolkit';
 import { Ref } from 'react';
+import { RefAttributes } from 'react';
 import { RefObject } from 'react';
 import { SagaIterator } from 'redux-saga';
 import { ScreenSize } from '@gooddata/sdk-model';
@@ -235,6 +250,7 @@ import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 import { weakMapMemoize } from '@reduxjs/toolkit';
 import { WeekStart } from '@gooddata/sdk-model';
+import { WidgetAttachmentType } from '@gooddata/sdk-model';
 import { WritableDraft } from 'immer';
 
 // @beta (undocumented)
@@ -293,22 +309,70 @@ export function addTextAttributeFilter(filter: DashboardTextAttributeFilter, ind
 // @beta
 export function addVisualizationToSwitcherWidgetContent(ref: ObjRef, visualization: IInsightWidget, insight: IInsight, sizeInfo: IVisualizationSizeInfo, correlationId?: string): IAddVisualizationToVisualizationSwitcherWidgetContent;
 
+// @alpha
+export type AlertAiOperator = `${typeof AI_OPERATOR}.${typeof AI_OPERATORS.ANOMALY_DETECTION}`;
+
+// @alpha
+export type AlertAttribute = {
+    attribute: IAttribute;
+    type: "dateAttribute" | "attribute";
+};
+
 // @internal
 export function AlertingDialog(props: IAlertingDialogProps): ReactElement;
 
 // @alpha
+export function AlertingDialogActionBar(props: IAlertingDialogActionBarBlockProps): JSX.Element;
+
+// @alpha
 export const AlertingDialogContextProvider: Provider<IAlertingDialogContextValue | undefined>;
+
+// @alpha
+export function AlertingDialogDestination(overrides: Partial<IAutomationDialogDestinationProps>): JSX.Element;
+
+// @alpha
+export function AlertingDialogFilters(overrides: Partial<IAlertingDialogFiltersProps>): JSX.Element;
+
+// @alpha
+export const AlertingDialogHeader: ForwardRefExoticComponent<Partial<IAlertingDialogHeaderProps> & RefAttributes<HTMLInputElement>>;
 
 // @alpha
 export type AlertingDialogHeaderDefaultProps = IAlertingDialogHeaderProps & {
     ref?: Ref<HTMLInputElement>;
 };
 
+// @alpha
+export function AlertingDialogRecipients(overrides: Partial<IAutomationDialogRecipientsProps>): JSX.Element;
+
 // @internal (undocumented)
 export type AlertingDisabledReason = "noDestinations" | "oldWidget" | "disabledOnInsight";
 
 // @internal (undocumented)
 export function AlertingManagementDialog(props: IAlertingManagementDialogProps): ReactElement;
+
+// @alpha
+export type AlertMetric = {
+    measure: IMeasure;
+    isPrimary: boolean;
+    comparators: AlertMetricComparator[];
+};
+
+// @alpha
+export type AlertMetricComparator = {
+    measure: IMeasure;
+    isPrimary: boolean;
+    comparator: AlertMetricComparatorType;
+    dataset?: IDataSetMetadataObject;
+    granularity?: DateAttributeGranularity;
+};
+
+// @alpha
+export enum AlertMetricComparatorType {
+    // (undocumented)
+    PreviousPeriod = 0,
+    // (undocumented)
+    SamePeriodPreviousYear = 1
+}
 
 // @internal
 export type AllQueryCacheReducers<TQuery extends IDashboardQuery, TResult> = {
@@ -376,6 +440,13 @@ export function attributeHierarchyModified(correlationId?: string): IAttributeHi
 
 // @internal (undocumented)
 export function AttributesDropdown(input: IAttributesDropdownProps): JSX.Element;
+
+// @alpha
+export type AttributeValue = {
+    title: string;
+    value: string;
+    name: string;
+};
 
 // @alpha (undocumented)
 export type AutomationInteractionData = {
@@ -1343,6 +1414,7 @@ export type DashboardState = {
     listedDashboards: EntityState<IListedDashboard, EntityId>;
     accessibleDashboards: IAccessibleDashboardsState;
     inaccessibleDashboards: EntityState<IInaccessibleDashboard, EntityId>;
+    unavailableObjects: EntityState<IUnavailableDashboardReference, EntityId>;
     dashboardPermissions: DashboardPermissionsState;
     automations: IAutomationsState;
     notificationChannels: INotificationChannelsState;
@@ -1506,7 +1578,22 @@ export const DEFAULT_TAB_ID = "defaultTabId";
 export function DefaultAlertingDialog(props: IDefaultAlertingDialogProps): JSX.Element;
 
 // @alpha
+export function DefaultAlertingDialogDestination(input: IAutomationDialogDestinationProps): JSX.Element;
+
+// @alpha
+export function DefaultAlertingDialogFilters(props: IAlertingDialogFiltersProps): JSX.Element;
+
+// @alpha
+export const DefaultAlertingDialogHeader: ForwardRefExoticComponent<IAlertingDialogHeaderProps & RefAttributes<HTMLInputElement>>;
+
+// @alpha
+export function DefaultAlertingDialogRecipients(props: IAutomationDialogRecipientsProps): JSX.Element;
+
+// @alpha
 export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDialogProps): JSX.Element;
+
+// @alpha
+export function DefaultAutomationDialogActionBar(input: IAutomationDialogActionBarProps): JSX.Element;
 
 // @alpha (undocumented)
 export function DefaultButtonBar(input: IButtonBarProps): ReactElement;
@@ -1633,6 +1720,21 @@ export function DefaultSaveButton(input: ISaveButtonProps): JSX.Element | null;
 
 // @alpha
 export function DefaultScheduledEmailDialog(props: IDefaultScheduledEmailDialogProps): JSX.Element;
+
+// @alpha
+export function DefaultScheduledEmailDialogDestination(input: IAutomationDialogDestinationProps): JSX.Element;
+
+// @alpha
+export function DefaultScheduledEmailDialogFilters(props: IScheduledEmailDialogFiltersProps): JSX.Element;
+
+// @alpha
+export const DefaultScheduledEmailDialogHeader: ForwardRefExoticComponent<IScheduledEmailDialogHeaderProps & RefAttributes<HTMLInputElement>>;
+
+// @alpha
+export function DefaultScheduledEmailDialogRecipients(props: IScheduledEmailDialogRecipientsProps): JSX.Element;
+
+// @alpha
+export function DefaultScheduledEmailDialogTimezone(input: IScheduledEmailDialogTimezoneProps): JSX.Element;
 
 // @alpha (undocumented)
 export function DefaultScheduledEmailManagementDialog(input: IScheduledEmailManagementDialogProps): JSX.Element;
@@ -2349,11 +2451,77 @@ export interface IAddVisualizationToVisualizationSwitcherWidgetContentPayload {
     readonly visualization: IInsightWidget;
 }
 
+// @alpha
+export interface IAlertActionsContextValue {
+    onAnomalyDetectionChange: (measure: AlertMetric) => void;
+    onAttributeChange: (attribute: AlertAttribute | undefined, value: AttributeValue | undefined) => void;
+    onComparisonOperatorChange: (measure: AlertMetric, comparisonOperator: IAlertComparisonOperator) => void;
+    onComparisonTypeChange: (measure: AlertMetric | undefined, relativeOperator: [IAlertRelativeOperator, IAlertRelativeArithmeticOperator] | undefined, comparisonType: AlertMetricComparatorType, granularity?: DateAttributeGranularity) => void;
+    onDestinationChange: (destinationId: string) => void;
+    onGranularityChange: (measure: AlertMetric | undefined, granularity: IAlertAnomalyDetectionGranularity) => void;
+    onMeasureChange: (measure: AlertMetric) => void;
+    onRecipientsChange: (recipients: IAutomationRecipient[]) => void;
+    onRelativeOperatorChange: (measure: AlertMetric, relativeOperator: IAlertRelativeOperator, arithmeticOperator: IAlertRelativeArithmeticOperator) => void;
+    onSensitivityChange: (sensitivity: IAlertAnomalyDetectionSensitivity) => void;
+    onTitleChange: (value: string) => void;
+    onTriggerIntervalChange: (triggerInterval: IAlertTriggerInterval, dirty?: boolean) => void;
+    onTriggerModeChange: (triggerMode: IAlertTriggerMode) => void;
+    setEditedAutomation: Dispatch_2<SetStateAction<IAutomationMetadataObjectDefinition | undefined>>;
+}
+
+// @alpha
+export interface IAlertDataContextValue {
+    defaultRecipient: IAutomationRecipient;
+    defaultUser: IAutomationRecipient;
+    getAttributeValues: (attribute: IAttributeMetadataObject) => AttributeValue[];
+    getMetricValue: (measure?: IMeasure, attribute?: IAttribute, value?: string | null) => number | undefined;
+    isResultLoading: boolean;
+    measureFormatMap: IMeasureFormatMap;
+    supportedAttributes: AlertAttribute[];
+    supportedMeasures: AlertMetric[];
+}
+
 // @internal (undocumented)
 export interface IAlertDialogContext {
     alert?: IAutomationMetadataObject;
     widgetRef?: ObjRef;
 }
+
+// @alpha
+export interface IAlertDialogValidity {
+    canChangeMeasure: boolean;
+    isInvalidConnectionToInsight: boolean;
+    isParentValid: boolean;
+    isSubmitDisabled: boolean;
+    validationErrorMessage: string | undefined;
+}
+
+// @alpha
+export interface IAlertDraftContextValue {
+    editedAutomation: IAutomationMetadataObjectDefinition | undefined;
+    isTitleValid: boolean;
+    originalAutomation: IAutomationMetadataObjectDefinition | undefined;
+    warningMessage: string | undefined;
+}
+
+// @alpha
+export interface IAlertFiltersContextValue {
+    automationIsValid: boolean;
+    automationParameters: IAutomationParameter[];
+    availableFilters: FilterContextItem[] | undefined;
+    availableParameters: IAutomationParameter[];
+    dropStaleParameters: () => void;
+    filtersAreStale: boolean;
+    onApplyCurrentFilters: () => void;
+    onFiltersChange: (filters: FilterContextItem[]) => void;
+    onParameterAdd: (ref: IdentifierRef) => void;
+    onParameterChange: (ref: IdentifierRef, value: ParameterValue) => void;
+    onParameterDelete: (ref: IdentifierRef) => void;
+    selectedFilters: FilterContextItem[];
+}
+
+// @alpha
+export type IAlertingDialogActionBarBlockProps = IUseAlertingDialogActionBarPropsInput & Partial<IAutomationDialogActionBarProps>;
 
 // @alpha
 export interface IAlertingDialogContextValue {
@@ -2483,6 +2651,28 @@ export interface IAlertingManagementDialogProps {
     onEdit?: (alert: IAutomationMetadataObject) => void;
     onPauseError: (error: GoodDataSdkError, pause: boolean) => void;
     onPauseSuccess: (alert: IAutomationMetadataObject, pause: boolean) => void;
+}
+
+// @alpha
+export interface IAlertSelectedValues {
+    allowExternalRecipients: boolean;
+    allowOnlyLoggedUserRecipients: boolean;
+    selectedAiOperator: AlertAiOperator | undefined;
+    selectedAttribute: AlertAttribute | undefined;
+    selectedComparator: AlertMetricComparator | undefined;
+    selectedComparisonOperator: IAlertComparisonOperator | undefined;
+    selectedGranularity: IAlertAnomalyDetectionGranularity | undefined;
+    selectedMeasure: AlertMetric | undefined;
+    selectedNotificationChannel: INotificationChannelIdentifier | INotificationChannelMetadataObject | undefined;
+    selectedRelativeOperator: [IAlertRelativeOperator, IAlertRelativeArithmeticOperator] | undefined;
+    selectedSensitivity: IAlertAnomalyDetectionSensitivity | undefined;
+    selectedValue: string | null | undefined;
+}
+
+// @alpha
+export interface IAlertSubmitState {
+    isSaving: boolean;
+    submit: () => Promise<void>;
 }
 
 // @alpha
@@ -5187,6 +5377,7 @@ export interface IDashboardParameterEntry {
     // (undocumented)
     parameter: IDashboardParameter;
     runtimeOverride: ParameterValue | undefined;
+    workingOverride?: ParameterValue;
 }
 
 // @alpha
@@ -6883,6 +7074,11 @@ export interface IMeasureDateDatasets {
     readonly dateDatasetsOrdered: ReadonlyArray<ICatalogDateDataset>;
 }
 
+// @alpha
+export type IMeasureFormatMap = {
+    [key: string]: string;
+};
+
 // @alpha (undocumented)
 export interface IMeasureValueFilterConfigsState {
     measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
@@ -8004,6 +8200,9 @@ export function isBrokenAlertAttributeFilterInfo(item: IBrokenAlertFilterBasicIn
 export function isBrokenAlertDateFilterInfo(item: IBrokenAlertFilterBasicInfo): item is BrokenAlertDateFilterInfo;
 
 // @alpha
+export type IScheduledEmailDialogActionBarBlockProps = IUseScheduledEmailDialogActionBarPropsInput & Partial<IAutomationDialogActionBarProps>;
+
+// @alpha
 export interface IScheduledEmailDialogContextValue {
     attributeFiltersModeMap: Map<string, DashboardAttributeFilterConfigMode>;
     // (undocumented)
@@ -8139,6 +8338,109 @@ export interface IScheduledEmailManagementDialogProps {
     onEdit?: (scheduledMail: IAutomationMetadataObject) => void;
     // @deprecated
     scheduleDataError?: GoodDataSdkError;
+}
+
+// @alpha
+export interface IScheduledEmailSaveState {
+    handleSaveScheduledEmail: () => void;
+    isSavingScheduledEmail: boolean;
+    savingErrorMessage: string | undefined;
+}
+
+// @alpha
+export interface IScheduledExportActionsContextValue {
+    applyCurrentScheduleTimezone: () => void;
+    onCsvRawSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    onCsvSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    onDashboardAttachmentsChange: (formats: DashboardAttachmentType[]) => void;
+    onDestinationChange: (notificationChannelId: string) => void;
+    onEvaluationModeChange: (isShared: boolean) => void;
+    onMessageChange: (value: string, isValid: boolean) => void;
+    onPdfSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    onRecipientsChange: (recipients: IAutomationRecipient[]) => void;
+    onRecurrenceChange: (cronExpression: string, startDate: Date | null, isValid: boolean) => void;
+    onScheduleTimezoneChange: (timezoneId: string | undefined) => void;
+    onSlidesTemplateIdChange: (templateId: string | undefined, format: "PPTX" | "PDF_SLIDES" | "PDF") => void;
+    onSubjectChange: (value: string | number, isValid: boolean) => void;
+    onTitleChange: (value: string) => void;
+    onWidgetAttachmentsChange: (formats: WidgetAttachmentType[]) => void;
+    onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    setEditedAutomation: Dispatch_2<SetStateAction<IAutomationMetadataObjectDefinition>>;
+}
+
+// @alpha
+export interface IScheduledExportAttachments {
+    csvRawSettings: IExportDefinitionVisualizationObjectSettings;
+    csvSettings: IExportDefinitionVisualizationObjectSettings;
+    isCsvExportSelected: boolean;
+    isDashboardExportSelected: boolean;
+    isXlsxExportSelected: boolean;
+    pdfSettings: IExportDefinitionVisualizationObjectSettings;
+    selectedAttachments: Array<DashboardAttachmentType | WidgetAttachmentType>;
+    slidesTemplateIds: {
+        PPTX: string | undefined;
+        PDF_SLIDES: string | undefined;
+        PDF: string | undefined;
+    };
+    xlsxSettings: IExportDefinitionVisualizationObjectSettings;
+}
+
+// @alpha
+export interface IScheduledExportDataContextValue {
+    defaultRecipient: IAutomationRecipient;
+    defaultUser: IAutomationRecipient;
+}
+
+// @alpha
+export interface IScheduledExportDialogValidity {
+    allowExternalRecipients: boolean;
+    allowOnlyLoggedUserRecipients: boolean;
+    isParentValid: boolean;
+    isSubmitDisabled: boolean | undefined;
+    validationErrorMessage: string | undefined;
+}
+
+// @alpha
+export interface IScheduledExportDraftContextValue {
+    canSelectScheduleTimezone: boolean;
+    defaultResolvedTimezone: string | undefined;
+    editedAutomation: IAutomationMetadataObjectDefinition;
+    isCronValid: boolean;
+    isOnMessageValid: boolean;
+    isSubjectValid: boolean;
+    isTimezoneFeatureEnabled: boolean;
+    isTitleValid: boolean;
+    originalAutomation: IAutomationMetadataObjectDefinition;
+    scheduleTimezoneIsStale: boolean;
+    scheduleTimezoneSelection: IScheduleTimezoneSelection;
+    startDate: Date;
+}
+
+// @alpha
+export interface IScheduledExportFiltersContextValue {
+    applyLatest: () => void;
+    automationIsValid: boolean;
+    availableFilters: FilterContextItem[] | undefined;
+    availableParametersByTab: Record<string, IAutomationParameter[]>;
+    editedFiltersByTab: Record<string, FilterContextItem[]> | undefined;
+    filtersAreStale: boolean;
+    filtersByTab: IAutomationFiltersTab[] | undefined;
+    flatTabId: string | undefined;
+    onApplyCurrentFilters: () => void;
+    onFiltersByTabChange: (newFiltersByTab: Record<string, FilterContextItem[]>, storeFiltersParam?: boolean) => void;
+    onFiltersChange: (filters: FilterContextItem[], storeFiltersParam?: boolean) => void;
+    onParameterAdd: (ref: IdentifierRef) => void;
+    onParameterAddByTab: (tabId: string, ref: IdentifierRef) => void;
+    onParameterChange: (ref: IdentifierRef, value: ParameterValue) => void;
+    onParameterChangeByTab: (tabId: string, ref: IdentifierRef, value: ParameterValue) => void;
+    onParameterDelete: (ref: IdentifierRef) => void;
+    onParameterDeleteByTab: (tabId: string, ref: IdentifierRef) => void;
+    onStoreFiltersChange: (value: boolean, filters?: FilterContextItem[], filtersByTabParam?: Record<string, FilterContextItem[]>) => void;
+    onStoreParametersChange: (storeParameters: boolean) => void;
+    parametersEnabled: boolean;
+    selectedFilters: FilterContextItem[];
+    storeFilters: boolean;
+    visibleParametersByTab: Record<string, IAutomationParameter[]>;
 }
 
 // @internal (undocumented)
@@ -8913,6 +9215,14 @@ export interface ISetParameterRuntimeValuesPayload {
     values: ISetParameterRuntimeValuePayload[];
 }
 
+// @alpha
+export interface ISetParameterWorkingValuePayload {
+    // (undocumented)
+    ref: ObjRef;
+    // (undocumented)
+    value: ParameterValue;
+}
+
 // @internal (undocumented)
 export interface ISetScreenSize extends IDashboardCommand {
     // (undocumented)
@@ -9546,6 +9856,23 @@ export interface IUpsertExecutionResult extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT";
 }
 
+// @alpha
+export interface IUseAlertingDialogActionBarPropsInput {
+    isSaving: boolean;
+    onCancel?: () => void;
+    onDelete?: () => void;
+    onSubmit: () => void;
+}
+
+// @alpha
+export interface IUseAlertingDialogHeaderPropsInput {
+    onCancel?: () => void;
+    ref?: Ref<HTMLInputElement>;
+}
+
+// @alpha
+export type IUseAlertSubmitCallbacks = Pick<IAlertingDialogProps, "onSuccess" | "onError" | "onSaveSuccess" | "onSaveError">;
+
 // @internal (undocumented)
 export interface IUseAttributeElements {
     // (undocumented)
@@ -9721,6 +10048,29 @@ export interface IUserInteractionPayloadWithDataBase<TType extends string, TData
     data: TData;
     // (undocumented)
     interaction: TType;
+}
+
+// @alpha
+export type IUseSaveScheduledEmailCallbacks = Pick<IScheduledEmailDialogProps, "onSuccess" | "onError" | "onSubmit" | "onSaveSuccess" | "onSaveError" | "onSave">;
+
+// @alpha
+export interface IUseScheduledEmailDialogActionBarPropsInput {
+    isSaving: boolean;
+    onCancel?: () => void;
+    onDelete?: () => void;
+    onSubmit: () => void;
+}
+
+// @alpha
+export interface IUseScheduledEmailDialogHeaderPropsInput {
+    onBack?: () => void;
+    onTitleKeyDown: (event: KeyboardEvent_2) => void;
+    ref?: Ref<HTMLInputElement>;
+}
+
+// @alpha
+export interface IUseScheduledEmailDialogRecipientsPropsInput {
+    onKeyDownSubmit: (event: KeyboardEvent_2) => void;
 }
 
 // @internal (undocumented)
@@ -10759,12 +11109,30 @@ export type SavingState = {
 export function ScheduledEmailDialog(props: IScheduledEmailDialogProps): ReactElement;
 
 // @alpha
+export function ScheduledEmailDialogActionBar(props: IScheduledEmailDialogActionBarBlockProps): JSX.Element;
+
+// @alpha
 export const ScheduledEmailDialogContextProvider: Provider<IScheduledEmailDialogContextValue | undefined>;
+
+// @alpha
+export function ScheduledEmailDialogDestination(overrides: Partial<IAutomationDialogDestinationProps>): JSX.Element;
+
+// @alpha
+export function ScheduledEmailDialogFilters(overrides: Partial<IScheduledEmailDialogFiltersProps>): JSX.Element;
+
+// @alpha
+export const ScheduledEmailDialogHeader: ForwardRefExoticComponent<Partial<IScheduledEmailDialogHeaderProps> & RefAttributes<HTMLInputElement>>;
 
 // @alpha
 export type ScheduledEmailDialogHeaderDefaultProps = IScheduledEmailDialogHeaderProps & {
     ref?: Ref<HTMLInputElement>;
 };
+
+// @alpha
+export function ScheduledEmailDialogRecipients(props: Partial<IScheduledEmailDialogRecipientsProps>): JSX.Element;
+
+// @alpha
+export function ScheduledEmailDialogTimezone(overrides: Partial<ScheduledEmailDialogTimezoneDefaultProps>): JSX.Element;
 
 // @alpha
 export type ScheduledEmailDialogTimezoneDefaultProps = IScheduledEmailDialogTimezoneProps;
@@ -11345,6 +11713,9 @@ export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<bo
 
 // @alpha
 export const selectEnableDashboardFilterGroups: DashboardSelector<boolean>;
+
+// @internal
+export const selectEnableDashboardPartialRendering: DashboardSelector<boolean>;
 
 // @alpha
 export const selectEnableDashboardSectionHeadersDateDataSet: DashboardSelector<boolean>;
@@ -11952,6 +12323,12 @@ export const selectIsWidgetLoadingAdditionalDataByWidgetRef: (refs: ObjRef) => D
 // @alpha
 export const selectIsWorkingFilterContextChanged: DashboardSelector<boolean | undefined>;
 
+// @alpha
+export const selectIsWorkingParametersChanged: DashboardSelector<boolean>;
+
+// @alpha
+export const selectIsWorkingSelectionChanged: DashboardSelector<boolean>;
+
 // @internal @deprecated (undocumented)
 export const selectKpiDeleteDialogWidgetCoordinates: DashboardSelector<ILayoutCoordinates | undefined>;
 
@@ -12105,6 +12482,9 @@ export const selectOtherContextAttributeFilterItems: (ref?: ObjRef) => Dashboard
 export const selectOtherContextAttributeFilters: (ref?: ObjRef) => DashboardSelector<IDashboardAttributeFilter[]>;
 
 // @alpha
+export const selectParameterDisplayValueByRef: (ref: ObjRef) => DashboardSelector<ParameterValue | undefined>;
+
+// @alpha
 export const selectParameterRuntimeOverrideByRef: (ref: ObjRef) => DashboardSelector<ParameterValue | undefined>;
 
 // @internal
@@ -12232,6 +12612,12 @@ export const selectTimezone: DashboardSelector<string | undefined>;
 
 // @alpha
 export const selectTimezoneOverride: DashboardSelector<string | undefined>;
+
+// @alpha
+export const selectUnavailableObjects: DashboardSelector<IUnavailableDashboardReference[]>;
+
+// @alpha
+export const selectUnavailableObjectsMapByType: (type: ObjectType) => DashboardSelector<ObjRefMap<IUnavailableDashboardReference>>;
 
 // @internal (undocumented)
 export const selectValidConfiguredDrillsByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWithPredicates[]>;
@@ -12494,113 +12880,6 @@ export function switchToEditRenderMode(correlationId?: string): IChangeRenderMod
 
 // @internal (undocumented)
 export const tabsActions: CaseReducerActions<    {
-readonly setTabs: TabsReducer<    {
-payload: {
-tabs?: ITabState[] | undefined;
-activeTabLocalIdentifier?: string | undefined;
-};
-type: string;
-}>;
-readonly setActiveTabLocalIdentifier: TabsReducer<    {
-payload: string | undefined;
-type: string;
-}>;
-readonly updateTab: TabsReducer<    {
-payload: ITabState;
-type: string;
-}>;
-readonly removeTabById: TabsReducer<    {
-payload: string;
-type: string;
-}>;
-readonly clearTabs: TabsReducer<    {
-payload: void;
-type: string;
-}>;
-readonly setTabIsRenaming: TabsReducer<    {
-payload: {
-tabId: string;
-isRenaming: boolean;
-};
-type: string;
-}>;
-readonly renameTab: TabsReducer<    {
-payload: {
-tabId: string;
-title: string;
-};
-type: string;
-}>;
-readonly resolveDefaultTab: TabsReducer<    {
-payload: {
-newLocalIdentifier: string;
-};
-type: string;
-}>;
-readonly changeAttributeFilterConfigMode: (state: WritableDraft<ITabsState>, action: {
-payload: ISetDashboardAttributeFilterConfigModePayload;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly changeAttributeFilterSelectionType: (state: WritableDraft<ITabsState>, action: {
-payload: ISetDashboardAttributeFilterSelectionTypePayload;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly setAttributeFilterConfigs: (state: WritableDraft<ITabsState>, action: {
-payload: any;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly removeAttributeFilterConfig: TabsReducer<    {
-payload: string;
-type: string;
-}>;
-readonly changeDisplayAsLabel: (state: WritableDraft<ITabsState>, action: {
-payload: ISetDashboardAttributeFilterConfigDisplayAsLabelPayload;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly setDateFilterConfig: (state: WritableDraft<ITabsState>, action: {
-payload: {
-dateFilterConfig?: IDashboardDateFilterConfig_2 | undefined;
-effectiveDateFilterConfig: IDateFilterConfig;
-isUsingDashboardOverrides: boolean;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly setDateFilterConfigMode: (state: WritableDraft<ITabsState>, action: {
-payload: DashboardDateFilterConfigMode;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly setDateFilterConfigTitle: (state: WritableDraft<ITabsState>, action: {
-payload: string | undefined;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly updateDateFilterConfig: (state: WritableDraft<ITabsState>, action: {
-payload: IDashboardDateFilterConfig_2;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly addDateFilterConfigValidationWarning: (state: WritableDraft<ITabsState>, action: {
-payload: DateFilterValidationResult;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly clearDateFilterConfigValidationWarning: (state: WritableDraft<ITabsState>, action: {
-payload: void;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly changeDateFilterConfigsMode: (state: WritableDraft<ITabsState>, action: {
-payload: ISetDashboardDateFilterWithDimensionConfigModePayload;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly setDateFilterConfigs: (state: WritableDraft<ITabsState>, action: {
-payload: any;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly removeDateFilterConfigs: (state: WritableDraft<ITabsState>, action: {
-payload: ObjRef;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly changeDateFilterConfigsTitle: (state: WritableDraft<ITabsState>, action: {
-payload: ISetDateFilterConfigTitlePayload;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
 readonly setFilterContext: (state: WritableDraft<ITabsState>, action: {
 payload: {
 filterContextDefinition: IFilterContextDefinition;
@@ -12719,11 +12998,7 @@ readonly setPreloadedAttributesWithReferences: (state: WritableDraft<ITabsState>
 payload: IAttributeWithReferences[];
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly applyWorkingSelection: (state: WritableDraft<ITabsState>, action: {
-payload: IApplyWorkingSelectionPayload;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly resetWorkingSelection: (state: WritableDraft<ITabsState>, action: {
+readonly resetWorkingFilterSelection: (state: WritableDraft<ITabsState>, action: {
 payload: void;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
@@ -12747,6 +13022,141 @@ payload: {
 readonly filterLocalId: string;
 readonly title?: string | undefined;
 };
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly addParameter: (state: WritableDraft<ITabsState>, action: {
+payload: IAddParameterPayload;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setParameterRuntimeValue: (state: WritableDraft<ITabsState>, action: {
+payload: ISetParameterRuntimeValuePayload;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setParameterRuntimeValues: (state: WritableDraft<ITabsState>, action: {
+payload: ISetParameterRuntimeValuesPayload;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setParameterWorkingValue: (state: WritableDraft<ITabsState>, action: {
+payload: ISetParameterWorkingValuePayload;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly removeParameter: (state: WritableDraft<ITabsState>, action: {
+payload: IRemoveParameterPayload;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setTabs: TabsReducer<    {
+payload: {
+tabs?: ITabState[] | undefined;
+activeTabLocalIdentifier?: string | undefined;
+};
+type: string;
+}>;
+readonly setActiveTabLocalIdentifier: TabsReducer<    {
+payload: string | undefined;
+type: string;
+}>;
+readonly updateTab: TabsReducer<    {
+payload: ITabState;
+type: string;
+}>;
+readonly removeTabById: TabsReducer<    {
+payload: string;
+type: string;
+}>;
+readonly clearTabs: TabsReducer<    {
+payload: void;
+type: string;
+}>;
+readonly setTabIsRenaming: TabsReducer<    {
+payload: {
+tabId: string;
+isRenaming: boolean;
+};
+type: string;
+}>;
+readonly renameTab: TabsReducer<    {
+payload: {
+tabId: string;
+title: string;
+};
+type: string;
+}>;
+readonly resolveDefaultTab: TabsReducer<    {
+payload: {
+newLocalIdentifier: string;
+};
+type: string;
+}>;
+readonly applyWorkingSelection: TabsReducer<    {
+payload: IApplyWorkingSelectionPayload;
+type: string;
+}>;
+readonly resetWorkingSelection: TabsReducer<    {
+payload: void;
+type: string;
+}>;
+readonly changeAttributeFilterConfigMode: (state: WritableDraft<ITabsState>, action: {
+payload: ISetDashboardAttributeFilterConfigModePayload;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly changeAttributeFilterSelectionType: (state: WritableDraft<ITabsState>, action: {
+payload: ISetDashboardAttributeFilterSelectionTypePayload;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setAttributeFilterConfigs: (state: WritableDraft<ITabsState>, action: {
+payload: any;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly removeAttributeFilterConfig: TabsReducer<    {
+payload: string;
+type: string;
+}>;
+readonly changeDisplayAsLabel: (state: WritableDraft<ITabsState>, action: {
+payload: ISetDashboardAttributeFilterConfigDisplayAsLabelPayload;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setDateFilterConfig: (state: WritableDraft<ITabsState>, action: {
+payload: {
+dateFilterConfig?: IDashboardDateFilterConfig_2 | undefined;
+effectiveDateFilterConfig: IDateFilterConfig;
+isUsingDashboardOverrides: boolean;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setDateFilterConfigMode: (state: WritableDraft<ITabsState>, action: {
+payload: DashboardDateFilterConfigMode;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setDateFilterConfigTitle: (state: WritableDraft<ITabsState>, action: {
+payload: string | undefined;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly updateDateFilterConfig: (state: WritableDraft<ITabsState>, action: {
+payload: IDashboardDateFilterConfig_2;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly addDateFilterConfigValidationWarning: (state: WritableDraft<ITabsState>, action: {
+payload: DateFilterValidationResult;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly clearDateFilterConfigValidationWarning: (state: WritableDraft<ITabsState>, action: {
+payload: void;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly changeDateFilterConfigsMode: (state: WritableDraft<ITabsState>, action: {
+payload: ISetDashboardDateFilterWithDimensionConfigModePayload;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setDateFilterConfigs: (state: WritableDraft<ITabsState>, action: {
+payload: any;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly removeDateFilterConfigs: (state: WritableDraft<ITabsState>, action: {
+payload: ObjRef;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly changeDateFilterConfigsTitle: (state: WritableDraft<ITabsState>, action: {
+payload: ISetDateFilterConfigTitlePayload;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly setLayout: (state: WritableDraft<ITabsState>, action: {
@@ -13071,22 +13481,6 @@ readonly removeMeasureValueFilterConfig: (state: WritableDraft<ITabsState>, acti
 payload: string;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly addParameter: (state: WritableDraft<ITabsState>, action: {
-payload: IAddParameterPayload;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly setParameterRuntimeValue: (state: WritableDraft<ITabsState>, action: {
-payload: ISetParameterRuntimeValuePayload;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly setParameterRuntimeValues: (state: WritableDraft<ITabsState>, action: {
-payload: ISetParameterRuntimeValuesPayload;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly removeParameter: (state: WritableDraft<ITabsState>, action: {
-payload: IRemoveParameterPayload;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
 }, "tabs">;
 
 // @alpha (undocumented)
@@ -13239,10 +13633,46 @@ export function unignoreFilterOnRichTextWidget(ref: ObjRef, oneOrMoreDisplayForm
 export function updateVisualizationsFromSwitcherWidgetContent(ref: ObjRef, visualizations: IInsightWidget[], correlationId?: string): IUpdateVisualizationsFromVisualizationSwitcherWidgetContent;
 
 // @alpha
+export function useAlertActions(): IAlertActionsContextValue;
+
+// @alpha
+export function useAlertData(): IAlertDataContextValue;
+
+// @alpha
+export function useAlertDialogValidity(): IAlertDialogValidity;
+
+// @alpha
+export function useAlertDraft(): IAlertDraftContextValue;
+
+// @alpha
+export function useAlertFilters(): IAlertFiltersContextValue;
+
+// @alpha
+export function useAlertingDialogActionBarProps(input: IUseAlertingDialogActionBarPropsInput): IAutomationDialogActionBarProps;
+
+// @alpha
 export function useAlertingDialogContext(): IAlertingDialogContextValue;
 
 // @alpha
+export function useAlertingDialogDestinationProps(): IAutomationDialogDestinationProps;
+
+// @alpha
+export function useAlertingDialogFiltersProps(): IAlertingDialogFiltersProps;
+
+// @alpha
+export function useAlertingDialogHeaderProps(input: IUseAlertingDialogHeaderPropsInput): AlertingDialogHeaderDefaultProps;
+
+// @alpha
+export function useAlertingDialogRecipientsProps(): IAutomationDialogRecipientsProps;
+
+// @alpha
 export function useAlertingManagementDialogContext(): IAlertingManagementDialogContextValue;
+
+// @alpha
+export function useAlertSelectedValues(): IAlertSelectedValues;
+
+// @alpha
+export function useAlertSubmit(input: IUseAlertSubmitCallbacks): IAlertSubmitState;
 
 // @alpha
 export function useAutomationsContext(): IAutomationsContextValue;
@@ -14021,10 +14451,49 @@ export function useSaveAsNewButtonProps(): ISaveAsNewButtonProps;
 export function useSaveButtonProps(): ISaveButtonProps;
 
 // @alpha
+export function useSaveScheduledEmailToBackend(input: IUseSaveScheduledEmailCallbacks): IScheduledEmailSaveState;
+
+// @alpha
+export function useScheduledEmailDialogActionBarProps(input: IUseScheduledEmailDialogActionBarPropsInput): IAutomationDialogActionBarProps;
+
+// @alpha
 export function useScheduledEmailDialogContext(): IScheduledEmailDialogContextValue;
 
 // @alpha
+export function useScheduledEmailDialogDestinationProps(): IAutomationDialogDestinationProps;
+
+// @alpha
+export function useScheduledEmailDialogFiltersProps(): IScheduledEmailDialogFiltersProps;
+
+// @alpha
+export function useScheduledEmailDialogHeaderProps(input: IUseScheduledEmailDialogHeaderPropsInput): ScheduledEmailDialogHeaderDefaultProps;
+
+// @alpha
+export function useScheduledEmailDialogRecipientsProps(input: IUseScheduledEmailDialogRecipientsPropsInput): IScheduledEmailDialogRecipientsProps;
+
+// @alpha
+export function useScheduledEmailDialogTimezoneProps(): ScheduledEmailDialogTimezoneDefaultProps;
+
+// @alpha
 export function useScheduledEmailManagementDialogContext(): IScheduledEmailManagementDialogContextValue;
+
+// @alpha
+export function useScheduledExportActions(): IScheduledExportActionsContextValue;
+
+// @alpha
+export function useScheduledExportAttachments(): IScheduledExportAttachments;
+
+// @alpha
+export function useScheduledExportData(): IScheduledExportDataContextValue;
+
+// @alpha
+export function useScheduledExportDialogValidity(): IScheduledExportDialogValidity;
+
+// @alpha
+export function useScheduledExportDraft(): IScheduledExportDraftContextValue;
+
+// @alpha
+export function useScheduledExportFilters(): IScheduledExportFiltersContextValue;
 
 // @alpha (undocumented)
 export const useSectionDescriptionExportData: (exportData: SectionExportData | undefined, loading: boolean, error: boolean) => SectionExportData | undefined;

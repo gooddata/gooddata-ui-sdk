@@ -2,9 +2,10 @@
 
 import { type PropsWithChildren, createContext, useContext, useMemo } from "react";
 
+import { DefaultAgentItem } from "./customized/AgentItem.js";
 import { DefaultDisclaimer } from "./customized/Disclaimer.js";
 import { DefaultLandingScreen } from "./customized/LandingScreen.js";
-import { type IGenAIAssistantSlots } from "./customized/types.js";
+import { type IGenAIAssistantAgentItemProps, type IGenAIAssistantSlots } from "./customized/types.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 
 export type CustomizationContext = {
@@ -41,6 +42,18 @@ function DisclaimerSlotRenderer() {
     return <DefaultDisclaimer />;
 }
 
+function AgentItemSlotRenderer(props: IGenAIAssistantAgentItemProps) {
+    const { slots } = useContext(customizationContext);
+    const AgentItemSlot = slots?.AgentItem;
+    const { agent, isSelected, menuItemProps, Content } = props;
+    const defaultProps = { agent, isSelected, menuItemProps, Content };
+
+    if (AgentItemSlot) {
+        return <AgentItemSlot Default={DefaultAgentItem} defaultProps={defaultProps} />;
+    }
+    return <DefaultAgentItem {...props} />;
+}
+
 export function CustomizationProvider({ children, slots }: PropsWithChildren<CustomizationContext>) {
     const value = useMemo(
         () => ({
@@ -57,6 +70,7 @@ export const useCustomization = () => {
         () => ({
             LandingScreenComponent: LandingScreenSlotRenderer,
             DisclaimerComponent: DisclaimerSlotRenderer,
+            AgentItemComponent: AgentItemSlotRenderer,
         }),
         [],
     );

@@ -583,6 +583,201 @@ export interface AutomationCompoundMeasureValueFilterCompoundMeasureValueFilter 
 }
 
 /**
+ * Conditional formatting for a table, with one entry per formatted column.
+ */
+export interface AutomationConditionalFormatting {
+    /**
+     * Whether the rules are applied when rendering.
+     */
+    'enabled': boolean;
+    /**
+     * Rules evaluated in order; within a target, the first matching condition wins.
+     */
+    'rules': Array<AutomationConditionalFormattingRule>;
+}
+
+/**
+ * A fixed, inclusive date period.
+ */
+export interface AutomationConditionalFormattingAbsoluteDateValue {
+    /**
+     * `YYYY-MM-DD`, or `YYYY-MM-DD HH:mm` at hour or minute granularity.
+     */
+    'from': string;
+    /**
+     * The value kind.
+     */
+    'kind': AutomationConditionalFormattingAbsoluteDateValueKindEnum;
+    /**
+     * `YYYY-MM-DD`, or `YYYY-MM-DD HH:mm` at hour or minute granularity. Inclusive.
+     */
+    'to': string;
+}
+
+export type AutomationConditionalFormattingAbsoluteDateValueKindEnum = 'absoluteDate';
+
+/**
+ * An attribute column, addressed by its bucket item local identifier.
+ */
+export interface AutomationConditionalFormattingAttributeTarget {
+    'attributeIdentifier': string;
+    /**
+     * The target kind.
+     */
+    'kind': AutomationConditionalFormattingAttributeTargetKindEnum;
+}
+
+export type AutomationConditionalFormattingAttributeTargetKindEnum = 'attribute';
+
+/**
+ * A condition and the formatting applied to cells matching it.
+ */
+export interface AutomationConditionalFormattingCondition {
+    'format': AutomationConditionalFormattingFormat;
+    /**
+     * Client-assigned identifier, stable across edits.
+     */
+    'id'?: string;
+    /**
+     * How a condition compares the cell value against its value.
+     */
+    'operator': AutomationConditionalFormattingConditionOperatorEnum;
+    'value': AutomationConditionalFormattingValue;
+}
+
+export type AutomationConditionalFormattingConditionOperatorEnum = 'ALL' | 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO' | 'BETWEEN' | 'NOT_BETWEEN' | 'CONTAINS' | 'NOT_CONTAINS' | 'STARTS_WITH' | 'NOT_STARTS_WITH' | 'ENDS_WITH' | 'NOT_ENDS_WITH' | 'IS_EMPTY' | 'IS_NOT_EMPTY';
+
+/**
+ * Visual formatting applied to a matching cell.
+ */
+export interface AutomationConditionalFormattingFormat {
+    /**
+     * Background color as a hex triplet.
+     */
+    'backgroundColor'?: string;
+    /**
+     * Text color as a hex triplet.
+     */
+    'color'?: string;
+    /**
+     * Whether the formatting applies to the matching cell only, or to its whole row.
+     */
+    'scope': AutomationConditionalFormattingFormatScopeEnum;
+}
+
+export type AutomationConditionalFormattingFormatScopeEnum = 'cell' | 'row';
+
+/**
+ * @type AutomationConditionalFormattingLiteral
+ * A string or a number, serialized in whichever form it was authored.
+ */
+export type AutomationConditionalFormattingLiteral = number | string;
+
+/**
+ * An inclusive numeric range.
+ */
+export interface AutomationConditionalFormattingLiteralRangeValue {
+    'from': number;
+    /**
+     * The value kind.
+     */
+    'kind': AutomationConditionalFormattingLiteralRangeValueKindEnum;
+    'to': number;
+}
+
+export type AutomationConditionalFormattingLiteralRangeValueKindEnum = 'literalRange';
+
+/**
+ * A single value compared against the cell value.
+ */
+export interface AutomationConditionalFormattingLiteralValue {
+    /**
+     * The value kind.
+     */
+    'kind': AutomationConditionalFormattingLiteralValueKindEnum;
+    'value': AutomationConditionalFormattingLiteral;
+}
+
+export type AutomationConditionalFormattingLiteralValueKindEnum = 'literal';
+
+/**
+ * A measure column, addressed by its bucket item local identifier.
+ */
+export interface AutomationConditionalFormattingMeasureTarget {
+    /**
+     * The target kind.
+     */
+    'kind': AutomationConditionalFormattingMeasureTargetKindEnum;
+    'measureIdentifier': string;
+}
+
+export type AutomationConditionalFormattingMeasureTargetKindEnum = 'measure';
+
+/**
+ * No value; used by operators that take none.
+ */
+export interface AutomationConditionalFormattingNoneValue {
+    /**
+     * The value kind.
+     */
+    'kind': AutomationConditionalFormattingNoneValueKindEnum;
+}
+
+export type AutomationConditionalFormattingNoneValueKindEnum = 'none';
+
+/**
+ * A date period relative to the moment of evaluation, resolved at render time.
+ */
+export interface AutomationConditionalFormattingRelativeDateValue {
+    /**
+     * Offset in periods; 0 is the current period, negative is the past.
+     */
+    'from': number;
+    /**
+     * Granularity the offsets are counted in.
+     */
+    'granularity': AutomationConditionalFormattingRelativeDateValueGranularityEnum;
+    /**
+     * The value kind.
+     */
+    'kind': AutomationConditionalFormattingRelativeDateValueKindEnum;
+    /**
+     * Offset in periods, not lower than `from`.
+     */
+    'to': number;
+}
+
+export type AutomationConditionalFormattingRelativeDateValueGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
+export type AutomationConditionalFormattingRelativeDateValueKindEnum = 'relativeDate';
+
+/**
+ * Conditions applied to a single column.
+ */
+export interface AutomationConditionalFormattingRule {
+    /**
+     * Conditions evaluated in order; the first match wins.
+     */
+    'conditions': Array<AutomationConditionalFormattingCondition>;
+    /**
+     * Client-assigned identifier, stable across edits.
+     */
+    'id'?: string;
+    'target': AutomationConditionalFormattingTarget;
+}
+
+/**
+ * @type AutomationConditionalFormattingTarget
+ * Column a rule formats. The shape is selected by the `kind` property.
+ */
+export type AutomationConditionalFormattingTarget = AutomationConditionalFormattingAttributeTarget | AutomationConditionalFormattingMeasureTarget;
+
+/**
+ * @type AutomationConditionalFormattingValue
+ * Value a condition compares against. The shape is selected by the `kind` property.
+ */
+export type AutomationConditionalFormattingValue = AutomationConditionalFormattingAbsoluteDateValue | AutomationConditionalFormattingLiteralRangeValue | AutomationConditionalFormattingLiteralValue | AutomationConditionalFormattingNoneValue | AutomationConditionalFormattingRelativeDateValue;
+
+/**
  * Custom label object override.
  */
 export interface AutomationCustomLabel {
@@ -1700,6 +1895,7 @@ export interface AutomationTabularExportExecution {
  * Export request object describing the export properties and overrides for tabular exports.
  */
 export interface AutomationTabularExportRequest {
+    'conditionalFormatting'?: AutomationConditionalFormatting | null;
     'customOverride'?: AutomationCustomOverride;
     /**
      * Execution result identifier.

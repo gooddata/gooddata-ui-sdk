@@ -1,5 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
+import { type AccessGranularPermission } from "../../../accessControl/index.js";
 import { type IAuditable, type IObjectCertification } from "../../../base/metadata.js";
 import { type IMetadataObject, type IMetadataObjectDefinition, isMetadataObject } from "../types.js";
 
@@ -57,6 +58,13 @@ export type IMeasureMetadataObject = IMetadataObject &
          * @internal
          */
         certification?: IObjectCertification;
+
+        /**
+         * Object-level permissions the current user has for this metric.
+         * Only populated when the backend was asked for them, undefined otherwise.
+         * @alpha
+         */
+        permissions?: AccessGranularPermission[];
     };
 
 /**

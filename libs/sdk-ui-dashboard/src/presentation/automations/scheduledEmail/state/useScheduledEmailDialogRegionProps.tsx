@@ -29,7 +29,7 @@ import { useScheduledExportDialogValidity } from "./useScheduledExportDialogVali
 /**
  * Inputs of {@link useScheduledEmailDialogHeaderProps} that come from the dialog rather than its state.
  *
- * @internal
+ * @alpha
  */
 export interface IUseScheduledEmailDialogHeaderPropsInput {
     /**
@@ -53,7 +53,7 @@ export interface IUseScheduledEmailDialogHeaderPropsInput {
  *
  * Throws outside the scheduled-export dialog's state providers.
  *
- * @internal
+ * @alpha
  */
 export function useScheduledEmailDialogHeaderProps({
     onBack,
@@ -120,7 +120,7 @@ export function useScheduledEmailDialogHeaderProps({
  *
  * Throws outside the scheduled-export dialog's state providers.
  *
- * @internal
+ * @alpha
  */
 export function useScheduledEmailDialogFiltersProps(): IScheduledEmailDialogFiltersProps {
     const { widget } = useScheduledEmailDialogContext();
@@ -174,7 +174,7 @@ export function useScheduledEmailDialogFiltersProps(): IScheduledEmailDialogFilt
  *
  * Throws outside the scheduled-export dialog's state providers.
  *
- * @internal
+ * @alpha
  */
 export function useScheduledEmailDialogDestinationProps(): IAutomationDialogDestinationProps {
     const { notificationChannels } = useScheduledEmailDialogContext();
@@ -191,7 +191,7 @@ export function useScheduledEmailDialogDestinationProps(): IAutomationDialogDest
 /**
  * Inputs of {@link useScheduledEmailDialogRecipientsProps} that come from the dialog rather than its state.
  *
- * @internal
+ * @alpha
  */
 export interface IUseScheduledEmailDialogRecipientsPropsInput {
     /**
@@ -205,7 +205,7 @@ export interface IUseScheduledEmailDialogRecipientsPropsInput {
  *
  * Throws outside the scheduled-export dialog's state providers.
  *
- * @internal
+ * @alpha
  */
 export function useScheduledEmailDialogRecipientsProps({
     onKeyDownSubmit,
@@ -238,7 +238,7 @@ export function useScheduledEmailDialogRecipientsProps({
  *
  * Throws outside the scheduled-export dialog's state providers.
  *
- * @internal
+ * @alpha
  */
 export function useScheduledEmailDialogTimezoneProps(): ScheduledEmailDialogTimezoneDefaultProps {
     const { widget } = useScheduledEmailDialogContext();
@@ -256,7 +256,7 @@ export function useScheduledEmailDialogTimezoneProps(): ScheduledEmailDialogTime
 /**
  * Inputs of {@link useScheduledEmailDialogActionBarProps} that come from the dialog rather than its state.
  *
- * @internal
+ * @alpha
  */
 export interface IUseScheduledEmailDialogActionBarPropsInput {
     /**
@@ -265,7 +265,7 @@ export interface IUseScheduledEmailDialogActionBarPropsInput {
     onCancel?: () => void;
 
     /**
-     * Submits the automation; the dialog's single save path (see `useSaveScheduledEmailToBackend`).
+     * Submits the automation; the dialog's single save path (see {@link useSaveScheduledEmailToBackend}).
      */
     onSubmit: () => void;
 
@@ -285,7 +285,7 @@ export interface IUseScheduledEmailDialogActionBarPropsInput {
  *
  * Throws outside the scheduled-export dialog's state providers.
  *
- * @internal
+ * @alpha
  */
 export function useScheduledEmailDialogActionBarProps({
     onCancel,

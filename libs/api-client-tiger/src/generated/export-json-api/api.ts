@@ -151,7 +151,7 @@ export interface ExportAfmObjectIdentifierCoreIdentifier {
     'type': ExportAfmObjectIdentifierCoreIdentifierTypeEnum;
 }
 
-export type ExportAfmObjectIdentifierCoreIdentifierTypeEnum = 'attribute' | 'label' | 'fact' | 'metric';
+export type ExportAfmObjectIdentifierCoreIdentifierTypeEnum = 'attribute' | 'label' | 'fact' | 'metric' | 'computedAttribute';
 
 /**
  * Reference to the date dataset to which the filter should be applied.
@@ -172,7 +172,7 @@ export interface ExportAfmObjectIdentifierIdentifier {
     'type': ExportAfmObjectIdentifierIdentifierTypeEnum;
 }
 
-export type ExportAfmObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
+export type ExportAfmObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'computedAttribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
 
 export interface ExportAfmObjectIdentifierLabel {
     'identifier': ExportAfmObjectIdentifierLabelIdentifier;
@@ -183,7 +183,7 @@ export interface ExportAfmObjectIdentifierLabelIdentifier {
     'type': ExportAfmObjectIdentifierLabelIdentifierTypeEnum;
 }
 
-export type ExportAfmObjectIdentifierLabelIdentifierTypeEnum = 'label';
+export type ExportAfmObjectIdentifierLabelIdentifierTypeEnum = 'label' | 'computedAttribute';
 
 /**
  * Reference to the parameter.
@@ -383,6 +383,201 @@ export interface ExportCompoundMeasureValueFilterCompoundMeasureValueFilter {
      */
     'treatNullValuesAs'?: number;
 }
+
+/**
+ * Conditional formatting for a table, with one entry per formatted column.
+ */
+export interface ExportConditionalFormatting {
+    /**
+     * Whether the rules are applied when rendering.
+     */
+    'enabled': boolean;
+    /**
+     * Rules evaluated in order; within a target, the first matching condition wins.
+     */
+    'rules': Array<ExportConditionalFormattingRule>;
+}
+
+/**
+ * A fixed, inclusive date period.
+ */
+export interface ExportConditionalFormattingAbsoluteDateValue {
+    /**
+     * `YYYY-MM-DD`, or `YYYY-MM-DD HH:mm` at hour or minute granularity.
+     */
+    'from': string;
+    /**
+     * The value kind.
+     */
+    'kind': ExportConditionalFormattingAbsoluteDateValueKindEnum;
+    /**
+     * `YYYY-MM-DD`, or `YYYY-MM-DD HH:mm` at hour or minute granularity. Inclusive.
+     */
+    'to': string;
+}
+
+export type ExportConditionalFormattingAbsoluteDateValueKindEnum = 'absoluteDate';
+
+/**
+ * An attribute column, addressed by its bucket item local identifier.
+ */
+export interface ExportConditionalFormattingAttributeTarget {
+    'attributeIdentifier': string;
+    /**
+     * The target kind.
+     */
+    'kind': ExportConditionalFormattingAttributeTargetKindEnum;
+}
+
+export type ExportConditionalFormattingAttributeTargetKindEnum = 'attribute';
+
+/**
+ * A condition and the formatting applied to cells matching it.
+ */
+export interface ExportConditionalFormattingCondition {
+    'format': ExportConditionalFormattingFormat;
+    /**
+     * Client-assigned identifier, stable across edits.
+     */
+    'id'?: string;
+    /**
+     * How a condition compares the cell value against its value.
+     */
+    'operator': ExportConditionalFormattingConditionOperatorEnum;
+    'value': ExportConditionalFormattingValue;
+}
+
+export type ExportConditionalFormattingConditionOperatorEnum = 'ALL' | 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO' | 'BETWEEN' | 'NOT_BETWEEN' | 'CONTAINS' | 'NOT_CONTAINS' | 'STARTS_WITH' | 'NOT_STARTS_WITH' | 'ENDS_WITH' | 'NOT_ENDS_WITH' | 'IS_EMPTY' | 'IS_NOT_EMPTY';
+
+/**
+ * Visual formatting applied to a matching cell.
+ */
+export interface ExportConditionalFormattingFormat {
+    /**
+     * Background color as a hex triplet.
+     */
+    'backgroundColor'?: string;
+    /**
+     * Text color as a hex triplet.
+     */
+    'color'?: string;
+    /**
+     * Whether the formatting applies to the matching cell only, or to its whole row.
+     */
+    'scope': ExportConditionalFormattingFormatScopeEnum;
+}
+
+export type ExportConditionalFormattingFormatScopeEnum = 'cell' | 'row';
+
+/**
+ * @type ExportConditionalFormattingLiteral
+ * A string or a number, serialized in whichever form it was authored.
+ */
+export type ExportConditionalFormattingLiteral = number | string;
+
+/**
+ * An inclusive numeric range.
+ */
+export interface ExportConditionalFormattingLiteralRangeValue {
+    'from': number;
+    /**
+     * The value kind.
+     */
+    'kind': ExportConditionalFormattingLiteralRangeValueKindEnum;
+    'to': number;
+}
+
+export type ExportConditionalFormattingLiteralRangeValueKindEnum = 'literalRange';
+
+/**
+ * A single value compared against the cell value.
+ */
+export interface ExportConditionalFormattingLiteralValue {
+    /**
+     * The value kind.
+     */
+    'kind': ExportConditionalFormattingLiteralValueKindEnum;
+    'value': ExportConditionalFormattingLiteral;
+}
+
+export type ExportConditionalFormattingLiteralValueKindEnum = 'literal';
+
+/**
+ * A measure column, addressed by its bucket item local identifier.
+ */
+export interface ExportConditionalFormattingMeasureTarget {
+    /**
+     * The target kind.
+     */
+    'kind': ExportConditionalFormattingMeasureTargetKindEnum;
+    'measureIdentifier': string;
+}
+
+export type ExportConditionalFormattingMeasureTargetKindEnum = 'measure';
+
+/**
+ * No value; used by operators that take none.
+ */
+export interface ExportConditionalFormattingNoneValue {
+    /**
+     * The value kind.
+     */
+    'kind': ExportConditionalFormattingNoneValueKindEnum;
+}
+
+export type ExportConditionalFormattingNoneValueKindEnum = 'none';
+
+/**
+ * A date period relative to the moment of evaluation, resolved at render time.
+ */
+export interface ExportConditionalFormattingRelativeDateValue {
+    /**
+     * Offset in periods; 0 is the current period, negative is the past.
+     */
+    'from': number;
+    /**
+     * Granularity the offsets are counted in.
+     */
+    'granularity': ExportConditionalFormattingRelativeDateValueGranularityEnum;
+    /**
+     * The value kind.
+     */
+    'kind': ExportConditionalFormattingRelativeDateValueKindEnum;
+    /**
+     * Offset in periods, not lower than `from`.
+     */
+    'to': number;
+}
+
+export type ExportConditionalFormattingRelativeDateValueGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
+export type ExportConditionalFormattingRelativeDateValueKindEnum = 'relativeDate';
+
+/**
+ * Conditions applied to a single column.
+ */
+export interface ExportConditionalFormattingRule {
+    /**
+     * Conditions evaluated in order; the first match wins.
+     */
+    'conditions': Array<ExportConditionalFormattingCondition>;
+    /**
+     * Client-assigned identifier, stable across edits.
+     */
+    'id'?: string;
+    'target': ExportConditionalFormattingTarget;
+}
+
+/**
+ * @type ExportConditionalFormattingTarget
+ * Column a rule formats. The shape is selected by the `kind` property.
+ */
+export type ExportConditionalFormattingTarget = ExportConditionalFormattingAttributeTarget | ExportConditionalFormattingMeasureTarget;
+
+/**
+ * @type ExportConditionalFormattingValue
+ * Value a condition compares against. The shape is selected by the `kind` property.
+ */
+export type ExportConditionalFormattingValue = ExportConditionalFormattingAbsoluteDateValue | ExportConditionalFormattingLiteralRangeValue | ExportConditionalFormattingLiteralValue | ExportConditionalFormattingNoneValue | ExportConditionalFormattingRelativeDateValue;
 
 /**
  * Custom label object override.
@@ -1303,6 +1498,7 @@ export interface ExportTabularExportExecution {
  * Export request object describing the export properties and overrides for tabular exports.
  */
 export interface ExportTabularExportRequest {
+    'conditionalFormatting'?: ExportConditionalFormatting | null;
     'customOverride'?: ExportCustomOverride;
     /**
      * Execution result identifier.
@@ -1442,12 +1638,13 @@ export async function ActionsExportAxiosParamCreator_CreateDashboardExportReques
  * @summary (EXPERIMENTAL) Create image export request
  * @param {string} workspaceId 
  * @param {ExportImageExportRequest} exportImageExportRequest 
+ * @param {boolean} [xGdcDebug] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ActionsExportAxiosParamCreator_CreateImageExport(
-    workspaceId: string, exportImageExportRequest: ExportImageExportRequest, 
+    workspaceId: string, exportImageExportRequest: ExportImageExportRequest, xGdcDebug?: boolean, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -1466,6 +1663,10 @@ export async function ActionsExportAxiosParamCreator_CreateImageExport(
     const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (xGdcDebug !== undefined && xGdcDebug !== null) {
+        localVarHeaderParameter['X-Gdc-Debug'] = String(JSON.stringify(xGdcDebug));
+    }
 
 
     
@@ -2193,7 +2394,7 @@ export async function ActionsExport_CreateImageExport(
     configuration?: Configuration,
 ): AxiosPromise<ExportExportResponse> {
     const localVarAxiosArgs = await ActionsExportAxiosParamCreator_CreateImageExport(
-        requestParameters.workspaceId, requestParameters.exportImageExportRequest, 
+        requestParameters.workspaceId, requestParameters.exportImageExportRequest, requestParameters.xGdcDebug, 
         options || {},
         configuration,
     );
@@ -2708,6 +2909,13 @@ export interface ActionsExportCreateImageExportRequest {
      * @memberof ActionsExportCreateImageExport
      */
     readonly exportImageExportRequest: ExportImageExportRequest
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ActionsExportCreateImageExport
+     */
+    readonly xGdcDebug?: boolean
 }
 
 /**
@@ -3159,12 +3367,13 @@ export class ActionsExport extends BaseAPI implements ActionsExportInterface {
  * @summary (EXPERIMENTAL) Create image export request
  * @param {string} workspaceId 
  * @param {ExportImageExportRequest} exportImageExportRequest 
+ * @param {boolean} [xGdcDebug] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ImageExportExportAxiosParamCreator_CreateImageExport(
-    workspaceId: string, exportImageExportRequest: ExportImageExportRequest, 
+    workspaceId: string, exportImageExportRequest: ExportImageExportRequest, xGdcDebug?: boolean, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -3183,6 +3392,10 @@ export async function ImageExportExportAxiosParamCreator_CreateImageExport(
     const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (xGdcDebug !== undefined && xGdcDebug !== null) {
+        localVarHeaderParameter['X-Gdc-Debug'] = String(JSON.stringify(xGdcDebug));
+    }
 
 
     
@@ -3332,7 +3545,7 @@ export async function ImageExportExport_CreateImageExport(
     configuration?: Configuration,
 ): AxiosPromise<ExportExportResponse> {
     const localVarAxiosArgs = await ImageExportExportAxiosParamCreator_CreateImageExport(
-        requestParameters.workspaceId, requestParameters.exportImageExportRequest, 
+        requestParameters.workspaceId, requestParameters.exportImageExportRequest, requestParameters.xGdcDebug, 
         options || {},
         configuration,
     );
@@ -3449,6 +3662,13 @@ export interface ImageExportExportCreateImageExportRequest {
      * @memberof ImageExportExportCreateImageExport
      */
     readonly exportImageExportRequest: ExportImageExportRequest
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImageExportExportCreateImageExport
+     */
+    readonly xGdcDebug?: boolean
 }
 
 /**

@@ -25,6 +25,7 @@ import { selectEffectiveDateFilterOptions } from "../../store/tabs/dateFilterCon
 import {
     selectFilterContextDefinition,
     selectFilterContextDefinitionsByTab,
+    selectIsWorkingFilterContextChanged,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveOrDefaultTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
@@ -111,10 +112,14 @@ export function* applyWorkingSelectionHandler(ctx: DashboardContext, cmd: IDashb
     const enableImmediateAttributeFilterDisplayAsLabelMigration: ReturnType<
         typeof selectEnableImmediateAttributeFilterDisplayAsLabelMigration
     > = yield select(selectEnableImmediateAttributeFilterDisplayAsLabelMigration);
+    // Read before the commit clears the staged overlay. A parameter-only apply must keep
+    // cross-filtering alive, so only a staged filter change may drop it.
+    const isWorkingFilterContextChanged: ReturnType<typeof selectIsWorkingFilterContextChanged> =
+        yield select(selectIsWorkingFilterContextChanged);
     yield put(tabsActions.applyWorkingSelection({ enableImmediateAttributeFilterDisplayAsLabelMigration }));
     const isCrossFiltering: ReturnType<typeof selectIsCrossFiltering> = yield select(selectIsCrossFiltering);
 
-    if (isCrossFiltering) {
+    if (isWorkingFilterContextChanged && isCrossFiltering) {
         yield call(resetCrossFiltering, cmd);
     }
     yield dispatchDashboardEvent(filterContextWorkingSelectionApplied(ctx, cmd.correlationId));

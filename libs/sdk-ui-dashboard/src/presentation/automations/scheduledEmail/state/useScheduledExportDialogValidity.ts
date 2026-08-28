@@ -5,6 +5,7 @@ import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDia
 
 import { useScheduledExportData } from "./ScheduledExportDataContext.js";
 import { useScheduledExportDraft } from "./ScheduledExportDraftContext.js";
+import { type IScheduledExportDialogValidity } from "./types.js";
 import { useScheduledEmailFormValidity } from "./useScheduledEmailFormValidity.js";
 
 /**
@@ -15,9 +16,9 @@ import { useScheduledEmailFormValidity } from "./useScheduledEmailFormValidity.j
  * Derived per consumer rather than published on a context: it is a pure function of the draft, the
  * recipient defaults and the dialog's own context, and no consumer observes its identity.
  *
- * @internal
+ * @alpha
  */
-export function useScheduledExportDialogValidity(): ReturnType<typeof useScheduledEmailFormValidity> {
+export function useScheduledExportDialogValidity(): IScheduledExportDialogValidity {
     const { maxAutomationsRecipients } = useAutomationsContext();
     const { scheduledExportToEdit, notificationChannels } = useScheduledEmailDialogContext();
     const {

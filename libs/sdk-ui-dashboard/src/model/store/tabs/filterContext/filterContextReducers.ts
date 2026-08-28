@@ -49,7 +49,7 @@ import {
     generateFilterLocalIdentifier,
     generateMeasureValueFilterLocalIdentifier,
 } from "../../_infra/generators.js";
-import { type ITabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
+import { type ITabState, type ITabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
 
 import { type WorkingDashboardMeasureValueFilter, filterContextInitialState } from "./filterContextState.js";
 import { applyFilterContext, initializeFilterContext } from "./filterContextUtils.js";
@@ -1555,55 +1555,47 @@ const changeLimitingItems: FilterContextReducer<PayloadAction<IChangeAttributeLi
 //
 
 /**
+ * Folds the tab's staged filters into the applied filter context and clears the staging overlay.
+ * No-op when the tab has no initialized filter context, so parameter-only staging can commit.
+ *
  * @internal
  */
-export interface IApplyWorkingSelectionPayload {
-    readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
-}
-
-const applyWorkingSelection: FilterContextReducer<PayloadAction<IApplyWorkingSelectionPayload>> = (
-    state,
-    action,
-) => {
-    const activeTab = getActiveTab(state);
-    if (!activeTab) {
+export function commitFilterContextWorkingValues(
+    tab: ITabState,
+    enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean,
+): void {
+    if (!tab.filterContext?.filterContextDefinition) {
         return;
     }
-    if (!activeTab.filterContext) {
-        activeTab.filterContext = { ...filterContextInitialState };
-    }
 
-    invariant(
-        activeTab.filterContext.filterContextDefinition,
-        "Attempt to edit uninitialized filter context",
-    );
-    const { enableImmediateAttributeFilterDisplayAsLabelMigration } = action.payload;
-    activeTab.filterContext.filterContextDefinition = applyFilterContext(
-        activeTab.filterContext.filterContextDefinition,
-        activeTab.filterContext.workingFilterContextDefinition,
+    tab.filterContext.filterContextDefinition = applyFilterContext(
+        tab.filterContext.filterContextDefinition,
+        tab.filterContext.workingFilterContextDefinition,
         enableImmediateAttributeFilterDisplayAsLabelMigration,
     );
-    activeTab.filterContext.workingFilterContextDefinition = { filters: [] };
-};
+    tab.filterContext.workingFilterContextDefinition = { filters: [] };
+}
 
-//
-//
-//
+/**
+ * Drops the tab's staged filters without applying them. No-op when the tab has no initialized
+ * filter context.
+ *
+ * @internal
+ */
+export function clearFilterContextWorkingValues(tab: ITabState): void {
+    if (!tab.filterContext?.workingFilterContextDefinition) {
+        return;
+    }
 
-const resetWorkingSelection: FilterContextReducer<PayloadAction> = (state) => {
+    tab.filterContext.workingFilterContextDefinition = { filters: [] };
+}
+
+const resetWorkingFilterSelection: FilterContextReducer<PayloadAction> = (state) => {
     const activeTab = getActiveTab(state);
     if (!activeTab) {
         return;
     }
-    if (!activeTab.filterContext) {
-        activeTab.filterContext = { ...filterContextInitialState };
-    }
-
-    invariant(
-        activeTab.filterContext.workingFilterContextDefinition,
-        "Attempt to edit uninitialized working filter context",
-    );
-    activeTab.filterContext.workingFilterContextDefinition = { filters: [] };
+    clearFilterContextWorkingValues(activeTab);
 };
 
 //
@@ -1796,8 +1788,7 @@ export const filterContextReducers = {
     changeSelectionMode,
     changeLimitingItems,
     setPreloadedAttributesWithReferences,
-    applyWorkingSelection,
-    resetWorkingSelection,
+    resetWorkingFilterSelection,
     setDefaultFilterOverrides,
     changeMeasureValueFilterCondition,
     setMeasureValueFilterDimensionality,

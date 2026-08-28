@@ -12,7 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type AlertAttribute, type AlertMetric } from "../../types.js";
-import { transformAlertByValue } from "../utils/transformation.js";
+import { transformAlertByValue } from "../../utils/transformation.js";
 
 import { useThresholdValue } from "./useThresholdValue.js";
 

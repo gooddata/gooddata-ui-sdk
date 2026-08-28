@@ -55,6 +55,7 @@ export function TimezoneOption({ label, tooltip, timezoneConfig, onChange }: ITi
                 inlineAnchor
                 anchor={
                     <span
+                        role="img"
                         tabIndex={0}
                         aria-label={intl.formatMessage({
                             id: "settingsDashboardDialog.section.timezone.defaultTimezone.help",

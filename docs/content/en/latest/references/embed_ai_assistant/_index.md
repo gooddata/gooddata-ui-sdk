@@ -576,6 +576,59 @@ export const App = () => (
 );
 ```
 
+### Customizing the agent chooser
+
+You can customize how individual agents are rendered in the agent chooser dropdown using `slots.AgentItem`.
+
+```tsx
+import { GenAIAssistant, IGenAIAssistantAgentItemProps } from "@gooddata/sdk-ui-gen-ai";
+import { ISlotProps } from "@gooddata/sdk-ui-kit";
+
+const CustomAgentItem = ({ defaultProps }: ISlotProps<IGenAIAssistantAgentItemProps>) => {
+    const { agent, isSelected } = defaultProps;
+    return (
+        <div
+            style={{
+                padding: "8px 12px",
+                backgroundColor: isSelected ? "#f0f0f0" : "transparent",
+                cursor: "pointer",
+            }}
+        >
+            <strong>{agent.title}</strong>
+            {isSelected && <span> (Selected)</span>}
+        </div>
+    );
+};
+
+export const App = () => (
+    <GenAIAssistant
+        slots={{
+            AgentItem: CustomAgentItem,
+        }}
+    />
+);
+```
+
+To preserve the default menu item behavior (hover effects, keyboard navigation, etc.) while only changing its content, use your custom content in the `Default` component provided in the slot:
+
+```tsx
+const CustomAgentItem = ({ Default, defaultProps }: ISlotProps<IGenAIAssistantAgentItemProps>) => {
+    const { agent } = defaultProps;
+    return (
+        <Default
+            {...defaultProps}
+            Content={(props) => (
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <div style={{ width: 8, height: 8, borderRadius: "50%", backgroundColor: "green" }} />
+                    {agent.title}
+                    {props.isFocused && <span> (Focused)</span>}
+                </div>
+            )}
+        />
+    );
+};
+```
+
 ## Resetting the chat thread
 
 To reset the chat thread, use the `reset` method on the ChatThread interface.

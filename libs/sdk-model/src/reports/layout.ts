@@ -2,10 +2,12 @@
 
 import { isEmpty } from "lodash-es";
 
+import { type IReportBoxStyle } from "./styling.js";
+
 /**
  * Node of a report page layout: a recursive row/column split tree (flexbox semantics)
- * over a fixed page. Leaves assign their area to slots; the tree carries only geometry,
- * slot content lives in {@link IReportPageBody.slots}.
+ * over a fixed page. Leaves assign their area to slots; the tree carries geometry and
+ * box paint, slot content lives in {@link IReportPageBody.slots}.
  *
  * @alpha
  */
@@ -38,6 +40,11 @@ export interface IReportLayoutSection extends IReportLayoutNodeBase {
     direction: "row" | "column";
 
     children: ReportPageLayoutNode[];
+
+    /**
+     * Paint of this section's box. Never affects how children are laid out.
+     */
+    style?: IReportBoxStyle;
 }
 
 /**

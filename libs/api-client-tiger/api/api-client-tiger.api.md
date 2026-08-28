@@ -1308,7 +1308,7 @@ export function ActionsExport_GetTabularExport(axios: AxiosInstance, basePath: s
 export function ActionsExportAxiosParamCreator_CreateDashboardExportRequest(workspaceId: string, dashboardId: string, exportDashboardTabularExportRequest: ExportDashboardTabularExportRequest, options?: AxiosRequestConfig, configuration?: ExportConfiguration): Promise<ExportRequestArgs>;
 
 // @public
-export function ActionsExportAxiosParamCreator_CreateImageExport(workspaceId: string, exportImageExportRequest: ExportImageExportRequest, options?: AxiosRequestConfig, configuration?: ExportConfiguration): Promise<ExportRequestArgs>;
+export function ActionsExportAxiosParamCreator_CreateImageExport(workspaceId: string, exportImageExportRequest: ExportImageExportRequest, xGdcDebug?: boolean, options?: AxiosRequestConfig, configuration?: ExportConfiguration): Promise<ExportRequestArgs>;
 
 // @public
 export function ActionsExportAxiosParamCreator_CreatePdfExport(workspaceId: string, exportVisualExportRequest: ExportVisualExportRequest, xGdcDebug?: boolean, options?: AxiosRequestConfig, configuration?: ExportConfiguration): Promise<ExportRequestArgs>;
@@ -1357,6 +1357,7 @@ export interface ActionsExportCreateDashboardExportRequestRequest {
 export interface ActionsExportCreateImageExportRequest {
     readonly exportImageExportRequest: ExportImageExportRequest;
     readonly workspaceId: string;
+    readonly xGdcDebug?: boolean;
 }
 
 // @public
@@ -4506,10 +4507,8 @@ export interface AiDashboardPatch {
     [key: string]: any;
     'dashboard_id': string;
     'operations': Array<object | null>;
-    'ref': string;
     // (undocumented)
     'references'?: AiDashboardPatchReferences;
-    'tab_id': string;
 }
 
 // @public (undocumented)
@@ -8417,6 +8416,16 @@ export interface AiUserContextRichTextWidgetDescriptor {
 export type AiUserContextRichTextWidgetDescriptorWidgetTypeEnum = 'richText';
 
 // @public (undocumented)
+export interface AiUserContextSwitcherVisualization {
+    // (undocumented)
+    'resultId'?: string | null;
+    // (undocumented)
+    'title'?: string | null;
+    // (undocumented)
+    'visualizationId': string;
+}
+
+// @public (undocumented)
 export interface AiUserContextView {
     // (undocumented)
     'dashboard'?: AiUserContextDashboard | null;
@@ -8432,8 +8441,8 @@ export interface AiUserContextVisualizationSwitcherWidgetDescriptor {
     'resultId'?: string | null;
     // (undocumented)
     'title': string;
-    // (undocumented)
     'visualizationIds'?: Array<string>;
+    'visualizations'?: Array<AiUserContextSwitcherVisualization>;
     // (undocumented)
     'widgetId': string;
     // (undocumented)
@@ -8457,8 +8466,8 @@ export interface AiUserContextWidgetDescriptor {
     'title': string;
     // (undocumented)
     'visualizationId': string;
-    // (undocumented)
     'visualizationIds'?: Array<string>;
+    'visualizations'?: Array<AiUserContextSwitcherVisualization>;
     // (undocumented)
     'widgetId': string;
     // (undocumented)
@@ -11574,6 +11583,126 @@ export interface AutomationCompoundMeasureValueFilterCompoundMeasureValueFilter 
     'treatNullValuesAs'?: number;
 }
 
+// @public
+export interface AutomationConditionalFormatting {
+    'enabled': boolean;
+    'rules': Array<AutomationConditionalFormattingRule>;
+}
+
+// @public
+export interface AutomationConditionalFormattingAbsoluteDateValue {
+    'from': string;
+    'kind': AutomationConditionalFormattingAbsoluteDateValueKindEnum;
+    'to': string;
+}
+
+// @public (undocumented)
+export type AutomationConditionalFormattingAbsoluteDateValueKindEnum = 'absoluteDate';
+
+// @public
+export interface AutomationConditionalFormattingAttributeTarget {
+    // (undocumented)
+    'attributeIdentifier': string;
+    'kind': AutomationConditionalFormattingAttributeTargetKindEnum;
+}
+
+// @public (undocumented)
+export type AutomationConditionalFormattingAttributeTargetKindEnum = 'attribute';
+
+// @public
+export interface AutomationConditionalFormattingCondition {
+    // (undocumented)
+    'format': AutomationConditionalFormattingFormat;
+    'id'?: string;
+    'operator': AutomationConditionalFormattingConditionOperatorEnum;
+    // (undocumented)
+    'value': AutomationConditionalFormattingValue;
+}
+
+// @public (undocumented)
+export type AutomationConditionalFormattingConditionOperatorEnum = 'ALL' | 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO' | 'BETWEEN' | 'NOT_BETWEEN' | 'CONTAINS' | 'NOT_CONTAINS' | 'STARTS_WITH' | 'NOT_STARTS_WITH' | 'ENDS_WITH' | 'NOT_ENDS_WITH' | 'IS_EMPTY' | 'IS_NOT_EMPTY';
+
+// @public
+export interface AutomationConditionalFormattingFormat {
+    'backgroundColor'?: string;
+    'color'?: string;
+    'scope': AutomationConditionalFormattingFormatScopeEnum;
+}
+
+// @public (undocumented)
+export type AutomationConditionalFormattingFormatScopeEnum = 'cell' | 'row';
+
+// @public
+export type AutomationConditionalFormattingLiteral = number | string;
+
+// @public
+export interface AutomationConditionalFormattingLiteralRangeValue {
+    // (undocumented)
+    'from': number;
+    'kind': AutomationConditionalFormattingLiteralRangeValueKindEnum;
+    // (undocumented)
+    'to': number;
+}
+
+// @public (undocumented)
+export type AutomationConditionalFormattingLiteralRangeValueKindEnum = 'literalRange';
+
+// @public
+export interface AutomationConditionalFormattingLiteralValue {
+    'kind': AutomationConditionalFormattingLiteralValueKindEnum;
+    // (undocumented)
+    'value': AutomationConditionalFormattingLiteral;
+}
+
+// @public (undocumented)
+export type AutomationConditionalFormattingLiteralValueKindEnum = 'literal';
+
+// @public
+export interface AutomationConditionalFormattingMeasureTarget {
+    'kind': AutomationConditionalFormattingMeasureTargetKindEnum;
+    // (undocumented)
+    'measureIdentifier': string;
+}
+
+// @public (undocumented)
+export type AutomationConditionalFormattingMeasureTargetKindEnum = 'measure';
+
+// @public
+export interface AutomationConditionalFormattingNoneValue {
+    'kind': AutomationConditionalFormattingNoneValueKindEnum;
+}
+
+// @public (undocumented)
+export type AutomationConditionalFormattingNoneValueKindEnum = 'none';
+
+// @public
+export interface AutomationConditionalFormattingRelativeDateValue {
+    'from': number;
+    'granularity': AutomationConditionalFormattingRelativeDateValueGranularityEnum;
+    'kind': AutomationConditionalFormattingRelativeDateValueKindEnum;
+    'to': number;
+}
+
+// @public (undocumented)
+export type AutomationConditionalFormattingRelativeDateValueGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
+
+// @public (undocumented)
+export type AutomationConditionalFormattingRelativeDateValueKindEnum = 'relativeDate';
+
+// @public
+export interface AutomationConditionalFormattingRule {
+    'conditions': Array<AutomationConditionalFormattingCondition>;
+    'id'?: string;
+    // (undocumented)
+    'target': AutomationConditionalFormattingTarget;
+}
+
+// @public
+export type AutomationConditionalFormattingTarget = AutomationConditionalFormattingAttributeTarget | AutomationConditionalFormattingMeasureTarget;
+
+// @public
+export type AutomationConditionalFormattingValue = AutomationConditionalFormattingAbsoluteDateValue | AutomationConditionalFormattingLiteralRangeValue | AutomationConditionalFormattingLiteralValue | AutomationConditionalFormattingNoneValue | AutomationConditionalFormattingRelativeDateValue;
+
 // @public (undocumented)
 export class AutomationConfiguration {
     constructor(param?: AutomationConfigurationParameters);
@@ -13125,6 +13254,8 @@ export interface AutomationTabularExportExecution {
 // @public
 export interface AutomationTabularExportRequest {
     // (undocumented)
+    'conditionalFormatting'?: AutomationConditionalFormatting | null;
+    // (undocumented)
     'customOverride'?: AutomationCustomOverride;
     'executionResult'?: string;
     'executions'?: Array<AutomationTabularExportExecution>;
@@ -13956,7 +14087,7 @@ export interface ConditionalFormattingRelativeDateValue {
 }
 
 // @public (undocumented)
-export type ConditionalFormattingRelativeDateValueGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.minute_in_day' | 'GDC.time.second' | 'GDC.time.second_in_minute' | 'GDC.time.second_in_day' | 'GDC.time.fiscal_week' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_semester' | 'GDC.time.fiscal_year' | 'GDC.time.fiscal_day_in_fiscal_week' | 'GDC.time.fiscal_day_in_fiscal_month' | 'GDC.time.fiscal_day_in_fiscal_quarter' | 'GDC.time.fiscal_day_in_fiscal_semester' | 'GDC.time.fiscal_day_in_fiscal_year' | 'GDC.time.fiscal_week_in_fiscal_month' | 'GDC.time.fiscal_week_in_fiscal_quarter' | 'GDC.time.fiscal_week_in_fiscal_semester' | 'GDC.time.fiscal_week_in_fiscal_year' | 'GDC.time.fiscal_month_in_fiscal_quarter' | 'GDC.time.fiscal_month_in_fiscal_semester' | 'GDC.time.fiscal_month_in_fiscal_year' | 'GDC.time.fiscal_quarter_in_fiscal_semester' | 'GDC.time.fiscal_quarter_in_fiscal_year' | 'GDC.time.fiscal_semester_in_fiscal_year';
+export type ConditionalFormattingRelativeDateValueGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 // @public (undocumented)
 export type ConditionalFormattingRelativeDateValueKindEnum = 'relativeDate';
@@ -19117,7 +19248,7 @@ export function EntitiesApiAxiosParamCreator_CreateEntityLlmProviders(jsonApiLlm
 export function EntitiesApiAxiosParamCreator_CreateEntityMemoryItems(workspaceId: string, jsonApiMemoryItemPostOptionalIdDocument: JsonApiMemoryItemPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_CreateEntityMetrics(workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_CreateEntityMetrics(workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_CreateEntityNotificationChannels(jsonApiNotificationChannelPostOptionalIdDocument: JsonApiNotificationChannelPostOptionalIdDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -19144,7 +19275,7 @@ export function EntitiesApiAxiosParamCreator_CreateEntityUsers(jsonApiUserInDocu
 export function EntitiesApiAxiosParamCreator_CreateEntityUserSettings(userId: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_CreateEntityVisualizationObjects(workspaceId: string, jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_CreateEntityVisualizationObjects(workspaceId: string, jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_CreateEntityWorkspaceColorPalettes(workspaceId: string, jsonApiWorkspaceColorPaletteInDocument: JsonApiWorkspaceColorPaletteInDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -19357,7 +19488,7 @@ export function EntitiesApiAxiosParamCreator_GetAllEntitiesLlmProviders(filter?:
 export function EntitiesApiAxiosParamCreator_GetAllEntitiesMemoryItems(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_GetAllEntitiesMetrics(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_GetAllEntitiesMetrics(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'permissions' | 'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_GetAllEntitiesNotificationChannelIdentifiers(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -19390,7 +19521,7 @@ export function EntitiesApiAxiosParamCreator_GetAllEntitiesUsers(filter?: string
 export function EntitiesApiAxiosParamCreator_GetAllEntitiesUserSettings(userId: string, filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_GetAllEntitiesVisualizationObjects(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_GetAllEntitiesVisualizationObjects(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_GetAllEntitiesWorkspaceColorPalettes(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -19501,7 +19632,7 @@ export function EntitiesApiAxiosParamCreator_GetEntityLlmProviders(id: string, f
 export function EntitiesApiAxiosParamCreator_GetEntityMemoryItems(workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_GetEntityMetrics(workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_GetEntityMetrics(workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_GetEntityNotificationChannelIdentifiers(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -19537,7 +19668,7 @@ export function EntitiesApiAxiosParamCreator_GetEntityUsers(id: string, filter?:
 export function EntitiesApiAxiosParamCreator_GetEntityUserSettings(userId: string, id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_GetEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_GetEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_GetEntityWorkspaceColorPalettes(workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -19660,7 +19791,7 @@ export function EntitiesApiAxiosParamCreator_PatchEntityUserGroups(id: string, j
 export function EntitiesApiAxiosParamCreator_PatchEntityUsers(id: string, jsonApiUserPatchDocument: JsonApiUserPatchDocument, filter?: string, include?: Array<'userGroups' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_PatchEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_PatchEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_PatchEntityWorkspaceColorPalettes(workspaceId: string, objectId: string, jsonApiWorkspaceColorPalettePatchDocument: JsonApiWorkspaceColorPalettePatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -19840,7 +19971,7 @@ export function EntitiesApiAxiosParamCreator_UpdateEntityUsers(id: string, jsonA
 export function EntitiesApiAxiosParamCreator_UpdateEntityUserSettings(userId: string, id: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_UpdateEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_UpdateEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_UpdateEntityWorkspaceColorPalettes(workspaceId: string, objectId: string, jsonApiWorkspaceColorPaletteInDocument: JsonApiWorkspaceColorPaletteInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -20015,7 +20146,7 @@ export interface EntitiesApiCreateEntityMemoryItemsRequest {
 export interface EntitiesApiCreateEntityMetricsRequest {
     readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
     readonly jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument;
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>;
     readonly workspaceId: string;
 }
 
@@ -20076,7 +20207,7 @@ export interface EntitiesApiCreateEntityUsersRequest {
 
 // @public
 export interface EntitiesApiCreateEntityVisualizationObjectsRequest {
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
     readonly jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
     readonly workspaceId: string;
@@ -20730,7 +20861,7 @@ export interface EntitiesApiGetAllEntitiesMemoryItemsRequest {
 export interface EntitiesApiGetAllEntitiesMetricsRequest {
     readonly filter?: string;
     readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
-    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
+    readonly metaInclude?: Array<'permissions' | 'origin' | 'page' | 'all' | 'ALL'>;
     readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
     readonly page?: number;
     readonly size?: number;
@@ -20853,7 +20984,7 @@ export interface EntitiesApiGetAllEntitiesUsersRequest {
 // @public
 export interface EntitiesApiGetAllEntitiesVisualizationObjectsRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
     readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
     readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
     readonly page?: number;
@@ -21213,7 +21344,7 @@ export interface EntitiesApiGetEntityMemoryItemsRequest {
 export interface EntitiesApiGetEntityMetricsRequest {
     readonly filter?: string;
     readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>;
     readonly objectId: string;
     readonly workspaceId: string;
     readonly xGDCVALIDATERELATIONS?: boolean;
@@ -21313,7 +21444,7 @@ export interface EntitiesApiGetEntityUsersRequest {
 // @public
 export interface EntitiesApiGetEntityVisualizationObjectsRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -21999,7 +22130,7 @@ export interface EntitiesApiPatchEntityUsersRequest {
 // @public
 export interface EntitiesApiPatchEntityVisualizationObjectsRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
     readonly jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -22536,7 +22667,7 @@ export interface EntitiesApiUpdateEntityUsersRequest {
 // @public
 export interface EntitiesApiUpdateEntityVisualizationObjectsRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
     readonly jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -22921,7 +23052,7 @@ export interface ExportAfmObjectIdentifierCoreIdentifier {
 }
 
 // @public (undocumented)
-export type ExportAfmObjectIdentifierCoreIdentifierTypeEnum = 'attribute' | 'label' | 'fact' | 'metric';
+export type ExportAfmObjectIdentifierCoreIdentifierTypeEnum = 'attribute' | 'label' | 'fact' | 'metric' | 'computedAttribute';
 
 // @public
 export interface ExportAfmObjectIdentifierDataset {
@@ -22949,7 +23080,7 @@ export interface ExportAfmObjectIdentifierIdentifier {
 }
 
 // @public (undocumented)
-export type ExportAfmObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
+export type ExportAfmObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'computedAttribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
 
 // @public (undocumented)
 export interface ExportAfmObjectIdentifierLabel {
@@ -22966,7 +23097,7 @@ export interface ExportAfmObjectIdentifierLabelIdentifier {
 }
 
 // @public (undocumented)
-export type ExportAfmObjectIdentifierLabelIdentifierTypeEnum = 'label';
+export type ExportAfmObjectIdentifierLabelIdentifierTypeEnum = 'label' | 'computedAttribute';
 
 // @public
 export interface ExportAfmObjectIdentifierParameter {
@@ -23150,6 +23281,126 @@ export interface ExportCompoundMeasureValueFilterCompoundMeasureValueFilter {
     'measure': ExportAfmIdentifier;
     'treatNullValuesAs'?: number;
 }
+
+// @public
+export interface ExportConditionalFormatting {
+    'enabled': boolean;
+    'rules': Array<ExportConditionalFormattingRule>;
+}
+
+// @public
+export interface ExportConditionalFormattingAbsoluteDateValue {
+    'from': string;
+    'kind': ExportConditionalFormattingAbsoluteDateValueKindEnum;
+    'to': string;
+}
+
+// @public (undocumented)
+export type ExportConditionalFormattingAbsoluteDateValueKindEnum = 'absoluteDate';
+
+// @public
+export interface ExportConditionalFormattingAttributeTarget {
+    // (undocumented)
+    'attributeIdentifier': string;
+    'kind': ExportConditionalFormattingAttributeTargetKindEnum;
+}
+
+// @public (undocumented)
+export type ExportConditionalFormattingAttributeTargetKindEnum = 'attribute';
+
+// @public
+export interface ExportConditionalFormattingCondition {
+    // (undocumented)
+    'format': ExportConditionalFormattingFormat;
+    'id'?: string;
+    'operator': ExportConditionalFormattingConditionOperatorEnum;
+    // (undocumented)
+    'value': ExportConditionalFormattingValue;
+}
+
+// @public (undocumented)
+export type ExportConditionalFormattingConditionOperatorEnum = 'ALL' | 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO' | 'BETWEEN' | 'NOT_BETWEEN' | 'CONTAINS' | 'NOT_CONTAINS' | 'STARTS_WITH' | 'NOT_STARTS_WITH' | 'ENDS_WITH' | 'NOT_ENDS_WITH' | 'IS_EMPTY' | 'IS_NOT_EMPTY';
+
+// @public
+export interface ExportConditionalFormattingFormat {
+    'backgroundColor'?: string;
+    'color'?: string;
+    'scope': ExportConditionalFormattingFormatScopeEnum;
+}
+
+// @public (undocumented)
+export type ExportConditionalFormattingFormatScopeEnum = 'cell' | 'row';
+
+// @public
+export type ExportConditionalFormattingLiteral = number | string;
+
+// @public
+export interface ExportConditionalFormattingLiteralRangeValue {
+    // (undocumented)
+    'from': number;
+    'kind': ExportConditionalFormattingLiteralRangeValueKindEnum;
+    // (undocumented)
+    'to': number;
+}
+
+// @public (undocumented)
+export type ExportConditionalFormattingLiteralRangeValueKindEnum = 'literalRange';
+
+// @public
+export interface ExportConditionalFormattingLiteralValue {
+    'kind': ExportConditionalFormattingLiteralValueKindEnum;
+    // (undocumented)
+    'value': ExportConditionalFormattingLiteral;
+}
+
+// @public (undocumented)
+export type ExportConditionalFormattingLiteralValueKindEnum = 'literal';
+
+// @public
+export interface ExportConditionalFormattingMeasureTarget {
+    'kind': ExportConditionalFormattingMeasureTargetKindEnum;
+    // (undocumented)
+    'measureIdentifier': string;
+}
+
+// @public (undocumented)
+export type ExportConditionalFormattingMeasureTargetKindEnum = 'measure';
+
+// @public
+export interface ExportConditionalFormattingNoneValue {
+    'kind': ExportConditionalFormattingNoneValueKindEnum;
+}
+
+// @public (undocumented)
+export type ExportConditionalFormattingNoneValueKindEnum = 'none';
+
+// @public
+export interface ExportConditionalFormattingRelativeDateValue {
+    'from': number;
+    'granularity': ExportConditionalFormattingRelativeDateValueGranularityEnum;
+    'kind': ExportConditionalFormattingRelativeDateValueKindEnum;
+    'to': number;
+}
+
+// @public (undocumented)
+export type ExportConditionalFormattingRelativeDateValueGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
+
+// @public (undocumented)
+export type ExportConditionalFormattingRelativeDateValueKindEnum = 'relativeDate';
+
+// @public
+export interface ExportConditionalFormattingRule {
+    'conditions': Array<ExportConditionalFormattingCondition>;
+    'id'?: string;
+    // (undocumented)
+    'target': ExportConditionalFormattingTarget;
+}
+
+// @public
+export type ExportConditionalFormattingTarget = ExportConditionalFormattingAttributeTarget | ExportConditionalFormattingMeasureTarget;
+
+// @public
+export type ExportConditionalFormattingValue = ExportConditionalFormattingAbsoluteDateValue | ExportConditionalFormattingLiteralRangeValue | ExportConditionalFormattingLiteralValue | ExportConditionalFormattingNoneValue | ExportConditionalFormattingRelativeDateValue;
 
 // @public (undocumented)
 export class ExportConfiguration {
@@ -24225,6 +24476,8 @@ export interface ExportTabularExportExecution {
 
 // @public
 export interface ExportTabularExportRequest {
+    // (undocumented)
+    'conditionalFormatting'?: ExportConditionalFormatting | null;
     // (undocumented)
     'customOverride'?: ExportCustomOverride;
     'executionResult'?: string;
@@ -26262,7 +26515,7 @@ export function ImageExportExport_GetImageExport(axios: AxiosInstance, basePath:
 export function ImageExportExport_GetImageExportMetadata(axios: AxiosInstance, basePath: string, requestParameters: ImageExportExportGetImageExportMetadataRequest, options?: AxiosRequestConfig, configuration?: ExportConfiguration): AxiosPromise<void>;
 
 // @public
-export function ImageExportExportAxiosParamCreator_CreateImageExport(workspaceId: string, exportImageExportRequest: ExportImageExportRequest, options?: AxiosRequestConfig, configuration?: ExportConfiguration): Promise<ExportRequestArgs>;
+export function ImageExportExportAxiosParamCreator_CreateImageExport(workspaceId: string, exportImageExportRequest: ExportImageExportRequest, xGdcDebug?: boolean, options?: AxiosRequestConfig, configuration?: ExportConfiguration): Promise<ExportRequestArgs>;
 
 // @public
 export function ImageExportExportAxiosParamCreator_GetImageExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig, configuration?: ExportConfiguration): Promise<ExportRequestArgs>;
@@ -26274,6 +26527,7 @@ export function ImageExportExportAxiosParamCreator_GetImageExportMetadata(worksp
 export interface ImageExportExportCreateImageExportRequest {
     readonly exportImageExportRequest: ExportImageExportRequest;
     readonly workspaceId: string;
+    readonly xGdcDebug?: boolean;
 }
 
 // @public
@@ -33718,6 +33972,7 @@ export interface JsonApiMetricOutListMeta {
 export interface JsonApiMetricOutMeta {
     // (undocumented)
     'origin'?: JsonApiMetricOutMetaOrigin;
+    'permissions'?: Array<JsonApiMetricOutMetaPermissionsEnum>;
 }
 
 // @public (undocumented)
@@ -33728,6 +33983,9 @@ export interface JsonApiMetricOutMetaOrigin {
 
 // @public (undocumented)
 export type JsonApiMetricOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
+// @public (undocumented)
+export type JsonApiMetricOutMetaPermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
 
 // @public (undocumented)
 export interface JsonApiMetricOutRelationships {
@@ -35911,19 +36169,16 @@ export interface JsonApiVisualizationObjectOutAttributesConditionalFormatting {
 export interface JsonApiVisualizationObjectOutDocument {
     // (undocumented)
     'data': JsonApiVisualizationObjectOut;
-    'included'?: Array<JsonApiVisualizationObjectOutIncludes>;
+    'included'?: Array<JsonApiComputedAttributeOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
 }
 
 // @public
-export type JsonApiVisualizationObjectOutIncludes = JsonApiAttributeOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFactOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiParameterOutWithLinks | JsonApiUserIdentifierOutWithLinks;
-
-// @public
 export interface JsonApiVisualizationObjectOutList {
     // (undocumented)
     'data': Array<JsonApiVisualizationObjectOutWithLinks>;
-    'included'?: Array<JsonApiVisualizationObjectOutIncludes>;
+    'included'?: Array<JsonApiComputedAttributeOutIncludes>;
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
@@ -35958,6 +36213,8 @@ export interface JsonApiVisualizationObjectOutRelationships {
     // (undocumented)
     'certifiedBy'?: JsonApiVisualizationObjectOutRelationshipsCertifiedBy;
     // (undocumented)
+    'computedAttributes'?: JsonApiVisualizationObjectOutRelationshipsComputedAttributes;
+    // (undocumented)
     'createdBy'?: JsonApiVisualizationObjectOutRelationshipsCreatedBy;
     // (undocumented)
     'datasets'?: JsonApiVisualizationObjectOutRelationshipsDatasets;
@@ -35982,6 +36239,11 @@ export interface JsonApiVisualizationObjectOutRelationshipsAttributes {
 export interface JsonApiVisualizationObjectOutRelationshipsCertifiedBy {
     // (undocumented)
     'data': JsonApiUserIdentifierLinkage | null;
+}
+
+// @public (undocumented)
+export interface JsonApiVisualizationObjectOutRelationshipsComputedAttributes {
+    'data': Array<JsonApiComputedAttributeLinkage>;
 }
 
 // @public (undocumented)
@@ -39950,16 +40212,16 @@ export function MetricControllerApi_SearchEntitiesMetrics(axios: AxiosInstance, 
 export function MetricControllerApi_UpdateEntityMetrics(axios: AxiosInstance, basePath: string, requestParameters: MetricControllerApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiMetricOutDocument>;
 
 // @public
-export function MetricControllerApiAxiosParamCreator_CreateEntityMetrics(workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function MetricControllerApiAxiosParamCreator_CreateEntityMetrics(workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function MetricControllerApiAxiosParamCreator_DeleteEntityMetrics(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function MetricControllerApiAxiosParamCreator_GetAllEntitiesMetrics(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function MetricControllerApiAxiosParamCreator_GetAllEntitiesMetrics(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'permissions' | 'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function MetricControllerApiAxiosParamCreator_GetEntityMetrics(workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function MetricControllerApiAxiosParamCreator_GetEntityMetrics(workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function MetricControllerApiAxiosParamCreator_PatchEntityMetrics(workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -39974,7 +40236,7 @@ export function MetricControllerApiAxiosParamCreator_UpdateEntityMetrics(workspa
 export interface MetricControllerApiCreateEntityMetricsRequest {
     readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
     readonly jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument;
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>;
     readonly workspaceId: string;
 }
 
@@ -39988,7 +40250,7 @@ export interface MetricControllerApiDeleteEntityMetricsRequest {
 export interface MetricControllerApiGetAllEntitiesMetricsRequest {
     readonly filter?: string;
     readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
-    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
+    readonly metaInclude?: Array<'permissions' | 'origin' | 'page' | 'all' | 'ALL'>;
     readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
     readonly page?: number;
     readonly size?: number;
@@ -40001,7 +40263,7 @@ export interface MetricControllerApiGetAllEntitiesMetricsRequest {
 export interface MetricControllerApiGetEntityMetricsRequest {
     readonly filter?: string;
     readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>;
     readonly objectId: string;
     readonly workspaceId: string;
     readonly xGDCVALIDATERELATIONS?: boolean;
@@ -40123,16 +40385,16 @@ export function MetricsApi_SearchEntitiesMetrics(axios: AxiosInstance, basePath:
 export function MetricsApi_UpdateEntityMetrics(axios: AxiosInstance, basePath: string, requestParameters: MetricsApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiMetricOutDocument>;
 
 // @public
-export function MetricsApiAxiosParamCreator_CreateEntityMetrics(workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function MetricsApiAxiosParamCreator_CreateEntityMetrics(workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function MetricsApiAxiosParamCreator_DeleteEntityMetrics(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function MetricsApiAxiosParamCreator_GetAllEntitiesMetrics(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function MetricsApiAxiosParamCreator_GetAllEntitiesMetrics(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'permissions' | 'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function MetricsApiAxiosParamCreator_GetEntityMetrics(workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function MetricsApiAxiosParamCreator_GetEntityMetrics(workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function MetricsApiAxiosParamCreator_PatchEntityMetrics(workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -40147,7 +40409,7 @@ export function MetricsApiAxiosParamCreator_UpdateEntityMetrics(workspaceId: str
 export interface MetricsApiCreateEntityMetricsRequest {
     readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
     readonly jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument;
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>;
     readonly workspaceId: string;
 }
 
@@ -40161,7 +40423,7 @@ export interface MetricsApiDeleteEntityMetricsRequest {
 export interface MetricsApiGetAllEntitiesMetricsRequest {
     readonly filter?: string;
     readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
-    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
+    readonly metaInclude?: Array<'permissions' | 'origin' | 'page' | 'all' | 'ALL'>;
     readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
     readonly page?: number;
     readonly size?: number;
@@ -40174,7 +40436,7 @@ export interface MetricsApiGetAllEntitiesMetricsRequest {
 export interface MetricsApiGetEntityMetricsRequest {
     readonly filter?: string;
     readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'computedAttributes' | 'metrics' | 'datasets' | 'parameters' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
-    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly metaInclude?: Array<'permissions' | 'origin' | 'all' | 'ALL'>;
     readonly objectId: string;
     readonly workspaceId: string;
     readonly xGDCVALIDATERELATIONS?: boolean;
@@ -43304,6 +43566,8 @@ export interface TabularExportExportInterface {
 // @public
 export interface TabularExportRequest {
     // (undocumented)
+    'conditionalFormatting'?: ConditionalFormatting | null;
+    // (undocumented)
     'customOverride'?: CustomOverride;
     'executionResult'?: string;
     'executions'?: Array<TabularExportExecution>;
@@ -45206,29 +45470,29 @@ export function VisualizationObjectApi_SearchEntitiesVisualizationObjects(axios:
 export function VisualizationObjectApi_UpdateEntityVisualizationObjects(axios: AxiosInstance, basePath: string, requestParameters: VisualizationObjectApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
 
 // @public
-export function VisualizationObjectApiAxiosParamCreator_CreateEntityVisualizationObjects(workspaceId: string, jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function VisualizationObjectApiAxiosParamCreator_CreateEntityVisualizationObjects(workspaceId: string, jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function VisualizationObjectApiAxiosParamCreator_DeleteEntityVisualizationObjects(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function VisualizationObjectApiAxiosParamCreator_GetAllEntitiesVisualizationObjects(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function VisualizationObjectApiAxiosParamCreator_GetAllEntitiesVisualizationObjects(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function VisualizationObjectApiAxiosParamCreator_GetEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function VisualizationObjectApiAxiosParamCreator_GetEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function VisualizationObjectApiAxiosParamCreator_PatchEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function VisualizationObjectApiAxiosParamCreator_PatchEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function VisualizationObjectApiAxiosParamCreator_SearchEntitiesVisualizationObjects(workspaceId: string, entitySearchBody: EntitySearchBody, origin?: 'ALL' | 'PARENTS' | 'NATIVE', xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function VisualizationObjectApiAxiosParamCreator_UpdateEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function VisualizationObjectApiAxiosParamCreator_UpdateEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export interface VisualizationObjectApiCreateEntityVisualizationObjectsRequest {
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
     readonly jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
     readonly workspaceId: string;
@@ -45243,7 +45507,7 @@ export interface VisualizationObjectApiDeleteEntityVisualizationObjectsRequest {
 // @public
 export interface VisualizationObjectApiGetAllEntitiesVisualizationObjectsRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
     readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
     readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
     readonly page?: number;
@@ -45256,7 +45520,7 @@ export interface VisualizationObjectApiGetAllEntitiesVisualizationObjectsRequest
 // @public
 export interface VisualizationObjectApiGetEntityVisualizationObjectsRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -45277,7 +45541,7 @@ export interface VisualizationObjectApiInterface {
 // @public
 export interface VisualizationObjectApiPatchEntityVisualizationObjectsRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
     readonly jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -45294,7 +45558,7 @@ export interface VisualizationObjectApiSearchEntitiesVisualizationObjectsRequest
 // @public
 export interface VisualizationObjectApiUpdateEntityVisualizationObjectsRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
     readonly jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -45333,29 +45597,29 @@ export function VisualizationObjectControllerApi_SearchEntitiesVisualizationObje
 export function VisualizationObjectControllerApi_UpdateEntityVisualizationObjects(axios: AxiosInstance, basePath: string, requestParameters: VisualizationObjectControllerApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
 
 // @public
-export function VisualizationObjectControllerApiAxiosParamCreator_CreateEntityVisualizationObjects(workspaceId: string, jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function VisualizationObjectControllerApiAxiosParamCreator_CreateEntityVisualizationObjects(workspaceId: string, jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function VisualizationObjectControllerApiAxiosParamCreator_DeleteEntityVisualizationObjects(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function VisualizationObjectControllerApiAxiosParamCreator_GetAllEntitiesVisualizationObjects(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function VisualizationObjectControllerApiAxiosParamCreator_GetAllEntitiesVisualizationObjects(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function VisualizationObjectControllerApiAxiosParamCreator_GetEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function VisualizationObjectControllerApiAxiosParamCreator_GetEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function VisualizationObjectControllerApiAxiosParamCreator_PatchEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function VisualizationObjectControllerApiAxiosParamCreator_PatchEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function VisualizationObjectControllerApiAxiosParamCreator_SearchEntitiesVisualizationObjects(workspaceId: string, entitySearchBody: EntitySearchBody, origin?: 'ALL' | 'PARENTS' | 'NATIVE', xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function VisualizationObjectControllerApiAxiosParamCreator_UpdateEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function VisualizationObjectControllerApiAxiosParamCreator_UpdateEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export interface VisualizationObjectControllerApiCreateEntityVisualizationObjectsRequest {
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
     readonly jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
     readonly workspaceId: string;
@@ -45370,7 +45634,7 @@ export interface VisualizationObjectControllerApiDeleteEntityVisualizationObject
 // @public
 export interface VisualizationObjectControllerApiGetAllEntitiesVisualizationObjectsRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
     readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
     readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
     readonly page?: number;
@@ -45383,7 +45647,7 @@ export interface VisualizationObjectControllerApiGetAllEntitiesVisualizationObje
 // @public
 export interface VisualizationObjectControllerApiGetEntityVisualizationObjectsRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -45404,7 +45668,7 @@ export interface VisualizationObjectControllerApiInterface {
 // @public
 export interface VisualizationObjectControllerApiPatchEntityVisualizationObjectsRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
     readonly jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -45421,7 +45685,7 @@ export interface VisualizationObjectControllerApiSearchEntitiesVisualizationObje
 // @public
 export interface VisualizationObjectControllerApiUpdateEntityVisualizationObjectsRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'computedAttributes' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>;
     readonly jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
     readonly objectId: string;
     readonly workspaceId: string;

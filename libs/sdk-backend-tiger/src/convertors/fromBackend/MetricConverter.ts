@@ -45,7 +45,8 @@ export function convertMetricFromBackend(
             .updatedBy(convertUserIdentifier(modifiedBy, included))
             .certification(
                 convertCertificationFromBackend(attributes, convertUserIdentifier(certifiedBy, included)),
-            ),
+            )
+            .permissions(object.meta?.permissions),
     );
 }
 

@@ -12,6 +12,7 @@ import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDia
 import { getDefaultPdfPageSize } from "../utils/pdfPageSize.js";
 
 import { useScheduledExportDraft } from "./ScheduledExportDraftContext.js";
+import { type IScheduledExportAttachments } from "./types.js";
 
 /**
  * Reads what the scheduled-export dialog's attachment section displays: the selected formats, which
@@ -23,9 +24,9 @@ import { useScheduledExportDraft } from "./ScheduledExportDraftContext.js";
  * *change* attachments are on {@link useScheduledExportActions}, because they capture the stored
  * export-parameter wire, which must exist once per dialog.
  *
- * @internal
+ * @alpha
  */
-export function useScheduledExportAttachments() {
+export function useScheduledExportAttachments(): IScheduledExportAttachments {
     const { settings } = useAutomationsContext();
     const { widget, insight } = useScheduledEmailDialogContext();
     const { editedAutomation } = useScheduledExportDraft();

@@ -2,6 +2,7 @@
 
 import { type AnyAction, type Dispatch, type EntityId, type EntityState } from "@reduxjs/toolkit";
 
+import { type IUnavailableDashboardReference } from "@gooddata/sdk-backend-spi";
 import { type IInsight, type IListedDashboard } from "@gooddata/sdk-model";
 
 import { type IInaccessibleDashboard } from "../types/inaccessibleDashboardTypes.js";
@@ -82,6 +83,8 @@ export type DashboardState = {
     accessibleDashboards: IAccessibleDashboardsState;
     /** @alpha */
     inaccessibleDashboards: EntityState<IInaccessibleDashboard, EntityId>;
+    /** @alpha */
+    unavailableObjects: EntityState<IUnavailableDashboardReference, EntityId>;
     dashboardPermissions: DashboardPermissionsState;
     /** @alpha */
     automations: IAutomationsState;

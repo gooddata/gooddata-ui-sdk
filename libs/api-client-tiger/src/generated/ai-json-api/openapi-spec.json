@@ -5857,7 +5857,7 @@
                     "interim": {
                         "type": "boolean",
                         "title": "Interim",
-                        "description": "True for items streamed only as live progress and never persisted. Today that is each agent iteration's reasoning, which is re-sent at the end of the turn folded into a single merged reasoning item — the one that is persisted. The interim items and that merged item carry the same text, so a consumer should render one or the other, not both: interim items arrive as the turn runs, the merged item arrives once at the end.",
+                        "description": "True for items streamed only as live progress and never persisted. Today that is each agent iteration's reasoning, which is folded at the end of the turn into a single merged reasoning item — the one that is persisted. Both carry the same text, so only one of them is ever delivered: the message stream carries the interim items as the turn runs, and replaying the conversation returns the merged item instead.",
                         "default": false
                     },
                     "itemId": {
@@ -6691,11 +6691,6 @@
                         "title": "Operations",
                         "description": "RFC 6902 JSON Patch operations against the relayed AAC dashboard document. A `test` operation guards each insert: if one fails, the dashboard moved and the change must be discarded rather than forced."
                     },
-                    "ref": {
-                        "type": "string",
-                        "title": "Ref",
-                        "description": "Identity of the proposal. A refinement re-proposes under the same ref, so when two items carry the same ref only the newest is a live proposal and the older one is superseded. Also the key to make applying the change idempotent."
-                    },
                     "references": {
                         "anyOf": [
                             {
@@ -6706,19 +6701,12 @@
                             }
                         ],
                         "description": "AAC bodies of the visualizations the operations reference, when available."
-                    },
-                    "tab_id": {
-                        "type": "string",
-                        "title": "Tab Id",
-                        "description": "Id of the tab the operations target."
                     }
                 },
                 "additionalProperties": false,
                 "type": "object",
                 "required": [
-                    "ref",
                     "dashboard_id",
-                    "tab_id",
                     "operations"
                 ],
                 "title": "DashboardPatch",
@@ -14238,6 +14226,43 @@
                 ],
                 "title": "UserContextRichTextWidgetDescriptor"
             },
+            "UserContextSwitcherVisualization": {
+                "properties": {
+                    "resultId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Resultid",
+                        "description": "Result of this visualization, when the client already rendered it. Only the active visualization normally has one; the others are fetched by `visualizationId`. Optional."
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title",
+                        "description": "Title of the visualization, as the switcher shows it in the UI. Optional."
+                    },
+                    "visualizationId": {
+                        "type": "string",
+                        "title": "Visualizationid"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "visualizationId"
+                ],
+                "title": "UserContextSwitcherVisualization"
+            },
             "UserContextView": {
                 "properties": {
                     "dashboard": {
@@ -14294,7 +14319,17 @@
                             "type": "string"
                         },
                         "type": "array",
-                        "title": "Visualizationids"
+                        "title": "Visualizationids",
+                        "description": "Deprecated: send `visualizations` instead, which additionally carries each visualization's title. Read only when `visualizations` is empty.",
+                        "deprecated": true
+                    },
+                    "visualizations": {
+                        "items": {
+                            "$ref": "#/components/schemas/UserContextSwitcherVisualization"
+                        },
+                        "type": "array",
+                        "title": "Visualizations",
+                        "description": "The visualizations the switcher offers, including the active one. Supersedes `visualizationIds`: titles let the assistant name a switcher's visualizations instead of quoting bare ids."
                     },
                     "widgetId": {
                         "type": "string",

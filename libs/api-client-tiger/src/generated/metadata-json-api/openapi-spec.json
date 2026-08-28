@@ -16391,6 +16391,7 @@
                             "items": {
                                 "type": "string",
                                 "enum": [
+                                    "permissions",
                                     "origin",
                                     "page",
                                     "all",
@@ -16398,7 +16399,7 @@
                                 ]
                             }
                         },
-                        "example": "metaInclude=origin,page,all"
+                        "example": "metaInclude=permissions,origin,page,all"
                     }
                 ],
                 "responses": {
@@ -16485,13 +16486,14 @@
                             "items": {
                                 "type": "string",
                                 "enum": [
+                                    "permissions",
                                     "origin",
                                     "all",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "metaInclude=origin,all"
+                        "example": "metaInclude=permissions,origin,all"
                     }
                 ],
                 "requestBody": {
@@ -16700,13 +16702,14 @@
                             "items": {
                                 "type": "string",
                                 "enum": [
+                                    "permissions",
                                     "origin",
                                     "all",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "metaInclude=origin,all"
+                        "example": "metaInclude=permissions,origin,all"
                     }
                 ],
                 "responses": {
@@ -18378,6 +18381,7 @@
                                     "labels",
                                     "metrics",
                                     "parameters",
+                                    "computedAttributes",
                                     "datasets",
                                     "createdBy",
                                     "modifiedBy",
@@ -18386,7 +18390,7 @@
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,metrics,parameters,datasets"
+                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,metrics,parameters,computedAttributes,datasets"
                     },
                     {
                         "$ref": "#/components/parameters/page"
@@ -18489,6 +18493,7 @@
                                     "labels",
                                     "metrics",
                                     "parameters",
+                                    "computedAttributes",
                                     "datasets",
                                     "createdBy",
                                     "modifiedBy",
@@ -18497,7 +18502,7 @@
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,metrics,parameters,datasets"
+                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,metrics,parameters,computedAttributes,datasets"
                     },
                     {
                         "name": "metaInclude",
@@ -18694,6 +18699,7 @@
                                     "labels",
                                     "metrics",
                                     "parameters",
+                                    "computedAttributes",
                                     "datasets",
                                     "createdBy",
                                     "modifiedBy",
@@ -18702,7 +18708,7 @@
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,metrics,parameters,datasets"
+                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,metrics,parameters,computedAttributes,datasets"
                     },
                     {
                         "name": "X-GDC-VALIDATE-RELATIONS",
@@ -18812,6 +18818,7 @@
                                     "labels",
                                     "metrics",
                                     "parameters",
+                                    "computedAttributes",
                                     "datasets",
                                     "createdBy",
                                     "modifiedBy",
@@ -18820,7 +18827,7 @@
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,metrics,parameters,datasets"
+                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,metrics,parameters,computedAttributes,datasets"
                     }
                 ],
                 "requestBody": {
@@ -18952,6 +18959,7 @@
                                     "labels",
                                     "metrics",
                                     "parameters",
+                                    "computedAttributes",
                                     "datasets",
                                     "createdBy",
                                     "modifiedBy",
@@ -18960,7 +18968,7 @@
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,metrics,parameters,datasets"
+                        "example": "createdBy,modifiedBy,certifiedBy,facts,attributes,labels,metrics,parameters,computedAttributes,datasets"
                     }
                 ],
                 "requestBody": {
@@ -29978,55 +29986,48 @@
                     "granularity": {
                         "type": "string",
                         "description": "Granularity the offsets are counted in.",
-                        "example": "GDC.time.month",
+                        "example": "MONTH",
                         "enum": [
-                            "ALL_TIME_GRANULARITY",
-                            "GDC.time.year",
-                            "GDC.time.week_us",
-                            "GDC.time.week_in_year",
-                            "GDC.time.week_in_quarter",
-                            "GDC.time.week",
-                            "GDC.time.euweek_in_year",
-                            "GDC.time.euweek_in_quarter",
-                            "GDC.time.quarter",
-                            "GDC.time.quarter_in_year",
-                            "GDC.time.month",
-                            "GDC.time.month_in_quarter",
-                            "GDC.time.month_in_year",
-                            "GDC.time.day_in_year",
-                            "GDC.time.day_in_quarter",
-                            "GDC.time.day_in_month",
-                            "GDC.time.day_in_week",
-                            "GDC.time.day_in_euweek",
-                            "GDC.time.date",
-                            "GDC.time.hour",
-                            "GDC.time.hour_in_day",
-                            "GDC.time.minute",
-                            "GDC.time.minute_in_hour",
-                            "GDC.time.minute_in_day",
-                            "GDC.time.second",
-                            "GDC.time.second_in_minute",
-                            "GDC.time.second_in_day",
-                            "GDC.time.fiscal_week",
-                            "GDC.time.fiscal_month",
-                            "GDC.time.fiscal_quarter",
-                            "GDC.time.fiscal_semester",
-                            "GDC.time.fiscal_year",
-                            "GDC.time.fiscal_day_in_fiscal_week",
-                            "GDC.time.fiscal_day_in_fiscal_month",
-                            "GDC.time.fiscal_day_in_fiscal_quarter",
-                            "GDC.time.fiscal_day_in_fiscal_semester",
-                            "GDC.time.fiscal_day_in_fiscal_year",
-                            "GDC.time.fiscal_week_in_fiscal_month",
-                            "GDC.time.fiscal_week_in_fiscal_quarter",
-                            "GDC.time.fiscal_week_in_fiscal_semester",
-                            "GDC.time.fiscal_week_in_fiscal_year",
-                            "GDC.time.fiscal_month_in_fiscal_quarter",
-                            "GDC.time.fiscal_month_in_fiscal_semester",
-                            "GDC.time.fiscal_month_in_fiscal_year",
-                            "GDC.time.fiscal_quarter_in_fiscal_semester",
-                            "GDC.time.fiscal_quarter_in_fiscal_year",
-                            "GDC.time.fiscal_semester_in_fiscal_year"
+                            "SECOND",
+                            "SECOND_OF_MINUTE",
+                            "SECOND_OF_DAY",
+                            "MINUTE",
+                            "MINUTE_OF_HOUR",
+                            "MINUTE_OF_DAY",
+                            "HOUR",
+                            "HOUR_OF_DAY",
+                            "DAY",
+                            "DAY_OF_WEEK",
+                            "DAY_OF_MONTH",
+                            "DAY_OF_QUARTER",
+                            "DAY_OF_YEAR",
+                            "WEEK",
+                            "WEEK_OF_YEAR",
+                            "MONTH",
+                            "MONTH_OF_YEAR",
+                            "QUARTER",
+                            "QUARTER_OF_YEAR",
+                            "YEAR",
+                            "FISCAL_DAY_OF_FISCAL_WEEK",
+                            "FISCAL_DAY_OF_FISCAL_MONTH",
+                            "FISCAL_DAY_OF_FISCAL_QUARTER",
+                            "FISCAL_DAY_OF_FISCAL_SEMESTER",
+                            "FISCAL_DAY_OF_FISCAL_YEAR",
+                            "FISCAL_WEEK",
+                            "FISCAL_WEEK_OF_FISCAL_MONTH",
+                            "FISCAL_WEEK_OF_FISCAL_QUARTER",
+                            "FISCAL_WEEK_OF_FISCAL_SEMESTER",
+                            "FISCAL_WEEK_OF_FISCAL_YEAR",
+                            "FISCAL_MONTH",
+                            "FISCAL_MONTH_OF_FISCAL_QUARTER",
+                            "FISCAL_MONTH_OF_FISCAL_SEMESTER",
+                            "FISCAL_MONTH_OF_FISCAL_YEAR",
+                            "FISCAL_QUARTER",
+                            "FISCAL_QUARTER_OF_FISCAL_SEMESTER",
+                            "FISCAL_QUARTER_OF_FISCAL_YEAR",
+                            "FISCAL_SEMESTER",
+                            "FISCAL_SEMESTER_OF_FISCAL_YEAR",
+                            "FISCAL_YEAR"
                         ]
                     },
                     "kind": {
@@ -49227,6 +49228,18 @@
                                         ]
                                     }
                                 }
+                            },
+                            "permissions": {
+                                "type": "array",
+                                "description": "List of valid permissions for a logged-in user.",
+                                "items": {
+                                    "type": "string",
+                                    "enum": [
+                                        "EDIT",
+                                        "SHARE",
+                                        "VIEW"
+                                    ]
+                                }
                             }
                         }
                     },
@@ -53751,6 +53764,17 @@
                                     }
                                 }
                             },
+                            "computedAttributes": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiComputedAttributeToManyLinkage"
+                                    }
+                                }
+                            },
                             "createdBy": {
                                 "required": [
                                     "data"
@@ -53855,38 +53879,13 @@
                         "type": "array",
                         "description": "Included resources",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiVisualizationObjectOutIncludes"
+                            "$ref": "#/components/schemas/JsonApiComputedAttributeOutIncludes"
                         }
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
                     }
                 }
-            },
-            "JsonApiVisualizationObjectOutIncludes": {
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiMetricOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiParameterOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
-                    }
-                ]
             },
             "JsonApiVisualizationObjectOutList": {
                 "required": [
@@ -53906,7 +53905,7 @@
                         "type": "array",
                         "description": "Included resources",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiVisualizationObjectOutIncludes"
+                            "$ref": "#/components/schemas/JsonApiComputedAttributeOutIncludes"
                         }
                     },
                     "links": {
@@ -59848,6 +59847,9 @@
                 ],
                 "type": "object",
                 "properties": {
+                    "conditionalFormatting": {
+                        "$ref": "#/components/schemas/ConditionalFormatting"
+                    },
                     "customOverride": {
                         "$ref": "#/components/schemas/CustomOverride"
                     },

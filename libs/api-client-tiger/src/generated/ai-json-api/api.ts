@@ -1217,7 +1217,7 @@ export interface AiConversationItemResponse {
     'createdAt': string;
     'detail'?: AiConversationItemResponseDetail | null;
     /**
-     * True for items streamed only as live progress and never persisted. Today that is each agent iteration\'s reasoning, which is re-sent at the end of the turn folded into a single merged reasoning item — the one that is persisted. The interim items and that merged item carry the same text, so a consumer should render one or the other, not both: interim items arrive as the turn runs, the merged item arrives once at the end.
+     * True for items streamed only as live progress and never persisted. Today that is each agent iteration\'s reasoning, which is folded at the end of the turn into a single merged reasoning item — the one that is persisted. Both carry the same text, so only one of them is ever delivered: the message stream carries the interim items as the turn runs, and replaying the conversation returns the merged item instead.
      */
     'interim'?: boolean;
     /**
@@ -1496,15 +1496,7 @@ export interface AiDashboardPatch {
      * RFC 6902 JSON Patch operations against the relayed AAC dashboard document. A `test` operation guards each insert: if one fails, the dashboard moved and the change must be discarded rather than forced.
      */
     'operations': Array<object | null>;
-    /**
-     * Identity of the proposal. A refinement re-proposes under the same ref, so when two items carry the same ref only the newest is a live proposal and the older one is superseded. Also the key to make applying the change idempotent.
-     */
-    'ref': string;
     'references'?: AiDashboardPatchReferences;
-    /**
-     * Id of the tab the operations target.
-     */
-    'tab_id': string;
 }
 
 export interface AiDashboardPatchPart {
@@ -5124,6 +5116,12 @@ export interface AiUserContextRichTextWidgetDescriptor {
 
 export type AiUserContextRichTextWidgetDescriptorWidgetTypeEnum = 'richText';
 
+export interface AiUserContextSwitcherVisualization {
+    'resultId'?: string | null;
+    'title'?: string | null;
+    'visualizationId': string;
+}
+
 export interface AiUserContextView {
     'dashboard'?: AiUserContextDashboard | null;
 }
@@ -5133,7 +5131,14 @@ export interface AiUserContextVisualizationSwitcherWidgetDescriptor {
     'filters'?: Array<AiVisualizationFilter> | null;
     'resultId'?: string | null;
     'title': string;
+    /**
+     * Deprecated: send `visualizations` instead, which additionally carries each visualization\'s title. Read only when `visualizations` is empty.
+     */
     'visualizationIds'?: Array<string>;
+    /**
+     * The visualizations the switcher offers, including the active one. Supersedes `visualizationIds`: titles let the assistant name a switcher\'s visualizations instead of quoting bare ids.
+     */
+    'visualizations'?: Array<AiUserContextSwitcherVisualization>;
     'widgetId': string;
     'widgetType': AiUserContextVisualizationSwitcherWidgetDescriptorWidgetTypeEnum;
 }
@@ -5149,7 +5154,14 @@ export interface AiUserContextWidgetDescriptor {
     'widgetType': AiUserContextWidgetDescriptorWidgetTypeEnum;
     'content'?: string;
     'activeVisualizationId': string;
+    /**
+     * Deprecated: send `visualizations` instead, which additionally carries each visualization\'s title. Read only when `visualizations` is empty.
+     */
     'visualizationIds'?: Array<string>;
+    /**
+     * The visualizations the switcher offers, including the active one. Supersedes `visualizationIds`: titles let the assistant name a switcher\'s visualizations instead of quoting bare ids.
+     */
+    'visualizations'?: Array<AiUserContextSwitcherVisualization>;
 }
 
 export type AiUserContextWidgetDescriptorWidgetTypeEnum = 'visualizationSwitcher';

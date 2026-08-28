@@ -9,9 +9,9 @@ import {
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 
-import { type ITabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
+import { type ITabState, type ITabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
 
-import { parametersInitialState } from "./parametersState.js";
+import { type IDashboardParameterEntry, parametersInitialState } from "./parametersState.js";
 
 type ParametersReducer<A extends Action> = CaseReducer<ITabsState, A>;
 
@@ -32,10 +32,10 @@ const addParameter: ParametersReducer<PayloadAction<IAddParameterPayload>> = (st
         return;
     }
     const { parameter, workspaceDefault } = action.payload;
-    const tabParameters = activeTab.parameters ?? parametersInitialState;
-    if (tabParameters.parameters.some((entry) => areObjRefsEqual(entry.parameter.ref, parameter.ref))) {
+    if (findParameterEntry(state, parameter.ref)) {
         return;
     }
+    const tabParameters = activeTab.parameters ?? parametersInitialState;
     activeTab.parameters = {
         parameters: [
             ...tabParameters.parameters,
@@ -80,6 +80,34 @@ const setParameterRuntimeValues: ParametersReducer<PayloadAction<ISetParameterRu
 };
 
 /**
+ * Stage a parameter value under the apply-all-at-once mode. The value is always concrete: the
+ * parameter control does not render for unresolved parameters, so staged `undefined` is
+ * unreachable.
+ *
+ * @alpha
+ */
+export interface ISetParameterWorkingValuePayload {
+    ref: ObjRef;
+    value: ParameterValue;
+}
+
+const setParameterWorkingValue: ParametersReducer<PayloadAction<ISetParameterWorkingValuePayload>> = (
+    state,
+    action,
+) => {
+    const { ref, value } = action.payload;
+    const entry = findParameterEntry(state, ref);
+    if (!entry) {
+        return;
+    }
+    if (entry.runtimeOverride === value) {
+        delete entry.workingOverride;
+    } else {
+        entry.workingOverride = value;
+    }
+};
+
+/**
  * @alpha
  */
 export interface IRemoveParameterPayload {
@@ -103,13 +131,48 @@ function setRuntimeOverride(
     { ref, value }: ISetParameterRuntimeValuePayload,
     tabLocalIdentifier?: string,
 ): void {
-    const tab = getTabOrActive(state, tabLocalIdentifier);
-    if (!tab?.parameters) {
+    const entry = findParameterEntry(state, ref, tabLocalIdentifier);
+    if (!entry) {
         return;
     }
-    const entry = tab.parameters.parameters.find((item) => areObjRefsEqual(item.parameter.ref, ref));
-    if (entry && entry.runtimeOverride !== value) {
+    delete entry.workingOverride;
+    if (entry.runtimeOverride !== value) {
         entry.runtimeOverride = value;
+    }
+}
+
+function findParameterEntry(
+    state: ITabsState,
+    ref: ObjRef,
+    tabLocalIdentifier?: string,
+): IDashboardParameterEntry | undefined {
+    const tab = getTabOrActive(state, tabLocalIdentifier);
+    return tab?.parameters?.parameters.find((entry) => areObjRefsEqual(entry.parameter.ref, ref));
+}
+
+/**
+ * Commits every staged value on the tab into `runtimeOverride`. Called by the tab-level
+ * `applyWorkingSelection` reducer so filters and parameters commit in one atomic transition.
+ *
+ * @internal
+ */
+export function commitParameterWorkingValues(tab: ITabState): void {
+    for (const entry of tab.parameters?.parameters ?? []) {
+        if (entry.workingOverride !== undefined) {
+            entry.runtimeOverride = entry.workingOverride;
+            delete entry.workingOverride;
+        }
+    }
+}
+
+/**
+ * Drops every staged value on the tab. Called by the tab-level `resetWorkingSelection` reducer.
+ *
+ * @internal
+ */
+export function clearParameterWorkingValues(tab: ITabState): void {
+    for (const entry of tab.parameters?.parameters ?? []) {
+        delete entry.workingOverride;
     }
 }
 
@@ -117,5 +180,6 @@ export const parametersReducers = {
     addParameter,
     setParameterRuntimeValue,
     setParameterRuntimeValues,
+    setParameterWorkingValue,
     removeParameter,
 };

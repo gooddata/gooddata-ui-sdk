@@ -13,6 +13,7 @@ import {
     attributeLocalId,
     attributeUri,
     attributesFind,
+    isComputedAttribute,
 } from "./index.js";
 
 const UriDefinedAttribute: IAttribute = {
@@ -111,6 +112,27 @@ describe("attributeAttributeDisplayFormObjRef", () => {
 
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
         expect(() => attributeDisplayFormRef(input)).toThrow();
+    });
+});
+
+describe("isComputedAttribute", () => {
+    const computedAttribute: IAttribute = {
+        attribute: {
+            localIdentifier: "ca1",
+            displayForm: { identifier: "rep_performance", type: "computedAttribute" },
+        },
+    };
+
+    it("should return true when display form type is computedAttribute", () => {
+        expect(isComputedAttribute(computedAttribute)).toBe(true);
+    });
+
+    it("should return false for a regular attribute", () => {
+        expect(isComputedAttribute(Account.Default)).toBe(false);
+    });
+
+    it("should return false for a URI-defined attribute", () => {
+        expect(isComputedAttribute(UriDefinedAttribute)).toBe(false);
     });
 });
 

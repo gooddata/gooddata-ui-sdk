@@ -24,8 +24,8 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { gdColorNegative, gdColorStateBlank } from "../../../../constants/colors.js";
 import { useAlertingManagementDialogContext } from "../../../contexts/AlertingManagementDialogContext.js";
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
-import { useAlertValidation } from "../../DefaultAlertingDialog/hooks/useAlertValidation.js";
-import { getSubtitle } from "../../DefaultAlertingDialog/utils/getters.js";
+import { useAlertValidation } from "../../hooks/useAlertValidation.js";
+import { getSubtitle } from "../../utils/getters.js";
 
 interface IAlertProps {
     onDelete: () => void;
