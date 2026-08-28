@@ -114,7 +114,7 @@ vi.mock("../../../automations/alerting/DefaultAlertingDialog/messages.js", () =>
     },
 }));
 
-vi.mock("../../../automations/alerting/DefaultAlertingDialog/utils/items.js", () => ({
+vi.mock("../../../automations/alerting/utils/items.js", () => ({
     getSupportedInsightMeasuresByInsight: () => [{ id: "measure-1" }],
 }));
 

@@ -49,6 +49,7 @@ import { renderModeActions } from "../../../store/renderMode/index.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { DEFAULT_TAB_ID } from "../../../store/tabs/tabsState.js";
 import { uiActions } from "../../../store/ui/index.js";
+import { unavailableObjectsActions } from "../../../store/unavailableObjects/index.js";
 import { userActions } from "../../../store/user/index.js";
 import {
     type DashboardContext,
@@ -72,6 +73,7 @@ import { loadDateHierarchyTemplates } from "./loadDateHierarchyTemplates.js";
 import { loadExportTimezone } from "./loadExportTimezone.js";
 import { loadFilterViews } from "./loadFilterViews.js";
 import { loadMeasureParameterDependencies } from "./loadMeasureParameterDependencies.js";
+import { dashboardLoadReferenceTypes, loadUnavailableReferences } from "./loadUnavailableReferences.js";
 import { loadUser } from "./loadUser.js";
 import { type IDateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mergeDateFilterConfigs.js";
 import { preloadAttributeFiltersData as preloadAttributeFiltersDataFromBackend } from "./preloadAttributeFiltersData.js";
@@ -112,7 +114,7 @@ async function loadDashboardFromBackend(
         return backend
             .workspace(workspace)
             .dashboards()
-            .getDashboardReferencedObjects(preloadedDashboard, ["insight", "dataSet"])
+            .getDashboardReferencedObjects(preloadedDashboard, dashboardLoadReferenceTypes(ctx))
             .then((references) => {
                 return {
                     dashboard: preloadedDashboard,
@@ -124,10 +126,12 @@ async function loadDashboardFromBackend(
     return backend
         .workspace(workspace)
         .dashboards()
-        .getDashboardWithReferences(dashboardRef, filterContextRef, { loadUserData: true }, [
-            "insight",
-            "dataSet",
-        ]);
+        .getDashboardWithReferences(
+            dashboardRef,
+            filterContextRef,
+            { loadUserData: true },
+            dashboardLoadReferenceTypes(ctx),
+        );
 }
 
 async function loadInsightsForPersistedDashboard(
@@ -306,8 +310,20 @@ function* loadExistingDashboard(
 
     const {
         dashboard: loadedDashboard,
-        references: { insights },
+        references: { insights, unavailable },
     } = dashboardWithReferences;
+
+    // must be in the store before filter sanitization/resolution so they can keep forbidden refs;
+    // FF off => nothing is ever marked unavailable and behavior is unchanged
+    const unavailableReferences: SagaReturnType<typeof loadUnavailableReferences> = yield call(
+        loadUnavailableReferences,
+        ctx,
+        loadedDashboard,
+        unavailable,
+        Boolean(config.settings?.enableDashboardPartialRendering),
+        !!cmd.payload.persistedDashboard,
+    );
+    yield put(unavailableObjectsActions.setUnavailableObjects(unavailableReferences));
 
     const dashboardWithFilterView = applyDefaultFilterView(loadedDashboard, filterViews, config.exportId);
     // Resolve active tab: URL's initialTabId takes precedence, otherwise default to first tab

@@ -6,6 +6,7 @@ import {
     type IMeasureKeyDrivers,
     type IMeasureReferencing,
     type IMeasuresQuery,
+    type ISaveMeasureOptions,
     type IWorkspaceMeasuresService,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -37,8 +38,11 @@ export abstract class DecoratedWorkspaceMeasuresService implements IWorkspaceMea
         return this.decorated.getMeasureExpressionTokens(ref);
     }
 
-    createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject> {
-        return this.decorated.createMeasure(measure);
+    createMeasure(
+        measure: IMeasureMetadataObjectDefinition,
+        options?: ISaveMeasureOptions,
+    ): Promise<IMeasureMetadataObject> {
+        return this.decorated.createMeasure(measure, options);
     }
 
     updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject> {

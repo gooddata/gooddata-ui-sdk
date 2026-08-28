@@ -4,23 +4,19 @@ import { type ReactElement } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
-import {
-    DashboardParameterModeValues,
-    type IDashboardParameter,
-    getParameterValueTitle,
-    objRefToString,
-} from "@gooddata/sdk-model";
+import { DashboardParameterModeValues, type IDashboardParameter, objRefToString } from "@gooddata/sdk-model";
 import { Dropdown, ParameterControl, ParameterControlButton, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogParameterByRef } from "../../../model/store/catalog/catalogSelectors.js";
+import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { tabsActions } from "../../../model/store/tabs/index.js";
 import { matchingWorkspaceDefinition } from "../../../model/store/tabs/parameters/parametersHelpers.js";
 import {
+    selectParameterDisplayValueByRef,
     selectParameterReconciliationByRef,
     selectParameterResetValueByRef,
-    selectParameterRuntimeOverrideByRef,
 } from "../../../model/store/tabs/parameters/parametersSelectors.js";
 import { DraggableChipSource } from "../../dragAndDrop/DraggableChipSource.js";
 
@@ -44,13 +40,14 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
     const intl = useIntl();
     const dispatch = useDashboardDispatch();
     const workspaceParameter = useDashboardSelector(selectCatalogParameterByRef(parameter.ref));
-    const runtimeOverride = useDashboardSelector(selectParameterRuntimeOverrideByRef(parameter.ref));
+    const displayValue = useDashboardSelector(selectParameterDisplayValueByRef(parameter.ref));
     const resetValue = useDashboardSelector(selectParameterResetValueByRef(parameter.ref));
     const reconciliation = useDashboardSelector(selectParameterReconciliationByRef(parameter.ref));
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
+    const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const valueInputId = useIdPrefixed("parameter-value-input");
 
-    if (parameter.mode === DashboardParameterModeValues.HIDDEN || runtimeOverride === undefined) {
+    if (parameter.mode === DashboardParameterModeValues.HIDDEN || displayValue === undefined) {
         return null;
     }
 
@@ -60,7 +57,6 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
     }
 
     const name = parameter.label ?? workspaceParameter.title;
-    const valueTitle = getParameterValueTitle(definition, runtimeOverride);
     const dragItem = { type: "parameter", ref: parameter.ref } as const;
     const warningTooltip = reconciliation === "reset" ? intl.formatMessage(messages.resetWarning) : undefined;
 
@@ -69,7 +65,8 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
             <DraggableChipSource dragItem={dragItem} canDrag={isInEditMode}>
                 <ParameterControlButton
                     name={name}
-                    value={valueTitle}
+                    definition={definition}
+                    value={displayValue}
                     isActive={false}
                     isDraggable={isInEditMode}
                     warningTooltip={warningTooltip}
@@ -88,7 +85,8 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
                 renderButton={({ isOpen, toggleDropdown, dropdownId }) => (
                     <ParameterControlButton
                         name={name}
-                        value={valueTitle}
+                        definition={definition}
+                        value={displayValue}
                         isActive={isOpen}
                         isDraggable={isInEditMode}
                         dropdownId={dropdownId}
@@ -101,12 +99,16 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
                     <ParameterControl
                         name={name}
                         definition={definition}
-                        value={runtimeOverride}
+                        value={displayValue}
                         resetValue={resetValue}
                         inputId={valueInputId}
                         ariaAttributes={ariaAttributes}
                         onApply={(value) => {
-                            dispatch(tabsActions.setParameterRuntimeValue({ ref: parameter.ref, value }));
+                            dispatch(
+                                isApplyAllAtOnceEnabledAndSet
+                                    ? tabsActions.setParameterWorkingValue({ ref: parameter.ref, value })
+                                    : tabsActions.setParameterRuntimeValue({ ref: parameter.ref, value }),
+                            );
                             closeDropdown();
                         }}
                         onCancel={closeDropdown}

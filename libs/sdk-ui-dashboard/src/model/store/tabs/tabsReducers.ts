@@ -4,8 +4,16 @@ import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/tool
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
+import {
+    clearFilterContextWorkingValues,
+    commitFilterContextWorkingValues,
+} from "./filterContext/filterContextReducers.js";
 import { initializeFilterContext } from "./filterContext/filterContextUtils.js";
-import { DEFAULT_TAB_ID, type ITabState, type ITabsState } from "./tabsState.js";
+import {
+    clearParameterWorkingValues,
+    commitParameterWorkingValues,
+} from "./parameters/parametersReducers.js";
+import { DEFAULT_TAB_ID, type ITabState, type ITabsState, getActiveTab } from "./tabsState.js";
 
 /**
  * @alpha
@@ -175,6 +183,36 @@ const resolveDefaultTab: TabsReducer<PayloadAction<{ newLocalIdentifier: string 
     }
 };
 
+/**
+ * @internal
+ */
+export interface IApplyWorkingSelectionPayload {
+    readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+}
+
+const applyWorkingSelection: TabsReducer<PayloadAction<IApplyWorkingSelectionPayload>> = (state, action) => {
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+
+    commitFilterContextWorkingValues(
+        activeTab,
+        action.payload.enableImmediateAttributeFilterDisplayAsLabelMigration,
+    );
+    commitParameterWorkingValues(activeTab);
+};
+
+const resetWorkingSelection: TabsReducer<PayloadAction> = (state) => {
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+
+    clearFilterContextWorkingValues(activeTab);
+    clearParameterWorkingValues(activeTab);
+};
+
 export const tabsReducers = {
     setTabs,
     setActiveTabLocalIdentifier,
@@ -184,4 +222,6 @@ export const tabsReducers = {
     setTabIsRenaming,
     renameTab,
     resolveDefaultTab,
+    applyWorkingSelection,
+    resetWorkingSelection,
 };

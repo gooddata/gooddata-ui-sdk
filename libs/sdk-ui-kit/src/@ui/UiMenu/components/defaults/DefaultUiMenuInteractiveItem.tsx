@@ -38,6 +38,7 @@ function getItemRole(
  */
 export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = object>({
     item,
+    Component,
 }: IUiMenuInteractiveItemWrapperProps<T>): ReactNode {
     const { useContextStore, createSelector } = typedUiMenuContextStore<T>();
     const selector = createSelector((ctx) => ({
@@ -137,7 +138,11 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
             className={classNames}
             data-testid={dataTestId}
         >
-            <InteractiveItemComponent item={item} isFocused={isFocused} isTooltipOpen={isTooltipOpen} />
+            {Component ? (
+                <Component item={item} isFocused={isFocused} isTooltipOpen={isTooltipOpen} />
+            ) : (
+                <InteractiveItemComponent item={item} isFocused={isFocused} isTooltipOpen={isTooltipOpen} />
+            )}
         </li>
     );
 }

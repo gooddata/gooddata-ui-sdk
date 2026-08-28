@@ -19,8 +19,8 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { type AlertMetric, type AlertMetricComparator, AlertMetricComparatorType } from "../../types.js";
-import { translateGranularity } from "../utils/granularity.js";
-import { isChangeOrDifferenceOperator } from "../utils/guards.js";
+import { translateGranularity } from "../../utils/granularity.js";
+import { isChangeOrDifferenceOperator } from "../../utils/guards.js";
 
 export interface IAlertComparisonPeriodSelectProps {
     alert: IAutomationMetadataObject | undefined;

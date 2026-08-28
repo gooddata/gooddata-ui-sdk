@@ -116,6 +116,7 @@ export interface IUiMenuItemProps<T extends IUiMenuItemData = object> {
  */
 export interface IUiMenuInteractiveItemWrapperProps<T extends IUiMenuItemData = object> {
     item: IUiMenuInteractiveItem<T>;
+    Component?: ComponentType<IUiMenuInteractiveItemProps<T>>;
 }
 
 /**

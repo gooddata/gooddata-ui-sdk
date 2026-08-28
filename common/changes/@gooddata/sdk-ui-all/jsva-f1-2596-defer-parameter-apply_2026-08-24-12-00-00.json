@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: In apply-all-at-once mode, filters waited for `Apply All` but parameters applied at once. Now parameters also wait. Apply on a parameter control sets a working value. `Apply All` applies the working filters and parameters together. Reset discards the working values. Adds `workingOverride` to `IDashboardParameterEntry`, `selectIsWorkingParametersChanged`, `selectParameterDisplayValueByRef` and `selectIsWorkingSelectionChanged`.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

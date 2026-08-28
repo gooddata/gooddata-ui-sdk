@@ -60,7 +60,7 @@ vi.mock("../../shared/automationFilters/useAutomationExportParameters.js", () =>
     useAutomationExportParameters: mockUseAutomationExportParameters,
 }));
 
-vi.mock("../DefaultScheduledEmailDialog/hooks/useScheduleValidation.js", () => ({
+vi.mock("../hooks/useScheduleValidation.js", () => ({
     useScheduleValidation: () => ({ isValid: true }),
 }));
 

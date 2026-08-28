@@ -173,7 +173,12 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         const rsqlTagFilter = tagsToRsqlFilter(this.options);
         const rsqlSearchFilter = searchToRsqlFilter(this.options);
         const params = addRsqlFilterToParams(
-            { workspaceId: this.workspace },
+            {
+                workspaceId: this.workspace,
+                // opt-in: `metaInclude=permissions` on this endpoint is not understood by older
+                // backends, so it must stay off unless the caller explicitly asks for it
+                ...(this.options.loadPermissions ? { metaInclude: ["permissions" as const] } : {}),
+            },
             rsqlAnd(rsqlTagFilter, rsqlSearchFilter),
         );
 

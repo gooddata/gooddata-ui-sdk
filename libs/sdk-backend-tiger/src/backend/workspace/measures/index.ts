@@ -25,6 +25,7 @@ import type {
     IMeasureExpressionToken,
     IMeasureKeyDrivers,
     IMeasureReferencing,
+    ISaveMeasureOptions,
     IWorkspaceMeasuresService,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -135,7 +136,10 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         );
     }
 
-    async createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject> {
+    async createMeasure(
+        measure: IMeasureMetadataObjectDefinition,
+        options: ISaveMeasureOptions = {},
+    ): Promise<IMeasureMetadataObject> {
         const metricAttributes = convertMetricToBackend(measure);
         const result = await this.authCall((client) => {
             return EntitiesApi_CreateEntityMetrics(client.axios, client.basePath, {
@@ -147,6 +151,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                         attributes: metricAttributes,
                     },
                 },
+                ...(options.loadPermissions ? { metaInclude: ["permissions" as const] } : {}),
             });
         });
 

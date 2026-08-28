@@ -18,7 +18,7 @@ export const ScheduledExportDraftContextProvider = ScheduledExportDraftContext.P
  * `ScheduledEmailDialogComponent` must check that flag before calling this. That state is on the
  * ordinary path here: a widget export renders while its filters load.
  *
- * @internal
+ * @alpha
  */
 export function useScheduledExportDraft(): IScheduledExportDraftContextValue {
     return (

@@ -2,7 +2,7 @@
 
 import { type ReactNode } from "react";
 
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { RawIntlProvider } from "react-intl";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -15,12 +15,13 @@ import {
 } from "@gooddata/sdk-model";
 
 import { selectCatalogParameterByRef } from "../../../model/store/catalog/catalogSelectors.js";
+import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { tabsActions } from "../../../model/store/tabs/index.js";
 import { type ParameterReconciliation } from "../../../model/store/tabs/parameters/parametersHelpers.js";
 import {
+    selectParameterDisplayValueByRef,
     selectParameterReconciliationByRef,
-    selectParameterRuntimeOverrideByRef,
 } from "../../../model/store/tabs/parameters/parametersSelectors.js";
 import { createInternalIntl } from "../../localization/createInternalIntl.js";
 
@@ -100,7 +101,8 @@ const RESET_TOOLTIP =
     "The original value is out of range, so the default is applied until you set a valid value.";
 
 let mockReconciliation: ParameterReconciliation | undefined;
-const mockCaptured: { warningTooltip?: string; value?: ParameterValue } = {};
+let mockIsApplyAllAtOnce = false;
+let mockStagedValue: ParameterValue | undefined;
 const mockUseDashboardSelector = vi.fn();
 const mockDispatch = vi.fn();
 
@@ -122,22 +124,6 @@ vi.mock("../../dragAndDrop/DraggableChipSource.js", () => ({
     DraggableChipSource: ({ children }: { children: ReactNode }) => <>{children}</>,
 }));
 
-vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
-    const actual = (await importOriginal()) as Record<string, unknown>;
-    return {
-        ...actual,
-        ParameterControlButton: (props: {
-            warningTooltip?: string;
-            value?: ParameterValue;
-            onClick?: () => void;
-        }) => {
-            mockCaptured.warningTooltip = props.warningTooltip;
-            mockCaptured.value = props.value;
-            return <button data-testid="mock-parameter-chip" onClick={props.onClick} />;
-        },
-    };
-});
-
 function renderFilter(renderedParameter: IDashboardParameter = parameter) {
     return render(
         <RawIntlProvider value={createInternalIntl()}>
@@ -146,8 +132,8 @@ function renderFilter(renderedParameter: IDashboardParameter = parameter) {
     );
 }
 
-function openDropdown() {
-    fireEvent.click(screen.getByTestId("mock-parameter-chip"));
+function openDropdown(name: string) {
+    fireEvent.click(screen.getByRole("button", { name }));
 }
 
 function getDropdownInput() {
@@ -157,8 +143,8 @@ function getDropdownInput() {
 describe("DashboardParameterFilter", () => {
     beforeEach(() => {
         mockReconciliation = undefined;
-        mockCaptured.warningTooltip = undefined;
-        mockCaptured.value = undefined;
+        mockIsApplyAllAtOnce = false;
+        mockStagedValue = undefined;
         mockDispatch.mockReset();
         mockUseDashboardSelector.mockImplementation((selector: unknown) => {
             if (selector === selectCatalogParameterByRef(paramRef)) {
@@ -170,17 +156,20 @@ describe("DashboardParameterFilter", () => {
             if (selector === selectCatalogParameterByRef(enumRef)) {
                 return enumWorkspaceParameter;
             }
-            if (selector === selectParameterRuntimeOverrideByRef(paramRef)) {
-                return 250;
+            if (selector === selectParameterDisplayValueByRef(paramRef)) {
+                return mockStagedValue ?? 250;
             }
-            if (selector === selectParameterRuntimeOverrideByRef(scenarioRef)) {
-                return "Budget";
+            if (selector === selectParameterDisplayValueByRef(scenarioRef)) {
+                return mockStagedValue ?? "Budget";
             }
-            if (selector === selectParameterRuntimeOverrideByRef(enumRef)) {
-                return "budget";
+            if (selector === selectParameterDisplayValueByRef(enumRef)) {
+                return mockStagedValue ?? "budget";
             }
             if (selector === selectParameterReconciliationByRef(paramRef)) {
                 return mockReconciliation;
+            }
+            if (selector === selectIsApplyFiltersAllAtOnceEnabledAndSet) {
+                return mockIsApplyAllAtOnce;
             }
             if (selector === selectIsInEditMode) {
                 return false;
@@ -189,38 +178,43 @@ describe("DashboardParameterFilter", () => {
         });
     });
 
-    it("wires the localized warningTooltip when the reconciliation is a reset", () => {
+    it("shows the localized reset warning when the reconciliation is a reset", async () => {
         mockReconciliation = "reset";
         renderFilter();
-        expect(mockCaptured.warningTooltip).toBe(RESET_TOOLTIP);
+        act(() => {
+            screen.getByRole("button", { name: "Top N is 250" }).focus();
+        });
+        expect(await screen.findByRole("tooltip")).toHaveTextContent(RESET_TOOLTIP);
     });
 
     it.each([undefined, "removed", "incompatible"] as const)(
-        "passes no warningTooltip when the reconciliation is %s",
+        "shows no warning when the reconciliation is %s",
         (reconciliation) => {
             mockReconciliation = reconciliation;
             renderFilter();
-            expect(mockCaptured.warningTooltip).toBeUndefined();
+            expect(screen.getByRole("button", { name: "Top N is 250" })).not.toHaveAttribute(
+                "aria-describedby",
+            );
         },
     );
 
     it("renders the number control for a NUMBER parameter", () => {
         renderFilter(activeNumberParameter);
-        openDropdown();
+        openDropdown("Top N is 250");
         expect(getDropdownInput()).toHaveAttribute("type", "number");
         expect(getDropdownInput()).toHaveValue(250);
     });
 
     it("renders the free-text control for a STRING parameter", () => {
         renderFilter(activeStringParameter);
-        openDropdown();
+        openDropdown("Scenario is Budget");
         expect(getDropdownInput()).toHaveAttribute("type", "text");
         expect(getDropdownInput()).toHaveValue("Budget");
     });
 
     it("dispatches the typed string as the runtime value on Apply", () => {
         renderFilter(activeStringParameter);
-        openDropdown();
+        openDropdown("Scenario is Budget");
         fireEvent.change(getDropdownInput(), { target: { value: "Forecast" } });
         fireEvent.click(screen.getByTestId("parameter-control-dropdown-apply"));
         expect(mockDispatch).toHaveBeenCalledWith(
@@ -228,9 +222,27 @@ describe("DashboardParameterFilter", () => {
         );
     });
 
+    it("dispatches the working value instead of the runtime value on Apply under apply-all-at-once", () => {
+        mockIsApplyAllAtOnce = true;
+        renderFilter(activeStringParameter);
+        openDropdown("Scenario is Budget");
+        fireEvent.change(getDropdownInput(), { target: { value: "Forecast" } });
+        fireEvent.click(screen.getByTestId("parameter-control-dropdown-apply"));
+        expect(mockDispatch).toHaveBeenCalledWith(
+            tabsActions.setParameterWorkingValue({ ref: scenarioRef, value: "Forecast" }),
+        );
+    });
+
+    it("shows the staged value on the parameter control and in the dropdown", () => {
+        mockStagedValue = "Staged";
+        renderFilter(activeStringParameter);
+        openDropdown("Scenario is Staged");
+        expect(getDropdownInput()).toHaveValue("Staged");
+    });
+
     it("renders the enum dropdown with the allowed value titles for a constrained STRING parameter", async () => {
         renderFilter(activeEnumParameter);
-        openDropdown();
+        openDropdown("Scenario is Budget Plan");
 
         expect(screen.getByTestId("parameter-control-allowed-values-dropdown")).toBeInTheDocument();
         const items = await screen.findAllByRole("option");
@@ -239,7 +251,7 @@ describe("DashboardParameterFilter", () => {
 
     it("dispatches the clicked allowed value's raw value, not its title", async () => {
         renderFilter(activeEnumParameter);
-        openDropdown();
+        openDropdown("Scenario is Budget Plan");
 
         fireEvent.click(await screen.findByText("Forecast"));
 
@@ -248,16 +260,14 @@ describe("DashboardParameterFilter", () => {
         );
     });
 
-    it("shows the allowed value's title on the chip, never the raw value", () => {
+    it("shows the allowed value's title on the button, never the raw value", () => {
         renderFilter(activeEnumParameter);
-
-        expect(mockCaptured.value).toBe("Budget Plan");
+        expect(screen.getByRole("button", { name: "Scenario is Budget Plan" })).toBeInTheDocument();
     });
 
-    it("shows the allowed value's title on a readonly chip", () => {
+    it("shows the allowed value's title on a readonly button", () => {
         renderFilter({ ...activeEnumParameter, mode: DashboardParameterModeValues.READONLY });
-
-        expect(mockCaptured.value).toBe("Budget Plan");
+        expect(screen.getByRole("button", { name: "Scenario is Budget Plan" })).toBeInTheDocument();
     });
 
     it("renders nothing when the workspace parameter type differs from the dashboard parameter type", () => {
@@ -267,6 +277,6 @@ describe("DashboardParameterFilter", () => {
             parameterType: "STRING",
         };
         renderFilter(mismatched);
-        expect(screen.queryByTestId("mock-parameter-chip")).not.toBeInTheDocument();
+        expect(screen.queryByRole("button")).not.toBeInTheDocument();
     });
 });

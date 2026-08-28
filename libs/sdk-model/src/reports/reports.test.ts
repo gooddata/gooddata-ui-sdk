@@ -1,8 +1,13 @@
 // (C) 2026 GoodData Corporation
 
-import { describe, expect, it } from "vitest";
+import { assert, describe, expect, it } from "vitest";
 
-import { BuiltInReportPageLayouts } from "./builtinPageLayouts.js";
+import {
+    BuiltInReportPageLayoutPortraitCover,
+    BuiltInReportPageLayoutPortraitSection,
+    BuiltInReportPageLayoutPortraitSummary,
+    BuiltInReportPageLayouts,
+} from "./builtinPageLayouts.js";
 import { isReportContentV1 } from "./content.js";
 import {
     newAdHocReportDefinition,
@@ -14,6 +19,12 @@ import {
     reportContentPage,
 } from "./factory.js";
 import { type ReportPageLayoutNode, isReportLayoutSlotRef } from "./layout.js";
+import {
+    DefaultReportPageFormat,
+    ReportPageFormatAspectRatios,
+    ReportPageFormats,
+    isReportPageFormat,
+} from "./pageFormat.js";
 import {
     type IReportPageBody,
     isReportPageLayout,
@@ -200,8 +211,8 @@ describe("validateReportPageBody", () => {
 });
 
 describe("BuiltInReportPageLayouts", () => {
-    it("contains 15 pages, all flagged and locked", () => {
-        expect(BuiltInReportPageLayouts).toHaveLength(15);
+    it("contains 24 pages, all flagged and locked", () => {
+        expect(BuiltInReportPageLayouts).toHaveLength(24);
         for (const page of BuiltInReportPageLayouts) {
             expect(page.isBuiltIn).toBe(true);
             expect(page.isLocked).toBe(true);
@@ -231,11 +242,49 @@ describe("BuiltInReportPageLayouts", () => {
         }
     });
 
+    it("declares a page format on every page", () => {
+        for (const page of BuiltInReportPageLayouts) {
+            expect(isReportPageFormat(page.content.format)).toBe(true);
+        }
+    });
+
+    it("offers both widescreen and portrait pages", () => {
+        const formats = new Set(BuiltInReportPageLayouts.map((page) => page.content.format));
+        expect(formats).toEqual(new Set(["widescreen", "a4Portrait"]));
+    });
+
+    it("gives every portrait page a cover, a divider and content variants", () => {
+        const portrait = BuiltInReportPageLayouts.filter((page) => page.content.format === "a4Portrait");
+        expect(portrait).toHaveLength(9);
+        expect(portrait).toContain(BuiltInReportPageLayoutPortraitCover);
+        expect(portrait).toContain(BuiltInReportPageLayoutPortraitSection);
+        expect(portrait).toContain(BuiltInReportPageLayoutPortraitSummary);
+        expect(portrait.map((page) => page.content.kind)).toContain("cover");
+        expect(portrait.map((page) => page.content.kind)).toContain("section");
+    });
+
+    it("lays portrait content out in a column, never a wide row of visualizations", () => {
+        const widestRow = (node: ReportPageLayoutNode): number =>
+            isReportLayoutSlotRef(node)
+                ? 0
+                : Math.max(
+                      node.direction === "row" ? node.children.length : 0,
+                      ...node.children.map(widestRow),
+                  );
+
+        for (const page of BuiltInReportPageLayouts.filter(
+            (candidate) => candidate.content.format === "a4Portrait",
+        )) {
+            // The footer places a logo next to the page number, so two side by side is the floor.
+            expect(widestRow(page.content.layout)).toBeLessThanOrEqual(2);
+        }
+    });
+
     it("summary variants place the summary slot in the layout", () => {
         const withSummary = BuiltInReportPageLayouts.filter((page) =>
             page.content.slots.some((slot) => slot.localIdentifier === "summary"),
         );
-        expect(withSummary).toHaveLength(5);
+        expect(withSummary).toHaveLength(7);
         for (const page of withSummary) {
             const slotIds: string[] = [];
             const visit = (node: ReportPageLayoutNode): void => {
@@ -248,5 +297,151 @@ describe("BuiltInReportPageLayouts", () => {
             visit(page.content.layout);
             expect(slotIds).toContain("summary");
         }
+    });
+});
+
+describe("box styling", () => {
+    const imageSlot = (localIdentifier: string) =>
+        ({ type: "image", localIdentifier, source: { type: "url", url: "https://x/bg.png" } }) as const;
+
+    const body = (overrides: Partial<IReportPageBody>): IReportPageBody => ({
+        layout: { type: "slotRef", slotId: "text1" },
+        slots: [{ type: "text", localIdentifier: "text1", kind: "body" }],
+        ...overrides,
+    });
+
+    it("accepts an image background referencing an image slot, counting it as placed", () => {
+        const issues = validateReportPageBody(
+            body({
+                style: { background: { type: "image", slotId: "bg" } },
+                slots: [{ type: "text", localIdentifier: "text1", kind: "body" }, imageSlot("bg")],
+            }),
+        );
+
+        expect(issues).toEqual([]);
+    });
+
+    it("warns about a background reference with no slot definition", () => {
+        const issues = validateReportPageBody(
+            body({ style: { background: { type: "image", slotId: "bg" } } }),
+        );
+
+        expect(issues).toEqual([
+            expect.objectContaining({ severity: "warning", message: expect.stringContaining('"bg"') }),
+        ]);
+    });
+
+    it("rejects a background reference to a non-image slot", () => {
+        const issues = validateReportPageBody(
+            body({ style: { background: { type: "image", slotId: "text1" } } }),
+        );
+
+        expect(issues).toEqual([
+            expect.objectContaining({
+                severity: "error",
+                message: expect.stringContaining("not an image slot"),
+            }),
+        ]);
+    });
+
+    it("still reports a slot as unplaced when its only use is an invalid background reference", () => {
+        const issues = validateReportPageBody(
+            body({
+                style: { background: { type: "image", slotId: "orphan" } },
+                slots: [
+                    { type: "text", localIdentifier: "text1", kind: "body" },
+                    { type: "text", localIdentifier: "orphan", kind: "body" },
+                ],
+            }),
+        );
+
+        expect(issues).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({
+                    severity: "error",
+                    message: expect.stringContaining("not an image slot"),
+                }),
+                expect.objectContaining({
+                    severity: "warning",
+                    message: expect.stringContaining('"orphan" is not placed'),
+                }),
+            ]),
+        );
+    });
+
+    it("prefixes background references when cloning a page into content", () => {
+        const definition = newReportPageLayoutDefinition("Hero", {
+            style: { background: { type: "image", slotId: "cover" } },
+            layout: {
+                type: "section",
+                direction: "column",
+                style: { background: { type: "image", slotId: "band" } },
+                children: [{ type: "slotRef", slotId: "text1" }],
+            },
+            slots: [
+                { type: "text", localIdentifier: "text1", kind: "body" },
+                imageSlot("cover"),
+                imageSlot("band"),
+            ],
+        });
+
+        const page = newReportContentPageFromLayout(definition, "p1");
+
+        expect(page.style?.background).toEqual({ type: "image", slotId: "p1_cover" });
+        const root = page.layout;
+        expect(isReportLayoutSlotRef(root)).toBe(false);
+        if (!isReportLayoutSlotRef(root)) {
+            expect(root.style?.background).toEqual({ type: "image", slotId: "p1_band" });
+        }
+        expect(validateReportPageBody(page)).toEqual([]);
+    });
+});
+
+describe("built-in footers", () => {
+    it("pin the logo lower left and the page number lower right", () => {
+        for (const layout of BuiltInReportPageLayouts) {
+            const logo = layout.content.slots.find((slot) => slot.localIdentifier === "footerLogo");
+            const pageNumber = layout.content.slots.find(
+                (slot) => slot.localIdentifier === "footerPageNumber",
+            );
+            assert(isReportImageSlot(logo));
+            expect(logo.style).toEqual({ horizontalAlign: "start", verticalAlign: "end" });
+            assert(isReportTextSlot(pageNumber));
+            expect(pageNumber.style).toEqual({ horizontalAlign: "end", verticalAlign: "end" });
+        }
+    });
+});
+
+describe("ReportPageFormat", () => {
+    it("accepts only the known formats", () => {
+        for (const format of ReportPageFormats) {
+            expect(isReportPageFormat(format)).toBe(true);
+        }
+        expect(isReportPageFormat("a5Portrait")).toBe(false);
+        expect(isReportPageFormat(undefined)).toBe(false);
+    });
+
+    it("defaults to the widescreen slide shape", () => {
+        expect(DefaultReportPageFormat).toBe("widescreen");
+        expect(ReportPageFormatAspectRatios[DefaultReportPageFormat]).toBeGreaterThan(1);
+    });
+
+    it("describes the paper formats as upright", () => {
+        expect(ReportPageFormatAspectRatios["a4Portrait"]).toBeLessThan(1);
+        expect(ReportPageFormatAspectRatios["letterPortrait"]).toBeLessThan(1);
+        // Letter is the squarer of the two sheets.
+        expect(ReportPageFormatAspectRatios["letterPortrait"]).toBeGreaterThan(
+            ReportPageFormatAspectRatios["a4Portrait"],
+        );
+    });
+
+    it("reports an unknown format on a page body as an error", () => {
+        const issues = validateReportPageBody({
+            format: "a5Portrait" as never,
+            layout: { type: "slotRef", slotId: "title" },
+            slots: [{ type: "text", localIdentifier: "title", kind: "title" }],
+        });
+
+        expect(issues).toEqual([{ severity: "error", message: 'Unknown page format "a5Portrait".' }]);
     });
 });

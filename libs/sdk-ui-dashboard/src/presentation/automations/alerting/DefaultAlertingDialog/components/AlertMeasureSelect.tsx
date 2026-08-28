@@ -14,7 +14,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { type AlertMetric } from "../../types.js";
-import { getMeasureTitle } from "../utils/getters.js";
+import { getMeasureTitle } from "../../utils/getters.js";
 
 export interface IAlertMetricSelectProps {
     id?: string;

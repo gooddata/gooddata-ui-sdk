@@ -43,6 +43,7 @@ export {
     type IChatConversationMultipartLocalPart,
     type IChatConversationLocal,
     type IChatConversationSystemContent,
+    type GenAIAgent,
 } from "./model.js";
 export {
     type ChatEventHandler,
@@ -139,8 +140,11 @@ export {
     DefaultLandingContainer,
     type ILandingContentProps,
 } from "./components/customized/LandingContainer.js";
+export { DefaultAgentItem } from "./components/customized/AgentItem.js";
+export { DefaultDisclaimer } from "./components/customized/Disclaimer.js";
 export {
     type IGenAIAssistantSlots,
     type IGenAIAssistantLandingScreenProps,
     type IGenAIAssistantDisclaimerProps,
+    type IGenAIAssistantAgentItemProps,
 } from "./components/customized/types.js";

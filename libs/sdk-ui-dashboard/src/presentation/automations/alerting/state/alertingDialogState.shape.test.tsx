@@ -100,7 +100,7 @@ vi.mock("react-intl", async () => {
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { useAlertingDialogContext } from "../../contexts/AlertingDialogContext.js";
 import { useAlertThreshold } from "../DefaultAlertingDialog/hooks/useAlertThreshold.js";
-import { getAlertThreshold } from "../DefaultAlertingDialog/utils/getters.js";
+import { getAlertThreshold } from "../utils/getters.js";
 
 import { useAlertActions } from "./AlertActionsContext.js";
 import { useAlertData } from "./AlertDataContext.js";

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
@@ -214,4 +214,19 @@ export function attributesFind(
     const predicate = typeof idOrFun === "string" ? idMatchAttribute(idOrFun) : idOrFun;
 
     return attributes.find(predicate);
+}
+
+/**
+ * Tests whether the attribute is a computed attribute.
+ *
+ * @remarks
+ * Computed attributes are modeled as normal attributes whose display form reference uses the
+ * `computedAttribute` object type. The fabricated display form shares the computed attribute's identity.
+ *
+ * @param attribute - attribute to work with
+ * @public
+ */
+export function isComputedAttribute(attribute: IAttribute): boolean {
+    const displayForm = attributeDisplayFormRef(attribute);
+    return isIdentifierRef(displayForm) && displayForm.type === "computedAttribute";
 }

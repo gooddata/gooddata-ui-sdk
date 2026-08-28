@@ -4,6 +4,7 @@
 
 ```ts
 
+import { AccessGranularPermission } from '@gooddata/sdk-model';
 import { AttributeModifications } from '@gooddata/sdk-model';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { CatalogItemType } from '@gooddata/sdk-model';
@@ -1364,6 +1365,8 @@ export class MeasureMetadataObjectBuilder<T extends IMeasureMetadataObject = IMe
     isLocked(isLocked: boolean): this;
     // (undocumented)
     metricType(metricType?: MetricType): this;
+    // (undocumented)
+    permissions(permissions?: AccessGranularPermission[]): this;
     // (undocumented)
     tags(tags: string[]): this;
     // (undocumented)

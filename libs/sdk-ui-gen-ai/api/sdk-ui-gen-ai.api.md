@@ -32,6 +32,8 @@ import type { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import type { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { ISlotProps } from '@gooddata/sdk-ui-kit';
 import { IUiButtonProps } from '@gooddata/sdk-ui-kit';
+import { IUiMenuInteractiveItemProps } from '@gooddata/sdk-ui-kit';
+import { IUiMenuInteractiveItemWrapperProps } from '@gooddata/sdk-ui-kit';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { JSX } from 'react/jsx-runtime';
 import { ReactNode } from 'react';
@@ -245,6 +247,12 @@ export const clearThreadAction: ActionCreatorWithoutPayload<"messages/clearThrea
 // @public (undocumented)
 export type Contents = TextContents | RoutingContents | ReasoningContents | SearchContents | SemanticSearchContents | VisualizationContents | ChangeAnalysisContents | ErrorContents;
 
+// @public
+export function DefaultAgentItem(props: IGenAIAssistantAgentItemProps): JSX.Element;
+
+// @beta (undocumented)
+export function DefaultDisclaimer(_props: IGenAIAssistantDisclaimerProps): JSX.Element;
+
 // @beta (undocumented)
 export function DefaultLandingContainer(input: ILandingContentProps): JSX.Element;
 
@@ -267,6 +275,15 @@ export function DefaultLandingTitleAscent(input: ILandingTitleProps): JSX.Elemen
 export type ErrorContents = {
     type: "error";
     text: string;
+};
+
+// @public
+export type GenAIAgent = {
+    id: string;
+    title: string;
+    description?: string;
+    modifiedAt?: string;
+    lastUsedAt?: string;
 };
 
 // @public
@@ -387,6 +404,14 @@ export type IChatConversationSystemContent = {
 };
 
 // @public
+export type IGenAIAssistantAgentItemProps = {
+    agent: GenAIAgent;
+    isSelected: boolean;
+    menuItemProps?: IUiMenuInteractiveItemWrapperProps;
+    Content?: ComponentType<IUiMenuInteractiveItemProps>;
+};
+
+// @public
 export type IGenAIAssistantDisclaimerProps = Record<string, never>;
 
 // @public
@@ -398,6 +423,7 @@ export type IGenAIAssistantLandingScreenProps = {
 
 // @public
 export interface IGenAIAssistantSlots {
+    AgentItem?: ComponentType<ISlotProps<IGenAIAssistantAgentItemProps>>;
     Disclaimer?: ComponentType<ISlotProps<IGenAIAssistantDisclaimerProps>>;
     LandingScreen?: ComponentType<ISlotProps<IGenAIAssistantLandingScreenProps>>;
 }

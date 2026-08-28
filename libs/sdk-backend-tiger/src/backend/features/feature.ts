@@ -460,6 +460,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableDashboardPartialRendering,
+            "enableDashboardPartialRendering",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDashboardPartialRendering,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.ProductionFeatures,
             "productionFeatures",
             "JSON",

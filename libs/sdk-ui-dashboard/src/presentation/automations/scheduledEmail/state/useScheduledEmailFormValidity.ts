@@ -14,8 +14,10 @@ import {
 } from "@gooddata/sdk-model";
 
 import { areAutomationsEqual } from "../../shared/utils/automationUtils.js";
-import { useScheduleValidation } from "../DefaultScheduledEmailDialog/hooks/useScheduleValidation.js";
+import { useScheduleValidation } from "../hooks/useScheduleValidation.js";
 import { isEmail } from "../utils/validate.js";
+
+import { type IScheduledExportDialogValidity } from "./types.js";
 
 export interface IUseScheduledEmailFormValidityProps {
     editedAutomation: IAutomationMetadataObjectDefinition;
@@ -30,16 +32,9 @@ export interface IUseScheduledEmailFormValidityProps {
     isOnMessageValid: boolean;
 }
 
-export function useScheduledEmailFormValidity(props: IUseScheduledEmailFormValidityProps): {
-    // `scheduledExportToEdit && areAutomationsEqual(...)` short-circuits to `undefined` (not `false`)
-    // when `scheduledExportToEdit` is unset (new-schedule mode) — this is the verbatim, pre-existing
-    // expression, preserved as-is; consumers treat it via truthiness.
-    isSubmitDisabled: boolean | undefined;
-    validationErrorMessage: string | undefined;
-    isParentValid: boolean;
-    allowExternalRecipients: boolean;
-    allowOnlyLoggedUserRecipients: boolean;
-} {
+export function useScheduledEmailFormValidity(
+    props: IUseScheduledEmailFormValidityProps,
+): IScheduledExportDialogValidity {
     const {
         editedAutomation,
         originalAutomation,

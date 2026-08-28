@@ -499,6 +499,10 @@ function* sanitizeFilterContext(
         .filter(isDashboardAttributeFilter)
         .map((f) => f.attributeFilter.displayForm);
 
+    // With enableDashboardPartialRendering on, the unavailableObjects store already knows which of
+    // these display forms are missing (resolved from the filter-context labels), so the lookups
+    // below could be skipped. Deferred until a failed availability check is reported explicitly:
+    // today it leaves the references unlisted, which here would keep a filter that cannot resolve.
     let availableRefs: ObjRef[];
     if (displayForms) {
         let missingRefs: ObjRef[] = [];

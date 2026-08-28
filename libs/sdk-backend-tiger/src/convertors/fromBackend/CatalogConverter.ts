@@ -121,7 +121,8 @@ export const convertMeasure = (
                     .created(measure.attributes?.createdAt ?? undefined)
                     .createdBy(convertUserIdentifier(measure.relationships?.createdBy, included))
                     .updated(measure.attributes?.modifiedAt ?? undefined)
-                    .updatedBy(convertUserIdentifier(measure.relationships?.modifiedBy, included)),
+                    .updatedBy(convertUserIdentifier(measure.relationships?.modifiedBy, included))
+                    .permissions(measure.meta?.permissions),
             )
             .modify(commonGroupableCatalogItemModifications(measure)),
     );

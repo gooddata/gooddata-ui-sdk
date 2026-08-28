@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-ext: let the Mekko chart declare the Stack to 100% checkbox visibility so it is not hidden for a Height-only metric",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "nikola.cech@gooddata.com"
+}

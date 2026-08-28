@@ -26,11 +26,11 @@ vi.hoisted(() => {
     vi.resetModules();
 });
 
-vi.mock("../DefaultAlertingDialog/hooks/useAlertValidation.js", () => ({
+vi.mock("../hooks/useAlertValidation.js", () => ({
     useAlertValidation: vi.fn(),
 }));
 
-vi.mock("../DefaultAlertingDialog/utils/guards.js", () => ({
+vi.mock("../utils/guards.js", () => ({
     isAlertValueDefined: vi.fn(),
 }));
 
@@ -49,8 +49,8 @@ vi.mock("react-intl", async () => {
 // ---------------------------------------------------------------------------
 
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
-import * as useAlertValidationModule from "../DefaultAlertingDialog/hooks/useAlertValidation.js";
-import * as guardsModule from "../DefaultAlertingDialog/utils/guards.js";
+import * as useAlertValidationModule from "../hooks/useAlertValidation.js";
+import * as guardsModule from "../utils/guards.js";
 
 import { useAlertFormValidation, type IUseAlertFormValidationProps } from "./useAlertFormValidation.js";
 

@@ -20,7 +20,7 @@ function renderSelect(props: Partial<ITimezoneSelectProps> = {}) {
 }
 
 function openDropdown() {
-    fireEvent.click(screen.getByRole("combobox"));
+    fireEvent.click(screen.getByRole("button"));
 }
 
 describe("TimezoneSelect search accessibility", () => {

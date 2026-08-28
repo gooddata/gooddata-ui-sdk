@@ -39,15 +39,20 @@ import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 
 import { transformBuckets } from "./bucketHelper.js";
 
-/** Width-only + Stack By locks "Stack to 100%" via uiConfig only — never the durable user property. */
-function lockPercentStackingForWidthOnly(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
+/** Declares "Stack to 100%" visibility (the app heuristic misses a Height-only metric) and locks it checked for Width-only + Stack By — uiConfig only, never the durable user property. */
+function configurePercentStacking(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
     const buckets = referencePoint[BUCKETS];
-    const widthOnlyWithStack =
-        !isEmpty(getBucketItems(buckets, BucketNames.MEASURES)) &&
-        isEmpty(getBucketItems(buckets, BucketNames.SECONDARY_MEASURES)) &&
-        !isEmpty(getBucketItems(buckets, BucketNames.STACK));
+    const hasWidth = !isEmpty(getBucketItems(buckets, BucketNames.MEASURES));
+    const hasHeight = !isEmpty(getBucketItems(buckets, BucketNames.SECONDARY_MEASURES));
+    const hasStack = !isEmpty(getBucketItems(buckets, BucketNames.STACK));
 
-    if (widthOnlyWithStack) {
+    set(
+        referencePoint,
+        ["uiConfig", "optionalStacking", "stackToPercentVisible"],
+        hasStack && (hasWidth || hasHeight),
+    );
+
+    if (hasWidth && !hasHeight && hasStack) {
         set(referencePoint, ["uiConfig", "optionalStacking", "disabled"], true);
         set(referencePoint, ["uiConfig", "optionalStacking", "stackMeasuresToPercent"], true);
     }
@@ -136,7 +141,7 @@ export class PluggableMekko extends PluggableBaseChart {
         newReferencePoint[BUCKETS] = transformBuckets(newReferencePoint.buckets);
 
         newReferencePoint = setMekkoUiConfig(newReferencePoint, this.intl, this.type);
-        newReferencePoint = lockPercentStackingForWidthOnly(newReferencePoint);
+        newReferencePoint = configurePercentStacking(newReferencePoint);
         newReferencePoint = configurePercent(newReferencePoint, true);
         newReferencePoint = configureOverTimeComparison(newReferencePoint);
         newReferencePoint = getReferencePointWithSupportedProperties(

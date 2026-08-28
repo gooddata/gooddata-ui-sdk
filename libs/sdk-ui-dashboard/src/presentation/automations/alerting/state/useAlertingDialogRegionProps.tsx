@@ -13,9 +13,9 @@ import {
     type IAutomationDialogDestinationProps,
     type IAutomationDialogRecipientsProps,
 } from "../../shared/slots/types.js";
-import { isAnomalyDetection } from "../DefaultAlertingDialog/utils/guards.js";
-import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
 import { type AlertingDialogHeaderDefaultProps, type IAlertingDialogFiltersProps } from "../types.js";
+import { isAnomalyDetection } from "../utils/guards.js";
+import { isMobileView } from "../utils/responsive.js";
 
 import { useAlertActions } from "./AlertActionsContext.js";
 import { useAlertData } from "./AlertDataContext.js";
@@ -27,7 +27,7 @@ import { useAlertSelectedValues } from "./useAlertSelectedValues.js";
 /**
  * Inputs of {@link useAlertingDialogHeaderProps} that come from the dialog rather than its state.
  *
- * @internal
+ * @alpha
  */
 export interface IUseAlertingDialogHeaderPropsInput {
     /**
@@ -46,7 +46,7 @@ export interface IUseAlertingDialogHeaderPropsInput {
  *
  * Throws outside the alerting dialog's state providers.
  *
- * @internal
+ * @alpha
  */
 export function useAlertingDialogHeaderProps({
     onCancel,
@@ -92,7 +92,7 @@ export function useAlertingDialogHeaderProps({
  *
  * Throws outside the alerting dialog's state providers.
  *
- * @internal
+ * @alpha
  */
 export function useAlertingDialogFiltersProps(): IAlertingDialogFiltersProps {
     const { editedAutomation } = useAlertDraft();
@@ -125,7 +125,7 @@ export function useAlertingDialogFiltersProps(): IAlertingDialogFiltersProps {
  *
  * Throws outside the alerting dialog's state providers.
  *
- * @internal
+ * @alpha
  */
 export function useAlertingDialogDestinationProps(): IAutomationDialogDestinationProps {
     const { notificationChannels } = useAlertingDialogContext();
@@ -144,7 +144,7 @@ export function useAlertingDialogDestinationProps(): IAutomationDialogDestinatio
  *
  * Throws outside the alerting dialog's state providers.
  *
- * @internal
+ * @alpha
  */
 export function useAlertingDialogRecipientsProps(): IAutomationDialogRecipientsProps {
     const { maxAutomationsRecipients, externalRecipient: externalRecipientOverride } =
@@ -172,7 +172,7 @@ export function useAlertingDialogRecipientsProps(): IAutomationDialogRecipientsP
 /**
  * Inputs of {@link useAlertingDialogActionBarProps} that come from the dialog rather than its state.
  *
- * @internal
+ * @alpha
  */
 export interface IUseAlertingDialogActionBarPropsInput {
     /**
@@ -181,7 +181,7 @@ export interface IUseAlertingDialogActionBarPropsInput {
     onCancel?: () => void;
 
     /**
-     * Submits the automation; the dialog's single submit path (see `useAlertSubmit`).
+     * Submits the automation; the dialog's single submit path (see {@link useAlertSubmit}).
      */
     onSubmit: () => void;
 
@@ -201,7 +201,7 @@ export interface IUseAlertingDialogActionBarPropsInput {
  *
  * Throws outside the alerting dialog's state providers.
  *
- * @internal
+ * @alpha
  */
 export function useAlertingDialogActionBarProps({
     onCancel,

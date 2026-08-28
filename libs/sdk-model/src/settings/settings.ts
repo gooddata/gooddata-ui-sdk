@@ -764,6 +764,12 @@ export interface IFeatureFlags {
     enableDashboardShareDialogLink?: boolean;
 
     /**
+     * Enables partial rendering of dashboards that reference objects the user cannot access: the
+     * unavailable references are detected and reported to the dashboard instead of being dropped.
+     */
+    enableDashboardPartialRendering?: boolean;
+
+    /**
      * Enable production features
      *
      * @alpha

@@ -20,7 +20,7 @@ vi.hoisted(() => {
     vi.resetModules();
 });
 
-vi.mock("../DefaultAlertingDialog/utils/getters.js", () => ({
+vi.mock("../utils/getters.js", () => ({
     getAlertMeasure: vi.fn(),
     getAlertCompareOperator: vi.fn(),
     getAlertRelativeOperator: vi.fn(),
@@ -38,8 +38,8 @@ vi.mock("../../contexts/AlertingDialogContext.js", () => ({
 }));
 
 import * as AlertingDialogContextModule from "../../contexts/AlertingDialogContext.js";
-import * as gettersModule from "../DefaultAlertingDialog/utils/getters.js";
 import { type AlertAttribute, type AlertMetric } from "../types.js";
+import * as gettersModule from "../utils/getters.js";
 
 import { AlertDataContextProvider } from "./AlertDataContext.js";
 import { AlertDraftContextProvider } from "./AlertDraftContext.js";

@@ -18,7 +18,7 @@ export const AlertActionsContextProvider = AlertActionsContext.Provider;
  * must check that flag before calling this. On the alerting side that state is reached only by an
  * automations refresh while the dialog is open, so it will not appear in manual testing.
  *
- * @internal
+ * @alpha
  */
 export function useAlertActions(): IAlertActionsContextValue {
     return useContext(AlertActionsContext) ?? missingAlertStateProvider("useAlertActions");

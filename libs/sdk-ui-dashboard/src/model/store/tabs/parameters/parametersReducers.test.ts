@@ -377,4 +377,140 @@ describe("parameters reducers (per tab)", () => {
             ]);
         });
     });
+
+    describe("setParameterWorkingValue", () => {
+        it("stages the value without touching runtimeOverride", () => {
+            const initial = makeState([{ parameter: topNParameter, runtimeOverride: 10 }]);
+
+            const next = produce(initial, (draft) =>
+                parametersReducers.setParameterWorkingValue(
+                    draft,
+                    tabsActions.setParameterWorkingValue({ ref: topNRef, value: 99 }),
+                ),
+            );
+
+            expect(activeParameters(next as ITabsState)[0]?.runtimeOverride).toBe(10);
+            expect(activeParameters(next as ITabsState)[0]?.workingOverride).toBe(99);
+        });
+
+        it("staging the applied value leaves no workingOverride", () => {
+            const initial = makeState([{ parameter: topNParameter, runtimeOverride: 10 }]);
+
+            const next = produce(initial, (draft) =>
+                parametersReducers.setParameterWorkingValue(
+                    draft,
+                    tabsActions.setParameterWorkingValue({ ref: topNRef, value: 10 }),
+                ),
+            );
+
+            expect(activeParameters(next as ITabsState)[0]).not.toHaveProperty("workingOverride");
+        });
+
+        it("staging back to the applied value leaves no workingOverride", () => {
+            const initial = makeState([{ parameter: topNParameter, runtimeOverride: 10 }]);
+
+            const staged = produce(initial, (draft) =>
+                parametersReducers.setParameterWorkingValue(
+                    draft,
+                    tabsActions.setParameterWorkingValue({ ref: topNRef, value: 99 }),
+                ),
+            );
+            const stagedBack = produce(staged, (draft) =>
+                parametersReducers.setParameterWorkingValue(
+                    draft,
+                    tabsActions.setParameterWorkingValue({ ref: topNRef, value: 10 }),
+                ),
+            );
+
+            expect(activeParameters(stagedBack as ITabsState)[0]).not.toHaveProperty("workingOverride");
+            expect(activeParameters(stagedBack as ITabsState)[0]?.runtimeOverride).toBe(10);
+        });
+
+        it("is a no-op when ref is unknown on the active tab", () => {
+            const initial = makeState([{ parameter: topNParameter, runtimeOverride: 10 }]);
+
+            const next = produce(initial, (draft) =>
+                parametersReducers.setParameterWorkingValue(
+                    draft,
+                    tabsActions.setParameterWorkingValue({ ref: sampleRef, value: 99 }),
+                ),
+            );
+
+            expect(activeParameters(next as ITabsState)).toEqual([
+                { parameter: topNParameter, runtimeOverride: 10 },
+            ]);
+        });
+    });
+
+    describe("runtime writes supersede staging", () => {
+        it("setParameterRuntimeValue drops the staged value for the written ref", () => {
+            const initial = makeState([
+                { parameter: topNParameter, runtimeOverride: 10, workingOverride: 99 },
+            ]);
+
+            const next = produce(initial, (draft) =>
+                parametersReducers.setParameterRuntimeValue(
+                    draft,
+                    tabsActions.setParameterRuntimeValue({ ref: topNRef, value: 50 }),
+                ),
+            );
+
+            expect(activeParameters(next as ITabsState)[0]?.runtimeOverride).toBe(50);
+            expect(activeParameters(next as ITabsState)[0]).not.toHaveProperty("workingOverride");
+        });
+
+        it("setParameterRuntimeValue drops staging even when the runtime value does not change", () => {
+            const initial = makeState([
+                { parameter: topNParameter, runtimeOverride: 10, workingOverride: 99 },
+            ]);
+
+            const next = produce(initial, (draft) =>
+                parametersReducers.setParameterRuntimeValue(
+                    draft,
+                    tabsActions.setParameterRuntimeValue({ ref: topNRef, value: 10 }),
+                ),
+            );
+
+            expect(activeParameters(next as ITabsState)[0]?.runtimeOverride).toBe(10);
+            expect(activeParameters(next as ITabsState)[0]).not.toHaveProperty("workingOverride");
+        });
+
+        it("setParameterRuntimeValues drops staging only for the written refs", () => {
+            const sampleParameter: IDashboardParameter = {
+                ref: sampleRef,
+                parameterType: "NUMBER",
+                mode: "active",
+            };
+            const initial = makeState([
+                { parameter: topNParameter, runtimeOverride: 10, workingOverride: 99 },
+                { parameter: sampleParameter, runtimeOverride: 100, workingOverride: 500 },
+            ]);
+
+            const next = produce(initial, (draft) =>
+                parametersReducers.setParameterRuntimeValues(
+                    draft,
+                    tabsActions.setParameterRuntimeValues({
+                        values: [{ ref: topNRef, value: 50 }],
+                    }),
+                ),
+            );
+
+            expect(activeParameters(next as ITabsState)[0]).not.toHaveProperty("workingOverride");
+            expect(activeParameters(next as ITabsState)[1]?.workingOverride).toBe(500);
+        });
+    });
+
+    describe("removeParameter with staged value", () => {
+        it("entry removal takes the staged value with it", () => {
+            const initial = makeState([
+                { parameter: topNParameter, runtimeOverride: 10, workingOverride: 99 },
+            ]);
+
+            const next = produce(initial, (draft) =>
+                parametersReducers.removeParameter(draft, tabsActions.removeParameter({ ref: topNRef })),
+            );
+
+            expect(activeParameters(next as ITabsState)).toEqual([]);
+        });
+    });
 });

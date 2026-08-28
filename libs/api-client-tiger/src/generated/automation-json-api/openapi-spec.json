@@ -1772,6 +1772,413 @@
                 },
                 "description": "Filter the result by applying multiple comparison and/or range conditions combined with OR logic. If conditions list is empty, no filtering is applied (all rows are returned)."
             },
+            "ConditionalFormatting": {
+                "required": [
+                    "enabled",
+                    "rules"
+                ],
+                "type": "object",
+                "properties": {
+                    "enabled": {
+                        "type": "boolean",
+                        "description": "Whether the rules are applied when rendering."
+                    },
+                    "rules": {
+                        "type": "array",
+                        "description": "Rules evaluated in order; within a target, the first matching condition wins.",
+                        "items": {
+                            "$ref": "#/components/schemas/ConditionalFormattingRule"
+                        }
+                    }
+                },
+                "description": "Conditional formatting for a table, with one entry per formatted column.",
+                "nullable": true
+            },
+            "ConditionalFormattingAbsoluteDateValue": {
+                "required": [
+                    "from",
+                    "kind",
+                    "to"
+                ],
+                "type": "object",
+                "description": "A fixed, inclusive date period.",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "from": {
+                                "type": "string",
+                                "description": "`YYYY-MM-DD`, or `YYYY-MM-DD HH:mm` at hour or minute granularity."
+                            },
+                            "kind": {
+                                "type": "string",
+                                "description": "The value kind.",
+                                "enum": [
+                                    "absoluteDate"
+                                ]
+                            },
+                            "to": {
+                                "type": "string",
+                                "description": "`YYYY-MM-DD`, or `YYYY-MM-DD HH:mm` at hour or minute granularity. Inclusive."
+                            }
+                        }
+                    }
+                ]
+            },
+            "ConditionalFormattingAttributeTarget": {
+                "required": [
+                    "attributeIdentifier",
+                    "kind"
+                ],
+                "type": "object",
+                "description": "An attribute column, addressed by its bucket item local identifier.",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "attributeIdentifier": {
+                                "type": "string",
+                                "example": "23990482d9d04e62a9c564a29be804f8"
+                            },
+                            "kind": {
+                                "type": "string",
+                                "description": "The target kind.",
+                                "enum": [
+                                    "attribute"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            "ConditionalFormattingCondition": {
+                "required": [
+                    "format",
+                    "operator",
+                    "value"
+                ],
+                "type": "object",
+                "properties": {
+                    "format": {
+                        "$ref": "#/components/schemas/ConditionalFormattingFormat"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "Client-assigned identifier, stable across edits.",
+                        "example": "d0538854-aac3-4fc6-9603-61f49bab6aa3"
+                    },
+                    "operator": {
+                        "type": "string",
+                        "description": "How a condition compares the cell value against its value.",
+                        "enum": [
+                            "ALL",
+                            "GREATER_THAN",
+                            "GREATER_THAN_OR_EQUAL_TO",
+                            "LESS_THAN",
+                            "LESS_THAN_OR_EQUAL_TO",
+                            "EQUAL_TO",
+                            "NOT_EQUAL_TO",
+                            "BETWEEN",
+                            "NOT_BETWEEN",
+                            "CONTAINS",
+                            "NOT_CONTAINS",
+                            "STARTS_WITH",
+                            "NOT_STARTS_WITH",
+                            "ENDS_WITH",
+                            "NOT_ENDS_WITH",
+                            "IS_EMPTY",
+                            "IS_NOT_EMPTY"
+                        ]
+                    },
+                    "value": {
+                        "$ref": "#/components/schemas/ConditionalFormattingValue"
+                    }
+                },
+                "description": "A condition and the formatting applied to cells matching it."
+            },
+            "ConditionalFormattingFormat": {
+                "required": [
+                    "scope"
+                ],
+                "type": "object",
+                "properties": {
+                    "backgroundColor": {
+                        "type": "string",
+                        "description": "Background color as a hex triplet.",
+                        "example": "#3DB36B"
+                    },
+                    "color": {
+                        "type": "string",
+                        "description": "Text color as a hex triplet.",
+                        "example": "#E54D40"
+                    },
+                    "scope": {
+                        "type": "string",
+                        "description": "Whether the formatting applies to the matching cell only, or to its whole row.",
+                        "enum": [
+                            "cell",
+                            "row"
+                        ]
+                    }
+                },
+                "description": "Visual formatting applied to a matching cell."
+            },
+            "ConditionalFormattingLiteral": {
+                "type": "object",
+                "description": "A string or a number, serialized in whichever form it was authored.",
+                "oneOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "number"
+                    }
+                ]
+            },
+            "ConditionalFormattingLiteralRangeValue": {
+                "required": [
+                    "from",
+                    "kind",
+                    "to"
+                ],
+                "type": "object",
+                "description": "An inclusive numeric range.",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "from": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "kind": {
+                                "type": "string",
+                                "description": "The value kind.",
+                                "enum": [
+                                    "literalRange"
+                                ]
+                            },
+                            "to": {
+                                "type": "number",
+                                "format": "double"
+                            }
+                        }
+                    }
+                ]
+            },
+            "ConditionalFormattingLiteralValue": {
+                "required": [
+                    "kind",
+                    "value"
+                ],
+                "type": "object",
+                "description": "A single value compared against the cell value.",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "kind": {
+                                "type": "string",
+                                "description": "The value kind.",
+                                "enum": [
+                                    "literal"
+                                ]
+                            },
+                            "value": {
+                                "$ref": "#/components/schemas/ConditionalFormattingLiteral"
+                            }
+                        }
+                    }
+                ]
+            },
+            "ConditionalFormattingMeasureTarget": {
+                "required": [
+                    "kind",
+                    "measureIdentifier"
+                ],
+                "type": "object",
+                "description": "A measure column, addressed by its bucket item local identifier.",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "kind": {
+                                "type": "string",
+                                "description": "The target kind.",
+                                "enum": [
+                                    "measure"
+                                ]
+                            },
+                            "measureIdentifier": {
+                                "type": "string",
+                                "example": "8cd55fe5748b48d7820ae9ee18e58011"
+                            }
+                        }
+                    }
+                ]
+            },
+            "ConditionalFormattingNoneValue": {
+                "required": [
+                    "kind"
+                ],
+                "type": "object",
+                "description": "No value; used by operators that take none.",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "kind": {
+                                "type": "string",
+                                "description": "The value kind.",
+                                "enum": [
+                                    "none"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            "ConditionalFormattingRelativeDateValue": {
+                "required": [
+                    "from",
+                    "granularity",
+                    "kind",
+                    "to"
+                ],
+                "type": "object",
+                "description": "A date period relative to the moment of evaluation, resolved at render time.",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "from": {
+                                "type": "integer",
+                                "description": "Offset in periods; 0 is the current period, negative is the past.",
+                                "format": "int32",
+                                "example": -29
+                            },
+                            "granularity": {
+                                "type": "string",
+                                "description": "Granularity the offsets are counted in.",
+                                "example": "MONTH",
+                                "enum": [
+                                    "SECOND",
+                                    "SECOND_OF_MINUTE",
+                                    "SECOND_OF_DAY",
+                                    "MINUTE",
+                                    "MINUTE_OF_HOUR",
+                                    "MINUTE_OF_DAY",
+                                    "HOUR",
+                                    "HOUR_OF_DAY",
+                                    "DAY",
+                                    "DAY_OF_WEEK",
+                                    "DAY_OF_MONTH",
+                                    "DAY_OF_QUARTER",
+                                    "DAY_OF_YEAR",
+                                    "WEEK",
+                                    "WEEK_OF_YEAR",
+                                    "MONTH",
+                                    "MONTH_OF_YEAR",
+                                    "QUARTER",
+                                    "QUARTER_OF_YEAR",
+                                    "YEAR",
+                                    "FISCAL_DAY_OF_FISCAL_WEEK",
+                                    "FISCAL_DAY_OF_FISCAL_MONTH",
+                                    "FISCAL_DAY_OF_FISCAL_QUARTER",
+                                    "FISCAL_DAY_OF_FISCAL_SEMESTER",
+                                    "FISCAL_DAY_OF_FISCAL_YEAR",
+                                    "FISCAL_WEEK",
+                                    "FISCAL_WEEK_OF_FISCAL_MONTH",
+                                    "FISCAL_WEEK_OF_FISCAL_QUARTER",
+                                    "FISCAL_WEEK_OF_FISCAL_SEMESTER",
+                                    "FISCAL_WEEK_OF_FISCAL_YEAR",
+                                    "FISCAL_MONTH",
+                                    "FISCAL_MONTH_OF_FISCAL_QUARTER",
+                                    "FISCAL_MONTH_OF_FISCAL_SEMESTER",
+                                    "FISCAL_MONTH_OF_FISCAL_YEAR",
+                                    "FISCAL_QUARTER",
+                                    "FISCAL_QUARTER_OF_FISCAL_SEMESTER",
+                                    "FISCAL_QUARTER_OF_FISCAL_YEAR",
+                                    "FISCAL_SEMESTER",
+                                    "FISCAL_SEMESTER_OF_FISCAL_YEAR",
+                                    "FISCAL_YEAR"
+                                ]
+                            },
+                            "kind": {
+                                "type": "string",
+                                "description": "The value kind.",
+                                "enum": [
+                                    "relativeDate"
+                                ]
+                            },
+                            "to": {
+                                "type": "integer",
+                                "description": "Offset in periods, not lower than `from`.",
+                                "format": "int32",
+                                "example": 0
+                            }
+                        }
+                    }
+                ]
+            },
+            "ConditionalFormattingRule": {
+                "required": [
+                    "conditions",
+                    "target"
+                ],
+                "type": "object",
+                "properties": {
+                    "conditions": {
+                        "type": "array",
+                        "description": "Conditions evaluated in order; the first match wins.",
+                        "items": {
+                            "$ref": "#/components/schemas/ConditionalFormattingCondition"
+                        }
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "Client-assigned identifier, stable across edits.",
+                        "example": "bb955b38-a9e6-45f5-b068-155cb7ce509a"
+                    },
+                    "target": {
+                        "$ref": "#/components/schemas/ConditionalFormattingTarget"
+                    }
+                },
+                "description": "Conditions applied to a single column."
+            },
+            "ConditionalFormattingTarget": {
+                "type": "object",
+                "description": "Column a rule formats. The shape is selected by the `kind` property.",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/ConditionalFormattingAttributeTarget"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ConditionalFormattingMeasureTarget"
+                    }
+                ]
+            },
+            "ConditionalFormattingValue": {
+                "type": "object",
+                "description": "Value a condition compares against. The shape is selected by the `kind` property.",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/ConditionalFormattingNoneValue"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ConditionalFormattingLiteralValue"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ConditionalFormattingLiteralRangeValue"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ConditionalFormattingAbsoluteDateValue"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ConditionalFormattingRelativeDateValue"
+                    }
+                ]
+            },
             "CustomLabel": {
                 "required": [
                     "title"
@@ -4168,6 +4575,9 @@
                 ],
                 "type": "object",
                 "properties": {
+                    "conditionalFormatting": {
+                        "$ref": "#/components/schemas/ConditionalFormatting"
+                    },
                     "customOverride": {
                         "$ref": "#/components/schemas/CustomOverride"
                     },

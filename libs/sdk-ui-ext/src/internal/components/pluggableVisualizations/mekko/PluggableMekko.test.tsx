@@ -127,7 +127,11 @@ describe("PluggableMekko", () => {
     describe("uiConfig", () => {
         it("should enable optional stacking (for the Stack to 100% control)", async () => {
             const extended = await createComponent().getExtendedReferencePoint(emptyReferencePoint);
-            expect(extended.uiConfig!.optionalStacking).toEqual({ supported: true, stackMeasures: false });
+            expect(extended.uiConfig!.optionalStacking).toEqual({
+                supported: true,
+                stackMeasures: false,
+                stackToPercentVisible: false,
+            });
         });
 
         it("should not support over-time comparison", async () => {
@@ -171,6 +175,48 @@ describe("PluggableMekko", () => {
             expect(extended.uiConfig!.optionalStacking!.disabled).toBeUndefined();
             expect(extended.uiConfig!.optionalStacking!.stackMeasuresToPercent).toBeUndefined();
             expect(extended.properties?.controls?.["stackMeasuresToPercent"]).toBeUndefined();
+        });
+
+        it("should declare Stack to 100% visible for a Height-only metric with Stack By", async () => {
+            const extended = await createComponent().getExtendedReferencePoint(
+                referencePoint({
+                    secondaryMeasures: [masterMeasureItems[0]],
+                    view: [attributeItems[0]],
+                    stack: [attributeItems[1]],
+                }),
+            );
+
+            expect(extended.uiConfig!.optionalStacking!.stackToPercentVisible).toBe(true);
+            expect(extended.uiConfig!.optionalStacking!.disabled).toBeUndefined();
+            expect(extended.uiConfig!.optionalStacking!.stackMeasuresToPercent).toBeUndefined();
+        });
+
+        it("should declare Stack to 100% visible for Width-only and for Width + Height with Stack By", async () => {
+            const widthOnly = await createComponent().getExtendedReferencePoint(
+                referencePoint({ measures: [masterMeasureItems[0]], stack: [attributeItems[1]] }),
+            );
+            const both = await createComponent().getExtendedReferencePoint(
+                referencePoint({
+                    measures: [masterMeasureItems[0]],
+                    secondaryMeasures: [masterMeasureItems[1]],
+                    stack: [attributeItems[1]],
+                }),
+            );
+
+            expect(widthOnly.uiConfig!.optionalStacking!.stackToPercentVisible).toBe(true);
+            expect(both.uiConfig!.optionalStacking!.stackToPercentVisible).toBe(true);
+        });
+
+        it("should declare Stack to 100% hidden without a Stack By attribute or without any metric", async () => {
+            const noStack = await createComponent().getExtendedReferencePoint(
+                referencePoint({ secondaryMeasures: [masterMeasureItems[0]], view: [attributeItems[0]] }),
+            );
+            const noMetric = await createComponent().getExtendedReferencePoint(
+                referencePoint({ view: [attributeItems[0]], stack: [attributeItems[1]] }),
+            );
+
+            expect(noStack.uiConfig!.optionalStacking!.stackToPercentVisible).toBe(false);
+            expect(noMetric.uiConfig!.optionalStacking!.stackToPercentVisible).toBe(false);
         });
     });
 

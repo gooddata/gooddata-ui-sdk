@@ -36,21 +36,18 @@ vi.mock("@gooddata/sdk-ui", async (importOriginal: () => Promise<Record<string, 
     };
 });
 
-vi.mock("../DefaultAlertingDialog/utils/items.js", () => ({
+vi.mock("../utils/items.js", () => ({
     getSupportedInsightMeasuresByInsight: vi.fn().mockReturnValue([]),
     getSupportedInsightAttributesByInsight: vi.fn().mockReturnValue([]),
 }));
 
-vi.mock(
-    "../DefaultAlertingDialog/utils/getters.js",
-    async (importOriginal: () => Promise<Record<string, unknown>>) => {
-        const original = await importOriginal();
-        return {
-            ...original,
-            getMeasureFormatsFromExecution: vi.fn().mockReturnValue({}),
-        };
-    },
-);
+vi.mock("../utils/getters.js", async (importOriginal: () => Promise<Record<string, unknown>>) => {
+    const original = await importOriginal();
+    return {
+        ...original,
+        getMeasureFormatsFromExecution: vi.fn().mockReturnValue({}),
+    };
+});
 
 // Context mocks — the hooks read these via useAutomationsContext /
 // useAlertingDialogContext. We inject the mock values through module mocking.
@@ -77,8 +74,8 @@ vi.mock("../../contexts/AlertingDialogContext.js", () => ({
 
 import * as sdkUi from "@gooddata/sdk-ui";
 
-import * as gettersModule from "../DefaultAlertingDialog/utils/getters.js";
-import * as itemsModule from "../DefaultAlertingDialog/utils/items.js";
+import * as gettersModule from "../utils/getters.js";
+import * as itemsModule from "../utils/items.js";
 
 import { useAlertSupportedMetrics, type IUseAlertSupportedMetricsProps } from "./useAlertSupportedMetrics.js";
 

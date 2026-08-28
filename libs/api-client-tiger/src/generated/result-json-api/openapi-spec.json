@@ -6,10 +6,6 @@
     },
     "servers": [
         {
-            "url": "https://automation.staging-ui.stg11.panther.intgdc.com",
-            "description": "Generated server url"
-        },
-        {
             "url": "/",
             "description": "GoodData.CN endpoint"
         }

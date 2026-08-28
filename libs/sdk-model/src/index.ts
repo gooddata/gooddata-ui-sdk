@@ -72,6 +72,7 @@ export {
     attributeAlias,
     attributeShowAllValues,
     attributeDisplayFormRef,
+    isComputedAttribute,
 } from "./execution/attribute/index.js";
 
 export {
@@ -1510,6 +1511,24 @@ export {
     isReportImageSlot,
     isReportSlot,
 } from "./reports/slot.js";
+export {
+    type ReportContentAlignment,
+    type IReportColorBackground,
+    type IReportImageBackground,
+    type ReportBackground,
+    type IReportBoxStyle,
+    type IReportImageStyle,
+    type IReportTextStyle,
+    isReportColorBackground,
+    isReportImageBackground,
+} from "./reports/styling.js";
+export {
+    type ReportPageFormat,
+    DefaultReportPageFormat,
+    ReportPageFormats,
+    ReportPageFormatAspectRatios,
+    isReportPageFormat,
+} from "./reports/pageFormat.js";
 
 export {
     type IReportPageBody,
@@ -1551,6 +1570,9 @@ export {
     BuiltInReportPageLayoutCover,
     BuiltInReportPageLayoutSection,
     BuiltInReportPageLayoutViz6TextLeft,
+    BuiltInReportPageLayoutPortraitCover,
+    BuiltInReportPageLayoutPortraitSection,
+    BuiltInReportPageLayoutPortraitSummary,
     BuiltInReportPageLayouts,
 } from "./reports/builtinPageLayouts.js";
 

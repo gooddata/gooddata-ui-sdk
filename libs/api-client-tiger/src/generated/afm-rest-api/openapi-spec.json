@@ -11173,9 +11173,9 @@
                         "description": "Specifies entity used for valid elements computation."
                     },
                     "type": {
-                        "pattern": "^(label)|(attribute)|(fact)|(metric)$",
+                        "pattern": "^(label|attribute|computedAttribute|fact|metric)$",
                         "type": "string",
-                        "description": "Specifies entity type which could be label, attribute, fact, or metric."
+                        "description": "Specifies entity type which could be label, attribute, computedAttribute, fact, or metric."
                     }
                 },
                 "nullable": true

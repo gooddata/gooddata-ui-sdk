@@ -19,7 +19,6 @@ import {
     addAttributeFilter,
     changeAttributeFilterSelection,
     removeAttributeFilters,
-    resetFilterContextWorkingSelection,
 } from "../../commands/filters.js";
 import { crossFilteringRequested, crossFilteringResolved } from "../../events/drill.js";
 import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js";
@@ -32,6 +31,7 @@ import {
 import { drillActions } from "../../store/drill/index.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectFilterContextDraggableFilterItems } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveOrDefaultTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { addAttributeFilterHandler } from "../filterContext/attributeFilter/addAttributeFilterHandler.js";
@@ -199,9 +199,10 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: ICrossFilteri
 
     const isApplyAllAtOnceEnabledAndSet: ReturnType<typeof selectIsApplyFiltersAllAtOnceEnabledAndSet> =
         yield select(selectIsApplyFiltersAllAtOnceEnabledAndSet);
-    // Reset working selection if apply modes are enabled
+    // Drop only the staged filters: the cross-filter writes applied filters directly, and a staged
+    // parameter value is unrelated to it, so it stays pending.
     if (isApplyAllAtOnceEnabledAndSet) {
-        yield put(resetFilterContextWorkingSelection());
+        yield put(tabsActions.resetWorkingFilterSelection());
     }
 
     // Cleanup of previous cross-filtering state

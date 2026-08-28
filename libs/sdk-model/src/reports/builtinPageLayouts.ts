@@ -3,15 +3,19 @@
 import { idRef } from "../objRef/factory.js";
 
 import { type ReportPageLayoutNode } from "./layout.js";
+import { type ReportPageFormat } from "./pageFormat.js";
 import { type IReportPageBody, type IReportPageLayout } from "./pageLayout.js";
 import { type IReportImageSlot, type IReportTextSlot, type IReportVisualizationSlot } from "./slot.js";
 
-const textSlot = (
-    localIdentifier: string,
-    kind: IReportTextSlot["kind"],
-    hint: string,
-    content?: string,
-): IReportTextSlot => ({
+const textSlot = ({
+    localIdentifier,
+    kind,
+    hint,
+    content,
+}: { localIdentifier: string; kind: IReportTextSlot["kind"] } & (
+    | { hint: string; content?: never }
+    | { content: string; hint?: never }
+)): IReportTextSlot => ({
     type: "text",
     localIdentifier,
     kind,
@@ -31,6 +35,7 @@ const logoSlot = (localIdentifier: string): IReportImageSlot => ({
     source: { type: "url", url: "{{logo}}" },
     fit: "contain",
     altText: "Logo",
+    style: { horizontalAlign: "start", verticalAlign: "end" },
 });
 
 const slot = (slotId: string, weight?: number): ReportPageLayoutNode => ({
@@ -55,18 +60,25 @@ const column = (children: ReportPageLayoutNode[], weight?: number): ReportPageLa
 
 const footerSlots = () => [
     logoSlot("footerLogo"),
-    textSlot("footerPageNumber", "custom", "", "{{pageNumber}} / {{totalPages}}"),
+    {
+        ...textSlot({
+            localIdentifier: "footerPageNumber",
+            kind: "custom",
+            content: "{{pageNumber}} / {{totalPages}}",
+        }),
+        style: { horizontalAlign: "end", verticalAlign: "end" },
+    } satisfies IReportTextSlot,
 ];
 
 const footerRow = () => row([slot("footerLogo", 1), slot("footerPageNumber", 8)], 1);
 
-interface IContentPageSpec {
+interface IWidescreenPageSpec {
     vizRows: string[][];
     summary?: boolean;
     gridWeights?: number[];
 }
 
-const vizGrid = ({ vizRows, gridWeights }: IContentPageSpec, weight: number): ReportPageLayoutNode =>
+const vizGrid = ({ vizRows, gridWeights }: IWidescreenPageSpec, weight: number): ReportPageLayoutNode =>
     vizRows.length === 1
         ? row(
               vizRows[0]!.map((id, index) => slot(id, gridWeights?.[index])),
@@ -77,17 +89,20 @@ const vizGrid = ({ vizRows, gridWeights }: IContentPageSpec, weight: number): Re
               weight,
           );
 
-const contentPage = (spec: IContentPageSpec): IReportPageBody => {
+const widescreenContentPage = (spec: IWidescreenPageSpec): IReportPageBody => {
     const { vizRows, summary } = spec;
     const body = summary ? row([vizGrid(spec, 2), slot("summary", 1)], 9) : vizGrid(spec, 9);
 
     return {
         kind: "content",
+        format: "widescreen",
         layout: column([slot("pageTitle", 2), body, footerRow()]),
         slots: [
-            textSlot("pageTitle", "title", "Page title"),
+            textSlot({ localIdentifier: "pageTitle", kind: "title", hint: "Page title" }),
             ...vizRows.flat().map(vizSlot),
-            ...(summary ? [textSlot("summary", "summary", "Add a summary")] : []),
+            ...(summary
+                ? [textSlot({ localIdentifier: "summary", kind: "summary", hint: "Add a summary" })]
+                : []),
             ...footerSlots(),
         ],
     };
@@ -114,12 +129,17 @@ function deepFreeze<T>(value: T): T {
     return value;
 }
 
-const builtInPage = (
-    id: string,
-    title: string,
-    description: string,
-    body: IReportPageBody,
-): IReportPageLayout =>
+const builtInPage = ({
+    id,
+    title,
+    description,
+    body,
+}: {
+    id: string;
+    title: string;
+    description: string;
+    body: IReportPageBody;
+}): IReportPageLayout =>
     deepFreeze({
         type: "reportPageLayout",
         ref: idRef(`builtin.reportPageLayout.${id}`, "reportPageLayout"),
@@ -135,14 +155,24 @@ const builtInPage = (
  *
  * @alpha
  */
-export const BuiltInReportPageLayoutCover: IReportPageLayout = builtInPage("cover", "Cover", "Title page", {
-    kind: "cover",
-    layout: column([slot("coverTitle", 2), slot("coverSubtitle", 1), footerRow()]),
-    slots: [
-        textSlot("coverTitle", "title", "Report title", "{{reportTitle}}"),
-        textSlot("coverSubtitle", "subtitle", "Subtitle", "{{periodStart}} – {{periodEnd}}"),
-        ...footerSlots(),
-    ],
+export const BuiltInReportPageLayoutCover: IReportPageLayout = builtInPage({
+    id: "cover",
+    title: "Cover",
+    description: "Title page",
+    body: {
+        kind: "cover",
+        format: "widescreen",
+        layout: column([slot("coverTitle", 2), slot("coverSubtitle", 1), footerRow()]),
+        slots: [
+            textSlot({ localIdentifier: "coverTitle", kind: "title", content: "{{reportTitle}}" }),
+            textSlot({
+                localIdentifier: "coverSubtitle",
+                kind: "subtitle",
+                content: "{{periodStart}} – {{periodEnd}}",
+            }),
+            ...footerSlots(),
+        ],
+    },
 });
 
 /**
@@ -150,78 +180,84 @@ export const BuiltInReportPageLayoutCover: IReportPageLayout = builtInPage("cove
  *
  * @alpha
  */
-export const BuiltInReportPageLayoutSection: IReportPageLayout = builtInPage(
-    "section",
-    "Section",
-    "Section divider page",
-    {
+export const BuiltInReportPageLayoutSection: IReportPageLayout = builtInPage({
+    id: "section",
+    title: "Section",
+    description: "Section divider page",
+    body: {
         kind: "section",
+        format: "widescreen",
         layout: column([slot("sectionTitle", 9), footerRow()]),
-        slots: [textSlot("sectionTitle", "sectionTitle", "Section title"), ...footerSlots()],
+        slots: [
+            textSlot({ localIdentifier: "sectionTitle", kind: "sectionTitle", hint: "Section title" }),
+            ...footerSlots(),
+        ],
     },
-);
+});
 
-const contentPages: [id: string, title: string, description: string, spec: IContentPageSpec][] = [
-    ["viz1", "1 visualization", "Single full-width visualization", { vizRows: vizIds(1, 1) }],
+const widescreenContentPages: [id: string, title: string, description: string, spec: IWidescreenPageSpec][] =
     [
-        "viz1SummaryRight",
-        "1 visualization + summary",
-        "Single visualization with a summary column on the right",
-        { vizRows: vizIds(1, 1), summary: true },
-    ],
-    ["viz2", "2 visualizations", "Two visualizations side by side", { vizRows: vizIds(2, 2) }],
-    [
-        "viz2Wide",
-        "2 visualizations (wide left)",
-        "Two visualizations, the left one twice as wide",
-        { vizRows: vizIds(2, 2), gridWeights: [2, 1] },
-    ],
-    [
-        "viz2Narrow",
-        "2 visualizations (wide right)",
-        "Two visualizations, the right one twice as wide",
-        { vizRows: vizIds(2, 2), gridWeights: [1, 2] },
-    ],
-    [
-        "viz2SummaryRight",
-        "2 visualizations + summary",
-        "Two visualizations with a summary column on the right",
-        { vizRows: vizIds(2, 2), summary: true },
-    ],
-    ["viz3", "3 visualizations", "Three visualizations side by side", { vizRows: vizIds(3, 3) }],
-    [
-        "viz3SummaryRight",
-        "3 visualizations + summary",
-        "Three visualizations with a summary column on the right",
-        { vizRows: vizIds(3, 3), summary: true },
-    ],
-    ["viz4", "4 visualizations", "Four visualizations in a 2x2 grid", { vizRows: vizIds(4, 2) }],
-    [
-        "viz4SummaryRight",
-        "4 visualizations + summary",
-        "2x2 visualization grid with a summary column on the right",
-        { vizRows: vizIds(4, 2), summary: true },
-    ],
-    ["viz6", "6 visualizations", "Six visualizations in a 2x3 grid", { vizRows: vizIds(6, 2) }],
-    [
-        "viz6SummaryRight",
-        "6 visualizations + summary",
-        "3x2 visualization grid with a summary column on the right",
-        { vizRows: vizIds(6, 2), summary: true },
-    ],
-];
+        ["viz1", "1 visualization", "Single full-width visualization", { vizRows: vizIds(1, 1) }],
+        [
+            "viz1SummaryRight",
+            "1 visualization + summary",
+            "Single visualization with a summary column on the right",
+            { vizRows: vizIds(1, 1), summary: true },
+        ],
+        ["viz2", "2 visualizations", "Two visualizations side by side", { vizRows: vizIds(2, 2) }],
+        [
+            "viz2Wide",
+            "2 visualizations (wide left)",
+            "Two visualizations, the left one twice as wide",
+            { vizRows: vizIds(2, 2), gridWeights: [2, 1] },
+        ],
+        [
+            "viz2Narrow",
+            "2 visualizations (wide right)",
+            "Two visualizations, the right one twice as wide",
+            { vizRows: vizIds(2, 2), gridWeights: [1, 2] },
+        ],
+        [
+            "viz2SummaryRight",
+            "2 visualizations + summary",
+            "Two visualizations with a summary column on the right",
+            { vizRows: vizIds(2, 2), summary: true },
+        ],
+        ["viz3", "3 visualizations", "Three visualizations side by side", { vizRows: vizIds(3, 3) }],
+        [
+            "viz3SummaryRight",
+            "3 visualizations + summary",
+            "Three visualizations with a summary column on the right",
+            { vizRows: vizIds(3, 3), summary: true },
+        ],
+        ["viz4", "4 visualizations", "Four visualizations in a 2x2 grid", { vizRows: vizIds(4, 2) }],
+        [
+            "viz4SummaryRight",
+            "4 visualizations + summary",
+            "2x2 visualization grid with a summary column on the right",
+            { vizRows: vizIds(4, 2), summary: true },
+        ],
+        ["viz6", "6 visualizations", "Six visualizations in a 2x3 grid", { vizRows: vizIds(6, 2) }],
+        [
+            "viz6SummaryRight",
+            "6 visualizations + summary",
+            "3x2 visualization grid with a summary column on the right",
+            { vizRows: vizIds(6, 2), summary: true },
+        ],
+    ];
 
 /**
  * Built-in content page with six visualizations and a text column on the left.
  *
  * @alpha
  */
-export const BuiltInReportPageLayoutViz6TextLeft: IReportPageLayout = builtInPage(
-    "viz6TextLeft",
-    "6 visualizations + text",
-    "Two rows of three visualizations with a text column on the left",
-    {
+export const BuiltInReportPageLayoutViz6TextLeft: IReportPageLayout = builtInPage({
+    id: "viz6TextLeft",
+    title: "6 visualizations + text",
+    description: "Two rows of three visualizations with a text column on the left",
+    body: {
         kind: "content",
+        format: "widescreen",
         layout: column([
             slot("pageTitle", 2),
             column(
@@ -234,14 +270,169 @@ export const BuiltInReportPageLayoutViz6TextLeft: IReportPageLayout = builtInPag
             footerRow(),
         ]),
         slots: [
-            textSlot("pageTitle", "title", "Page title"),
-            textSlot("text1", "body", "Add a text"),
-            textSlot("text2", "body", "Add a text"),
+            textSlot({ localIdentifier: "pageTitle", kind: "title", hint: "Page title" }),
+            textSlot({ localIdentifier: "text1", kind: "body", hint: "Add a text" }),
+            textSlot({ localIdentifier: "text2", kind: "body", hint: "Add a text" }),
             ...["widget1", "widget2", "widget3", "widget4", "widget5", "widget6"].map(vizSlot),
             ...footerSlots(),
         ],
     },
-);
+});
+
+//
+// Portrait pages, for reports printed or exported as an A4 / Letter PDF. An upright page fits at
+// most two visualizations side by side, so these layouts stack rows down the page instead of
+// spreading them across it, and the title band takes a smaller share of the taller page.
+//
+
+const PORTRAIT_FORMAT: ReportPageFormat = "a4Portrait";
+
+interface IPortraitPageSpec {
+    /** Visualization rows, top to bottom. A row holding two ids places them side by side. */
+    vizRows: string[][];
+    /** Adds a body text block above the visualizations. */
+    text?: boolean;
+    /** Adds a summary text block below the visualizations. */
+    summary?: boolean;
+}
+
+const portraitContentPage = ({ vizRows, text, summary }: IPortraitPageSpec): IReportPageBody => {
+    const bodyChildren: ReportPageLayoutNode[] = [
+        ...(text ? [slot("text1", 2)] : []),
+        ...vizRows.map((ids) =>
+            row(
+                ids.map((id) => slot(id)),
+                3,
+            ),
+        ),
+        ...(summary ? [slot("summary", 2)] : []),
+    ];
+
+    return {
+        kind: "content",
+        format: PORTRAIT_FORMAT,
+        layout: column([slot("pageTitle", 1), column(bodyChildren, 10), footerRow()]),
+        slots: [
+            textSlot({ localIdentifier: "pageTitle", kind: "title", hint: "Page title" }),
+            ...(text ? [textSlot({ localIdentifier: "text1", kind: "body", hint: "Add a text" })] : []),
+            ...vizRows.flat().map(vizSlot),
+            ...(summary
+                ? [textSlot({ localIdentifier: "summary", kind: "summary", hint: "Add a summary" })]
+                : []),
+            ...footerSlots(),
+        ],
+    };
+};
+
+/**
+ * Built-in portrait cover page: report title and subtitle.
+ *
+ * @alpha
+ */
+export const BuiltInReportPageLayoutPortraitCover: IReportPageLayout = builtInPage({
+    id: "portraitCover",
+    title: "Cover (portrait)",
+    description: "Title page of an upright report",
+    body: {
+        kind: "cover",
+        format: PORTRAIT_FORMAT,
+        layout: column([slot("coverTitle", 2), slot("coverSubtitle", 1), footerRow()]),
+        slots: [
+            textSlot({ localIdentifier: "coverTitle", kind: "title", content: "{{reportTitle}}" }),
+            textSlot({
+                localIdentifier: "coverSubtitle",
+                kind: "subtitle",
+                content: "{{periodStart}} – {{periodEnd}}",
+            }),
+            ...footerSlots(),
+        ],
+    },
+});
+
+/**
+ * Built-in portrait section divider page.
+ *
+ * @alpha
+ */
+export const BuiltInReportPageLayoutPortraitSection: IReportPageLayout = builtInPage({
+    id: "portraitSection",
+    title: "Section (portrait)",
+    description: "Section divider page of an upright report",
+    body: {
+        kind: "section",
+        format: PORTRAIT_FORMAT,
+        layout: column([slot("sectionTitle", 9), footerRow()]),
+        slots: [
+            textSlot({ localIdentifier: "sectionTitle", kind: "sectionTitle", hint: "Section title" }),
+            ...footerSlots(),
+        ],
+    },
+});
+
+/**
+ * Built-in portrait page carrying a full-page narrative, with no visualization.
+ *
+ * @alpha
+ */
+export const BuiltInReportPageLayoutPortraitSummary: IReportPageLayout = builtInPage({
+    id: "portraitSummary",
+    title: "Summary (portrait)",
+    description: "Full-page narrative with no visualization",
+    body: {
+        kind: "content",
+        format: PORTRAIT_FORMAT,
+        layout: column([slot("pageTitle", 1), slot("summary", 10), footerRow()]),
+        slots: [
+            textSlot({ localIdentifier: "pageTitle", kind: "title", hint: "Page title" }),
+            textSlot({ localIdentifier: "summary", kind: "summary", hint: "Add a summary" }),
+            ...footerSlots(),
+        ],
+    },
+});
+
+const portraitContentPages: [id: string, title: string, description: string, spec: IPortraitPageSpec][] = [
+    [
+        "portraitViz1",
+        "1 visualization (portrait)",
+        "Single visualization filling an upright page",
+        { vizRows: [["widget1"]] },
+    ],
+    [
+        "portraitViz1Summary",
+        "1 visualization + summary (portrait)",
+        "One visualization with a summary below it",
+        { vizRows: [["widget1"]], summary: true },
+    ],
+    [
+        "portraitViz2",
+        "2 visualizations (portrait)",
+        "Two visualizations stacked down the page",
+        { vizRows: [["widget1"], ["widget2"]] },
+    ],
+    [
+        "portraitViz2Text",
+        "2 visualizations + text (portrait)",
+        "Two stacked visualizations under a block of text",
+        { vizRows: [["widget1"], ["widget2"]], text: true },
+    ],
+    [
+        "portraitViz3",
+        "3 visualizations (portrait)",
+        "Three visualizations stacked down the page",
+        { vizRows: [["widget1"], ["widget2"], ["widget3"]] },
+    ],
+    [
+        "portraitViz4",
+        "4 visualizations (portrait)",
+        "Four visualizations in a 2x2 grid on an upright page",
+        {
+            vizRows: [
+                ["widget1", "widget2"],
+                ["widget3", "widget4"],
+            ],
+        },
+    ],
+];
 
 /**
  * All built-in report pages served by the SPI. Built-ins are read-only: they cannot be
@@ -252,8 +443,14 @@ export const BuiltInReportPageLayoutViz6TextLeft: IReportPageLayout = builtInPag
 export const BuiltInReportPageLayouts: readonly IReportPageLayout[] = Object.freeze([
     BuiltInReportPageLayoutCover,
     BuiltInReportPageLayoutSection,
-    ...contentPages.map(([id, title, description, spec]) =>
-        builtInPage(id, title, description, contentPage(spec)),
+    ...widescreenContentPages.map(([id, title, description, spec]) =>
+        builtInPage({ id, title, description, body: widescreenContentPage(spec) }),
     ),
     BuiltInReportPageLayoutViz6TextLeft,
+    BuiltInReportPageLayoutPortraitCover,
+    BuiltInReportPageLayoutPortraitSection,
+    BuiltInReportPageLayoutPortraitSummary,
+    ...portraitContentPages.map(([id, title, description, spec]) =>
+        builtInPage({ id, title, description, body: portraitContentPage(spec) }),
+    ),
 ]);

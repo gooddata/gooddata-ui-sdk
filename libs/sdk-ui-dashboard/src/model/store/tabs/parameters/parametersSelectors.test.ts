@@ -36,9 +36,12 @@ import {
     selectEffectiveDashboardParametersForWidget,
     selectEffectiveParameterValuesForWidget,
     selectExportEffectiveParameters,
+    selectFilterViewDisplayParameters,
     selectFilterViewParameters,
     selectHasAnyResettableParameterOnActiveTab,
     selectIsParametersChanged,
+    selectIsWorkingParametersChanged,
+    selectParameterDisplayValueByRef,
     selectParameterReconciliationByRef,
     selectParameterReconciliations,
     selectParameterResetValueByRef,
@@ -302,6 +305,96 @@ describe("parameter selectors (per tab)", () => {
         expect(select(makeState([entry]))).toBeUndefined();
     });
 
+    describe("selectFilterViewDisplayParameters", () => {
+        it("returns undefined when there are no parameter entries", () => {
+            expect(selectFilterViewDisplayParameters(makeFullState({ entries: [] }))).toBeUndefined();
+        });
+
+        it("staged value wins over runtimeOverride", () => {
+            expect(
+                selectFilterViewDisplayParameters(
+                    makeFullState({
+                        entries: [{ parameter: topNParameter, runtimeOverride: 42, workingOverride: 99 }],
+                    }),
+                ),
+            ).toEqual([{ ...topNParameter, value: 99 }]);
+        });
+
+        it("falls back to the runtime override when nothing is staged", () => {
+            expect(
+                selectFilterViewDisplayParameters(
+                    makeFullState({ entries: [{ parameter: topNParameter, runtimeOverride: 42 }] }),
+                ),
+            ).toEqual([{ ...topNParameter, value: 42 }]);
+        });
+
+        it("does not leak the stale persisted value for a staged entry with undefined runtimeOverride", () => {
+            const withValue: IDashboardParameter = { ...topNParameter, value: 25 };
+
+            expect(
+                selectFilterViewDisplayParameters(
+                    makeFullState({
+                        entries: [{ parameter: withValue, runtimeOverride: undefined, workingOverride: 99 }],
+                    }),
+                ),
+            ).toEqual([{ ...withValue, value: 99 }]);
+        });
+
+        it("omits gated-off STRING entries", () => {
+            expect(
+                selectFilterViewDisplayParameters(
+                    makeFullState({
+                        entries: [
+                            { parameter: topNParameter, runtimeOverride: 42 },
+                            {
+                                parameter: scenarioParameter,
+                                runtimeOverride: "Actual",
+                                workingOverride: "Budget",
+                            },
+                        ],
+                        enableStringParameters: false,
+                    }),
+                ),
+            ).toEqual([{ ...topNParameter, value: 42 }]);
+        });
+    });
+
+    describe("selectIsWorkingParametersChanged", () => {
+        it("is false when no entry stages a value", () => {
+            expect(selectIsWorkingParametersChanged(makeState([entry]))).toBe(false);
+        });
+
+        it("is true when any entry stages a value (presence means dirty)", () => {
+            expect(
+                selectIsWorkingParametersChanged(
+                    makeState([{ parameter: topNParameter, runtimeOverride: 25, workingOverride: 99 }]),
+                ),
+            ).toBe(true);
+        });
+    });
+
+    describe("selectParameterDisplayValueByRef", () => {
+        it("prefers the staged value over the runtime override", () => {
+            expect(
+                selectParameterDisplayValueByRef(topNRef)(
+                    makeState([{ parameter: topNParameter, runtimeOverride: 25, workingOverride: 99 }]),
+                ),
+            ).toBe(99);
+        });
+
+        it("falls back to the runtime override when nothing is staged", () => {
+            expect(selectParameterDisplayValueByRef(topNRef)(makeState([entry]))).toBe(25);
+        });
+
+        it("is undefined when the runtime override is undefined and nothing is staged", () => {
+            expect(
+                selectParameterDisplayValueByRef(topNRef)(
+                    makeState([{ parameter: topNParameter, runtimeOverride: undefined }]),
+                ),
+            ).toBeUndefined();
+        });
+    });
+
     describe("selectActiveTabDrillParameters", () => {
         it("includes a runtime value left at the workspace default (F1-2604: drill must propagate it)", () => {
             const state = makeFullState({
@@ -444,6 +537,24 @@ describe("parameter selectors (per tab)", () => {
         it("returns one payload entry per resettable parameter with the computed reset value", () => {
             // view mode: parameter.value=50 ⇒ reset target=50; runtimeOverride=99 (differs)
             const entries = [{ parameter: { ...topNParameter, value: 50 }, runtimeOverride: 99 }];
+            expect(computeParameterResetTargets(entries, [topNWorkspace], false)).toEqual([
+                { ref: topNRef, value: 50 },
+            ]);
+        });
+
+        it("emits a staged-only entry whose applied value already equals its reset value", () => {
+            const entries = [
+                { parameter: { ...topNParameter, value: 50 }, runtimeOverride: 50, workingOverride: 99 },
+            ] satisfies IDashboardParameterEntry[];
+            expect(computeParameterResetTargets(entries, [topNWorkspace], false)).toEqual([
+                { ref: topNRef, value: 50 },
+            ]);
+        });
+
+        it("emits an entry whose staged value equals its reset value while the applied value differs", () => {
+            const entries = [
+                { parameter: { ...topNParameter, value: 50 }, runtimeOverride: 99, workingOverride: 50 },
+            ] satisfies IDashboardParameterEntry[];
             expect(computeParameterResetTargets(entries, [topNWorkspace], false)).toEqual([
                 { ref: topNRef, value: 50 },
             ]);
@@ -2015,6 +2126,28 @@ describe("parameter reconciliation selectors", () => {
                 workspaceParameters: [boundedTopNWorkspace],
             });
             expect(selectParameterReconciliationByRef(topNRef)(state)).toBeUndefined();
+        });
+
+        it("returns undefined when a valid value is staged over an out-of-range applied value", () => {
+            const state = makeFullState({
+                entries: [
+                    {
+                        parameter: { ...topNParameter, value: 999 },
+                        runtimeOverride: 999,
+                        workingOverride: 10,
+                    },
+                ],
+                workspaceParameters: [boundedTopNWorkspace],
+            });
+            expect(selectParameterReconciliationByRef(topNRef)(state)).toBeUndefined();
+        });
+
+        it("classifies a staged out-of-range value as reset even when the applied value is valid", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 10, workingOverride: 999 }],
+                workspaceParameters: [boundedTopNWorkspace],
+            });
+            expect(selectParameterReconciliationByRef(topNRef)(state)).toBe("reset");
         });
 
         it("returns undefined when enableParameters is off", () => {

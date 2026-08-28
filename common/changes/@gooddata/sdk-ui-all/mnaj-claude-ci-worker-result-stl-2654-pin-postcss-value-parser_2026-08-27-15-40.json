@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Pinned the postcss-value-parser dependency to the exact version 4.2.0 instead of the '^4.2.0' range in @gooddata/sdk-ui-theme-provider.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

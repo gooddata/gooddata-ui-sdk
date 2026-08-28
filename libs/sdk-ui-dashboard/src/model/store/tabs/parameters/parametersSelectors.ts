@@ -36,6 +36,7 @@ import {
     EMPTY_EXPORT_PARAMETERS_BY_TAB,
     type IParameterReconciliationEntry,
     type ParameterReconciliation,
+    applyDisplayOverride,
     applyRuntimeOverride,
     buildPersistedByTabAndRef,
     buildWidgetScopeTabRefSelections,
@@ -46,6 +47,7 @@ import {
     collectReferencedParameterRefs,
     computeParameterResetTargets,
     computeParameterResetValue,
+    displayOverride,
     isGatedStringEntry,
     resolveEffectiveParameterValuesForRefs,
     smartPersistResolvedEntry,
@@ -111,23 +113,36 @@ export const selectDashboardParameterEntries: DashboardSelector<IDashboardParame
     (state) => state.parameters,
 );
 
-/**
- * Returns the active tab's parameters in the shape persisted by a filter view.
- * Runtime overrides become persisted `value`; existing parameter values are kept when no runtime value exists.
- *
- * @internal
- */
-export const selectFilterViewParameters: DashboardSelector<IDashboardParameter[] | undefined> =
+const selectPersistableParameterEntries: DashboardSelector<IDashboardParameterEntry[] | undefined> =
     createSelector(
         selectDashboardParameterEntries,
         selectEnableStringParameters,
         (entries, isStringEnabled) => {
             const persistable = entries.filter((item) => !isGatedStringEntry(item, isStringEnabled));
-            if (persistable.length === 0) {
-                return undefined;
-            }
-            return persistable.map(applyRuntimeOverride);
+            return persistable.length === 0 ? undefined : persistable;
         },
+    );
+
+/**
+ * Returns the active tab's applied parameters in the shape persisted by a filter view.
+ * Runtime overrides become persisted `value`; existing parameter values are kept when no runtime value exists.
+ *
+ * @internal
+ */
+export const selectFilterViewParameters: DashboardSelector<IDashboardParameter[] | undefined> =
+    createSelector(selectPersistableParameterEntries, (entries) =>
+        entries?.map((entry) => applyRuntimeOverride(entry)),
+    );
+
+/**
+ * Returns the active tab's parameters with their display values, in the shape persisted by a filter
+ * view, so a view saved before "Apply All" captures what the user sees.
+ *
+ * @internal
+ */
+export const selectFilterViewDisplayParameters: DashboardSelector<IDashboardParameter[] | undefined> =
+    createSelector(selectPersistableParameterEntries, (entries) =>
+        entries?.map((entry) => applyDisplayOverride(entry)),
     );
 
 /**
@@ -175,6 +190,30 @@ export const selectParameterRuntimeOverrideByRef: (
     ref: ObjRef,
 ) => DashboardSelector<ParameterValue | undefined> = createMemoizedSelector((ref: ObjRef) =>
     createSelector(selectDashboardParameterEntryByRef(ref), (entry) => entry?.runtimeOverride),
+);
+
+/**
+ * Returns a selector that yields the value shown for a given parameter ref on the active tab: the
+ * staged one when the entry has it, otherwise the applied `runtimeOverride`.
+ *
+ * @alpha
+ */
+export const selectParameterDisplayValueByRef: (
+    ref: ObjRef,
+) => DashboardSelector<ParameterValue | undefined> = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(selectDashboardParameterEntryByRef(ref), (entry) =>
+        entry ? displayOverride(entry) : undefined,
+    ),
+);
+
+/**
+ * True when the active tab has at least one staged parameter value.
+ *
+ * @alpha
+ */
+export const selectIsWorkingParametersChanged: DashboardSelector<boolean> = createSelector(
+    selectDashboardParameterEntries,
+    (entries) => entries.some((entry) => entry.workingOverride !== undefined),
 );
 
 /**
@@ -317,8 +356,8 @@ export const selectActiveTabParameterResetTargets: DashboardSelector<
 );
 
 /**
- * True when the active tab has at least one parameter whose `runtimeOverride` differs from
- * the value it would be reset to (per `computeParameterResetValue`).
+ * True when the active tab has at least one parameter whose display value (staged, else applied)
+ * or applied value differs from the value it would be reset to (per `computeParameterResetValue`).
  *
  * @alpha
  */
@@ -353,8 +392,9 @@ export const selectParameterReconciliations: DashboardSelector<IParameterReconci
     );
 
 /**
- * Reconciliation status of a parameter's effective value, not its persisted value (which
- * {@link selectParameterReconciliations} uses).
+ * Reconciliation status of a parameter's display value (staged, else applied), not its persisted
+ * value (which {@link selectParameterReconciliations} uses), so the control's warning matches the
+ * value it shows.
  *
  * @internal
  */
@@ -371,7 +411,7 @@ export const selectParameterReconciliationByRef: (
             if (!isEnabled || !isCatalogLoaded || !entry || isGatedStringEntry(entry, isStringEnabled)) {
                 return undefined;
             }
-            return classifyParameterReconciliation(applyRuntimeOverride(entry), workspaceParameter);
+            return classifyParameterReconciliation(applyDisplayOverride(entry), workspaceParameter);
         },
     ),
 );

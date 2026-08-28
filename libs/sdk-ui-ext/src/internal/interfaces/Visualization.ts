@@ -417,6 +417,8 @@ export interface IOptionalStacking {
     stackMeasures?: boolean;
     stackMeasuresToPercent?: boolean;
     canStackInPercent?: boolean;
+    /** When set, dictates the Stack to 100% checkbox visibility instead of the app's bucket heuristic. */
+    stackToPercentVisible?: boolean;
 }
 
 export interface ISupportedLocationIcon {

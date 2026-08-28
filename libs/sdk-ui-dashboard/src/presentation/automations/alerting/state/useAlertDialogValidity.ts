@@ -5,6 +5,7 @@ import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 
 import { useAlertData } from "./AlertDataContext.js";
 import { useAlertDraft } from "./AlertDraftContext.js";
+import { type IAlertDialogValidity } from "./types.js";
 import { useAlertFormValidation } from "./useAlertFormValidation.js";
 import { useAlertSelectedValues } from "./useAlertSelectedValues.js";
 
@@ -13,15 +14,9 @@ import { useAlertSelectedValues } from "./useAlertSelectedValues.js";
  * whether the parent widget is still valid, whether the measure may be changed, and whether the
  * saved alert points at a widget whose insight is gone.
  *
- * @internal
+ * @alpha
  */
-export function useAlertDialogValidity(): {
-    isSubmitDisabled: boolean;
-    validationErrorMessage: string | undefined;
-    isParentValid: boolean;
-    canChangeMeasure: boolean;
-    isInvalidConnectionToInsight: boolean;
-} {
+export function useAlertDialogValidity(): IAlertDialogValidity {
     const { catalogDateDatasets, maxAutomationsRecipients } = useAutomationsContext();
     const { alertToEdit, widget, insight } = useAlertingDialogContext();
     const { editedAutomation, originalAutomation, isTitleValid } = useAlertDraft();

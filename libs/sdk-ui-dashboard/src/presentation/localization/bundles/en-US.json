@@ -2172,12 +2172,12 @@
         "crowdinContext": "Label for URL input field in the URL editor"
     },
     "configurationPanel.drillIntoUrl.editor.parametersPanelLabel": {
-        "text": "Parameters",
-        "crowdinContext": "Section header for URL parameters configuration"
+        "text": "Placeholders",
+        "crowdinContext": "Section header for URL placeholders configuration"
     },
     "configurationPanel.drillIntoUrl.editor.parametersPanelTooltip": {
-        "text": "Parameters are placeholders that are replaced by dynamic values during drilling.",
-        "crowdinContext": "Tooltip explaining URL parameters functionality"
+        "text": "Placeholders are replaced by dynamic values during drilling.",
+        "crowdinContext": "Tooltip explaining URL placeholders functionality"
     },
     "configurationPanel.drillIntoUrl.editor.addParameterButtonLabel": {
         "text": "Add",
@@ -2252,7 +2252,7 @@
         "crowdinContext": "Button to discard URL drill configuration changes"
     },
     "configurationPanel.drillIntoUrl.editor.textAreaPlaceholder": {
-        "text": "Enter URL and add parameters from the right panel.",
+        "text": "Enter URL and add placeholders from the right panel.",
         "crowdinContext": "Placeholder text in URL input field"
     },
     "configurationPanel.drillIntoUrl.editor.helpButtonLabel": {
@@ -2260,8 +2260,8 @@
         "crowdinContext": "Help link text for URL drill configuration"
     },
     "configurationPanel.drillIntoUrl.editor.invalidAttributeDisplayForms": {
-        "text": "Invalid parameters: {invalidParameters}",
-        "crowdinContext": "Error message shown when URL contains invalid parameters"
+        "text": "Invalid placeholders: {invalidParameters}",
+        "crowdinContext": "Error message shown when URL contains invalid placeholders"
     },
     "configurationPanel.drillIntoUrl.customUrlAddButtonLabel": {
         "text": "Add custom URL",

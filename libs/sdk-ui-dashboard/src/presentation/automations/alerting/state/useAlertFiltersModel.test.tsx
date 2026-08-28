@@ -41,17 +41,14 @@ vi.mock("../../shared/filters/index.js", () => ({
     getVisibleFiltersByFilters: vi.fn(),
 }));
 
-vi.mock(
-    "../DefaultAlertingDialog/utils/transformation.js",
-    async (importOriginal: () => Promise<Record<string, unknown>>) => {
-        const actual = await importOriginal();
-        return {
-            ...actual,
-            transformAlertByAttribute: vi.fn(),
-            transformAlertByMetric: vi.fn(),
-        };
-    },
-);
+vi.mock("../utils/transformation.js", async (importOriginal: () => Promise<Record<string, unknown>>) => {
+    const actual = await importOriginal();
+    return {
+        ...actual,
+        transformAlertByAttribute: vi.fn(),
+        transformAlertByMetric: vi.fn(),
+    };
+});
 
 // ---------------------------------------------------------------------------
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
@@ -59,7 +56,7 @@ vi.mock(
 
 import * as validateExistingAutomationFiltersModule from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import * as utilsModule from "../../shared/filters/index.js";
-import * as transformationModule from "../DefaultAlertingDialog/utils/transformation.js";
+import * as transformationModule from "../utils/transformation.js";
 
 import { useAlertFiltersModel, type IUseAlertFiltersModelProps } from "./useAlertFiltersModel.js";
 

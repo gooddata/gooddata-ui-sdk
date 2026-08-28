@@ -54,6 +54,7 @@ import { showWidgetAsTableSliceReducer } from "./showWidgetAsTable/index.js";
 import { tabsSliceReducer } from "./tabs/index.js";
 import { type DashboardDispatch, type DashboardState } from "./types.js";
 import { uiSliceReducer } from "./ui/index.js";
+import { unavailableObjectsSliceReducer } from "./unavailableObjects/index.js";
 import { userSliceReducer } from "./user/index.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
@@ -317,6 +318,7 @@ export function createDashboardRootReducer({
         listedDashboards: listedDashboardsSliceReducer,
         accessibleDashboards: accessibleDashboardsSliceReducer,
         inaccessibleDashboards: inaccessibleDashboardsSliceReducer,
+        unavailableObjects: unavailableObjectsSliceReducer,
         executionResults: executionResultsSliceReducer,
         renderMode: renderModeSliceReducer,
         ui: uiSliceReducer,

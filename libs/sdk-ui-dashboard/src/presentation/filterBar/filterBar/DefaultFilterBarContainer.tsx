@@ -40,10 +40,8 @@ import {
     selectLocale,
 } from "../../../model/store/config/configSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
-import {
-    selectIsWorkingFilterContextChanged,
-    selectNamesOfFiltersWithInvalidSelection,
-} from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { selectNamesOfFiltersWithInvalidSelection } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { selectIsWorkingSelectionChanged } from "../../../model/store/tabs/workingSelectionSelectors.js";
 import { BulletsBar as FlexibleBulletsBar } from "../../flexibleLayout/dragAndDrop/Resize/BulletsBar.js";
 import { IntlWrapper } from "../../localization/IntlWrapper.js";
 
@@ -71,7 +69,7 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
         setFilterBarExpanded,
     );
 
-    const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
+    const isWorkingSelectionChanged = useDashboardSelector(selectIsWorkingSelectionChanged);
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const filtersWithInvalidSelection = useDashboardSelector(selectNamesOfFiltersWithInvalidSelection);
     const hasInvalidFilterSelections = filtersWithInvalidSelection.length > 0;
@@ -169,7 +167,7 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
                     </AllFiltersContainer>
                     <FiltersRows rows={rows} />
                     <div className="filter-bar-configuration" style={configurationStyle}>
-                        {isApplyAllAtOnceEnabledAndSet && isWorkingFilterContextChanged ? (
+                        {isApplyAllAtOnceEnabledAndSet && isWorkingSelectionChanged ? (
                             <UiTooltip
                                 content={bubbleText}
                                 triggerBy={["hover", "focus"]}
@@ -201,7 +199,7 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
                 />
                 {isInEditMode ? <FlexibleBulletsBar /> : null}
             </div>
-            {isWorkingFilterContextChanged && isApplyAllAtOnceEnabledAndSet ? (
+            {isWorkingSelectionChanged && isApplyAllAtOnceEnabledAndSet ? (
                 <div
                     aria-hidden="true"
                     className="filters-message"

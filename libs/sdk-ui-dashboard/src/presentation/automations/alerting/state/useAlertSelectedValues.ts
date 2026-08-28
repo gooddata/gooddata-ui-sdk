@@ -7,6 +7,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { useAlertingDialogContext } from "../../contexts/AlertingDialogContext.js";
+import { type AlertAttribute, type AlertMetric } from "../types.js";
 import {
     getAlertAiOperator,
     getAlertAttribute,
@@ -16,11 +17,11 @@ import {
     getAlertMeasure,
     getAlertRelativeOperator,
     getAlertSensitivity,
-} from "../DefaultAlertingDialog/utils/getters.js";
-import { type AlertAttribute, type AlertMetric } from "../types.js";
+} from "../utils/getters.js";
 
 import { useAlertData } from "./AlertDataContext.js";
 import { useAlertDraft } from "./AlertDraftContext.js";
+import { type IAlertSelectedValues } from "./types.js";
 
 /**
  * Props for {@link getAlertSelectedValues}.
@@ -48,7 +49,7 @@ export function getAlertSelectedValues({
     supportedMeasures,
     supportedAttributes,
     notificationChannels,
-}: IGetAlertSelectedValuesProps) {
+}: IGetAlertSelectedValuesProps): IAlertSelectedValues {
     const selectedMeasure = getAlertMeasure(supportedMeasures, editedAutomation?.alert);
     const selectedComparisonOperator = getAlertCompareOperator(editedAutomation?.alert);
     const selectedRelativeOperator = getAlertRelativeOperator(editedAutomation?.alert);
@@ -88,9 +89,9 @@ export function getAlertSelectedValues({
  * `useCallback` dependency arrays and `useAlertThreshold` arguments, so recomputing them every
  * render is what keeps those consumers behaving correctly.
  *
- * @internal
+ * @alpha
  */
-export function useAlertSelectedValues(): ReturnType<typeof getAlertSelectedValues> {
+export function useAlertSelectedValues(): IAlertSelectedValues {
     const { editedAutomation } = useAlertDraft();
     const { supportedMeasures, supportedAttributes } = useAlertData();
     const { notificationChannels } = useAlertingDialogContext();

@@ -1,6 +1,12 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type IMeasureMetadataObject, type IUser, type MetricType, type ObjRef } from "@gooddata/sdk-model";
+import {
+    type AccessGranularPermission,
+    type IMeasureMetadataObject,
+    type IUser,
+    type MetricType,
+    type ObjRef,
+} from "@gooddata/sdk-model";
 
 import { type BuilderModifications, builderFactory } from "../builder.js";
 
@@ -62,6 +68,11 @@ export class MeasureMetadataObjectBuilder<
 
     public updatedBy(updatedBy?: IUser): this {
         this.item.updatedBy = updatedBy;
+        return this;
+    }
+
+    public permissions(permissions?: AccessGranularPermission[]): this {
+        this.item.permissions = permissions;
         return this;
     }
 }

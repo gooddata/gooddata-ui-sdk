@@ -1325,6 +1325,7 @@ export {
     selectEnableExportToDocumentStorage,
     selectExternalRecipient,
     selectEnableDashboardShareDialogLink,
+    selectEnableDashboardPartialRendering,
     selectEnableAutomationEvaluationMode,
     selectEnableSnapshotExport,
     selectEnableAccessibilityMode,
@@ -1545,7 +1546,7 @@ export type {
     ISetMeasureValueFilterConfigsPayload,
 } from "./model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsReducers.js";
 export type { ILayoutState, LayoutStash } from "./model/store/tabs/layout/layoutState.js";
-export type { TabsReducer } from "./model/store/tabs/tabsReducers.js";
+export type { IApplyWorkingSelectionPayload, TabsReducer } from "./model/store/tabs/tabsReducers.js";
 export type { IdentityMapping } from "./_staging/dashboard/dashboardLayout.js";
 export type {
     IAddAttributeFilterPayload,
@@ -1567,7 +1568,6 @@ export type {
     IChangeAttributeTitlePayload,
     IChangeAttributeSelectionModePayload,
     IChangeAttributeLimitingItemsPayload,
-    IApplyWorkingSelectionPayload,
     IAddAttributeFilterDisplayFormPayload,
     IRemoveMeasureValueFilterReducerPayload,
     IMoveMeasureValueFilterPayload,
@@ -1580,6 +1580,7 @@ export {
     selectTabById,
     selectHasTabs,
 } from "./model/store/tabs/tabsSelectors.js";
+export { selectIsWorkingSelectionChanged } from "./model/store/tabs/workingSelectionSelectors.js";
 export { tabsActions } from "./model/store/tabs/index.js";
 export { type ITabState, DEFAULT_TAB_ID, type ITabsState } from "./model/store/tabs/tabsState.js";
 export type {
@@ -1650,6 +1651,7 @@ export type {
     IRemoveParameterPayload,
     ISetParameterRuntimeValuePayload,
     ISetParameterRuntimeValuesPayload,
+    ISetParameterWorkingValuePayload,
 } from "./model/store/tabs/parameters/parametersReducers.js";
 export type {
     IDashboardParameterEntry,
@@ -1663,6 +1665,8 @@ export {
     selectFilterViewParameters,
     selectHasAnyResettableParameterOnActiveTab,
     selectIsParametersChanged,
+    selectIsWorkingParametersChanged,
+    selectParameterDisplayValueByRef,
     selectParameterRuntimeOverrideByRef,
 } from "./model/store/tabs/parameters/parametersSelectors.js";
 export { drillActions } from "./model/store/drill/index.js";
@@ -1726,6 +1730,10 @@ export {
     selectInaccessibleDashboards,
     selectInaccessibleDashboardsMap,
 } from "./model/store/inaccessibleDashboards/inaccessibleDashboardsSelectors.js";
+export {
+    selectUnavailableObjects,
+    selectUnavailableObjectsMapByType,
+} from "./model/store/unavailableObjects/unavailableObjectsSelectors.js";
 export {
     selectDrillTargetsByWidgetRef,
     selectDrillTargets,
@@ -2237,18 +2245,108 @@ export { DefaultAlertingDialog } from "./presentation/automations/alerting/Defau
 export { DefaultAlertingManagementDialogNew } from "./presentation/automations/connectors/DefaultAlertingManagementDialogConnected.js";
 export { AlertingDialog } from "./presentation/automations/alerting/AlertingDialog.js";
 export { AlertingManagementDialog } from "./presentation/automations/alerting/AlertingManagementDialog.js";
-export type {
-    CustomAlertingManagementDialogComponent,
-    CustomAlertingDialogComponent,
-    CustomAlertingDialogContextDecoratorComponent,
-    IAlertingManagementDialogProps,
-    IAlertingDialogProps,
-    IAlertingDialogHeaderProps,
-    AlertingDialogHeaderDefaultProps,
-    IAlertingDialogFiltersProps,
-    IAlertingDialogSlots,
-    IDefaultAlertingDialogProps,
+export {
+    AlertMetricComparatorType,
+    type CustomAlertingManagementDialogComponent,
+    type CustomAlertingDialogComponent,
+    type CustomAlertingDialogContextDecoratorComponent,
+    type IAlertingManagementDialogProps,
+    type IAlertingDialogProps,
+    type IAlertingDialogHeaderProps,
+    type AlertingDialogHeaderDefaultProps,
+    type IAlertingDialogFiltersProps,
+    type IAlertingDialogSlots,
+    type IDefaultAlertingDialogProps,
+    type AlertAttribute,
+    type AlertMetric,
+    type AlertMetricComparator,
 } from "./presentation/automations/alerting/types.js";
+export type { AttributeValue } from "./presentation/automations/alerting/hooks/useAttributeValuesFromExecResults.js";
+export type {
+    AlertAiOperator,
+    IMeasureFormatMap,
+} from "./presentation/automations/alerting/utils/getters.js";
+export type {
+    IAlertActionsContextValue,
+    IAlertDataContextValue,
+    IAlertDialogValidity,
+    IAlertDraftContextValue,
+    IAlertFiltersContextValue,
+    IAlertSelectedValues,
+    IAlertSubmitState,
+    IUseAlertSubmitCallbacks,
+} from "./presentation/automations/alerting/state/types.js";
+export { useAlertDraft } from "./presentation/automations/alerting/state/AlertDraftContext.js";
+export { useAlertActions } from "./presentation/automations/alerting/state/AlertActionsContext.js";
+export { useAlertData } from "./presentation/automations/alerting/state/AlertDataContext.js";
+export { useAlertFilters } from "./presentation/automations/alerting/state/AlertFiltersContext.js";
+export { useAlertSelectedValues } from "./presentation/automations/alerting/state/useAlertSelectedValues.js";
+export { useAlertDialogValidity } from "./presentation/automations/alerting/state/useAlertDialogValidity.js";
+export { useAlertSubmit } from "./presentation/automations/alerting/state/useAlertSubmit.js";
+export {
+    useAlertingDialogActionBarProps,
+    useAlertingDialogDestinationProps,
+    useAlertingDialogFiltersProps,
+    useAlertingDialogHeaderProps,
+    useAlertingDialogRecipientsProps,
+    type IUseAlertingDialogActionBarPropsInput,
+    type IUseAlertingDialogHeaderPropsInput,
+} from "./presentation/automations/alerting/state/useAlertingDialogRegionProps.js";
+export { DefaultAlertingDialogHeader } from "./presentation/automations/alerting/DefaultAlertingDialog/DefaultAlertingDialogHeader.js";
+export { DefaultAlertingDialogFilters } from "./presentation/automations/alerting/DefaultAlertingDialog/DefaultAlertingDialogFilters.js";
+export { DefaultAlertingDialogDestination } from "./presentation/automations/alerting/DefaultAlertingDialog/DefaultAlertingDialogDestination.js";
+export { DefaultAlertingDialogRecipients } from "./presentation/automations/alerting/DefaultAlertingDialog/DefaultAlertingDialogRecipients.js";
+export { DefaultAutomationDialogActionBar } from "./presentation/automations/shared/slots/DefaultAutomationDialogActionBar.js";
+export { AlertingDialogHeader } from "./presentation/automations/alerting/blocks/AlertingDialogHeader.js";
+export { AlertingDialogFilters } from "./presentation/automations/alerting/blocks/AlertingDialogFilters.js";
+export { AlertingDialogDestination } from "./presentation/automations/alerting/blocks/AlertingDialogDestination.js";
+export { AlertingDialogRecipients } from "./presentation/automations/alerting/blocks/AlertingDialogRecipients.js";
+export {
+    AlertingDialogActionBar,
+    type IAlertingDialogActionBarBlockProps,
+} from "./presentation/automations/alerting/blocks/AlertingDialogActionBar.js";
+export type {
+    IScheduledEmailSaveState,
+    IScheduledExportActionsContextValue,
+    IScheduledExportAttachments,
+    IScheduledExportDataContextValue,
+    IScheduledExportDialogValidity,
+    IScheduledExportDraftContextValue,
+    IScheduledExportFiltersContextValue,
+    IUseSaveScheduledEmailCallbacks,
+} from "./presentation/automations/scheduledEmail/state/types.js";
+export { useScheduledExportDraft } from "./presentation/automations/scheduledEmail/state/ScheduledExportDraftContext.js";
+export { useScheduledExportActions } from "./presentation/automations/scheduledEmail/state/ScheduledExportActionsContext.js";
+export { useScheduledExportData } from "./presentation/automations/scheduledEmail/state/ScheduledExportDataContext.js";
+export { useScheduledExportFilters } from "./presentation/automations/scheduledEmail/state/ScheduledExportFiltersContext.js";
+export { useScheduledExportDialogValidity } from "./presentation/automations/scheduledEmail/state/useScheduledExportDialogValidity.js";
+export { useScheduledExportAttachments } from "./presentation/automations/scheduledEmail/state/useScheduledExportAttachments.js";
+export { useSaveScheduledEmailToBackend } from "./presentation/automations/scheduledEmail/state/useSaveScheduledEmailToBackend.js";
+export {
+    useScheduledEmailDialogActionBarProps,
+    useScheduledEmailDialogDestinationProps,
+    useScheduledEmailDialogFiltersProps,
+    useScheduledEmailDialogHeaderProps,
+    useScheduledEmailDialogRecipientsProps,
+    useScheduledEmailDialogTimezoneProps,
+    type IUseScheduledEmailDialogActionBarPropsInput,
+    type IUseScheduledEmailDialogHeaderPropsInput,
+    type IUseScheduledEmailDialogRecipientsPropsInput,
+} from "./presentation/automations/scheduledEmail/state/useScheduledEmailDialogRegionProps.js";
+export { DefaultScheduledEmailDialogHeader } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogHeader.js";
+export { DefaultScheduledEmailDialogFilters } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogFilters.js";
+export { DefaultScheduledEmailDialogDestination } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogDestination.js";
+export { DefaultScheduledEmailDialogRecipients } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogRecipients.js";
+export { DefaultScheduledEmailDialogTimezone } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogTimezone.js";
+export { ScheduledEmailDialogHeader } from "./presentation/automations/scheduledEmail/blocks/ScheduledEmailDialogHeader.js";
+export { ScheduledEmailDialogFilters } from "./presentation/automations/scheduledEmail/blocks/ScheduledEmailDialogFilters.js";
+export { ScheduledEmailDialogDestination } from "./presentation/automations/scheduledEmail/blocks/ScheduledEmailDialogDestination.js";
+export { ScheduledEmailDialogRecipients } from "./presentation/automations/scheduledEmail/blocks/ScheduledEmailDialogRecipients.js";
+export { ScheduledEmailDialogTimezone } from "./presentation/automations/scheduledEmail/blocks/ScheduledEmailDialogTimezone.js";
+export {
+    ScheduledEmailDialogActionBar,
+    type IScheduledEmailDialogActionBarBlockProps,
+} from "./presentation/automations/scheduledEmail/blocks/ScheduledEmailDialogActionBar.js";
 export type {
     IAutomationDialogActionBarProps,
     IAutomationDialogDestinationProps,

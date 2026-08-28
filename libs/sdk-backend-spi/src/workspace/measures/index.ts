@@ -30,6 +30,21 @@ export interface IMeasureReferencing {
 }
 
 /**
+ * Options for saving a measure.
+ *
+ * @public
+ */
+export interface ISaveMeasureOptions {
+    /**
+     * Ask the backend to return the measure's object-level permissions.
+     *
+     * @remarks
+     * Defaults to false. Only honoured when creating; the update endpoint does not offer it.
+     */
+    loadPermissions?: boolean;
+}
+
+/**
  * Options for getting a measure.
  *
  * @public
@@ -94,9 +109,13 @@ export interface IWorkspaceMeasuresService {
      * Create and save measure for the provided measure definition
      *
      * @param measure - measure definition
+     * @param options - options for saving the measure
      * @returns promise of created measure
      */
-    createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject>;
+    createMeasure(
+        measure: IMeasureMetadataObjectDefinition,
+        options?: ISaveMeasureOptions,
+    ): Promise<IMeasureMetadataObject>;
 
     /**
      * Update provided measure

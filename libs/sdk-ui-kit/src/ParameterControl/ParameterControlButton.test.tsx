@@ -3,16 +3,34 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
+import { type IParameterDefinition } from "@gooddata/sdk-model";
 import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { ParameterControlButton } from "./ParameterControlButton.js";
 
 const WrappedParameterControlButton = withIntlForTest(ParameterControlButton);
 
+const numberDefinition: IParameterDefinition = { type: "NUMBER", defaultValue: 10 };
+
+const freeTextDefinition: IParameterDefinition = { type: "STRING", defaultValue: "Actual" };
+
+const constrainedDefinition: IParameterDefinition = {
+    type: "STRING",
+    defaultValue: "actual",
+    constraints: {
+        allowedValues: [
+            { value: "actual", title: "Actual" },
+            { value: "budget", title: "Budget Plan" },
+            { value: "forecast" },
+        ],
+    },
+};
+
 const renderButton = (props: Partial<React.ComponentProps<typeof ParameterControlButton>> = {}) => {
     return render(
         <WrappedParameterControlButton
             name="Threshold"
+            definition={numberDefinition}
             value={25}
             isActive={false}
             onClick={() => {}}
@@ -32,9 +50,19 @@ describe("ParameterControlButton", () => {
         expect(container.textContent).toContain("is 42");
     });
 
-    it("renders a string value in the subtitle", () => {
-        const { container } = renderButton({ value: "Budget" });
+    it("renders a free-text string value in the subtitle", () => {
+        const { container } = renderButton({ definition: freeTextDefinition, value: "Budget" });
         expect(container.textContent).toContain("is Budget");
+    });
+
+    it("shows the allowed value title, never the raw value, for a constrained STRING parameter", () => {
+        renderButton({ definition: constrainedDefinition, value: "budget" });
+        expect(screen.getByRole("button")).toHaveAccessibleName("Threshold is Budget Plan");
+    });
+
+    it("falls back to the raw value when the allowed value has no title", () => {
+        renderButton({ definition: constrainedDefinition, value: "forecast" });
+        expect(screen.getByRole("button")).toHaveAccessibleName("Threshold is forecast");
     });
 
     it("delegates rendering to UiControlButton (role=button, dialog popup)", () => {

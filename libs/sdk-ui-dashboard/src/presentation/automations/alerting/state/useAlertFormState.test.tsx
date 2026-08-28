@@ -36,23 +36,20 @@ vi.hoisted(() => {
     vi.resetModules();
 });
 
-vi.mock(
-    "../DefaultAlertingDialog/utils/transformation.js",
-    async (importOriginal: () => Promise<Record<string, unknown>>) => {
-        const actual = await importOriginal();
-        return {
-            ...actual,
-            transformAlertByMetric: vi.fn(),
-            transformAlertByAttribute: vi.fn(),
-            transformAlertByComparisonOperator: vi.fn(),
-            transformAlertByRelativeOperator: vi.fn(),
-            transformAlertByAnomalyDetection: vi.fn(),
-            transformAlertBySensitivity: vi.fn(),
-            transformAlertByGranularity: vi.fn(),
-            transformAlertByDestination: vi.fn(),
-        };
-    },
-);
+vi.mock("../utils/transformation.js", async (importOriginal: () => Promise<Record<string, unknown>>) => {
+    const actual = await importOriginal();
+    return {
+        ...actual,
+        transformAlertByMetric: vi.fn(),
+        transformAlertByAttribute: vi.fn(),
+        transformAlertByComparisonOperator: vi.fn(),
+        transformAlertByRelativeOperator: vi.fn(),
+        transformAlertByAnomalyDetection: vi.fn(),
+        transformAlertBySensitivity: vi.fn(),
+        transformAlertByGranularity: vi.fn(),
+        transformAlertByDestination: vi.fn(),
+    };
+});
 
 vi.mock(
     "../../shared/utils/automationUtils.js",
@@ -66,16 +63,13 @@ vi.mock(
     },
 );
 
-vi.mock(
-    "../DefaultAlertingDialog/utils/convertors.js",
-    async (importOriginal: () => Promise<Record<string, unknown>>) => {
-        const actual = await importOriginal();
-        return {
-            ...actual,
-            createDefaultAlert: vi.fn(),
-        };
-    },
-);
+vi.mock("../utils/convertors.js", async (importOriginal: () => Promise<Record<string, unknown>>) => {
+    const actual = await importOriginal();
+    return {
+        ...actual,
+        createDefaultAlert: vi.fn(),
+    };
+});
 
 vi.mock(
     "../../shared/automationFilters/automationParameters.js",
@@ -147,8 +141,8 @@ import {
     convertExternalRecipientToAutomationRecipient,
     convertUserToAutomationRecipient,
 } from "../../shared/utils/automationUtils.js";
-import { createDefaultAlert } from "../DefaultAlertingDialog/utils/convertors.js";
-import * as transformationModule from "../DefaultAlertingDialog/utils/transformation.js";
+import { createDefaultAlert } from "../utils/convertors.js";
+import * as transformationModule from "../utils/transformation.js";
 
 import { useAlertFormState, type IUseAlertFormStateProps } from "./useAlertFormState.js";
 

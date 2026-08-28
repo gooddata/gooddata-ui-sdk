@@ -750,6 +750,18 @@ export const selectEnableDashboardShareDialogLink: DashboardSelector<boolean> = 
 );
 
 /**
+ * Selector for the dashboard object availability (OLP partial rendering) feature flag
+ *
+ * @internal
+ */
+export const selectEnableDashboardPartialRendering: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return Boolean(state.settings?.enableDashboardPartialRendering);
+    },
+);
+
+/**
  * Selector for the alert once per interval feature flag
  *
  * @internal

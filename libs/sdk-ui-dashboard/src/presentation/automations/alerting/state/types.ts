@@ -17,14 +17,22 @@ import {
     type IAutomationMetadataObjectDefinition,
     type IAutomationRecipient,
     type IMeasure,
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
     type IdentifierRef,
     type ParameterValue,
 } from "@gooddata/sdk-model";
 
 import { type IAutomationParameter } from "../../shared/automationFilters/automationParameters.js";
-import { type AttributeValue } from "../DefaultAlertingDialog/hooks/useAttributeValuesFromExecResults.js";
-import { type IMeasureFormatMap } from "../DefaultAlertingDialog/utils/getters.js";
-import { type AlertAttribute, type AlertMetric, type AlertMetricComparatorType } from "../types.js";
+import { type AttributeValue } from "../hooks/useAttributeValuesFromExecResults.js";
+import {
+    type AlertAttribute,
+    type AlertMetric,
+    type AlertMetricComparator,
+    type AlertMetricComparatorType,
+    type IAlertingDialogProps,
+} from "../types.js";
+import { type AlertAiOperator, type IMeasureFormatMap } from "../utils/getters.js";
 
 /**
  * The alerting dialog's edit draft: the automation being edited, the baseline it is compared
@@ -32,7 +40,7 @@ import { type AlertAttribute, type AlertMetric, type AlertMetricComparatorType }
  *
  * Changes on every keystroke; consumers re-render by design.
  *
- * @internal
+ * @alpha
  */
 export interface IAlertDraftContextValue {
     /**
@@ -62,37 +70,77 @@ export interface IAlertDraftContextValue {
  * Changes rarely: `onGranularityChange` is re-created when `triggerIntervalDirty` toggles or the
  * supported measures load.
  *
- * @internal
+ * @alpha
  */
 export interface IAlertActionsContextValue {
+    /**
+     * Replaces the draft; the change-handlers below are the preferred, field-scoped writes.
+     */
     setEditedAutomation: Dispatch<SetStateAction<IAutomationMetadataObjectDefinition | undefined>>;
+    /**
+     * Sets the alert title and re-validates its length.
+     */
     onTitleChange: (value: string) => void;
+    /**
+     * Selects the measure the condition targets; resets the comparison to the measure's defaults.
+     */
     onMeasureChange: (measure: AlertMetric) => void;
+    /**
+     * Slices the condition by an attribute value; `undefined` clears the slice.
+     */
     onAttributeChange: (attribute: AlertAttribute | undefined, value: AttributeValue | undefined) => void;
+    /**
+     * Switches the condition to a comparison against a fixed threshold.
+     */
     onComparisonOperatorChange: (measure: AlertMetric, comparisonOperator: IAlertComparisonOperator) => void;
+    /**
+     * Switches the condition to a relative (change / difference) comparison with the given operators.
+     */
     onRelativeOperatorChange: (
         measure: AlertMetric,
         relativeOperator: IAlertRelativeOperator,
         arithmeticOperator: IAlertRelativeArithmeticOperator,
     ) => void;
+    /**
+     * Switches the condition to anomaly detection on the measure.
+     */
     onAnomalyDetectionChange: (measure: AlertMetric) => void;
+    /**
+     * Sets the period a relative condition compares against (and its granularity when given).
+     */
     onComparisonTypeChange: (
         measure: AlertMetric | undefined,
         relativeOperator: [IAlertRelativeOperator, IAlertRelativeArithmeticOperator] | undefined,
         comparisonType: AlertMetricComparatorType,
         granularity?: DateAttributeGranularity,
     ) => void;
+    /**
+     * Sets the anomaly-detection sensitivity.
+     */
     onSensitivityChange: (sensitivity: IAlertAnomalyDetectionSensitivity) => void;
     /**
-     * `dirty` defaults to true; the granularity handler passes false when it derives the interval.
+     * Sets the trigger interval. `dirty` defaults to true; the granularity handler passes false when it
+     * derives the interval.
      */
     onTriggerIntervalChange: (triggerInterval: IAlertTriggerInterval, dirty?: boolean) => void;
+    /**
+     * Sets the anomaly-detection granularity; derives the trigger interval unless the user edited it.
+     */
     onGranularityChange: (
         measure: AlertMetric | undefined,
         granularity: IAlertAnomalyDetectionGranularity,
     ) => void;
+    /**
+     * Selects the notification channel; recipients incompatible with it are dropped.
+     */
     onDestinationChange: (destinationId: string) => void;
+    /**
+     * Sets when the alert fires: every evaluation or once per interval.
+     */
     onTriggerModeChange: (triggerMode: IAlertTriggerMode) => void;
+    /**
+     * Replaces the recipients with the complete updated array.
+     */
     onRecipientsChange: (recipients: IAutomationRecipient[]) => void;
 }
 
@@ -102,11 +150,20 @@ export interface IAlertActionsContextValue {
  *
  * Changes when an async load resolves, not per keystroke.
  *
- * @internal
+ * @alpha
  */
 export interface IAlertDataContextValue {
+    /**
+     * Measures of the insight an alert can be built on, with their comparisons.
+     */
     supportedMeasures: AlertMetric[];
+    /**
+     * Attributes of the insight an alert can be sliced by.
+     */
     supportedAttributes: AlertAttribute[];
+    /**
+     * Number formats of the insight's measures, by local identifier.
+     */
     measureFormatMap: IMeasureFormatMap;
     /**
      * Whether the widget's execution result is still loading.
@@ -137,10 +194,16 @@ export interface IAlertDataContextValue {
  *
  * Changes when a filter or a parameter is edited.
  *
- * @internal
+ * @alpha
  */
 export interface IAlertFiltersContextValue {
+    /**
+     * The filters the alert is saved with.
+     */
     selectedFilters: FilterContextItem[];
+    /**
+     * The dashboard filters the alert may use; undefined until resolved.
+     */
     availableFilters: FilterContextItem[] | undefined;
     /**
      * Replaces the selection with the complete updated array and mirrors it into the draft.
@@ -167,8 +230,17 @@ export interface IAlertFiltersContextValue {
      * Workspace parameters addable via the "+" menu. Empty when the feature is off.
      */
     availableParameters: IAutomationParameter[];
+    /**
+     * Sets a parameter's value.
+     */
     onParameterChange: (ref: IdentifierRef, value: ParameterValue) => void;
+    /**
+     * Removes a parameter override.
+     */
     onParameterDelete: (ref: IdentifierRef) => void;
+    /**
+     * Adds a workspace parameter with its default value.
+     */
     onParameterAdd: (ref: IdentifierRef) => void;
     /**
      * Drops stored parameters whose `ref` left the workspace catalog, keeping every other override.
@@ -223,3 +295,119 @@ export type IAlertFiltersModel = Pick<
     | "automationIsValid"
     | "filtersAreStale"
 >;
+
+/**
+ * The alerting dialog's currently selected form values, derived from the draft and the supported
+ * measures and attributes.
+ *
+ * @alpha
+ */
+export interface IAlertSelectedValues {
+    /**
+     * The measure the condition targets; undefined until the draft names one the insight supports.
+     */
+    selectedMeasure: AlertMetric | undefined;
+    /**
+     * The operator of a fixed-threshold comparison condition.
+     */
+    selectedComparisonOperator: IAlertComparisonOperator | undefined;
+    /**
+     * The relative and arithmetic operators of a relative condition.
+     */
+    selectedRelativeOperator: [IAlertRelativeOperator, IAlertRelativeArithmeticOperator] | undefined;
+    /**
+     * The operator id of an anomaly-detection condition.
+     */
+    selectedAiOperator: AlertAiOperator | undefined;
+    /**
+     * The period comparison a relative condition uses.
+     */
+    selectedComparator: AlertMetricComparator | undefined;
+    /**
+     * The sensitivity of an anomaly-detection condition.
+     */
+    selectedSensitivity: IAlertAnomalyDetectionSensitivity | undefined;
+    /**
+     * The granularity of an anomaly-detection condition.
+     */
+    selectedGranularity: IAlertAnomalyDetectionGranularity | undefined;
+    /**
+     * The attribute the condition is sliced by.
+     */
+    selectedAttribute: AlertAttribute | undefined;
+    /**
+     * The attribute element URI the condition is sliced to; null for the empty value.
+     */
+    selectedValue: string | null | undefined;
+    /**
+     * The notification channel the draft targets, resolved against the available channels.
+     */
+    selectedNotificationChannel:
+        | INotificationChannelIdentifier
+        | INotificationChannelMetadataObject
+        | undefined;
+    /**
+     * Whether the selected channel accepts external (e-mail only) recipients.
+     */
+    allowExternalRecipients: boolean;
+    /**
+     * Whether the selected channel accepts only the creator as recipient.
+     */
+    allowOnlyLoggedUserRecipients: boolean;
+}
+
+/**
+ * The alerting dialog's validity.
+ *
+ * @alpha
+ */
+export interface IAlertDialogValidity {
+    /**
+     * Whether submit is disabled: the draft is invalid, incomplete, or unchanged in edit mode.
+     */
+    isSubmitDisabled: boolean;
+    /**
+     * The validation message to show; undefined when there is none.
+     */
+    validationErrorMessage: string | undefined;
+    /**
+     * Whether the widget the alert is attached to still exists and supports the alert's measure.
+     */
+    isParentValid: boolean;
+    /**
+     * Whether the measure may be changed — false when the dialog has no insight.
+     */
+    canChangeMeasure: boolean;
+    /**
+     * Whether the saved alert points at a widget whose insight is gone.
+     */
+    isInvalidConnectionToInsight: boolean;
+}
+
+/**
+ * Lifecycle callbacks of {@link useAlertSubmit}: the dialog's own `onSuccess`/`onError` (create) and
+ * `onSaveSuccess`/`onSaveError` (edit).
+ *
+ * @alpha
+ */
+export type IUseAlertSubmitCallbacks = Pick<
+    IAlertingDialogProps,
+    "onSuccess" | "onError" | "onSaveSuccess" | "onSaveError"
+>;
+
+/**
+ * The alerting dialog's submit path.
+ *
+ * @alpha
+ */
+export interface IAlertSubmitState {
+    /**
+     * Whether a create or save is in flight.
+     */
+    isSaving: boolean;
+    /**
+     * Creates the alert (no `alertToEdit`) or saves the edited one; a second call while one is in
+     * flight is ignored.
+     */
+    submit: () => Promise<void>;
+}
