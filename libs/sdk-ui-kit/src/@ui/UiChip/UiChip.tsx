@@ -4,6 +4,7 @@ import { type CSSProperties, useLayoutEffect, useRef, useState } from "react";
 
 import { bem } from "../@utils/bem.js";
 
+import { ChipActionButton } from "./ChipActionButton.js";
 import { ChipContent } from "./ChipContent.js";
 import { ChipDeleteButton } from "./ChipDeleteButton.js";
 import { type IUiChipProps } from "./types.js";
@@ -17,6 +18,7 @@ export function UiChip({
     label,
     tag,
     isDeletable = false,
+    isActionable = false,
     isActive = false,
     isLocked = false,
     isExpandable = true,
@@ -26,14 +28,18 @@ export function UiChip({
     iconAfter,
     iconColor = "primary",
     onClick,
-    onDelete,
     onKeyDown,
+    onDelete,
     onDeleteKeyDown,
+    onAction,
+    onActionKeyDown,
     accessibilityConfig,
     dataTestId,
     buttonRef,
+    iconAction,
+    variant = "normal",
     renderChipContent,
-    renderDeleteButton,
+    renderActionButton,
 }: IUiChipProps) {
     const [styleObj, setStyleObj] = useState<CSSProperties>();
     const defaultButtonRef = useRef<HTMLButtonElement>(null);
@@ -48,12 +54,14 @@ export function UiChip({
         }
     }, [label, tag, effectiveButtonRef]);
 
-    const { deleteAriaLabel, deleteAriaDescribedBy } = accessibilityConfig ?? {};
+    const { deleteAriaLabel, deleteAriaDescribedBy, actionAriaLabel, actionAriaDescribedBy } =
+        accessibilityConfig ?? {};
 
     const chipContent = (
         <ChipContent
             label={label}
             tag={tag}
+            variant={variant}
             iconBefore={iconBefore}
             iconAfter={iconAfter}
             iconColor={iconColor}
@@ -64,6 +72,7 @@ export function UiChip({
             isExpandable={isExpandable}
             isDisabled={isDisabled}
             isDeletable={isDeletable}
+            isActionable={isActionable}
             maxWidth={maxWidth}
             accessibilityConfig={accessibilityConfig}
             dataTestId={dataTestId}
@@ -72,7 +81,7 @@ export function UiChip({
         />
     );
 
-    const deleteButton = isDeletable ? (
+    const actionButton = isDeletable ? (
         <ChipDeleteButton
             onDelete={onDelete}
             onDeleteKeyDown={onDeleteKeyDown}
@@ -80,12 +89,26 @@ export function UiChip({
             deleteAriaDescribedBy={deleteAriaDescribedBy}
             dataTestId={dataTestId}
         />
+    ) : isActionable ? (
+        <ChipActionButton
+            onAction={onAction}
+            onActionKeyDown={onActionKeyDown}
+            actionIcon={iconAction}
+            actionAriaLabel={actionAriaLabel}
+            actionAriaDescribedBy={actionAriaDescribedBy}
+            dataTestId={dataTestId}
+        />
     ) : null;
 
     return (
-        <div className={b()} style={{ maxWidth }}>
+        <div
+            className={b({
+                variant,
+            })}
+            style={{ maxWidth }}
+        >
             {renderChipContent ? renderChipContent(chipContent) : chipContent}
-            {deleteButton && renderDeleteButton ? renderDeleteButton(deleteButton) : deleteButton}
+            {actionButton && renderActionButton ? renderActionButton(actionButton) : actionButton}
         </div>
     );
 }

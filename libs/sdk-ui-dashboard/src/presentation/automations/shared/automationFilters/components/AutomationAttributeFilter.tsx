@@ -179,7 +179,7 @@ function AutomationAttributeFilterDropdownButtonComponent(props: IAttributeFilte
                     }}
                 />
             )}
-            renderDeleteButton={(button: ReactNode) => (
+            renderActionButton={(button: ReactNode) => (
                 <UiTooltip
                     id={attributeFilterDeleteTooltipId}
                     arrowPlacement="top-start"

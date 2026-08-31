@@ -1,34 +1,26 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type MutableRefObject, useRef } from "react";
+import { type MutableRefObject, type ReactElement, useRef } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import {
-    Dropdown,
-    DropdownButton,
-    type OverlayPositionType,
-    SingleSelectListItem,
-    UiListbox,
-} from "@gooddata/sdk-ui-kit";
+import { Dropdown, DropdownButton, SingleSelectListItem, UiListbox } from "@gooddata/sdk-ui-kit";
 
-import { type AlertMetric } from "../../types.js";
-import { getMeasureTitle } from "../../utils/getters.js";
-
-export interface IAlertMetricSelectProps {
-    id?: string;
-    disabled?: boolean;
-    selectedMeasure: AlertMetric | undefined;
-    onMeasureChange: (measure: AlertMetric) => void;
-    measures: AlertMetric[];
-    overlayPositionType?: OverlayPositionType;
-    closeOnParentScroll?: boolean;
-}
+import { type IAlertingDialogMeasureProps } from "../types.js";
+import { getMeasureTitle } from "../utils/getters.js";
 
 const measureIcon = <div className="gd-alert-measure-select__icon gd-icon-metric" />;
 
-export function AlertMeasureSelect({
+/**
+ * Default render of the alerting dialog's measure field: the dropdown selecting the measure the
+ * condition targets. Props-driven — the bare control without its label; reads no dialog context
+ * (only `useIntl`). The default dialog and {@link AlertingDialogMeasure} render it with
+ * {@link useAlertingDialogMeasureProps} inside {@link AutomationDialogFormField}.
+ *
+ * @alpha
+ */
+export function DefaultAlertingDialogMeasure({
     id,
     disabled,
     selectedMeasure,
@@ -36,7 +28,7 @@ export function AlertMeasureSelect({
     measures,
     overlayPositionType,
     closeOnParentScroll,
-}: IAlertMetricSelectProps) {
+}: IAlertingDialogMeasureProps): ReactElement {
     const intl = useIntl();
     const ref = useRef<HTMLElement | null>(null);
     const selectedMeasureTitle = selectedMeasure

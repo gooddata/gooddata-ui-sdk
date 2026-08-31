@@ -1505,3 +1505,58 @@ export function isAdSetTimezoneCommandData(obj: unknown): obj is AdSetTimezoneCo
         getEventType(obj) === (GdcAdCommandType.SetTimezone as string)
     );
 }
+
+/**
+ * Every command the Analytical Designer accepts, as the envelope the postMessage transport delivers.
+ * Narrow it with the per-command `isAd*CommandData` type guards.
+ *
+ * @beta
+ */
+export type AdCommandData =
+    | AdDrillableItemsCommandData
+    | AdOpenInsightCommandData
+    | AdClearCommandData
+    | AdClearInsightCommandData
+    | AdRequestCancellationCommandData
+    | AdSaveInsightCommandData
+    | AdSaveAsInsightCommandData
+    | AdExportInsightCommandData
+    | AdUndoCommandData
+    | AdRedoCommandData
+    | AdSetFilterContextCommandData
+    | AdRemoveFilterContextCommandData
+    | AdSetApiTokenCommandData
+    | AdAttributeHierarchyModifiedCommandData
+    | AdSetTimezoneCommandData;
+
+/**
+ * Every command the Analytical Designer accepts, as the window message event that carries it.
+ *
+ * @beta
+ */
+export type AdCommand =
+    | AdDrillableItemsCommand
+    | AdOpenInsightCommand
+    | AdClearCommand
+    | AdClearInsightCommand
+    | AdRequestCancellationCommand
+    | AdSaveInsightCommand
+    | AdSaveAsInsightCommand
+    | AdExportInsightCommand
+    | AdUndoCommand
+    | AdRedoCommand
+    | AdSetFilterContextCommand
+    | AdRemoveFilterContextCommand
+    | AdSetApiTokenCommand
+    | AdAttributeHierarchyModifiedCommand
+    | AdSetTimezoneCommand;
+
+/**
+ * The body the Analytical Designer command `T` carries — `undefined` for the bodiless commands.
+ *
+ * @beta
+ */
+export type AdCommandBody<T extends GdcAdCommandType> = Extract<
+    AdCommandData,
+    { readonly gdc: { readonly event: { readonly name: T } } }
+>["gdc"]["event"]["data"];

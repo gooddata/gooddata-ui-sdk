@@ -1,16 +1,11 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type MutableRefObject, useCallback, useMemo, useState } from "react";
+import { type MutableRefObject, type ReactElement, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import {
-    type IAttributeMetadataObject,
-    type ICatalogAttribute,
-    type ICatalogDateDataset,
-    areObjRefsEqual,
-} from "@gooddata/sdk-model";
+import { areObjRefsEqual } from "@gooddata/sdk-model";
 import {
     Dropdown,
     DropdownButton,
@@ -22,24 +17,9 @@ import {
     UiMenu,
 } from "@gooddata/sdk-ui-kit";
 
-import { type AttributeValue } from "../../hooks/useAttributeValuesFromExecResults.js";
-import { type AlertAttribute } from "../../types.js";
-import { getSelectedCatalogAttribute, getSelectedCatalogAttributeValue } from "../../utils/getters.js";
-
-export interface IAlertAttributeSelectProps {
-    id: string;
-    disabled?: boolean;
-    selectedAttribute: AlertAttribute | undefined;
-    selectedValue: string | null | undefined;
-    onAttributeChange: (attribute: AlertAttribute | undefined, value: AttributeValue | undefined) => void;
-    attributes: AlertAttribute[];
-    catalogAttributes: ICatalogAttribute[];
-    catalogDateDatasets: ICatalogDateDataset[];
-    getAttributeValues: (attr: IAttributeMetadataObject) => AttributeValue[];
-    isResultLoading?: boolean;
-    showLabel?: boolean;
-    closeOnParentScroll?: boolean;
-}
+import { type AttributeValue } from "../hooks/useAttributeValuesFromExecResults.js";
+import { type AlertAttribute, type IAlertingDialogAttributeProps } from "../types.js";
+import { getSelectedCatalogAttribute, getSelectedCatalogAttributeValue } from "../utils/getters.js";
 
 interface IAttributeMenuItemData {
     attribute: AlertAttribute | undefined;
@@ -161,7 +141,16 @@ function AttributeValuesSearchContent({
     );
 }
 
-export function AlertAttributeSelect({
+/**
+ * Default render of the alerting dialog's attribute field: the dropdown slicing the condition by an
+ * attribute value; renders nothing when the insight has no non-date attribute. Props-driven — the
+ * bare control without its label; reads no dialog context (only `useIntl`). The default dialog and
+ * {@link AlertingDialogAttribute} render it with {@link useAlertingDialogAttributeProps} inside
+ * {@link AutomationDialogFormField}.
+ *
+ * @alpha
+ */
+export function DefaultAlertingDialogAttribute({
     id,
     disabled,
     selectedAttribute: selectedAttributeProp,
@@ -174,7 +163,7 @@ export function AlertAttributeSelect({
     catalogDateDatasets,
     showLabel = true,
     closeOnParentScroll,
-}: IAlertAttributeSelectProps) {
+}: IAlertingDialogAttributeProps): ReactElement | null {
     const intl = useIntl();
 
     const availableAttributes = useMemo(() => {

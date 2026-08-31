@@ -12,9 +12,9 @@ import {
     type IMeasure,
 } from "@gooddata/sdk-model";
 
-import { type AlertAttribute, type AlertMetric } from "../../types.js";
-import { getAlertThreshold, getMeasureFormat } from "../../utils/getters.js";
-import { convertThresholdValue } from "../../utils/threshold.js";
+import { type AlertAttribute, type AlertMetric } from "../types.js";
+import { getAlertThreshold, getMeasureFormat } from "../utils/getters.js";
+import { convertThresholdValue } from "../utils/threshold.js";
 
 function clearValueForRelativeOperator(
     changeValue: (value: number) => void,

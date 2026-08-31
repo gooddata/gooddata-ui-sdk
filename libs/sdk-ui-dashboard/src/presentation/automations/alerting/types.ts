@@ -1,11 +1,22 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type ComponentType, type ReactNode, type Ref } from "react";
+import { type ComponentType, type FocusEvent, type ReactNode, type Ref } from "react";
 
 import {
     type DateAttributeGranularity,
+    type IAlertAnomalyDetectionGranularity,
+    type IAlertAnomalyDetectionSensitivity,
+    type IAlertComparisonOperator,
+    type IAlertRelativeArithmeticOperator,
+    type IAlertRelativeOperator,
+    type IAlertTriggerInterval,
+    type IAlertTriggerMode,
     type IAttribute,
+    type IAttributeMetadataObject,
     type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+    type ICatalogAttribute,
+    type ICatalogDateDataset,
     type IDataSetMetadataObject,
     type IInsight,
     type IMeasure,
@@ -14,7 +25,8 @@ import {
     type IWidget,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
-import { type ISlotProps } from "@gooddata/sdk-ui-kit";
+import type { AI_OPERATOR, AI_OPERATORS } from "@gooddata/sdk-ui-ext";
+import { type ISlotProps, type OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
 import {
     type IAutomationDialogActionBarProps,
@@ -23,6 +35,8 @@ import {
     type IAutomationDialogHeaderProps,
     type IAutomationDialogRecipientsProps,
 } from "../shared/slots/types.js";
+
+import { type AttributeValue } from "./hooks/useAttributeValuesFromExecResults.js";
 
 ///
 /// Component props
@@ -154,6 +168,353 @@ export interface IAlertingDialogFiltersProps extends IAutomationDialogFiltersPro
      * anomaly detection.
      */
     disableDateFilters: boolean;
+}
+
+/**
+ * Props of the default alerting dialog's measure field (the "Metric" row).
+ *
+ * @alpha
+ */
+export interface IAlertingDialogMeasureProps {
+    /**
+     * Id of the dropdown button; the form row's label points at it.
+     */
+    id?: string;
+    /**
+     * Disables the select. The default dialog disables it when the dialog has no insight to pick measures from.
+     */
+    disabled?: boolean;
+    /**
+     * The measure the condition targets; undefined shows the placeholder.
+     */
+    selectedMeasure: AlertMetric | undefined;
+    /**
+     * Called with the picked measure.
+     */
+    onMeasureChange: (measure: AlertMetric) => void;
+    /**
+     * The insight's measures an alert can be built on.
+     */
+    measures: AlertMetric[];
+    /**
+     * Positioning of the dropdown overlay; the default dialog uses `"sameAsTarget"`.
+     */
+    overlayPositionType?: OverlayPositionType;
+    /**
+     * Closes the dropdown when an ancestor scrolls; the default dialog sets it.
+     */
+    closeOnParentScroll?: boolean;
+}
+
+/**
+ * Props of the default alerting dialog's attribute field (the "For" row).
+ *
+ * @alpha
+ */
+export interface IAlertingDialogAttributeProps {
+    /**
+     * Id of the dropdown button; the form row's label points at it.
+     */
+    id: string;
+    /**
+     * Disables the select. The default dialog disables it when the dialog has no insight to pick measures from.
+     */
+    disabled?: boolean;
+    /**
+     * The attribute the condition is sliced by; undefined for the whole measure.
+     */
+    selectedAttribute: AlertAttribute | undefined;
+    /**
+     * The attribute element the condition is sliced to; null for the empty value, undefined for all values.
+     */
+    selectedValue: string | null | undefined;
+    /**
+     * Called with the picked attribute and value; `(undefined, undefined)` clears the slice.
+     */
+    onAttributeChange: (attribute: AlertAttribute | undefined, value: AttributeValue | undefined) => void;
+    /**
+     * The insight's attributes; the select offers the non-date ones and renders nothing when there is none.
+     */
+    attributes: AlertAttribute[];
+    /**
+     * The workspace catalog's attributes, to resolve titles and display forms.
+     */
+    catalogAttributes: ICatalogAttribute[];
+    /**
+     * The workspace catalog's date datasets, to resolve date attributes.
+     */
+    catalogDateDatasets: ICatalogDateDataset[];
+    /**
+     * Distinct values of an attribute in the widget's execution result.
+     */
+    getAttributeValues: (attribute: IAttributeMetadataObject) => AttributeValue[];
+    /**
+     * Disables the select while the execution result is loading.
+     */
+    isResultLoading?: boolean;
+    /**
+     * Renders the select's own "For" label above the control. The default dialog passes false — the
+     * form row carries the label.
+     */
+    showLabel?: boolean;
+    /**
+     * Closes the dropdown when an ancestor scrolls; the default dialog sets it.
+     */
+    closeOnParentScroll?: boolean;
+}
+
+/**
+ * Props of the default alerting dialog's comparison-operator field (the "Condition" row).
+ *
+ * @alpha
+ */
+export interface IAlertingDialogComparisonOperatorProps {
+    /**
+     * Id of the dropdown button; the form row's label points at it.
+     */
+    id: string;
+    /**
+     * The measure the condition targets; the select renders nothing without one.
+     */
+    measure: AlertMetric | undefined;
+    /**
+     * Offers the anomaly-detection operators. The default dialog passes the conjunction of the
+     * `enableAnomalyDetectionAlert` and `canUseAiAssistant` features; pass false to hide those
+     * options.
+     */
+    enableAnomalyDetectionAlert: boolean;
+    /**
+     * The operator of a fixed-threshold condition, when that is the condition type.
+     */
+    selectedComparisonOperator: IAlertComparisonOperator | undefined;
+    /**
+     * The relative and arithmetic operators of a relative condition, when that is the condition type.
+     */
+    selectedRelativeOperator: [IAlertRelativeOperator, IAlertRelativeArithmeticOperator] | undefined;
+    /**
+     * The operator id of an anomaly-detection condition, when that is the condition type.
+     */
+    selectedAiOperator: AlertAiOperator | undefined;
+    /**
+     * Called when a fixed-threshold operator is picked.
+     */
+    onComparisonOperatorChange: (measure: AlertMetric, comparisonOperator: IAlertComparisonOperator) => void;
+    /**
+     * Called when the anomaly-detection operator is picked.
+     */
+    onAnomalyDetectionChange: (measure: AlertMetric) => void;
+    /**
+     * Called when a relative (change / difference) operator is picked.
+     */
+    onRelativeOperatorChange: (
+        measure: AlertMetric,
+        relativeOperator: IAlertRelativeOperator,
+        arithmeticOperator: IAlertRelativeArithmeticOperator,
+    ) => void;
+    /**
+     * Positioning of the dropdown overlay; the default dialog uses `"sameAsTarget"`.
+     */
+    overlayPositionType?: OverlayPositionType;
+    /**
+     * Closes the dropdown when an ancestor scrolls; the default dialog sets it.
+     */
+    closeOnParentScroll?: boolean;
+}
+
+/**
+ * Props of the default alerting dialog's threshold field (the "Threshold" row).
+ *
+ * @alpha
+ */
+export interface IAlertingDialogThresholdProps {
+    /**
+     * Id of the input; the form row's label and the error message point at it.
+     */
+    id: string;
+    /**
+     * The threshold shown; undefined for an empty input.
+     */
+    value: number | undefined;
+    /**
+     * Called with the raw input value on every keystroke.
+     */
+    onChange: (value: string | number) => void;
+    /**
+     * Called on blur; the default dialog rounds the value to the measure's format here.
+     */
+    onBlur: (event: FocusEvent<HTMLInputElement>) => void;
+    /**
+     * Unit shown after the input — `"%"` for a change condition.
+     */
+    suffix?: string;
+    /**
+     * Validation message shown under the input; undefined when there is none.
+     */
+    errorMessage?: string;
+}
+
+/**
+ * Props of the default alerting dialog's comparison-period field (the "Compared to" row).
+ *
+ * @alpha
+ */
+export interface IAlertingDialogComparisonPeriodProps {
+    /**
+     * Id of the dropdown button; the form row's label points at it.
+     */
+    id: string;
+    /**
+     * The alert draft; the select renders nothing unless its condition is a change or difference.
+     */
+    alert: IAutomationMetadataObjectDefinition | undefined;
+    /**
+     * The measure the condition targets, whose comparators are the options; with a single
+     * comparator the select renders it as static text.
+     */
+    measure: AlertMetric | undefined;
+    /**
+     * The selected period comparison.
+     */
+    selectedComparison?: AlertMetricComparatorType;
+    /**
+     * The selected granularity of the period shift.
+     */
+    selectedGranularity?: DateAttributeGranularity;
+    /**
+     * Called with the picked comparison and its granularity.
+     */
+    onComparisonChange: (
+        comparison: AlertMetricComparatorType,
+        granularity?: DateAttributeGranularity,
+    ) => void;
+    /**
+     * Positioning of the dropdown overlay; the default dialog uses `"sameAsTarget"`.
+     */
+    overlayPositionType?: OverlayPositionType;
+    /**
+     * Closes the dropdown when an ancestor scrolls; the default dialog sets it.
+     */
+    closeOnParentScroll?: boolean;
+}
+
+/**
+ * Props of the default alerting dialog's sensitivity field (anomaly detection).
+ *
+ * @alpha
+ */
+export interface IAlertingDialogSensitivityProps {
+    /**
+     * Id of the dropdown button; the form row's label points at it.
+     */
+    id: string;
+    /**
+     * The anomaly-detection sensitivity; undefined renders as `"MEDIUM"`.
+     */
+    selectedSensitivity: IAlertAnomalyDetectionSensitivity | undefined;
+    /**
+     * Called with the picked sensitivity.
+     */
+    onSensitivityChange: (sensitivity: IAlertAnomalyDetectionSensitivity) => void;
+    /**
+     * Positioning of the dropdown overlay; the default dialog uses `"sameAsTarget"`.
+     */
+    overlayPositionType?: OverlayPositionType;
+    /**
+     * Closes the dropdown when an ancestor scrolls; the default dialog sets it.
+     */
+    closeOnParentScroll?: boolean;
+}
+
+/**
+ * Props of the default alerting dialog's granularity field (anomaly detection).
+ *
+ * @alpha
+ */
+export interface IAlertingDialogGranularityProps {
+    /**
+     * Id of the dropdown button; the form row's label points at it.
+     */
+    id: string;
+    /**
+     * Offers the `"HOUR"` granularity.
+     */
+    allowHourlyRecurrence: boolean;
+    /**
+     * The anomaly-detection granularity; undefined renders as `"WEEK"`.
+     */
+    selectedGranularity: IAlertAnomalyDetectionGranularity | undefined;
+    /**
+     * Called with the picked granularity.
+     */
+    onGranularityChange: (granularity: IAlertAnomalyDetectionGranularity) => void;
+    /**
+     * Positioning of the dropdown overlay; the default dialog uses `"sameAsTarget"`.
+     */
+    overlayPositionType?: OverlayPositionType;
+    /**
+     * Closes the dropdown when an ancestor scrolls; the default dialog sets it.
+     */
+    closeOnParentScroll?: boolean;
+}
+
+/**
+ * Props of the default alerting dialog's trigger-mode field (the "Trigger" row).
+ *
+ * @alpha
+ */
+export interface IAlertingDialogTriggerModeProps {
+    /**
+     * Id of the dropdown button; the form row's label points at it.
+     */
+    id: string;
+    /**
+     * When the alert fires: `"ALWAYS"`, `"ONCE"` or `"ONCE_PER_INTERVAL"`.
+     */
+    selectedTriggerMode: IAlertTriggerMode;
+    /**
+     * Called with the picked mode.
+     */
+    onTriggerModeChange: (triggerMode: IAlertTriggerMode) => void;
+    /**
+     * Positioning of the dropdown overlay; the default dialog uses `"sameAsTarget"`.
+     */
+    overlayPositionType?: OverlayPositionType;
+    /**
+     * Closes the dropdown when an ancestor scrolls; the default dialog sets it.
+     */
+    closeOnParentScroll?: boolean;
+    /**
+     * Offers `"ONCE_PER_INTERVAL"`; the default dialog passes the feature flag.
+     */
+    enableAlertOncePerInterval?: boolean;
+}
+
+/**
+ * Props of the default alerting dialog's trigger-interval field (the "Interval" row).
+ *
+ * @alpha
+ */
+export interface IAlertingDialogTriggerIntervalProps {
+    /**
+     * Id of the dropdown button; the form row's label points at it.
+     */
+    id: string;
+    /**
+     * The interval of a `"ONCE_PER_INTERVAL"` trigger.
+     */
+    selectedTriggerInterval: IAlertTriggerInterval;
+    /**
+     * Called with the picked interval.
+     */
+    onTriggerIntervalChange: (triggerInterval: IAlertTriggerInterval) => void;
+    /**
+     * Positioning of the dropdown overlay; the default dialog uses `"sameAsTarget"`.
+     */
+    overlayPositionType?: OverlayPositionType;
+    /**
+     * Closes the dropdown when an ancestor scrolls; the default dialog sets it.
+     */
+    closeOnParentScroll?: boolean;
 }
 
 /**
@@ -484,3 +845,10 @@ export type AlertAttribute = {
      */
     type: "dateAttribute" | "attribute";
 };
+
+/**
+ * The operator id of an anomaly-detection condition (`"AI.ANOMALY_DETECTION"`).
+ *
+ * @alpha
+ */
+export type AlertAiOperator = `${typeof AI_OPERATOR}.${typeof AI_OPERATORS.ANOMALY_DETECTION}`;

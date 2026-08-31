@@ -1,6 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
-
-import path from "path";
+// (C) 2021-2026 GoodData Corporation
 
 import fse from "fs-extra";
 import { snakeCase } from "lodash-es";
@@ -33,20 +31,6 @@ export function readPackageJsonIfExists(): Record<string, any> {
     }
 
     return {};
-}
-
-/**
- * Safely joins two path parts together.
- *
- * Path on windows will contain backslashes which can cause problems with Globby. This function makes sure
- * only forward slashes are used so that Globby and node fs works properly on all platforms.
- *
- * @param initialPath - the first part
- * @param relativePath - the second part
- * @returns joined path
- */
-export function safeJoin(initialPath: string, relativePath: string): string {
-    return path.posix.join(initialPath, relativePath).replace(/\\/g, "/");
 }
 
 /**

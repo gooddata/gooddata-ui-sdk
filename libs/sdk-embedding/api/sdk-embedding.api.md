@@ -44,6 +44,21 @@ export type AdClearInsightFinished = IGdcAdMessageEvent<GdcAdEventType.ClearInsi
 // @public
 export type AdClearInsightFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.ClearInsightFinished, IAdAvailableCommands>;
 
+// @beta
+export type AdCommand = AdDrillableItemsCommand | AdOpenInsightCommand | AdClearCommand | AdClearInsightCommand | AdRequestCancellationCommand | AdSaveInsightCommand | AdSaveAsInsightCommand | AdExportInsightCommand | AdUndoCommand | AdRedoCommand | AdSetFilterContextCommand | AdRemoveFilterContextCommand | AdSetApiTokenCommand | AdAttributeHierarchyModifiedCommand | AdSetTimezoneCommand;
+
+// @beta
+export type AdCommandBody<T extends GdcAdCommandType> = Extract<AdCommandData, {
+    readonly gdc: {
+        readonly event: {
+            readonly name: T;
+        };
+    };
+}>["gdc"]["event"]["data"];
+
+// @beta
+export type AdCommandData = AdDrillableItemsCommandData | AdOpenInsightCommandData | AdClearCommandData | AdClearInsightCommandData | AdRequestCancellationCommandData | AdSaveInsightCommandData | AdSaveAsInsightCommandData | AdExportInsightCommandData | AdUndoCommandData | AdRedoCommandData | AdSetFilterContextCommandData | AdRemoveFilterContextCommandData | AdSetApiTokenCommandData | AdAttributeHierarchyModifiedCommandData | AdSetTimezoneCommandData;
+
 // @public
 export type AdCommandFailed = CommandFailed<GdcProductName.ANALYTICAL_DESIGNER>;
 

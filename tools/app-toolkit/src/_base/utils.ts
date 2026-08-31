@@ -1,9 +1,8 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import path from "path";
 
 import fse from "fs-extra";
-
-import { isNotAuthenticated } from "@gooddata/sdk-backend-spi";
 
 import { logError } from "./terminal/loggers.js";
 import { isInputValidationError } from "./types.js";
@@ -73,10 +72,6 @@ export function extractRootCause(error: any): any {
 export function genericErrorReporter(error: any): void {
     if (isInputValidationError(error)) {
         logError(error.message);
-    } else if (isNotAuthenticated(error)) {
-        logError(
-            "Authentication to backend has failed. Please ensure your environment is setup with correct credentials.",
-        );
     } else {
         const e = extractRootCause(error);
 

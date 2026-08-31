@@ -1,42 +1,32 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { type MutableRefObject, useMemo } from "react";
+import { type MutableRefObject, type ReactElement, useMemo } from "react";
 
 import cx from "classnames";
 import { type IntlShape, useIntl } from "react-intl";
 
+import { type DateAttributeGranularity, DateGranularity } from "@gooddata/sdk-model";
+import { Dropdown, DropdownButton, SingleSelectListItem, UiListbox } from "@gooddata/sdk-ui-kit";
+
 import {
-    type DateAttributeGranularity,
-    DateGranularity,
-    type IAutomationMetadataObject,
-} from "@gooddata/sdk-model";
-import {
-    Dropdown,
-    DropdownButton,
-    type OverlayPositionType,
-    SingleSelectListItem,
-    UiListbox,
-} from "@gooddata/sdk-ui-kit";
+    type AlertMetricComparator,
+    AlertMetricComparatorType,
+    type IAlertingDialogComparisonPeriodProps,
+} from "../types.js";
+import { translateGranularity } from "../utils/granularity.js";
+import { isChangeOrDifferenceOperator } from "../utils/guards.js";
 
-import { type AlertMetric, type AlertMetricComparator, AlertMetricComparatorType } from "../../types.js";
-import { translateGranularity } from "../../utils/granularity.js";
-import { isChangeOrDifferenceOperator } from "../../utils/guards.js";
-
-export interface IAlertComparisonPeriodSelectProps {
-    alert: IAutomationMetadataObject | undefined;
-    measure: AlertMetric | undefined;
-    overlayPositionType?: OverlayPositionType;
-    selectedComparison?: AlertMetricComparatorType;
-    selectedGranularity?: DateAttributeGranularity;
-    onComparisonChange: (
-        comparison: AlertMetricComparatorType,
-        granularity?: DateAttributeGranularity,
-    ) => void;
-    id: string;
-    closeOnParentScroll?: boolean;
-}
-
-export function AlertComparisonPeriodSelect({
+/**
+ * Default render of the alerting dialog's comparison-period field: the dropdown selecting the
+ * period a change or difference condition compares against; static text with a single comparator,
+ * nothing for other condition types. Props-driven — the bare control without its label; reads no
+ * dialog context (only `useIntl`). The default dialog and {@link AlertingDialogComparisonPeriod}
+ * render it with {@link useAlertingDialogComparisonPeriodProps} inside
+ * {@link AutomationDialogFormField}.
+ *
+ * @alpha
+ */
+export function DefaultAlertingDialogComparisonPeriod({
     alert,
     measure,
     overlayPositionType,
@@ -45,7 +35,7 @@ export function AlertComparisonPeriodSelect({
     onComparisonChange,
     id,
     closeOnParentScroll,
-}: IAlertComparisonPeriodSelectProps) {
+}: IAlertingDialogComparisonPeriodProps): ReactElement | null {
     const intl = useIntl();
 
     const selectedOperator = useMemo(() => {

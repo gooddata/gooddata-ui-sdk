@@ -1,60 +1,70 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type MutableRefObject } from "react";
+import { type MutableRefObject, type ReactElement } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { type IAlertAnomalyDetectionSensitivity } from "@gooddata/sdk-model";
+import { type IAlertTriggerInterval } from "@gooddata/sdk-model";
 import {
     Dropdown,
     DropdownButton,
     type IUiListboxItem,
-    type OverlayPositionType,
     SingleSelectListItem,
     UiListbox,
 } from "@gooddata/sdk-ui-kit";
 
-import { messages } from "../messages.js";
+import { type IAlertingDialogTriggerIntervalProps } from "../types.js";
+
+import { messages } from "./messages.js";
 
 const options: {
     title: string;
-    id: IAlertAnomalyDetectionSensitivity;
+    id: IAlertTriggerInterval;
 }[] = [
     {
-        title: messages.alertSensitivityLow.id,
-        id: "LOW",
+        title: messages.alertTriggerIntervalDay.id,
+        id: "DAY",
     },
     {
-        title: messages.alertSensitivityMedium.id,
-        id: "MEDIUM",
+        title: messages.alertTriggerIntervalWeek.id,
+        id: "WEEK",
     },
     {
-        title: messages.alertSensitivityHigh.id,
-        id: "HIGH",
+        title: messages.alertTriggerIntervalMonth.id,
+        id: "MONTH",
+    },
+    {
+        title: messages.alertTriggerIntervalQuarter.id,
+        id: "QUARTER",
+    },
+    {
+        title: messages.alertTriggerIntervalYear.id,
+        id: "YEAR",
     },
 ];
 
-export interface IAlertSensitivitySelectProps {
-    id: string;
-    selectedSensitivity: IAlertAnomalyDetectionSensitivity | undefined;
-    onSensitivityChange: (sensitivity: IAlertAnomalyDetectionSensitivity) => void;
-    overlayPositionType?: OverlayPositionType;
-    closeOnParentScroll?: boolean;
-}
-
-export function AlertSensitivitySelect({
+/**
+ * Default render of the alerting dialog's trigger-interval field: the dropdown selecting the
+ * interval of a once-per-interval trigger. Props-driven — the bare control without its label;
+ * reads no dialog context (only `useIntl`). The default dialog and
+ * {@link AlertingDialogTriggerInterval} render it with {@link useAlertingDialogTriggerIntervalProps}
+ * inside {@link AutomationDialogFormField}.
+ *
+ * @alpha
+ */
+export function DefaultAlertingDialogTriggerInterval({
     id,
-    selectedSensitivity = "MEDIUM",
-    onSensitivityChange,
+    selectedTriggerInterval,
+    onTriggerIntervalChange,
     overlayPositionType,
     closeOnParentScroll,
-}: IAlertSensitivitySelectProps) {
-    const selectedOption = options.find((o) => o.id === selectedSensitivity);
+}: IAlertingDialogTriggerIntervalProps): ReactElement {
+    const selectedOption = options.find((o) => o.id === selectedTriggerInterval);
     const intl = useIntl();
 
     return (
-        <div className="gd-alert-sensitivity-select">
+        <div className="gd-alert-trigger-interval-select">
             <Dropdown
                 closeOnParentScroll={closeOnParentScroll}
                 overlayPositionType={overlayPositionType}
@@ -66,7 +76,7 @@ export function AlertSensitivitySelect({
                             value={selectedOption ? intl.formatMessage({ id: selectedOption.title }) : ""}
                             onClick={toggleDropdown}
                             className={cx(
-                                "gd-edit-alert-sensitivity-select__button s-alert-sensitivity-select",
+                                "gd-edit-alert-trigger-interval-select__button s-alert-trigger-interval-select",
                             )}
                             buttonRef={buttonRef as MutableRefObject<HTMLElement>}
                             dropdownId={dropdownId}
@@ -79,26 +89,24 @@ export function AlertSensitivitySelect({
                     );
                 }}
                 renderBody={({ closeDropdown, ariaAttributes }) => {
-                    const listboxItems: IUiListboxItem<{
-                        title: string;
-                        id: IAlertAnomalyDetectionSensitivity;
-                    }>[] = options.map((option) => ({
-                        type: "interactive",
-                        id: option.id,
-                        stringTitle: intl.formatMessage({ id: option.title }),
-                        data: option,
-                    }));
+                    const listboxItems: IUiListboxItem<{ title: string; id: IAlertTriggerInterval }>[] =
+                        options.map((option) => ({
+                            type: "interactive",
+                            id: option.id,
+                            stringTitle: intl.formatMessage({ id: option.title }),
+                            data: option,
+                        }));
 
                     return (
                         <UiListbox
                             shouldKeyboardActionStopPropagation
                             shouldKeyboardActionPreventDefault
-                            dataTestId="s-alert-sensitivity-select-list"
+                            dataTestId="s-alert-trigger-interval-select-list"
                             items={listboxItems}
-                            selectedItemId={selectedSensitivity}
+                            selectedItemId={selectedTriggerInterval}
                             onSelect={(item) => {
-                                if (selectedSensitivity !== item.id) {
-                                    onSensitivityChange(item.id as IAlertAnomalyDetectionSensitivity);
+                                if (selectedTriggerInterval !== item.id) {
+                                    onTriggerIntervalChange(item.id as IAlertTriggerInterval);
                                 }
                             }}
                             onClose={closeDropdown}
@@ -110,7 +118,7 @@ export function AlertSensitivitySelect({
                                         isSelected={isSelected}
                                         isFocused={isFocused}
                                         onClick={onSelect}
-                                        className="gd-alert-sensitivity-select__list-item"
+                                        className="gd-alert-trigger-interval-select__list-item"
                                     />
                                 );
                             }}

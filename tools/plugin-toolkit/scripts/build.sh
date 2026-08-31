@@ -1,13 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-# Function to filter out baseline-browser-mapping warnings from stderr
-filter_baseline_warning() {
-    grep -v "\[baseline-browser-mapping\]" || true
-}
-
 # prepare the auxiliary __version.ts file so that the code can read the package version as a constant
-node -p "'// (C) 2021 GoodData Corporation' + '\n\n' + '// DO NOT CHANGE THIS FILE, IT IS RE-GENERATED ON EVERY BUILD' + '\n\n' + 'export const LIB_VERSION = ' + JSON.stringify(require('./package.json').version) + ';' +'\n\n' + 'export const LIB_DESCRIPTION = ' + JSON.stringify(require('./package.json').description) + ';' +'\n\n' + 'export const LIB_NAME = ' + JSON.stringify(require('./package.json').name) + ';'" >src/__version.ts
+node -p "'// (C) 2021 GoodData Corporation' + '\n\n' + '// DO NOT CHANGE THIS FILE, IT IS RE-GENERATED ON EVERY BUILD' + '\n\n' + 'export const LIB_VERSION = ' + JSON.stringify(require('./package.json').version) + ';'" >src/__version.ts
 
 if [[ $1 == "--genFilesOnly" ]]; then
   #we need just version file and it is generated, so we can exit
@@ -18,7 +13,7 @@ set -e
 
 PACKAGE_DIR="$(echo $(cd $(dirname $0)/.. && pwd -P))"
 DIST_DIR="${PACKAGE_DIR}/esm"
-BABEL_BIN="${PACKAGE_DIR}/node_modules/.bin/babel"
+TSGO_BIN="${PACKAGE_DIR}/node_modules/.bin/tsgo"
 OXFMT_BIN="${PACKAGE_DIR}/node_modules/.bin/oxfmt"
 
 PREPARE_PACKAGE_JSON="node ${PACKAGE_DIR}/scripts/preparePackageJson.mjs"
@@ -82,16 +77,14 @@ $PREPARE_PACKAGE_JSON remove-ts "${JS_BUILD_DIR}"
 cp ${JS_CONFIG_TEMPLATES} "${JS_BUILD_DIR}"
 cp ${JS_CONFIG_TEMPLATES_DOT} "${JS_BUILD_DIR}"
 
-# transpile TypeScript files to JavaScript
-$BABEL_BIN --no-babelrc \
-  --config-file "${PACKAGE_DIR}/.babelrc-js" \
-  --extensions .ts,.tsx "${JS_BUILD_DIR}" -d "${JS_BUILD_DIR}" 2> >(filter_baseline_warning >&2)
+# transpile TypeScript template files to JavaScript (type-strip only; JSX and ESM preserved).
+# tsgo (jsx: preserve) emits .ts -> .js and .tsx -> .jsx directly. tsconfig.babel.json sets
+# "noCheck", so it only emits and does not type-check the template (whose deps are not installed
+# in the build dir).
+"${TSGO_BIN}" -p "${PACKAGE_DIR}/tsconfig.babel.json"
 
-# remove TypeScript files
-find "${JS_BUILD_DIR}" -type f \( -iname \*.ts -o -iname \*.tsx -o -iname \*.d.js \) -exec rm -rf {} \;
-
-# rename react files to .jsx
-find "${TS_BUILD_DIR}" -type f -iname \*.tsx | cut -c $((${#TS_BUILD_DIR} + 2))- | cut -sd . -f 1 | xargs -I {} mv "${JS_BUILD_DIR}/{}.js" "${JS_BUILD_DIR}/{}.jsx"
+# remove TypeScript source files (leaving the emitted .js / .jsx in place)
+find "${JS_BUILD_DIR}" -type f \( -iname \*.ts -o -iname \*.tsx \) -exec rm -rf {} \;
 
 # format transpiled files as format was broken during transpile process
 $OXFMT_BIN ${JS_BUILD_DIR}/**/*

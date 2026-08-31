@@ -555,7 +555,7 @@ function* loadWorkspaceParametersWithStatus(
         const result: PromiseFnReturnType<typeof loadDashboardParameters> = yield call(
             loadDashboardParameters,
             ctx,
-            settings.enableStringParameters ?? false,
+            settings.enableStringParameters ?? true,
         );
         return result;
     } catch {

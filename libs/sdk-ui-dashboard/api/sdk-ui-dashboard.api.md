@@ -9,8 +9,8 @@ import { Action } from '@reduxjs/toolkit';
 import { ActionCreatorWithOptionalPayload } from '@reduxjs/toolkit';
 import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
-import { AI_OPERATOR } from '@gooddata/sdk-ui-ext';
-import { AI_OPERATORS } from '@gooddata/sdk-ui-ext';
+import type { AI_OPERATOR } from '@gooddata/sdk-ui-ext';
+import type { AI_OPERATORS } from '@gooddata/sdk-ui-ext';
 import { AnyAction } from '@reduxjs/toolkit';
 import { CaseReducer } from '@reduxjs/toolkit';
 import { CaseReducerActions } from '@reduxjs/toolkit';
@@ -42,6 +42,7 @@ import { EntityState } from '@reduxjs/toolkit';
 import { ExecutionResultLimitType } from '@gooddata/sdk-model';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FilterContextItem } from '@gooddata/sdk-model';
+import { FocusEvent as FocusEvent_2 } from 'react';
 import { ForwardRefExoticComponent } from 'react';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
@@ -325,6 +326,15 @@ export function AlertingDialog(props: IAlertingDialogProps): ReactElement;
 export function AlertingDialogActionBar(props: IAlertingDialogActionBarBlockProps): JSX.Element;
 
 // @alpha
+export function AlertingDialogAttribute(overrides: Partial<IAlertingDialogAttributeProps>): ReactElement;
+
+// @alpha
+export function AlertingDialogComparisonOperator(overrides: Partial<IAlertingDialogComparisonOperatorProps>): ReactElement;
+
+// @alpha
+export function AlertingDialogComparisonPeriod(overrides: Partial<IAlertingDialogComparisonPeriodProps>): ReactElement;
+
+// @alpha
 export const AlertingDialogContextProvider: Provider<IAlertingDialogContextValue | undefined>;
 
 // @alpha
@@ -332,6 +342,9 @@ export function AlertingDialogDestination(overrides: Partial<IAutomationDialogDe
 
 // @alpha
 export function AlertingDialogFilters(overrides: Partial<IAlertingDialogFiltersProps>): JSX.Element;
+
+// @alpha
+export function AlertingDialogGranularity(overrides: Partial<IAlertingDialogGranularityProps>): ReactElement;
 
 // @alpha
 export const AlertingDialogHeader: ForwardRefExoticComponent<Partial<IAlertingDialogHeaderProps> & RefAttributes<HTMLInputElement>>;
@@ -342,7 +355,22 @@ export type AlertingDialogHeaderDefaultProps = IAlertingDialogHeaderProps & {
 };
 
 // @alpha
+export function AlertingDialogMeasure(overrides: Partial<IAlertingDialogMeasureProps>): ReactElement;
+
+// @alpha
 export function AlertingDialogRecipients(overrides: Partial<IAutomationDialogRecipientsProps>): JSX.Element;
+
+// @alpha
+export function AlertingDialogSensitivity(overrides: Partial<IAlertingDialogSensitivityProps>): ReactElement;
+
+// @alpha
+export function AlertingDialogThreshold(overrides: Partial<IAlertingDialogThresholdProps>): ReactElement;
+
+// @alpha
+export function AlertingDialogTriggerInterval(overrides: Partial<IAlertingDialogTriggerIntervalProps>): ReactElement;
+
+// @alpha
+export function AlertingDialogTriggerMode(overrides: Partial<IAlertingDialogTriggerModeProps>): ReactElement;
 
 // @internal (undocumented)
 export type AlertingDisabledReason = "noDestinations" | "oldWidget" | "disabledOnInsight";
@@ -447,6 +475,9 @@ export type AttributeValue = {
     value: string;
     name: string;
 };
+
+// @alpha
+export function AutomationDialogFormField(input: IAutomationDialogFormFieldProps): ReactElement;
 
 // @alpha (undocumented)
 export type AutomationInteractionData = {
@@ -1578,16 +1609,43 @@ export const DEFAULT_TAB_ID = "defaultTabId";
 export function DefaultAlertingDialog(props: IDefaultAlertingDialogProps): JSX.Element;
 
 // @alpha
+export function DefaultAlertingDialogAttribute(input: IAlertingDialogAttributeProps): ReactElement | null;
+
+// @alpha
+export function DefaultAlertingDialogComparisonOperator(props: IAlertingDialogComparisonOperatorProps): ReactElement | null;
+
+// @alpha
+export function DefaultAlertingDialogComparisonPeriod(input: IAlertingDialogComparisonPeriodProps): ReactElement | null;
+
+// @alpha
 export function DefaultAlertingDialogDestination(input: IAutomationDialogDestinationProps): JSX.Element;
 
 // @alpha
 export function DefaultAlertingDialogFilters(props: IAlertingDialogFiltersProps): JSX.Element;
 
 // @alpha
+export function DefaultAlertingDialogGranularity(input: IAlertingDialogGranularityProps): ReactElement;
+
+// @alpha
 export const DefaultAlertingDialogHeader: ForwardRefExoticComponent<IAlertingDialogHeaderProps & RefAttributes<HTMLInputElement>>;
 
 // @alpha
+export function DefaultAlertingDialogMeasure(input: IAlertingDialogMeasureProps): ReactElement;
+
+// @alpha
 export function DefaultAlertingDialogRecipients(props: IAutomationDialogRecipientsProps): JSX.Element;
+
+// @alpha
+export function DefaultAlertingDialogSensitivity(input: IAlertingDialogSensitivityProps): ReactElement;
+
+// @alpha
+export function DefaultAlertingDialogThreshold(input: IAlertingDialogThresholdProps): ReactElement;
+
+// @alpha
+export function DefaultAlertingDialogTriggerInterval(input: IAlertingDialogTriggerIntervalProps): ReactElement;
+
+// @alpha
+export function DefaultAlertingDialogTriggerMode(input: IAlertingDialogTriggerModeProps): ReactElement;
 
 // @alpha
 export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDialogProps): JSX.Element;
@@ -2524,6 +2582,49 @@ export interface IAlertFiltersContextValue {
 export type IAlertingDialogActionBarBlockProps = IUseAlertingDialogActionBarPropsInput & Partial<IAutomationDialogActionBarProps>;
 
 // @alpha
+export interface IAlertingDialogAttributeProps {
+    attributes: AlertAttribute[];
+    catalogAttributes: ICatalogAttribute[];
+    catalogDateDatasets: ICatalogDateDataset[];
+    closeOnParentScroll?: boolean;
+    disabled?: boolean;
+    getAttributeValues: (attribute: IAttributeMetadataObject) => AttributeValue[];
+    id: string;
+    isResultLoading?: boolean;
+    onAttributeChange: (attribute: AlertAttribute | undefined, value: AttributeValue | undefined) => void;
+    selectedAttribute: AlertAttribute | undefined;
+    selectedValue: string | null | undefined;
+    showLabel?: boolean;
+}
+
+// @alpha
+export interface IAlertingDialogComparisonOperatorProps {
+    closeOnParentScroll?: boolean;
+    enableAnomalyDetectionAlert: boolean;
+    id: string;
+    measure: AlertMetric | undefined;
+    onAnomalyDetectionChange: (measure: AlertMetric) => void;
+    onComparisonOperatorChange: (measure: AlertMetric, comparisonOperator: IAlertComparisonOperator) => void;
+    onRelativeOperatorChange: (measure: AlertMetric, relativeOperator: IAlertRelativeOperator, arithmeticOperator: IAlertRelativeArithmeticOperator) => void;
+    overlayPositionType?: OverlayPositionType;
+    selectedAiOperator: AlertAiOperator | undefined;
+    selectedComparisonOperator: IAlertComparisonOperator | undefined;
+    selectedRelativeOperator: [IAlertRelativeOperator, IAlertRelativeArithmeticOperator] | undefined;
+}
+
+// @alpha
+export interface IAlertingDialogComparisonPeriodProps {
+    alert: IAutomationMetadataObjectDefinition | undefined;
+    closeOnParentScroll?: boolean;
+    id: string;
+    measure: AlertMetric | undefined;
+    onComparisonChange: (comparison: AlertMetricComparatorType, granularity?: DateAttributeGranularity) => void;
+    overlayPositionType?: OverlayPositionType;
+    selectedComparison?: AlertMetricComparatorType;
+    selectedGranularity?: DateAttributeGranularity;
+}
+
+// @alpha
 export interface IAlertingDialogContextValue {
     alertToEdit?: IAutomationMetadataObject;
     // (undocumented)
@@ -2566,8 +2667,29 @@ export interface IAlertingDialogFiltersProps extends IAutomationDialogFiltersPro
 }
 
 // @alpha
+export interface IAlertingDialogGranularityProps {
+    allowHourlyRecurrence: boolean;
+    closeOnParentScroll?: boolean;
+    id: string;
+    onGranularityChange: (granularity: IAlertAnomalyDetectionGranularity) => void;
+    overlayPositionType?: OverlayPositionType;
+    selectedGranularity: IAlertAnomalyDetectionGranularity | undefined;
+}
+
+// @alpha
 export interface IAlertingDialogHeaderProps extends IAutomationDialogHeaderProps {
     onCancel?: () => void;
+}
+
+// @alpha
+export interface IAlertingDialogMeasureProps {
+    closeOnParentScroll?: boolean;
+    disabled?: boolean;
+    id?: string;
+    measures: AlertMetric[];
+    onMeasureChange: (measure: AlertMetric) => void;
+    overlayPositionType?: OverlayPositionType;
+    selectedMeasure: AlertMetric | undefined;
 }
 
 // @alpha (undocumented)
@@ -2592,12 +2714,50 @@ export interface IAlertingDialogProps {
 }
 
 // @alpha
+export interface IAlertingDialogSensitivityProps {
+    closeOnParentScroll?: boolean;
+    id: string;
+    onSensitivityChange: (sensitivity: IAlertAnomalyDetectionSensitivity) => void;
+    overlayPositionType?: OverlayPositionType;
+    selectedSensitivity: IAlertAnomalyDetectionSensitivity | undefined;
+}
+
+// @alpha
 export interface IAlertingDialogSlots {
     ActionBar?: ComponentType<ISlotProps<IAutomationDialogActionBarProps>>;
     Destination?: ComponentType<ISlotProps<IAutomationDialogDestinationProps>>;
     Filters?: ComponentType<ISlotProps<IAlertingDialogFiltersProps>>;
     Header?: ComponentType<ISlotProps<AlertingDialogHeaderDefaultProps>>;
     Recipients?: ComponentType<ISlotProps<IAutomationDialogRecipientsProps>>;
+}
+
+// @alpha
+export interface IAlertingDialogThresholdProps {
+    errorMessage?: string;
+    id: string;
+    onBlur: (event: FocusEvent_2<HTMLInputElement>) => void;
+    onChange: (value: string | number) => void;
+    suffix?: string;
+    value: number | undefined;
+}
+
+// @alpha
+export interface IAlertingDialogTriggerIntervalProps {
+    closeOnParentScroll?: boolean;
+    id: string;
+    onTriggerIntervalChange: (triggerInterval: IAlertTriggerInterval) => void;
+    overlayPositionType?: OverlayPositionType;
+    selectedTriggerInterval: IAlertTriggerInterval;
+}
+
+// @alpha
+export interface IAlertingDialogTriggerModeProps {
+    closeOnParentScroll?: boolean;
+    enableAlertOncePerInterval?: boolean;
+    id: string;
+    onTriggerModeChange: (triggerMode: IAlertTriggerMode) => void;
+    overlayPositionType?: OverlayPositionType;
+    selectedTriggerMode: IAlertTriggerMode;
 }
 
 // @alpha
@@ -2763,6 +2923,14 @@ export interface IAutomationDialogFiltersProps {
     onParameterDelete: (ref: IdentifierRef) => void;
     parameters?: IAutomationParameter[];
     selectedFilters: FilterContextItem[];
+}
+
+// @alpha
+export interface IAutomationDialogFormFieldProps {
+    children: ReactNode;
+    fullWidth?: boolean;
+    htmlFor?: string;
+    label: ReactNode;
 }
 
 // @alpha
@@ -13651,6 +13819,15 @@ export function useAlertFilters(): IAlertFiltersContextValue;
 export function useAlertingDialogActionBarProps(input: IUseAlertingDialogActionBarPropsInput): IAutomationDialogActionBarProps;
 
 // @alpha
+export function useAlertingDialogAttributeProps(): IAlertingDialogAttributeProps;
+
+// @alpha
+export function useAlertingDialogComparisonOperatorProps(): IAlertingDialogComparisonOperatorProps;
+
+// @alpha
+export function useAlertingDialogComparisonPeriodProps(): IAlertingDialogComparisonPeriodProps;
+
+// @alpha
 export function useAlertingDialogContext(): IAlertingDialogContextValue;
 
 // @alpha
@@ -13660,10 +13837,28 @@ export function useAlertingDialogDestinationProps(): IAutomationDialogDestinatio
 export function useAlertingDialogFiltersProps(): IAlertingDialogFiltersProps;
 
 // @alpha
+export function useAlertingDialogGranularityProps(): IAlertingDialogGranularityProps;
+
+// @alpha
 export function useAlertingDialogHeaderProps(input: IUseAlertingDialogHeaderPropsInput): AlertingDialogHeaderDefaultProps;
 
 // @alpha
+export function useAlertingDialogMeasureProps(): IAlertingDialogMeasureProps;
+
+// @alpha
 export function useAlertingDialogRecipientsProps(): IAutomationDialogRecipientsProps;
+
+// @alpha
+export function useAlertingDialogSensitivityProps(): IAlertingDialogSensitivityProps;
+
+// @alpha
+export function useAlertingDialogThresholdProps(): IAlertingDialogThresholdProps;
+
+// @alpha
+export function useAlertingDialogTriggerIntervalProps(): IAlertingDialogTriggerIntervalProps;
+
+// @alpha
+export function useAlertingDialogTriggerModeProps(): IAlertingDialogTriggerModeProps;
 
 // @alpha
 export function useAlertingManagementDialogContext(): IAlertingManagementDialogContextValue;

@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "jsx": "preserve",
+        "isolatedModules": true,
+        "verbatimModuleSyntax": false,
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "noEmit": false,
+        "noCheck": true,
+        "noEmitOnError": false,
+        "declaration": false,
+        "declarationMap": false,
+        "sourceMap": false,
+        "removeComments": false,
+        "importHelpers": false,
+        "allowJs": false,
+        "strict": false,
+        "types": []
+    },
+    "include": ["build/dashboard-plugin-template.js/**/*.ts", "build/dashboard-plugin-template.js/**/*.tsx"]
+}

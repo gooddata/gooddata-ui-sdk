@@ -1,68 +1,80 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type MutableRefObject } from "react";
+import { type MutableRefObject, type ReactElement } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { type IAlertTriggerInterval } from "@gooddata/sdk-model";
+import { type IAlertAnomalyDetectionGranularity } from "@gooddata/sdk-model";
 import {
     Dropdown,
     DropdownButton,
     type IUiListboxItem,
-    type OverlayPositionType,
     SingleSelectListItem,
     UiListbox,
 } from "@gooddata/sdk-ui-kit";
 
-import { messages } from "../messages.js";
+import { type IAlertingDialogGranularityProps } from "../types.js";
+
+import { messages } from "./messages.js";
 
 const options: {
     title: string;
-    id: IAlertTriggerInterval;
+    id: IAlertAnomalyDetectionGranularity;
 }[] = [
     {
-        title: messages.alertTriggerIntervalDay.id,
+        title: messages.alertGranularityHour.id,
+        id: "HOUR",
+    },
+    {
+        title: messages.alertGranularityDay.id,
         id: "DAY",
     },
     {
-        title: messages.alertTriggerIntervalWeek.id,
+        title: messages.alertGranularityWeek.id,
         id: "WEEK",
     },
     {
-        title: messages.alertTriggerIntervalMonth.id,
+        title: messages.alertGranularityMonth.id,
         id: "MONTH",
     },
     {
-        title: messages.alertTriggerIntervalQuarter.id,
+        title: messages.alertGranularityQuarter.id,
         id: "QUARTER",
     },
     {
-        title: messages.alertTriggerIntervalYear.id,
+        title: messages.alertGranularityYear.id,
         id: "YEAR",
     },
 ];
 
-export interface IAlertTriggerIntervalSelectProps {
-    id: string;
-    selectedTriggerInterval: IAlertTriggerInterval;
-    onTriggerIntervalChange: (triggerMode: IAlertTriggerInterval) => void;
-    overlayPositionType?: OverlayPositionType;
-    closeOnParentScroll?: boolean;
-}
-
-export function AlertTriggerIntervalSelect({
+/**
+ * Default render of the alerting dialog's granularity field: the dropdown selecting the
+ * anomaly-detection granularity. Props-driven — the bare control without its label; reads no
+ * dialog context (only `useIntl`). The default dialog and {@link AlertingDialogGranularity} render
+ * it with {@link useAlertingDialogGranularityProps} inside {@link AutomationDialogFormField}.
+ *
+ * @alpha
+ */
+export function DefaultAlertingDialogGranularity({
     id,
-    selectedTriggerInterval,
-    onTriggerIntervalChange,
+    allowHourlyRecurrence,
+    selectedGranularity = "WEEK",
+    onGranularityChange,
     overlayPositionType,
     closeOnParentScroll,
-}: IAlertTriggerIntervalSelectProps) {
-    const selectedOption = options.find((o) => o.id === selectedTriggerInterval);
+}: IAlertingDialogGranularityProps): ReactElement {
+    const usableOptions = options.filter((o) => {
+        if (!allowHourlyRecurrence) {
+            return o.id !== "HOUR";
+        }
+        return true;
+    });
+    const selectedOption = usableOptions.find((o) => o.id === selectedGranularity);
     const intl = useIntl();
 
     return (
-        <div className="gd-alert-trigger-interval-select">
+        <div className="gd-alert-granularity-select">
             <Dropdown
                 closeOnParentScroll={closeOnParentScroll}
                 overlayPositionType={overlayPositionType}
@@ -74,7 +86,7 @@ export function AlertTriggerIntervalSelect({
                             value={selectedOption ? intl.formatMessage({ id: selectedOption.title }) : ""}
                             onClick={toggleDropdown}
                             className={cx(
-                                "gd-edit-alert-trigger-interval-select__button s-alert-trigger-interval-select",
+                                "gd-edit-alert-granularity-select__button s-alert-granularity-select",
                             )}
                             buttonRef={buttonRef as MutableRefObject<HTMLElement>}
                             dropdownId={dropdownId}
@@ -87,24 +99,26 @@ export function AlertTriggerIntervalSelect({
                     );
                 }}
                 renderBody={({ closeDropdown, ariaAttributes }) => {
-                    const listboxItems: IUiListboxItem<{ title: string; id: IAlertTriggerInterval }>[] =
-                        options.map((option) => ({
-                            type: "interactive",
-                            id: option.id,
-                            stringTitle: intl.formatMessage({ id: option.title }),
-                            data: option,
-                        }));
+                    const listboxItems: IUiListboxItem<{
+                        title: string;
+                        id: IAlertAnomalyDetectionGranularity;
+                    }>[] = usableOptions.map((option) => ({
+                        type: "interactive",
+                        id: option.id,
+                        stringTitle: intl.formatMessage({ id: option.title }),
+                        data: option,
+                    }));
 
                     return (
                         <UiListbox
                             shouldKeyboardActionStopPropagation
                             shouldKeyboardActionPreventDefault
-                            dataTestId="s-alert-trigger-interval-select-list"
+                            dataTestId="s-alert-granularity-select-list"
                             items={listboxItems}
-                            selectedItemId={selectedTriggerInterval}
+                            selectedItemId={selectedGranularity}
                             onSelect={(item) => {
-                                if (selectedTriggerInterval !== item.id) {
-                                    onTriggerIntervalChange(item.id as IAlertTriggerInterval);
+                                if (selectedGranularity !== item.id) {
+                                    onGranularityChange(item.id as IAlertAnomalyDetectionGranularity);
                                 }
                             }}
                             onClose={closeDropdown}
@@ -116,7 +130,7 @@ export function AlertTriggerIntervalSelect({
                                         isSelected={isSelected}
                                         isFocused={isFocused}
                                         onClick={onSelect}
-                                        className="gd-alert-trigger-interval-select__list-item"
+                                        className="gd-alert-granularity-select__list-item"
                                     />
                                 );
                             }}

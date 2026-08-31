@@ -15,6 +15,7 @@ export function ChipContent({
     iconBefore,
     iconAfter,
     iconColor = "primary",
+    variant = "normal",
     onClick,
     onKeyDown,
     isActive,
@@ -22,6 +23,7 @@ export function ChipContent({
     isExpandable,
     isDisabled,
     isDeletable,
+    isActionable,
     accessibilityConfig,
     dataTestId,
     buttonRef,
@@ -36,6 +38,7 @@ export function ChipContent({
         ariaLabelledBy,
         ariaControls,
         iconBeforeAriaLabel,
+        iconAfterAriaLabel,
     } = accessibilityConfig ?? {};
     const isDropdownTrigger = isExpandable || isExpanded !== undefined || popupId !== undefined;
     const ariaDropdownProps = isDropdownTrigger
@@ -51,9 +54,11 @@ export function ChipContent({
         <button
             data-testid={dataTestId}
             className={e("trigger", {
-                isDeletable,
-                hasIconAfter: !!iconAfter,
+                variant,
                 isActive,
+                isDeletable,
+                isActionable,
+                hasIconAfter: !!iconAfter,
                 isLocked: isLocked || isDisabled,
             })}
             disabled={isDisabled}
@@ -96,7 +101,14 @@ export function ChipContent({
                         </span>
                     ) : iconAfter ? (
                         <span className={e("icon-after")}>
-                            <UiIcon type={iconAfter} color={iconColor} size={ICON_SIZE} />
+                            <UiIcon
+                                type={iconAfter}
+                                color={iconColor}
+                                size={ICON_SIZE}
+                                accessibilityConfig={
+                                    iconAfterAriaLabel ? { ariaLabel: iconAfterAriaLabel } : undefined
+                                }
+                            />
                         </span>
                     ) : null}
                 </>

@@ -26,13 +26,14 @@ import {
 import { type IAutomationParameter } from "../../shared/automationFilters/automationParameters.js";
 import { type AttributeValue } from "../hooks/useAttributeValuesFromExecResults.js";
 import {
+    type AlertAiOperator,
     type AlertAttribute,
     type AlertMetric,
     type AlertMetricComparator,
     type AlertMetricComparatorType,
     type IAlertingDialogProps,
 } from "../types.js";
-import { type AlertAiOperator, type IMeasureFormatMap } from "../utils/getters.js";
+import { type IMeasureFormatMap } from "../utils/getters.js";
 
 /**
  * The alerting dialog's edit draft: the automation being edited, the baseline it is compared

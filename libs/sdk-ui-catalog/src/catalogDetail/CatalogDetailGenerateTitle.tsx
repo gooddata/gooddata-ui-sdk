@@ -11,8 +11,7 @@ import {
     useToastMessage,
 } from "@gooddata/sdk-ui-kit";
 
-import { isGenerateDescriptionSupportedObjectType } from "../catalogItem/query.js";
-import type { ICatalogItem } from "../catalogItem/types.js";
+import type { ICatalogItemTextGenerable } from "../catalogItem/types.js";
 
 const messages = defineMessages({
     generateTitleButton: {
@@ -34,7 +33,7 @@ const messages = defineMessages({
 });
 
 interface ICatalogDetailGenerateTitleProps {
-    item: ICatalogItem;
+    item: ICatalogItemTextGenerable;
     onApplyTitle: (title: string) => void;
 }
 
@@ -46,10 +45,6 @@ export const CatalogDetailGenerateTitle = forwardRef<HTMLDivElement, ICatalogDet
         const { addError } = useToastMessage();
 
         const generateItemTitle = useCallback(async (): Promise<IUiInlineTextGeneratorResult> => {
-            if (!isGenerateDescriptionSupportedObjectType(item.type)) {
-                throw new Error(`Unsupported object type for generated title: ${item.type}`);
-            }
-
             const response = await backend
                 .workspace(workspaceId)
                 .genAI()

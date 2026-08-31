@@ -8,7 +8,12 @@ import type { IObjectShareLabel } from "@gooddata/sdk-ui-ext";
 import { EditableLabel, UiCard, UiCopyButton, UiSkeleton } from "@gooddata/sdk-ui-kit";
 
 import { CatalogItemLockMemo } from "../catalogItem/CatalogItemLock.js";
-import { getVisualizationType, isCatalogItemAttribute, isCatalogItemFact } from "../catalogItem/guards.js";
+import {
+    getVisualizationType,
+    isCatalogItemAttribute,
+    isCatalogItemFact,
+    isCatalogItemTextGenerable,
+} from "../catalogItem/guards.js";
 import { type ICatalogItem } from "../catalogItem/types.js";
 import { CatalogCertificationIconMemo } from "../certification/CatalogCertificationIcon.js";
 import { ObjectTypeIconMemo } from "../objectType/ObjectTypeIcon.js";
@@ -60,7 +65,7 @@ export function CatalogDetailHeader({
 
     const type = item.type ?? "analyticalDashboard";
     const visualizationType = getVisualizationType(item);
-    const canGenerateText = canEdit && item.type !== "dataSet" && isDescriptionGenerationEnabled;
+    const canGenerateText = isDescriptionGenerationEnabled && isCatalogItemTextGenerable(item);
 
     // Header info columns: ID is always shown; Dataset only for attributes/facts
     // that carry one; Labels for attributes — a skeleton while they load, then the

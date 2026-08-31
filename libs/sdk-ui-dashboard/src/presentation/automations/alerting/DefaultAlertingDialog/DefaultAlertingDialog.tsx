@@ -19,8 +19,6 @@ import {
     OverlayController,
     OverlayControllerProvider,
     ScrollablePanel,
-    UiIconButton,
-    UiTooltip,
     useId,
 } from "@gooddata/sdk-ui-kit";
 
@@ -33,9 +31,16 @@ import {
     AutomationDialogFooterLeft,
     DefaultAutomationDialogActionBar,
 } from "../../shared/slots/DefaultAutomationDialogActionBar.js";
+import { AlertingDialogAttribute } from "../blocks/AlertingDialogAttribute.js";
+import { AlertingDialogComparisonOperator } from "../blocks/AlertingDialogComparisonOperator.js";
+import { AlertingDialogComparisonPeriod } from "../blocks/AlertingDialogComparisonPeriod.js";
+import { AlertingDialogGranularity } from "../blocks/AlertingDialogGranularity.js";
+import { AlertingDialogMeasure } from "../blocks/AlertingDialogMeasure.js";
+import { AlertingDialogSensitivity } from "../blocks/AlertingDialogSensitivity.js";
+import { AlertingDialogThreshold } from "../blocks/AlertingDialogThreshold.js";
+import { AlertingDialogTriggerInterval } from "../blocks/AlertingDialogTriggerInterval.js";
+import { AlertingDialogTriggerMode } from "../blocks/AlertingDialogTriggerMode.js";
 import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/components/DeleteAlertConfirmDialog.js";
-import { useAlertActions } from "../state/AlertActionsContext.js";
-import { useAlertData } from "../state/AlertDataContext.js";
 import { useAlertDraft } from "../state/AlertDraftContext.js";
 import { useAlertFilters } from "../state/AlertFiltersContext.js";
 import { useAlertDialogValidity } from "../state/useAlertDialogValidity.js";
@@ -46,34 +51,15 @@ import {
     useAlertingDialogHeaderProps,
     useAlertingDialogRecipientsProps,
 } from "../state/useAlertingDialogRegionProps.js";
-import { useAlertSelectedValues } from "../state/useAlertSelectedValues.js";
 import { useAlertSubmit } from "../state/useAlertSubmit.js";
 import { type IDefaultAlertingDialogProps } from "../types.js";
-import { getValueSuffix } from "../utils/getters.js";
-import { isAnomalyDetection, isChangeOrDifferenceOperator } from "../utils/guards.js";
 
-import { AlertAttributeSelect } from "./components/AlertAttributeSelect.js";
-import { AlertComparisonOperatorSelect } from "./components/AlertComparisonOperatorSelect.js";
-//
-//
-import { AlertComparisonPeriodSelect } from "./components/AlertComparisonPeriodSelect.js";
-import { AlertGranularitySelect } from "./components/AlertGranularitySelect.js";
-import { AlertMeasureSelect } from "./components/AlertMeasureSelect.js";
-import { AlertSensitivitySelect } from "./components/AlertSensitivitySelect.js";
-import { AlertThresholdInput } from "./components/AlertThresholdInput.js";
-import { AlertTriggerIntervalSelect } from "./components/AlertTriggerIntervalSelect.js";
-import { AlertTriggerModeSelect } from "./components/AlertTriggerModeSelect.js";
 import { ALERTING_DIALOG_ID } from "./constants.js";
 import { DefaultAlertingDialogDestination } from "./DefaultAlertingDialogDestination.js";
 import { DefaultAlertingDialogFilters } from "./DefaultAlertingDialogFilters.js";
 import { DefaultAlertingDialogHeader } from "./DefaultAlertingDialogHeader.js";
 import { DefaultAlertingDialogRecipients } from "./DefaultAlertingDialogRecipients.js";
 import { DefaultLoadingAlertingDialog } from "./DefaultLoadingAlertingDialog.js";
-import { FormField } from "./FormField.js";
-import { useAlertThreshold } from "./hooks/useAlertThreshold.js";
-
-const OVERLAY_POSITION_TYPE = "sameAsTarget";
-const CLOSE_ON_PARENT_SCROLL = true;
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
@@ -99,16 +85,6 @@ export function AlertingDialogRenderer({
 
     const dialogTitleRef = useRef<HTMLInputElement | null>(null);
 
-    const {
-        features: {
-            enableAlertOncePerInterval,
-            enableAnomalyDetectionAlert,
-            canUseAiAssistant: enableAiAssistant,
-        },
-        catalogAttributes,
-        catalogDateDatasets,
-        allowHourlyRecurrence,
-    } = useAutomationsContext();
     const { alertToEdit, notificationChannels } = useAlertingDialogContext();
 
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
@@ -118,53 +94,12 @@ export function AlertingDialogRenderer({
         setAlertToDelete(null);
     };
 
-    const { editedAutomation, warningMessage } = useAlertDraft();
-
-    const {
-        onMeasureChange,
-        onAttributeChange,
-        onComparisonOperatorChange,
-        onRelativeOperatorChange,
-        onAnomalyDetectionChange,
-        onComparisonTypeChange,
-        onTriggerModeChange,
-        onTriggerIntervalChange,
-        onSensitivityChange,
-        onGranularityChange,
-        setEditedAutomation,
-    } = useAlertActions();
-
-    const { supportedMeasures, supportedAttributes, isResultLoading, getAttributeValues, getMetricValue } =
-        useAlertData();
+    const { warningMessage } = useAlertDraft();
 
     const { onApplyCurrentFilters, automationIsValid, filtersAreStale, dropStaleParameters } =
         useAlertFilters();
 
-    const {
-        selectedMeasure,
-        selectedComparisonOperator,
-        selectedRelativeOperator,
-        selectedAiOperator,
-        selectedComparator,
-        selectedSensitivity,
-        selectedGranularity,
-        selectedAttribute,
-        selectedValue,
-    } = useAlertSelectedValues();
-
-    const { value, onChange, onBlur, thresholdErrorMessage } = useAlertThreshold({
-        setEditedAutomation,
-        editedAutomation,
-        getMetricValue,
-        isNewAlert: !alertToEdit,
-        selectedRelativeOperator,
-        selectedMeasure,
-        selectedAttribute,
-        selectedValue,
-    });
-
-    const { validationErrorMessage, canChangeMeasure, isInvalidConnectionToInsight } =
-        useAlertDialogValidity();
+    const { validationErrorMessage, isInvalidConnectionToInsight } = useAlertDialogValidity();
 
     const [isApplyCurrentFiltersDialogOpen, setIsApplyCurrentFiltersDialogOpen] =
         useState(!automationIsValid);
@@ -299,159 +234,13 @@ export function AlertingDialogRenderer({
                                     <ContentDivider className="gd-divider-with-margin" />
                                 </>
                                 <FormFieldGroup label={<FormattedMessage id="insightAlert.config.when" />}>
-                                    <FormField
-                                        label={intl.formatMessage({ id: "insightAlert.config.metric" })}
-                                        htmlFor="alert.measure"
-                                    >
-                                        <AlertMeasureSelect
-                                            selectedMeasure={selectedMeasure}
-                                            onMeasureChange={onMeasureChange}
-                                            measures={supportedMeasures}
-                                            disabled={!canChangeMeasure}
-                                            overlayPositionType={OVERLAY_POSITION_TYPE}
-                                            id="alert.measure"
-                                            closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
-                                        />
-                                    </FormField>
-                                    {supportedAttributes.filter((a) => a.type === "attribute").length > 0 && (
-                                        <FormField
-                                            label={<FormattedMessage id="insightAlert.config.for" />}
-                                            htmlFor="alert.attribute"
-                                        >
-                                            <AlertAttributeSelect
-                                                id="alert.attribute"
-                                                disabled={!canChangeMeasure}
-                                                selectedAttribute={selectedAttribute}
-                                                selectedValue={selectedValue}
-                                                onAttributeChange={onAttributeChange}
-                                                attributes={supportedAttributes}
-                                                catalogAttributes={catalogAttributes}
-                                                catalogDateDatasets={catalogDateDatasets}
-                                                getAttributeValues={getAttributeValues}
-                                                isResultLoading={isResultLoading}
-                                                showLabel={false}
-                                                closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
-                                            />
-                                        </FormField>
-                                    )}
-                                    <FormField
-                                        label={<FormattedMessage id="insightAlert.config.condition" />}
-                                        htmlFor="alert.condition"
-                                    >
-                                        <AlertComparisonOperatorSelect
-                                            id="alert.condition"
-                                            measure={selectedMeasure}
-                                            enableAnomalyDetectionAlert={
-                                                enableAnomalyDetectionAlert ? enableAiAssistant : false
-                                            }
-                                            selectedComparisonOperator={selectedComparisonOperator}
-                                            selectedRelativeOperator={selectedRelativeOperator}
-                                            selectedAiOperator={selectedAiOperator}
-                                            onAnomalyDetectionChange={onAnomalyDetectionChange}
-                                            onComparisonOperatorChange={onComparisonOperatorChange}
-                                            onRelativeOperatorChange={onRelativeOperatorChange}
-                                            overlayPositionType={OVERLAY_POSITION_TYPE}
-                                            closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
-                                        />
-                                    </FormField>
-                                    {!isAnomalyDetection(editedAutomation?.alert) && (
-                                        <FormField
-                                            label={<FormattedMessage id="insightAlert.config.threshold" />}
-                                            htmlFor="alert.value"
-                                        >
-                                            <AlertThresholdInput
-                                                id="alert.value"
-                                                value={value}
-                                                onChange={onChange}
-                                                onBlur={onBlur}
-                                                suffix={getValueSuffix(editedAutomation?.alert)}
-                                                errorMessage={thresholdErrorMessage}
-                                            />
-                                        </FormField>
-                                    )}
-                                    {isChangeOrDifferenceOperator(editedAutomation?.alert) && (
-                                        <FormField
-                                            label={<FormattedMessage id="insightAlert.config.comparison" />}
-                                            htmlFor="alert.comparison"
-                                        >
-                                            <AlertComparisonPeriodSelect
-                                                id="alert.comparison"
-                                                measure={selectedMeasure}
-                                                alert={editedAutomation as IAutomationMetadataObject}
-                                                selectedComparison={selectedComparator?.comparator}
-                                                selectedGranularity={selectedComparator?.granularity}
-                                                onComparisonChange={(comparisonType, granularity) => {
-                                                    onComparisonTypeChange(
-                                                        selectedMeasure,
-                                                        selectedRelativeOperator,
-                                                        comparisonType,
-                                                        granularity,
-                                                    );
-                                                }}
-                                                overlayPositionType={OVERLAY_POSITION_TYPE}
-                                                closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
-                                            />
-                                        </FormField>
-                                    )}
-                                    {isAnomalyDetection(editedAutomation?.alert) && (
-                                        <>
-                                            <FormField
-                                                label={
-                                                    <FormattedMessage id="insightAlert.config.sensitivity" />
-                                                }
-                                                htmlFor="alert.sensitivity"
-                                            >
-                                                <AlertSensitivitySelect
-                                                    id="alert.sensitivity"
-                                                    selectedSensitivity={selectedSensitivity}
-                                                    onSensitivityChange={onSensitivityChange}
-                                                    overlayPositionType={OVERLAY_POSITION_TYPE}
-                                                    closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
-                                                />
-                                            </FormField>
-                                            <FormField
-                                                label={
-                                                    <div className="gd-dashboard-alerting-dialog-form-field__content-container-tooltip">
-                                                        <FormattedMessage id="insightAlert.config.granularity" />
-                                                        <UiTooltip
-                                                            anchor={
-                                                                <UiIconButton
-                                                                    icon="question"
-                                                                    variant="tertiary"
-                                                                    size="xsmall"
-                                                                    accessibilityConfig={{
-                                                                        ariaLabel: intl.formatMessage({
-                                                                            id: "insightAlert.config.granularity",
-                                                                        }),
-                                                                    }}
-                                                                />
-                                                            }
-                                                            content={
-                                                                <FormattedMessage id="insightAlert.config.granularity.tooltip" />
-                                                            }
-                                                            arrowPlacement="left"
-                                                            optimalPlacement
-                                                            offset={10}
-                                                            width={280}
-                                                            triggerBy={["hover", "click"]}
-                                                        />
-                                                    </div>
-                                                }
-                                                htmlFor="alert.granularity"
-                                            >
-                                                <AlertGranularitySelect
-                                                    id="alert.granularity"
-                                                    allowHourlyRecurrence={allowHourlyRecurrence}
-                                                    selectedGranularity={selectedGranularity}
-                                                    onGranularityChange={(granularity) => {
-                                                        onGranularityChange(selectedMeasure, granularity);
-                                                    }}
-                                                    overlayPositionType={OVERLAY_POSITION_TYPE}
-                                                    closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
-                                                />
-                                            </FormField>
-                                        </>
-                                    )}
+                                    <AlertingDialogMeasure />
+                                    <AlertingDialogAttribute />
+                                    <AlertingDialogComparisonOperator />
+                                    <AlertingDialogThreshold />
+                                    <AlertingDialogComparisonPeriod />
+                                    <AlertingDialogSensitivity />
+                                    <AlertingDialogGranularity />
                                 </FormFieldGroup>
                                 <ContentDivider className="gd-divider-with-margin" />
                                 <FormFieldGroup label={<FormattedMessage id="insightAlert.config.do" />}>
@@ -465,63 +254,8 @@ export function AlertingDialogRenderer({
                                             <DefaultAlertingDialogDestination {...destinationDefaultProps} />
                                         )
                                     ) : null}
-                                    <FormField
-                                        label={<FormattedMessage id="insightAlert.config.trigger" />}
-                                        htmlFor="alert.trigger"
-                                    >
-                                        <AlertTriggerModeSelect
-                                            id="alert.trigger"
-                                            selectedTriggerMode={
-                                                editedAutomation?.alert?.trigger.mode ?? "ALWAYS"
-                                            }
-                                            onTriggerModeChange={onTriggerModeChange}
-                                            overlayPositionType={OVERLAY_POSITION_TYPE}
-                                            closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
-                                            enableAlertOncePerInterval={enableAlertOncePerInterval}
-                                        />
-                                    </FormField>
-                                    {editedAutomation?.alert?.trigger.mode === "ONCE_PER_INTERVAL" ? (
-                                        <FormField
-                                            label={
-                                                <div className="gd-dashboard-alerting-dialog-form-field__content-container-tooltip">
-                                                    <FormattedMessage id="insightAlert.config.interval" />
-                                                    <UiTooltip
-                                                        anchor={
-                                                            <UiIconButton
-                                                                icon="question"
-                                                                variant="tertiary"
-                                                                size="xsmall"
-                                                                accessibilityConfig={{
-                                                                    ariaLabel: intl.formatMessage({
-                                                                        id: "insightAlert.config.interval",
-                                                                    }),
-                                                                }}
-                                                            />
-                                                        }
-                                                        content={
-                                                            <FormattedMessage id="insightAlert.config.interval.tooltip" />
-                                                        }
-                                                        arrowPlacement="left"
-                                                        optimalPlacement
-                                                        offset={10}
-                                                        width={280}
-                                                        triggerBy={["hover", "click"]}
-                                                    />
-                                                </div>
-                                            }
-                                            htmlFor="alert.interval"
-                                        >
-                                            <AlertTriggerIntervalSelect
-                                                id="alert.interval"
-                                                selectedTriggerInterval={
-                                                    editedAutomation?.alert?.trigger.interval ?? "DAY"
-                                                }
-                                                onTriggerIntervalChange={onTriggerIntervalChange}
-                                                overlayPositionType={OVERLAY_POSITION_TYPE}
-                                                closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
-                                            />
-                                        </FormField>
-                                    ) : null}
+                                    <AlertingDialogTriggerMode />
+                                    <AlertingDialogTriggerInterval />
                                     {RecipientsSlot ? (
                                         <RecipientsSlot
                                             Default={DefaultAlertingDialogRecipients}
@@ -587,9 +321,16 @@ export function AlertingDialogRenderer({
  * The dialog is composed from the exported region renders — {@link DefaultAlertingDialogHeader},
  * {@link DefaultAlertingDialogFilters}, {@link DefaultAlertingDialogDestination},
  * {@link DefaultAlertingDialogRecipients}, {@link DefaultAutomationDialogActionBar} — fed by the
- * matching `use*Props` hooks ({@link useAlertingDialogFiltersProps} and siblings). A custom
- * `AlertingDialogComponent` that keeps our regions but owns the markup places the connected blocks
- * ({@link AlertingDialogFilters} and siblings) instead of this component, and reads or writes the
+ * matching `use*Props` hooks ({@link useAlertingDialogFiltersProps} and siblings), and from the
+ * connected field blocks — {@link AlertingDialogMeasure}, {@link AlertingDialogAttribute},
+ * {@link AlertingDialogComparisonOperator}, {@link AlertingDialogThreshold},
+ * {@link AlertingDialogComparisonPeriod}, {@link AlertingDialogSensitivity},
+ * {@link AlertingDialogGranularity}, {@link AlertingDialogTriggerMode},
+ * {@link AlertingDialogTriggerInterval} — each a labelled {@link AutomationDialogFormField} row; the
+ * conditional ones (Attribute, Threshold, ComparisonPeriod, Sensitivity, Granularity, TriggerInterval)
+ * gate themselves on the draft. A custom `AlertingDialogComponent` that keeps our regions and fields
+ * but owns the markup places the connected blocks ({@link AlertingDialogFilters},
+ * {@link AlertingDialogThreshold} and siblings) instead of this component, and reads or writes the
  * same draft through {@link useAlertDraft} and {@link useAlertActions}.
  *
  * Slots render only in the fully rendered dialog: not while the dialog context reports loading,

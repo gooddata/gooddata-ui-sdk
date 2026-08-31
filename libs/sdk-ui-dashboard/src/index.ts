@@ -2260,12 +2260,19 @@ export {
     type AlertAttribute,
     type AlertMetric,
     type AlertMetricComparator,
+    type AlertAiOperator,
+    type IAlertingDialogAttributeProps,
+    type IAlertingDialogComparisonOperatorProps,
+    type IAlertingDialogComparisonPeriodProps,
+    type IAlertingDialogGranularityProps,
+    type IAlertingDialogMeasureProps,
+    type IAlertingDialogSensitivityProps,
+    type IAlertingDialogThresholdProps,
+    type IAlertingDialogTriggerIntervalProps,
+    type IAlertingDialogTriggerModeProps,
 } from "./presentation/automations/alerting/types.js";
 export type { AttributeValue } from "./presentation/automations/alerting/hooks/useAttributeValuesFromExecResults.js";
-export type {
-    AlertAiOperator,
-    IMeasureFormatMap,
-} from "./presentation/automations/alerting/utils/getters.js";
+export type { IMeasureFormatMap } from "./presentation/automations/alerting/utils/getters.js";
 export type {
     IAlertActionsContextValue,
     IAlertDataContextValue,
@@ -2305,6 +2312,36 @@ export {
     AlertingDialogActionBar,
     type IAlertingDialogActionBarBlockProps,
 } from "./presentation/automations/alerting/blocks/AlertingDialogActionBar.js";
+export {
+    useAlertingDialogAttributeProps,
+    useAlertingDialogComparisonOperatorProps,
+    useAlertingDialogComparisonPeriodProps,
+    useAlertingDialogGranularityProps,
+    useAlertingDialogMeasureProps,
+    useAlertingDialogSensitivityProps,
+    useAlertingDialogThresholdProps,
+    useAlertingDialogTriggerIntervalProps,
+    useAlertingDialogTriggerModeProps,
+} from "./presentation/automations/alerting/state/useAlertingDialogFieldProps.js";
+export { DefaultAlertingDialogMeasure } from "./presentation/automations/alerting/DefaultAlertingDialog/DefaultAlertingDialogMeasure.js";
+export { DefaultAlertingDialogAttribute } from "./presentation/automations/alerting/DefaultAlertingDialog/DefaultAlertingDialogAttribute.js";
+export { DefaultAlertingDialogComparisonOperator } from "./presentation/automations/alerting/DefaultAlertingDialog/DefaultAlertingDialogComparisonOperator.js";
+export { DefaultAlertingDialogThreshold } from "./presentation/automations/alerting/DefaultAlertingDialog/DefaultAlertingDialogThreshold.js";
+export { DefaultAlertingDialogComparisonPeriod } from "./presentation/automations/alerting/DefaultAlertingDialog/DefaultAlertingDialogComparisonPeriod.js";
+export { DefaultAlertingDialogSensitivity } from "./presentation/automations/alerting/DefaultAlertingDialog/DefaultAlertingDialogSensitivity.js";
+export { DefaultAlertingDialogGranularity } from "./presentation/automations/alerting/DefaultAlertingDialog/DefaultAlertingDialogGranularity.js";
+export { DefaultAlertingDialogTriggerMode } from "./presentation/automations/alerting/DefaultAlertingDialog/DefaultAlertingDialogTriggerMode.js";
+export { DefaultAlertingDialogTriggerInterval } from "./presentation/automations/alerting/DefaultAlertingDialog/DefaultAlertingDialogTriggerInterval.js";
+export { AlertingDialogMeasure } from "./presentation/automations/alerting/blocks/AlertingDialogMeasure.js";
+export { AlertingDialogAttribute } from "./presentation/automations/alerting/blocks/AlertingDialogAttribute.js";
+export { AlertingDialogComparisonOperator } from "./presentation/automations/alerting/blocks/AlertingDialogComparisonOperator.js";
+export { AlertingDialogThreshold } from "./presentation/automations/alerting/blocks/AlertingDialogThreshold.js";
+export { AlertingDialogComparisonPeriod } from "./presentation/automations/alerting/blocks/AlertingDialogComparisonPeriod.js";
+export { AlertingDialogSensitivity } from "./presentation/automations/alerting/blocks/AlertingDialogSensitivity.js";
+export { AlertingDialogGranularity } from "./presentation/automations/alerting/blocks/AlertingDialogGranularity.js";
+export { AlertingDialogTriggerMode } from "./presentation/automations/alerting/blocks/AlertingDialogTriggerMode.js";
+export { AlertingDialogTriggerInterval } from "./presentation/automations/alerting/blocks/AlertingDialogTriggerInterval.js";
+export { AutomationDialogFormField } from "./presentation/automations/shared/slots/AutomationDialogFormField.js";
 export type {
     IScheduledEmailSaveState,
     IScheduledExportActionsContextValue,
@@ -2351,6 +2388,7 @@ export type {
     IAutomationDialogActionBarProps,
     IAutomationDialogDestinationProps,
     IAutomationDialogFiltersProps,
+    IAutomationDialogFormFieldProps,
     IAutomationDialogHeaderProps,
     IAutomationDialogRecipientsProps,
 } from "./presentation/automations/shared/slots/types.js";

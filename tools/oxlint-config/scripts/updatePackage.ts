@@ -25,9 +25,7 @@ const devDeps: Record<string, string> = {
     "@typescript-eslint/eslint-plugin": packageJson.devDependencies["@typescript-eslint/eslint-plugin"],
     "@typescript-eslint/parser": packageJson.devDependencies["@typescript-eslint/parser"],
     eslint: packageJson.devDependencies["eslint"],
-    "eslint-import-resolver-typescript": packageJson.devDependencies["eslint-import-resolver-typescript"],
     "eslint-plugin-headers": packageJson.devDependencies["eslint-plugin-headers"],
-    "eslint-plugin-import-x": packageJson.devDependencies["eslint-plugin-import-x"],
     "eslint-plugin-sonarjs": packageJson.devDependencies["eslint-plugin-sonarjs"],
     globals: packageJson.devDependencies["globals"],
 };

@@ -7,9 +7,13 @@ $box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-complement
 
 $active-background-color: var(--gd-palette-complementary-2);
 
-$action-border-color: var(--gd-palette-error-base-t50);
-$action-background-color: var(--gd-palette-error-lightest);
-$action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-error-base-t50) inset;
+$delete-border-color: var(--gd-palette-error-base-t50);
+$delete-background-color: var(--gd-palette-error-lightest);
+$delete-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-error-base-t50) inset;
+
+$action-border-color: var(--gd-palette-complementary-4);
+$action-background-color: var(--gd-palette-complementary-2);
+$action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-complementary-5-t40) inset;
 
 .gd-ui-kit-chip {
     $root: &;
@@ -50,6 +54,15 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
         #{$root}__trigger--isDeletable:not(:disabled) {
             border-right: 1px solid $border-color;
         }
+        #{$root}__trigger--isDeletable#{$root}__trigger--variant-inactive:not(:disabled) {
+            border-right: 1px dashed $border-color;
+        }
+        #{$root}__trigger--isActionable:not(:disabled) {
+            border-right: 1px solid $border-color;
+        }
+        #{$root}__trigger--isActionable#{$root}__trigger--variant-inactive:not(:disabled) {
+            border-right: 1px dashed $border-color;
+        }
 
         &:has(#{$root}__trigger--isLocked:hover) {
             &::after {
@@ -64,13 +77,52 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
     }
 
     &:has(#{$root}__delete:hover) {
+        border-color: $delete-border-color;
+        background-color: $delete-background-color;
+
+        &::after {
+            box-shadow: $delete-box-shadow;
+        }
+
+        #{$root}__trigger:not(#{$root}__trigger--isLocked:disabled) {
+            border-color: $delete-border-color;
+            border-right: 1px solid $delete-border-color;
+        }
+        #{$root}__trigger#{$root}__trigger--variant-inactive:not(#{$root}__trigger--isLocked:disabled) {
+            border-right: 1px dashed $delete-border-color;
+        }
+
+        #{$root}__trigger--isActive {
+            background-color: $delete-background-color;
+        }
+    }
+
+    &:has(#{$root}__action:hover) {
         border-color: $action-border-color;
         background-color: $action-background-color;
 
         &::after {
+            box-shadow: $action-box-shadow;
+        }
+
+        #{$root}__trigger:not(#{$root}__trigger--isLocked:disabled) {
+            border-color: $action-border-color;
+            border-right: 1px solid $action-border-color;
+        }
+        #{$root}__trigger#{$root}__trigger--variant-inactive:not(#{$root}__trigger--isLocked:disabled) {
+            border-right: 1px dashed $action-border-color;
+        }
+
+        #{$root}__trigger--isActive {
+            background-color: $action-background-color;
+        }
+    }
+
+    &:has(#{$root}__delete:hover),
+    &:has(#{$root}__action:hover) {
+        &::after {
             content: "";
             border-radius: inherit;
-            box-shadow: $action-box-shadow;
             position: absolute;
             width: 100%;
             height: 100%;
@@ -79,30 +131,40 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
             pointer-events: none;
         }
 
-        #{$root}__trigger:not(#{$root}__trigger--isLocked:disabled) {
-            border-color: $action-border-color;
-            border-right: 1px solid $action-border-color;
-        }
-
-        #{$root}__trigger--isActive {
-            background-color: $action-background-color;
-        }
-
         #{$root}__delete {
             color: var(--gd-palette-error-base);
         }
+        #{$root}__action {
+            color: var(--gd-palette-complementary-2);
+        }
+    }
+
+    &--variant-inactive {
+        border-style: dashed;
     }
 
     #{$root}__trigger--isDeletable {
         border-right: 1px solid transparent;
     }
-
+    #{$root}__trigger--isDeletable#{$root}__trigger--variant-inactive {
+        border-right: 1px dashed transparent;
+    }
     #{$root}__trigger--hasIconAfter#{$root}__trigger--isDeletable {
+        padding-right: 3px;
+    }
+    #{$root}__trigger--isActionable {
+        border-right: 1px solid transparent;
+    }
+    #{$root}__trigger--isActionable#{$root}__trigger--variant-inactive {
+        border-right: 1px dashed transparent;
+    }
+    #{$root}__trigger--hasIconAfter#{$root}__trigger--isActionable {
         padding-right: 3px;
     }
 
     &__trigger,
-    &__delete {
+    &__delete,
+    &__action {
         color: var(--gd-palette-complementary-7);
         background-color: transparent;
         border-radius: var(--gd-button-borderRadius);
@@ -129,10 +191,18 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
         border-radius: $border-radius 0 0 $border-radius;
         border-right: 1px solid transparent;
 
+        &--variant-inactive {
+            border-right: 1px dashed transparent;
+            color: var(--gd-palette-complementary-6);
+        }
+
         &--isActive {
             color: var(--gd-palette-complementary-8);
             background-color: $active-background-color;
             border-right: 1px solid $border-color;
+        }
+        &--isActive#{$root}__trigger--variant-inactive {
+            border-right: 1px dashed $border-color;
         }
 
         &--isLocked {
@@ -147,7 +217,7 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
             }
         }
 
-        &:not(&:disabled) {
+        &:not(&:disabled):not(#{$root}__trigger--variant-inactive) {
             &:hover,
             &:focus,
             &:active {
@@ -159,7 +229,7 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
             }
         }
 
-        &:not(&--isDeletable) {
+        &:not(&--isDeletable):not(&--isActionable) {
             border-radius: $border-radius;
             border: none;
         }
@@ -176,6 +246,24 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
             &:active {
                 svg {
                     color: var(--gd-palette-error-base);
+                }
+
+                color: var(--gd-palette-complementary-8);
+            }
+        }
+    }
+
+    &__action {
+        flex-shrink: 0;
+        border-radius: 0 $border-radius $border-radius 0;
+        padding: 0 7px 0 3px;
+
+        &:not(&:disabled) {
+            &:hover,
+            &:focus,
+            &:active {
+                svg {
+                    color: var(--gd-palette-complementary-2);
                 }
 
                 color: var(--gd-palette-complementary-8);
@@ -237,6 +325,13 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
     }
 
     &__icon-delete {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--gd-transition-all);
+    }
+
+    &__icon-action {
         display: flex;
         align-items: center;
         justify-content: center;

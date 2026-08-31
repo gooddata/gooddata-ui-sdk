@@ -6269,9 +6269,15 @@ export interface IUiCheckboxProps {
 // @internal (undocumented)
 export interface IUiChipAccessibilityConfig extends IAccessibilityConfigBase, IDropdownButtonAccessibilityConfig {
     // (undocumented)
+    actionAriaDescribedBy?: string;
+    // (undocumented)
+    actionAriaLabel?: string;
+    // (undocumented)
     deleteAriaDescribedBy?: string;
     // (undocumented)
     deleteAriaLabel?: string;
+    // (undocumented)
+    iconAfterAriaLabel?: string;
     // (undocumented)
     iconBeforeAriaLabel?: string;
 }
@@ -6285,11 +6291,15 @@ export interface IUiChipProps {
     // (undocumented)
     dataTestId?: string;
     // (undocumented)
+    iconAction?: IconType;
+    // (undocumented)
     iconAfter?: IconType;
     // (undocumented)
     iconBefore?: IconType;
     // (undocumented)
     iconColor?: ThemeColor | "currentColor";
+    // (undocumented)
+    isActionable?: boolean;
     // (undocumented)
     isActive?: boolean;
     // (undocumented)
@@ -6305,6 +6315,10 @@ export interface IUiChipProps {
     // (undocumented)
     maxWidth?: number;
     // (undocumented)
+    onAction?: () => void;
+    // (undocumented)
+    onActionKeyDown?: KeyboardEventHandler<HTMLButtonElement>;
+    // (undocumented)
     onClick?: () => void;
     // (undocumented)
     onDelete?: () => void;
@@ -6313,11 +6327,13 @@ export interface IUiChipProps {
     // (undocumented)
     onKeyDown?: KeyboardEventHandler<HTMLButtonElement>;
     // (undocumented)
+    renderActionButton?: (button: ReactNode) => ReactNode;
+    // (undocumented)
     renderChipContent?: (content: ReactNode) => ReactNode;
     // (undocumented)
-    renderDeleteButton?: (button: ReactNode) => ReactNode;
-    // (undocumented)
     tag?: string;
+    // (undocumented)
+    variant?: "normal" | "inactive";
 }
 
 // @internal (undocumented)
