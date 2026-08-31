@@ -239,3 +239,27 @@ export interface IAutomationDialogActionBarProps {
      */
     deleteButtonText?: string;
 }
+
+/**
+ * Props of {@link AutomationDialogFormField}: a labelled form row of the automation dialogs.
+ *
+ * @alpha
+ */
+export interface IAutomationDialogFormFieldProps {
+    /**
+     * The row's label, rendered in a `<label>` on the left.
+     */
+    label: ReactNode;
+    /**
+     * The control, rendered on the right.
+     */
+    children: ReactNode;
+    /**
+     * The id of the control the label is for.
+     */
+    htmlFor?: string;
+    /**
+     * Lets the control span the full row width instead of the default control column.
+     */
+    fullWidth?: boolean;
+}

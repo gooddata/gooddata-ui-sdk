@@ -66,14 +66,14 @@ vi.mock("../../../filterBar/attributeFilter/DefaultDashboardAttributeFilter.js",
 // itself never activates in these tests (no dropdown focus), so the backend is never queried.
 
 // Form controls unrelated to the two regions under test, stubbed for mount cost only.
-vi.mock("./components/AlertMeasureSelect.js", () => ({
-    AlertMeasureSelect: () => null,
+vi.mock("./DefaultAlertingDialogMeasure.js", () => ({
+    DefaultAlertingDialogMeasure: () => null,
 }));
-vi.mock("./components/AlertComparisonOperatorSelect.js", () => ({
-    AlertComparisonOperatorSelect: () => null,
+vi.mock("./DefaultAlertingDialogComparisonOperator.js", () => ({
+    DefaultAlertingDialogComparisonOperator: () => null,
 }));
-vi.mock("./components/AlertTriggerModeSelect.js", () => ({
-    AlertTriggerModeSelect: () => null,
+vi.mock("./DefaultAlertingDialogTriggerMode.js", () => ({
+    DefaultAlertingDialogTriggerMode: () => null,
 }));
 
 const DEFAULT_DESTINATION_SELECTOR = ".s-alert-destination-select";

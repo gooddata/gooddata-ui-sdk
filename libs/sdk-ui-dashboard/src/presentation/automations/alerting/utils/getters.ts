@@ -43,7 +43,12 @@ import {
     getRelativeOperatorTitle,
 } from "@gooddata/sdk-ui-ext";
 
-import { type AlertAttribute, type AlertMetric, type AlertMetricComparator } from "../types.js";
+import {
+    type AlertAiOperator,
+    type AlertAttribute,
+    type AlertMetric,
+    type AlertMetricComparator,
+} from "../types.js";
 
 import { isChangeOperator, isDifferenceOperator } from "./guards.js";
 
@@ -56,13 +61,6 @@ const DEFAULT_MEASURE_FORMAT = "#,##0.00";
  * @alpha
  */
 export type IMeasureFormatMap = { [key: string]: string };
-
-/**
- * The operator id of an anomaly-detection alert condition.
- *
- * @alpha
- */
-export type AlertAiOperator = `${typeof AI_OPERATOR}.${typeof AI_OPERATORS.ANOMALY_DETECTION}`;
 
 /**
  * @internal

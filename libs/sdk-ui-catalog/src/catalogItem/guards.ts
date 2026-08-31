@@ -12,6 +12,7 @@ import type {
     ICatalogItemMeasure,
     ICatalogItemParameter,
     ICatalogItemRef,
+    ICatalogItemTextGenerable,
     VisualizationType,
 } from "./types.js";
 
@@ -83,6 +84,22 @@ export function isCatalogItemHidable(item: ICatalogItem | undefined | null): ite
         isCatalogItemMeasure(item) ||
         isCatalogItemAttribute(item) ||
         isCatalogItemFact(item)
+    );
+}
+
+/**
+ * Type guard for catalog items that support AI text generation.
+ * @internal
+ */
+export function isCatalogItemTextGenerable(
+    item: ICatalogItem | undefined | null,
+): item is ICatalogItemTextGenerable {
+    return (
+        isCatalogItemInsight(item) ||
+        isCatalogItemDashboard(item) ||
+        isCatalogItemMeasure(item) ||
+        isCatalogItemFact(item) ||
+        isCatalogItemAttribute(item)
     );
 }
 

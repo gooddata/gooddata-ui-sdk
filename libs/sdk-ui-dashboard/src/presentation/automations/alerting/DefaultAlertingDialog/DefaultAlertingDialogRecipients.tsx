@@ -3,9 +3,8 @@
 import { FormattedMessage } from "react-intl";
 
 import { RecipientsSelect } from "../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
+import { AutomationDialogFormField } from "../../shared/slots/AutomationDialogFormField.js";
 import { type IAutomationDialogRecipientsProps } from "../../shared/slots/types.js";
-
-import { FormField } from "./FormField.js";
 
 /**
  * Default render of the alerting dialog's recipients region: the recipients select in a form-field
@@ -17,12 +16,12 @@ import { FormField } from "./FormField.js";
  */
 export function DefaultAlertingDialogRecipients(props: IAutomationDialogRecipientsProps) {
     return (
-        <FormField
+        <AutomationDialogFormField
             label={<FormattedMessage id="insightAlert.config.recipients" />}
             htmlFor="alert.recipients"
             fullWidth
         >
             <RecipientsSelect id="alert.recipients" showLabel={false} {...props} />
-        </FormField>
+        </AutomationDialogFormField>
     );
 }

@@ -297,7 +297,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableParameters: true,
     enableAnalyticalCatalogMetricEditor: false,
     enableAnalyticalCatalogVisualizationEditor: false,
-    enableStringParameters: false,
+    enableStringParameters: true,
     enableLabsSmartFunctions: false,
     enableCustomTooltip: true,
     enableDataProfiling: false,

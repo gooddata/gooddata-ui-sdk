@@ -22,8 +22,49 @@ const isDeletableActive = propCombination("isDeletable", [true], { isActive: tru
 
 const isLocked = propCombination("isLocked", [true]);
 
+const isActionable = propCombination("isActionable", [true], { iconAction: "prohibited" });
+const isActionableActive = propCombination("isActionable", [true], {
+    isActive: true,
+    iconAction: "prohibited",
+});
+
+const inactive = propCombination("variant", ["inactive"]);
+const inactiveActive = propCombination("variant", ["inactive"], { isActive: true });
+const inactiveDeletable = propCombination("variant", ["inactive"], { isDeletable: true });
+const inactiveActionable = propCombination("variant", ["inactive"], {
+    isActionable: true,
+    iconAction: "prohibited",
+});
+const inactiveLocked = propCombination("variant", ["inactive"], { isLocked: true });
+
 const shortLabel = propCombination("label", ["State name: All"]);
 const shortLabelDeletable = propCombination("label", ["State name: All"], { isDeletable: true });
+const shortLabelActionable = propCombination("label", ["State name: All"], {
+    isActionable: true,
+    iconAction: "prohibited",
+});
+
+const iconAfterActionable = propCombination("iconAfter", ["date"], {
+    isActionable: true,
+    iconAction: "prohibited",
+});
+
+const iconActionableDefault = propCombination("iconAfter", ["date"], {
+    isActionable: true,
+});
+
+const withRenderActionButton = propCombination("isActionable", [true], {
+    iconAction: "prohibited",
+    renderActionButton: (button) => (
+        <div style={{ border: "1px solid red", display: "inline-flex" }}>{button}</div>
+    ),
+});
+
+const withRenderChipContent = propCombination("label", ["Render content"], {
+    renderChipContent: (content) => (
+        <div style={{ border: "1px solid blue", display: "inline-flex" }}>{content}</div>
+    ),
+});
 
 function UiChipTest({ showCode }: { showCode?: boolean }) {
     return (
@@ -37,8 +78,20 @@ function UiChipTest({ showCode }: { showCode?: boolean }) {
                     isDeletable,
                     isDeletableActive,
                     isLocked,
+                    isActionable,
+                    isActionableActive,
+                    iconActionableDefault,
+                    inactive,
+                    inactiveActive,
+                    inactiveDeletable,
+                    inactiveActionable,
+                    inactiveLocked,
                     shortLabel,
                     shortLabelDeletable,
+                    shortLabelActionable,
+                    iconAfterActionable,
+                    withRenderActionButton,
+                    withRenderChipContent,
                 ]}
                 Component={UiChip}
                 codeSnippet={showCode ? "UiChip" : undefined}

@@ -174,7 +174,7 @@ function AutomationMeasureValueFilterButton({
                     }}
                 />
             )}
-            renderDeleteButton={(button: ReactNode) => (
+            renderActionButton={(button: ReactNode) => (
                 <UiTooltip
                     id={mvfDeleteTooltipId}
                     arrowPlacement="top-start"

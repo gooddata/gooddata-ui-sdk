@@ -1,9 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type {
-    AnalyticsCatalogGenerateDescriptionObjectType,
-    IAnalyticalBackend,
-} from "@gooddata/sdk-backend-spi";
+import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     type IMeasureMetadataObject,
     type IMeasureMetadataObjectDefinition,
@@ -11,8 +8,6 @@ import {
     type ObjRef,
     idRef,
 } from "@gooddata/sdk-model";
-
-import type { ObjectType } from "../objectType/types.js";
 
 import type {
     ICatalogItem,
@@ -29,22 +24,6 @@ import type {
 } from "./types.js";
 
 const PAGE_SIZE = 50;
-
-/**
- * Type guard for catalog object types supported by AI description generation.
- * @internal
- */
-export function isGenerateDescriptionSupportedObjectType(
-    objectType: ObjectType,
-): objectType is AnalyticsCatalogGenerateDescriptionObjectType {
-    return (
-        objectType === "insight" ||
-        objectType === "analyticalDashboard" ||
-        objectType === "measure" ||
-        objectType === "fact" ||
-        objectType === "attribute"
-    );
-}
 
 export function getDashboardsQuery({
     backend,

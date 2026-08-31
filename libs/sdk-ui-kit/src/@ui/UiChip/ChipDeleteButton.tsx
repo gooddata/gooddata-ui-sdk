@@ -11,12 +11,14 @@ export function ChipDeleteButton({
     onDelete,
     onDeleteKeyDown,
     deleteAriaLabel,
+    deleteAriaDescribedBy,
     dataTestId,
 }: IChipDeleteButtonProps) {
     return (
         <button
             data-testid={dataTestId ? `${dataTestId}-delete-button` : undefined}
             aria-label={deleteAriaLabel}
+            aria-describedby={deleteAriaDescribedBy}
             className={e("delete")}
             onClick={onDelete}
             onKeyDown={onDeleteKeyDown}

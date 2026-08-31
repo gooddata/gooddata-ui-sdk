@@ -99,7 +99,7 @@ vi.mock("react-intl", async () => {
 
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { useAlertingDialogContext } from "../../contexts/AlertingDialogContext.js";
-import { useAlertThreshold } from "../DefaultAlertingDialog/hooks/useAlertThreshold.js";
+import { useAlertThreshold } from "../hooks/useAlertThreshold.js";
 import { getAlertThreshold } from "../utils/getters.js";
 
 import { useAlertActions } from "./AlertActionsContext.js";
@@ -277,9 +277,10 @@ function Wrapper({ children }: PropsWithChildren) {
 }
 
 // ---------------------------------------------------------------------------
-// A probe that reads every accessor and derivation the default dialog's renderer reads, the same
-// way the renderer does: the four contexts by their accessors, the two zero-argument derivations,
-// and a direct `useAlertThreshold` call fed from those derivations.
+// A probe that reads every accessor and derivation the alerting dialog's state layer exposes, the
+// way the field props hooks read them: the four contexts by their accessors, the two zero-argument
+// derivations, and a direct `useAlertThreshold` call fed from those derivations, the way
+// `useAlertingDialogThresholdProps` does.
 // ---------------------------------------------------------------------------
 
 function useStateProbe() {
@@ -391,14 +392,14 @@ describe("alerting dialog state — context shapes", () => {
 });
 
 // ---------------------------------------------------------------------------
-// The threshold members are renderer-owned: produced by a direct `useAlertThreshold` call, not by
-// any of the four contexts. Without this check they fall through the gap between the shape
-// assertions above — none of those contexts would ever be expected to carry them, so a
-// regression that accidentally added them to a context, or dropped them from the direct call,
-// would pass unnoticed otherwise.
+// The threshold members are owned by the Threshold block's props hook: produced by a direct
+// `useAlertThreshold` call, not by any of the four contexts. Without this check they fall through
+// the gap between the shape assertions above — none of those contexts would ever be expected to
+// carry them, so a regression that accidentally added them to a context, or dropped them from the
+// direct call, would pass unnoticed otherwise.
 // ---------------------------------------------------------------------------
 
-describe("alerting dialog state — threshold members stay renderer-owned", () => {
+describe("alerting dialog state — threshold members stay out of the contexts", () => {
     it("produces value/onChange/onBlur/thresholdErrorMessage from the direct call, and from no context", () => {
         const { result } = renderStateProbe();
 
@@ -535,8 +536,8 @@ describe("AlertingDialogStateProvider — staleness gate", () => {
 // comparison threshold when the selection changes. Its mount point determines draft content, so
 // the shape assertions above (which only check presence) do not cover this half: a regression
 // could keep the same four member names while silently breaking, duplicating, or relocating the
-// write. A probe that calls `useAlertThreshold` the way the renderer does proves the write still
-// happens from that single call site.
+// write. A probe that calls `useAlertThreshold` the way `useAlertingDialogThresholdProps` does
+// proves the write still happens from that single call site.
 // ---------------------------------------------------------------------------
 
 function ThresholdMountProbe() {
@@ -573,7 +574,7 @@ function DraftOnlyProbe() {
     );
 }
 
-describe("useAlertThreshold — renderer mount point", () => {
+describe("useAlertThreshold — single mount point", () => {
     it("writes the computed threshold into the shared draft, and only once per selection change", () => {
         const mockGetMetricValue = vi.fn((measure) => (measure === SENTINEL_MEASURE_2.measure ? 99 : 42));
         mockUseAlertSupportedMetrics.mockReturnValue({
@@ -596,9 +597,9 @@ describe("useAlertThreshold — renderer mount point", () => {
 
         fireEvent.click(screen.getByTestId("switch-measure"));
 
-        // The selection change recomputes the threshold from the renderer's mount point. The
-        // draft-only reader's single, consistent update — one call added, not two — shows it does
-        // not itself produce a second write.
+        // The selection change recomputes the threshold from that mount point. The draft-only
+        // reader's single, consistent update — one call added, not two — shows it does not itself
+        // produce a second write.
         expect(screen.getByTestId("draft-threshold")).toHaveTextContent("99");
         expect(mockGetMetricValue).toHaveBeenCalledTimes(2);
     });

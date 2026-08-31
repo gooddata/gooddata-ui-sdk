@@ -11,8 +11,7 @@ import {
     useToastMessage,
 } from "@gooddata/sdk-ui-kit";
 
-import { isGenerateDescriptionSupportedObjectType } from "../catalogItem/query.js";
-import type { ICatalogItem } from "../catalogItem/types.js";
+import type { ICatalogItemTextGenerable } from "../catalogItem/types.js";
 
 const messages = defineMessages({
     generateDescriptionButton: {
@@ -34,7 +33,7 @@ const messages = defineMessages({
 });
 
 interface ICatalogDetailGenerateDescriptionProps {
-    item: ICatalogItem;
+    item: ICatalogItemTextGenerable;
     onApplyDescription: (description: string) => void;
 }
 
@@ -48,10 +47,6 @@ export const CatalogDetailGenerateDescription = forwardRef<
     const { addError } = useToastMessage();
 
     const generateItemDescription = useCallback(async (): Promise<IUiInlineTextGeneratorResult> => {
-        if (!isGenerateDescriptionSupportedObjectType(item.type)) {
-            throw new Error(`Unsupported object type for generated description: ${item.type}`);
-        }
-
         const response = await backend
             .workspace(workspaceId)
             .genAI()

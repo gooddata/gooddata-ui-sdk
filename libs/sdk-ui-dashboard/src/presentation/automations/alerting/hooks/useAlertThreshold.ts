@@ -11,8 +11,8 @@ import {
     type IMeasure,
 } from "@gooddata/sdk-model";
 
-import { type AlertAttribute, type AlertMetric } from "../../types.js";
-import { transformAlertByValue } from "../../utils/transformation.js";
+import { type AlertAttribute, type AlertMetric } from "../types.js";
+import { transformAlertByValue } from "../utils/transformation.js";
 
 import { useThresholdValue } from "./useThresholdValue.js";
 

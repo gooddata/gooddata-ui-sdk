@@ -15,6 +15,7 @@ import {
     AUTOMATIONS_CONTEXT,
     SENTINEL_MEASURE,
 } from "../tests/alerting.test.helpers.js";
+import { VALID_FILTERS_RESULT } from "../tests/alertingBlocks.test.helpers.js";
 import { type AlertAttribute, type IDefaultAlertingDialogProps } from "../types.js";
 
 import { DefaultAlertingDialog } from "./DefaultAlertingDialog.js";
@@ -54,31 +55,15 @@ vi.mock("../../../filterBar/attributeFilter/DefaultDashboardAttributeFilter.js",
 }));
 
 // Form controls unrelated to the region under test, stubbed for mount cost only.
-vi.mock("./components/AlertMeasureSelect.js", () => ({
-    AlertMeasureSelect: () => null,
+vi.mock("./DefaultAlertingDialogMeasure.js", () => ({
+    DefaultAlertingDialogMeasure: () => null,
 }));
-vi.mock("./components/AlertComparisonOperatorSelect.js", () => ({
-    AlertComparisonOperatorSelect: () => null,
+vi.mock("./DefaultAlertingDialogComparisonOperator.js", () => ({
+    DefaultAlertingDialogComparisonOperator: () => null,
 }));
-vi.mock("./components/AlertTriggerModeSelect.js", () => ({
-    AlertTriggerModeSelect: () => null,
+vi.mock("./DefaultAlertingDialogTriggerMode.js", () => ({
+    DefaultAlertingDialogTriggerMode: () => null,
 }));
-
-// Hoisted so the stale-filters test below can spread-override just the fields it cares about.
-const VALID_FILTERS_RESULT = {
-    isValid: true,
-    hiddenFilterIsMissingInSavedFilters: false,
-    hiddenFilterHasDifferentValueInSavedFilter: false,
-    lockedFilterIsMissingInSavedFilters: false,
-    lockedFilterHasDifferentValueInSavedFilter: false,
-    ignoredFilterIsAppliedInSavedFilters: false,
-    removedFilterIsAppliedInSavedFilters: false,
-    commonDateFilterIsMissingInSavedVisibleFilters: false,
-    visibleFilterIsMissingInSavedFilters: false,
-    visibleFiltersAreMissing: false,
-    incompatibleSelectionTypeIsAppliedInSavedFilters: false,
-    filtersAreStale: false,
-};
 
 beforeEach(() => {
     vi.clearAllMocks();

@@ -306,7 +306,7 @@ export const selectEnableParameters: DashboardSelector<boolean> = createSelector
 export const selectEnableStringParameters: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableStringParameters ?? false;
+        return state.settings?.enableStringParameters ?? true;
     },
 );
 

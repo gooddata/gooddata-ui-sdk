@@ -96,7 +96,7 @@ function AutomationDateFilterButton(props: IDateFilterButtonProps) {
                     }}
                 />
             )}
-            renderDeleteButton={(button: ReactNode) => (
+            renderActionButton={(button: ReactNode) => (
                 <UiTooltip
                     id={dateFilterDeleteTooltipId}
                     arrowPlacement="top-start"

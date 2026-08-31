@@ -76,14 +76,14 @@ vi.mock(
 // AutomationFiltersSelect renders for real — the slots.Filters suite below asserts on its DOM and drives
 // onFiltersChange through it — so its AttributesDropdown/DefaultDashboardAttributeFilter children are
 // mocked individually above instead of being stubbed out with it.
-vi.mock("./components/AlertMeasureSelect.js", () => ({
-    AlertMeasureSelect: () => null,
+vi.mock("./DefaultAlertingDialogMeasure.js", () => ({
+    DefaultAlertingDialogMeasure: () => null,
 }));
-vi.mock("./components/AlertComparisonOperatorSelect.js", () => ({
-    AlertComparisonOperatorSelect: () => null,
+vi.mock("./DefaultAlertingDialogComparisonOperator.js", () => ({
+    DefaultAlertingDialogComparisonOperator: () => null,
 }));
-vi.mock("./components/AlertTriggerModeSelect.js", () => ({
-    AlertTriggerModeSelect: () => null,
+vi.mock("./DefaultAlertingDialogTriggerMode.js", () => ({
+    DefaultAlertingDialogTriggerMode: () => null,
 }));
 
 const DEFAULT_HEADER_SELECTOR = ".s-gd-notifications-channels-dialog-title";

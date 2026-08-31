@@ -2,10 +2,10 @@
 
 import { FormattedMessage } from "react-intl";
 
+import { AutomationDialogFormField } from "../../shared/slots/AutomationDialogFormField.js";
 import { type IAutomationDialogDestinationProps } from "../../shared/slots/types.js";
 
 import { AlertDestinationSelect } from "./components/AlertDestinationSelect.js";
-import { FormField } from "./FormField.js";
 
 const OVERLAY_POSITION_TYPE = "sameAsTarget";
 const CLOSE_ON_PARENT_SCROLL = true;
@@ -24,7 +24,10 @@ export function DefaultAlertingDialogDestination({
     onChange,
 }: IAutomationDialogDestinationProps) {
     return (
-        <FormField label={<FormattedMessage id="insightAlert.config.action" />} htmlFor="alert.destination">
+        <AutomationDialogFormField
+            label={<FormattedMessage id="insightAlert.config.action" />}
+            htmlFor="alert.destination"
+        >
             <AlertDestinationSelect
                 id="alert.destination"
                 selectedDestination={selectedNotificationChannelId}
@@ -33,6 +36,6 @@ export function DefaultAlertingDialogDestination({
                 overlayPositionType={OVERLAY_POSITION_TYPE}
                 closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
             />
-        </FormField>
+        </AutomationDialogFormField>
     );
 }

@@ -2,7 +2,7 @@
 
 import * as fs from "fs";
 
-import { transform } from "@babel/core";
+import { transform } from "oxc-transform";
 import { format } from "oxfmt";
 
 import { type WorkspaceMetadata } from "../base/types.js";
@@ -11,7 +11,7 @@ import { transformToTypescript } from "../transform/toTypescript.js";
 /**
  * Exports project metadata into javascript file containing sdk-model entity definitions (attribute, measure, etc)
  *
- * This is done by generating typescript code & then running it through babel plugin which strips away the
+ * This is done by generating typescript code & then running it through oxc-transform which strips away the
  * type annotations.
  *
  * @param projectMetadata - project metadata to export into javascript
@@ -29,9 +29,16 @@ export async function exportMetadataToJavascript(
         printWidth: 120,
     });
 
-    const javascript = transform(formattedTypescript.code, {
-        plugins: ["@babel/plugin-transform-typescript"],
+    // oxc-transform infers the source language from the file name, so pass a .ts name to ensure
+    // the TypeScript type annotations are stripped (the emitted file itself is the .js outputFile).
+    const { code: javascript } = await transform(
+        outputFile.replace(/\.[^./\\]+$/, ".ts"),
+        formattedTypescript.code,
+    );
+
+    const formattedJavascript = await format(outputFile, javascript, {
+        printWidth: 120,
     });
 
-    fs.writeFileSync(outputFile, javascript?.code ?? "", { encoding: "utf-8" });
+    fs.writeFileSync(outputFile, formattedJavascript.code, { encoding: "utf-8" });
 }

@@ -1,6 +1,9 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import type {
+    AnalyticsCatalogGenerateDescriptionObjectType,
+    IAnalyticalBackend,
+} from "@gooddata/sdk-backend-spi";
 import type {
     CertificationStatus,
     IDataSetMetadataObject,
@@ -172,6 +175,15 @@ export interface ICatalogItemDataSet extends ICatalogItemBase {
 export type ICatalogItemHidable = Extract<
     ICatalogItem,
     { type: "insight" | "measure" | "attribute" | "fact" }
+>;
+
+/**
+ * Catalog items that support AI text generation.
+ * @internal
+ */
+export type ICatalogItemTextGenerable = Extract<
+    ICatalogItem,
+    { type: AnalyticsCatalogGenerateDescriptionObjectType }
 >;
 
 export type ICatalogItemFeedOptions = Omit<ICatalogItemQueryOptions, "origin" | "tags">;

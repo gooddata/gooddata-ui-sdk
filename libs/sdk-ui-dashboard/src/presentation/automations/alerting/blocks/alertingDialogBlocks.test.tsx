@@ -5,9 +5,7 @@ import { type ReactNode, createRef } from "react";
 import { fireEvent, render, renderHook, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type INotificationChannelIdentifier } from "@gooddata/sdk-model";
-import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import {
@@ -18,7 +16,6 @@ import { AutomationsContextProvider } from "../../contexts/AutomationsContext.js
 import { type IAutomationDialogActionBarProps } from "../../shared/slots/types.js";
 import { useAlertActions } from "../state/AlertActionsContext.js";
 import { useAlertDraft } from "../state/AlertDraftContext.js";
-import { AlertingDialogStateProvider } from "../state/AlertingDialogStateProvider.js";
 import { useAlertDialogValidity } from "../state/useAlertDialogValidity.js";
 import {
     useAlertingDialogActionBarProps,
@@ -35,6 +32,7 @@ import {
     SENTINEL_CHANNEL,
     SENTINEL_MEASURE,
 } from "../tests/alerting.test.helpers.js";
+import { BlockProviders, VALID_FILTERS_RESULT } from "../tests/alertingBlocks.test.helpers.js";
 import { type AlertAttribute, type AlertingDialogHeaderDefaultProps } from "../types.js";
 
 import { AlertingDialogActionBar } from "./AlertingDialogActionBar.js";
@@ -106,20 +104,7 @@ beforeEach(() => {
         getMetricValue: vi.fn(),
     });
 
-    mockUseValidateExistingAutomationFilters.mockReturnValue({
-        isValid: true,
-        hiddenFilterIsMissingInSavedFilters: false,
-        hiddenFilterHasDifferentValueInSavedFilter: false,
-        lockedFilterIsMissingInSavedFilters: false,
-        lockedFilterHasDifferentValueInSavedFilter: false,
-        ignoredFilterIsAppliedInSavedFilters: false,
-        removedFilterIsAppliedInSavedFilters: false,
-        commonDateFilterIsMissingInSavedVisibleFilters: false,
-        visibleFilterIsMissingInSavedFilters: false,
-        visibleFiltersAreMissing: false,
-        incompatibleSelectionTypeIsAppliedInSavedFilters: false,
-        filtersAreStale: false,
-    });
+    mockUseValidateExistingAutomationFilters.mockReturnValue(VALID_FILTERS_RESULT);
 });
 
 // Probes read the state the way a customer's own field would.
@@ -155,33 +140,11 @@ function BlocksShell({
     );
 }
 
-function Providers({
-    children,
-    dialogContext = TWO_CHANNEL_CONTEXT,
-}: {
-    children: ReactNode;
-    dialogContext?: IAlertingDialogContextValue;
-}) {
-    return (
-        <BackendProvider backend={dummyBackend()}>
-            <WorkspaceProvider workspace="ws-1">
-                <IntlWrapper>
-                    <AutomationsContextProvider value={AUTOMATIONS_CONTEXT}>
-                        <AlertingDialogContextProvider value={dialogContext}>
-                            <AlertingDialogStateProvider>{children}</AlertingDialogStateProvider>
-                        </AlertingDialogContextProvider>
-                    </AutomationsContextProvider>
-                </IntlWrapper>
-            </WorkspaceProvider>
-        </BackendProvider>
-    );
-}
-
 function renderShell(shellProps?: Parameters<typeof BlocksShell>[0], dialogContext = TWO_CHANNEL_CONTEXT) {
     return render(
-        <Providers dialogContext={dialogContext}>
+        <BlockProviders dialogContext={dialogContext}>
             <BlocksShell {...shellProps} />
-        </Providers>,
+        </BlockProviders>,
     );
 }
 

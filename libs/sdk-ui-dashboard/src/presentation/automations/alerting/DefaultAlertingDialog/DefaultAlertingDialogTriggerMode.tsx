@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type MutableRefObject } from "react";
+import { type MutableRefObject, type ReactElement } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -10,12 +10,13 @@ import {
     Dropdown,
     DropdownButton,
     type IUiListboxItem,
-    type OverlayPositionType,
     SingleSelectListItem,
     UiListbox,
 } from "@gooddata/sdk-ui-kit";
 
-import { messages } from "../messages.js";
+import { type IAlertingDialogTriggerModeProps } from "../types.js";
+
+import { messages } from "./messages.js";
 
 const options: {
     title: string;
@@ -35,23 +36,22 @@ const options: {
     },
 ];
 
-export interface IAlertTriggerModeSelectProps {
-    id: string;
-    selectedTriggerMode: IAlertTriggerMode;
-    onTriggerModeChange: (triggerMode: IAlertTriggerMode) => void;
-    overlayPositionType?: OverlayPositionType;
-    closeOnParentScroll?: boolean;
-    enableAlertOncePerInterval?: boolean;
-}
-
-export function AlertTriggerModeSelect({
+/**
+ * Default render of the alerting dialog's trigger-mode field: the dropdown selecting when the
+ * alert fires. Props-driven — the bare control without its label; reads no dialog context (only
+ * `useIntl`). The default dialog and {@link AlertingDialogTriggerMode} render it with
+ * {@link useAlertingDialogTriggerModeProps} inside {@link AutomationDialogFormField}.
+ *
+ * @alpha
+ */
+export function DefaultAlertingDialogTriggerMode({
     id,
     selectedTriggerMode,
     onTriggerModeChange,
     overlayPositionType,
     closeOnParentScroll,
     enableAlertOncePerInterval,
-}: IAlertTriggerModeSelectProps) {
+}: IAlertingDialogTriggerModeProps): ReactElement {
     const selectedOption = options.find((o) => o.id === selectedTriggerMode);
     const intl = useIntl();
 

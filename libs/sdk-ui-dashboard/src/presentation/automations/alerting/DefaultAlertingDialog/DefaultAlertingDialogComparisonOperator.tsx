@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type MutableRefObject, useRef } from "react";
+import { type MutableRefObject, type ReactElement, useRef } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -11,17 +11,12 @@ import {
     type IAlertRelativeOperator,
 } from "@gooddata/sdk-model";
 import { AI_OPERATOR, AI_OPERATORS } from "@gooddata/sdk-ui-ext";
-import {
-    Dropdown,
-    DropdownButton,
-    type OverlayPositionType,
-    SingleSelectListItem,
-    UiListbox,
-} from "@gooddata/sdk-ui-kit";
+import { Dropdown, DropdownButton, SingleSelectListItem, UiListbox } from "@gooddata/sdk-ui-kit";
 
-import { type AlertMetric } from "../../types.js";
-import { OPERATORS, type OperatorItemType } from "../constants.js";
-import { useOperators } from "../hooks/useOperators.js";
+import { type IAlertingDialogComparisonOperatorProps } from "../types.js";
+
+import { OPERATORS, type OperatorItemType } from "./constants.js";
+import { useOperators } from "./hooks/useOperators.js";
 
 type SeparatorItem = {
     type: "separator";
@@ -35,25 +30,18 @@ type HeaderItem = {
 
 type StaticItemData = SeparatorItem | HeaderItem;
 
-export interface IAlertComparisonOperatorSelectProps {
-    measure: AlertMetric | undefined;
-    enableAnomalyDetectionAlert: boolean;
-    selectedComparisonOperator: IAlertComparisonOperator | undefined;
-    selectedRelativeOperator: [IAlertRelativeOperator, IAlertRelativeArithmeticOperator] | undefined;
-    selectedAiOperator: `${typeof AI_OPERATOR}.${typeof AI_OPERATORS.ANOMALY_DETECTION}` | undefined;
-    onComparisonOperatorChange: (metric: AlertMetric, comparisonOperator: IAlertComparisonOperator) => void;
-    onAnomalyDetectionChange: (metric: AlertMetric) => void;
-    onRelativeOperatorChange: (
-        metric: AlertMetric,
-        relativeOperator: IAlertRelativeOperator,
-        relativeArithmeticOperator: IAlertRelativeArithmeticOperator,
-    ) => void;
-    overlayPositionType?: OverlayPositionType;
-    id: string;
-    closeOnParentScroll?: boolean;
-}
-
-export function AlertComparisonOperatorSelect(props: IAlertComparisonOperatorSelectProps) {
+/**
+ * Default render of the alerting dialog's comparison-operator field: the dropdown selecting the
+ * condition's operator (fixed threshold, change, difference, anomaly detection); renders nothing
+ * without a measure. Props-driven — the bare control without its label; reads no dialog context
+ * (only `useIntl`). The default dialog and {@link AlertingDialogComparisonOperator} render it with
+ * {@link useAlertingDialogComparisonOperatorProps} inside {@link AutomationDialogFormField}.
+ *
+ * @alpha
+ */
+export function DefaultAlertingDialogComparisonOperator(
+    props: IAlertingDialogComparisonOperatorProps,
+): ReactElement | null {
     const {
         measure,
         selectedComparisonOperator,

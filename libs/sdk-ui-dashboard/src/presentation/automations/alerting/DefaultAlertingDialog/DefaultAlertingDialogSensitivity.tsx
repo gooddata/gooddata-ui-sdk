@@ -1,80 +1,61 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type MutableRefObject } from "react";
+import { type MutableRefObject, type ReactElement } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { type IAlertAnomalyDetectionGranularity } from "@gooddata/sdk-model";
+import { type IAlertAnomalyDetectionSensitivity } from "@gooddata/sdk-model";
 import {
     Dropdown,
     DropdownButton,
     type IUiListboxItem,
-    type OverlayPositionType,
     SingleSelectListItem,
     UiListbox,
 } from "@gooddata/sdk-ui-kit";
 
-import { messages } from "../messages.js";
+import { type IAlertingDialogSensitivityProps } from "../types.js";
+
+import { messages } from "./messages.js";
 
 const options: {
     title: string;
-    id: IAlertAnomalyDetectionGranularity;
+    id: IAlertAnomalyDetectionSensitivity;
 }[] = [
     {
-        title: messages.alertGranularityHour.id,
-        id: "HOUR",
+        title: messages.alertSensitivityLow.id,
+        id: "LOW",
     },
     {
-        title: messages.alertGranularityDay.id,
-        id: "DAY",
+        title: messages.alertSensitivityMedium.id,
+        id: "MEDIUM",
     },
     {
-        title: messages.alertGranularityWeek.id,
-        id: "WEEK",
-    },
-    {
-        title: messages.alertGranularityMonth.id,
-        id: "MONTH",
-    },
-    {
-        title: messages.alertGranularityQuarter.id,
-        id: "QUARTER",
-    },
-    {
-        title: messages.alertGranularityYear.id,
-        id: "YEAR",
+        title: messages.alertSensitivityHigh.id,
+        id: "HIGH",
     },
 ];
 
-export interface IAlertGranularitySelectProps {
-    id: string;
-    allowHourlyRecurrence: boolean;
-    selectedGranularity: IAlertAnomalyDetectionGranularity | undefined;
-    onGranularityChange: (granularity: IAlertAnomalyDetectionGranularity) => void;
-    overlayPositionType?: OverlayPositionType;
-    closeOnParentScroll?: boolean;
-}
-
-export function AlertGranularitySelect({
+/**
+ * Default render of the alerting dialog's sensitivity field: the dropdown selecting the
+ * anomaly-detection sensitivity. Props-driven — the bare control without its label; reads no
+ * dialog context (only `useIntl`). The default dialog and {@link AlertingDialogSensitivity} render
+ * it with {@link useAlertingDialogSensitivityProps} inside {@link AutomationDialogFormField}.
+ *
+ * @alpha
+ */
+export function DefaultAlertingDialogSensitivity({
     id,
-    allowHourlyRecurrence,
-    selectedGranularity = "WEEK",
-    onGranularityChange,
+    selectedSensitivity = "MEDIUM",
+    onSensitivityChange,
     overlayPositionType,
     closeOnParentScroll,
-}: IAlertGranularitySelectProps) {
-    const usableOptions = options.filter((o) => {
-        if (!allowHourlyRecurrence) {
-            return o.id !== "HOUR";
-        }
-        return true;
-    });
-    const selectedOption = usableOptions.find((o) => o.id === selectedGranularity);
+}: IAlertingDialogSensitivityProps): ReactElement {
+    const selectedOption = options.find((o) => o.id === selectedSensitivity);
     const intl = useIntl();
 
     return (
-        <div className="gd-alert-granularity-select">
+        <div className="gd-alert-sensitivity-select">
             <Dropdown
                 closeOnParentScroll={closeOnParentScroll}
                 overlayPositionType={overlayPositionType}
@@ -86,7 +67,7 @@ export function AlertGranularitySelect({
                             value={selectedOption ? intl.formatMessage({ id: selectedOption.title }) : ""}
                             onClick={toggleDropdown}
                             className={cx(
-                                "gd-edit-alert-granularity-select__button s-alert-granularity-select",
+                                "gd-edit-alert-sensitivity-select__button s-alert-sensitivity-select",
                             )}
                             buttonRef={buttonRef as MutableRefObject<HTMLElement>}
                             dropdownId={dropdownId}
@@ -101,8 +82,8 @@ export function AlertGranularitySelect({
                 renderBody={({ closeDropdown, ariaAttributes }) => {
                     const listboxItems: IUiListboxItem<{
                         title: string;
-                        id: IAlertAnomalyDetectionGranularity;
-                    }>[] = usableOptions.map((option) => ({
+                        id: IAlertAnomalyDetectionSensitivity;
+                    }>[] = options.map((option) => ({
                         type: "interactive",
                         id: option.id,
                         stringTitle: intl.formatMessage({ id: option.title }),
@@ -113,12 +94,12 @@ export function AlertGranularitySelect({
                         <UiListbox
                             shouldKeyboardActionStopPropagation
                             shouldKeyboardActionPreventDefault
-                            dataTestId="s-alert-granularity-select-list"
+                            dataTestId="s-alert-sensitivity-select-list"
                             items={listboxItems}
-                            selectedItemId={selectedGranularity}
+                            selectedItemId={selectedSensitivity}
                             onSelect={(item) => {
-                                if (selectedGranularity !== item.id) {
-                                    onGranularityChange(item.id as IAlertAnomalyDetectionGranularity);
+                                if (selectedSensitivity !== item.id) {
+                                    onSensitivityChange(item.id as IAlertAnomalyDetectionSensitivity);
                                 }
                             }}
                             onClose={closeDropdown}
@@ -130,7 +111,7 @@ export function AlertGranularitySelect({
                                         isSelected={isSelected}
                                         isFocused={isFocused}
                                         onClick={onSelect}
-                                        className="gd-alert-granularity-select__list-item"
+                                        className="gd-alert-sensitivity-select__list-item"
                                     />
                                 );
                             }}
