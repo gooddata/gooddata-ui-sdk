@@ -8,7 +8,7 @@ import { collectAvailableReferences, collectContextReferences } from "./collectC
 
 describe("collectContextReferences", () => {
     it("should return empty array if context is undefined", () => {
-        expect(collectContextReferences(undefined)).toEqual([]);
+        expect(collectContextReferences(undefined, undefined)).toEqual([]);
     });
 
     it("should collect dashboard reference with idRef", () => {
@@ -22,7 +22,8 @@ describe("collectContextReferences", () => {
                 },
             },
         } as any;
-        const result = collectContextReferences(context);
+        const selected = undefined;
+        const result = collectContextReferences(context, selected);
         expect(result).toEqual([
             {
                 id: "dash1",
@@ -45,7 +46,8 @@ describe("collectContextReferences", () => {
                 },
             },
         } as any;
-        const result = collectContextReferences(context);
+        const selected = undefined;
+        const result = collectContextReferences(context, selected);
         expect(result).toEqual([
             {
                 id: "/uri1",
@@ -69,7 +71,8 @@ describe("collectContextReferences", () => {
                 },
             },
         } as any;
-        const result = collectContextReferences(context);
+        const selected = undefined;
+        const result = collectContextReferences(context, selected);
         expect(result).toHaveLength(1);
         expect(result[0].ref).toEqual(idRef("dash1"));
     });
@@ -92,7 +95,8 @@ describe("collectContextReferences", () => {
                 },
             ],
         } as any;
-        const result = collectContextReferences(context);
+        const selected = undefined;
+        const result = collectContextReferences(context, selected);
         expect(result).toEqual([
             {
                 id: "metric1",
@@ -115,6 +119,11 @@ describe("collectContextReferences", () => {
             },
             referencedObjects: [
                 {
+                    context: {
+                        title: "Dash 1",
+                        type: "dashboard",
+                        ref: idRef("dash1"),
+                    },
                     objects: [
                         {
                             ref: idRef("metric1"),
@@ -125,7 +134,8 @@ describe("collectContextReferences", () => {
                 },
             ],
         } as any;
-        const result = collectContextReferences(context);
+        const selected = undefined;
+        const result = collectContextReferences(context, selected);
         expect(result[0].nesting).toBe(0);
         expect(result[1].nesting).toBe(1);
     });

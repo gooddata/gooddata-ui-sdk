@@ -64,6 +64,7 @@ const errorMessages = defineMessages({
     invalidStructure: { id: "analyticsCatalog.computedAttribute.validation.invalidStructure" },
     idImmutable: { id: "analyticsCatalog.computedAttribute.dialog.edit.idImmutable" },
     missingMaql: { id: "analyticsCatalog.computedAttribute.validation.missingMaql" },
+    invalidType: { id: "analyticsCatalog.computedAttribute.validation.invalidType" },
     invalidTags: { id: "analyticsCatalog.computedAttribute.validation.invalidTags" },
 });
 
@@ -117,9 +118,9 @@ export const computedAttributeDescriptor = defineAsCodeDescriptor<
         }),
     // The catalog item carries no MAQL, so the full object is fetched for editing.
     seed: { load: loadComputedAttribute, loadError: capabilityMessages.loadError },
-    // Refuses the deletion while a visualization still groups by it, and names those
-    // visualizations. The backend currently allows the delete (it would break the insight
-    // silently), so the catalog is the guard.
+    // Refuses the deletion while a visualization, metric, or dashboard still references it,
+    // and names those objects. The backend currently allows the delete (it would break the
+    // dependents silently), so the catalog is the guard.
     referenceCounted: {
         load: listComputedAttributeReferences,
         usageWarning: capabilityMessages.deleteUsageWarning,

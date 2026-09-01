@@ -100,7 +100,7 @@ export function isColGroupDef(colDef: ColDef | ColGroupDef): colDef is ColGroupD
  * @returns true if the column definition is a column group definition, false otherwise
  */
 export const isAgGridColumnGroupDef = (colDef: unknown): colDef is AgGridColumnGroupDef => {
-    return colDef !== undefined && colDef !== null && (colDef as AgGridColumnGroupDef).children !== undefined;
+    return (colDef as AgGridColumnGroupDef | undefined)?.children !== undefined;
 };
 
 /**
@@ -111,7 +111,7 @@ export const isAgGridColumnGroupDef = (colDef: unknown): colDef is AgGridColumnG
  * @returns true if params are header params, false otherwise
  */
 export const isAgGridHeaderParams = (params: unknown): params is AgGridHeaderParams => {
-    return params !== undefined && params !== null && (params as AgGridHeaderParams).column !== undefined;
+    return (params as AgGridHeaderParams | undefined)?.column !== undefined;
 };
 
 /**
@@ -122,9 +122,5 @@ export const isAgGridHeaderParams = (params: unknown): params is AgGridHeaderPar
  * @returns true if params are header group params, false otherwise
  */
 export const isAgGridHeaderGroupParams = (params: unknown): params is AgGridHeaderGroupParams => {
-    return (
-        params !== undefined &&
-        params !== null &&
-        (params as AgGridHeaderGroupParams).columnGroup !== undefined
-    );
+    return (params as AgGridHeaderGroupParams | undefined)?.columnGroup !== undefined;
 };

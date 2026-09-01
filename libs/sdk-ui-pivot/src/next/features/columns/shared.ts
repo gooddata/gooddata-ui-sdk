@@ -183,7 +183,7 @@ export function parentsMatch(
 
     for (const attrColId of attributeColIds) {
         const cellData = currentRow.cellDataByColId[attrColId];
-        if (!cellData || cellData.columnDefinition?.type !== "attribute") {
+        if (cellData?.columnDefinition?.type !== "attribute") {
             continue;
         }
 

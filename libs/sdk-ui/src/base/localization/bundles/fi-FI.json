@@ -1119,6 +1119,7 @@
     "message.accessibility.dismiss.notification": "Hylkää ilmoitus",
     "datePicker.accessibility.label": "Valitse aloituspäivä",
     "timePicker.accessibility.label": "Valitse aloitusaika",
+    "timezoneSelect.search.accessibility.label": "Hae aikavyöhykkeitä",
     "menu.close": "Sulje valikko",
     "menu.back": "Takaisin päävalikkoon",
     "copyButton.copy.success": "Kopioitu leikepöydälle!",

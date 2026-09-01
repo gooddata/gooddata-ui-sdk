@@ -16,6 +16,10 @@ import type { IDashboardAlertSaved } from "../../../../model/events/alerts.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardCommandProcessing } from "../../../../model/react/useDashboardCommandProcessing.js";
 import {
+    selectAutomationsIsLoading,
+    selectDashboardUserAutomationAlertsInContext,
+} from "../../../../model/store/automations/automationsSelectors.js";
+import {
     selectEnableAccessibilityMode,
     selectIsEmbedded,
 } from "../../../../model/store/config/configSelectors.js";
@@ -45,6 +49,8 @@ export function useBuildAlertingManagementDialogContext(): IAlertingManagementDi
     const automationsInvalidationId = useDashboardSelector(selectAutomationsInvalidationId);
     const isEmbedded = useDashboardSelector(selectIsEmbedded);
     const enableAccessibilityMode = useDashboardSelector(selectEnableAccessibilityMode);
+    const automations = useDashboardSelector(selectDashboardUserAutomationAlertsInContext(undefined));
+    const isLoading = useDashboardSelector(selectAutomationsIsLoading);
 
     const widgetsMap = useDashboardSelector(selectWidgetsMap);
     const insightsMap = useDashboardSelector(selectInsightsMap);
@@ -151,6 +157,8 @@ export function useBuildAlertingManagementDialogContext(): IAlertingManagementDi
             automationsInvalidationId,
             isEmbedded,
             enableAccessibilityMode,
+            automations,
+            isLoading,
             getWidgetByRef,
             getInsightByWidgetRef,
             pauseAlert,
@@ -167,6 +175,8 @@ export function useBuildAlertingManagementDialogContext(): IAlertingManagementDi
             automationsInvalidationId,
             isEmbedded,
             enableAccessibilityMode,
+            automations,
+            isLoading,
             getWidgetByRef,
             getInsightByWidgetRef,
             pauseAlert,

@@ -4,15 +4,11 @@ import { type ReactNode, useCallback, useRef, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import {
-    type DashboardAttachmentType,
-    type FilterContextItem,
-    type IExportDefinitionVisualizationObjectSettings,
-    type IExportTemplate,
-} from "@gooddata/sdk-model";
+import { type DashboardAttachmentType } from "@gooddata/sdk-model";
 import { Message } from "@gooddata/sdk-ui-kit";
 
 import { AUTOMATION_ATTACHMENTS_GROUP_LABEL_ID } from "../../../../../constants/automations.js";
+import { type IScheduledEmailDialogDashboardAttachmentsProps } from "../../../types.js";
 
 import { partitionAttachments } from "./attachmentFormats.js";
 import { AttachmentsList } from "./AttachmentsList.js";
@@ -21,22 +17,6 @@ import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
 
 const ALL_DASHBOARD_ATTACHMENTS: DashboardAttachmentType[] = ["PDF", "PDF_SLIDES", "PPTX", "XLSX"];
 const SLIDE_DASHBOARD_ATTACHMENTS: DashboardAttachmentType[] = ["PDF_SLIDES", "PPTX"];
-
-export interface IDashboardAttachmentsProps {
-    selectedAttachments: DashboardAttachmentType[];
-    dashboardFilters?: FilterContextItem[];
-    isCrossFiltering: boolean;
-    onDashboardAttachmentsChange: (formats: DashboardAttachmentType[], filters?: FilterContextItem[]) => void;
-    xlsxSettings: IExportDefinitionVisualizationObjectSettings;
-    onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
-    isSlidesExportEnabled: boolean;
-    exportTemplates?: IExportTemplate[];
-    slidesTemplateIds?: { PPTX?: string; PDF_SLIDES?: string; PDF?: string };
-    onSlidesTemplateIdChange?: (
-        templateId: string | undefined,
-        format: "PPTX" | "PDF_SLIDES" | "PDF",
-    ) => void;
-}
 
 export function DashboardAttachments({
     dashboardFilters,
@@ -49,7 +29,7 @@ export function DashboardAttachments({
     exportTemplates,
     slidesTemplateIds,
     onSlidesTemplateIdChange,
-}: IDashboardAttachmentsProps) {
+}: IScheduledEmailDialogDashboardAttachmentsProps) {
     const intl = useIntl();
 
     const {

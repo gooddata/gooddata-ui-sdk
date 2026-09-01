@@ -207,6 +207,14 @@ export type ReportImageSource =
       };
 
 /**
+ * How an image is fitted to the area it is drawn in: kept whole inside it, filling it and cropped to
+ * do so, or stretched to its shape.
+ *
+ * @alpha
+ */
+export type ReportImageFit = "contain" | "cover" | "fill";
+
+/**
  * Slot rendering an image.
  *
  * @alpha
@@ -224,7 +232,7 @@ export interface IReportImageSlot extends IReportSlotBase {
     /**
      * How the image fills the slot area. Defaults to "contain".
      */
-    fit?: "contain" | "cover" | "fill";
+    fit?: ReportImageFit;
 
     /**
      * Placement overrides for the drawn image; centered on both axes by default.

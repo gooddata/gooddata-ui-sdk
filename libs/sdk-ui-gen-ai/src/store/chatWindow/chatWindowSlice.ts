@@ -15,15 +15,17 @@ import {
 } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
-import { addAmbientContextReferences, addContextReference } from "../../context/addContextReference.js";
+import { addContextReference } from "../../context/addContextReference.js";
 import { mergeContexts } from "../../context/build.js";
-import { removeContextReference, removeUserContextReferences } from "../../context/removeContextReference.js";
+import { removeContextReference } from "../../context/removeContextReference.js";
+import { selectContextReferences, updateAmbientContext } from "../../context/selectContextReferences.js";
 import {
     type ContextObjectKind,
     type ContextObjectListState,
     type ContextObjectsState,
     type IGenAIContextListItem,
     type IGenAIContextObject,
+    type SelectedContext,
     type StoreContext,
 } from "../../types.js";
 import { clearThreadAction, startNewConversationAction } from "../messages/messagesSlice.js";
@@ -299,10 +301,8 @@ const chatWindowSlice = createSlice({
             }: PayloadAction<{ userContext?: IGenAIUserContext; replaceUserContext?: boolean }>,
         ) => {
             if (replaceUserContext) {
-                state.context.active = mergeContexts(
-                    removeUserContextReferences(state.context.active),
-                    userContext,
-                );
+                state.context.active = userContext;
+                state.context = selectContextReferences(state.context, state.context.ambientSelected);
             } else {
                 state.context.active = mergeContexts(state.context.active, userContext);
             }
@@ -317,7 +317,7 @@ const chatWindowSlice = createSlice({
                 }
                 return;
             }
-            state.context = addAmbientContextReferences(state.context, userContext);
+            state.context = updateAmbientContext(state.context, userContext);
         },
         addContextReferenceAction: (
             state,
@@ -325,11 +325,14 @@ const chatWindowSlice = createSlice({
         ) => {
             state.context = addContextReference(state.context, object);
         },
+        selectedContextReferencesAction: (state, { payload }: PayloadAction<SelectedContext>) => {
+            state.context = selectContextReferences(state.context, payload);
+        },
         removeContextReferenceAction: (
             state,
             { payload: { object } }: PayloadAction<{ object: IGenAIContextObject }>,
         ) => {
-            state.context.active = removeContextReference(state.context.active, object);
+            state.context = removeContextReference(state.context, object);
         },
         setIsPreviewAction: (state, { payload: { isPreview } }: PayloadAction<{ isPreview?: boolean }>) => {
             state.isPreview = isPreview;
@@ -382,6 +385,7 @@ export const {
     onDefinitionReceivedAction,
     addContextReferenceAction,
     removeContextReferenceAction,
+    selectedContextReferencesAction,
     setIsPreviewAction,
     /**
      * Switches the assistant between the docked and the fullscreen layout.

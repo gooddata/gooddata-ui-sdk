@@ -22,6 +22,18 @@ export interface IAlertingManagementDialogContextValue {
     automationsInvalidationId?: number;
     isEmbedded: boolean;
     enableAccessibilityMode: boolean;
+    /**
+     * Alerts visible in the management dialog, scoped to the current dashboard context.
+     */
+    automations: IAutomationMetadataObject[];
+    /**
+     * True while the automation list is still loading.
+     *
+     * The automations load only — deliberately narrower than the scheduled-email management
+     * context's flag, which also folds in a widget-filters load that has no bearing on a
+     * management list.
+     */
+    isLoading: boolean;
     getWidgetByRef: (ref: ObjRef | undefined) => IWidget | undefined;
     getInsightByWidgetRef: (ref: ObjRef | undefined) => IInsight | undefined;
     pauseAlert(alert: IAutomationMetadataObject): Promise<IAutomationMetadataObject>;

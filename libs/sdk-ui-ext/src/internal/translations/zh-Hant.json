@@ -675,7 +675,7 @@
     "properties.conditionalFormatting.dialog.error.valueEmpty": "值不可為空。",
     "properties.conditionalFormatting.dialog.selectPeriod": "選擇期間",
     "properties.conditionalFormatting.dialog.error.dateUnresolvable": "此值無法解析。請重新選擇。",
-    "properties.conditionalFormatting.dateOperator.allTime": "整天",
+    "properties.conditionalFormatting.dateOperator.allTime": "所有時間",
     "properties.conditionalFormatting.dateOperator.isOn": "位於",
     "properties.conditionalFormatting.dateOperator.isNotOn": "不位於",
     "properties.conditionalFormatting.dateOperator.isAfter": "晚於",

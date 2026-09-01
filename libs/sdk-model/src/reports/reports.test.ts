@@ -369,6 +369,202 @@ describe("box styling", () => {
         );
     });
 
+    it("accepts a zero and a fractional corner radius", () => {
+        expect(validateReportPageBody(body({ style: { borderRadius: 0 } }))).toEqual([]);
+        expect(
+            validateReportPageBody(
+                body({
+                    layout: {
+                        type: "section",
+                        direction: "row",
+                        style: { borderRadius: 1.5 },
+                        children: [{ type: "slotRef", slotId: "text1" }],
+                    },
+                }),
+            ),
+        ).toEqual([]);
+    });
+
+    it("accepts a text slot painting its own box", () => {
+        const issues = validateReportPageBody(
+            body({
+                style: undefined,
+                layout: {
+                    type: "section",
+                    direction: "row",
+                    children: [{ type: "slotRef", slotId: "text1" }],
+                },
+                slots: [
+                    {
+                        type: "text",
+                        localIdentifier: "text1",
+                        kind: "body",
+                        style: { background: { type: "image", slotId: "bg" }, borderRadius: 1 },
+                    },
+                    imageSlot("bg"),
+                ],
+            }),
+        );
+
+        expect(issues).toEqual([]);
+    });
+
+    it("does not count a background reference from a slot the layout never places", () => {
+        const issues = validateReportPageBody(
+            body({
+                slots: [
+                    { type: "text", localIdentifier: "text1", kind: "body" },
+                    {
+                        type: "text",
+                        localIdentifier: "orphan",
+                        kind: "body",
+                        style: { background: { type: "image", slotId: "bg" } },
+                    },
+                    imageSlot("bg"),
+                ],
+            }),
+        );
+
+        expect(issues).toEqual([
+            expect.objectContaining({
+                severity: "warning",
+                message: expect.stringContaining('"orphan" is not placed'),
+            }),
+            expect.objectContaining({
+                severity: "warning",
+                message: expect.stringContaining('"bg" is not placed'),
+            }),
+        ]);
+    });
+
+    it("counts a background named by both a placed and an unplaced slot", () => {
+        const issues = validateReportPageBody(
+            body({
+                layout: {
+                    type: "section",
+                    direction: "row",
+                    children: [{ type: "slotRef", slotId: "text1" }],
+                },
+                slots: [
+                    {
+                        type: "text",
+                        localIdentifier: "text1",
+                        kind: "body",
+                        style: { background: { type: "image", slotId: "bg" } },
+                    },
+                    {
+                        type: "text",
+                        localIdentifier: "orphan",
+                        kind: "body",
+                        style: { background: { type: "image", slotId: "bg" } },
+                    },
+                    imageSlot("bg"),
+                ],
+            }),
+        );
+
+        expect(issues).toEqual([
+            expect.objectContaining({
+                severity: "warning",
+                message: expect.stringContaining('"orphan" is not placed'),
+            }),
+        ]);
+    });
+
+    it("checks the box of a text slot the layout never places", () => {
+        const issues = validateReportPageBody(
+            body({
+                slots: [
+                    { type: "text", localIdentifier: "text1", kind: "body" },
+                    { type: "text", localIdentifier: "orphan", kind: "body", style: { borderRadius: -5 } },
+                ],
+            }),
+        );
+
+        expect(issues).toEqual([
+            expect.objectContaining({
+                severity: "error",
+                message: expect.stringContaining("Border radius"),
+            }),
+            expect.objectContaining({
+                severity: "warning",
+                message: expect.stringContaining('"orphan" is not placed'),
+            }),
+        ]);
+    });
+
+    it("rejects a text slot's background reference to a non-image slot", () => {
+        const issues = validateReportPageBody(
+            body({
+                slots: [
+                    {
+                        type: "text",
+                        localIdentifier: "text1",
+                        kind: "body",
+                        style: { background: { type: "image", slotId: "text1" } },
+                    },
+                ],
+            }),
+        );
+
+        expect(issues).toEqual([
+            expect.objectContaining({
+                severity: "error",
+                message: expect.stringContaining("not an image slot"),
+            }),
+        ]);
+    });
+
+    it("rejects a negative corner radius on a text slot", () => {
+        const issues = validateReportPageBody(
+            body({
+                slots: [
+                    {
+                        type: "text",
+                        localIdentifier: "text1",
+                        kind: "body",
+                        style: { borderRadius: -1 },
+                    },
+                ],
+            }),
+        );
+
+        expect(issues).toEqual([
+            expect.objectContaining({
+                severity: "error",
+                message: expect.stringContaining("Border radius"),
+            }),
+        ]);
+    });
+
+    it("rejects a corner radius that is negative, infinite or not a number", () => {
+        for (const borderRadius of [-1, Number.POSITIVE_INFINITY, Number.NaN]) {
+            expect(validateReportPageBody(body({ style: { borderRadius } }))).toEqual([
+                expect.objectContaining({
+                    severity: "error",
+                    message: expect.stringContaining("Border radius"),
+                }),
+            ]);
+        }
+        expect(
+            validateReportPageBody(
+                body({
+                    layout: {
+                        type: "section",
+                        direction: "row",
+                        style: { borderRadius: -1 },
+                        children: [{ type: "slotRef", slotId: "text1" }],
+                    },
+                }),
+            ),
+        ).toEqual([
+            expect.objectContaining({
+                severity: "error",
+                message: expect.stringContaining("Border radius"),
+            }),
+        ]);
+    });
+
     it("prefixes background references when cloning a page into content", () => {
         const definition = newReportPageLayoutDefinition("Hero", {
             style: { background: { type: "image", slotId: "cover" } },

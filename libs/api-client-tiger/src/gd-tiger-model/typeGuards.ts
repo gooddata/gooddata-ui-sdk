@@ -40,7 +40,7 @@ import {
  * @public
  */
 export function isAttributeHeader(header: ResultDimensionHeader): header is AttributeHeader {
-    return header && (header as AttributeHeader).attributeHeader !== undefined;
+    return (header as AttributeHeader)?.attributeHeader !== undefined;
 }
 
 /**

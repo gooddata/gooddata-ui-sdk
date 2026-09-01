@@ -55,10 +55,17 @@ export type ReportBackground = IReportColorBackground | IReportImageBackground;
  */
 export interface IReportBoxStyle {
     background?: ReportBackground;
+
+    /**
+     * Corner radius in percent of the page width — the same relative unit the rest of a report page
+     * is sized in, so the corners keep their proportion however large the page is rendered.
+     * Content reaching into a rounded corner is clipped.
+     */
+    borderRadius?: number;
 }
 
 /**
- * Styling of the text a text slot owns.
+ * Styling of a text slot: the paint of its box, plus the ink and placement of the text it owns.
  *
  * @remarks
  * Overrides the ink and placement of the slot's {@link ReportTextSlotKind} defaults; the kind
@@ -66,7 +73,7 @@ export interface IReportBoxStyle {
  *
  * @alpha
  */
-export interface IReportTextStyle {
+export interface IReportTextStyle extends IReportBoxStyle {
     /**
      * CSS color value. Absolute, like {@link IReportColorBackground.color}.
      */

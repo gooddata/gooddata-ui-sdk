@@ -125,7 +125,8 @@ export function useCloseOnOutsideClick(
                 return;
             }
 
-            if (anchorRef.current instanceof Element && anchorRef.current.contains(target)) {
+            const anchorElement = anchorRef.current instanceof Element ? anchorRef.current : null;
+            if (anchorElement?.contains(target)) {
                 return;
             }
 

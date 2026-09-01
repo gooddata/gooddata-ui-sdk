@@ -1119,6 +1119,7 @@
     "message.accessibility.dismiss.notification": "关闭通知",
     "datePicker.accessibility.label": "选择开始日期",
     "timePicker.accessibility.label": "选择开始时间",
+    "timezoneSelect.search.accessibility.label": "搜索时区",
     "menu.close": "关闭菜单",
     "menu.back": "返回父菜单",
     "copyButton.copy.success": "已复制到剪贴板！",

@@ -8,7 +8,7 @@ import { type ObjRef, isObjRef } from "../objRef/index.js";
 
 import { type ReportPageLayoutNode, isReportLayoutSection, isReportLayoutSlotRef } from "./layout.js";
 import { type ReportPageFormat, isReportPageFormat } from "./pageFormat.js";
-import { type ReportSlot, isReportImageSlot } from "./slot.js";
+import { type ReportSlot, isReportImageSlot, isReportTextSlot } from "./slot.js";
 import { type IReportBoxStyle, isReportImageBackground } from "./styling.js";
 
 /**
@@ -159,9 +159,10 @@ export interface IReportPageBodyValidationIssue {
 /**
  * Validates the structural invariants of a page body beyond what its types guarantee for content
  * arriving from the wire: the page format is known, slot localIdentifiers are unique, layout
- * weights are positive, every slot is placed (by the layout or as a background), every layout
- * slotId resolves (unresolved ones are warnings — they render as empty areas), and background
- * references resolve to image slots.
+ * weights are positive, corner radii are finite and not negative, every slot is placed (by the
+ * layout, or as the image background of a box that renders), every layout slotId resolves
+ * (unresolved ones are warnings — they render as empty areas), and background references
+ * resolve to image slots.
  *
  * @alpha
  */
@@ -171,6 +172,15 @@ export function validateReportPageBody(body: IReportPageBody): IReportPageBodyVa
     if (body.format !== undefined && !isReportPageFormat(body.format)) {
         issues.push({ severity: "error", message: `Unknown page format "${body.format}".` });
     }
+
+    const checkBorderRadius = (borderRadius: number | undefined): void => {
+        if (borderRadius !== undefined && !(Number.isFinite(borderRadius) && borderRadius >= 0)) {
+            issues.push({
+                severity: "error",
+                message: `Border radius must be a finite non-negative number, got ${borderRadius}.`,
+            });
+        }
+    };
 
     const slotIds = new Set<string>();
     for (const slot of body.slots) {
@@ -185,7 +195,8 @@ export function validateReportPageBody(body: IReportPageBody): IReportPageBodyVa
 
     const slotsById = new Map(body.slots.map((slot) => [slot.localIdentifier, slot]));
     const backgroundIds = new Set<string>();
-    const checkBackground = (style: IReportBoxStyle | undefined): void => {
+    const checkBoxStyle = (style: IReportBoxStyle | undefined, isDrawn: boolean): void => {
+        checkBorderRadius(style?.borderRadius);
         if (!style?.background || !isReportImageBackground(style.background)) {
             return;
         }
@@ -205,10 +216,11 @@ export function validateReportPageBody(body: IReportPageBody): IReportPageBodyVa
             });
             return;
         }
-        // Only a reference that actually renders counts as placing its slot.
-        backgroundIds.add(slotId);
+        if (isDrawn) {
+            backgroundIds.add(slotId);
+        }
     };
-    checkBackground(body.style);
+    checkBoxStyle(body.style, true);
 
     const referencedIds = new Set<string>();
     const visit = (node: ReportPageLayoutNode): void => {
@@ -227,11 +239,16 @@ export function validateReportPageBody(body: IReportPageBody): IReportPageBodyVa
                 });
             }
         } else if (isReportLayoutSection(node)) {
-            checkBackground(node.style);
+            checkBoxStyle(node.style, true);
             node.children.forEach(visit);
         }
     };
     visit(body.layout);
+
+    // After the layout, so a slot the layout never places cannot vouch for the image it names.
+    for (const slot of body.slots.filter(isReportTextSlot)) {
+        checkBoxStyle(slot.style, referencedIds.has(slot.localIdentifier));
+    }
 
     for (const slotId of slotIds) {
         if (!referencedIds.has(slotId) && !backgroundIds.has(slotId)) {

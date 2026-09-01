@@ -1,10 +1,12 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { describe, expect, it } from "vitest";
+import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
 
+import { ActionsApi_ComputeValidObjects } from "@gooddata/api-client-tiger/endpoints/validObjects";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import {
     type CatalogItem,
+    type CatalogItemType,
     type ICatalogDateDataset,
     type ICatalogMeasure,
     type IMeasureValueFilter,
@@ -19,10 +21,14 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
+    TigerWorkspaceCatalogAvailableItemsFactory,
     filterAvailableItems,
-    isComputedAttributeRef,
     sanitizeFiltersForValidObjects,
 } from "./availableItemsFactory.js";
+
+vi.mock("@gooddata/api-client-tiger/endpoints/validObjects", () => ({
+    ActionsApi_ComputeValidObjects: vi.fn(),
+}));
 
 describe("available item filtering", () => {
     describe("item filtering", () => {
@@ -87,19 +93,6 @@ describe("available item filtering", () => {
             displayForms: [displayForm],
         };
 
-        it("should recognise a computed attribute reference for the validObjects query", () => {
-            const ids = new Set(["rep_performance"]);
-
-            // says what it is
-            expect(isComputedAttributeRef(idRef("rep_performance", "computedAttribute"), ids)).toBe(true);
-            // does NOT say what it is - an insight built before the reference carried the computed
-            // attribute type points at one as a plain label, and it must be dropped all the same
-            expect(isComputedAttributeRef(idRef("rep_performance", "displayForm"), ids)).toBe(true);
-            expect(isComputedAttributeRef(idRef("rep_performance"), ids)).toBe(true);
-            // a real attribute is untouched
-            expect(isComputedAttributeRef(idRef("region", "displayForm"), ids)).toBe(false);
-        });
-
         it("should filter-in a computed attribute when its own ref matches", () => {
             const result = filterAvailableItems(
                 [idRef("rep_performance", "computedAttribute")],
@@ -110,11 +103,59 @@ describe("available item filtering", () => {
         });
 
         it("should filter-out a computed attribute the response does not mention", () => {
-            // the validObjects action cannot evaluate a computed attribute yet, so one never comes
-            // back in the response - which is why the factory passes them through separately
             expect(filterAvailableItems([idRef("of_activities", "measure")], [computedAttribute])).toEqual(
                 [],
             );
+        });
+
+        describe("the validObjects query", () => {
+            const computeValidObjects = ActionsApi_ComputeValidObjects as Mock;
+            const authCall = (fn: (client: any) => any) => fn({ axios: {}, basePath: "" });
+
+            const loadAvailableItems = (types: CatalogItemType[]) =>
+                new TigerWorkspaceCatalogAvailableItemsFactory(
+                    authCall as any,
+                    "workspace",
+                    [],
+                    [computedAttribute],
+                    {
+                        types,
+                        excludeTags: [],
+                        includeTags: [],
+                        loadGroups: false,
+                        items: [newAttribute("region")],
+                    },
+                ).load();
+
+            const sentQuery = () => computeValidObjects.mock.calls[0][2].afmValidObjectsQuery;
+
+            beforeEach(() => {
+                computeValidObjects.mockReset();
+                // the action answers with the computed attribute itself - what it could not do
+                // before it learned to evaluate them
+                computeValidObjects.mockResolvedValue({
+                    data: { items: [{ id: "rep_performance", type: "computedAttribute" }] },
+                });
+            });
+
+            it("should ask the action for computed attributes by their own type", async () => {
+                await loadAvailableItems(["computedAttribute"]);
+
+                expect(sentQuery().types).toEqual(["computedAttributes"]);
+            });
+
+            it("should take the computed attribute from the RESPONSE, not pass it through", async () => {
+                const result = await loadAvailableItems(["computedAttribute"]);
+
+                // exactly once: a pass-through on top of the response would duplicate it
+                expect(result.availableComputedAttributes()).toEqual([computedAttribute]);
+            });
+
+            it("should not ask for computed attributes when they were not requested", async () => {
+                await loadAvailableItems(["attribute"]);
+
+                expect(sentQuery().types).toEqual(["attributes"]);
+            });
         });
     });
 

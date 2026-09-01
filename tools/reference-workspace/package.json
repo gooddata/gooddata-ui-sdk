@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/reference-workspace",
-    "version": "11.55.0-alpha.2",
+    "version": "11.55.0-alpha.3",
     "description": "GoodData SDK - Reference Workspace for tests",
     "license": "MIT",
     "author": "GoodData",
@@ -58,7 +58,7 @@
         "eslint-plugin-no-barrel-files": "1.2.2",
         "eslint-plugin-sonarjs": "3.0.6",
         "oxfmt": "0.52.0",
-        "oxlint": "1.51.0",
+        "oxlint": "1.57.0",
         "oxlint-tsgolint": "0.15.0",
         "typescript": "5.9.3"
     }

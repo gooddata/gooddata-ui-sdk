@@ -21,15 +21,24 @@ import type { IMeasureExpressionToken } from "../measures/measure.js";
  * {@link IWorkspaceComputedAttributesService.getComputedAttributeReferencingObjects}.
  *
  * @remarks
- * Insights that group by the computed attribute are the referents that exist today. Measures are
- * also reported; a metric cannot reference a computed attribute yet, so that list is empty until
- * the backend supports it.
+ * Insights that group by the computed attribute, metrics that reference it, and dashboards that
+ * filter by it or embed those insights are reported when the backend can resolve them.
  *
  * @public
  */
 export interface IComputedAttributeReferencing {
-    measures?: IMetadataObject[];
+    /**
+     * Dashboards that filter by the computed attribute or embed a visualization that uses it.
+     */
+    analyticalDashboards?: IMetadataObject[];
+    /**
+     * Visualizations that group by the computed attribute.
+     */
     insights?: IInsight[];
+    /**
+     * Metrics that reference the computed attribute.
+     */
+    measures?: IMetadataObject[];
 }
 
 /**

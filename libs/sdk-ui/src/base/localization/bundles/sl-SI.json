@@ -1119,6 +1119,7 @@
     "message.accessibility.dismiss.notification": "Zaprite obvestilo",
     "datePicker.accessibility.label": "Izberite začetni datum",
     "timePicker.accessibility.label": "Izberite začetni čas",
+    "timezoneSelect.search.accessibility.label": "Iskanje časovnih pasov",
     "menu.close": "Zapri meni",
     "menu.back": "Nazaj na starševski meni",
     "copyButton.copy.success": "Kopirano na odložišče!",

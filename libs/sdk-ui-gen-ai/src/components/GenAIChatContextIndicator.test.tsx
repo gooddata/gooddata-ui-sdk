@@ -13,6 +13,15 @@ import { type RootState } from "../store/types.js";
 
 import { GenAIChatContextIndicator } from "./GenAIChatContextIndicator.js";
 
+// `isolate: false` shares one module graph per worker, so the modules mocked below may already have
+// been evaluated — against their real dependencies — by a test file that ran earlier in the same
+// worker (useContextItems.test.tsx renders these hooks with the real react-redux), which turns the
+// `vi.mock()` below into a no-op. Dropping the module registry from `vi.hoisted()` (it runs before
+// this file's own imports, unlike any `beforeEach`) makes those imports resolve through the mocks.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 function makeContext({ withWidget = true }: { withWidget?: boolean } = {}) {
     return {
         view: {
@@ -42,7 +51,11 @@ function makeState(context: IGenAIUserContext | undefined): RootState {
     return {
         chatWindow: {
             settings: { enableAiContextSetup: true },
-            context: { active: context, ambient: undefined },
+            context: {
+                active: context,
+                ambient: undefined,
+                ambientSelected: { activated: false, dashboard: { ref: { identifier: "none" } } } as any,
+            },
         },
     } as unknown as RootState;
 }

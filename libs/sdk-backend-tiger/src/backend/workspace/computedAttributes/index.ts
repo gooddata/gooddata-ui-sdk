@@ -1,7 +1,10 @@
 // (C) 2026 GoodData Corporation
 
+import { uniqBy } from "lodash-es";
+
 import { MetadataUtilities } from "@gooddata/api-client-tiger";
 import {
+    DashboardsApi_GetAllEntitiesAnalyticalDashboards,
     EntitiesApi_CreateEntityComputedAttributes,
     EntitiesApi_DeleteEntityComputedAttributes,
     EntitiesApi_GetAllEntitiesMetrics,
@@ -22,11 +25,13 @@ import {
     type IMetadataObjectBase,
     type IMetadataObjectIdentity,
     type ObjRef,
+    insightId,
     isIdentifierRef,
 } from "@gooddata/sdk-model";
 
 import { convertComputedAttributeFromBackend } from "../../../convertors/fromBackend/ComputedAttributeConverter.js";
 import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter.js";
+import { convertAnalyticalDashboardWithLinks } from "../../../convertors/fromBackend/MetadataConverter.js";
 import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter.js";
 import { convertComputedAttributeToBackend } from "../../../convertors/toBackend/ComputedAttributeConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
@@ -174,12 +179,12 @@ export class TigerWorkspaceComputedAttributes implements IWorkspaceComputedAttri
     public async getComputedAttributeReferencingObjects(ref: ObjRef): Promise<IComputedAttributeReferencing> {
         const id = objRefToIdentifier(ref, this.authCall);
 
-        // A visualization grouping by a computed attribute is the referent that exists today. The
-        // backend allows the delete; the catalog refuses it and lists these titles instead.
+        // Visualizations grouping by the computed attribute, metrics that reference it, and
+        // dashboards that filter by it or embed those visualizations. The backend allows the
+        // delete; the catalog refuses it and lists these titles instead.
         const insights = this.authCall((client) =>
             MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesVisualizationObjects, {
                 workspaceId: this.workspace,
-                // return only visualizationObjects that have a link to the given computed attribute
                 filter: `computedAttributes.id==${id}`,
             })
                 .then(MetadataUtilities.mergeEntitiesResults)
@@ -190,7 +195,6 @@ export class TigerWorkspaceComputedAttributes implements IWorkspaceComputedAttri
                 ),
         );
 
-        // Reports nothing until a metric can reference a computed attribute (pending backend support).
         const measures = this.authCall((client) =>
             MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesMetrics, {
                 workspaceId: this.workspace,
@@ -204,7 +208,28 @@ export class TigerWorkspaceComputedAttributes implements IWorkspaceComputedAttri
         );
 
         const [insightList, measureList] = await Promise.all([insights, measures]);
-        return { insights: insightList, measures: measureList };
+
+        const dashboardFilterParts = [`labels.id==${id}`];
+        if (insightList.length > 0) {
+            const insightIds = insightList.map((insight) => `"${insightId(insight)}"`).join(",");
+            dashboardFilterParts.push(`visualizationObjects.id=in=(${insightIds})`);
+        }
+
+        const analyticalDashboards = await this.authCall((client) =>
+            MetadataUtilities.getAllPagesOf(client, DashboardsApi_GetAllEntitiesAnalyticalDashboards, {
+                workspaceId: this.workspace,
+                filter: dashboardFilterParts.join(","),
+            })
+                .then(MetadataUtilities.mergeEntitiesResults)
+                .then((dashboards) =>
+                    uniqBy(
+                        dashboards.data.map((dashboard) => convertAnalyticalDashboardWithLinks(dashboard)),
+                        (dashboard) => dashboard.id,
+                    ),
+                ),
+        );
+
+        return { insights: insightList, measures: measureList, analyticalDashboards };
     }
 
     public getComputedAttributesQuery(): ComputedAttributesQuery {

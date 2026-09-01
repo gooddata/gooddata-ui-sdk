@@ -4,25 +4,9 @@ import { useIntl } from "react-intl";
 
 import { Checkbox, UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-/**
- * @internal
- */
-export interface IEvaluationModeCheckboxProps {
-    /**
-     * Whether the evaluation mode is set to shared
-     */
-    isShared: boolean;
+import { type IScheduledEmailDialogEvaluationModeProps } from "../../../types.js";
 
-    /**
-     * Callback when the checkbox value changes
-     */
-    onChange: (isShared: boolean) => void;
-}
-
-/**
- * @internal
- */
-export function EvaluationModeCheckbox({ isShared, onChange }: IEvaluationModeCheckboxProps) {
+export function EvaluationModeCheckbox({ isShared, onChange }: IScheduledEmailDialogEvaluationModeProps) {
     const intl = useIntl();
 
     return (

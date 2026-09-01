@@ -1119,6 +1119,7 @@
     "message.accessibility.dismiss.notification": "Ignora notifica",
     "datePicker.accessibility.label": "Seleziona la data di inizio",
     "timePicker.accessibility.label": "Seleziona l'ora di inizio",
+    "timezoneSelect.search.accessibility.label": "Cerca fusi orari",
     "menu.close": "Chiudere il menu",
     "menu.back": "Torna al menu principale",
     "copyButton.copy.success": "Copiato negli appunti!",

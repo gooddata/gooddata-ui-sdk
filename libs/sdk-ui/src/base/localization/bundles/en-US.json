@@ -243,6 +243,34 @@
         "text": "hex",
         "crowdinContext": "label that inidicates that user should enter hexadecimal color value, e.g. #C0D6E4"
     },
+    "gs.ui-color-picker.wheel": {
+        "text": "Hue and saturation",
+        "crowdinContext": "Accessible name of the color wheel in the color picker. Turning it around changes the hue, moving out from its middle increases the saturation."
+    },
+    "gs.ui-color-picker.lightness": {
+        "text": "Lightness",
+        "crowdinContext": "Accessible name of the slider that makes the picked color lighter or darker."
+    },
+    "gs.ui-color-picker.opacity": {
+        "text": "Opacity",
+        "crowdinContext": "Accessible name of the slider that makes the picked color more or less see-through."
+    },
+    "gs.ui-color-picker.value": {
+        "text": "Color value",
+        "crowdinContext": "Accessible name of the text field showing the picked color as text, e.g. #C0D6E4, which can also be typed into."
+    },
+    "gs.ui-color-picker.notation": {
+        "text": "Color notation",
+        "crowdinContext": "Accessible name of the dropdown choosing how the color value is written: HEX, RGB or HSL."
+    },
+    "gs.ui-color-picker.cancelButton": {
+        "text": "Cancel",
+        "crowdinContext": "Label for the cancel button in the color picker. Clicking it discards the color and closes the picker."
+    },
+    "gs.ui-color-picker.okButton": {
+        "text": "OK",
+        "crowdinContext": "Label for the confirm button in the color picker. Clicking it applies the picked color."
+    },
     "gs.noData.noMatchingData": {
         "text": "No matching data",
         "crowdinContext": "Message displayed when no data matches the current filter criteria in visualizations or data views."

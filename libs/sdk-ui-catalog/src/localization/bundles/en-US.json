@@ -699,6 +699,10 @@
         "text": "Parameter definition must be a YAML object with a nested definition block.",
         "crowdinContext": "Error shown when the parameter YAML does not follow the expected object structure."
     },
+    "analyticsCatalog.parameter.validation.invalidType": {
+        "text": "The type must be parameter.",
+        "crowdinContext": "Validation error shown when the parameter YAML declares a type other than parameter at the top level. The second 'parameter' is a literal value and must not be translated."
+    },
     "analyticsCatalog.parameter.validation.unsupportedType": {
         "text": "Only {enabledTypes} parameters are supported.",
         "crowdinContext": "Error shown when the parameter YAML declares an unsupported parameter type. {enabledTypes} is a comma-separated list of the supported type names (e.g. 'NUMBER' or 'NUMBER and STRING')."
@@ -827,6 +831,10 @@
         "text": "The computed attribute must define a MAQL expression.",
         "crowdinContext": "Validation error shown when the computed attribute YAML is missing the maql field."
     },
+    "analyticsCatalog.computedAttribute.validation.invalidType": {
+        "text": "The type must be computed_attribute.",
+        "crowdinContext": "Validation error shown when the computed attribute YAML declares a type other than computed_attribute. computed_attribute is a literal value and must not be translated."
+    },
     "analyticsCatalog.computedAttribute.validation.invalidTags": {
         "text": "Tags must be a list of text values.",
         "crowdinContext": "Validation error shown when the computed attribute tags are not a list of strings."
@@ -856,12 +864,12 @@
         "crowdinContext": "Body text of the computed attribute delete confirmation dialog. {name} is the computed attribute title or fallback ID. <b>...</b> wraps the name in bold."
     },
     "analyticsCatalog.computedAttribute.dialog.delete.usageWarning": {
-        "text": "This attribute is used in <b>{count, plural, one {# visualization} other {# visualizations}}</b>",
-        "crowdinContext": "Warning banner in the computed attribute delete dialog when visualizations still reference it. {count} is the number of referencing visualizations, wrapped in <b>. Followed by a Show more toggle that lists their titles."
+        "text": "This attribute is used in <b>{count, plural, one {# object} other {# objects}}</b>",
+        "crowdinContext": "Warning banner in the computed attribute delete dialog when other objects still reference it. {count} is the number of referencing visualizations, metrics, and dashboards, wrapped in <b>. Followed by a Show more toggle that lists their titles."
     },
     "analyticsCatalog.computedAttribute.dialog.delete.blocked": {
-        "text": "The computed attribute <b>{name}</b> cannot be deleted because it is used in some visualizations. To delete this attribute, remove it from all visualizations first.",
-        "crowdinContext": "Body of the computed attribute delete dialog when visualizations still reference it, so deletion is refused. {name} is the computed attribute title or fallback ID. <b>...</b> wraps the name in bold."
+        "text": "The computed attribute <b>{name}</b> cannot be deleted because it is used in some visualizations, metrics, or dashboards. To delete this attribute, remove it from all of them first.",
+        "crowdinContext": "Body of the computed attribute delete dialog when visualizations, metrics, or dashboards still reference it, so deletion is refused. {name} is the computed attribute title or fallback ID. <b>...</b> wraps the name in bold."
     },
     "analyticsCatalog.computedAttribute.dialog.delete.submit": {
         "text": "Delete",

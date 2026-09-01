@@ -1565,16 +1565,12 @@ describe("parameter selectors (per tab)", () => {
             ref: exportSampleSizeRef,
             title: "Sample Size",
         };
-        const insightWithTopN = makeInsightWithMetric(W1_INSIGHT_REF, idRef("metric-A", "measure"));
-        const depMapTopN: Record<string, IdentifierRef[]> = { "metric-A": [topNRef] };
 
         describe("dashboard scope (widgetIds empty/undefined)", () => {
             it("emits map keyed by tab.localIdentifier with formatted rows", () => {
                 const state = makeFullState({
                     entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
                     workspaceParameters: [topNWorkspace],
-                    insights: [insightWithTopN],
-                    measureParameters: depMapTopN,
                 });
                 expect(selectExportEffectiveParameters(undefined)(state)).toEqual({
                     [TAB_ID]: [{ id: "topN", value: "25", title: "Top N", parameterType: "NUMBER" }],
@@ -1662,7 +1658,7 @@ describe("parameter selectors (per tab)", () => {
         });
 
         describe("widget scope (widgetIds non-empty)", () => {
-            it("intersects with widget's metric-referenced refs, keyed by owning tabId", () => {
+            it("sends every override of the owning tab", () => {
                 const sampleSizeParam: IDashboardParameter = {
                     ref: exportSampleSizeRef,
                     parameterType: "NUMBER",
@@ -1674,43 +1670,21 @@ describe("parameter selectors (per tab)", () => {
                         { parameter: sampleSizeParam, runtimeOverride: 99 },
                     ],
                     workspaceParameters: [topNWorkspace, exportSampleSizeWorkspace],
-                    insights: [insightWithTopN],
-                    measureParameters: depMapTopN,
                 });
-                // Insight references only topN, so sampleSize is excluded.
                 expect(selectExportEffectiveParameters(["w-1"])(state)).toEqual({
-                    [TAB_ID]: [{ id: "topN", value: "25", title: "Top N", parameterType: "NUMBER" }],
+                    [TAB_ID]: [
+                        { id: "topN", value: "25", title: "Top N", parameterType: "NUMBER" },
+                        { id: "sampleSize", value: "99", title: "Sample Size", parameterType: "NUMBER" },
+                    ],
                 });
-            });
-
-            it("omits owning tab when widget references no parameters", () => {
-                const state = makeFullState({
-                    entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
-                    workspaceParameters: [topNWorkspace],
-                    insights: [insightWithTopN],
-                    measureParameters: {}, // no parameter dep for any metric
-                });
-                expect(selectExportEffectiveParameters(["w-1"])(state)).toEqual({});
             });
 
             it("returns {} when the requested widgetId is not found in the layout", () => {
                 const state = makeFullState({
                     entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
                     workspaceParameters: [topNWorkspace],
-                    insights: [insightWithTopN],
-                    measureParameters: depMapTopN,
                 });
                 expect(selectExportEffectiveParameters(["does-not-exist"])(state)).toEqual({});
-            });
-
-            it("returns {} when the insight referenced by the widget is missing", () => {
-                const state = makeFullState({
-                    entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
-                    workspaceParameters: [topNWorkspace],
-                    insights: [], // widget points at W1_INSIGHT_REF which is absent
-                    measureParameters: depMapTopN,
-                });
-                expect(selectExportEffectiveParameters(["w-1"])(state)).toEqual({});
             });
 
             it("widget on non-active tab → key = owning tabId, not active tabId", () => {
@@ -1718,8 +1692,6 @@ describe("parameter selectors (per tab)", () => {
                 const widgetB = { identifier: "w-B", type: "insight" } as const;
                 const insightARef = idRef("insight-A", "insight");
                 const insightBRef = idRef("insight-B", "insight");
-                const insightA = makeInsightWithMetric(insightARef, idRef("metric-A", "measure"));
-                const insightB = makeInsightWithMetric(insightBRef, idRef("metric-B", "measure"));
                 const state = {
                     tabs: {
                         tabs: [
@@ -1784,17 +1756,9 @@ describe("parameter selectors (per tab)", () => {
                         ],
                         activeTabLocalIdentifier: "tab-A",
                     },
-                    insights: makeInsightsSliceState([insightA, insightB]),
                     backendCapabilities: BACKEND_CAPABILITIES,
                     catalog: {
                         parameters: { status: "loaded", parameters: [topNWorkspace] },
-                        measureParameters: {
-                            status: "loaded",
-                            byMetric: {
-                                "metric-A": [topNRef],
-                                "metric-B": [topNRef],
-                            },
-                        },
                     },
                     meta: { persistedDashboard: undefined },
                     config: { config: { settings: { enableParameters: true } } },
@@ -1806,13 +1770,9 @@ describe("parameter selectors (per tab)", () => {
                 });
             });
 
-            it("multi-widget on the same tab → unions referenced refs, keyed by that one tab", () => {
-                const m1 = idRef("m1", "measure");
-                const m2 = idRef("m2", "measure");
-                const insightM1 = makeInsightWithMetric(W1_INSIGHT_REF, m1);
+            it("multi-widget on the same tab → one entry with the tab's overrides", () => {
                 const widgetTwoRef = { identifier: "w-2", type: "insight" } as const;
                 const insightW2Ref = idRef("insight-2", "insight");
-                const insightM2 = makeInsightWithMetric(insightW2Ref, m2);
                 const sampleSizeParam: IDashboardParameter = {
                     ref: exportSampleSizeRef,
                     parameterType: "NUMBER",
@@ -1866,16 +1826,11 @@ describe("parameter selectors (per tab)", () => {
                         ],
                         activeTabLocalIdentifier: TAB_ID,
                     },
-                    insights: makeInsightsSliceState([insightM1, insightM2]),
                     backendCapabilities: BACKEND_CAPABILITIES,
                     catalog: {
                         parameters: {
                             status: "loaded",
                             parameters: [topNWorkspace, exportSampleSizeWorkspace],
-                        },
-                        measureParameters: {
-                            status: "loaded",
-                            byMetric: { m1: [topNRef], m2: [exportSampleSizeRef] },
                         },
                     },
                     meta: { persistedDashboard: undefined },
@@ -1906,8 +1861,6 @@ describe("parameter selectors (per tab)", () => {
                     entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
                     workspaceParameters: [topNWorkspace],
                     enableParameters: false,
-                    insights: [insightWithTopN],
-                    measureParameters: depMapTopN,
                 });
                 expect(selectExportEffectiveParameters(["w-1"])(state)).toEqual({});
             });
@@ -1924,27 +1877,16 @@ describe("parameter selectors (per tab)", () => {
                 },
             );
 
-            it.each(["uninitialized", "loading", "failed"] as const)(
-                "returns {} on widget scope when measure-parameter status is %s",
-                (status) => {
-                    const state = makeFullState({
-                        entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
-                        workspaceParameters: [topNWorkspace],
-                        insights: [insightWithTopN],
-                        measureParameters: depMapTopN,
-                        measureParametersStatus: status,
-                    });
-                    expect(selectExportEffectiveParameters(["w-1"])(state)).toEqual({});
-                },
-            );
-
-            it("dashboard scope ignores measure-parameter status (not required for whole-dashboard)", () => {
+            it.each<[string, string[] | undefined]>([
+                ["dashboard scope", undefined],
+                ["widget scope", ["w-1"]],
+            ])("%s does not depend on insights or the measure-parameter map", (_, widgetIds) => {
                 const state = makeFullState({
                     entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
                     workspaceParameters: [topNWorkspace],
                     measureParametersStatus: "uninitialized",
                 });
-                expect(selectExportEffectiveParameters(undefined)(state)).toEqual({
+                expect(selectExportEffectiveParameters(widgetIds)(state)).toEqual({
                     [TAB_ID]: [{ id: "topN", value: "25", title: "Top N", parameterType: "NUMBER" }],
                 });
             });
@@ -2272,13 +2214,9 @@ describe("parameter reconciliation selectors", () => {
         });
 
         it("selectExportEffectiveParameters emits STRING rows in widget scope when the flag is on", () => {
-            const topNMetricRef = idRef("m-topn", "measure");
-            const mixedInsight = makeInsightWithMetric(W1_INSIGHT_REF, [scenarioMetricRef, topNMetricRef]);
             const state = makeFullState({
                 entries: [stringEntry, { parameter: topNParameter, runtimeOverride: 25 }],
                 workspaceParameters: [scenarioWorkspace, topNWorkspace],
-                insights: [mixedInsight],
-                measureParameters: { "m-scenario": [scenarioRef], "m-topn": [topNRef] },
             });
             expect(selectExportEffectiveParameters(["w-1"])(state)).toEqual({
                 [TAB_ID]: [

@@ -3,9 +3,12 @@
 import { type ComponentType, type KeyboardEvent, type ReactNode, type Ref } from "react";
 
 import {
+    type DashboardAttachmentType,
     type FilterContextItem,
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
+    type IExportDefinitionVisualizationObjectSettings,
+    type IExportTemplate,
     type IFilter,
     type IInsight,
     type INotificationChannelIdentifier,
@@ -13,6 +16,8 @@ import {
     type IWidget,
     type IdentifierRef,
     type ParameterValue,
+    type WeekStart,
+    type WidgetAttachmentType,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 import { type ISlotProps } from "@gooddata/sdk-ui-kit";
@@ -358,6 +363,251 @@ export interface IScheduledEmailDialogRecipientsProps extends IAutomationDialogR
 }
 
 /**
+ * Props of the scheduled-export dialog's recurrence field.
+ *
+ * @alpha
+ */
+export interface IScheduledEmailDialogRecurrenceProps {
+    /**
+     * First-run date the cron editor is anchored to.
+     */
+    startDate: Date;
+    /**
+     * The draft's cron expression.
+     */
+    cronExpression: string;
+    /**
+     * Human-readable description of the cron expression, when the draft carries one.
+     */
+    cronDescription?: string;
+    /**
+     * Display-only timezone label shown in the occurrence description.
+     */
+    timezone: string;
+    /**
+     * Date format used by the first-run date picker.
+     */
+    dateFormat: string;
+    /**
+     * Locale of the recurrence editor.
+     */
+    locale: string;
+    /**
+     * First day of the week in the date picker.
+     */
+    weekStart: WeekStart;
+    /**
+     * Whether the hourly recurrence option is offered.
+     */
+    allowHourlyRecurrence: boolean;
+    /**
+     * Hides GoodData-specific copy when white-labeled.
+     */
+    isWhiteLabeled: boolean;
+    /**
+     * Closes the recurrence dropdowns when the dialog body scrolls.
+     */
+    closeDropdownsOnParentScroll: boolean;
+    /**
+     * Sets the cron expression and first run; `isValid` is the recurrence form's own verdict.
+     */
+    onChange: (cronExpression: string, startDate: Date | null, isValid: boolean) => void;
+    /**
+     * Key-down handler; the dialog submits on Enter through it.
+     */
+    onKeyDownSubmit: (event: KeyboardEvent) => void;
+}
+
+/**
+ * Props of the scheduled-export dialog's subject field.
+ *
+ * @alpha
+ */
+export interface IScheduledEmailDialogSubjectProps {
+    /**
+     * Dashboard title, used as the subject placeholder (truncated to the title max length).
+     */
+    dashboardTitle: string;
+    /**
+     * The export draft; the field renders `details.subject`.
+     */
+    editedAutomation: IAutomationMetadataObjectDefinition;
+    /**
+     * Disables submit-on-Enter while the dialog is not submittable.
+     */
+    isSubmitDisabled?: boolean;
+    /**
+     * Sets the e-mail subject; `isValid` is the field's own length verdict.
+     */
+    onChange: (value: string, isValid: boolean) => void;
+    /**
+     * Called on Enter when submit is not disabled.
+     */
+    onKeyDownSubmit: () => void;
+}
+
+/**
+ * Props of the scheduled-export dialog's message field.
+ *
+ * @alpha
+ */
+export interface IScheduledEmailDialogMessageProps {
+    /**
+     * The e-mail message text.
+     */
+    value: string;
+    /**
+     * Sets the e-mail message; `isValid` is the field's own length verdict.
+     */
+    onChange: (value: string, isValid: boolean) => void;
+}
+
+/**
+ * Props of the scheduled-export dialog's evaluation-mode checkbox.
+ *
+ * @alpha
+ */
+export interface IScheduledEmailDialogEvaluationModeProps {
+    /**
+     * Whether the evaluation mode is SHARED.
+     */
+    isShared: boolean;
+    /**
+     * Switches between a shared and a per-recipient evaluation of the export.
+     */
+    onChange: (isShared: boolean) => void;
+}
+
+/**
+ * Props of the scheduled-export dialog's dashboard-attachments field.
+ *
+ * @alpha
+ */
+export interface IScheduledEmailDialogDashboardAttachmentsProps {
+    /**
+     * The selected export formats.
+     */
+    selectedAttachments: DashboardAttachmentType[];
+    /**
+     * Dashboard filters the export is scoped to; the control passes them back as the second
+     * argument of every {@link IScheduledEmailDialogDashboardAttachmentsProps.onDashboardAttachmentsChange}
+     * call.
+     */
+    dashboardFilters?: FilterContextItem[];
+    /**
+     * When true and at least one attachment is selected, the control shows the notice that
+     * exports do not reflect cross-filtering.
+     */
+    isCrossFiltering: boolean;
+    /**
+     * Replaces the selected dashboard export formats. Called with the complete new selection and
+     * the current {@link IScheduledEmailDialogDashboardAttachmentsProps.dashboardFilters}.
+     */
+    onDashboardAttachmentsChange: (formats: DashboardAttachmentType[], filters?: FilterContextItem[]) => void;
+    /**
+     * XLSX export settings shown in the attachment's settings editor.
+     */
+    xlsxSettings: IExportDefinitionVisualizationObjectSettings;
+    /**
+     * Sets the XLSX export settings.
+     */
+    onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    /**
+     * Whether the slide-based formats (PPTX, PDF slides) are offered; when false they are
+     * excluded from the add-attachment options.
+     */
+    isSlidesExportEnabled: boolean;
+    /**
+     * Export templates offered in the template picker of the slide-based formats.
+     */
+    exportTemplates?: IExportTemplate[];
+    /**
+     * The template chosen per slide-based format; undefined where the default template applies.
+     */
+    slidesTemplateIds?: { PPTX?: string; PDF_SLIDES?: string; PDF?: string };
+    /**
+     * Sets the export template of one slide-based format.
+     */
+    onSlidesTemplateIdChange?: (
+        templateId: string | undefined,
+        format: "PPTX" | "PDF_SLIDES" | "PDF",
+    ) => void;
+}
+
+/**
+ * Props of the scheduled-export dialog's widget-attachments field.
+ *
+ * @alpha
+ */
+export interface IScheduledEmailDialogWidgetAttachmentsProps {
+    /**
+     * The selected export formats.
+     */
+    selectedAttachments: WidgetAttachmentType[];
+    /**
+     * Replaces the selected widget export formats with the complete new selection.
+     */
+    onWidgetAttachmentsChange: (formats: WidgetAttachmentType[]) => void;
+    /**
+     * XLSX export settings shown in the attachment's settings editor.
+     */
+    xlsxSettings: IExportDefinitionVisualizationObjectSettings;
+    /**
+     * Sets the XLSX export settings.
+     */
+    onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    /**
+     * Tabular-PDF export settings shown in the attachment's settings editor.
+     */
+    pdfSettings: IExportDefinitionVisualizationObjectSettings;
+    /**
+     * Sets the tabular-PDF export settings.
+     */
+    onPdfSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    /**
+     * CSV export settings shown in the attachment's settings editor.
+     */
+    csvSettings: IExportDefinitionVisualizationObjectSettings;
+    /**
+     * Sets the CSV export settings.
+     */
+    onCsvSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    /**
+     * Raw-CSV export settings shown in the attachment's settings editor.
+     */
+    csvRawSettings: IExportDefinitionVisualizationObjectSettings;
+    /**
+     * Sets the raw-CSV export settings.
+     */
+    onCsvRawSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    /**
+     * Whether the slide-based formats (PPTX, PDF) are offered; when false they are excluded
+     * from the add-attachment options.
+     */
+    isSlidesExportEnabled: boolean;
+    /**
+     * When true, formats without an accessible rendering (PDF_TABULAR) are excluded from the
+     * add-attachment options.
+     */
+    isAccessibilityModeEnabled: boolean;
+    /**
+     * Export templates offered in the template picker of the slide-based formats.
+     */
+    exportTemplates?: IExportTemplate[];
+    /**
+     * The template chosen per slide-based format; undefined where the default template applies.
+     */
+    slidesTemplateIds?: { PPTX?: string; PDF_SLIDES?: string; PDF?: string };
+    /**
+     * Sets the export template of one slide-based format.
+     */
+    onSlidesTemplateIdChange?: (
+        templateId: string | undefined,
+        format: "PPTX" | "PDF_SLIDES" | "PDF",
+    ) => void;
+}
+
+/**
  * Section-level overrides of the default scheduled email dialog.
  *
  * @alpha
@@ -489,6 +739,74 @@ export interface IDefaultScheduledEmailDialogProps extends IScheduledEmailDialog
      * Rendered on both tabs — it is a content-area child, not a tab child.
      */
     bottomContent?: ReactNode;
+}
+
+/**
+ * Props of {@link ScheduledEmailDialogShell}.
+ *
+ * @alpha
+ */
+export interface IScheduledEmailDialogShellProps extends Pick<
+    IScheduledEmailDialogProps,
+    "onCancel" | "onBack" | "onDeleteSuccess" | "onDeleteError"
+> {
+    /**
+     * The dialog's single save — `handleSaveScheduledEmail` of the caller's
+     * {@link useSaveScheduledEmailToBackend} instance. Drives the footer's submit button, the Enter key on
+     * it, and the header's Enter-to-submit. (Not the `onSubmit` observer of {@link IScheduledEmailDialogProps};
+     * that one goes to the save hook.) The shell does not own the save hook, so the caller's own Enter
+     * handlers — {@link useScheduledEmailSubmitOnEnter} — share the same instance. Create the hook instance
+     * only once the dialog context reports `isLoading: false`.
+     */
+    onSubmit: () => void;
+
+    /**
+     * `isSavingScheduledEmail` of the same instance: disables submit and Delete and shows the footer's
+     * progress indicator.
+     */
+    isSaving: boolean;
+
+    /**
+     * `savingErrorMessage` of the same instance; shown as the body's error message, ahead of the form's
+     * validation message.
+     */
+    savingErrorMessage?: string;
+
+    /**
+     * Header, action-bar and Filters-tab overrides — the Level 1 slot contract
+     * ({@link IScheduledEmailDialogSlots.Header}, {@link IScheduledEmailDialogSlots.ActionBar},
+     * {@link IScheduledEmailDialogSlots.Filters}): each slot receives `{ Default, defaultProps }` with the
+     * shell's live values. Slot components need a stable reference identity — see
+     * {@link @gooddata/sdk-ui-kit#ISlotProps}. `Filters` is ignored when `filtersTabContent` is passed. The
+     * General-tab regions have no slot here: place their blocks ({@link ScheduledEmailDialogDestination} and
+     * siblings) as children instead.
+     */
+    slots?: Pick<IScheduledEmailDialogSlots, "Header" | "ActionBar" | "Filters">;
+
+    /**
+     * Rendered first inside the dialog's scrollable content area, above the selected tab's content.
+     */
+    topContent?: ReactNode;
+
+    /**
+     * Rendered last inside the scrollable content area, below the selected tab's content.
+     */
+    bottomContent?: ReactNode;
+
+    /**
+     * The General tab's content: the regions and fields, in the caller's order. Rendered only while the
+     * General tab is selected; not mounted while `useScheduledEmailDialogContext().isLoading` is true (the
+     * shell shows its loading skeleton — on scheduled email the ordinary path while a widget export's
+     * filters load) or while the stale-filters confirmation step is shown.
+     */
+    children?: ReactNode;
+
+    /**
+     * The Filters tab's content. Defaults to the dialog's filters region ({@link DefaultScheduledEmailDialogFilters}
+     * with {@link useScheduledEmailDialogFiltersProps}, or the `Filters` slot). Rendered only while the Filters
+     * tab is selected. An explicit `null` counts as provided and renders an empty Filters tab.
+     */
+    filtersTabContent?: ReactNode;
 }
 
 /**

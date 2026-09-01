@@ -29,6 +29,7 @@ export type ParameterValidationErrorCode =
     | "syntax"
     | "invalidStructure"
     | "idImmutable"
+    | "invalidType"
     | "unsupportedType"
     | "invalidDefaultValue"
     | "invalidConstraints"
@@ -68,6 +69,12 @@ function classifySchemaError(
 
         if (isSchemaErrorCode(issue.message)) {
             return invalid(issue.message, declaredType);
+        }
+        // The object's own `type`, not the model type inside `definition`. A mistyped one is easy to
+        // make and impossible to spot in a generic structure error, so it gets its own message naming
+        // the one value the field accepts.
+        if (path === "type") {
+            return invalid("invalidType");
         }
         if (path === "definition.type") {
             return invalid("unsupportedType");

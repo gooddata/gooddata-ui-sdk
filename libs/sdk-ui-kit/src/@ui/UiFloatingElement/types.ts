@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type CSSProperties, type MutableRefObject, type ReactNode, type RefObject } from "react";
 
@@ -53,6 +53,23 @@ export interface IUiFloatingElementProps {
     strategy?: Strategy;
     offset?: OffsetOptions;
     autoFlip?: boolean;
+    /**
+     * Whether the floating element may slide over its anchor to stay in view.
+     *
+     * @remarks
+     * By default it only slides along the side it is placed on. An anchor taller than the viewport
+     * has room on neither side, which leaves the element off the screen.
+     */
+    allowOverlapAnchor?: boolean;
+    /**
+     * Element the floating element is kept inside of, instead of the window.
+     *
+     * @remarks
+     * The portal puts it outside whatever the anchor scrolls in, so by default only the window
+     * constrains it. Pass the element rather than its rect, so the position is measured again as
+     * the element moves.
+     */
+    overflowBoundary?: Element;
     closeOnOutsideClick?: boolean;
     closeOnEscape?: boolean;
     closeOnParentScroll?: boolean;
@@ -81,6 +98,8 @@ export interface IUseFloatingPositionOptions {
     strategy?: Strategy;
     offset?: OffsetOptions;
     autoFlip?: boolean;
+    allowOverlapAnchor?: boolean;
+    overflowBoundary?: Element;
     fallbackPlacements?: Placement[];
     arrowRef?: RefObject<SVGSVGElement | null>;
     customMiddleware?: Middleware[];

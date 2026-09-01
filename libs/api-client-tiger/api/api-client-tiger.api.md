@@ -307,14 +307,6 @@ export interface ActionsApiAiChatUsageRequest {
 }
 
 // @public
-interface ActionsApiAiSearchRequest {
-    readonly searchRequest: SearchRequest;
-    readonly workspaceId: string;
-}
-export { ActionsApiAiSearchRequest }
-export { ActionsApiAiSearchRequest as GenAiApiAiSearchRequest }
-
-// @public
 export interface ActionsApiAnalyzeCsvRequest {
     readonly analyzeCsvRequest: AnalyzeCsvRequest;
 }
@@ -1535,7 +1527,6 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     aiChatHistory(requestParameters: ActionsApiAiChatHistoryRequest, options?: AxiosRequestConfig): AxiosPromise<ChatHistoryResult>;
     aiChatStream(requestParameters: ActionsApiAiChatStreamRequest, options?: AxiosRequestConfig): AxiosPromise<object[]>;
     aiChatUsage(requestParameters: ActionsApiAiChatUsageRequest, options?: AxiosRequestConfig): AxiosPromise<ChatUsageResponse>;
-    aiSearch(requestParameters: ActionsApiAiSearchRequest, options?: AxiosRequestConfig): AxiosPromise<SearchResult>;
     // @deprecated
     anomalyDetection(requestParameters: ActionsApiAnomalyDetectionRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     // @deprecated
@@ -1614,7 +1605,6 @@ export interface AfmActionsApiInterface {
     aiChatHistory(requestParameters: ActionsApiAiChatHistoryRequest, options?: AxiosRequestConfig): AxiosPromise<ChatHistoryResult>;
     aiChatStream(requestParameters: ActionsApiAiChatStreamRequest, options?: AxiosRequestConfig): AxiosPromise<Array<object>>;
     aiChatUsage(requestParameters: ActionsApiAiChatUsageRequest, options?: AxiosRequestConfig): AxiosPromise<ChatUsageResponse>;
-    aiSearch(requestParameters: ActionsApiAiSearchRequest, options?: AxiosRequestConfig): AxiosPromise<SearchResult>;
     // @deprecated
     anomalyDetection(requestParameters: ActionsApiAnomalyDetectionRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     // @deprecated
@@ -2566,7 +2556,7 @@ export interface AfmValidObjectsQuery {
 }
 
 // @public (undocumented)
-export type AfmValidObjectsQueryTypesEnum = 'facts' | 'attributes' | 'measures';
+export type AfmValidObjectsQueryTypesEnum = 'facts' | 'attributes' | 'measures' | 'computedAttributes';
 
 // @public
 export interface AfmValidObjectsResponse {
@@ -2868,6 +2858,14 @@ export interface AggregatedFactControllerApiSearchEntitiesAggregatedFactsRequest
     readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
     readonly workspaceId: string;
     readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public (undocumented)
+export interface AiAbsolute {
+    // (undocumented)
+    'from': string;
+    // (undocumented)
+    'to': string;
 }
 
 // @public (undocumented)
@@ -3706,6 +3704,13 @@ export const AiCellVerticalAlign: {
 // @public (undocumented)
 export type AiCellVerticalAlign = typeof AiCellVerticalAlign[keyof typeof AiCellVerticalAlign];
 
+// @public
+export interface AiCertificationInfo {
+    // (undocumented)
+    'certificationMessage'?: string | null;
+    'status': string;
+}
+
 // @public (undocumented)
 export interface AiChartFill {
     // (undocumented)
@@ -3980,6 +3985,8 @@ export interface AiConfig {
     // (undocumented)
     'grid_enabled'?: boolean | null;
     // (undocumented)
+    'grid_line_shape'?: AiGridLineShape | null;
+    // (undocumented)
     'group_nearby_points'?: boolean | null;
     // (undocumented)
     'icon'?: string | null;
@@ -4029,6 +4036,8 @@ export interface AiConfig {
     'pagination'?: boolean | null;
     // (undocumented)
     'position'?: string | null;
+    // (undocumented)
+    'render_as'?: AiRenderAs | null;
     // (undocumented)
     'row_height'?: AiRowHeight | null;
     // (undocumented)
@@ -4832,6 +4841,12 @@ export const AiEmptyValueHandling: {
 export type AiEmptyValueHandling = typeof AiEmptyValueHandling[keyof typeof AiEmptyValueHandling];
 
 // @public (undocumented)
+export interface AiErrorInfo {
+    'reason': string;
+    'statusCode': number;
+}
+
+// @public (undocumented)
 export interface AiFeedback {
     // (undocumented)
     'text'?: string | null;
@@ -5060,6 +5075,29 @@ export const AiGrandTotalsPosition: {
 
 // @public (undocumented)
 export type AiGrandTotalsPosition = typeof AiGrandTotalsPosition[keyof typeof AiGrandTotalsPosition];
+
+// @public (undocumented)
+export const AiGranularity3: {
+    readonly MINUTE: "minute";
+    readonly HOUR: "hour";
+    readonly DAY: "day";
+    readonly WEEK: "week";
+    readonly MONTH: "month";
+    readonly QUARTER: "quarter";
+    readonly YEAR: "year";
+};
+
+// @public (undocumented)
+export type AiGranularity3 = typeof AiGranularity3[keyof typeof AiGranularity3];
+
+// @public (undocumented)
+export const AiGridLineShape: {
+    readonly POLYGON: "polygon";
+    readonly CIRCLE: "circle";
+};
+
+// @public (undocumented)
+export type AiGridLineShape = typeof AiGridLineShape[keyof typeof AiGridLineShape];
 
 // @public (undocumented)
 export interface AiHTTPValidationError {
@@ -6435,6 +6473,16 @@ export type AiReasoningContentTypeEnum = 'reasoning';
 
 // @public (undocumented)
 export interface AiRelative {
+    // (undocumented)
+    'from': number;
+    // (undocumented)
+    'granularity': AiGranularity3;
+    // (undocumented)
+    'to': number;
+}
+
+// @public (undocumented)
+export interface AiRelativeChange {
     'measure': AiArithmeticMeasure;
     'operator': AiRelativeConditionOperator;
     'threshold': AiValueOperand;
@@ -6442,7 +6490,7 @@ export interface AiRelative {
 
 // @public (undocumented)
 export interface AiRelativeCondition {
-    'relative': AiRelative;
+    'relative': AiRelativeChange;
 }
 
 // @public
@@ -6506,6 +6554,15 @@ export interface AiRelativeDateFilterOutput {
     // (undocumented)
     'relativeDateFilter': AiRelativeDateFilterBodyOutput;
 }
+
+// @public (undocumented)
+export const AiRenderAs: {
+    readonly FILLED: "filled";
+    readonly OUTLINE: "outline";
+};
+
+// @public (undocumented)
+export type AiRenderAs = typeof AiRenderAs[keyof typeof AiRenderAs];
 
 // @public (undocumented)
 export interface AiRequestArgs {
@@ -6584,6 +6641,19 @@ export const AiScope: {
 // @public (undocumented)
 export type AiScope = typeof AiScope[keyof typeof AiScope];
 
+// @public (undocumented)
+export interface AiSearchAllowedRelationshipType {
+    'allowOrphans'?: boolean;
+    'sourceType': AiSearchAllowedRelationshipTypeSourceTypeEnum;
+    'targetType': AiSearchAllowedRelationshipTypeTargetTypeEnum;
+}
+
+// @public (undocumented)
+export type AiSearchAllowedRelationshipTypeSourceTypeEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
+
+// @public (undocumented)
+export type AiSearchAllowedRelationshipTypeTargetTypeEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
+
 // @public
 export interface AiSearchDocumentsResponse {
     // (undocumented)
@@ -6641,6 +6711,54 @@ export interface AiSearchRelationship {
     'targetWorkspaceId': string;
 }
 
+// @public (undocumented)
+export interface AiSearchRelationshipObject {
+    'sourceObjectId': string;
+    'sourceObjectTitle': string;
+    'sourceObjectType': string;
+    'sourceWorkspaceId': string;
+    'targetObjectId': string;
+    'targetObjectTitle': string;
+    'targetObjectType': string;
+    'targetWorkspaceId': string;
+}
+
+// @public (undocumented)
+interface AiSearchRequest {
+    // (undocumented)
+    'allowedRelationshipTypes'?: Array<AiSearchAllowedRelationshipType> | null;
+    'deepSearch'?: boolean;
+    'enableHybridSearch'?: boolean;
+    // (undocumented)
+    'excludeTags'?: Array<string> | null;
+    'includeHidden'?: boolean;
+    // (undocumented)
+    'includeTags'?: Array<string> | null;
+    'limit'?: number;
+    'objectTypes'?: Array<AiSearchRequestObjectTypesEnum>;
+    'question': string;
+    'relevantScoreThreshold'?: number;
+    // @deprecated
+    'titleToDescriptorRatio'?: number;
+}
+export { AiSearchRequest }
+export { AiSearchRequest as SearchRequest }
+
+// @public (undocumented)
+type AiSearchRequestObjectTypesEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
+export { AiSearchRequestObjectTypesEnum }
+export { AiSearchRequestObjectTypesEnum as SearchRequestObjectTypesEnum }
+
+// @public (undocumented)
+export interface AiSearchResult {
+    // (undocumented)
+    'error'?: AiErrorInfo | null;
+    // @deprecated
+    'reasoning': string;
+    'relationships': Array<AiSearchRelationshipObject>;
+    'results': Array<AiSearchResultObject>;
+}
+
 // @public
 export interface AiSearchResultItem {
     // (undocumented)
@@ -6663,6 +6781,36 @@ export interface AiSearchResultItem {
     'totalChunks': number;
     // (undocumented)
     'workspaceId'?: string | null;
+}
+
+// @public
+export interface AiSearchResultObject {
+    // (undocumented)
+    'certification'?: AiCertificationInfo | null;
+    // (undocumented)
+    'createdAt'?: string | null;
+    // (undocumented)
+    'description'?: string | null;
+    'id': string;
+    // (undocumented)
+    'isHidden'?: boolean | null;
+    // (undocumented)
+    'modifiedAt'?: string | null;
+    // (undocumented)
+    'score'?: number | null;
+    // (undocumented)
+    'scoreDescriptor'?: number | null;
+    // (undocumented)
+    'scoreExactMatch'?: number | null;
+    // (undocumented)
+    'scoreTitle'?: number | null;
+    // (undocumented)
+    'tags'?: Array<string> | null;
+    'title': string;
+    'type': string;
+    // (undocumented)
+    'visualizationUrl'?: string | null;
+    'workspaceId': string;
 }
 
 // @public (undocumented)
@@ -6961,6 +7109,7 @@ export const AiType100: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -6983,6 +7132,7 @@ export const AiType100: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly BAR_CHART3: "bar_chart";
 };
 
@@ -7013,6 +7163,7 @@ export const AiType101: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -7035,6 +7186,7 @@ export const AiType101: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly COLUMN_CHART3: "column_chart";
 };
 
@@ -7065,6 +7217,7 @@ export const AiType102: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -7087,6 +7240,7 @@ export const AiType102: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly LINE_CHART3: "line_chart";
 };
 
@@ -7117,6 +7271,7 @@ export const AiType103: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -7139,6 +7294,7 @@ export const AiType103: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly AREA_CHART3: "area_chart";
 };
 
@@ -7169,6 +7325,7 @@ export const AiType104: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -7191,6 +7348,7 @@ export const AiType104: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly SCATTER_CHART3: "scatter_chart";
 };
 
@@ -7221,6 +7379,7 @@ export const AiType105: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -7243,6 +7402,7 @@ export const AiType105: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly BUBBLE_CHART3: "bubble_chart";
 };
 
@@ -7273,6 +7433,7 @@ export const AiType106: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -7295,6 +7456,7 @@ export const AiType106: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly PIE_CHART3: "pie_chart";
 };
 
@@ -7325,6 +7487,7 @@ export const AiType107: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -7347,6 +7510,7 @@ export const AiType107: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly DONUT_CHART3: "donut_chart";
 };
 
@@ -7377,6 +7541,7 @@ export const AiType108: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -7399,6 +7564,7 @@ export const AiType108: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly TREEMAP_CHART3: "treemap_chart";
 };
 
@@ -7429,6 +7595,7 @@ export const AiType109: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -7451,6 +7618,7 @@ export const AiType109: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly PYRAMID_CHART3: "pyramid_chart";
 };
 
@@ -7481,6 +7649,7 @@ export const AiType110: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -7503,6 +7672,7 @@ export const AiType110: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly FUNNEL_CHART3: "funnel_chart";
 };
 
@@ -7533,6 +7703,7 @@ export const AiType111: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -7555,6 +7726,7 @@ export const AiType111: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly HEATMAP_CHART3: "heatmap_chart";
 };
 
@@ -7585,6 +7757,7 @@ export const AiType112: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -7607,6 +7780,7 @@ export const AiType112: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly BULLET_CHART3: "bullet_chart";
 };
 
@@ -7637,6 +7811,7 @@ export const AiType113: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -7659,6 +7834,7 @@ export const AiType113: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly WATERFALL_CHART3: "waterfall_chart";
 };
 
@@ -7689,6 +7865,7 @@ export const AiType114: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -7711,6 +7888,7 @@ export const AiType114: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly DEPENDENCY_WHEEL_CHART3: "dependency_wheel_chart";
 };
 
@@ -7741,6 +7919,7 @@ export const AiType115: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -7763,6 +7942,7 @@ export const AiType115: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly SANKEY_CHART3: "sankey_chart";
 };
 
@@ -7793,6 +7973,7 @@ export const AiType116: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -7815,6 +7996,7 @@ export const AiType116: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly HEADLINE_CHART3: "headline_chart";
 };
 
@@ -7845,6 +8027,7 @@ export const AiType117: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -7867,6 +8050,7 @@ export const AiType117: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly COMBO_CHART3: "combo_chart";
 };
 
@@ -7897,6 +8081,7 @@ export const AiType118: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -7919,6 +8104,7 @@ export const AiType118: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly GEO_CHART3: "geo_chart";
 };
 
@@ -7949,6 +8135,7 @@ export const AiType119: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -7971,6 +8158,7 @@ export const AiType119: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly GEO_AREA_CHART3: "geo_area_chart";
 };
 
@@ -8001,6 +8189,7 @@ export const AiType120: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -8023,11 +8212,66 @@ export const AiType120: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly REPEATER_CHART3: "repeater_chart";
 };
 
 // @public (undocumented)
 export type AiType120 = typeof AiType120[keyof typeof AiType120];
+
+// @public (undocumented)
+export const AiType121: {
+    readonly TABLE: "table";
+    readonly BAR_CHART: "bar_chart";
+    readonly COLUMN_CHART: "column_chart";
+    readonly LINE_CHART: "line_chart";
+    readonly AREA_CHART: "area_chart";
+    readonly SCATTER_CHART: "scatter_chart";
+    readonly BUBBLE_CHART: "bubble_chart";
+    readonly PIE_CHART: "pie_chart";
+    readonly DONUT_CHART: "donut_chart";
+    readonly TREEMAP_CHART: "treemap_chart";
+    readonly PYRAMID_CHART: "pyramid_chart";
+    readonly FUNNEL_CHART: "funnel_chart";
+    readonly HEATMAP_CHART: "heatmap_chart";
+    readonly BULLET_CHART: "bullet_chart";
+    readonly WATERFALL_CHART: "waterfall_chart";
+    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
+    readonly SANKEY_CHART: "sankey_chart";
+    readonly HEADLINE_CHART: "headline_chart";
+    readonly COMBO_CHART: "combo_chart";
+    readonly GEO_CHART: "geo_chart";
+    readonly GEO_AREA_CHART: "geo_area_chart";
+    readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
+    readonly TABLE2: "table";
+    readonly BAR_CHART2: "bar_chart";
+    readonly COLUMN_CHART2: "column_chart";
+    readonly LINE_CHART2: "line_chart";
+    readonly AREA_CHART2: "area_chart";
+    readonly SCATTER_CHART2: "scatter_chart";
+    readonly BUBBLE_CHART2: "bubble_chart";
+    readonly PIE_CHART2: "pie_chart";
+    readonly DONUT_CHART2: "donut_chart";
+    readonly TREEMAP_CHART2: "treemap_chart";
+    readonly PYRAMID_CHART2: "pyramid_chart";
+    readonly FUNNEL_CHART2: "funnel_chart";
+    readonly HEATMAP_CHART2: "heatmap_chart";
+    readonly BULLET_CHART2: "bullet_chart";
+    readonly WATERFALL_CHART2: "waterfall_chart";
+    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
+    readonly SANKEY_CHART2: "sankey_chart";
+    readonly HEADLINE_CHART2: "headline_chart";
+    readonly COMBO_CHART2: "combo_chart";
+    readonly GEO_CHART2: "geo_chart";
+    readonly GEO_AREA_CHART2: "geo_area_chart";
+    readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
+    readonly RADAR_CHART3: "radar_chart";
+};
+
+// @public (undocumented)
+export type AiType121 = typeof AiType121[keyof typeof AiType121];
 
 // @public (undocumented)
 export const AiType30: {
@@ -8283,6 +8527,7 @@ export const AiType99: {
     readonly GEO_CHART: "geo_chart";
     readonly GEO_AREA_CHART: "geo_area_chart";
     readonly REPEATER_CHART: "repeater_chart";
+    readonly RADAR_CHART: "radar_chart";
     readonly TABLE2: "table";
     readonly BAR_CHART2: "bar_chart";
     readonly COLUMN_CHART2: "column_chart";
@@ -8305,6 +8550,7 @@ export const AiType99: {
     readonly GEO_CHART2: "geo_chart";
     readonly GEO_AREA_CHART2: "geo_area_chart";
     readonly REPEATER_CHART2: "repeater_chart";
+    readonly RADAR_CHART2: "radar_chart";
     readonly TABLE3: "table";
 };
 
@@ -8573,8 +8819,10 @@ export interface AiValue {
 
 // @public
 export interface AiValue1 {
+    'absolute': AiAbsolute;
     // (undocumented)
     'from': number;
+    'relative': AiRelative;
     // (undocumented)
     'to': number;
 }
@@ -8648,7 +8896,7 @@ export interface AiVisualisation {
     'to'?: AiBucketItem;
     // (undocumented)
     'trend_by'?: Array<AiBucketItem>;
-    'type': AiType120;
+    'type': AiType121;
     // (undocumented)
     'view_by'?: Array<AiBucketItem>;
 }
@@ -9065,6 +9313,32 @@ export interface AiVisualisation22 {
     // (undocumented)
     'title'?: string;
     'type': AiType120;
+    // (undocumented)
+    'view_by'?: Array<AiBucketItem> | null;
+}
+
+// @public (undocumented)
+export interface AiVisualisation23 {
+    // (undocumented)
+    'config'?: AiConfig | null;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'id': string;
+    // (undocumented)
+    'is_hidden'?: boolean | null;
+    // (undocumented)
+    'metrics'?: Array<AiBucketItem> | null;
+    'query': AiQuery;
+    // (undocumented)
+    'segment_by'?: Array<AiBucketItem> | null;
+    // (undocumented)
+    'show_in_ai_results'?: boolean | null;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title'?: string;
+    'type': AiType121;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -12227,7 +12501,7 @@ export interface AutomationIdentifierRefIdentifier {
 }
 
 // @public (undocumented)
-export type AutomationIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
+export type AutomationIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'reportPageLayout' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
 
 // @public (undocumented)
 export interface AutomationImageExport {
@@ -13834,9 +14108,6 @@ export type ColumnOverrideLabelTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LO
 
 // @public (undocumented)
 export type ColumnOverrideLdmTypeOverrideEnum = 'FACT' | 'LABEL';
-
-// @public (undocumented)
-export type ColumnPartitionConfigTypeEnum = 'column';
 
 // @public (undocumented)
 export interface ColumnStatistic {
@@ -16823,6 +17094,7 @@ export interface DeclarativeAnalyticsLayer {
     'memoryItems'?: Array<DeclarativeMemoryItem>;
     'metrics'?: Array<DeclarativeMetric>;
     'parameters'?: Array<DeclarativeParameter>;
+    'reportPageLayouts'?: Array<DeclarativeReportPageLayout>;
     'visualizationObjects'?: Array<DeclarativeVisualizationObject>;
 }
 
@@ -17534,6 +17806,16 @@ export type DeclarativeReferenceSourceColumnDataTypesEnum = 'INT' | 'STRING' | '
 // @public (undocumented)
 export type DeclarativeReferenceSourceDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 
+// @public (undocumented)
+export interface DeclarativeReportPageLayout {
+    'content': object | null;
+    'description'?: string;
+    'id': string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    'title': string;
+}
+
 // @public
 export interface DeclarativeRsaSpecification {
     'alg': DeclarativeRsaSpecificationAlgEnum;
@@ -18096,6 +18378,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     createEntityOrganizationSettings(requestParameters: EntitiesApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     createEntityOrgMemoryItems(requestParameters: EntitiesApiCreateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
     createEntityParameters(requestParameters: EntitiesApiCreateEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
+    createEntityReportPageLayouts(requestParameters: EntitiesApiCreateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
     createEntityThemes(requestParameters: EntitiesApiCreateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
     createEntityUserDataFilters(requestParameters: EntitiesApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     createEntityUserGroups(requestParameters: EntitiesApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
@@ -18139,6 +18422,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     deleteEntityOrganizationSettings(requestParameters: EntitiesApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityOrgMemoryItems(requestParameters: EntitiesApiDeleteEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityParameters(requestParameters: EntitiesApiDeleteEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityReportPageLayouts(requestParameters: EntitiesApiDeleteEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityThemes(requestParameters: EntitiesApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityUserDataFilters(requestParameters: EntitiesApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityUserGroups(requestParameters: EntitiesApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -18192,6 +18476,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     getAllEntitiesOrganizationSettings(requestParameters?: EntitiesApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutList>;
     getAllEntitiesOrgMemoryItems(requestParameters?: EntitiesApiGetAllEntitiesOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutList>;
     getAllEntitiesParameters(requestParameters: EntitiesApiGetAllEntitiesParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutList>;
+    getAllEntitiesReportPageLayouts(requestParameters: EntitiesApiGetAllEntitiesReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutList>;
     getAllEntitiesThemes(requestParameters?: EntitiesApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutList>;
     getAllEntitiesUserDataFilters(requestParameters: EntitiesApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutList>;
     getAllEntitiesUserGroups(requestParameters?: EntitiesApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutList>;
@@ -18251,6 +18536,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     getEntityOrganizationSettings(requestParameters: EntitiesApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     getEntityOrgMemoryItems(requestParameters: EntitiesApiGetEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
     getEntityParameters(requestParameters: EntitiesApiGetEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
+    getEntityReportPageLayouts(requestParameters: EntitiesApiGetEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
     getEntityThemes(requestParameters: EntitiesApiGetEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
     getEntityUserDataFilters(requestParameters: EntitiesApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     getEntityUserGroups(requestParameters: EntitiesApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
@@ -18299,6 +18585,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     patchEntityOrganizationSettings(requestParameters: EntitiesApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     patchEntityOrgMemoryItems(requestParameters: EntitiesApiPatchEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
     patchEntityParameters(requestParameters: EntitiesApiPatchEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
+    patchEntityReportPageLayouts(requestParameters: EntitiesApiPatchEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
     patchEntityThemes(requestParameters: EntitiesApiPatchEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
     patchEntityUserDataFilters(requestParameters: EntitiesApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     patchEntityUserGroups(requestParameters: EntitiesApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
@@ -18366,6 +18653,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     updateEntityOrganizationSettings(requestParameters: EntitiesApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     updateEntityOrgMemoryItems(requestParameters: EntitiesApiUpdateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
     updateEntityParameters(requestParameters: EntitiesApiUpdateEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
+    updateEntityReportPageLayouts(requestParameters: EntitiesApiUpdateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
     updateEntityThemes(requestParameters: EntitiesApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
     updateEntityUserDataFilters(requestParameters: EntitiesApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     updateEntityUserGroups(requestParameters: EntitiesApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
@@ -20175,6 +20463,13 @@ export interface EntitiesApiCreateEntityParametersRequest {
 }
 
 // @public
+export interface EntitiesApiCreateEntityReportPageLayoutsRequest {
+    readonly jsonApiReportPageLayoutPostOptionalIdDocument: JsonApiReportPageLayoutPostOptionalIdDocument;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface EntitiesApiCreateEntityThemesRequest {
     readonly jsonApiThemeInDocument: JsonApiThemeInDocument;
 }
@@ -20415,6 +20710,12 @@ export interface EntitiesApiDeleteEntityOrgMemoryItemsRequest {
 
 // @public
 export interface EntitiesApiDeleteEntityParametersRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface EntitiesApiDeleteEntityReportPageLayoutsRequest {
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -20921,6 +21222,18 @@ export interface EntitiesApiGetAllEntitiesParametersRequest {
 }
 
 // @public
+export interface EntitiesApiGetAllEntitiesReportPageLayoutsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
 export interface EntitiesApiGetAllEntitiesThemesRequest {
     readonly filter?: string;
     readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
@@ -21394,6 +21707,15 @@ export interface EntitiesApiGetEntityParametersRequest {
 }
 
 // @public
+export interface EntitiesApiGetEntityReportPageLayoutsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
 export interface EntitiesApiGetEntityRequest {
     readonly id: string;
 }
@@ -21552,6 +21874,7 @@ export interface EntitiesApiInterface {
     createEntityOrganizationSettings(requestParameters: EntitiesApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     createEntityOrgMemoryItems(requestParameters: EntitiesApiCreateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
     createEntityParameters(requestParameters: EntitiesApiCreateEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
+    createEntityReportPageLayouts(requestParameters: EntitiesApiCreateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
     createEntityThemes(requestParameters: EntitiesApiCreateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
     createEntityUserDataFilters(requestParameters: EntitiesApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     createEntityUserGroups(requestParameters: EntitiesApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
@@ -21595,6 +21918,7 @@ export interface EntitiesApiInterface {
     deleteEntityOrganizationSettings(requestParameters: EntitiesApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityOrgMemoryItems(requestParameters: EntitiesApiDeleteEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityParameters(requestParameters: EntitiesApiDeleteEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityReportPageLayouts(requestParameters: EntitiesApiDeleteEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityThemes(requestParameters: EntitiesApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityUserDataFilters(requestParameters: EntitiesApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityUserGroups(requestParameters: EntitiesApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -21648,6 +21972,7 @@ export interface EntitiesApiInterface {
     getAllEntitiesOrganizationSettings(requestParameters: EntitiesApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutList>;
     getAllEntitiesOrgMemoryItems(requestParameters: EntitiesApiGetAllEntitiesOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutList>;
     getAllEntitiesParameters(requestParameters: EntitiesApiGetAllEntitiesParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutList>;
+    getAllEntitiesReportPageLayouts(requestParameters: EntitiesApiGetAllEntitiesReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutList>;
     getAllEntitiesThemes(requestParameters: EntitiesApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutList>;
     getAllEntitiesUserDataFilters(requestParameters: EntitiesApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutList>;
     getAllEntitiesUserGroups(requestParameters: EntitiesApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutList>;
@@ -21707,6 +22032,7 @@ export interface EntitiesApiInterface {
     getEntityOrganizationSettings(requestParameters: EntitiesApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     getEntityOrgMemoryItems(requestParameters: EntitiesApiGetEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
     getEntityParameters(requestParameters: EntitiesApiGetEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
+    getEntityReportPageLayouts(requestParameters: EntitiesApiGetEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
     getEntityThemes(requestParameters: EntitiesApiGetEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
     getEntityUserDataFilters(requestParameters: EntitiesApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     getEntityUserGroups(requestParameters: EntitiesApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
@@ -21755,6 +22081,7 @@ export interface EntitiesApiInterface {
     patchEntityOrganizationSettings(requestParameters: EntitiesApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     patchEntityOrgMemoryItems(requestParameters: EntitiesApiPatchEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
     patchEntityParameters(requestParameters: EntitiesApiPatchEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
+    patchEntityReportPageLayouts(requestParameters: EntitiesApiPatchEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
     patchEntityThemes(requestParameters: EntitiesApiPatchEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
     patchEntityUserDataFilters(requestParameters: EntitiesApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     patchEntityUserGroups(requestParameters: EntitiesApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
@@ -21822,6 +22149,7 @@ export interface EntitiesApiInterface {
     updateEntityOrganizationSettings(requestParameters: EntitiesApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     updateEntityOrgMemoryItems(requestParameters: EntitiesApiUpdateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
     updateEntityParameters(requestParameters: EntitiesApiUpdateEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
+    updateEntityReportPageLayouts(requestParameters: EntitiesApiUpdateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
     updateEntityThemes(requestParameters: EntitiesApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
     updateEntityUserDataFilters(requestParameters: EntitiesApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     updateEntityUserGroups(requestParameters: EntitiesApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
@@ -22086,6 +22414,14 @@ export interface EntitiesApiPatchEntityParametersRequest {
     readonly filter?: string;
     readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiParameterPatchDocument: JsonApiParameterPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface EntitiesApiPatchEntityReportPageLayoutsRequest {
+    readonly filter?: string;
+    readonly jsonApiReportPageLayoutPatchDocument: JsonApiReportPageLayoutPatchDocument;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -22615,6 +22951,14 @@ export interface EntitiesApiUpdateEntityParametersRequest {
     readonly filter?: string;
     readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiParameterInDocument: JsonApiParameterInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface EntitiesApiUpdateEntityReportPageLayoutsRequest {
+    readonly filter?: string;
+    readonly jsonApiReportPageLayoutInDocument: JsonApiReportPageLayoutInDocument;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -24043,7 +24387,7 @@ export interface ExportIdentifierRefIdentifier {
 }
 
 // @public (undocumented)
-export type ExportIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
+export type ExportIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'reportPageLayout' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
 
 // @public
 export interface ExportImageExportRequest {
@@ -25624,9 +25968,6 @@ export function GenAiApi_AiChatHistory(axios: AxiosInstance, basePath: string, r
 export function GenAiApi_AiChatStream(axios: AxiosInstance, basePath: string, requestParameters: ActionsApiAiChatStreamRequest, options?: AxiosRequestConfig, configuration?: LabelElementsConfiguration): AxiosPromise<Array<object>>;
 
 // @public
-export function GenAiApi_AiSearch(axios: AxiosInstance, basePath: string, requestParameters: ActionsApiAiSearchRequest, options?: AxiosRequestConfig, configuration?: LabelElementsConfiguration): AxiosPromise<SearchResult>;
-
-// @public
 export function GenAiApi_CreatedBy(axios: AxiosInstance, basePath: string, requestParameters: ActionsApiCreatedByRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<AfmAnalyticsCatalogCreatedBy>;
 
 // @public
@@ -26213,7 +26554,7 @@ export interface IdentifierRefIdentifier {
 }
 
 // @public (undocumented)
-export type IdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
+export type IdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'reportPageLayout' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
 
 // @public
 export class IdentityProviderControllerApi extends MetadataBaseApi implements IdentityProviderControllerApiInterface {
@@ -35168,6 +35509,176 @@ export interface JsonApiParameterPostOptionalIdDocument {
 export type JsonApiParameterPostOptionalIdTypeEnum = 'parameter';
 
 // @public
+export interface JsonApiReportPageLayoutIn {
+    // (undocumented)
+    'attributes': JsonApiReportPageLayoutInAttributes;
+    'id': string;
+    'type': JsonApiReportPageLayoutInTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiReportPageLayoutInAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title': string;
+}
+
+// @public (undocumented)
+export interface JsonApiReportPageLayoutInDocument {
+    // (undocumented)
+    'data': JsonApiReportPageLayoutIn;
+}
+
+// @public (undocumented)
+export type JsonApiReportPageLayoutInTypeEnum = 'reportPageLayout';
+
+// @public
+export interface JsonApiReportPageLayoutOut {
+    // (undocumented)
+    'attributes': JsonApiReportPageLayoutOutAttributes;
+    'id': string;
+    // (undocumented)
+    'meta'?: JsonApiReportPageLayoutOutMeta;
+    'type': JsonApiReportPageLayoutOutTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiReportPageLayoutOutAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title': string;
+}
+
+// @public (undocumented)
+export interface JsonApiReportPageLayoutOutDocument {
+    // (undocumented)
+    'data': JsonApiReportPageLayoutOut;
+    // (undocumented)
+    'links'?: ObjectLinks;
+}
+
+// @public
+export interface JsonApiReportPageLayoutOutList {
+    // (undocumented)
+    'data': Array<JsonApiReportPageLayoutOutWithLinks>;
+    // (undocumented)
+    'links'?: ListLinks;
+    // (undocumented)
+    'meta'?: JsonApiReportPageLayoutOutListMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiReportPageLayoutOutListMeta {
+    // (undocumented)
+    'page'?: PageMetadata;
+}
+
+// @public (undocumented)
+export interface JsonApiReportPageLayoutOutMeta {
+    // (undocumented)
+    'origin'?: JsonApiReportPageLayoutOutMetaOrigin;
+}
+
+// @public (undocumented)
+export interface JsonApiReportPageLayoutOutMetaOrigin {
+    'originId': string;
+    'originType': JsonApiReportPageLayoutOutMetaOriginOriginTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiReportPageLayoutOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
+// @public (undocumented)
+export type JsonApiReportPageLayoutOutTypeEnum = 'reportPageLayout';
+
+// @public (undocumented)
+export interface JsonApiReportPageLayoutOutWithLinks {
+    // (undocumented)
+    'attributes': JsonApiReportPageLayoutOutAttributes;
+    'id': string;
+    // (undocumented)
+    'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiReportPageLayoutOutMeta;
+    'type': JsonApiReportPageLayoutOutWithLinksTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiReportPageLayoutOutWithLinksTypeEnum = 'reportPageLayout';
+
+// @public
+export interface JsonApiReportPageLayoutPatch {
+    // (undocumented)
+    'attributes': JsonApiReportPageLayoutPatchAttributes;
+    'id': string;
+    'type': JsonApiReportPageLayoutPatchTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiReportPageLayoutPatchAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content'?: object;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title'?: string;
+}
+
+// @public (undocumented)
+export interface JsonApiReportPageLayoutPatchDocument {
+    // (undocumented)
+    'data': JsonApiReportPageLayoutPatch;
+}
+
+// @public (undocumented)
+export type JsonApiReportPageLayoutPatchTypeEnum = 'reportPageLayout';
+
+// @public
+export interface JsonApiReportPageLayoutPostOptionalId {
+    // (undocumented)
+    'attributes': JsonApiReportPageLayoutPostOptionalIdAttributes;
+    'id'?: string;
+    'type': JsonApiReportPageLayoutPostOptionalIdTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiReportPageLayoutPostOptionalIdAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title': string;
+}
+
+// @public (undocumented)
+export interface JsonApiReportPageLayoutPostOptionalIdDocument {
+    // (undocumented)
+    'data': JsonApiReportPageLayoutPostOptionalId;
+}
+
+// @public (undocumented)
+export type JsonApiReportPageLayoutPostOptionalIdTypeEnum = 'reportPageLayout';
+
+// @public
 export interface JsonApiThemeIn {
     // (undocumented)
     'attributes': JsonApiThemeInAttributes;
@@ -43106,25 +43617,7 @@ export interface SearchRelationshipObject {
     'targetWorkspaceId': string;
 }
 
-// @public (undocumented)
-export interface SearchRequest {
-    'allowedRelationshipTypes'?: Array<AllowedRelationshipType>;
-    'deepSearch'?: boolean;
-    'enableHybridSearch'?: boolean;
-    'excludeTags'?: Array<string>;
-    'includeHidden'?: boolean;
-    'includeTags'?: Array<string>;
-    'limit'?: number;
-    'objectTypes'?: Array<SearchRequestObjectTypesEnum>;
-    'question': string;
-    'relevantScoreThreshold'?: number;
-    'titleToDescriptorRatio'?: number;
-}
-
-// @public (undocumented)
-export type SearchRequestObjectTypesEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
-
-// @public (undocumented)
+// @public
 export interface SearchResult {
     // (undocumented)
     'error'?: SearchErrorInfo;
@@ -43311,6 +43804,49 @@ export type SlidesExportRequestFormatEnum = 'PDF' | 'PPTX';
 export interface SmartFunctionResponse {
     // (undocumented)
     'links': ExecutionLinks;
+}
+
+// @public
+export class SmartFunctionsAi extends AiBaseAPI implements SmartFunctionsAiInterface {
+    // @deprecated
+    aiSearch(requestParameters: SmartFunctionsAiAiSearchRequest, options?: AxiosRequestConfig): AxiosPromise<AiSearchResult>;
+    semanticSearch(requestParameters: SmartFunctionsAiSemanticSearchRequest, options?: AxiosRequestConfig): AxiosPromise<AiSearchResult>;
+}
+
+// @public
+function SmartFunctionsAi_AiSearch(axios: AxiosInstance, basePath: string, requestParameters: SmartFunctionsAiAiSearchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiSearchResult>;
+export { SmartFunctionsAi_AiSearch as GenAiApi_AiSearch }
+export { SmartFunctionsAi_AiSearch }
+
+// @public
+export function SmartFunctionsAi_SemanticSearch(axios: AxiosInstance, basePath: string, requestParameters: SmartFunctionsAiSemanticSearchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiSearchResult>;
+
+// @public
+interface SmartFunctionsAiAiSearchRequest {
+    readonly aiSearchRequest: AiSearchRequest;
+    readonly workspaceId: string;
+}
+export { SmartFunctionsAiAiSearchRequest as ActionsApiAiSearchRequest }
+export { SmartFunctionsAiAiSearchRequest as GenAiApiAiSearchRequest }
+export { SmartFunctionsAiAiSearchRequest }
+
+// @public
+export function SmartFunctionsAiAxiosParamCreator_AiSearch(workspaceId: string, aiSearchRequest: AiSearchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
+export function SmartFunctionsAiAxiosParamCreator_SemanticSearch(workspaceId: string, aiSearchRequest: AiSearchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
+export interface SmartFunctionsAiInterface {
+    // @deprecated
+    aiSearch(requestParameters: SmartFunctionsAiAiSearchRequest, options?: AxiosRequestConfig): AxiosPromise<AiSearchResult>;
+    semanticSearch(requestParameters: SmartFunctionsAiSemanticSearchRequest, options?: AxiosRequestConfig): AxiosPromise<AiSearchResult>;
+}
+
+// @public
+export interface SmartFunctionsAiSemanticSearchRequest {
+    readonly aiSearchRequest: AiSearchRequest;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -43795,7 +44331,7 @@ export const tigerExecutionResultClientFactory: (axios: AxiosInstance) => Pick<A
 export const tigerExportClientFactory: (axios: AxiosInstance) => ActionsExportInterface;
 
 // @public
-export type TigerGenAIClient = Pick<AfmActionsApiInterface, "aiSearch" | "aiChat" | "aiChatStream" | "aiChatHistory" | "validateLLMEndpoint" | "validateLLMEndpointById" | "getQualityIssues" | "getQualityIssuesCalculationStatus" | "triggerQualityIssuesCalculation" | "memoryCreatedByUsers"> & Pick<ObservabilityAiInterface, "getObservabilityOverview">;
+export type TigerGenAIClient = Pick<AfmActionsApiInterface, "aiChat" | "aiChatStream" | "aiChatHistory" | "validateLLMEndpoint" | "validateLLMEndpointById" | "getQualityIssues" | "getQualityIssuesCalculationStatus" | "triggerQualityIssuesCalculation" | "memoryCreatedByUsers"> & Pick<SmartFunctionsAiInterface, "aiSearch"> & Pick<ObservabilityAiInterface, "getObservabilityOverview">;
 
 // @public (undocumented)
 export const tigerGenAIClientFactory: (axios: AxiosInstance) => TigerGenAIClient;

@@ -8,7 +8,6 @@ import {
     type ActionsApiAiChatHistoryRequest,
     type ActionsApiAiChatRequest,
     type ActionsApiAiChatStreamRequest,
-    type ActionsApiAiSearchRequest,
     type ActionsApiGetQualityIssuesRequest,
     type ActionsApiListLlmProviderModelsByIdRequest,
     type ActionsApiListLlmProviderModelsRequest,
@@ -20,7 +19,6 @@ import {
     ActionsApi_AiChat,
     ActionsApi_AiChatHistory,
     ActionsApi_AiChatStream,
-    ActionsApi_AiSearch,
     ActionsApi_GetQualityIssues,
     ActionsApi_GetQualityIssuesCalculationStatus,
     ActionsApi_ListLlmProviderModels,
@@ -101,6 +99,8 @@ import {
     KnowledgeAi_UpsertDocument,
     KnowledgeAi_UpsertOrgDocument,
     ObservabilityAi_GetObservabilityOverview,
+    type SmartFunctionsAiAiSearchRequest,
+    SmartFunctionsAi_AiSearch,
 } from "../../generated/ai-json-api/index.js";
 // Analytics-catalog createdBy/tags operations moved from the AFM API to the metadata API.
 import {
@@ -120,8 +120,6 @@ export {
     type AiMetricUsageResponse as GenAiApiMetricUsageResponse,
     AiObservabilityMetricType as GenAiApiObservabilityMetricType,
     type AiObservabilityOverviewResponse as GenAiApiObservabilityOverviewResponse,
-    ActionsApi_AiSearch as GenAiApi_AiSearch,
-    type ActionsApiAiSearchRequest as GenAiApiAiSearchRequest,
     ActionsApi_AiChat as GenAiApi_AiChat,
     type ActionsApiAiChatRequest as GenAiApiAiChatRequest,
     ActionsApi_AiChatHistory as GenAiApi_AiChatHistory,
@@ -196,6 +194,8 @@ export {
     type KnowledgeAiPatchDocumentRequest as GenAiApiPatchKnowledgeDocumentRequest,
     KnowledgeAi_SearchKnowledge as GenAiApi_SearchKnowledge,
     type KnowledgeAiSearchKnowledgeRequest as GenAiApiSearchKnowledgeRequest,
+    SmartFunctionsAi_AiSearch as GenAiApi_AiSearch,
+    type SmartFunctionsAiAiSearchRequest as GenAiApiAiSearchRequest,
     type AiPatchDocumentRequest as GenAiApiPatchDocumentRequestBody,
     // Organization-scoped Knowledge Documents
     KnowledgeAi_CreateOrgDocument as GenAiApi_CreateOrgKnowledgeDocument,

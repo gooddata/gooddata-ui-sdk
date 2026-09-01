@@ -47,6 +47,7 @@ const errorMessages = defineMessages({
     syntax: { id: "analyticsCatalog.parameter.validation.syntax" },
     invalidStructure: { id: "analyticsCatalog.parameter.validation.invalidStructure" },
     idImmutable: { id: "analyticsCatalog.parameter.dialog.edit.idImmutable" },
+    invalidType: { id: "analyticsCatalog.parameter.validation.invalidType" },
     unsupportedType: { id: "analyticsCatalog.parameter.validation.unsupportedType" },
     invalidDefaultValue: { id: "analyticsCatalog.parameter.validation.invalidDefaultValue" },
     invalidConstraints: { id: "analyticsCatalog.parameter.validation.invalidConstraints" },

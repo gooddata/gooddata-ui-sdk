@@ -1119,6 +1119,7 @@
     "message.accessibility.dismiss.notification": "Dismiss notification",
     "datePicker.accessibility.label": "Select start date",
     "timePicker.accessibility.label": "Select starting time",
+    "timezoneSelect.search.accessibility.label": "Search time zones",
     "menu.close": "Close menu",
     "menu.back": "Return to the parent menu",
     "copyButton.copy.success": "Copied to clipboard!",

@@ -1119,6 +1119,7 @@
     "message.accessibility.dismiss.notification": "알림 해제",
     "datePicker.accessibility.label": "시작 날짜 선택",
     "timePicker.accessibility.label": "시작 시간 선택",
+    "timezoneSelect.search.accessibility.label": "시간대 검색",
     "menu.close": "메뉴 닫기",
     "menu.back": "상위 메뉴로 돌아가기",
     "copyButton.copy.success": "클립보드에 복사되었습니다!",

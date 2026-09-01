@@ -737,6 +737,16 @@ export {
 export type { IColorPickerProps, IColorPickerState } from "./ColorPicker/typings.js";
 export { ColorPicker } from "./ColorPicker/ColorPicker.js";
 export { ColorPickerPointer } from "./ColorPicker/ColorPickerPointer.js";
+export { UiColorPicker } from "./@ui/UiColorPicker/UiColorPicker.js";
+export type {
+    IUiColorPickerProps,
+    IUiColorPickerBaseProps,
+    IUiColorPickerCommitProps,
+    IUiColorPickerLiveProps,
+    IUiColorPickerRgb,
+    IUiColorPickerRgba,
+} from "./@ui/UiColorPicker/types.js";
+export { usePointerTrack, type IPointerTrackHandlers } from "./@ui/hooks/usePointerTrack.js";
 export type { IFilterLabelProps, IFilterLabelState } from "./FilterLabel/typings.js";
 export { FilterLabel } from "./FilterLabel/FilterLabel.js";
 export { Menu, type IMenuProps } from "./Menu/Menu.js";

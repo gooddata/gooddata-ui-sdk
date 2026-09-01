@@ -44,6 +44,11 @@
             min-width: 0;
             overflow: hidden;
         }
+
+        &--selected {
+            color: var(--gd-palette-primary-base);
+            font-weight: bold;
+        }
     }
 }
 

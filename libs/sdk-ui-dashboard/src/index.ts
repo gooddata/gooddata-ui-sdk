@@ -2240,6 +2240,13 @@ export type {
     IScheduledEmailDialogRecipientsProps,
     IScheduledEmailDialogSlots,
     IDefaultScheduledEmailDialogProps,
+    IScheduledEmailDialogShellProps,
+    IScheduledEmailDialogRecurrenceProps,
+    IScheduledEmailDialogSubjectProps,
+    IScheduledEmailDialogMessageProps,
+    IScheduledEmailDialogWidgetAttachmentsProps,
+    IScheduledEmailDialogDashboardAttachmentsProps,
+    IScheduledEmailDialogEvaluationModeProps,
 } from "./presentation/automations/scheduledEmail/types.js";
 export { DefaultAlertingDialog } from "./presentation/automations/alerting/DefaultAlertingDialog/DefaultAlertingDialog.js";
 export { DefaultAlertingManagementDialogNew } from "./presentation/automations/connectors/DefaultAlertingManagementDialogConnected.js";
@@ -2257,6 +2264,8 @@ export {
     type IAlertingDialogFiltersProps,
     type IAlertingDialogSlots,
     type IDefaultAlertingDialogProps,
+    type IAlertingDialogShellProps,
+    type IAlertingDialogFormFieldGroupProps,
     type AlertAttribute,
     type AlertMetric,
     type AlertMetricComparator,
@@ -2342,6 +2351,8 @@ export { AlertingDialogGranularity } from "./presentation/automations/alerting/b
 export { AlertingDialogTriggerMode } from "./presentation/automations/alerting/blocks/AlertingDialogTriggerMode.js";
 export { AlertingDialogTriggerInterval } from "./presentation/automations/alerting/blocks/AlertingDialogTriggerInterval.js";
 export { AutomationDialogFormField } from "./presentation/automations/shared/slots/AutomationDialogFormField.js";
+export { AlertingDialogFormFieldGroup } from "./presentation/automations/alerting/blocks/AlertingDialogFormFieldGroup.js";
+export { AlertingDialogShell } from "./presentation/automations/alerting/blocks/AlertingDialogShell.js";
 export type {
     IScheduledEmailSaveState,
     IScheduledExportActionsContextValue,
@@ -2370,20 +2381,47 @@ export {
     type IUseScheduledEmailDialogHeaderPropsInput,
     type IUseScheduledEmailDialogRecipientsPropsInput,
 } from "./presentation/automations/scheduledEmail/state/useScheduledEmailDialogRegionProps.js";
+export {
+    useScheduledEmailDialogRecurrenceProps,
+    useScheduledEmailDialogSubjectProps,
+    useScheduledEmailDialogMessageProps,
+    useScheduledEmailDialogWidgetAttachmentsProps,
+    useScheduledEmailDialogDashboardAttachmentsProps,
+    useScheduledEmailDialogEvaluationModeProps,
+    type IUseScheduledEmailDialogRecurrencePropsInput,
+    type IUseScheduledEmailDialogSubjectPropsInput,
+} from "./presentation/automations/scheduledEmail/state/useScheduledEmailDialogFieldProps.js";
 export { DefaultScheduledEmailDialogHeader } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogHeader.js";
 export { DefaultScheduledEmailDialogFilters } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogFilters.js";
 export { DefaultScheduledEmailDialogDestination } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogDestination.js";
 export { DefaultScheduledEmailDialogRecipients } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogRecipients.js";
+export { DefaultScheduledEmailDialogRecurrence } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogRecurrence.js";
+export { DefaultScheduledEmailDialogSubject } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogSubject.js";
+export { DefaultScheduledEmailDialogMessage } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogMessage.js";
+export { DefaultScheduledEmailDialogWidgetAttachments } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogWidgetAttachments.js";
+export { DefaultScheduledEmailDialogDashboardAttachments } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogDashboardAttachments.js";
+export { DefaultScheduledEmailDialogEvaluationMode } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogEvaluationMode.js";
 export { DefaultScheduledEmailDialogTimezone } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/components/DefaultScheduledEmailDialogTimezone.js";
 export { ScheduledEmailDialogHeader } from "./presentation/automations/scheduledEmail/blocks/ScheduledEmailDialogHeader.js";
 export { ScheduledEmailDialogFilters } from "./presentation/automations/scheduledEmail/blocks/ScheduledEmailDialogFilters.js";
 export { ScheduledEmailDialogDestination } from "./presentation/automations/scheduledEmail/blocks/ScheduledEmailDialogDestination.js";
 export { ScheduledEmailDialogRecipients } from "./presentation/automations/scheduledEmail/blocks/ScheduledEmailDialogRecipients.js";
+export { ScheduledEmailDialogRecurrence } from "./presentation/automations/scheduledEmail/blocks/ScheduledEmailDialogRecurrence.js";
+export { ScheduledEmailDialogSubject } from "./presentation/automations/scheduledEmail/blocks/ScheduledEmailDialogSubject.js";
+export { ScheduledEmailDialogMessage } from "./presentation/automations/scheduledEmail/blocks/ScheduledEmailDialogMessage.js";
+export { ScheduledEmailDialogWidgetAttachments } from "./presentation/automations/scheduledEmail/blocks/ScheduledEmailDialogWidgetAttachments.js";
+export { ScheduledEmailDialogDashboardAttachments } from "./presentation/automations/scheduledEmail/blocks/ScheduledEmailDialogDashboardAttachments.js";
+export { ScheduledEmailDialogEvaluationMode } from "./presentation/automations/scheduledEmail/blocks/ScheduledEmailDialogEvaluationMode.js";
 export { ScheduledEmailDialogTimezone } from "./presentation/automations/scheduledEmail/blocks/ScheduledEmailDialogTimezone.js";
 export {
     ScheduledEmailDialogActionBar,
     type IScheduledEmailDialogActionBarBlockProps,
 } from "./presentation/automations/scheduledEmail/blocks/ScheduledEmailDialogActionBar.js";
+export { ScheduledEmailDialogShell } from "./presentation/automations/scheduledEmail/blocks/ScheduledEmailDialogShell.js";
+export {
+    useScheduledEmailSubmitOnEnter,
+    type IUseScheduledEmailSubmitOnEnterInput,
+} from "./presentation/automations/scheduledEmail/state/useScheduledEmailSubmitOnEnter.js";
 export type {
     IAutomationDialogActionBarProps,
     IAutomationDialogDestinationProps,
@@ -2394,6 +2432,10 @@ export type {
 } from "./presentation/automations/shared/slots/types.js";
 export type { ISlotProps } from "@gooddata/sdk-ui-kit";
 export type { IAutomationParameter } from "./presentation/automations/shared/automationFilters/automationParameters.js";
+export {
+    useWorkspaceUsersSearch,
+    type IUseWorkspaceUsersSearchResult,
+} from "./presentation/automations/shared/hooks/useWorkspaceUsersSearch.js";
 export {
     useAutomationsContext,
     type IAutomationsContextValue,

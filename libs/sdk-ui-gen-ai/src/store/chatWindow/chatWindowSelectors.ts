@@ -13,7 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
-import { type ContextObjectsState } from "../../types.js";
+import { type ContextObjectsState, type SelectedContext } from "../../types.js";
 import { type RootState } from "../types.js";
 
 import { chatWindowSliceName } from "./chatWindowSlice.js";
@@ -148,6 +148,11 @@ export const userContextSelector: (state: RootState) => IGenAIUserContext | unde
 export const ambientContextSelector: (state: RootState) => IGenAIUserContext | undefined = createSelector(
     chatWindowSliceSelector,
     (state) => state.context.ambient,
+);
+
+export const selectedContextSelector: (state: RootState) => SelectedContext | undefined = createSelector(
+    chatWindowSliceSelector,
+    (state) => state.context.ambientSelected,
 );
 
 export const hasPinnedContextSelector: (state: RootState) => boolean = createSelector(

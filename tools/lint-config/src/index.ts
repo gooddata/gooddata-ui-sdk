@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-export type { IPackage, GlobalValue } from "./types.js";
+export type { IPackage, GlobalValue, Rules } from "./types.js";
 
 export { chaiFriendlyPlugin, chaiFriendlyRules } from "./configurations/chai-friendly.js";
 export {

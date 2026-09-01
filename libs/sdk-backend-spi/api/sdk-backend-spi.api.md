@@ -1110,9 +1110,8 @@ export interface ICommentExpressionToken {
 
 // @public
 export interface IComputedAttributeReferencing {
-    // (undocumented)
+    analyticalDashboards?: IMetadataObject[];
     insights?: IInsight[];
-    // (undocumented)
     measures?: IMetadataObject[];
 }
 

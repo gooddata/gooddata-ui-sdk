@@ -243,6 +243,68 @@ definition:
         });
     });
 
+    it.each([`id:`, `id: `, `id: "   "`])(
+        "ignores a blank id (%s), leaving the identity to the server",
+        (idLine) => {
+            const result = validate(`${idLine}
+definition:
+  type: NUMBER
+  defaultValue: 10
+`);
+
+            expect(result.isValid).toBe(true);
+            expect(result.isValid && result.parameter).not.toHaveProperty("id");
+        },
+    );
+
+    it.each(["parameters", "computed_attribute", "Parameter"])(
+        "names the expected type when the author mistypes the object's own type as %s",
+        (type) => {
+            const result = validate(`type: ${type}
+definition:
+  type: NUMBER
+  defaultValue: 10
+`);
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "invalidType",
+            });
+        },
+    );
+
+    it("keeps the object's type and the model type apart when both are wrong", () => {
+        const result = validate(
+            `type: parameters
+definition:
+  type: STRING
+  defaultValue: Actual
+`,
+            { enabledTypes: NUMBER_ONLY },
+        );
+
+        expect(result).toEqual({
+            isValid: false,
+            errorCode: "invalidType",
+        });
+    });
+
+    it("rejects a blanked id while editing, where the identity is fixed", () => {
+        const result = validate(
+            `id:
+definition:
+  type: NUMBER
+  defaultValue: 10
+`,
+            { fixedIdentifier: "test" },
+        );
+
+        expect(result).toEqual({
+            isValid: false,
+            errorCode: "idImmutable",
+        });
+    });
+
     it("rejects id changes when a fixed identifier is required", () => {
         const result = validate(
             `id: another

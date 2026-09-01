@@ -186,20 +186,22 @@ describe("AsCodeDeleteDialog with a blocking referencing lookup (computed attrib
         );
 
         expect(
-            await screen.findByText(/cannot be deleted because it is used in some visualizations/),
+            await screen.findByText(
+                /cannot be deleted because it is used in some visualizations, metrics, or dashboards/,
+            ),
         ).toBeInTheDocument();
-        expect(screen.getByText("1 visualization")).toBeInTheDocument();
+        expect(screen.getByText("1 object")).toBeInTheDocument();
         expect(getDeleteButton()).toHaveAttribute("aria-disabled", "true");
     });
 
-    it("discloses the referencing visualizations behind the Show more toggle", async () => {
+    it("discloses the referencing objects behind the Show more toggle", async () => {
         renderComputedAttribute(
             computedAttributeDescriptorWithReferences(
                 vi.fn().mockResolvedValue(["Rep performance", "Won by band", "Pipeline"]),
             ),
         );
 
-        expect(await screen.findByText("3 visualizations")).toBeInTheDocument();
+        expect(await screen.findByText("3 objects")).toBeInTheDocument();
         expect(screen.queryByText("Rep performance")).toBeNull();
 
         fireEvent.click(screen.getByText("Show more"));

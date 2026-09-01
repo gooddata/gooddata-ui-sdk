@@ -40,28 +40,42 @@ maql: ${MAQL}`);
         expect(yaml).toContain(`description: ""`);
     });
 
-    it("renders an empty maql as a bare key, the create template's state", () => {
+    it("renders an empty maql as a key with a trailing space, so typing is valid YAML", () => {
         const yaml = serializeComputedAttributeToYaml({
             type: "computed_attribute",
             title: "My computed attribute",
             maql: "",
         });
 
-        expect(yaml).toBe(`type: computed_attribute
+        expect(yaml).toBe(`id: 
+type: computed_attribute
 title: My computed attribute
 description: ""
-maql:`);
+maql: `);
     });
 
-    it("omits the id line when the computed attribute has none", () => {
+    it("offers an empty id line when the computed attribute has none, so the author can choose one", () => {
         const yaml = serializeComputedAttributeToYaml({
             type: "computed_attribute",
             id: undefined,
             title: "Draft",
             maql: "SELECT 1",
         });
-        expect(yaml).not.toContain("id:");
+        expect(yaml.split("\n")[0]).toBe("id: ");
         expect(yaml).toContain("maql: SELECT 1");
+    });
+
+    it("leaves an untouched id line out of the validated computed attribute, for the server to derive", () => {
+        const yaml = serializeComputedAttributeToYaml({
+            type: "computed_attribute",
+            title: "Draft",
+            maql: "SELECT 1",
+        });
+
+        const result = validateComputedAttributeYaml(yaml);
+
+        expect(result.isValid).toBe(true);
+        expect(result.isValid && result.computedAttribute).not.toHaveProperty("id");
     });
 
     it("emits locale only when one is set", () => {

@@ -76,6 +76,7 @@ import {
 import { isInheritedObject } from "../../../convertors/fromBackend/ObjectInheritance.js";
 import { convertUserIdentifier } from "../../../convertors/fromBackend/UsersConverter.js";
 import { convertVisualizationObject } from "../../../convertors/fromBackend/visualizationObjects/VisualizationObjectConverter.js";
+import { convertConditionalFormatting } from "../../../convertors/toBackend/ConditionalFormattingConverter.js";
 import { convertInsight } from "../../../convertors/toBackend/InsightConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier, objRefToUri } from "../../../utils/api.js";
@@ -266,6 +267,8 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                         attributes: {
                             description: insightSummary(insight),
                             content: convertInsight(insight),
+                            // dual-write: content (authoritative) + the typed projection
+                            conditionalFormatting: convertConditionalFormatting(insight),
                             title: insightTitle(insight),
                             tags: insightTags(insight),
                             ...(insight.insight.isHidden === undefined
@@ -304,6 +307,8 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                         attributes: {
                             description: insightSummary(insight),
                             content: convertInsight(insight),
+                            // dual-write: content (authoritative) + the typed projection
+                            conditionalFormatting: convertConditionalFormatting(insight),
                             title: insightTitle(insight),
                             tags: insightTags(insight),
                             isHidden: insight.insight.isHidden,

@@ -11,3 +11,11 @@ export interface IPackage {
  * - "writable" or true: variable can be written to
  */
 export type GlobalValue = "readonly" | "writable" | false | true;
+
+export type RuleKey<Prefix extends string = ""> = `${Prefix}${string}`;
+
+export type RuleValue = string | number | object | object[];
+
+export type Rules<Prefix extends string = ""> = {
+    [key in RuleKey<Prefix>]: RuleValue;
+};

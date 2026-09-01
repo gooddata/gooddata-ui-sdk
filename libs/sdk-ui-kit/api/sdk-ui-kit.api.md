@@ -83,6 +83,7 @@ import { OnError } from '@gooddata/sdk-ui';
 import { OnLoadingChanged } from '@gooddata/sdk-ui';
 import { ParameterValue } from '@gooddata/sdk-model';
 import { Placement } from '@floating-ui/react';
+import { PointerEvent as PointerEvent_2 } from 'react';
 import { PrimitiveType } from 'react-intl';
 import { PropsWithChildren } from 'react';
 import { PropsWithoutRef } from 'react';
@@ -1913,7 +1914,7 @@ export function IconTrash(input: IIconProps): JSX.Element;
 export function IconTreeMap(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "building" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart" | "timezone";
+export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "building" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "alignLeft" | "alignCenter" | "alignRight" | "alignTop" | "alignMiddle" | "alignBottom" | "imageContain" | "imageCover" | "imageFill" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart" | "timezone";
 
 // @internal (undocumented)
 export function IconUndo(input: IIconProps): JSX.Element;
@@ -4664,6 +4665,20 @@ export interface IParameterPickerProps {
 }
 
 // @internal (undocumented)
+export interface IPointerTrackHandlers {
+    // (undocumented)
+    onLostPointerCapture: (event: PointerEvent_2<HTMLElement>) => void;
+    // (undocumented)
+    onPointerCancel: (event: PointerEvent_2<HTMLElement>) => void;
+    // (undocumented)
+    onPointerDown: (event: PointerEvent_2<HTMLElement>) => void;
+    // (undocumented)
+    onPointerMove: (event: PointerEvent_2<HTMLElement>) => void;
+    // (undocumented)
+    onPointerUp: (event: PointerEvent_2<HTMLElement>) => void;
+}
+
+// @internal (undocumented)
 export interface IPositioning {
     // (undocumented)
     offset?: IOffset;
@@ -6336,6 +6351,48 @@ export interface IUiChipProps {
     variant?: "normal" | "inactive";
 }
 
+// @internal
+export interface IUiColorPickerBaseProps {
+    initialRgbColor: IUiColorPickerRgb | IUiColorPickerRgba;
+    supportsAlpha?: boolean;
+}
+
+// @internal
+export interface IUiColorPickerCommitProps extends IUiColorPickerBaseProps {
+    onCancel: () => void;
+    // (undocumented)
+    onChange?: never;
+    // (undocumented)
+    onSubmit: (color: IUiColorPickerRgba) => void;
+}
+
+// @internal
+export interface IUiColorPickerLiveProps extends IUiColorPickerBaseProps {
+    // (undocumented)
+    onChange: (color: IUiColorPickerRgba) => void;
+    // (undocumented)
+    onSubmit?: never;
+}
+
+// @internal (undocumented)
+export type IUiColorPickerProps = IUiColorPickerCommitProps | IUiColorPickerLiveProps;
+
+// @internal
+export interface IUiColorPickerRgb {
+    // (undocumented)
+    b: number;
+    // (undocumented)
+    g: number;
+    // (undocumented)
+    r: number;
+}
+
+// @internal
+export interface IUiColorPickerRgba extends IUiColorPickerRgb {
+    // (undocumented)
+    a: number;
+}
+
 // @internal (undocumented)
 export interface IUiComboboxInputProps {
     accessibilityConfig?: IAccessibilityConfigBase;
@@ -6721,6 +6778,7 @@ export interface IUiFloatingElementProps {
     accessibilityConfig?: IAccessibilityConfigBase;
     // (undocumented)
     alignPoints?: ILegacyAlignPoint[];
+    allowOverlapAnchor?: boolean;
     // (undocumented)
     anchor: IFloatingAnchor;
     // (undocumented)
@@ -6753,6 +6811,7 @@ export interface IUiFloatingElementProps {
     onClose?: () => void;
     // (undocumented)
     onPlacementChange?: (placement: Placement) => void;
+    overflowBoundary?: Element;
     // (undocumented)
     placement?: Placement;
     // (undocumented)
@@ -8264,6 +8323,8 @@ export interface IUseFloatingPositionOptions {
     // (undocumented)
     alignPoints?: ILegacyAlignPoint[];
     // (undocumented)
+    allowOverlapAnchor?: boolean;
+    // (undocumented)
     arrowRef?: RefObject<SVGSVGElement | null>;
     // (undocumented)
     autoFlip?: boolean;
@@ -8281,6 +8342,8 @@ export interface IUseFloatingPositionOptions {
     offset?: OffsetOptions;
     // (undocumented)
     onOpenChange?: (open: boolean) => void;
+    // (undocumented)
+    overflowBoundary?: Element;
     // (undocumented)
     placement?: Placement;
     shiftPadding?: number;
@@ -9165,6 +9228,9 @@ export function UiCheckbox(input: IUiCheckboxProps): JSX.Element;
 // @internal (undocumented)
 export function UiChip(input: IUiChipProps): JSX.Element;
 
+// @internal (undocumented)
+export function UiColorPicker(props: IUiColorPickerProps): JSX.Element;
+
 // @internal
 export function UiCombobox(input: IUiComboboxProps): JSX.Element;
 
@@ -9643,6 +9709,9 @@ export const useOverlayZIndex: (uuid: string) => number | undefined;
 
 // @internal
 export function useOverlayZIndexWithRegister(): number;
+
+// @internal
+export function usePointerTrack(track: (event: PointerEvent_2<HTMLElement>) => void): IPointerTrackHandlers;
 
 // @internal
 export const useResponsiveContext: () => IResponsiveConfig;

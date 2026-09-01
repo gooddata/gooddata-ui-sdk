@@ -1119,6 +1119,7 @@
     "message.accessibility.dismiss.notification": "ปิดการแจ้งเตือน",
     "datePicker.accessibility.label": "เลือกวันที่เริ่มต้น",
     "timePicker.accessibility.label": "เลือกเวลาเริ่มต้น",
+    "timezoneSelect.search.accessibility.label": "ค้นหาเขตเวลา",
     "menu.close": "ปิดเมนู",
     "menu.back": "กลับไปที่เมนูหลัก",
     "copyButton.copy.success": "คัดลอกไปยังคลิปบอร์ดแล้ว!",

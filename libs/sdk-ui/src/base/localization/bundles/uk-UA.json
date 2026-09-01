@@ -1119,6 +1119,7 @@
     "message.accessibility.dismiss.notification": "Закрити сповіщення",
     "datePicker.accessibility.label": "Вибрати дату початку",
     "timePicker.accessibility.label": "Вибрати час початку",
+    "timezoneSelect.search.accessibility.label": "Шукати часові пояси",
     "menu.close": "Закрити меню",
     "menu.back": "Назад до батьківського меню",
     "copyButton.copy.success": "Скопійовано в буфер обміну!",

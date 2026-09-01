@@ -254,8 +254,7 @@ export function closeAiAssistantRequested(): ICloseAiAssistantRequestedEvent {
 export function isCloseAiAssistantRequestedEvent(obj: unknown): obj is ICloseAiAssistantRequestedEvent {
     return (
         typeof obj === "object" &&
-        obj !== null &&
-        (obj as { type?: unknown }).type === "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CLOSE_REQUESTED"
+        (obj as { type?: unknown })?.type === "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CLOSE_REQUESTED"
     );
 }
 

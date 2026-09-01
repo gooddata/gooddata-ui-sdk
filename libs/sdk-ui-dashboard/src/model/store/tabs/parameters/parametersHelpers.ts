@@ -5,7 +5,6 @@ import {
     type IDashboardExportParameter,
     type IDashboardParameter,
     type IDashboardTab,
-    type IInsight,
     type IInsightDefinition,
     type IInsightParameterValue,
     type IParameterDefinition,
@@ -21,8 +20,6 @@ import {
     sanitizeParameterValue,
 } from "@gooddata/sdk-model";
 
-import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
-import { type IInsightWidgetTabContext } from "../layout/layoutSelectors.js";
 import { type ITabState } from "../tabsState.js";
 
 import {
@@ -303,6 +300,17 @@ export function isGatedStringValue(value: ParameterValue, isStringEnabled: boole
 }
 
 /**
+ * The tab's parameter entries without the gated-off STRING entries.
+ *
+ * @internal
+ */
+export function ungatedTabEntries(tab: ITabState, isStringEnabled: boolean): IDashboardParameterEntry[] {
+    return (tab.parameters?.parameters ?? parametersInitialState.parameters).filter(
+        (entry) => !isGatedStringEntry(entry, isStringEnabled),
+    );
+}
+
+/**
  * The insight-authored parameter values that pass the string gate — the single home of
  * insight-level gating for both the widget-execution hook path and the selector path.
  *
@@ -526,69 +534,24 @@ export function computeParameterResetTargets(
 }
 
 /**
- * Folds per-tab ref selections into the wire shape, dropping entries without a
- * `runtimeOverride`. Each selection pairs a tab with an optional ref restriction:
- * `allowedRefs === undefined` selects all refs (whole-dashboard scope); a defined set restricts
- * entries to those refs (widget scope). Tabs that yield no rows are omitted from the result.
+ * Folds the parameter entries of the given tabs into the wire shape, dropping entries without a
+ * `runtimeOverride`. Tabs that yield no rows are omitted from the result.
  *
  * @internal
  */
 export function collectExportOverrides(
-    tabRefSelections: ReadonlyArray<{ tab: ITabState; allowedRefs?: Set<string> }>,
+    tabs: ReadonlyArray<ITabState>,
     workspaceParameterByRef: Map<string, IParameterMetadataObject>,
     isStringEnabled: boolean,
 ): Record<string, IDashboardExportParameter[]> {
     const result: Record<string, IDashboardExportParameter[]> = {};
-    for (const { tab, allowedRefs } of tabRefSelections) {
-        const entries = (tab.parameters?.parameters ?? parametersInitialState.parameters).filter(
-            (entry) => !isGatedStringEntry(entry, isStringEnabled),
-        );
-        const scoped = allowedRefs
-            ? entries.filter((entry) => allowedRefs.has(objRefToString(entry.parameter.ref)))
-            : entries;
-        const rows = formatEntries(scoped, workspaceParameterByRef);
+    for (const tab of tabs) {
+        const rows = formatEntries(ungatedTabEntries(tab, isStringEnabled), workspaceParameterByRef);
         if (rows.length > 0) {
             result[tab.localIdentifier] = rows;
         }
     }
     return Object.keys(result).length === 0 ? EMPTY_EXPORT_PARAMETERS_BY_TAB : result;
-}
-
-/**
- * Builds per-tab ref selections for a widget-scope export: each widget's owning tab is restricted
- * to refs referenced by the widget's insight metrics. Multiple widgets on the same tab union their
- * refs.
- *
- * @internal
- */
-export function buildWidgetScopeTabRefSelections(
-    widgetContexts: ReadonlyArray<IInsightWidgetTabContext>,
-    widgetIds: ReadonlyArray<string>,
-    insights: ObjRefMap<IInsight>,
-    measureParameters: Record<string, IdentifierRef[]>,
-): { tab: ITabState; allowedRefs: Set<string> }[] {
-    const byTab = new Map<string, { tab: ITabState; allowedRefs: Set<string> }>();
-    for (const widgetId of widgetIds) {
-        const context = widgetContexts.find((ctx) => ctx.widget.identifier === widgetId);
-        if (!context) {
-            continue;
-        }
-        const insight = insights.get(context.widget.insight);
-        if (!insight) {
-            continue;
-        }
-        const referencedRefs = collectReferencedParameterRefs(insight, measureParameters);
-        if (referencedRefs.length === 0) {
-            continue;
-        }
-        const tabId = context.tab.localIdentifier;
-        const existing = byTab.get(tabId) ?? { tab: context.tab, allowedRefs: new Set<string>() };
-        for (const ref of referencedRefs) {
-            existing.allowedRefs.add(objRefToString(ref));
-        }
-        byTab.set(tabId, existing);
-    }
-    return [...byTab.values()];
 }
 
 function formatEntries(

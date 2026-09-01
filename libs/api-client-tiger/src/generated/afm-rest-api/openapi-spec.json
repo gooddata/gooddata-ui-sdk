@@ -100,240 +100,6 @@
                 }
             }
         },
-        "/api/v1/ailake/database/instances/{instanceId}/pipeTables/{tableName}/refresh": {
-            "post": {
-                "tags": [
-                    "AI Lake",
-                    "AI Lake - Pipe Tables"
-                ],
-                "summary": "(BETA) Refresh a pipe table partition",
-                "description": "(BETA) Deletes all rows for the specified Hive partition and re-loads them from S3. Use after overwriting a partition file in object storage with corrected data. Returns an operation-id header the client can use to poll for progress.",
-                "operationId": "refreshAiLakePipeTablePartition",
-                "parameters": [
-                    {
-                        "name": "instanceId",
-                        "in": "path",
-                        "description": "Database instance identifier. Accepts the database name (preferred) or UUID.",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
-                        }
-                    },
-                    {
-                        "name": "tableName",
-                        "in": "path",
-                        "description": "Pipe table name.",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Pipe table name."
-                        }
-                    },
-                    {
-                        "name": "operation-id",
-                        "in": "header",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/RefreshPartitionRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "202": {
-                        "description": "Accepted",
-                        "headers": {
-                            "operation-location": {
-                                "description": "Operation location URL.",
-                                "required": true,
-                                "style": "simple",
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "/api/v1/ailake/operations/e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
-                            },
-                            "operation-id": {
-                                "description": "Operation ID to use for polling.",
-                                "required": true,
-                                "style": "simple",
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
-                            }
-                        },
-                        "content": {}
-                    }
-                },
-                "x-gdc-security-info": {
-                    "permissions": [
-                        "MANAGE"
-                    ],
-                    "description": "Permissions required to refresh an AI Lake pipe table partition."
-                }
-            }
-        },
-        "/api/v1/ailake/database/instances/{instanceId}/pipeTables": {
-            "get": {
-                "tags": [
-                    "AI Lake",
-                    "AI Lake - Pipe Tables"
-                ],
-                "summary": "(BETA) List AI Lake pipe tables",
-                "description": "(BETA) Lists active pipe tables in the given AI Lake database instance.",
-                "operationId": "listAiLakePipeTables",
-                "parameters": [
-                    {
-                        "name": "instanceId",
-                        "in": "path",
-                        "description": "Database instance identifier. Accepts the database name (preferred) or UUID.",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
-                        }
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Zero-based page number.",
-                        "required": false,
-                        "schema": {
-                            "minimum": 0,
-                            "type": "integer",
-                            "description": "Zero-based page number.",
-                            "format": "int32",
-                            "default": 0
-                        }
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "Number of items per page.",
-                        "required": false,
-                        "schema": {
-                            "maximum": 500,
-                            "minimum": 1,
-                            "type": "integer",
-                            "description": "Number of items per page.",
-                            "format": "int32",
-                            "default": 50
-                        }
-                    },
-                    {
-                        "name": "metaInclude",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "uniqueItems": true,
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "AI Lake pipe tables successfully retrieved",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiListDocumentPipeTableSummary"
-                                }
-                            }
-                        }
-                    }
-                },
-                "x-gdc-security-info": {
-                    "permissions": [
-                        "MANAGE"
-                    ],
-                    "description": "Permissions required to list AI Lake pipe tables."
-                }
-            },
-            "post": {
-                "tags": [
-                    "AI Lake",
-                    "AI Lake - Pipe Tables"
-                ],
-                "summary": "(BETA) Create a new AI Lake pipe table",
-                "description": "(BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.",
-                "operationId": "createAiLakePipeTable",
-                "parameters": [
-                    {
-                        "name": "instanceId",
-                        "in": "path",
-                        "description": "Database instance identifier. Accepts the database name (preferred) or UUID.",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
-                        }
-                    },
-                    {
-                        "name": "operation-id",
-                        "in": "header",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CreatePipeTableRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "202": {
-                        "description": "Accepted",
-                        "headers": {
-                            "operation-location": {
-                                "description": "Operation location URL.",
-                                "required": true,
-                                "style": "simple",
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "/api/v1/ailake/operations/e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
-                            },
-                            "operation-id": {
-                                "description": "Operation ID to use for polling.",
-                                "required": true,
-                                "style": "simple",
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
-                            }
-                        },
-                        "content": {}
-                    }
-                },
-                "x-gdc-security-info": {
-                    "permissions": [
-                        "MANAGE"
-                    ],
-                    "description": "Permissions required to create an AI Lake pipe table."
-                }
-            }
-        },
         "/api/v1/ailake/database/instances/{instanceId}/dataSources": {
             "get": {
                 "tags": [
@@ -466,11 +232,11 @@
         "/api/v1/ailake/database/instances/{instanceId}/analyzeStatistics": {
             "post": {
                 "tags": [
-                    "AI Lake",
-                    "AI Lake - Pipe Tables"
+                    "AI Lake - Databases",
+                    "AI Lake"
                 ],
                 "summary": "(BETA) Run ANALYZE TABLE for tables in a database instance",
-                "description": "(BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.",
+                "description": "(BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.",
                 "operationId": "analyzeStatistics",
                 "parameters": [
                     {
@@ -506,12 +272,23 @@
                     "202": {
                         "description": "Statistics analysis scheduled.",
                         "headers": {
-                            "operation-id": {
+                            "operation-location": {
+                                "description": "Operation location URL that can be used for polling.",
+                                "required": true,
                                 "style": "simple",
                                 "schema": {
-                                    "type": "string",
-                                    "format": "uuid"
-                                }
+                                    "type": "string"
+                                },
+                                "example": "/api/v1/ailake/operations/e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
+                            },
+                            "operation-id": {
+                                "description": "Operation ID to use for polling.",
+                                "required": true,
+                                "style": "simple",
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
                             }
                         },
                         "content": {}
@@ -1571,51 +1348,6 @@
                 }
             }
         },
-        "/api/v1/actions/workspaces/{workspaceId}/ai/search": {
-            "post": {
-                "tags": [
-                    "Smart Functions",
-                    "actions"
-                ],
-                "summary": "(BETA) Semantic Search in Metadata",
-                "description": "(BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.",
-                "operationId": "aiSearch",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/SearchRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/SearchResult"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/v1/actions/workspaces/{workspaceId}/ai/issues/triggerCheck": {
             "post": {
                 "tags": [
@@ -2464,7 +2196,7 @@
                     "AI Lake"
                 ],
                 "summary": "(BETA) List registered AI Lake ObjectStorages",
-                "description": "(BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.",
+                "description": "(BETA) Lists ObjectStorages registered for the organization. Pass the returned `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.",
                 "operationId": "listAiLakeObjectStorages",
                 "parameters": [
                     {
@@ -2524,128 +2256,6 @@
                         "MANAGE"
                     ],
                     "description": "Permissions required to list registered AI Lake ObjectStorages."
-                }
-            }
-        },
-        "/api/v1/ailake/database/instances/{instanceId}/pipeTables/{tableName}": {
-            "get": {
-                "tags": [
-                    "AI Lake",
-                    "AI Lake - Pipe Tables"
-                ],
-                "summary": "(BETA) Get an AI Lake pipe table",
-                "description": "(BETA) Returns full details of the specified pipe table.",
-                "operationId": "getAiLakePipeTable",
-                "parameters": [
-                    {
-                        "name": "instanceId",
-                        "in": "path",
-                        "description": "Database instance identifier. Accepts the database name (preferred) or UUID.",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
-                        }
-                    },
-                    {
-                        "name": "tableName",
-                        "in": "path",
-                        "description": "Pipe table name.",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Pipe table name."
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "AI Lake pipe table successfully retrieved",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiDocumentPipeTable"
-                                }
-                            }
-                        }
-                    }
-                },
-                "x-gdc-security-info": {
-                    "permissions": [
-                        "MANAGE"
-                    ],
-                    "description": "Permissions required to get an AI Lake pipe table."
-                }
-            },
-            "delete": {
-                "tags": [
-                    "AI Lake",
-                    "AI Lake - Pipe Tables"
-                ],
-                "summary": "(BETA) Delete an AI Lake pipe table",
-                "description": "(BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.",
-                "operationId": "deleteAiLakePipeTable",
-                "parameters": [
-                    {
-                        "name": "instanceId",
-                        "in": "path",
-                        "description": "Database instance identifier. Accepts the database name (preferred) or UUID.",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
-                        }
-                    },
-                    {
-                        "name": "tableName",
-                        "in": "path",
-                        "description": "Pipe table name.",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Pipe table name."
-                        }
-                    },
-                    {
-                        "name": "operation-id",
-                        "in": "header",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "202": {
-                        "description": "Accepted",
-                        "headers": {
-                            "operation-location": {
-                                "description": "Operation location URL.",
-                                "required": true,
-                                "style": "simple",
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "/api/v1/ailake/operations/e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
-                            },
-                            "operation-id": {
-                                "description": "Operation ID to use for polling.",
-                                "required": true,
-                                "style": "simple",
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
-                            }
-                        },
-                        "content": {}
-                    }
-                },
-                "x-gdc-security-info": {
-                    "permissions": [
-                        "MANAGE"
-                    ],
-                    "description": "Permissions required to delete an AI Lake pipe table."
                 }
             }
         },
@@ -4314,7 +3924,8 @@
                             "enum": [
                                 "facts",
                                 "attributes",
-                                "measures"
+                                "measures",
+                                "computedAttributes"
                             ]
                         }
                     }
@@ -4335,29 +3946,6 @@
                     }
                 },
                 "description": "All objects of specified types valid with respect to given AFM."
-            },
-            "AggregateKeyConfig": {
-                "required": [
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "columns": {
-                        "type": "array",
-                        "description": "Key columns. Defaults to first inferred column.",
-                        "items": {
-                            "type": "string",
-                            "description": "Key columns. Defaults to first inferred column."
-                        }
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "aggregate"
-                        ]
-                    }
-                },
-                "description": "Aggregate key model — pre-aggregates rows sharing the same key columns."
             },
             "AiUsageMetadataItem": {
                 "required": [
@@ -5703,72 +5291,6 @@
                     }
                 }
             },
-            "ColumnExpression": {
-                "required": [
-                    "column",
-                    "function"
-                ],
-                "type": "object",
-                "properties": {
-                    "column": {
-                        "type": "string",
-                        "description": "Source column produced by parquet schema inference (after columnOverrides)."
-                    },
-                    "function": {
-                        "type": "string",
-                        "description": "StarRocks transform applied to a source column when projecting it through the generated CREATE PIPE ... AS INSERT statement.",
-                        "enum": [
-                            "HLL_HASH",
-                            "BITMAP_HASH",
-                            "BITMAP_HASH64",
-                            "TO_BITMAP"
-                        ]
-                    }
-                },
-                "description": "Single column projection override: applies `function(column)` to a source column."
-            },
-            "ColumnInfo": {
-                "required": [
-                    "name",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "description": "Column name"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "SQL column type (e.g. VARCHAR(200), BIGINT, DOUBLE)"
-                    }
-                },
-                "description": "A single column definition inferred from the parquet schema"
-            },
-            "ColumnPartitionConfig": {
-                "required": [
-                    "columns",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "columns": {
-                        "type": "array",
-                        "description": "Columns to partition by.",
-                        "items": {
-                            "type": "string",
-                            "description": "Columns to partition by."
-                        }
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "column"
-                        ]
-                    }
-                },
-                "description": "Partition by column expression."
-            },
             "ComparisonCondition": {
                 "required": [
                     "comparison"
@@ -5903,109 +5425,6 @@
                     }
                 },
                 "description": "Filter the result by applying multiple comparison and/or range conditions combined with OR logic. If conditions list is empty, no filtering is applied (all rows are returned)."
-            },
-            "CreatePipeTableRequest": {
-                "required": [
-                    "pathPrefix",
-                    "sourceStorageName",
-                    "tableName"
-                ],
-                "type": "object",
-                "properties": {
-                    "aggregationOverrides": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "string",
-                            "description": "Maps non-key column names to their StarRocks aggregation function (SUM, MIN, MAX, REPLACE, REPLACE_IF_NOT_NULL, HLL_UNION, BITMAP_UNION, PERCENTILE_UNION). Required for every non-key column when keyConfig type is 'aggregate'. Ignored for other key types."
-                        },
-                        "description": "Maps non-key column names to their StarRocks aggregation function (SUM, MIN, MAX, REPLACE, REPLACE_IF_NOT_NULL, HLL_UNION, BITMAP_UNION, PERCENTILE_UNION). Required for every non-key column when keyConfig type is 'aggregate'. Ignored for other key types."
-                    },
-                    "columnExpressions": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/components/schemas/ColumnExpression"
-                        },
-                        "description": "Per-target-column projection overrides. Each entry emits `<function>(<column>) AS <key>` in the SELECT list of the generated CREATE PIPE ... AS INSERT; keys absent from the map are projected as-is. Required for AGGREGATE-KEY tables that include native HLL columns (StarRocks rejects raw VARBINARY into HLL columns)."
-                    },
-                    "columnOverrides": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "string",
-                            "description": "Override inferred column types. Maps column names to SQL type strings (e.g. {\"year\": \"INT\", \"event_date\": \"DATE\"}). Applied after parquet schema inference."
-                        },
-                        "description": "Override inferred column types. Maps column names to SQL type strings (e.g. {\"year\": \"INT\", \"event_date\": \"DATE\"}). Applied after parquet schema inference."
-                    },
-                    "distributionConfig": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/HashDistributionConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/RandomDistributionConfig"
-                            }
-                        ]
-                    },
-                    "keyConfig": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/AggregateKeyConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/DuplicateKeyConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/PrimaryKeyConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/UniqueKeyConfig"
-                            }
-                        ]
-                    },
-                    "maxVarcharLength": {
-                        "type": "integer",
-                        "description": "Cap VARCHAR(N) to this length when N exceeds it. 0 = no cap.",
-                        "format": "int32"
-                    },
-                    "partitionConfig": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/ColumnPartitionConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/DateTruncPartitionConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/TimeSlicePartitionConfig"
-                            }
-                        ]
-                    },
-                    "pathPrefix": {
-                        "type": "string",
-                        "description": "Path prefix to the parquet files (e.g. 'my-dataset/year=2024/'). All parquet files must be at a uniform depth under the prefix — either all directly under the prefix, or all under a consistent Hive partition hierarchy (e.g. year=2024/month=01/). Mixed layouts (files at multiple depths) are not supported."
-                    },
-                    "pollingIntervalSeconds": {
-                        "type": "integer",
-                        "description": "How often (in seconds) the pipe polls for new files. 0 or null = use server default.",
-                        "format": "int32"
-                    },
-                    "sourceStorageName": {
-                        "type": "string",
-                        "description": "Name of the pre-configured S3/MinIO ObjectStorage source"
-                    },
-                    "tableName": {
-                        "type": "string",
-                        "description": "Name of the OLAP table to create. Must match ^[a-z][a-z0-9_-]{0,62}$"
-                    },
-                    "tableProperties": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "string",
-                            "description": "CREATE TABLE PROPERTIES key-value pairs. Defaults to {\"replication_num\": \"1\"}."
-                        },
-                        "description": "CREATE TABLE PROPERTIES key-value pairs. Defaults to {\"replication_num\": \"1\"}."
-                    }
-                },
-                "description": "Request to create a new pipe-backed OLAP table in the AI Lake"
             },
             "CreatedVisualization": {
                 "required": [
@@ -6432,43 +5851,6 @@
                     }
                 ]
             },
-            "DateTruncPartitionConfig": {
-                "required": [
-                    "column",
-                    "type",
-                    "unit"
-                ],
-                "type": "object",
-                "properties": {
-                    "column": {
-                        "type": "string",
-                        "description": "Column to partition on."
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "dateTrunc"
-                        ]
-                    },
-                    "unit": {
-                        "type": "string",
-                        "description": "Date/time unit for partition granularity",
-                        "enum": [
-                            "year",
-                            "quarter",
-                            "month",
-                            "week",
-                            "day",
-                            "hour",
-                            "minute",
-                            "second",
-                            "millisecond",
-                            "microsecond"
-                        ]
-                    }
-                },
-                "description": "Partition by date_trunc() expression."
-            },
             "DependsOn": {
                 "required": [
                     "label",
@@ -6624,48 +6006,6 @@
                     }
                 },
                 "description": "Contains the dimension-specific header information."
-            },
-            "DistributionConfig": {
-                "required": [
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string"
-                    }
-                },
-                "description": "Distribution configuration for the OLAP table.",
-                "discriminator": {
-                    "propertyName": "type",
-                    "mapping": {
-                        "hash": "#/components/schemas/HashDistributionConfig",
-                        "random": "#/components/schemas/RandomDistributionConfig"
-                    }
-                }
-            },
-            "DuplicateKeyConfig": {
-                "required": [
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "columns": {
-                        "type": "array",
-                        "description": "Key columns. Defaults to first inferred column.",
-                        "items": {
-                            "type": "string",
-                            "description": "Key columns. Defaults to first inferred column."
-                        }
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "duplicate"
-                        ]
-                    }
-                },
-                "description": "Duplicate key model — allows duplicate rows for the given key columns."
             },
             "Element": {
                 "required": [
@@ -7592,35 +6932,6 @@
                 },
                 "description": "Status of an AI Lake service"
             },
-            "HashDistributionConfig": {
-                "required": [
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "buckets": {
-                        "minimum": 1,
-                        "type": "integer",
-                        "description": "Number of hash buckets. Defaults to 1.",
-                        "format": "int32"
-                    },
-                    "columns": {
-                        "type": "array",
-                        "description": "Columns to distribute by. Defaults to first column.",
-                        "items": {
-                            "type": "string",
-                            "description": "Columns to distribute by. Defaults to first column."
-                        }
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "hash"
-                        ]
-                    }
-                },
-                "description": "Hash-based distribution across buckets."
-            },
             "HeaderGroup": {
                 "required": [
                     "headers"
@@ -7742,22 +7053,6 @@
                 },
                 "description": "JSON:API-compatible single-resource response envelope"
             },
-            "JsonApiDocumentPipeTable": {
-                "required": [
-                    "data",
-                    "links"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiItemPipeTable"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/JsonApiListLinks"
-                    }
-                },
-                "description": "JSON:API-compatible single-resource response envelope"
-            },
             "JsonApiItemDataSourceInfo": {
                 "required": [
                     "attributes",
@@ -7812,50 +7107,6 @@
                 "properties": {
                     "attributes": {
                         "$ref": "#/components/schemas/ObjectStorageInfo"
-                    },
-                    "id": {
-                        "type": "string",
-                        "description": "Resource identifier"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Resource type"
-                    }
-                },
-                "description": "A single JSON:API resource item"
-            },
-            "JsonApiItemPipeTable": {
-                "required": [
-                    "attributes",
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "attributes": {
-                        "$ref": "#/components/schemas/PipeTable"
-                    },
-                    "id": {
-                        "type": "string",
-                        "description": "Resource identifier"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Resource type"
-                    }
-                },
-                "description": "A single JSON:API resource item"
-            },
-            "JsonApiItemPipeTableSummary": {
-                "required": [
-                    "attributes",
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "attributes": {
-                        "$ref": "#/components/schemas/PipeTableSummary"
                     },
                     "id": {
                         "type": "string",
@@ -7959,29 +7210,6 @@
                 },
                 "description": "JSON:API-compatible list response envelope"
             },
-            "JsonApiListDocumentPipeTableSummary": {
-                "required": [
-                    "data",
-                    "links"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "type": "array",
-                        "description": "Array of resource items",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiItemPipeTableSummary"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/JsonApiListLinks"
-                    },
-                    "meta": {
-                        "$ref": "#/components/schemas/JsonApiListMeta"
-                    }
-                },
-                "description": "JSON:API-compatible list response envelope"
-            },
             "JsonApiListDocumentServiceInfo": {
                 "required": [
                     "data",
@@ -8064,27 +7292,6 @@
                 "type": "object",
                 "description": "The payload to pass to the command",
                 "nullable": true
-            },
-            "KeyConfig": {
-                "required": [
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string"
-                    }
-                },
-                "description": "Key configuration for the table data model.",
-                "discriminator": {
-                    "propertyName": "type",
-                    "mapping": {
-                        "duplicate": "#/components/schemas/DuplicateKeyConfig",
-                        "primary": "#/components/schemas/PrimaryKeyConfig",
-                        "unique": "#/components/schemas/UniqueKeyConfig",
-                        "aggregate": "#/components/schemas/AggregateKeyConfig"
-                    }
-                }
             },
             "KeyDriversDimension": {
                 "required": [
@@ -8855,7 +8062,7 @@
                 "properties": {
                     "name": {
                         "type": "string",
-                        "description": "Human-readable name. Use this as `sourceStorageName` in CreatePipeTable, or pass `storageId` to ProvisionDatabase.storageIds.",
+                        "description": "Human-readable name. Pass `storageId` to ProvisionDatabase.storageIds.",
                         "example": "s3-data-lake"
                     },
                     "storageConfig": {
@@ -8960,15 +8167,12 @@
                     },
                     "kind": {
                         "type": "string",
-                        "description": "Type of the long-running operation.\n* `provision-database` — Provisioning of an AI Lake database.\n* `deprovision-database` — Deprovisioning (deletion) of an AI Lake database.\n* `run-service-command` — Running a command in a particular AI Lake service.\n* `create-pipe-table` — Creating a pipe table backed by an S3 data source.\n* `delete-pipe-table` — Deleting a pipe table.\n* `analyze-statistics` — Running ANALYZE TABLE for CBO statistics collection.\n* `refresh-partition` — Refreshing a specific Hive partition (delete + re-load from S3).\n",
+                        "description": "Type of the long-running operation.\n* `provision-database` — Provisioning of an AI Lake database.\n* `deprovision-database` — Deprovisioning (deletion) of an AI Lake database.\n* `run-service-command` — Running a command in a particular AI Lake service.\n* `analyze-statistics` — Running ANALYZE TABLE for CBO statistics collection.\n",
                         "enum": [
                             "provision-database",
                             "deprovision-database",
                             "run-service-command",
-                            "create-pipe-table",
-                            "delete-pipe-table",
-                            "analyze-statistics",
-                            "refresh-partition"
+                            "analyze-statistics"
                         ]
                     },
                     "status": {
@@ -9164,26 +8368,6 @@
                 "additionalProperties": true,
                 "description": "(EXPERIMENTAL) Parameter value for this execution."
             },
-            "PartitionConfig": {
-                "required": [
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string"
-                    }
-                },
-                "description": "Partition configuration for the table.",
-                "discriminator": {
-                    "propertyName": "type",
-                    "mapping": {
-                        "column": "#/components/schemas/ColumnPartitionConfig",
-                        "dateTrunc": "#/components/schemas/DateTruncPartitionConfig",
-                        "timeSlice": "#/components/schemas/TimeSlicePartitionConfig"
-                    }
-                }
-            },
             "PendingOperation": {
                 "required": [
                     "id",
@@ -9205,143 +8389,6 @@
                         "$ref": "#/components/schemas/Operation"
                     }
                 ]
-            },
-            "PipeTable": {
-                "required": [
-                    "columns",
-                    "databaseName",
-                    "distributionConfig",
-                    "keyConfig",
-                    "partitionColumns",
-                    "pathPrefix",
-                    "pipeTableId",
-                    "pollingIntervalSeconds",
-                    "sourceStorageName",
-                    "tableName",
-                    "tableProperties"
-                ],
-                "type": "object",
-                "properties": {
-                    "columns": {
-                        "type": "array",
-                        "description": "Inferred column schema",
-                        "items": {
-                            "$ref": "#/components/schemas/ColumnInfo"
-                        }
-                    },
-                    "databaseName": {
-                        "type": "string",
-                        "description": "Database name"
-                    },
-                    "distributionConfig": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/HashDistributionConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/RandomDistributionConfig"
-                            }
-                        ]
-                    },
-                    "keyConfig": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/AggregateKeyConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/DuplicateKeyConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/PrimaryKeyConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/UniqueKeyConfig"
-                            }
-                        ]
-                    },
-                    "partitionColumns": {
-                        "type": "array",
-                        "description": "Hive partition columns detected from the path structure",
-                        "items": {
-                            "type": "string",
-                            "description": "Hive partition columns detected from the path structure"
-                        }
-                    },
-                    "partitionConfig": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/ColumnPartitionConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/DateTruncPartitionConfig"
-                            },
-                            {
-                                "$ref": "#/components/schemas/TimeSlicePartitionConfig"
-                            }
-                        ]
-                    },
-                    "pathPrefix": {
-                        "type": "string",
-                        "description": "Path prefix to the parquet files"
-                    },
-                    "pipeTableId": {
-                        "type": "string",
-                        "description": "Internal UUID of the pipe table record"
-                    },
-                    "pollingIntervalSeconds": {
-                        "type": "integer",
-                        "description": "How often (in seconds) the pipe polls for new files. 0 = server default.",
-                        "format": "int32"
-                    },
-                    "sourceStorageName": {
-                        "type": "string",
-                        "description": "Source ObjectStorage name"
-                    },
-                    "tableName": {
-                        "type": "string",
-                        "description": "OLAP table name"
-                    },
-                    "tableProperties": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "string",
-                            "description": "CREATE TABLE PROPERTIES key-value pairs"
-                        },
-                        "description": "CREATE TABLE PROPERTIES key-value pairs"
-                    }
-                },
-                "description": "Full details of a pipe-backed OLAP table"
-            },
-            "PipeTableSummary": {
-                "required": [
-                    "columns",
-                    "pathPrefix",
-                    "pipeTableId",
-                    "tableName"
-                ],
-                "type": "object",
-                "properties": {
-                    "columns": {
-                        "type": "array",
-                        "description": "Inferred column schema",
-                        "items": {
-                            "$ref": "#/components/schemas/ColumnInfo"
-                        }
-                    },
-                    "pathPrefix": {
-                        "type": "string",
-                        "description": "Path prefix to the parquet files"
-                    },
-                    "pipeTableId": {
-                        "type": "string",
-                        "description": "Internal UUID of the pipe table record"
-                    },
-                    "tableName": {
-                        "type": "string",
-                        "description": "OLAP table name"
-                    }
-                },
-                "description": "Lightweight pipe table entry used in list responses"
             },
             "PopDataset": {
                 "required": [
@@ -9482,29 +8529,6 @@
                 },
                 "description": "Filter able to limit element values by label and related selected elements."
             },
-            "PrimaryKeyConfig": {
-                "required": [
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "columns": {
-                        "type": "array",
-                        "description": "Key columns. Defaults to first inferred column.",
-                        "items": {
-                            "type": "string",
-                            "description": "Key columns. Defaults to first inferred column."
-                        }
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "primary"
-                        ]
-                    }
-                },
-                "description": "Primary key model — enforces uniqueness, replaces on conflict."
-            },
             "ProvisionDatabaseInstanceRequest": {
                 "required": [
                     "name",
@@ -9644,27 +8668,6 @@
                         ]
                     }
                 }
-            },
-            "RandomDistributionConfig": {
-                "required": [
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "buckets": {
-                        "minimum": 1,
-                        "type": "integer",
-                        "description": "Number of random distribution buckets. Defaults to 1.",
-                        "format": "int32"
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "random"
-                        ]
-                    }
-                },
-                "description": "Random distribution across buckets."
             },
             "RangeCondition": {
                 "required": [
@@ -9855,23 +8858,6 @@
                     }
                 },
                 "description": "Steps taken during processing, showing the AI's reasoning process."
-            },
-            "RefreshPartitionRequest": {
-                "required": [
-                    "partitionSpec"
-                ],
-                "type": "object",
-                "properties": {
-                    "partitionSpec": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "string",
-                            "description": "Partition column values identifying the partition to refresh. Keys must match the table's partition_columns exactly. Example: {\"date\": \"2026-01-01\"}"
-                        },
-                        "description": "Partition column values identifying the partition to refresh. Keys must match the table's partition_columns exactly. Example: {\"date\": \"2026-01-01\"}"
-                    }
-                },
-                "description": "Request to refresh a specific Hive partition in a pipe-backed OLAP table"
             },
             "RelativeDateFilter": {
                 "required": [
@@ -10294,93 +9280,6 @@
                     }
                 }
             },
-            "SearchRequest": {
-                "required": [
-                    "question"
-                ],
-                "type": "object",
-                "properties": {
-                    "allowedRelationshipTypes": {
-                        "type": "array",
-                        "description": "Filter relationships and results based on allowed relationship type combinations. When specified, only relationships matching the allowed types are returned, and results are filtered to include only direct matches or objects reachable via allowed relationships. When null or omitted, all relationships and results are returned (default behavior). Note: This filtering happens after the initial search, so the number of returned results may be lower than the requested limit if some results are filtered out.",
-                        "items": {
-                            "$ref": "#/components/schemas/AllowedRelationshipType"
-                        }
-                    },
-                    "deepSearch": {
-                        "type": "boolean",
-                        "description": "Turn on deep search. If true, content of complex objects will be searched as well, e.g. metrics in visualizations.",
-                        "default": false
-                    },
-                    "enableHybridSearch": {
-                        "type": "boolean",
-                        "description": "If true, enables hybrid search combining vector similarity and keyword matching. This can improve search results by considering both semantic similarity and exact keyword matches.",
-                        "default": false
-                    },
-                    "excludeTags": {
-                        "type": "array",
-                        "description": "Exclude objects that contain any of the specified tags. This parameter only affects the search results. Objects with excluded tags are completely hidden from the results.",
-                        "items": {
-                            "type": "string",
-                            "description": "Tag to exclude."
-                        }
-                    },
-                    "includeHidden": {
-                        "type": "boolean",
-                        "description": "If true, includes hidden objects in search results. If false (default), excludes objects where isHidden=true.",
-                        "default": false
-                    },
-                    "includeTags": {
-                        "type": "array",
-                        "description": "Include only objects that contain at least one of the specified tags (OR logic). This parameter only affects the search results. If an object has multiple tags, it will be included as long as it matches at least one tag from this parameter.",
-                        "items": {
-                            "type": "string",
-                            "description": "Tag to include."
-                        }
-                    },
-                    "limit": {
-                        "type": "integer",
-                        "description": "Maximum number of results to return. There is a hard limit and the actual number of returned results may be lower than what is requested. This can happen when post-search filters are applied (e.g., reranker threshold filtering or allowedRelationshipTypes filtering), which may exclude some results after the initial search.",
-                        "format": "int32",
-                        "default": 10
-                    },
-                    "objectTypes": {
-                        "type": "array",
-                        "description": "List of object types to search for.",
-                        "items": {
-                            "type": "string",
-                            "description": "Object type to search for.",
-                            "enum": [
-                                "attribute",
-                                "metric",
-                                "fact",
-                                "label",
-                                "date",
-                                "dataset",
-                                "visualization",
-                                "dashboard"
-                            ]
-                        }
-                    },
-                    "question": {
-                        "maxLength": 1000,
-                        "type": "string",
-                        "description": "Keyword/sentence is input for search."
-                    },
-                    "relevantScoreThreshold": {
-                        "type": "number",
-                        "description": "Score, above which we return found objects. Below this score objects are not relevant.",
-                        "format": "double",
-                        "default": 0.3
-                    },
-                    "titleToDescriptorRatio": {
-                        "type": "number",
-                        "description": "Temporary for experiments. Ratio of title score to descriptor score.",
-                        "format": "double",
-                        "default": 0.7
-                    }
-                }
-            },
             "SearchResult": {
                 "required": [
                     "reasoning",
@@ -10409,7 +9308,8 @@
                             "$ref": "#/components/schemas/SearchResultObject"
                         }
                     }
-                }
+                },
+                "description": "Semantic search result payload."
             },
             "SearchResultObject": {
                 "required": [
@@ -10806,50 +9706,6 @@
                 },
                 "description": "Detailed thoughts/messages within this step."
             },
-            "TimeSlicePartitionConfig": {
-                "required": [
-                    "column",
-                    "slices",
-                    "type",
-                    "unit"
-                ],
-                "type": "object",
-                "properties": {
-                    "column": {
-                        "type": "string",
-                        "description": "Column to partition on."
-                    },
-                    "slices": {
-                        "minimum": 1,
-                        "type": "integer",
-                        "description": "How many units per slice.",
-                        "format": "int32"
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "timeSlice"
-                        ]
-                    },
-                    "unit": {
-                        "type": "string",
-                        "description": "Date/time unit for partition granularity",
-                        "enum": [
-                            "year",
-                            "quarter",
-                            "month",
-                            "week",
-                            "day",
-                            "hour",
-                            "minute",
-                            "second",
-                            "millisecond",
-                            "microsecond"
-                        ]
-                    }
-                },
-                "description": "Partition by time_slice() expression."
-            },
             "Total": {
                 "required": [
                     "function",
@@ -11078,29 +9934,6 @@
                     }
                 },
                 "description": "Ambient UI state: what the user is currently looking at (dashboard, visible widgets)."
-            },
-            "UniqueKeyConfig": {
-                "required": [
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "columns": {
-                        "type": "array",
-                        "description": "Key columns. Defaults to first inferred column.",
-                        "items": {
-                            "type": "string",
-                            "description": "Key columns. Defaults to first inferred column."
-                        }
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "unique"
-                        ]
-                    }
-                },
-                "description": "Unique key model — enforces uniqueness, replaces on conflict."
             },
             "UpdateDatabaseDataSourceRequest": {
                 "required": [

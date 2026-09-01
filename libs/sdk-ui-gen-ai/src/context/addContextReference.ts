@@ -1,38 +1,28 @@
 // (C) 2026 GoodData Corporation
 
-import {
-    type IGenAIObjectReferenceGroup,
-    type IGenAIUserContext,
-    areObjRefsEqual,
-} from "@gooddata/sdk-model";
+import { type IGenAIObjectReferenceGroup, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { type IGenAIContextObject, type StoreContext } from "../types.js";
 import { convertGenAiTypeToReferenceType } from "../utils.js";
 
-import { mergeContexts } from "./build.js";
-import { isReferenceChanged } from "./isReferenceChanged.js";
-import { removeAmbientContribution, removeReferencesCoveredByAmbient } from "./removeContextReference.js";
-
 export function addContextReference(context: StoreContext, reference?: IGenAIContextObject): StoreContext {
-    const { ambient, active } = context;
+    const { active } = context;
 
     if (!reference) {
         return context;
     }
 
-    if (reference.where === "view.dashboard" && ambient?.view?.dashboard) {
-        const ambientDashboard = ambient.view.dashboard;
-        if (areObjRefsEqual(ambientDashboard.ref, reference.ref)) {
-            return {
-                ...context,
-                active: {
-                    ...active,
-                    view: {
-                        dashboard: ambientDashboard,
-                    },
+    if (reference.where === "view.dashboard") {
+        return {
+            ...context,
+            active: {
+                ...active,
+                view: {
+                    ...active?.view,
+                    dashboard: context.ambient?.view?.dashboard,
                 },
-            };
-        }
+            },
+        };
     }
 
     if (reference.where === "referencedObjects") {
@@ -76,35 +66,4 @@ export function addContextReference(context: StoreContext, reference?: IGenAICon
     }
 
     return context;
-}
-
-function pruneForNewAmbient(
-    active: IGenAIUserContext | undefined,
-    previousAmbient: IGenAIUserContext | undefined,
-    newAmbient: IGenAIUserContext | undefined,
-): IGenAIUserContext | undefined {
-    return removeReferencesCoveredByAmbient(removeAmbientContribution(active, previousAmbient), newAmbient);
-}
-
-export function addAmbientContextReferences(
-    context: StoreContext,
-    userContext?: IGenAIUserContext,
-): StoreContext {
-    const referenceChanged = isReferenceChanged(context.ambient, userContext);
-    const updateActive = Boolean(!context.ambient || context.active?.view?.dashboard || referenceChanged);
-
-    return {
-        ...context,
-        ambient: userContext,
-        ...(updateActive
-            ? {
-                  active: mergeContexts(
-                      referenceChanged
-                          ? pruneForNewAmbient(context.active, context.ambient, userContext)
-                          : context.active,
-                      userContext,
-                  ),
-              }
-            : {}),
-    };
 }

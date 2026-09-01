@@ -21,7 +21,7 @@ import { DASHBOARD_LAYOUT_BREAK_POINTS } from "../../constants/layout.js";
 
 const getCurrentScreenSize = (): ScreenSize | undefined => {
     let viewportWidth = 0;
-    if (typeof window !== "undefined" && window.innerWidth) {
+    if (window?.innerWidth) {
         viewportWidth = window.innerWidth;
     }
 

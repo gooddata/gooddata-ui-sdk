@@ -636,6 +636,23 @@ export interface IDefaultAlertingDialogProps extends IAlertingDialogProps {
 }
 
 /**
+ * Props of {@link AlertingDialogFormFieldGroup}.
+ *
+ * @alpha
+ */
+export interface IAlertingDialogFormFieldGroupProps {
+    /**
+     * The group heading in the label column — "When" (the condition) and "Do" (the action) in the default dialog.
+     */
+    label: ReactNode;
+
+    /**
+     * The field rows of the group — {@link AlertingDialogMeasure} and its siblings.
+     */
+    children: ReactNode;
+}
+
+/**
  * @alpha
  */
 export interface IAlertingManagementDialogProps {
@@ -852,3 +869,56 @@ export type AlertAttribute = {
  * @alpha
  */
 export type AlertAiOperator = `${typeof AI_OPERATOR}.${typeof AI_OPERATORS.ANOMALY_DETECTION}`;
+
+/**
+ * Props of {@link AlertingDialogShell}.
+ *
+ * @alpha
+ */
+export interface IAlertingDialogShellProps extends Pick<
+    IAlertingDialogProps,
+    "onCancel" | "onDeleteSuccess" | "onDeleteError"
+> {
+    /**
+     * The dialog's single submit — `submit` of the caller's {@link useAlertSubmit} instance. Drives the
+     * footer's submit button and the Enter key on it. The shell does not own the submit hook, so a
+     * caller's own Enter handler or button can share the same instance. Create the hook instance only
+     * once the dialog context reports `isLoading: false`.
+     */
+    onSubmit: () => void;
+
+    /**
+     * `isSaving` of the same {@link useAlertSubmit} instance: disables submit and Delete and shows the
+     * footer's progress indicator.
+     */
+    isSaving: boolean;
+
+    /**
+     * Header and action-bar overrides — the Level 1 slot contract ({@link IAlertingDialogSlots.Header},
+     * {@link IAlertingDialogSlots.ActionBar}): each slot receives `{ Default, defaultProps }`, where
+     * `defaultProps` are the shell's live values (the header's `onCancel` and initial-focus `ref`; the
+     * action bar's `onSubmit`, `isSaving`, `onDelete`). Slot components need a stable reference identity —
+     * see {@link @gooddata/sdk-ui-kit#ISlotProps}. The body regions have no slot here: place their blocks
+     * ({@link AlertingDialogFilters} and siblings) as children instead.
+     */
+    slots?: Pick<IAlertingDialogSlots, "Header" | "ActionBar">;
+
+    /**
+     * Rendered first inside the dialog's scrollable content area, above `children`.
+     */
+    topContent?: ReactNode;
+
+    /**
+     * Rendered last inside the scrollable content area, below `children` and the dialog's warning and
+     * validation messages.
+     */
+    bottomContent?: ReactNode;
+
+    /**
+     * The body: the regions and fields, in the caller's order — {@link AlertingDialogFilters},
+     * {@link AlertingDialogFormFieldGroup} with the condition and action blocks, and so on. Not mounted
+     * while `useAlertingDialogContext().isLoading` is true (the shell shows its loading skeleton) or while
+     * the stale-filters confirmation step is shown.
+     */
+    children?: ReactNode;
+}

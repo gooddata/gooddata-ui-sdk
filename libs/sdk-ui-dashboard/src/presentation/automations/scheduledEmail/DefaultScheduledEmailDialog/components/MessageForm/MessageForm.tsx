@@ -12,17 +12,13 @@ import {
 } from "@gooddata/sdk-ui";
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
+import { type IScheduledEmailDialogMessageProps } from "../../../types.js";
 import { ErrorWrapper } from "../ErrorWrapper/ErrorWrapper.js";
 import { Textarea } from "../Textarea.js";
 
 const MAX_MESSAGE_LENGTH = 10000;
 
-interface IMessageFormProps {
-    value: string;
-    onChange: (value: string, isValid: boolean) => void;
-}
-
-export function MessageForm({ value, onChange }: IMessageFormProps) {
+export function MessageForm({ value, onChange }: IScheduledEmailDialogMessageProps) {
     const { formatMessage } = useIntl();
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 

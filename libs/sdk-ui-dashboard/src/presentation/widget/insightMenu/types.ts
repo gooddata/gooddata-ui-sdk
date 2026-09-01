@@ -100,7 +100,7 @@ export interface IInsightMenuSubmenu {
 }
 
 export function isIInsightMenuSubmenu(obj: IInsightMenuItem): obj is IInsightMenuSubmenu {
-    return obj !== null && obj.type === "submenu";
+    return obj?.type === "submenu";
 }
 
 /**

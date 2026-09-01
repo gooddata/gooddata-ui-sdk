@@ -1502,6 +1502,7 @@ export {
     type ReportTextSource,
     type IReportTextSlot,
     type ReportImageSource,
+    type ReportImageFit,
     type IReportImageSlot,
     type ReportSlot,
     BuiltInReportSlotTypes,

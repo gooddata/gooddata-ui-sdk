@@ -31,7 +31,6 @@ import {
     isCatalogFact,
     isCatalogMeasure,
     isFilter,
-    isIdentifierRef,
     isLocalIdRef,
     isMeasure,
     isMeasureValueFilter,
@@ -50,6 +49,7 @@ import { TigerWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableI
 //ivec investigate
 const typesMatching: Partial<{ [T in CatalogItemType]: AfmValidObjectsQueryTypesEnum }> = {
     attribute: "attributes",
+    computedAttribute: "computedAttributes",
     fact: "facts",
     measure: "measures",
     // dateDatasets are not supported by tiger in this context
@@ -177,23 +177,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         const relevantItems = insight
             ? [...insightMeasures(insight), ...insightAttributes(insight), ...insightFilters(insight)]
             : items;
-        // The validObjects action does not accept a computed attribute yet, and one in the query
-        // makes it fail for the WHOLE insight - which takes the catalog availability and the date
-        // datasets down with it. Leaving computed attributes out narrows the answer (their own
-        // restrictions are not applied) instead of losing it.
-        //
-        // Identified against the CATALOG rather than against the reference's own type: an insight
-        // built before the reference carried the computed attribute type still points at one with a
-        // plain displayForm type, and such a reference must be dropped too or the request 400s.
-        // TODO INE (CQ-2796): include them once the action accepts them
-        const computedAttributeIds = new Set(
-            this.items.filter(isCatalogComputedAttribute).map((item) => item.computedAttribute.id),
-        );
-        const attributes = relevantItems
-            .filter(isAttribute)
-            .filter(
-                (attribute) => !isComputedAttributeRef(attribute.attribute.displayForm, computedAttributeIds),
-            );
+        const attributes = relevantItems.filter(isAttribute);
         const measures = relevantItems.filter(isMeasure);
         const filters = relevantItems.filter(isFilter);
 
@@ -230,14 +214,6 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         const allAvailableItems = [
             ...availableItems,
             ...(types.includes("attributeHierarchy") ? this.items.filter(isCatalogAttributeHierarchy) : []),
-            // The action cannot evaluate a computed attribute yet, so one would never come back in
-            // the response and filterAvailableItems would drop it - hence the pass-through. Only
-            // when the query was actually sent: an empty query already answers with every item, and
-            // appending would list the computed attributes twice.
-            // TODO INE (CQ-2796): drop this once the action evaluates them
-            ...(types.includes("computedAttribute") && !afmValidObjectsQueryEmpty
-                ? this.items.filter(isCatalogComputedAttribute)
-                : []),
         ];
 
         return new TigerWorkspaceCatalogWithAvailableItems(
@@ -248,15 +224,6 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         );
     }
 }
-
-/**
- * Whether a reference points at a computed attribute - either because it says so, or because its
- * identifier is one of the workspace's computed attributes. The fabricated display form of a
- * computed attribute shares the computed attribute's id, so the identifier match holds for both the
- * attribute reference and its display form reference.
- */
-export const isComputedAttributeRef = (ref: ObjRef, computedAttributeIds: Set<string>) =>
-    isIdentifierRef(ref) && (ref.type === "computedAttribute" || computedAttributeIds.has(ref.identifier));
 
 /**
  * @internal

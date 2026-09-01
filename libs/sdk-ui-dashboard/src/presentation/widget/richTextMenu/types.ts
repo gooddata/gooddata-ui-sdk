@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { type ComponentType, type MouseEvent, type ReactElement, type ReactNode } from "react";
 
 import { type IRichTextWidget } from "@gooddata/sdk-model";
@@ -124,7 +125,7 @@ export interface IRichTextMenuSubmenu {
 }
 
 export function isRichTextMenuSubmenu(obj: IRichTextMenuItem): obj is IRichTextMenuSubmenu {
-    return obj !== null && obj.type === "submenu";
+    return obj?.type === "submenu";
 }
 
 ///

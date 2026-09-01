@@ -1056,7 +1056,7 @@ export function yamlFilterContextToDeclarative(
             // dataset from bypassing validation: without `date`, mapDateParentToFilterElementByDate
             // produces no dataSet, and the runtime legacy fallback then treats filterLocalIdentifier
             // as a dataset id — wrong when using holds a date-filter localId like "0_dateFilter".
-            if (typeof parent === "object" && parent !== null && parent.common === true && parent.date) {
+            if (typeof parent === "object" && parent?.common === true && parent.date) {
                 return true;
             }
             // Non-common object parents and plain string parents (including bare-string legacy common-date

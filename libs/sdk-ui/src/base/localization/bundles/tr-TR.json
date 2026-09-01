@@ -1119,6 +1119,7 @@
     "message.accessibility.dismiss.notification": "Bildirimi kapat",
     "datePicker.accessibility.label": "Başlangıç tarihini seçin",
     "timePicker.accessibility.label": "Başlangıç zamanını seç",
+    "timezoneSelect.search.accessibility.label": "Saat dilimlerini ara",
     "menu.close": "Menüyü kapat",
     "menu.back": "Ana menüye geri dön",
     "copyButton.copy.success": "Panoya kopyalandı!",

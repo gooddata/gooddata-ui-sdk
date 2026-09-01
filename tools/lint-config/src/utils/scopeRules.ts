@@ -1,10 +1,12 @@
 // (C) 2026 GoodData Corporation
 
+import { RuleValue } from "../types.js";
+
 export function scopeRules<Scope extends string>(
-    rules: Record<string, string | number | object | object[]>,
+    rules: Record<string, RuleValue>,
     scope: Scope,
-): Record<`${Scope}/${string}`, string | number | object | object[]> {
+): Record<`${Scope}/${string}`, RuleValue> {
     return Object.fromEntries(
         Object.entries(rules).map(([key, value]) => [`${scope}/${key}`, value]),
-    ) as Record<`${Scope}/${string}`, string | number | object | object[]>;
+    ) as Record<`${Scope}/${string}`, RuleValue>;
 }

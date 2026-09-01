@@ -3,14 +3,18 @@
 import { type AxiosInstance } from "axios";
 
 import { ActionsApi, type ActionsApiInterface } from "./generated/afm-rest-api/index.js";
-import { ObservabilityAi, type ObservabilityAiInterface } from "./generated/ai-json-api/index.js";
+import {
+    ObservabilityAi,
+    type ObservabilityAiInterface,
+    SmartFunctionsAi,
+    type SmartFunctionsAiInterface,
+} from "./generated/ai-json-api/index.js";
 
 /**
  * Tiger GenAI client factory
  */
 export type TigerGenAIClient = Pick<
     ActionsApiInterface,
-    | "aiSearch"
     | "aiChat"
     | "aiChatStream"
     | "aiChatHistory"
@@ -21,14 +25,16 @@ export type TigerGenAIClient = Pick<
     | "triggerQualityIssuesCalculation"
     | "memoryCreatedByUsers"
 > &
+    Pick<SmartFunctionsAiInterface, "aiSearch"> &
     Pick<ObservabilityAiInterface, "getObservabilityOverview">;
 
 export const tigerGenAIClientFactory = (axios: AxiosInstance): TigerGenAIClient => {
     const actionsApi = new ActionsApi(undefined, "", axios);
     const observabilityApi = new ObservabilityAi(undefined, "", axios);
+    const smartFunctionsApi = new SmartFunctionsAi(undefined, "", axios);
 
     return {
-        aiSearch: actionsApi.aiSearch.bind(actionsApi),
+        aiSearch: smartFunctionsApi.aiSearch.bind(smartFunctionsApi),
         aiChat: actionsApi.aiChat.bind(actionsApi),
         aiChatStream: actionsApi.aiChatStream.bind(actionsApi),
         aiChatHistory: actionsApi.aiChatHistory.bind(actionsApi),

@@ -54,7 +54,7 @@ function classifyMetricError(
     parsed: unknown,
 ): "invalidStructure" | "missingMaql" | "invalidTags" {
     const maqlProvided =
-        typeof parsed === "object" && parsed !== null && (parsed as { maql?: unknown }).maql !== undefined;
+        typeof parsed === "object" && (parsed as { maql?: unknown } | null)?.maql !== undefined;
 
     for (const issue of error.issues) {
         const path = issue.path.map(String).join(".");
