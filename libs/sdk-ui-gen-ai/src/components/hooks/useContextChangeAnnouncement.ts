@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { type IntlShape, defineMessages, useIntl } from "react-intl";
 
-import { type IGenAIContextObject } from "../../types.js";
+import { type IGenAIContextObject, type SelectedContext } from "../../types.js";
 
 const msgs = defineMessages({
     added: {
@@ -29,20 +29,28 @@ const ANNOUNCEMENT_DELAY = 250;
  * nothing is left.
  * @internal
  */
-export function useContextChangeAnnouncement(references: IGenAIContextObject[]): string {
+export function useContextChangeAnnouncement(
+    selected: SelectedContext | undefined,
+    references: IGenAIContextObject[],
+): string {
     const intl = useIntl();
     const [announcement, setAnnouncement] = useState("");
     const previousReferences = useRef<IGenAIContextObject[] | null>(null);
 
     useEffect(() => {
         const previous = previousReferences.current;
-        previousReferences.current = references;
+        const all = [
+            ...(selected?.activated && selected.dashboard ? [selected.dashboard] : []),
+            ...(selected?.activated && selected.visualization ? [selected.visualization] : []),
+            ...references,
+        ];
+        previousReferences.current = all;
 
         if (previous === null) {
             return undefined;
         }
 
-        const message = getAnnouncement(previous, references, intl);
+        const message = getAnnouncement(previous, all, intl);
         if (!message) {
             return undefined;
         }
@@ -50,7 +58,7 @@ export function useContextChangeAnnouncement(references: IGenAIContextObject[]):
         setAnnouncement("");
         const timeout = setTimeout(() => setAnnouncement(message), ANNOUNCEMENT_DELAY);
         return () => clearTimeout(timeout);
-    }, [references, intl]);
+    }, [references, intl, selected]);
 
     return announcement;
 }

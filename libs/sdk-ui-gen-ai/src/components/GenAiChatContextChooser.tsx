@@ -7,13 +7,17 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Dropdown, UiIconButton, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-import { ambientContextSelector, userContextSelector } from "../store/chatWindow/chatWindowSelectors.js";
+import {
+    ambientContextSelector,
+    selectedContextSelector,
+    userContextSelector,
+} from "../store/chatWindow/chatWindowSelectors.js";
 import { addContextReferenceAction, initContextObjectsAction } from "../store/chatWindow/chatWindowSlice.js";
 import { type RootState } from "../store/types.js";
 import { type IGenAIContextObject } from "../types.js";
 
 import { GenAiChatContextChooserBody } from "./GenAiChatContextChooserBody.js";
-import { useContextItems } from "./hooks/useContextItems.js";
+import { useUserContextItems } from "./hooks/useContextItems.js";
 
 const msgs = defineMessages({
     add: {
@@ -30,6 +34,7 @@ export function GenAiChatContextChooser({ onAddContext }: GenAiChatContextChoose
     const dispatch = useDispatch();
     const titleId = useIdPrefixed("context-chooser-title");
     const ambient = useSelector((state: RootState) => ambientContextSelector(state));
+    const selected = useSelector((state: RootState) => selectedContextSelector(state));
     const active = useSelector((state: RootState) => userContextSelector(state));
     const {
         items: inputItems,
@@ -38,7 +43,7 @@ export function GenAiChatContextChooser({ onAddContext }: GenAiChatContextChoose
         isLoading,
         hasNextPage,
         loadNextPage,
-    } = useContextItems(ambient, active);
+    } = useUserContextItems(ambient, selected, active);
     const addContextLabel = intl.formatMessage(msgs.add);
 
     const onOpenStateChanged = useCallback(

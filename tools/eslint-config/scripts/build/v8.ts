@@ -2,7 +2,9 @@
 
 import { writeFileSync } from "fs";
 
-import type { IConfigurationV8, IDualConfiguration, Rules } from "../../src/types.js";
+import { type Rules } from "@gooddata/lint-config";
+
+import type { IConfigurationV8, IDualConfiguration } from "../../src/types.js";
 
 // Types for the output eslintrc JSON format
 interface IEslintConfigurationCommon {

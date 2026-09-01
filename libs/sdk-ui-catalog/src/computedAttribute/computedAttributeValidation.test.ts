@@ -46,6 +46,16 @@ locale: en-US
         });
     });
 
+    it.each([`id:`, `id: `, `id: "   "`])(
+        "ignores a blank id (%s), leaving the identity to the server",
+        (idLine) => {
+            const result = validateComputedAttributeYaml(`${idLine}\nmaql: SELECT 1`);
+
+            expect(result.isValid).toBe(true);
+            expect(result.isValid && result.computedAttribute).not.toHaveProperty("id");
+        },
+    );
+
     it("rejects an empty definition", () => {
         expect(validateComputedAttributeYaml("   ")).toEqual({ isValid: false, errorCode: "empty" });
     });
@@ -64,8 +74,22 @@ locale: en-US
         });
     });
 
+    it.each(["computedAttribute", "computed attribute", "metric"])(
+        "names the expected type when the author mistypes it as %s",
+        (type) => {
+            expect(validateComputedAttributeYaml(`type: ${type}\nmaql: SELECT 1`)).toEqual({
+                isValid: false,
+                errorCode: "invalidType",
+            });
+        },
+    );
+
     it("reports a blank maql line - the create template's state - as missing, not malformed", () => {
         expect(validateComputedAttributeYaml(`title: Draft\ndescription: ""\nmaql:`)).toEqual({
+            isValid: false,
+            errorCode: "missingMaql",
+        });
+        expect(validateComputedAttributeYaml(`title: Draft\ndescription: ""\nmaql: `)).toEqual({
             isValid: false,
             errorCode: "missingMaql",
         });

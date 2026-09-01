@@ -1119,6 +1119,7 @@
     "message.accessibility.dismiss.notification": "Bỏ qua thông báo",
     "datePicker.accessibility.label": "Chọn ngày bắt đầu",
     "timePicker.accessibility.label": "Chọn giờ bắt đầu",
+    "timezoneSelect.search.accessibility.label": "Tìm kiếm múi giờ",
     "menu.close": "Đóng menu",
     "menu.back": "Quay lại menu cha",
     "copyButton.copy.success": "Đã sao chép vào bảng tạm!",

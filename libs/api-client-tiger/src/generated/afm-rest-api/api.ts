@@ -289,7 +289,7 @@ export interface AfmValidObjectsQuery {
     'types': Array<AfmValidObjectsQueryTypesEnum>;
 }
 
-export type AfmValidObjectsQueryTypesEnum = 'facts' | 'attributes' | 'measures';
+export type AfmValidObjectsQueryTypesEnum = 'facts' | 'attributes' | 'measures' | 'computedAttributes';
 
 /**
  * All objects of specified types valid with respect to given AFM.
@@ -297,19 +297,6 @@ export type AfmValidObjectsQueryTypesEnum = 'facts' | 'attributes' | 'measures';
 export interface AfmValidObjectsResponse {
     'items': Array<RestApiIdentifier>;
 }
-
-/**
- * Aggregate key model — pre-aggregates rows sharing the same key columns.
- */
-export interface AggregateKeyConfig {
-    /**
-     * Key columns. Defaults to first inferred column.
-     */
-    'columns'?: Array<string>;
-    'type': AggregateKeyConfigTypeEnum;
-}
-
-export type AggregateKeyConfigTypeEnum = 'aggregate';
 
 /**
  * AI usage metadata returned after the interaction (e.g. current query count vs. entitlement limit).
@@ -970,49 +957,6 @@ export interface ClusteringResult {
 }
 
 /**
- * Single column projection override: applies `function(column)` to a source column.
- */
-export interface ColumnExpression {
-    /**
-     * Source column produced by parquet schema inference (after columnOverrides).
-     */
-    'column': string;
-    /**
-     * StarRocks transform applied to a source column when projecting it through the generated CREATE PIPE ... AS INSERT statement.
-     */
-    'function': ColumnExpressionFunctionEnum;
-}
-
-export type ColumnExpressionFunctionEnum = 'HLL_HASH' | 'BITMAP_HASH' | 'BITMAP_HASH64' | 'TO_BITMAP';
-
-/**
- * A single column definition inferred from the parquet schema
- */
-export interface ColumnInfo {
-    /**
-     * Column name
-     */
-    'name': string;
-    /**
-     * SQL column type (e.g. VARCHAR(200), BIGINT, DOUBLE)
-     */
-    'type': string;
-}
-
-/**
- * Partition by column expression.
- */
-export interface ColumnPartitionConfig {
-    /**
-     * Columns to partition by.
-     */
-    'columns': Array<string>;
-    'type': ColumnPartitionConfigTypeEnum;
-}
-
-export type ColumnPartitionConfigTypeEnum = 'column';
-
-/**
  * Condition that compares the metric value to a given constant value using a comparison operator.
  */
 export interface ComparisonCondition {
@@ -1075,66 +1019,6 @@ export interface CompoundMeasureValueFilterCompoundMeasureValueFilter {
      */
     'treatNullValuesAs'?: number;
 }
-
-/**
- * Request to create a new pipe-backed OLAP table in the AI Lake
- */
-export interface CreatePipeTableRequest {
-    /**
-     * Maps non-key column names to their StarRocks aggregation function (SUM, MIN, MAX, REPLACE, REPLACE_IF_NOT_NULL, HLL_UNION, BITMAP_UNION, PERCENTILE_UNION). Required for every non-key column when keyConfig type is \'aggregate\'. Ignored for other key types.
-     */
-    'aggregationOverrides'?: { [key: string]: string; };
-    /**
-     * Per-target-column projection overrides. Each entry emits `<function>(<column>) AS <key>` in the SELECT list of the generated CREATE PIPE ... AS INSERT; keys absent from the map are projected as-is. Required for AGGREGATE-KEY tables that include native HLL columns (StarRocks rejects raw VARBINARY into HLL columns).
-     */
-    'columnExpressions'?: { [key: string]: ColumnExpression; };
-    /**
-     * Override inferred column types. Maps column names to SQL type strings (e.g. {\"year\": \"INT\", \"event_date\": \"DATE\"}). Applied after parquet schema inference.
-     */
-    'columnOverrides'?: { [key: string]: string; };
-    'distributionConfig'?: CreatePipeTableRequestDistributionConfig;
-    'keyConfig'?: CreatePipeTableRequestKeyConfig;
-    /**
-     * Cap VARCHAR(N) to this length when N exceeds it. 0 = no cap.
-     */
-    'maxVarcharLength'?: number;
-    'partitionConfig'?: CreatePipeTableRequestPartitionConfig;
-    /**
-     * Path prefix to the parquet files (e.g. \'my-dataset/year=2024/\'). All parquet files must be at a uniform depth under the prefix — either all directly under the prefix, or all under a consistent Hive partition hierarchy (e.g. year=2024/month=01/). Mixed layouts (files at multiple depths) are not supported.
-     */
-    'pathPrefix': string;
-    /**
-     * How often (in seconds) the pipe polls for new files. 0 or null = use server default.
-     */
-    'pollingIntervalSeconds'?: number;
-    /**
-     * Name of the pre-configured S3/MinIO ObjectStorage source
-     */
-    'sourceStorageName': string;
-    /**
-     * Name of the OLAP table to create. Must match ^[a-z][a-z0-9_-]{0,62}$
-     */
-    'tableName': string;
-    /**
-     * CREATE TABLE PROPERTIES key-value pairs. Defaults to {\"replication_num\": \"1\"}.
-     */
-    'tableProperties'?: { [key: string]: string; };
-}
-
-/**
- * @type CreatePipeTableRequestDistributionConfig
- */
-export type CreatePipeTableRequestDistributionConfig = HashDistributionConfig | RandomDistributionConfig;
-
-/**
- * @type CreatePipeTableRequestKeyConfig
- */
-export type CreatePipeTableRequestKeyConfig = AggregateKeyConfig | DuplicateKeyConfig | PrimaryKeyConfig | UniqueKeyConfig;
-
-/**
- * @type CreatePipeTableRequestPartitionConfig
- */
-export type CreatePipeTableRequestPartitionConfig = ColumnPartitionConfig | DateTruncPartitionConfig | TimeSlicePartitionConfig;
 
 /**
  * List of created visualization objects
@@ -1315,24 +1199,6 @@ export interface DateRelativeFilter {
 export type DateRelativeFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
- * Partition by date_trunc() expression.
- */
-export interface DateTruncPartitionConfig {
-    /**
-     * Column to partition on.
-     */
-    'column': string;
-    'type': DateTruncPartitionConfigTypeEnum;
-    /**
-     * Date/time unit for partition granularity
-     */
-    'unit': DateTruncPartitionConfigUnitEnum;
-}
-
-export type DateTruncPartitionConfigTypeEnum = 'dateTrunc';
-export type DateTruncPartitionConfigUnitEnum = 'year' | 'quarter' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond' | 'microsecond';
-
-/**
  * Filter definition type specified by label and values.
  */
 export interface DependsOn {
@@ -1411,26 +1277,6 @@ export interface DimensionHeader {
      */
     'headerGroups': Array<HeaderGroup>;
 }
-
-/**
- * Distribution configuration for the OLAP table.
- */
-export interface DistributionConfig {
-    'type': string;
-}
-
-/**
- * Duplicate key model — allows duplicate rows for the given key columns.
- */
-export interface DuplicateKeyConfig {
-    /**
-     * Key columns. Defaults to first inferred column.
-     */
-    'columns'?: Array<string>;
-    'type': DuplicateKeyConfigTypeEnum;
-}
-
-export type DuplicateKeyConfigTypeEnum = 'duplicate';
 
 /**
  * List of returned elements.
@@ -1897,23 +1743,6 @@ export interface GetServiceStatusResponse {
 }
 
 /**
- * Hash-based distribution across buckets.
- */
-export interface HashDistributionConfig {
-    /**
-     * Number of hash buckets. Defaults to 1.
-     */
-    'buckets'?: number;
-    /**
-     * Columns to distribute by. Defaults to first column.
-     */
-    'columns'?: Array<string>;
-    'type': HashDistributionConfigTypeEnum;
-}
-
-export type HashDistributionConfigTypeEnum = 'hash';
-
-/**
  * Contains the information specific for a group of headers. These groups correlate to attributes and metric groups.
  */
 export interface HeaderGroup {
@@ -1991,14 +1820,6 @@ export interface JsonApiDocumentDatabaseInstance {
 }
 
 /**
- * JSON:API-compatible single-resource response envelope
- */
-export interface JsonApiDocumentPipeTable {
-    'data': JsonApiItemPipeTable;
-    'links': JsonApiListLinks;
-}
-
-/**
  * A single JSON:API resource item
  */
 export interface JsonApiItemDataSourceInfo {
@@ -2033,36 +1854,6 @@ export interface JsonApiItemDatabaseInstance {
  */
 export interface JsonApiItemObjectStorageInfo {
     'attributes': ObjectStorageInfo;
-    /**
-     * Resource identifier
-     */
-    'id': string;
-    /**
-     * Resource type
-     */
-    'type': string;
-}
-
-/**
- * A single JSON:API resource item
- */
-export interface JsonApiItemPipeTable {
-    'attributes': PipeTable;
-    /**
-     * Resource identifier
-     */
-    'id': string;
-    /**
-     * Resource type
-     */
-    'type': string;
-}
-
-/**
- * A single JSON:API resource item
- */
-export interface JsonApiItemPipeTableSummary {
-    'attributes': PipeTableSummary;
     /**
      * Resource identifier
      */
@@ -2127,18 +1918,6 @@ export interface JsonApiListDocumentObjectStorageInfo {
 /**
  * JSON:API-compatible list response envelope
  */
-export interface JsonApiListDocumentPipeTableSummary {
-    /**
-     * Array of resource items
-     */
-    'data': Array<JsonApiItemPipeTableSummary>;
-    'links': JsonApiListLinks;
-    'meta'?: JsonApiListMeta;
-}
-
-/**
- * JSON:API-compatible list response envelope
- */
 export interface JsonApiListDocumentServiceInfo {
     /**
      * Array of resource items
@@ -2185,13 +1964,6 @@ export interface JsonApiPageInfo {
      * Total number of pages; only present when metaInclude=page was requested
      */
     'totalPages'?: number;
-}
-
-/**
- * Key configuration for the table data model.
- */
-export interface KeyConfig {
-    'type': string;
 }
 
 export interface KeyDriversDimension {
@@ -2569,7 +2341,7 @@ export interface ObjectReferenceGroup {
  */
 export interface ObjectStorageInfo {
     /**
-     * Human-readable name. Use this as `sourceStorageName` in CreatePipeTable, or pass `storageId` to ProvisionDatabase.storageIds.
+     * Human-readable name. Pass `storageId` to ProvisionDatabase.storageIds.
      */
     'name': string;
     /**
@@ -2629,13 +2401,13 @@ export interface Operation {
      */
     'id': string;
     /**
-     * Type of the long-running operation. * `provision-database` — Provisioning of an AI Lake database. * `deprovision-database` — Deprovisioning (deletion) of an AI Lake database. * `run-service-command` — Running a command in a particular AI Lake service. * `create-pipe-table` — Creating a pipe table backed by an S3 data source. * `delete-pipe-table` — Deleting a pipe table. * `analyze-statistics` — Running ANALYZE TABLE for CBO statistics collection. * `refresh-partition` — Refreshing a specific Hive partition (delete + re-load from S3). 
+     * Type of the long-running operation. * `provision-database` — Provisioning of an AI Lake database. * `deprovision-database` — Deprovisioning (deletion) of an AI Lake database. * `run-service-command` — Running a command in a particular AI Lake service. * `analyze-statistics` — Running ANALYZE TABLE for CBO statistics collection. 
      */
     'kind': OperationKindEnum;
     'status': string;
 }
 
-export type OperationKindEnum = 'provision-database' | 'deprovision-database' | 'run-service-command' | 'create-pipe-table' | 'delete-pipe-table' | 'analyze-statistics' | 'refresh-partition';
+export type OperationKindEnum = 'provision-database' | 'deprovision-database' | 'run-service-command' | 'analyze-statistics';
 
 /**
  * Error information for a failed operation
@@ -2733,13 +2505,6 @@ export interface ParameterItem {
 }
 
 /**
- * Partition configuration for the table.
- */
-export interface PartitionConfig {
-    'type': string;
-}
-
-/**
  * Operation that is still pending
  */
 export interface PendingOperation extends Operation {
@@ -2747,88 +2512,6 @@ export interface PendingOperation extends Operation {
 }
 
 export type PendingOperationStatusEnum = 'pending';
-
-/**
- * Full details of a pipe-backed OLAP table
- */
-export interface PipeTable {
-    /**
-     * Inferred column schema
-     */
-    'columns': Array<ColumnInfo>;
-    /**
-     * Database name
-     */
-    'databaseName': string;
-    'distributionConfig': PipeTableDistributionConfig;
-    'keyConfig': PipeTableKeyConfig;
-    /**
-     * Hive partition columns detected from the path structure
-     */
-    'partitionColumns': Array<string>;
-    'partitionConfig'?: PipeTablePartitionConfig;
-    /**
-     * Path prefix to the parquet files
-     */
-    'pathPrefix': string;
-    /**
-     * Internal UUID of the pipe table record
-     */
-    'pipeTableId': string;
-    /**
-     * How often (in seconds) the pipe polls for new files. 0 = server default.
-     */
-    'pollingIntervalSeconds': number;
-    /**
-     * Source ObjectStorage name
-     */
-    'sourceStorageName': string;
-    /**
-     * OLAP table name
-     */
-    'tableName': string;
-    /**
-     * CREATE TABLE PROPERTIES key-value pairs
-     */
-    'tableProperties': { [key: string]: string; };
-}
-
-/**
- * @type PipeTableDistributionConfig
- */
-export type PipeTableDistributionConfig = HashDistributionConfig | RandomDistributionConfig;
-
-/**
- * @type PipeTableKeyConfig
- */
-export type PipeTableKeyConfig = AggregateKeyConfig | DuplicateKeyConfig | PrimaryKeyConfig | UniqueKeyConfig;
-
-/**
- * @type PipeTablePartitionConfig
- */
-export type PipeTablePartitionConfig = ColumnPartitionConfig | DateTruncPartitionConfig | TimeSlicePartitionConfig;
-
-/**
- * Lightweight pipe table entry used in list responses
- */
-export interface PipeTableSummary {
-    /**
-     * Inferred column schema
-     */
-    'columns': Array<ColumnInfo>;
-    /**
-     * Path prefix to the parquet files
-     */
-    'pathPrefix': string;
-    /**
-     * Internal UUID of the pipe table record
-     */
-    'pipeTableId': string;
-    /**
-     * OLAP table name
-     */
-    'tableName': string;
-}
 
 /**
  * Combination of the date data set to use and how many periods ago to calculate the previous period for.
@@ -2904,19 +2587,6 @@ export interface PositiveAttributeFilterPositiveAttributeFilter {
      */
     'usesArbitraryValues'?: boolean;
 }
-
-/**
- * Primary key model — enforces uniqueness, replaces on conflict.
- */
-export interface PrimaryKeyConfig {
-    /**
-     * Key columns. Defaults to first inferred column.
-     */
-    'columns'?: Array<string>;
-    'type': PrimaryKeyConfigTypeEnum;
-}
-
-export type PrimaryKeyConfigTypeEnum = 'primary';
 
 /**
  * Request to provision a new AILake Database instance
@@ -3006,19 +2676,6 @@ export interface QualityIssuesCalculationStatusResponse {
 }
 
 export type QualityIssuesCalculationStatusResponseStatusEnum = 'RUNNING' | 'SYNCING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | 'NOT_FOUND' | 'DISABLED';
-
-/**
- * Random distribution across buckets.
- */
-export interface RandomDistributionConfig {
-    /**
-     * Number of random distribution buckets. Defaults to 1.
-     */
-    'buckets'?: number;
-    'type': RandomDistributionConfigTypeEnum;
-}
-
-export type RandomDistributionConfigTypeEnum = 'random';
 
 /**
  * Condition that checks if the metric value is within a given range.
@@ -3121,16 +2778,6 @@ export interface ReasoningStep {
      * Title describing this reasoning step.
      */
     'title': string;
-}
-
-/**
- * Request to refresh a specific Hive partition in a pipe-backed OLAP table
- */
-export interface RefreshPartitionRequest {
-    /**
-     * Partition column values identifying the partition to refresh. Keys must match the table\'s partition_columns exactly. Example: {\"date\": \"2026-01-01\"}
-     */
-    'partitionSpec': { [key: string]: string; };
 }
 
 /**
@@ -3347,55 +2994,9 @@ export interface SearchRelationshipObject {
     'targetWorkspaceId': string;
 }
 
-export interface SearchRequest {
-    /**
-     * Filter relationships and results based on allowed relationship type combinations. When specified, only relationships matching the allowed types are returned, and results are filtered to include only direct matches or objects reachable via allowed relationships. When null or omitted, all relationships and results are returned (default behavior). Note: This filtering happens after the initial search, so the number of returned results may be lower than the requested limit if some results are filtered out.
-     */
-    'allowedRelationshipTypes'?: Array<AllowedRelationshipType>;
-    /**
-     * Turn on deep search. If true, content of complex objects will be searched as well, e.g. metrics in visualizations.
-     */
-    'deepSearch'?: boolean;
-    /**
-     * If true, enables hybrid search combining vector similarity and keyword matching. This can improve search results by considering both semantic similarity and exact keyword matches.
-     */
-    'enableHybridSearch'?: boolean;
-    /**
-     * Exclude objects that contain any of the specified tags. This parameter only affects the search results. Objects with excluded tags are completely hidden from the results.
-     */
-    'excludeTags'?: Array<string>;
-    /**
-     * If true, includes hidden objects in search results. If false (default), excludes objects where isHidden=true.
-     */
-    'includeHidden'?: boolean;
-    /**
-     * Include only objects that contain at least one of the specified tags (OR logic). This parameter only affects the search results. If an object has multiple tags, it will be included as long as it matches at least one tag from this parameter.
-     */
-    'includeTags'?: Array<string>;
-    /**
-     * Maximum number of results to return. There is a hard limit and the actual number of returned results may be lower than what is requested. This can happen when post-search filters are applied (e.g., reranker threshold filtering or allowedRelationshipTypes filtering), which may exclude some results after the initial search.
-     */
-    'limit'?: number;
-    /**
-     * List of object types to search for.
-     */
-    'objectTypes'?: Array<SearchRequestObjectTypesEnum>;
-    /**
-     * Keyword/sentence is input for search.
-     */
-    'question': string;
-    /**
-     * Score, above which we return found objects. Below this score objects are not relevant.
-     */
-    'relevantScoreThreshold'?: number;
-    /**
-     * Temporary for experiments. Ratio of title score to descriptor score.
-     */
-    'titleToDescriptorRatio'?: number;
-}
-
-export type SearchRequestObjectTypesEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
-
+/**
+ * Semantic search result payload.
+ */
 export interface SearchResult {
     'error'?: ErrorInfo;
     /**
@@ -3644,28 +3245,6 @@ export interface Thought {
 }
 
 /**
- * Partition by time_slice() expression.
- */
-export interface TimeSlicePartitionConfig {
-    /**
-     * Column to partition on.
-     */
-    'column': string;
-    /**
-     * How many units per slice.
-     */
-    'slices': number;
-    'type': TimeSlicePartitionConfigTypeEnum;
-    /**
-     * Date/time unit for partition granularity
-     */
-    'unit': TimeSlicePartitionConfigUnitEnum;
-}
-
-export type TimeSlicePartitionConfigTypeEnum = 'timeSlice';
-export type TimeSlicePartitionConfigUnitEnum = 'year' | 'quarter' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond' | 'microsecond';
-
-/**
  * Definition of a total. There are two types of totals: grand totals and subtotals. Grand total data will be returned in a separate section of the result structure while subtotals are fully integrated into the main result data. The mechanism for this distinction is automatic and it\'s described in `TotalDimension`
  */
 export interface Total {
@@ -3809,19 +3388,6 @@ export type TriggerQualityIssuesCalculationResponseStatusEnum = 'RUNNING' | 'COM
 export interface UIContext {
     'dashboard'?: DashboardContext;
 }
-
-/**
- * Unique key model — enforces uniqueness, replaces on conflict.
- */
-export interface UniqueKeyConfig {
-    /**
-     * Key columns. Defaults to first inferred column.
-     */
-    'columns'?: Array<string>;
-    'type': UniqueKeyConfigTypeEnum;
-}
-
-export type UniqueKeyConfigTypeEnum = 'unique';
 
 /**
  * Request to update the data source associated with an AI Lake Database instance
@@ -4073,7 +3639,7 @@ export async function AILakeApiAxiosParamCreator_AddAiLakeDatabaseDataSource(
 
 // AILakeApi FP - AILakeApiAxiosParamCreator
 /**
- * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
+ * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
  * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
  * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
  * @param {AnalyzeStatisticsRequest} analyzeStatisticsRequest 
@@ -4130,127 +3696,6 @@ export async function AILakeApiAxiosParamCreator_AnalyzeStatistics(
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(analyzeStatisticsRequest !== undefined ? analyzeStatisticsRequest : {})
         : analyzeStatisticsRequest || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AILakeApi FP - AILakeApiAxiosParamCreator
-/**
- * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
- * @summary (BETA) Create a new AI Lake pipe table
- * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
- * @param {CreatePipeTableRequest} createPipeTableRequest 
- * @param {string} [operationId] 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakeApiAxiosParamCreator_CreateAiLakePipeTable(
-    instanceId: string, createPipeTableRequest: CreatePipeTableRequest, operationId?: string, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'instanceId' is not null or undefined
-    assertParamExists('createAiLakePipeTable', 'instanceId', instanceId)
-    // verify required parameter 'createPipeTableRequest' is not null or undefined
-    assertParamExists('createAiLakePipeTable', 'createPipeTableRequest', createPipeTableRequest)
-    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables`
-        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (operationId !== undefined && operationId !== null) {
-        localVarHeaderParameter['operation-id'] = String(operationId);
-    }
-
-
-    
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof createPipeTableRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(createPipeTableRequest !== undefined ? createPipeTableRequest : {})
-        : createPipeTableRequest || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AILakeApi FP - AILakeApiAxiosParamCreator
-/**
- * (BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.
- * @summary (BETA) Delete an AI Lake pipe table
- * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
- * @param {string} tableName Pipe table name.
- * @param {string} [operationId] 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakeApiAxiosParamCreator_DeleteAiLakePipeTable(
-    instanceId: string, tableName: string, operationId?: string, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'instanceId' is not null or undefined
-    assertParamExists('deleteAiLakePipeTable', 'instanceId', instanceId)
-    // verify required parameter 'tableName' is not null or undefined
-    assertParamExists('deleteAiLakePipeTable', 'tableName', tableName)
-    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables/{tableName}`
-        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)))
-        .replace(`{${"tableName"}}`, encodeURIComponent(String(tableName)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (operationId !== undefined && operationId !== null) {
-        localVarHeaderParameter['operation-id'] = String(operationId);
-    }
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
 
     return {
         url: toPathString(localVarUrlObj),
@@ -4372,55 +3817,6 @@ export async function AILakeApiAxiosParamCreator_GetAiLakeOperation(
     assertParamExists('getAiLakeOperation', 'operationId', operationId)
     const localVarPath = `/api/v1/ailake/operations/{operationId}`
         .replace(`{${"operationId"}}`, encodeURIComponent(String(operationId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AILakeApi FP - AILakeApiAxiosParamCreator
-/**
- * (BETA) Returns full details of the specified pipe table.
- * @summary (BETA) Get an AI Lake pipe table
- * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
- * @param {string} tableName Pipe table name.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakeApiAxiosParamCreator_GetAiLakePipeTable(
-    instanceId: string, tableName: string, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'instanceId' is not null or undefined
-    assertParamExists('getAiLakePipeTable', 'instanceId', instanceId)
-    // verify required parameter 'tableName' is not null or undefined
-    assertParamExists('getAiLakePipeTable', 'tableName', tableName)
-    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables/{tableName}`
-        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)))
-        .replace(`{${"tableName"}}`, encodeURIComponent(String(tableName)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
     let baseOptions;
@@ -4611,7 +4007,7 @@ export async function AILakeApiAxiosParamCreator_ListAiLakeDatabaseInstances(
 
 // AILakeApi FP - AILakeApiAxiosParamCreator
 /**
- * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
+ * (BETA) Lists ObjectStorages registered for the organization. Pass the returned `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
  * @summary (BETA) List registered AI Lake ObjectStorages
  * @param {number} [page] Zero-based page number.
  * @param {number} [size] Number of items per page.
@@ -4626,66 +4022,6 @@ export async function AILakeApiAxiosParamCreator_ListAiLakeObjectStorages(
     configuration?: Configuration,
 ): Promise<RequestArgs> {
     const localVarPath = `/api/v1/ailake/objectStorages`;
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
-    }
-
-    if (size !== undefined) {
-        localVarQueryParameter['size'] = size;
-    }
-
-    if (metaInclude) {
-        localVarQueryParameter['metaInclude'] = Array.from(metaInclude);
-    }
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AILakeApi FP - AILakeApiAxiosParamCreator
-/**
- * (BETA) Lists active pipe tables in the given AI Lake database instance.
- * @summary (BETA) List AI Lake pipe tables
- * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
- * @param {number} [page] Zero-based page number.
- * @param {number} [size] Number of items per page.
- * @param {Array<string>} [metaInclude] 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakeApiAxiosParamCreator_ListAiLakePipeTables(
-    instanceId: string, page?: number, size?: number, metaInclude?: Array<string>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'instanceId' is not null or undefined
-    assertParamExists('listAiLakePipeTables', 'instanceId', instanceId)
-    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables`
-        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
     let baseOptions;
@@ -4836,77 +4172,6 @@ export async function AILakeApiAxiosParamCreator_ProvisionAiLakeDatabaseInstance
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(provisionDatabaseInstanceRequest !== undefined ? provisionDatabaseInstanceRequest : {})
         : provisionDatabaseInstanceRequest || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AILakeApi FP - AILakeApiAxiosParamCreator
-/**
- * (BETA) Deletes all rows for the specified Hive partition and re-loads them from S3. Use after overwriting a partition file in object storage with corrected data. Returns an operation-id header the client can use to poll for progress.
- * @summary (BETA) Refresh a pipe table partition
- * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
- * @param {string} tableName Pipe table name.
- * @param {RefreshPartitionRequest} refreshPartitionRequest 
- * @param {string} [operationId] 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakeApiAxiosParamCreator_RefreshAiLakePipeTablePartition(
-    instanceId: string, tableName: string, refreshPartitionRequest: RefreshPartitionRequest, operationId?: string, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'instanceId' is not null or undefined
-    assertParamExists('refreshAiLakePipeTablePartition', 'instanceId', instanceId)
-    // verify required parameter 'tableName' is not null or undefined
-    assertParamExists('refreshAiLakePipeTablePartition', 'tableName', tableName)
-    // verify required parameter 'refreshPartitionRequest' is not null or undefined
-    assertParamExists('refreshAiLakePipeTablePartition', 'refreshPartitionRequest', refreshPartitionRequest)
-    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables/{tableName}/refresh`
-        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)))
-        .replace(`{${"tableName"}}`, encodeURIComponent(String(tableName)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (operationId !== undefined && operationId !== null) {
-        localVarHeaderParameter['operation-id'] = String(operationId);
-    }
-
-
-    
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof refreshPartitionRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(refreshPartitionRequest !== undefined ? refreshPartitionRequest : {})
-        : refreshPartitionRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -5126,7 +4391,7 @@ export async function AILakeApi_AddAiLakeDatabaseDataSource(
 
 // AILakeApi Api FP
 /**
- * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
+ * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
  * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -5143,58 +4408,6 @@ export async function AILakeApi_AnalyzeStatistics(
 ): AxiosPromise<void> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_AnalyzeStatistics(
         requestParameters.instanceId, requestParameters.analyzeStatisticsRequest, requestParameters.operationId, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AILakeApi Api FP
-/**
- * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
- * @summary (BETA) Create a new AI Lake pipe table
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AILakeApiCreateAiLakePipeTableRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakeApi_CreateAiLakePipeTable(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AILakeApiCreateAiLakePipeTableRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<void> {
-    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_CreateAiLakePipeTable(
-        requestParameters.instanceId, requestParameters.createPipeTableRequest, requestParameters.operationId, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AILakeApi Api FP
-/**
- * (BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.
- * @summary (BETA) Delete an AI Lake pipe table
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AILakeApiDeleteAiLakePipeTableRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakeApi_DeleteAiLakePipeTable(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AILakeApiDeleteAiLakePipeTableRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<void> {
-    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_DeleteAiLakePipeTable(
-        requestParameters.instanceId, requestParameters.tableName, requestParameters.operationId, 
         options || {},
         configuration,
     );
@@ -5282,32 +4495,6 @@ export async function AILakeApi_GetAiLakeOperation(
 
 // AILakeApi Api FP
 /**
- * (BETA) Returns full details of the specified pipe table.
- * @summary (BETA) Get an AI Lake pipe table
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AILakeApiGetAiLakePipeTableRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakeApi_GetAiLakePipeTable(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AILakeApiGetAiLakePipeTableRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiDocumentPipeTable> {
-    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_GetAiLakePipeTable(
-        requestParameters.instanceId, requestParameters.tableName, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AILakeApi Api FP
-/**
  * (BETA) Returns the status of a service in the organization\'s AI Lake. The status is controller-specific (e.g., available commands, readiness).
  * @summary (BETA) Get AI Lake service status
  * @param {AxiosInstance} axios Axios instance.
@@ -5386,7 +4573,7 @@ export async function AILakeApi_ListAiLakeDatabaseInstances(
 
 // AILakeApi Api FP
 /**
- * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
+ * (BETA) Lists ObjectStorages registered for the organization. Pass the returned `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
  * @summary (BETA) List registered AI Lake ObjectStorages
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -5403,32 +4590,6 @@ export async function AILakeApi_ListAiLakeObjectStorages(
 ): AxiosPromise<JsonApiListDocumentObjectStorageInfo> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_ListAiLakeObjectStorages(
         requestParameters.page, requestParameters.size, requestParameters.metaInclude, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AILakeApi Api FP
-/**
- * (BETA) Lists active pipe tables in the given AI Lake database instance.
- * @summary (BETA) List AI Lake pipe tables
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AILakeApiListAiLakePipeTablesRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakeApi_ListAiLakePipeTables(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AILakeApiListAiLakePipeTablesRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiListDocumentPipeTableSummary> {
-    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_ListAiLakePipeTables(
-        requestParameters.instanceId, requestParameters.page, requestParameters.size, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -5481,32 +4642,6 @@ export async function AILakeApi_ProvisionAiLakeDatabaseInstance(
 ): AxiosPromise<void> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_ProvisionAiLakeDatabaseInstance(
         requestParameters.provisionDatabaseInstanceRequest, requestParameters.operationId, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AILakeApi Api FP
-/**
- * (BETA) Deletes all rows for the specified Hive partition and re-loads them from S3. Use after overwriting a partition file in object storage with corrected data. Returns an operation-id header the client can use to poll for progress.
- * @summary (BETA) Refresh a pipe table partition
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AILakeApiRefreshAiLakePipeTablePartitionRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakeApi_RefreshAiLakePipeTablePartition(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AILakeApiRefreshAiLakePipeTablePartitionRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<void> {
-    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_RefreshAiLakePipeTablePartition(
-        requestParameters.instanceId, requestParameters.tableName, requestParameters.refreshPartitionRequest, requestParameters.operationId, 
         options || {},
         configuration,
     );
@@ -5609,7 +4744,7 @@ export interface AILakeApiInterface {
     addAiLakeDatabaseDataSource(requestParameters: AILakeApiAddAiLakeDatabaseDataSourceRequest, options?: AxiosRequestConfig): AxiosPromise<AddDatabaseDataSourceResponse>;
 
     /**
-     * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
+     * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
      * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
      * @param {AILakeApiAnalyzeStatisticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5617,26 +4752,6 @@ export interface AILakeApiInterface {
      * @memberof AILakeApiInterface
      */
     analyzeStatistics(requestParameters: AILakeApiAnalyzeStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
-     * @summary (BETA) Create a new AI Lake pipe table
-     * @param {AILakeApiCreateAiLakePipeTableRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakeApiInterface
-     */
-    createAiLakePipeTable(requestParameters: AILakeApiCreateAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * (BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.
-     * @summary (BETA) Delete an AI Lake pipe table
-     * @param {AILakeApiDeleteAiLakePipeTableRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakeApiInterface
-     */
-    deleteAiLakePipeTable(requestParameters: AILakeApiDeleteAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
@@ -5669,16 +4784,6 @@ export interface AILakeApiInterface {
     getAiLakeOperation(requestParameters: AILakeApiGetAiLakeOperationRequest, options?: AxiosRequestConfig): AxiosPromise<GetAiLakeOperation200Response>;
 
     /**
-     * (BETA) Returns full details of the specified pipe table.
-     * @summary (BETA) Get an AI Lake pipe table
-     * @param {AILakeApiGetAiLakePipeTableRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakeApiInterface
-     */
-    getAiLakePipeTable(requestParameters: AILakeApiGetAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDocumentPipeTable>;
-
-    /**
      * (BETA) Returns the status of a service in the organization\'s AI Lake. The status is controller-specific (e.g., available commands, readiness).
      * @summary (BETA) Get AI Lake service status
      * @param {AILakeApiGetAiLakeServiceStatusRequest} requestParameters Request parameters.
@@ -5709,7 +4814,7 @@ export interface AILakeApiInterface {
     listAiLakeDatabaseInstances(requestParameters: AILakeApiListAiLakeDatabaseInstancesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiListDocumentDatabaseInstance>;
 
     /**
-     * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
+     * (BETA) Lists ObjectStorages registered for the organization. Pass the returned `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
      * @summary (BETA) List registered AI Lake ObjectStorages
      * @param {AILakeApiListAiLakeObjectStoragesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5717,16 +4822,6 @@ export interface AILakeApiInterface {
      * @memberof AILakeApiInterface
      */
     listAiLakeObjectStorages(requestParameters: AILakeApiListAiLakeObjectStoragesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiListDocumentObjectStorageInfo>;
-
-    /**
-     * (BETA) Lists active pipe tables in the given AI Lake database instance.
-     * @summary (BETA) List AI Lake pipe tables
-     * @param {AILakeApiListAiLakePipeTablesRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakeApiInterface
-     */
-    listAiLakePipeTables(requestParameters: AILakeApiListAiLakePipeTablesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiListDocumentPipeTableSummary>;
 
     /**
      * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name).
@@ -5747,16 +4842,6 @@ export interface AILakeApiInterface {
      * @memberof AILakeApiInterface
      */
     provisionAiLakeDatabaseInstance(requestParameters: AILakeApiProvisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * (BETA) Deletes all rows for the specified Hive partition and re-loads them from S3. Use after overwriting a partition file in object storage with corrected data. Returns an operation-id header the client can use to poll for progress.
-     * @summary (BETA) Refresh a pipe table partition
-     * @param {AILakeApiRefreshAiLakePipeTablePartitionRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakeApiInterface
-     */
-    refreshAiLakePipeTablePartition(requestParameters: AILakeApiRefreshAiLakePipeTablePartitionRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * (BETA) Removes a data source association from an AI Lake database instance and deletes the corresponding data source from metadata-api. Fails if removing the data source would leave the instance with no data sources.
@@ -5840,62 +4925,6 @@ export interface AILakeApiAnalyzeStatisticsRequest {
 }
 
 /**
- * Request parameters for createAiLakePipeTable operation in AILakeApi.
- * @export
- * @interface AILakeApiCreateAiLakePipeTableRequest
- */
-export interface AILakeApiCreateAiLakePipeTableRequest {
-    /**
-     * Database instance identifier. Accepts the database name (preferred) or UUID.
-     * @type {string}
-     * @memberof AILakeApiCreateAiLakePipeTable
-     */
-    readonly instanceId: string
-
-    /**
-     * 
-     * @type {CreatePipeTableRequest}
-     * @memberof AILakeApiCreateAiLakePipeTable
-     */
-    readonly createPipeTableRequest: CreatePipeTableRequest
-
-    /**
-     * 
-     * @type {string}
-     * @memberof AILakeApiCreateAiLakePipeTable
-     */
-    readonly operationId?: string
-}
-
-/**
- * Request parameters for deleteAiLakePipeTable operation in AILakeApi.
- * @export
- * @interface AILakeApiDeleteAiLakePipeTableRequest
- */
-export interface AILakeApiDeleteAiLakePipeTableRequest {
-    /**
-     * Database instance identifier. Accepts the database name (preferred) or UUID.
-     * @type {string}
-     * @memberof AILakeApiDeleteAiLakePipeTable
-     */
-    readonly instanceId: string
-
-    /**
-     * Pipe table name.
-     * @type {string}
-     * @memberof AILakeApiDeleteAiLakePipeTable
-     */
-    readonly tableName: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof AILakeApiDeleteAiLakePipeTable
-     */
-    readonly operationId?: string
-}
-
-/**
  * Request parameters for deprovisionAiLakeDatabaseInstance operation in AILakeApi.
  * @export
  * @interface AILakeApiDeprovisionAiLakeDatabaseInstanceRequest
@@ -5942,27 +4971,6 @@ export interface AILakeApiGetAiLakeOperationRequest {
      * @memberof AILakeApiGetAiLakeOperation
      */
     readonly operationId: string
-}
-
-/**
- * Request parameters for getAiLakePipeTable operation in AILakeApi.
- * @export
- * @interface AILakeApiGetAiLakePipeTableRequest
- */
-export interface AILakeApiGetAiLakePipeTableRequest {
-    /**
-     * Database instance identifier. Accepts the database name (preferred) or UUID.
-     * @type {string}
-     * @memberof AILakeApiGetAiLakePipeTable
-     */
-    readonly instanceId: string
-
-    /**
-     * Pipe table name.
-     * @type {string}
-     * @memberof AILakeApiGetAiLakePipeTable
-     */
-    readonly tableName: string
 }
 
 /**
@@ -6071,41 +5079,6 @@ export interface AILakeApiListAiLakeObjectStoragesRequest {
 }
 
 /**
- * Request parameters for listAiLakePipeTables operation in AILakeApi.
- * @export
- * @interface AILakeApiListAiLakePipeTablesRequest
- */
-export interface AILakeApiListAiLakePipeTablesRequest {
-    /**
-     * Database instance identifier. Accepts the database name (preferred) or UUID.
-     * @type {string}
-     * @memberof AILakeApiListAiLakePipeTables
-     */
-    readonly instanceId: string
-
-    /**
-     * Zero-based page number.
-     * @type {number}
-     * @memberof AILakeApiListAiLakePipeTables
-     */
-    readonly page?: number
-
-    /**
-     * Number of items per page.
-     * @type {number}
-     * @memberof AILakeApiListAiLakePipeTables
-     */
-    readonly size?: number
-
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof AILakeApiListAiLakePipeTables
-     */
-    readonly metaInclude?: Array<string>
-}
-
-/**
  * Request parameters for listAiLakeServices operation in AILakeApi.
  * @export
  * @interface AILakeApiListAiLakeServicesRequest
@@ -6150,41 +5123,6 @@ export interface AILakeApiProvisionAiLakeDatabaseInstanceRequest {
      * 
      * @type {string}
      * @memberof AILakeApiProvisionAiLakeDatabaseInstance
-     */
-    readonly operationId?: string
-}
-
-/**
- * Request parameters for refreshAiLakePipeTablePartition operation in AILakeApi.
- * @export
- * @interface AILakeApiRefreshAiLakePipeTablePartitionRequest
- */
-export interface AILakeApiRefreshAiLakePipeTablePartitionRequest {
-    /**
-     * Database instance identifier. Accepts the database name (preferred) or UUID.
-     * @type {string}
-     * @memberof AILakeApiRefreshAiLakePipeTablePartition
-     */
-    readonly instanceId: string
-
-    /**
-     * Pipe table name.
-     * @type {string}
-     * @memberof AILakeApiRefreshAiLakePipeTablePartition
-     */
-    readonly tableName: string
-
-    /**
-     * 
-     * @type {RefreshPartitionRequest}
-     * @memberof AILakeApiRefreshAiLakePipeTablePartition
-     */
-    readonly refreshPartitionRequest: RefreshPartitionRequest
-
-    /**
-     * 
-     * @type {string}
-     * @memberof AILakeApiRefreshAiLakePipeTablePartition
      */
     readonly operationId?: string
 }
@@ -6286,7 +5224,7 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
     }
 
     /**
-     * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
+     * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
      * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
      * @param {AILakeApiAnalyzeStatisticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6295,30 +5233,6 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
      */
     public analyzeStatistics(requestParameters: AILakeApiAnalyzeStatisticsRequest, options?: AxiosRequestConfig) {
         return AILakeApi_AnalyzeStatistics(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
-     * @summary (BETA) Create a new AI Lake pipe table
-     * @param {AILakeApiCreateAiLakePipeTableRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakeApi
-     */
-    public createAiLakePipeTable(requestParameters: AILakeApiCreateAiLakePipeTableRequest, options?: AxiosRequestConfig) {
-        return AILakeApi_CreateAiLakePipeTable(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * (BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.
-     * @summary (BETA) Delete an AI Lake pipe table
-     * @param {AILakeApiDeleteAiLakePipeTableRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakeApi
-     */
-    public deleteAiLakePipeTable(requestParameters: AILakeApiDeleteAiLakePipeTableRequest, options?: AxiosRequestConfig) {
-        return AILakeApi_DeleteAiLakePipeTable(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -6358,18 +5272,6 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
     }
 
     /**
-     * (BETA) Returns full details of the specified pipe table.
-     * @summary (BETA) Get an AI Lake pipe table
-     * @param {AILakeApiGetAiLakePipeTableRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakeApi
-     */
-    public getAiLakePipeTable(requestParameters: AILakeApiGetAiLakePipeTableRequest, options?: AxiosRequestConfig) {
-        return AILakeApi_GetAiLakePipeTable(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
      * (BETA) Returns the status of a service in the organization\'s AI Lake. The status is controller-specific (e.g., available commands, readiness).
      * @summary (BETA) Get AI Lake service status
      * @param {AILakeApiGetAiLakeServiceStatusRequest} requestParameters Request parameters.
@@ -6406,7 +5308,7 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
     }
 
     /**
-     * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
+     * (BETA) Lists ObjectStorages registered for the organization. Pass the returned `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
      * @summary (BETA) List registered AI Lake ObjectStorages
      * @param {AILakeApiListAiLakeObjectStoragesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6415,18 +5317,6 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
      */
     public listAiLakeObjectStorages(requestParameters: AILakeApiListAiLakeObjectStoragesRequest = {}, options?: AxiosRequestConfig) {
         return AILakeApi_ListAiLakeObjectStorages(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * (BETA) Lists active pipe tables in the given AI Lake database instance.
-     * @summary (BETA) List AI Lake pipe tables
-     * @param {AILakeApiListAiLakePipeTablesRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakeApi
-     */
-    public listAiLakePipeTables(requestParameters: AILakeApiListAiLakePipeTablesRequest, options?: AxiosRequestConfig) {
-        return AILakeApi_ListAiLakePipeTables(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -6451,18 +5341,6 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
      */
     public provisionAiLakeDatabaseInstance(requestParameters: AILakeApiProvisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig) {
         return AILakeApi_ProvisionAiLakeDatabaseInstance(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * (BETA) Deletes all rows for the specified Hive partition and re-loads them from S3. Use after overwriting a partition file in object storage with corrected data. Returns an operation-id header the client can use to poll for progress.
-     * @summary (BETA) Refresh a pipe table partition
-     * @param {AILakeApiRefreshAiLakePipeTablePartitionRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakeApi
-     */
-    public refreshAiLakePipeTablePartition(requestParameters: AILakeApiRefreshAiLakePipeTablePartitionRequest, options?: AxiosRequestConfig) {
-        return AILakeApi_RefreshAiLakePipeTablePartition(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -6557,6 +5435,73 @@ export async function AILakeDatabasesApiAxiosParamCreator_AddAiLakeDatabaseDataS
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(addDatabaseDataSourceRequest !== undefined ? addDatabaseDataSourceRequest : {})
         : addDatabaseDataSourceRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeDatabasesApi FP - AILakeDatabasesApiAxiosParamCreator
+/**
+ * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
+ * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {AnalyzeStatisticsRequest} analyzeStatisticsRequest 
+ * @param {string} [operationId] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApiAxiosParamCreator_AnalyzeStatistics(
+    instanceId: string, analyzeStatisticsRequest: AnalyzeStatisticsRequest, operationId?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('analyzeStatistics', 'instanceId', instanceId)
+    // verify required parameter 'analyzeStatisticsRequest' is not null or undefined
+    assertParamExists('analyzeStatistics', 'analyzeStatisticsRequest', analyzeStatisticsRequest)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/analyzeStatistics`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (operationId !== undefined && operationId !== null) {
+        localVarHeaderParameter['operation-id'] = String(operationId);
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof analyzeStatisticsRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(analyzeStatisticsRequest !== undefined ? analyzeStatisticsRequest : {})
+        : analyzeStatisticsRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -6778,7 +5723,7 @@ export async function AILakeDatabasesApiAxiosParamCreator_ListAiLakeDatabaseInst
 
 // AILakeDatabasesApi FP - AILakeDatabasesApiAxiosParamCreator
 /**
- * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
+ * (BETA) Lists ObjectStorages registered for the organization. Pass the returned `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
  * @summary (BETA) List registered AI Lake ObjectStorages
  * @param {number} [page] Zero-based page number.
  * @param {number} [size] Number of items per page.
@@ -7035,6 +5980,32 @@ export async function AILakeDatabasesApi_AddAiLakeDatabaseDataSource(
 
 // AILakeDatabasesApi Api FP
 /**
+ * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
+ * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeDatabasesApiAnalyzeStatisticsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApi_AnalyzeStatistics(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeDatabasesApiAnalyzeStatisticsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await AILakeDatabasesApiAxiosParamCreator_AnalyzeStatistics(
+        requestParameters.instanceId, requestParameters.analyzeStatisticsRequest, requestParameters.operationId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeDatabasesApi Api FP
+/**
  * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
  * @summary (BETA) Delete an existing AILake Database instance
  * @param {AxiosInstance} axios Axios instance.
@@ -7139,7 +6110,7 @@ export async function AILakeDatabasesApi_ListAiLakeDatabaseInstances(
 
 // AILakeDatabasesApi Api FP
 /**
- * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
+ * (BETA) Lists ObjectStorages registered for the organization. Pass the returned `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
  * @summary (BETA) List registered AI Lake ObjectStorages
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -7258,6 +6229,16 @@ export interface AILakeDatabasesApiInterface {
     addAiLakeDatabaseDataSource(requestParameters: AILakeDatabasesApiAddAiLakeDatabaseDataSourceRequest, options?: AxiosRequestConfig): AxiosPromise<AddDatabaseDataSourceResponse>;
 
     /**
+     * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
+     * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
+     * @param {AILakeDatabasesApiAnalyzeStatisticsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApiInterface
+     */
+    analyzeStatistics(requestParameters: AILakeDatabasesApiAnalyzeStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
      * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
      * @summary (BETA) Delete an existing AILake Database instance
      * @param {AILakeDatabasesApiDeprovisionAiLakeDatabaseInstanceRequest} requestParameters Request parameters.
@@ -7298,7 +6279,7 @@ export interface AILakeDatabasesApiInterface {
     listAiLakeDatabaseInstances(requestParameters: AILakeDatabasesApiListAiLakeDatabaseInstancesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiListDocumentDatabaseInstance>;
 
     /**
-     * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
+     * (BETA) Lists ObjectStorages registered for the organization. Pass the returned `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
      * @summary (BETA) List registered AI Lake ObjectStorages
      * @param {AILakeDatabasesApiListAiLakeObjectStoragesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -7358,6 +6339,34 @@ export interface AILakeDatabasesApiAddAiLakeDatabaseDataSourceRequest {
      * @memberof AILakeDatabasesApiAddAiLakeDatabaseDataSource
      */
     readonly addDatabaseDataSourceRequest: AddDatabaseDataSourceRequest
+}
+
+/**
+ * Request parameters for analyzeStatistics operation in AILakeDatabasesApi.
+ * @export
+ * @interface AILakeDatabasesApiAnalyzeStatisticsRequest
+ */
+export interface AILakeDatabasesApiAnalyzeStatisticsRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakeDatabasesApiAnalyzeStatistics
+     */
+    readonly instanceId: string
+
+    /**
+     * 
+     * @type {AnalyzeStatisticsRequest}
+     * @memberof AILakeDatabasesApiAnalyzeStatistics
+     */
+    readonly analyzeStatisticsRequest: AnalyzeStatisticsRequest
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AILakeDatabasesApiAnalyzeStatistics
+     */
+    readonly operationId?: string
 }
 
 /**
@@ -7569,6 +6578,18 @@ export class AILakeDatabasesApi extends BaseAPI implements AILakeDatabasesApiInt
     }
 
     /**
+     * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
+     * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
+     * @param {AILakeDatabasesApiAnalyzeStatisticsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApi
+     */
+    public analyzeStatistics(requestParameters: AILakeDatabasesApiAnalyzeStatisticsRequest, options?: AxiosRequestConfig) {
+        return AILakeDatabasesApi_AnalyzeStatistics(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
      * @summary (BETA) Delete an existing AILake Database instance
      * @param {AILakeDatabasesApiDeprovisionAiLakeDatabaseInstanceRequest} requestParameters Request parameters.
@@ -7617,7 +6638,7 @@ export class AILakeDatabasesApi extends BaseAPI implements AILakeDatabasesApiInt
     }
 
     /**
-     * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
+     * (BETA) Lists ObjectStorages registered for the organization. Pass the returned `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
      * @summary (BETA) List registered AI Lake ObjectStorages
      * @param {AILakeDatabasesApiListAiLakeObjectStoragesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -7662,855 +6683,6 @@ export class AILakeDatabasesApi extends BaseAPI implements AILakeDatabasesApiInt
      */
     public updateAiLakeDatabaseDataSource(requestParameters: AILakeDatabasesApiUpdateAiLakeDatabaseDataSourceRequest, options?: AxiosRequestConfig) {
         return AILakeDatabasesApi_UpdateAiLakeDatabaseDataSource(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-}
-
-
-// AILakePipeTablesApi FP - AILakePipeTablesApiAxiosParamCreator
-/**
- * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
- * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
- * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
- * @param {AnalyzeStatisticsRequest} analyzeStatisticsRequest 
- * @param {string} [operationId] 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakePipeTablesApiAxiosParamCreator_AnalyzeStatistics(
-    instanceId: string, analyzeStatisticsRequest: AnalyzeStatisticsRequest, operationId?: string, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'instanceId' is not null or undefined
-    assertParamExists('analyzeStatistics', 'instanceId', instanceId)
-    // verify required parameter 'analyzeStatisticsRequest' is not null or undefined
-    assertParamExists('analyzeStatistics', 'analyzeStatisticsRequest', analyzeStatisticsRequest)
-    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/analyzeStatistics`
-        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (operationId !== undefined && operationId !== null) {
-        localVarHeaderParameter['operation-id'] = String(operationId);
-    }
-
-
-    
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof analyzeStatisticsRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(analyzeStatisticsRequest !== undefined ? analyzeStatisticsRequest : {})
-        : analyzeStatisticsRequest || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AILakePipeTablesApi FP - AILakePipeTablesApiAxiosParamCreator
-/**
- * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
- * @summary (BETA) Create a new AI Lake pipe table
- * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
- * @param {CreatePipeTableRequest} createPipeTableRequest 
- * @param {string} [operationId] 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakePipeTablesApiAxiosParamCreator_CreateAiLakePipeTable(
-    instanceId: string, createPipeTableRequest: CreatePipeTableRequest, operationId?: string, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'instanceId' is not null or undefined
-    assertParamExists('createAiLakePipeTable', 'instanceId', instanceId)
-    // verify required parameter 'createPipeTableRequest' is not null or undefined
-    assertParamExists('createAiLakePipeTable', 'createPipeTableRequest', createPipeTableRequest)
-    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables`
-        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (operationId !== undefined && operationId !== null) {
-        localVarHeaderParameter['operation-id'] = String(operationId);
-    }
-
-
-    
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof createPipeTableRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(createPipeTableRequest !== undefined ? createPipeTableRequest : {})
-        : createPipeTableRequest || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AILakePipeTablesApi FP - AILakePipeTablesApiAxiosParamCreator
-/**
- * (BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.
- * @summary (BETA) Delete an AI Lake pipe table
- * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
- * @param {string} tableName Pipe table name.
- * @param {string} [operationId] 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakePipeTablesApiAxiosParamCreator_DeleteAiLakePipeTable(
-    instanceId: string, tableName: string, operationId?: string, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'instanceId' is not null or undefined
-    assertParamExists('deleteAiLakePipeTable', 'instanceId', instanceId)
-    // verify required parameter 'tableName' is not null or undefined
-    assertParamExists('deleteAiLakePipeTable', 'tableName', tableName)
-    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables/{tableName}`
-        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)))
-        .replace(`{${"tableName"}}`, encodeURIComponent(String(tableName)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (operationId !== undefined && operationId !== null) {
-        localVarHeaderParameter['operation-id'] = String(operationId);
-    }
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AILakePipeTablesApi FP - AILakePipeTablesApiAxiosParamCreator
-/**
- * (BETA) Returns full details of the specified pipe table.
- * @summary (BETA) Get an AI Lake pipe table
- * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
- * @param {string} tableName Pipe table name.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakePipeTablesApiAxiosParamCreator_GetAiLakePipeTable(
-    instanceId: string, tableName: string, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'instanceId' is not null or undefined
-    assertParamExists('getAiLakePipeTable', 'instanceId', instanceId)
-    // verify required parameter 'tableName' is not null or undefined
-    assertParamExists('getAiLakePipeTable', 'tableName', tableName)
-    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables/{tableName}`
-        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)))
-        .replace(`{${"tableName"}}`, encodeURIComponent(String(tableName)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AILakePipeTablesApi FP - AILakePipeTablesApiAxiosParamCreator
-/**
- * (BETA) Lists active pipe tables in the given AI Lake database instance.
- * @summary (BETA) List AI Lake pipe tables
- * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
- * @param {number} [page] Zero-based page number.
- * @param {number} [size] Number of items per page.
- * @param {Array<string>} [metaInclude] 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakePipeTablesApiAxiosParamCreator_ListAiLakePipeTables(
-    instanceId: string, page?: number, size?: number, metaInclude?: Array<string>, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'instanceId' is not null or undefined
-    assertParamExists('listAiLakePipeTables', 'instanceId', instanceId)
-    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables`
-        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
-    }
-
-    if (size !== undefined) {
-        localVarQueryParameter['size'] = size;
-    }
-
-    if (metaInclude) {
-        localVarQueryParameter['metaInclude'] = Array.from(metaInclude);
-    }
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// AILakePipeTablesApi FP - AILakePipeTablesApiAxiosParamCreator
-/**
- * (BETA) Deletes all rows for the specified Hive partition and re-loads them from S3. Use after overwriting a partition file in object storage with corrected data. Returns an operation-id header the client can use to poll for progress.
- * @summary (BETA) Refresh a pipe table partition
- * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
- * @param {string} tableName Pipe table name.
- * @param {RefreshPartitionRequest} refreshPartitionRequest 
- * @param {string} [operationId] 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakePipeTablesApiAxiosParamCreator_RefreshAiLakePipeTablePartition(
-    instanceId: string, tableName: string, refreshPartitionRequest: RefreshPartitionRequest, operationId?: string, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'instanceId' is not null or undefined
-    assertParamExists('refreshAiLakePipeTablePartition', 'instanceId', instanceId)
-    // verify required parameter 'tableName' is not null or undefined
-    assertParamExists('refreshAiLakePipeTablePartition', 'tableName', tableName)
-    // verify required parameter 'refreshPartitionRequest' is not null or undefined
-    assertParamExists('refreshAiLakePipeTablePartition', 'refreshPartitionRequest', refreshPartitionRequest)
-    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables/{tableName}/refresh`
-        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)))
-        .replace(`{${"tableName"}}`, encodeURIComponent(String(tableName)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-    if (operationId !== undefined && operationId !== null) {
-        localVarHeaderParameter['operation-id'] = String(operationId);
-    }
-
-
-    
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof refreshPartitionRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(refreshPartitionRequest !== undefined ? refreshPartitionRequest : {})
-        : refreshPartitionRequest || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-
-// AILakePipeTablesApi Api FP
-/**
- * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
- * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AILakePipeTablesApiAnalyzeStatisticsRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakePipeTablesApi_AnalyzeStatistics(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AILakePipeTablesApiAnalyzeStatisticsRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<void> {
-    const localVarAxiosArgs = await AILakePipeTablesApiAxiosParamCreator_AnalyzeStatistics(
-        requestParameters.instanceId, requestParameters.analyzeStatisticsRequest, requestParameters.operationId, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AILakePipeTablesApi Api FP
-/**
- * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
- * @summary (BETA) Create a new AI Lake pipe table
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AILakePipeTablesApiCreateAiLakePipeTableRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakePipeTablesApi_CreateAiLakePipeTable(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AILakePipeTablesApiCreateAiLakePipeTableRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<void> {
-    const localVarAxiosArgs = await AILakePipeTablesApiAxiosParamCreator_CreateAiLakePipeTable(
-        requestParameters.instanceId, requestParameters.createPipeTableRequest, requestParameters.operationId, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AILakePipeTablesApi Api FP
-/**
- * (BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.
- * @summary (BETA) Delete an AI Lake pipe table
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AILakePipeTablesApiDeleteAiLakePipeTableRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakePipeTablesApi_DeleteAiLakePipeTable(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AILakePipeTablesApiDeleteAiLakePipeTableRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<void> {
-    const localVarAxiosArgs = await AILakePipeTablesApiAxiosParamCreator_DeleteAiLakePipeTable(
-        requestParameters.instanceId, requestParameters.tableName, requestParameters.operationId, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AILakePipeTablesApi Api FP
-/**
- * (BETA) Returns full details of the specified pipe table.
- * @summary (BETA) Get an AI Lake pipe table
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AILakePipeTablesApiGetAiLakePipeTableRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakePipeTablesApi_GetAiLakePipeTable(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AILakePipeTablesApiGetAiLakePipeTableRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiDocumentPipeTable> {
-    const localVarAxiosArgs = await AILakePipeTablesApiAxiosParamCreator_GetAiLakePipeTable(
-        requestParameters.instanceId, requestParameters.tableName, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AILakePipeTablesApi Api FP
-/**
- * (BETA) Lists active pipe tables in the given AI Lake database instance.
- * @summary (BETA) List AI Lake pipe tables
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AILakePipeTablesApiListAiLakePipeTablesRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakePipeTablesApi_ListAiLakePipeTables(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AILakePipeTablesApiListAiLakePipeTablesRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<JsonApiListDocumentPipeTableSummary> {
-    const localVarAxiosArgs = await AILakePipeTablesApiAxiosParamCreator_ListAiLakePipeTables(
-        requestParameters.instanceId, requestParameters.page, requestParameters.size, requestParameters.metaInclude, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// AILakePipeTablesApi Api FP
-/**
- * (BETA) Deletes all rows for the specified Hive partition and re-loads them from S3. Use after overwriting a partition file in object storage with corrected data. Returns an operation-id header the client can use to poll for progress.
- * @summary (BETA) Refresh a pipe table partition
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {AILakePipeTablesApiRefreshAiLakePipeTablePartitionRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function AILakePipeTablesApi_RefreshAiLakePipeTablePartition(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: AILakePipeTablesApiRefreshAiLakePipeTablePartitionRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<void> {
-    const localVarAxiosArgs = await AILakePipeTablesApiAxiosParamCreator_RefreshAiLakePipeTablePartition(
-        requestParameters.instanceId, requestParameters.tableName, requestParameters.refreshPartitionRequest, requestParameters.operationId, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-/**
- * AILakePipeTablesApi - interface
- * @export
- * @interface AILakePipeTablesApi
- */
-export interface AILakePipeTablesApiInterface {
-    /**
-     * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
-     * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
-     * @param {AILakePipeTablesApiAnalyzeStatisticsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakePipeTablesApiInterface
-     */
-    analyzeStatistics(requestParameters: AILakePipeTablesApiAnalyzeStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
-     * @summary (BETA) Create a new AI Lake pipe table
-     * @param {AILakePipeTablesApiCreateAiLakePipeTableRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakePipeTablesApiInterface
-     */
-    createAiLakePipeTable(requestParameters: AILakePipeTablesApiCreateAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * (BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.
-     * @summary (BETA) Delete an AI Lake pipe table
-     * @param {AILakePipeTablesApiDeleteAiLakePipeTableRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakePipeTablesApiInterface
-     */
-    deleteAiLakePipeTable(requestParameters: AILakePipeTablesApiDeleteAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * (BETA) Returns full details of the specified pipe table.
-     * @summary (BETA) Get an AI Lake pipe table
-     * @param {AILakePipeTablesApiGetAiLakePipeTableRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakePipeTablesApiInterface
-     */
-    getAiLakePipeTable(requestParameters: AILakePipeTablesApiGetAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDocumentPipeTable>;
-
-    /**
-     * (BETA) Lists active pipe tables in the given AI Lake database instance.
-     * @summary (BETA) List AI Lake pipe tables
-     * @param {AILakePipeTablesApiListAiLakePipeTablesRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakePipeTablesApiInterface
-     */
-    listAiLakePipeTables(requestParameters: AILakePipeTablesApiListAiLakePipeTablesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiListDocumentPipeTableSummary>;
-
-    /**
-     * (BETA) Deletes all rows for the specified Hive partition and re-loads them from S3. Use after overwriting a partition file in object storage with corrected data. Returns an operation-id header the client can use to poll for progress.
-     * @summary (BETA) Refresh a pipe table partition
-     * @param {AILakePipeTablesApiRefreshAiLakePipeTablePartitionRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakePipeTablesApiInterface
-     */
-    refreshAiLakePipeTablePartition(requestParameters: AILakePipeTablesApiRefreshAiLakePipeTablePartitionRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-}
-
-/**
- * Request parameters for analyzeStatistics operation in AILakePipeTablesApi.
- * @export
- * @interface AILakePipeTablesApiAnalyzeStatisticsRequest
- */
-export interface AILakePipeTablesApiAnalyzeStatisticsRequest {
-    /**
-     * Database instance identifier. Accepts the database name (preferred) or UUID.
-     * @type {string}
-     * @memberof AILakePipeTablesApiAnalyzeStatistics
-     */
-    readonly instanceId: string
-
-    /**
-     * 
-     * @type {AnalyzeStatisticsRequest}
-     * @memberof AILakePipeTablesApiAnalyzeStatistics
-     */
-    readonly analyzeStatisticsRequest: AnalyzeStatisticsRequest
-
-    /**
-     * 
-     * @type {string}
-     * @memberof AILakePipeTablesApiAnalyzeStatistics
-     */
-    readonly operationId?: string
-}
-
-/**
- * Request parameters for createAiLakePipeTable operation in AILakePipeTablesApi.
- * @export
- * @interface AILakePipeTablesApiCreateAiLakePipeTableRequest
- */
-export interface AILakePipeTablesApiCreateAiLakePipeTableRequest {
-    /**
-     * Database instance identifier. Accepts the database name (preferred) or UUID.
-     * @type {string}
-     * @memberof AILakePipeTablesApiCreateAiLakePipeTable
-     */
-    readonly instanceId: string
-
-    /**
-     * 
-     * @type {CreatePipeTableRequest}
-     * @memberof AILakePipeTablesApiCreateAiLakePipeTable
-     */
-    readonly createPipeTableRequest: CreatePipeTableRequest
-
-    /**
-     * 
-     * @type {string}
-     * @memberof AILakePipeTablesApiCreateAiLakePipeTable
-     */
-    readonly operationId?: string
-}
-
-/**
- * Request parameters for deleteAiLakePipeTable operation in AILakePipeTablesApi.
- * @export
- * @interface AILakePipeTablesApiDeleteAiLakePipeTableRequest
- */
-export interface AILakePipeTablesApiDeleteAiLakePipeTableRequest {
-    /**
-     * Database instance identifier. Accepts the database name (preferred) or UUID.
-     * @type {string}
-     * @memberof AILakePipeTablesApiDeleteAiLakePipeTable
-     */
-    readonly instanceId: string
-
-    /**
-     * Pipe table name.
-     * @type {string}
-     * @memberof AILakePipeTablesApiDeleteAiLakePipeTable
-     */
-    readonly tableName: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof AILakePipeTablesApiDeleteAiLakePipeTable
-     */
-    readonly operationId?: string
-}
-
-/**
- * Request parameters for getAiLakePipeTable operation in AILakePipeTablesApi.
- * @export
- * @interface AILakePipeTablesApiGetAiLakePipeTableRequest
- */
-export interface AILakePipeTablesApiGetAiLakePipeTableRequest {
-    /**
-     * Database instance identifier. Accepts the database name (preferred) or UUID.
-     * @type {string}
-     * @memberof AILakePipeTablesApiGetAiLakePipeTable
-     */
-    readonly instanceId: string
-
-    /**
-     * Pipe table name.
-     * @type {string}
-     * @memberof AILakePipeTablesApiGetAiLakePipeTable
-     */
-    readonly tableName: string
-}
-
-/**
- * Request parameters for listAiLakePipeTables operation in AILakePipeTablesApi.
- * @export
- * @interface AILakePipeTablesApiListAiLakePipeTablesRequest
- */
-export interface AILakePipeTablesApiListAiLakePipeTablesRequest {
-    /**
-     * Database instance identifier. Accepts the database name (preferred) or UUID.
-     * @type {string}
-     * @memberof AILakePipeTablesApiListAiLakePipeTables
-     */
-    readonly instanceId: string
-
-    /**
-     * Zero-based page number.
-     * @type {number}
-     * @memberof AILakePipeTablesApiListAiLakePipeTables
-     */
-    readonly page?: number
-
-    /**
-     * Number of items per page.
-     * @type {number}
-     * @memberof AILakePipeTablesApiListAiLakePipeTables
-     */
-    readonly size?: number
-
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof AILakePipeTablesApiListAiLakePipeTables
-     */
-    readonly metaInclude?: Array<string>
-}
-
-/**
- * Request parameters for refreshAiLakePipeTablePartition operation in AILakePipeTablesApi.
- * @export
- * @interface AILakePipeTablesApiRefreshAiLakePipeTablePartitionRequest
- */
-export interface AILakePipeTablesApiRefreshAiLakePipeTablePartitionRequest {
-    /**
-     * Database instance identifier. Accepts the database name (preferred) or UUID.
-     * @type {string}
-     * @memberof AILakePipeTablesApiRefreshAiLakePipeTablePartition
-     */
-    readonly instanceId: string
-
-    /**
-     * Pipe table name.
-     * @type {string}
-     * @memberof AILakePipeTablesApiRefreshAiLakePipeTablePartition
-     */
-    readonly tableName: string
-
-    /**
-     * 
-     * @type {RefreshPartitionRequest}
-     * @memberof AILakePipeTablesApiRefreshAiLakePipeTablePartition
-     */
-    readonly refreshPartitionRequest: RefreshPartitionRequest
-
-    /**
-     * 
-     * @type {string}
-     * @memberof AILakePipeTablesApiRefreshAiLakePipeTablePartition
-     */
-    readonly operationId?: string
-}
-
-/**
- * AILakePipeTablesApi - object-oriented interface
- * @export
- * @class AILakePipeTablesApi
- * @extends {BaseAPI}
- */
-export class AILakePipeTablesApi extends BaseAPI implements AILakePipeTablesApiInterface {
-    /**
-     * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
-     * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
-     * @param {AILakePipeTablesApiAnalyzeStatisticsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakePipeTablesApi
-     */
-    public analyzeStatistics(requestParameters: AILakePipeTablesApiAnalyzeStatisticsRequest, options?: AxiosRequestConfig) {
-        return AILakePipeTablesApi_AnalyzeStatistics(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
-     * @summary (BETA) Create a new AI Lake pipe table
-     * @param {AILakePipeTablesApiCreateAiLakePipeTableRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakePipeTablesApi
-     */
-    public createAiLakePipeTable(requestParameters: AILakePipeTablesApiCreateAiLakePipeTableRequest, options?: AxiosRequestConfig) {
-        return AILakePipeTablesApi_CreateAiLakePipeTable(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * (BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.
-     * @summary (BETA) Delete an AI Lake pipe table
-     * @param {AILakePipeTablesApiDeleteAiLakePipeTableRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakePipeTablesApi
-     */
-    public deleteAiLakePipeTable(requestParameters: AILakePipeTablesApiDeleteAiLakePipeTableRequest, options?: AxiosRequestConfig) {
-        return AILakePipeTablesApi_DeleteAiLakePipeTable(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * (BETA) Returns full details of the specified pipe table.
-     * @summary (BETA) Get an AI Lake pipe table
-     * @param {AILakePipeTablesApiGetAiLakePipeTableRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakePipeTablesApi
-     */
-    public getAiLakePipeTable(requestParameters: AILakePipeTablesApiGetAiLakePipeTableRequest, options?: AxiosRequestConfig) {
-        return AILakePipeTablesApi_GetAiLakePipeTable(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * (BETA) Lists active pipe tables in the given AI Lake database instance.
-     * @summary (BETA) List AI Lake pipe tables
-     * @param {AILakePipeTablesApiListAiLakePipeTablesRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakePipeTablesApi
-     */
-    public listAiLakePipeTables(requestParameters: AILakePipeTablesApiListAiLakePipeTablesRequest, options?: AxiosRequestConfig) {
-        return AILakePipeTablesApi_ListAiLakePipeTables(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * (BETA) Deletes all rows for the specified Hive partition and re-loads them from S3. Use after overwriting a partition file in object storage with corrected data. Returns an operation-id header the client can use to poll for progress.
-     * @summary (BETA) Refresh a pipe table partition
-     * @param {AILakePipeTablesApiRefreshAiLakePipeTablePartitionRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AILakePipeTablesApi
-     */
-    public refreshAiLakePipeTablePartition(requestParameters: AILakePipeTablesApiRefreshAiLakePipeTablePartitionRequest, options?: AxiosRequestConfig) {
-        return AILakePipeTablesApi_RefreshAiLakePipeTablePartition(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 
@@ -9256,68 +7428,6 @@ export async function ActionsApiAxiosParamCreator_AiChatUsage(
         ...headersFromBaseOptions,
         ...options.headers,
     };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// ActionsApi FP - ActionsApiAxiosParamCreator
-/**
- * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
- * @summary (BETA) Semantic Search in Metadata
- * @param {string} workspaceId Workspace identifier
- * @param {SearchRequest} searchRequest 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ActionsApiAxiosParamCreator_AiSearch(
-    workspaceId: string, searchRequest: SearchRequest, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('aiSearch', 'workspaceId', workspaceId)
-    // verify required parameter 'searchRequest' is not null or undefined
-    assertParamExists('aiSearch', 'searchRequest', searchRequest)
-    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/search`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof searchRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(searchRequest !== undefined ? searchRequest : {})
-        : searchRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -12019,32 +10129,6 @@ export async function ActionsApi_AiChatUsage(
 
 // ActionsApi Api FP
 /**
- * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
- * @summary (BETA) Semantic Search in Metadata
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {ActionsApiAiSearchRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ActionsApi_AiSearch(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: ActionsApiAiSearchRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<SearchResult> {
-    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_AiSearch(
-        requestParameters.workspaceId, requestParameters.searchRequest, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// ActionsApi Api FP
-/**
  * (EXPERIMENTAL) Computes anomaly detection.
  * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
  * @param {AxiosInstance} axios Axios instance.
@@ -13251,16 +11335,6 @@ export interface ActionsApiInterface {
     aiChatUsage(requestParameters: ActionsApiAiChatUsageRequest, options?: AxiosRequestConfig): AxiosPromise<ChatUsageResponse>;
 
     /**
-     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-     * @summary (BETA) Semantic Search in Metadata
-     * @param {ActionsApiAiSearchRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApiInterface
-     */
-    aiSearch(requestParameters: ActionsApiAiSearchRequest, options?: AxiosRequestConfig): AxiosPromise<SearchResult>;
-
-    /**
      * (EXPERIMENTAL) Computes anomaly detection.
      * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
      * @param {ActionsApiAnomalyDetectionRequest} requestParameters Request parameters.
@@ -13783,27 +11857,6 @@ export interface ActionsApiAiChatUsageRequest {
      * @memberof ActionsApiAiChatUsage
      */
     readonly workspaceId: string
-}
-
-/**
- * Request parameters for aiSearch operation in ActionsApi.
- * @export
- * @interface ActionsApiAiSearchRequest
- */
-export interface ActionsApiAiSearchRequest {
-    /**
-     * Workspace identifier
-     * @type {string}
-     * @memberof ActionsApiAiSearch
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {SearchRequest}
-     * @memberof ActionsApiAiSearch
-     */
-    readonly searchRequest: SearchRequest
 }
 
 /**
@@ -14937,18 +12990,6 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public aiChatUsage(requestParameters: ActionsApiAiChatUsageRequest, options?: AxiosRequestConfig) {
         return ActionsApi_AiChatUsage(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-     * @summary (BETA) Semantic Search in Metadata
-     * @param {ActionsApiAiSearchRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApi
-     */
-    public aiSearch(requestParameters: ActionsApiAiSearchRequest, options?: AxiosRequestConfig) {
-        return ActionsApi_AiSearch(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -17983,68 +16024,6 @@ export async function SmartFunctionsApiAxiosParamCreator_AiChatUsage(
 
 // SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
 /**
- * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
- * @summary (BETA) Semantic Search in Metadata
- * @param {string} workspaceId Workspace identifier
- * @param {SearchRequest} searchRequest 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function SmartFunctionsApiAxiosParamCreator_AiSearch(
-    workspaceId: string, searchRequest: SearchRequest, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('aiSearch', 'workspaceId', workspaceId)
-    // verify required parameter 'searchRequest' is not null or undefined
-    assertParamExists('aiSearch', 'searchRequest', searchRequest)
-    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/search`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof searchRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(searchRequest !== undefined ? searchRequest : {})
-        : searchRequest || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
-/**
  * (EXPERIMENTAL) Computes anomaly detection.
  * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
  * @param {string} workspaceId Workspace identifier
@@ -19290,32 +17269,6 @@ export async function SmartFunctionsApi_AiChatUsage(
 
 // SmartFunctionsApi Api FP
 /**
- * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
- * @summary (BETA) Semantic Search in Metadata
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {SmartFunctionsApiAiSearchRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function SmartFunctionsApi_AiSearch(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: SmartFunctionsApiAiSearchRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<SearchResult> {
-    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_AiSearch(
-        requestParameters.workspaceId, requestParameters.searchRequest, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// SmartFunctionsApi Api FP
-/**
  * (EXPERIMENTAL) Computes anomaly detection.
  * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
  * @param {AxiosInstance} axios Axios instance.
@@ -19906,16 +17859,6 @@ export interface SmartFunctionsApiInterface {
     aiChatUsage(requestParameters: SmartFunctionsApiAiChatUsageRequest, options?: AxiosRequestConfig): AxiosPromise<ChatUsageResponse>;
 
     /**
-     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-     * @summary (BETA) Semantic Search in Metadata
-     * @param {SmartFunctionsApiAiSearchRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SmartFunctionsApiInterface
-     */
-    aiSearch(requestParameters: SmartFunctionsApiAiSearchRequest, options?: AxiosRequestConfig): AxiosPromise<SearchResult>;
-
-    /**
      * (EXPERIMENTAL) Computes anomaly detection.
      * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
      * @param {SmartFunctionsApiAnomalyDetectionRequest} requestParameters Request parameters.
@@ -20206,27 +18149,6 @@ export interface SmartFunctionsApiAiChatUsageRequest {
      * @memberof SmartFunctionsApiAiChatUsage
      */
     readonly workspaceId: string
-}
-
-/**
- * Request parameters for aiSearch operation in SmartFunctionsApi.
- * @export
- * @interface SmartFunctionsApiAiSearchRequest
- */
-export interface SmartFunctionsApiAiSearchRequest {
-    /**
-     * Workspace identifier
-     * @type {string}
-     * @memberof SmartFunctionsApiAiSearch
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {SearchRequest}
-     * @memberof SmartFunctionsApiAiSearch
-     */
-    readonly searchRequest: SearchRequest
 }
 
 /**
@@ -20716,18 +18638,6 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
      */
     public aiChatUsage(requestParameters: SmartFunctionsApiAiChatUsageRequest, options?: AxiosRequestConfig) {
         return SmartFunctionsApi_AiChatUsage(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-     * @summary (BETA) Semantic Search in Metadata
-     * @param {SmartFunctionsApiAiSearchRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SmartFunctionsApi
-     */
-    public aiSearch(requestParameters: SmartFunctionsApiAiSearchRequest, options?: AxiosRequestConfig) {
-        return SmartFunctionsApi_AiSearch(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**

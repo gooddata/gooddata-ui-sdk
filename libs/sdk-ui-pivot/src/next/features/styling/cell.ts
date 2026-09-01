@@ -51,11 +51,7 @@ type CommonCellParams =
  * Type guard to check if params is CellClassParams (has rowIndex directly)
  */
 const isCellClassParams = (params: unknown): params is CellClassParams<AgGridRowData, string | null> => {
-    return (
-        params !== undefined &&
-        params !== null &&
-        (params as CellClassParams<AgGridRowData, string | null>).rowIndex !== undefined
-    );
+    return (params as CellClassParams<AgGridRowData, string | null> | undefined)?.rowIndex !== undefined;
 };
 
 /**
@@ -66,9 +62,7 @@ const isCellRendererParams = (
 ): params is ICellRendererParams<AgGridRowData, string | null> => {
     return (
         !isCellClassParams(params) &&
-        params !== undefined &&
-        params !== null &&
-        (params as ICellRendererParams<AgGridRowData, string | null>).node !== undefined
+        (params as ICellRendererParams<AgGridRowData, string | null> | undefined)?.node !== undefined
     );
 };
 

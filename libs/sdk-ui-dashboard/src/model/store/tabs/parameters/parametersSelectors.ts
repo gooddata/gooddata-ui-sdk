@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { isEqual } from "lodash-es";
+import { isEqual, uniq } from "lodash-es";
 
 import {
     type IDashboardExportParameter,
@@ -28,7 +28,10 @@ import { selectEnableParameters, selectEnableStringParameters } from "../../conf
 import { selectInsightsMap } from "../../insights/insightsSelectors.js";
 import { selectIsInEditMode } from "../../renderMode/renderModeSelectors.js";
 import { type DashboardSelector } from "../../types.js";
-import { selectAllTabsInsightWidgetContexts } from "../layout/layoutSelectors.js";
+import {
+    selectAllTabsInsightWidgetContexts,
+    selectAllTabsWidgetContexts,
+} from "../layout/layoutSelectors.js";
 import { selectActiveOrDefaultTabLocalIdentifier, selectActiveTab, selectTabs } from "../tabsSelectors.js";
 import { DEFAULT_TAB_ID } from "../tabsState.js";
 
@@ -39,7 +42,6 @@ import {
     applyDisplayOverride,
     applyRuntimeOverride,
     buildPersistedByTabAndRef,
-    buildWidgetScopeTabRefSelections,
     buildWorkspaceParametersByRef,
     classifyParameterReconciliation,
     collectExportOverrides,
@@ -52,6 +54,7 @@ import {
     resolveEffectiveParameterValuesForRefs,
     smartPersistResolvedEntry,
     ungatedInsightParameterValues,
+    ungatedTabEntries,
 } from "./parametersHelpers.js";
 import {
     type IDashboardParameterEntry,
@@ -383,9 +386,7 @@ export const selectParameterReconciliations: DashboardSelector<IParameterReconci
             if (!isEnabled || !isCatalogLoaded || !tabs) {
                 return EMPTY_RECONCILIATIONS;
             }
-            const entries = tabs
-                .flatMap((tab) => tab.parameters?.parameters ?? [])
-                .filter((entry) => !isGatedStringEntry(entry, isStringEnabled));
+            const entries = tabs.flatMap((tab) => ungatedTabEntries(tab, isStringEnabled));
             const result = collectParameterReconciliations(entries, workspaceParameters);
             return result.length === 0 ? EMPTY_RECONCILIATIONS : result;
         },
@@ -457,11 +458,8 @@ export const selectWidgetParameterContext: (
                 if (!context) {
                     return undefined;
                 }
-                const entries = (
-                    context.tab.parameters?.parameters ?? parametersInitialState.parameters
-                ).filter((entry) => !isGatedStringEntry(entry, isStringEnabled));
                 return {
-                    entries,
+                    entries: ungatedTabEntries(context.tab, isStringEnabled),
                     measureParameters,
                     workspaceParameterByRef,
                     widgetInsightRef: context.widget.insight,
@@ -578,84 +576,50 @@ export const selectEffectiveDashboardParametersForWidget: (
 );
 
 /**
- * Returns the per-tab parameter overrides to send on dashboard tabular export, keyed by
- * tab `localIdentifier`. The shape matches the backend's `dashboardTabsParametersOverrides`
+ * Returns the per-tab parameter overrides to send on dashboard export, keyed by tab
+ * `localIdentifier`. The shape matches the backend's `dashboardTabsParametersOverrides`
  * field directly.
  *
  * @remarks
- * Scope rules:
- * - When `widgetIds` is empty/undefined (whole-dashboard export), every tab in scope contributes
- *   parameter entries with a `runtimeOverride`.
- * - When `widgetIds` is non-empty, each widget's owning tab contributes only entries with a
- *   `runtimeOverride` whose ref is referenced by the widget's insight metrics via the dashboard-wide
- *   metric → parameter dependency map. Multi-widget across distinct owning tabs yields one
- *   map entry per owning tab; entries for the same tab are unioned and deduplicated by ref.
+ * The request sends every `runtimeOverride` entry of each tab in scope; the query drops the
+ * parameters a widget's metrics do not use.
+ * - When `widgetIds` is empty/undefined (whole-dashboard export), every tab is in scope.
+ * - When `widgetIds` is non-empty, only the owning tabs of those widgets are in scope. Send only
+ *   these tabs. A non-empty map tells the backend that the map is complete, and the backend then
+ *   does not resolve pinned values for any tab.
  *
  * Returns `{}` (signalling "omit the field on the wire") when:
  * - `enableParameters` is off,
  * - the workspace catalog parameters are not loaded,
- * - (widget scope only) the `measureParameters` dependency map is not loaded,
  * - or no in-scope parameter has a `runtimeOverride`.
  *
  * @alpha
  */
 export const selectExportEffectiveParameters: (
     widgetIds: string[] | undefined,
-) => DashboardSelector<Record<string, IDashboardExportParameter[]>> = (widgetIds) =>
-    widgetIds?.length
-        ? selectExportEffectiveParametersForWidgets(widgetIds)
-        : selectExportEffectiveParametersDashboardScope;
-
-const selectExportEffectiveParametersDashboardScope = createSelector(
-    selectTabs,
-    selectEnableParameters,
-    selectEnableStringParameters,
-    selectWorkspaceParametersByRef,
-    selectCatalogParametersIsLoaded,
-    (tabs, isEnabled, isStringEnabled, workspaceParameterByRef, isCatalogLoaded) => {
-        if (!isEnabled || !isCatalogLoaded || !tabs?.length) {
-            return EMPTY_EXPORT_PARAMETERS_BY_TAB;
-        }
-        return collectExportOverrides(
-            tabs.map((tab) => ({ tab })),
-            workspaceParameterByRef,
-            isStringEnabled,
-        );
-    },
-);
-
-const selectExportEffectiveParametersForWidgets = createMemoizedSelector((widgetIds: ReadonlyArray<string>) =>
-    createSelector(
-        selectAllTabsInsightWidgetContexts,
-        selectInsightsMap,
-        selectEnableParameters,
-        selectEnableStringParameters,
-        selectWorkspaceParametersByRef,
-        selectCatalogParametersIsLoaded,
-        selectCatalogMeasureParameters,
-        selectCatalogMeasureParametersStatus,
-        (
-            widgetContexts,
-            insights,
-            isEnabled,
-            isStringEnabled,
-            workspaceParameterByRef,
-            isCatalogLoaded,
-            measureParameters,
-            measureParametersStatus,
-        ) => {
-            if (!isEnabled || !isCatalogLoaded || measureParametersStatus !== "loaded") {
-                return EMPTY_EXPORT_PARAMETERS_BY_TAB;
-            }
-            const tabRefSelections = buildWidgetScopeTabRefSelections(
-                widgetContexts,
-                widgetIds,
-                insights,
-                measureParameters,
-            );
-            return collectExportOverrides(tabRefSelections, workspaceParameterByRef, isStringEnabled);
-        },
-    ),
+) => DashboardSelector<Record<string, IDashboardExportParameter[]>> = createMemoizedSelector(
+    (widgetIds: string[] | undefined) =>
+        createSelector(
+            selectTabs,
+            selectAllTabsWidgetContexts,
+            selectEnableParameters,
+            selectEnableStringParameters,
+            selectWorkspaceParametersByRef,
+            selectCatalogParametersIsLoaded,
+            (tabs, widgetContexts, isEnabled, isStringEnabled, workspaceParameterByRef, isCatalogLoaded) => {
+                if (!isEnabled || !isCatalogLoaded) {
+                    return EMPTY_EXPORT_PARAMETERS_BY_TAB;
+                }
+                const scopedTabs = widgetIds?.length
+                    ? uniq(
+                          widgetContexts
+                              .filter((ctx) => widgetIds.includes(ctx.widget.identifier))
+                              .map((ctx) => ctx.tab),
+                      )
+                    : (tabs ?? []);
+                return collectExportOverrides(scopedTabs, workspaceParameterByRef, isStringEnabled);
+            },
+        ),
 );
 
 /**
@@ -664,7 +628,7 @@ const selectExportEffectiveParametersForWidgets = createMemoizedSelector((widget
  * @internal
  */
 export const selectActiveTabExportParameters: DashboardSelector<IDashboardExportParameter[]> = createSelector(
-    selectExportEffectiveParametersDashboardScope,
+    selectExportEffectiveParameters(undefined),
     selectActiveOrDefaultTabLocalIdentifier,
     (parametersByTab, activeTabId) => parametersByTab[activeTabId] ?? EMPTY_EXPORT_PARAMETERS,
 );

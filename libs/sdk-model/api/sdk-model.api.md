@@ -4835,6 +4835,7 @@ export interface IReportBase {
 export interface IReportBoxStyle {
     // (undocumented)
     background?: ReportBackground;
+    borderRadius?: number;
 }
 
 // @alpha
@@ -4875,7 +4876,7 @@ export interface IReportImageBackground {
 export interface IReportImageSlot extends IReportSlotBase {
     // (undocumented)
     altText?: string;
-    fit?: "contain" | "cover" | "fill";
+    fit?: ReportImageFit;
     source?: ReportImageSource;
     style?: IReportImageStyle;
     // (undocumented)
@@ -5012,7 +5013,7 @@ export interface IReportTextSlot extends IReportSlotBase {
 }
 
 // @alpha
-export interface IReportTextStyle {
+export interface IReportTextStyle extends IReportBoxStyle {
     color?: string;
     // (undocumented)
     horizontalAlign?: ReportContentAlignment;
@@ -7532,6 +7533,9 @@ export function reportContentPage(reportOrTemplate: IReport | IReportDefinition 
 
 // @alpha
 export type ReportDateString = string;
+
+// @alpha
+export type ReportImageFit = "contain" | "cover" | "fill";
 
 // @alpha
 export type ReportImageSource = {

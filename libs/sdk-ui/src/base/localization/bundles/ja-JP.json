@@ -1119,6 +1119,7 @@
     "message.accessibility.dismiss.notification": "通知を閉じる",
     "datePicker.accessibility.label": "開始日を選択",
     "timePicker.accessibility.label": "開始時間の選択",
+    "timezoneSelect.search.accessibility.label": "タイムゾーンを検索",
     "menu.close": "メニューを閉じる",
     "menu.back": "親メニューに戻る",
     "copyButton.copy.success": "クリップボードにコピーしました!",

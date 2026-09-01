@@ -4,13 +4,10 @@ import { useCallback, useRef, useState } from "react";
 
 import { useIntl } from "react-intl";
 
-import {
-    type IExportDefinitionVisualizationObjectSettings,
-    type IExportTemplate,
-    type WidgetAttachmentType,
-} from "@gooddata/sdk-model";
+import { type WidgetAttachmentType } from "@gooddata/sdk-model";
 
 import { AUTOMATION_ATTACHMENTS_GROUP_LABEL_ID } from "../../../../../constants/automations.js";
+import { type IScheduledEmailDialogWidgetAttachmentsProps } from "../../../types.js";
 
 import { partitionAttachments } from "./attachmentFormats.js";
 import { AttachmentsList } from "./AttachmentsList.js";
@@ -29,27 +26,6 @@ const ALL_WIDGET_ATTACHMENTS: WidgetAttachmentType[] = [
 const SLIDE_WIDGET_ATTACHMENTS: WidgetAttachmentType[] = ["PDF", "PPTX"];
 const ACCESSIBILITY_MODE_EXCLUDED_WIDGET_ATTACHMENTS: WidgetAttachmentType[] = ["PDF_TABULAR"];
 
-export interface IWidgetAttachmentsProps {
-    selectedAttachments: WidgetAttachmentType[];
-    onWidgetAttachmentsChange: (formats: WidgetAttachmentType[]) => void;
-    xlsxSettings: IExportDefinitionVisualizationObjectSettings;
-    onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
-    pdfSettings: IExportDefinitionVisualizationObjectSettings;
-    onPdfSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
-    csvSettings: IExportDefinitionVisualizationObjectSettings;
-    onCsvSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
-    csvRawSettings: IExportDefinitionVisualizationObjectSettings;
-    onCsvRawSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
-    isSlidesExportEnabled: boolean;
-    isAccessibilityModeEnabled: boolean;
-    exportTemplates?: IExportTemplate[];
-    slidesTemplateIds?: { PPTX?: string; PDF_SLIDES?: string; PDF?: string };
-    onSlidesTemplateIdChange?: (
-        templateId: string | undefined,
-        format: "PPTX" | "PDF_SLIDES" | "PDF",
-    ) => void;
-}
-
 export function WidgetAttachments({
     selectedAttachments,
     onWidgetAttachmentsChange,
@@ -66,7 +42,7 @@ export function WidgetAttachments({
     exportTemplates,
     slidesTemplateIds,
     onSlidesTemplateIdChange,
-}: IWidgetAttachmentsProps) {
+}: IScheduledEmailDialogWidgetAttachmentsProps) {
     const intl = useIntl();
 
     const {

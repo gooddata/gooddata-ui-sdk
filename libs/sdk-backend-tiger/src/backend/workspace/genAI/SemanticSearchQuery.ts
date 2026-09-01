@@ -86,7 +86,7 @@ export class SemanticSearchQuery implements ISemanticSearchQuery {
                 client.basePath,
                 {
                     workspaceId: this.workspaceId,
-                    searchRequest: this.config,
+                    aiSearchRequest: this.config,
                 },
                 options,
             ),

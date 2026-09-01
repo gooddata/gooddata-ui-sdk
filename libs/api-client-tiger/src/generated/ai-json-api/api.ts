@@ -20,6 +20,11 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base.js';
 
+export interface AiAbsolute {
+    'from': string;
+    'to': string;
+}
+
 export interface AiAbsoluteDateFilter {
     'absoluteDateFilter': AiAbsoluteDateFilterBody;
 }
@@ -894,6 +899,17 @@ export const AiCellVerticalAlign = {
 export type AiCellVerticalAlign = typeof AiCellVerticalAlign[keyof typeof AiCellVerticalAlign];
 
 
+/**
+ * Certification state of the object. Who certified and when are never exposed here.
+ */
+export interface AiCertificationInfo {
+    'certificationMessage'?: string | null;
+    /**
+     * Certification status, e.g. CERTIFIED.
+     */
+    'status': string;
+}
+
 export interface AiChartFill {
     'pattern_name_mapping'?: { [key: string]: AiPatternNameMapping; } | null;
     'type'?: AiType83 | null;
@@ -1086,6 +1102,7 @@ export interface AiConfig {
     'format'?: string | null;
     'grand_totals_position'?: AiGrandTotalsPosition | null;
     'grid_enabled'?: boolean | null;
+    'grid_line_shape'?: AiGridLineShape | null;
     'group_nearby_points'?: boolean | null;
     'icon'?: string | null;
     'indicator_arrow'?: boolean | null;
@@ -1110,6 +1127,7 @@ export interface AiConfig {
     'page_size'?: number | null;
     'pagination'?: boolean | null;
     'position'?: string | null;
+    'render_as'?: AiRenderAs | null;
     'row_height'?: AiRowHeight | null;
     'shape_type'?: AiShapeType | null;
     'stack_measures'?: boolean | null;
@@ -1766,6 +1784,17 @@ export const AiEmptyValueHandling = {
 export type AiEmptyValueHandling = typeof AiEmptyValueHandling[keyof typeof AiEmptyValueHandling];
 
 
+export interface AiErrorInfo {
+    /**
+     * Stable machine-readable error code. Switch on this for localized client messages.
+     */
+    'reason': string;
+    /**
+     * HTTP-like semantic status (e.g. 503 when the workspace is still syncing).
+     */
+    'statusCode': number;
+}
+
 export interface AiFeedback {
     'text'?: string | null;
     /**
@@ -1939,6 +1968,29 @@ export const AiGrandTotalsPosition = {
 } as const;
 
 export type AiGrandTotalsPosition = typeof AiGrandTotalsPosition[keyof typeof AiGrandTotalsPosition];
+
+
+
+export const AiGranularity3 = {
+    MINUTE: 'minute',
+    HOUR: 'hour',
+    DAY: 'day',
+    WEEK: 'week',
+    MONTH: 'month',
+    QUARTER: 'quarter',
+    YEAR: 'year'
+} as const;
+
+export type AiGranularity3 = typeof AiGranularity3[keyof typeof AiGranularity3];
+
+
+
+export const AiGridLineShape = {
+    POLYGON: 'polygon',
+    CIRCLE: 'circle'
+} as const;
+
+export type AiGridLineShape = typeof AiGridLineShape[keyof typeof AiGridLineShape];
 
 
 export interface AiHTTPValidationError {
@@ -3160,6 +3212,13 @@ export interface AiReasoningContent {
 export type AiReasoningContentTypeEnum = 'reasoning';
 
 export interface AiRelative {
+    'from': number;
+    'granularity': AiGranularity3;
+    'to': number;
+}
+
+
+export interface AiRelativeChange {
     /**
      * Arithmetic combination of the two metrics.
      */
@@ -3179,7 +3238,7 @@ export interface AiRelativeCondition {
     /**
      * Relative (metric-to-metric) condition.
      */
-    'relative': AiRelative;
+    'relative': AiRelativeChange;
 }
 
 /**
@@ -3226,6 +3285,15 @@ export interface AiRelativeDateFilterInput {
 export interface AiRelativeDateFilterOutput {
     'relativeDateFilter': AiRelativeDateFilterBodyOutput;
 }
+
+
+export const AiRenderAs = {
+    FILLED: 'filled',
+    OUTLINE: 'outline'
+} as const;
+
+export type AiRenderAs = typeof AiRenderAs[keyof typeof AiRenderAs];
+
 
 
 export const AiRequestedReasoningEffort = {
@@ -3294,6 +3362,24 @@ export const AiScope = {
 
 export type AiScope = typeof AiScope[keyof typeof AiScope];
 
+
+export interface AiSearchAllowedRelationshipType {
+    /**
+     * If true, allows target objects that are not part of any relationship (orphans) to be included in results. If false, orphan target objects will be excluded even if they directly match the search query. Default is true (orphans are allowed).
+     */
+    'allowOrphans'?: boolean;
+    /**
+     * Source object type (e.g., \'dashboard\', \'visualization\', \'metric\').
+     */
+    'sourceType': AiSearchAllowedRelationshipTypeSourceTypeEnum;
+    /**
+     * Target object type (e.g., \'visualization\', \'metric\', \'attribute\').
+     */
+    'targetType': AiSearchAllowedRelationshipTypeTargetTypeEnum;
+}
+
+export type AiSearchAllowedRelationshipTypeSourceTypeEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
+export type AiSearchAllowedRelationshipTypeTargetTypeEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
 
 /**
  * Response for GET /search.
@@ -3372,6 +3458,99 @@ export interface AiSearchRelationship {
     'targetWorkspaceId': string;
 }
 
+export interface AiSearchRelationshipObject {
+    /**
+     * Source object ID.
+     */
+    'sourceObjectId': string;
+    /**
+     * Source object title.
+     */
+    'sourceObjectTitle': string;
+    /**
+     * Source object type, e.g. dashboard.
+     */
+    'sourceObjectType': string;
+    /**
+     * Source workspace ID. If relationship is dashboard->visualization, this is the workspace where the dashboard is located.
+     */
+    'sourceWorkspaceId': string;
+    /**
+     * Target object ID.
+     */
+    'targetObjectId': string;
+    /**
+     * Target object title.
+     */
+    'targetObjectTitle': string;
+    /**
+     * Target object type, e.g. visualization.
+     */
+    'targetObjectType': string;
+    /**
+     * Target workspace ID. If relationship is dashboard->visualization, this is the workspace where the visualization is located.
+     */
+    'targetWorkspaceId': string;
+}
+
+export interface AiSearchRequest {
+    'allowedRelationshipTypes'?: Array<AiSearchAllowedRelationshipType> | null;
+    /**
+     * Turn on deep search. If true, content of complex objects will be searched as well, e.g. metrics in visualizations.
+     */
+    'deepSearch'?: boolean;
+    /**
+     * If true, enables hybrid search combining vector similarity and keyword matching. This can improve search results by considering both semantic similarity and exact keyword matches.
+     */
+    'enableHybridSearch'?: boolean;
+    'excludeTags'?: Array<string> | null;
+    /**
+     * If true, includes hidden objects in search results. If false (default), excludes objects where isHidden=true.
+     */
+    'includeHidden'?: boolean;
+    'includeTags'?: Array<string> | null;
+    /**
+     * Maximum number of results to return. There is a hard limit and the actual number of returned results may be lower than what is requested. This can happen when post-search filters are applied (e.g., reranker threshold filtering or allowedRelationshipTypes filtering), which may exclude some results after the initial search.
+     */
+    'limit'?: number;
+    /**
+     * Object type to search for.
+     */
+    'objectTypes'?: Array<AiSearchRequestObjectTypesEnum>;
+    /**
+     * Keyword/sentence is input for search.
+     */
+    'question': string;
+    /**
+     * Score, above which we return found objects. Below this score objects are not relevant.
+     */
+    'relevantScoreThreshold'?: number;
+    /**
+     * Temporary for experiments. Ratio of title score to descriptor score.
+     * @deprecated
+     */
+    'titleToDescriptorRatio'?: number;
+}
+
+export type AiSearchRequestObjectTypesEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
+
+export interface AiSearchResult {
+    'error'?: AiErrorInfo | null;
+    /**
+     * DEPRECATED: Use top-level reasoning.steps instead. If something is not working properly this field will contain explanation.
+     * @deprecated
+     */
+    'reasoning': string;
+    /**
+     * Relationships between the results.
+     */
+    'relationships': Array<AiSearchRelationshipObject>;
+    /**
+     * Search results.
+     */
+    'results': Array<AiSearchResultObject>;
+}
+
 /**
  * A single search result entry.
  */
@@ -3386,6 +3565,39 @@ export interface AiSearchResultItem {
     'title'?: string | null;
     'totalChunks': number;
     'workspaceId'?: string | null;
+}
+
+/**
+ * A lot of fields are optional, because this object is reused for two different purposes: 1. Search results (OUT) 2. A part of chat history(IN)
+ */
+export interface AiSearchResultObject {
+    'certification'?: AiCertificationInfo | null;
+    'createdAt'?: string | null;
+    'description'?: string | null;
+    /**
+     * Object ID.
+     */
+    'id': string;
+    'isHidden'?: boolean | null;
+    'modifiedAt'?: string | null;
+    'score'?: number | null;
+    'scoreDescriptor'?: number | null;
+    'scoreExactMatch'?: number | null;
+    'scoreTitle'?: number | null;
+    'tags'?: Array<string> | null;
+    /**
+     * Object title.
+     */
+    'title': string;
+    /**
+     * Object type, e.g. dashboard.
+     */
+    'type': string;
+    'visualizationUrl'?: string | null;
+    /**
+     * Workspace ID.
+     */
+    'workspaceId': string;
 }
 
 export interface AiSearchResults {
@@ -3706,6 +3918,7 @@ export const AiType100 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -3728,6 +3941,7 @@ export const AiType100 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     BAR_CHART3: 'bar_chart'
 } as const;
 
@@ -3758,6 +3972,7 @@ export const AiType101 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -3780,6 +3995,7 @@ export const AiType101 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     COLUMN_CHART3: 'column_chart'
 } as const;
 
@@ -3810,6 +4026,7 @@ export const AiType102 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -3832,6 +4049,7 @@ export const AiType102 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     LINE_CHART3: 'line_chart'
 } as const;
 
@@ -3862,6 +4080,7 @@ export const AiType103 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -3884,6 +4103,7 @@ export const AiType103 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     AREA_CHART3: 'area_chart'
 } as const;
 
@@ -3914,6 +4134,7 @@ export const AiType104 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -3936,6 +4157,7 @@ export const AiType104 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     SCATTER_CHART3: 'scatter_chart'
 } as const;
 
@@ -3966,6 +4188,7 @@ export const AiType105 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -3988,6 +4211,7 @@ export const AiType105 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     BUBBLE_CHART3: 'bubble_chart'
 } as const;
 
@@ -4018,6 +4242,7 @@ export const AiType106 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -4040,6 +4265,7 @@ export const AiType106 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     PIE_CHART3: 'pie_chart'
 } as const;
 
@@ -4070,6 +4296,7 @@ export const AiType107 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -4092,6 +4319,7 @@ export const AiType107 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     DONUT_CHART3: 'donut_chart'
 } as const;
 
@@ -4122,6 +4350,7 @@ export const AiType108 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -4144,6 +4373,7 @@ export const AiType108 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     TREEMAP_CHART3: 'treemap_chart'
 } as const;
 
@@ -4174,6 +4404,7 @@ export const AiType109 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -4196,6 +4427,7 @@ export const AiType109 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     PYRAMID_CHART3: 'pyramid_chart'
 } as const;
 
@@ -4226,6 +4458,7 @@ export const AiType110 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -4248,6 +4481,7 @@ export const AiType110 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     FUNNEL_CHART3: 'funnel_chart'
 } as const;
 
@@ -4278,6 +4512,7 @@ export const AiType111 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -4300,6 +4535,7 @@ export const AiType111 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     HEATMAP_CHART3: 'heatmap_chart'
 } as const;
 
@@ -4330,6 +4566,7 @@ export const AiType112 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -4352,6 +4589,7 @@ export const AiType112 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     BULLET_CHART3: 'bullet_chart'
 } as const;
 
@@ -4382,6 +4620,7 @@ export const AiType113 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -4404,6 +4643,7 @@ export const AiType113 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     WATERFALL_CHART3: 'waterfall_chart'
 } as const;
 
@@ -4434,6 +4674,7 @@ export const AiType114 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -4456,6 +4697,7 @@ export const AiType114 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     DEPENDENCY_WHEEL_CHART3: 'dependency_wheel_chart'
 } as const;
 
@@ -4486,6 +4728,7 @@ export const AiType115 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -4508,6 +4751,7 @@ export const AiType115 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     SANKEY_CHART3: 'sankey_chart'
 } as const;
 
@@ -4538,6 +4782,7 @@ export const AiType116 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -4560,6 +4805,7 @@ export const AiType116 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     HEADLINE_CHART3: 'headline_chart'
 } as const;
 
@@ -4590,6 +4836,7 @@ export const AiType117 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -4612,6 +4859,7 @@ export const AiType117 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     COMBO_CHART3: 'combo_chart'
 } as const;
 
@@ -4642,6 +4890,7 @@ export const AiType118 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -4664,6 +4913,7 @@ export const AiType118 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     GEO_CHART3: 'geo_chart'
 } as const;
 
@@ -4694,6 +4944,7 @@ export const AiType119 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -4716,6 +4967,7 @@ export const AiType119 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     GEO_AREA_CHART3: 'geo_area_chart'
 } as const;
 
@@ -4746,6 +4998,7 @@ export const AiType120 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -4768,10 +5021,65 @@ export const AiType120 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     REPEATER_CHART3: 'repeater_chart'
 } as const;
 
 export type AiType120 = typeof AiType120[keyof typeof AiType120];
+
+
+
+export const AiType121 = {
+    TABLE: 'table',
+    BAR_CHART: 'bar_chart',
+    COLUMN_CHART: 'column_chart',
+    LINE_CHART: 'line_chart',
+    AREA_CHART: 'area_chart',
+    SCATTER_CHART: 'scatter_chart',
+    BUBBLE_CHART: 'bubble_chart',
+    PIE_CHART: 'pie_chart',
+    DONUT_CHART: 'donut_chart',
+    TREEMAP_CHART: 'treemap_chart',
+    PYRAMID_CHART: 'pyramid_chart',
+    FUNNEL_CHART: 'funnel_chart',
+    HEATMAP_CHART: 'heatmap_chart',
+    BULLET_CHART: 'bullet_chart',
+    WATERFALL_CHART: 'waterfall_chart',
+    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
+    SANKEY_CHART: 'sankey_chart',
+    HEADLINE_CHART: 'headline_chart',
+    COMBO_CHART: 'combo_chart',
+    GEO_CHART: 'geo_chart',
+    GEO_AREA_CHART: 'geo_area_chart',
+    REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
+    TABLE2: 'table',
+    BAR_CHART2: 'bar_chart',
+    COLUMN_CHART2: 'column_chart',
+    LINE_CHART2: 'line_chart',
+    AREA_CHART2: 'area_chart',
+    SCATTER_CHART2: 'scatter_chart',
+    BUBBLE_CHART2: 'bubble_chart',
+    PIE_CHART2: 'pie_chart',
+    DONUT_CHART2: 'donut_chart',
+    TREEMAP_CHART2: 'treemap_chart',
+    PYRAMID_CHART2: 'pyramid_chart',
+    FUNNEL_CHART2: 'funnel_chart',
+    HEATMAP_CHART2: 'heatmap_chart',
+    BULLET_CHART2: 'bullet_chart',
+    WATERFALL_CHART2: 'waterfall_chart',
+    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
+    SANKEY_CHART2: 'sankey_chart',
+    HEADLINE_CHART2: 'headline_chart',
+    COMBO_CHART2: 'combo_chart',
+    GEO_CHART2: 'geo_chart',
+    GEO_AREA_CHART2: 'geo_area_chart',
+    REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
+    RADAR_CHART3: 'radar_chart'
+} as const;
+
+export type AiType121 = typeof AiType121[keyof typeof AiType121];
 
 
 
@@ -5028,6 +5336,7 @@ export const AiType99 = {
     GEO_CHART: 'geo_chart',
     GEO_AREA_CHART: 'geo_area_chart',
     REPEATER_CHART: 'repeater_chart',
+    RADAR_CHART: 'radar_chart',
     TABLE2: 'table',
     BAR_CHART2: 'bar_chart',
     COLUMN_CHART2: 'column_chart',
@@ -5050,6 +5359,7 @@ export const AiType99 = {
     GEO_CHART2: 'geo_chart',
     GEO_AREA_CHART2: 'geo_area_chart',
     REPEATER_CHART2: 'repeater_chart',
+    RADAR_CHART2: 'radar_chart',
     TABLE3: 'table'
 } as const;
 
@@ -5246,11 +5556,19 @@ export interface AiValue {
 }
 
 /**
- * Literal (number or string); a {from,to} range for between/not_between; omitted for all/is_empty/is_not_empty.
+ * Literal (number or string); a {from,to} range for between/not_between; an {absolute} period or {relative} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
  */
 export interface AiValue1 {
     'from': number;
     'to': number;
+    /**
+     * Static period, snapped to the target date attribute\'s granularity: from = period start, to = inclusive period end. Platform date strings: \"YYYY-MM-DD\", or \"YYYY-MM-DD HH:mm\" for hour/minute, or \"YYYY-MM-DD HH:mm:ss\" for hour/minute/second granularities.
+     */
+    'absolute': AiAbsolute;
+    /**
+     * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute\'s granularity.
+     */
+    'relative': AiRelative;
 }
 
 /**
@@ -5307,7 +5625,7 @@ export interface AiVisualisation {
     /**
      * Type of visualisation.
      */
-    'type': AiType120;
+    'type': AiType121;
     'view_by'?: Array<AiBucketItem>;
     'stack_by'?: Array<AiBucketItem>;
     'trend_by'?: Array<AiBucketItem>;
@@ -5658,6 +5976,28 @@ export interface AiVisualisation22 {
      * Type of visualisation.
      */
     'type': AiType120;
+    'view_by'?: Array<AiBucketItem> | null;
+}
+
+
+export interface AiVisualisation23 {
+    'config'?: AiConfig | null;
+    'description'?: string;
+    'id': string;
+    'is_hidden'?: boolean | null;
+    'metrics'?: Array<AiBucketItem> | null;
+    /**
+     * Query definition of visualisation.
+     */
+    'query': AiQuery;
+    'segment_by'?: Array<AiBucketItem> | null;
+    'show_in_ai_results'?: boolean | null;
+    'tags'?: Array<string>;
+    'title'?: string;
+    /**
+     * Type of visualisation.
+     */
+    'type': AiType121;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -10737,6 +11077,288 @@ export class ObservabilityAi extends BaseAPI implements ObservabilityAiInterface
      */
     public getObservabilityOverview(options?: AxiosRequestConfig) {
         return ObservabilityAi_GetObservabilityOverview(this.axios, this.basePath, options, this.configuration);
+    }
+}
+
+
+// SmartFunctionsAi FP - SmartFunctionsAiAxiosParamCreator
+/**
+ * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+ * @summary (BETA) Semantic Search in Metadata
+ * @param {string} workspaceId 
+ * @param {AiSearchRequest} aiSearchRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsAiAxiosParamCreator_AiSearch(
+    workspaceId: string, aiSearchRequest: AiSearchRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('aiSearch', 'workspaceId', workspaceId)
+    // verify required parameter 'aiSearchRequest' is not null or undefined
+    assertParamExists('aiSearch', 'aiSearchRequest', aiSearchRequest)
+    const localVarPath = `/api/v1/actions/workspaces/{workspace_id}/ai/search`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof aiSearchRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(aiSearchRequest !== undefined ? aiSearchRequest : {})
+        : aiSearchRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// SmartFunctionsAi FP - SmartFunctionsAiAxiosParamCreator
+/**
+ * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+ * @summary (BETA) Semantic Search in Metadata
+ * @param {string} workspaceId 
+ * @param {AiSearchRequest} aiSearchRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsAiAxiosParamCreator_SemanticSearch(
+    workspaceId: string, aiSearchRequest: AiSearchRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('semanticSearch', 'workspaceId', workspaceId)
+    // verify required parameter 'aiSearchRequest' is not null or undefined
+    assertParamExists('semanticSearch', 'aiSearchRequest', aiSearchRequest)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/search`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof aiSearchRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(aiSearchRequest !== undefined ? aiSearchRequest : {})
+        : aiSearchRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// SmartFunctionsAi Api FP
+/**
+ * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+ * @summary (BETA) Semantic Search in Metadata
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsAiAiSearchRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsAi_AiSearch(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: SmartFunctionsAiAiSearchRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiSearchResult> {
+    const localVarAxiosArgs = await SmartFunctionsAiAxiosParamCreator_AiSearch(
+        requestParameters.workspaceId, requestParameters.aiSearchRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// SmartFunctionsAi Api FP
+/**
+ * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+ * @summary (BETA) Semantic Search in Metadata
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsAiSemanticSearchRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsAi_SemanticSearch(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: SmartFunctionsAiSemanticSearchRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiSearchResult> {
+    const localVarAxiosArgs = await SmartFunctionsAiAxiosParamCreator_SemanticSearch(
+        requestParameters.workspaceId, requestParameters.aiSearchRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * SmartFunctionsAi - interface
+ * @export
+ * @interface SmartFunctionsAi
+ */
+export interface SmartFunctionsAiInterface {
+    /**
+     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+     * @summary (BETA) Semantic Search in Metadata
+     * @param {SmartFunctionsAiAiSearchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @deprecated
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsAiInterface
+     */
+    aiSearch(requestParameters: SmartFunctionsAiAiSearchRequest, options?: AxiosRequestConfig): AxiosPromise<AiSearchResult>;
+
+    /**
+     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+     * @summary (BETA) Semantic Search in Metadata
+     * @param {SmartFunctionsAiSemanticSearchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsAiInterface
+     */
+    semanticSearch(requestParameters: SmartFunctionsAiSemanticSearchRequest, options?: AxiosRequestConfig): AxiosPromise<AiSearchResult>;
+
+}
+
+/**
+ * Request parameters for aiSearch operation in SmartFunctionsAi.
+ * @export
+ * @interface SmartFunctionsAiAiSearchRequest
+ */
+export interface SmartFunctionsAiAiSearchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SmartFunctionsAiAiSearch
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {AiSearchRequest}
+     * @memberof SmartFunctionsAiAiSearch
+     */
+    readonly aiSearchRequest: AiSearchRequest
+}
+
+/**
+ * Request parameters for semanticSearch operation in SmartFunctionsAi.
+ * @export
+ * @interface SmartFunctionsAiSemanticSearchRequest
+ */
+export interface SmartFunctionsAiSemanticSearchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SmartFunctionsAiSemanticSearch
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {AiSearchRequest}
+     * @memberof SmartFunctionsAiSemanticSearch
+     */
+    readonly aiSearchRequest: AiSearchRequest
+}
+
+/**
+ * SmartFunctionsAi - object-oriented interface
+ * @export
+ * @class SmartFunctionsAi
+ * @extends {BaseAPI}
+ */
+export class SmartFunctionsAi extends BaseAPI implements SmartFunctionsAiInterface {
+    /**
+     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+     * @summary (BETA) Semantic Search in Metadata
+     * @param {SmartFunctionsAiAiSearchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @deprecated
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsAi
+     */
+    public aiSearch(requestParameters: SmartFunctionsAiAiSearchRequest, options?: AxiosRequestConfig) {
+        return SmartFunctionsAi_AiSearch(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+     * @summary (BETA) Semantic Search in Metadata
+     * @param {SmartFunctionsAiSemanticSearchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsAi
+     */
+    public semanticSearch(requestParameters: SmartFunctionsAiSemanticSearchRequest, options?: AxiosRequestConfig) {
+        return SmartFunctionsAi_SemanticSearch(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

@@ -1,18 +1,28 @@
 // (C) 2026 GoodData Corporation
 
-import { useCallback, useMemo } from "react";
+import { type ReactNode, useCallback, useMemo } from "react";
 
-import { defineMessages, useIntl } from "react-intl";
+import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
-import { UiChip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { Dropdown, UiChip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { collectContextReferences } from "../context/collectContextReferences.js";
-import { contextSetupEnabledSelector, userContextSelector } from "../store/chatWindow/chatWindowSelectors.js";
-import { removeContextReferenceAction } from "../store/chatWindow/chatWindowSlice.js";
-import { type IGenAIContextObject } from "../types.js";
+import {
+    ambientContextSelector,
+    contextSetupEnabledSelector,
+    selectedContextSelector,
+    userContextSelector,
+} from "../store/chatWindow/chatWindowSelectors.js";
+import {
+    removeContextReferenceAction,
+    selectedContextReferencesAction,
+} from "../store/chatWindow/chatWindowSlice.js";
+import { type IGenAIContextObject, type SelectedContext } from "../types.js";
 
+import { GenAiChatContextChooserBody } from "./GenAiChatContextChooserBody.js";
 import { useContextChangeAnnouncement } from "./hooks/useContextChangeAnnouncement.js";
+import { useAmbientContextItems } from "./hooks/useContextItems.js";
 import { getIconByObject, getTypeLabel } from "./utils/icons.js";
 
 const msgs = defineMessages({
@@ -25,10 +35,13 @@ const msgs = defineMessages({
     groupLabel: {
         id: "gd.gen-ai.context.group.ariaLabel",
     },
+    focusOn: {
+        id: "gd.gen-ai.context.focus_on",
+    },
 });
 
 type GenAIChatContextIndicatorOwnProps = {
-    onDelete?: () => void;
+    onUpdate?: () => void;
 };
 
 /**
@@ -39,16 +52,23 @@ type GenAIChatContextIndicatorOwnProps = {
  *
  * @internal
  */
-export function GenAIChatContextIndicator({ onDelete }: GenAIChatContextIndicatorOwnProps) {
+export function GenAIChatContextIndicator({ onUpdate }: GenAIChatContextIndicatorOwnProps) {
     const intl = useIntl();
     const emptyReferenceLabel = intl.formatMessage(msgs.untitled);
     const groupLabelId = useIdPrefixed("context-indicator-label");
 
     const isContextSetupEnabled = useSelector(contextSetupEnabledSelector);
-    const context = useSelector(userContextSelector);
+    const ambientContext = useSelector(ambientContextSelector);
+    const userContext = useSelector(userContextSelector);
+    const selectedContext = useSelector(selectedContextSelector);
+    const { items, search, setSearch, selectedIds } = useAmbientContextItems(ambientContext);
+
+    const addContextLabel = intl.formatMessage(msgs.focusOn);
+    const titleId = useIdPrefixed("context-focuson-title");
+
     const references = useMemo(
-        () => collectContextReferences(context, emptyReferenceLabel),
-        [context, emptyReferenceLabel],
+        () => collectContextReferences(userContext, selectedContext, emptyReferenceLabel),
+        [userContext, selectedContext, emptyReferenceLabel],
     );
 
     const dispatch = useDispatch();
@@ -57,17 +77,33 @@ export function GenAIChatContextIndicator({ onDelete }: GenAIChatContextIndicato
         [dispatch],
     );
 
+    const onAmbientToggleHandler = useCallback(() => {
+        return () => {
+            dispatch(
+                selectedContextReferencesAction({
+                    ...selectedContext,
+                    activated: !selectedContext?.activated,
+                }),
+            );
+            onUpdate?.();
+        };
+    }, [dispatch, onUpdate, selectedContext]);
+
     const onDeleteHandler = useCallback(
         (reference: IGenAIContextObject) => {
             return () => {
                 removeContextReference({ object: reference });
-                onDelete?.();
+                onUpdate?.();
             };
         },
-        [removeContextReference, onDelete],
+        [removeContextReference, onUpdate],
     );
 
-    const announcement = useContextChangeAnnouncement(references);
+    const onOpenStateChanged = useCallback(() => {
+        setSearch("");
+    }, [setSearch]);
+
+    const announcement = useContextChangeAnnouncement(selectedContext, references);
 
     if (!isContextSetupEnabled) {
         return null;
@@ -75,39 +111,132 @@ export function GenAIChatContextIndicator({ onDelete }: GenAIChatContextIndicato
 
     return (
         <>
-            {references.length > 0 ? (
-                <>
-                    <span className="sr-only" id={groupLabelId}>
-                        {intl.formatMessage(msgs.groupLabel)}
-                    </span>
-                    <div
-                        className="gd-gen-ai-chat__context-indicator"
-                        role="group"
-                        aria-labelledby={groupLabelId}
-                    >
-                        {references.map((reference, index) => (
-                            <UiChip
-                                key={index}
-                                isDisabled
-                                isDeletable
-                                {...getIconByObject(reference)}
-                                label={reference.title}
-                                isExpandable={false}
-                                onDelete={onDeleteHandler(reference)}
-                                accessibilityConfig={{
-                                    deleteAriaLabel: intl.formatMessage(msgs.remove, {
-                                        title: reference.title,
-                                    }),
-                                    iconBeforeAriaLabel: getTypeLabel(reference.type, intl),
+            <ContextWrapper groupLabel={msgs.groupLabel} groupLabelId={groupLabelId}>
+                {selectedContext?.dashboard ? (
+                    <Dropdown
+                        alignPoints={[{ align: "tl bl", offset: { x: 0, y: 0 } }]}
+                        closeOnEscape
+                        fullscreenOnMobile={false}
+                        autofocusOnOpen
+                        accessibilityConfig={{ popupRole: "dialog" }}
+                        onOpenStateChanged={onOpenStateChanged}
+                        renderButton={({ isOpen, toggleDropdown, accessibilityConfig }) => {
+                            const item = selectedContext.visualization ?? selectedContext.dashboard;
+                            if (!item) {
+                                return null;
+                            }
+                            return (
+                                <UiChip
+                                    isActionable
+                                    isExpandable
+                                    isActive={isOpen}
+                                    {...getIconByObject(item)}
+                                    label={getSelectedTitle(selectedContext, emptyReferenceLabel)}
+                                    iconAction={selectedContext.activated ? "visible" : "invisible"}
+                                    variant={selectedContext.activated ? "normal" : "inactive"}
+                                    onClick={toggleDropdown}
+                                    onAction={onAmbientToggleHandler()}
+                                    accessibilityConfig={{
+                                        ...accessibilityConfig,
+                                        deleteAriaLabel: intl.formatMessage(msgs.remove, {
+                                            title: getSelectedTitle(selectedContext, emptyReferenceLabel),
+                                        }),
+                                        iconBeforeAriaLabel: getTypeLabel(item.type, intl),
+                                    }}
+                                />
+                            );
+                        }}
+                        renderBody={({ closeDropdown, ariaAttributes }) => (
+                            <GenAiChatContextChooserBody
+                                inputItems={items}
+                                selectedIds={selectedIds}
+                                title={addContextLabel}
+                                titleId={titleId}
+                                search={search}
+                                onSearchChange={setSearch}
+                                ariaAttributes={ariaAttributes}
+                                closeDropdown={closeDropdown}
+                                onSelect={(item) => {
+                                    dispatch(
+                                        selectedContextReferencesAction({
+                                            ...selectedContext,
+                                            ...(item.type === "dashboard"
+                                                ? {
+                                                      dashboard: item,
+                                                      visualization: undefined,
+                                                  }
+                                                : {}),
+                                            ...(item.type === "visualization" || item.type === "widget"
+                                                ? {
+                                                      visualization: item,
+                                                  }
+                                                : {}),
+                                            activated: true,
+                                        }),
+                                    );
+                                    onUpdate?.();
                                 }}
                             />
-                        ))}
-                    </div>
-                </>
-            ) : null}
+                        )}
+                    />
+                ) : null}
+                {references.length > 0
+                    ? references.map((reference, index) => (
+                          <UiChip
+                              key={index}
+                              isDisabled
+                              isDeletable
+                              {...getIconByObject(reference)}
+                              label={reference.title}
+                              isExpandable={false}
+                              onDelete={onDeleteHandler(reference)}
+                              accessibilityConfig={{
+                                  deleteAriaLabel: intl.formatMessage(msgs.remove, {
+                                      title: reference.title,
+                                  }),
+                                  iconBeforeAriaLabel: getTypeLabel(reference.type, intl),
+                              }}
+                          />
+                      ))
+                    : null}
+            </ContextWrapper>
             <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">
                 {announcement}
             </span>
         </>
     );
+}
+
+interface IContextWrapperProps {
+    groupLabelId: string;
+    groupLabel: MessageDescriptor;
+    children: ReactNode;
+}
+
+function ContextWrapper({ groupLabel, groupLabelId, children }: IContextWrapperProps) {
+    const intl = useIntl();
+
+    return (
+        <>
+            <span className="sr-only" id={groupLabelId}>
+                {intl.formatMessage(groupLabel)}
+            </span>
+            <div className="gd-gen-ai-chat__context-indicator" role="group" aria-labelledby={groupLabelId}>
+                {children}
+            </div>
+        </>
+    );
+}
+
+// utils
+
+function getSelectedTitle(selectedContext: SelectedContext, emptyReferenceLabel: string) {
+    const label = [
+        ...(selectedContext.dashboard ? [selectedContext.dashboard.title || emptyReferenceLabel] : []),
+        ...(selectedContext.visualization
+            ? [selectedContext.visualization.title || emptyReferenceLabel]
+            : []),
+    ];
+
+    return label.join(" / ");
 }

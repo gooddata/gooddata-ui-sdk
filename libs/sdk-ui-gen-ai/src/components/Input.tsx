@@ -161,7 +161,7 @@ function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }:
                 <HintText focused={focused} where="top" />
                 <div className="gd-gen-ai-chat__input__container">
                     <div className="gd-gen-ai-chat__input__context" onMouseDown={handleContextMouseDown}>
-                        <GenAIChatContextIndicator onDelete={handleOnFocus} />
+                        <GenAIChatContextIndicator onUpdate={handleOnFocus} />
                     </div>
                     <div ref={targetRef} onFocus={handleOnFocus} />
                     <div className="gd-gen-ai-chat__input__text" {...ref}>

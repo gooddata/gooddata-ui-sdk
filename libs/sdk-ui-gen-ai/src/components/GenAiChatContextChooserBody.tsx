@@ -5,6 +5,7 @@ import { type KeyboardEvent, useCallback, useEffect, useId } from "react";
 import cx from "classnames";
 import { defineMessages, useIntl } from "react-intl";
 
+import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { useDebouncedState } from "@gooddata/sdk-ui";
 import {
     DEFAULT_ITEM_HEIGHT,
@@ -57,6 +58,7 @@ type GenAiChatContextChooserBodyProps = {
     titleId: string;
     search: string;
     onSearchChange: (search: string) => void;
+    selectedIds?: ObjRef[];
     isLoading?: boolean;
     hasNextPage?: boolean;
     loadNextPage?: () => void;
@@ -74,6 +76,7 @@ export function GenAiChatContextChooserBody({
     title,
     titleId,
     search,
+    selectedIds,
     onSearchChange,
     isLoading = false,
     hasNextPage = false,
@@ -200,7 +203,13 @@ export function GenAiChatContextChooserBody({
                             "aria-label": intl.formatMessage(msgs.listAriaLabel),
                         }}
                     >
-                        {(item) => <ContextChooserItem item={item} onSelect={() => handleSelect(item)} />}
+                        {(item) => (
+                            <ContextChooserItem
+                                item={item}
+                                selected={selectedIds?.some((r) => areObjRefsEqual(r, item.ref))}
+                                onSelect={() => handleSelect(item)}
+                            />
+                        )}
                     </UiPagedVirtualList>
                 </ScopedIdStore>
             ) : (
@@ -214,11 +223,25 @@ export function GenAiChatContextChooserBody({
     );
 }
 
-function ContextChooserItem({ item, onSelect }: { item: IGenAIContextObject; onSelect: () => void }) {
+function ContextChooserItem({
+    item,
+    selected,
+    onSelect,
+}: {
+    item: IGenAIContextObject;
+    selected?: boolean;
+    onSelect: () => void;
+}) {
     const icon = getIconByObject(item);
 
     return (
-        <div className="gd-list-item" onClick={onSelect}>
+        <div
+            className={cx("gd-list-item", {
+                "gd-list-item--selected": selected,
+            })}
+            onClick={onSelect}
+            aria-selected={selected}
+        >
             {icon.iconBefore ? <UiIcon size={16} type={icon.iconBefore} color={icon.iconColor} /> : null}
             <ShortenedText ellipsisPosition="end">{item.title}</ShortenedText>
         </div>

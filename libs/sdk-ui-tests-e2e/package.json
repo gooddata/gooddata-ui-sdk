@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-e2e",
-    "version": "11.55.0-alpha.2",
+    "version": "11.55.0-alpha.3",
     "private": true,
     "description": "GoodData SDK e2e tests",
     "license": "LicenseRef-LICENSE",
@@ -61,7 +61,7 @@
         "lodash-es": "^4.17.23",
         "npm-run-all": "4.1.5",
         "oxfmt": "0.52.0",
-        "oxlint": "1.51.0",
+        "oxlint": "1.57.0",
         "oxlint-tsgolint": "0.15.0",
         "rolldown": "1.0.3",
         "typescript": "5.9.3"

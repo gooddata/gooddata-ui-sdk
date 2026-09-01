@@ -1119,6 +1119,7 @@
     "message.accessibility.dismiss.notification": "Usuń powiadomienie",
     "datePicker.accessibility.label": "Wybierz datę początkową",
     "timePicker.accessibility.label": "Wybierz czas rozpoczęcia",
+    "timezoneSelect.search.accessibility.label": "Wyszukaj strefy czasowe",
     "menu.close": "Zamknij menu",
     "menu.back": "Powrót do menu nadrzędnego",
     "copyButton.copy.success": "Skopiowano do schowka!",

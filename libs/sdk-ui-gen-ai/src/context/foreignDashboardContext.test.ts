@@ -94,34 +94,60 @@ describe("adding a dashboard the user is not viewing", () => {
         const withWidget = addContextReference(ambientContext, ambientWidget);
         const withBoth = addContextReference(withWidget, foreignDashboard("marketing", "Marketing"));
 
-        expect(collectContextReferences(withBoth.active).map((reference) => reference.title)).toEqual([
-            "Revenue",
-            "Sales by Region",
-            "Marketing",
-        ]);
+        expect(
+            collectContextReferences(withBoth.active, {
+                activated: false,
+                dashboard: {
+                    ref: idRef("none"),
+                    id: "none",
+                    where: "view.dashboard",
+                    title: "None",
+                    type: "dashboard",
+                    nesting: 0,
+                },
+            }).map((reference) => reference.title),
+        ).toEqual(["Revenue", "Sales by Region", "Marketing"]);
     });
 
     it("can be removed on its own without touching the rest of the context", () => {
         const withWidget = addContextReference(ambientContext, ambientWidget);
         const withBoth = addContextReference(withWidget, foreignDashboard("marketing", "Marketing"));
 
-        const active = removeContextReference(withBoth.active, foreignDashboard("marketing", "Marketing"));
+        const active = removeContextReference(withBoth, foreignDashboard("marketing", "Marketing"));
 
-        expect(collectContextReferences(active).map((reference) => reference.title)).toEqual([
-            "Revenue",
-            "Sales by Region",
-        ]);
+        expect(
+            collectContextReferences(active.active, {
+                activated: false,
+                dashboard: {
+                    ref: idRef("none"),
+                    id: "none",
+                    where: "view.dashboard",
+                    title: "None",
+                    type: "dashboard",
+                    nesting: 0,
+                },
+            }).map((reference) => reference.title),
+        ).toEqual(["Revenue", "Sales by Region"]);
     });
 
     it("removes only the one asked for when several are added", () => {
         const withMarketing = addContextReference(ambientContext, foreignDashboard("marketing", "Marketing"));
         const withBoth = addContextReference(withMarketing, foreignDashboard("finance", "Finance"));
 
-        const active = removeContextReference(withBoth.active, foreignDashboard("marketing", "Marketing"));
+        const active = removeContextReference(withBoth, foreignDashboard("marketing", "Marketing"));
 
-        expect(collectContextReferences(active).map((reference) => reference.title)).toEqual([
-            "Revenue",
-            "Finance",
-        ]);
+        expect(
+            collectContextReferences(active.active, {
+                activated: false,
+                dashboard: {
+                    ref: idRef("none"),
+                    id: "none",
+                    where: "view.dashboard",
+                    title: "None",
+                    type: "dashboard",
+                    nesting: 0,
+                },
+            }).map((reference) => reference.title),
+        ).toEqual(["Revenue", "Finance"]);
     });
 });

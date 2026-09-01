@@ -4,7 +4,6 @@ import { type FocusEvent, useCallback } from "react";
 
 import { useIntl } from "react-intl";
 
-import { type IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import {
     ValidationContextStore,
     createInvalidDatapoint,
@@ -14,17 +13,10 @@ import {
 import { Input, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { DASHBOARD_TITLE_MAX_LENGTH } from "../../../../../constants/dashboard.js";
+import { type IScheduledEmailDialogSubjectProps } from "../../../types.js";
 import { ErrorWrapper } from "../ErrorWrapper/ErrorWrapper.js";
 
 const MAX_SUBJECT_LENGTH = 255;
-
-interface ISubjectFormProps {
-    dashboardTitle: string;
-    editedAutomation: IAutomationMetadataObjectDefinition;
-    isSubmitDisabled?: boolean;
-    onChange: (value: string, isValid: boolean) => void;
-    onKeyDownSubmit: () => void;
-}
 
 export function SubjectForm({
     dashboardTitle,
@@ -32,7 +24,7 @@ export function SubjectForm({
     isSubmitDisabled,
     onChange,
     onKeyDownSubmit,
-}: ISubjectFormProps) {
+}: IScheduledEmailDialogSubjectProps) {
     const { formatMessage } = useIntl();
 
     const labelId = useIdPrefixed("label");

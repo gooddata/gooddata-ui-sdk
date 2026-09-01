@@ -123,6 +123,10 @@
         "text": "Add context",
         "crowdinContext": "Label for the button that adds a new context to the AI chatbot"
     },
+    "gd.gen-ai.context.focus_on": {
+        "text": "Focus on",
+        "crowdinContext": "Label for popover that shows current view context"
+    },
     "gd.gen-ai.context.close": {
         "text": "Close add context",
         "crowdinContext": "Accessibility label for the button that closes the AI chatbot add-context dialog"
@@ -162,6 +166,10 @@
     "gd.gen-ai.context.untitled": {
         "text": "Untitled",
         "crowdinContext": "Label for untitled objects in the AI chatbot context"
+    },
+    "gd.gen-ai.context.this": {
+        "text": "Whole dashboard",
+        "crowdinContext": "Label for the dashboard context item that refers to the whole dashboard"
     },
     "gd.gen-ai.context.list.ariaLabel": {
         "text": "Available context items",

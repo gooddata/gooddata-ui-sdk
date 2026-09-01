@@ -11,12 +11,12 @@ import {
 } from "@gooddata/sdk-model";
 import { DETAILED_ANNOUNCEMENT_THRESHOLD, UiSearchResultsAnnouncement } from "@gooddata/sdk-ui-kit";
 
+import { useWorkspaceUsersSearch } from "../../../../shared/hooks/useWorkspaceUsersSearch.js";
 import { convertUserToAutomationRecipient } from "../../../../shared/utils/automationUtils.js";
 import { createUser, matchRecipient } from "../../../utils/users.js";
 import { isEmail } from "../../../utils/validate.js";
 
 import { RecipientsSelectRenderer } from "./RecipientsSelectRenderer.js";
-import { useWorkspaceUsersSearch } from "./useWorkspaceUsersSearch.js";
 
 interface IRecipientsSelectProps {
     /**

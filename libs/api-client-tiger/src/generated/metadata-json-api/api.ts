@@ -1717,6 +1717,10 @@ export interface DeclarativeAnalyticsLayer {
      */
     'parameters'?: Array<DeclarativeParameter>;
     /**
+     * A list of report page layouts available in the model.
+     */
+    'reportPageLayouts'?: Array<DeclarativeReportPageLayout>;
+    /**
      * A list of visualization objects available in the model.
      */
     'visualizationObjects'?: Array<DeclarativeVisualizationObject>;
@@ -3025,6 +3029,26 @@ export interface DeclarativeReferenceSource {
 
 export type DeclarativeReferenceSourceDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 
+export interface DeclarativeReportPageLayout {
+    /**
+     * Free-form JSON object
+     */
+    'content': object | null;
+    /**
+     * Report page layout description.
+     */
+    'description'?: string;
+    /**
+     * Report page layout ID.
+     */
+    'id': string;
+    'tags'?: Array<string>;
+    /**
+     * Report page layout title.
+     */
+    'title': string;
+}
+
 /**
  * Declarative specification of the cryptographic key.
  */
@@ -3972,7 +3996,7 @@ export interface IdentifierRefIdentifier {
     'type': IdentifierRefIdentifierTypeEnum;
 }
 
-export type IdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
+export type IdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'reportPageLayout' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
 
 /**
  * Export request object describing the export properties and metadata for image exports.
@@ -12283,6 +12307,182 @@ export type JsonApiParameterPostOptionalIdAttributesDefinition = { type: 'NUMBER
 
 export interface JsonApiParameterPostOptionalIdDocument {
     'data': JsonApiParameterPostOptionalId;
+}
+
+/**
+ * JSON:API representation of reportPageLayout entity.
+ */
+export interface JsonApiReportPageLayoutIn {
+    'attributes': JsonApiReportPageLayoutInAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    /**
+     * Object type
+     */
+    'type': JsonApiReportPageLayoutInTypeEnum;
+}
+
+export type JsonApiReportPageLayoutInTypeEnum = 'reportPageLayout';
+
+export interface JsonApiReportPageLayoutInAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title': string;
+}
+
+export interface JsonApiReportPageLayoutInDocument {
+    'data': JsonApiReportPageLayoutIn;
+}
+
+/**
+ * JSON:API representation of reportPageLayout entity.
+ */
+export interface JsonApiReportPageLayoutOut {
+    'attributes': JsonApiReportPageLayoutOutAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    'meta'?: JsonApiReportPageLayoutOutMeta;
+    /**
+     * Object type
+     */
+    'type': JsonApiReportPageLayoutOutTypeEnum;
+}
+
+export type JsonApiReportPageLayoutOutTypeEnum = 'reportPageLayout';
+
+export interface JsonApiReportPageLayoutOutAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title': string;
+}
+
+export interface JsonApiReportPageLayoutOutDocument {
+    'data': JsonApiReportPageLayoutOut;
+    'links'?: ObjectLinks;
+}
+
+/**
+ * A JSON:API document with a list of resources
+ */
+export interface JsonApiReportPageLayoutOutList {
+    'data': Array<JsonApiReportPageLayoutOutWithLinks>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiReportPageLayoutOutListMeta;
+}
+
+export interface JsonApiReportPageLayoutOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiReportPageLayoutOutMeta {
+    'origin'?: JsonApiReportPageLayoutOutMetaOrigin;
+}
+
+export interface JsonApiReportPageLayoutOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiReportPageLayoutOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiReportPageLayoutOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
+export interface JsonApiReportPageLayoutOutWithLinks {
+    'attributes': JsonApiReportPageLayoutOutAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    'meta'?: JsonApiReportPageLayoutOutMeta;
+    /**
+     * Object type
+     */
+    'type': JsonApiReportPageLayoutOutWithLinksTypeEnum;
+    'links'?: ObjectLinks;
+}
+
+export type JsonApiReportPageLayoutOutWithLinksTypeEnum = 'reportPageLayout';
+
+/**
+ * JSON:API representation of patching reportPageLayout entity.
+ */
+export interface JsonApiReportPageLayoutPatch {
+    'attributes': JsonApiReportPageLayoutPatchAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    /**
+     * Object type
+     */
+    'type': JsonApiReportPageLayoutPatchTypeEnum;
+}
+
+export type JsonApiReportPageLayoutPatchTypeEnum = 'reportPageLayout';
+
+export interface JsonApiReportPageLayoutPatchAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
+     */
+    'content'?: object;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
+}
+
+export interface JsonApiReportPageLayoutPatchDocument {
+    'data': JsonApiReportPageLayoutPatch;
+}
+
+/**
+ * JSON:API representation of reportPageLayout entity.
+ */
+export interface JsonApiReportPageLayoutPostOptionalId {
+    'attributes': JsonApiReportPageLayoutPostOptionalIdAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id'?: string;
+    /**
+     * Object type
+     */
+    'type': JsonApiReportPageLayoutPostOptionalIdTypeEnum;
+}
+
+export type JsonApiReportPageLayoutPostOptionalIdTypeEnum = 'reportPageLayout';
+
+export interface JsonApiReportPageLayoutPostOptionalIdAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title': string;
+}
+
+export interface JsonApiReportPageLayoutPostOptionalIdDocument {
+    'data': JsonApiReportPageLayoutPostOptionalId;
 }
 
 /**
@@ -61167,6 +61367,74 @@ export async function EntitiesApiAxiosParamCreator_CreateEntityParameters(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
+ * @summary Post Report Page Layout
+ * @param {string} workspaceId 
+ * @param {JsonApiReportPageLayoutPostOptionalIdDocument} jsonApiReportPageLayoutPostOptionalIdDocument 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_CreateEntityReportPageLayouts(
+    workspaceId: string, jsonApiReportPageLayoutPostOptionalIdDocument: JsonApiReportPageLayoutPostOptionalIdDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createEntityReportPageLayouts', 'workspaceId', workspaceId)
+    // verify required parameter 'jsonApiReportPageLayoutPostOptionalIdDocument' is not null or undefined
+    assertParamExists('createEntityReportPageLayouts', 'jsonApiReportPageLayoutPostOptionalIdDocument', jsonApiReportPageLayoutPostOptionalIdDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiReportPageLayoutPostOptionalIdDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiReportPageLayoutPostOptionalIdDocument !== undefined ? jsonApiReportPageLayoutPostOptionalIdDocument : {})
+        : jsonApiReportPageLayoutPostOptionalIdDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
  * @summary Post Theming
  * @param {JsonApiThemeInDocument} jsonApiThemeInDocument 
  * @param {*} [options] Override http request option.
@@ -63383,6 +63651,55 @@ export async function EntitiesApiAxiosParamCreator_DeleteEntityParameters(
     // verify required parameter 'objectId' is not null or undefined
     assertParamExists('deleteEntityParameters', 'objectId', objectId)
     const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/parameters/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
+ * @summary Delete a Report Page Layout
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_DeleteEntityReportPageLayouts(
+    workspaceId: string, objectId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('deleteEntityReportPageLayouts', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('deleteEntityReportPageLayouts', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts/{objectId}`
         .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
         .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -66964,6 +67281,86 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesParameters(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
+ * @summary Get all Report Page Layouts
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_GetAllEntitiesReportPageLayouts(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesReportPageLayouts', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
  * @summary Get all Theming entities
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
  * @param {number} [page] Zero-based page index (0..N)
@@ -70500,6 +70897,70 @@ export async function EntitiesApiAxiosParamCreator_GetEntityParameters(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
+ * @summary Get a Report Page Layout
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_GetEntityReportPageLayouts(
+    workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityReportPageLayouts', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityReportPageLayouts', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
  * @summary Get Theming
  * @param {string} id 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -73707,6 +74168,78 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityParameters(
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(jsonApiParameterPatchDocument !== undefined ? jsonApiParameterPatchDocument : {})
         : jsonApiParameterPatchDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
+ * @summary Patch a Report Page Layout
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiReportPageLayoutPatchDocument} jsonApiReportPageLayoutPatchDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_PatchEntityReportPageLayouts(
+    workspaceId: string, objectId: string, jsonApiReportPageLayoutPatchDocument: JsonApiReportPageLayoutPatchDocument, filter?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchEntityReportPageLayouts', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('patchEntityReportPageLayouts', 'objectId', objectId)
+    // verify required parameter 'jsonApiReportPageLayoutPatchDocument' is not null or undefined
+    assertParamExists('patchEntityReportPageLayouts', 'jsonApiReportPageLayoutPatchDocument', jsonApiReportPageLayoutPatchDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiReportPageLayoutPatchDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiReportPageLayoutPatchDocument !== undefined ? jsonApiReportPageLayoutPatchDocument : {})
+        : jsonApiReportPageLayoutPatchDocument || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -78482,6 +79015,78 @@ export async function EntitiesApiAxiosParamCreator_UpdateEntityParameters(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
+ * @summary Put a Report Page Layout
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiReportPageLayoutInDocument} jsonApiReportPageLayoutInDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_UpdateEntityReportPageLayouts(
+    workspaceId: string, objectId: string, jsonApiReportPageLayoutInDocument: JsonApiReportPageLayoutInDocument, filter?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('updateEntityReportPageLayouts', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('updateEntityReportPageLayouts', 'objectId', objectId)
+    // verify required parameter 'jsonApiReportPageLayoutInDocument' is not null or undefined
+    assertParamExists('updateEntityReportPageLayouts', 'jsonApiReportPageLayoutInDocument', jsonApiReportPageLayoutInDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiReportPageLayoutInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiReportPageLayoutInDocument !== undefined ? jsonApiReportPageLayoutInDocument : {})
+        : jsonApiReportPageLayoutInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
  * @summary Put Theming
  * @param {string} id 
  * @param {JsonApiThemeInDocument} jsonApiThemeInDocument 
@@ -80191,6 +80796,32 @@ export async function EntitiesApi_CreateEntityParameters(
 // EntitiesApi Api FP
 /**
  * 
+ * @summary Post Report Page Layout
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiCreateEntityReportPageLayoutsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_CreateEntityReportPageLayouts(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiCreateEntityReportPageLayoutsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_CreateEntityReportPageLayouts(
+        requestParameters.workspaceId, requestParameters.jsonApiReportPageLayoutPostOptionalIdDocument, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
  * @summary Post Theming
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -81272,6 +81903,32 @@ export async function EntitiesApi_DeleteEntityParameters(
     configuration?: Configuration,
 ): AxiosPromise<void> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_DeleteEntityParameters(
+        requestParameters.workspaceId, requestParameters.objectId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Delete a Report Page Layout
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiDeleteEntityReportPageLayoutsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_DeleteEntityReportPageLayouts(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiDeleteEntityReportPageLayoutsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_DeleteEntityReportPageLayouts(
         requestParameters.workspaceId, requestParameters.objectId, 
         options || {},
         configuration,
@@ -82624,6 +83281,32 @@ export async function EntitiesApi_GetAllEntitiesParameters(
 ): AxiosPromise<JsonApiParameterOutList> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetAllEntitiesParameters(
         requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Get all Report Page Layouts
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiGetAllEntitiesReportPageLayoutsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_GetAllEntitiesReportPageLayouts(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiGetAllEntitiesReportPageLayoutsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiReportPageLayoutOutList> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetAllEntitiesReportPageLayouts(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -84088,6 +84771,32 @@ export async function EntitiesApi_GetEntityParameters(
 // EntitiesApi Api FP
 /**
  * 
+ * @summary Get a Report Page Layout
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiGetEntityReportPageLayoutsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_GetEntityReportPageLayouts(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiGetEntityReportPageLayoutsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetEntityReportPageLayouts(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
  * @summary Get Theming
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -85300,6 +86009,32 @@ export async function EntitiesApi_PatchEntityParameters(
 ): AxiosPromise<JsonApiParameterOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_PatchEntityParameters(
         requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiParameterPatchDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Patch a Report Page Layout
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiPatchEntityReportPageLayoutsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_PatchEntityReportPageLayouts(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiPatchEntityReportPageLayoutsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_PatchEntityReportPageLayouts(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPageLayoutPatchDocument, requestParameters.filter, 
         options || {},
         configuration,
     );
@@ -87026,6 +87761,32 @@ export async function EntitiesApi_UpdateEntityParameters(
 // EntitiesApi Api FP
 /**
  * 
+ * @summary Put a Report Page Layout
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiUpdateEntityReportPageLayoutsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_UpdateEntityReportPageLayouts(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiUpdateEntityReportPageLayoutsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_UpdateEntityReportPageLayouts(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPageLayoutInDocument, requestParameters.filter, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
  * @summary Put Theming
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -87659,6 +88420,16 @@ export interface EntitiesApiInterface {
 
     /**
      * 
+     * @summary Post Report Page Layout
+     * @param {EntitiesApiCreateEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    createEntityReportPageLayouts(requestParameters: EntitiesApiCreateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
+
+    /**
+     * 
      * @summary Post Theming
      * @param {EntitiesApiCreateEntityThemesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -88077,6 +88848,16 @@ export interface EntitiesApiInterface {
      * @memberof EntitiesApiInterface
      */
     deleteEntityParameters(requestParameters: EntitiesApiDeleteEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Delete a Report Page Layout
+     * @param {EntitiesApiDeleteEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    deleteEntityReportPageLayouts(requestParameters: EntitiesApiDeleteEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * 
@@ -88597,6 +89378,16 @@ export interface EntitiesApiInterface {
      * @memberof EntitiesApiInterface
      */
     getAllEntitiesParameters(requestParameters: EntitiesApiGetAllEntitiesParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutList>;
+
+    /**
+     * 
+     * @summary Get all Report Page Layouts
+     * @param {EntitiesApiGetAllEntitiesReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getAllEntitiesReportPageLayouts(requestParameters: EntitiesApiGetAllEntitiesReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutList>;
 
     /**
      * 
@@ -89159,6 +89950,16 @@ export interface EntitiesApiInterface {
 
     /**
      * 
+     * @summary Get a Report Page Layout
+     * @param {EntitiesApiGetEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getEntityReportPageLayouts(requestParameters: EntitiesApiGetEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
+
+    /**
+     * 
      * @summary Get Theming
      * @param {EntitiesApiGetEntityThemesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -89627,6 +90428,16 @@ export interface EntitiesApiInterface {
      * @memberof EntitiesApiInterface
      */
     patchEntityParameters(requestParameters: EntitiesApiPatchEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
+
+    /**
+     * 
+     * @summary Patch a Report Page Layout
+     * @param {EntitiesApiPatchEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    patchEntityReportPageLayouts(requestParameters: EntitiesApiPatchEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
 
     /**
      * 
@@ -90288,6 +91099,16 @@ export interface EntitiesApiInterface {
      * @memberof EntitiesApiInterface
      */
     updateEntityParameters(requestParameters: EntitiesApiUpdateEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
+
+    /**
+     * 
+     * @summary Put a Report Page Layout
+     * @param {EntitiesApiUpdateEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    updateEntityReportPageLayouts(requestParameters: EntitiesApiUpdateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
 
     /**
      * 
@@ -91110,6 +91931,34 @@ export interface EntitiesApiCreateEntityParametersRequest {
      * Include Meta objects.
      * @type {Array<'origin' | 'all' | 'ALL'>}
      * @memberof EntitiesApiCreateEntityParameters
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for createEntityReportPageLayouts operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiCreateEntityReportPageLayoutsRequest
+ */
+export interface EntitiesApiCreateEntityReportPageLayoutsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiCreateEntityReportPageLayouts
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {JsonApiReportPageLayoutPostOptionalIdDocument}
+     * @memberof EntitiesApiCreateEntityReportPageLayouts
+     */
+    readonly jsonApiReportPageLayoutPostOptionalIdDocument: JsonApiReportPageLayoutPostOptionalIdDocument
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiCreateEntityReportPageLayouts
      */
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
 }
@@ -91978,6 +92827,27 @@ export interface EntitiesApiDeleteEntityParametersRequest {
      * 
      * @type {string}
      * @memberof EntitiesApiDeleteEntityParameters
+     */
+    readonly objectId: string
+}
+
+/**
+ * Request parameters for deleteEntityReportPageLayouts operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiDeleteEntityReportPageLayoutsRequest
+ */
+export interface EntitiesApiDeleteEntityReportPageLayoutsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityReportPageLayouts
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityReportPageLayouts
      */
     readonly objectId: string
 }
@@ -94384,6 +95254,69 @@ export interface EntitiesApiGetAllEntitiesParametersRequest {
 }
 
 /**
+ * Request parameters for getAllEntitiesReportPageLayouts operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetAllEntitiesReportPageLayoutsRequest
+ */
+export interface EntitiesApiGetAllEntitiesReportPageLayoutsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesReportPageLayouts
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof EntitiesApiGetAllEntitiesReportPageLayouts
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesReportPageLayouts
+     */
+    readonly filter?: string
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesReportPageLayouts
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesReportPageLayouts
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof EntitiesApiGetAllEntitiesReportPageLayouts
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EntitiesApiGetAllEntitiesReportPageLayouts
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesReportPageLayouts
+     */
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
+}
+
+/**
  * Request parameters for getAllEntitiesThemes operation in EntitiesApi.
  * @export
  * @interface EntitiesApiGetAllEntitiesThemesRequest
@@ -96596,6 +97529,48 @@ export interface EntitiesApiGetEntityParametersRequest {
 }
 
 /**
+ * Request parameters for getEntityReportPageLayouts operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetEntityReportPageLayoutsRequest
+ */
+export interface EntitiesApiGetEntityReportPageLayoutsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiGetEntityReportPageLayouts
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiGetEntityReportPageLayouts
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetEntityReportPageLayouts
+     */
+    readonly filter?: string
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EntitiesApiGetEntityReportPageLayouts
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityReportPageLayouts
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
  * Request parameters for getEntityThemes operation in EntitiesApi.
  * @export
  * @interface EntitiesApiGetEntityThemesRequest
@@ -98266,6 +99241,41 @@ export interface EntitiesApiPatchEntityParametersRequest {
      * @memberof EntitiesApiPatchEntityParameters
      */
     readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for patchEntityReportPageLayouts operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiPatchEntityReportPageLayoutsRequest
+ */
+export interface EntitiesApiPatchEntityReportPageLayoutsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityReportPageLayouts
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityReportPageLayouts
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiReportPageLayoutPatchDocument}
+     * @memberof EntitiesApiPatchEntityReportPageLayouts
+     */
+    readonly jsonApiReportPageLayoutPatchDocument: JsonApiReportPageLayoutPatchDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityReportPageLayouts
+     */
+    readonly filter?: string
 }
 
 /**
@@ -100586,6 +101596,41 @@ export interface EntitiesApiUpdateEntityParametersRequest {
 }
 
 /**
+ * Request parameters for updateEntityReportPageLayouts operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiUpdateEntityReportPageLayoutsRequest
+ */
+export interface EntitiesApiUpdateEntityReportPageLayoutsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityReportPageLayouts
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityReportPageLayouts
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiReportPageLayoutInDocument}
+     * @memberof EntitiesApiUpdateEntityReportPageLayouts
+     */
+    readonly jsonApiReportPageLayoutInDocument: JsonApiReportPageLayoutInDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityReportPageLayouts
+     */
+    readonly filter?: string
+}
+
+/**
  * Request parameters for updateEntityThemes operation in EntitiesApi.
  * @export
  * @interface EntitiesApiUpdateEntityThemesRequest
@@ -101418,6 +102463,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
+     * @summary Post Report Page Layout
+     * @param {EntitiesApiCreateEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public createEntityReportPageLayouts(requestParameters: EntitiesApiCreateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_CreateEntityReportPageLayouts(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
      * @summary Post Theming
      * @param {EntitiesApiCreateEntityThemesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -101919,6 +102976,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
      */
     public deleteEntityParameters(requestParameters: EntitiesApiDeleteEntityParametersRequest, options?: AxiosRequestConfig) {
         return EntitiesApi_DeleteEntityParameters(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Delete a Report Page Layout
+     * @param {EntitiesApiDeleteEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public deleteEntityReportPageLayouts(requestParameters: EntitiesApiDeleteEntityReportPageLayoutsRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_DeleteEntityReportPageLayouts(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -102543,6 +103612,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
      */
     public getAllEntitiesParameters(requestParameters: EntitiesApiGetAllEntitiesParametersRequest, options?: AxiosRequestConfig) {
         return EntitiesApi_GetAllEntitiesParameters(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get all Report Page Layouts
+     * @param {EntitiesApiGetAllEntitiesReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getAllEntitiesReportPageLayouts(requestParameters: EntitiesApiGetAllEntitiesReportPageLayoutsRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_GetAllEntitiesReportPageLayouts(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -103218,6 +104299,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
+     * @summary Get a Report Page Layout
+     * @param {EntitiesApiGetEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getEntityReportPageLayouts(requestParameters: EntitiesApiGetEntityReportPageLayoutsRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_GetEntityReportPageLayouts(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
      * @summary Get Theming
      * @param {EntitiesApiGetEntityThemesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -103779,6 +104872,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
      */
     public patchEntityParameters(requestParameters: EntitiesApiPatchEntityParametersRequest, options?: AxiosRequestConfig) {
         return EntitiesApi_PatchEntityParameters(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Patch a Report Page Layout
+     * @param {EntitiesApiPatchEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public patchEntityReportPageLayouts(requestParameters: EntitiesApiPatchEntityReportPageLayoutsRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_PatchEntityReportPageLayouts(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -104572,6 +105677,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
      */
     public updateEntityParameters(requestParameters: EntitiesApiUpdateEntityParametersRequest, options?: AxiosRequestConfig) {
         return EntitiesApi_UpdateEntityParameters(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Put a Report Page Layout
+     * @param {EntitiesApiUpdateEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public updateEntityReportPageLayouts(requestParameters: EntitiesApiUpdateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_UpdateEntityReportPageLayouts(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -155597,6 +156714,941 @@ export class PluginsApi extends BaseAPI implements PluginsApiInterface {
 }
 
 
+// ReportPageLayoutControllerApi FP - ReportPageLayoutControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Post Report Page Layout
+ * @param {string} workspaceId 
+ * @param {JsonApiReportPageLayoutPostOptionalIdDocument} jsonApiReportPageLayoutPostOptionalIdDocument 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportPageLayoutControllerApiAxiosParamCreator_CreateEntityReportPageLayouts(
+    workspaceId: string, jsonApiReportPageLayoutPostOptionalIdDocument: JsonApiReportPageLayoutPostOptionalIdDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createEntityReportPageLayouts', 'workspaceId', workspaceId)
+    // verify required parameter 'jsonApiReportPageLayoutPostOptionalIdDocument' is not null or undefined
+    assertParamExists('createEntityReportPageLayouts', 'jsonApiReportPageLayoutPostOptionalIdDocument', jsonApiReportPageLayoutPostOptionalIdDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiReportPageLayoutPostOptionalIdDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiReportPageLayoutPostOptionalIdDocument !== undefined ? jsonApiReportPageLayoutPostOptionalIdDocument : {})
+        : jsonApiReportPageLayoutPostOptionalIdDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ReportPageLayoutControllerApi FP - ReportPageLayoutControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Delete a Report Page Layout
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportPageLayoutControllerApiAxiosParamCreator_DeleteEntityReportPageLayouts(
+    workspaceId: string, objectId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('deleteEntityReportPageLayouts', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('deleteEntityReportPageLayouts', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ReportPageLayoutControllerApi FP - ReportPageLayoutControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Get all Report Page Layouts
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportPageLayoutControllerApiAxiosParamCreator_GetAllEntitiesReportPageLayouts(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesReportPageLayouts', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ReportPageLayoutControllerApi FP - ReportPageLayoutControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Get a Report Page Layout
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportPageLayoutControllerApiAxiosParamCreator_GetEntityReportPageLayouts(
+    workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityReportPageLayouts', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityReportPageLayouts', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ReportPageLayoutControllerApi FP - ReportPageLayoutControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Patch a Report Page Layout
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiReportPageLayoutPatchDocument} jsonApiReportPageLayoutPatchDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportPageLayoutControllerApiAxiosParamCreator_PatchEntityReportPageLayouts(
+    workspaceId: string, objectId: string, jsonApiReportPageLayoutPatchDocument: JsonApiReportPageLayoutPatchDocument, filter?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchEntityReportPageLayouts', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('patchEntityReportPageLayouts', 'objectId', objectId)
+    // verify required parameter 'jsonApiReportPageLayoutPatchDocument' is not null or undefined
+    assertParamExists('patchEntityReportPageLayouts', 'jsonApiReportPageLayoutPatchDocument', jsonApiReportPageLayoutPatchDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiReportPageLayoutPatchDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiReportPageLayoutPatchDocument !== undefined ? jsonApiReportPageLayoutPatchDocument : {})
+        : jsonApiReportPageLayoutPatchDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ReportPageLayoutControllerApi FP - ReportPageLayoutControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Put a Report Page Layout
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiReportPageLayoutInDocument} jsonApiReportPageLayoutInDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportPageLayoutControllerApiAxiosParamCreator_UpdateEntityReportPageLayouts(
+    workspaceId: string, objectId: string, jsonApiReportPageLayoutInDocument: JsonApiReportPageLayoutInDocument, filter?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('updateEntityReportPageLayouts', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('updateEntityReportPageLayouts', 'objectId', objectId)
+    // verify required parameter 'jsonApiReportPageLayoutInDocument' is not null or undefined
+    assertParamExists('updateEntityReportPageLayouts', 'jsonApiReportPageLayoutInDocument', jsonApiReportPageLayoutInDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiReportPageLayoutInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiReportPageLayoutInDocument !== undefined ? jsonApiReportPageLayoutInDocument : {})
+        : jsonApiReportPageLayoutInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// ReportPageLayoutControllerApi Api FP
+/**
+ * 
+ * @summary Post Report Page Layout
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ReportPageLayoutControllerApiCreateEntityReportPageLayoutsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportPageLayoutControllerApi_CreateEntityReportPageLayouts(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ReportPageLayoutControllerApiCreateEntityReportPageLayoutsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
+    const localVarAxiosArgs = await ReportPageLayoutControllerApiAxiosParamCreator_CreateEntityReportPageLayouts(
+        requestParameters.workspaceId, requestParameters.jsonApiReportPageLayoutPostOptionalIdDocument, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ReportPageLayoutControllerApi Api FP
+/**
+ * 
+ * @summary Delete a Report Page Layout
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ReportPageLayoutControllerApiDeleteEntityReportPageLayoutsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportPageLayoutControllerApi_DeleteEntityReportPageLayouts(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ReportPageLayoutControllerApiDeleteEntityReportPageLayoutsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await ReportPageLayoutControllerApiAxiosParamCreator_DeleteEntityReportPageLayouts(
+        requestParameters.workspaceId, requestParameters.objectId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ReportPageLayoutControllerApi Api FP
+/**
+ * 
+ * @summary Get all Report Page Layouts
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ReportPageLayoutControllerApiGetAllEntitiesReportPageLayoutsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportPageLayoutControllerApi_GetAllEntitiesReportPageLayouts(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ReportPageLayoutControllerApiGetAllEntitiesReportPageLayoutsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiReportPageLayoutOutList> {
+    const localVarAxiosArgs = await ReportPageLayoutControllerApiAxiosParamCreator_GetAllEntitiesReportPageLayouts(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ReportPageLayoutControllerApi Api FP
+/**
+ * 
+ * @summary Get a Report Page Layout
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ReportPageLayoutControllerApiGetEntityReportPageLayoutsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportPageLayoutControllerApi_GetEntityReportPageLayouts(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ReportPageLayoutControllerApiGetEntityReportPageLayoutsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
+    const localVarAxiosArgs = await ReportPageLayoutControllerApiAxiosParamCreator_GetEntityReportPageLayouts(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ReportPageLayoutControllerApi Api FP
+/**
+ * 
+ * @summary Patch a Report Page Layout
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ReportPageLayoutControllerApiPatchEntityReportPageLayoutsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportPageLayoutControllerApi_PatchEntityReportPageLayouts(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ReportPageLayoutControllerApiPatchEntityReportPageLayoutsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
+    const localVarAxiosArgs = await ReportPageLayoutControllerApiAxiosParamCreator_PatchEntityReportPageLayouts(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPageLayoutPatchDocument, requestParameters.filter, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ReportPageLayoutControllerApi Api FP
+/**
+ * 
+ * @summary Put a Report Page Layout
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ReportPageLayoutControllerApiUpdateEntityReportPageLayoutsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportPageLayoutControllerApi_UpdateEntityReportPageLayouts(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ReportPageLayoutControllerApiUpdateEntityReportPageLayoutsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
+    const localVarAxiosArgs = await ReportPageLayoutControllerApiAxiosParamCreator_UpdateEntityReportPageLayouts(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPageLayoutInDocument, requestParameters.filter, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * ReportPageLayoutControllerApi - interface
+ * @export
+ * @interface ReportPageLayoutControllerApi
+ */
+export interface ReportPageLayoutControllerApiInterface {
+    /**
+     * 
+     * @summary Post Report Page Layout
+     * @param {ReportPageLayoutControllerApiCreateEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportPageLayoutControllerApiInterface
+     */
+    createEntityReportPageLayouts(requestParameters: ReportPageLayoutControllerApiCreateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
+
+    /**
+     * 
+     * @summary Delete a Report Page Layout
+     * @param {ReportPageLayoutControllerApiDeleteEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportPageLayoutControllerApiInterface
+     */
+    deleteEntityReportPageLayouts(requestParameters: ReportPageLayoutControllerApiDeleteEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Get all Report Page Layouts
+     * @param {ReportPageLayoutControllerApiGetAllEntitiesReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportPageLayoutControllerApiInterface
+     */
+    getAllEntitiesReportPageLayouts(requestParameters: ReportPageLayoutControllerApiGetAllEntitiesReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutList>;
+
+    /**
+     * 
+     * @summary Get a Report Page Layout
+     * @param {ReportPageLayoutControllerApiGetEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportPageLayoutControllerApiInterface
+     */
+    getEntityReportPageLayouts(requestParameters: ReportPageLayoutControllerApiGetEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
+
+    /**
+     * 
+     * @summary Patch a Report Page Layout
+     * @param {ReportPageLayoutControllerApiPatchEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportPageLayoutControllerApiInterface
+     */
+    patchEntityReportPageLayouts(requestParameters: ReportPageLayoutControllerApiPatchEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
+
+    /**
+     * 
+     * @summary Put a Report Page Layout
+     * @param {ReportPageLayoutControllerApiUpdateEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportPageLayoutControllerApiInterface
+     */
+    updateEntityReportPageLayouts(requestParameters: ReportPageLayoutControllerApiUpdateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
+
+}
+
+/**
+ * Request parameters for createEntityReportPageLayouts operation in ReportPageLayoutControllerApi.
+ * @export
+ * @interface ReportPageLayoutControllerApiCreateEntityReportPageLayoutsRequest
+ */
+export interface ReportPageLayoutControllerApiCreateEntityReportPageLayoutsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportPageLayoutControllerApiCreateEntityReportPageLayouts
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {JsonApiReportPageLayoutPostOptionalIdDocument}
+     * @memberof ReportPageLayoutControllerApiCreateEntityReportPageLayouts
+     */
+    readonly jsonApiReportPageLayoutPostOptionalIdDocument: JsonApiReportPageLayoutPostOptionalIdDocument
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof ReportPageLayoutControllerApiCreateEntityReportPageLayouts
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for deleteEntityReportPageLayouts operation in ReportPageLayoutControllerApi.
+ * @export
+ * @interface ReportPageLayoutControllerApiDeleteEntityReportPageLayoutsRequest
+ */
+export interface ReportPageLayoutControllerApiDeleteEntityReportPageLayoutsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportPageLayoutControllerApiDeleteEntityReportPageLayouts
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportPageLayoutControllerApiDeleteEntityReportPageLayouts
+     */
+    readonly objectId: string
+}
+
+/**
+ * Request parameters for getAllEntitiesReportPageLayouts operation in ReportPageLayoutControllerApi.
+ * @export
+ * @interface ReportPageLayoutControllerApiGetAllEntitiesReportPageLayoutsRequest
+ */
+export interface ReportPageLayoutControllerApiGetAllEntitiesReportPageLayoutsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportPageLayoutControllerApiGetAllEntitiesReportPageLayouts
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof ReportPageLayoutControllerApiGetAllEntitiesReportPageLayouts
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof ReportPageLayoutControllerApiGetAllEntitiesReportPageLayouts
+     */
+    readonly filter?: string
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof ReportPageLayoutControllerApiGetAllEntitiesReportPageLayouts
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof ReportPageLayoutControllerApiGetAllEntitiesReportPageLayouts
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof ReportPageLayoutControllerApiGetAllEntitiesReportPageLayouts
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ReportPageLayoutControllerApiGetAllEntitiesReportPageLayouts
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @memberof ReportPageLayoutControllerApiGetAllEntitiesReportPageLayouts
+     */
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getEntityReportPageLayouts operation in ReportPageLayoutControllerApi.
+ * @export
+ * @interface ReportPageLayoutControllerApiGetEntityReportPageLayoutsRequest
+ */
+export interface ReportPageLayoutControllerApiGetEntityReportPageLayoutsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportPageLayoutControllerApiGetEntityReportPageLayouts
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportPageLayoutControllerApiGetEntityReportPageLayouts
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof ReportPageLayoutControllerApiGetEntityReportPageLayouts
+     */
+    readonly filter?: string
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ReportPageLayoutControllerApiGetEntityReportPageLayouts
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof ReportPageLayoutControllerApiGetEntityReportPageLayouts
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for patchEntityReportPageLayouts operation in ReportPageLayoutControllerApi.
+ * @export
+ * @interface ReportPageLayoutControllerApiPatchEntityReportPageLayoutsRequest
+ */
+export interface ReportPageLayoutControllerApiPatchEntityReportPageLayoutsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportPageLayoutControllerApiPatchEntityReportPageLayouts
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportPageLayoutControllerApiPatchEntityReportPageLayouts
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiReportPageLayoutPatchDocument}
+     * @memberof ReportPageLayoutControllerApiPatchEntityReportPageLayouts
+     */
+    readonly jsonApiReportPageLayoutPatchDocument: JsonApiReportPageLayoutPatchDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof ReportPageLayoutControllerApiPatchEntityReportPageLayouts
+     */
+    readonly filter?: string
+}
+
+/**
+ * Request parameters for updateEntityReportPageLayouts operation in ReportPageLayoutControllerApi.
+ * @export
+ * @interface ReportPageLayoutControllerApiUpdateEntityReportPageLayoutsRequest
+ */
+export interface ReportPageLayoutControllerApiUpdateEntityReportPageLayoutsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportPageLayoutControllerApiUpdateEntityReportPageLayouts
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportPageLayoutControllerApiUpdateEntityReportPageLayouts
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiReportPageLayoutInDocument}
+     * @memberof ReportPageLayoutControllerApiUpdateEntityReportPageLayouts
+     */
+    readonly jsonApiReportPageLayoutInDocument: JsonApiReportPageLayoutInDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof ReportPageLayoutControllerApiUpdateEntityReportPageLayouts
+     */
+    readonly filter?: string
+}
+
+/**
+ * ReportPageLayoutControllerApi - object-oriented interface
+ * @export
+ * @class ReportPageLayoutControllerApi
+ * @extends {BaseAPI}
+ */
+export class ReportPageLayoutControllerApi extends BaseAPI implements ReportPageLayoutControllerApiInterface {
+    /**
+     * 
+     * @summary Post Report Page Layout
+     * @param {ReportPageLayoutControllerApiCreateEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportPageLayoutControllerApi
+     */
+    public createEntityReportPageLayouts(requestParameters: ReportPageLayoutControllerApiCreateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig) {
+        return ReportPageLayoutControllerApi_CreateEntityReportPageLayouts(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Delete a Report Page Layout
+     * @param {ReportPageLayoutControllerApiDeleteEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportPageLayoutControllerApi
+     */
+    public deleteEntityReportPageLayouts(requestParameters: ReportPageLayoutControllerApiDeleteEntityReportPageLayoutsRequest, options?: AxiosRequestConfig) {
+        return ReportPageLayoutControllerApi_DeleteEntityReportPageLayouts(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get all Report Page Layouts
+     * @param {ReportPageLayoutControllerApiGetAllEntitiesReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportPageLayoutControllerApi
+     */
+    public getAllEntitiesReportPageLayouts(requestParameters: ReportPageLayoutControllerApiGetAllEntitiesReportPageLayoutsRequest, options?: AxiosRequestConfig) {
+        return ReportPageLayoutControllerApi_GetAllEntitiesReportPageLayouts(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get a Report Page Layout
+     * @param {ReportPageLayoutControllerApiGetEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportPageLayoutControllerApi
+     */
+    public getEntityReportPageLayouts(requestParameters: ReportPageLayoutControllerApiGetEntityReportPageLayoutsRequest, options?: AxiosRequestConfig) {
+        return ReportPageLayoutControllerApi_GetEntityReportPageLayouts(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Patch a Report Page Layout
+     * @param {ReportPageLayoutControllerApiPatchEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportPageLayoutControllerApi
+     */
+    public patchEntityReportPageLayouts(requestParameters: ReportPageLayoutControllerApiPatchEntityReportPageLayoutsRequest, options?: AxiosRequestConfig) {
+        return ReportPageLayoutControllerApi_PatchEntityReportPageLayouts(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Put a Report Page Layout
+     * @param {ReportPageLayoutControllerApiUpdateEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportPageLayoutControllerApi
+     */
+    public updateEntityReportPageLayouts(requestParameters: ReportPageLayoutControllerApiUpdateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig) {
+        return ReportPageLayoutControllerApi_UpdateEntityReportPageLayouts(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
 // ReportingSettingsApi FP - ReportingSettingsApiAxiosParamCreator
 /**
  * Resolves values for all settings without workspace by current user, organization, or default settings.
@@ -155851,6 +157903,941 @@ export class ReportingSettingsApi extends BaseAPI implements ReportingSettingsAp
      */
     public resolveSettingsWithoutWorkspace(requestParameters: ReportingSettingsApiResolveSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig) {
         return ReportingSettingsApi_ResolveSettingsWithoutWorkspace(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
+// ReportsApi FP - ReportsApiAxiosParamCreator
+/**
+ * 
+ * @summary Post Report Page Layout
+ * @param {string} workspaceId 
+ * @param {JsonApiReportPageLayoutPostOptionalIdDocument} jsonApiReportPageLayoutPostOptionalIdDocument 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportsApiAxiosParamCreator_CreateEntityReportPageLayouts(
+    workspaceId: string, jsonApiReportPageLayoutPostOptionalIdDocument: JsonApiReportPageLayoutPostOptionalIdDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createEntityReportPageLayouts', 'workspaceId', workspaceId)
+    // verify required parameter 'jsonApiReportPageLayoutPostOptionalIdDocument' is not null or undefined
+    assertParamExists('createEntityReportPageLayouts', 'jsonApiReportPageLayoutPostOptionalIdDocument', jsonApiReportPageLayoutPostOptionalIdDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiReportPageLayoutPostOptionalIdDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiReportPageLayoutPostOptionalIdDocument !== undefined ? jsonApiReportPageLayoutPostOptionalIdDocument : {})
+        : jsonApiReportPageLayoutPostOptionalIdDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ReportsApi FP - ReportsApiAxiosParamCreator
+/**
+ * 
+ * @summary Delete a Report Page Layout
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportsApiAxiosParamCreator_DeleteEntityReportPageLayouts(
+    workspaceId: string, objectId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('deleteEntityReportPageLayouts', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('deleteEntityReportPageLayouts', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ReportsApi FP - ReportsApiAxiosParamCreator
+/**
+ * 
+ * @summary Get all Report Page Layouts
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportsApiAxiosParamCreator_GetAllEntitiesReportPageLayouts(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesReportPageLayouts', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ReportsApi FP - ReportsApiAxiosParamCreator
+/**
+ * 
+ * @summary Get a Report Page Layout
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportsApiAxiosParamCreator_GetEntityReportPageLayouts(
+    workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityReportPageLayouts', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityReportPageLayouts', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ReportsApi FP - ReportsApiAxiosParamCreator
+/**
+ * 
+ * @summary Patch a Report Page Layout
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiReportPageLayoutPatchDocument} jsonApiReportPageLayoutPatchDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportsApiAxiosParamCreator_PatchEntityReportPageLayouts(
+    workspaceId: string, objectId: string, jsonApiReportPageLayoutPatchDocument: JsonApiReportPageLayoutPatchDocument, filter?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchEntityReportPageLayouts', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('patchEntityReportPageLayouts', 'objectId', objectId)
+    // verify required parameter 'jsonApiReportPageLayoutPatchDocument' is not null or undefined
+    assertParamExists('patchEntityReportPageLayouts', 'jsonApiReportPageLayoutPatchDocument', jsonApiReportPageLayoutPatchDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiReportPageLayoutPatchDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiReportPageLayoutPatchDocument !== undefined ? jsonApiReportPageLayoutPatchDocument : {})
+        : jsonApiReportPageLayoutPatchDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ReportsApi FP - ReportsApiAxiosParamCreator
+/**
+ * 
+ * @summary Put a Report Page Layout
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiReportPageLayoutInDocument} jsonApiReportPageLayoutInDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportsApiAxiosParamCreator_UpdateEntityReportPageLayouts(
+    workspaceId: string, objectId: string, jsonApiReportPageLayoutInDocument: JsonApiReportPageLayoutInDocument, filter?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('updateEntityReportPageLayouts', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('updateEntityReportPageLayouts', 'objectId', objectId)
+    // verify required parameter 'jsonApiReportPageLayoutInDocument' is not null or undefined
+    assertParamExists('updateEntityReportPageLayouts', 'jsonApiReportPageLayoutInDocument', jsonApiReportPageLayoutInDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiReportPageLayoutInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiReportPageLayoutInDocument !== undefined ? jsonApiReportPageLayoutInDocument : {})
+        : jsonApiReportPageLayoutInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// ReportsApi Api FP
+/**
+ * 
+ * @summary Post Report Page Layout
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ReportsApiCreateEntityReportPageLayoutsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportsApi_CreateEntityReportPageLayouts(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ReportsApiCreateEntityReportPageLayoutsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
+    const localVarAxiosArgs = await ReportsApiAxiosParamCreator_CreateEntityReportPageLayouts(
+        requestParameters.workspaceId, requestParameters.jsonApiReportPageLayoutPostOptionalIdDocument, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ReportsApi Api FP
+/**
+ * 
+ * @summary Delete a Report Page Layout
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ReportsApiDeleteEntityReportPageLayoutsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportsApi_DeleteEntityReportPageLayouts(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ReportsApiDeleteEntityReportPageLayoutsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await ReportsApiAxiosParamCreator_DeleteEntityReportPageLayouts(
+        requestParameters.workspaceId, requestParameters.objectId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ReportsApi Api FP
+/**
+ * 
+ * @summary Get all Report Page Layouts
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ReportsApiGetAllEntitiesReportPageLayoutsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportsApi_GetAllEntitiesReportPageLayouts(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ReportsApiGetAllEntitiesReportPageLayoutsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiReportPageLayoutOutList> {
+    const localVarAxiosArgs = await ReportsApiAxiosParamCreator_GetAllEntitiesReportPageLayouts(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ReportsApi Api FP
+/**
+ * 
+ * @summary Get a Report Page Layout
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ReportsApiGetEntityReportPageLayoutsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportsApi_GetEntityReportPageLayouts(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ReportsApiGetEntityReportPageLayoutsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
+    const localVarAxiosArgs = await ReportsApiAxiosParamCreator_GetEntityReportPageLayouts(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ReportsApi Api FP
+/**
+ * 
+ * @summary Patch a Report Page Layout
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ReportsApiPatchEntityReportPageLayoutsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportsApi_PatchEntityReportPageLayouts(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ReportsApiPatchEntityReportPageLayoutsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
+    const localVarAxiosArgs = await ReportsApiAxiosParamCreator_PatchEntityReportPageLayouts(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPageLayoutPatchDocument, requestParameters.filter, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ReportsApi Api FP
+/**
+ * 
+ * @summary Put a Report Page Layout
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ReportsApiUpdateEntityReportPageLayoutsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportsApi_UpdateEntityReportPageLayouts(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ReportsApiUpdateEntityReportPageLayoutsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
+    const localVarAxiosArgs = await ReportsApiAxiosParamCreator_UpdateEntityReportPageLayouts(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPageLayoutInDocument, requestParameters.filter, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * ReportsApi - interface
+ * @export
+ * @interface ReportsApi
+ */
+export interface ReportsApiInterface {
+    /**
+     * 
+     * @summary Post Report Page Layout
+     * @param {ReportsApiCreateEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApiInterface
+     */
+    createEntityReportPageLayouts(requestParameters: ReportsApiCreateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
+
+    /**
+     * 
+     * @summary Delete a Report Page Layout
+     * @param {ReportsApiDeleteEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApiInterface
+     */
+    deleteEntityReportPageLayouts(requestParameters: ReportsApiDeleteEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Get all Report Page Layouts
+     * @param {ReportsApiGetAllEntitiesReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApiInterface
+     */
+    getAllEntitiesReportPageLayouts(requestParameters: ReportsApiGetAllEntitiesReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutList>;
+
+    /**
+     * 
+     * @summary Get a Report Page Layout
+     * @param {ReportsApiGetEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApiInterface
+     */
+    getEntityReportPageLayouts(requestParameters: ReportsApiGetEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
+
+    /**
+     * 
+     * @summary Patch a Report Page Layout
+     * @param {ReportsApiPatchEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApiInterface
+     */
+    patchEntityReportPageLayouts(requestParameters: ReportsApiPatchEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
+
+    /**
+     * 
+     * @summary Put a Report Page Layout
+     * @param {ReportsApiUpdateEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApiInterface
+     */
+    updateEntityReportPageLayouts(requestParameters: ReportsApiUpdateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
+
+}
+
+/**
+ * Request parameters for createEntityReportPageLayouts operation in ReportsApi.
+ * @export
+ * @interface ReportsApiCreateEntityReportPageLayoutsRequest
+ */
+export interface ReportsApiCreateEntityReportPageLayoutsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportsApiCreateEntityReportPageLayouts
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {JsonApiReportPageLayoutPostOptionalIdDocument}
+     * @memberof ReportsApiCreateEntityReportPageLayouts
+     */
+    readonly jsonApiReportPageLayoutPostOptionalIdDocument: JsonApiReportPageLayoutPostOptionalIdDocument
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof ReportsApiCreateEntityReportPageLayouts
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for deleteEntityReportPageLayouts operation in ReportsApi.
+ * @export
+ * @interface ReportsApiDeleteEntityReportPageLayoutsRequest
+ */
+export interface ReportsApiDeleteEntityReportPageLayoutsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportsApiDeleteEntityReportPageLayouts
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportsApiDeleteEntityReportPageLayouts
+     */
+    readonly objectId: string
+}
+
+/**
+ * Request parameters for getAllEntitiesReportPageLayouts operation in ReportsApi.
+ * @export
+ * @interface ReportsApiGetAllEntitiesReportPageLayoutsRequest
+ */
+export interface ReportsApiGetAllEntitiesReportPageLayoutsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportsApiGetAllEntitiesReportPageLayouts
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof ReportsApiGetAllEntitiesReportPageLayouts
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof ReportsApiGetAllEntitiesReportPageLayouts
+     */
+    readonly filter?: string
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof ReportsApiGetAllEntitiesReportPageLayouts
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof ReportsApiGetAllEntitiesReportPageLayouts
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof ReportsApiGetAllEntitiesReportPageLayouts
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ReportsApiGetAllEntitiesReportPageLayouts
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @memberof ReportsApiGetAllEntitiesReportPageLayouts
+     */
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getEntityReportPageLayouts operation in ReportsApi.
+ * @export
+ * @interface ReportsApiGetEntityReportPageLayoutsRequest
+ */
+export interface ReportsApiGetEntityReportPageLayoutsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportsApiGetEntityReportPageLayouts
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportsApiGetEntityReportPageLayouts
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof ReportsApiGetEntityReportPageLayouts
+     */
+    readonly filter?: string
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ReportsApiGetEntityReportPageLayouts
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof ReportsApiGetEntityReportPageLayouts
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for patchEntityReportPageLayouts operation in ReportsApi.
+ * @export
+ * @interface ReportsApiPatchEntityReportPageLayoutsRequest
+ */
+export interface ReportsApiPatchEntityReportPageLayoutsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportsApiPatchEntityReportPageLayouts
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportsApiPatchEntityReportPageLayouts
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiReportPageLayoutPatchDocument}
+     * @memberof ReportsApiPatchEntityReportPageLayouts
+     */
+    readonly jsonApiReportPageLayoutPatchDocument: JsonApiReportPageLayoutPatchDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof ReportsApiPatchEntityReportPageLayouts
+     */
+    readonly filter?: string
+}
+
+/**
+ * Request parameters for updateEntityReportPageLayouts operation in ReportsApi.
+ * @export
+ * @interface ReportsApiUpdateEntityReportPageLayoutsRequest
+ */
+export interface ReportsApiUpdateEntityReportPageLayoutsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportsApiUpdateEntityReportPageLayouts
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportsApiUpdateEntityReportPageLayouts
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiReportPageLayoutInDocument}
+     * @memberof ReportsApiUpdateEntityReportPageLayouts
+     */
+    readonly jsonApiReportPageLayoutInDocument: JsonApiReportPageLayoutInDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof ReportsApiUpdateEntityReportPageLayouts
+     */
+    readonly filter?: string
+}
+
+/**
+ * ReportsApi - object-oriented interface
+ * @export
+ * @class ReportsApi
+ * @extends {BaseAPI}
+ */
+export class ReportsApi extends BaseAPI implements ReportsApiInterface {
+    /**
+     * 
+     * @summary Post Report Page Layout
+     * @param {ReportsApiCreateEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApi
+     */
+    public createEntityReportPageLayouts(requestParameters: ReportsApiCreateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig) {
+        return ReportsApi_CreateEntityReportPageLayouts(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Delete a Report Page Layout
+     * @param {ReportsApiDeleteEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApi
+     */
+    public deleteEntityReportPageLayouts(requestParameters: ReportsApiDeleteEntityReportPageLayoutsRequest, options?: AxiosRequestConfig) {
+        return ReportsApi_DeleteEntityReportPageLayouts(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get all Report Page Layouts
+     * @param {ReportsApiGetAllEntitiesReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApi
+     */
+    public getAllEntitiesReportPageLayouts(requestParameters: ReportsApiGetAllEntitiesReportPageLayoutsRequest, options?: AxiosRequestConfig) {
+        return ReportsApi_GetAllEntitiesReportPageLayouts(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get a Report Page Layout
+     * @param {ReportsApiGetEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApi
+     */
+    public getEntityReportPageLayouts(requestParameters: ReportsApiGetEntityReportPageLayoutsRequest, options?: AxiosRequestConfig) {
+        return ReportsApi_GetEntityReportPageLayouts(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Patch a Report Page Layout
+     * @param {ReportsApiPatchEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApi
+     */
+    public patchEntityReportPageLayouts(requestParameters: ReportsApiPatchEntityReportPageLayoutsRequest, options?: AxiosRequestConfig) {
+        return ReportsApi_PatchEntityReportPageLayouts(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Put a Report Page Layout
+     * @param {ReportsApiUpdateEntityReportPageLayoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApi
+     */
+    public updateEntityReportPageLayouts(requestParameters: ReportsApiUpdateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig) {
+        return ReportsApi_UpdateEntityReportPageLayouts(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

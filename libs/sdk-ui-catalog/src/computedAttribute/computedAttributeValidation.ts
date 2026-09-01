@@ -25,6 +25,7 @@ export type ComputedAttributeValidationErrorCode =
     | "invalidStructure"
     | "idImmutable"
     | "missingMaql"
+    | "invalidType"
     | "invalidTags";
 
 type ValidateComputedAttributeYamlOptions = {
@@ -55,8 +56,8 @@ export function validateComputedAttributeYaml(
 function classifyComputedAttributeError(
     error: z.core.$ZodError,
     parsed: unknown,
-): "invalidStructure" | "missingMaql" | "invalidTags" {
-    // A blank `maql:` line parses to null - the seeded template's state - and counts as unwritten,
+): "invalidStructure" | "missingMaql" | "invalidType" | "invalidTags" {
+    // A blank `maql:` / `maql: ` line parses to null - the seeded template's state - and counts as unwritten,
     // not as a value of the wrong type.
     const maqlProvided =
         typeof parsed === "object" &&
@@ -69,6 +70,11 @@ function classifyComputedAttributeError(
         if (path === "maql") {
             // A present-but-wrong-typed maql is a structural error, not a missing field.
             return maqlProvided ? "invalidStructure" : "missingMaql";
+        }
+        // A mistyped `type` is easy to make and impossible to spot in a generic structure error,
+        // so it gets its own message naming the one value the field accepts.
+        if (path === "type") {
+            return "invalidType";
         }
         if (path === "tags" || path.startsWith("tags.")) {
             return "invalidTags";

@@ -16530,9 +16530,9 @@
                 },
                 "x-gdc-security-info": {
                     "permissions": [
-                        "MANAGE"
+                        "CREATE_METRIC"
                     ],
-                    "description": "Contains minimal permission level required to manage this object type."
+                    "description": "Contains minimal permission level required to create Metrics"
                 }
             }
         },
@@ -27847,6 +27847,472 @@
                     "description": "Contains minimal permission level required to manage this object type."
                 }
             }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts": {
+            "get": {
+                "tags": [
+                    "Reports",
+                    "entities",
+                    "report-page-layout-controller"
+                ],
+                "summary": "Get all Report Page Layouts",
+                "operationId": "getAllEntities@ReportPageLayouts",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "origin",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Defines scope of origin of objects. All by default.",
+                            "default": "ALL",
+                            "enum": [
+                                "ALL",
+                                "PARENTS",
+                                "NATIVE"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "title==someString;description==someString"
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
+                    },
+                    {
+                        "$ref": "#/components/parameters/size"
+                    },
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    },
+                    {
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "page",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,page,all"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportPageLayoutOutList"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportPageLayoutOutList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Contains minimal permission level required to view this object type."
+                }
+            },
+            "post": {
+                "tags": [
+                    "Reports",
+                    "entities",
+                    "report-page-layout-controller"
+                ],
+                "summary": "Post Report Page Layout",
+                "operationId": "createEntity@ReportPageLayouts",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,all"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiReportPageLayoutPostOptionalIdDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiReportPageLayoutPostOptionalIdDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportPageLayoutOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportPageLayoutOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/reportPageLayouts/{objectId}": {
+            "get": {
+                "tags": [
+                    "Reports",
+                    "entities",
+                    "report-page-layout-controller"
+                ],
+                "summary": "Get a Report Page Layout",
+                "operationId": "getEntity@ReportPageLayouts",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "title==someString;description==someString"
+                    },
+                    {
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,all"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportPageLayoutOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportPageLayoutOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Contains minimal permission level required to view this object type."
+                }
+            },
+            "put": {
+                "tags": [
+                    "Reports",
+                    "entities",
+                    "report-page-layout-controller"
+                ],
+                "summary": "Put a Report Page Layout",
+                "operationId": "updateEntity@ReportPageLayouts",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "title==someString;description==someString"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiReportPageLayoutInDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiReportPageLayoutInDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportPageLayoutOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportPageLayoutOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Reports",
+                    "entities",
+                    "report-page-layout-controller"
+                ],
+                "summary": "Delete a Report Page Layout",
+                "operationId": "deleteEntity@ReportPageLayouts",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "$ref": "#/components/responses/Deleted"
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Reports",
+                    "entities",
+                    "report-page-layout-controller"
+                ],
+                "summary": "Patch a Report Page Layout",
+                "operationId": "patchEntity@ReportPageLayouts",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "title==someString;description==someString"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiReportPageLayoutPatchDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiReportPageLayoutPatchDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportPageLayoutOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportPageLayoutOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            }
         }
     },
     "components": {
@@ -31537,6 +32003,13 @@
                             "$ref": "#/components/schemas/DeclarativeParameter"
                         }
                     },
+                    "reportPageLayouts": {
+                        "type": "array",
+                        "description": "A list of report page layouts available in the model.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeReportPageLayout"
+                        }
+                    },
                     "visualizationObjects": {
                         "type": "array",
                         "description": "A list of visualization objects available in the model.",
@@ -34110,6 +34583,44 @@
                 },
                 "description": "A dataset reference source column description."
             },
+            "DeclarativeReportPageLayout": {
+                "required": [
+                    "content",
+                    "id",
+                    "title"
+                ],
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "$ref": "#/components/schemas/JsonNode"
+                    },
+                    "description": {
+                        "maxLength": 10000,
+                        "type": "string",
+                        "description": "Report page layout description."
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "Report page layout ID.",
+                        "example": "brand-cover"
+                    },
+                    "tags": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "A list of tags.",
+                            "example": "[\"brand\"]"
+                        }
+                    },
+                    "title": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "Report page layout title."
+                    }
+                }
+            },
             "DeclarativeRsaSpecification": {
                 "required": [
                     "alg",
@@ -36134,6 +36645,7 @@
                                     "workspaceDataFilter",
                                     "workspaceDataFilterSetting",
                                     "filterView",
+                                    "reportPageLayout",
                                     "workspaceExportTemplate",
                                     "workspaceTheme",
                                     "workspaceColorPalette",
@@ -51771,6 +52283,331 @@
                 "description": "References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
                 "items": {
                     "$ref": "#/components/schemas/JsonApiParameterLinkage"
+                }
+            },
+            "JsonApiReportPageLayoutIn": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content",
+                            "title"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters."
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "reportPageLayout",
+                        "enum": [
+                            "reportPageLayout"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of reportPageLayout entity."
+            },
+            "JsonApiReportPageLayoutInDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiReportPageLayoutIn"
+                    }
+                }
+            },
+            "JsonApiReportPageLayoutOut": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content",
+                            "title"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters."
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "origin": {
+                                "required": [
+                                    "originId",
+                                    "originType"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "originId": {
+                                        "type": "string",
+                                        "description": "defines id of the workspace where the entity comes from"
+                                    },
+                                    "originType": {
+                                        "type": "string",
+                                        "description": "defines type of the origin of the entity",
+                                        "enum": [
+                                            "NATIVE",
+                                            "PARENT"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "reportPageLayout",
+                        "enum": [
+                            "reportPageLayout"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of reportPageLayout entity."
+            },
+            "JsonApiReportPageLayoutOutDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiReportPageLayoutOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    }
+                }
+            },
+            "JsonApiReportPageLayoutOutList": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiReportPageLayoutOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            }
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiReportPageLayoutOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiReportPageLayoutOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiReportPageLayoutPatch": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters."
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "reportPageLayout",
+                        "enum": [
+                            "reportPageLayout"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of patching reportPageLayout entity."
+            },
+            "JsonApiReportPageLayoutPatchDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiReportPageLayoutPatch"
+                    }
+                }
+            },
+            "JsonApiReportPageLayoutPostOptionalId": {
+                "required": [
+                    "attributes",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content",
+                            "title"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters."
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "reportPageLayout",
+                        "enum": [
+                            "reportPageLayout"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of reportPageLayout entity."
+            },
+            "JsonApiReportPageLayoutPostOptionalIdDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiReportPageLayoutPostOptionalId"
+                    }
                 }
             },
             "JsonApiThemeIn": {

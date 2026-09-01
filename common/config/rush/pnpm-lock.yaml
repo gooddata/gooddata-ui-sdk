@@ -4,13 +4,16 @@ settings:
   autoInstallPeers: false
   excludeLinksFromLockfile: false
 
+overrides:
+  minimatch@>=10.0.0 <10.2.3: 10.2.5
+
 pnpmfileChecksum: sha256-E1T7OJ3DLTjpDqf4RdJzK9VDtAxgm4gDEQCLYdHD8nI=
 
 importers:
 
   .: {}
 
-  ../../examples/playground:
+  ../../../sdk/examples/playground:
     devDependencies:
       '@codemirror/state':
         specifier: 6.5.3
@@ -136,8 +139,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -166,13 +169,13 @@ importers:
         specifier: 8.0.16
         version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../examples/sdk-interactive-examples:
+  ../../../sdk/examples/sdk-interactive-examples:
     devDependencies:
       validate-npm-package-name:
         specifier: 5.0.1
         version: 5.0.1
 
-  ../../examples/sdk-interactive-examples/examples-template:
+  ../../../sdk/examples/sdk-interactive-examples/examples-template:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -281,8 +284,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -302,7 +305,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-attributefilter:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-attributefilter:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -411,8 +414,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -432,7 +435,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-chartconfig:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-chartconfig:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -541,8 +544,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -562,7 +565,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-columnchart:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-columnchart:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -671,8 +674,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -692,7 +695,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-combochart:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-combochart:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -801,8 +804,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -822,7 +825,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-dashboard:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-dashboard:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -931,8 +934,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -952,7 +955,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-datefilter:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-datefilter:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1061,8 +1064,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -1082,7 +1085,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-dependentfilters:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-dependentfilters:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1191,8 +1194,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -1212,7 +1215,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-execute:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-execute:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1330,8 +1333,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -1351,7 +1354,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-granularity:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-granularity:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1460,8 +1463,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -1481,7 +1484,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-headline:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-headline:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1590,8 +1593,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -1611,7 +1614,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-pivottable:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-pivottable:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1720,8 +1723,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -1741,7 +1744,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-relativedatefilter:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-relativedatefilter:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1850,8 +1853,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -1871,7 +1874,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-repeater:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-repeater:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1980,8 +1983,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -2001,7 +2004,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../libs/api-client-tiger:
+  ../../../sdk/libs/api-client-tiger:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -2086,8 +2089,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -2098,7 +2101,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-backend-base:
+  ../../../sdk/libs/sdk-backend-base:
     dependencies:
       '@braintree/sanitize-url':
         specifier: ^6.0.0
@@ -2192,8 +2195,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -2204,7 +2207,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-backend-mockingbird:
+  ../../../sdk/libs/sdk-backend-mockingbird:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -2286,8 +2289,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -2298,7 +2301,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-backend-spi:
+  ../../../sdk/libs/sdk-backend-spi:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -2365,8 +2368,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -2377,7 +2380,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-backend-tiger:
+  ../../../sdk/libs/sdk-backend-tiger:
     dependencies:
       '@gooddata/api-client-tiger':
         specifier: workspace:*
@@ -2504,8 +2507,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -2516,7 +2519,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-code-convertors:
+  ../../../sdk/libs/sdk-code-convertors:
     dependencies:
       '@gooddata/api-client-tiger':
         specifier: workspace:*
@@ -2580,8 +2583,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -2592,7 +2595,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-code-schemas:
+  ../../../sdk/libs/sdk-code-schemas:
     devDependencies:
       '@gooddata/eslint-config':
         specifier: workspace:*
@@ -2646,8 +2649,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -2661,7 +2664,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-e2e-utils:
+  ../../../sdk/libs/sdk-e2e-utils:
     dependencies:
       '@playwright/test':
         specifier: 1.62.1
@@ -2734,8 +2737,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -2743,7 +2746,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  ../../libs/sdk-embedding:
+  ../../../sdk/libs/sdk-embedding:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -2810,8 +2813,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -2822,7 +2825,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-model:
+  ../../../sdk/libs/sdk-model:
     dependencies:
       '@types/geojson':
         specifier: ^7946.0.16
@@ -2904,8 +2907,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -2916,7 +2919,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-pluggable-application-model:
+  ../../../sdk/libs/sdk-pluggable-application-model:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -2980,8 +2983,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -2989,7 +2992,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  ../../libs/sdk-ui:
+  ../../../sdk/libs/sdk-ui:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -3140,8 +3143,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -3170,7 +3173,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-all:
+  ../../../sdk/libs/sdk-ui-all:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -3252,8 +3255,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -3261,7 +3264,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  ../../libs/sdk-ui-application-header:
+  ../../../sdk/libs/sdk-ui-application-header:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -3379,8 +3382,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -3412,7 +3415,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-catalog:
+  ../../../sdk/libs/sdk-ui-catalog:
     dependencies:
       '@codemirror/autocomplete':
         specifier: 6.20.0
@@ -3563,8 +3566,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -3593,7 +3596,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-charts:
+  ../../../sdk/libs/sdk-ui-charts:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -3780,8 +3783,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -3810,7 +3813,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-dashboard:
+  ../../../sdk/libs/sdk-ui-dashboard:
     dependencies:
       '@codemirror/language':
         specifier: 6.12.1
@@ -4042,8 +4045,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -4075,7 +4078,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-ext:
+  ../../../sdk/libs/sdk-ui-ext:
     dependencies:
       '@codemirror/commands':
         specifier: 6.10.1
@@ -4316,8 +4319,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -4349,7 +4352,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-filters:
+  ../../../sdk/libs/sdk-ui-filters:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -4515,8 +4518,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -4545,7 +4548,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-gen-ai:
+  ../../../sdk/libs/sdk-ui-gen-ai:
     dependencies:
       '@codemirror/autocomplete':
         specifier: 6.20.0
@@ -4753,8 +4756,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -4786,7 +4789,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-geo:
+  ../../../sdk/libs/sdk-ui-geo:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -4937,8 +4940,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -4967,7 +4970,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-kit:
+  ../../../sdk/libs/sdk-ui-kit:
     dependencies:
       '@aaronhayes/react-use-hubspot-form':
         specifier: 2.1.2
@@ -5229,8 +5232,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -5262,7 +5265,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-loaders:
+  ../../../sdk/libs/sdk-ui-loaders:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -5371,8 +5374,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -5389,7 +5392,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  ../../libs/sdk-ui-pivot:
+  ../../../sdk/libs/sdk-ui-pivot:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -5540,8 +5543,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -5570,7 +5573,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-pluggable-application:
+  ../../../sdk/libs/sdk-ui-pluggable-application:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -5670,8 +5673,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -5688,7 +5691,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-ui-pluggable-host:
+  ../../../sdk/libs/sdk-ui-pluggable-host:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -5821,8 +5824,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -5860,7 +5863,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-semantic-search:
+  ../../../sdk/libs/sdk-ui-semantic-search:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -5984,8 +5987,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -6014,7 +6017,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-tests-app:
+  ../../../sdk/libs/sdk-ui-tests-app:
     devDependencies:
       '@gooddata/eslint-config':
         specifier: workspace:*
@@ -6122,8 +6125,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -6146,7 +6149,7 @@ importers:
         specifier: 8.0.16
         version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-ui-tests-e2e:
+  ../../../sdk/libs/sdk-ui-tests-e2e:
     devDependencies:
       '@gooddata/eslint-config':
         specifier: workspace:*
@@ -6227,8 +6230,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -6239,7 +6242,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  ../../libs/sdk-ui-tests-reference-workspace:
+  ../../../sdk/libs/sdk-ui-tests-reference-workspace:
     devDependencies:
       '@gooddata/catalog-export':
         specifier: workspace:*
@@ -6290,8 +6293,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -6299,7 +6302,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  ../../libs/sdk-ui-tests-scenarios:
+  ../../../sdk/libs/sdk-ui-tests-scenarios:
     devDependencies:
       '@gooddata/eslint-config':
         specifier: workspace:*
@@ -6428,8 +6431,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -6452,7 +6455,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-ui-tests-storybook:
+  ../../../sdk/libs/sdk-ui-tests-storybook:
     devDependencies:
       '@gooddata/eslint-config':
         specifier: workspace:*
@@ -6614,8 +6617,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -6659,7 +6662,7 @@ importers:
         specifier: 4.1.0
         version: 4.1.0(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../libs/sdk-ui-theme-provider:
+  ../../../sdk/libs/sdk-ui-theme-provider:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -6789,8 +6792,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -6810,7 +6813,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-ui-vis-commons:
+  ../../../sdk/libs/sdk-ui-vis-commons:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -6943,8 +6946,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -6973,7 +6976,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-web-components:
+  ../../../sdk/libs/sdk-ui-web-components:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -7109,8 +7112,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -7142,7 +7145,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/util:
+  ../../../sdk/libs/util:
     dependencies:
       lodash-es:
         specifier: ^4.17.23
@@ -7206,8 +7209,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -7218,7 +7221,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../templates/pluggable-module/harness:
+  ../../../sdk/templates/pluggable-module/harness:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -7303,8 +7306,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -7321,7 +7324,7 @@ importers:
         specifier: 8.0.16
         version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../templates/pluggable-module/module:
+  ../../../sdk/templates/pluggable-module/module:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -7421,8 +7424,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -7448,7 +7451,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/app-toolkit:
+  ../../../sdk/tools/app-toolkit:
     dependencies:
       chalk:
         specifier: 5.3.0
@@ -7533,8 +7536,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -7545,7 +7548,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/catalog-export:
+  ../../../sdk/tools/catalog-export:
     dependencies:
       '@gooddata/api-client-tiger':
         specifier: workspace:*
@@ -7642,8 +7645,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -7654,7 +7657,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/create-pluggable-module:
+  ../../../sdk/tools/create-pluggable-module:
     devDependencies:
       '@gooddata/eslint-config':
         specifier: workspace:*
@@ -7705,8 +7708,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -7723,7 +7726,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/dashboard-plugin-template:
+  ../../../sdk/tools/dashboard-plugin-template:
     dependencies:
       tslib:
         specifier: 2.8.1
@@ -7844,8 +7847,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -7886,7 +7889,7 @@ importers:
         specifier: 5.2.4
         version: 5.2.4(tslib@2.8.1)(webpack-cli@7.0.3)(webpack@5.107.2)
 
-  ../../tools/eslint-config:
+  ../../../sdk/tools/eslint-config:
     devDependencies:
       '@eslint/js':
         specifier: 9.28.0
@@ -7982,7 +7985,7 @@ importers:
         specifier: 5.3.0
         version: 5.3.0(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.33.0)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/i18n-toolkit:
+  ../../../sdk/tools/i18n-toolkit:
     dependencies:
       '@formatjs/cli-lib':
         specifier: ^6.1.1
@@ -8070,8 +8073,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -8082,7 +8085,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/lint-config:
+  ../../../sdk/tools/lint-config:
     devDependencies:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260202.1
@@ -8097,7 +8100,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  ../../tools/mock-handling:
+  ../../../sdk/tools/mock-handling:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -8188,8 +8191,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -8200,7 +8203,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/oxlint-config:
+  ../../../sdk/tools/oxlint-config:
     devDependencies:
       '@eslint/js':
         specifier: 9.28.0
@@ -8269,8 +8272,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -8290,7 +8293,7 @@ importers:
         specifier: 5.3.0
         version: 5.3.0(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.33.0)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/plugin-toolkit:
+  ../../../sdk/tools/plugin-toolkit:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -8399,8 +8402,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -8411,7 +8414,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/react-app-template:
+  ../../../sdk/tools/react-app-template:
     dependencies:
       '@codemirror/state':
         specifier: 6.5.3
@@ -8535,8 +8538,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -8559,7 +8562,7 @@ importers:
         specifier: 5.2.4
         version: 5.2.4(tslib@2.8.1)(webpack-cli@7.0.3)(webpack@5.107.2)
 
-  ../../tools/reference-workspace:
+  ../../../sdk/tools/reference-workspace:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -8620,8 +8623,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -8629,7 +8632,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  ../../tools/reference-workspace-mgmt:
+  ../../../sdk/tools/reference-workspace-mgmt:
     dependencies:
       '@gooddata/catalog-export':
         specifier: workspace:*
@@ -8693,8 +8696,8 @@ importers:
         specifier: 0.52.0
         version: 0.52.0
       oxlint:
-        specifier: 1.51.0
-        version: 1.51.0(oxlint-tsgolint@0.15.0)
+        specifier: 1.57.0
+        version: 1.57.0(oxlint-tsgolint@0.15.0)
       oxlint-tsgolint:
         specifier: 0.15.0
         version: 0.15.0
@@ -8705,7 +8708,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/stylelint-config:
+  ../../../sdk/tools/stylelint-config:
     dependencies:
       postcss:
         specifier: 8.5.10
@@ -9503,14 +9506,6 @@ packages:
 
   '@internationalized/string@3.2.9':
     resolution: {integrity: sha512-kzP/M/mbQxODlmOt4bIQZ2SBVUWUSqMLXooXixnX7noche8WHaQcA+nwFN1K2KCF/cp+LDUhcJsCicwkvhD1pg==}
-
-  '@isaacs/balanced-match@4.0.1':
-    resolution: {integrity: sha512-yzMTt9lEb8Gv7zRioUilSglI0c0smZ9k5D65677DLWLtWJaXIS3CqcGyUFByYKlnUj6TkjLVs54fBl6+TiGQDQ==}
-    engines: {node: 20 || >=22}
-
-  '@isaacs/brace-expansion@5.0.1':
-    resolution: {integrity: sha512-WMz71T1JS624nWj2n2fnYAuPovhv7EUhk69R6i9dsVyzxt5eM3bjwvgk9L+APE1TRscGysAVMANkB0jh0LQZrQ==}
-    engines: {node: 20 || >=22}
 
   '@isaacs/cliui@9.0.0':
     resolution: {integrity: sha512-AokJm4tuBHillT+FpMtxQ60n8ObyXBatq7jD2/JA9dxbDDokKQm8KMht5ibGzLVU9IJDIKK4TPKgMHEYMn3lMg==}
@@ -10481,124 +10476,124 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@oxlint/binding-android-arm-eabi@1.51.0':
-    resolution: {integrity: sha512-jJYIqbx4sX+suIxWstc4P7SzhEwb4ArWA2KVrmEuu9vH2i0qM6QIHz/ehmbGE4/2fZbpuMuBzTl7UkfNoqiSgw==}
+  '@oxlint/binding-android-arm-eabi@1.57.0':
+    resolution: {integrity: sha512-C7EiyfAJG4B70496eV543nKiq5cH0o/xIh/ufbjQz3SIvHhlDDsyn+mRFh+aW8KskTyUpyH2LGWL8p2oN6bl1A==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm]
     os: [android]
 
-  '@oxlint/binding-android-arm64@1.51.0':
-    resolution: {integrity: sha512-GtXyBCcH4ti98YdiMNCrpBNGitx87EjEWxevnyhcBK12k/Vu4EzSB45rzSC4fGFUD6sQgeaxItRCEEWeVwPafw==}
+  '@oxlint/binding-android-arm64@1.57.0':
+    resolution: {integrity: sha512-9i80AresjZ/FZf5xK8tKFbhQnijD4s1eOZw6/FHUwD59HEZbVLRc2C88ADYJfLZrF5XofWDiRX/Ja9KefCLy7w==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [android]
 
-  '@oxlint/binding-darwin-arm64@1.51.0':
-    resolution: {integrity: sha512-3QJbeYaMHn6Bh2XeBXuITSsbnIctyTjvHf5nRjKYrT9pPeErNIpp5VDEeAXC0CZSwSVTsc8WOSDwgrAI24JolQ==}
+  '@oxlint/binding-darwin-arm64@1.57.0':
+    resolution: {integrity: sha512-0eUfhRz5L2yKa9I8k3qpyl37XK3oBS5BvrgdVIx599WZK63P8sMbg+0s4IuxmIiZuBK68Ek+Z+gcKgeYf0otsg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [darwin]
 
-  '@oxlint/binding-darwin-x64@1.51.0':
-    resolution: {integrity: sha512-NzErhMaTEN1cY0E8C5APy74lw5VwsNfJfVPBMWPVQLqAbO0k4FFLjvHURvkUL+Y18Wu+8Vs1kbqPh2hjXYA4pg==}
+  '@oxlint/binding-darwin-x64@1.57.0':
+    resolution: {integrity: sha512-UvrSuzBaYOue+QMAcuDITe0k/Vhj6KZGjfnI6x+NkxBTke/VoM7ZisaxgNY0LWuBkTnd1OmeQfEQdQ48fRjkQg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [darwin]
 
-  '@oxlint/binding-freebsd-x64@1.51.0':
-    resolution: {integrity: sha512-msAIh3vPAoKoHlOE/oe6Q5C/n9umypv/k81lED82ibrJotn+3YG2Qp1kiR8o/Dg5iOEU97c6tl0utxcyFenpFw==}
+  '@oxlint/binding-freebsd-x64@1.57.0':
+    resolution: {integrity: sha512-wtQq0dCoiw4bUwlsNVDJJ3pxJA218fOezpgtLKrbQqUtQJcM9yP8z+I9fu14aHg0uyAxIY+99toL6uBa2r7nxA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [freebsd]
 
-  '@oxlint/binding-linux-arm-gnueabihf@1.51.0':
-    resolution: {integrity: sha512-CqQPcvqYyMe9ZBot2stjGogEzk1z8gGAngIX7srSzrzexmXixwVxBdFZyxTVM0CjGfDeV+Ru0w25/WNjlMM2Hw==}
+  '@oxlint/binding-linux-arm-gnueabihf@1.57.0':
+    resolution: {integrity: sha512-qxFWl2BBBFcT4djKa+OtMdnLgoHEJXpqjyGwz8OhW35ImoCwR5qtAGqApNYce5260FQqoAHW8S8eZTjiX67Tsg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm]
     os: [linux]
 
-  '@oxlint/binding-linux-arm-musleabihf@1.51.0':
-    resolution: {integrity: sha512-dstrlYQgZMnyOssxSbolGCge/sDbko12N/35RBNuqLpoPbft2aeBidBAb0dvQlyBd9RJ6u8D4o4Eh8Un6iTgyQ==}
+  '@oxlint/binding-linux-arm-musleabihf@1.57.0':
+    resolution: {integrity: sha512-SQoIsBU7J0bDW15/f0/RvxHfY3Y0+eB/caKBQtNFbuerTiA6JCYx9P1MrrFTwY2dTm/lMgTSgskvCEYk2AtG/Q==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm]
     os: [linux]
 
-  '@oxlint/binding-linux-arm64-gnu@1.51.0':
-    resolution: {integrity: sha512-QEjUpXO7d35rP1/raLGGbAsBLLGZIzV3ZbeSjqWlD3oRnxpRIZ6iL4o51XQHkconn3uKssc+1VKdtHJ81BBhDA==}
+  '@oxlint/binding-linux-arm64-gnu@1.57.0':
+    resolution: {integrity: sha512-jqxYd1W6WMeozsCmqe9Rzbu3SRrGTyGDAipRlRggetyYbUksJqJKvUNTQtZR/KFoJPb+grnSm5SHhdWrywv3RQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@oxlint/binding-linux-arm64-musl@1.51.0':
-    resolution: {integrity: sha512-YSJua5irtG4DoMAjUapDTPhkQLHhBIY0G9JqlZS6/SZPzqDkPku/1GdWs0D6h/wyx0Iz31lNCfIaWKBQhzP0wQ==}
+  '@oxlint/binding-linux-arm64-musl@1.57.0':
+    resolution: {integrity: sha512-i66WyEPVEvq9bxRUCJ/MP5EBfnTDN3nhwEdFZFTO5MmLLvzngfWEG3NSdXQzTT3vk5B9i6C2XSIYBh+aG6uqyg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [linux]
     libc: [musl]
 
-  '@oxlint/binding-linux-ppc64-gnu@1.51.0':
-    resolution: {integrity: sha512-7L4Wj2IEUNDETKssB9IDYt16T6WlF+X2jgC/hBq3diGHda9vJLpAgb09+D3quFq7TdkFtI7hwz/jmuQmQFPc1Q==}
+  '@oxlint/binding-linux-ppc64-gnu@1.57.0':
+    resolution: {integrity: sha512-oMZDCwz4NobclZU3pH+V1/upVlJZiZvne4jQP+zhJwt+lmio4XXr4qG47CehvrW1Lx2YZiIHuxM2D4YpkG3KVA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [ppc64]
     os: [linux]
     libc: [glibc]
 
-  '@oxlint/binding-linux-riscv64-gnu@1.51.0':
-    resolution: {integrity: sha512-cBUHqtOXy76G41lOB401qpFoKx1xq17qYkhWrLSM7eEjiHM9sOtYqpr6ZdqCnN9s6ZpzudX4EkeHOFH2E9q0vA==}
+  '@oxlint/binding-linux-riscv64-gnu@1.57.0':
+    resolution: {integrity: sha512-uoBnjJ3MMEBbfnWC1jSFr7/nSCkcQYa72NYoNtLl1imshDnWSolYCjzb8LVCwYCCfLJXD+0gBLD7fyC14c0+0g==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [riscv64]
     os: [linux]
     libc: [glibc]
 
-  '@oxlint/binding-linux-riscv64-musl@1.51.0':
-    resolution: {integrity: sha512-WKbg8CysgZcHfZX0ixQFBRSBvFZUHa3SBnEjHY2FVYt2nbNJEjzTxA3ZR5wMU0NOCNKIAFUFvAh5/XJKPRJuJg==}
+  '@oxlint/binding-linux-riscv64-musl@1.57.0':
+    resolution: {integrity: sha512-BdrwD7haPZ8a9KrZhKJRSj6jwCor+Z8tHFZ3PT89Y3Jq5v3LfMfEePeAmD0LOTWpiTmzSzdmyw9ijneapiVHKQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [riscv64]
     os: [linux]
     libc: [musl]
 
-  '@oxlint/binding-linux-s390x-gnu@1.51.0':
-    resolution: {integrity: sha512-N1QRUvJTxqXNSu35YOufdjsAVmKVx5bkrggOWAhTWBc3J4qjcBwr1IfyLh/6YCg8sYRSR1GraldS9jUgJL/U4A==}
+  '@oxlint/binding-linux-s390x-gnu@1.57.0':
+    resolution: {integrity: sha512-BNs+7ZNsRstVg2tpNxAXfMX/Iv5oZh204dVyb8Z37+/gCh+yZqNTlg6YwCLIMPSk5wLWIGOaQjT0GUOahKYImw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [s390x]
     os: [linux]
     libc: [glibc]
 
-  '@oxlint/binding-linux-x64-gnu@1.51.0':
-    resolution: {integrity: sha512-e0Mz0DizsCoqNIjeOg6OUKe8JKJWZ5zZlwsd05Bmr51Jo3AOL4UJnPvwKumr4BBtBrDZkCmOLhCvDGm95nJM2g==}
+  '@oxlint/binding-linux-x64-gnu@1.57.0':
+    resolution: {integrity: sha512-AghS18w+XcENcAX0+BQGLiqjpqpaxKJa4cWWP0OWNLacs27vHBxu7TYkv9LUSGe5w8lOJHeMxcYfZNOAPqw2bg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@oxlint/binding-linux-x64-musl@1.51.0':
-    resolution: {integrity: sha512-wD8HGTWhYBKXvRDvoBVB1y+fEYV01samhWQSy1Zkxq2vpezvMnjaFKRuiP6tBNITLGuffbNDEXOwcAhJ3gI5Ug==}
+  '@oxlint/binding-linux-x64-musl@1.57.0':
+    resolution: {integrity: sha512-E/FV3GB8phu/Rpkhz5T96hAiJlGzn91qX5yj5gU754P5cmVGXY1Jw/VSjDSlZBCY3VHjsVLdzgdkJaomEmcNOg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [linux]
     libc: [musl]
 
-  '@oxlint/binding-openharmony-arm64@1.51.0':
-    resolution: {integrity: sha512-5NSwQ2hDEJ0GPXqikjWtwzgAQCsS7P9aLMNenjjKa+gknN3lTCwwwERsT6lKXSirfU3jLjexA2XQvQALh5h27w==}
+  '@oxlint/binding-openharmony-arm64@1.57.0':
+    resolution: {integrity: sha512-xvZ2yZt0nUVfU14iuGv3V25jpr9pov5N0Wr28RXnHFxHCRxNDMtYPHV61gGLhN9IlXM96gI4pyYpLSJC5ClLCQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [openharmony]
 
-  '@oxlint/binding-win32-arm64-msvc@1.51.0':
-    resolution: {integrity: sha512-JEZyah1M0RHMw8d+jjSSJmSmO8sABA1J1RtrHYujGPeCkYg1NeH0TGuClpe2h5QtioRTaF57y/TZfn/2IFV6fA==}
+  '@oxlint/binding-win32-arm64-msvc@1.57.0':
+    resolution: {integrity: sha512-Z4D8Pd0AyHBKeazhdIXeUUy5sIS3Mo0veOlzlDECg6PhRRKgEsBJCCV1n+keUZtQ04OP+i7+itS3kOykUyNhDg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [win32]
 
-  '@oxlint/binding-win32-ia32-msvc@1.51.0':
-    resolution: {integrity: sha512-q3cEoKH6kwjz/WRyHwSf0nlD2F5Qw536kCXvmlSu+kaShzgrA0ojmh45CA81qL+7udfCaZL2SdKCZlLiGBVFlg==}
+  '@oxlint/binding-win32-ia32-msvc@1.57.0':
+    resolution: {integrity: sha512-StOZ9nFMVKvevicbQfql6Pouu9pgbeQnu60Fvhz2S6yfMaii+wnueLnqQ5I1JPgNF0Syew4voBlAaHD13wH6tw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [ia32]
     os: [win32]
 
-  '@oxlint/binding-win32-x64-msvc@1.51.0':
-    resolution: {integrity: sha512-Q14+fOGb9T28nWF/0EUsYqERiRA7cl1oy4TJrGmLaqhm+aO2cV+JttboHI3CbdeMCAyDI1+NoSlrM7Melhp/cw==}
+  '@oxlint/binding-win32-x64-msvc@1.57.0':
+    resolution: {integrity: sha512-6PuxhYgth8TuW0+ABPOIkGdBYw+qYGxgIdXPHSVpiCDm+hqTTWCmC739St1Xni0DJBt8HnSHTG67i1y6gr8qrA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [win32]
@@ -12180,8 +12175,8 @@ packages:
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
-  baseline-browser-mapping@2.11.18:
-    resolution: {integrity: sha512-1iEmLEYSiE1SeBoAfPo/Mnx3PzfzHUkDK61ASkCpuk3YXugYLH5DYK1SzqV55F8FMI6s0F+/tCP7Polz1QRjxw==}
+  baseline-browser-mapping@2.11.20:
+    resolution: {integrity: sha512-H0ulySigv6icDJ1F7SjtdCD6PrhTpdYCmP0CactWy1+ekh0AFd0o1Wn5T8b+hnTmdBx19u9yhL6wvCylXMY7zw==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -13205,7 +13200,6 @@ packages:
   eslint@9.39.5:
     resolution: {integrity: sha512-DgZS62aPLXKlnxILS/AYCoRvHaZeXceIzlXPkkGGzJWSow1aEk0lbTlxUSlyjC8jcaKxAdOnTDz+o1JFSBsyjw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -14828,10 +14822,6 @@ packages:
   minimalistic-assert@1.0.1:
     resolution: {integrity: sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==}
 
-  minimatch@10.1.1:
-    resolution: {integrity: sha512-enIvLvRAFZYXJzkCYG5RKmPfrFArdLv+R+lbQ53BmIMLIry74bjKzX6iHAm8WYamJkhSSEabrWN5D97XnKObjQ==}
-    engines: {node: 20 || >=22}
-
   minimatch@10.2.3:
     resolution: {integrity: sha512-Rwi3pnapEqirPSbWbrZaa6N3nmqq4Xer/2XooiOKyV3q12ML06f7MOuc5DVH8ONZIFhwIYQ3yzPH4nt7iWHaTg==}
     engines: {node: 18 || 20 || >=22}
@@ -15102,8 +15092,8 @@ packages:
     resolution: {integrity: sha512-iwvFmhKQVZzVTFygUVI4t2S/VKEm+Mqkw3jQRJwfDuTcUYI5LCIYzdO5Dbuv4mFOkXZCcXaRRh0m+uydB5xdqw==}
     hasBin: true
 
-  oxlint@1.51.0:
-    resolution: {integrity: sha512-g6DNPaV9/WI9MoX2XllafxQuxwY1TV++j7hP8fTJByVBuCoVtm3dy9f/2vtH/HU40JztcgWF4G7ua+gkainklQ==}
+  oxlint@1.57.0:
+    resolution: {integrity: sha512-DGFsuBX5MFZX9yiDdtKjTrYPq45CZ8Fft6qCltJITYZxfwYjVdGf/6wycGYTACloauwIPxUnYhBVeZbHvleGhw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -18089,12 +18079,6 @@ snapshots:
     dependencies:
       '@swc/helpers': 0.5.23
 
-  '@isaacs/balanced-match@4.0.1': {}
-
-  '@isaacs/brace-expansion@5.0.1':
-    dependencies:
-      '@isaacs/balanced-match': 4.0.1
-
   '@isaacs/cliui@9.0.0': {}
 
   '@isaacs/fs-minipass@4.0.1':
@@ -18909,61 +18893,61 @@ snapshots:
   '@oxlint-tsgolint/win32-x64@0.15.0':
     optional: true
 
-  '@oxlint/binding-android-arm-eabi@1.51.0':
+  '@oxlint/binding-android-arm-eabi@1.57.0':
     optional: true
 
-  '@oxlint/binding-android-arm64@1.51.0':
+  '@oxlint/binding-android-arm64@1.57.0':
     optional: true
 
-  '@oxlint/binding-darwin-arm64@1.51.0':
+  '@oxlint/binding-darwin-arm64@1.57.0':
     optional: true
 
-  '@oxlint/binding-darwin-x64@1.51.0':
+  '@oxlint/binding-darwin-x64@1.57.0':
     optional: true
 
-  '@oxlint/binding-freebsd-x64@1.51.0':
+  '@oxlint/binding-freebsd-x64@1.57.0':
     optional: true
 
-  '@oxlint/binding-linux-arm-gnueabihf@1.51.0':
+  '@oxlint/binding-linux-arm-gnueabihf@1.57.0':
     optional: true
 
-  '@oxlint/binding-linux-arm-musleabihf@1.51.0':
+  '@oxlint/binding-linux-arm-musleabihf@1.57.0':
     optional: true
 
-  '@oxlint/binding-linux-arm64-gnu@1.51.0':
+  '@oxlint/binding-linux-arm64-gnu@1.57.0':
     optional: true
 
-  '@oxlint/binding-linux-arm64-musl@1.51.0':
+  '@oxlint/binding-linux-arm64-musl@1.57.0':
     optional: true
 
-  '@oxlint/binding-linux-ppc64-gnu@1.51.0':
+  '@oxlint/binding-linux-ppc64-gnu@1.57.0':
     optional: true
 
-  '@oxlint/binding-linux-riscv64-gnu@1.51.0':
+  '@oxlint/binding-linux-riscv64-gnu@1.57.0':
     optional: true
 
-  '@oxlint/binding-linux-riscv64-musl@1.51.0':
+  '@oxlint/binding-linux-riscv64-musl@1.57.0':
     optional: true
 
-  '@oxlint/binding-linux-s390x-gnu@1.51.0':
+  '@oxlint/binding-linux-s390x-gnu@1.57.0':
     optional: true
 
-  '@oxlint/binding-linux-x64-gnu@1.51.0':
+  '@oxlint/binding-linux-x64-gnu@1.57.0':
     optional: true
 
-  '@oxlint/binding-linux-x64-musl@1.51.0':
+  '@oxlint/binding-linux-x64-musl@1.57.0':
     optional: true
 
-  '@oxlint/binding-openharmony-arm64@1.51.0':
+  '@oxlint/binding-openharmony-arm64@1.57.0':
     optional: true
 
-  '@oxlint/binding-win32-arm64-msvc@1.51.0':
+  '@oxlint/binding-win32-arm64-msvc@1.57.0':
     optional: true
 
-  '@oxlint/binding-win32-ia32-msvc@1.51.0':
+  '@oxlint/binding-win32-ia32-msvc@1.57.0':
     optional: true
 
-  '@oxlint/binding-win32-x64-msvc@1.51.0':
+  '@oxlint/binding-win32-x64-msvc@1.57.0':
     optional: true
 
   '@peculiar/asn1-cms@2.8.0':
@@ -19893,8 +19877,8 @@ snapshots:
 
   '@typescript-eslint/project-service@8.58.0(typescript@5.9.3)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.65.0(typescript@5.9.3)
-      '@typescript-eslint/types': 8.65.0
+      '@typescript-eslint/tsconfig-utils': 8.58.0(typescript@5.9.3)
+      '@typescript-eslint/types': 8.58.0
       debug: 4.4.3
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -20309,11 +20293,11 @@ snapshots:
 
   acorn-loose@8.5.2:
     dependencies:
-      acorn: 8.17.0
+      acorn: 8.16.0
 
   acorn-walk@8.3.5:
     dependencies:
-      acorn: 8.17.0
+      acorn: 8.16.0
 
   acorn@8.16.0: {}
 
@@ -20639,7 +20623,7 @@ snapshots:
 
   base64-js@1.5.1: {}
 
-  baseline-browser-mapping@2.11.18: {}
+  baseline-browser-mapping@2.11.20: {}
 
   basic-ftp@5.3.1: {}
 
@@ -20701,7 +20685,7 @@ snapshots:
 
   browserslist@4.28.8:
     dependencies:
-      baseline-browser-mapping: 2.11.18
+      baseline-browser-mapping: 2.11.20
       caniuse-lite: 1.0.30001809
       electron-to-chromium: 1.5.403
       node-releases: 2.0.53
@@ -21755,7 +21739,7 @@ snapshots:
       functional-red-black-tree: 1.0.1
       jsx-ast-utils-x: 0.1.0
       lodash.merge: 4.6.2
-      minimatch: 10.1.1
+      minimatch: 10.2.5
       scslre: 0.3.0
       semver: 7.7.3
       typescript: 5.9.3
@@ -23717,10 +23701,6 @@ snapshots:
 
   minimalistic-assert@1.0.1: {}
 
-  minimatch@10.1.1:
-    dependencies:
-      '@isaacs/brace-expansion': 5.0.1
-
   minimatch@10.2.3:
     dependencies:
       brace-expansion: 5.0.8
@@ -24078,27 +24058,27 @@ snapshots:
       '@oxlint-tsgolint/win32-arm64': 0.15.0
       '@oxlint-tsgolint/win32-x64': 0.15.0
 
-  oxlint@1.51.0(oxlint-tsgolint@0.15.0):
+  oxlint@1.57.0(oxlint-tsgolint@0.15.0):
     optionalDependencies:
-      '@oxlint/binding-android-arm-eabi': 1.51.0
-      '@oxlint/binding-android-arm64': 1.51.0
-      '@oxlint/binding-darwin-arm64': 1.51.0
-      '@oxlint/binding-darwin-x64': 1.51.0
-      '@oxlint/binding-freebsd-x64': 1.51.0
-      '@oxlint/binding-linux-arm-gnueabihf': 1.51.0
-      '@oxlint/binding-linux-arm-musleabihf': 1.51.0
-      '@oxlint/binding-linux-arm64-gnu': 1.51.0
-      '@oxlint/binding-linux-arm64-musl': 1.51.0
-      '@oxlint/binding-linux-ppc64-gnu': 1.51.0
-      '@oxlint/binding-linux-riscv64-gnu': 1.51.0
-      '@oxlint/binding-linux-riscv64-musl': 1.51.0
-      '@oxlint/binding-linux-s390x-gnu': 1.51.0
-      '@oxlint/binding-linux-x64-gnu': 1.51.0
-      '@oxlint/binding-linux-x64-musl': 1.51.0
-      '@oxlint/binding-openharmony-arm64': 1.51.0
-      '@oxlint/binding-win32-arm64-msvc': 1.51.0
-      '@oxlint/binding-win32-ia32-msvc': 1.51.0
-      '@oxlint/binding-win32-x64-msvc': 1.51.0
+      '@oxlint/binding-android-arm-eabi': 1.57.0
+      '@oxlint/binding-android-arm64': 1.57.0
+      '@oxlint/binding-darwin-arm64': 1.57.0
+      '@oxlint/binding-darwin-x64': 1.57.0
+      '@oxlint/binding-freebsd-x64': 1.57.0
+      '@oxlint/binding-linux-arm-gnueabihf': 1.57.0
+      '@oxlint/binding-linux-arm-musleabihf': 1.57.0
+      '@oxlint/binding-linux-arm64-gnu': 1.57.0
+      '@oxlint/binding-linux-arm64-musl': 1.57.0
+      '@oxlint/binding-linux-ppc64-gnu': 1.57.0
+      '@oxlint/binding-linux-riscv64-gnu': 1.57.0
+      '@oxlint/binding-linux-riscv64-musl': 1.57.0
+      '@oxlint/binding-linux-s390x-gnu': 1.57.0
+      '@oxlint/binding-linux-x64-gnu': 1.57.0
+      '@oxlint/binding-linux-x64-musl': 1.57.0
+      '@oxlint/binding-openharmony-arm64': 1.57.0
+      '@oxlint/binding-win32-arm64-msvc': 1.57.0
+      '@oxlint/binding-win32-ia32-msvc': 1.57.0
+      '@oxlint/binding-win32-x64-msvc': 1.57.0
       oxlint-tsgolint: 0.15.0
 
   p-limit@2.3.0:
@@ -25757,7 +25737,7 @@ snapshots:
   tsconfig-paths-webpack-plugin@4.2.0:
     dependencies:
       chalk: 4.1.2
-      enhanced-resolve: 5.24.3
+      enhanced-resolve: 5.20.1
       tapable: 2.3.3
       tsconfig-paths: 4.2.0
 

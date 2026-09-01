@@ -1,10 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { GlobalValue, IPackage } from "@gooddata/lint-config";
-
-export type Rules<Prefix extends string = ""> = {
-    [key in `${Prefix}${string}`]: string | number | object | object[];
-};
+import type { GlobalValue, IPackage, Rules } from "@gooddata/lint-config";
 
 export type Category =
     | "correctness"

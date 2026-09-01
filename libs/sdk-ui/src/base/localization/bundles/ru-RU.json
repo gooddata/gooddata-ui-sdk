@@ -1119,6 +1119,7 @@
     "message.accessibility.dismiss.notification": "Закрыть уведомление",
     "datePicker.accessibility.label": "Выбор даты начала",
     "timePicker.accessibility.label": "Выбор времени начала",
+    "timezoneSelect.search.accessibility.label": "Поиск часовых поясов",
     "menu.close": "Закрыть меню",
     "menu.back": "Вернуться в родительское меню",
     "copyButton.copy.success": "Скопировано в буфер обмена!",

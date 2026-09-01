@@ -4,6 +4,42 @@
     font-size: 12px;
 }
 
+// The rows render sdk-ui-kit's insight list item, which is drawn for a dropdown: an inset margin, a
+// rounded border and a lifted hover, all of which fight the flat row-wide highlight painted below
+// it. Flattening the item hands the whole row back to that highlight.
+.gd-ui-ext-insight-picker {
+    .gd-visualizations-list-item {
+        margin: 0;
+        padding: 0;
+        border: none;
+        border-radius: 0;
+
+        &:hover {
+            box-shadow: none;
+        }
+
+        .gd-visualizations-list-item-content {
+            padding: 5px 0;
+
+            .gd-visualizations-list-item-content-name {
+                font-size: 14px;
+            }
+        }
+
+        .gd-visualizations-list-item-actions {
+            padding: 5px 10px 5px 0;
+        }
+
+        .gd-visualizations-list-item-description {
+            padding: 13px 0 5px 2px;
+        }
+
+        .gd-vis-type-container {
+            padding: 5px 0 5px 10px;
+        }
+    }
+}
+
 .gd-ui-ext-insight-picker-search {
     padding: 0 10px 10px;
 }
@@ -14,6 +50,9 @@
     align-items: center;
     cursor: pointer;
     padding-right: 10px;
+    // The virtualized list gives every row a fixed-height slot. Anything the row leaves unclaimed
+    // is a strip its highlight cannot reach.
+    height: 100%;
 
     &--with-menu {
         grid-template-columns: 1fr auto;
@@ -76,6 +115,8 @@
     display: flex;
     align-items: center;
     gap: 5px;
+    // A native button takes the browser's own font rather than the one around it.
+    font: inherit;
     padding: 4px 8px;
     border: none;
     border-radius: 3px;

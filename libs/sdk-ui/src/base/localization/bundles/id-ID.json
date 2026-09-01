@@ -1119,6 +1119,7 @@
     "message.accessibility.dismiss.notification": "Tutup notifikasi",
     "datePicker.accessibility.label": "Pilih tanggal mulai",
     "timePicker.accessibility.label": "Pilih waktu mulai",
+    "timezoneSelect.search.accessibility.label": "Cari zona waktu",
     "menu.close": "Tutup menu",
     "menu.back": "Kembali ke menu induk",
     "copyButton.copy.success": "Disalin ke papan klip!",

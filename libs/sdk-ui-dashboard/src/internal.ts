@@ -112,10 +112,7 @@ export { DashboardItemVisualization } from "./presentation/presentationComponent
 export { getVisTypeCssClass } from "./presentation/presentationComponents/DashboardItems/utils.js";
 export { ThemedLoadingEqualizer } from "./presentation/presentationComponents/ThemedLoadingEqualizer.js";
 
-export {
-    DefaultScheduledEmailDialog,
-    ScheduledMailDialogRenderer,
-} from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/DefaultScheduledEmailDialog.js";
+export { DefaultScheduledEmailDialog } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/DefaultScheduledEmailDialog.js";
 export { ScheduledEmailManagementDialog as DefaultScheduledEmailManagementDialog } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailManagementDialog/DefaultScheduledEmailManagementDialog.js";
 export { ScheduledEmailDialog } from "./presentation/automations/scheduledEmail/ScheduledEmailDialog.js";
 export { ScheduledEmailManagementDialog } from "./presentation/automations/scheduledEmail/ScheduledEmailManagementDialog.js";

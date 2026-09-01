@@ -9,6 +9,7 @@ import {
     arrow,
     autoUpdate,
     flip,
+    limitShift,
     offset,
     shift,
     size,
@@ -36,6 +37,8 @@ export function useFloatingPosition({
     strategy = "absolute",
     offset: offsetProp,
     autoFlip = true,
+    allowOverlapAnchor = false,
+    overflowBoundary,
     fallbackPlacements: fallbackPlacementsProp,
     arrowRef,
     customMiddleware = EMPTY_MIDDLEWARE,
@@ -80,17 +83,30 @@ export function useFloatingPosition({
         if (autoFlip) {
             mw.push(
                 flip({
+                    boundary: overflowBoundary,
                     fallbackPlacements,
-                    fallbackStrategy: "initialPlacement",
+                    // When no placement fits, the side with the least overflow is all that keeps the
+                    // element on the screen. An element allowed to cover its anchor is slid back
+                    // into view by shift whichever side it is on, so that one keeps the side asked
+                    // for instead.
+                    fallbackStrategy: allowOverlapAnchor ? "initialPlacement" : "bestFit",
                 }),
             );
         }
 
-        mw.push(shift({ padding: shiftPadding }));
+        mw.push(
+            shift({
+                boundary: overflowBoundary,
+                padding: shiftPadding,
+                crossAxis: allowOverlapAnchor,
+                limiter: allowOverlapAnchor ? limitShift() : undefined,
+            }),
+        );
 
         if (maxWidth !== undefined || maxHeight !== undefined) {
             mw.push(
                 size({
+                    boundary: overflowBoundary,
                     apply({ availableWidth, availableHeight, elements }) {
                         const maxW = typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth;
                         const maxH = typeof maxHeight === "number" ? `${maxHeight}px` : maxHeight;
@@ -112,6 +128,8 @@ export function useFloatingPosition({
         computedOffset,
         customMiddleware,
         autoFlip,
+        allowOverlapAnchor,
+        overflowBoundary,
         shiftPadding,
         maxWidth,
         maxHeight,

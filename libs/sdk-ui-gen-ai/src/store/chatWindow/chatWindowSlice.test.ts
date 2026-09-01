@@ -10,6 +10,7 @@ import { clearThreadAction, startNewConversationAction } from "../messages/messa
 import {
     chatWindowSliceReducer,
     getInitialChatWindowState,
+    selectedContextReferencesAction,
     setAmbientUserContextAction,
     setUserContextAction,
 } from "./chatWindowSlice.js";
@@ -116,5 +117,30 @@ describe.each([
         expect(state.context.active).toEqual(ambientContext);
         expect(state.context.active).not.toBe(state.context.ambient);
         expect(state.context.active?.view).not.toBe(state.context.ambient?.view);
+    });
+});
+
+describe("selectedContextReferencesAction", () => {
+    it("should update selected context and update references in the store context", () => {
+        const state = stateWith(
+            contextSetupOn,
+            setAmbientUserContextAction({ userContext: ambientContext }),
+            selectedContextReferencesAction({
+                activated: true,
+                dashboard: {
+                    id: "ambient-dashboard",
+                    ref: idRef("ambient-dashboard", "analyticalDashboard"),
+                    title: "2. Sales",
+                    type: "dashboard",
+                    where: "view.dashboard",
+                    nesting: 0,
+                },
+            }),
+        );
+
+        expect(state.context.ambientSelected?.dashboard?.id).toBe("ambient-dashboard");
+        expect(state.context.active?.view?.dashboard?.ref).toEqual(
+            idRef("ambient-dashboard", "analyticalDashboard"),
+        );
     });
 });

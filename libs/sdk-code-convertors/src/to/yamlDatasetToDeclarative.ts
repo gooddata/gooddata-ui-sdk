@@ -152,7 +152,7 @@ function resolveAggregatedFactReference(
         }
         const fields = (entity.data as Dataset).fields;
         const field = fields?.[assignedTo];
-        return field !== undefined && (field as Attribute).type === "attribute";
+        return (field as Attribute | undefined)?.type === "attribute";
     });
 
     return { id: assignedTo, type: isAttribute ? "attribute" : "fact" };

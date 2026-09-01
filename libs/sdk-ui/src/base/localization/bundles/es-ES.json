@@ -1119,6 +1119,7 @@
     "message.accessibility.dismiss.notification": "Notificación de despido",
     "datePicker.accessibility.label": "Seleccione la fecha de inicio",
     "timePicker.accessibility.label": "Seleccione la hora de inicio",
+    "timezoneSelect.search.accessibility.label": "Buscar zonas horarias",
     "menu.close": "Cerrar menú",
     "menu.back": "Volver al menú principal",
     "copyButton.copy.success": "¡Copiado al portapapeles!",

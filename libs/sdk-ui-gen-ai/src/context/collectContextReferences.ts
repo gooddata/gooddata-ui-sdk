@@ -3,45 +3,49 @@
 import {
     type IGenAIObjectReference,
     type IGenAIUserContext,
+    areObjRefsEqual,
     isIdentifierRef,
     serializeObjRef,
 } from "@gooddata/sdk-model";
 
-import { type IGenAIContextObject } from "../types.js";
+import { type IGenAIContextObject, type SelectedContext } from "../types.js";
 import { convertReferenceTypeToGenAiType } from "../utils.js";
 
 export function collectContextReferences(
-    context: IGenAIUserContext | undefined,
+    userContext: IGenAIUserContext | undefined,
+    selectedContext: SelectedContext | undefined,
     placeholderTitle?: string,
 ): IGenAIContextObject[] {
-    if (!context) {
-        return [];
-    }
-
-    const references: IGenAIContextObject[] = [];
+    const userReferences: IGenAIContextObject[] = [];
 
     // dashboard
-    const dashboard = context.view?.dashboard;
-    if (dashboard) {
-        const ref = dashboard.ref;
+    const userDashboard = userContext?.view?.dashboard;
+    if (userDashboard) {
+        const ref = userDashboard.ref;
         const id = isIdentifierRef(ref) ? ref.identifier : ref.uri;
-        references.push({
-            id,
-            ref,
-            type: "dashboard",
-            where: "view.dashboard",
-            title: dashboard.title || placeholderTitle || id,
-            nesting: 0,
-        });
+
+        if (!areObjRefsEqual(ref, selectedContext?.dashboard?.ref)) {
+            userReferences.push({
+                id,
+                ref,
+                nesting: 0,
+                type: "dashboard",
+                where: "view.dashboard",
+                title: userDashboard.title || placeholderTitle || id,
+            });
+        }
     }
 
     // references
-    context.referencedObjects?.forEach((obj) => {
+    userContext?.referencedObjects?.forEach((obj) => {
+        if (areObjRefsEqual(obj.context?.ref, selectedContext?.dashboard?.ref)) {
+            return;
+        }
         obj.objects.forEach((item) => {
             const ref = item.ref;
             const id = isIdentifierRef(ref) ? ref.identifier : ref.uri;
 
-            references.push({
+            userReferences.push({
                 id,
                 ref,
                 nesting: 1,
@@ -52,7 +56,7 @@ export function collectContextReferences(
         });
     });
 
-    return references.sort((a, b) => a.nesting - b.nesting);
+    return userReferences.sort((a, b) => a.nesting - b.nesting);
 }
 
 export function collectAvailableReferences(

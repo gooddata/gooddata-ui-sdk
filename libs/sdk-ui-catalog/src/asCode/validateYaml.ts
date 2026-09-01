@@ -25,9 +25,9 @@ type ValidateYamlOptions<TData> = {
 };
 
 /**
- * Runs the steps every as-code YAML shares: reject empty input, parse (strict) YAML, validate against
- * the schema, and enforce identity immutability. The schema itself and the conversion of validated data
- * into a definition are the caller's.
+ * Runs the steps every as-code YAML shares: reject empty input, parse (strict) YAML, drop a blank
+ * identity, validate against the schema, and enforce identity immutability. The schema itself and the
+ * conversion of validated data into a definition are the caller's.
  */
 export function validateYaml<TData extends { id?: string }>(
     value: string,
@@ -44,9 +44,10 @@ export function validateYaml<TData extends { id?: string }>(
         return { ok: false, kind: "syntax" };
     }
 
-    const result = schema.safeParse(parsed);
+    const document = withoutBlankIdentity(parsed);
+    const result = schema.safeParse(document);
     if (!result.success) {
-        return { ok: false, kind: "schema", error: result.error, parsed };
+        return { ok: false, kind: "schema", error: result.error, parsed: document };
     }
 
     if (fixedIdentifier !== undefined && result.data.id !== fixedIdentifier) {
@@ -54,4 +55,20 @@ export function validateYaml<TData extends { id?: string }>(
     }
 
     return { ok: true, data: result.data };
+}
+
+/**
+ * Drops an `id` the author left blank, so the template can offer the key without forcing a value.
+ *
+ * The seeded template renders `id: ` for an object that has none yet; left untouched it parses to
+ * `null`, and a whitespace-only value to a blank string. Either means "no identity chosen" — the
+ * server derives one on create — so the key is removed rather than passed on as a value the schema
+ * would reject or the backend would take literally.
+ */
+function withoutBlankIdentity(parsed: unknown): unknown {
+    if (!parsed || typeof parsed !== "object" || !("id" in parsed)) {
+        return parsed;
+    }
+    const { id, ...rest } = parsed as { id?: unknown };
+    return id === null || (typeof id === "string" && id.trim() === "") ? rest : parsed;
 }

@@ -208,14 +208,8 @@ function createGeneratorInput(recordings: IRecording[]): IndexGeneratorInput {
         insights: () => {
             return (categorized[RecordingType.Insights] as unknown as InsightRecording[]) || [];
         },
-        catalog: () =>
-            (categorized[RecordingType.Catalog] &&
-                (categorized[RecordingType.Catalog][0] as unknown as CatalogRecording)) ||
-            null,
-        visClasses: () =>
-            (categorized[RecordingType.VisClasses] &&
-                (categorized[RecordingType.VisClasses][0] as VisClassesRecording)) ||
-            null,
+        catalog: () => (categorized[RecordingType.Catalog]?.[0] as unknown as CatalogRecording) || null,
+        visClasses: () => (categorized[RecordingType.VisClasses]?.[0] as VisClassesRecording) || null,
         dashboards: () => {
             return (categorized[RecordingType.Dashboards] as unknown as DashboardRecording[]) || [];
         },

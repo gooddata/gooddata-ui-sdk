@@ -22,6 +22,21 @@ export type Config =
           IChatConversationVisualisationContent["visualization"]
       >["insight"]["properties"]["controls"];
 
+export type SelectedContext = {
+    /**
+     * Dashboard selected by the user.
+     */
+    dashboard?: IGenAIContextObject;
+    /**
+     * Visualization or widget selected by the user.
+     */
+    visualization?: IGenAIContextObject;
+    /**
+     * Whether the selected objects are activated.
+     */
+    activated?: boolean;
+};
+
 export type StoredConversation = {
     /**
      * A record containing chat conversation items indexed by string keys.
@@ -103,11 +118,20 @@ export type IChatConversationTracedAction = {
 
 export type StoreContext = {
     /**
+     * Indicates whether some data has been loaded into the store.
+     */
+    loaded?: boolean;
+    /**
      * Ambient user context kept in sync by the host (e.g. the open dashboard and its
      * live filter state). Unlike the one-shot userContext it persists across messages
      * and is attached to every message that has no one-shot context.
      */
     ambient?: IGenAIUserContext;
+    /**
+     * Selected objects from ambient context.
+     */
+    ambientSelected?: SelectedContext;
+
     /**
      * Active context
      */

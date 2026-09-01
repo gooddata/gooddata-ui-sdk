@@ -1119,6 +1119,7 @@
     "message.accessibility.dismiss.notification": "Kennisgeving verwijderen",
     "datePicker.accessibility.label": "Selecteer begindatum",
     "timePicker.accessibility.label": "Selecteer starttijd",
+    "timezoneSelect.search.accessibility.label": "Tijdzones zoeken",
     "menu.close": "Menu sluiten",
     "menu.back": "Terug naar het hoofdmenu",
     "copyButton.copy.success": "Gekopieerd naar klembord!",

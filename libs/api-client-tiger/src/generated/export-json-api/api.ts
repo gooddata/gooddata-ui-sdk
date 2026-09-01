@@ -892,7 +892,7 @@ export interface ExportIdentifierRefIdentifier {
     'type': ExportIdentifierRefIdentifierTypeEnum;
 }
 
-export type ExportIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
+export type ExportIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'reportPageLayout' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
 
 /**
  * Export request object describing the export properties and metadata for image exports.

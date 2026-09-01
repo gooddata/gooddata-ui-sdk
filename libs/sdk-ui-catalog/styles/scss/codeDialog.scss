@@ -83,6 +83,10 @@
 }
 
 .gd-ascode-dialog-error {
+    flex: 0 1 auto;
+    max-height: 7.5rem;
+    overflow-x: hidden;
+
     background-color: var(--gd-palette-error-lightest, #fff2f1);
     color: var(--gd-palette-error-base, #e54d42);
     font-size: 14px;

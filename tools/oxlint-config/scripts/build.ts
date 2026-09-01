@@ -4,8 +4,10 @@
 
 import { writeFileSync } from "fs";
 
+import { type Rules } from "@gooddata/lint-config";
+
 import { common, variants } from "../src/index.js";
-import { type Category, type IConfiguration, type IJsPlugin, type Level, type Rules } from "../src/types.js";
+import { type Category, type IConfiguration, type IJsPlugin, type Level } from "../src/types.js";
 
 // Types for the output eslintrc JSON format
 interface IOxLintConfigurationCommon {

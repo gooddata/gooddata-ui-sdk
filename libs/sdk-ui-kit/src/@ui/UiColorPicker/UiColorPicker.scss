@@ -1,0 +1,120 @@
+// (C) 2007-2026 GoodData Corporation
+
+.gd-ui-kit-color-picker {
+    --color-picker-handle: 14px;
+
+    width: 200px;
+    padding: 15px;
+}
+
+// Hue runs around the wheel and saturation out from the middle, which the geometry in UiColorWheel.tsx
+// reads back. The two agree only because the conic gradient starts where the screen angle is
+// measured from - at 3 o'clock, running clockwise - so a gradient position is a hue is an angle.
+//
+// Painted at a fixed lightness, not the one being edited: at either extreme every hue renders the
+// same white or black, and a wheel that followed it would leave nothing to aim at.
+.gd-ui-kit-color-picker__wheel {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    margin-bottom: 15px;
+    border-radius: 50%;
+    cursor: crosshair;
+    // Without this a drag on a touch screen scrolls the page instead of picking a color.
+    touch-action: none;
+    user-select: none;
+    background:
+        radial-gradient(circle closest-side, hsl(0deg 0% 50%) 0%, transparent 100%),
+        conic-gradient(
+            from 90deg,
+            hsl(0deg 100% 50%),
+            hsl(60deg 100% 50%),
+            hsl(120deg 100% 50%),
+            hsl(180deg 100% 50%),
+            hsl(240deg 100% 50%),
+            hsl(300deg 100% 50%),
+            hsl(360deg 100% 50%)
+        );
+
+    &:focus-visible {
+        outline: 2px solid var(--gd-palette-primary-base);
+        outline-offset: 2px;
+    }
+}
+
+.gd-ui-kit-color-picker__slider {
+    position: relative;
+    height: var(--color-picker-handle);
+    margin-bottom: 15px;
+    border-radius: calc(var(--color-picker-handle) / 2);
+    cursor: pointer;
+    touch-action: none;
+    // A drag would otherwise select the labels around the control and show an I-beam over it.
+    user-select: none;
+    // Shows through wherever a track is not fully opaque, which is what marks it as see-through.
+    background: repeating-conic-gradient(
+            var(--gd-palette-complementary-2) 0% 25%,
+            var(--gd-palette-complementary-0) 0% 50%
+        )
+        50% / 8px 8px;
+
+    &:focus-visible {
+        outline: 2px solid var(--gd-palette-primary-base);
+        outline-offset: 2px;
+    }
+}
+
+.gd-ui-kit-color-picker__slider-track {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+}
+
+// Placed by its middle, which is what the positions the controls set mean. The border counts
+// towards its size, or the offset that centres it would be short by the border on each side.
+.gd-ui-kit-color-picker__wheel-thumb,
+.gd-ui-kit-color-picker__slider-thumb {
+    position: absolute;
+    box-sizing: border-box;
+    width: var(--color-picker-handle);
+    height: var(--color-picker-handle);
+    margin: calc(var(--color-picker-handle) / -2) 0 0 calc(var(--color-picker-handle) / -2);
+    border: 2px solid var(--gd-palette-complementary-0);
+    border-radius: 50%;
+    box-shadow: 0 0 2px var(--gd-palette-complementary-6);
+    // The handle only reports where the value is; the gesture belongs to the control under it.
+    pointer-events: none;
+}
+
+.gd-ui-kit-color-picker__slider-thumb {
+    top: 50%;
+    // Stops half a handle short of each end, so it stays inside the track it reads against.
+    left: calc(
+        var(--color-picker-handle) / 2 + (100% - var(--color-picker-handle)) *
+            var(--color-picker-slider-position)
+    );
+}
+
+.gd-ui-kit-color-picker__value {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    // A text input asks for a width of its own and a flex item will not shrink below what it asks
+    // for, so without this the notation button is pushed out of the panel.
+    .gd-ui-kit-text-input {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+.gd-ui-kit-color-picker__actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 15px 0 0;
+
+    .gd-ui-kit-button {
+        flex: 1;
+    }
+}
