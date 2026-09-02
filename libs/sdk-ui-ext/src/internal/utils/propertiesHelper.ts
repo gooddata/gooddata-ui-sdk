@@ -3,7 +3,15 @@
 // eslint-disable-next-line no-restricted-imports
 import { cloneDeep, get, has, isEmpty, set } from "lodash-es";
 
-import { type IInsightDefinition, type ISettings, bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model";
+import {
+    type IConditionalFormatting,
+    type IInsightDefinition,
+    type ISettings,
+    bucketsIsEmpty,
+    insightBuckets,
+    insightProperties,
+    insightVisualizationUrl,
+} from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import {
     type ColumnHeadersPosition,
@@ -317,6 +325,60 @@ export function getConditionalFormattingFromProperties(
  */
 export function isConditionalFormattingEnabled(settings: ISettings | undefined): boolean {
     return settings?.enableConditionalFormatting ?? false;
+}
+
+/**
+ * Whether `insightDefinition` is (or would render as) the next-gen pivot table — the only
+ * visualization conditional formatting applies to. Distinct from {@link isConditionalFormattingEnabled}:
+ * that's a workspace-wide flag, this is a per-insight check (so a chart or geo insight never gets
+ * mistaken for a pivot table just because the flag happens to be on workspace-wide).
+ *
+ * @remarks
+ * `enableNewPivotTable` defaults to enabled when absent, matching every other check of this flag
+ * (the pluggable visualization factory's own routing decision in `BaseVisualization.tsx`, the
+ * config panel, the embed dialog) — an unset flag must not make this predicate disagree with what
+ * actually gets rendered.
+ */
+export function isPivotTableNext(
+    insightDefinition: IInsightDefinition,
+    settings: ISettings | undefined,
+): boolean {
+    const uri = insightVisualizationUrl(insightDefinition);
+    return (settings?.enableNewPivotTable ?? true) && uri === "local:table";
+}
+
+/**
+ * Every semantic-layer (inherited) conditional formatting gate — the engine's own inheritance and
+ * the panel's "From semantic layer" block — must go through this predicate, mirroring
+ * {@link isConditionalFormattingEnabled}. Deliberately independent of it: a workspace can inherit
+ * semantic-layer rules without exposing insight-level CF authoring, or vice versa. Pivot-table-next
+ * only, like every other CF check, so it also requires `enableNewPivotTable` (default enabled,
+ * matching the flag's convention everywhere else it's checked).
+ */
+export function isSemanticConditionalFormattingEnabled(settings: ISettings | undefined): boolean {
+    return (
+        (settings?.enableSemanticConditionalFormatting ?? false) && (settings?.enableNewPivotTable ?? true)
+    );
+}
+
+/**
+ * The conditional formatting config that should currently apply to an insight: gated behind the
+ * feature flag and behind the insight actually being a next-gen pivot table (disabled/not-a-pivot-
+ * table means no config at all, so there is no UI to edit rules a viewer can't see take effect, and
+ * a chart/geo export never picks up stale CF left over from a since-changed visualization type),
+ * preferring a runtime override (e.g. InsightView's config prop) over the insight's own saved rules.
+ *
+ * @internal
+ */
+export function getEffectiveConditionalFormatting(
+    insight: IInsightDefinition,
+    settings: ISettings | undefined,
+    configOverride?: IConditionalFormatting,
+): IConditionalFormatting | undefined {
+    if (!isConditionalFormattingEnabled(settings) || !isPivotTableNext(insight, settings)) {
+        return undefined;
+    }
+    return configOverride ?? getConditionalFormattingFromProperties(insightProperties(insight));
 }
 
 export function getPageSizeFromProperties(

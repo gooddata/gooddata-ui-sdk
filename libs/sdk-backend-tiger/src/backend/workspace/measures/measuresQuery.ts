@@ -19,6 +19,8 @@ import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { buildFilterQuery } from "../../common/filtering.js";
 import { buildSortQuery } from "../../common/sorting.js";
 
+type MetricMetaInclude = NonNullable<EntitiesApiGetAllEntitiesMetricsRequest["metaInclude"]>[number];
+
 export class MeasuresQuery implements IMeasuresQuery {
     private size = 50;
     private page = 0;
@@ -27,6 +29,7 @@ export class MeasuresQuery implements IMeasuresQuery {
     private include: EntitiesApiGetAllEntitiesMetricsRequest["include"] = undefined;
     private origin: ObjectOrigin | undefined = undefined;
     private method: QueryMethod = "GET";
+    private metaInclude: MetricMetaInclude[] | undefined = undefined;
     private totalCount: number | undefined = undefined;
 
     constructor(
@@ -76,6 +79,12 @@ export class MeasuresQuery implements IMeasuresQuery {
         return this;
     }
 
+    withMetaInclude(metaInclude: string[]): IMeasuresQuery {
+        // NOTE: Unsupported meta include values handling is delegated to the backend
+        this.metaInclude = metaInclude as MetricMetaInclude[];
+        return this;
+    }
+
     query(): Promise<IMeasuresQueryResult> {
         return ServerPaging.for(
             async ({ limit, offset }) => {
@@ -85,8 +94,12 @@ export class MeasuresQuery implements IMeasuresQuery {
                 /**
                  * For backend performance reasons, we do not want to ask for paging info each time.
                  */
+                const metaIncludeSet: Set<MetricMetaInclude> = new Set([
+                    ...(this.totalCount === undefined ? (["page"] as const) : []),
+                    ...(this.metaInclude ?? []),
+                ]);
                 const metaInclude: EntitiesApiGetAllEntitiesMetricsRequest["metaInclude"] =
-                    this.totalCount === undefined ? (["page"] as const) : undefined;
+                    metaIncludeSet.size > 0 ? [...metaIncludeSet] : undefined;
 
                 const items = await this.authCall((client) => {
                     if (this.method === "POST") {

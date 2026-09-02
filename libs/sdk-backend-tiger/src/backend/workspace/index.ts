@@ -75,7 +75,7 @@ import { TigerWorkspaceObjectPermissionsService } from "./objectPermissions/inde
 import { TigerWorkspaceParameters } from "./parameters/index.js";
 import { TigerWorkspacePermissionsFactory } from "./permissions/index.js";
 import { TigerReferencesService } from "./references/index.js";
-import { getTigerWorkspaceReportsService } from "./reports.js";
+import { TigerWorkspaceReportsService } from "./reports.js";
 import { TigerWorkspaceSettings } from "./settings/index.js";
 import { TigerWorkspaceStyling } from "./styling/index.js";
 import { TigerWorkspaceUsersQuery } from "./users/index.js";
@@ -255,6 +255,6 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
     }
 
     public reports(): IWorkspaceReportsService {
-        return getTigerWorkspaceReportsService(this.workspace);
+        return new TigerWorkspaceReportsService(this.authCall, this.workspace);
     }
 }

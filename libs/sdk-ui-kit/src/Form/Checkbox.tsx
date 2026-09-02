@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type ChangeEvent, Fragment, memo, useCallback, useMemo } from "react";
+import { type ChangeEvent, Fragment, type NamedExoticComponent, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 
@@ -25,7 +25,7 @@ export interface ICheckboxProps {
  * @internal
  */
 
-export const Checkbox = memo(function Checkbox({
+export const Checkbox: NamedExoticComponent<ICheckboxProps> = memo(function Checkbox({
     disabled = false,
     name = "",
     text = "",

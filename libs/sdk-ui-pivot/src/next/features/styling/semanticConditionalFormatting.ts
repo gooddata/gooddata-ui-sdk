@@ -70,7 +70,7 @@ export function resolvePerTargetConditionalFormatting(
 
     // `enabled` predates per-target Inherited/Custom and only ever meant "my authored rules are
     // active" — it must not also suppress targets the creator never touched (that's what
-    // `customTargets` is for). A Custom target (has an authored rule) whose rules are inactive
+    // `suppressedTargets` is for). A Custom target (has an authored rule) whose rules are inactive
     // shows nothing rather than silently falling back to its inherited rule: `customModeTargets`
     // is built from ALL authored rules regardless of `enabled`, so a disabled target stays
     // excluded from inheritance even though its (inactive) rule is excluded from the merge below.
@@ -78,7 +78,7 @@ export function resolvePerTargetConditionalFormatting(
     const activeInsightRules = insightConfig?.enabled ? allInsightRules : [];
     const customModeTargets = new Set([
         ...allInsightRules.map((rule) => targetKey(rule.target)),
-        ...(insightConfig?.customTargets ?? []).map(targetKey),
+        ...(insightConfig?.suppressedTargets ?? []).map(targetKey),
     ]);
     const inheritedRules = semanticRules.filter((rule) => !customModeTargets.has(targetKey(rule.target)));
 
@@ -91,6 +91,6 @@ export function resolvePerTargetConditionalFormatting(
         version: insightConfig?.version,
         enabled: true,
         rules: mergedRules,
-        customTargets: insightConfig?.customTargets,
+        suppressedTargets: insightConfig?.suppressedTargets,
     };
 }

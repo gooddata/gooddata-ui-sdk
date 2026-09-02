@@ -2,6 +2,7 @@
 
 import {
     type ComponentType,
+    type NamedExoticComponent,
     type SyntheticEvent,
     memo,
     useCallback,
@@ -194,10 +195,12 @@ function MeasureNumberFormatCore(props: MeasureNumberFormatProps) {
 /**
  * @internal
  */
-export const MeasureNumberFormat = memo(function MeasureNumberFormat(props: IMeasureNumberFormatOwnProps) {
-    return (
-        <IntlWrapper locale={props.locale}>
-            <MeasureNumberFormatCore {...props} />
-        </IntlWrapper>
-    );
-});
+export const MeasureNumberFormat: NamedExoticComponent<IMeasureNumberFormatOwnProps> = memo(
+    function MeasureNumberFormat(props: IMeasureNumberFormatOwnProps) {
+        return (
+            <IntlWrapper locale={props.locale}>
+                <MeasureNumberFormatCore {...props} />
+            </IntlWrapper>
+        );
+    },
+);

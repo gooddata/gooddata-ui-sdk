@@ -2292,6 +2292,10 @@ class DummyMeasuresQuery implements IMeasuresQuery {
         return this;
     }
 
+    withMetaInclude(): IMeasuresQuery {
+        return this;
+    }
+
     withMethod(): IMeasuresQuery {
         return this;
     }

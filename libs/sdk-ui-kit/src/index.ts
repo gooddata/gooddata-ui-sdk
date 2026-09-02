@@ -1253,6 +1253,7 @@ export {
     type IParameterControlButtonProps,
 } from "./ParameterControl/ParameterControlButton.js";
 export { ParameterControl, type IParameterControlProps } from "./ParameterControl/ParameterControl.js";
+export { type ParameterSubmitModeProps } from "./ParameterControl/submitMode.js";
 export { UiSectionHeading, type IUiSectionHeadingProps } from "./@ui/UiSectionHeading/UiSectionHeading.js";
 export {
     UiDialogHeader,

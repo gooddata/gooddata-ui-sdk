@@ -51,6 +51,7 @@ import { IColorPaletteDefinition } from '@gooddata/sdk-model';
 import { IColorPaletteMetadataObject } from '@gooddata/sdk-model';
 import type { IComputedAttributeMetadataObject } from '@gooddata/sdk-model';
 import type { IComputedAttributeMetadataObjectDefinition } from '@gooddata/sdk-model';
+import { IConditionalFormatting } from '@gooddata/sdk-model';
 import type { IDashboard } from '@gooddata/sdk-model';
 import type { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
 import type { IDashboardBase } from '@gooddata/sdk-model';
@@ -143,6 +144,7 @@ import { IReport } from '@gooddata/sdk-model';
 import { IReportDefinition } from '@gooddata/sdk-model';
 import { IReportPageLayout } from '@gooddata/sdk-model';
 import { IReportPageLayoutDefinition } from '@gooddata/sdk-model';
+import { IReportsBrandKit } from '@gooddata/sdk-model';
 import { IReportTemplate } from '@gooddata/sdk-model';
 import { IReportTemplateDefinition } from '@gooddata/sdk-model';
 import { IResultHeader } from '@gooddata/sdk-model';
@@ -1577,6 +1579,8 @@ export interface IExportAdditionalExecution {
 export interface IExportConfig {
     // @alpha
     additionalExecutions?: ReadonlyArray<IExportAdditionalExecution>;
+    // @alpha
+    conditionalFormatting?: IConditionalFormatting;
     delimiter?: string;
     format?: "xlsx" | "csv" | "raw" | "pdf";
     grandTotalsPosition?: "pinnedBottom" | "pinnedTop" | "bottom" | "top";
@@ -1825,6 +1829,7 @@ export interface IGetInsightOptions {
 
 // @public
 export interface IGetMeasureOptions {
+    loadPermissions?: boolean;
     loadUserData?: boolean;
 }
 
@@ -2015,6 +2020,7 @@ export interface IMeasuresQuery {
     query(): Promise<IMeasuresQueryResult>;
     withFilter(filter: IFilterBaseOptions): IMeasuresQuery;
     withInclude(include: string[]): IMeasuresQuery;
+    withMetaInclude(metaInclude: string[]): IMeasuresQuery;
     // @beta
     withMethod(method: QueryMethod): IMeasuresQuery;
     withOrigin(origin: ObjectOrigin | (string & {})): IMeasuresQuery;
@@ -3129,7 +3135,7 @@ export interface IWorkspaceMeasuresService {
 // @alpha
 export interface IWorkspaceObjectPermissionsService {
     getAccessList(target: IObjectPermissionsObject): Promise<IObjectAccessList>;
-    getAvailableAssignees(target: IObjectPermissionsObject): Promise<IAvailableAccessGrantee[]>;
+    getAvailableAssignees(target?: IObjectPermissionsObject): Promise<IAvailableAccessGrantee[]>;
     manageObjectPermissions(target: IObjectPermissionsObject, grantees: IGranularAccessGrantee[]): Promise<void>;
 }
 
@@ -3152,15 +3158,18 @@ export interface IWorkspaceReportsService {
     createReport(report: IReportDefinition): Promise<IReport>;
     createReportPageLayout(page: IReportPageLayoutDefinition): Promise<IReportPageLayout>;
     createReportTemplate(template: IReportTemplateDefinition): Promise<IReportTemplate>;
+    deleteBrandKit(): Promise<void>;
     deleteReport(ref: ObjRef): Promise<void>;
     deleteReportPageLayout(ref: ObjRef): Promise<void>;
     deleteReportTemplate(ref: ObjRef): Promise<void>;
+    getBrandKit(): Promise<IReportsBrandKit | undefined>;
     getReport(ref: ObjRef): Promise<IReport>;
     getReportPageLayout(ref: ObjRef): Promise<IReportPageLayout>;
     getReportPageLayouts(): Promise<IReportPageLayout[]>;
     getReports(): Promise<IReport[]>;
     getReportTemplate(ref: ObjRef): Promise<IReportTemplate>;
     getReportTemplates(): Promise<IReportTemplate[]>;
+    setBrandKit(brandKit: IReportsBrandKit): Promise<void>;
     updateReport(report: IReport): Promise<IReport>;
     updateReportPageLayout(page: IReportPageLayout): Promise<IReportPageLayout>;
     updateReportTemplate(template: IReportTemplate): Promise<IReportTemplate>;

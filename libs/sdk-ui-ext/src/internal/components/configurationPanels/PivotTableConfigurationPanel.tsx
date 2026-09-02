@@ -22,7 +22,10 @@ import {
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
 import { isSetColumnHeadersPositionToLeftAllowed } from "../../utils/controlsHelper.js";
-import { isConditionalFormattingEnabled } from "../../utils/propertiesHelper.js";
+import {
+    isConditionalFormattingEnabled,
+    isSemanticConditionalFormattingEnabled,
+} from "../../utils/propertiesHelper.js";
 import { CellsControl } from "../configurationControls/CellsControl.js";
 import { ColumnHeadersPositionControl } from "../configurationControls/ColumnHeadersPositionControl.js";
 import {
@@ -75,6 +78,7 @@ export class PivotTableConfigurationPanel extends ConfigurationPanelContent<IPiv
         const { featureFlags } = this.props;
         const enableNewPivotTable = featureFlags?.enableNewPivotTable ?? true;
         const enableConditionalFormatting = isConditionalFormattingEnabled(featureFlags);
+        const enableSemanticConditionalFormatting = isSemanticConditionalFormattingEnabled(featureFlags);
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -82,7 +86,8 @@ export class PivotTableConfigurationPanel extends ConfigurationPanelContent<IPiv
                     {this.renderInteractionsSection()}
                     {enableNewPivotTable ? this.renderPagingSection() : null}
                     {this.renderCanvasSection()}
-                    {enableNewPivotTable && enableConditionalFormatting
+                    {enableNewPivotTable &&
+                    (enableConditionalFormatting || enableSemanticConditionalFormatting)
                         ? this.renderConditionalFormattingSection()
                         : null}
                 </div>
@@ -193,6 +198,7 @@ export class PivotTableConfigurationPanel extends ConfigurationPanelContent<IPiv
             separators,
             pushData,
             isLoading,
+            featureFlags,
         } = this.props;
 
         return (
@@ -207,6 +213,10 @@ export class PivotTableConfigurationPanel extends ConfigurationPanelContent<IPiv
                 separators={separators}
                 pushData={pushData}
                 isLoading={isLoading}
+                enableConditionalFormatting={isConditionalFormattingEnabled(featureFlags)}
+                // Mirrors `enableSemanticConditionalFormatting` in PluggablePivotTableNext.tsx — its
+                // own dedicated flag, independent of insight-level CF authoring.
+                enableSemanticConditionalFormatting={isSemanticConditionalFormattingEnabled(featureFlags)}
             />
         );
     }

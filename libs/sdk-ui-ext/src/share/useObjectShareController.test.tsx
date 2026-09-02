@@ -28,6 +28,7 @@ import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { createTightWaitFor } from "@gooddata/util";
 
 import { objectShareMessages } from "./messages.js";
+import { draftToPermissions } from "./objectShareController.helpers.js";
 import type {
     IObjectShareController,
     IUseObjectShareOptions,
@@ -3647,5 +3648,122 @@ describe("useObjectShareController write-path scope integrity", () => {
         expect(svc.manageObjectPermissions).not.toHaveBeenCalled();
         // No optimistic edit was applied either — the rows stayed untouched.
         expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.level).toBe("VIEW");
+    });
+});
+
+describe("useObjectShareController draft mode", () => {
+    const DRAFT_OPTS = { draft: true, initialDraftGeneralAccess: "RESTRICTED" as const };
+    const PICKED = {
+        id: "user:u9",
+        ref: idRef("u9"),
+        kind: "user" as const,
+        name: "Nina New",
+        permissionLevel: "VIEW" as const,
+    };
+
+    async function renderDraft(svc = makeService(), options = {}) {
+        const rendered = renderController(svc, undefined, { ...DRAFT_OPTS, ...options });
+        await waitFor(() => expect(rendered.result.current.state.status).toBe("success"));
+        return rendered;
+    }
+
+    it("writes nothing, whatever the user changes", async () => {
+        const svc = makeService();
+        const { result } = await renderDraft(svc);
+
+        act(() => result.current.actions.setPendingGrantees([PICKED]));
+        await act(async () => {
+            await result.current.actions.confirmAddGrantees();
+        });
+        act(() => result.current.actions.requestGeneralAccessChange("WORKSPACE"));
+        await act(async () => {
+            await result.current.actions.confirmGeneralAccessChange();
+        });
+        await act(async () => {
+            await result.current.actions.removeGrantee(PICKED.id);
+        });
+
+        expect(svc.manageObjectPermissions).not.toHaveBeenCalled();
+        expect(svc.getAccessList).not.toHaveBeenCalled();
+    });
+
+    it("carries the changes in the draft it reports, ready to apply", async () => {
+        const { result } = await renderDraft();
+
+        act(() => result.current.actions.setPendingGrantees([PICKED]));
+        await act(async () => {
+            await result.current.actions.confirmAddGrantees();
+        });
+
+        expect(draftToPermissions(result.current.draft!)).toEqual([
+            expect.objectContaining({ permissions: expect.arrayContaining(["VIEW"]) }),
+        ]);
+    });
+
+    it("resumes from a draft it is given", async () => {
+        const seeded = {
+            granteeEdits: {
+                [PICKED.id]: {
+                    kind: "added" as const,
+                    grantee: {
+                        id: PICKED.id,
+                        kind: "user" as const,
+                        granteeRef: PICKED.ref,
+                        level: "EDIT" as const,
+                        directLevel: "EDIT" as const,
+                    },
+                    pending: false,
+                },
+            },
+            ruleEdit: undefined,
+        };
+        const { result } = await renderDraft(makeService(), { initialDraft: seeded });
+
+        expect(result.current.state.grantees.map((g) => g.id)).toContain(PICKED.id);
+    });
+
+    it("never seeds a live session from a draft", async () => {
+        const seeded = {
+            granteeEdits: { "user:ghost": { kind: "removed" as const, pending: false } },
+            ruleEdit: { generalAccess: "WORKSPACE" as const, level: "EDIT" as const, pending: false },
+        };
+        const svc = makeService();
+        const { result } = renderController(svc, TARGET, { initialDraft: seeded });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        expect(result.current.draft).toBeUndefined();
+        expect(result.current.state.generalAccess).toBe("RESTRICTED");
+    });
+
+    it("starts general access where the consumer says the object will", async () => {
+        const { result } = await renderDraft();
+        expect(result.current.state.generalAccess).toBe("RESTRICTED");
+
+        const workspace = await renderDraft(makeService(), { initialDraftGeneralAccess: "WORKSPACE" });
+        expect(workspace.result.current.state.generalAccess).toBe("WORKSPACE");
+        expect(draftToPermissions(workspace.result.current.draft!)).toEqual([]);
+    });
+
+    it("settles even when the profile cannot be read", async () => {
+        getUserMock.mockRejectedValueOnce(new Error("profile unavailable"));
+        const { result } = renderController(makeService(), undefined, DRAFT_OPTS);
+
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        act(() => result.current.actions.setPendingGrantees([PICKED]));
+        await act(async () => {
+            await result.current.actions.confirmAddGrantees();
+        });
+        expect(draftToPermissions(result.current.draft!)).toHaveLength(1);
+    });
+
+    it("lists candidates without an object to scope them to", async () => {
+        const svc = makeService();
+        const { result } = await renderDraft(svc);
+
+        await act(async () => {
+            await result.current.actions.loadOptions("");
+        });
+
+        expect(svc.getAvailableAssignees).toHaveBeenCalled();
     });
 });

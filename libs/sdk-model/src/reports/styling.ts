@@ -62,6 +62,14 @@ export interface IReportBoxStyle {
      * Content reaching into a rounded corner is clipped.
      */
     borderRadius?: number;
+
+    /**
+     * Inset of the box's own content, in percent of the page width like
+     * {@link IReportBoxStyle.borderRadius}. Insets only inward — siblings and the layout
+     * gaps around the box are untouched. A box that paints a background usually wants one;
+     * a full-bleed box (an image-backed cover) wants none, which is why no default exists.
+     */
+    padding?: number;
 }
 
 /**

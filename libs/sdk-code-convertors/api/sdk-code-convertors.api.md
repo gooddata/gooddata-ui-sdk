@@ -3727,7 +3727,7 @@ export type TableConfigProperties = {
     conditionalFormatting: {
         version?: string;
         enabled: boolean;
-        rules: Array<{
+        rules: readonly {
             id: string;
             target: {
                 kind: "measure";
@@ -3736,7 +3736,7 @@ export type TableConfigProperties = {
                 kind: "attribute";
                 attributeIdentifier: string;
             };
-            conditions: Array<{
+            conditions: readonly {
                 id: string;
                 operator: string;
                 value: {
@@ -3763,8 +3763,15 @@ export type TableConfigProperties = {
                     backgroundColor?: string;
                     scope: "cell" | "row";
                 };
-            }>;
-        }>;
+            }[];
+        }[];
+        suppressedTargets?: readonly ({
+            kind: "measure";
+            measureIdentifier: string;
+        } | {
+            kind: "attribute";
+            attributeIdentifier: string;
+        })[];
     };
 };
 
@@ -3846,7 +3853,7 @@ export function tableSave(fields: Visualisation["query"]["fields"] | undefined, 
     conditionalFormatting: {
         version?: string | undefined;
         enabled: boolean;
-        rules: {
+        rules: readonly {
             id: string;
             target: {
                 kind: "measure";
@@ -3855,7 +3862,7 @@ export function tableSave(fields: Visualisation["query"]["fields"] | undefined, 
                 kind: "attribute";
                 attributeIdentifier: string;
             };
-            conditions: {
+            conditions: readonly {
                 id: string;
                 operator: string;
                 value: {
@@ -3884,6 +3891,13 @@ export function tableSave(fields: Visualisation["query"]["fields"] | undefined, 
                 };
             }[];
         }[];
+        suppressedTargets?: readonly ({
+            kind: "measure";
+            measureIdentifier: string;
+        } | {
+            kind: "attribute";
+            attributeIdentifier: string;
+        })[] | undefined;
     } | undefined;
 } | undefined;
 

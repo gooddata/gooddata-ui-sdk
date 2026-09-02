@@ -6,6 +6,7 @@
 
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuthCredentials } from '@gooddata/sdk-pluggable-application-model';
+import { IHostNavigationRequest } from '@gooddata/sdk-pluggable-application-model';
 import { ILocale } from '@gooddata/sdk-model';
 import { IPlatformContext } from '@gooddata/sdk-pluggable-application-model';
 import { IPluggableAppEvent } from '@gooddata/sdk-pluggable-application-model';
@@ -20,6 +21,9 @@ export function AppProviders(input: PropsWithChildren<IAppProvidersProps>): JSX.
 
 // @alpha
 export function createBackendForModule(auth: IAuthCredentials, options: ICreateBackendForModuleOptions): IAnalyticalBackend;
+
+// @alpha
+export function createHostNavigationTakeover(basePath: string, navigateRef: IPluggableAppNavigateRef): (request: IHostNavigationRequest) => boolean;
 
 // @alpha
 export function enrichTelemetryCallbacks(callbacks: IPluggableAppTelemetryCallbacks | undefined, metadata: IModuleTelemetryMetadata): IPluggableAppTelemetryCallbacks | undefined;
@@ -51,6 +55,9 @@ export interface IModuleTelemetryMetadata {
 }
 
 // @alpha
+export function inAppPath(url: string, basePath: string): string | undefined;
+
+// @alpha
 export interface IPlatformContextProviderProps extends PropsWithChildren {
     value: IClientPlatformContext;
 }
@@ -65,6 +72,12 @@ export interface IPluggableAppEventsContextValue {
 // @alpha
 export interface IPluggableAppEventsProviderProps extends PropsWithChildren {
     onEvent?: (event: IPluggableAppEvent) => void;
+}
+
+// @alpha
+export interface IPluggableAppNavigateRef {
+    // (undocumented)
+    current: ((path: string) => void) | null;
 }
 
 // @alpha

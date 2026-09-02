@@ -22,15 +22,13 @@ import {
 
 import { ChatSkeleton } from "./ChatSkeleton.js";
 import { parseReferences } from "./completion/references.js";
-import { useCustomization } from "./CustomizationProvider.js";
+import { useCustomization } from "./CustomizationContext.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
-import { AssistantItemComponent } from "./messages/AssistantItem.js";
 import { AssistantMessageComponent } from "./messages/AssistantMessage.js";
 import { ItemsGroup } from "./messages/ItemsGroup.js";
 import { useMessageScroller } from "./messages/MessageScroller.js";
 import { SystemItemComponent } from "./messages/SystemItem.js";
 import { ToolItemComponent } from "./messages/ToolItem.js";
-import { UserItemComponent } from "./messages/UserItem.js";
 import { UserMessageComponent } from "./messages/UserMessage.js";
 import { groupMessages } from "./utils/groupUtility.js";
 
@@ -133,6 +131,7 @@ function ConversationMessages({ messages, catalogItems }: IConversationMessagesP
         });
     }, [messages, catalogItems]);
     const groups = useMemo(() => groupMessages(currentMessages), [currentMessages]);
+    const { UserMessageComponent, AssistantMessageComponent } = useCustomization();
 
     return (
         <>
@@ -147,7 +146,7 @@ function ConversationMessages({ messages, catalogItems }: IConversationMessagesP
                             switch (message.role) {
                                 case "user":
                                     return (
-                                        <UserItemComponent
+                                        <UserMessageComponent
                                             key={message.localId}
                                             groups={groups}
                                             message={message}
@@ -156,7 +155,7 @@ function ConversationMessages({ messages, catalogItems }: IConversationMessagesP
                                     );
                                 case "assistant":
                                     return (
-                                        <AssistantItemComponent
+                                        <AssistantMessageComponent
                                             key={message.localId}
                                             groups={groups}
                                             message={message}

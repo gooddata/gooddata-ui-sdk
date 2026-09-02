@@ -284,6 +284,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                 objectId: id,
                 workspaceId: this.workspace,
                 include: options.loadUserData ? ["createdBy", "modifiedBy"] : [],
+                ...(options.loadPermissions ? { metaInclude: ["permissions" as const] } : {}),
             }),
         );
 

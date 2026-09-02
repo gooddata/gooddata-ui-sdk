@@ -22,7 +22,9 @@ import { escapeMarkdown } from "../utils/markdownUtils.js";
 const disabledTooltip = defineMessage({ id: "gd.gen-ai.agent.unavailable.disabled-tooltip" });
 
 /**
- * @beta
+ * Default implementation of the LandingQuestion slot.
+ *
+ * @alpha
  */
 export interface ILandingQuestionProps {
     question: string;
@@ -32,7 +34,9 @@ export interface ILandingQuestionProps {
 }
 
 /**
- * @beta
+ * Default implementation of the LandingQuestion slot.
+ *
+ * @alpha
  */
 export function DefaultLandingQuestion({ icon, question, answer, title = question }: ILandingQuestionProps) {
     const intl = useIntl();

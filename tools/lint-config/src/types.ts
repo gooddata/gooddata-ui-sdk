@@ -12,7 +12,7 @@ export interface IPackage {
  */
 export type GlobalValue = "readonly" | "writable" | false | true;
 
-export type RuleKey<Prefix extends string = ""> = `${Prefix}${string}`;
+export type RuleKey<Prefix extends string = ""> = [Prefix] extends [""] ? string : `${Prefix}/${string}`;
 
 export type RuleValue = string | number | object | object[];
 

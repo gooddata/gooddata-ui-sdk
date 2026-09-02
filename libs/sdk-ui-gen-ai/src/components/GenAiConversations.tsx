@@ -21,6 +21,7 @@ import {
 
 import { ConfigProvider } from "./ConfigContext.js";
 import { CustomizationProvider } from "./CustomizationProvider.js";
+import type { IGenAIAssistantSlots } from "./customized/types.js";
 import { GenAIChatConversations } from "./GenAIChatConversations.js";
 import { GenAiStore, type GenAiStoreProps } from "./GenAiStore.js";
 import { useThreadLoading } from "./hooks/useThreadLoading.js";
@@ -43,6 +44,10 @@ export type GenAIConversationsProps = Omit<GenAiStoreProps, "children"> & {
      * Additional class name applied to the root element.
      */
     className?: string;
+    /**
+     * Customizations for the Gen AI assistant.
+     */
+    slots?: IGenAIAssistantSlots;
 };
 
 /**
@@ -101,7 +106,7 @@ export function GenAIConversations(props: GenAIConversationsProps) {
 }
 
 function GenAIConversationsContent(props: GenAIConversationsProps) {
-    const { catalogItems, className, onConversationSelect = noop } = props;
+    const { catalogItems, className, onConversationSelect = noop, slots } = props;
     const dispatch = useDispatch();
     const settings = useSelector(settingsSelector);
     const { loading } = usePermissions();
@@ -138,7 +143,7 @@ function GenAIConversationsContent(props: GenAIConversationsProps) {
             canManage={false}
             canAnalyze={false}
         >
-            <CustomizationProvider>
+            <CustomizationProvider slots={slots}>
                 <GenAIChatConversations
                     wrapper={<div className={classNames} />}
                     onSelect={onSelectConversation}

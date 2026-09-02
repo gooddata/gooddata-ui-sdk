@@ -84,11 +84,13 @@ export function useAutomationAlertParameters({
             return EMPTY_PARAMETERS;
         }
         return (
+            // `true`: alert values load as untyped wire strings (unlike tag-typed export values)
             reconstructAutomationParametersFromValues(
                 storedParameters,
                 dashboardParameters,
                 catalog,
                 stringParametersEnabled,
+                true,
             )
                 // `hidden` parameters stay in the stored payload but are never rendered or user-editable
                 .filter((parameter) => parameter.mode !== DashboardParameterModeValues.HIDDEN)

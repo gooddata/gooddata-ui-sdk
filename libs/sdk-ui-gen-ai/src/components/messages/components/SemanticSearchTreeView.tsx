@@ -78,6 +78,7 @@ export function SemanticSearchTreeViewImpl({ workspace, content, maxHeight }: Se
                         itemUrl,
                         newTab,
                         preventDefault,
+                        action: "open",
                     });
                 }
                 if (isSemanticSearchRelationship(data)) {
@@ -88,6 +89,7 @@ export function SemanticSearchTreeViewImpl({ workspace, content, maxHeight }: Se
                         itemUrl,
                         newTab,
                         preventDefault,
+                        action: "open",
                     });
                 }
             }

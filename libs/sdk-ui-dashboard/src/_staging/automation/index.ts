@@ -14,6 +14,7 @@ import {
     type IExportDefinitionVisualizationObjectRequestPayload,
     type IFilter,
     type IInsightParameterValue,
+    type IParameterDefinition,
     type IUser,
     type IWorkspaceUser,
     type ParameterType,
@@ -212,7 +213,12 @@ export function exportParametersToValues(
     isStringParametersEnabled: boolean,
 ): IInsightParameterValue[] {
     return stored.reduce<IInsightParameterValue[]>((acc, row) => {
-        const value = decodeExportParameterValue(row.parameterType, row.value, isStringParametersEnabled);
+        // Untagged rows predate the tag — a wire-format rule, so the default lives at this call site
+        const tag = row.parameterType ?? "NUMBER";
+        if (tag === "STRING" && !isStringParametersEnabled) {
+            return acc;
+        }
+        const value = decodeParameterValue(tag, row.value);
         if (value !== undefined) {
             acc.push({ ref: idRef(row.id, "parameter"), value });
         }
@@ -220,23 +226,58 @@ export function exportParametersToValues(
     }, []);
 }
 
-function decodeExportParameterValue(
-    parameterType: ParameterType | undefined,
-    wireValue: string,
-    isStringParametersEnabled: boolean,
+/**
+ * The single core of parameter value decoding: coerces `value` to the type named by `tag`, or
+ * fails with `undefined` — for a non-numeric value under NUMBER, a tag this version does not know
+ * (persisted by a newer one), or a malformed persisted row whose value is nullish. Both wire
+ * shapes route here: export rows pass their own type tag, alert values pass the workspace
+ * definition's type (see {@link decodeParameterWireValue}).
+ */
+function decodeParameterValue(
+    tag: ParameterType,
+    value: ParameterValue | null | undefined,
 ): ParameterValue | undefined {
-    const tag = parameterType ?? "NUMBER";
+    if (value == null) {
+        return undefined;
+    }
     switch (tag) {
-        case "NUMBER": {
-            const parsed = Number(wireValue);
-            return Number.isFinite(parsed) ? parsed : undefined;
-        }
+        case "NUMBER":
+            return typeof value === "number" ? value : parseNumberWireValue(value);
         case "STRING":
-            return isStringParametersEnabled ? wireValue : undefined;
+            return String(value);
         default:
             assertNever(tag);
             return undefined;
     }
+}
+
+/**
+ * Strict whole-string numeric parse of a wire value: only a non-empty string that is entirely a
+ * finite number parses (guarding the `Number("") === 0` quirk); anything else is `undefined`.
+ * Runtime rows can violate the declared type (e.g. a null value in persisted metadata), so the
+ * input is stringified first — the parse degrades to `undefined` instead of throwing.
+ */
+export function parseNumberWireValue(wireValue: string): number | undefined {
+    const normalized = String(wireValue).trim();
+    const parsed = normalized === "" ? Number.NaN : Number(normalized);
+    return Number.isFinite(parsed) ? parsed : undefined;
+}
+
+/**
+ * Decodes a stored alert parameter value against a workspace parameter definition. The alert wire
+ * format is untyped — values arrive as raw strings — so the definition is the only source of the
+ * value's type: under a NUMBER definition a numeric string parses to a number, under a STRING
+ * definition the string passes through byte-for-byte. A value already carrying the definition's
+ * runtime type (user-edited in the dialog) passes through unchanged. Returns `undefined` when the
+ * value cannot be decoded (see {@link decodeParameterValue}).
+ *
+ * @internal
+ */
+export function decodeParameterWireValue(
+    definition: IParameterDefinition,
+    value: ParameterValue,
+): ParameterValue | undefined {
+    return decodeParameterValue(definition.type, value);
 }
 
 export const getAutomationVisualizationFilters = (

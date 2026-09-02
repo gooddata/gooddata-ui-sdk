@@ -43,12 +43,12 @@ export type TableConfigProperties = {
     conditionalFormatting: {
         version?: string;
         enabled: boolean;
-        rules: Array<{
+        rules: readonly {
             id: string;
             target:
                 | { kind: "measure"; measureIdentifier: string }
                 | { kind: "attribute"; attributeIdentifier: string };
-            conditions: Array<{
+            conditions: readonly {
                 id: string;
                 operator: string;
                 value:
@@ -58,8 +58,14 @@ export type TableConfigProperties = {
                     | { kind: "absoluteDate"; from: string; to: string }
                     | { kind: "relativeDate"; granularity: string; from: number; to: number };
                 format: { color?: string; backgroundColor?: string; scope: "cell" | "row" };
-            }>;
-        }>;
+            }[];
+        }[];
+        // Matches sdk-model's own `suppressedTargets?: readonly ConditionalFormattingTarget[]` exactly —
+        // this mirror type must not disagree with the canonical shape on optionality or mutability.
+        suppressedTargets?: readonly (
+            | { kind: "measure"; measureIdentifier: string }
+            | { kind: "attribute"; attributeIdentifier: string }
+        )[];
     };
 };
 
@@ -195,6 +201,7 @@ type YamlConditionalFormatting = {
             format: { text?: string; fill?: string; scope: "cell" | "row" };
         }>;
     }>;
+    suppressed_targets?: Array<{ measure?: string; attribute?: string }>;
 };
 
 // internal -> YAML (condensed authoring form)
@@ -236,25 +243,46 @@ function loadConditionalFormattingCondition(condition: ConditionalFormattingCond
     };
 }
 
+type ConditionalFormattingTargetModel = ConditionalFormattingRule["target"];
+
+function loadConditionalFormattingTarget(target: ConditionalFormattingTargetModel): {
+    measure?: string;
+    attribute?: string;
+} {
+    return target.kind === "measure"
+        ? { measure: target.measureIdentifier }
+        : { attribute: target.attributeIdentifier };
+}
+
+function saveConditionalFormattingTarget(target: {
+    measure?: string;
+    attribute?: string;
+}): ConditionalFormattingTargetModel {
+    return target.measure === undefined
+        ? { kind: "attribute", attributeIdentifier: target.attribute ?? "" }
+        : { kind: "measure", measureIdentifier: target.measure };
+}
+
 function loadConditionalFormattingRule(rule: ConditionalFormattingRule): object {
     return {
         id: rule.id,
-        target:
-            rule.target.kind === "measure"
-                ? { measure: rule.target.measureIdentifier }
-                : { attribute: rule.target.attributeIdentifier },
+        target: loadConditionalFormattingTarget(rule.target),
         conditions: rule.conditions.map(loadConditionalFormattingCondition),
     };
 }
 
 function loadConditionalFormatting(value: ConditionalFormatting | undefined): object | undefined {
-    if (!value || (value.rules.length === 0 && !value.enabled)) {
+    const suppressedTargets = value?.suppressedTargets ?? [];
+    if (!value || (value.rules.length === 0 && !value.enabled && suppressedTargets.length === 0)) {
         return undefined;
     }
     return {
         ...(value.version ? { version: value.version } : {}),
         enabled: value.enabled,
         rules: value.rules.map(loadConditionalFormattingRule),
+        ...(suppressedTargets.length > 0
+            ? { suppressed_targets: suppressedTargets.map(loadConditionalFormattingTarget) }
+            : {}),
     };
 }
 
@@ -292,10 +320,7 @@ function saveConditionalFormattingRule(
 ): ConditionalFormattingRule {
     return {
         id: rule.id,
-        target:
-            rule.target.measure === undefined
-                ? { kind: "attribute", attributeIdentifier: rule.target.attribute ?? "" }
-                : { kind: "measure", measureIdentifier: rule.target.measure },
+        target: saveConditionalFormattingTarget(rule.target),
         conditions: rule.conditions.map((condition) => ({
             id: condition.id,
             operator: condition.operator.toUpperCase(),
@@ -313,15 +338,23 @@ function saveConditionalFormatting(
     value: YamlConditionalFormatting | undefined,
 ): ConditionalFormatting | undefined {
     const rules = value?.rules ?? [];
+    const suppressedTargets = value?.suppressed_targets ?? [];
     // Same drop condition as loadConditionalFormatting: drop only the fully-empty default so the
     // config round-trips symmetrically (an enabled-but-ruleless config is preserved on both sides).
-    if (!value || (rules.length === 0 && !value.enabled)) {
+    if (!value || (rules.length === 0 && !value.enabled && suppressedTargets.length === 0)) {
         return undefined;
     }
     return {
         ...(value.version ? { version: value.version } : {}),
         enabled: value.enabled ?? false,
         rules: rules.map(saveConditionalFormattingRule),
+        // Omit when empty, mirroring loadConditionalFormatting's own suppressed_targets handling above —
+        // otherwise every YAML->insight conversion writes an explicit `suppressedTargets: []` even for
+        // insights that never had `suppressed_targets`, making absent/[]/populated three spellings of
+        // the same thing that every downstream comparator would have to normalize against.
+        ...(suppressedTargets.length > 0
+            ? { suppressedTargets: suppressedTargets.map(saveConditionalFormattingTarget) }
+            : {}),
     };
 }
 

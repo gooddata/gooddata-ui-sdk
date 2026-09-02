@@ -542,31 +542,18 @@ export const AiAlertTrigger = {
 export type AiAlertTrigger = typeof AiAlertTrigger[keyof typeof AiAlertTrigger];
 
 
-export interface AiAllTimeDateFilterBodyInput {
+export interface AiAllTimeDateFilter {
+    'allTimeDateFilter': AiAllTimeDateFilterBody;
+}
+
+export interface AiAllTimeDateFilterBody {
     'applyOnResult'?: boolean | null;
     'dataset': AiAfmObjectIdentifier;
     'emptyValueHandling'?: AiEmptyValueHandling | null;
-    'granularity'?: AiDateGranularityInput | null;
+    'granularity'?: AiDateGranularity | null;
     'localIdentifier'?: string | null;
 }
 
-
-export interface AiAllTimeDateFilterBodyOutput {
-    'applyOnResult'?: boolean | null;
-    'dataset': AiAfmObjectIdentifier;
-    'emptyValueHandling'?: AiEmptyValueHandling | null;
-    'granularity'?: AiAppApplicationDtosAfmFilterDefinitionDateGranularity | null;
-    'localIdentifier'?: string | null;
-}
-
-
-export interface AiAllTimeDateFilterInput {
-    'allTimeDateFilter': AiAllTimeDateFilterBodyInput;
-}
-
-export interface AiAllTimeDateFilterOutput {
-    'allTimeDateFilter': AiAllTimeDateFilterBodyOutput;
-}
 
 export interface AiAllowedRelationshipType {
     'allowOrphans'?: boolean;
@@ -635,53 +622,6 @@ export type AiAnomalyDetectionSize = typeof AiAnomalyDetectionSize[keyof typeof 
 
 
 
-export const AiAppApplicationDtosAfmFilterDefinitionDateGranularity = {
-    SECOND: 'SECOND',
-    SECOND_OF_MINUTE: 'SECOND_OF_MINUTE',
-    SECOND_OF_DAY: 'SECOND_OF_DAY',
-    MINUTE: 'MINUTE',
-    MINUTE_OF_DAY: 'MINUTE_OF_DAY',
-    HOUR: 'HOUR',
-    DAY: 'DAY',
-    WEEK: 'WEEK',
-    MONTH: 'MONTH',
-    QUARTER: 'QUARTER',
-    YEAR: 'YEAR',
-    MINUTE_OF_HOUR: 'MINUTE_OF_HOUR',
-    HOUR_OF_DAY: 'HOUR_OF_DAY',
-    DAY_OF_WEEK: 'DAY_OF_WEEK',
-    DAY_OF_MONTH: 'DAY_OF_MONTH',
-    DAY_OF_QUARTER: 'DAY_OF_QUARTER',
-    DAY_OF_YEAR: 'DAY_OF_YEAR',
-    WEEK_OF_YEAR: 'WEEK_OF_YEAR',
-    MONTH_OF_YEAR: 'MONTH_OF_YEAR',
-    QUARTER_OF_YEAR: 'QUARTER_OF_YEAR',
-    FISCAL_DAY_OF_FISCAL_WEEK: 'FISCAL_DAY_OF_FISCAL_WEEK',
-    FISCAL_DAY_OF_FISCAL_MONTH: 'FISCAL_DAY_OF_FISCAL_MONTH',
-    FISCAL_DAY_OF_FISCAL_QUARTER: 'FISCAL_DAY_OF_FISCAL_QUARTER',
-    FISCAL_DAY_OF_FISCAL_SEMESTER: 'FISCAL_DAY_OF_FISCAL_SEMESTER',
-    FISCAL_DAY_OF_FISCAL_YEAR: 'FISCAL_DAY_OF_FISCAL_YEAR',
-    FISCAL_WEEK: 'FISCAL_WEEK',
-    FISCAL_WEEK_OF_FISCAL_MONTH: 'FISCAL_WEEK_OF_FISCAL_MONTH',
-    FISCAL_WEEK_OF_FISCAL_QUARTER: 'FISCAL_WEEK_OF_FISCAL_QUARTER',
-    FISCAL_WEEK_OF_FISCAL_SEMESTER: 'FISCAL_WEEK_OF_FISCAL_SEMESTER',
-    FISCAL_WEEK_OF_FISCAL_YEAR: 'FISCAL_WEEK_OF_FISCAL_YEAR',
-    FISCAL_MONTH: 'FISCAL_MONTH',
-    FISCAL_MONTH_OF_FISCAL_QUARTER: 'FISCAL_MONTH_OF_FISCAL_QUARTER',
-    FISCAL_MONTH_OF_FISCAL_SEMESTER: 'FISCAL_MONTH_OF_FISCAL_SEMESTER',
-    FISCAL_MONTH_OF_FISCAL_YEAR: 'FISCAL_MONTH_OF_FISCAL_YEAR',
-    FISCAL_QUARTER: 'FISCAL_QUARTER',
-    FISCAL_QUARTER_OF_FISCAL_SEMESTER: 'FISCAL_QUARTER_OF_FISCAL_SEMESTER',
-    FISCAL_QUARTER_OF_FISCAL_YEAR: 'FISCAL_QUARTER_OF_FISCAL_YEAR',
-    FISCAL_SEMESTER: 'FISCAL_SEMESTER',
-    FISCAL_SEMESTER_OF_FISCAL_YEAR: 'FISCAL_SEMESTER_OF_FISCAL_YEAR',
-    FISCAL_YEAR: 'FISCAL_YEAR'
-} as const;
-
-export type AiAppApplicationDtosAfmFilterDefinitionDateGranularity = typeof AiAppApplicationDtosAfmFilterDefinitionDateGranularity[keyof typeof AiAppApplicationDtosAfmFilterDefinitionDateGranularity];
-
-
-
 export const AiAppApplicationDtosAfmFilterDefinitionMatchType = {
     STARTS_WITH: 'STARTS_WITH',
     ENDS_WITH: 'ENDS_WITH',
@@ -689,21 +629,6 @@ export const AiAppApplicationDtosAfmFilterDefinitionMatchType = {
 } as const;
 
 export type AiAppApplicationDtosAfmFilterDefinitionMatchType = typeof AiAppApplicationDtosAfmFilterDefinitionMatchType[keyof typeof AiAppApplicationDtosAfmFilterDefinitionMatchType];
-
-
-/**
- * Date granularity for date filters.
- */
-
-export const AiAppDomainConversationsVisualizationDateGranularity = {
-    DAY: 'DAY',
-    WEEK_US: 'WEEK_US',
-    MONTH: 'MONTH',
-    QUARTER: 'QUARTER',
-    YEAR: 'YEAR'
-} as const;
-
-export type AiAppDomainConversationsVisualizationDateGranularity = typeof AiAppDomainConversationsVisualizationDateGranularity[keyof typeof AiAppDomainConversationsVisualizationDateGranularity];
 
 
 /**
@@ -781,16 +706,9 @@ export const AiAxis = {
 export type AiAxis = typeof AiAxis[keyof typeof AiAxis];
 
 
-export interface AiBoundedFilterInput {
+export interface AiBoundedFilter {
     'from'?: number | null;
-    'granularity': AiDateGranularityInput;
-    'to'?: number | null;
-}
-
-
-export interface AiBoundedFilterOutput {
-    'from'?: number | null;
-    'granularity': AiAppApplicationDtosAfmFilterDefinitionDateGranularity;
+    'granularity': AiDateGranularity;
     'to'?: number | null;
 }
 
@@ -1428,13 +1346,14 @@ export interface AiDashboardAbsoluteDateFilter {
     'date'?: string;
     'empty_values'?: string;
     'from'?: string;
-    'granularity'?: AiAppDomainConversationsVisualizationDateGranularity;
+    'granularity'?: AiDashboardAbsoluteDateFilterGranularityEnum;
     'mode'?: string;
     'title'?: string;
     'to'?: string;
     'type': AiDashboardAbsoluteDateFilterTypeEnum;
 }
 
+export type AiDashboardAbsoluteDateFilterGranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 export type AiDashboardAbsoluteDateFilterTypeEnum = 'date_filter';
 
 /**
@@ -1561,13 +1480,14 @@ export interface AiDashboardRelativeDateFilter {
     'date'?: string;
     'empty_values'?: string;
     'from'?: number;
-    'granularity'?: AiAppDomainConversationsVisualizationDateGranularity;
+    'granularity'?: AiDashboardRelativeDateFilterGranularityEnum;
     'mode'?: string;
     'title'?: string;
     'to'?: number;
     'type': AiDashboardRelativeDateFilterTypeEnum;
 }
 
+export type AiDashboardRelativeDateFilterGranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 export type AiDashboardRelativeDateFilterTypeEnum = 'date_filter';
 
 /**
@@ -1658,7 +1578,11 @@ export interface AiDataTotals {
 
 
 export const AiDateFilterGranularity = {
+    SECOND: 'SECOND',
+    SECOND_OF_MINUTE: 'SECOND_OF_MINUTE',
+    SECOND_OF_DAY: 'SECOND_OF_DAY',
     MINUTE: 'MINUTE',
+    MINUTE_OF_DAY: 'MINUTE_OF_DAY',
     HOUR: 'HOUR',
     DAY: 'DAY',
     WEEK_US: 'WEEK_US',
@@ -1669,17 +1593,38 @@ export const AiDateFilterGranularity = {
     HOUR_OF_DAY: 'HOUR_OF_DAY',
     DAY_OF_WEEK: 'DAY_OF_WEEK',
     DAY_OF_MONTH: 'DAY_OF_MONTH',
+    DAY_OF_QUARTER: 'DAY_OF_QUARTER',
     DAY_OF_YEAR: 'DAY_OF_YEAR',
     WEEK_OF_YEAR: 'WEEK_OF_YEAR',
     MONTH_OF_YEAR: 'MONTH_OF_YEAR',
-    QUARTER_OF_YEAR: 'QUARTER_OF_YEAR'
+    QUARTER_OF_YEAR: 'QUARTER_OF_YEAR',
+    FISCAL_DAY_OF_FISCAL_WEEK: 'FISCAL_DAY_OF_FISCAL_WEEK',
+    FISCAL_DAY_OF_FISCAL_MONTH: 'FISCAL_DAY_OF_FISCAL_MONTH',
+    FISCAL_DAY_OF_FISCAL_QUARTER: 'FISCAL_DAY_OF_FISCAL_QUARTER',
+    FISCAL_DAY_OF_FISCAL_SEMESTER: 'FISCAL_DAY_OF_FISCAL_SEMESTER',
+    FISCAL_DAY_OF_FISCAL_YEAR: 'FISCAL_DAY_OF_FISCAL_YEAR',
+    FISCAL_WEEK: 'FISCAL_WEEK',
+    FISCAL_WEEK_OF_FISCAL_MONTH: 'FISCAL_WEEK_OF_FISCAL_MONTH',
+    FISCAL_WEEK_OF_FISCAL_QUARTER: 'FISCAL_WEEK_OF_FISCAL_QUARTER',
+    FISCAL_WEEK_OF_FISCAL_SEMESTER: 'FISCAL_WEEK_OF_FISCAL_SEMESTER',
+    FISCAL_WEEK_OF_FISCAL_YEAR: 'FISCAL_WEEK_OF_FISCAL_YEAR',
+    FISCAL_MONTH: 'FISCAL_MONTH',
+    FISCAL_MONTH_OF_FISCAL_QUARTER: 'FISCAL_MONTH_OF_FISCAL_QUARTER',
+    FISCAL_MONTH_OF_FISCAL_SEMESTER: 'FISCAL_MONTH_OF_FISCAL_SEMESTER',
+    FISCAL_MONTH_OF_FISCAL_YEAR: 'FISCAL_MONTH_OF_FISCAL_YEAR',
+    FISCAL_QUARTER: 'FISCAL_QUARTER',
+    FISCAL_QUARTER_OF_FISCAL_SEMESTER: 'FISCAL_QUARTER_OF_FISCAL_SEMESTER',
+    FISCAL_QUARTER_OF_FISCAL_YEAR: 'FISCAL_QUARTER_OF_FISCAL_YEAR',
+    FISCAL_SEMESTER: 'FISCAL_SEMESTER',
+    FISCAL_SEMESTER_OF_FISCAL_YEAR: 'FISCAL_SEMESTER_OF_FISCAL_YEAR',
+    FISCAL_YEAR: 'FISCAL_YEAR'
 } as const;
 
 export type AiDateFilterGranularity = typeof AiDateFilterGranularity[keyof typeof AiDateFilterGranularity];
 
 
 
-export const AiDateGranularityInput = {
+export const AiDateGranularity = {
     SECOND: 'SECOND',
     SECOND_OF_MINUTE: 'SECOND_OF_MINUTE',
     SECOND_OF_DAY: 'SECOND_OF_DAY',
@@ -1722,7 +1667,7 @@ export const AiDateGranularityInput = {
     FISCAL_YEAR: 'FISCAL_YEAR'
 } as const;
 
-export type AiDateGranularityInput = typeof AiDateGranularityInput[keyof typeof AiDateGranularityInput];
+export type AiDateGranularity = typeof AiDateGranularity[keyof typeof AiDateGranularity];
 
 
 /**
@@ -1809,7 +1754,7 @@ export interface AiFiltersValue {
     'date'?: string;
     'empty_values'?: string;
     'from'?: string;
-    'granularity'?: AiAppDomainConversationsVisualizationDateGranularity;
+    'granularity'?: AiFiltersValueGranularityEnum;
     'mode'?: string;
     'title': string;
     'to'?: string;
@@ -1831,12 +1776,13 @@ export interface AiFiltersValue {
     'filters': { [key: string]: AiFiltersValue1; };
 }
 
+export type AiFiltersValueGranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 export interface AiFiltersValue1 {
     'date'?: string;
     'empty_values'?: string;
     'from'?: string;
-    'granularity'?: AiAppDomainConversationsVisualizationDateGranularity;
+    'granularity'?: AiFiltersValue1GranularityEnum;
     'mode'?: string;
     'title'?: string;
     'to'?: string;
@@ -1857,12 +1803,13 @@ export interface AiFiltersValue1 {
     'null_values_as_zero'?: boolean;
 }
 
+export type AiFiltersValue1GranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 export interface AiFiltersValue2 {
     'date'?: string;
     'empty_values'?: string;
     'from'?: string;
-    'granularity'?: AiAppDomainConversationsVisualizationDateGranularity;
+    'granularity'?: AiFiltersValue2GranularityEnum;
     'mode'?: string;
     'title': string;
     'to'?: string;
@@ -1884,6 +1831,7 @@ export interface AiFiltersValue2 {
     'filters': { [key: string]: AiFiltersValue1; };
 }
 
+export type AiFiltersValue2GranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 export interface AiFormat {
     'fill'?: string | null;
@@ -3254,37 +3202,21 @@ export const AiRelativeConditionOperator = {
 export type AiRelativeConditionOperator = typeof AiRelativeConditionOperator[keyof typeof AiRelativeConditionOperator];
 
 
-export interface AiRelativeDateFilterBodyInput {
+export interface AiRelativeDateFilter {
+    'relativeDateFilter': AiRelativeDateFilterBody;
+}
+
+export interface AiRelativeDateFilterBody {
     'applyOnResult'?: boolean | null;
-    'boundedFilter'?: AiBoundedFilterInput | null;
+    'boundedFilter'?: AiBoundedFilter | null;
     'dataset': AiAfmObjectIdentifier;
     'emptyValueHandling'?: AiEmptyValueHandling | null;
     'from': number;
-    'granularity': AiDateGranularityInput;
+    'granularity': AiDateGranularity;
     'localIdentifier'?: string | null;
     'to': number;
 }
 
-
-export interface AiRelativeDateFilterBodyOutput {
-    'applyOnResult'?: boolean | null;
-    'boundedFilter'?: AiBoundedFilterOutput | null;
-    'dataset': AiAfmObjectIdentifier;
-    'emptyValueHandling'?: AiEmptyValueHandling | null;
-    'from': number;
-    'granularity': AiAppApplicationDtosAfmFilterDefinitionDateGranularity;
-    'localIdentifier'?: string | null;
-    'to': number;
-}
-
-
-export interface AiRelativeDateFilterInput {
-    'relativeDateFilter': AiRelativeDateFilterBodyInput;
-}
-
-export interface AiRelativeDateFilterOutput {
-    'relativeDateFilter': AiRelativeDateFilterBodyOutput;
-}
 
 
 export const AiRenderAs = {
@@ -3805,7 +3737,7 @@ export interface AiSummarizeRequest {
 /**
  * @type AiSummarizeRequestFilterContextInner
  */
-export type AiSummarizeRequestFilterContextInner = AiAbsoluteDateFilter | AiAllTimeDateFilterInput | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilterInput | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilter | AiRelativeDateFilterInput;
+export type AiSummarizeRequestFilterContextInner = AiAbsoluteDateFilter | AiAllTimeDateFilter | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilterInput | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilter | AiRelativeDateFilter;
 
 export interface AiSummarizeResponse {
     'filterContext': Array<AiSummarizeResponseFilterContextInner>;
@@ -3819,7 +3751,7 @@ export interface AiSummarizeResponse {
 /**
  * @type AiSummarizeResponseFilterContextInner
  */
-export type AiSummarizeResponseFilterContextInner = AiAbsoluteDateFilter | AiAllTimeDateFilterOutput | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilterOutput | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilter | AiRelativeDateFilterOutput;
+export type AiSummarizeResponseFilterContextInner = AiAbsoluteDateFilter | AiAllTimeDateFilter | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilterOutput | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilter | AiRelativeDateFilter;
 
 /**
  * POST /conversations/{conversationId}/switchAgent body.

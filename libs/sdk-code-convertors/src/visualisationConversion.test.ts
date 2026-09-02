@@ -1319,9 +1319,105 @@ describe("visualisation conversion", () => {
             } as any;
 
             const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
-            expect((declarative.content as any).properties.controls.conditionalFormatting).toEqual({
+            const cf = (declarative.content as any).properties.controls.conditionalFormatting;
+            expect(cf).toEqual({ enabled: true, rules: [] });
+            expect("suppressedTargets" in cf).toBe(false);
+
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            expect(json!.config!["conditional_formatting"]).toEqual(conditionalFormatting);
+        });
+
+        it("does not introduce a suppressedTargets key when the YAML never had suppressed_targets", () => {
+            const conditionalFormatting = {
                 enabled: true,
+                rules: [
+                    {
+                        id: "variance_rule",
+                        target: { measure: "m1" },
+                        conditions: [
+                            {
+                                id: "low",
+                                operator: "less_than",
+                                value: -10,
+                                format: { fill: "#E54D40", scope: "cell" },
+                            },
+                        ],
+                    },
+                ],
+            };
+            const input = {
+                type: "table",
+                id: "cf_no_suppressed_targets",
+                query: { fields: { m1: { using: "metric/revenue" } } },
+                metrics: [{ field: "m1" }],
+                config: { conditional_formatting: conditionalFormatting },
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            const cf = storedConditionalFormatting(declarative);
+            expect("suppressedTargets" in (cf as object)).toBe(false);
+
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            expect(json!.config!["conditional_formatting"]).toEqual(conditionalFormatting);
+            expect("suppressed_targets" in json!.config!["conditional_formatting"]!).toBe(false);
+        });
+
+        it("round-trips suppressed_targets alongside authored rules", () => {
+            const conditionalFormatting = {
+                enabled: true,
+                rules: [
+                    {
+                        id: "variance_rule",
+                        target: { measure: "m1" },
+                        conditions: [
+                            {
+                                id: "low",
+                                operator: "less_than",
+                                value: -10,
+                                format: { fill: "#E54D40", scope: "cell" },
+                            },
+                        ],
+                    },
+                ],
+                suppressed_targets: [{ attribute: "a1" }],
+            };
+            const input = {
+                type: "table",
+                id: "cf_suppressed_targets",
+                query: { fields: { m1: { using: "metric/revenue" }, a1: { using: "label/status" } } },
+                metrics: [{ field: "m1" }],
+                view_by: [{ field: "a1" }],
+                config: { conditional_formatting: conditionalFormatting },
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            const cf = storedConditionalFormatting(declarative);
+            expect(cf?.suppressedTargets).toEqual([{ kind: "attribute", attributeIdentifier: "a1" }]);
+            expect(cf?.rules[0].target).toEqual({ kind: "measure", measureIdentifier: "m1" });
+
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            expect(json!.config!["conditional_formatting"]).toEqual(conditionalFormatting);
+        });
+
+        it("preserves a suppression-only config (zero rules, disabled, one custom target)", () => {
+            const conditionalFormatting = {
+                enabled: false,
                 rules: [],
+                suppressed_targets: [{ measure: "m1" }],
+            };
+            const input = {
+                type: "table",
+                id: "cf_suppressed",
+                query: { fields: { m1: { using: "metric/revenue" } } },
+                metrics: [{ field: "m1" }],
+                config: { conditional_formatting: conditionalFormatting },
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            expect((declarative.content as any).properties.controls.conditionalFormatting).toEqual({
+                enabled: false,
+                rules: [],
+                suppressedTargets: [{ kind: "measure", measureIdentifier: "m1" }],
             });
 
             const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);

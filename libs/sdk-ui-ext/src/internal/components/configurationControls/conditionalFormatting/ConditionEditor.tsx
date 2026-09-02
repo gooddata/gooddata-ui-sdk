@@ -345,13 +345,18 @@ function ConditionValueInput({
 }
 
 // The ColorDropdown trigger swatch. ColorDropdown clones it with selectable-child props the swatch
-// ignores. No color renders a "none" slash rather than a misleading white.
+// ignores. No color renders a "none" slash rather than a misleading white. The outer span fills and
+// centers within ColorDropdown's own trigger wrapper (taller than the fixed-size chip); the inner
+// `__box` is the actual visible 20x20 chip — see conditional_formatting.scss for why it's split this
+// way instead of reaching into ColorDropdown's own (dynamically-classed) wrapper.
 function CfSwatch({ hex }: { hex: string | undefined }) {
     return (
-        <span
-            className={`gd-cf-swatch${hex ? "" : " gd-cf-swatch--none"}`}
-            style={hex ? { backgroundColor: hex } : undefined}
-        />
+        <span className="gd-cf-swatch">
+            <span
+                className={`gd-cf-swatch__box${hex ? "" : " gd-cf-swatch__box--none"}`}
+                style={hex ? { backgroundColor: hex } : undefined}
+            />
+        </span>
     );
 }
 
@@ -423,22 +428,24 @@ function FormatEditor({ format, onChange }: IFormatEditorProps) {
                         noneColorLabel={intl.formatMessage(conditionalFormattingMessages.dialogNoColor)}
                         onChange={(backgroundColor) => onChange({ ...format, backgroundColor })}
                     />
-                    <UiButtonSegmentedControl>
-                        <UiButton
-                            size="small"
-                            variant="secondary"
-                            label={intl.formatMessage(conditionalFormattingMessages.dialogScopeCell)}
-                            isSelected={format.scope === "cell"}
-                            onClick={() => onChange({ ...format, scope: "cell" })}
-                        />
-                        <UiButton
-                            size="small"
-                            variant="secondary"
-                            label={intl.formatMessage(conditionalFormattingMessages.dialogScopeRow)}
-                            isSelected={format.scope === "row"}
-                            onClick={() => onChange({ ...format, scope: "row" })}
-                        />
-                    </UiButtonSegmentedControl>
+                    <div className="gd-cf-scope-toggle">
+                        <UiButtonSegmentedControl>
+                            <UiButton
+                                size="small"
+                                variant="secondary"
+                                label={intl.formatMessage(conditionalFormattingMessages.dialogScopeCell)}
+                                isSelected={format.scope === "cell"}
+                                onClick={() => onChange({ ...format, scope: "cell" })}
+                            />
+                            <UiButton
+                                size="small"
+                                variant="secondary"
+                                label={intl.formatMessage(conditionalFormattingMessages.dialogScopeRow)}
+                                isSelected={format.scope === "row"}
+                                onClick={() => onChange({ ...format, scope: "row" })}
+                            />
+                        </UiButtonSegmentedControl>
+                    </div>
                 </div>
             )}
         />

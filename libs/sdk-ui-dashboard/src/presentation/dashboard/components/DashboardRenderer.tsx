@@ -72,9 +72,15 @@ function resolveDialogComponents(props: IDashboardProps) {
             props.ScheduledEmailDialogContextDecoratorComponent ?? DefaultDialogContextDecorator,
         ScheduledEmailManagementDialogComponent:
             props.ScheduledEmailManagementDialogComponent ?? DefaultScheduledEmailManagementDialog,
+        ScheduledEmailManagementDialogContextDecoratorComponent:
+            props.ScheduledEmailManagementDialogContextDecoratorComponent ?? DefaultDialogContextDecorator,
         ShareDialogComponent: props.ShareDialogComponent ?? DefaultShareDialog,
         AlertingManagementDialogComponent:
             props.AlertingManagementDialogComponent ?? DefaultAlertingManagementDialogNew,
+        AlertingManagementDialogContextDecoratorComponent:
+            props.AlertingManagementDialogContextDecoratorComponent ?? DefaultDialogContextDecorator,
+        AutomationsContextDecoratorComponent:
+            props.AutomationsContextDecoratorComponent ?? DefaultDialogContextDecorator,
         AlertingDialogComponent: props.AlertingDialogComponent ?? DefaultAlertingDialog,
         AlertingDialogContextDecoratorComponent:
             props.AlertingDialogContextDecoratorComponent ?? DefaultDialogContextDecorator,
@@ -210,9 +216,18 @@ export function DashboardRenderer(props: IDashboardProps) {
                                                 ScheduledEmailManagementDialogComponent={
                                                     components.ScheduledEmailManagementDialogComponent
                                                 }
+                                                ScheduledEmailManagementDialogContextDecoratorComponent={
+                                                    components.ScheduledEmailManagementDialogContextDecoratorComponent
+                                                }
                                                 ShareDialogComponent={components.ShareDialogComponent}
                                                 AlertingManagementDialogComponent={
                                                     components.AlertingManagementDialogComponent
+                                                }
+                                                AlertingManagementDialogContextDecoratorComponent={
+                                                    components.AlertingManagementDialogContextDecoratorComponent
+                                                }
+                                                AutomationsContextDecoratorComponent={
+                                                    components.AutomationsContextDecoratorComponent
                                                 }
                                                 AlertingDialogComponent={components.AlertingDialogComponent}
                                                 AlertingDialogContextDecoratorComponent={

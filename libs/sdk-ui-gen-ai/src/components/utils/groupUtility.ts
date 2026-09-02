@@ -2,6 +2,9 @@
 
 import { type IChatConversationLocalItem } from "../../model.js";
 
+/**
+ * @public
+ */
 export interface IChatMessagesGroup {
     type: "reasoning" | "user" | "assistant" | "error" | "system";
     messages: IChatConversationLocalItem[];

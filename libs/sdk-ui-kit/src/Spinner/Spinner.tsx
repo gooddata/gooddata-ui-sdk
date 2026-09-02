@@ -1,6 +1,6 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
-import { memo, useMemo } from "react";
+import { type NamedExoticComponent, memo, useMemo } from "react";
 
 import cx from "classnames";
 
@@ -9,7 +9,9 @@ import { type ISpinnerProps } from "./typings.js";
 /**
  * @internal
  */
-export const Spinner = memo(function Spinner({ className = "" }: ISpinnerProps) {
+export const Spinner: NamedExoticComponent<ISpinnerProps> = memo(function Spinner({
+    className = "",
+}: ISpinnerProps) {
     const spinnerTicks = useMemo(() => {
         const items = [];
 

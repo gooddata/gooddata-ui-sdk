@@ -126,3 +126,5 @@ export {
     type InsightListSortDirection,
     useInsightPagedList,
 } from "./components/insightList/useInsightPagedList.js";
+
+export { getEffectiveConditionalFormatting } from "./utils/propertiesHelper.js";

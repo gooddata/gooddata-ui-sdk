@@ -2231,6 +2231,7 @@ export type {
     CustomScheduledEmailDialogComponent,
     CustomScheduledEmailDialogContextDecoratorComponent,
     CustomScheduledEmailManagementDialogComponent,
+    CustomScheduledEmailManagementDialogContextDecoratorComponent,
     IScheduledEmailDialogHeaderProps,
     ScheduledEmailDialogHeaderDefaultProps,
     IScheduledEmailDialogFiltersProps,
@@ -2255,6 +2256,7 @@ export { AlertingManagementDialog } from "./presentation/automations/alerting/Al
 export {
     AlertMetricComparatorType,
     type CustomAlertingManagementDialogComponent,
+    type CustomAlertingManagementDialogContextDecoratorComponent,
     type CustomAlertingDialogComponent,
     type CustomAlertingDialogContextDecoratorComponent,
     type IAlertingManagementDialogProps,
@@ -2437,6 +2439,7 @@ export {
     type IUseWorkspaceUsersSearchResult,
 } from "./presentation/automations/shared/hooks/useWorkspaceUsersSearch.js";
 export {
+    AutomationsContextProvider,
     useAutomationsContext,
     type IAutomationsContextValue,
     type IAutomationsDateFilterConfig,
@@ -2448,6 +2451,7 @@ export {
     type IAlertingDialogContextValue,
 } from "./presentation/automations/contexts/AlertingDialogContext.js";
 export {
+    AlertingManagementDialogContextProvider,
     useAlertingManagementDialogContext,
     type IAlertingManagementDialogContextValue,
 } from "./presentation/automations/contexts/AlertingManagementDialogContext.js";
@@ -2457,6 +2461,7 @@ export {
     type IScheduledEmailDialogContextValue,
 } from "./presentation/automations/contexts/ScheduledEmailDialogContext.js";
 export {
+    ScheduledEmailManagementDialogContextProvider,
     useScheduledEmailManagementDialogContext,
     type IScheduledEmailManagementDialogContextValue,
 } from "./presentation/automations/contexts/ScheduledEmailManagementDialogContext.js";
@@ -2759,6 +2764,7 @@ export type { DashboardRelatedFilter } from "./presentation/export/hooks/useDash
 export { resolveMessages, DEFAULT_MESSAGES } from "./presentation/localization/translations.js";
 
 export {
+    type CustomAutomationsContextDecoratorComponent,
     type IDashboardFilter,
     isDashboardFilter,
     type DashboardDrillDefinition,
@@ -2799,7 +2805,7 @@ export {
     dashboardDateFilterToDateFilterByDateDataSet,
     dashboardAttributeFilterToAttributeFilter,
     dashboardAttributeFilterItemToAttributeFilter,
-} from "./converters/filterConverters.js";
+} from "@gooddata/sdk-model";
 
 export {
     DashboardPluginV1,

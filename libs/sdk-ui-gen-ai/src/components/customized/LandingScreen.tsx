@@ -31,7 +31,7 @@ const quickOptions = [
 ] as const;
 
 /**
- * @beta
+ * @alpha
  */
 export type LandingScreenProps = IGenAIAssistantLandingScreenProps & {
     /**
@@ -42,7 +42,9 @@ export type LandingScreenProps = IGenAIAssistantLandingScreenProps & {
 };
 
 /**
- * @beta
+ * Default implementation of the LandingScreen slot.
+ *
+ * @alpha
  */
 export function DefaultLandingScreen({
     LandingScreen,

@@ -19,9 +19,10 @@ import {
     convertMeasureToCatalogItem,
     convertParameterToCatalogItem,
 } from "../../catalogItem/converter.js";
-import { isCatalogItemLoaded } from "../../catalogItem/guards.js";
+import { isCatalogItemLoaded, isCatalogItemMeasure } from "../../catalogItem/guards.js";
 import { type ICatalogItem, type ICatalogItemRef } from "../../catalogItem/types.js";
 import { type ObjectType } from "../../objectType/types.js";
+import { useFeatureFlag } from "../../permission/PermissionsContext.js";
 
 export interface IUseCatalogItemLoad {
     objectId?: string | null;
@@ -36,10 +37,12 @@ export function useCatalogItemLoad({ objectDefinition, objectId, objectType }: I
 } {
     const id = objectId ?? objectDefinition?.identifier;
     const type = objectType ?? objectDefinition?.type;
-    const filled = isCatalogItemLoaded(objectDefinition);
 
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
+    const loadPermissions = useFeatureFlag("enableMetricPermissions");
+    const filled =
+        isCatalogItemLoaded(objectDefinition) && !awaitsPermissions(objectDefinition, loadPermissions);
 
     const { status, error, result } = useCancelablePromise<ICatalogItem | undefined, Error>(
         {
@@ -55,13 +58,15 @@ export function useCatalogItemLoad({ objectDefinition, objectId, objectType }: I
                 // A 404 must reach CatalogDetailStatus as a NotFoundSdkError so isNotFound() shows
                 // the not-found page; convertError maps it. Other errors are rethrown untouched so
                 // their original status/message survives in the generic error description.
-                return loadObjectDefinition(backend.workspace(workspace), id, type).catch((e) => {
-                    const converted = convertError(e);
-                    throw isNotFound(converted) ? converted : e;
-                });
+                return loadObjectDefinition(backend.workspace(workspace), id, type, loadPermissions).catch(
+                    (e) => {
+                        const converted = convertError(e);
+                        throw isNotFound(converted) ? converted : e;
+                    },
+                );
             },
         },
-        [backend, workspace, id, type, filled],
+        [backend, workspace, id, type, filled, loadPermissions],
     );
 
     // Object id is required
@@ -86,10 +91,17 @@ export function useCatalogItemLoad({ objectDefinition, objectId, objectType }: I
     };
 }
 
+// A metric handed over by a producer that cannot return permissions (a semantic-search hit) has to
+// be fetched for them, or its own EDIT and SHARE would read as absent.
+function awaitsPermissions(item: ICatalogItem, loadPermissions: boolean): boolean {
+    return loadPermissions && isCatalogItemMeasure(item) && item.permissions === undefined;
+}
+
 async function loadObjectDefinition(
     workspace: IAnalyticalWorkspace,
     id: string,
     type: ObjectType,
+    loadPermissions: boolean,
 ): Promise<ICatalogItem> {
     switch (type) {
         case "attribute":
@@ -150,6 +162,7 @@ async function loadObjectDefinition(
                     },
                     {
                         loadUserData: true,
+                        ...(loadPermissions ? { loadPermissions: true } : {}),
                     },
                 )
                 .then(convertMeasureToCatalogItem);

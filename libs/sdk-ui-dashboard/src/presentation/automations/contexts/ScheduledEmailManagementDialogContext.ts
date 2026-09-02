@@ -66,6 +66,16 @@ const ScheduledEmailManagementDialogContext = createContext<
     IScheduledEmailManagementDialogContextValue | undefined
 >(undefined);
 
+/**
+ * Provides the scheduled email management dialog context.
+ *
+ * The dashboard's connector mounts the original value. Exported so a context-decorator
+ * component (`CustomScheduledEmailManagementDialogContextDecoratorComponent`) can re-provide a decorated
+ * value read from `useScheduledEmailManagementDialogContext()`; it is not a way to run the management
+ * dialog outside a dashboard.
+ *
+ * @alpha
+ */
 export const ScheduledEmailManagementDialogContextProvider = ScheduledEmailManagementDialogContext.Provider;
 
 /**

@@ -4,6 +4,7 @@ import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     type IMeasureMetadataObject,
     type IMeasureMetadataObjectDefinition,
+    type ISettings,
     idRef,
     insightTitle,
     isMeasureMetadataObject,
@@ -67,10 +68,20 @@ export async function listMetricReferences(
 export function createMetricMutationAdapter(
     backend: IAnalyticalBackend,
     workspace: string,
+    settings?: ISettings,
 ): IMetricMutationPort {
+    const loadPermissions = Boolean(settings?.enableMetricPermissions);
+
     return {
         async create(definition) {
-            const savedMeasure = await createMeasureCatalogItem(backend, workspace, definition);
+            // create is the only write that can return permissions, and the new metric is opened
+            // straight from its result
+            const savedMeasure = await createMeasureCatalogItem(
+                backend,
+                workspace,
+                definition,
+                loadPermissions,
+            );
             return convertMeasureToCatalogItem(savedMeasure);
         },
         async update(base, definition) {

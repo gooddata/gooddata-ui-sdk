@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { newAttributeSort } from "@gooddata/sdk-model";
+import { type IConditionalFormatting, newAttributeSort, newInsightDefinition } from "@gooddata/sdk-model";
 import { type ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 
 import { OPTIONAL_STACKING_PROPERTIES } from "../constants/supportedProperties.js";
@@ -21,11 +21,14 @@ import {
 
 import {
     getColumnWidthsFromProperties,
+    getConditionalFormattingFromProperties,
+    getEffectiveConditionalFormatting,
     getHighchartsAxisNameConfiguration,
     getReferencePointWithSupportedProperties,
     getSupportedProperties,
     getSupportedPropertiesControls,
     isDualAxisOrSomeSecondaryAxisMeasure,
+    isSemanticConditionalFormattingEnabled,
     removeImmutableOptionalStackingProperties,
 } from "./propertiesHelper.js";
 import {
@@ -320,6 +323,141 @@ describe("propertiesHelper", () => {
             };
             const result = getColumnWidthsFromProperties(visualizationProperties);
             expect(result).toEqual(undefined);
+        });
+    });
+
+    describe("getEffectiveConditionalFormatting", () => {
+        const storedConditionalFormatting: IConditionalFormatting = { enabled: true, rules: [] };
+        const overrideConditionalFormatting: IConditionalFormatting = {
+            enabled: true,
+            rules: [
+                {
+                    id: "r1",
+                    target: { kind: "measure", measureIdentifier: "m1" },
+                    conditions: [],
+                },
+            ],
+        };
+        const insightWithStoredConditionalFormatting = newInsightDefinition("local:table", (builder) =>
+            builder.properties({ controls: { conditionalFormatting: storedConditionalFormatting } }),
+        );
+        const insightWithNoConditionalFormatting = newInsightDefinition("local:table");
+        const enabledSettings = { enableConditionalFormatting: true, enableNewPivotTable: true };
+        const disabledSettings = { enableConditionalFormatting: false, enableNewPivotTable: true };
+
+        it("returns the override when both an override and stored properties are present", () => {
+            const result = getEffectiveConditionalFormatting(
+                insightWithStoredConditionalFormatting,
+                enabledSettings,
+                overrideConditionalFormatting,
+            );
+            expect(result).toBe(overrideConditionalFormatting);
+        });
+
+        it("falls back to the insight's stored properties when there is no override", () => {
+            const result = getEffectiveConditionalFormatting(
+                insightWithStoredConditionalFormatting,
+                enabledSettings,
+            );
+            expect(result).toEqual(storedConditionalFormatting);
+        });
+
+        it("returns undefined when the feature flag is off, even with an override", () => {
+            const result = getEffectiveConditionalFormatting(
+                insightWithStoredConditionalFormatting,
+                disabledSettings,
+                overrideConditionalFormatting,
+            );
+            expect(result).toBeUndefined();
+        });
+
+        it("returns undefined when the legacy (non-next) pivot table is in use, even with the flag on", () => {
+            const result = getEffectiveConditionalFormatting(
+                insightWithStoredConditionalFormatting,
+                { enableConditionalFormatting: true, enableNewPivotTable: false },
+                overrideConditionalFormatting,
+            );
+            expect(result).toBeUndefined();
+        });
+
+        it("returns undefined when there is neither an override nor stored properties", () => {
+            const result = getEffectiveConditionalFormatting(
+                insightWithNoConditionalFormatting,
+                enabledSettings,
+            );
+            expect(result).toBeUndefined();
+        });
+
+        it("still applies CF when enableNewPivotTable is omitted, matching the routing factory's own default", () => {
+            const result = getEffectiveConditionalFormatting(insightWithStoredConditionalFormatting, {
+                enableConditionalFormatting: true,
+            });
+            expect(result).toEqual(storedConditionalFormatting);
+        });
+    });
+
+    describe("getConditionalFormattingFromProperties", () => {
+        it("returns the config as-is when it already carries suppressedTargets", () => {
+            const visualizationProperties: IVisualizationProperties = {
+                controls: {
+                    conditionalFormatting: {
+                        enabled: true,
+                        rules: [],
+                        suppressedTargets: [{ kind: "measure", measureIdentifier: "m1" }],
+                    },
+                },
+            };
+            const result = getConditionalFormattingFromProperties(visualizationProperties);
+            expect(result).toEqual({
+                enabled: true,
+                rules: [],
+                suppressedTargets: [{ kind: "measure", measureIdentifier: "m1" }],
+            });
+        });
+
+        it("returns undefined when there is no persisted config", () => {
+            const visualizationProperties: IVisualizationProperties = { controls: {} };
+            const result = getConditionalFormattingFromProperties(visualizationProperties);
+            expect(result).toBeUndefined();
+        });
+    });
+
+    describe("isSemanticConditionalFormattingEnabled", () => {
+        it("returns true when the semantic flag is on and enableNewPivotTable is omitted (defaults enabled)", () => {
+            expect(
+                isSemanticConditionalFormattingEnabled({ enableSemanticConditionalFormatting: true }),
+            ).toBe(true);
+        });
+
+        it("returns false when the semantic flag is off, even with insight-level CF enabled", () => {
+            expect(
+                isSemanticConditionalFormattingEnabled({
+                    enableSemanticConditionalFormatting: false,
+                    enableConditionalFormatting: true,
+                }),
+            ).toBe(false);
+        });
+
+        it("returns true when the semantic flag is on, even with insight-level CF disabled", () => {
+            expect(
+                isSemanticConditionalFormattingEnabled({
+                    enableSemanticConditionalFormatting: true,
+                    enableConditionalFormatting: false,
+                }),
+            ).toBe(true);
+        });
+
+        it("returns false when enableNewPivotTable is explicitly off, even with the semantic flag on", () => {
+            expect(
+                isSemanticConditionalFormattingEnabled({
+                    enableSemanticConditionalFormatting: true,
+                    enableNewPivotTable: false,
+                }),
+            ).toBe(false);
+        });
+
+        it("returns false when settings are undefined", () => {
+            expect(isSemanticConditionalFormattingEnabled(undefined)).toBe(false);
         });
     });
 });

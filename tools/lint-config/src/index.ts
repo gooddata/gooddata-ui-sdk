@@ -19,7 +19,6 @@ export {
 } from "./configurations/no-barrel-files.js";
 export { noOnlyTestsPlugin, noOnlyTestsRules } from "./configurations/no-only-tests.js";
 export { playwrightPlugin, playwrightRules } from "./configurations/playwright.js";
-export { securityRules } from "./configurations/security.js";
 export { sonarjsOverrides, sonarjsPlugin, sonarjsRules } from "./configurations/sonarjs.js";
 export { storybookOverrides, storybookPackages, storybookPlugin } from "./configurations/storybook.js";
 export {
@@ -35,11 +34,6 @@ export {
     typescriptRulesNativeNotSupported,
     typescriptRulesNativeSupported,
 } from "./configurations/typescript.js";
-export {
-    vitestPlugin,
-    vitestRules,
-    vitestRulesNativeNotSupported,
-    vitestRulesNativeSupported,
-} from "./configurations/vitest.js";
+export { vitestPlugin, vitestRules } from "./configurations/vitest.js";
 
 export { scopeRules } from "./utils/scopeRules.js";

@@ -1,6 +1,13 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type ReactElement, type ReactNode, memo, useCallback, useState } from "react";
+import {
+    type NamedExoticComponent,
+    type ReactElement,
+    type ReactNode,
+    memo,
+    useCallback,
+    useState,
+} from "react";
 
 import cx from "classnames";
 
@@ -36,7 +43,7 @@ export interface IStaticLegendProps {
 /**
  * @internal
  */
-export const StaticLegend = memo(function StaticLegend({
+export const StaticLegend: NamedExoticComponent<IStaticLegendProps> = memo(function StaticLegend({
     buttonOrientation = "upDown",
     paginationHeight = STATIC_PAGING_HEIGHT,
     containerHeight,

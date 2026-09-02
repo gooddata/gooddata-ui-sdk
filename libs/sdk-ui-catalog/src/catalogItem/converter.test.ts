@@ -46,6 +46,16 @@ describe("convertMeasureToCatalogItem", () => {
 
         expect(catalogItem.format).toBeNull();
     });
+
+    it("should carry the metric object-level permissions", () => {
+        expect(
+            convertMeasureToCatalogItem(createMeasure({ permissions: ["VIEW", "EDIT"] })).permissions,
+        ).toEqual(["VIEW", "EDIT"]);
+    });
+
+    it("should leave the permissions undefined when they were not requested", () => {
+        expect(convertMeasureToCatalogItem(createMeasure()).permissions).toBeUndefined();
+    });
 });
 
 describe("convertParameterToCatalogItem", () => {

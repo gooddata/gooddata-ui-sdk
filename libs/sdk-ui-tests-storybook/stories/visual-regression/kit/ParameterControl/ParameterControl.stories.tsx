@@ -86,8 +86,9 @@ function ParameterControlExamples() {
                             definition={numberDefinitionWithConstraints}
                             value={25}
                             resetValue={25}
-                            onApply={() => {}}
-                            onCancel={() => {}}
+                            mode="commit"
+                            onCommit={() => {}}
+                            onClose={() => {}}
                         />
                     </Section>
                     <Section title="value !== resetValue (Reset shown)">
@@ -96,8 +97,9 @@ function ParameterControlExamples() {
                             definition={numberDefinitionWithConstraints}
                             value={50}
                             resetValue={25}
-                            onApply={() => {}}
-                            onCancel={() => {}}
+                            mode="commit"
+                            onCommit={() => {}}
+                            onClose={() => {}}
                         />
                     </Section>
                     <Section title="No resetValue (Reset hidden)">
@@ -105,8 +107,9 @@ function ParameterControlExamples() {
                             name="Threshold"
                             definition={numberDefinitionWithConstraints}
                             value={25}
-                            onApply={() => {}}
-                            onCancel={() => {}}
+                            mode="commit"
+                            onCommit={() => {}}
+                            onClose={() => {}}
                         />
                     </Section>
                     <Section title="No constraints">
@@ -115,8 +118,20 @@ function ParameterControlExamples() {
                             definition={numberDefinitionWithoutConstraints}
                             value={42}
                             resetValue={25}
-                            onApply={() => {}}
-                            onCancel={() => {}}
+                            mode="commit"
+                            onCommit={() => {}}
+                            onClose={() => {}}
+                        />
+                    </Section>
+                    <Section title="Staged mode (Close-only footer)">
+                        <ParameterControl
+                            name="Threshold"
+                            definition={numberDefinitionWithConstraints}
+                            value={50}
+                            resetValue={25}
+                            mode="staged"
+                            onStage={() => {}}
+                            onClose={() => {}}
                         />
                     </Section>
                 </div>
@@ -128,8 +143,9 @@ function ParameterControlExamples() {
                             definition={stringDefinitionWithConstraints}
                             value="Actual"
                             resetValue="Actual"
-                            onApply={() => {}}
-                            onCancel={() => {}}
+                            mode="commit"
+                            onCommit={() => {}}
+                            onClose={() => {}}
                         />
                     </Section>
                     <Section title="value !== resetValue (Reset shown)">
@@ -138,8 +154,9 @@ function ParameterControlExamples() {
                             definition={stringDefinitionWithConstraints}
                             value="Budget"
                             resetValue="Actual"
-                            onApply={() => {}}
-                            onCancel={() => {}}
+                            mode="commit"
+                            onCommit={() => {}}
+                            onClose={() => {}}
                         />
                     </Section>
                     <Section title="No constraints">
@@ -148,8 +165,9 @@ function ParameterControlExamples() {
                             definition={stringDefinitionWithoutConstraints}
                             value="Budget"
                             resetValue="Actual"
-                            onApply={() => {}}
-                            onCancel={() => {}}
+                            mode="commit"
+                            onCommit={() => {}}
+                            onClose={() => {}}
                         />
                     </Section>
                 </div>

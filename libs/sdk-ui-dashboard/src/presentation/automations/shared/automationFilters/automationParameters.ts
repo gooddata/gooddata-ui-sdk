@@ -13,11 +13,14 @@ import {
     type ParameterValue,
     isIdentifierRef,
     objRefToString,
-    parameterValueMatchesType,
     sanitizeParameterValue,
 } from "@gooddata/sdk-model";
 
-import { exportParametersToValues } from "../../../../_staging/automation/index.js";
+import {
+    decodeParameterWireValue,
+    exportParametersToValues,
+    parseNumberWireValue,
+} from "../../../../_staging/automation/index.js";
 
 /**
  * A workspace parameter resolved for display and editing inside an automation (alert/schedule)
@@ -57,7 +60,11 @@ export interface IAutomationParameter {
 /**
  * Stored {@link IInsightParameterValue} overrides carry only {ref, value}; title, mode and
  * definition are re-derived from the current dashboard and workspace catalog. Rows without a
- * resolvable definition (see {@link resolveParameterDefinition}) are dropped.
+ * resolvable definition (see {@link resolveParameterDefinition}) are dropped; a value whose kind
+ * arrives as an untyped wire string is decoded against the definition (see
+ * {@link decodeParameterWireValue}) so the chip still renders. Pass `valuesAreUntypedWire` for
+ * alert overrides, whose loaded values are untyped strings; export overrides are decoded by their
+ * own type tag before they get here, so their strings are already authoritative.
  *
  * @internal
  */
@@ -66,6 +73,7 @@ export function reconstructAutomationParametersFromValues(
     dashboardParameters: IDashboardParameter[],
     catalog: IParameterMetadataObject[],
     isStringParametersEnabled: boolean,
+    valuesAreUntypedWire = false,
 ): IAutomationParameter[] {
     const dashboardByRef = new Map(
         dashboardParameters.map((parameter) => [objRefToString(parameter.ref), parameter]),
@@ -79,14 +87,19 @@ export function reconstructAutomationParametersFromValues(
             workspaceParameter,
             row.value,
             isStringParametersEnabled,
+            valuesAreUntypedWire,
         );
         if (!definition) {
+            return [];
+        }
+        const value = decodeParameterWireValue(definition, row.value);
+        if (value === undefined) {
             return [];
         }
         return {
             ref: row.ref,
             title: dashboardParameter?.label ?? workspaceParameter?.title ?? row.ref.identifier,
-            value: row.value,
+            value,
             mode: dashboardParameter?.mode ?? DashboardParameterModeValues.ACTIVE,
             definition,
         };
@@ -192,8 +205,8 @@ export function setAlertExecutionParameters(
 
 /**
  * A param dropped from the *dashboard* is not stale: parameters are workspace-scoped, so only
- * removal from the workspace catalog counts — as does a parameter recreated with the same id but
- * the other type, where the decoded value kind disagrees with the current definition.
+ * removal from the workspace catalog counts — as does a stored value that cannot be decoded
+ * against the current definition (see {@link decodeParameterWireValue}).
  *
  * @internal
  */
@@ -275,25 +288,29 @@ function alertParameterMatchesCatalog(
     catalogById: Map<string, IParameterMetadataObject>,
 ): boolean {
     const workspaceParameter = catalogById.get(parameter.ref.identifier);
-    return !!workspaceParameter && parameterValueMatchesType(workspaceParameter.definition, parameter.value);
+    return (
+        !!workspaceParameter &&
+        decodeParameterWireValue(workspaceParameter.definition, parameter.value) !== undefined
+    );
 }
 
 /**
  * Every parameter needs a definition — its `type` picks which control renders. The workspace
- * parameter definition is the source of truth; when its type disagrees with the stored value the
- * parameter was recreated as the other type, so the parameter is dropped.
+ * parameter definition is the source of truth; whether the stored value decodes against it is the
+ * caller's check ({@link reconstructAutomationParametersFromValues} drops undecodable rows).
  */
 function resolveParameterDefinition(
     workspaceParameter: IParameterMetadataObject | undefined,
     value: ParameterValue,
     isStringParametersEnabled: boolean,
+    valueIsUntypedWire: boolean,
 ): IParameterDefinition | undefined {
     const definition = workspaceParameter?.definition;
     if (definition) {
         if (definition.type === "STRING" && !isStringParametersEnabled) {
             return undefined;
         }
-        return parameterValueMatchesType(definition, value) ? definition : undefined;
+        return definition;
     }
     // Deleted workspace parameter: synthesize a definition from the value so the parameter stays
     // editable (the constraint-less M1 fallback). Its `defaultValue` is a shape-filling
@@ -301,6 +318,14 @@ function resolveParameterDefinition(
     // branch above.
     if (typeof value === "number") {
         return { type: "NUMBER", defaultValue: value };
+    }
+    // Only an untyped alert wire string warrants a shape-guess — an export string was already
+    // decoded by its own type tag, so a numeric-looking one really is a STRING value.
+    if (valueIsUntypedWire) {
+        const numeric = parseNumberWireValue(value);
+        if (numeric !== undefined) {
+            return { type: "NUMBER", defaultValue: numeric };
+        }
     }
     return isStringParametersEnabled ? { type: "STRING", defaultValue: value } : undefined;
 }

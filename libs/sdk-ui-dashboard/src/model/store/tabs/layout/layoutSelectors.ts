@@ -16,6 +16,7 @@ import {
     type ObjRef,
     type ScreenSize,
     dashboardAttributeFilterItemLocalIdentifier,
+    filterContextItemsToDashboardFiltersByWidget,
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardLayout,
@@ -26,7 +27,6 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type ObjRefMap, newMapForObjectWithIdentity } from "../../../../_staging/metadata/objRefMap.js";
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/filterConverters.js";
 import { type IDashboardFilter, type ILayoutCoordinates, type ILayoutItemPath } from "../../../../types.js";
 import {
     isInsightPlaceholderWidget,

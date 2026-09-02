@@ -51,7 +51,11 @@ export interface IWorkspaceObjectPermissionsService {
      * Excludes the current user. Whether organization admins are excluded
      * depends on the backend.
      *
-     * @param target - the object to find available assignees for
+     * Candidates come from the workspace, so some object types narrow them further and the
+     * rest fall back to the workspace listing.
+     *
+     * @param target - the object being shared, for backends that can narrow to it. Omit
+     *  when there is no object yet.
      */
-    getAvailableAssignees(target: IObjectPermissionsObject): Promise<IAvailableAccessGrantee[]>;
+    getAvailableAssignees(target?: IObjectPermissionsObject): Promise<IAvailableAccessGrantee[]>;
 }

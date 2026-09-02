@@ -157,14 +157,12 @@ export {
     findDateFilterOptionByValue,
 } from "./_staging/dateFilterConfig/dateFilterOptionMapping.js";
 export { convertDateFilterConfigToDateFilterOptions } from "./_staging/dateFilterConfig/dateFilterConfigConverters.js";
+export { dateFilterOptionToDashboardDateFilter } from "./_staging/dashboard/dashboardFilterConverter.js";
 export {
     attributeFilterToDashboardAttributeFilter,
-    dateFilterOptionToDashboardDateFilter,
-} from "./_staging/dashboard/dashboardFilterConverter.js";
-export {
     dashboardAttributeFilterToAttributeFilter,
     dashboardAttributeFilterItemToAttributeFilter,
-} from "./converters/filterConverters.js";
+} from "@gooddata/sdk-model";
 export type {
     IKdaDateOptions,
     IKdaItem,

@@ -17,7 +17,7 @@ import type { IFeatureFlags, Identifier, ObjectOrigin } from "@gooddata/sdk-mode
 import { COMPUTED_ATTRIBUTE_FEATURE_FLAG } from "../computedAttribute/gate.js";
 import { ObjectTypes } from "../objectType/constants.js";
 import { type ObjectType } from "../objectType/types.js";
-import { useFeatureFlags } from "../permission/PermissionsContext.js";
+import { useFeatureFlag, useFeatureFlags } from "../permission/PermissionsContext.js";
 
 import {
     getAttributesQuery,
@@ -67,6 +67,8 @@ export function useCatalogQueryOptions(
 ): ICatalogItemQueryOptions {
     const { backend, workspace, id, pageSize } = feedOptions;
     const { search, origin, createdBy, tags, qualityIds, isHidden, certification } = filterInputs;
+    // the detail panel reuses the listed item, so its permissions have to come with the list
+    const loadPermissions = useFeatureFlag("enableMetricPermissions");
 
     return useMemo<ICatalogItemQueryOptions>(() => {
         let includeIds: string[] | undefined = id;
@@ -94,6 +96,7 @@ export function useCatalogQueryOptions(
             isHidden,
             certification,
             pageSize,
+            loadPermissions,
         };
     }, [
         backend,
@@ -107,6 +110,7 @@ export function useCatalogQueryOptions(
         qualityIds,
         isHidden,
         certification,
+        loadPermissions,
     ]);
 }
 

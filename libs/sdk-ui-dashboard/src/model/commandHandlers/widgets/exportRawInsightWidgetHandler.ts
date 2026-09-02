@@ -14,12 +14,12 @@ import {
     type INullableFilter,
     defWithDimensions,
     defaultDimensionsGenerator,
+    filterContextItemsToDashboardFiltersByWidget,
     insightRef,
     newDefForInsight,
 } from "@gooddata/sdk-model";
 import { fillMissingTitles, resolveDefaultDisplayFormRefForDisplayForm } from "@gooddata/sdk-ui";
 
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/filterConverters.js";
 import { type IExportRawInsightWidget } from "../../commands/insight.js";
 import {
     type IDashboardInsightWidgetExportResolved,

@@ -127,135 +127,34 @@ describe("InMemoryWorkspaceReportsService", () => {
         expect(fetched.content.pages).toEqual([]);
     });
 
-    it("rehydrates state from the persistence hook and saves after mutations", async () => {
-        let stored: string | null = null;
-        const persistence = {
-            load: () => stored,
-            save: (value: string) => {
-                stored = value;
-            },
-        };
+    it("round-trips and deletes the brand kit", async () => {
+        const service = new InMemoryWorkspaceReportsService();
+        await expect(service.getBrandKit()).resolves.toBeUndefined();
 
-        const service = new InMemoryWorkspaceReportsService(persistence);
-        const created = await service.createReport(
-            newAdHocReportDefinition({
-                title: "Persisted",
-                periodStart: "2026-01-01",
-                periodEnd: "2026-03-31",
-            }),
-        );
-        expect(stored).not.toBeNull();
+        const kit = { version: "1" as const, assets: { logo: "https://cdn.example.com/logo.svg" } };
+        await service.setBrandKit(kit);
+        await expect(service.getBrandKit()).resolves.toEqual(kit);
 
-        const rehydrated = new InMemoryWorkspaceReportsService(persistence);
-        await expect(rehydrated.getReport(created.ref)).resolves.toEqual(created);
-
-        await rehydrated.deleteReport(created.ref);
-        const afterDelete = new InMemoryWorkspaceReportsService(persistence);
-        expect(() => afterDelete.getReport(created.ref)).toThrow(/does not exist/);
+        await service.deleteBrandKit();
+        await expect(service.getBrandKit()).resolves.toBeUndefined();
     });
 
-    it("reads persisted state through on every operation", async () => {
-        let stored: string | null = null;
-        const persistence = {
-            load: () => stored,
-            save: (value: string) => {
-                stored = value;
-            },
-        };
-
-        const first = new InMemoryWorkspaceReportsService(persistence);
-        const second = new InMemoryWorkspaceReportsService(persistence);
-
-        const fromFirst = await first.createReport(
-            newAdHocReportDefinition({ title: "A", periodStart: "2026-01-01", periodEnd: "2026-01-31" }),
-        );
-        const fromSecond = await second.createReport(
-            newAdHocReportDefinition({ title: "B", periodStart: "2026-01-01", periodEnd: "2026-01-31" }),
-        );
-
-        const titles = (await first.getReports()).map((report) => report.title);
-        expect(titles).toEqual(expect.arrayContaining(["A", "B"]));
-        expect(fromFirst.ref).not.toEqual(fromSecond.ref);
-    });
-
-    it("keeps working when the storage throws", async () => {
-        const service = new InMemoryWorkspaceReportsService({
-            load: () => {
-                throw new Error("storage blocked");
-            },
-            save: () => {
-                throw new Error("quota exceeded");
-            },
+    it("stores an empty kit, refuses a foreign one and sanitizes the one it stores", async () => {
+        const service = new InMemoryWorkspaceReportsService();
+        await service.setBrandKit({
+            version: "1",
+            assets: { logo: "https://cdn.example.com/logo.svg", images: "no" },
+        } as never);
+        await expect(service.getBrandKit()).resolves.toEqual({
+            version: "1",
+            assets: { logo: "https://cdn.example.com/logo.svg" },
         });
 
-        const created = await service.createReport(
-            newAdHocReportDefinition({
-                title: "Report",
-                periodStart: "2026-01-01",
-                periodEnd: "2026-01-31",
-            }),
-        );
-        await expect(service.getReport(created.ref)).resolves.toEqual(created);
-    });
-
-    it("keeps mutations after a save failure instead of losing them to read-through", async () => {
-        const service = new InMemoryWorkspaceReportsService({
-            load: () => null,
-            save: () => {
-                throw new Error("quota exceeded");
-            },
-        });
-
-        const created = await service.createReport(
-            newAdHocReportDefinition({
-                title: "Report",
-                periodStart: "2026-01-01",
-                periodEnd: "2026-01-31",
-            }),
-        );
-
-        await expect(service.getReport(created.ref)).resolves.toEqual(created);
-        await expect(service.getReports()).resolves.toHaveLength(1);
-    });
-
-    it("ignores persisted state of an unexpected shape", async () => {
-        const service = new InMemoryWorkspaceReportsService({
-            load: () => JSON.stringify({ pageLayouts: {}, reports: 42 }),
-            save: () => {},
-        });
-
-        await expect(service.getReports()).resolves.toEqual([]);
-        await expect(service.getReportPageLayouts()).resolves.toHaveLength(BuiltInReportPageLayouts.length);
-    });
-
-    it("keeps current state when a persisted entry is malformed", async () => {
-        let stored: string | null = null;
-        const persistence = {
-            load: () => stored,
-            save: (value: string) => {
-                stored = value;
-            },
-        };
-        const service = new InMemoryWorkspaceReportsService(persistence);
-        const created = await service.createReport(
-            newAdHocReportDefinition({
-                title: "Report",
-                periodStart: "2026-01-01",
-                periodEnd: "2026-01-31",
-            }),
-        );
-
-        stored = JSON.stringify({ pageLayouts: [], templates: [], reports: [{}] });
-
-        await expect(service.getReport(created.ref)).resolves.toEqual(created);
-    });
-
-    it("starts empty on corrupted persisted state", () => {
-        const service = new InMemoryWorkspaceReportsService({
-            load: () => "not-json{",
-            save: () => {},
-        });
-        expect(() => service.getReport(idRef("missing"))).toThrow(/does not exist/);
+        // A kit that carries nothing is what a workspace holds before anyone fills one in, so it
+        // stores rather than throwing; only a value that is no version 1 kit at all is refused.
+        await service.setBrandKit({ version: "1" });
+        await expect(service.getBrandKit()).resolves.toEqual({ version: "1" });
+        expect(() => service.setBrandKit({ version: "2" } as never)).toThrow(/not a valid brand kit/);
     });
 
     it("throws on unknown refs and locked objects", async () => {

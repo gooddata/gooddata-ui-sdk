@@ -10,15 +10,18 @@ import {
     UnexpectedSdkError,
 } from "@gooddata/sdk-ui";
 
+import { type CustomAutomationsContextDecoratorComponent } from "../../types.js";
 import {
     type CustomAlertingDialogComponent,
     type CustomAlertingDialogContextDecoratorComponent,
     type CustomAlertingManagementDialogComponent,
+    type CustomAlertingManagementDialogContextDecoratorComponent,
 } from "../automations/alerting/types.js";
 import {
     type CustomScheduledEmailDialogComponent,
     type CustomScheduledEmailDialogContextDecoratorComponent,
     type CustomScheduledEmailManagementDialogComponent,
+    type CustomScheduledEmailManagementDialogContextDecoratorComponent,
 } from "../automations/scheduledEmail/types.js";
 import {
     type AttributeFilterComponentSet,
@@ -90,7 +93,10 @@ interface IDashboardComponentsContext {
     ScheduledEmailDialogComponent: CustomScheduledEmailDialogComponent;
     ScheduledEmailDialogContextDecoratorComponent: CustomScheduledEmailDialogContextDecoratorComponent;
     ScheduledEmailManagementDialogComponent: CustomScheduledEmailManagementDialogComponent;
+    ScheduledEmailManagementDialogContextDecoratorComponent: CustomScheduledEmailManagementDialogContextDecoratorComponent;
     AlertingManagementDialogComponent: CustomAlertingManagementDialogComponent;
+    AlertingManagementDialogContextDecoratorComponent: CustomAlertingManagementDialogContextDecoratorComponent;
+    AutomationsContextDecoratorComponent: CustomAutomationsContextDecoratorComponent;
     AlertingDialogComponent: CustomAlertingDialogComponent;
     AlertingDialogContextDecoratorComponent: CustomAlertingDialogContextDecoratorComponent;
     ShareDialogComponent: CustomShareDialogComponent;
@@ -151,7 +157,14 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     ScheduledEmailManagementDialogComponent: ThrowMissingComponentError(
         "ScheduledEmailManagementDialogComponent",
     ),
+    ScheduledEmailManagementDialogContextDecoratorComponent: ThrowMissingComponentError(
+        "ScheduledEmailManagementDialogContextDecoratorComponent",
+    ),
     AlertingManagementDialogComponent: ThrowMissingComponentError("AlertingManagementDialogComponent"),
+    AlertingManagementDialogContextDecoratorComponent: ThrowMissingComponentError(
+        "AlertingManagementDialogContextDecoratorComponent",
+    ),
+    AutomationsContextDecoratorComponent: ThrowMissingComponentError("AutomationsContextDecoratorComponent"),
     AlertingDialogComponent: ThrowMissingComponentError("AlertingDialogComponent"),
     AlertingDialogContextDecoratorComponent: ThrowMissingComponentError(
         "AlertingDialogContextDecoratorComponent",

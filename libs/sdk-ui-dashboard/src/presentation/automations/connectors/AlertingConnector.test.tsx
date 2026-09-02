@@ -50,6 +50,8 @@ const fixtures = vi.hoisted(() => {
 });
 
 vi.mock("@gooddata/sdk-ui", () => ({
+    ErrorComponent: () => null,
+    LoadingComponent: () => null,
     buildAutomationUrl: fixtures.buildAutomationUrl,
     navigate: fixtures.navigate,
     useWorkspaceStrict: () => "workspace-id",

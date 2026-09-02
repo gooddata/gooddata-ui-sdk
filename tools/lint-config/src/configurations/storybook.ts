@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { IPackage } from "../types.js";
+import { IPackage, Rules } from "../types.js";
 
 export const storybookPlugin: IPackage = {
     name: "eslint-plugin-storybook",
@@ -47,10 +47,10 @@ export const storybookOverrides = [
             "storybook/story-exports": "error",
             "storybook/use-storybook-expect": "error",
             "storybook/use-storybook-testing-library": "error",
-        },
+        } as Rules<"react-hooks" | "import" | "storybook">,
     },
     {
         files: [".storybook/main.@(js|cjs|mjs|ts)"],
-        rules: { "storybook/no-uninstalled-addons": "error" },
+        rules: { "storybook/no-uninstalled-addons": "error" } as Rules<"storybook">,
     },
 ];

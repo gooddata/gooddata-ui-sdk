@@ -71,7 +71,7 @@ import { generateDimensions } from "../../../utils/dimensions.js";
 import {
     getColumnHeadersPositionFromProperties,
     getColumnWidthsFromProperties,
-    getConditionalFormattingFromProperties,
+    getEffectiveConditionalFormatting,
     getGrandTotalsPositionFromProperties,
     getMeasureGroupDimensionFromProperties,
     getPageSizeFromProperties,
@@ -80,7 +80,7 @@ import {
     getReferencePointWithSupportedProperties,
     getSupportedPropertiesControls,
     getTextWrappingFromProperties,
-    isConditionalFormattingEnabled,
+    isSemanticConditionalFormattingEnabled,
 } from "../../../utils/propertiesHelper.js";
 import {
     getPivotTableNextDefaultUiConfig,
@@ -358,7 +358,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
     // it here to surface the resolved titles instead of leaving fallback names until the next render.
     private handleDataView = (dataView: DataViewFacade): void => {
         this.onDataView(dataView);
-        this.cfTargetData = buildCfTargetData(dataView);
+        this.cfTargetData = { ...buildCfTargetData(dataView), semanticFresh: true };
         this.renderConfigurationPanel(this.currentInsight, this.currentOptions);
     };
 
@@ -366,12 +366,17 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
     // titles so the config panel never shows a previous insight's names. handleDataView repopulates.
     private handleLoadingChanged = (loadingState: ILoadingState): void => {
         if (loadingState.isLoading) {
-            // Formats and element suggestions are deliberately kept: clearing them would flip an open
-            // percent rule's input from "40" to "0.4" and blank suggestions mid-edit. Semantic-layer
-            // rules have no such open-edit session to protect (they're view-only in this panel), and a
-            // reused localId could otherwise show/open a DIFFERENT target's inherited rule until the
-            // next data view lands (or indefinitely on a failed execution) — clear them alongside titles.
-            this.cfTargetData = { ...this.cfTargetData, titles: {}, semantic: {} };
+            // Formats, element suggestions, and semantic-layer rules are deliberately kept: clearing
+            // formats/suggestions would flip an open percent rule's input from "40" to "0.4" and blank
+            // suggestions mid-edit; clearing semantic would do worse — it can close a held-open semantic
+            // dialog outright (resolveActiveDialog treats a missing entry as invalidated), discarding an
+            // in-progress edit. A reused localId could in principle show a stale target's inherited rule
+            // until the next data view lands, same accepted tradeoff already made for formats/suggestions.
+            // `semanticFresh: false` marks that stale rule as such the instant this execution starts —
+            // onLoadingChanged(false) can fire before handleDataView actually rebuilds `semantic` (see
+            // handleDataView's own comment), or never at all if this execution fails, so `isLoading`
+            // alone can't gate anything that must not act on a superseded semantic map.
+            this.cfTargetData = { ...this.cfTargetData, titles: {}, semanticFresh: false };
         }
         this.onLoadingChanged(loadingState);
     };
@@ -458,7 +463,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         const growToFit = this.environment === DASHBOARDS_ENVIRONMENT;
         const isInEditMode = config?.isInEditMode;
         const pagination = getPaginationFromProperties(insightProperties(insight));
-        const enableConditionalFormatting = isConditionalFormattingEnabled(this.settings);
+        const enableSemanticConditionalFormatting = isSemanticConditionalFormattingEnabled(this.settings);
         const tableConfig: PivotTableNextConfigWithConditionalFormatting = {
             ...createPivotTableNextConfig(config, this.environment!, this.settings),
             ...customVisualizationConfig,
@@ -475,16 +480,15 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             grandTotalsPosition: getGrandTotalsPositionFromProperties(insightProperties(insight)),
             pagination,
             enableCellSelection: !isInEditMode,
-            // Gated behind the feature flag: when disabled, never pass any CF config so an insight
-            // saved with rules (or a runtime InsightView config) renders plain, with no UI to edit it.
-            // Prefer a runtime config (InsightView config prop) over the insight's saved rules.
-            conditionalFormatting: enableConditionalFormatting
-                ? (customVisualizationConfig?.conditionalFormatting ??
-                  getConditionalFormattingFromProperties(insightProperties(insight)))
-                : undefined,
+            conditionalFormatting: getEffectiveConditionalFormatting(
+                insight,
+                this.settings,
+                customVisualizationConfig?.conditionalFormatting,
+            ),
             // The engine inherits from descriptors independently of `conditionalFormatting` above
-            // (even `undefined` still inherits) — it needs its own explicit gate behind the flag.
-            enableSemanticConditionalFormatting: enableConditionalFormatting,
+            // (even `undefined` still inherits) — it needs its own explicit gate behind its own flag,
+            // separate from insight-level CF authoring.
+            enableSemanticConditionalFormatting,
         };
 
         // Only pass pageSize when pagination is enabled

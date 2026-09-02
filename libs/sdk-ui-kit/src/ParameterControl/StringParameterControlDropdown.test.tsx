@@ -9,14 +9,20 @@ import { StringParameterControlDropdown } from "./StringParameterControlDropdown
 
 const WrappedStringParameterControlDropdown = withIntlForTest(StringParameterControlDropdown);
 
-const renderDropdown = (props: Partial<React.ComponentProps<typeof StringParameterControlDropdown>> = {}) => {
+type CommitModeProps = Extract<
+    React.ComponentProps<typeof StringParameterControlDropdown>,
+    { mode: "commit" }
+>;
+
+const renderDropdown = (props: Partial<CommitModeProps> = {}) => {
     return render(
         <WrappedStringParameterControlDropdown
             name="Scenario"
             value="Actual"
             resetValue="Actual"
-            onApply={() => {}}
-            onCancel={() => {}}
+            mode="commit"
+            onCommit={() => {}}
+            onClose={() => {}}
             {...props}
         />,
     );
@@ -36,24 +42,6 @@ describe("StringParameterControlDropdown", () => {
         expect(getInput().parentElement).toHaveClass("gd-ui-kit-parameter-input");
     });
 
-    it("calls onApply with the typed text on Apply", () => {
-        const onApply = vi.fn();
-        renderDropdown({ onApply });
-        fireEvent.change(getInput(), { target: { value: "Budget" } });
-        fireEvent.click(getApply());
-        expect(onApply).toHaveBeenCalledWith("Budget");
-    });
-
-    it("calls onCancel without applying when Cancel is clicked", () => {
-        const onCancel = vi.fn();
-        const onApply = vi.fn();
-        renderDropdown({ onCancel, onApply });
-        fireEvent.change(getInput(), { target: { value: "Budget" } });
-        fireEvent.click(screen.getByTestId("parameter-control-dropdown-cancel"));
-        expect(onCancel).toHaveBeenCalledTimes(1);
-        expect(onApply).not.toHaveBeenCalled();
-    });
-
     it("hides Reset when value equals resetValue", () => {
         renderDropdown({ value: "Actual", resetValue: "Actual" });
         expect(screen.queryByTestId("parameter-control-dropdown-reset")).not.toBeInTheDocument();
@@ -69,39 +57,39 @@ describe("StringParameterControlDropdown", () => {
         expect(screen.getByTestId("parameter-control-dropdown-reset")).toBeInTheDocument();
     });
 
-    it("Reset writes resetValue into the draft input but does NOT call onApply", () => {
-        const onApply = vi.fn();
-        renderDropdown({ value: "Budget", resetValue: "Actual", onApply });
+    it("Reset writes resetValue into the draft input but does NOT call onCommit", () => {
+        const onCommit = vi.fn();
+        renderDropdown({ value: "Budget", resetValue: "Actual", onCommit });
         fireEvent.click(screen.getByTestId("parameter-control-dropdown-reset"));
         expect(getInput()).toHaveValue("Actual");
-        expect(onApply).not.toHaveBeenCalled();
+        expect(onCommit).not.toHaveBeenCalled();
     });
 
     it("Apply commits the post-reset draft value", () => {
-        const onApply = vi.fn();
-        renderDropdown({ value: "Budget", resetValue: "Actual", onApply });
+        const onCommit = vi.fn();
+        renderDropdown({ value: "Budget", resetValue: "Actual", onCommit });
         fireEvent.click(screen.getByTestId("parameter-control-dropdown-reset"));
         fireEvent.click(getApply());
-        expect(onApply).toHaveBeenCalledWith("Actual");
+        expect(onCommit).toHaveBeenCalledWith("Actual");
     });
 
     it("applies any text, including empty, when there are no constraints", () => {
-        const onApply = vi.fn();
-        renderDropdown({ onApply });
+        const onCommit = vi.fn();
+        renderDropdown({ onCommit });
         fireEvent.change(getInput(), { target: { value: "" } });
         expect(getApply()).not.toBeDisabled();
         fireEvent.click(getApply());
-        expect(onApply).toHaveBeenCalledWith("");
+        expect(onCommit).toHaveBeenCalledWith("");
     });
 
     it("blocks Apply and shows an error for a draft shorter than minLength", () => {
-        const onApply = vi.fn();
-        renderDropdown({ constraints: { minLength: 3 }, onApply });
+        const onCommit = vi.fn();
+        renderDropdown({ constraints: { minLength: 3 }, onCommit });
         fireEvent.change(getInput(), { target: { value: "ab" } });
         expect(getApply()).toBeDisabled();
         expect(screen.getByTestId("parameter-control-dropdown-error")).toBeInTheDocument();
         fireEvent.click(getApply());
-        expect(onApply).not.toHaveBeenCalled();
+        expect(onCommit).not.toHaveBeenCalled();
     });
 
     it("does not clamp the input natively so oversized drafts reach validation", () => {
@@ -110,23 +98,23 @@ describe("StringParameterControlDropdown", () => {
     });
 
     it("blocks Apply and shows an error for a draft longer than maxLength", () => {
-        const onApply = vi.fn();
-        renderDropdown({ constraints: { maxLength: 6 }, onApply });
+        const onCommit = vi.fn();
+        renderDropdown({ constraints: { maxLength: 6 }, onCommit });
         fireEvent.change(getInput(), { target: { value: "Forecast" } });
         expect(getApply()).toBeDisabled();
         expect(screen.getByTestId("parameter-control-dropdown-error")).toBeInTheDocument();
         fireEvent.click(getApply());
-        expect(onApply).not.toHaveBeenCalled();
+        expect(onCommit).not.toHaveBeenCalled();
     });
 
     it("allows Apply on the inclusive length boundary", () => {
-        const onApply = vi.fn();
-        renderDropdown({ constraints: { minLength: 2, maxLength: 6 }, onApply });
+        const onCommit = vi.fn();
+        renderDropdown({ constraints: { minLength: 2, maxLength: 6 }, onCommit });
         fireEvent.change(getInput(), { target: { value: "Budget" } });
         expect(getApply()).not.toBeDisabled();
         expect(screen.queryByTestId("parameter-control-dropdown-error")).not.toBeInTheDocument();
         fireEvent.click(getApply());
-        expect(onApply).toHaveBeenCalledWith("Budget");
+        expect(onCommit).toHaveBeenCalledWith("Budget");
     });
 
     it("renders no stepper", () => {

@@ -8,6 +8,7 @@ import {
     type IReportPageLayoutDefinition,
     type IReportTemplate,
     type IReportTemplateDefinition,
+    type IReportsBrandKit,
     type ObjRef,
 } from "@gooddata/sdk-model";
 
@@ -78,5 +79,17 @@ export abstract class DecoratedWorkspaceReportsService implements IWorkspaceRepo
 
     public deleteReport(ref: ObjRef): Promise<void> {
         return this.decorated.deleteReport(ref);
+    }
+
+    public getBrandKit(): Promise<IReportsBrandKit | undefined> {
+        return this.decorated.getBrandKit();
+    }
+
+    public setBrandKit(brandKit: IReportsBrandKit): Promise<void> {
+        return this.decorated.setBrandKit(brandKit);
+    }
+
+    public deleteBrandKit(): Promise<void> {
+        return this.decorated.deleteBrandKit();
     }
 }

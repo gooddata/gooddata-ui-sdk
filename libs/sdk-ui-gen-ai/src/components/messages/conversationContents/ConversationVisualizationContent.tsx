@@ -745,6 +745,7 @@ function useHandlers({ visualization, setSaveDialogOpen }: IUseHandlersProps) {
                         ),
                         visualization,
                         visualizationStatus,
+                        action: "open",
                     });
                     e.stopPropagation();
                 }
@@ -785,6 +786,7 @@ function useHandlers({ visualization, setSaveDialogOpen }: IUseHandlersProps) {
                     ),
                     visualization,
                     visualizationStatus,
+                    action: "copy",
                 });
             }
             if (link) {

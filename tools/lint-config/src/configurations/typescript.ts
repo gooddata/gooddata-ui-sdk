@@ -1,6 +1,8 @@
 // (C) 2026 GoodData Corporation
 
-export const typescriptConflicts = {
+import { Rules } from "../types.js";
+
+export const typescriptConflicts: Rules = {
     "constructor-super": "off",
     "getter-return": "off",
     "no-class-assign": "off",
@@ -29,7 +31,7 @@ export const typescriptConflicts = {
     "no-unused-vars": "off",
 };
 
-const typescriptRulesCommon = {
+const typescriptRulesCommon: Rules = {
     "@typescript-eslint/no-array-constructor": "error",
     "@typescript-eslint/no-duplicate-enum-values": "error",
     "@typescript-eslint/no-empty-object-type": "error",
@@ -120,12 +122,12 @@ const typescriptRulesCommon = {
     ],
 };
 
-export const typescriptRulesNativeSupported = {
+export const typescriptRulesNativeSupported: Rules = {
     ...typescriptRulesCommon,
 };
 
 // todo: https://github.com/oxc-project/oxc/issues/2180
-export const typescriptRulesNativeNotSupported = {
+export const typescriptRulesNativeNotSupported: Rules<"@typescript-eslint"> = {
     "@typescript-eslint/prefer-optional-chain": "error",
     "@typescript-eslint/consistent-type-exports": [
         "error",
@@ -144,7 +146,7 @@ export const typescriptRulesNativeNotSupported = {
     ],
 };
 
-export const typescriptRules = {
+export const typescriptRules: Rules = {
     ...typescriptRulesNativeSupported,
     ...typescriptRulesNativeNotSupported,
 };

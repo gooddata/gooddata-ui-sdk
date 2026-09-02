@@ -290,6 +290,7 @@ function VisualizationContentsComponentCore({
                 useHostedAnalyticalDesigner,
             ),
             visualizationStatus,
+            action: "open",
         });
         e.stopPropagation();
     };
@@ -342,6 +343,7 @@ function VisualizationContentsComponentCore({
                                 useHostedAnalyticalDesigner,
                             ),
                             visualizationStatus,
+                            action: "copy",
                         });
                     }
                     if (link) {

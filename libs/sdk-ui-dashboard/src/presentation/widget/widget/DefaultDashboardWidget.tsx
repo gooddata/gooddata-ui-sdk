@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type ReactElement, memo, useMemo } from "react";
+import { type NamedExoticComponent, type ReactElement, memo, useMemo } from "react";
 
 import cx from "classnames";
 
@@ -91,97 +91,99 @@ function WidgetComponent({
 /**
  * @internal
  */
-export const DefaultDashboardWidget = memo(function DefaultDashboardWidget({
-    onError,
-    onFiltersChange,
-    screen,
-    widget,
-    backend,
-    // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
-    index,
-    parentLayoutItemSize,
-    parentLayoutPath,
-    rowIndex,
-    exportData,
-}: IDashboardWidgetProps): ReactElement {
-    if (!isDashboardWidget(widget)) {
-        throw new UnexpectedError(
-            "Cannot render custom widget with DefaultWidgetRenderer! Please handle custom widget rendering in your widgetRenderer.",
-        );
-    }
+export const DefaultDashboardWidget: NamedExoticComponent<IDashboardWidgetProps> = memo(
+    function DefaultDashboardWidget({
+        onError,
+        onFiltersChange,
+        screen,
+        widget,
+        backend,
+        // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
+        index,
+        parentLayoutItemSize,
+        parentLayoutPath,
+        rowIndex,
+        exportData,
+    }: IDashboardWidgetProps): ReactElement {
+        if (!isDashboardWidget(widget)) {
+            throw new UnexpectedError(
+                "Cannot render custom widget with DefaultWidgetRenderer! Please handle custom widget rendering in your widgetRenderer.",
+            );
+        }
 
-    const ref = widgetRef(widget);
+        const ref = widgetRef(widget);
 
-    const dispatchEvent = useDashboardEventDispatch();
-    const effectiveBackend = useBackendStrict(backend);
+        const dispatchEvent = useDashboardEventDispatch();
+        const effectiveBackend = useBackendStrict(backend);
 
-    const backendWithEventing = useMemo(() => {
-        // use a flag to report only the first result of the execution as per the events documented API
-        let hasReportedResult = false;
-        const onSuccess = (dataView: IDataView, executionId: string) => {
-            if (!hasReportedResult) {
-                dispatchEvent(widgetExecutionSucceeded(ref, dataView, executionId));
-                hasReportedResult = true;
-            }
-        };
-        const onError = (error: any, executionId: string) => {
-            if (!hasReportedResult) {
-                dispatchEvent(widgetExecutionFailed(ref, convertError(error), executionId));
-                hasReportedResult = true;
-            }
-        };
-        return withEventing(effectiveBackend, {
-            beforeExecute: (def, executionId) => {
-                hasReportedResult = false;
-                dispatchEvent(widgetExecutionStarted(ref, def, executionId));
-            },
-            successfulResultReadAll: onSuccess,
-            successfulResultReadWindow: (_offset, _limit, dataView, executionId) => {
-                onSuccess(dataView, executionId);
-            },
-            failedExecute: onError,
-            failedResultReadAll: onError,
-            failedResultReadWindow: (_offset, _limit, error, executionId) => {
-                onError(error, executionId);
-            },
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [effectiveBackend, dispatchEvent, safeSerializeObjRef(ref)]);
+        const backendWithEventing = useMemo(() => {
+            // use a flag to report only the first result of the execution as per the events documented API
+            let hasReportedResult = false;
+            const onSuccess = (dataView: IDataView, executionId: string) => {
+                if (!hasReportedResult) {
+                    dispatchEvent(widgetExecutionSucceeded(ref, dataView, executionId));
+                    hasReportedResult = true;
+                }
+            };
+            const onError = (error: any, executionId: string) => {
+                if (!hasReportedResult) {
+                    dispatchEvent(widgetExecutionFailed(ref, convertError(error), executionId));
+                    hasReportedResult = true;
+                }
+            };
+            return withEventing(effectiveBackend, {
+                beforeExecute: (def, executionId) => {
+                    hasReportedResult = false;
+                    dispatchEvent(widgetExecutionStarted(ref, def, executionId));
+                },
+                successfulResultReadAll: onSuccess,
+                successfulResultReadWindow: (_offset, _limit, dataView, executionId) => {
+                    onSuccess(dataView, executionId);
+                },
+                failedExecute: onError,
+                failedResultReadAll: onError,
+                failedResultReadWindow: (_offset, _limit, error, executionId) => {
+                    onError(error, executionId);
+                },
+            });
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [effectiveBackend, dispatchEvent, safeSerializeObjRef(ref)]);
 
-    if (isWidget(widget)) {
-        return (
-            <BackendProvider backend={backendWithEventing}>
-                <WidgetComponent
+        if (isWidget(widget)) {
+            return (
+                <BackendProvider backend={backendWithEventing}>
+                    <WidgetComponent
+                        widget={widget}
+                        screen={screen}
+                        index={index}
+                        parentLayoutPath={parentLayoutPath}
+                        onFiltersChange={onFiltersChange}
+                        onError={onError}
+                        rowIndex={rowIndex!}
+                        exportData={exportData}
+                    />
+                </BackendProvider>
+            );
+        } else if (isExtendedDashboardLayoutWidget(widget)) {
+            const dashboardItemClasses = parentLayoutPath
+                ? `s-dash-item-${serializeLayoutItemPath(parentLayoutPath)}--container`
+                : `s-dash-item-${index}--container`;
+            const dashboardItemClassNames = cx(dashboardItemClasses, {
+                "gd-first-container-row-widget": rowIndex === 0,
+            });
+            return (
+                <RenderModeAwareDashboardNestedLayoutWidget
+                    // nested layout widget merges layout and other widget props into single object. Split them here
                     widget={widget}
-                    screen={screen}
-                    index={index}
-                    parentLayoutPath={parentLayoutPath}
+                    layout={widget}
                     onFiltersChange={onFiltersChange}
-                    onError={onError}
-                    rowIndex={rowIndex!}
-                    exportData={exportData}
+                    parentLayoutItemSize={parentLayoutItemSize}
+                    parentLayoutPath={parentLayoutPath}
+                    dashboardItemClasses={dashboardItemClassNames}
                 />
-            </BackendProvider>
-        );
-    } else if (isExtendedDashboardLayoutWidget(widget)) {
-        const dashboardItemClasses = parentLayoutPath
-            ? `s-dash-item-${serializeLayoutItemPath(parentLayoutPath)}--container`
-            : `s-dash-item-${index}--container`;
-        const dashboardItemClassNames = cx(dashboardItemClasses, {
-            "gd-first-container-row-widget": rowIndex === 0,
-        });
-        return (
-            <RenderModeAwareDashboardNestedLayoutWidget
-                // nested layout widget merges layout and other widget props into single object. Split them here
-                widget={widget}
-                layout={widget}
-                onFiltersChange={onFiltersChange}
-                parentLayoutItemSize={parentLayoutItemSize}
-                parentLayoutPath={parentLayoutPath}
-                dashboardItemClasses={dashboardItemClassNames}
-            />
-        );
-    }
+            );
+        }
 
-    return <div>Unknown widget</div>;
-});
+        return <div>Unknown widget</div>;
+    },
+);

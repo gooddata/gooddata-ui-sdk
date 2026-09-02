@@ -141,7 +141,7 @@ export function GenAIChat({
     // open/navigate handler instead.
     const onLinkClick = useCallback(
         (link: LinkHandlerEvent): string | undefined => {
-            if (!embedded) {
+            if (!embedded && link.action === "open") {
                 const currentUrl = window.location.pathname + window.location.hash;
                 const areUrlsEqual = currentUrl === link.itemUrl;
                 if (link.newTab) {

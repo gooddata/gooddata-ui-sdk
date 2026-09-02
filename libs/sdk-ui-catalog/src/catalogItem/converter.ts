@@ -138,6 +138,7 @@ export function convertMeasureToCatalogItem(measure: IMeasureMetadataObject): IC
         updatedAt: updatedAt ? parseBackendDate(updatedAt) : null,
         isLocked: measure.isLocked ?? false,
         isEditable: true,
+        permissions: measure.permissions,
         isHidden: measure.isHidden,
         isHiddenFromKda: measure.isHiddenFromKda,
         format,

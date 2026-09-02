@@ -163,6 +163,25 @@ async function waitForStatus(result: { current: { status: AsyncStatus } }, expec
     });
 }
 
+describe("useCatalogItemFeed – metric permissions", () => {
+    it("asks the metrics endpoint for object-level permissions behind the flag", async () => {
+        const { result, stub } = renderFeed({
+            flags: { enableParameters: false, enableMetricPermissions: true },
+        });
+        await waitForStatus(result, "success");
+
+        // the detail panel reuses the listed item, so its permissions have to arrive with the list
+        expect(stub.builders[ObjectTypes.METRIC].withMetaInclude).toHaveBeenCalledWith(["permissions"]);
+    });
+
+    it("does not ask for them with the flag off, leaving the query as it was before", async () => {
+        const { result, stub } = renderFeed();
+        await waitForStatus(result, "success");
+
+        expect(stub.builders[ObjectTypes.METRIC].withMetaInclude).not.toHaveBeenCalled();
+    });
+});
+
 describe("useCatalogItemFeed – endpoint selection", () => {
     it("with empty types and parameters gate off, selects all endpoints except parameters", async () => {
         const { result, stub } = renderFeed();

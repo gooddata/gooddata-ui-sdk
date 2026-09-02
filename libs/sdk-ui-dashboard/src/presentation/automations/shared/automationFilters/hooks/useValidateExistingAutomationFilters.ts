@@ -17,6 +17,7 @@ import {
     type IParameterMetadataObject,
     type IRelativeDateFilter,
     dashboardFilterLocalIdentifier,
+    filterContextItemsToDashboardFiltersByWidget,
     filterLocalIdentifier,
     isAllDashboardMeasureValueFilter,
     isAllValuesAttributeFilter,
@@ -29,17 +30,16 @@ import {
     isInsightWidget,
     isLocalIdRef,
     isNegativeAttributeFilter,
-    isNumberParameterDefinition,
     isPositiveAttributeFilter,
     isRelativeDateFilter,
     isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
 
 import {
+    decodeParameterWireValue,
     getAutomationAlertParameters,
     getAutomationExportParametersByTab,
 } from "../../../../../_staging/automation/index.js";
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../../../converters/filterConverters.js";
 import { isFilterTypeCompatibleWithSelectionType } from "../../../../../model/commandHandlers/dashboard/common/attributeFilterSelectionTypeCompatibility.js";
 import { type ExtendedDashboardWidget } from "../../../../../model/types/layoutTypes.js";
 import { type IDashboardFilter } from "../../../../../types.js";
@@ -381,10 +381,17 @@ export function validateExistingAutomationParameters({
                 continue;
             }
             const currentValue = dashboardParameter?.value ?? workspaceParameter.definition.defaultValue;
-            // NUMBER compares numerically so a non-canonical stored encoding (e.g. "1.50") doesn't read as drift
-            const valueDrifted = isNumberParameterDefinition(workspaceParameter.definition)
-                ? Number(stored.value) !== currentValue
-                : String(currentValue) !== stored.value;
+            // Normalize BOTH sides through the definition: NUMBER rows compare numerically (a
+            // non-canonical stored encoding like "1.50" is not drift) and a type-loose persisted
+            // dashboard value (e.g. a STRING pin stored as a JSON number) is not drift either.
+            // `undefined` means undecodable — either side undecodable is drift, so two malformed
+            // values cannot validate as "still matching".
+            const decodedStored = decodeParameterWireValue(workspaceParameter.definition, stored.value);
+            const decodedCurrent = decodeParameterWireValue(workspaceParameter.definition, currentValue);
+            const valueDrifted =
+                decodedStored === undefined ||
+                decodedCurrent === undefined ||
+                decodedStored !== decodedCurrent;
             if (valueDrifted) {
                 return true;
             }

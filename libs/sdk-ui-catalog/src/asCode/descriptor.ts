@@ -3,6 +3,7 @@
 import type { MessageDescriptor } from "react-intl";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import type { ISettings } from "@gooddata/sdk-model";
 import type { YamlCompletionSource } from "@gooddata/sdk-ui-kit";
 
 import type { ICatalogItem, ICatalogItemRef } from "../catalogItem/types.js";
@@ -157,7 +158,11 @@ export interface IAsCodeDescriptor<TDef = unknown, TItem extends ICatalogItem = 
     useIsItemEditable?(item: TItem): boolean;
     /** Extra requirement for creation, ANDed with the feature flag and manage permission. */
     useCreateGate?(): boolean;
-    createMutationPort(backend: IAnalyticalBackend, workspace: string): IAsCodeMutationPort<TDef, TItem>;
+    createMutationPort(
+        backend: IAnalyticalBackend,
+        workspace: string,
+        settings: ISettings | undefined,
+    ): IAsCodeMutationPort<TDef, TItem>;
 
     emptyDefinition(defaultTitle: string): TDef;
     seed: AsCodeSeed<TDef, TItem>;

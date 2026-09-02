@@ -2,6 +2,8 @@
 
 // Lodash-es imports that should be replaced with native alternatives
 // Maps import name(s) to the recommended alternative
+import { Rules } from "../types.js";
+
 const lodashEsBans: Record<string, string> = {
     "get,getOr": "the ?. and ?? operators",
     keys: "Object.keys()",
@@ -87,7 +89,7 @@ const restrictedImportPaths = [
     },
 ];
 
-const eslintRulesCommon = {
+const eslintRulesCommon: Rules = {
     "constructor-super": "error",
     "for-direction": "error",
     "getter-return": "error",
@@ -101,7 +103,6 @@ const eslintRulesCommon = {
     "no-constant-condition": "error",
     "no-control-regex": "error",
     "no-debugger": "error",
-    "no-delete-var": "error",
     "no-dupe-args": "error",
     "no-dupe-class-members": "error",
     "no-dupe-else-if": "error",
@@ -174,16 +175,22 @@ const eslintRulesCommon = {
             },
         },
     ],
+
+    // security rules
+    "no-caller": "error",
+    "no-eval": "error",
+    "no-delete-var": "error",
+    "no-octal-escape": "error",
 };
 
-export const eslintRulesNativeSupported = {
+export const eslintRulesNativeSupported: Rules = {
     ...eslintRulesCommon,
     "no-duplicate-imports": "error",
     "prefer-const": "off", // todo: maybe leave this here, both linters seem to turn it on by default and conflict
 };
 
 // todo: https://github.com/oxc-project/oxc/issues/479
-export const eslintRulesNativeNotSupported = {
+export const eslintRulesNativeNotSupported: Rules = {
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-duplicate-imports
     "no-duplicate-imports": ["error", { includeExports: true }], // oxlint state: pending fix
 
@@ -206,7 +213,7 @@ export const eslintRulesNativeNotSupported = {
     "prefer-const": "off", // todo: maybe leave this here, both linters seem to turn it on by default and conflict
 };
 
-export const eslintRules = {
+export const eslintRules: Rules = {
     ...eslintRulesNativeSupported,
     ...eslintRulesNativeNotSupported,
 };
@@ -228,7 +235,7 @@ export const eslintOverrides = [
                     ],
                 },
             ],
-        },
+        } as Rules,
     },
     {
         files: [
@@ -251,13 +258,13 @@ export const eslintOverrides = [
                     patterns: lodashEsPatterns,
                 },
             ],
-        },
+        } as Rules,
     },
     {
         // ESLint flat config files & Vite config files require a default export
         files: ["**/eslint.config.ts", "**/eslint.config.js", "**/vite.config.ts", "**/vite.config.js"],
         rules: {
             "no-restricted-exports": "off",
-        },
+        } as Rules,
     },
 ];

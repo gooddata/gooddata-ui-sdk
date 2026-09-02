@@ -1,6 +1,14 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type CSSProperties, type ReactNode, memo, useCallback, useMemo, useState } from "react";
+import {
+    type CSSProperties,
+    type NamedExoticComponent,
+    type ReactNode,
+    memo,
+    useCallback,
+    useMemo,
+    useState,
+} from "react";
 
 import cx from "classnames";
 import { cloneDeep, result } from "lodash-es";
@@ -122,7 +130,7 @@ const defaultProps = {
 /**
  * @internal
  */
-export const Bubble = memo(
+export const Bubble: NamedExoticComponent<IBubbleProps> = memo(
     function Bubble(props: IBubbleProps) {
         const {
             id,

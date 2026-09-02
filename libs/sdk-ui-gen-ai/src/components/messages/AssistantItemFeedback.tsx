@@ -19,18 +19,15 @@ export interface IAssistantItemFeedbackProps {
     group: IChatMessagesGroup;
     message: IChatConversationLocalItem;
     isLast?: boolean;
-    /**
-     * Whether the Interaction Intelligence trigger actually shares this actions row. With it,
-     * feedback stops being hover-revealed on older messages so the trigger sits flush left.
-     */
-    hasInteractionIntelligenceTrigger?: boolean;
+    isHidden?: boolean;
+    isComplete?: boolean;
 }
 
 export function AssistantItemFeedback({
     message,
-    group,
     isLast,
-    hasInteractionIntelligenceTrigger,
+    isHidden,
+    isComplete,
 }: IAssistantItemFeedbackProps) {
     const intl = useIntl();
     const dispatch = useDispatch();
@@ -45,10 +42,7 @@ export function AssistantItemFeedback({
     const { handlePositiveFeedbackClick, handleNegativeFeedbackClick, handleFeedbackSubmit } =
         useUserFeedback({ message, setUserFeedback: setUserFeedbackAction });
 
-    if (group.type !== "assistant" || !message.complete) {
-        return null;
-    }
-    if (message.content.type === "reasoning") {
+    if (!isComplete) {
         return null;
     }
 
@@ -57,10 +51,7 @@ export function AssistantItemFeedback({
     const type = message.feedback?.feedback;
     const isAssigned = type ? type !== "NONE" : false;
 
-    // With the Interaction Intelligence trigger sharing this row, feedback is fully hidden on
-    // older unrated messages instead of hover-revealed, so the trigger isn't pushed away from
-    // the left edge.
-    if (hasInteractionIntelligenceTrigger && !isLast && !isAssigned) {
+    if (isHidden && !isAssigned) {
         return null;
     }
 

@@ -694,6 +694,22 @@ export {
 } from "./dashboard/filterContext.js";
 
 export {
+    type IDashboardFilter,
+    isDashboardFilter,
+    dashboardAttributeFilterToAttributeFilter,
+    dashboardAttributeFilterItemToAttributeFilter,
+    attributeFilterToDashboardAttributeFilter,
+    dashboardDateFilterToDateFilterByWidget,
+    dashboardDateFilterToDateFilterByDateDataSet,
+    dashboardMeasureValueFilterToMeasureValueFilter,
+    filterContextToDashboardFiltersByWidget,
+    filterContextToDashboardFiltersByDateDataSet,
+    filterContextItemsToDashboardFiltersByWidget,
+    filterContextItemsToDashboardFiltersByRichTextWidget,
+    filterContextItemsToDashboardFiltersByDateDataSet,
+} from "./dashboard/filterConverters.js";
+
+export {
     type IWidgetAlert,
     type IWidgetAlertBase,
     type IWidgetAlertDefinition,
@@ -1136,6 +1152,7 @@ export type {
 } from "./theme/index.js";
 
 export type { IWorkspacePermissions, WorkspacePermission } from "./permissions/index.js";
+export { canEditMetric, canShareMetric } from "./permissions/metric.js";
 
 export {
     type DataValue,
@@ -1482,6 +1499,19 @@ export {
     getReportTextPlaceholders,
     resolveReportTextPlaceholders,
 } from "./reports/variables.js";
+
+export {
+    type IReportsBrandKit,
+    type IReportsBrandKitAssets,
+    type IReportsBrandKitColors,
+    type IReportsBrandKitFontFace,
+    type IReportsBrandKitImage,
+    type IReportsBrandKitTypography,
+    ReportsBrandKitImageVariablePrefix,
+    parseReportsBrandChartColor,
+    reportsBrandKitImageVariable,
+    sanitizeReportsBrandKit,
+} from "./reports/brandKit.js";
 
 export {
     type ReportPageLayoutNode,

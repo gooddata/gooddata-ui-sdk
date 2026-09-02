@@ -908,6 +908,12 @@ export type CustomScheduledEmailDialogComponent = ComponentType<IScheduledEmailD
  * corrupts the draft seed on every such open, not in an edge case. Define the decorator outside
  * render, or the dialog remounts (and reseeds) on every parent render.
  *
+ * The contract: change the data, not what it means — every member keeps its documented meaning.
+ * The dialog does not check the decorated value; when you override a member, everything that
+ * reads it is your responsibility. Spread the value you read (`{ ...ctx, member }`) so the other
+ * members pass through. Wrap functions instead of replacing them. Do not touch members marked as
+ * internal machinery.
+ *
  * @alpha
  */
 export type CustomScheduledEmailDialogContextDecoratorComponent = ComponentType<{
@@ -919,3 +925,50 @@ export type CustomScheduledEmailDialogContextDecoratorComponent = ComponentType<
  */
 export type CustomScheduledEmailManagementDialogComponent =
     ComponentType<IScheduledEmailManagementDialogProps>;
+
+/**
+ * Decorates the data the scheduled email management dialog reads.
+ *
+ * The dashboard mounts this component between the connector-provided management dialog context and
+ * the resolved management dialog component (default or replacement), so the value it re-provides is
+ * what the dialog reads. Read the current value with `useScheduledEmailManagementDialogContext()`,
+ * decorate the members to adjust, and re-provide via
+ * `ScheduledEmailManagementDialogContextProvider`:
+ *
+ * @example
+ * ```tsx
+ * function SchedulesListDecorator({ children }: { children?: ReactNode }) {
+ *     const ctx = useScheduledEmailManagementDialogContext();
+ *     const { schedules, loading } = useMySelfFetchedSchedules(ctx.automations);
+ *     const decorated = useMemo(
+ *         () => ({ ...ctx, automations: schedules, isLoading: ctx.isLoading || loading }),
+ *         [ctx, schedules, loading],
+ *     );
+ *     return (
+ *         <ScheduledEmailManagementDialogContextProvider value={decorated}>
+ *             {children}
+ *         </ScheduledEmailManagementDialogContextProvider>
+ *     );
+ * }
+ * // <Dashboard ScheduledEmailManagementDialogContextDecoratorComponent={SchedulesListDecorator} />
+ * ```
+ *
+ * The management dialog has no state seeding — it renders from the context on every change, so a
+ * decorator may replace `automations` or extend `isLoading` (as above). Extend `isLoading` only
+ * as `ctx.isLoading || yourOwnLoading`, never force it: forced false shows the list before its
+ * data arrives, forced true hides it forever. `isLoading` here may also cover a widget-filters
+ * load while a widget-scoped create/edit dialog is open — deliberately broader than the alerting
+ * management context's automations-only flag. Define the decorator outside render, or the dialog
+ * remounts on every parent render.
+ *
+ * The contract: change the data, not what it means — every member keeps its documented meaning.
+ * The dialog does not check the decorated value; when you override a member, everything that
+ * reads it is your responsibility. Spread the value you read (`{ ...ctx, member }`) so the other
+ * members pass through. Wrap functions instead of replacing them. Do not touch members marked as
+ * internal machinery.
+ *
+ * @alpha
+ */
+export type CustomScheduledEmailManagementDialogContextDecoratorComponent = ComponentType<{
+    children?: ReactNode;
+}>;

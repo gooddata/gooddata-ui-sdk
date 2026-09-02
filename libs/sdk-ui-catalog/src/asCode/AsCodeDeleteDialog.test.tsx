@@ -20,6 +20,7 @@ import { TestIntlProvider } from "../localization/TestIntlProvider.js";
 import { createTestMetricMutationPort } from "../metric/metricMutationPort.test.utils.js";
 import { ObjectTypes } from "../objectType/constants.js";
 import { createTestParameterMutationPort } from "../parameter/parameterMutationPort.test.utils.js";
+import { TestPermissionsProvider } from "../permission/TestPermissionsProvider.js";
 
 import { AsCodeDeleteDialog } from "./AsCodeDeleteDialog.js";
 import type { IAsCodeDescriptor } from "./descriptor.js";
@@ -60,7 +61,9 @@ function Wrapper({ children }: PropsWithChildren) {
         <TestIntlProvider>
             <BackendProvider backend={stubBackend}>
                 <WorkspaceProvider workspace="test-workspace">
-                    <ToastsCenterContextProvider>{children}</ToastsCenterContextProvider>
+                    <TestPermissionsProvider>
+                        <ToastsCenterContextProvider>{children}</ToastsCenterContextProvider>
+                    </TestPermissionsProvider>
                 </WorkspaceProvider>
             </BackendProvider>
         </TestIntlProvider>

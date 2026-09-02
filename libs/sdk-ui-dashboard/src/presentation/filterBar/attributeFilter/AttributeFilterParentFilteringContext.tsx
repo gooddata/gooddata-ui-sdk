@@ -18,13 +18,13 @@ import {
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemTitle,
+    dashboardAttributeFilterItemToAttributeFilter,
     filterObjRef,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
 
 import { useAttributeFilterDisplayFormFromMap } from "../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
-import { dashboardAttributeFilterItemToAttributeFilter } from "../../../converters/filterConverters.js";
 import { replaceAttributeFilterItemSelection } from "../../../model/commands/filters.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardCommandProcessing } from "../../../model/react/useDashboardCommandProcessing.js";

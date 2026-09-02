@@ -23,6 +23,7 @@ import {
     selectAutomationDefaultSelectedFilters,
     selectDashboardHiddenFilters,
 } from "../../../model/store/filtering/dashboardFilterSelectors.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { AutomationsContextProvider } from "../contexts/AutomationsContext.js";
 import { ScheduledEmailDialogContextProvider } from "../contexts/ScheduledEmailDialogContext.js";
 import { ScheduledEmailManagementDialogContextProvider } from "../contexts/ScheduledEmailManagementDialogContext.js";
@@ -39,15 +40,20 @@ import { useWidgetAutomationFilters } from "./hooks/useWidgetAutomationFilters.j
 type ScheduledEmailsProps = ReturnType<typeof useDashboardScheduledEmails>;
 
 /**
- * Provides AutomationsContext to its children, built from dashboard Redux state.
- * Wraps the scheduled-email dialog subtree (both the create/edit and management dialogs reach
- * AutomationsContext through this provider).
+ * Provides AutomationsContext to its children, built from dashboard Redux state, with the
+ * resolved context decorator mounted directly inside — so everything in the scheduled-email dialog
+ * subtree (both the create/edit and management dialogs) reads the decorated value.
  *
  * @internal
  */
 export function ScheduledEmailAutomationsProvider({ children }: { children: ReactNode }): ReactElement {
     const automationsCtx = useBuildAutomationsContext();
-    return <AutomationsContextProvider value={automationsCtx}>{children}</AutomationsContextProvider>;
+    const { AutomationsContextDecoratorComponent } = useDashboardComponentsContext();
+    return (
+        <AutomationsContextProvider value={automationsCtx}>
+            <AutomationsContextDecoratorComponent>{children}</AutomationsContextDecoratorComponent>
+        </AutomationsContextProvider>
+    );
 }
 
 /**

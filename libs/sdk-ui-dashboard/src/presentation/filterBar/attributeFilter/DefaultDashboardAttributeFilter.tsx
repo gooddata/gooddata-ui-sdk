@@ -6,9 +6,11 @@ import { useIntl } from "react-intl";
 
 import {
     DashboardAttributeFilterConfigModeValues,
+    attributeFilterToDashboardAttributeFilter,
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemTitle,
+    dashboardAttributeFilterItemToAttributeFilter,
     dashboardAttributeFilterItemValidateElementsBy,
     filterObjRef,
     isDashboardAttributeFilter,
@@ -34,9 +36,7 @@ import {
 } from "@gooddata/sdk-ui-filters";
 import { LOADING_HEIGHT, LoadingMask } from "@gooddata/sdk-ui-kit";
 
-import { attributeFilterToDashboardAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
-import { dashboardAttributeFilterItemToAttributeFilter } from "../../../converters/filterConverters.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../model/react/useDashboardUserInteraction.js";
 import { selectBackendCapabilities } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";

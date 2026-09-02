@@ -14,7 +14,9 @@ export interface ILandingContentProps {
 }
 
 /**
- * @beta
+ * Default implementation of the LandingContainer slot.
+ *
+ * @alpha
  */
 export function DefaultLandingContainer({
     children,
@@ -36,7 +38,9 @@ export function DefaultLandingContainer({
 }
 
 /**
- * @beta
+ * Default implementation of the LandingQuestions slot.
+ *
+ * @alpha
  */
 export function DefaultLandingQuestions({
     children,

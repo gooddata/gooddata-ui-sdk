@@ -201,10 +201,11 @@
     }
 }
 
-// Read-only row: nothing on the row itself is editable (only the View button), so the base
+// Nothing on the row itself is editable (only the toggle and the Edit button), so the base
 // hover's "pop card" bleed — which signals "click me to edit" — doesn't apply here; the dashed
 // border + muted title read as "inherited, not yours to edit here" instead.
 .gd-cf-rule--semantic {
+    gap: 8px;
     border: 1px dashed var(--gd-palette-complementary-3);
 
     &:hover {
@@ -217,6 +218,16 @@
     .gd-cf-rule__title {
         color: var(--gd-palette-complementary-6);
     }
+}
+
+// Suppressed (Custom-with-zero-rules, via `suppressedTargets`) — further muted than a plain Inherited
+// row on top of the shared dashed treatment, so "off" reads as visually quieter than "inherited".
+.gd-cf-rule--off {
+    opacity: 0.6;
+}
+
+.gd-cf-rule__toggle {
+    flex: 0 0 auto;
 }
 
 .gd-cf-rule__view {
@@ -319,13 +330,33 @@
         }
     }
 
+    &__use-default {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    // A real <button> (for keyboard/screen-reader focus) reset back to look like the plain icon
+    // the span it replaced used to.
+    &__use-default-info {
+        padding: 0;
+        border: none;
+        background: none;
+        color: var(--gd-palette-complementary-6);
+        cursor: help;
+    }
+
     &__footer {
         display: flex;
         flex: 0 0 auto;
-        justify-content: flex-end;
+        align-items: center;
         gap: 10px;
         padding: 10px;
         border-top: 1px solid var(--gd-palette-complementary-3);
+    }
+
+    &__delete {
+        margin-right: auto;
     }
 
     .gd-input-field {
@@ -440,7 +471,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 10px;
+    padding: 7px;
     border: 1px solid var(--gd-palette-complementary-3);
     border-radius: 3px;
     background: var(--gd-palette-complementary-0);
@@ -452,27 +483,45 @@
     }
 }
 
+// Separates the Cell/Row scope toggle from the color pickers, matching the design. Our own wrapper
+// around the kit's UiButtonSegmentedControl — this is popover layout between siblings, not something
+// to style via the kit's internal root class (rename-prone, not part of its public contract).
+.gd-cf-scope-toggle {
+    padding-left: 8px;
+    border-left: 1px solid var(--gd-palette-complementary-3);
+}
+
 // The class sits on the trigger button element itself (DropdownButton's className), so the
 // element+class selector outranks the kit's single-class button styling without naming it.
 button.gd-cf-date-value--error {
     border-color: var(--gd-palette-error-base);
 }
 
+// Fills and centers within whatever height ColorDropdown's own trigger wrapper ends up with — its
+// per-instance dynamic class can't be targeted reliably (substring-matching it broke on any rename,
+// and stylelint wouldn't catch that), so this makes OUR OWN markup self-centering instead of
+// reaching into theirs. `__box` is the actual fixed-size visible chip.
 .gd-cf-swatch {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 1px solid var(--gd-palette-complementary-4);
-    border-radius: 2px;
-    background: var(--gd-palette-complementary-0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 
-    &--none {
-        background-image: linear-gradient(
-            to top right,
-            transparent calc(50% - 1px),
-            var(--gd-palette-error-base) calc(50% - 1px),
-            var(--gd-palette-error-base) calc(50% + 1px),
-            transparent calc(50% + 1px)
-        );
+    &__box {
+        width: 20px;
+        height: 20px;
+        border: 1px solid var(--gd-palette-complementary-4);
+        border-radius: 2px;
+        background: var(--gd-palette-complementary-0);
+
+        &--none {
+            background-image: linear-gradient(
+                to top right,
+                transparent calc(50% - 1px),
+                var(--gd-palette-error-base) calc(50% - 1px),
+                var(--gd-palette-error-base) calc(50% + 1px),
+                transparent calc(50% + 1px)
+            );
+        }
     }
 }

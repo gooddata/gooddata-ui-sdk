@@ -51,6 +51,7 @@ export function useSettingsClick(settings: ISettings | undefined) {
                             id: CHANGE_LLM_MODEL_ACTION,
                             workspaceId,
                             type: "setting",
+                            action: "open",
                             newTab: e.metaKey,
                             section: GEN_AI_SECTION,
                             preventDefault: e.preventDefault.bind(e),
@@ -78,6 +79,7 @@ export function useSettingsClick(settings: ISettings | undefined) {
                         linkHandler?.({
                             id: CREATE_LLM_PROVIDER_ACTION,
                             workspaceId,
+                            action: "open",
                             type: "setting",
                             newTab: e.metaKey,
                             section: GEN_AI_SECTION,

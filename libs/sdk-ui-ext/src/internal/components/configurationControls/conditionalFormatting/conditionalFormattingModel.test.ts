@@ -35,6 +35,7 @@ import {
     isCustomTarget,
     isPercentFormat,
     isRuleComplete,
+    isSuppressedTarget,
     operatorArity,
     operatorIcon,
     operatorsForTarget,
@@ -45,6 +46,7 @@ import {
     validateCondition,
     valueEditorKind,
     valueForOperator,
+    withSuppressedTargets,
 } from "./conditionalFormattingModel.js";
 
 const condition = (
@@ -267,14 +269,70 @@ describe("isCustomTarget", () => {
         expect(isCustomTarget(config, attributeTarget)).toBe(false);
     });
 
-    it("is true when it's listed in customTargets, even with no matching rule", () => {
+    it("is true when it's listed in suppressedTargets, even with no matching rule", () => {
         const config: IConditionalFormatting = {
             enabled: true,
             rules: [],
-            customTargets: [attributeTarget],
+            suppressedTargets: [attributeTarget],
         };
         expect(isCustomTarget(config, attributeTarget)).toBe(true);
         expect(isCustomTarget(config, measureTarget)).toBe(false);
+    });
+});
+
+describe("isSuppressedTarget", () => {
+    const measureTarget = { kind: "measure" as const, measureIdentifier: "m1" };
+    const attributeTarget = { kind: "attribute" as const, attributeIdentifier: "a1" };
+
+    it("returns false when config is undefined", () => {
+        expect(isSuppressedTarget(undefined, measureTarget)).toBe(false);
+    });
+
+    it("is true when listed in suppressedTargets", () => {
+        const config: IConditionalFormatting = {
+            enabled: true,
+            rules: [],
+            suppressedTargets: [attributeTarget],
+        };
+        expect(isSuppressedTarget(config, attributeTarget)).toBe(true);
+        expect(isSuppressedTarget(config, measureTarget)).toBe(false);
+    });
+
+    it("is false for a target with only an authored rule (not listed in suppressedTargets)", () => {
+        const config: IConditionalFormatting = { enabled: true, rules: [measureRule([])] };
+        expect(isSuppressedTarget(config, measureTarget)).toBe(false);
+    });
+});
+
+describe("withSuppressedTargets", () => {
+    const attributeTarget = { kind: "attribute" as const, attributeIdentifier: "a1" };
+
+    it("omits the suppressedTargets key entirely (not set to undefined) when the next value is empty", () => {
+        const config: IConditionalFormatting = { enabled: true, rules: [] };
+        const next = withSuppressedTargets(config, undefined);
+        expect("suppressedTargets" in next).toBe(false);
+    });
+
+    it("omits the key when the next value is an empty array too", () => {
+        const config: IConditionalFormatting = { enabled: true, rules: [] };
+        const next = withSuppressedTargets(config, []);
+        expect("suppressedTargets" in next).toBe(false);
+    });
+
+    it("clears a previously non-empty suppressedTargets when the next value is empty", () => {
+        const config: IConditionalFormatting = {
+            enabled: true,
+            rules: [],
+            suppressedTargets: [attributeTarget],
+        };
+        const next = withSuppressedTargets(config, []);
+        expect("suppressedTargets" in next).toBe(false);
+    });
+
+    it("sets the key when the next value is non-empty", () => {
+        const config: IConditionalFormatting = { enabled: true, rules: [] };
+        const next = withSuppressedTargets(config, [attributeTarget]);
+        expect(next.suppressedTargets).toEqual([attributeTarget]);
     });
 });
 

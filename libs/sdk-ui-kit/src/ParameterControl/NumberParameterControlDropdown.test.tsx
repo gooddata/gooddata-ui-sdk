@@ -9,15 +9,21 @@ import { NumberParameterControlDropdown } from "./NumberParameterControlDropdown
 
 const WrappedNumberParameterControlDropdown = withIntlForTest(NumberParameterControlDropdown);
 
-const renderDropdown = (props: Partial<React.ComponentProps<typeof NumberParameterControlDropdown>> = {}) => {
+type CommitModeProps = Extract<
+    React.ComponentProps<typeof NumberParameterControlDropdown>,
+    { mode: "commit" }
+>;
+
+const renderDropdown = (props: Partial<CommitModeProps> = {}) => {
     return render(
         <WrappedNumberParameterControlDropdown
             name="Threshold"
             value={25}
             resetValue={25}
             constraints={{ min: 0, max: 100 }}
-            onApply={() => {}}
-            onCancel={() => {}}
+            mode="commit"
+            onCommit={() => {}}
+            onClose={() => {}}
             {...props}
         />,
     );
@@ -51,60 +57,42 @@ describe("NumberParameterControlDropdown", () => {
         expect(getInput()).not.toHaveAttribute("step");
     });
 
-    it("calls onApply with the numeric value on Apply", () => {
-        const onApply = vi.fn();
-        renderDropdown({ onApply });
-        fireEvent.change(getInput(), { target: { value: "42" } });
-        fireEvent.click(getApply());
-        expect(onApply).toHaveBeenCalledWith(42);
-    });
-
-    it("calls onCancel without applying when Cancel is clicked", () => {
-        const onCancel = vi.fn();
-        const onApply = vi.fn();
-        renderDropdown({ onCancel, onApply });
-        fireEvent.change(getInput(), { target: { value: "42" } });
-        fireEvent.click(screen.getByTestId("parameter-control-dropdown-cancel"));
-        expect(onCancel).toHaveBeenCalledTimes(1);
-        expect(onApply).not.toHaveBeenCalled();
-    });
-
     it("disables Apply and ignores clicks when input is empty", () => {
-        const onApply = vi.fn();
-        renderDropdown({ onApply });
+        const onCommit = vi.fn();
+        renderDropdown({ onCommit });
         fireEvent.change(getInput(), { target: { value: "" } });
         expect(getApply()).toBeDisabled();
         fireEvent.click(getApply());
-        expect(onApply).not.toHaveBeenCalled();
+        expect(onCommit).not.toHaveBeenCalled();
     });
 
     it("blocks Apply and shows an error for an out-of-range value", () => {
-        const onApply = vi.fn();
-        renderDropdown({ onApply });
+        const onCommit = vi.fn();
+        renderDropdown({ onCommit });
         fireEvent.change(getInput(), { target: { value: "999" } });
         expect(getApply()).toBeDisabled();
         expect(screen.getByTestId("parameter-control-dropdown-error")).toBeInTheDocument();
         fireEvent.click(getApply());
-        expect(onApply).not.toHaveBeenCalled();
+        expect(onCommit).not.toHaveBeenCalled();
     });
 
     it("blocks Apply and shows an error for a non-numeric value", () => {
-        const onApply = vi.fn();
-        renderDropdown({ onApply });
+        const onCommit = vi.fn();
+        renderDropdown({ onCommit });
         fireEvent.change(getInput(), { target: { value: "abc" } });
         expect(getApply()).toBeDisabled();
         expect(screen.getByTestId("parameter-control-dropdown-error")).toBeInTheDocument();
         fireEvent.click(getApply());
-        expect(onApply).not.toHaveBeenCalled();
+        expect(onCommit).not.toHaveBeenCalled();
     });
 
     it("allows Apply on the inclusive boundary and commits the raw value", () => {
-        const onApply = vi.fn();
-        renderDropdown({ value: 100, onApply });
+        const onCommit = vi.fn();
+        renderDropdown({ value: 100, onCommit });
         expect(getApply()).not.toBeDisabled();
         expect(screen.queryByTestId("parameter-control-dropdown-error")).not.toBeInTheDocument();
         fireEvent.click(getApply());
-        expect(onApply).toHaveBeenCalledWith(100);
+        expect(onCommit).toHaveBeenCalledWith(100);
     });
 
     it("hides Reset when value equals resetValue", () => {
@@ -122,20 +110,20 @@ describe("NumberParameterControlDropdown", () => {
         expect(screen.queryByTestId("parameter-control-dropdown-reset")).not.toBeInTheDocument();
     });
 
-    it("Reset writes resetValue into the draft input but does NOT call onApply", () => {
-        const onApply = vi.fn();
-        renderDropdown({ value: 50, resetValue: 25, onApply });
+    it("Reset writes resetValue into the draft input but does NOT call onCommit", () => {
+        const onCommit = vi.fn();
+        renderDropdown({ value: 50, resetValue: 25, onCommit });
         fireEvent.click(screen.getByTestId("parameter-control-dropdown-reset"));
         expect(getInput()).toHaveValue(25);
-        expect(onApply).not.toHaveBeenCalled();
+        expect(onCommit).not.toHaveBeenCalled();
     });
 
     it("Apply commits the post-reset draft value", () => {
-        const onApply = vi.fn();
-        renderDropdown({ value: 50, resetValue: 25, onApply });
+        const onCommit = vi.fn();
+        renderDropdown({ value: 50, resetValue: 25, onCommit });
         fireEvent.click(screen.getByTestId("parameter-control-dropdown-reset"));
         fireEvent.click(getApply());
-        expect(onApply).toHaveBeenCalledWith(25);
+        expect(onCommit).toHaveBeenCalledWith(25);
     });
 
     it("emits the dropdown root data-testid", () => {

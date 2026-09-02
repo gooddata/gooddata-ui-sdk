@@ -32,8 +32,8 @@ const renderDropdown = (
             value="actual"
             defaultValue="plan"
             allowedValues={allowedValues}
-            onApply={() => {}}
-            onCancel={() => {}}
+            onSelect={() => {}}
+            onClose={() => {}}
             {...props}
         />,
     );
@@ -60,12 +60,12 @@ describe("AllowedValuesParameterControlDropdown", () => {
         expect(items.map((item) => item.getAttribute("aria-selected"))).toEqual(["false", "true", "false"]);
     });
 
-    it("applies the clicked row's raw value once", async () => {
-        const onApply = vi.fn();
-        renderDropdown({ onApply });
+    it("selects the clicked row's raw value once", async () => {
+        const onSelect = vi.fn();
+        renderDropdown({ onSelect });
         fireEvent.click(await screen.findByText("Plan"));
-        expect(onApply).toHaveBeenCalledTimes(1);
-        expect(onApply).toHaveBeenCalledWith("plan");
+        expect(onSelect).toHaveBeenCalledTimes(1);
+        expect(onSelect).toHaveBeenCalledWith("plan");
     });
 
     it("renders no Apply or Cancel buttons", async () => {
@@ -120,32 +120,32 @@ describe("AllowedValuesParameterControlDropdown", () => {
         expect(items[1].textContent).toContain("(Default)");
     });
 
-    it("applies the default row's raw value when it is clicked", async () => {
-        const onApply = vi.fn();
-        renderDropdown({ value: "plan", defaultValue: "actual", onApply });
+    it("selects the default row's raw value when it is clicked", async () => {
+        const onSelect = vi.fn();
+        renderDropdown({ value: "plan", defaultValue: "actual", onSelect });
         fireEvent.click(await screen.findByText("Actual results"));
-        expect(onApply).toHaveBeenCalledTimes(1);
-        expect(onApply).toHaveBeenCalledWith("actual");
+        expect(onSelect).toHaveBeenCalledTimes(1);
+        expect(onSelect).toHaveBeenCalledWith("actual");
     });
 
-    it("applies the keyboard-navigated row on Enter", async () => {
-        const onApply = vi.fn();
-        renderDropdown({ onApply });
+    it("selects the keyboard-navigated row on Enter", async () => {
+        const onSelect = vi.fn();
+        renderDropdown({ onSelect });
         await screen.findAllByRole("option");
         const list = screen.getByRole("listbox");
         fireEvent.keyDown(list, { code: "ArrowDown", key: "ArrowDown" });
         fireEvent.keyDown(list, { code: "Enter", key: "Enter" });
-        expect(onApply).toHaveBeenCalledWith("plan");
+        expect(onSelect).toHaveBeenCalledWith("plan");
     });
 
-    it("cancels without applying on Escape in the list", async () => {
-        const onApply = vi.fn();
-        const onCancel = vi.fn();
-        renderDropdown({ onApply, onCancel });
+    it("closes without selecting on Escape in the list", async () => {
+        const onSelect = vi.fn();
+        const onClose = vi.fn();
+        renderDropdown({ onSelect, onClose });
         await screen.findAllByRole("option");
         fireEvent.keyDown(screen.getByRole("listbox"), { code: "Escape", key: "Escape" });
-        expect(onCancel).toHaveBeenCalledTimes(1);
-        expect(onApply).not.toHaveBeenCalled();
+        expect(onClose).toHaveBeenCalledTimes(1);
+        expect(onSelect).not.toHaveBeenCalled();
     });
 
     it("exposes the list as a listbox named after the parameter", async () => {

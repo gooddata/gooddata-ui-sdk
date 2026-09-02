@@ -28313,6 +28313,1033 @@
                     "description": "Contains minimal permission level required to manage this object type."
                 }
             }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/reportTemplates": {
+            "get": {
+                "tags": [
+                    "Reports",
+                    "entities",
+                    "report-template-controller"
+                ],
+                "summary": "Get all Report Templates",
+                "operationId": "getAllEntities@ReportTemplates",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "origin",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Defines scope of origin of objects. All by default.",
+                            "default": "ALL",
+                            "enum": [
+                                "ALL",
+                                "PARENTS",
+                                "NATIVE"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "title==someString;description==someString"
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
+                    },
+                    {
+                        "$ref": "#/components/parameters/size"
+                    },
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    },
+                    {
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "page",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,page,all"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportTemplateOutList"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportTemplateOutList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Contains minimal permission level required to view this object type."
+                }
+            },
+            "post": {
+                "tags": [
+                    "Reports",
+                    "entities",
+                    "report-template-controller"
+                ],
+                "summary": "Post Report Template",
+                "operationId": "createEntity@ReportTemplates",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,all"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiReportTemplatePostOptionalIdDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiReportTemplatePostOptionalIdDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportTemplateOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportTemplateOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/reportTemplates/{objectId}": {
+            "get": {
+                "tags": [
+                    "Reports",
+                    "entities",
+                    "report-template-controller"
+                ],
+                "summary": "Get a Report Template",
+                "operationId": "getEntity@ReportTemplates",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "title==someString;description==someString"
+                    },
+                    {
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,all"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportTemplateOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportTemplateOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Contains minimal permission level required to view this object type."
+                }
+            },
+            "put": {
+                "tags": [
+                    "Reports",
+                    "entities",
+                    "report-template-controller"
+                ],
+                "summary": "Put a Report Template",
+                "operationId": "updateEntity@ReportTemplates",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "title==someString;description==someString"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiReportTemplateInDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiReportTemplateInDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportTemplateOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportTemplateOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Reports",
+                    "entities",
+                    "report-template-controller"
+                ],
+                "summary": "Delete a Report Template",
+                "operationId": "deleteEntity@ReportTemplates",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "$ref": "#/components/responses/Deleted"
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Reports",
+                    "entities",
+                    "report-template-controller"
+                ],
+                "summary": "Patch a Report Template",
+                "operationId": "patchEntity@ReportTemplates",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "title==someString;description==someString"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiReportTemplatePatchDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiReportTemplatePatchDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportTemplateOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportTemplateOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/reports": {
+            "get": {
+                "tags": [
+                    "Reports",
+                    "entities",
+                    "report-controller"
+                ],
+                "summary": "Get all Reports",
+                "operationId": "getAllEntities@Reports",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "origin",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Defines scope of origin of objects. All by default.",
+                            "default": "ALL",
+                            "enum": [
+                                "ALL",
+                                "PARENTS",
+                                "NATIVE"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "title==someString;description==someString"
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
+                    },
+                    {
+                        "$ref": "#/components/parameters/size"
+                    },
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    },
+                    {
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "page",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,page,all"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportOutList"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportOutList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Contains minimal permission level required to view this object type."
+                }
+            },
+            "post": {
+                "tags": [
+                    "Reports",
+                    "entities",
+                    "report-controller"
+                ],
+                "summary": "Post Report",
+                "operationId": "createEntity@Reports",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,all"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiReportPostOptionalIdDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiReportPostOptionalIdDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/reports/{objectId}": {
+            "get": {
+                "tags": [
+                    "Reports",
+                    "entities",
+                    "report-controller"
+                ],
+                "summary": "Get a Report",
+                "operationId": "getEntity@Reports",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "title==someString;description==someString"
+                    },
+                    {
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,all"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Contains minimal permission level required to view this object type."
+                }
+            },
+            "put": {
+                "tags": [
+                    "Reports",
+                    "entities",
+                    "report-controller"
+                ],
+                "summary": "Put a Report",
+                "operationId": "updateEntity@Reports",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "title==someString;description==someString"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiReportInDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiReportInDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Reports",
+                    "entities",
+                    "report-controller"
+                ],
+                "summary": "Delete a Report",
+                "operationId": "deleteEntity@Reports",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "$ref": "#/components/responses/Deleted"
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Reports",
+                    "entities",
+                    "report-controller"
+                ],
+                "summary": "Patch a Report",
+                "operationId": "patchEntity@Reports",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "title==someString;description==someString"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiReportPatchDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiReportPatchDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiReportOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/computedAttributes/{computedAttributeId}/managePermissions": {
+            "post": {
+                "tags": [
+                    "Permissions",
+                    "actions"
+                ],
+                "summary": "(BETA) Manage Permissions for a Computed Attribute",
+                "operationId": "manageComputedAttributePermissions",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "computedAttributeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "description": "An array of computed-attribute-permission assignments.",
+                                "items": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ComputedAttributePermissionsForAssignee"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/ComputedAttributePermissionsForAssigneeRule"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/computedAttributes/{computedAttributeId}/permissions": {
+            "get": {
+                "tags": [
+                    "Permissions",
+                    "actions"
+                ],
+                "summary": "(BETA) Get Computed Attribute Permissions",
+                "operationId": "computedAttributePermissions",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "computedAttributeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ComputedAttributePermissions"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -30199,6 +31226,99 @@
                 },
                 "description": "Filter the result by applying multiple comparison and/or range conditions combined with OR logic. If conditions list is empty, no filtering is applied (all rows are returned)."
             },
+            "ComputedAttributePermissions": {
+                "required": [
+                    "rules",
+                    "userGroups",
+                    "users"
+                ],
+                "type": "object",
+                "properties": {
+                    "rules": {
+                        "type": "array",
+                        "description": "List of rules",
+                        "items": {
+                            "$ref": "#/components/schemas/RulePermission"
+                        }
+                    },
+                    "userGroups": {
+                        "type": "array",
+                        "description": "List of user groups",
+                        "items": {
+                            "$ref": "#/components/schemas/UserGroupPermission"
+                        }
+                    },
+                    "users": {
+                        "type": "array",
+                        "description": "List of users",
+                        "items": {
+                            "$ref": "#/components/schemas/UserPermission"
+                        }
+                    }
+                }
+            },
+            "ComputedAttributePermissionsAssignment": {
+                "required": [
+                    "permissions"
+                ],
+                "type": "object",
+                "properties": {
+                    "permissions": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "EDIT",
+                                "SHARE",
+                                "VIEW"
+                            ]
+                        }
+                    }
+                },
+                "description": "Desired levels of permissions on a computed attribute for an assignee."
+            },
+            "ComputedAttributePermissionsForAssignee": {
+                "required": [
+                    "assigneeIdentifier",
+                    "permissions"
+                ],
+                "type": "object",
+                "description": "Desired levels of computed-attribute permissions for an assignee identified by an identifier.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ComputedAttributePermissionsAssignment"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "assigneeIdentifier": {
+                                "$ref": "#/components/schemas/AssigneeIdentifier"
+                            }
+                        }
+                    }
+                ]
+            },
+            "ComputedAttributePermissionsForAssigneeRule": {
+                "required": [
+                    "assigneeRule",
+                    "permissions"
+                ],
+                "type": "object",
+                "description": "Desired levels of computed-attribute permissions for a collection of assignees identified by a rule.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ComputedAttributePermissionsAssignment"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "assigneeRule": {
+                                "$ref": "#/components/schemas/AssigneeRule"
+                            }
+                        }
+                    }
+                ]
+            },
             "ConditionalFormatting": {
                 "required": [
                     "enabled",
@@ -32008,6 +33128,20 @@
                         "description": "A list of report page layouts available in the model.",
                         "items": {
                             "$ref": "#/components/schemas/DeclarativeReportPageLayout"
+                        }
+                    },
+                    "reportTemplates": {
+                        "type": "array",
+                        "description": "A list of report templates available in the model.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeReportTemplate"
+                        }
+                    },
+                    "reports": {
+                        "type": "array",
+                        "description": "A list of reports available in the model.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeReport"
                         }
                     },
                     "visualizationObjects": {
@@ -34583,6 +35717,66 @@
                 },
                 "description": "A dataset reference source column description."
             },
+            "DeclarativeReport": {
+                "required": [
+                    "content",
+                    "id",
+                    "periodEnd",
+                    "periodStart",
+                    "title"
+                ],
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "$ref": "#/components/schemas/JsonNode"
+                    },
+                    "description": {
+                        "maxLength": 10000,
+                        "type": "string",
+                        "description": "Report description."
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "Report ID.",
+                        "example": "boozt-h1"
+                    },
+                    "periodEnd": {
+                        "type": "string",
+                        "description": "Last day of the reported period, inclusive.",
+                        "format": "date",
+                        "example": "2026-06-30"
+                    },
+                    "periodStart": {
+                        "type": "string",
+                        "description": "First day of the reported period, inclusive.",
+                        "format": "date",
+                        "example": "2026-01-01"
+                    },
+                    "tags": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "A list of tags.",
+                            "example": "[\"brand\"]"
+                        }
+                    },
+                    "title": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "Report title."
+                    },
+                    "variableValues": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string",
+                            "description": "Values for the variables declared in the content, keyed by name."
+                        },
+                        "description": "Values for the variables declared in the content, keyed by name."
+                    }
+                }
+            },
             "DeclarativeReportPageLayout": {
                 "required": [
                     "content",
@@ -34618,6 +35812,44 @@
                         "maxLength": 255,
                         "type": "string",
                         "description": "Report page layout title."
+                    }
+                }
+            },
+            "DeclarativeReportTemplate": {
+                "required": [
+                    "content",
+                    "id",
+                    "title"
+                ],
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "$ref": "#/components/schemas/JsonNode"
+                    },
+                    "description": {
+                        "maxLength": 10000,
+                        "type": "string",
+                        "description": "Report template description."
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "Report template ID.",
+                        "example": "boozt-h1-deck"
+                    },
+                    "tags": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "A list of tags.",
+                            "example": "[\"brand\"]"
+                        }
+                    },
+                    "title": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "Report template title."
                     }
                 }
             },
@@ -34759,7 +35991,8 @@
                             "RESTRICT_BASE_UI",
                             "CERTIFY_PARENT_OBJECTS",
                             "HLL_TYPE",
-                            "ENABLE_TIMEZONE_CHANGE"
+                            "ENABLE_TIMEZONE_CHANGE",
+                            "REPORTS_BRAND_KIT"
                         ]
                     }
                 },
@@ -35855,6 +37088,7 @@
                             "fact",
                             "label",
                             "metric",
+                            "computedAttribute",
                             "userDataFilter",
                             "parameter",
                             "automation",
@@ -35977,6 +37211,7 @@
                             "fact",
                             "label",
                             "metric",
+                            "computedAttribute",
                             "userDataFilter",
                             "parameter",
                             "automation",
@@ -36646,6 +37881,8 @@
                                     "workspaceDataFilterSetting",
                                     "filterView",
                                     "reportPageLayout",
+                                    "reportTemplate",
+                                    "report",
                                     "workspaceExportTemplate",
                                     "workspaceTheme",
                                     "workspaceColorPalette",
@@ -51541,7 +52778,8 @@
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
-                                    "ENABLE_TIMEZONE_CHANGE"
+                                    "ENABLE_TIMEZONE_CHANGE",
+                                    "REPORTS_BRAND_KIT"
                                 ]
                             }
                         }
@@ -51645,7 +52883,8 @@
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
-                                    "ENABLE_TIMEZONE_CHANGE"
+                                    "ENABLE_TIMEZONE_CHANGE",
+                                    "REPORTS_BRAND_KIT"
                                 ]
                             }
                         }
@@ -51789,7 +53028,8 @@
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
-                                    "ENABLE_TIMEZONE_CHANGE"
+                                    "ENABLE_TIMEZONE_CHANGE",
+                                    "REPORTS_BRAND_KIT"
                                 ]
                             }
                         }
@@ -52285,6 +53525,238 @@
                     "$ref": "#/components/schemas/JsonApiParameterLinkage"
                 }
             },
+            "JsonApiReportIn": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content",
+                            "periodEnd",
+                            "periodStart",
+                            "title"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form report definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters."
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "periodEnd": {
+                                "type": "string",
+                                "description": "Last day of the reported period, inclusive.",
+                                "format": "date",
+                                "example": "2026-06-30"
+                            },
+                            "periodStart": {
+                                "type": "string",
+                                "description": "First day of the reported period, inclusive.",
+                                "format": "date",
+                                "example": "2026-01-01"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "variableValues": {
+                                "description": "Values for the variables declared in the content, keyed by name."
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "report",
+                        "enum": [
+                            "report"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of report entity."
+            },
+            "JsonApiReportInDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiReportIn"
+                    }
+                }
+            },
+            "JsonApiReportOut": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content",
+                            "periodEnd",
+                            "periodStart",
+                            "title"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form report definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters."
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "periodEnd": {
+                                "type": "string",
+                                "description": "Last day of the reported period, inclusive.",
+                                "format": "date",
+                                "example": "2026-06-30"
+                            },
+                            "periodStart": {
+                                "type": "string",
+                                "description": "First day of the reported period, inclusive.",
+                                "format": "date",
+                                "example": "2026-01-01"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "variableValues": {
+                                "description": "Values for the variables declared in the content, keyed by name."
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "origin": {
+                                "required": [
+                                    "originId",
+                                    "originType"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "originId": {
+                                        "type": "string",
+                                        "description": "defines id of the workspace where the entity comes from"
+                                    },
+                                    "originType": {
+                                        "type": "string",
+                                        "description": "defines type of the origin of the entity",
+                                        "enum": [
+                                            "NATIVE",
+                                            "PARENT"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "report",
+                        "enum": [
+                            "report"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of report entity."
+            },
+            "JsonApiReportOutDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiReportOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    }
+                }
+            },
+            "JsonApiReportOutList": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiReportOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            }
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiReportOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiReportOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
             "JsonApiReportPageLayoutIn": {
                 "required": [
                     "attributes",
@@ -52607,6 +54079,490 @@
                 "properties": {
                     "data": {
                         "$ref": "#/components/schemas/JsonApiReportPageLayoutPostOptionalId"
+                    }
+                }
+            },
+            "JsonApiReportPatch": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form report definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters."
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "periodEnd": {
+                                "type": "string",
+                                "description": "Last day of the reported period, inclusive.",
+                                "format": "date",
+                                "example": "2026-06-30"
+                            },
+                            "periodStart": {
+                                "type": "string",
+                                "description": "First day of the reported period, inclusive.",
+                                "format": "date",
+                                "example": "2026-01-01"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "variableValues": {
+                                "description": "Values for the variables declared in the content, keyed by name."
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "report",
+                        "enum": [
+                            "report"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of patching report entity."
+            },
+            "JsonApiReportPatchDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiReportPatch"
+                    }
+                }
+            },
+            "JsonApiReportPostOptionalId": {
+                "required": [
+                    "attributes",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content",
+                            "periodEnd",
+                            "periodStart",
+                            "title"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form report definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters."
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "periodEnd": {
+                                "type": "string",
+                                "description": "Last day of the reported period, inclusive.",
+                                "format": "date",
+                                "example": "2026-06-30"
+                            },
+                            "periodStart": {
+                                "type": "string",
+                                "description": "First day of the reported period, inclusive.",
+                                "format": "date",
+                                "example": "2026-01-01"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "variableValues": {
+                                "description": "Values for the variables declared in the content, keyed by name."
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "report",
+                        "enum": [
+                            "report"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of report entity."
+            },
+            "JsonApiReportPostOptionalIdDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiReportPostOptionalId"
+                    }
+                }
+            },
+            "JsonApiReportTemplateIn": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content",
+                            "title"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form deck definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters."
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "reportTemplate",
+                        "enum": [
+                            "reportTemplate"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of reportTemplate entity."
+            },
+            "JsonApiReportTemplateInDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiReportTemplateIn"
+                    }
+                }
+            },
+            "JsonApiReportTemplateOut": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content",
+                            "title"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form deck definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters."
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "origin": {
+                                "required": [
+                                    "originId",
+                                    "originType"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "originId": {
+                                        "type": "string",
+                                        "description": "defines id of the workspace where the entity comes from"
+                                    },
+                                    "originType": {
+                                        "type": "string",
+                                        "description": "defines type of the origin of the entity",
+                                        "enum": [
+                                            "NATIVE",
+                                            "PARENT"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "reportTemplate",
+                        "enum": [
+                            "reportTemplate"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of reportTemplate entity."
+            },
+            "JsonApiReportTemplateOutDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiReportTemplateOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    }
+                }
+            },
+            "JsonApiReportTemplateOutList": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiReportTemplateOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            }
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiReportTemplateOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiReportTemplateOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiReportTemplatePatch": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form deck definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters."
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "reportTemplate",
+                        "enum": [
+                            "reportTemplate"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of patching reportTemplate entity."
+            },
+            "JsonApiReportTemplatePatchDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiReportTemplatePatch"
+                    }
+                }
+            },
+            "JsonApiReportTemplatePostOptionalId": {
+                "required": [
+                    "attributes",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content",
+                            "title"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form deck definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters."
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "reportTemplate",
+                        "enum": [
+                            "reportTemplate"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of reportTemplate entity."
+            },
+            "JsonApiReportTemplatePostOptionalIdDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiReportTemplatePostOptionalId"
                     }
                 }
             },
@@ -54130,7 +56086,8 @@
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
-                                    "ENABLE_TIMEZONE_CHANGE"
+                                    "ENABLE_TIMEZONE_CHANGE",
+                                    "REPORTS_BRAND_KIT"
                                 ]
                             }
                         }
@@ -54234,7 +56191,8 @@
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
-                                    "ENABLE_TIMEZONE_CHANGE"
+                                    "ENABLE_TIMEZONE_CHANGE",
+                                    "REPORTS_BRAND_KIT"
                                 ]
                             }
                         }
@@ -57362,7 +59320,8 @@
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
-                                    "ENABLE_TIMEZONE_CHANGE"
+                                    "ENABLE_TIMEZONE_CHANGE",
+                                    "REPORTS_BRAND_KIT"
                                 ]
                             }
                         }
@@ -57466,7 +59425,8 @@
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
-                                    "ENABLE_TIMEZONE_CHANGE"
+                                    "ENABLE_TIMEZONE_CHANGE",
+                                    "REPORTS_BRAND_KIT"
                                 ]
                             }
                         }
@@ -57636,7 +59596,8 @@
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
-                                    "ENABLE_TIMEZONE_CHANGE"
+                                    "ENABLE_TIMEZONE_CHANGE",
+                                    "REPORTS_BRAND_KIT"
                                 ]
                             }
                         }
@@ -57739,7 +59700,8 @@
                                     "RESTRICT_BASE_UI",
                                     "CERTIFY_PARENT_OBJECTS",
                                     "HLL_TYPE",
-                                    "ENABLE_TIMEZONE_CHANGE"
+                                    "ENABLE_TIMEZONE_CHANGE",
+                                    "REPORTS_BRAND_KIT"
                                 ]
                             }
                         }
@@ -59981,7 +61943,8 @@
                             "RESTRICT_BASE_UI",
                             "CERTIFY_PARENT_OBJECTS",
                             "HLL_TYPE",
-                            "ENABLE_TIMEZONE_CHANGE"
+                            "ENABLE_TIMEZONE_CHANGE",
+                            "REPORTS_BRAND_KIT"
                         ]
                     }
                 },

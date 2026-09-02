@@ -16,7 +16,6 @@ import { noOnlyTests } from "./configurations/no-only-tests.js";
 import { playwright } from "./configurations/playwright.js";
 import { react } from "./configurations/react.js";
 import { regexp } from "./configurations/regexp.js";
-import { security } from "./configurations/security.js";
 import { sonarjs } from "./configurations/sonarjs.js";
 import { storybook } from "./configurations/storybook.js";
 import { testingLibraryDom, testingLibraryReact } from "./configurations/testing-library.js";
@@ -35,7 +34,6 @@ export const commonConfigurations: IDualConfiguration[] = [
     regexp,
     sonarjs,
     // tsdoc,
-    security,
     ignore,
     formatter,
 ];

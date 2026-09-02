@@ -57,6 +57,14 @@ export interface IGetMeasureOptions {
      * Defaults to false.
      */
     loadUserData?: boolean;
+
+    /**
+     * Ask the backend to return the measure's object-level permissions.
+     *
+     * @remarks
+     * Defaults to false.
+     */
+    loadPermissions?: boolean;
 }
 
 /**
@@ -232,6 +240,14 @@ export interface IMeasuresQuery {
      * @returns measures query
      */
     withInclude(include: string[]): IMeasuresQuery;
+
+    /**
+     * Sets meta include for the query.
+     *
+     * @param metaInclude - meta include to apply
+     * @returns measures query
+     */
+    withMetaInclude(metaInclude: string[]): IMeasuresQuery;
 
     /**
      * Sets origin for the query.

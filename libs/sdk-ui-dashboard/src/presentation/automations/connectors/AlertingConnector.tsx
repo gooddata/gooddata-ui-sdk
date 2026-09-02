@@ -13,6 +13,7 @@ import {
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { useDashboardAlerts } from "../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { AlertingDialog } from "../alerting/AlertingDialog.js";
 import { AlertingManagementDialog } from "../alerting/AlertingManagementDialog.js";
 import { AlertingDialogContextProvider } from "../contexts/AlertingDialogContext.js";
@@ -27,15 +28,20 @@ import { useBuildAutomationsContext } from "./hooks/useBuildAutomationsContext.j
 type AlertsProps = ReturnType<typeof useDashboardAlerts>;
 
 /**
- * Provides AutomationsContext to its children, built from dashboard Redux state.
- * Wraps the alerting dialog subtree (both the create/edit and management dialogs reach
- * AutomationsContext through this provider).
+ * Provides AutomationsContext to its children, built from dashboard Redux state, with the
+ * resolved context decorator mounted directly inside — so everything in the alerting dialog
+ * subtree (both the create/edit and management dialogs) reads the decorated value.
  *
  * @internal
  */
 export function AlertingAutomationsProvider({ children }: { children: ReactNode }): ReactElement {
     const automationsCtx = useBuildAutomationsContext();
-    return <AutomationsContextProvider value={automationsCtx}>{children}</AutomationsContextProvider>;
+    const { AutomationsContextDecoratorComponent } = useDashboardComponentsContext();
+    return (
+        <AutomationsContextProvider value={automationsCtx}>
+            <AutomationsContextDecoratorComponent>{children}</AutomationsContextDecoratorComponent>
+        </AutomationsContextProvider>
+    );
 }
 
 /**

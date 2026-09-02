@@ -3,6 +3,7 @@
 import { isEmpty } from "lodash-es";
 
 import type { IDateFilterConfig } from "../dateFilterConfig/index.js";
+import type { IReportsBrandKit } from "../reports/brandKit.js";
 
 /**
  * Describes metric format override configuration.
@@ -350,6 +351,12 @@ export interface IPermanentSettings {
      * @beta
      */
     defaultExportTemplate?: IDefaultExportTemplate;
+
+    /**
+     * Brand kit offered to report authors: brand colors, typography and shared assets.
+     * @alpha
+     */
+    reportsBrandKit?: IReportsBrandKit;
 
     /**
      * Indicates current platform edition.
@@ -800,6 +807,14 @@ export interface IFeatureFlags {
      * Enable conditional formatting for the pivot table
      */
     enableConditionalFormatting?: boolean;
+
+    /**
+     * Enable inheriting conditional formatting rules authored on a semantic-layer catalog object
+     * (label, metric, fact, or date dataset) — independent of
+     * {@link IFeatureFlags.enableConditionalFormatting}, which only gates an insight's own authored
+     * rules.
+     */
+    enableSemanticConditionalFormatting?: boolean;
 
     /**
      * Enable new geo pushpin chart

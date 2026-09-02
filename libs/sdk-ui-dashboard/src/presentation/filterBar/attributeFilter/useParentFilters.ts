@@ -10,10 +10,10 @@ import {
     type ObjRef,
     dashboardAttributeFilterItemFilterElementsBy,
     dashboardAttributeFilterItemLocalIdentifier,
+    dashboardAttributeFilterItemToAttributeFilter,
 } from "@gooddata/sdk-model";
 import { type IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
 
-import { dashboardAttributeFilterItemToAttributeFilter } from "../../../converters/filterConverters.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsSettingConnectingAttributes } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";

@@ -1,13 +1,13 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { IPackage } from "../types.js";
+import { IPackage, Rules } from "../types.js";
 
 export const vitestPlugin: IPackage = {
     name: "@vitest/eslint-plugin",
     version: "1.6.19",
 };
 
-const vitestRulesCommon = {
+export const vitestRules: Rules = {
     "no-conditional-expect": "error",
     "no-import-node-test": "error",
     "no-interpolation-in-snapshots": "error",
@@ -23,19 +23,6 @@ const vitestRulesCommon = {
     "no-disabled-tests": "warn",
     "no-focused-tests": "warn",
     "no-identical-title": "warn",
-};
-
-export const vitestRulesNativeSupported = {
-    ...vitestRulesCommon,
-};
-
-// TODO: https://github.com/oxc-project/oxc/issues/4656
-export const vitestRulesNativeNotSupported = {
     "valid-expect": "warn",
     "valid-expect-in-promise": "error",
-};
-
-export const vitestRules = {
-    ...vitestRulesNativeSupported,
-    ...vitestRulesNativeNotSupported,
 };

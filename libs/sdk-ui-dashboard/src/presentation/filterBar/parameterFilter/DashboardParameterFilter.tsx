@@ -4,8 +4,19 @@ import { type ReactElement } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
-import { DashboardParameterModeValues, type IDashboardParameter, objRefToString } from "@gooddata/sdk-model";
-import { Dropdown, ParameterControl, ParameterControlButton, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import {
+    DashboardParameterModeValues,
+    type IDashboardParameter,
+    type ParameterValue,
+    objRefToString,
+} from "@gooddata/sdk-model";
+import {
+    Dropdown,
+    ParameterControl,
+    ParameterControlButton,
+    type ParameterSubmitModeProps,
+    useIdPrefixed,
+} from "@gooddata/sdk-ui-kit";
 
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogParameterByRef } from "../../../model/store/catalog/catalogSelectors.js";
@@ -76,6 +87,18 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
         );
     }
 
+    const submitModeProps: ParameterSubmitModeProps<ParameterValue> = isApplyAllAtOnceEnabledAndSet
+        ? {
+              mode: "staged",
+              onStage: (value) =>
+                  dispatch(tabsActions.setParameterWorkingValue({ ref: parameter.ref, value })),
+          }
+        : {
+              mode: "commit",
+              onCommit: (value) =>
+                  dispatch(tabsActions.setParameterRuntimeValue({ ref: parameter.ref, value })),
+          };
+
     return (
         <DraggableChipSource dragItem={dragItem} canDrag={isInEditMode}>
             <Dropdown
@@ -103,15 +126,8 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
                         resetValue={resetValue}
                         inputId={valueInputId}
                         ariaAttributes={ariaAttributes}
-                        onApply={(value) => {
-                            dispatch(
-                                isApplyAllAtOnceEnabledAndSet
-                                    ? tabsActions.setParameterWorkingValue({ ref: parameter.ref, value })
-                                    : tabsActions.setParameterRuntimeValue({ ref: parameter.ref, value }),
-                            );
-                            closeDropdown();
-                        }}
-                        onCancel={closeDropdown}
+                        {...submitModeProps}
+                        onClose={closeDropdown}
                     />
                 )}
             />

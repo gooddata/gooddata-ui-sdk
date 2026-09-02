@@ -141,3 +141,99 @@ describe("buildAfmExecution text filters", () => {
         ]);
     });
 });
+
+describe("buildAfmExecution ranking filters", () => {
+    it("routes the ranked attribute to dimensionality, not to measures", () => {
+        const query = buildQueryWithFilters({
+            f1: {
+                type: "ranking_filter",
+                using: "metric/revenue",
+                attribute: "label/brand",
+                top: 5,
+            },
+        });
+
+        const { execution } = buildAfmExecution(emptyEntities, query);
+
+        expect(execution.execution.filters).toEqual([
+            {
+                rankingFilter: {
+                    measures: [{ identifier: { id: "revenue", type: "measure" } }],
+                    dimensionality: [{ identifier: { id: "brand", type: "label" } }],
+                    operator: "TOP",
+                    value: 5,
+                },
+            },
+        ]);
+    });
+
+    it("omits dimensionality entirely when no attribute is ranked", () => {
+        const query = buildQueryWithFilters({
+            f1: { type: "ranking_filter", using: "metric/revenue", top: 3 },
+        });
+
+        const { execution } = buildAfmExecution(emptyEntities, query);
+
+        expect(execution.execution.filters).toEqual([
+            {
+                rankingFilter: {
+                    measures: [{ identifier: { id: "revenue", type: "measure" } }],
+                    operator: "TOP",
+                    value: 3,
+                },
+            },
+        ]);
+        expect(execution.execution.filters?.[0]).not.toHaveProperty("rankingFilter.dimensionality");
+    });
+
+    it("resolves local field keys to local identifiers in both measures and dimensionality", () => {
+        const query = {
+            fields: {
+                m1: { using: "metric/revenue" },
+                a1: { using: "label/brand" },
+            },
+            metrics: [{ field: "m1" }],
+            attributes: [{ field: "a1" }],
+            filter_by: {
+                f1: { type: "ranking_filter", using: "m1", attribute: "a1", top: 5 },
+            },
+        } as unknown as Query;
+
+        const { execution } = buildAfmExecution(emptyEntities, query);
+
+        expect(execution.execution.filters).toEqual([
+            {
+                rankingFilter: {
+                    measures: [{ localIdentifier: "m1" }],
+                    dimensionality: [{ localIdentifier: "a1" }],
+                    operator: "TOP",
+                    value: 5,
+                },
+            },
+        ]);
+    });
+
+    it("converts a bottom ranking filter to BOTTOM and keeps dimensionality routed", () => {
+        const query = buildQueryWithFilters({
+            f1: {
+                type: "ranking_filter",
+                using: "metric/revenue",
+                attribute: "label/brand",
+                bottom: 2,
+            },
+        });
+
+        const { execution } = buildAfmExecution(emptyEntities, query);
+
+        expect(execution.execution.filters).toEqual([
+            {
+                rankingFilter: {
+                    measures: [{ identifier: { id: "revenue", type: "measure" } }],
+                    dimensionality: [{ identifier: { id: "brand", type: "label" } }],
+                    operator: "BOTTOM",
+                    value: 2,
+                },
+            },
+        ]);
+    });
+});

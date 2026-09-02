@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type ReactNode, memo, useState } from "react";
+import { type NamedExoticComponent, type ReactNode, memo, useState } from "react";
 
 import cx from "classnames";
 
@@ -25,7 +25,9 @@ export interface IFluidLegendProps {
 /**
  * @internal
  */
-export const FluidLegend = memo(function FluidLegend(props: IFluidLegendProps) {
+export const FluidLegend: NamedExoticComponent<IFluidLegendProps> = memo(function FluidLegend(
+    props: IFluidLegendProps,
+) {
     const { series, containerWidth, onItemClick = () => {}, enableBorderRadius, chartFill } = props;
 
     const [showAll, setShowAll] = useState(false);

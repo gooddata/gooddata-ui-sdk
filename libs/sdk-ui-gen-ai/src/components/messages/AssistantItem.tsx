@@ -9,12 +9,12 @@ import { useSelector } from "react-redux";
 import { type IChatConversationLocalItem } from "../../model.js";
 import { interactionIntelligenceEnabledSelector } from "../../store/chatWindow/chatWindowSelectors.js";
 import { useToolsReferences } from "../completion/useToolsReferences.js";
+import { useCustomization } from "../CustomizationContext.js";
 import { useInteractionIntelligenceTotals } from "../intelligence/data/useInteractionIntelligenceTotals.js";
 import { GenAiInteractionIntelligence } from "../intelligence/GenAiInteractionIntelligence.js";
 import { InteractionIntelligenceTrigger } from "../intelligence/InteractionIntelligenceTrigger.js";
 import { type IChatMessagesGroup } from "../utils/groupUtility.js";
 
-import { AssistantItemFeedback } from "./AssistantItemFeedback.js";
 import { AssistantItemSuggestions } from "./AssistantItemSuggestions.js";
 import { ReasoningIcon } from "./contents/ReasoningIcon.js";
 import { ConversationItemContents } from "./ConversationItemContents.js";
@@ -32,6 +32,7 @@ export function AssistantItemComponent({ message, groups, isLast }: AssistantIte
 
     const messageState = getItemState(message);
     const references = useToolsReferences(groups);
+    const { FeedbackComponent } = useCustomization();
     const [isInteractionIntelligenceOpen, setIsInteractionIntelligenceOpen] = useState(false);
     const interactionIntelligenceEnabled = useSelector(interactionIntelligenceEnabledSelector);
     const showInteractionIntelligence =
@@ -79,17 +80,20 @@ export function AssistantItemComponent({ message, groups, isLast }: AssistantIte
             />
             <AssistantItemSuggestions
                 type="followUp"
-                content={message.content}
+                message={message}
                 showSuggestions
                 references={references}
             />
             <div className="gd-gen-ai-chat__conversation__item__actions">
-                <AssistantItemFeedback
-                    group={group}
-                    message={message}
-                    isLast={isLast}
-                    hasInteractionIntelligenceTrigger={hasInteractionIntelligenceTrigger}
-                />
+                {group.type === "assistant" && message.content.type !== "reasoning" ? (
+                    <FeedbackComponent
+                        group={group}
+                        message={message}
+                        isLast={Boolean(isLast)}
+                        isComplete={Boolean(message.complete)}
+                        isHidden={Boolean(hasInteractionIntelligenceTrigger && !isLast)}
+                    />
+                ) : null}
                 {showInteractionIntelligence ? (
                     <InteractionIntelligenceTrigger
                         totals={interactionIntelligenceTotals}
@@ -104,7 +108,7 @@ export function AssistantItemComponent({ message, groups, isLast }: AssistantIte
                     onClose={() => setIsInteractionIntelligenceOpen(false)}
                 />
             ) : null}
-            <AssistantItemSuggestions type="actions" content={message.content} showSuggestions={isLast} />
+            <AssistantItemSuggestions type="actions" message={message} showSuggestions={isLast} />
         </div>
     );
 }

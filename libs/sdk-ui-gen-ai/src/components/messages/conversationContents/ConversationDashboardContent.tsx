@@ -62,6 +62,7 @@ export function ConversationDashboardContent(props: ConversationDashboardContent
                     dashboard,
                     insights: insights ?? [],
                     dashboardStatus,
+                    action: "open",
                 });
             }
         };

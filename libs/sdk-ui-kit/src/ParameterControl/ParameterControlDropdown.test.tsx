@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 
 import { withIntlForTest } from "@gooddata/sdk-ui";
 
@@ -17,7 +17,7 @@ const renderDropdown = (props: Partial<React.ComponentProps<typeof ParameterCont
             onDraftChange={() => {}}
             inputType="text"
             onApply={() => {}}
-            onCancel={() => {}}
+            onClose={() => {}}
             {...props}
         />,
     );
@@ -39,5 +39,23 @@ describe("ParameterControlDropdown", () => {
     it("renders the reset button with type button so it does not submit a form", () => {
         renderDropdown({ onReset: () => {} });
         expect(screen.getByTestId("parameter-control-dropdown-reset")).toHaveAttribute("type", "button");
+    });
+
+    it("renders Cancel and Apply when onApply is provided", () => {
+        renderDropdown({ onApply: () => {} });
+        expect(screen.getByTestId("parameter-control-dropdown-cancel")).toBeInTheDocument();
+        expect(screen.getByTestId("parameter-control-dropdown-apply")).toBeInTheDocument();
+        expect(screen.queryByTestId("parameter-control-dropdown-close")).not.toBeInTheDocument();
+    });
+
+    it("renders a single Close button when onApply is omitted", () => {
+        const onClose = vi.fn();
+        renderDropdown({ onApply: undefined, onClose });
+        expect(screen.queryByTestId("parameter-control-dropdown-apply")).not.toBeInTheDocument();
+        expect(screen.queryByTestId("parameter-control-dropdown-cancel")).not.toBeInTheDocument();
+        const close = screen.getByTestId("parameter-control-dropdown-close");
+        expect(close).toHaveTextContent("Close");
+        fireEvent.click(close);
+        expect(onClose).toHaveBeenCalledTimes(1);
     });
 });

@@ -133,8 +133,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -278,8 +278,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -408,8 +408,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -538,8 +538,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -668,8 +668,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -798,8 +798,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -928,8 +928,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -1058,8 +1058,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -1188,8 +1188,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -1327,8 +1327,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -1457,8 +1457,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -1587,8 +1587,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -1717,8 +1717,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -1847,8 +1847,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -1977,8 +1977,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2083,8 +2083,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2189,8 +2189,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2283,8 +2283,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2362,8 +2362,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2501,8 +2501,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2577,8 +2577,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2643,8 +2643,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2731,8 +2731,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2807,8 +2807,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2901,8 +2901,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2977,8 +2977,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -3094,9 +3094,6 @@ importers:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260202.1
         version: 7.0.0-dev.20260202.1
-      '@vitest/eslint-plugin':
-        specifier: 1.6.19
-        version: 1.6.19(@typescript-eslint/eslint-plugin@8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)(vitest@4.1.8)
       dependency-cruiser:
         specifier: 17.3.10
         version: 17.3.10
@@ -3137,8 +3134,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -3249,8 +3246,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -3330,9 +3327,6 @@ importers:
       '@vitest/coverage-v8':
         specifier: 4.1.8
         version: 4.1.8(vitest@4.1.8)
-      '@vitest/eslint-plugin':
-        specifier: 1.6.19
-        version: 1.6.19(@typescript-eslint/eslint-plugin@8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)(vitest@4.1.8)
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -3376,8 +3370,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -3520,9 +3514,6 @@ importers:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260202.1
         version: 7.0.0-dev.20260202.1
-      '@vitest/eslint-plugin':
-        specifier: 1.6.19
-        version: 1.6.19(@typescript-eslint/eslint-plugin@8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)(vitest@4.1.8)
       dependency-cruiser:
         specifier: 17.3.10
         version: 17.3.10
@@ -3560,8 +3551,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -3734,9 +3725,6 @@ importers:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260202.1
         version: 7.0.0-dev.20260202.1
-      '@vitest/eslint-plugin':
-        specifier: 1.6.19
-        version: 1.6.19(@typescript-eslint/eslint-plugin@8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)(vitest@4.1.8)
       dependency-cruiser:
         specifier: 17.3.10
         version: 17.3.10
@@ -3777,8 +3765,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -3999,9 +3987,6 @@ importers:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260202.1
         version: 7.0.0-dev.20260202.1
-      '@vitest/eslint-plugin':
-        specifier: 1.6.19
-        version: 1.6.19(@typescript-eslint/eslint-plugin@8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)(vitest@4.1.8)
       dependency-cruiser:
         specifier: 17.3.10
         version: 17.3.10
@@ -4039,8 +4024,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -4270,9 +4255,6 @@ importers:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260202.1
         version: 7.0.0-dev.20260202.1
-      '@vitest/eslint-plugin':
-        specifier: 1.6.19
-        version: 1.6.19(@typescript-eslint/eslint-plugin@8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)(vitest@4.1.8)
       dependency-cruiser:
         specifier: 17.3.10
         version: 17.3.10
@@ -4313,8 +4295,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -4469,9 +4451,6 @@ importers:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260202.1
         version: 7.0.0-dev.20260202.1
-      '@vitest/eslint-plugin':
-        specifier: 1.6.19
-        version: 1.6.19(@typescript-eslint/eslint-plugin@8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)(vitest@4.1.8)
       dependency-cruiser:
         specifier: 17.3.10
         version: 17.3.10
@@ -4512,8 +4491,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -4710,9 +4689,6 @@ importers:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260202.1
         version: 7.0.0-dev.20260202.1
-      '@vitest/eslint-plugin':
-        specifier: 1.6.19
-        version: 1.6.19(@typescript-eslint/eslint-plugin@8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)(vitest@4.1.8)
       dependency-cruiser:
         specifier: 17.3.10
         version: 17.3.10
@@ -4750,8 +4726,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -4897,9 +4873,6 @@ importers:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260202.1
         version: 7.0.0-dev.20260202.1
-      '@vitest/eslint-plugin':
-        specifier: 1.6.19
-        version: 1.6.19(@typescript-eslint/eslint-plugin@8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)(vitest@4.1.8)
       dependency-cruiser:
         specifier: 17.3.10
         version: 17.3.10
@@ -4934,8 +4907,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -5183,9 +5156,6 @@ importers:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260202.1
         version: 7.0.0-dev.20260202.1
-      '@vitest/eslint-plugin':
-        specifier: 1.6.19
-        version: 1.6.19(@typescript-eslint/eslint-plugin@8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)(vitest@4.1.8)
       dependency-cruiser:
         specifier: 17.3.10
         version: 17.3.10
@@ -5226,8 +5196,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -5368,8 +5338,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -5494,9 +5464,6 @@ importers:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260202.1
         version: 7.0.0-dev.20260202.1
-      '@vitest/eslint-plugin':
-        specifier: 1.6.19
-        version: 1.6.19(@typescript-eslint/eslint-plugin@8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)(vitest@4.1.8)
       dependency-cruiser:
         specifier: 17.3.10
         version: 17.3.10
@@ -5537,8 +5504,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -5667,8 +5634,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -5781,9 +5748,6 @@ importers:
       '@vitest/coverage-v8':
         specifier: 4.1.8
         version: 4.1.8(vitest@4.1.8)
-      '@vitest/eslint-plugin':
-        specifier: 1.6.19
-        version: 1.6.19(@typescript-eslint/eslint-plugin@8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)(vitest@4.1.8)
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -5818,8 +5782,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -5941,9 +5905,6 @@ importers:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260202.1
         version: 7.0.0-dev.20260202.1
-      '@vitest/eslint-plugin':
-        specifier: 1.6.19
-        version: 1.6.19(@typescript-eslint/eslint-plugin@8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)(vitest@4.1.8)
       dependency-cruiser:
         specifier: 17.3.10
         version: 17.3.10
@@ -5981,8 +5942,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -6119,8 +6080,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -6224,8 +6185,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -6287,8 +6248,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -6370,9 +6331,6 @@ importers:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260202.1
         version: 7.0.0-dev.20260202.1
-      '@vitest/eslint-plugin':
-        specifier: 1.6.19
-        version: 1.6.19(@typescript-eslint/eslint-plugin@8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)(vitest@4.1.8)
       dependency-cruiser:
         specifier: 17.3.10
         version: 17.3.10
@@ -6425,8 +6383,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -6611,8 +6569,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -6746,9 +6704,6 @@ importers:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260202.1
         version: 7.0.0-dev.20260202.1
-      '@vitest/eslint-plugin':
-        specifier: 1.6.19
-        version: 1.6.19(@typescript-eslint/eslint-plugin@8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)(vitest@4.1.8)
       dependency-cruiser:
         specifier: 17.3.10
         version: 17.3.10
@@ -6786,8 +6741,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -6900,9 +6855,6 @@ importers:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260202.1
         version: 7.0.0-dev.20260202.1
-      '@vitest/eslint-plugin':
-        specifier: 1.6.19
-        version: 1.6.19(@typescript-eslint/eslint-plugin@8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)(vitest@4.1.8)
       dependency-cruiser:
         specifier: 17.3.10
         version: 17.3.10
@@ -6940,8 +6892,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -7069,9 +7021,6 @@ importers:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260202.1
         version: 7.0.0-dev.20260202.1
-      '@vitest/eslint-plugin':
-        specifier: 1.6.19
-        version: 1.6.19(@typescript-eslint/eslint-plugin@8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)(vitest@4.1.8)
       dependency-cruiser:
         specifier: 17.3.10
         version: 17.3.10
@@ -7106,8 +7055,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -7203,8 +7152,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -7300,8 +7249,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -7418,8 +7367,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -7530,8 +7479,8 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -7578,8 +7527,8 @@ importers:
         specifier: 0.147.0
         version: 0.147.0
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       strip-ansi:
         specifier: 6.0.1
         version: 6.0.1
@@ -7702,8 +7651,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -7841,8 +7790,8 @@ importers:
         specifier: 5.6.4
         version: 5.6.4(webpack@5.107.2)
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -7964,8 +7913,8 @@ importers:
         specifier: 2.6.1
         version: 2.6.1
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       react:
         specifier: 19.1.1
         version: 19.1.1
@@ -8067,8 +8016,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -8091,8 +8040,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -8185,8 +8134,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -8266,8 +8215,8 @@ importers:
         specifier: 2.6.1
         version: 2.6.1
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -8396,8 +8345,8 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -8532,8 +8481,8 @@ importers:
         specifier: 5.6.4
         version: 5.6.4(webpack@5.107.2)
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -8617,8 +8566,8 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -8690,8 +8639,8 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       oxfmt:
-        specifier: 0.52.0
-        version: 0.52.0
+        specifier: 0.58.0
+        version: 0.58.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -10329,124 +10278,124 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@oxfmt/binding-android-arm-eabi@0.52.0':
-    resolution: {integrity: sha512-17EMSJnQ9g+upVHrAUYDMfH5lvRKQ9Nvg8WtEoH72oDr1VpWz+7/o3tD97U1EToen2YAQ/68JmtDYkQUi20dfQ==}
+  '@oxfmt/binding-android-arm-eabi@0.58.0':
+    resolution: {integrity: sha512-Uz62sHduGGPftXtILGyxdSW4PX82rUg+rfdNqhsgxe881g4rIoXlIqmZQ6HVKcF4f+F8qMhdD03Bx5u7gmeTdg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm]
     os: [android]
 
-  '@oxfmt/binding-android-arm64@0.52.0':
-    resolution: {integrity: sha512-A2G1IdwGEW2lLJkIxcvuirRH1CzSl/e0NX11zTlW1gvxJThfwbI/BEoaKrTNpm7M2FchvIf6guvIQU7d5iz+OQ==}
+  '@oxfmt/binding-android-arm64@0.58.0':
+    resolution: {integrity: sha512-rD0lRaJp1b+9vw6X4A2dJWKukd6X8yxiicN4JxXcXayolmUypRZxk+lKR+fVOu5q/iYc0fh5fR4bgmfOfVlbaA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [android]
 
-  '@oxfmt/binding-darwin-arm64@0.52.0':
-    resolution: {integrity: sha512-f9+bLvOYxy7NttCLFTvQ7afmqDOWY4wIP9xdvfj5trQ1qj6f2UFAGwZESlfsMjvJNTyRpXfIlOanCI9FOvoeQA==}
+  '@oxfmt/binding-darwin-arm64@0.58.0':
+    resolution: {integrity: sha512-uzbPPk7O6M+w2K65vcQ1woga3wgP8zghjL1KOG5b6qJ8dvYHZJ1VShaslg2KOK6yQIwCQtcMCXqLBM6sqXUNTg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [darwin]
 
-  '@oxfmt/binding-darwin-x64@0.52.0':
-    resolution: {integrity: sha512-YSTB9sJ5nnQd/Q0ddHkgof0ZCHPAnWZT1IW2SJ8omz7CP7KluJhO1fNHrpqdxCtpztJwSs4hY1uAee35wKxxaw==}
+  '@oxfmt/binding-darwin-x64@0.58.0':
+    resolution: {integrity: sha512-L0nKYDxU32oxeQqJj21W9SlIMnf81VZEhyah6iDvFhf5q0oynq498Fopth7blErUJVBpVtxQ98RMCfMPqpJX6w==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [darwin]
 
-  '@oxfmt/binding-freebsd-x64@0.52.0':
-    resolution: {integrity: sha512-NIrRNTTPCs4UbmVs0bxLSCDlLCtIRMJIXklNKaXa5Oj2/K1UIMBvgE8+uPVo01Io3N9HF0+GAX+aAHjUgZS7vA==}
+  '@oxfmt/binding-freebsd-x64@0.58.0':
+    resolution: {integrity: sha512-woNwfD58dC5PGS9LSLSD5JYfo/EFK5iG9vhDWkcCg3q78ag7KC8bpDqgvPHrMoXpx83OLXxoSOhu6z8FsVTHlg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [freebsd]
 
-  '@oxfmt/binding-linux-arm-gnueabihf@0.52.0':
-    resolution: {integrity: sha512-JXUCde8mn3GpgQouz2PXUokgy/uT1QrRJBL2s983VWcSQp62wTFYiNXgTKdeo1Jgbr0IgUnKKvzIk/YBlj/nVQ==}
+  '@oxfmt/binding-linux-arm-gnueabihf@0.58.0':
+    resolution: {integrity: sha512-Sqs8nMLxuQpY21NKJ1u4stPDmO5hskBCNNh2E3AdCfI1QqWtf4m+Qn4mGEIUO4KGmuq3SWc/SZ80uy5IiwTCDw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm]
     os: [linux]
 
-  '@oxfmt/binding-linux-arm-musleabihf@0.52.0':
-    resolution: {integrity: sha512-psbUXaRZ+V8DaXz10Qf7LSHtdtdKAmC8fxXgeU608jjzrmWK4quamZMOpl6sf+dikoFHA85uE93Q0BqxrCdQrQ==}
+  '@oxfmt/binding-linux-arm-musleabihf@0.58.0':
+    resolution: {integrity: sha512-Vd4exzBI5B5hB9m22JiTQzIL23WvHo/Pe+sNXPNeBLXSP9swCBPKCEBRwKpmpQzYhlgYaCgfPcGXPKAJBRIiZQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm]
     os: [linux]
 
-  '@oxfmt/binding-linux-arm64-gnu@0.52.0':
-    resolution: {integrity: sha512-Jw7MgWUU9lcLCcy82updISP3EthTlfvAwR6gWNxPzqly7+fLvOi2gHQE9xXQjpqaVLm/8P+gOzlv9ODuoVlaaw==}
+  '@oxfmt/binding-linux-arm64-gnu@0.58.0':
+    resolution: {integrity: sha512-bUWi5mHV+4Vi56RLHE1h6q/HHfwAIT3XoB9vJAVeRzfu5NriXM8y6eeJu0vlKa0C9kq2rq1sOWRClhdLHPocrg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@oxfmt/binding-linux-arm64-musl@0.52.0':
-    resolution: {integrity: sha512-wZg6bLjDvh2KibyI3QFUYo8GTXneIFsd0JvehtvJiUmQ8WRPERgxd/VM4ctWb86U5FT1FkqgS8/wZKVB+AZScg==}
+  '@oxfmt/binding-linux-arm64-musl@0.58.0':
+    resolution: {integrity: sha512-2ZHxemzgHcjtktAuVUwSoyXmGo/t+aF5tS1ciPpPei4rhSyrz3JOqDosXXrmhN/yLUSzJjtuW7ToTWqfQpCj2w==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [linux]
     libc: [musl]
 
-  '@oxfmt/binding-linux-ppc64-gnu@0.52.0':
-    resolution: {integrity: sha512-IngE8uxhNvxcMrLjZNDo9xNLY7rEK33AKnaMd2B46he1e/mz2CfcW6If/U1wUjdRZddm1QzQaciqZkuMkdh1FA==}
+  '@oxfmt/binding-linux-ppc64-gnu@0.58.0':
+    resolution: {integrity: sha512-AwKkVwjVmFQ3bcO7j0McGYAqCKH2a326fswfofng/E8VewCT/raeeGQr4huVhY704deK8AWASSTlxzMj0eZc6Q==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [ppc64]
     os: [linux]
     libc: [glibc]
 
-  '@oxfmt/binding-linux-riscv64-gnu@0.52.0':
-    resolution: {integrity: sha512-H3+DdFMv/efN3Efmhsv18jDrpiWWqKG7wsfAlQBqAt6z/E2Bx+TwEj2Nowe51CPOWB8/mFBC2dAMSgVFLvvowA==}
+  '@oxfmt/binding-linux-riscv64-gnu@0.58.0':
+    resolution: {integrity: sha512-xsRpTxfUnJF8D3AUKko/qyWdjw4GZVHlCVFuGlzSCTeewLmykKINW8em1+wx+axsDVtJJcMtvsiaXggXxrlHgw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [riscv64]
     os: [linux]
     libc: [glibc]
 
-  '@oxfmt/binding-linux-riscv64-musl@0.52.0':
-    resolution: {integrity: sha512-zji+1kb7lJKohSDjzC1IsS+K/cKRs1hdVf0ZH0VbdbiakmtLvN9twBoXo/k8VdjFax7kfo+DyPxS7vv52br1aw==}
+  '@oxfmt/binding-linux-riscv64-musl@0.58.0':
+    resolution: {integrity: sha512-Z4AYOTcy7nYEIiXwD62PlerimyYRcfJOgUbQAEBjXz098kxKuERBlRntofGy69HHhe9E0TLVNMl1yspVNu+efw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [riscv64]
     os: [linux]
     libc: [musl]
 
-  '@oxfmt/binding-linux-s390x-gnu@0.52.0':
-    resolution: {integrity: sha512-hcLBYedpCy7ToUvvBidWk7+11Yhg1oAZ4+6hKPic/mQI6NaqXJSXMps5nFlwUuX2ewhtLZZDPg63TI042qGKBg==}
+  '@oxfmt/binding-linux-s390x-gnu@0.58.0':
+    resolution: {integrity: sha512-A3nhhtZPC/TKVWOPj9q/H3p2znJDCcHWYlJBhWL8hGq/bFmBaNBHC8Np6E581yVq1w9Mi3rMDNzDalWvtUfJtQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [s390x]
     os: [linux]
     libc: [glibc]
 
-  '@oxfmt/binding-linux-x64-gnu@0.52.0':
-    resolution: {integrity: sha512-IDO2loXK2OtTOhSPchU9MW25mWL2QCDGdJbjN8MXKZVS80qXe5gMTwQWu/gMJ3juoBHbkuUZNB2N1LHzNT7DoA==}
+  '@oxfmt/binding-linux-x64-gnu@0.58.0':
+    resolution: {integrity: sha512-2g+tVkgwqphw8R4hgo+kF4oz8+P5RwVOtr9+irsC7uwEp0e9j7Crw8kDGKL20uYlLPD7g02DqA61mC/UNYx98A==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@oxfmt/binding-linux-x64-musl@0.52.0':
-    resolution: {integrity: sha512-mAV2Hjn0SatJ+KoAzKUC3eJhdJ8wv+3m1KyuS0dTsbF0c5weq+QrCt/DRZZM+uj/XiKzCDEUKYsBF30e2qkcyw==}
+  '@oxfmt/binding-linux-x64-musl@0.58.0':
+    resolution: {integrity: sha512-rc15P6AbyyB7426aN8AakLd02Trb3a6ML/mmfAQeVHJEfVofWLcWIrBdy6zDEY+DIaL/s8E4GGPboVw+oP3+EA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [linux]
     libc: [musl]
 
-  '@oxfmt/binding-openharmony-arm64@0.52.0':
-    resolution: {integrity: sha512-vd4npaUIwChxp7XzkqmepBWTT9YMcSe/NBApVGPC30/lLyOVaV3dvma1SKo03t8O73BPRAG7EyJzGlN5cJM5hQ==}
+  '@oxfmt/binding-openharmony-arm64@0.58.0':
+    resolution: {integrity: sha512-ZWoTM27/HYPOh9iq86DAbhPu9nXb8qKvvGU/h8OfliyVUFAMMNTLDkGsWDKKnDqIkqvZ9+dXlgUOsH1LYO3O7g==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [openharmony]
 
-  '@oxfmt/binding-win32-arm64-msvc@0.52.0':
-    resolution: {integrity: sha512-k2sz6gWQdMfh5HPpIS+Bw/0UEV/kaK2xuqJRrWL233sEHx9WLlsmvlPFM4HUNThkYbSN0U0vPW7LVKZWDS8hPQ==}
+  '@oxfmt/binding-win32-arm64-msvc@0.58.0':
+    resolution: {integrity: sha512-LHZnqFXe2dEfkRI4XdZS/57nEOT/I4UCRX5IyM9v4GYW9XwQCjGe1IUK59SuKw3POwvcgWQ4pme2cYXmNqTNPg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [win32]
 
-  '@oxfmt/binding-win32-ia32-msvc@0.52.0':
-    resolution: {integrity: sha512-rhke69GTcArodLHpjMTfNnvjTEBryDeZcUCKK/VjXDMtfTULl6QRh0ymX5/hbCUv2WjYm9h/QbW++q2vE15gWQ==}
+  '@oxfmt/binding-win32-ia32-msvc@0.58.0':
+    resolution: {integrity: sha512-mZKpg20TpheCJym1rarcZCUJeW1sSruw8zAAaCYWvuVfwIUDN1CXdrPU/JgCWReXTCTrEfCB8Wyo3hh9jSZ2EA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [ia32]
     os: [win32]
 
-  '@oxfmt/binding-win32-x64-msvc@0.52.0':
-    resolution: {integrity: sha512-q5xL7oeXkZdEtNZWBdvehJcmt+GRu9l2bK40yJs1jJXlqq+r0Hygb1rTjq+FM2o/2xyt4cufH6KRplHp3Jjsvw==}
+  '@oxfmt/binding-win32-x64-msvc@0.58.0':
+    resolution: {integrity: sha512-N/wUU4N5PZ2orBtI+Ko7MnMfYLfE7K91UrGMY/c/pYyHR3lA9kwst1XugkZx+92YcRh/Eo+iv2eTESSWXfiZPA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [win32]
@@ -15085,8 +15034,8 @@ packages:
     resolution: {integrity: sha512-FkGVLTM83USPtu7Oa8iWKuLygto+gQRz7Kvb2SZsoVjFrJ0VJFQvIOHWW02GBN/8MzwT5G5hC9HM8HsWY72ufg==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
-  oxfmt@0.52.0:
-    resolution: {integrity: sha512-nJlYM35F64zTDMecCNhoHNkf+D/eHv7xcjj9XDSj+bFAVtN93m7v8DQMdHd6nDG6Akf/kEYYHmDUBs2Dz27Sug==}
+  oxfmt@0.58.0:
+    resolution: {integrity: sha512-8feG/7NVEHDVwc1OUpP6Pks+TnaDFUw2jLLFIMi5bcmmwxAX2wBQvjSzj62RRTYBf2Op1Wt8xbkmagmPTR5ETg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -18834,61 +18783,61 @@ snapshots:
   '@oxc-transform/binding-win32-x64-msvc@0.147.0':
     optional: true
 
-  '@oxfmt/binding-android-arm-eabi@0.52.0':
+  '@oxfmt/binding-android-arm-eabi@0.58.0':
     optional: true
 
-  '@oxfmt/binding-android-arm64@0.52.0':
+  '@oxfmt/binding-android-arm64@0.58.0':
     optional: true
 
-  '@oxfmt/binding-darwin-arm64@0.52.0':
+  '@oxfmt/binding-darwin-arm64@0.58.0':
     optional: true
 
-  '@oxfmt/binding-darwin-x64@0.52.0':
+  '@oxfmt/binding-darwin-x64@0.58.0':
     optional: true
 
-  '@oxfmt/binding-freebsd-x64@0.52.0':
+  '@oxfmt/binding-freebsd-x64@0.58.0':
     optional: true
 
-  '@oxfmt/binding-linux-arm-gnueabihf@0.52.0':
+  '@oxfmt/binding-linux-arm-gnueabihf@0.58.0':
     optional: true
 
-  '@oxfmt/binding-linux-arm-musleabihf@0.52.0':
+  '@oxfmt/binding-linux-arm-musleabihf@0.58.0':
     optional: true
 
-  '@oxfmt/binding-linux-arm64-gnu@0.52.0':
+  '@oxfmt/binding-linux-arm64-gnu@0.58.0':
     optional: true
 
-  '@oxfmt/binding-linux-arm64-musl@0.52.0':
+  '@oxfmt/binding-linux-arm64-musl@0.58.0':
     optional: true
 
-  '@oxfmt/binding-linux-ppc64-gnu@0.52.0':
+  '@oxfmt/binding-linux-ppc64-gnu@0.58.0':
     optional: true
 
-  '@oxfmt/binding-linux-riscv64-gnu@0.52.0':
+  '@oxfmt/binding-linux-riscv64-gnu@0.58.0':
     optional: true
 
-  '@oxfmt/binding-linux-riscv64-musl@0.52.0':
+  '@oxfmt/binding-linux-riscv64-musl@0.58.0':
     optional: true
 
-  '@oxfmt/binding-linux-s390x-gnu@0.52.0':
+  '@oxfmt/binding-linux-s390x-gnu@0.58.0':
     optional: true
 
-  '@oxfmt/binding-linux-x64-gnu@0.52.0':
+  '@oxfmt/binding-linux-x64-gnu@0.58.0':
     optional: true
 
-  '@oxfmt/binding-linux-x64-musl@0.52.0':
+  '@oxfmt/binding-linux-x64-musl@0.58.0':
     optional: true
 
-  '@oxfmt/binding-openharmony-arm64@0.52.0':
+  '@oxfmt/binding-openharmony-arm64@0.58.0':
     optional: true
 
-  '@oxfmt/binding-win32-arm64-msvc@0.52.0':
+  '@oxfmt/binding-win32-arm64-msvc@0.58.0':
     optional: true
 
-  '@oxfmt/binding-win32-ia32-msvc@0.52.0':
+  '@oxfmt/binding-win32-ia32-msvc@0.58.0':
     optional: true
 
-  '@oxfmt/binding-win32-x64-msvc@0.52.0':
+  '@oxfmt/binding-win32-x64-msvc@0.58.0':
     optional: true
 
   '@oxlint-tsgolint/darwin-arm64@0.15.0':
@@ -24045,29 +23994,29 @@ snapshots:
       '@oxc-transform/binding-win32-ia32-msvc': 0.147.0
       '@oxc-transform/binding-win32-x64-msvc': 0.147.0
 
-  oxfmt@0.52.0:
+  oxfmt@0.58.0:
     dependencies:
       tinypool: 2.1.0
     optionalDependencies:
-      '@oxfmt/binding-android-arm-eabi': 0.52.0
-      '@oxfmt/binding-android-arm64': 0.52.0
-      '@oxfmt/binding-darwin-arm64': 0.52.0
-      '@oxfmt/binding-darwin-x64': 0.52.0
-      '@oxfmt/binding-freebsd-x64': 0.52.0
-      '@oxfmt/binding-linux-arm-gnueabihf': 0.52.0
-      '@oxfmt/binding-linux-arm-musleabihf': 0.52.0
-      '@oxfmt/binding-linux-arm64-gnu': 0.52.0
-      '@oxfmt/binding-linux-arm64-musl': 0.52.0
-      '@oxfmt/binding-linux-ppc64-gnu': 0.52.0
-      '@oxfmt/binding-linux-riscv64-gnu': 0.52.0
-      '@oxfmt/binding-linux-riscv64-musl': 0.52.0
-      '@oxfmt/binding-linux-s390x-gnu': 0.52.0
-      '@oxfmt/binding-linux-x64-gnu': 0.52.0
-      '@oxfmt/binding-linux-x64-musl': 0.52.0
-      '@oxfmt/binding-openharmony-arm64': 0.52.0
-      '@oxfmt/binding-win32-arm64-msvc': 0.52.0
-      '@oxfmt/binding-win32-ia32-msvc': 0.52.0
-      '@oxfmt/binding-win32-x64-msvc': 0.52.0
+      '@oxfmt/binding-android-arm-eabi': 0.58.0
+      '@oxfmt/binding-android-arm64': 0.58.0
+      '@oxfmt/binding-darwin-arm64': 0.58.0
+      '@oxfmt/binding-darwin-x64': 0.58.0
+      '@oxfmt/binding-freebsd-x64': 0.58.0
+      '@oxfmt/binding-linux-arm-gnueabihf': 0.58.0
+      '@oxfmt/binding-linux-arm-musleabihf': 0.58.0
+      '@oxfmt/binding-linux-arm64-gnu': 0.58.0
+      '@oxfmt/binding-linux-arm64-musl': 0.58.0
+      '@oxfmt/binding-linux-ppc64-gnu': 0.58.0
+      '@oxfmt/binding-linux-riscv64-gnu': 0.58.0
+      '@oxfmt/binding-linux-riscv64-musl': 0.58.0
+      '@oxfmt/binding-linux-s390x-gnu': 0.58.0
+      '@oxfmt/binding-linux-x64-gnu': 0.58.0
+      '@oxfmt/binding-linux-x64-musl': 0.58.0
+      '@oxfmt/binding-openharmony-arm64': 0.58.0
+      '@oxfmt/binding-win32-arm64-msvc': 0.58.0
+      '@oxfmt/binding-win32-ia32-msvc': 0.58.0
+      '@oxfmt/binding-win32-x64-msvc': 0.58.0
 
   oxlint-tsgolint@0.15.0:
     optionalDependencies:

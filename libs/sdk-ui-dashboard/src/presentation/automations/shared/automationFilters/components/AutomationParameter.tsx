@@ -128,11 +128,9 @@ export function AutomationParameter({
                     value={value}
                     inputId={valueInputId}
                     ariaAttributes={ariaAttributes}
-                    onApply={(next) => {
-                        onChange?.(ref, next);
-                        closeDropdown();
-                    }}
-                    onCancel={closeDropdown}
+                    mode="commit"
+                    onCommit={(next) => onChange?.(ref, next)}
+                    onClose={closeDropdown}
                 />
             )}
         />

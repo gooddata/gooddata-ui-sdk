@@ -14,6 +14,7 @@ import {
     type IMeasureValueFilter,
     type IdentifierRef,
     type ObjRef,
+    dashboardAttributeFilterItemToAttributeFilter,
     filterObjRef,
     idRef,
     insightFilters as insightDefinitionFilters,
@@ -36,7 +37,6 @@ import {
     useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
 
-import { dashboardAttributeFilterItemToAttributeFilter } from "../../../../converters/filterConverters.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import {
     selectAllCatalogDisplayFormsMap,

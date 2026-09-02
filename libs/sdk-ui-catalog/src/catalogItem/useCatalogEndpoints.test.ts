@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type PropsWithChildren, createElement } from "react";
+
 import { renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
@@ -8,6 +10,7 @@ import type { IFeatureFlags } from "@gooddata/sdk-model";
 
 import { ObjectTypes } from "../objectType/constants.js";
 import type { ObjectType } from "../objectType/types.js";
+import { TestPermissionsProvider } from "../permission/TestPermissionsProvider.js";
 
 import { createCatalogBackendStub } from "./catalogBackend.test.utils.js";
 import type { ICatalogItemFeedOptions, ICatalogItemQueryOptions } from "./types.js";
@@ -284,13 +287,20 @@ describe("selectCatalogEndpoints", () => {
     });
 });
 
+// useCatalogQueryOptions reads the metric-permissions flag off the permissions context
+function wrapper({ children }: PropsWithChildren) {
+    return createElement(TestPermissionsProvider, null, children);
+}
+
 describe("useCatalogQueryOptions", () => {
     it("merges non-inverted quality ids with feedOptions.id into queryOptions.id", () => {
-        const { result } = renderHook(() =>
-            useCatalogQueryOptions(
-                { ...baseFeedOptions, id: ["a"] },
-                makeFilterInputs({ qualityIds: { values: ["q1", "q2"], isInverted: false } }),
-            ),
+        const { result } = renderHook(
+            () =>
+                useCatalogQueryOptions(
+                    { ...baseFeedOptions, id: ["a"] },
+                    makeFilterInputs({ qualityIds: { values: ["q1", "q2"], isInverted: false } }),
+                ),
+            { wrapper },
         );
 
         expect(result.current.id).toEqual(expect.arrayContaining(["q1", "q2", "a"]));
@@ -299,11 +309,13 @@ describe("useCatalogQueryOptions", () => {
     });
 
     it("populates excludeId from inverted quality ids and keeps feedOptions.id as id", () => {
-        const { result } = renderHook(() =>
-            useCatalogQueryOptions(
-                { ...baseFeedOptions, id: ["a"] },
-                makeFilterInputs({ qualityIds: { values: ["q1"], isInverted: true } }),
-            ),
+        const { result } = renderHook(
+            () =>
+                useCatalogQueryOptions(
+                    { ...baseFeedOptions, id: ["a"] },
+                    makeFilterInputs({ qualityIds: { values: ["q1"], isInverted: true } }),
+                ),
+            { wrapper },
         );
 
         expect(result.current.id).toEqual(["a"]);
@@ -311,11 +323,13 @@ describe("useCatalogQueryOptions", () => {
     });
 
     it("maps non-inverted createdBy to createdBy and leaves excludeCreatedBy undefined", () => {
-        const { result } = renderHook(() =>
-            useCatalogQueryOptions(
-                baseFeedOptions,
-                makeFilterInputs({ createdBy: { values: ["user-1"], isInverted: false } }),
-            ),
+        const { result } = renderHook(
+            () =>
+                useCatalogQueryOptions(
+                    baseFeedOptions,
+                    makeFilterInputs({ createdBy: { values: ["user-1"], isInverted: false } }),
+                ),
+            { wrapper },
         );
 
         expect(result.current.createdBy).toEqual(["user-1"]);
@@ -323,11 +337,13 @@ describe("useCatalogQueryOptions", () => {
     });
 
     it("maps inverted createdBy to excludeCreatedBy and leaves createdBy undefined", () => {
-        const { result } = renderHook(() =>
-            useCatalogQueryOptions(
-                baseFeedOptions,
-                makeFilterInputs({ createdBy: { values: ["user-1"], isInverted: true } }),
-            ),
+        const { result } = renderHook(
+            () =>
+                useCatalogQueryOptions(
+                    baseFeedOptions,
+                    makeFilterInputs({ createdBy: { values: ["user-1"], isInverted: true } }),
+                ),
+            { wrapper },
         );
 
         expect(result.current.createdBy).toBeUndefined();
@@ -335,36 +351,42 @@ describe("useCatalogQueryOptions", () => {
     });
 
     it("maps non-inverted/inverted tags symmetrically to tags / excludeTags", () => {
-        const includedRender = renderHook(() =>
-            useCatalogQueryOptions(
-                baseFeedOptions,
-                makeFilterInputs({ tags: { values: ["t1"], isInverted: false } }),
-            ),
+        const includedRender = renderHook(
+            () =>
+                useCatalogQueryOptions(
+                    baseFeedOptions,
+                    makeFilterInputs({ tags: { values: ["t1"], isInverted: false } }),
+                ),
+            { wrapper },
         );
         expect(includedRender.result.current.tags).toEqual(["t1"]);
         expect(includedRender.result.current.excludeTags).toBeUndefined();
 
-        const excludedRender = renderHook(() =>
-            useCatalogQueryOptions(
-                baseFeedOptions,
-                makeFilterInputs({ tags: { values: ["t1"], isInverted: true } }),
-            ),
+        const excludedRender = renderHook(
+            () =>
+                useCatalogQueryOptions(
+                    baseFeedOptions,
+                    makeFilterInputs({ tags: { values: ["t1"], isInverted: true } }),
+                ),
+            { wrapper },
         );
         expect(excludedRender.result.current.tags).toBeUndefined();
         expect(excludedRender.result.current.excludeTags).toEqual(["t1"]);
     });
 
     it("forwards backend/workspace/search/origin/pageSize/isHidden/certification verbatim", () => {
-        const { result } = renderHook(() =>
-            useCatalogQueryOptions(
-                baseFeedOptions,
-                makeFilterInputs({
-                    search: "hello",
-                    origin: "PARENTS",
-                    isHidden: true,
-                    certification: false,
-                }),
-            ),
+        const { result } = renderHook(
+            () =>
+                useCatalogQueryOptions(
+                    baseFeedOptions,
+                    makeFilterInputs({
+                        search: "hello",
+                        origin: "PARENTS",
+                        isHidden: true,
+                        certification: false,
+                    }),
+                ),
+            { wrapper },
         );
 
         expect(result.current).toMatchObject<Partial<ICatalogItemQueryOptions>>({

@@ -97,7 +97,8 @@ $subtotal-odd-background-color: var(
             modal-overlay-background-color: $custom-background-color,
             odd-row-background-color: transparent,
             secondary-foreground-color: $custom-secondary-foreground-color,
-            row-hover-color: var(
+            row-hover-color:
+                var(
                     --gd-table-hoverBackgroundColor,
                     var(
                         --gd-palette-complementary-1-from-theme,

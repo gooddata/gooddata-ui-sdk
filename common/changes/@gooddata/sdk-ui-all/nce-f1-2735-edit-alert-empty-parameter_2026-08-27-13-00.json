@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard, sdk-backend-tiger: Fixed Edit Alert treating a parameter as an unavailable filter when its stored value looked like a different type (e.g. a STRING parameter saved with an empty or numeric-looking value). Alert parameter wire values are no longer type-guessed on load; they pass through as strings and are decoded against the workspace parameter definition, so such values round-trip losslessly and the parameter stays visible instead of triggering the stale-filters warning and being dropped.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

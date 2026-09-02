@@ -158,12 +158,13 @@ export interface IConditionalFormatting {
     enabled: boolean;
     rules: readonly IConditionalFormattingRule[];
     /**
-     * Targets for which these insight-level rules take over entirely from any semantic-layer
-     * conditional formatting carried on the execution result (see {@link ISemanticConditionalFormatting}).
-     * A target listed here is Custom: its semantic rules are ignored, never merged. A target not
-     * listed here (or when this is absent) is Inherited: semantic rules apply as-is.
+     * Targets whose formatting is explicitly suppressed — turned off rather than inherited from any
+     * semantic-layer conditional formatting carried on the execution result (see
+     * {@link ISemanticConditionalFormatting}). A target listed here shows no formatting even if the
+     * semantic layer has rules for it. A target not listed here (or when this is absent) is
+     * Inherited: semantic rules apply as-is.
      */
-    customTargets?: readonly ConditionalFormattingTarget[];
+    suppressedTargets?: readonly ConditionalFormattingTarget[];
 }
 
 /**

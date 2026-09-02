@@ -193,6 +193,9 @@ export function attributeElementsCount(attributeElements: IAttributeElements): n
 // @internal
 export function attributeElementsIsEmpty(attributeElements: IAttributeElements): boolean;
 
+// @alpha
+export function attributeFilterToDashboardAttributeFilter(filter: IAttributeFilter, localIdentifier: string | undefined, title: string | undefined, attributeElements?: IAttributeElement[], isInverted?: boolean, selectionMode?: DashboardAttributeFilterSelectionMode): DashboardAttributeFilterItem;
+
 // @public
 export function attributeIdentifier(attribute: IAttribute): string | undefined;
 
@@ -366,6 +369,12 @@ export type CalendarContext = {
 // @public
 export type CalendarType = "STANDARD" | "FISCAL";
 
+// @alpha
+export function canEditMetric(metricPermissions: AccessGranularPermission[] | undefined, workspacePermissions: IWorkspacePermissions, areMetricPermissionsEnabled: boolean): boolean;
+
+// @alpha
+export function canShareMetric(metricPermissions: AccessGranularPermission[] | undefined, workspacePermissions: IWorkspacePermissions, areMetricPermissionsEnabled: boolean): boolean;
+
 // @public
 export type CatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact | ICatalogDateDataset | ICatalogAttributeHierarchy | ICatalogComputedAttribute;
 
@@ -499,6 +508,9 @@ export function dashboardAttributeFilterItemLocalIdentifier(filter: DashboardAtt
 export function dashboardAttributeFilterItemTitle(filter: DashboardAttributeFilterItem): string | undefined;
 
 // @alpha
+export function dashboardAttributeFilterItemToAttributeFilter(filter: DashboardAttributeFilterItem): IAttributeFilter;
+
+// @alpha
 export function dashboardAttributeFilterItemValidateElementsBy(filter: DashboardAttributeFilterItem): ObjRef[] | undefined;
 
 // @beta
@@ -510,11 +522,20 @@ export type DashboardAttributeFilterSelectionType = "list" | "text" | "listOrTex
 // @internal
 export const DashboardAttributeFilterSelectionTypeValues: Record<Uppercase<Exclude<DashboardAttributeFilterSelectionType, "listOrText">> | "LIST_OR_TEXT", DashboardAttributeFilterSelectionType>;
 
+// @public @deprecated
+export function dashboardAttributeFilterToAttributeFilter(filter: IDashboardAttributeFilter): IAttributeFilter;
+
 // @alpha
 export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
 
 // @internal
 export const DashboardDateFilterConfigModeValues: Record<Uppercase<DashboardDateFilterConfigMode>, DashboardDateFilterConfigMode>;
+
+// @public
+export function dashboardDateFilterToDateFilterByDateDataSet(filter: IDashboardDateFilter, dateDataSet: ObjRef): IDateFilter;
+
+// @public
+export function dashboardDateFilterToDateFilterByWidget(filter: IDashboardDateFilter, widget?: Partial<IFilterableWidget>): IDateFilter;
 
 // @alpha
 export function dashboardFilterLocalIdentifier(filter: FilterContextItem): string | undefined;
@@ -534,6 +555,9 @@ export type DashboardFiltersApplyMode = {
 
 // @alpha
 export function dashboardMeasureValueFilterLocalIdentifier(filter: IDashboardMeasureValueFilter): string;
+
+// @alpha
+export function dashboardMeasureValueFilterToMeasureValueFilter(filter: IDashboardMeasureValueFilter): IMeasureValueFilter;
 
 // @alpha
 export type DashboardParameterMode = "active" | "readonly" | "hidden";
@@ -792,6 +816,21 @@ export function filterAttributeElements(filter: IFilter): IAttributeElements | u
 
 // @alpha
 export type FilterContextItem = DashboardAttributeFilterItem | IDashboardDateFilter | IDashboardMeasureValueFilter;
+
+// @alpha
+export function filterContextItemsToDashboardFiltersByDateDataSet(filterContextItems: FilterContextItem[], dateDataSet: ObjRef): IDashboardFilter[];
+
+// @alpha
+export function filterContextItemsToDashboardFiltersByRichTextWidget(filterContextItems: FilterContextItem[], widget?: Partial<IFilterableWidget>): IDashboardFilter[];
+
+// @alpha
+export function filterContextItemsToDashboardFiltersByWidget(filterContextItems: FilterContextItem[], widget?: Partial<IFilterableWidget>): IDashboardFilter[];
+
+// @alpha
+export function filterContextToDashboardFiltersByDateDataSet(filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined, dateDataSet: ObjRef): IDashboardFilter[];
+
+// @alpha
+export function filterContextToDashboardFiltersByWidget(filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined, widget: IWidgetDefinition): IDashboardFilter[];
 
 // @public
 export function filterIsEmpty(filter: IAttributeFilter): boolean;
@@ -1862,11 +1901,11 @@ export type IComputedAttributeMetadataObjectDefinition = IMetadataObjectDefiniti
 
 // @alpha
 export interface IConditionalFormatting {
-    customTargets?: readonly ConditionalFormattingTarget[];
     // (undocumented)
     enabled: boolean;
     // (undocumented)
     rules: readonly IConditionalFormattingRule[];
+    suppressedTargets?: readonly ConditionalFormattingTarget[];
     version?: string;
 }
 
@@ -2102,6 +2141,9 @@ export interface IDashboardExportParameter {
     title: string;
     value: string;
 }
+
+// @public
+export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IArbitraryAttributeFilter | IMatchAttributeFilter | IMeasureValueFilter;
 
 // @alpha
 export interface IDashboardFilterGroup {
@@ -3066,6 +3108,7 @@ export interface IFeatureFlags {
     enableRichTextWidgetFilterConfiguration?: boolean;
     enableSeamlessIdpSwitch?: boolean;
     enableSecondGranularities?: boolean;
+    enableSemanticConditionalFormatting?: boolean;
     enableSemanticSearch?: boolean;
     enableShellApplication?: boolean;
     enableShellApplication_analyticalDesigner?: boolean;
@@ -4546,6 +4589,8 @@ export interface IPermanentSettings {
     // @alpha
     openAiConfig?: IOpenAiConfig;
     platformEdition?: PlatformEdition;
+    // @alpha
+    reportsBrandKit?: IReportsBrandKit;
     responsiveUiDateFormat?: string;
     restrictBaseUi?: boolean;
     showHiddenCatalogItems?: boolean;
@@ -4836,6 +4881,7 @@ export interface IReportBoxStyle {
     // (undocumented)
     background?: ReportBackground;
     borderRadius?: number;
+    padding?: number;
 }
 
 // @alpha
@@ -4957,6 +5003,55 @@ export interface IReportPageLayoutDefinition {
     title: string;
     // (undocumented)
     type: "reportPageLayout";
+}
+
+// @alpha
+export interface IReportsBrandKit {
+    // (undocumented)
+    assets?: IReportsBrandKitAssets;
+    // (undocumented)
+    colors?: IReportsBrandKitColors;
+    // (undocumented)
+    typography?: IReportsBrandKitTypography;
+    version: "1";
+}
+
+// @alpha
+export interface IReportsBrandKitAssets {
+    images?: IReportsBrandKitImage[];
+    logo?: string;
+    logoInverse?: string;
+}
+
+// @alpha
+export interface IReportsBrandKitColors {
+    brand?: string;
+    chart?: string[];
+    ink?: string;
+    inkMuted?: string;
+    paper?: string;
+    paperAlt?: string;
+}
+
+// @alpha
+export interface IReportsBrandKitFontFace {
+    family: string;
+    style?: "normal" | "italic";
+    url: string;
+    weight?: number;
+}
+
+// @alpha
+export interface IReportsBrandKitImage {
+    description?: string;
+    id: string;
+    url: string;
+}
+
+// @alpha
+export interface IReportsBrandKitTypography {
+    fontFamily?: string;
+    fonts?: IReportsBrandKitFontFace[];
 }
 
 // @alpha
@@ -5398,6 +5493,9 @@ export function isDashboardDateFilterWithDimension(obj: unknown): obj is IDashbo
 
 // @alpha
 export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition;
+
+// @public
+export function isDashboardFilter(obj: unknown): obj is IDashboardFilter;
 
 // @alpha
 export function isDashboardLayout<TWidget = IDashboardWidget>(obj: unknown): obj is IDashboardLayout<TWidget>;
@@ -7385,6 +7483,9 @@ export type ParameterValue = IParameterDefinition["defaultValue"];
 export function parameterValueMatchesType(definition: IParameterDefinition, value: ParameterValue): boolean;
 
 // @alpha
+export function parseReportsBrandChartColor(color: string): IRgbColorValue | undefined;
+
+// @alpha
 export type PermissionSource = "direct" | "indirect";
 
 // @public
@@ -7520,7 +7621,7 @@ export type RemotePluggableApplicationsRegistry = IRemotePluggableApplicationsRe
 export type ReportBackground = IReportColorBackground | IReportImageBackground;
 
 // @alpha
-export type ReportBuiltInVariable = "reportTitle" | "periodStart" | "periodEnd" | "workspaceName" | "generatedAt" | "pageNumber" | "totalPages" | "logo";
+export type ReportBuiltInVariable = "reportTitle" | "periodStart" | "periodEnd" | "workspaceName" | "generatedAt" | "pageNumber" | "totalPages" | "logo" | "logoInverse";
 
 // @alpha
 export const ReportBuiltInVariables: ReportBuiltInVariable[];
@@ -7557,6 +7658,12 @@ export const ReportPageFormats: ReportPageFormat[];
 
 // @alpha
 export type ReportPageLayoutNode = IReportLayoutSection | IReportLayoutSlotRef;
+
+// @alpha
+export function reportsBrandKitImageVariable(imageId: string): string;
+
+// @alpha
+export const ReportsBrandKitImageVariablePrefix = "image_";
 
 // @alpha
 export type ReportSlot = IReportVisualizationSlot | IReportTextSlot | IReportImageSlot;
@@ -7601,6 +7708,9 @@ export function sanitizeBucketTotals(bucket: IBucket, sortItems: ISortItem[], to
 
 // @alpha
 export function sanitizeParameterValue(definition: IParameterDefinition, value: ParameterValue): ParameterValue;
+
+// @alpha
+export function sanitizeReportsBrandKit(value: unknown): IReportsBrandKit | undefined;
 
 // @alpha @deprecated
 export type ScheduledMailAttachment = IDashboardAttachment | IWidgetAttachment;

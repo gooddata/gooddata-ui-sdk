@@ -84,10 +84,11 @@ export function useCatalogItemUpdate({
     /** Sync local state with an item mutation persisted outside this hook; does not re-persist. */
     const applyItemUpdate = useCallback(
         (updated: ICatalogItem) => {
-            setItem(updated);
-            onUpdate?.(updated);
+            const next = keepMeasurePermissions(item, updated);
+            setItem(next);
+            onUpdate?.(next);
         },
-        [onUpdate],
+        [item, onUpdate],
     );
 
     /** Sync local state with an item deletion persisted outside this hook; does not re-persist. */
@@ -364,6 +365,23 @@ function updateItem<TItem extends ICatalogItem>(
     onUpdate(newItem);
     const persistFn = persist ?? ((nextItem: TItem) => updateCatalogItem(backend, workspace, nextItem));
     Promise.resolve(persistFn(newItem)).catch(onError);
+}
+
+// The update endpoint cannot return permissions, and a save does not change them.
+function keepMeasurePermissions(
+    previous: ICatalogItem | null | undefined,
+    updated: ICatalogItem,
+): ICatalogItem {
+    if (!previous || !isCatalogItemMeasure(previous) || !isCatalogItemMeasure(updated)) {
+        return updated;
+    }
+    if (previous.identifier !== updated.identifier) {
+        return updated;
+    }
+    if (updated.permissions || !previous.permissions) {
+        return updated;
+    }
+    return { ...updated, permissions: previous.permissions };
 }
 
 function makeUpdatedItem<TItem extends ICatalogItem>(

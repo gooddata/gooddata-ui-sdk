@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/playground",
-    "version": "11.55.0-alpha.3",
+    "version": "11.55.0-alpha.4",
     "private": true,
     "description": "GoodData.UI SDK - Developer Playground",
     "license": "LicenseRef-LICENSE",
@@ -67,7 +67,7 @@
         "lodash-es": "^4.17.23",
         "maplibre-gl": "^4.7.1",
         "npm-run-all": "4.1.5",
-        "oxfmt": "0.52.0",
+        "oxfmt": "0.58.0",
         "oxlint": "1.57.0",
         "oxlint-tsgolint": "0.15.0",
         "react": "19.1.1",

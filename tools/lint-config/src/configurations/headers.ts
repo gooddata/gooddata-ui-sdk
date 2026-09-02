@@ -1,13 +1,13 @@
 // (C) 2026 GoodData Corporation
 
-import type { IPackage } from "../types.js";
+import type { IPackage, Rules } from "../types.js";
 
 export const headersPlugin: IPackage = {
     name: "eslint-plugin-headers",
     version: "1.3.3",
 };
 
-export const headersRules = {
+export const headersRules: Rules<"headers"> = {
     "headers/header-format": [
         "error",
         {
