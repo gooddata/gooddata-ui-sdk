@@ -1,13 +1,13 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { IPackage } from "../types.js";
+import { IPackage, Rules } from "../types.js";
 
 export const testingLibraryPlugin: IPackage = {
     name: "eslint-plugin-testing-library",
     version: "7.16.2",
 };
 
-const commonRules = {
+const commonRules: Rules<"testing-library"> = {
     "testing-library/await-async-queries": "error",
     "testing-library/await-async-utils": "error",
     "testing-library/no-await-sync-queries": "error",
@@ -23,7 +23,7 @@ const commonRules = {
     "testing-library/prefer-screen-queries": "error",
 };
 
-export const testingLibraryDomRules = {
+export const testingLibraryDomRules: Rules<"testing-library"> = {
     ...commonRules,
     "testing-library/await-async-events": [
         "error",
@@ -39,7 +39,7 @@ export const testingLibraryDomRules = {
     ],
 };
 
-export const testingLibraryReactRules = {
+export const testingLibraryReactRules: Rules<"testing-library"> = {
     ...commonRules,
     "testing-library/await-async-events": [
         "error",
@@ -62,7 +62,7 @@ export const testingLibraryReactRules = {
     "testing-library/render-result-naming-convention": "error",
 };
 
-export const testingLibraryVueRules = {
+export const testingLibraryVueRules: Rules<"testing-library"> = {
     ...commonRules,
     "testing-library/await-async-events": [
         "error",

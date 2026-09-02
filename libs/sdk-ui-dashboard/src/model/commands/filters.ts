@@ -848,7 +848,7 @@ export function changeWorkingAttributeFilterSelection(
  * The {@link ChangeAttributeFilterSelectionPayload}'s `selectionType` and `elements` are derived from the
  * provided attribute filter.
  *
- * To convert {@link IDashboardFilter} to {@link @gooddata/sdk-model#IFilter} use {@link dashboardAttributeFilterToAttributeFilter}.
+ * To convert {@link IDashboardFilter} to {@link @gooddata/sdk-model#IFilter} use {@link @gooddata/sdk-model#dashboardAttributeFilterToAttributeFilter}.
  * Converted filter can be used within the command's payload.
  *
  * @param filterLocalId - dashboard attribute filter's local id

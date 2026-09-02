@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: Added an @alpha context-decorator slot for the automation dialogs' shared automations context (AutomationsContextDecoratorComponent Dashboard prop): a decorator reads useAutomationsContext(), adjusts members such as dateFilterConfig, and re-provides via the newly exported AutomationsContextProvider; it decorates both dialog trees (alerting and scheduled email).",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

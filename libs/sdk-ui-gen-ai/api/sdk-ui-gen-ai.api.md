@@ -10,6 +10,7 @@ import { CatalogItem } from '@gooddata/sdk-model';
 import { ComponentType } from 'react';
 import { DashboardSelectorEvaluator } from '@gooddata/sdk-ui-dashboard';
 import { EnhancedStore } from '@reduxjs/toolkit';
+import { GenAIChatEffort } from '@gooddata/sdk-model';
 import type { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import type { GenAIChatRoutingUseCase } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
@@ -20,6 +21,7 @@ import { IChatConversationError } from '@gooddata/sdk-backend-spi';
 import { IChatConversationItem } from '@gooddata/sdk-backend-spi';
 import { IChatConversationMultipartPart } from '@gooddata/sdk-backend-spi';
 import { IChatConversationVisualisationContent } from '@gooddata/sdk-backend-spi';
+import { IChatSuggestion } from '@gooddata/sdk-backend-spi';
 import { IChatSuggestions } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboard } from '@gooddata/sdk-model';
@@ -247,29 +249,59 @@ export const clearThreadAction: ActionCreatorWithoutPayload<"messages/clearThrea
 // @public (undocumented)
 export type Contents = TextContents | RoutingContents | ReasoningContents | SearchContents | SemanticSearchContents | VisualizationContents | ChangeAnalysisContents | ErrorContents;
 
-// @public
+// @alpha
+export function DefaultAgentChooser(props: IGenAIAssistantAgentChooserProps): JSX.Element;
+
+// @alpha
 export function DefaultAgentItem(props: IGenAIAssistantAgentItemProps): JSX.Element;
 
-// @beta (undocumented)
+// @alpha
+export function DefaultAssistantMessage(props: IGenAIAssistantAssistantMessageProps): JSX.Element;
+
+// @alpha
 export function DefaultDisclaimer(_props: IGenAIAssistantDisclaimerProps): JSX.Element;
 
-// @beta (undocumented)
+// @alpha
+export function DefaultFeedback(props: IGenAIAssistantFeedbackProps): JSX.Element;
+
+// @alpha
+export function DefaultFollowUpButtons(props: IGenAIAssistantFollowUpButtonsProps): JSX.Element;
+
+// @alpha
+export function DefaultFollowUpQuestion(props: IGenAIAssistantFollowUpQuestionProps): JSX.Element;
+
+// @alpha
 export function DefaultLandingContainer(input: ILandingContentProps): JSX.Element;
 
-// @beta (undocumented)
+// @alpha
 export function DefaultLandingQuestion(input: ILandingQuestionProps): JSX.Element;
 
-// @beta (undocumented)
+// @alpha
 export function DefaultLandingQuestions(input: ILandingContentProps): JSX.Element;
 
-// @beta (undocumented)
+// @alpha
 export function DefaultLandingScreen(input: LandingScreenProps): JSX.Element;
 
-// @beta (undocumented)
+// @alpha
 export function DefaultLandingTitle(input: ILandingTitleProps): JSX.Element;
 
-// @beta (undocumented)
+// @alpha
 export function DefaultLandingTitleAscent(input: ILandingTitleProps): JSX.Element;
+
+// @alpha
+export function DefaultMessageErrorContent(props: IGenAIAssistantMessageErrorContentProps): JSX.Element;
+
+// @alpha
+export function DefaultMessageMultipartContent(props: IGenAIAssistantMessageMultipartContentProps): JSX.Element;
+
+// @alpha
+export function DefaultMessageReasoningContent(props: IGenAIAssistantMessageReasoningContentProps): JSX.Element;
+
+// @alpha
+export function DefaultMessageTextContent(props: IGenAIAssistantMessageTextContentProps): JSX.Element;
+
+// @alpha
+export function DefaultUserMessage(props: IGenAIAssistantUserMessageProps): JSX.Element;
 
 // @public (undocumented)
 export type ErrorContents = {
@@ -321,6 +353,7 @@ export type GenAIConversationsProps = Omit<GenAiStoreProps, "children"> & {
     locale?: string;
     onConversationSelect?: (conversation: IChatConversationLocal) => void;
     className?: string;
+    slots?: IGenAIAssistantSlots;
 };
 
 // @public
@@ -403,6 +436,30 @@ export type IChatConversationSystemContent = {
     type: "system";
 };
 
+// @public (undocumented)
+export interface IChatMessagesGroup {
+    // (undocumented)
+    messages: IChatConversationLocalItem[];
+    // (undocumented)
+    type: "reasoning" | "user" | "assistant" | "error" | "system";
+}
+
+// @alpha
+export type IGenAIAssistantAgentChooserProps = {
+    agents: GenAIAgent[];
+    conversations?: IChatConversationLocal[];
+    conversationAgentId?: string;
+    selectedAgentId?: string;
+    effectiveSelectedAgentId?: string;
+    onSelectAgent: (agentId: string | undefined, options?: {
+        showChangeEvent?: boolean;
+    }) => void;
+    selectedEffort?: GenAIChatEffort;
+    onSelectEffort?: (effort: GenAIChatEffort) => void;
+    isDisabled?: boolean;
+    isLoading?: boolean;
+};
+
 // @public
 export type IGenAIAssistantAgentItemProps = {
     agent: GenAIAgent;
@@ -411,8 +468,37 @@ export type IGenAIAssistantAgentItemProps = {
     Content?: ComponentType<IUiMenuInteractiveItemProps>;
 };
 
+// @alpha
+export type IGenAIAssistantAssistantMessageProps = {
+    message: IChatConversationLocalItem;
+    groups: IChatMessagesGroup[];
+    isLast?: boolean;
+};
+
 // @public
 export type IGenAIAssistantDisclaimerProps = Record<string, never>;
+
+// @alpha
+export type IGenAIAssistantFeedbackProps = {
+    message: IChatConversationLocalItem;
+    group: IChatMessagesGroup;
+    isLast?: boolean;
+    isHidden?: boolean;
+    isComplete?: boolean;
+};
+
+// @alpha
+export type IGenAIAssistantFollowUpButtonsProps = {
+    message: IChatConversationLocalItem;
+    suggestions: IChatSuggestion[];
+};
+
+// @alpha
+export type IGenAIAssistantFollowUpQuestionProps = {
+    message: IChatConversationLocalItem;
+    question: string;
+    references: TextContentObject[];
+};
 
 // @public
 export type IGenAIAssistantLandingScreenProps = {
@@ -421,12 +507,65 @@ export type IGenAIAssistantLandingScreenProps = {
     isSmallScreen?: boolean;
 };
 
+// @alpha
+export type IGenAIAssistantMessageErrorContentProps = IChatConversationErrorContent & {
+    isLoading?: boolean;
+};
+
+// @alpha
+export type IGenAIAssistantMessageMultipartContentProps = {
+    message: IChatConversationLocalItem;
+    parts: IChatConversationMultipartLocalPart[];
+    references: TextContentObject[];
+};
+
+// @alpha
+export type IGenAIAssistantMessageReasoningContentProps = {
+    summary: string;
+    objects: TextContentObject[];
+    isLoading?: boolean;
+};
+
+// @alpha
+export type IGenAIAssistantMessageTextContentProps = {
+    text: string;
+    objects: TextContentObject[];
+    isLoading?: boolean;
+};
+
 // @public
 export interface IGenAIAssistantSlots {
+    // @alpha
+    AgentChooser?: ComponentType<ISlotProps<IGenAIAssistantAgentChooserProps>>;
     AgentItem?: ComponentType<ISlotProps<IGenAIAssistantAgentItemProps>>;
+    // @alpha
+    AssistantMessage?: ComponentType<ISlotProps<IGenAIAssistantAssistantMessageProps>>;
     Disclaimer?: ComponentType<ISlotProps<IGenAIAssistantDisclaimerProps>>;
+    // @alpha
+    Feedback?: ComponentType<ISlotProps<IGenAIAssistantFeedbackProps>>;
+    // @alpha
+    FollowUpButtons?: ComponentType<ISlotProps<IGenAIAssistantFollowUpButtonsProps>>;
+    // @alpha
+    FollowUpQuestion?: ComponentType<ISlotProps<IGenAIAssistantFollowUpQuestionProps>>;
     LandingScreen?: ComponentType<ISlotProps<IGenAIAssistantLandingScreenProps>>;
+    // @alpha
+    MessageErrorContent?: ComponentType<ISlotProps<IGenAIAssistantMessageErrorContentProps>>;
+    // @alpha
+    MessageMultipartContent?: ComponentType<ISlotProps<IGenAIAssistantMessageMultipartContentProps>>;
+    // @alpha
+    MessageReasoningContent?: ComponentType<ISlotProps<IGenAIAssistantMessageReasoningContentProps>>;
+    // @alpha
+    MessageTextContent?: ComponentType<ISlotProps<IGenAIAssistantMessageTextContentProps>>;
+    // @alpha
+    UserMessage?: ComponentType<ISlotProps<IGenAIAssistantUserMessageProps>>;
 }
+
+// @alpha
+export type IGenAIAssistantUserMessageProps = {
+    message: IChatConversationLocalItem;
+    groups: IChatMessagesGroup[];
+    isLast?: boolean;
+};
 
 // @public
 export interface IGenAiInteractionIntelligenceProps {
@@ -450,7 +589,7 @@ export interface ILandingContentProps {
     isSmallScreen?: boolean;
 }
 
-// @beta (undocumented)
+// @alpha
 export interface ILandingQuestionProps {
     // (undocumented)
     answer: string;
@@ -462,7 +601,7 @@ export interface ILandingQuestionProps {
     title?: string;
 }
 
-// @beta (undocumented)
+// @alpha (undocumented)
 export interface ILandingTitleProps {
     // (undocumented)
     children: ReactNode;
@@ -543,7 +682,7 @@ export const isChatUserMessageEvent: (event: ChatEvent) => event is ChatUserMess
 // @public
 export const isChatVisualizationErrorEvent: (event: ChatEvent) => event is ChatVisualizationErrorEvent;
 
-// @beta (undocumented)
+// @alpha (undocumented)
 export type LandingScreenProps = IGenAIAssistantLandingScreenProps & {
     LandingScreen?: ComponentType;
 };
@@ -562,6 +701,7 @@ export type LinkHandlerEvent = {
     dashboardStatus?: "saved" | "draft";
     visualization?: IInsight;
     visualizationStatus?: "saved" | "draft";
+    action: "copy" | "open";
 };
 
 // @internal

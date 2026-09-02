@@ -4,6 +4,7 @@
 
 ```ts
 
+import type { AccessGranularPermission } from '@gooddata/sdk-model';
 import type { CertificationStatus } from '@gooddata/sdk-model';
 import type { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import type { IDataSetMetadataObject } from '@gooddata/sdk-model';
@@ -229,6 +230,7 @@ export interface ICatalogItemMeasure extends ICatalogItemBase {
     isHiddenFromKda?: boolean;
     // (undocumented)
     metricType?: MetricType;
+    permissions?: AccessGranularPermission[];
     // (undocumented)
     type: "measure";
 }

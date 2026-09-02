@@ -7,7 +7,7 @@ import { type IGenAIAssistantAgentItemProps } from "./types.js";
 /**
  * Default implementation of the AgentItem slot.
  *
- * @public
+ * @alpha
  */
 export function DefaultAgentItem(props: IGenAIAssistantAgentItemProps) {
     const { menuItemProps, Content } = props;

@@ -65,8 +65,18 @@ describe("metricMutationPort adapter", () => {
 
         expect(createMeasure).toHaveBeenCalledWith(
             expect.objectContaining({ expression: "SELECT SUM({fact/order_amount})", format: "#,##0.00" }),
+            { loadPermissions: false },
         );
         expect(result).toMatchObject({ type: "measure", identifier: "revenue.total", format: "#,##0.00" });
+    });
+
+    it("create asks for the new metric's permissions when they are enabled", async () => {
+        const { backend, createMeasure } = createFakeBackend();
+        const adapter = createMetricMutationAdapter(backend, "ws-1", { enableMetricPermissions: true });
+
+        await adapter.create({ type: "measure", title: "Total Revenue", expression: "SELECT 1", format: "" });
+
+        expect(createMeasure).toHaveBeenCalledWith(expect.anything(), { loadPermissions: true });
     });
 
     it("update persists the definition's content with the loaded measure's identity", async () => {

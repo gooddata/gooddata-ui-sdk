@@ -1,26 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
 import {
-    type DashboardAttributeFilterItem,
-    type FilterContextItem,
-    type IAttributeFilter,
-    type IDashboardAttributeFilter,
-    type IDashboardDateFilter,
-    type IDashboardMeasureValueFilter,
-    type IDateFilter,
-    type IFilterContext,
-    type IFilterContextDefinition,
-    type IFilterableWidget,
-    type IMeasureValueFilter,
-    type ITempFilterContext,
-    type IWidgetDefinition,
-    type ObjRef,
-    isAllTimeDashboardDateFilter,
-    isDashboardArbitraryAttributeFilter,
-    isDashboardAttributeFilterItem,
-    isDashboardDateFilter,
-    isDashboardMatchAttributeFilter,
-    isDashboardMeasureValueFilter,
     newAbsoluteDateFilter,
     newAllTimeFilter,
     newArbitraryAttributeFilter,
@@ -28,16 +8,84 @@ import {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
-} from "@gooddata/sdk-model";
+} from "../execution/filter/factory.js";
+import {
+    type IAbsoluteDateFilter,
+    type IArbitraryAttributeFilter,
+    type IAttributeElements,
+    type IAttributeElementsByRef,
+    type IAttributeFilter,
+    type IDateFilter,
+    type IMatchAttributeFilter,
+    type IMeasureValueFilter,
+    type INegativeAttributeFilter,
+    type IPositiveAttributeFilter,
+    type IRelativeDateFilter,
+    filterAttributeElements,
+    filterObjRef,
+    isArbitraryAttributeFilter,
+    isAttributeFilter,
+    isAttributeFilterWithSelection,
+    isDateFilter,
+    isMatchAttributeFilter,
+    isMeasureValueFilter,
+    isNegativeAttributeFilter,
+} from "../execution/filter/index.js";
+import { type IAttributeElement } from "../ldm/attributeElement.js";
+import { type ObjRef } from "../objRef/index.js";
 
-import { type IDashboardFilter } from "../types.js";
+import { type IFilterableWidget } from "./baseWidget.js";
+import {
+    type DashboardAttributeFilterItem,
+    type DashboardAttributeFilterSelectionMode,
+    type FilterContextItem,
+    type IDashboardArbitraryAttributeFilter,
+    type IDashboardAttributeFilter,
+    type IDashboardDateFilter,
+    type IDashboardMatchAttributeFilter,
+    type IDashboardMeasureValueFilter,
+    type IFilterContext,
+    type IFilterContextDefinition,
+    type ITempFilterContext,
+    isAllTimeDashboardDateFilter,
+    isDashboardArbitraryAttributeFilter,
+    isDashboardAttributeFilterItem,
+    isDashboardDateFilter,
+    isDashboardMatchAttributeFilter,
+    isDashboardMeasureValueFilter,
+} from "./filterContext.js";
+import { type IWidgetDefinition } from "./widget.js";
+
+/**
+ * Execution-filter form of a dashboard filter: what a {@link FilterContextItem} becomes once it is
+ * resolved against the object it filters.
+ *
+ * @public
+ */
+export type IDashboardFilter =
+    | IAbsoluteDateFilter
+    | IRelativeDateFilter
+    | IPositiveAttributeFilter
+    | INegativeAttributeFilter
+    | IArbitraryAttributeFilter
+    | IMatchAttributeFilter
+    | IMeasureValueFilter;
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDashboardFilter}.
+ *
+ * @public
+ */
+export function isDashboardFilter(obj: unknown): obj is IDashboardFilter {
+    return isAttributeFilter(obj) || isDateFilter(obj) || isMeasureValueFilter(obj);
+}
 
 /**
  * Gets {@link IDashboardFilter} items for filters specified in given filterContext in relation to the given widget.
  *
  * @param filterContext - filter context to get filters for
  * @param widget - widget to use to get dateDataSet for date filters
- * @public
+ * @alpha
  */
 export function filterContextToDashboardFiltersByWidget(
     filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined,
@@ -56,7 +104,7 @@ export function filterContextToDashboardFiltersByWidget(
  *
  * @param filterContext - filter context to get filters for
  * @param dateDataSet - widget to use to get dateDataSet for date filters
- * @public
+ * @alpha
  */
 export function filterContextToDashboardFiltersByDateDataSet(
     filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined,
@@ -70,7 +118,7 @@ export function filterContextToDashboardFiltersByDateDataSet(
 }
 
 /**
- * Converts {@link @gooddata/sdk-backend-spi#IDashboardAttributeFilter} to {@link @gooddata/sdk-model#IAttributeFilter} instance.
+ * Converts {@link IDashboardAttributeFilter} to {@link IAttributeFilter} instance.
  *
  * @param filter - filter context attribute filter to convert
  * @deprecated Use {@link dashboardAttributeFilterItemToAttributeFilter} instead,
@@ -96,14 +144,14 @@ export function dashboardAttributeFilterToAttributeFilter(
 }
 
 /**
- * Converts any {@link @gooddata/sdk-model#DashboardAttributeFilterItem} to {@link @gooddata/sdk-model#IAttributeFilter} instance.
+ * Converts any {@link DashboardAttributeFilterItem} to {@link IAttributeFilter} instance.
  *
  * @remarks
  * Handles all attribute filter types: element-based (positive/negative selection),
  * arbitrary value filters, and match (text) filters.
  *
  * @param filter - dashboard attribute filter item to convert
- * @public
+ * @alpha
  */
 export function dashboardAttributeFilterItemToAttributeFilter(
     filter: DashboardAttributeFilterItem,
@@ -140,7 +188,80 @@ export function dashboardAttributeFilterItemToAttributeFilter(
 }
 
 /**
- * Converts {@link @gooddata/sdk-backend-spi#IDashboardDateFilter} to {@link @gooddata/sdk-model#IDateFilter} instance.
+ * Converts {@link IAttributeFilter} to {@link DashboardAttributeFilterItem}.
+ *
+ * @remarks
+ * For arbitrary and match filters, returns the corresponding dedicated dashboard filter type
+ * with full lossless conversion. For element-based filters, returns {@link IDashboardAttributeFilter}.
+ *
+ * @alpha
+ * @param filter - filter to convert
+ * @param localIdentifier - localIdentifier of the filter
+ * @param title - custom title of the filter
+ * @param attributeElements - currently selected elements. Only used for element-based filters.
+ * @param isInverted - whether filter has negative selection (NOT_IN operator). Default is taken from the filter param.
+ * @param selectionMode - selection mode of the filter (single / multi). Default is undefined.
+ * @returns converted filter
+ */
+export function attributeFilterToDashboardAttributeFilter(
+    filter: IAttributeFilter,
+    localIdentifier: string | undefined,
+    title: string | undefined,
+    attributeElements?: IAttributeElement[],
+    isInverted?: boolean,
+    selectionMode?: DashboardAttributeFilterSelectionMode,
+): DashboardAttributeFilterItem {
+    if (isArbitraryAttributeFilter(filter)) {
+        const result: IDashboardArbitraryAttributeFilter = {
+            arbitraryAttributeFilter: {
+                displayForm: filterObjRef(filter),
+                values: filter.arbitraryAttributeFilter.values,
+                negativeSelection: filter.arbitraryAttributeFilter.negativeSelection ?? false,
+                localIdentifier,
+                title,
+            },
+        };
+        return result;
+    }
+
+    if (isMatchAttributeFilter(filter)) {
+        const result: IDashboardMatchAttributeFilter = {
+            matchAttributeFilter: {
+                displayForm: filterObjRef(filter),
+                operator: filter.matchAttributeFilter.operator,
+                literal: filter.matchAttributeFilter.literal,
+                caseSensitive: filter.matchAttributeFilter.caseSensitive,
+                negativeSelection: filter.matchAttributeFilter.negativeSelection ?? false,
+                localIdentifier,
+                title,
+            },
+        };
+        return result;
+    }
+
+    const attributeElementsObj: IAttributeElementsByRef | undefined = attributeElements && {
+        uris: attributeElements.map((element) => element.uri),
+    };
+
+    let resolvedElements: IAttributeElements | undefined = attributeElementsObj;
+    if (!resolvedElements && isAttributeFilterWithSelection(filter)) {
+        resolvedElements = filterAttributeElements(filter);
+    }
+
+    return {
+        attributeFilter: {
+            attributeElements: resolvedElements ?? { values: [] },
+            displayForm: filterObjRef(filter),
+            negativeSelection: isInverted ?? isNegativeAttributeFilter(filter),
+            localIdentifier,
+            title,
+            selectionMode,
+        },
+    };
+}
+
+/**
+ * Converts {@link IDashboardDateFilter} to {@link IDateFilter} instance.
  *
  * @param filter - filter context attribute filter to convert
  * @param widget - widget to use to get dateDataSet for date filters
@@ -183,10 +304,10 @@ export function dashboardDateFilterToDateFilterByWidget(
 }
 
 /**
- * Converts {@link @gooddata/sdk-backend-spi#IDashboardDateFilter} to {@link @gooddata/sdk-model#IDateFilter} instance.
+ * Converts {@link IDashboardDateFilter} to {@link IDateFilter} instance.
  *
  * @param filter - filter context attribute filter to convert
- * @param dateDataSet - date data set to define {@link @gooddata/sdk-model#IDateFilter}
+ * @param dateDataSet - date data set to define {@link IDateFilter}
  * @public
  */
 export function dashboardDateFilterToDateFilterByDateDataSet(
@@ -223,7 +344,7 @@ export function dashboardDateFilterToDateFilterByDateDataSet(
 }
 
 /**
- * Converts {@link @gooddata/sdk-model#IDashboardMeasureValueFilter} to {@link @gooddata/sdk-model#IMeasureValueFilter} instance.
+ * Converts {@link IDashboardMeasureValueFilter} to {@link IMeasureValueFilter} instance.
  *
  * @remarks
  * Dashboard measure value filters always reference a catalog metric via `ObjRef`, which is a valid
@@ -232,7 +353,7 @@ export function dashboardDateFilterToDateFilterByDateDataSet(
  * Conditions are passed through unchanged.
  *
  * @param filter - dashboard measure value filter to convert
- * @public
+ * @alpha
  */
 export function dashboardMeasureValueFilterToMeasureValueFilter(
     filter: IDashboardMeasureValueFilter,
@@ -249,11 +370,11 @@ export function dashboardMeasureValueFilterToMeasureValueFilter(
 }
 
 /**
- * Gets {@link IDashboardFilter} items for filters specified as {@link @gooddata/sdk-backend-spi#FilterContextItem} instances.
+ * Gets {@link IDashboardFilter} items for filters specified as {@link FilterContextItem} instances.
  *
  * @param filterContextItems - filter context items to get filters for
  * @param widget - widget to use to get dateDataSet for date filters
- * @public
+ * @alpha
  */
 export function filterContextItemsToDashboardFiltersByWidget(
     filterContextItems: FilterContextItem[],
@@ -280,11 +401,11 @@ export function filterContextItemsToDashboardFiltersByWidget(
 }
 
 /**
- * Gets {@link IDashboardFilter} items for filters specified as {@link @gooddata/sdk-backend-spi#FilterContextItem} instances.
+ * Gets {@link IDashboardFilter} items for filters specified as {@link FilterContextItem} instances.
  *
  * @param filterContextItems - filter context items to get filters for
  * @param widget - widget to use to get dateDataSet for date filters
- * @public
+ * @alpha
  */
 export function filterContextItemsToDashboardFiltersByRichTextWidget(
     filterContextItems: FilterContextItem[],
@@ -312,11 +433,11 @@ export function filterContextItemsToDashboardFiltersByRichTextWidget(
 }
 
 /**
- * Gets {@link IDashboardFilter} items for filters specified as {@link @gooddata/sdk-backend-spi#FilterContextItem} instances.
+ * Gets {@link IDashboardFilter} items for filters specified as {@link FilterContextItem} instances.
  *
  * @param filterContextItems - filter context items to get filters for
- * @param dateDataSet - date data set to define {@link @gooddata/sdk-model#IDateFilter}
- * @public
+ * @param dateDataSet - date data set to define {@link IDateFilter}
+ * @alpha
  */
 export function filterContextItemsToDashboardFiltersByDateDataSet(
     filterContextItems: FilterContextItem[],

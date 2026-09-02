@@ -95,6 +95,14 @@ export interface ICfTargetData {
     dates?: Record<string, ICfDateMeta>;
     /** Semantic-layer conditional formatting carried on the execution result header, by localId. */
     semantic?: Record<string, ISemanticConditionalFormatting>;
+    /**
+     * False while `semantic` still belongs to a superseded execution — distinct from `isLoading`,
+     * which can flip back to false before the new data view actually lands (or never, if that
+     * execution fails), leaving a gap `isLoading` alone can't see. Set false the instant a new
+     * execution starts, true again only once a fresh data view actually rebuilds this object.
+     * Undefined (e.g. in tests that construct this directly) is treated as fresh.
+     */
+    semanticFresh?: boolean;
 }
 
 /**
@@ -102,7 +110,10 @@ export interface ICfTargetData {
  * titles live only on the result headers, and measures resolve to their final header name; formats
  * living on metric metadata also resolve only here (insight-level formats win in buildTargetOptions).
  */
-export function buildCfTargetData(dataView: DataViewFacade): Required<ICfTargetData> {
+// `semanticFresh` is deliberately excluded: it's a caller-owned freshness marker across MULTIPLE
+// calls to this function over time (see PluggablePivotTableNext's handleLoadingChanged/handleDataView),
+// not something derivable from a single dataView.
+export function buildCfTargetData(dataView: DataViewFacade): Required<Omit<ICfTargetData, "semanticFresh">> {
     const titles: Record<string, string> = {};
     const formats: Record<string, string> = {};
     const dates: Record<string, ICfDateMeta> = {};
@@ -217,11 +228,13 @@ export const targetLocalId = (target: ConditionalFormattingTarget): string =>
 
 /**
  * Whether `target` is already in Custom mode on this insight config — an insight rule targets it,
- * or it's explicitly listed in `customTargets`. Mirrors the `customModeTargets` set built by
+ * or it's explicitly listed in `suppressedTargets`. Mirrors the `customModeTargets` set built by
  * sdk-ui-pivot's `resolvePerTargetConditionalFormatting` (semanticConditionalFormatting.ts); the two
  * packages don't share this helper, so keep them in sync by hand if either changes. Honoring
- * `customTargets` here matters even though this PR never writes it: if some other path already
- * marked a target Custom, the semantic block must still hide it as Inherited would be wrong.
+ * `suppressedTargets` here matters regardless of source: the Section's own "Turn off" toggle writes
+ * it (`setSuppressed`/`setTargetMode`), and it can also arrive from AAC or an older panel version —
+ * either way, if a target is already marked Custom, the semantic block must still hide it as
+ * Inherited would be wrong.
  */
 export const isCustomTarget = (
     config: IConditionalFormatting | undefined,
@@ -230,14 +243,52 @@ export const isCustomTarget = (
     const value = targetToValue(target);
     return (
         (config?.rules ?? []).some((rule) => targetToValue(rule.target) === value) ||
-        (config?.customTargets ?? []).some((customTarget) => targetToValue(customTarget) === value)
+        (config?.suppressedTargets ?? []).some(
+            (suppressedTarget) => targetToValue(suppressedTarget) === value,
+        )
     );
 };
 
 /**
- * Synthesizes a read-only rule for the View dialog from an inherited semantic-layer condition set.
- * The id mirrors the engine's own `semantic:<kind>:<localId>` convention (semanticConditionalFormatting.ts)
- * for consistency only — it's never persisted or compared.
+ * Whether `target` is explicitly suppressed (Custom-with-zero-rules, per the engine's
+ * `resolvePerTargetConditionalFormatting`): listed in `suppressedTargets` with no authored rule.
+ * This is the "Turn off" state for an otherwise-Inherited target — distinct from an authored-Custom
+ * target, which is never in `suppressedTargets` in practice (its own rule already makes it Custom).
+ */
+export const isSuppressedTarget = (
+    config: IConditionalFormatting | undefined,
+    target: ConditionalFormattingTarget,
+): boolean => {
+    const value = targetToValue(target);
+    return (config?.suppressedTargets ?? []).some(
+        (suppressedTarget) => targetToValue(suppressedTarget) === value,
+    );
+};
+
+/**
+ * `suppressedTargets` must be OMITTED entirely when empty, never set to `undefined` — persisting the
+ * config as JSON drops an `undefined` value either way, but an in-memory object with an explicit
+ * `suppressedTargets: undefined` key is NOT deep-equal to one where the key is simply absent, which
+ * creates spurious dirty-state noise in the session before that JSON round-trip ever happens. Shared
+ * by every place that builds an `IConditionalFormatting` payload (Section today, a future catalog
+ * authoring adapter next) so this normalization can't be forgotten in one of them.
+ */
+export const withSuppressedTargets = (
+    config: IConditionalFormatting,
+    suppressedTargets: IConditionalFormatting["suppressedTargets"],
+): IConditionalFormatting => {
+    if (suppressedTargets?.length) {
+        return { ...config, suppressedTargets };
+    }
+    const { suppressedTargets: _dropped, ...rest } = config;
+    return rest;
+};
+
+/**
+ * Synthesizes a rule for the dialog from an inherited semantic-layer condition set, seeding it with
+ * a display-only id (mirroring the engine's own `semantic:<kind>:<localId>` convention in
+ * semanticConditionalFormatting.ts, for consistency only) — the dialog swaps this for a real uuid()
+ * the moment the user customizes and saves, so this synthetic id itself is never persisted.
  */
 export const semanticRuleFor = (
     option: ITargetOption,

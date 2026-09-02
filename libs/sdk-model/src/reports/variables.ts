@@ -24,7 +24,8 @@ export type ReportBuiltInVariable =
     | "generatedAt"
     | "pageNumber"
     | "totalPages"
-    | "logo";
+    | "logo"
+    | "logoInverse";
 
 /**
  * All built-in report variable names.
@@ -40,6 +41,7 @@ export const ReportBuiltInVariables: ReportBuiltInVariable[] = [
     "pageNumber",
     "totalPages",
     "logo",
+    "logoInverse",
 ];
 
 /**

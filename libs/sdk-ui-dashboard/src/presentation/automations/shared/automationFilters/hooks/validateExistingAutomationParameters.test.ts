@@ -174,6 +174,42 @@ describe("validateExistingAutomationParameters — stored export parameter stale
         ).toBe(true);
     });
 
+    it("is stale when a readonly NUMBER parameter's stored and pinned values are both undecodable", () => {
+        expect(
+            validateExistingAutomationParameters({
+                storedParametersByTab: {
+                    tab1: [{ id: "topN", value: "n/a", title: "Top N", parameterType: "NUMBER" }],
+                },
+                catalog,
+                dashboardParametersByTab: {
+                    tab1: [dashboardParameter("topN", { mode: "readonly", value: "n/a" })],
+                },
+                existingTabIds: new Set(["tab1"]),
+            }),
+        ).toBe(true);
+    });
+
+    it("is not stale when a readonly STRING parameter's pin was persisted as a JSON number", () => {
+        expect(
+            validateExistingAutomationParameters({
+                storedParametersByTab: {
+                    tab1: [{ id: "scenario", value: "42", title: "Scenario", parameterType: "STRING" }],
+                },
+                catalog,
+                dashboardParametersByTab: {
+                    tab1: [
+                        dashboardParameter("scenario", {
+                            mode: "readonly",
+                            parameterType: "STRING",
+                            value: 42,
+                        }),
+                    ],
+                },
+                existingTabIds: new Set(["tab1"]),
+            }),
+        ).toBe(false);
+    });
+
     it("is stale when a readonly STRING parameter's pinned value drifted from the dashboard", () => {
         expect(
             validateExistingAutomationParameters({

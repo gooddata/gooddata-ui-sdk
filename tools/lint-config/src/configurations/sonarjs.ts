@@ -1,13 +1,13 @@
 // (C) 2026 GoodData Corporation
 
-import type { IPackage } from "../types.js";
+import type { IPackage, Rules } from "../types.js";
 
 export const sonarjsPlugin: IPackage = {
     name: "eslint-plugin-sonarjs",
     version: "3.0.6",
 };
 
-export const sonarjsRules = {
+export const sonarjsRules: Rules<"sonarjs"> = {
     "sonarjs/function-name": "off",
     "sonarjs/max-lines": "off",
     "sonarjs/no-tab": "off",
@@ -291,6 +291,6 @@ export const sonarjsOverrides = [
         rules: {
             // we do not care about duplicate functions in test files, they often make sense (e.g. in different describe blocks)
             "sonarjs/no-identical-functions": "off",
-        },
+        } as Rules<"sonarjs">,
     },
 ];

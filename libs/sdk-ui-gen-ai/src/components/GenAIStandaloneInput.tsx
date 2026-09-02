@@ -13,6 +13,8 @@ import { useGenAIStandaloneInputData } from "../hooks/useGenAIStandaloneInputDat
 import { IntlWrapper } from "../localization/IntlWrapper.js";
 
 import { useCompletion } from "./completion/useCompletion.js";
+import { CustomizationProvider } from "./CustomizationProvider.js";
+import type { IGenAIAssistantSlots } from "./customized/types.js";
 import { GenAiChatAgentSwitching } from "./GenAiChatAgentSwitching.js";
 import { GenAiStore, type GenAiStoreProps } from "./GenAiStore.js";
 import { useHighlight } from "./highlight/useHighlight.js";
@@ -61,6 +63,10 @@ export type GenAIStandaloneInputProps = Omit<GenAiStoreProps, "children"> & {
      * Whether the input should autofocus.
      */
     autofocus?: boolean;
+    /**
+     * Customization slots for the assistant.
+     */
+    slots?: IGenAIAssistantSlots;
 };
 
 function StandaloneInputContent({
@@ -156,14 +162,16 @@ function StandaloneInputContent({
  * @internal
  */
 export function GenAIStandaloneInput(props: GenAIStandaloneInputProps) {
-    const { backend, workspace, locale, ...rest } = props;
+    const { backend, workspace, locale, slots, ...rest } = props;
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
 
     return (
         <IntlWrapper locale={locale}>
             <GenAiStore {...props} backend={effectiveBackend} workspace={effectiveWorkspace}>
-                <StandaloneInputContent {...rest} />
+                <CustomizationProvider slots={slots}>
+                    <StandaloneInputContent {...rest} />
+                </CustomizationProvider>
             </GenAiStore>
         </IntlWrapper>
     );

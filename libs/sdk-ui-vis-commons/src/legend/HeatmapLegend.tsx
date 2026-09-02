@@ -1,6 +1,6 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
-import { memo } from "react";
+import { type NamedExoticComponent, memo } from "react";
 
 import { ColorLegend } from "./ColorLegend.js";
 import { type IColorLegendItem, type IColorLegendSize, type IHeatmapLegendItem } from "./types.js";
@@ -20,7 +20,7 @@ export interface IHeatmapLegendProps {
 /**
  * @internal
  */
-export const HeatmapLegend = memo(function HeatmapLegend({
+export const HeatmapLegend: NamedExoticComponent<IHeatmapLegendProps> = memo(function HeatmapLegend({
     title,
     series,
     format,

@@ -446,12 +446,15 @@ function buildFilters(entities: ExportEntities, filters_by: QueryFilters | undef
         if (isRankingFilter(filter)) {
             filters.push({
                 rankingFilter: {
-                    measures: [
-                        createIdentifier(filter.using) || createLocalIdentifier(filter.using),
-                        ...(filter.attribute
-                            ? [createIdentifier(filter.attribute) || createLocalIdentifier(filter.attribute)]
-                            : []),
-                    ],
+                    measures: [createIdentifier(filter.using) || createLocalIdentifier(filter.using)],
+                    ...(filter.attribute
+                        ? {
+                              dimensionality: [
+                                  createIdentifier(filter.attribute) ||
+                                      createLocalIdentifier(filter.attribute),
+                              ],
+                          }
+                        : {}),
                     operator: filter.top === undefined ? "BOTTOM" : "TOP",
                     value: filter.top === undefined ? filter.bottom! : filter.top,
                 },

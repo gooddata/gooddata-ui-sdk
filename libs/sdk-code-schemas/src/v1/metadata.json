@@ -3145,6 +3145,38 @@
                                         }
                                     }
                                 }
+                            },
+                            "suppressed_targets": {
+                                "type": "array",
+                                "description": "Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).",
+                                "items": {
+                                    "type": "object",
+                                    "description": "The measure or attribute — exactly one of measure/attribute.",
+                                    "oneOf": [
+                                        {
+                                            "type": "object",
+                                            "additionalProperties": false,
+                                            "required": ["measure"],
+                                            "properties": {
+                                                "measure": {
+                                                    "type": "string",
+                                                    "description": "Local identifier of the targeted measure."
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "type": "object",
+                                            "additionalProperties": false,
+                                            "required": ["attribute"],
+                                            "properties": {
+                                                "attribute": {
+                                                    "type": "string",
+                                                    "description": "Local identifier of the targeted attribute."
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
                             }
                         }
                     }

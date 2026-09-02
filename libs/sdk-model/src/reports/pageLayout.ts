@@ -159,7 +159,7 @@ export interface IReportPageBodyValidationIssue {
 /**
  * Validates the structural invariants of a page body beyond what its types guarantee for content
  * arriving from the wire: the page format is known, slot localIdentifiers are unique, layout
- * weights are positive, corner radii are finite and not negative, every slot is placed (by the
+ * weights are positive, corner radii and paddings are finite and not negative, every slot is placed (by the
  * layout, or as the image background of a box that renders), every layout slotId resolves
  * (unresolved ones are warnings — they render as empty areas), and background references
  * resolve to image slots.
@@ -173,11 +173,11 @@ export function validateReportPageBody(body: IReportPageBody): IReportPageBodyVa
         issues.push({ severity: "error", message: `Unknown page format "${body.format}".` });
     }
 
-    const checkBorderRadius = (borderRadius: number | undefined): void => {
-        if (borderRadius !== undefined && !(Number.isFinite(borderRadius) && borderRadius >= 0)) {
+    const checkLength = (name: string, value: number | undefined): void => {
+        if (value !== undefined && !(Number.isFinite(value) && value >= 0)) {
             issues.push({
                 severity: "error",
-                message: `Border radius must be a finite non-negative number, got ${borderRadius}.`,
+                message: `${name} must be a finite non-negative number, got ${value}.`,
             });
         }
     };
@@ -196,7 +196,8 @@ export function validateReportPageBody(body: IReportPageBody): IReportPageBodyVa
     const slotsById = new Map(body.slots.map((slot) => [slot.localIdentifier, slot]));
     const backgroundIds = new Set<string>();
     const checkBoxStyle = (style: IReportBoxStyle | undefined, isDrawn: boolean): void => {
-        checkBorderRadius(style?.borderRadius);
+        checkLength("Border radius", style?.borderRadius);
+        checkLength("Padding", style?.padding);
         if (!style?.background || !isReportImageBackground(style.background)) {
             return;
         }

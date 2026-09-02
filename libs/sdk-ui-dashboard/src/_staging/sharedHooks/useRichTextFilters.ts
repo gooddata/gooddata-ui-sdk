@@ -8,13 +8,13 @@ import {
     type IInsightWidget,
     type IRichTextWidget,
     areObjRefsEqual,
+    filterContextItemsToDashboardFiltersByRichTextWidget,
     idRef,
     isAbsoluteDateFilter,
     isObjRef,
     isRelativeDateFilter,
 } from "@gooddata/sdk-model";
 
-import { filterContextItemsToDashboardFiltersByRichTextWidget } from "../../converters/filterConverters.js";
 import {
     type IInsightDateDatasets,
     type IQueryInsightDateDatasets,

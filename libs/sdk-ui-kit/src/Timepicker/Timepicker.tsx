@@ -2,6 +2,7 @@
 
 import {
     type KeyboardEvent,
+    type NamedExoticComponent,
     type RefObject,
     memo,
     useCallback,
@@ -245,7 +246,9 @@ export const WrappedTimepicker = memo(function WrappedTimepicker({
 /**
  * @internal
  */
-export const Timepicker = memo(function Timepicker(props: ITimepickerOwnProps) {
+export const Timepicker: NamedExoticComponent<ITimepickerOwnProps> = memo(function Timepicker(
+    props: ITimepickerOwnProps,
+) {
     return (
         <IntlWrapper locale={props.locale}>
             <WrappedTimepicker {...props} />

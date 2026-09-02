@@ -73,6 +73,7 @@ export enum TigerFeaturesNames {
     EnablePreAggregationDatasets = "enablePreAggregationDatasets",
     EnableNewPivotTable = "enableNewPivotTable",
     EnableConditionalFormatting = "enableConditionalFormatting",
+    EnableSemanticConditionalFormatting = "enableSemanticConditionalFormatting",
     EnableNewGeoPushpin = "enableNewGeoPushpin",
     EnableGeoArea = "enableGeoArea",
     EnableHLL = "enableHLL",
@@ -210,6 +211,7 @@ export type ITigerFeatureFlags = {
     enablePreAggregationDatasets: (typeof FeatureFlagsValues)["enablePreAggregationDatasets"][number];
     enableNewPivotTable: (typeof FeatureFlagsValues)["enableNewPivotTable"][number];
     enableConditionalFormatting: (typeof FeatureFlagsValues)["enableConditionalFormatting"][number];
+    enableSemanticConditionalFormatting: (typeof FeatureFlagsValues)["enableSemanticConditionalFormatting"][number];
     enableNewGeoPushpin: (typeof FeatureFlagsValues)["enableNewGeoPushpin"][number];
     enableGeoArea: (typeof FeatureFlagsValues)["enableGeoArea"][number];
     enableHLL: (typeof FeatureFlagsValues)["enableHLL"][number];
@@ -343,6 +345,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enablePreAggregationDatasets: false,
     enableNewPivotTable: true,
     enableConditionalFormatting: false,
+    enableSemanticConditionalFormatting: false,
     enableNewGeoPushpin: true,
     enableGeoArea: true,
     enableHLL: false,
@@ -476,6 +479,7 @@ export const FeatureFlagsValues = {
     enablePreAggregationDatasets: [true, false] as const,
     enableNewPivotTable: [true, false] as const,
     enableConditionalFormatting: [true, false] as const,
+    enableSemanticConditionalFormatting: [true, false] as const,
     enableNewGeoPushpin: [true, false] as const,
     enableGeoArea: [true, false] as const,
     enableHLL: [true, false] as const,

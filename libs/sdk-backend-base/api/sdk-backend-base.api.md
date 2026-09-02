@@ -143,6 +143,7 @@ import { IReport } from '@gooddata/sdk-model';
 import { IReportDefinition } from '@gooddata/sdk-model';
 import { IReportPageLayout } from '@gooddata/sdk-model';
 import { IReportPageLayoutDefinition } from '@gooddata/sdk-model';
+import { IReportsBrandKit } from '@gooddata/sdk-model';
 import { IReportTemplate } from '@gooddata/sdk-model';
 import { IReportTemplateDefinition } from '@gooddata/sdk-model';
 import { IRequestCorrelationMetadata } from '@gooddata/sdk-backend-spi';
@@ -845,11 +846,15 @@ export abstract class DecoratedWorkspaceReportsService implements IWorkspaceRepo
     // (undocumented)
     protected readonly decorated: IWorkspaceReportsService;
     // (undocumented)
+    deleteBrandKit(): Promise<void>;
+    // (undocumented)
     deleteReport(ref: ObjRef): Promise<void>;
     // (undocumented)
     deleteReportPageLayout(ref: ObjRef): Promise<void>;
     // (undocumented)
     deleteReportTemplate(ref: ObjRef): Promise<void>;
+    // (undocumented)
+    getBrandKit(): Promise<IReportsBrandKit | undefined>;
     // (undocumented)
     getReport(ref: ObjRef): Promise<IReport>;
     // (undocumented)
@@ -862,6 +867,8 @@ export abstract class DecoratedWorkspaceReportsService implements IWorkspaceRepo
     getReportTemplate(ref: ObjRef): Promise<IReportTemplate>;
     // (undocumented)
     getReportTemplates(): Promise<IReportTemplate[]>;
+    // (undocumented)
+    setBrandKit(brandKit: IReportsBrandKit): Promise<void>;
     // (undocumented)
     updateReport(report: IReport): Promise<IReport>;
     // (undocumented)
@@ -1210,7 +1217,6 @@ export class InMemoryPaging<T> implements IPagedResource<T> {
 
 // @alpha
 export class InMemoryWorkspaceReportsService implements IWorkspaceReportsService {
-    constructor(persistence?: IWorkspaceReportsPersistence | undefined);
     // (undocumented)
     createReport(report: IReportDefinition): Promise<IReport>;
     // (undocumented)
@@ -1218,11 +1224,15 @@ export class InMemoryWorkspaceReportsService implements IWorkspaceReportsService
     // (undocumented)
     createReportTemplate(template: IReportTemplateDefinition): Promise<IReportTemplate>;
     // (undocumented)
+    deleteBrandKit(): Promise<void>;
+    // (undocumented)
     deleteReport(ref: ObjRef): Promise<void>;
     // (undocumented)
     deleteReportPageLayout(ref: ObjRef): Promise<void>;
     // (undocumented)
     deleteReportTemplate(ref: ObjRef): Promise<void>;
+    // (undocumented)
+    getBrandKit(): Promise<IReportsBrandKit | undefined>;
     // (undocumented)
     getReport(ref: ObjRef): Promise<IReport>;
     // (undocumented)
@@ -1235,6 +1245,8 @@ export class InMemoryWorkspaceReportsService implements IWorkspaceReportsService
     getReportTemplate(ref: ObjRef): Promise<IReportTemplate>;
     // (undocumented)
     getReportTemplates(): Promise<IReportTemplate[]>;
+    // (undocumented)
+    setBrandKit(brandKit: IReportsBrandKit): Promise<void>;
     // (undocumented)
     updateReport(report: IReport): Promise<IReport>;
     // (undocumented)
@@ -1304,14 +1316,6 @@ export interface IWidgetBaseBuilder<T extends IWidget> extends IBuilder<T> {
     title(valueOrUpdateCallback: ValueOrUpdateCallback<string>): this;
     // (undocumented)
     uri(valueOrUpdateCallback: ValueOrUpdateCallback<string>): this;
-}
-
-// @alpha
-export interface IWorkspaceReportsPersistence {
-    // (undocumented)
-    load(): string | null;
-    // (undocumented)
-    save(value: string): void;
 }
 
 // @beta

@@ -1,12 +1,12 @@
 // (C) 2026 GoodData Corporation
 
-import { IPackage } from "../types.js";
+import { IPackage, Rules } from "../types.js";
 
 export const noOnlyTestsPlugin: IPackage = {
     name: "eslint-plugin-no-only-tests",
     version: "3.3.0",
 };
 
-export const noOnlyTestsRules = {
+export const noOnlyTestsRules: Rules<"no-only-tests"> = {
     "no-only-tests/no-only-tests": ["error", { block: ["fixture"], focus: ["only"] }],
 };

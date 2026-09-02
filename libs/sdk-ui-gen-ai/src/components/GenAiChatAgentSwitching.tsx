@@ -24,9 +24,9 @@ import {
 import { setSelectedAgentAction, setSelectedEffortAction } from "../store/messages/messagesSlice.js";
 import { type RootState } from "../store/types.js";
 
-import { GenAIChatAgentDropdown } from "./GenAIChatAgentDropdown.js";
+import { useCustomization } from "./CustomizationContext.js";
 import { GenAIChatEffortDropdown } from "./GenAIChatEffortDropdown.js";
-import { getAgentSelectionStatus } from "./utils/agentSelection.js";
+import { getAgentSelectionStatus, getEffectiveSelectedAgentId } from "./utils/agentSelection.js";
 
 const msgs = defineMessages({
     send: {
@@ -90,6 +90,7 @@ function GenAiChatAgentSwitchingCore({
     GenAiChatAgentSwitchingStateProps &
     IGenAiChatAgentSwitchingDispatchProps) {
     const intl = useIntl();
+    const { AgentChooserComponent } = useCustomization();
 
     const sendLabel = intl.formatMessage(msgs.send);
     const noAgentAvailableLabel = intl.formatMessage(msgs.noAgentAvailable);
@@ -99,6 +100,12 @@ function GenAiChatAgentSwitchingCore({
         assistantLoading: isAssistantLoading,
         conversationsLoading: isConversationsLoading,
         agents,
+        selectedAgentId,
+    });
+
+    const effectiveSelectedAgentId = getEffectiveSelectedAgentId({
+        agents: availableAgents,
+        conversationAgentId: conversation?.agentId,
         selectedAgentId,
     });
 
@@ -167,15 +174,15 @@ function GenAiChatAgentSwitchingCore({
                         agent being built, so the agent dropdown — and its in-menu Reasoning row — is
                         hidden. The effort selector is still relevant there, so it is shown standalone. */}
                     {agentSwitchingActive ? (
-                        <GenAIChatAgentDropdown
+                        <AgentChooserComponent
                             agents={availableAgents}
                             conversations={conversations}
                             conversationAgentId={conversation?.agentId}
                             selectedAgentId={selectedAgentId}
+                            effectiveSelectedAgentId={effectiveSelectedAgentId}
                             isDisabled={agentDropdownDisabled || isSelectionLoading}
                             isLoading={isSelectionLoading}
                             onSelectAgent={handleSelectAgent}
-                            reasoningEnabled={reasoningEffortEnabled}
                             selectedEffort={selectedEffort}
                             onSelectEffort={handleSelectEffort}
                         />

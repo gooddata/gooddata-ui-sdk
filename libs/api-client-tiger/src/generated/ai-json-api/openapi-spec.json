@@ -3147,10 +3147,10 @@
                 "title": "AlertTrigger",
                 "description": "Trigger behavior for the alert."
             },
-            "AllTimeDateFilter-Input": {
+            "AllTimeDateFilter": {
                 "properties": {
                     "allTimeDateFilter": {
-                        "$ref": "#/components/schemas/AllTimeDateFilterBody-Input"
+                        "$ref": "#/components/schemas/AllTimeDateFilterBody"
                     }
                 },
                 "additionalProperties": false,
@@ -3160,20 +3160,7 @@
                 ],
                 "title": "AllTimeDateFilter"
             },
-            "AllTimeDateFilter-Output": {
-                "properties": {
-                    "allTimeDateFilter": {
-                        "$ref": "#/components/schemas/AllTimeDateFilterBody-Output"
-                    }
-                },
-                "additionalProperties": false,
-                "type": "object",
-                "required": [
-                    "allTimeDateFilter"
-                ],
-                "title": "AllTimeDateFilter"
-            },
-            "AllTimeDateFilterBody-Input": {
+            "AllTimeDateFilterBody": {
                 "properties": {
                     "applyOnResult": {
                         "anyOf": [
@@ -3202,62 +3189,7 @@
                     "granularity": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/DateGranularity-Input"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
-                    },
-                    "localIdentifier": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Localidentifier"
-                    }
-                },
-                "additionalProperties": false,
-                "type": "object",
-                "required": [
-                    "dataset"
-                ],
-                "title": "AllTimeDateFilterBody"
-            },
-            "AllTimeDateFilterBody-Output": {
-                "properties": {
-                    "applyOnResult": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Applyonresult"
-                    },
-                    "dataset": {
-                        "$ref": "#/components/schemas/AfmObjectIdentifier"
-                    },
-                    "emptyValueHandling": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/EmptyValueHandling"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
-                    },
-                    "granularity": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/app__application__dtos__afm__filter_definition__DateGranularity"
+                                "$ref": "#/components/schemas/DateGranularity"
                             },
                             {
                                 "type": "null"
@@ -3683,7 +3615,7 @@
                 ],
                 "title": "Body_upsertOrgDocument"
             },
-            "BoundedFilter-Input": {
+            "BoundedFilter": {
                 "properties": {
                     "from": {
                         "anyOf": [
@@ -3697,42 +3629,7 @@
                         "title": "From"
                     },
                     "granularity": {
-                        "$ref": "#/components/schemas/DateGranularity-Input"
-                    },
-                    "to": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "To"
-                    }
-                },
-                "additionalProperties": false,
-                "type": "object",
-                "required": [
-                    "granularity"
-                ],
-                "title": "BoundedFilter"
-            },
-            "BoundedFilter-Output": {
-                "properties": {
-                    "from": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "From"
-                    },
-                    "granularity": {
-                        "$ref": "#/components/schemas/app__application__dtos__afm__filter_definition__DateGranularity"
+                        "$ref": "#/components/schemas/DateGranularity"
                     },
                     "to": {
                         "anyOf": [
@@ -6630,7 +6527,21 @@
                         "title": "From"
                     },
                     "granularity": {
-                        "$ref": "#/components/schemas/app__domain__conversations__visualization__DateGranularity"
+                        "type": "string",
+                        "enum": [
+                            "SECOND",
+                            "MINUTE",
+                            "HOUR",
+                            "DAY",
+                            "WEEK_US",
+                            "MONTH",
+                            "QUARTER",
+                            "YEAR",
+                            "FISCAL_MONTH",
+                            "FISCAL_QUARTER",
+                            "FISCAL_YEAR"
+                        ],
+                        "title": "Granularity"
                     },
                     "mode": {
                         "type": "string",
@@ -6993,7 +6904,21 @@
                         "title": "From"
                     },
                     "granularity": {
-                        "$ref": "#/components/schemas/app__domain__conversations__visualization__DateGranularity"
+                        "type": "string",
+                        "enum": [
+                            "SECOND",
+                            "MINUTE",
+                            "HOUR",
+                            "DAY",
+                            "WEEK_US",
+                            "MONTH",
+                            "QUARTER",
+                            "YEAR",
+                            "FISCAL_MONTH",
+                            "FISCAL_QUARTER",
+                            "FISCAL_YEAR"
+                        ],
+                        "title": "Granularity"
                     },
                     "mode": {
                         "type": "string",
@@ -7234,7 +7159,11 @@
             "DateFilterGranularity": {
                 "type": "string",
                 "enum": [
+                    "SECOND",
+                    "SECOND_OF_MINUTE",
+                    "SECOND_OF_DAY",
                     "MINUTE",
+                    "MINUTE_OF_DAY",
                     "HOUR",
                     "DAY",
                     "WEEK_US",
@@ -7245,13 +7174,34 @@
                     "HOUR_OF_DAY",
                     "DAY_OF_WEEK",
                     "DAY_OF_MONTH",
+                    "DAY_OF_QUARTER",
                     "DAY_OF_YEAR",
                     "WEEK_OF_YEAR",
                     "MONTH_OF_YEAR",
-                    "QUARTER_OF_YEAR"
+                    "QUARTER_OF_YEAR",
+                    "FISCAL_DAY_OF_FISCAL_WEEK",
+                    "FISCAL_DAY_OF_FISCAL_MONTH",
+                    "FISCAL_DAY_OF_FISCAL_QUARTER",
+                    "FISCAL_DAY_OF_FISCAL_SEMESTER",
+                    "FISCAL_DAY_OF_FISCAL_YEAR",
+                    "FISCAL_WEEK",
+                    "FISCAL_WEEK_OF_FISCAL_MONTH",
+                    "FISCAL_WEEK_OF_FISCAL_QUARTER",
+                    "FISCAL_WEEK_OF_FISCAL_SEMESTER",
+                    "FISCAL_WEEK_OF_FISCAL_YEAR",
+                    "FISCAL_MONTH",
+                    "FISCAL_MONTH_OF_FISCAL_QUARTER",
+                    "FISCAL_MONTH_OF_FISCAL_SEMESTER",
+                    "FISCAL_MONTH_OF_FISCAL_YEAR",
+                    "FISCAL_QUARTER",
+                    "FISCAL_QUARTER_OF_FISCAL_SEMESTER",
+                    "FISCAL_QUARTER_OF_FISCAL_YEAR",
+                    "FISCAL_SEMESTER",
+                    "FISCAL_SEMESTER_OF_FISCAL_YEAR",
+                    "FISCAL_YEAR"
                 ]
             },
-            "DateGranularity-Input": {
+            "DateGranularity": {
                 "type": "string",
                 "enum": [
                     "SECOND",
@@ -11299,10 +11249,10 @@
                 "title": "RelativeConditionOperator",
                 "description": "Operator of a relative (metric-to-metric) condition."
             },
-            "RelativeDateFilter-Input": {
+            "RelativeDateFilter": {
                 "properties": {
                     "relativeDateFilter": {
-                        "$ref": "#/components/schemas/RelativeDateFilterBody-Input"
+                        "$ref": "#/components/schemas/RelativeDateFilterBody"
                     }
                 },
                 "additionalProperties": false,
@@ -11312,20 +11262,7 @@
                 ],
                 "title": "RelativeDateFilter"
             },
-            "RelativeDateFilter-Output": {
-                "properties": {
-                    "relativeDateFilter": {
-                        "$ref": "#/components/schemas/RelativeDateFilterBody-Output"
-                    }
-                },
-                "additionalProperties": false,
-                "type": "object",
-                "required": [
-                    "relativeDateFilter"
-                ],
-                "title": "RelativeDateFilter"
-            },
-            "RelativeDateFilterBody-Input": {
+            "RelativeDateFilterBody": {
                 "properties": {
                     "applyOnResult": {
                         "anyOf": [
@@ -11341,7 +11278,7 @@
                     "boundedFilter": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/BoundedFilter-Input"
+                                "$ref": "#/components/schemas/BoundedFilter"
                             },
                             {
                                 "type": "null"
@@ -11366,76 +11303,7 @@
                         "title": "From"
                     },
                     "granularity": {
-                        "$ref": "#/components/schemas/DateGranularity-Input"
-                    },
-                    "localIdentifier": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Localidentifier"
-                    },
-                    "to": {
-                        "type": "integer",
-                        "title": "To"
-                    }
-                },
-                "additionalProperties": false,
-                "type": "object",
-                "required": [
-                    "dataset",
-                    "granularity",
-                    "from",
-                    "to"
-                ],
-                "title": "RelativeDateFilterBody"
-            },
-            "RelativeDateFilterBody-Output": {
-                "properties": {
-                    "applyOnResult": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Applyonresult"
-                    },
-                    "boundedFilter": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/BoundedFilter-Output"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
-                    },
-                    "dataset": {
-                        "$ref": "#/components/schemas/AfmObjectIdentifier"
-                    },
-                    "emptyValueHandling": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/EmptyValueHandling"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
-                    },
-                    "from": {
-                        "type": "integer",
-                        "title": "From"
-                    },
-                    "granularity": {
-                        "$ref": "#/components/schemas/app__application__dtos__afm__filter_definition__DateGranularity"
+                        "$ref": "#/components/schemas/DateGranularity"
                     },
                     "localIdentifier": {
                         "anyOf": [
@@ -12955,10 +12823,10 @@
                                             "$ref": "#/components/schemas/AbsoluteDateFilter"
                                         },
                                         {
-                                            "$ref": "#/components/schemas/RelativeDateFilter-Input"
+                                            "$ref": "#/components/schemas/RelativeDateFilter"
                                         },
                                         {
-                                            "$ref": "#/components/schemas/AllTimeDateFilter-Input"
+                                            "$ref": "#/components/schemas/AllTimeDateFilter"
                                         },
                                         {
                                             "$ref": "#/components/schemas/RankingFilter"
@@ -13049,10 +12917,10 @@
                                     "$ref": "#/components/schemas/AbsoluteDateFilter"
                                 },
                                 {
-                                    "$ref": "#/components/schemas/RelativeDateFilter-Output"
+                                    "$ref": "#/components/schemas/RelativeDateFilter"
                                 },
                                 {
-                                    "$ref": "#/components/schemas/AllTimeDateFilter-Output"
+                                    "$ref": "#/components/schemas/AllTimeDateFilter"
                                 },
                                 {
                                     "$ref": "#/components/schemas/RankingFilter"
@@ -19618,52 +19486,6 @@
                 ],
                 "title": "_MeasureValueRangeInner"
             },
-            "app__application__dtos__afm__filter_definition__DateGranularity": {
-                "type": "string",
-                "enum": [
-                    "SECOND",
-                    "SECOND_OF_MINUTE",
-                    "SECOND_OF_DAY",
-                    "MINUTE",
-                    "MINUTE_OF_DAY",
-                    "HOUR",
-                    "DAY",
-                    "WEEK",
-                    "MONTH",
-                    "QUARTER",
-                    "YEAR",
-                    "MINUTE_OF_HOUR",
-                    "HOUR_OF_DAY",
-                    "DAY_OF_WEEK",
-                    "DAY_OF_MONTH",
-                    "DAY_OF_QUARTER",
-                    "DAY_OF_YEAR",
-                    "WEEK_OF_YEAR",
-                    "MONTH_OF_YEAR",
-                    "QUARTER_OF_YEAR",
-                    "FISCAL_DAY_OF_FISCAL_WEEK",
-                    "FISCAL_DAY_OF_FISCAL_MONTH",
-                    "FISCAL_DAY_OF_FISCAL_QUARTER",
-                    "FISCAL_DAY_OF_FISCAL_SEMESTER",
-                    "FISCAL_DAY_OF_FISCAL_YEAR",
-                    "FISCAL_WEEK",
-                    "FISCAL_WEEK_OF_FISCAL_MONTH",
-                    "FISCAL_WEEK_OF_FISCAL_QUARTER",
-                    "FISCAL_WEEK_OF_FISCAL_SEMESTER",
-                    "FISCAL_WEEK_OF_FISCAL_YEAR",
-                    "FISCAL_MONTH",
-                    "FISCAL_MONTH_OF_FISCAL_QUARTER",
-                    "FISCAL_MONTH_OF_FISCAL_SEMESTER",
-                    "FISCAL_MONTH_OF_FISCAL_YEAR",
-                    "FISCAL_QUARTER",
-                    "FISCAL_QUARTER_OF_FISCAL_SEMESTER",
-                    "FISCAL_QUARTER_OF_FISCAL_YEAR",
-                    "FISCAL_SEMESTER",
-                    "FISCAL_SEMESTER_OF_FISCAL_YEAR",
-                    "FISCAL_YEAR"
-                ],
-                "title": "DateGranularity"
-            },
             "app__application__dtos__afm__filter_definition__MatchType": {
                 "type": "string",
                 "enum": [
@@ -19672,18 +19494,6 @@
                     "CONTAINS"
                 ],
                 "title": "MatchType"
-            },
-            "app__domain__conversations__visualization__DateGranularity": {
-                "type": "string",
-                "enum": [
-                    "DAY",
-                    "WEEK_US",
-                    "MONTH",
-                    "QUARTER",
-                    "YEAR"
-                ],
-                "title": "DateGranularity",
-                "description": "Date granularity for date filters."
             },
             "gooddata_code_convertors__pydantic_models__MatchType": {
                 "type": "string",

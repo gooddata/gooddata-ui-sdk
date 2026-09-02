@@ -54,15 +54,15 @@ export interface IObjectShareGrantee extends IGranteeIdentityFacts {
      */
     isSelf?: boolean;
     /**
-     * EFFECTIVE permission level shown on the row — the stronger of {@link directLevel}
-     * and {@link inheritedLevel}, so a grantee who only inherits a level is not
+     * EFFECTIVE permission level shown on the row — the stronger of {@link IObjectShareGrantee.directLevel}
+     * and {@link IObjectShareGrantee.inheritedLevel}, so a grantee who only inherits a level is not
      * understated as VIEW.
      */
     level: ObjectSharePermissionLevel;
     /**
      * Permission level granted by THIS workspace, or undefined when the grantee's
      * access is inherited-only (a group, or a parent workspace in a hierarchy).
-     * This — not {@link level} — is what a re-grade writes and what decides whether
+     * This — not {@link IObjectShareGrantee.level} — is what a re-grade writes and what decides whether
      * there is a grant here to remove: inherited access cannot be revoked from here.
      */
     directLevel?: ObjectSharePermissionLevel;
@@ -257,11 +257,60 @@ export interface IObjectShareControllerActions {
 }
 
 /**
+ * A transient edit overlaid on a fetched grantee row (keyed by grantee id in
+ * `mergeGrantees`). The pending-guard keeps at most one edit in flight per id.
+ * A pending edit that superseded an already-COMMITTED entry (an added row, an
+ * earlier level change) carries it as `settled`, because the fetched base no longer
+ * holds that row's last-settled state: failure restores `settled`, success drops it.
+ * With no `settled`, failure deletes the entry, reverting to the fetched row.
+ *
+ * @internal
+ */
+export type GranteeEdit =
+    | { kind: "level"; level: ObjectSharePermissionLevel; pending: boolean; settled?: GranteeEdit }
+    | { kind: "added"; grantee: IObjectShareGrantee; pending: boolean; settled?: GranteeEdit }
+    | { kind: "removed"; pending: boolean; settled?: GranteeEdit }
+    /**
+     * Pending marker only — the row renders exactly as it stands. For a write that
+     * locks the row without changing its access (a label-scope edit), so nothing has
+     * to invent a level: reusing the `level` overlay would record the DISPLAYED level
+     * as the direct grant, and that level is the effective one.
+     */
+    | { kind: "locked"; pending: boolean; settled?: GranteeEdit };
+
+/**
+ * Transient edit of the all-workspace-users rule (general access + its level),
+ * overlaid on the fetched rule state in the hook. Same lifecycle and `settled`
+ * semantics as {@link GranteeEdit}, one edit in flight at a time.
+ *
+ * @internal
+ */
+export interface IRuleEdit {
+    generalAccess: GeneralAccessValue;
+    level: ObjectSharePermissionLevel;
+    pending: boolean;
+    /** The committed rule edit this pending one superseded; restored on failure. */
+    settled?: IRuleEdit;
+}
+
+/**
+ * Unsaved access for an object that does not exist yet.
+ *
+ * @internal
+ */
+export interface IObjectShareDraft {
+    granteeEdits: Readonly<Record<string, GranteeEdit>>;
+    ruleEdit: IRuleEdit | undefined;
+}
+
+/**
  * @internal
  */
 export interface IObjectShareController {
     state: IObjectShareControllerState;
     actions: IObjectShareControllerActions;
+    /** The session's unsaved access. Undefined outside draft mode. */
+    draft: IObjectShareDraft | undefined;
 }
 
 /**
@@ -288,4 +337,16 @@ export interface IUseObjectShareOptions {
      * the labels aren't passed yet, so an empty list must not read as label-free.
      */
     labelsLoading?: boolean;
+    /**
+     * Manage access for an object that does not exist yet. Nothing is written.
+     * Requires no `target`, and `labels` is ignored.
+     */
+    draft?: boolean;
+    /** Draft to carry on from. */
+    initialDraft?: IObjectShareDraft;
+    /**
+     * What a draft's general access starts as; an untouched default is never sent.
+     * Defaults to RESTRICTED, understating rather than overstating actual access.
+     */
+    initialDraftGeneralAccess?: GeneralAccessValue;
 }

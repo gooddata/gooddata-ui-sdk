@@ -236,7 +236,7 @@ describe("loadWhatIfScenarios", () => {
             type: "multipart",
             parts: [],
         };
-        expect(loadWhatIfScenarios(content)).toBeUndefined();
+        expect(loadWhatIfScenarios(content.parts)).toBeUndefined();
     });
 
     it("returns undefined if what-if has no scenarios", () => {
@@ -252,7 +252,7 @@ describe("loadWhatIfScenarios", () => {
                 },
             ],
         };
-        expect(loadWhatIfScenarios(content)).toBeUndefined();
+        expect(loadWhatIfScenarios(content.parts)).toBeUndefined();
     });
 
     it("returns undefined if no visualization part is present", () => {
@@ -273,7 +273,7 @@ describe("loadWhatIfScenarios", () => {
                 },
             ],
         };
-        expect(loadWhatIfScenarios(content)).toBeUndefined();
+        expect(loadWhatIfScenarios(content.parts)).toBeUndefined();
     });
 
     it("correctly loads scenarios with baseline", () => {
@@ -304,7 +304,7 @@ describe("loadWhatIfScenarios", () => {
             ],
         };
 
-        const result = loadWhatIfScenarios(content);
+        const result = loadWhatIfScenarios(content.parts);
         expect(result).toBeDefined();
         expect(result?.insight).toEqual(insight);
         expect(result?.scenarios).toHaveLength(2);
@@ -364,7 +364,7 @@ describe("loadWhatIfScenarios", () => {
             ],
         };
 
-        const result = loadWhatIfScenarios(content);
+        const result = loadWhatIfScenarios(content.parts);
         expect(result?.scenarios[0].execConfig?.measureDefinitionOverrides?.[0].item).toEqual({
             identifier: {
                 id: "/uri/1",

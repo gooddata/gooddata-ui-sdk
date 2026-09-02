@@ -7,10 +7,19 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/Dashboard
 import { type IAlertingManagementDialogProps } from "./types.js";
 
 /**
+ * Resolves the management dialog component from DashboardComponentsContext and mounts it inside
+ * the resolved context decorator — so a decorated management context is what the dialog (default
+ * or replacement) reads.
+ *
  * @internal
  */
 export function AlertingManagementDialog(props: IAlertingManagementDialogProps): ReactElement {
-    const { AlertingManagementDialogComponent } = useDashboardComponentsContext();
+    const { AlertingManagementDialogComponent, AlertingManagementDialogContextDecoratorComponent } =
+        useDashboardComponentsContext();
 
-    return <AlertingManagementDialogComponent {...props} />;
+    return (
+        <AlertingManagementDialogContextDecoratorComponent>
+            <AlertingManagementDialogComponent {...props} />
+        </AlertingManagementDialogContextDecoratorComponent>
+    );
 }

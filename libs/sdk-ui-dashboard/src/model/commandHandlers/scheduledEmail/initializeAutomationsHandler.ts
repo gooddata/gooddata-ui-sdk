@@ -59,6 +59,10 @@ import {
 } from "../../store/automations/automationsSelectors.js";
 import { automationsActions } from "../../store/automations/index.js";
 import {
+    selectCatalogParameters,
+    selectCatalogParametersIsLoaded,
+} from "../../store/catalog/catalogSelectors.js";
+import {
     selectEnableNotificationChannelIdentifiers,
     selectEnableParameters,
     selectEnableStringParameters,
@@ -337,11 +341,17 @@ export function* initializeAutomationsHandler(
             const enableStringParameters: ReturnType<typeof selectEnableStringParameters> = yield select(
                 selectEnableStringParameters,
             );
+            const catalogParameters: ReturnType<typeof selectCatalogParameters> =
+                yield select(selectCatalogParameters);
+            const catalogParametersIsLoaded: ReturnType<typeof selectCatalogParametersIsLoaded> =
+                yield select(selectCatalogParametersIsLoaded);
             const parameterChanges = extractAutomationParameterChanges({
                 enableParameters,
                 enableStringParameters,
                 alertParameters: getAutomationAlertParameters(targetAutomation),
                 exportParametersByTab: getAutomationExportParametersByTab(targetAutomation),
+                catalog: catalogParameters,
+                catalogIsLoaded: catalogParametersIsLoaded,
                 correlationId: automationId,
             });
             for (const change of parameterChanges) {

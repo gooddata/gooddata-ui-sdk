@@ -20,7 +20,10 @@ import {
     type IMeasureValueFilter,
     type ObjRef,
     areObjRefsEqual,
+    dashboardAttributeFilterItemToAttributeFilter,
+    dashboardDateFilterToDateFilterByWidget,
     dashboardFilterLocalIdentifier,
+    dashboardMeasureValueFilterToMeasureValueFilter,
     insightMeasures,
     isDashboardAttributeFilter,
     isDashboardMeasureValueFilter,
@@ -30,11 +33,6 @@ import {
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
-import {
-    dashboardAttributeFilterItemToAttributeFilter,
-    dashboardDateFilterToDateFilterByWidget,
-    dashboardMeasureValueFilterToMeasureValueFilter,
-} from "../../../converters/filterConverters.js";
 import { type IDashboardFilter } from "../../../types.js";
 import { type IDrillToDashboard } from "../../commands/drill.js";
 import { switchDashboardTab } from "../../commands/tabs.js";

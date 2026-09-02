@@ -88,6 +88,7 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     availableAssignees(requestParameters: ActionsApiAvailableAssigneesRequest, options?: AxiosRequestConfig): AxiosPromise<AvailableAssignees>;
     checkEntityOverrides(requestParameters: ActionsApiCheckEntityOverridesRequest, options?: AxiosRequestConfig): AxiosPromise<IdentifierDuplications[]>;
     cleanTranslations(requestParameters: ActionsApiCleanTranslationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    computedAttributePermissions(requestParameters: ActionsApiComputedAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<ComputedAttributePermissions>;
     createdBy(requestParameters: ActionsApiCreatedByRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogCreatedBy>;
     dashboardPermissions(requestParameters: ActionsApiDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DashboardPermissions>;
     deleteOrganizationAutomations(requestParameters: ActionsApiDeleteOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -105,6 +106,7 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     // (undocumented)
     listWorkspaceUsers(requestParameters: ActionsApiListWorkspaceUsersRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceUsers>;
     manageAttributePermissions(requestParameters: ActionsApiManageAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    manageComputedAttributePermissions(requestParameters: ActionsApiManageComputedAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageDashboardPermissions(requestParameters: ActionsApiManageDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageDataSourcePermissions(requestParameters: ActionsApiManageDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageFactPermissions(requestParameters: ActionsApiManageFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -527,6 +529,12 @@ export interface ActionsApiColumnStatisticsRequest {
 }
 
 // @public
+export interface ActionsApiComputedAttributePermissionsRequest {
+    readonly computedAttributeId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiComputeLabelElementsPostRequest {
     readonly elementsRequest: ElementsRequest;
     readonly limit?: number;
@@ -738,6 +746,7 @@ export interface ActionsApiInterface {
     availableAssignees(requestParameters: ActionsApiAvailableAssigneesRequest, options?: AxiosRequestConfig): AxiosPromise<AvailableAssignees>;
     checkEntityOverrides(requestParameters: ActionsApiCheckEntityOverridesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<IdentifierDuplications>>;
     cleanTranslations(requestParameters: ActionsApiCleanTranslationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    computedAttributePermissions(requestParameters: ActionsApiComputedAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<ComputedAttributePermissions>;
     createdBy(requestParameters: ActionsApiCreatedByRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogCreatedBy>;
     dashboardPermissions(requestParameters: ActionsApiDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DashboardPermissions>;
     deleteOrganizationAutomations(requestParameters: ActionsApiDeleteOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -755,6 +764,7 @@ export interface ActionsApiInterface {
     // (undocumented)
     listWorkspaceUsers(requestParameters: ActionsApiListWorkspaceUsersRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceUsers>;
     manageAttributePermissions(requestParameters: ActionsApiManageAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    manageComputedAttributePermissions(requestParameters: ActionsApiManageComputedAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageDashboardPermissions(requestParameters: ActionsApiManageDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageDataSourcePermissions(requestParameters: ActionsApiManageDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageFactPermissions(requestParameters: ActionsApiManageFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -848,6 +858,13 @@ export interface ActionsApiListWorkspaceUsersRequest {
 export interface ActionsApiManageAttributePermissionsRequest {
     readonly attributeId: string;
     readonly manageAttributePermissionsRequestInner: Array<ManageAttributePermissionsRequestInner>;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiManageComputedAttributePermissionsRequest {
+    readonly computedAttributeId: string;
+    readonly manageComputedAttributePermissionsRequestInner: Array<ManageComputedAttributePermissionsRequestInner>;
     readonly workspaceId: string;
 }
 
@@ -3382,7 +3399,13 @@ export interface AiAllowedRelationshipType {
 }
 
 // @public (undocumented)
-export interface AiAllTimeDateFilterBodyInput {
+export interface AiAllTimeDateFilter {
+    // (undocumented)
+    'allTimeDateFilter': AiAllTimeDateFilterBody;
+}
+
+// @public (undocumented)
+export interface AiAllTimeDateFilterBody {
     // (undocumented)
     'applyOnResult'?: boolean | null;
     // (undocumented)
@@ -3390,35 +3413,9 @@ export interface AiAllTimeDateFilterBodyInput {
     // (undocumented)
     'emptyValueHandling'?: AiEmptyValueHandling | null;
     // (undocumented)
-    'granularity'?: AiDateGranularityInput | null;
+    'granularity'?: AiDateGranularity | null;
     // (undocumented)
     'localIdentifier'?: string | null;
-}
-
-// @public (undocumented)
-export interface AiAllTimeDateFilterBodyOutput {
-    // (undocumented)
-    'applyOnResult'?: boolean | null;
-    // (undocumented)
-    'dataset': AiAfmObjectIdentifier;
-    // (undocumented)
-    'emptyValueHandling'?: AiEmptyValueHandling | null;
-    // (undocumented)
-    'granularity'?: AiAppApplicationDtosAfmFilterDefinitionDateGranularity | null;
-    // (undocumented)
-    'localIdentifier'?: string | null;
-}
-
-// @public (undocumented)
-export interface AiAllTimeDateFilterInput {
-    // (undocumented)
-    'allTimeDateFilter': AiAllTimeDateFilterBodyInput;
-}
-
-// @public (undocumented)
-export interface AiAllTimeDateFilterOutput {
-    // (undocumented)
-    'allTimeDateFilter': AiAllTimeDateFilterBodyOutput;
 }
 
 // @public (undocumented)
@@ -3469,53 +3466,6 @@ export const AiAnomalyDetectionSize: {
 export type AiAnomalyDetectionSize = typeof AiAnomalyDetectionSize[keyof typeof AiAnomalyDetectionSize];
 
 // @public (undocumented)
-export const AiAppApplicationDtosAfmFilterDefinitionDateGranularity: {
-    readonly SECOND: "SECOND";
-    readonly SECOND_OF_MINUTE: "SECOND_OF_MINUTE";
-    readonly SECOND_OF_DAY: "SECOND_OF_DAY";
-    readonly MINUTE: "MINUTE";
-    readonly MINUTE_OF_DAY: "MINUTE_OF_DAY";
-    readonly HOUR: "HOUR";
-    readonly DAY: "DAY";
-    readonly WEEK: "WEEK";
-    readonly MONTH: "MONTH";
-    readonly QUARTER: "QUARTER";
-    readonly YEAR: "YEAR";
-    readonly MINUTE_OF_HOUR: "MINUTE_OF_HOUR";
-    readonly HOUR_OF_DAY: "HOUR_OF_DAY";
-    readonly DAY_OF_WEEK: "DAY_OF_WEEK";
-    readonly DAY_OF_MONTH: "DAY_OF_MONTH";
-    readonly DAY_OF_QUARTER: "DAY_OF_QUARTER";
-    readonly DAY_OF_YEAR: "DAY_OF_YEAR";
-    readonly WEEK_OF_YEAR: "WEEK_OF_YEAR";
-    readonly MONTH_OF_YEAR: "MONTH_OF_YEAR";
-    readonly QUARTER_OF_YEAR: "QUARTER_OF_YEAR";
-    readonly FISCAL_DAY_OF_FISCAL_WEEK: "FISCAL_DAY_OF_FISCAL_WEEK";
-    readonly FISCAL_DAY_OF_FISCAL_MONTH: "FISCAL_DAY_OF_FISCAL_MONTH";
-    readonly FISCAL_DAY_OF_FISCAL_QUARTER: "FISCAL_DAY_OF_FISCAL_QUARTER";
-    readonly FISCAL_DAY_OF_FISCAL_SEMESTER: "FISCAL_DAY_OF_FISCAL_SEMESTER";
-    readonly FISCAL_DAY_OF_FISCAL_YEAR: "FISCAL_DAY_OF_FISCAL_YEAR";
-    readonly FISCAL_WEEK: "FISCAL_WEEK";
-    readonly FISCAL_WEEK_OF_FISCAL_MONTH: "FISCAL_WEEK_OF_FISCAL_MONTH";
-    readonly FISCAL_WEEK_OF_FISCAL_QUARTER: "FISCAL_WEEK_OF_FISCAL_QUARTER";
-    readonly FISCAL_WEEK_OF_FISCAL_SEMESTER: "FISCAL_WEEK_OF_FISCAL_SEMESTER";
-    readonly FISCAL_WEEK_OF_FISCAL_YEAR: "FISCAL_WEEK_OF_FISCAL_YEAR";
-    readonly FISCAL_MONTH: "FISCAL_MONTH";
-    readonly FISCAL_MONTH_OF_FISCAL_QUARTER: "FISCAL_MONTH_OF_FISCAL_QUARTER";
-    readonly FISCAL_MONTH_OF_FISCAL_SEMESTER: "FISCAL_MONTH_OF_FISCAL_SEMESTER";
-    readonly FISCAL_MONTH_OF_FISCAL_YEAR: "FISCAL_MONTH_OF_FISCAL_YEAR";
-    readonly FISCAL_QUARTER: "FISCAL_QUARTER";
-    readonly FISCAL_QUARTER_OF_FISCAL_SEMESTER: "FISCAL_QUARTER_OF_FISCAL_SEMESTER";
-    readonly FISCAL_QUARTER_OF_FISCAL_YEAR: "FISCAL_QUARTER_OF_FISCAL_YEAR";
-    readonly FISCAL_SEMESTER: "FISCAL_SEMESTER";
-    readonly FISCAL_SEMESTER_OF_FISCAL_YEAR: "FISCAL_SEMESTER_OF_FISCAL_YEAR";
-    readonly FISCAL_YEAR: "FISCAL_YEAR";
-};
-
-// @public (undocumented)
-export type AiAppApplicationDtosAfmFilterDefinitionDateGranularity = typeof AiAppApplicationDtosAfmFilterDefinitionDateGranularity[keyof typeof AiAppApplicationDtosAfmFilterDefinitionDateGranularity];
-
-// @public (undocumented)
 export const AiAppApplicationDtosAfmFilterDefinitionMatchType: {
     readonly STARTS_WITH: "STARTS_WITH";
     readonly ENDS_WITH: "ENDS_WITH";
@@ -3524,18 +3474,6 @@ export const AiAppApplicationDtosAfmFilterDefinitionMatchType: {
 
 // @public (undocumented)
 export type AiAppApplicationDtosAfmFilterDefinitionMatchType = typeof AiAppApplicationDtosAfmFilterDefinitionMatchType[keyof typeof AiAppApplicationDtosAfmFilterDefinitionMatchType];
-
-// @public
-export const AiAppDomainConversationsVisualizationDateGranularity: {
-    readonly DAY: "DAY";
-    readonly WEEK_US: "WEEK_US";
-    readonly MONTH: "MONTH";
-    readonly QUARTER: "QUARTER";
-    readonly YEAR: "YEAR";
-};
-
-// @public (undocumented)
-export type AiAppDomainConversationsVisualizationDateGranularity = typeof AiAppDomainConversationsVisualizationDateGranularity[keyof typeof AiAppDomainConversationsVisualizationDateGranularity];
 
 // @public
 export interface AiAppliedMemoryItem {
@@ -3602,21 +3540,11 @@ export class AiBaseAPI {
 }
 
 // @public (undocumented)
-export interface AiBoundedFilterInput {
+export interface AiBoundedFilter {
     // (undocumented)
     'from'?: number | null;
     // (undocumented)
-    'granularity': AiDateGranularityInput;
-    // (undocumented)
-    'to'?: number | null;
-}
-
-// @public (undocumented)
-export interface AiBoundedFilterOutput {
-    // (undocumented)
-    'from'?: number | null;
-    // (undocumented)
-    'granularity': AiAppApplicationDtosAfmFilterDefinitionDateGranularity;
+    'granularity': AiDateGranularity;
     // (undocumented)
     'to'?: number | null;
 }
@@ -4414,7 +4342,7 @@ export interface AiDashboardAbsoluteDateFilter {
     // (undocumented)
     'from'?: string;
     // (undocumented)
-    'granularity'?: AiAppDomainConversationsVisualizationDateGranularity;
+    'granularity'?: AiDashboardAbsoluteDateFilterGranularityEnum;
     // (undocumented)
     'mode'?: string;
     // (undocumented)
@@ -4424,6 +4352,9 @@ export interface AiDashboardAbsoluteDateFilter {
     // (undocumented)
     'type': AiDashboardAbsoluteDateFilterTypeEnum;
 }
+
+// @public (undocumented)
+export type AiDashboardAbsoluteDateFilterGranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 // @public (undocumented)
 export type AiDashboardAbsoluteDateFilterTypeEnum = 'date_filter';
@@ -4558,7 +4489,7 @@ export interface AiDashboardRelativeDateFilter {
     // (undocumented)
     'from'?: number;
     // (undocumented)
-    'granularity'?: AiAppDomainConversationsVisualizationDateGranularity;
+    'granularity'?: AiDashboardRelativeDateFilterGranularityEnum;
     // (undocumented)
     'mode'?: string;
     // (undocumented)
@@ -4568,6 +4499,9 @@ export interface AiDashboardRelativeDateFilter {
     // (undocumented)
     'type': AiDashboardRelativeDateFilterTypeEnum;
 }
+
+// @public (undocumented)
+export type AiDashboardRelativeDateFilterGranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 // @public (undocumented)
 export type AiDashboardRelativeDateFilterTypeEnum = 'date_filter';
@@ -4700,7 +4634,11 @@ export interface AiDataTotals {
 
 // @public (undocumented)
 export const AiDateFilterGranularity: {
+    readonly SECOND: "SECOND";
+    readonly SECOND_OF_MINUTE: "SECOND_OF_MINUTE";
+    readonly SECOND_OF_DAY: "SECOND_OF_DAY";
     readonly MINUTE: "MINUTE";
+    readonly MINUTE_OF_DAY: "MINUTE_OF_DAY";
     readonly HOUR: "HOUR";
     readonly DAY: "DAY";
     readonly WEEK_US: "WEEK_US";
@@ -4711,17 +4649,38 @@ export const AiDateFilterGranularity: {
     readonly HOUR_OF_DAY: "HOUR_OF_DAY";
     readonly DAY_OF_WEEK: "DAY_OF_WEEK";
     readonly DAY_OF_MONTH: "DAY_OF_MONTH";
+    readonly DAY_OF_QUARTER: "DAY_OF_QUARTER";
     readonly DAY_OF_YEAR: "DAY_OF_YEAR";
     readonly WEEK_OF_YEAR: "WEEK_OF_YEAR";
     readonly MONTH_OF_YEAR: "MONTH_OF_YEAR";
     readonly QUARTER_OF_YEAR: "QUARTER_OF_YEAR";
+    readonly FISCAL_DAY_OF_FISCAL_WEEK: "FISCAL_DAY_OF_FISCAL_WEEK";
+    readonly FISCAL_DAY_OF_FISCAL_MONTH: "FISCAL_DAY_OF_FISCAL_MONTH";
+    readonly FISCAL_DAY_OF_FISCAL_QUARTER: "FISCAL_DAY_OF_FISCAL_QUARTER";
+    readonly FISCAL_DAY_OF_FISCAL_SEMESTER: "FISCAL_DAY_OF_FISCAL_SEMESTER";
+    readonly FISCAL_DAY_OF_FISCAL_YEAR: "FISCAL_DAY_OF_FISCAL_YEAR";
+    readonly FISCAL_WEEK: "FISCAL_WEEK";
+    readonly FISCAL_WEEK_OF_FISCAL_MONTH: "FISCAL_WEEK_OF_FISCAL_MONTH";
+    readonly FISCAL_WEEK_OF_FISCAL_QUARTER: "FISCAL_WEEK_OF_FISCAL_QUARTER";
+    readonly FISCAL_WEEK_OF_FISCAL_SEMESTER: "FISCAL_WEEK_OF_FISCAL_SEMESTER";
+    readonly FISCAL_WEEK_OF_FISCAL_YEAR: "FISCAL_WEEK_OF_FISCAL_YEAR";
+    readonly FISCAL_MONTH: "FISCAL_MONTH";
+    readonly FISCAL_MONTH_OF_FISCAL_QUARTER: "FISCAL_MONTH_OF_FISCAL_QUARTER";
+    readonly FISCAL_MONTH_OF_FISCAL_SEMESTER: "FISCAL_MONTH_OF_FISCAL_SEMESTER";
+    readonly FISCAL_MONTH_OF_FISCAL_YEAR: "FISCAL_MONTH_OF_FISCAL_YEAR";
+    readonly FISCAL_QUARTER: "FISCAL_QUARTER";
+    readonly FISCAL_QUARTER_OF_FISCAL_SEMESTER: "FISCAL_QUARTER_OF_FISCAL_SEMESTER";
+    readonly FISCAL_QUARTER_OF_FISCAL_YEAR: "FISCAL_QUARTER_OF_FISCAL_YEAR";
+    readonly FISCAL_SEMESTER: "FISCAL_SEMESTER";
+    readonly FISCAL_SEMESTER_OF_FISCAL_YEAR: "FISCAL_SEMESTER_OF_FISCAL_YEAR";
+    readonly FISCAL_YEAR: "FISCAL_YEAR";
 };
 
 // @public (undocumented)
 export type AiDateFilterGranularity = typeof AiDateFilterGranularity[keyof typeof AiDateFilterGranularity];
 
 // @public (undocumented)
-export const AiDateGranularityInput: {
+export const AiDateGranularity: {
     readonly SECOND: "SECOND";
     readonly SECOND_OF_MINUTE: "SECOND_OF_MINUTE";
     readonly SECOND_OF_DAY: "SECOND_OF_DAY";
@@ -4765,7 +4724,7 @@ export const AiDateGranularityInput: {
 };
 
 // @public (undocumented)
-export type AiDateGranularityInput = typeof AiDateGranularityInput[keyof typeof AiDateGranularityInput];
+export type AiDateGranularity = typeof AiDateGranularity[keyof typeof AiDateGranularity];
 
 // @public
 export interface AiDeleteDocumentResponse {
@@ -4879,7 +4838,7 @@ export interface AiFiltersValue {
     // (undocumented)
     'from'?: string;
     // (undocumented)
-    'granularity'?: AiAppDomainConversationsVisualizationDateGranularity;
+    'granularity'?: AiFiltersValueGranularityEnum;
     // (undocumented)
     'metric_filters'?: Array<string>;
     // (undocumented)
@@ -4927,7 +4886,7 @@ export interface AiFiltersValue1 {
     // (undocumented)
     'from'?: string;
     // (undocumented)
-    'granularity'?: AiAppDomainConversationsVisualizationDateGranularity;
+    'granularity'?: AiFiltersValue1GranularityEnum;
     // (undocumented)
     'metric_filters'?: Array<string>;
     // (undocumented)
@@ -4957,6 +4916,9 @@ export interface AiFiltersValue1 {
 }
 
 // @public (undocumented)
+export type AiFiltersValue1GranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+
+// @public (undocumented)
 export interface AiFiltersValue2 {
     // (undocumented)
     'case_sensitive'?: boolean;
@@ -4979,7 +4941,7 @@ export interface AiFiltersValue2 {
     // (undocumented)
     'from'?: string;
     // (undocumented)
-    'granularity'?: AiAppDomainConversationsVisualizationDateGranularity;
+    'granularity'?: AiFiltersValue2GranularityEnum;
     // (undocumented)
     'metric_filters'?: Array<string>;
     // (undocumented)
@@ -5007,6 +4969,12 @@ export interface AiFiltersValue2 {
     // (undocumented)
     'values'?: Array<string>;
 }
+
+// @public (undocumented)
+export type AiFiltersValue2GranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+
+// @public (undocumented)
+export type AiFiltersValueGranularityEnum = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK_US' | 'MONTH' | 'QUARTER' | 'YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 // @public (undocumented)
 export interface AiFormat {
@@ -6504,11 +6472,17 @@ export const AiRelativeConditionOperator: {
 export type AiRelativeConditionOperator = typeof AiRelativeConditionOperator[keyof typeof AiRelativeConditionOperator];
 
 // @public (undocumented)
-export interface AiRelativeDateFilterBodyInput {
+export interface AiRelativeDateFilter {
+    // (undocumented)
+    'relativeDateFilter': AiRelativeDateFilterBody;
+}
+
+// @public (undocumented)
+export interface AiRelativeDateFilterBody {
     // (undocumented)
     'applyOnResult'?: boolean | null;
     // (undocumented)
-    'boundedFilter'?: AiBoundedFilterInput | null;
+    'boundedFilter'?: AiBoundedFilter | null;
     // (undocumented)
     'dataset': AiAfmObjectIdentifier;
     // (undocumented)
@@ -6516,43 +6490,11 @@ export interface AiRelativeDateFilterBodyInput {
     // (undocumented)
     'from': number;
     // (undocumented)
-    'granularity': AiDateGranularityInput;
+    'granularity': AiDateGranularity;
     // (undocumented)
     'localIdentifier'?: string | null;
     // (undocumented)
     'to': number;
-}
-
-// @public (undocumented)
-export interface AiRelativeDateFilterBodyOutput {
-    // (undocumented)
-    'applyOnResult'?: boolean | null;
-    // (undocumented)
-    'boundedFilter'?: AiBoundedFilterOutput | null;
-    // (undocumented)
-    'dataset': AiAfmObjectIdentifier;
-    // (undocumented)
-    'emptyValueHandling'?: AiEmptyValueHandling | null;
-    // (undocumented)
-    'from': number;
-    // (undocumented)
-    'granularity': AiAppApplicationDtosAfmFilterDefinitionDateGranularity;
-    // (undocumented)
-    'localIdentifier'?: string | null;
-    // (undocumented)
-    'to': number;
-}
-
-// @public (undocumented)
-export interface AiRelativeDateFilterInput {
-    // (undocumented)
-    'relativeDateFilter': AiRelativeDateFilterBodyInput;
-}
-
-// @public (undocumented)
-export interface AiRelativeDateFilterOutput {
-    // (undocumented)
-    'relativeDateFilter': AiRelativeDateFilterBodyOutput;
 }
 
 // @public (undocumented)
@@ -7004,7 +6946,7 @@ export { AiSummarizeRequest }
 export { AiSummarizeRequest as GenAiApiSummarizeRequest }
 
 // @public
-export type AiSummarizeRequestFilterContextInner = AiAbsoluteDateFilter | AiAllTimeDateFilterInput | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilterInput | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilter | AiRelativeDateFilterInput;
+export type AiSummarizeRequestFilterContextInner = AiAbsoluteDateFilter | AiAllTimeDateFilter | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilterInput | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilter | AiRelativeDateFilter;
 
 // @public (undocumented)
 interface AiSummarizeResponse {
@@ -7025,7 +6967,7 @@ export { AiSummarizeResponse }
 export { AiSummarizeResponse as GenAiApiSummarizeResponse }
 
 // @public
-export type AiSummarizeResponseFilterContextInner = AiAbsoluteDateFilter | AiAllTimeDateFilterOutput | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilterOutput | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilter | AiRelativeDateFilterOutput;
+export type AiSummarizeResponseFilterContextInner = AiAbsoluteDateFilter | AiAllTimeDateFilter | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilterOutput | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilter | AiRelativeDateFilter;
 
 // @public
 export interface AiSwitchAgentRequest {
@@ -12501,7 +12443,7 @@ export interface AutomationIdentifierRefIdentifier {
 }
 
 // @public (undocumented)
-export type AutomationIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'reportPageLayout' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
+export type AutomationIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'reportPageLayout' | 'reportTemplate' | 'report' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
 
 // @public (undocumented)
 export interface AutomationImageExport {
@@ -14256,6 +14198,35 @@ export interface CompoundMeasureValueFilterCompoundMeasureValueFilter {
     'measure': AfmIdentifier;
     'treatNullValuesAs'?: number;
 }
+
+// @public (undocumented)
+export interface ComputedAttributePermissions {
+    'rules': Array<RulePermission>;
+    'userGroups': Array<UserGroupPermission>;
+    'users': Array<UserPermission>;
+}
+
+// @public
+export interface ComputedAttributePermissionsForAssignee {
+    // (undocumented)
+    'assigneeIdentifier': AssigneeIdentifier;
+    // (undocumented)
+    'permissions': Array<ComputedAttributePermissionsForAssigneePermissionsEnum>;
+}
+
+// @public (undocumented)
+export type ComputedAttributePermissionsForAssigneePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+// @public
+export interface ComputedAttributePermissionsForAssigneeRule {
+    // (undocumented)
+    'assigneeRule': AssigneeRule;
+    // (undocumented)
+    'permissions': Array<ComputedAttributePermissionsForAssigneeRulePermissionsEnum>;
+}
+
+// @public (undocumented)
+export type ComputedAttributePermissionsForAssigneeRulePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
 
 // @public
 export interface ConditionalFormatting {
@@ -17095,6 +17066,8 @@ export interface DeclarativeAnalyticsLayer {
     'metrics'?: Array<DeclarativeMetric>;
     'parameters'?: Array<DeclarativeParameter>;
     'reportPageLayouts'?: Array<DeclarativeReportPageLayout>;
+    'reports'?: Array<DeclarativeReport>;
+    'reportTemplates'?: Array<DeclarativeReportTemplate>;
     'visualizationObjects'?: Array<DeclarativeVisualizationObject>;
 }
 
@@ -17807,7 +17780,32 @@ export type DeclarativeReferenceSourceColumnDataTypesEnum = 'INT' | 'STRING' | '
 export type DeclarativeReferenceSourceDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 
 // @public (undocumented)
+export interface DeclarativeReport {
+    'content': object | null;
+    'description'?: string;
+    'id': string;
+    'periodEnd': string;
+    'periodStart': string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    'title': string;
+    'variableValues'?: {
+        [key: string]: string;
+    };
+}
+
+// @public (undocumented)
 export interface DeclarativeReportPageLayout {
+    'content': object | null;
+    'description'?: string;
+    'id': string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    'title': string;
+}
+
+// @public (undocumented)
+export interface DeclarativeReportTemplate {
     'content': object | null;
     'description'?: string;
     'id': string;
@@ -17845,7 +17843,7 @@ export interface DeclarativeSetting {
 }
 
 // @public (undocumented)
-export type DeclarativeSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
+export type DeclarativeSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'REPORTS_BRAND_KIT';
 
 // @public (undocumented)
 export interface DeclarativeSingleWorkspacePermission {
@@ -18240,7 +18238,7 @@ export interface DependentEntitiesNode {
 }
 
 // @public (undocumented)
-export type DependentEntitiesNodeTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView';
+export type DependentEntitiesNodeTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView';
 
 // @public (undocumented)
 export interface DependentEntitiesRequest {
@@ -18379,6 +18377,8 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     createEntityOrgMemoryItems(requestParameters: EntitiesApiCreateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
     createEntityParameters(requestParameters: EntitiesApiCreateEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
     createEntityReportPageLayouts(requestParameters: EntitiesApiCreateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
+    createEntityReports(requestParameters: EntitiesApiCreateEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutDocument>;
+    createEntityReportTemplates(requestParameters: EntitiesApiCreateEntityReportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportTemplateOutDocument>;
     createEntityThemes(requestParameters: EntitiesApiCreateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
     createEntityUserDataFilters(requestParameters: EntitiesApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     createEntityUserGroups(requestParameters: EntitiesApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
@@ -18423,6 +18423,8 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     deleteEntityOrgMemoryItems(requestParameters: EntitiesApiDeleteEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityParameters(requestParameters: EntitiesApiDeleteEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityReportPageLayouts(requestParameters: EntitiesApiDeleteEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityReports(requestParameters: EntitiesApiDeleteEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityReportTemplates(requestParameters: EntitiesApiDeleteEntityReportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityThemes(requestParameters: EntitiesApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityUserDataFilters(requestParameters: EntitiesApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityUserGroups(requestParameters: EntitiesApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -18477,6 +18479,8 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     getAllEntitiesOrgMemoryItems(requestParameters?: EntitiesApiGetAllEntitiesOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutList>;
     getAllEntitiesParameters(requestParameters: EntitiesApiGetAllEntitiesParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutList>;
     getAllEntitiesReportPageLayouts(requestParameters: EntitiesApiGetAllEntitiesReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutList>;
+    getAllEntitiesReports(requestParameters: EntitiesApiGetAllEntitiesReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutList>;
+    getAllEntitiesReportTemplates(requestParameters: EntitiesApiGetAllEntitiesReportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportTemplateOutList>;
     getAllEntitiesThemes(requestParameters?: EntitiesApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutList>;
     getAllEntitiesUserDataFilters(requestParameters: EntitiesApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutList>;
     getAllEntitiesUserGroups(requestParameters?: EntitiesApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutList>;
@@ -18537,6 +18541,8 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     getEntityOrgMemoryItems(requestParameters: EntitiesApiGetEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
     getEntityParameters(requestParameters: EntitiesApiGetEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
     getEntityReportPageLayouts(requestParameters: EntitiesApiGetEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
+    getEntityReports(requestParameters: EntitiesApiGetEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutDocument>;
+    getEntityReportTemplates(requestParameters: EntitiesApiGetEntityReportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportTemplateOutDocument>;
     getEntityThemes(requestParameters: EntitiesApiGetEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
     getEntityUserDataFilters(requestParameters: EntitiesApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     getEntityUserGroups(requestParameters: EntitiesApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
@@ -18586,6 +18592,8 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     patchEntityOrgMemoryItems(requestParameters: EntitiesApiPatchEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
     patchEntityParameters(requestParameters: EntitiesApiPatchEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
     patchEntityReportPageLayouts(requestParameters: EntitiesApiPatchEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
+    patchEntityReports(requestParameters: EntitiesApiPatchEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutDocument>;
+    patchEntityReportTemplates(requestParameters: EntitiesApiPatchEntityReportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportTemplateOutDocument>;
     patchEntityThemes(requestParameters: EntitiesApiPatchEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
     patchEntityUserDataFilters(requestParameters: EntitiesApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     patchEntityUserGroups(requestParameters: EntitiesApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
@@ -18654,6 +18662,8 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     updateEntityOrgMemoryItems(requestParameters: EntitiesApiUpdateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
     updateEntityParameters(requestParameters: EntitiesApiUpdateEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
     updateEntityReportPageLayouts(requestParameters: EntitiesApiUpdateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
+    updateEntityReports(requestParameters: EntitiesApiUpdateEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutDocument>;
+    updateEntityReportTemplates(requestParameters: EntitiesApiUpdateEntityReportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportTemplateOutDocument>;
     updateEntityThemes(requestParameters: EntitiesApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
     updateEntityUserDataFilters(requestParameters: EntitiesApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     updateEntityUserGroups(requestParameters: EntitiesApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
@@ -20470,6 +20480,20 @@ export interface EntitiesApiCreateEntityReportPageLayoutsRequest {
 }
 
 // @public
+export interface EntitiesApiCreateEntityReportsRequest {
+    readonly jsonApiReportPostOptionalIdDocument: JsonApiReportPostOptionalIdDocument;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface EntitiesApiCreateEntityReportTemplatesRequest {
+    readonly jsonApiReportTemplatePostOptionalIdDocument: JsonApiReportTemplatePostOptionalIdDocument;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface EntitiesApiCreateEntityThemesRequest {
     readonly jsonApiThemeInDocument: JsonApiThemeInDocument;
 }
@@ -20716,6 +20740,18 @@ export interface EntitiesApiDeleteEntityParametersRequest {
 
 // @public
 export interface EntitiesApiDeleteEntityReportPageLayoutsRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface EntitiesApiDeleteEntityReportsRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface EntitiesApiDeleteEntityReportTemplatesRequest {
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -21234,6 +21270,30 @@ export interface EntitiesApiGetAllEntitiesReportPageLayoutsRequest {
 }
 
 // @public
+export interface EntitiesApiGetAllEntitiesReportsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface EntitiesApiGetAllEntitiesReportTemplatesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
 export interface EntitiesApiGetAllEntitiesThemesRequest {
     readonly filter?: string;
     readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
@@ -21716,6 +21776,24 @@ export interface EntitiesApiGetEntityReportPageLayoutsRequest {
 }
 
 // @public
+export interface EntitiesApiGetEntityReportsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface EntitiesApiGetEntityReportTemplatesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
 export interface EntitiesApiGetEntityRequest {
     readonly id: string;
 }
@@ -21875,6 +21953,8 @@ export interface EntitiesApiInterface {
     createEntityOrgMemoryItems(requestParameters: EntitiesApiCreateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
     createEntityParameters(requestParameters: EntitiesApiCreateEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
     createEntityReportPageLayouts(requestParameters: EntitiesApiCreateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
+    createEntityReports(requestParameters: EntitiesApiCreateEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutDocument>;
+    createEntityReportTemplates(requestParameters: EntitiesApiCreateEntityReportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportTemplateOutDocument>;
     createEntityThemes(requestParameters: EntitiesApiCreateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
     createEntityUserDataFilters(requestParameters: EntitiesApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     createEntityUserGroups(requestParameters: EntitiesApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
@@ -21919,6 +21999,8 @@ export interface EntitiesApiInterface {
     deleteEntityOrgMemoryItems(requestParameters: EntitiesApiDeleteEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityParameters(requestParameters: EntitiesApiDeleteEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityReportPageLayouts(requestParameters: EntitiesApiDeleteEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityReports(requestParameters: EntitiesApiDeleteEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityReportTemplates(requestParameters: EntitiesApiDeleteEntityReportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityThemes(requestParameters: EntitiesApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityUserDataFilters(requestParameters: EntitiesApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityUserGroups(requestParameters: EntitiesApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -21973,6 +22055,8 @@ export interface EntitiesApiInterface {
     getAllEntitiesOrgMemoryItems(requestParameters: EntitiesApiGetAllEntitiesOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutList>;
     getAllEntitiesParameters(requestParameters: EntitiesApiGetAllEntitiesParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutList>;
     getAllEntitiesReportPageLayouts(requestParameters: EntitiesApiGetAllEntitiesReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutList>;
+    getAllEntitiesReports(requestParameters: EntitiesApiGetAllEntitiesReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutList>;
+    getAllEntitiesReportTemplates(requestParameters: EntitiesApiGetAllEntitiesReportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportTemplateOutList>;
     getAllEntitiesThemes(requestParameters: EntitiesApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutList>;
     getAllEntitiesUserDataFilters(requestParameters: EntitiesApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutList>;
     getAllEntitiesUserGroups(requestParameters: EntitiesApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutList>;
@@ -22033,6 +22117,8 @@ export interface EntitiesApiInterface {
     getEntityOrgMemoryItems(requestParameters: EntitiesApiGetEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
     getEntityParameters(requestParameters: EntitiesApiGetEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
     getEntityReportPageLayouts(requestParameters: EntitiesApiGetEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
+    getEntityReports(requestParameters: EntitiesApiGetEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutDocument>;
+    getEntityReportTemplates(requestParameters: EntitiesApiGetEntityReportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportTemplateOutDocument>;
     getEntityThemes(requestParameters: EntitiesApiGetEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
     getEntityUserDataFilters(requestParameters: EntitiesApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     getEntityUserGroups(requestParameters: EntitiesApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
@@ -22082,6 +22168,8 @@ export interface EntitiesApiInterface {
     patchEntityOrgMemoryItems(requestParameters: EntitiesApiPatchEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
     patchEntityParameters(requestParameters: EntitiesApiPatchEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
     patchEntityReportPageLayouts(requestParameters: EntitiesApiPatchEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
+    patchEntityReports(requestParameters: EntitiesApiPatchEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutDocument>;
+    patchEntityReportTemplates(requestParameters: EntitiesApiPatchEntityReportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportTemplateOutDocument>;
     patchEntityThemes(requestParameters: EntitiesApiPatchEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
     patchEntityUserDataFilters(requestParameters: EntitiesApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     patchEntityUserGroups(requestParameters: EntitiesApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
@@ -22150,6 +22238,8 @@ export interface EntitiesApiInterface {
     updateEntityOrgMemoryItems(requestParameters: EntitiesApiUpdateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
     updateEntityParameters(requestParameters: EntitiesApiUpdateEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
     updateEntityReportPageLayouts(requestParameters: EntitiesApiUpdateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
+    updateEntityReports(requestParameters: EntitiesApiUpdateEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutDocument>;
+    updateEntityReportTemplates(requestParameters: EntitiesApiUpdateEntityReportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportTemplateOutDocument>;
     updateEntityThemes(requestParameters: EntitiesApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
     updateEntityUserDataFilters(requestParameters: EntitiesApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     updateEntityUserGroups(requestParameters: EntitiesApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
@@ -22422,6 +22512,22 @@ export interface EntitiesApiPatchEntityParametersRequest {
 export interface EntitiesApiPatchEntityReportPageLayoutsRequest {
     readonly filter?: string;
     readonly jsonApiReportPageLayoutPatchDocument: JsonApiReportPageLayoutPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface EntitiesApiPatchEntityReportsRequest {
+    readonly filter?: string;
+    readonly jsonApiReportPatchDocument: JsonApiReportPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface EntitiesApiPatchEntityReportTemplatesRequest {
+    readonly filter?: string;
+    readonly jsonApiReportTemplatePatchDocument: JsonApiReportTemplatePatchDocument;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -22964,6 +23070,22 @@ export interface EntitiesApiUpdateEntityReportPageLayoutsRequest {
 }
 
 // @public
+export interface EntitiesApiUpdateEntityReportsRequest {
+    readonly filter?: string;
+    readonly jsonApiReportInDocument: JsonApiReportInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface EntitiesApiUpdateEntityReportTemplatesRequest {
+    readonly filter?: string;
+    readonly jsonApiReportTemplateInDocument: JsonApiReportTemplateInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface EntitiesApiUpdateEntityRequest {
     readonly id: string;
 }
@@ -23190,7 +23312,7 @@ export interface EntityIdentifier {
 }
 
 // @public (undocumented)
-export type EntityIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView';
+export type EntityIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView';
 
 // @public
 export interface EntitySearchBody {
@@ -24387,7 +24509,7 @@ export interface ExportIdentifierRefIdentifier {
 }
 
 // @public (undocumented)
-export type ExportIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'reportPageLayout' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
+export type ExportIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'reportPageLayout' | 'reportTemplate' | 'report' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
 
 // @public
 export interface ExportImageExportRequest {
@@ -26554,7 +26676,7 @@ export interface IdentifierRefIdentifier {
 }
 
 // @public (undocumented)
-export type IdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'reportPageLayout' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
+export type IdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'reportPageLayout' | 'reportTemplate' | 'report' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
 
 // @public
 export class IdentityProviderControllerApi extends MetadataBaseApi implements IdentityProviderControllerApiInterface {
@@ -35016,7 +35138,7 @@ export interface JsonApiOrganizationSettingInAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiOrganizationSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
+export type JsonApiOrganizationSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'REPORTS_BRAND_KIT';
 
 // @public (undocumented)
 export interface JsonApiOrganizationSettingInDocument {
@@ -35043,7 +35165,7 @@ export interface JsonApiOrganizationSettingOutAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiOrganizationSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
+export type JsonApiOrganizationSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'REPORTS_BRAND_KIT';
 
 // @public (undocumented)
 export interface JsonApiOrganizationSettingOutDocument {
@@ -35101,7 +35223,7 @@ export interface JsonApiOrganizationSettingPatchAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiOrganizationSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
+export type JsonApiOrganizationSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'REPORTS_BRAND_KIT';
 
 // @public (undocumented)
 export interface JsonApiOrganizationSettingPatchDocument {
@@ -35509,6 +35631,122 @@ export interface JsonApiParameterPostOptionalIdDocument {
 export type JsonApiParameterPostOptionalIdTypeEnum = 'parameter';
 
 // @public
+export interface JsonApiReportIn {
+    // (undocumented)
+    'attributes': JsonApiReportInAttributes;
+    'id': string;
+    'type': JsonApiReportInTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiReportInAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    // (undocumented)
+    'description'?: string;
+    'periodEnd': string;
+    'periodStart': string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title': string;
+    'variableValues'?: any;
+}
+
+// @public (undocumented)
+export interface JsonApiReportInDocument {
+    // (undocumented)
+    'data': JsonApiReportIn;
+}
+
+// @public (undocumented)
+export type JsonApiReportInTypeEnum = 'report';
+
+// @public
+export interface JsonApiReportOut {
+    // (undocumented)
+    'attributes': JsonApiReportOutAttributes;
+    'id': string;
+    // (undocumented)
+    'meta'?: JsonApiReportOutMeta;
+    'type': JsonApiReportOutTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiReportOutAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    // (undocumented)
+    'description'?: string;
+    'periodEnd': string;
+    'periodStart': string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title': string;
+    'variableValues'?: any;
+}
+
+// @public (undocumented)
+export interface JsonApiReportOutDocument {
+    // (undocumented)
+    'data': JsonApiReportOut;
+    // (undocumented)
+    'links'?: ObjectLinks;
+}
+
+// @public
+export interface JsonApiReportOutList {
+    // (undocumented)
+    'data': Array<JsonApiReportOutWithLinks>;
+    // (undocumented)
+    'links'?: ListLinks;
+    // (undocumented)
+    'meta'?: JsonApiReportOutListMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiReportOutListMeta {
+    // (undocumented)
+    'page'?: PageMetadata;
+}
+
+// @public (undocumented)
+export interface JsonApiReportOutMeta {
+    // (undocumented)
+    'origin'?: JsonApiReportOutMetaOrigin;
+}
+
+// @public (undocumented)
+export interface JsonApiReportOutMetaOrigin {
+    'originId': string;
+    'originType': JsonApiReportOutMetaOriginOriginTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiReportOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
+// @public (undocumented)
+export type JsonApiReportOutTypeEnum = 'report';
+
+// @public (undocumented)
+export interface JsonApiReportOutWithLinks {
+    // (undocumented)
+    'attributes': JsonApiReportOutAttributes;
+    'id': string;
+    // (undocumented)
+    'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiReportOutMeta;
+    'type': JsonApiReportOutWithLinksTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiReportOutWithLinksTypeEnum = 'report';
+
+// @public
 export interface JsonApiReportPageLayoutIn {
     // (undocumented)
     'attributes': JsonApiReportPageLayoutInAttributes;
@@ -35677,6 +35915,242 @@ export interface JsonApiReportPageLayoutPostOptionalIdDocument {
 
 // @public (undocumented)
 export type JsonApiReportPageLayoutPostOptionalIdTypeEnum = 'reportPageLayout';
+
+// @public
+export interface JsonApiReportPatch {
+    // (undocumented)
+    'attributes': JsonApiReportPatchAttributes;
+    'id': string;
+    'type': JsonApiReportPatchTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiReportPatchAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content'?: object;
+    // (undocumented)
+    'description'?: string;
+    'periodEnd'?: string;
+    'periodStart'?: string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title'?: string;
+    'variableValues'?: any;
+}
+
+// @public (undocumented)
+export interface JsonApiReportPatchDocument {
+    // (undocumented)
+    'data': JsonApiReportPatch;
+}
+
+// @public (undocumented)
+export type JsonApiReportPatchTypeEnum = 'report';
+
+// @public
+export interface JsonApiReportPostOptionalId {
+    // (undocumented)
+    'attributes': JsonApiReportPostOptionalIdAttributes;
+    'id'?: string;
+    'type': JsonApiReportPostOptionalIdTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiReportPostOptionalIdAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    // (undocumented)
+    'description'?: string;
+    'periodEnd': string;
+    'periodStart': string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title': string;
+    'variableValues'?: any;
+}
+
+// @public (undocumented)
+export interface JsonApiReportPostOptionalIdDocument {
+    // (undocumented)
+    'data': JsonApiReportPostOptionalId;
+}
+
+// @public (undocumented)
+export type JsonApiReportPostOptionalIdTypeEnum = 'report';
+
+// @public
+export interface JsonApiReportTemplateIn {
+    // (undocumented)
+    'attributes': JsonApiReportTemplateInAttributes;
+    'id': string;
+    'type': JsonApiReportTemplateInTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiReportTemplateInAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title': string;
+}
+
+// @public (undocumented)
+export interface JsonApiReportTemplateInDocument {
+    // (undocumented)
+    'data': JsonApiReportTemplateIn;
+}
+
+// @public (undocumented)
+export type JsonApiReportTemplateInTypeEnum = 'reportTemplate';
+
+// @public
+export interface JsonApiReportTemplateOut {
+    // (undocumented)
+    'attributes': JsonApiReportTemplateOutAttributes;
+    'id': string;
+    // (undocumented)
+    'meta'?: JsonApiReportTemplateOutMeta;
+    'type': JsonApiReportTemplateOutTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiReportTemplateOutAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title': string;
+}
+
+// @public (undocumented)
+export interface JsonApiReportTemplateOutDocument {
+    // (undocumented)
+    'data': JsonApiReportTemplateOut;
+    // (undocumented)
+    'links'?: ObjectLinks;
+}
+
+// @public
+export interface JsonApiReportTemplateOutList {
+    // (undocumented)
+    'data': Array<JsonApiReportTemplateOutWithLinks>;
+    // (undocumented)
+    'links'?: ListLinks;
+    // (undocumented)
+    'meta'?: JsonApiReportTemplateOutListMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiReportTemplateOutListMeta {
+    // (undocumented)
+    'page'?: PageMetadata;
+}
+
+// @public (undocumented)
+export interface JsonApiReportTemplateOutMeta {
+    // (undocumented)
+    'origin'?: JsonApiReportTemplateOutMetaOrigin;
+}
+
+// @public (undocumented)
+export interface JsonApiReportTemplateOutMetaOrigin {
+    'originId': string;
+    'originType': JsonApiReportTemplateOutMetaOriginOriginTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiReportTemplateOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
+// @public (undocumented)
+export type JsonApiReportTemplateOutTypeEnum = 'reportTemplate';
+
+// @public (undocumented)
+export interface JsonApiReportTemplateOutWithLinks {
+    // (undocumented)
+    'attributes': JsonApiReportTemplateOutAttributes;
+    'id': string;
+    // (undocumented)
+    'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiReportTemplateOutMeta;
+    'type': JsonApiReportTemplateOutWithLinksTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiReportTemplateOutWithLinksTypeEnum = 'reportTemplate';
+
+// @public
+export interface JsonApiReportTemplatePatch {
+    // (undocumented)
+    'attributes': JsonApiReportTemplatePatchAttributes;
+    'id': string;
+    'type': JsonApiReportTemplatePatchTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiReportTemplatePatchAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content'?: object;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title'?: string;
+}
+
+// @public (undocumented)
+export interface JsonApiReportTemplatePatchDocument {
+    // (undocumented)
+    'data': JsonApiReportTemplatePatch;
+}
+
+// @public (undocumented)
+export type JsonApiReportTemplatePatchTypeEnum = 'reportTemplate';
+
+// @public
+export interface JsonApiReportTemplatePostOptionalId {
+    // (undocumented)
+    'attributes': JsonApiReportTemplatePostOptionalIdAttributes;
+    'id'?: string;
+    'type': JsonApiReportTemplatePostOptionalIdTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiReportTemplatePostOptionalIdAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title': string;
+}
+
+// @public (undocumented)
+export interface JsonApiReportTemplatePostOptionalIdDocument {
+    // (undocumented)
+    'data': JsonApiReportTemplatePostOptionalId;
+}
+
+// @public (undocumented)
+export type JsonApiReportTemplatePostOptionalIdTypeEnum = 'reportTemplate';
 
 // @public
 export interface JsonApiThemeIn {
@@ -36513,7 +36987,7 @@ export interface JsonApiUserSettingInAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiUserSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
+export type JsonApiUserSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'REPORTS_BRAND_KIT';
 
 // @public (undocumented)
 export interface JsonApiUserSettingInDocument {
@@ -36540,7 +37014,7 @@ export interface JsonApiUserSettingOutAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiUserSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
+export type JsonApiUserSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'REPORTS_BRAND_KIT';
 
 // @public (undocumented)
 export interface JsonApiUserSettingOutDocument {
@@ -38138,7 +38612,7 @@ export interface JsonApiWorkspaceSettingInAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
+export type JsonApiWorkspaceSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'REPORTS_BRAND_KIT';
 
 // @public (undocumented)
 export interface JsonApiWorkspaceSettingInDocument {
@@ -38167,7 +38641,7 @@ export interface JsonApiWorkspaceSettingOutAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
+export type JsonApiWorkspaceSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'REPORTS_BRAND_KIT';
 
 // @public (undocumented)
 export interface JsonApiWorkspaceSettingOutDocument {
@@ -38242,7 +38716,7 @@ export interface JsonApiWorkspaceSettingPatchAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
+export type JsonApiWorkspaceSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'REPORTS_BRAND_KIT';
 
 // @public (undocumented)
 export interface JsonApiWorkspaceSettingPatchDocument {
@@ -38269,7 +38743,7 @@ export interface JsonApiWorkspaceSettingPostOptionalIdAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
+export type JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'REPORTS_BRAND_KIT';
 
 // @public (undocumented)
 export interface JsonApiWorkspaceSettingPostOptionalIdDocument {
@@ -40318,6 +40792,9 @@ export type LocationStyleDocument = Record<string, unknown>;
 
 // @public
 export type ManageAttributePermissionsRequestInner = LdmObjectPermissionsForAssignee | LdmObjectPermissionsForAssigneeRule;
+
+// @public
+export type ManageComputedAttributePermissionsRequestInner = ComputedAttributePermissionsForAssignee | ComputedAttributePermissionsForAssigneeRule;
 
 // @public
 export type ManageDashboardPermissionsRequestInner = PermissionsForAssignee | PermissionsForAssigneeRule;
@@ -42470,6 +42947,7 @@ export interface PdmSql {
 export class PermissionsApi extends MetadataBaseApi implements PermissionsApiInterface {
     attributePermissions(requestParameters: PermissionsApiAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
     availableAssignees(requestParameters: PermissionsApiAvailableAssigneesRequest, options?: AxiosRequestConfig): AxiosPromise<AvailableAssignees>;
+    computedAttributePermissions(requestParameters: PermissionsApiComputedAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<ComputedAttributePermissions>;
     dashboardPermissions(requestParameters: PermissionsApiDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DashboardPermissions>;
     factPermissions(requestParameters: PermissionsApiFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
     getOrganizationPermissions(options?: AxiosRequestConfig): AxiosPromise<DeclarativeOrganizationPermission[]>;
@@ -42478,6 +42956,7 @@ export class PermissionsApi extends MetadataBaseApi implements PermissionsApiInt
     getWorkspacePermissions(requestParameters: PermissionsApiGetWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeWorkspacePermissions>;
     labelPermissions(requestParameters: PermissionsApiLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
     manageAttributePermissions(requestParameters: PermissionsApiManageAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    manageComputedAttributePermissions(requestParameters: PermissionsApiManageComputedAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageDashboardPermissions(requestParameters: PermissionsApiManageDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageDataSourcePermissions(requestParameters: PermissionsApiManageDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageFactPermissions(requestParameters: PermissionsApiManageFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -42589,6 +43068,12 @@ export function PermissionsApiAxiosParamCreator_SetUserPermissions(userId: strin
 export function PermissionsApiAxiosParamCreator_SetWorkspacePermissions(workspaceId: string, declarativeWorkspacePermissions: DeclarativeWorkspacePermissions, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
+export interface PermissionsApiComputedAttributePermissionsRequest {
+    readonly computedAttributeId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface PermissionsApiDashboardPermissionsRequest {
     readonly dashboardId: string;
     readonly workspaceId: string;
@@ -42619,6 +43104,7 @@ export interface PermissionsApiGetWorkspacePermissionsRequest {
 export interface PermissionsApiInterface {
     attributePermissions(requestParameters: PermissionsApiAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
     availableAssignees(requestParameters: PermissionsApiAvailableAssigneesRequest, options?: AxiosRequestConfig): AxiosPromise<AvailableAssignees>;
+    computedAttributePermissions(requestParameters: PermissionsApiComputedAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<ComputedAttributePermissions>;
     dashboardPermissions(requestParameters: PermissionsApiDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DashboardPermissions>;
     factPermissions(requestParameters: PermissionsApiFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
     getOrganizationPermissions(options?: AxiosRequestConfig): AxiosPromise<Array<DeclarativeOrganizationPermission>>;
@@ -42627,6 +43113,7 @@ export interface PermissionsApiInterface {
     getWorkspacePermissions(requestParameters: PermissionsApiGetWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeWorkspacePermissions>;
     labelPermissions(requestParameters: PermissionsApiLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<LdmObjectPermissions>;
     manageAttributePermissions(requestParameters: PermissionsApiManageAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    manageComputedAttributePermissions(requestParameters: PermissionsApiManageComputedAttributePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageDashboardPermissions(requestParameters: PermissionsApiManageDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageDataSourcePermissions(requestParameters: PermissionsApiManageDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageFactPermissions(requestParameters: PermissionsApiManageFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -42651,6 +43138,13 @@ export interface PermissionsApiLabelPermissionsRequest {
 export interface PermissionsApiManageAttributePermissionsRequest {
     readonly attributeId: string;
     readonly manageAttributePermissionsRequestInner: Array<ManageAttributePermissionsRequestInner>;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface PermissionsApiManageComputedAttributePermissionsRequest {
+    readonly computedAttributeId: string;
+    readonly manageComputedAttributePermissionsRequestInner: Array<ManageComputedAttributePermissionsRequestInner>;
     readonly workspaceId: string;
 }
 
@@ -43318,7 +43812,7 @@ export interface ResolvedSetting {
 }
 
 // @public (undocumented)
-export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE';
+export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'REPORTS_BRAND_KIT';
 
 // @public
 export interface ResolveSettingsRequest {

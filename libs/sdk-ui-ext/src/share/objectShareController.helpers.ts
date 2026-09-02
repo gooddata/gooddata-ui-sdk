@@ -9,10 +9,11 @@ import {
     isGranularUserGroupAccess,
     objRefToString,
 } from "@gooddata/sdk-model";
-import type { GeneralAccessValue } from "@gooddata/sdk-ui-kit";
 
 import type {
+    GranteeEdit,
     IGranteeIdentityFacts,
+    IObjectShareDraft,
     IObjectShareGrantee,
     ISelfIdentity,
     ObjectSharePermissionLevel,
@@ -333,43 +334,6 @@ export function granteesFromAccessList(list: IObjectAccessList | undefined): IOb
 }
 
 /**
- * A transient edit overlaid on a fetched grantee row (keyed by grantee id in
- * {@link mergeGrantees}). The pending-guard keeps at most one edit in flight per id.
- * A pending edit that superseded an already-COMMITTED entry (an added row, an
- * earlier level change) carries it as `settled`, because the fetched base no longer
- * holds that row's last-settled state: failure restores `settled`, success drops it.
- * With no `settled`, failure deletes the entry, reverting to the fetched row.
- *
- * @internal
- */
-export type GranteeEdit =
-    | { kind: "level"; level: ObjectSharePermissionLevel; pending: boolean; settled?: GranteeEdit }
-    | { kind: "added"; grantee: IObjectShareGrantee; pending: boolean; settled?: GranteeEdit }
-    | { kind: "removed"; pending: boolean; settled?: GranteeEdit }
-    /**
-     * Pending marker only — the row renders exactly as it stands. For a write that
-     * locks the row without changing its access (a label-scope edit), so nothing has
-     * to invent a level: reusing the `level` overlay would record the DISPLAYED level
-     * as the direct grant, and that level is the effective one.
-     */
-    | { kind: "locked"; pending: boolean; settled?: GranteeEdit };
-
-/**
- * Transient edit of the all-workspace-users rule (general access + its level),
- * overlaid on the fetched rule state in the hook. Same lifecycle and `settled`
- * semantics as {@link GranteeEdit}, one edit in flight at a time.
- *
- * @internal
- */
-export interface IRuleEdit {
-    generalAccess: GeneralAccessValue;
-    level: ObjectSharePermissionLevel;
-    pending: boolean;
-    /** The committed rule edit this pending one superseded; restored on failure. */
-    settled?: IRuleEdit;
-}
-
-/**
  * Pure composition of the fetched base with the transient overlay — the hook's
  * `grantees` derive from this with no effect and no mirrored state. Marks the
  * caller's own row via `selfId`, backfilling its facts from `selfIdentity` (the
@@ -611,6 +575,31 @@ export function buildLabelMutationsForScopes(
         }
     }
     return Array.from(byLabel.values());
+}
+
+/**
+ * The permissions to POST for a draft, once its object exists. Idempotent.
+ *
+ * Only adds survive: nothing is granted yet, so removals drop out. The creator is left to
+ * the backend — a draft that named them could also drop them.
+ */
+export function draftToPermissions(draft: IObjectShareDraft): IGranularAccessGrantee[] {
+    const permissions: IGranularAccessGrantee[] = [];
+    for (const edit of Object.values(draft.granteeEdits)) {
+        // Only `added` can reach here: the other kinds need a fetched row, and there is none.
+        if (edit.kind === "added") {
+            permissions.push(
+                toGranularGrantee(edit.grantee.kind, edit.grantee.granteeRef, edit.grantee.level),
+            );
+        }
+    }
+    const { ruleEdit } = draft;
+    if (ruleEdit?.generalAccess === "WORKSPACE") {
+        permissions.push(granularGranteeFor({ allWorkspaceUsers: true }, ruleEdit.level));
+    } else if (ruleEdit?.generalAccess === "RESTRICTED") {
+        permissions.push(granularGranteeFor({ allWorkspaceUsers: true }, "none"));
+    }
+    return permissions;
 }
 
 /** Stable empty-labels default so the hook's default arg doesn't churn identities. */

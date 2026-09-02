@@ -7,6 +7,7 @@ import {
     type IFilter,
     type IInsight,
     type IInsightParameterValue,
+    filterContextItemsToDashboardFiltersByWidget,
     isFilter,
     isFilterContextItem,
     isWidget,
@@ -15,7 +16,6 @@ import {
 } from "@gooddata/sdk-model";
 
 import { exportParametersToValues } from "../../../_staging/automation/index.js";
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/filterConverters.js";
 import { type ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 
 export function prepareCsvRawExecutionDefinition({

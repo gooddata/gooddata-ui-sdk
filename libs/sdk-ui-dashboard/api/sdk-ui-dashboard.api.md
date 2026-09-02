@@ -21,9 +21,13 @@ import { CurrentUserPermissions } from '@gooddata/sdk-ui-kit';
 import { DashboardAttachmentType } from '@gooddata/sdk-model';
 import { DashboardAttributeFilterConfigMode } from '@gooddata/sdk-model';
 import { DashboardAttributeFilterItem } from '@gooddata/sdk-model';
+import { dashboardAttributeFilterItemToAttributeFilter } from '@gooddata/sdk-model';
 import { DashboardAttributeFilterSelectionMode } from '@gooddata/sdk-model';
 import { DashboardAttributeFilterSelectionType } from '@gooddata/sdk-model';
+import { dashboardAttributeFilterToAttributeFilter } from '@gooddata/sdk-model';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
+import { dashboardDateFilterToDateFilterByDateDataSet } from '@gooddata/sdk-model';
+import { dashboardDateFilterToDateFilterByWidget } from '@gooddata/sdk-model';
 import { DashboardFiltersApplyMode } from '@gooddata/sdk-model';
 import { DashboardParameterMode } from '@gooddata/sdk-model';
 import { DashboardSummaryWorkflowStatus } from '@gooddata/sdk-backend-spi';
@@ -42,10 +46,14 @@ import { EntityState } from '@reduxjs/toolkit';
 import { ExecutionResultLimitType } from '@gooddata/sdk-model';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FilterContextItem } from '@gooddata/sdk-model';
+import { filterContextItemsToDashboardFiltersByDateDataSet } from '@gooddata/sdk-model';
+import { filterContextItemsToDashboardFiltersByRichTextWidget } from '@gooddata/sdk-model';
+import { filterContextItemsToDashboardFiltersByWidget } from '@gooddata/sdk-model';
+import { filterContextToDashboardFiltersByDateDataSet } from '@gooddata/sdk-model';
+import { filterContextToDashboardFiltersByWidget } from '@gooddata/sdk-model';
 import { FocusEvent as FocusEvent_2 } from 'react';
 import { ForwardRefExoticComponent } from 'react';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
-import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessControlAware } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
 import { IActiveCalendars } from '@gooddata/sdk-model';
@@ -57,7 +65,6 @@ import { IAlertRelativeOperator } from '@gooddata/sdk-model';
 import { IAlertTriggerInterval } from '@gooddata/sdk-model';
 import { IAlertTriggerMode } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
-import { IArbitraryAttributeFilter } from '@gooddata/sdk-model';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeDescriptorBody } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
@@ -96,6 +103,7 @@ import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardExportParameter } from '@gooddata/sdk-model';
 import { IDashboardExportPresentationOptions } from '@gooddata/sdk-backend-spi';
 import { IDashboardExportRawOptions } from '@gooddata/sdk-backend-spi';
+import { IDashboardFilter as IDashboardFilter_2 } from '@gooddata/sdk-model';
 import { IDashboardFilterGroup } from '@gooddata/sdk-model';
 import { IDashboardFilterGroupsConfig } from '@gooddata/sdk-model';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
@@ -145,7 +153,6 @@ import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IExportTemplate } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterableWidget } from '@gooddata/sdk-model';
-import { IFilterContext } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IInsight } from '@gooddata/sdk-model';
@@ -166,13 +173,11 @@ import { IListedDashboard } from '@gooddata/sdk-model';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
 import { ILowerBoundedFilter } from '@gooddata/sdk-model';
-import { IMatchAttributeFilter } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureDescriptor } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMeasureValueFilter } from '@gooddata/sdk-model';
 import { IMeasureValueFilterProps } from '@gooddata/sdk-ui-filters';
-import { INegativeAttributeFilter } from '@gooddata/sdk-model';
 import { INotificationChannelIdentifier } from '@gooddata/sdk-model';
 import { INotificationChannelMetadataObject } from '@gooddata/sdk-model';
 import { INotificationChannelMetadataObjectBase } from '@gooddata/sdk-model';
@@ -181,13 +186,12 @@ import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
 import { IParameterDefinition } from '@gooddata/sdk-model';
 import { IParameterMetadataObject } from '@gooddata/sdk-model';
-import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
 import { IPushData } from '@gooddata/sdk-ui';
 import { IRawExportCustomOverrides } from '@gooddata/sdk-backend-spi';
-import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IRenderListItemProps } from '@gooddata/sdk-ui-kit';
 import { IResultWarning } from '@gooddata/sdk-model';
 import { IRichTextWidget } from '@gooddata/sdk-model';
+import { isDashboardFilter as isDashboardFilter_2 } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { IShareDialogInteractionData } from '@gooddata/sdk-ui-kit';
@@ -195,7 +199,6 @@ import { ISharedObject } from '@gooddata/sdk-ui-kit';
 import { ISharingApplyPayload as ISharingApplyPayload_2 } from '@gooddata/sdk-ui-kit';
 import { ISlotProps } from '@gooddata/sdk-ui-kit';
 import { ITableDataAttributeScope } from '@gooddata/sdk-ui';
-import { ITempFilterContext } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import type { ITranslations } from '@gooddata/sdk-ui';
 import { IUnavailableDashboardReference } from '@gooddata/sdk-backend-spi';
@@ -382,8 +385,11 @@ export function AlertingDialogTriggerMode(overrides: Partial<IAlertingDialogTrig
 // @internal (undocumented)
 export type AlertingDisabledReason = "noDestinations" | "oldWidget" | "disabledOnInsight";
 
-// @internal (undocumented)
+// @internal
 export function AlertingManagementDialog(props: IAlertingManagementDialogProps): ReactElement;
+
+// @alpha
+export const AlertingManagementDialogContextProvider: Provider<IAlertingManagementDialogContextValue | undefined>;
 
 // @alpha
 export type AlertMetric = {
@@ -504,6 +510,9 @@ export type AutomationInteractionPayload = IUserInteractionPayloadWithDataBase<"
 
 // @alpha (undocumented)
 export type AutomationInteractionType = "scheduledExportInitialized" | "scheduledExportCreated" | "alertInitialized" | "alertCreated";
+
+// @alpha
+export const AutomationsContextProvider: Provider<IAutomationsContextValue | undefined>;
 
 // @public (undocumented)
 export type BackendCapabilitiesState = {
@@ -839,6 +848,16 @@ export type CustomAlertingDialogContextDecoratorComponent = ComponentType<{
 // @alpha (undocumented)
 export type CustomAlertingManagementDialogComponent = ComponentType<IAlertingManagementDialogProps>;
 
+// @alpha
+export type CustomAlertingManagementDialogContextDecoratorComponent = ComponentType<{
+    children?: ReactNode;
+}>;
+
+// @alpha
+export type CustomAutomationsContextDecoratorComponent = ComponentType<{
+    children?: ReactNode;
+}>;
+
 // @beta (undocumented)
 export type CustomButtonBarComponent = ComponentType<IButtonBarProps>;
 
@@ -976,6 +995,11 @@ export type CustomScheduledEmailDialogContextDecoratorComponent = ComponentType<
 // @alpha (undocumented)
 export type CustomScheduledEmailManagementDialogComponent = ComponentType<IScheduledEmailManagementDialogProps>;
 
+// @alpha
+export type CustomScheduledEmailManagementDialogContextDecoratorComponent = ComponentType<{
+    children?: ReactNode;
+}>;
+
 // @beta (undocumented)
 export type CustomSettingButtonComponent = ComponentType<ISettingButtonProps>;
 
@@ -1056,8 +1080,7 @@ export type DashboardAttributeFilterItemSelectionReplacedPayload = {
     readonly filter: DashboardAttributeFilterItem;
 };
 
-// @public
-export function dashboardAttributeFilterItemToAttributeFilter(filter: DashboardAttributeFilterItem): IAttributeFilter;
+export { dashboardAttributeFilterItemToAttributeFilter }
 
 // @public
 export type DashboardAttributeFilterSelectionChanged = IDashboardEvent & {
@@ -1070,8 +1093,7 @@ export type DashboardAttributeFilterSelectionChangedPayload = {
     readonly filter: IDashboardAttributeFilter;
 };
 
-// @public @deprecated
-export function dashboardAttributeFilterToAttributeFilter(filter: IDashboardAttributeFilter): IAttributeFilter;
+export { dashboardAttributeFilterToAttributeFilter }
 
 // @public
 export type DashboardCommands = InitializeDashboard | SaveDashboardAs | RequestAsyncRender | ResolveAsyncRender | ChangeFilterContextSelection | ChangeDateFilterSelection | ChangeAttributeFilterSelection | ReplaceAttributeFilterItemSelection | IChangeRenderMode | IChangeDashboardDensity | IRequestOpenDensityDialog | IChangeDashboardTimezoneOverride | ISaveDashboard | IRenameDashboard | IResetDashboard | IExportDashboardToPdf | IExportDashboardToExcel | IExportDashboardToPdfPresentation | IExportDashboardToPptPresentation | IDeleteDashboard | ITriggerEvent | IUpsertExecutionResult | IAddAttributeFilter | IAddTextAttributeFilter | IRemoveAttributeFilters | IMoveAttributeFilter | ISetAttributeFilterParents | ISetAttributeFilterDependentDateFilters | IAddLayoutSection | IMoveLayoutSection | IRemoveLayoutSection | ChangeLayoutSectionHeader | IResizeHeight | IResizeWidth | IAddSectionItems | IReplaceSectionItem | IMoveSectionItem | IMoveSectionItemToNewSection | IRemoveSectionItem | IRemoveSectionItemByWidgetRef | IUndoLayoutChanges | IChangeKpiWidgetHeader | IChangeKpiWidgetDescription | IChangeKpiWidgetConfiguration | IChangeKpiWidgetMeasure | IChangeKpiWidgetFilterSettings | IChangeKpiWidgetComparison | IRefreshKpiWidget | ISetDrillForKpiWidget | IRemoveDrillForKpiWidget | IChangeInsightWidgetHeader | IChangeInsightWidgetDescription | IChangeInsightWidgetIgnoreCrossFiltering | IChangeInsightWidgetFilterSettings | IChangeInsightWidgetVisProperties | ChangeInsightWidgetVisConfiguration | IChangeInsightWidgetInsight | IModifyDrillsForInsightWidget | IRemoveDrillsForInsightWidget | IRefreshInsightWidget | IExportInsightWidget | ICreateAlert | ISaveAlert | ICreateScheduledEmail | ISaveScheduledEmail | IChangeSharing | ISetAttributeFilterDisplayForm | ISetAttributeFilterTitle | ISetMeasureValueFilterTitle | ISetMeasureValueFilterDimensionality | ISetAttributeFilterSelectionMode | IChangeRichTextWidgetContent | IChangeRichTextWidgetFilterSettings | IAddVisualizationToVisualizationSwitcherWidgetContent | IUpdateVisualizationsFromVisualizationSwitcherWidgetContent | IChangeVisualizationSwitcherActiveVisualization | IDrill | IDrillDown | IDrillToAttributeUrl | IDrillToCustomUrl | IDrillToDashboard | IDrillToInsight | IDrillToLegacyDashboard | IChangeDrillableItems | IAddDrillTargets | ISetDashboardDateFilterConfigMode | ISetDashboardAttributeFilterConfigMode | ISetDashboardMeasureValueFilterConfigMode | ISetDashboardAttributeFilterSelectionType | ISetDashboardAttributeFilterConfigDisplayAsLabel | IRemoveDrillDownForInsightWidget | IRemoveDrillToUrlForInsightWidget | IAddDrillDownForInsightWidget | IModifyDrillDownForInsightWidget | ICrossFiltering | IKeyDriverAnalysis | IAttributeHierarchyModified | IAddDateFilter | IAddMeasureValueFilter | IRemoveMeasureValueFilters | IRemoveDateFilters | IMoveDateFilter | IChangeMeasureValueFilterCondition | IMoveMeasureValueFilter | ISetDashboardDateFilterWithDimensionConfigMode | ISetDateFilterConfigTitle | IInitializeAutomations | IRefreshAutomations | ISetAttributeFilterLimitingItems | ISaveFilterView | IDeleteFilterView | IApplyFilterView | ISetFilterViewAsDefault | IReloadFilterViews | IToggleLayoutSectionHeaders | IToggleLayoutDirection | IApplyFilterContextWorkingSelection | IResetFilterContextWorkingSelection | IChangeIgnoreExecutionTimestamp | ISwitchDashboardTab | ICreateDashboardTab | IRepositionDashboardTab | IDeleteDashboardTab | IStartRenamingDashboardTab | ICancelRenamingDashboardTab | IRenameDashboardTab | ISetScreenSize | IExportRawInsightWidget | IExportSlidesInsightWidget | IExportImageInsightWidget | ISetShowWidgetAsTable | IChangeParameterValues;
@@ -1169,11 +1191,9 @@ export type DashboardDateFilterSelectionChangedPayload = {
     readonly dateFilterOptionLocalId?: string;
 };
 
-// @public
-export function dashboardDateFilterToDateFilterByDateDataSet(filter: IDashboardDateFilter, dateDataSet: ObjRef): IDateFilter;
+export { dashboardDateFilterToDateFilterByDateDataSet }
 
-// @public
-export function dashboardDateFilterToDateFilterByWidget(filter: IDashboardDateFilter, widget?: Partial<IFilterableWidget>): IDateFilter;
+export { dashboardDateFilterToDateFilterByWidget }
 
 // @public
 export type DashboardDeinitialized = IDashboardEvent & {
@@ -2173,14 +2193,11 @@ export type FilterBarMeasureValueFilterIndexed = {
 // @public
 export type FilterBarRenderingMode = "default" | "hidden";
 
-// @public
-export function filterContextItemsToDashboardFiltersByDateDataSet(filterContextItems: FilterContextItem[], dateDataSet: ObjRef): IDashboardFilter[];
+export { filterContextItemsToDashboardFiltersByDateDataSet }
 
-// @public
-export function filterContextItemsToDashboardFiltersByRichTextWidget(filterContextItems: FilterContextItem[], widget?: Partial<IFilterableWidget>): IDashboardFilter[];
+export { filterContextItemsToDashboardFiltersByRichTextWidget }
 
-// @public
-export function filterContextItemsToDashboardFiltersByWidget(filterContextItems: FilterContextItem[], widget?: Partial<IFilterableWidget>): IDashboardFilter[];
+export { filterContextItemsToDashboardFiltersByWidget }
 
 // @alpha (undocumented)
 export function filterContextSelectionReset(correlationId?: string): DashboardEventBody<IDashboardFilterContextSelectionReset>;
@@ -2197,11 +2214,9 @@ export type FilterContextState = {
     defaultFilterOverrides?: FilterContextItem[];
 };
 
-// @public
-export function filterContextToDashboardFiltersByDateDataSet(filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined, dateDataSet: ObjRef): IDashboardFilter[];
+export { filterContextToDashboardFiltersByDateDataSet }
 
-// @public
-export function filterContextToDashboardFiltersByWidget(filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined, widget: IWidgetDefinition): IDashboardFilter[];
+export { filterContextToDashboardFiltersByWidget }
 
 // @alpha (undocumented)
 export function filterContextWorkingSelectionApplied(ctx: DashboardContext, correlationId?: string): IDashboardFilterContextWorkingSelectionApplied;
@@ -4112,6 +4127,10 @@ export interface IDashboardCustomComponentProps {
     // @alpha
     AlertingManagementDialogComponent?: CustomAlertingManagementDialogComponent;
     // @alpha
+    AlertingManagementDialogContextDecoratorComponent?: CustomAlertingManagementDialogContextDecoratorComponent;
+    // @alpha
+    AutomationsContextDecoratorComponent?: CustomAutomationsContextDecoratorComponent;
+    // @alpha
     ButtonBarComponent?: CustomButtonBarComponent;
     // @alpha
     DashboardAttributeFilterComponentProvider?: OptionalAttributeFilterComponentProvider;
@@ -4166,6 +4185,8 @@ export interface IDashboardCustomComponentProps {
     ScheduledEmailDialogContextDecoratorComponent?: CustomScheduledEmailDialogContextDecoratorComponent;
     // @alpha
     ScheduledEmailManagementDialogComponent?: CustomScheduledEmailManagementDialogComponent;
+    // @alpha
+    ScheduledEmailManagementDialogContextDecoratorComponent?: CustomScheduledEmailManagementDialogContextDecoratorComponent;
     // @internal
     SettingButtonComponent?: CustomSettingButtonComponent;
     // @alpha
@@ -4665,7 +4686,7 @@ export interface IDashboardExtensionProps extends IDashboardEventing, IDashboard
 }
 
 // @public
-export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IArbitraryAttributeFilter | IMatchAttributeFilter | IMeasureValueFilter;
+export type IDashboardFilter = IDashboardFilter_2;
 
 // @alpha
 export interface IDashboardFilterContextSelectionReset extends IDashboardEvent {
@@ -8944,7 +8965,7 @@ export const isDashboardExportToPptPresentationRequested: (obj: unknown) => obj 
 export const isDashboardExportToPptPresentationResolved: (obj: unknown) => obj is IDashboardExportToPptPresentationResolved;
 
 // @alpha
-export function isDashboardFilter(obj: unknown): obj is IDashboardFilter;
+export const isDashboardFilter: typeof isDashboardFilter_2;
 
 // @public
 export const isDashboardFilterContextChanged: (obj: unknown) => obj is DashboardFilterContextChanged;
@@ -11485,8 +11506,11 @@ export type ScheduledEmailDialogTimezoneDefaultProps = IScheduledEmailDialogTime
 // @alpha
 export function ScheduledEmailDialogWidgetAttachments(props: Partial<IScheduledEmailDialogWidgetAttachmentsProps>): ReactElement;
 
-// @internal (undocumented)
+// @internal
 export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementDialogProps): ReactElement;
+
+// @alpha
+export const ScheduledEmailManagementDialogContextProvider: Provider<IScheduledEmailManagementDialogContextValue | undefined>;
 
 // @internal (undocumented)
 export type SchedulingDisabledReason = "incompatibleWidget" | "oldWidget" | "disabledOnInsight";

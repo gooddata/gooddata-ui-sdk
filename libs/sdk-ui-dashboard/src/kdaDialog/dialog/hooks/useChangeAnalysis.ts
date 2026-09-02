@@ -15,6 +15,8 @@ import {
     type IMeasure,
     type ISeparators,
     type ObjRef,
+    dashboardAttributeFilterItemToAttributeFilter,
+    dashboardMeasureValueFilterToMeasureValueFilter,
     isAllDashboardMeasureValueFilter,
     isAllValuesDashboardAttributeFilter,
     newAttribute,
@@ -22,10 +24,6 @@ import {
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { type IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 
-import {
-    dashboardAttributeFilterItemToAttributeFilter,
-    dashboardMeasureValueFilterToMeasureValueFilter,
-} from "../../../converters/filterConverters.js";
 import { DEFAULT_MEASURE_FORMAT } from "../../const.js";
 import { useAttribute } from "../../hooks/useAttribute.js";
 import { useDateAttribute } from "../../hooks/useDateAttribute.js";

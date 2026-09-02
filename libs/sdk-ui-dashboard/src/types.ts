@@ -1,26 +1,20 @@
 // (C) 2007-2026 GoodData Corporation
 
+import { type ComponentType, type ReactNode } from "react";
+
 import { isEmpty } from "lodash-es";
 
 import {
     type DrillDefinition,
-    type IAbsoluteDateFilter,
     type IAccessGrantee,
-    type IArbitraryAttributeFilter,
     type IAutomationMetadataObject,
+    type IDashboardFilter as IDashboardFilterBase,
     type IInsight,
-    type IMatchAttributeFilter,
-    type IMeasureValueFilter,
-    type INegativeAttributeFilter,
-    type IPositiveAttributeFilter,
-    type IRelativeDateFilter,
     type IWidget,
     type LocalIdRef,
     type ObjRef,
     type ShareStatus,
-    isAttributeFilter,
-    isDateFilter,
-    isMeasureValueFilter,
+    isDashboardFilter as isDashboardFilterBase,
 } from "@gooddata/sdk-model";
 import { type IDrillEvent, type OnFiredDrillEvent } from "@gooddata/sdk-ui";
 
@@ -29,25 +23,17 @@ import { type DateFilterConfigValidationResult } from "./_staging/dateFilterConf
 // TODO consider adding FilterContextItem to this union so that user can use either sdk-model or FilterContextItem variants of the filters
 /**
  * Supported dashboard filter type.
+ *
  * @public
  */
-export type IDashboardFilter =
-    | IAbsoluteDateFilter
-    | IRelativeDateFilter
-    | IPositiveAttributeFilter
-    | INegativeAttributeFilter
-    | IArbitraryAttributeFilter
-    | IMatchAttributeFilter
-    | IMeasureValueFilter;
+export type IDashboardFilter = IDashboardFilterBase;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardFilter}.
  *
  * @alpha
  */
-export function isDashboardFilter(obj: unknown): obj is IDashboardFilter {
-    return isAttributeFilter(obj) || isDateFilter(obj) || isMeasureValueFilter(obj);
-}
+export const isDashboardFilter: typeof isDashboardFilterBase = isDashboardFilterBase;
 
 /**
  * Supported dashboard drill definitions.
@@ -434,3 +420,58 @@ export interface IAlertDialogContext {
      */
     alert?: IAutomationMetadataObject;
 }
+
+/**
+ * Decorates the data the automation dialogs' shared context carries.
+ *
+ * The dashboard mounts this component directly inside each connector-provided automations context
+ * — once in the alerting tree and once in the scheduled-email tree — so the value it re-provides
+ * is what everything in both trees reads: the default dialogs, wholesale replacements, exported
+ * blocks and hooks, and the dialogs' state seeding. A decorator must therefore be tree-agnostic.
+ * Read the current value with `useAutomationsContext()`, decorate the members to adjust, and
+ * re-provide via `AutomationsContextProvider`:
+ *
+ * @example
+ * ```tsx
+ * function GranularityDecorator({ children }: { children?: ReactNode }) {
+ *     const ctx = useAutomationsContext();
+ *     const decorated = useMemo(
+ *         () => ({
+ *             ...ctx,
+ *             dateFilterConfig: {
+ *                 ...ctx.dateFilterConfig,
+ *                 availableGranularities: ctx.dateFilterConfig.availableGranularities.filter(
+ *                     (g) => g !== "GDC.time.hour",
+ *                 ),
+ *                 getGranularitiesForTab: (tabId: string) =>
+ *                     ctx.dateFilterConfig
+ *                         .getGranularitiesForTab(tabId)
+ *                         .filter((g) => g !== "GDC.time.hour"),
+ *             },
+ *         }),
+ *         [ctx],
+ *     );
+ *     return <AutomationsContextProvider value={decorated}>{children}</AutomationsContextProvider>;
+ * }
+ * // <Dashboard AutomationsContextDecoratorComponent={GranularityDecorator} />
+ * ```
+ *
+ * To constrain the date-filter granularities the dialogs offer, override
+ * `dateFilterConfig.availableGranularities` and `dateFilterConfig.getGranularitiesForTab`
+ * together, as above — the date filter falls back per tab. Components that build this context
+ * themselves (the standalone connected dialogs, the widget-panel alerts list) are not decorated.
+ * Define the decorator outside render, or both dialog trees remount on every parent render.
+ * Both instances mount with the dashboard, not only while a dialog is open — a decorator that
+ * fetches data runs on every dashboard.
+ *
+ * The contract: change the data, not what it means — every member keeps its documented meaning.
+ * The dialog does not check the decorated value; when you override a member, everything that
+ * reads it is your responsibility. Spread the value you read (`{ ...ctx, member }`) so the other
+ * members pass through. Wrap functions instead of replacing them. Do not touch members marked as
+ * internal machinery.
+ *
+ * @alpha
+ */
+export type CustomAutomationsContextDecoratorComponent = ComponentType<{
+    children?: ReactNode;
+}>;

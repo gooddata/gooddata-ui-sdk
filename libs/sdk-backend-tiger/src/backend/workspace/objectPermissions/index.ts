@@ -93,7 +93,7 @@ export class TigerWorkspaceObjectPermissionsService implements IWorkspaceObjectP
     }
 
     public async getAvailableAssignees(
-        _target: IObjectPermissionsObject,
+        _target?: IObjectPermissionsObject,
     ): Promise<IAvailableAccessGrantee[]> {
         // Composed from workspace-wide user/group lists, filtered to exclude the
         // current user. Admins aren't filtered: the listing endpoints don't

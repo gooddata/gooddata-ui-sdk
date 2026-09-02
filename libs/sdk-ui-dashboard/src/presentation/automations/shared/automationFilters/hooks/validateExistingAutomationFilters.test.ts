@@ -12,6 +12,7 @@ import {
     type IInsight,
     type IInsightWidget,
     dashboardFilterLocalIdentifier,
+    filterContextItemsToDashboardFiltersByWidget,
     idRef,
     isAllTimeDashboardDateFilter,
     newAllTimeDashboardDateFilter,
@@ -21,8 +22,6 @@ import {
     newRelativeDashboardDateFilter,
     newRelativeDateFilter,
 } from "@gooddata/sdk-model";
-
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../../../converters/filterConverters.js";
 
 import { validateExistingAutomationFilters } from "./useValidateExistingAutomationFilters.js";
 

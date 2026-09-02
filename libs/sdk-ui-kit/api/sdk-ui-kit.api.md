@@ -4630,24 +4630,15 @@ export interface IParameterControlButtonProps {
 }
 
 // @internal (undocumented)
-export interface IParameterControlProps {
-    // (undocumented)
-    ariaAttributes?: IDropdownBodyRenderProps["ariaAttributes"];
-    // (undocumented)
-    definition: IParameterDefinition;
-    // (undocumented)
-    inputId?: string;
-    // (undocumented)
+export type IParameterControlProps = {
     name: string;
-    // (undocumented)
-    onApply: (value: ParameterValue) => void;
-    // (undocumented)
-    onCancel: () => void;
-    // (undocumented)
-    resetValue?: ParameterValue;
-    // (undocumented)
+    definition: IParameterDefinition;
     value: ParameterValue;
-}
+    resetValue?: ParameterValue;
+    inputId?: string;
+    ariaAttributes?: IDropdownBodyRenderProps["ariaAttributes"];
+    onClose: () => void;
+} & ParameterSubmitModeProps<ParameterValue>;
 
 // @internal (undocumented)
 export interface IParameterPickerProps {
@@ -8789,13 +8780,22 @@ export type PageOrientation = "PORTRAIT" | "LANDSCAPE";
 export type PageSize = "A3" | "A4" | "LETTER";
 
 // @internal
-export function ParameterControl(input: IParameterControlProps): JSX.Element;
+export function ParameterControl(props: IParameterControlProps): JSX.Element;
 
 // @internal (undocumented)
 export function ParameterControlButton(input: IParameterControlButtonProps): JSX.Element;
 
 // @internal
 export function ParameterPicker(input: IParameterPickerProps): JSX.Element;
+
+// @internal
+export type ParameterSubmitModeProps<TValue> = {
+    mode: "commit";
+    onCommit: (value: TValue) => void;
+} | {
+    mode: "staged";
+    onStage: (value: TValue) => void;
+};
 
 // @internal
 export function permissionLevelMessage(level: PermissionMenuLevel): MessageDescriptor;

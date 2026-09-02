@@ -7,10 +7,21 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/Dashboard
 import { type IScheduledEmailManagementDialogProps } from "./types.js";
 
 /**
+ * Resolves the management dialog component from DashboardComponentsContext and mounts it inside
+ * the resolved context decorator — so a decorated management context is what the dialog (default
+ * or replacement) reads.
+ *
  * @internal
  */
 export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementDialogProps): ReactElement {
-    const { ScheduledEmailManagementDialogComponent } = useDashboardComponentsContext();
+    const {
+        ScheduledEmailManagementDialogComponent,
+        ScheduledEmailManagementDialogContextDecoratorComponent,
+    } = useDashboardComponentsContext();
 
-    return <ScheduledEmailManagementDialogComponent {...props} />;
+    return (
+        <ScheduledEmailManagementDialogContextDecoratorComponent>
+            <ScheduledEmailManagementDialogComponent {...props} />
+        </ScheduledEmailManagementDialogContextDecoratorComponent>
+    );
 }

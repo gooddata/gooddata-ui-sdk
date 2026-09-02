@@ -50,6 +50,7 @@ import {
     WIDGET_DROPZONE_SIZE_INFO_DEFAULT,
     addIntersectionFiltersToInsight,
     fluidLayoutDescriptor,
+    getEffectiveConditionalFormatting,
     isDrillDownDefinition,
     isEmptyAfm,
     isSizeInfo,
@@ -144,6 +145,7 @@ export {
     isSizeInfo,
     isSizeInfoDefault,
     isVisualizationDefaultSizeInfo,
+    getEffectiveConditionalFormatting,
 };
 
 // below functions are exported only for sdk-ui-dashboard use to avoid exporting the whole FullVisualizationCatalog
@@ -338,6 +340,16 @@ export {
 
 export { ObjectShareDialog, type IObjectShareDialogProps } from "./share/ObjectShareDialog.js";
 export { sortShareableLabels } from "./share/objectShareController.helpers.js";
+export type {
+    // Members of IObjectShareDraft; exported because the type needs them to be described.
+    GranteeEdit,
+    IGranteeIdentityFacts,
+    IObjectShareDraft,
+    IObjectShareGrantee,
+    IRuleEdit,
+    ObjectSharePermissionLevel,
+} from "./share/objectShareController.types.js";
+export { useApplyObjectPermissions } from "./share/useApplyObjectPermissions.js";
 export { accessListToSummary } from "./share/accessSummary.js";
 export { isPermissionsNotAvailable } from "./share/accessErrors.js";
 export type { IObjectAccessSummary, IObjectShareLabel } from "./share/types.js";

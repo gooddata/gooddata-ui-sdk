@@ -29,8 +29,6 @@ import {
 } from "./accessSummary.js";
 import { objectShareMessages } from "./messages.js";
 import {
-    type GranteeEdit,
-    type IRuleEdit,
     assigneeIdentityFacts,
     assigneeMatchesQuery,
     granteeId,
@@ -41,8 +39,11 @@ import {
     withDirectLevel,
 } from "./objectShareController.helpers.js";
 import type {
+    GranteeEdit,
     IObjectShareControllerState,
+    IObjectShareDraft,
     IObjectShareGrantee,
+    IRuleEdit,
     ISelfIdentity,
     ObjectSharePermissionLevel,
 } from "./objectShareController.types.js";
@@ -148,6 +149,19 @@ export interface IAccessList {
     settleRuleEdit: () => void;
     /** Revert the rule edit after a failed write: the superseded committed edit, or the fetch. */
     failRuleEdit: () => void;
+    /** The overlay as a draft. Only meaningful in draft mode. */
+    draft: IObjectShareDraft;
+}
+
+/**
+ * Draft-mode inputs. See {@link IUseObjectShareOptions} for what each one means.
+ *
+ * @internal
+ */
+export interface IAccessListDraftOptions {
+    draft?: boolean;
+    initialDraft?: IObjectShareDraft;
+    initialDraftGeneralAccess?: GeneralAccessValue;
 }
 
 /**
@@ -167,14 +181,24 @@ export interface IAccessList {
  *
  * @internal
  */
-export function useAccessList(target: IObjectPermissionsObject | undefined): IAccessList {
+export function useAccessList(
+    target: IObjectPermissionsObject | undefined,
+    draftOptions: IAccessListDraftOptions = {},
+): IAccessList {
+    const { draft = false, initialDraft, initialDraftGeneralAccess = "RESTRICTED" } = draftOptions;
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
     const toast = useToastMessage();
 
     // The only local state: the transient edit overlay. Everything else is derived.
-    const [granteeEdits, setGranteeEdits] = useState<Record<string, GranteeEdit>>({});
-    const [ruleEdit, setRuleEditState] = useState<IRuleEdit | undefined>(undefined);
+    // Seeded in draft mode only, so reopening carries on. A live session derives from the
+    // fetched list; overlaying a draft on it would show rows the object does not have.
+    const [granteeEdits, setGranteeEdits] = useState<Record<string, GranteeEdit>>(() =>
+        draft ? (initialDraft?.granteeEdits ?? {}) : {},
+    );
+    const [ruleEdit, setRuleEditState] = useState<IRuleEdit | undefined>(() =>
+        draft ? initialDraft?.ruleEdit : undefined,
+    );
 
     // Serialized so an inline idRef(...) — a new object each render — doesn't refetch forever.
     const fetchKey = target ? `${workspace}:${target.kind}:${serializeObjRef(target.ref)}` : undefined;
@@ -254,8 +278,11 @@ export function useAccessList(target: IObjectPermissionsObject | undefined): IAc
         [base, granteeEdits, selfId, selfIdentity],
     );
 
+    // A draft has no list to derive from, so the consumer says where it starts. Untouched
+    // leaves `ruleEdit` undefined, so nothing is sent.
     const generalAccess: GeneralAccessValue =
-        ruleEdit?.generalAccess ?? deriveGeneralAccess(fetchedList?.grants ?? []);
+        ruleEdit?.generalAccess ??
+        (draft ? initialDraftGeneralAccess : deriveGeneralAccess(fetchedList?.grants ?? []));
     const workspaceLevel = ruleEdit?.level ?? deriveWorkspacePermissionLevel(fetchedList?.grants ?? []);
     const workspaceLevelSaving = ruleEdit?.pending ?? false;
     const workspaceInheritedLevel = useMemo(
@@ -279,6 +306,11 @@ export function useAccessList(target: IObjectPermissionsObject | undefined): IAc
 
     // "success" waits for `hasList` so consumers never see success with nothing to show.
     const deriveStatus = (): IObjectShareControllerState["status"] => {
+        if (draft) {
+            // Nothing to fetch: a non-existent object holds no grants. Waits only for the
+            // profile, and a failed one still settles — `loading` would never end.
+            return currentUserStatus === "loading" || currentUserStatus === "pending" ? "loading" : "success";
+        }
         if (!target) {
             return "idle";
         }
@@ -298,6 +330,10 @@ export function useAccessList(target: IObjectPermissionsObject | undefined): IAc
     // The caller owns the optimistic overlay write and its rollback; there is no refetch.
     const commit = useCallback(
         async (mutate: IGranularAccessGrantee[], successMessage: { id: string }): Promise<boolean> => {
+            if (draft) {
+                // No write, by design. Success so the caller settles its overlay entry.
+                return true;
+            }
             if (!target) {
                 return false;
             }
@@ -318,7 +354,7 @@ export function useAccessList(target: IObjectPermissionsObject | undefined): IAc
                 return false;
             }
         },
-        [backend, workspace, target, toast],
+        [backend, workspace, target, toast, draft],
     );
 
     // Ids the picker excludes as already-granted — INCLUDING rows whose removal is
@@ -331,7 +367,8 @@ export function useAccessList(target: IObjectPermissionsObject | undefined): IAc
     // Each option carries its backend `ref` so the add flow grants against the exact ref.
     const loadOptions = useCallback(
         async (search: string): Promise<IUiGranteeAsyncOptions> => {
-            if (!target) {
+            // Candidates are the workspace's, so a draft needs no target to list them.
+            if (!target && !draft) {
                 return { groups: [], users: [] };
             }
             const assignees = await backend
@@ -362,7 +399,7 @@ export function useAccessList(target: IObjectPermissionsObject | undefined): IAc
             }
             return { users, groups };
         },
-        [backend, workspace, target, excludedIds],
+        [backend, workspace, target, excludedIds, draft],
     );
 
     const applyGranteeAdd = useCallback((grantee: IObjectShareGrantee) => {
@@ -466,7 +503,14 @@ export function useAccessList(target: IObjectPermissionsObject | undefined): IAc
         setRuleEditState((current) => current?.settled);
     }, []);
 
+    // Memoized so the identity changes only when the edits do.
+    const draftValue = useMemo<IObjectShareDraft>(
+        () => ({ granteeEdits, ruleEdit }),
+        [granteeEdits, ruleEdit],
+    );
+
     return {
+        draft: draftValue,
         hasList,
         grantees,
         seededWithoutSelfGrant,

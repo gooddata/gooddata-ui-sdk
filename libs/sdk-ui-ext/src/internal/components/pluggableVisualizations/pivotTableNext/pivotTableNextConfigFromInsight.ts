@@ -1,11 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import {
-    type IInsightDefinition,
-    type ISettings,
-    insightProperties,
-    insightVisualizationUrl,
-} from "@gooddata/sdk-model";
+import { type IInsightDefinition, insightProperties } from "@gooddata/sdk-model";
 import {
     type IColumnSizing,
     type PivotTableNextConfig,
@@ -15,10 +10,9 @@ import {
 import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
 import { type PropMeta, type PropWithMeta } from "../../../utils/embeddingCodeGenerator/types.js";
 import {
-    getConditionalFormattingFromProperties,
+    getEffectiveConditionalFormatting,
     getPaginationFromProperties,
     getTextWrappingFromProperties,
-    isConditionalFormattingEnabled,
 } from "../../../utils/propertiesHelper.js";
 import { removeUseless } from "../../../utils/removeUseless.js";
 import { createPivotTableNextConfig } from "../pivotTableNext/PluggablePivotTableNext.js";
@@ -52,14 +46,6 @@ export function pivotTableNextConfigPropMeta(config: unknown): PropMeta {
     );
 }
 
-export function isPivotTableNext(
-    insightDefinition: IInsightDefinition,
-    settings: ISettings | undefined,
-): boolean {
-    const uri = insightVisualizationUrl(insightDefinition);
-    return !!settings?.enableNewPivotTable && uri === "local:table";
-}
-
 export function pivotTableNextConfigFromInsight(
     insight: IInsightDefinition,
     ctx: IEmbeddingCodeContext | undefined,
@@ -79,9 +65,7 @@ export function pivotTableNextConfigFromInsight(
         grandTotalsPosition: controls?.grandTotalsPosition,
         pagination: getPaginationFromProperties(properties),
         textWrapping: getTextWrappingFromProperties(properties),
-        conditionalFormatting: isConditionalFormattingEnabled(ctx?.settings)
-            ? getConditionalFormattingFromProperties(properties)
-            : undefined,
+        conditionalFormatting: getEffectiveConditionalFormatting(insight, ctx?.settings),
         columnSizing: {
             columnWidths: controls?.columnWidths,
             defaultWidth: "autoresizeAll",

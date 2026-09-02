@@ -15,7 +15,7 @@ import { DateFilterGranularity } from '@gooddata/sdk-model';
 import { Dispatch } from 'react';
 import { EmbedType } from '@gooddata/sdk-ui-kit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
-import type { GeneralAccessValue } from '@gooddata/sdk-ui-kit';
+import { GeneralAccessValue } from '@gooddata/sdk-ui-kit';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAlertComparisonOperator } from '@gooddata/sdk-model';
 import { IAlertRelativeArithmeticOperator } from '@gooddata/sdk-model';
@@ -25,6 +25,7 @@ import { IAutomationMetadataObject } from '@gooddata/sdk-model';
 import { ICatalogAttributeHierarchy } from '@gooddata/sdk-model';
 import { IChartConfig } from '@gooddata/sdk-ui-charts';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IConditionalFormatting } from '@gooddata/sdk-model';
 import { IConditionalFormattingRule } from '@gooddata/sdk-ui-pivot/next';
 import { IDashboardUrlBuilder } from '@gooddata/sdk-ui';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
@@ -44,6 +45,7 @@ import { IntlShape } from 'react-intl';
 import type { IObjectAccessList } from '@gooddata/sdk-model';
 import type { IObjectPermissionsObject } from '@gooddata/sdk-backend-spi';
 import { IPivotTableConfig } from '@gooddata/sdk-ui-pivot';
+import { ISemanticConditionalFormatting } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ITab } from '@gooddata/sdk-ui-kit';
@@ -282,6 +284,9 @@ export const fluidLayoutDescriptor: FluidLayoutDescriptor;
 // @internal (undocumented)
 export const getComparisonOperatorTitle: (operator: IAlertComparisonOperator, intl: IntlShape) => string;
 
+// @internal
+export function getEffectiveConditionalFormatting(insight: IInsightDefinition, settings: ISettings | undefined, configOverride?: IConditionalFormatting): IConditionalFormatting | undefined;
+
 // @internal (undocumented)
 export function getInsightSizeInfo(insight: IInsightDefinition, settings: ISettings): IVisualizationSizeInfo;
 
@@ -293,6 +298,34 @@ export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: ID
 
 // @internal (undocumented)
 export const getRelativeOperatorTitle: (operator: IAlertRelativeOperator, art: IAlertRelativeArithmeticOperator, intl: IntlShape) => string;
+
+// @internal
+export type GranteeEdit = {
+    kind: "level";
+    level: ObjectSharePermissionLevel;
+    pending: boolean;
+    settled?: GranteeEdit;
+} | {
+    kind: "added";
+    grantee: IObjectShareGrantee;
+    pending: boolean;
+    settled?: GranteeEdit;
+} | {
+    kind: "removed";
+    pending: boolean;
+    settled?: GranteeEdit;
+}
+/**
+* Pending marker only — the row renders exactly as it stands. For a write that
+* locks the row without changing its access (a label-scope edit), so nothing has
+* to invent a level: reusing the `level` overlay would record the DISPLAYED level
+* as the direct grant, and that level is the effective one.
+*/
+| {
+    kind: "locked";
+    pending: boolean;
+    settled?: GranteeEdit;
+};
 
 // @internal (undocumented)
 export interface IAddDataSourceToSubjectsProps extends IWithTelemetryProps {
@@ -466,11 +499,13 @@ export interface IConditionalFormattingDialogProps {
     isNew: boolean;
     // (undocumented)
     onClose: () => void;
+    onDelete?: () => void;
+    onRevertToDefault?: (target: ConditionalFormattingTarget, ruleId: string) => void;
     // (undocumented)
     onSave: (rule: IConditionalFormattingRule) => void;
-    readOnly?: boolean;
     // (undocumented)
     rule: IConditionalFormattingRule;
+    semanticByTarget?: Record<string, ISemanticConditionalFormatting>;
     separators?: ISeparators;
     // (undocumented)
     targetOptions: ITargetOption[];
@@ -602,6 +637,12 @@ export interface IGrantedDataSource {
     permission: DataSourcePermission;
     // (undocumented)
     title: string;
+}
+
+// @internal
+export interface IGranteeIdentityFacts {
+    email?: string;
+    name?: string;
 }
 
 // @internal (undocumented)
@@ -948,14 +989,41 @@ export interface IObjectAccessSummary {
 
 // @internal
 export interface IObjectShareDialogProps {
+    draft?: boolean;
+    initialDraft?: IObjectShareDraft;
+    initialDraftGeneralAccess?: GeneralAccessValue;
     isOpen: boolean;
     labels?: IObjectShareLabel[];
     labelsError?: boolean;
     labelsLoading?: boolean;
     objectTitle: string;
     onClose: () => void;
+    onDraftChange?: (draft: IObjectShareDraft) => void;
     onSummaryChange?: (summary: IObjectAccessSummary) => void;
     target: IObjectPermissionsObject | undefined;
+}
+
+// @internal
+export interface IObjectShareDraft {
+    // (undocumented)
+    granteeEdits: Readonly<Record<string, GranteeEdit>>;
+    // (undocumented)
+    ruleEdit: IRuleEdit | undefined;
+}
+
+// @internal
+export interface IObjectShareGrantee extends IGranteeIdentityFacts {
+    directLevel?: ObjectSharePermissionLevel;
+    effectivePermission?: ObjectSharePermissionLevel;
+    // (undocumented)
+    granteeRef: ObjRef;
+    id: string;
+    inheritedLevel?: ObjectSharePermissionLevel;
+    isSelf?: boolean;
+    // (undocumented)
+    kind: "user" | "group";
+    level: ObjectSharePermissionLevel;
+    pending?: "saving" | "removing";
 }
 
 // @internal
@@ -965,6 +1033,17 @@ export interface IObjectShareLabel {
     isPrimary: boolean;
     ref: ObjRef;
     title: string;
+}
+
+// @internal
+export interface IRuleEdit {
+    // (undocumented)
+    generalAccess: GeneralAccessValue;
+    // (undocumented)
+    level: ObjectSharePermissionLevel;
+    // (undocumented)
+    pending: boolean;
+    settled?: IRuleEdit;
 }
 
 // @beta
@@ -1190,6 +1269,9 @@ export function NotificationsPanel(props: INotificationsPanelProps): JSX.Element
 // @internal
 export function ObjectShareDialog(props: IObjectShareDialogProps): JSX.Element | null;
 
+// @internal
+export type ObjectSharePermissionLevel = AccessGranularPermission;
+
 // @alpha (undocumented)
 export const PluggableVisualizationErrorCodes: {
     INVALID_BUCKETS: string;
@@ -1227,6 +1309,9 @@ export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted
 
 // @internal (undocumented)
 export type TrackEventCallback = (event: TelemetryEvent) => void;
+
+// @internal
+export function useApplyObjectPermissions(): (target: IObjectPermissionsObject, draft: IObjectShareDraft) => Promise<boolean>;
 
 // @internal
 export function useCfDateFilterOptions(backend: IAnalyticalBackend | undefined, workspace: string | undefined,

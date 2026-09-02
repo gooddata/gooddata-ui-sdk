@@ -86,6 +86,7 @@ export function CustomHyperlinkComponent({ href, text, settings }: CustomHyperli
             itemUrl: parsedRef.itemUrl,
             newTab: e.metaKey,
             preventDefault: e.preventDefault.bind(e),
+            action: "open",
         });
     };
 

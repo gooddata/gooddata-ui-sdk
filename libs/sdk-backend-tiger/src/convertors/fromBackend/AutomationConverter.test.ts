@@ -123,33 +123,27 @@ describe("convertAlert (fromBackend) — parameters", () => {
             baseAlert([{ parameter: { identifier: { id: "topN", type: "parameter" } }, value: "5" }]),
         );
 
-        expect(result?.execution.parameters).toEqual([{ ref: idRef("topN", "parameter"), value: 5 }]);
+        expect(result?.execution.parameters).toEqual([{ ref: idRef("topN", "parameter"), value: "5" }]);
     });
 
     it("leaves parameters undefined when the backend sends none", () => {
         expect(convertAlert(baseAlert())?.execution.parameters).toBeUndefined();
     });
 
-    it("passes non-numeric string values through unchanged, keeping the rest as numbers", () => {
+    it("passes every wire value through verbatim, numeric-looking and empty ones included", () => {
         const result = convertAlert(
             baseAlert([
                 { parameter: { identifier: { id: "scenario", type: "parameter" } }, value: "Budget" },
-                { parameter: { identifier: { id: "topN", type: "parameter" } }, value: "5" },
+                { parameter: { identifier: { id: "topN", type: "parameter" } }, value: "007" },
+                { parameter: { identifier: { id: "note", type: "parameter" } }, value: "" },
             ]),
         );
 
         expect(result?.execution.parameters).toEqual([
             { ref: idRef("scenario", "parameter"), value: "Budget" },
-            { ref: idRef("topN", "parameter"), value: 5 },
+            { ref: idRef("topN", "parameter"), value: "007" },
+            { ref: idRef("note", "parameter"), value: "" },
         ]);
-    });
-
-    it("decodes a numeric string value as a number", () => {
-        const result = convertAlert(
-            baseAlert([{ parameter: { identifier: { id: "topN", type: "parameter" } }, value: "8" }]),
-        );
-
-        expect(result?.execution.parameters).toEqual([{ ref: idRef("topN", "parameter"), value: 8 }]);
     });
 });
 

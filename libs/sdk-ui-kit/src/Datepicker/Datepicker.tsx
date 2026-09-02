@@ -3,6 +3,7 @@
 import {
     type ChangeEvent,
     type FocusEvent,
+    type NamedExoticComponent,
     type KeyboardEvent as ReactKeyboardEvent,
     type MouseEvent as ReactMouseEvent,
     memo,
@@ -454,7 +455,9 @@ WrappedDatePicker.displayName = "WrappedDatePicker";
 /**
  * @internal
  */
-export const Datepicker = memo(function Datepicker(props: IDatePickerProps) {
+export const Datepicker: NamedExoticComponent<IDatePickerProps> = memo(function Datepicker(
+    props: IDatePickerProps,
+) {
     return (
         <IntlWrapper locale={props.locale}>
             <WrappedDatePicker {...props} />

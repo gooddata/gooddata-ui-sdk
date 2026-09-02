@@ -608,6 +608,9 @@ function recordedWorkspace(
                 createReport: (report) => Promise.resolve({ ...report, ref: idRef("recordedReport") }),
                 updateReport: (report) => Promise.resolve(report),
                 deleteReport: () => Promise.resolve(),
+                getBrandKit: () => Promise.resolve(undefined),
+                setBrandKit: () => Promise.resolve(),
+                deleteBrandKit: () => Promise.resolve(),
             };
         },
     };

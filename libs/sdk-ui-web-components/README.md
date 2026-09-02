@@ -285,9 +285,7 @@ The `filters` and `title` properties are the preferred way to update insight ren
     };
     insightEl.filters = [
         {
-            positiveAttributeFilter: {
-                /* ... */
-            },
+            positiveAttributeFilter: {/* ... */},
         },
     ];
     insightEl.title = "My custom title";

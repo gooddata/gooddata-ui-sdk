@@ -10,13 +10,10 @@ import {
     type IFilterContext,
     type IWidgetDefinition,
     type Identifier,
-    idRef,
-} from "@gooddata/sdk-model";
-
-import {
     filterContextToDashboardFiltersByDateDataSet,
     filterContextToDashboardFiltersByWidget,
-} from "./filterConverters.js";
+    idRef,
+} from "@gooddata/sdk-model";
 
 describe("filterConverters tests", () => {
     type Scenario = [string, IFilterContext | undefined];

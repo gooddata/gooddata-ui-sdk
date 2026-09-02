@@ -3065,6 +3065,8 @@
                                     "workspaceDataFilterSetting",
                                     "filterView",
                                     "reportPageLayout",
+                                    "reportTemplate",
+                                    "report",
                                     "workspaceExportTemplate",
                                     "workspaceTheme",
                                     "workspaceColorPalette",

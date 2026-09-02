@@ -50,7 +50,7 @@ describe("PivotTableNext embedding code", () => {
         const insight = newTableInsight({ conditionalFormatting });
 
         const code = descriptor.getEmbeddingCode(insight, {
-            context: newContext({ enableConditionalFormatting: true }),
+            context: newContext({ enableConditionalFormatting: true, enableNewPivotTable: true }),
         });
 
         expect(code).toContain("conditionalFormatting");

@@ -222,14 +222,65 @@ describe("DashboardParameterFilter", () => {
         );
     });
 
-    it("dispatches the working value instead of the runtime value on Apply under apply-all-at-once", () => {
+    it("offers Close instead of Cancel and Apply under apply-all-at-once", () => {
+        mockIsApplyAllAtOnce = true;
+        renderFilter(activeStringParameter);
+        openDropdown("Scenario is Budget");
+        expect(screen.queryByTestId("parameter-control-dropdown-apply")).not.toBeInTheDocument();
+        expect(screen.queryByTestId("parameter-control-dropdown-cancel")).not.toBeInTheDocument();
+        expect(screen.getByTestId("parameter-control-dropdown-close")).toBeInTheDocument();
+    });
+
+    it("stages the typed string as the working value while typing under apply-all-at-once", () => {
         mockIsApplyAllAtOnce = true;
         renderFilter(activeStringParameter);
         openDropdown("Scenario is Budget");
         fireEvent.change(getDropdownInput(), { target: { value: "Forecast" } });
-        fireEvent.click(screen.getByTestId("parameter-control-dropdown-apply"));
         expect(mockDispatch).toHaveBeenCalledWith(
             tabsActions.setParameterWorkingValue({ ref: scenarioRef, value: "Forecast" }),
+        );
+        expect(getDropdownInput()).toBeInTheDocument();
+    });
+
+    it("stages the typed number as the working value while typing under apply-all-at-once", () => {
+        mockIsApplyAllAtOnce = true;
+        renderFilter(activeNumberParameter);
+        openDropdown("Top N is 250");
+        fireEvent.change(getDropdownInput(), { target: { value: "42" } });
+        expect(mockDispatch).toHaveBeenCalledWith(
+            tabsActions.setParameterWorkingValue({ ref: paramRef, value: 42 }),
+        );
+    });
+
+    it("stages nothing for an out-of-range number under apply-all-at-once", () => {
+        mockIsApplyAllAtOnce = true;
+        renderFilter(activeNumberParameter);
+        openDropdown("Top N is 250");
+        fireEvent.change(getDropdownInput(), { target: { value: "999" } });
+        expect(screen.getByTestId("parameter-control-dropdown-error")).toBeInTheDocument();
+        expect(mockDispatch).not.toHaveBeenCalled();
+    });
+
+    it("keeps the last staged value when the dropdown closes under apply-all-at-once", () => {
+        mockIsApplyAllAtOnce = true;
+        renderFilter(activeStringParameter);
+        openDropdown("Scenario is Budget");
+        fireEvent.change(getDropdownInput(), { target: { value: "Forecast" } });
+        fireEvent.click(screen.getByTestId("parameter-control-dropdown-close"));
+        expect(mockDispatch.mock.calls).toEqual([
+            [tabsActions.setParameterWorkingValue({ ref: scenarioRef, value: "Forecast" })],
+        ]);
+    });
+
+    it("dispatches the clicked allowed value as the working value under apply-all-at-once", async () => {
+        mockIsApplyAllAtOnce = true;
+        renderFilter(activeEnumParameter);
+        openDropdown("Scenario is Budget Plan");
+
+        fireEvent.click(await screen.findByText("Forecast"));
+
+        expect(mockDispatch).toHaveBeenCalledWith(
+            tabsActions.setParameterWorkingValue({ ref: enumRef, value: "forecast" }),
         );
     });
 

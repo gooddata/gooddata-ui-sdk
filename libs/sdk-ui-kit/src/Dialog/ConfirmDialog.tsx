@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { memo } from "react";
+import { type NamedExoticComponent, memo } from "react";
 
 import { Overlay } from "../Overlay/Overlay.js";
 
@@ -10,7 +10,7 @@ import { type IConfirmDialogBaseProps } from "./typings.js";
 /**
  * @internal
  */
-export const ConfirmDialog = memo(function ConfirmDialog({
+export const ConfirmDialog: NamedExoticComponent<IConfirmDialogBaseProps> = memo(function ConfirmDialog({
     containerClassName,
     ...dialogProps
 }: IConfirmDialogBaseProps) {

@@ -3572,6 +3572,23 @@ export interface VisualisationConfig {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -4030,6 +4047,23 @@ export interface VisualisationConfig1 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -4409,6 +4443,23 @@ export interface VisualisationConfig2 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -4788,6 +4839,23 @@ export interface VisualisationConfig3 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -5167,6 +5235,23 @@ export interface VisualisationConfig4 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -5546,6 +5631,23 @@ export interface VisualisationConfig5 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -5925,6 +6027,23 @@ export interface VisualisationConfig6 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -6300,6 +6419,23 @@ export interface VisualisationConfig7 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -6675,6 +6811,23 @@ export interface VisualisationConfig8 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -7050,6 +7203,23 @@ export interface VisualisationConfig9 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -7425,6 +7595,23 @@ export interface VisualisationConfig10 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -7800,6 +7987,23 @@ export interface VisualisationConfig11 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -8183,6 +8387,23 @@ export interface VisualisationConfig12 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -8558,6 +8779,23 @@ export interface VisualisationConfig13 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -8933,6 +9171,23 @@ export interface VisualisationConfig14 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -9310,6 +9565,23 @@ export interface VisualisationConfig15 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -9687,6 +9959,23 @@ export interface VisualisationConfig16 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -10062,6 +10351,23 @@ export interface VisualisationConfig17 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -10437,6 +10743,23 @@ export interface VisualisationConfig18 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -10816,6 +11139,23 @@ export interface VisualisationConfig19 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -11168,6 +11508,23 @@ export interface VisualisationConfig20 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -11547,6 +11904,23 @@ export interface VisualisationConfig21 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -11930,6 +12304,23 @@ export interface VisualisationConfig22 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }
@@ -12305,6 +12696,23 @@ export interface VisualisationConfig23 {
                 };
             }[];
         }[];
+        /**
+         * Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).
+         */
+        suppressed_targets?: (
+            | {
+                  /**
+                   * Local identifier of the targeted measure.
+                   */
+                  measure: string;
+              }
+            | {
+                  /**
+                   * Local identifier of the targeted attribute.
+                   */
+                  attribute: string;
+              }
+        )[];
     };
     [k: string]: unknown;
 }

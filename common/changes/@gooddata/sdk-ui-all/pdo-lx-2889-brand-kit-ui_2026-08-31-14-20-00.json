@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-model, sdk-backend-spi: Added @alpha workspace brand kit for reports (IReportsBrandKit: colors, typography incl. hosted font faces, externally hosted assets) with sanitizeReportsBrandKit for its free-form stored content, brand-kit read/write on IWorkspaceReportsService (getBrandKit/setBrandKit/deleteBrandKit; tiger persists to localStorage until the reportsBrandKit setting is available), and the logoInverse built-in report variable plus reserved image_ variables resolving brand kit images.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

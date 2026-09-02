@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type OptionValues } from "commander";
 
@@ -49,5 +49,5 @@ export class InputValidationError extends Error {
  * Type guard testing whether object is a type of {@link InputValidationError}.
  */
 export function isInputValidationError(obj: Error): obj is InputValidationError {
-    return obj && (obj as InputValidationError).type === "IVE";
+    return (obj as InputValidationError)?.type === "IVE";
 }

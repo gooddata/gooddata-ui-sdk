@@ -15,15 +15,18 @@ import {
     type DashboardModelCustomizationFns,
     type WidgetsOverlayFn,
 } from "../../model/types/commonTypes.js";
+import { type CustomAutomationsContextDecoratorComponent } from "../../types.js";
 import {
     type CustomAlertingDialogComponent,
     type CustomAlertingDialogContextDecoratorComponent,
     type CustomAlertingManagementDialogComponent,
+    type CustomAlertingManagementDialogContextDecoratorComponent,
 } from "../automations/alerting/types.js";
 import {
     type CustomScheduledEmailDialogComponent,
     type CustomScheduledEmailDialogContextDecoratorComponent,
     type CustomScheduledEmailManagementDialogComponent,
+    type CustomScheduledEmailManagementDialogContextDecoratorComponent,
 } from "../automations/scheduledEmail/types.js";
 import { type InsightComponentSetProvider } from "../componentDefinition/types.js";
 import {
@@ -314,11 +317,43 @@ export interface IDashboardCustomComponentProps {
     ScheduledEmailManagementDialogComponent?: CustomScheduledEmailManagementDialogComponent;
 
     /**
+     * Specify component to decorate the data the scheduled email management dialog reads.
+     *
+     * Rendered between the connector-provided management dialog context and the resolved
+     * management dialog component; see `CustomScheduledEmailManagementDialogContextDecoratorComponent`
+     * for the contract and an example.
+     *
+     * @alpha
+     */
+    ScheduledEmailManagementDialogContextDecoratorComponent?: CustomScheduledEmailManagementDialogContextDecoratorComponent;
+
+    /**
      * Specify component to use for rendering the alerting management dialog.
      *
      * @alpha
      */
     AlertingManagementDialogComponent?: CustomAlertingManagementDialogComponent;
+
+    /**
+     * Specify component to decorate the data the alerting management dialog reads.
+     *
+     * Rendered between the connector-provided management dialog context and the resolved
+     * management dialog component; see `CustomAlertingManagementDialogContextDecoratorComponent`
+     * for the contract and an example.
+     *
+     * @alpha
+     */
+    AlertingManagementDialogContextDecoratorComponent?: CustomAlertingManagementDialogContextDecoratorComponent;
+
+    /**
+     * Specify component to decorate the data the automation dialogs' shared context carries.
+     *
+     * Rendered once per dialog tree, directly inside each connector-provided automations context;
+     * see `CustomAutomationsContextDecoratorComponent` for the contract and an example.
+     *
+     * @alpha
+     */
+    AutomationsContextDecoratorComponent?: CustomAutomationsContextDecoratorComponent;
 
     /**
      * Specify component to use for rendering the alerting dialog.

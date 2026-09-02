@@ -9,7 +9,7 @@ import {
     isIdentifierRef,
 } from "@gooddata/sdk-model";
 
-import type { IChatConversationLocalContent } from "../model.js";
+import type { IChatConversationMultipartLocalPart } from "../model.js";
 
 /**
  * A renderable what-if scenario with optional execution config overrides.
@@ -96,8 +96,10 @@ export function mapVisualizationWhatIfToScenarios(
  * @returns Array of renderable scenarios, or undefined if the file is not found or invalid.
  * @internal
  */
-export function loadWhatIfScenarios(content: IChatConversationLocalContent): IWhatIfDefinition | undefined {
-    const whatIf = content.parts?.find((p) => p.type === "whatIf");
+export function loadWhatIfScenarios(
+    parts?: IChatConversationMultipartLocalPart[],
+): IWhatIfDefinition | undefined {
+    const whatIf = parts?.find((p) => p.type === "whatIf");
 
     //No what if
     if (!whatIf || whatIf.whatIf.scenarios.length === 0) {
@@ -105,7 +107,7 @@ export function loadWhatIfScenarios(content: IChatConversationLocalContent): IWh
     }
 
     // Search for visualizations
-    const visualisation = content.parts?.find((p) => p.type === "visualization");
+    const visualisation = parts?.find((p) => p.type === "visualization");
     if (!visualisation?.visualization) {
         return undefined;
     }

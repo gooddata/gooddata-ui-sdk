@@ -1,6 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { type ReactNode, memo, useMemo } from "react";
+import { type NamedExoticComponent, type ReactNode, memo, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -87,7 +87,9 @@ function ErrorOverlayCore({
 /**
  * @internal
  */
-export const ErrorOverlay = memo(function ErrorOverlay(props: IErrorOverlayProps) {
+export const ErrorOverlay: NamedExoticComponent<IErrorOverlayProps> = memo(function ErrorOverlay(
+    props: IErrorOverlayProps,
+) {
     return (
         <IntlWrapper locale={props.locale}>
             <ErrorOverlayCore {...props} />

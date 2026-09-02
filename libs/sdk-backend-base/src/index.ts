@@ -68,10 +68,7 @@ export { DecoratedWorkspaceExportTemplatesService } from "./decoratedBackend/wor
 
 export { DecoratedWorkspaceReportsService } from "./decoratedBackend/workspaceReports.js";
 
-export {
-    type IWorkspaceReportsPersistence,
-    InMemoryWorkspaceReportsService,
-} from "./dummyBackend/InMemoryWorkspaceReportsService.js";
+export { InMemoryWorkspaceReportsService } from "./dummyBackend/InMemoryWorkspaceReportsService.js";
 
 export { DecoratedWorkspaceSettingsService } from "./decoratedBackend/workspaceSettings.js";
 

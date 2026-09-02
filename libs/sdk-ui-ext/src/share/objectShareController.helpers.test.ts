@@ -5,10 +5,10 @@ import { describe, expect, it } from "vitest";
 import { type IObjectAccessList, idRef } from "@gooddata/sdk-model";
 
 import {
-    type GranteeEdit,
     assigneeIdentityFacts,
     buildLabelMutations,
     buildLabelRegrades,
+    draftToPermissions,
     effectivePermissionAbove,
     granteeDisplayPair,
     granteesFromAccessList,
@@ -19,7 +19,12 @@ import {
     sortShareableLabels,
     userIdentityFacts,
 } from "./objectShareController.helpers.js";
-import type { IObjectShareGrantee, ISelfIdentity } from "./objectShareController.types.js";
+import type {
+    GranteeEdit,
+    IObjectShareDraft,
+    IObjectShareGrantee,
+    ISelfIdentity,
+} from "./objectShareController.types.js";
 import type { IObjectShareLabel } from "./types.js";
 
 const REF = idRef("u1");
@@ -442,5 +447,82 @@ describe("buildLabelRegrades", () => {
             LABELS,
         );
         expect(revokes).toHaveLength(2);
+    });
+});
+
+function addedRow(id: string, level: "VIEW" | "SHARE" | "EDIT"): IObjectShareGrantee {
+    return { id, kind: "user", granteeRef: idRef(id), level, directLevel: level };
+}
+
+function draftOf(
+    granteeEdits: Record<string, GranteeEdit>,
+    ruleEdit?: IObjectShareDraft["ruleEdit"],
+): IObjectShareDraft {
+    return { granteeEdits, ruleEdit };
+}
+
+describe("draftToPermissions", () => {
+    it("grants each added row at the level it was added with", () => {
+        const permissions = draftToPermissions(
+            draftOf({
+                u1: { kind: "added", grantee: addedRow("u1", "EDIT"), pending: false },
+                u2: { kind: "added", grantee: addedRow("u2", "VIEW"), pending: false },
+            }),
+        );
+
+        expect(permissions).toHaveLength(2);
+        expect(permissions).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({ permissions: expect.arrayContaining(["EDIT"]) }),
+                expect.objectContaining({ permissions: ["VIEW"] }),
+            ]),
+        );
+    });
+
+    it("sends nothing for a removal — an object that does not exist granted nothing", () => {
+        expect(draftToPermissions(draftOf({ u1: { kind: "removed", pending: false } }))).toEqual([]);
+    });
+
+    it("sends nothing for a grantee added and then removed again", () => {
+        const edits: Record<string, GranteeEdit> = {
+            u1: {
+                kind: "removed",
+                pending: false,
+                settled: { kind: "added", grantee: addedRow("u1", "VIEW"), pending: false },
+            },
+        };
+
+        expect(draftToPermissions(draftOf(edits))).toEqual([]);
+    });
+
+    it("sends nothing for a row that is only locked", () => {
+        expect(draftToPermissions(draftOf({ u1: { kind: "locked", pending: false } }))).toEqual([]);
+    });
+
+    it("sends nothing when the rule was never touched", () => {
+        expect(draftToPermissions(draftOf({}))).toEqual([]);
+    });
+
+    it("grants the workspace rule at the level the edit carries", () => {
+        const permissions = draftToPermissions(
+            draftOf({}, { generalAccess: "WORKSPACE", level: "SHARE", pending: false }),
+        );
+
+        expect(permissions).toEqual([
+            expect.objectContaining({
+                type: "allWorkspaceUsers",
+                permissions: expect.arrayContaining(["SHARE"]),
+            }),
+        ]);
+    });
+
+    it("revokes the workspace rule when general access was set to restricted", () => {
+        const permissions = draftToPermissions(
+            draftOf({}, { generalAccess: "RESTRICTED", level: "VIEW", pending: false }),
+        );
+
+        expect(permissions).toEqual([
+            expect.objectContaining({ type: "allWorkspaceUsers", permissions: [] }),
+        ]);
     });
 });

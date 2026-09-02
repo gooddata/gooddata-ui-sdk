@@ -44,6 +44,16 @@ const AlertingManagementDialogContext = createContext<IAlertingManagementDialogC
     undefined,
 );
 
+/**
+ * Provides the alerting management dialog context.
+ *
+ * The dashboard's connector mounts the original value. Exported so a context-decorator
+ * component (`CustomAlertingManagementDialogContextDecoratorComponent`) can re-provide a decorated
+ * value read from `useAlertingManagementDialogContext()`; it is not a way to run the management
+ * dialog outside a dashboard.
+ *
+ * @alpha
+ */
 export const AlertingManagementDialogContextProvider = AlertingManagementDialogContext.Provider;
 
 /**

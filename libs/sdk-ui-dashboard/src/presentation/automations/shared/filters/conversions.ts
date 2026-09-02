@@ -13,6 +13,7 @@ import {
     attributeLocalId,
     dashboardFilterLocalIdentifier,
     filterAttributeElements,
+    filterContextItemsToDashboardFiltersByWidget,
     filterLocalIdentifier,
     filterObjRef,
     hasMeasureValueFilterConditions,
@@ -45,7 +46,6 @@ import {
     newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/filterConverters.js";
 import { type ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
 import { removeIgnoredWidgetFilters } from "../../../../model/utils/widgetFilters.js";
 import { type IDashboardFilter } from "../../../../types.js";

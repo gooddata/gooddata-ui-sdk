@@ -3,7 +3,7 @@
 # as we must not run images in the context of the superuser. This image comes with user 'nginx' with UID 101 and
 # runs as that user by default. The UID of this user is also used in runAsUser directive in the deployment chart.
 # !!! Do not change base image to Alpine flavors due to compliance reasons !!!
-FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/nginxinc/nginx-unprivileged:1.31.4@sha256:197f252f060ed357f2ab98d4256762d7d107c76f18ad8f0b9d5178854611566d
+FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/nginxinc/nginx-unprivileged:1.31.4@sha256:a7caff5bdcb3e3ba5dafacbdfc8f2d6d4d9f256d63f47cfeee9e1f9c289dd833
 
 # BEGIN OF Mastercard security compliance - do not alter or remove
 USER 0

@@ -3,21 +3,25 @@
 import { type ReactNode } from "react";
 
 /**
- * @beta
+ * @alpha
  */
 export interface ILandingTitleProps {
     children: ReactNode;
 }
 
 /**
- * @beta
+ * Default implementation of the LandingTitle slot.
+ *
+ * @alpha
  */
 export function DefaultLandingTitle({ children }: ILandingTitleProps) {
     return <h3 className="gd-typography gd-typography--h1">{children}</h3>;
 }
 
 /**
- * @beta
+ * Default implementation of the LandingTitleAscent slot.
+ *
+ * @alpha
  */
 export function DefaultLandingTitleAscent({ children }: ILandingTitleProps) {
     return <span className="gd-gen-ai-chat__messages__empty__h1--accent">{children}</span>;

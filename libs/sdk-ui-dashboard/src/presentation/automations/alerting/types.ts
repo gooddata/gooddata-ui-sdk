@@ -760,6 +760,12 @@ export type CustomAlertingDialogComponent = ComponentType<IAlertingDialogProps>;
  * false, and a decorator that overrides it corrupts the draft seed. Define the decorator
  * outside render, or the dialog remounts (and reseeds) on every parent render.
  *
+ * The contract: change the data, not what it means — every member keeps its documented meaning.
+ * The dialog does not check the decorated value; when you override a member, everything that
+ * reads it is your responsibility. Spread the value you read (`{ ...ctx, member }`) so the other
+ * members pass through. Wrap functions instead of replacing them. Do not touch members marked as
+ * internal machinery.
+ *
  * @alpha
  */
 export type CustomAlertingDialogContextDecoratorComponent = ComponentType<{ children?: ReactNode }>;
@@ -768,6 +774,51 @@ export type CustomAlertingDialogContextDecoratorComponent = ComponentType<{ chil
  * @alpha
  */
 export type CustomAlertingManagementDialogComponent = ComponentType<IAlertingManagementDialogProps>;
+
+/**
+ * Decorates the data the alerting management dialog reads.
+ *
+ * The dashboard mounts this component between the connector-provided management dialog context and
+ * the resolved management dialog component (default or replacement), so the value it re-provides is
+ * what the dialog reads. Read the current value with `useAlertingManagementDialogContext()`,
+ * decorate the members to adjust, and re-provide via `AlertingManagementDialogContextProvider`:
+ *
+ * @example
+ * ```tsx
+ * function AlertsListDecorator({ children }: { children?: ReactNode }) {
+ *     const ctx = useAlertingManagementDialogContext();
+ *     const { alerts, loading } = useMySelfFetchedAlerts(ctx.automations);
+ *     const decorated = useMemo(
+ *         () => ({ ...ctx, automations: alerts, isLoading: ctx.isLoading || loading }),
+ *         [ctx, alerts, loading],
+ *     );
+ *     return (
+ *         <AlertingManagementDialogContextProvider value={decorated}>
+ *             {children}
+ *         </AlertingManagementDialogContextProvider>
+ *     );
+ * }
+ * // <Dashboard AlertingManagementDialogContextDecoratorComponent={AlertsListDecorator} />
+ * ```
+ *
+ * The management dialog has no state seeding — it renders from the context on every change, so a
+ * decorator may replace `automations` or extend `isLoading` (as above). Extend `isLoading` only
+ * as `ctx.isLoading || yourOwnLoading`, never force it: forced false shows the list before its
+ * data arrives, forced true hides it forever. `isLoading` here covers the automations load only —
+ * deliberately narrower than the scheduled-email management context's flag. Define the decorator
+ * outside render, or the dialog remounts on every parent render.
+ *
+ * The contract: change the data, not what it means — every member keeps its documented meaning.
+ * The dialog does not check the decorated value; when you override a member, everything that
+ * reads it is your responsibility. Spread the value you read (`{ ...ctx, member }`) so the other
+ * members pass through. Wrap functions instead of replacing them. Do not touch members marked as
+ * internal machinery.
+ *
+ * @alpha
+ */
+export type CustomAlertingManagementDialogContextDecoratorComponent = ComponentType<{
+    children?: ReactNode;
+}>;
 
 /**
  * @alpha

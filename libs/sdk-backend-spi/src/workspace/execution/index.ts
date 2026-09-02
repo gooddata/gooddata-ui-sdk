@@ -6,6 +6,7 @@ import {
     type GeoCollectionKind,
     type IAttributeOrMeasure,
     type IBucket,
+    type IConditionalFormatting,
     type IDimension,
     type IDimensionDescriptor,
     type IExecutionConfig,
@@ -640,6 +641,17 @@ export interface IExportConfig {
      * @alpha
      */
     additionalExecutions?: ReadonlyArray<IExportAdditionalExecution>;
+
+    /**
+     * Conditional formatting rules to apply when generating the export.
+     *
+     * @remarks
+     * Sent as-is; when combined with `visualizationObjectId` this replaces that visualization's
+     * stored rules rather than merging with them.
+     *
+     * @alpha
+     */
+    conditionalFormatting?: IConditionalFormatting;
 }
 
 /**

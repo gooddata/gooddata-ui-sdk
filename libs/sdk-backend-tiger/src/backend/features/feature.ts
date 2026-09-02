@@ -502,6 +502,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableSemanticConditionalFormatting,
+            "enableSemanticConditionalFormatting",
+            "BOOLEAN",
+            FeatureFlagsValues.enableSemanticConditionalFormatting,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableNewGeoPushpin,
             "enableNewGeoPushpin",
             "BOOLEAN",

@@ -537,6 +537,19 @@ describe("box styling", () => {
         ]);
     });
 
+    it("accepts a valid padding and rejects one that is negative, infinite or not a number", () => {
+        expect(validateReportPageBody(body({ style: { padding: 0 } }))).toEqual([]);
+        expect(validateReportPageBody(body({ style: { padding: 2.5 } }))).toEqual([]);
+        for (const padding of [-1, Number.POSITIVE_INFINITY, Number.NaN]) {
+            expect(validateReportPageBody(body({ style: { padding } }))).toEqual([
+                expect.objectContaining({
+                    severity: "error",
+                    message: expect.stringContaining("Padding"),
+                }),
+            ]);
+        }
+    });
+
     it("rejects a corner radius that is negative, infinite or not a number", () => {
         for (const borderRadius of [-1, Number.POSITIVE_INFINITY, Number.NaN]) {
             expect(validateReportPageBody(body({ style: { borderRadius } }))).toEqual([

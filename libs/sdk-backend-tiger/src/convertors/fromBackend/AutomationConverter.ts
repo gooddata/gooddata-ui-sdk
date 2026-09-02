@@ -340,18 +340,15 @@ export const convertAutomationListToAutomations = (
 };
 
 /**
- * The wire value is an untyped string with no type tag. A value that parses to a finite number
- * decodes as a number (legacy NUMBER rows, incl. `Number("") === 0`); everything else passes
- * through as-is, so a STRING value that happens to look numeric decodes as a number too.
+ * The wire value is an untyped string with no type tag, so it is passed through verbatim — the
+ * consumer decodes it against the workspace parameter definition, which is the only source of the
+ * value's type (see `decodeParameterWireValue` in sdk-ui-dashboard).
  */
 function convertParameterItems(items: AutomationParameterItem[]): IInsightParameterValue[] {
-    return items.map((item) => {
-        const value = Number(item.value);
-        return {
-            ref: idRef(item.parameter.identifier.id, "parameter"),
-            value: Number.isFinite(value) ? value : item.value,
-        };
-    });
+    return items.map((item) => ({
+        ref: idRef(item.parameter.identifier.id, "parameter"),
+        value: item.value,
+    }));
 }
 
 export const convertAlert = (

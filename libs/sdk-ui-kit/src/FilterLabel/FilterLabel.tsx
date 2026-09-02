@@ -1,6 +1,15 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
-import { type ReactNode, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+    type NamedExoticComponent,
+    type ReactNode,
+    memo,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import { useIntl } from "react-intl";
 
@@ -9,7 +18,7 @@ import { type IFilterLabelProps } from "./typings.js";
 /**
  * @internal
  */
-export const FilterLabel = memo(function FilterLabel({
+export const FilterLabel: NamedExoticComponent<IFilterLabelProps> = memo(function FilterLabel({
     isAllSelected = false,
     isDate = false,
     selection = "",

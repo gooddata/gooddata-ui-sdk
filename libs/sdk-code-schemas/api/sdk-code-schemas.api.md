@@ -4848,6 +4848,37 @@ export const metadata_v1: {
                                     };
                                 };
                             };
+                            suppressed_targets: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    type: string;
+                                    description: string;
+                                    oneOf: ({
+                                        type: string;
+                                        additionalProperties: boolean;
+                                        required: string[];
+                                        properties: {
+                                            attribute?: undefined;
+                                            measure: {
+                                                type: string;
+                                                description: string;
+                                            };
+                                        };
+                                    } | {
+                                        type: string;
+                                        additionalProperties: boolean;
+                                        required: string[];
+                                        properties: {
+                                            measure?: undefined;
+                                            attribute: {
+                                                type: string;
+                                                description: string;
+                                            };
+                                        };
+                                    })[];
+                                };
+                            };
                         };
                     };
                 };
@@ -11628,6 +11659,11 @@ interface VisualisationConfig {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -11930,6 +11966,11 @@ interface VisualisationConfig1 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -12232,6 +12273,11 @@ interface VisualisationConfig10 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -12534,6 +12580,11 @@ interface VisualisationConfig11 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -12836,6 +12887,11 @@ interface VisualisationConfig12 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -13138,6 +13194,11 @@ interface VisualisationConfig13 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -13440,6 +13501,11 @@ interface VisualisationConfig14 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -13742,6 +13808,11 @@ interface VisualisationConfig15 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -14044,6 +14115,11 @@ interface VisualisationConfig16 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -14346,6 +14422,11 @@ interface VisualisationConfig17 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -14648,6 +14729,11 @@ interface VisualisationConfig18 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -14950,6 +15036,11 @@ interface VisualisationConfig19 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -15252,6 +15343,11 @@ interface VisualisationConfig2 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -15554,6 +15650,11 @@ interface VisualisationConfig20 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -15856,6 +15957,11 @@ interface VisualisationConfig21 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -16158,6 +16264,11 @@ interface VisualisationConfig22 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -16460,6 +16571,11 @@ interface VisualisationConfig23 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -16762,6 +16878,11 @@ interface VisualisationConfig3 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -17064,6 +17185,11 @@ interface VisualisationConfig4 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -17366,6 +17492,11 @@ interface VisualisationConfig5 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -17668,6 +17799,11 @@ interface VisualisationConfig6 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -17970,6 +18106,11 @@ interface VisualisationConfig7 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -18272,6 +18413,11 @@ interface VisualisationConfig8 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;
@@ -18574,6 +18720,11 @@ interface VisualisationConfig9 {
                 };
             }[];
         }[];
+        suppressed_targets?: ({
+            measure: string;
+        } | {
+            attribute: string;
+        })[];
     };
     // (undocumented)
     continuous_line?: boolean;

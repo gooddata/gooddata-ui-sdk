@@ -1,6 +1,8 @@
 // (C) 2025-2026 GoodData Corporation
 
-export const importXRules = {
+import { Rules } from "../types.js";
+
+export const importXRules: Rules = {
     named: "error",
     namespace: "error",
     default: "error",

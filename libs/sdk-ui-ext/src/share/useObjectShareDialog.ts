@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
+import type { GeneralAccessValue } from "@gooddata/sdk-ui-kit";
 
 import { objectShareMessages } from "./messages.js";
 import {
@@ -12,11 +13,12 @@ import {
     levelsBelow,
     removalChangesEffectiveLevel,
 } from "./objectShareController.helpers.js";
-import {
-    type IObjectShareControllerActions,
-    type IObjectShareControllerState,
-    type IObjectShareGrantee,
-    type ObjectSharePermissionLevel,
+import type {
+    IObjectShareControllerActions,
+    IObjectShareControllerState,
+    IObjectShareDraft,
+    IObjectShareGrantee,
+    ObjectSharePermissionLevel,
 } from "./objectShareController.types.js";
 import type { IObjectAccessSummary, IObjectShareLabel } from "./types.js";
 import { useObjectShareController } from "./useObjectShareController.js";
@@ -104,7 +106,7 @@ export interface IObjectShareDialogViewModel {
     /** Whether this row's controls must stay disabled (see `granteeControlsLocked`). */
     isRowControlsLocked: (grantee: IObjectShareGrantee) => boolean;
 
-    /** Close the whole dialog, discarding any staged self-restriction. */
+    /** Close the whole dialog, handing the draft over and discarding any staged self-restriction. */
     onClose: () => void;
     /**
      * Handle a grantee row's permission change. The signed-in user's own sole grant is
@@ -137,6 +139,14 @@ interface IUseObjectShareDialogParams {
     labelsLoading?: boolean;
     /** Whether the object's labels failed to load (gates mutations); forwarded to the controller. */
     labelsError?: boolean;
+    /** Manage access for an object that does not exist yet; forwarded to the controller. */
+    draft?: boolean;
+    /** Fires with the final draft as the dialog closes (draft mode only). */
+    onDraftChange?: (draft: IObjectShareDraft) => void;
+    /** Draft to carry on from; forwarded to the controller. */
+    initialDraft?: IObjectShareDraft;
+    /** What a new object's general access starts as; forwarded to the controller. */
+    initialDraftGeneralAccess?: GeneralAccessValue;
 }
 
 /**
@@ -151,12 +161,27 @@ export function useObjectShareDialog({
     target,
     onClose,
     onSummaryChange,
+    draft,
+    onDraftChange,
+    initialDraft,
+    initialDraftGeneralAccess,
     labels,
     labelsLoading,
     labelsError,
 }: IUseObjectShareDialogParams): IObjectShareDialogViewModel {
     const intl = useIntl();
-    const { state, actions } = useObjectShareController(target, { labels, labelsError, labelsLoading });
+    const {
+        state,
+        actions,
+        draft: currentDraft,
+    } = useObjectShareController(target, {
+        labels,
+        labelsError,
+        labelsLoading,
+        draft,
+        initialDraft,
+        initialDraftGeneralAccess,
+    });
 
     const [pendingSelfChange, setPendingSelfChange] = useState<IPendingSelfChange | undefined>(undefined);
 
@@ -175,6 +200,13 @@ export function useObjectShareDialog({
             onSummaryChange?.(state.summary);
         }
     }, [state.summary, onSummaryChange]);
+
+    const closeDialog = useCallback(() => {
+        if (currentDraft) {
+            onDraftChange?.(currentDraft);
+        }
+        onClose();
+    }, [currentDraft, onDraftChange, onClose]);
 
     // A row belongs to the signed-in user's own sole grant when the controller has
     // classified it as self-managed — those changes route through the confirm.
@@ -293,7 +325,7 @@ export function useObjectShareDialog({
         isRowRemoveDisabled,
         isRowControlsLocked,
         rowRemoveDisabledTooltip: intl.formatMessage(objectShareMessages.granteeRemoveInherited),
-        onClose,
+        onClose: closeDialog,
         onRowPermissionChange,
         onRowRemove,
         onSelfRestrictCancel,

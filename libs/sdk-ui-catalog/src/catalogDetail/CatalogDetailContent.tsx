@@ -9,7 +9,7 @@ import { type SemanticQualityIssueAttributeName } from "@gooddata/sdk-model";
 import { useLocalStorage } from "@gooddata/sdk-ui";
 import { type IUiTab, UiSkeleton, UiTabs } from "@gooddata/sdk-ui-kit";
 
-import { canEditCatalogItem } from "../catalogItem/permission.js";
+import { canEditCatalogItem, canShareCatalogItem } from "../catalogItem/permission.js";
 import { type ICatalogItem, type ICatalogItemRef } from "../catalogItem/types.js";
 import { useIsCertificationAllowed } from "../certification/gate.js";
 import { useIsLineageEnabled } from "../lineage/gate.js";
@@ -29,7 +29,7 @@ import { useCatalogItemUpdate } from "./hooks/useCatalogItemUpdate.js";
 import { CatalogItemAccessRow } from "./share/CatalogItemAccessRow.js";
 import { CatalogItemShareDialog } from "./share/CatalogItemShareDialog.js";
 import { CatalogItemShareProvider } from "./share/CatalogItemShareProvider.js";
-import { isShareableCatalogItem, isSharingEnabledForItem, toShareTarget } from "./share/guards.js";
+import { isShareableCatalogItem, toShareTarget } from "./share/guards.js";
 import { useShareableLabels } from "./share/useShareableLabels.js";
 import type { OpenHandlerEvent } from "./types.js";
 
@@ -129,11 +129,13 @@ export function CatalogDetailContent({
         onError: onCatalogItemUpdateError,
     });
 
-    const canEdit = canEditCatalogItem(permissions, item);
+    const canEdit = canEditCatalogItem(permissions, item, settings);
 
     const enableColumnLevelPermissions = Boolean(settings?.enableColumnLevelPermissions);
     const shareableItem =
-        item && isShareableCatalogItem(item) && isSharingEnabledForItem(item, settings) ? item : undefined;
+        item && isShareableCatalogItem(item) && canShareCatalogItem(permissions, item, settings)
+            ? item
+            : undefined;
     const shareTarget = useMemo(
         () => (shareableItem ? toShareTarget(shareableItem) : undefined),
         [shareableItem],

@@ -20,6 +20,7 @@ function buildExportRequestConfig(exportConfig: IExtendedExportConfig, exportTit
         grandTotalsPosition,
         timezoneId,
         timeout,
+        conditionalFormatting,
     } = exportConfig;
 
     const title: string = escapeFileName(customTitle || exportTitle || "Untitled");
@@ -31,6 +32,7 @@ function buildExportRequestConfig(exportConfig: IExtendedExportConfig, exportTit
         delimiter,
         ...(grandTotalsPosition ? { grandTotalsPosition } : {}),
         ...(timezoneId ? { timezoneId } : {}),
+        ...(conditionalFormatting ? { conditionalFormatting } : {}),
         // layer titles become sheet/file names, so they need the same sanitization as the main title
         ...(exportConfig.additionalExecutions
             ? {

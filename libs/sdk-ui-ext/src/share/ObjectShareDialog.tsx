@@ -1,9 +1,11 @@
 // (C) 2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
+import { invariant } from "ts-invariant";
 
 import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
 import {
+    type GeneralAccessValue,
     type IUiObjectShareDialogGrantee,
     UiAddGranteeDialog,
     UiConfirmDialog,
@@ -15,7 +17,11 @@ import {
 
 import { objectShareMessages } from "./messages.js";
 import { granteeDisplayPair } from "./objectShareController.helpers.js";
-import type { IObjectShareGrantee, ObjectSharePermissionLevel } from "./objectShareController.types.js";
+import type {
+    IObjectShareDraft,
+    IObjectShareGrantee,
+    ObjectSharePermissionLevel,
+} from "./objectShareController.types.js";
 import type { IObjectAccessSummary, IObjectShareLabel } from "./types.js";
 import { useObjectShareDialog } from "./useObjectShareDialog.js";
 
@@ -83,6 +89,23 @@ export interface IObjectShareDialogProps {
      */
     onSummaryChange?: (summary: IObjectAccessSummary) => void;
     /**
+     * Manage access for an object that does not exist yet. Nothing is written; the result
+     * arrives through `onDraftChange`. Requires no `target`, and `labels` is ignored.
+     */
+    draft?: boolean;
+    /**
+     * Fires with the final draft as the dialog closes, while `draft`. Required: the session
+     * unmounts on close, so a draft nobody keeps is lost.
+     */
+    onDraftChange?: (draft: IObjectShareDraft) => void;
+    /** Draft to carry on from, when reopening. */
+    initialDraft?: IObjectShareDraft;
+    /**
+     * What a draft's general access starts as; an untouched default is never written.
+     * Defaults to RESTRICTED; pass WORKSPACE for a type the backend creates visible.
+     */
+    initialDraftGeneralAccess?: GeneralAccessValue;
+    /**
      * Labels (display forms) of the shared attribute, enabling the per-grantee
      * label-scope picker. Omit for objects without labels (e.g. facts).
      */
@@ -119,6 +142,14 @@ export interface IObjectShareDialogProps {
  * @internal
  */
 export function ObjectShareDialog(props: IObjectShareDialogProps) {
+    invariant(
+        !props.draft || !props.target,
+        "ObjectShareDialog: `draft` cannot be combined with a `target` — a draft is for an object that does not exist yet, and nothing it stages would ever be written to that target.",
+    );
+    invariant(
+        !props.draft || props.onDraftChange,
+        "ObjectShareDialog: `draft` requires `onDraftChange`, and something above the dialog must keep what it emits and pass it back as `initialDraft` — the session unmounts on close, discarding anything only drafted.",
+    );
     if (!props.isOpen) {
         return null;
     }
@@ -134,6 +165,10 @@ function ObjectShareDialogSession({
     labels,
     labelsLoading,
     labelsError,
+    draft,
+    onDraftChange,
+    initialDraft,
+    initialDraftGeneralAccess,
 }: IObjectShareDialogProps) {
     const intl = useIntl();
     const {
@@ -165,6 +200,10 @@ function ObjectShareDialogSession({
         labels,
         labelsLoading,
         labelsError,
+        draft,
+        onDraftChange,
+        initialDraft,
+        initialDraftGeneralAccess,
     });
 
     // Primary label is locked — always selected, can't be unchecked.

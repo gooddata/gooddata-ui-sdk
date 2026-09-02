@@ -1,6 +1,15 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type ComponentType, type ReactNode, memo, useCallback, useEffect, useRef, useState } from "react";
+import {
+    type ComponentType,
+    type NamedExoticComponent,
+    type ReactNode,
+    memo,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 
 import { isEmpty, isEqual } from "lodash-es";
 
@@ -309,7 +318,9 @@ function isSameOptionExceptEmptyValueHandling(a: DateFilterOption, b: DateFilter
  *
  * @public
  */
-export const DateFilter = memo(function DateFilter(props: IDateFilterProps) {
+export const DateFilter: NamedExoticComponent<IDateFilterProps> = memo(function DateFilter(
+    props: IDateFilterProps,
+) {
     const {
         customFilterName,
         dateFilterMode,

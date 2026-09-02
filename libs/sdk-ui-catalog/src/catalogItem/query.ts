@@ -116,8 +116,9 @@ export function getMetricsQuery({
     isHidden,
     certification,
     pageSize = PAGE_SIZE,
+    loadPermissions = false,
 }: ICatalogItemQueryOptions) {
-    return backend
+    const query = backend
         .workspace(workspace)
         .measures()
         .getMeasuresQuery()
@@ -138,6 +139,10 @@ export function getMetricsQuery({
             certification,
         })
         .withMethod("POST");
+
+    // asked for only when needed, so a backend written against the previous SPI keeps working
+    // for as long as the feature is off
+    return loadPermissions ? query.withMetaInclude(["permissions"]) : query;
 }
 
 export function getParametersQuery({
@@ -501,8 +506,9 @@ export function createMeasureCatalogItem(
     backend: IAnalyticalBackend,
     workspace: string,
     measure: IMeasureMetadataObjectDefinition,
+    loadPermissions = false,
 ) {
-    return backend.workspace(workspace).measures().createMeasure(measure);
+    return backend.workspace(workspace).measures().createMeasure(measure, { loadPermissions });
 }
 
 export function updateMeasureCatalogItem(

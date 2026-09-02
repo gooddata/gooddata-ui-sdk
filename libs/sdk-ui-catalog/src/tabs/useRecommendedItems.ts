@@ -11,7 +11,7 @@ import {
 import { convertEntityToCatalogItem } from "../catalogItem/converter.js";
 import { getDashboardsQuery, getInsightsQuery, getMetricsQuery } from "../catalogItem/query.js";
 import type { ICatalogItem } from "../catalogItem/types.js";
-import { usePermissionsState } from "../permission/PermissionsContext.js";
+import { useFeatureFlag, usePermissionsState } from "../permission/PermissionsContext.js";
 
 const RECOMMENDED_PAGE_SIZE = 5;
 
@@ -20,6 +20,7 @@ async function fetchRecommendedItems(
     workspace: string,
     userId: string,
     organizationId: string,
+    loadPermissions: boolean,
 ): Promise<ICatalogItem[]> {
     // User group names are used as tags to find recommended catalog items --
     // items tagged with a group name are surfaced to members of that group.
@@ -37,6 +38,7 @@ async function fetchRecommendedItems(
         origin: "ALL" as const,
         tags,
         pageSize: RECOMMENDED_PAGE_SIZE,
+        loadPermissions,
     };
 
     const [dashboards, insights, metrics] = await Promise.all([
@@ -59,15 +61,23 @@ export function useRecommendedItems(): UseCancelablePromiseState<ICatalogItem[],
     const workspace = useWorkspaceStrict();
     const { result } = usePermissionsState();
     const user = result?.user;
+    const loadPermissions = useFeatureFlag("enableMetricPermissions");
 
     return useCancelablePromise<ICatalogItem[], Error>(
         {
             promise:
                 user?.login && user?.organizationId
-                    ? () => fetchRecommendedItems(backend, workspace, user.login, user.organizationId!)
+                    ? () =>
+                          fetchRecommendedItems(
+                              backend,
+                              workspace,
+                              user.login,
+                              user.organizationId!,
+                              loadPermissions,
+                          )
                     : null,
             onError: (error) => console.error(error),
         },
-        [backend, workspace, user?.login, user?.organizationId],
+        [backend, workspace, user?.login, user?.organizationId, loadPermissions],
     );
 }

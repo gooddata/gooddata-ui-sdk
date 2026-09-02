@@ -16,7 +16,7 @@ import { asyncProcessSelector } from "../store/messages/messagesSelectors.js";
 import { cancelAsyncAction, clearThreadAction, loadThreadAction } from "../store/messages/messagesSlice.js";
 
 import { useConfig } from "./ConfigContext.js";
-import { useCustomization } from "./CustomizationProvider.js";
+import { useCustomization } from "./CustomizationContext.js";
 import { ErrorBoundary } from "./ErrorBoundary.js";
 import { GlobalError } from "./GlobalError.js";
 import { useEndpointCheck } from "./hooks/useEndpointCheck.js";

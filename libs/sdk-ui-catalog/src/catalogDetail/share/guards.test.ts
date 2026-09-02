@@ -6,7 +6,7 @@ import { idRef } from "@gooddata/sdk-model";
 
 import type { ICatalogItem } from "../../catalogItem/types.js";
 
-import { isShareableCatalogItem, isSharingEnabledForItem, toShareTarget } from "./guards.js";
+import { isShareableCatalogItem, toShareTarget } from "./guards.js";
 import type { ShareableCatalogItem } from "./types.js";
 
 const itemBase = {
@@ -53,40 +53,6 @@ describe("isShareableCatalogItem", () => {
         { item: dashboard, expected: false },
     ])("returns $expected for $item.type", ({ item, expected }) => {
         expect(isShareableCatalogItem(item)).toBe(expected);
-    });
-});
-
-describe("isSharingEnabledForItem", () => {
-    it.each`
-        columnFlag | metricFlag | attributeOn | factOn   | measureOn
-        ${false}   | ${false}   | ${false}    | ${false} | ${false}
-        ${true}    | ${false}   | ${true}     | ${true}  | ${false}
-        ${false}   | ${true}    | ${false}    | ${false} | ${true}
-        ${true}    | ${true}    | ${true}     | ${true}  | ${true}
-    `(
-        "column=$columnFlag metric=$metricFlag → attribute=$attributeOn fact=$factOn measure=$measureOn",
-        ({ columnFlag, metricFlag, attributeOn, factOn, measureOn }) => {
-            const settings = {
-                enableColumnLevelPermissions: columnFlag,
-                enableMetricPermissions: metricFlag,
-            };
-
-            expect(isSharingEnabledForItem(attribute, settings)).toBe(attributeOn);
-            expect(isSharingEnabledForItem(fact, settings)).toBe(factOn);
-            expect(isSharingEnabledForItem(measure, settings)).toBe(measureOn);
-        },
-    );
-
-    it("is disabled for every kind without settings", () => {
-        expect(isSharingEnabledForItem(attribute, undefined)).toBe(false);
-        expect(isSharingEnabledForItem(fact, undefined)).toBe(false);
-        expect(isSharingEnabledForItem(measure, undefined)).toBe(false);
-    });
-
-    it("never enables non-shareable kinds even with both flags on", () => {
-        const settings = { enableColumnLevelPermissions: true, enableMetricPermissions: true };
-
-        expect(isSharingEnabledForItem(dashboard, settings)).toBe(false);
     });
 });
 

@@ -181,6 +181,16 @@ export interface IAutomationsContextValue {
 
 const AutomationsContext = createContext<IAutomationsContextValue | undefined>(undefined);
 
+/**
+ * Provides the automation dialogs' shared context.
+ *
+ * The dashboard's connectors mount the original value once per tree. Exported so a
+ * context-decorator component (`CustomAutomationsContextDecoratorComponent`) can re-provide a
+ * decorated value read from `useAutomationsContext()`; it is not a way to run the dialogs outside
+ * a dashboard.
+ *
+ * @alpha
+ */
 export const AutomationsContextProvider = AutomationsContext.Provider;
 
 /**

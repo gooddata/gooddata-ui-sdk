@@ -80,6 +80,7 @@ import { transformOutliersResult } from "../../../convertors/fromBackend/afm/out
 import { transformExecutionResult } from "../../../convertors/fromBackend/afm/result.js";
 import { type DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec.js";
+import { convertConditionalFormattingToBackend } from "../../../convertors/toBackend/ConditionalFormattingConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { handleExportResultPolling } from "../../../utils/exportPolling.js";
 
@@ -451,6 +452,9 @@ export class TigerExecutionResult implements IExecutionResult {
             customOverride: augmented,
             visualizationObject: options.visualizationObjectId,
             visualizationObjectCustomFilters: options.visualizationObjectCustomFilters,
+            conditionalFormatting: options.conditionalFormatting
+                ? convertConditionalFormattingToBackend(options.conditionalFormatting)
+                : undefined,
             ...(options.timezoneId ? { executionSettings: { timezone: options.timezoneId } } : {}),
         };
 

@@ -242,7 +242,7 @@ describe("resolvePerTargetConditionalFormatting", () => {
         ]);
     });
 
-    it("disabled: a customTargets suppression still applies (independent of the enabled toggle)", () => {
+    it("disabled: a suppressedTargets entry still applies (independent of the enabled toggle)", () => {
         const semantic: ISemanticConditionalFormatting = {
             conditions: [
                 {
@@ -256,7 +256,7 @@ describe("resolvePerTargetConditionalFormatting", () => {
         const insightConfig: IConditionalFormatting = {
             enabled: false,
             rules: [],
-            customTargets: [{ kind: "attribute", attributeIdentifier: "status" }],
+            suppressedTargets: [{ kind: "attribute", attributeIdentifier: "status" }],
         };
 
         const result = resolvePerTargetConditionalFormatting(
@@ -353,7 +353,7 @@ describe("resolvePerTargetConditionalFormatting", () => {
         expect(result?.rules).toEqual([insightRule]);
     });
 
-    it("suppression: a customTargets entry with no authored rule removes the semantic rule with nothing replacing it", () => {
+    it("suppression: a suppressedTargets entry with no authored rule removes the semantic rule with nothing replacing it", () => {
         const semantic: ISemanticConditionalFormatting = {
             conditions: [
                 {
@@ -367,7 +367,7 @@ describe("resolvePerTargetConditionalFormatting", () => {
         const insightConfig: IConditionalFormatting = {
             enabled: true,
             rules: [],
-            customTargets: [{ kind: "attribute", attributeIdentifier: "status" }],
+            suppressedTargets: [{ kind: "attribute", attributeIdentifier: "status" }],
         };
 
         const result = resolvePerTargetConditionalFormatting(

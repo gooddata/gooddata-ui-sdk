@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: d33fde6e156639a69bd104b0a89144e53c9b0498394dbc63f30d859eb278225f
+# schema-hash: 91810ffb6fb0c40dba9b329a17fea1eeada9ba670bf3f8624a84782810375c61
 
 from __future__ import annotations
 
@@ -252,6 +252,8 @@ __all__ = [
     "State",
     "StringParameterDefinition",
     "Style",
+    "SuppressedTargets",
+    "SuppressedTargets1",
     "Tab",
     "Tags",
     "Target",
@@ -2414,6 +2416,22 @@ class Rule(BaseModel):
     )
 
 
+class SuppressedTargets(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    measure: str = Field(..., description='Local identifier of the targeted measure.')
+
+
+class SuppressedTargets1(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    attribute: str = Field(
+        ..., description='Local identifier of the targeted attribute.'
+    )
+
+
 class ConditionalFormatting(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -2427,6 +2445,10 @@ class ConditionalFormatting(BaseModel):
     )
     rules: list[Rule] | None = Field(
         None, description='Ordered list of rules; the first matching rule wins.'
+    )
+    suppressed_targets: list[SuppressedTargets | SuppressedTargets1] | None = Field(
+        None,
+        description='Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules).',
     )
 
 

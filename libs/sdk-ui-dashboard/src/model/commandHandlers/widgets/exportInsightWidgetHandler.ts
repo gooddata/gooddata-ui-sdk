@@ -9,6 +9,7 @@ import {
     type IExecutionDefinition,
     type IInsightDefinition,
     type ObjRef,
+    isInsightWidget,
     serializeObjRef,
 } from "@gooddata/sdk-model";
 import {
@@ -17,11 +18,13 @@ import {
     prepareGeoInsightForDataExport,
     prepareGeoLayerInsightsForDataExport,
 } from "@gooddata/sdk-ui";
+import { getEffectiveConditionalFormatting } from "@gooddata/sdk-ui-ext";
 import {
     type ICreateExportExecutionDefinitionOptions,
     createExportExecutionDefinition,
 } from "@gooddata/sdk-ui/internal";
 
+import { mergeInsightWithWidgetProperties } from "../../../_staging/insight/insightWidgetProperties.js";
 import { type IExportInsightWidget } from "../../commands/insight.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import {
@@ -41,6 +44,7 @@ import {
 import { selectInsightByWidgetRef } from "../../store/insights/insightsSelectors.js";
 import { selectEffectiveDashboardTimezone } from "../../store/meta/metaSelectors.js";
 import { selectPreloadedAttributesWithReferences } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 
 async function performExport(
@@ -153,6 +157,12 @@ export function* exportInsightWidgetHandler(
         yield select(selectCatalogAttributes);
     const preloadedAttributesWithReferences: ReturnType<typeof selectPreloadedAttributesWithReferences> =
         yield select(selectPreloadedAttributesWithReferences);
+    const widget: ReturnType<ReturnType<typeof selectWidgetByRef>> = yield select(selectWidgetByRef(ref));
+    const effectiveInsight =
+        insight && isInsightWidget(widget) ? mergeInsightWithWidgetProperties(insight, widget) : insight;
+    const conditionalFormatting = effectiveInsight
+        ? getEffectiveConditionalFormatting(effectiveInsight, settings)
+        : undefined;
 
     const buildLayerDefinition = (
         tableInsight: IInsightDefinition,
@@ -199,7 +209,12 @@ export function* exportInsightWidgetHandler(
                     attributeLocalIdMapping: layer.attributeLocalIdMapping,
                 }),
             })),
-            { ...config, timeout, timezoneId },
+            {
+                ...config,
+                timeout,
+                timezoneId,
+                ...(conditionalFormatting ? { conditionalFormatting } : {}),
+            },
         );
     } else {
         const exportInsight = insight
@@ -215,7 +230,12 @@ export function* exportInsightWidgetHandler(
             performExport,
             ctx,
             executionResult,
-            { ...config, timeout, timezoneId },
+            {
+                ...config,
+                timeout,
+                timezoneId,
+                ...(conditionalFormatting ? { conditionalFormatting } : {}),
+            },
             exportDefinition,
         );
     }

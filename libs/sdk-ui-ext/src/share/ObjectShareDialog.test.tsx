@@ -21,6 +21,7 @@ import type {
     IObjectShareController,
     IObjectShareControllerActions,
     IObjectShareControllerState,
+    IObjectShareDraft,
 } from "./objectShareController.types.js";
 
 // The dialog owns its controller (one open = one session), so tests inject a stub
@@ -52,6 +53,7 @@ const captured = vi.hoisted(() => ({
     rows: [] as Array<{ id: string; name: string; email?: string }>,
     controls: [] as Array<Partial<IUiGranteeRowControlsProps>>,
     addGrantee: [] as Array<Partial<IUiAddGranteeDialogProps>>,
+    close: [] as Array<() => void>,
     confirms: [] as Array<{
         title: string;
         isOpen: boolean | undefined;
@@ -75,6 +77,7 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
         UiObjectShareDialog: (props: IUiObjectShareDialogProps) => {
             captured.addDisabled.push(props.isAddDisabled);
             captured.isLoading.push(props.isLoading);
+            captured.close.push(props.onClose);
             // Snapshot of the LAST render only — re-renders replace, not append,
             // so whole-array assertions stay stable.
             captured.rows.length = 0;
@@ -148,7 +151,10 @@ const SELF_GRANTEE = {
     level: "VIEW" as const,
 };
 
-function makeController(stateOverrides: Partial<IObjectShareControllerState>): IObjectShareController {
+function makeController(
+    stateOverrides: Partial<IObjectShareControllerState>,
+    draft?: IObjectShareDraft,
+): IObjectShareController {
     const actions: IObjectShareControllerActions = {
         openAddGrantee: noop,
         closeAddGrantee: noop,
@@ -187,16 +193,21 @@ function makeController(stateOverrides: Partial<IObjectShareControllerState>): I
         pendingGrantees: [],
         ...stateOverrides,
     };
-    return { state, actions };
+    return { state, actions, draft };
 }
 
-function renderDialog(controller: IObjectShareController, onSummaryChange?: (summary: unknown) => void) {
+function renderDialog(
+    controller: IObjectShareController,
+    onSummaryChange?: (summary: unknown) => void,
+    overrides: Record<string, unknown> = {},
+) {
     captured.addDisabled.length = 0;
     captured.isLoading.length = 0;
     captured.rows.length = 0;
     captured.controls.length = 0;
     captured.confirms.length = 0;
     captured.addGrantee.length = 0;
+    captured.close.length = 0;
     injected.controller = controller;
     return render(
         <IntlProvider locale="en-US" messages={MESSAGES}>
@@ -208,6 +219,7 @@ function renderDialog(controller: IObjectShareController, onSummaryChange?: (sum
                         isOpen
                         onClose={noop}
                         onSummaryChange={onSummaryChange}
+                        {...overrides}
                     />
                 </WorkspaceProvider>
             </BackendProvider>
@@ -724,5 +736,54 @@ describe("ObjectShareDialog summary synchronization", () => {
         const onSummaryChange = vi.fn();
         renderDialog(makeController({ status: "loading", summary: undefined }), onSummaryChange);
         expect(onSummaryChange).not.toHaveBeenCalled();
+    });
+});
+
+describe("ObjectShareDialog draft handover", () => {
+    const DRAFT: IObjectShareDraft = {
+        granteeEdits: { "user.jane": { kind: "level", level: "VIEW", pending: false } },
+        ruleEdit: undefined,
+    };
+
+    it("hands the draft over as the session ends, not while it runs", () => {
+        const onDraftChange = vi.fn();
+        const onClose = vi.fn();
+        renderDialog(makeController({}, DRAFT), undefined, {
+            target: undefined,
+            draft: true,
+            onDraftChange,
+            onClose,
+        });
+
+        expect(onDraftChange).not.toHaveBeenCalled();
+
+        act(() => captured.close.at(-1)!());
+        expect(onDraftChange).toHaveBeenCalledTimes(1);
+        expect(onDraftChange).toHaveBeenCalledWith(DRAFT);
+        expect(onClose).toHaveBeenCalledTimes(1);
+    });
+
+    it("closes without a draft outside draft mode", () => {
+        const onDraftChange = vi.fn();
+        const onClose = vi.fn();
+        renderDialog(makeController({}), undefined, { onDraftChange, onClose });
+
+        act(() => captured.close.at(-1)!());
+        expect(onDraftChange).not.toHaveBeenCalled();
+        expect(onClose).toHaveBeenCalledTimes(1);
+    });
+});
+
+describe("ObjectShareDialog draft guards", () => {
+    it("refuses a draft with nowhere to report it", () => {
+        expect(() => renderDialog(makeController({}), undefined, { draft: true, target: undefined })).toThrow(
+            /requires `onDraftChange`/,
+        );
+    });
+
+    it("refuses a draft against an existing object", () => {
+        expect(() =>
+            renderDialog(makeController({}), undefined, { draft: true, onDraftChange: () => {} }),
+        ).toThrow(/cannot be combined with a `target`/);
     });
 });

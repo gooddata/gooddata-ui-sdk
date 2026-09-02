@@ -265,17 +265,61 @@ describe("reconstructAutomationParametersFromValues — reopen existing alert", 
         expect(reconstructed.map((parameter) => parameter.ref.identifier)).toEqual(["topN"]);
     });
 
-    it("drops a row whose value type mismatches the catalog definition", () => {
+    it("drops a non-numeric STRING value row when its catalog definition is NUMBER", () => {
         const reconstructed = reconstructAutomationParametersFromValues(
-            [
-                { ref: idRef("topN", "parameter"), value: "Budget" },
-                { ref: idRef("scenario", "parameter"), value: 8 },
-            ],
+            [{ ref: idRef("topN", "parameter"), value: "Budget" }],
             [],
             catalog,
             true,
         );
         expect(reconstructed).toEqual([]);
+    });
+
+    it("decodes an untyped wire string against the catalog definition", () => {
+        const reconstructed = reconstructAutomationParametersFromValues(
+            [
+                { ref: idRef("topN", "parameter"), value: "8" },
+                { ref: idRef("scenario", "parameter"), value: "007" },
+            ],
+            [],
+            catalog,
+            true,
+        );
+        expect(reconstructed.map((parameter) => [parameter.ref.identifier, parameter.value])).toEqual([
+            ["topN", 8],
+            ["scenario", "007"],
+        ]);
+    });
+
+    it("keeps a STRING value saved empty as an empty string (F1-2735)", () => {
+        const reconstructed = reconstructAutomationParametersFromValues(
+            [{ ref: idRef("scenario", "parameter"), value: "" }],
+            [],
+            catalog,
+            true,
+        );
+        expect(reconstructed.map((parameter) => [parameter.ref.identifier, parameter.value])).toEqual([
+            ["scenario", ""],
+        ]);
+    });
+
+    it("synthesizes NUMBER from a numeric untyped wire string only when the ref left the catalog", () => {
+        const reconstructed = reconstructAutomationParametersFromValues(
+            [{ ref: idRef("removedNumber", "parameter"), value: "8" }],
+            [],
+            catalog,
+            true,
+            true,
+        );
+        expect(reconstructed).toEqual([
+            {
+                ref: idRef("removedNumber", "parameter"),
+                title: "removedNumber",
+                value: 8,
+                mode: "active",
+                definition: { type: "NUMBER", defaultValue: 8 },
+            },
+        ]);
     });
 });
 
@@ -299,6 +343,25 @@ describe("reconstructAutomationParametersFromExportParameters — reopen existin
                 value: 8,
                 mode: "readonly",
                 definition: { type: "NUMBER", defaultValue: 3, constraints: { min: 1, max: 10 } },
+            },
+        ]);
+    });
+
+    it("keeps a numeric-looking STRING value of a catalog-deleted export parameter as a STRING chip", () => {
+        // Export rows are typed by their own tag — the untyped-wire NUMBER guess must not re-type them.
+        const reconstructed = reconstructAutomationParametersFromExportParameters(
+            [{ id: "removedString", value: "007", title: "Removed (stored)", parameterType: "STRING" }],
+            [],
+            catalog,
+            true,
+        );
+        expect(reconstructed).toEqual([
+            {
+                ref: idRef("removedString", "parameter"),
+                title: "removedString",
+                value: "007",
+                mode: "active",
+                definition: { type: "STRING", defaultValue: "007" },
             },
         ]);
     });
@@ -423,20 +486,26 @@ describe("alert parameter staleness — detector and repairer share one predicat
         ]);
     });
 
-    it("is stale when a stored NUMBER value's id was recreated as a STRING catalog parameter", () => {
-        const recreatedCatalog = [
-            workspaceStringParameter("topN", "Top N", "Actual"),
+    it("is not stale when an untyped wire string decodes against the catalog definition", () => {
+        const mixedCatalog = [
+            workspaceStringParameter("scenario", "Scenario", "Actual"),
             workspaceNumberParameter("limit", "Limit", 50),
         ];
         const stored = [
-            { ref: idRef("topN", "parameter"), value: 8 },
-            { ref: idRef("limit", "parameter"), value: 50 },
+            { ref: idRef("scenario", "parameter"), value: "007" },
+            { ref: idRef("limit", "parameter"), value: "50" },
         ];
 
-        expect(hasStaleAlertParameters(stored, recreatedCatalog)).toBe(true);
-        expect(dropStaleAlertParameters(stored, recreatedCatalog)).toEqual([
-            { ref: idRef("limit", "parameter"), value: 50 },
-        ]);
+        expect(hasStaleAlertParameters(stored, mixedCatalog)).toBe(false);
+        expect(dropStaleAlertParameters(stored, mixedCatalog)).toEqual(stored);
+    });
+
+    it("is not stale when a STRING value was saved empty (F1-2735)", () => {
+        const stringCatalog = [workspaceStringParameter("scenario", "Scenario", "Actual")];
+        const stored = [{ ref: idRef("scenario", "parameter"), value: "" }];
+
+        expect(hasStaleAlertParameters(stored, stringCatalog)).toBe(false);
+        expect(dropStaleAlertParameters(stored, stringCatalog)).toEqual(stored);
     });
 
     it("is not stale when the stored value's kind matches its catalog parameter's type", () => {

@@ -2599,9 +2599,9 @@
         "text": "Delete rule",
         "crowdinContext": "Accessible label for the button that deletes a conditional-formatting rule."
     },
-    "properties.conditionalFormatting.rule.view": {
-        "text": "View rule",
-        "crowdinContext": "Accessible label and button text for viewing a read-only conditional-formatting rule inherited from the semantic layer."
+    "properties.conditionalFormatting.semanticToggleAriaLabel": {
+        "text": "Turn formatting on/off for {title}",
+        "crowdinContext": "Accessible label for the toggle that turns a semantic-layer-inherited conditional-formatting rule on or off for one target. {title} is the target's display name (a metric or attribute name), not translatable."
     },
     "properties.conditionalFormatting.dialog.addTitle": {
         "text": "Add rule",
@@ -2611,9 +2611,21 @@
         "text": "Edit rule",
         "crowdinContext": "Headline of the dialog when editing an existing conditional-formatting rule."
     },
-    "properties.conditionalFormatting.dialog.viewTitle": {
-        "text": "View rule",
-        "crowdinContext": "Headline of the dialog when viewing a read-only conditional-formatting rule inherited from the semantic layer."
+    "properties.conditionalFormatting.dialog.ruleTitle": {
+        "text": "Rule",
+        "crowdinContext": "Generic headline of the conditional-formatting rule dialog for a target that has a semantic-layer default rule (the dialog lets the user switch between the default rule and their own override)."
+    },
+    "properties.conditionalFormatting.dialog.useDefaultRule": {
+        "text": "Use default rule",
+        "crowdinContext": "Checkbox label in the conditional-formatting rule dialog. When checked, the target uses the rule defined once in the semantic layer; unchecking it lets the user author their own rule for this table."
+    },
+    "properties.conditionalFormatting.dialog.useDefaultRuleInfo": {
+        "text": "Use the default rule for this item. Turn off this option to override the default rule.",
+        "crowdinContext": "Tooltip text explaining the 'Use default rule' checkbox in the conditional-formatting rule dialog."
+    },
+    "properties.conditionalFormatting.dialog.ruleCannotBeDeleted": {
+        "text": "This rule cannot be deleted. Disable it in the rule list.",
+        "crowdinContext": "Tooltip shown on the disabled delete button in the conditional-formatting rule dialog, when the rule currently comes from the semantic layer default (nothing has been authored yet to delete)."
     },
     "properties.conditionalFormatting.dialog.target": {
         "text": "When",

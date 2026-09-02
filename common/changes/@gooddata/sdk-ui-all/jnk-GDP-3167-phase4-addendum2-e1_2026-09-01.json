@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: Added @alpha context-decorator slots for the two automation management dialogs (AlertingManagementDialogContextDecoratorComponent and ScheduledEmailManagementDialogContextDecoratorComponent Dashboard props), mirroring the create/edit dialogs' seam: a decorator reads the management dialog context, adjusts members such as the automations list, and re-provides it via the newly exported AlertingManagementDialogContextProvider / ScheduledEmailManagementDialogContextProvider.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: d33fde6e156639a69bd104b0a89144e53c9b0498394dbc63f30d859eb278225f
+# schema-hash: 91810ffb6fb0c40dba9b329a17fea1eeada9ba670bf3f8624a84782810375c61
 
 from __future__ import annotations
 
@@ -150,6 +150,8 @@ __all__ = [
     "SourceColumn",
     "State",
     "StringParameterDefinition",
+    "SuppressedTargets",
+    "SuppressedTargets1",
     "Tab",
     "Tags",
     "Target",
@@ -695,10 +697,19 @@ class Rule(TypedDict):
     conditions: list[Condition]
 
 
+class SuppressedTargets(TypedDict):
+    measure: str
+
+
+class SuppressedTargets1(TypedDict):
+    attribute: str
+
+
 class ConditionalFormatting(TypedDict):
     version: NotRequired[str]
     enabled: NotRequired[bool]
     rules: NotRequired[list[Rule]]
+    suppressed_targets: NotRequired[list[SuppressedTargets | SuppressedTargets1]]
 
 
 class AttributeHierarchy(TypedDict):

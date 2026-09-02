@@ -12,38 +12,50 @@ import { type IDropdownBodyRenderProps } from "../Dropdown/Dropdown.js";
 import { AllowedValuesParameterControlDropdown } from "./AllowedValuesParameterControlDropdown.js";
 import { NumberParameterControlDropdown } from "./NumberParameterControlDropdown.js";
 import { StringParameterControlDropdown } from "./StringParameterControlDropdown.js";
+import { type ParameterSubmitModeProps } from "./submitMode.js";
 
 /**
  * @internal
  */
-export interface IParameterControlProps {
+export type IParameterControlProps = {
     name: string;
     definition: IParameterDefinition;
     value: ParameterValue;
     resetValue?: ParameterValue;
     inputId?: string;
     ariaAttributes?: IDropdownBodyRenderProps["ariaAttributes"];
-    onApply: (value: ParameterValue) => void;
-    onCancel: () => void;
-}
+    /**
+     * The control calls this itself after a commit-mode Apply, and after the user selects an
+     * allowed value. The footer Cancel or Close button also calls this. Close does not remove the
+     * staged value.
+     */
+    onClose: () => void;
+} & ParameterSubmitModeProps<ParameterValue>;
 
 /**
- * Selects the parameter editing control by `definition.type` and constraint shape — the single
- * seam where control variants are dispatched. New variants get a sibling control and a new arm
- * here.
+ * Controls the full parameter edit session. It selects the control variant from `definition.type`
+ * and the constraint shape, then gives the commit or staged mode to that variant. To add a
+ * variant, add a sibling control and a new case here.
  *
  * @internal
  */
-export function ParameterControl({
-    name,
-    definition,
-    value,
-    resetValue,
-    inputId,
-    ariaAttributes,
-    onApply,
-    onCancel,
-}: IParameterControlProps) {
+export function ParameterControl(props: IParameterControlProps) {
+    const { name, definition, value, resetValue, inputId, ariaAttributes, onClose } = props;
+
+    function submitAndClose(nextValue: ParameterValue) {
+        if (props.mode === "staged") {
+            props.onStage(nextValue);
+        } else {
+            props.onCommit(nextValue);
+        }
+        onClose();
+    }
+
+    const scalarSubmitProps: ParameterSubmitModeProps<ParameterValue> =
+        props.mode === "staged"
+            ? { mode: "staged", onStage: props.onStage }
+            : { mode: "commit", onCommit: submitAndClose };
+
     switch (definition.type) {
         case "NUMBER":
             return (
@@ -54,8 +66,8 @@ export function ParameterControl({
                     constraints={definition.constraints}
                     inputId={inputId}
                     ariaAttributes={ariaAttributes}
-                    onApply={onApply}
-                    onCancel={onCancel}
+                    {...scalarSubmitProps}
+                    onClose={onClose}
                 />
             );
         case "STRING": {
@@ -67,8 +79,8 @@ export function ParameterControl({
                     defaultValue={resetValue === undefined ? definition.defaultValue : String(resetValue)}
                     allowedValues={allowedValues}
                     ariaAttributes={ariaAttributes}
-                    onApply={onApply}
-                    onCancel={onCancel}
+                    onSelect={submitAndClose}
+                    onClose={onClose}
                 />
             ) : (
                 <StringParameterControlDropdown
@@ -78,8 +90,8 @@ export function ParameterControl({
                     constraints={definition.constraints}
                     inputId={inputId}
                     ariaAttributes={ariaAttributes}
-                    onApply={onApply}
-                    onCancel={onCancel}
+                    {...scalarSubmitProps}
+                    onClose={onClose}
                 />
             );
         }

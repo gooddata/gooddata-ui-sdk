@@ -10,6 +10,7 @@ import {
     type IFilter,
     type IInsightWidget,
     areObjRefsEqual,
+    dashboardAttributeFilterItemToAttributeFilter,
     filterObjRef,
     idRef,
     isArbitraryAttributeFilter,
@@ -21,7 +22,6 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
-import { dashboardAttributeFilterItemToAttributeFilter } from "../../../converters/filterConverters.js";
 import { queryWidgetFilters } from "../../queries/widgets.js";
 import { query } from "../../store/_infra/queryCall.js";
 import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors.js";

@@ -11,12 +11,10 @@ import {
     geoConfigForInsightViewComponent,
     isGeoChart,
 } from "../../components/pluggableVisualizations/geoChart/geoConfigCodeGenerator.js";
-import {
-    isPivotTableNext,
-    pivotTableNextConfigForInsightViewComponent,
-} from "../../components/pluggableVisualizations/pivotTableNext/pivotTableNextConfigFromInsight.js";
+import { pivotTableNextConfigForInsightViewComponent } from "../../components/pluggableVisualizations/pivotTableNext/pivotTableNextConfigFromInsight.js";
 import { type IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor.js";
 import { type PropWithMeta } from "../embeddingCodeGenerator/types.js";
+import { isPivotTableNext } from "../propertiesHelper.js";
 
 /**
  * @internal

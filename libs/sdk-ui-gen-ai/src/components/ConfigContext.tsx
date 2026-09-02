@@ -29,6 +29,7 @@ export type LinkHandlerEvent = {
     dashboardStatus?: "saved" | "draft";
     visualization?: IInsight;
     visualizationStatus?: "saved" | "draft";
+    action: "copy" | "open";
 };
 
 /**

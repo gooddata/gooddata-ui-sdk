@@ -2,7 +2,7 @@
 
 import { type RefObject, createRef } from "react";
 
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
@@ -273,7 +273,9 @@ describe("ShortenedText", () => {
 
         await userEvent.hover(screen.getByText("…", { exact: false }));
         // After hover: full text appears a second time inside the bubble.
-        expect(screen.getAllByText(longText)).toHaveLength(2);
+        await waitFor(() => {
+            expect(screen.getAllByText(longText)).toHaveLength(2);
+        });
     });
 
     it("should not render bubble if displayTooltip is false", async () => {

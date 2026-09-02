@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type ReactNode, memo, useCallback } from "react";
+import { type NamedExoticComponent, type ReactNode, memo, useCallback } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
@@ -53,7 +53,7 @@ export interface ILegendProps {
 /**
  * @internal
  */
-export const Legend = memo(function Legend({
+export const Legend: NamedExoticComponent<ILegendProps> = memo(function Legend({
     responsive = false,
     legendItemsEnabled = [] as any,
     height = 0,

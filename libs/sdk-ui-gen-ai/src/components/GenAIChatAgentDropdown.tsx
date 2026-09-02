@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo } from "react";
 
 import cx from "classnames";
 import { defineMessages, useIntl } from "react-intl";
+import { useSelector } from "react-redux";
 
 import { type GenAIChatEffort } from "@gooddata/sdk-model";
 import {
@@ -22,8 +23,10 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { type GenAIAgent, type IChatConversationLocal } from "../model.js";
+import { reasoningEffortEnabledSelector } from "../store/chatWindow/chatWindowSelectors.js";
+import type { RootState } from "../store/types.js";
 
-import { useCustomization } from "./CustomizationProvider.js";
+import { useCustomization } from "./CustomizationContext.js";
 import {
     GenAIChatReasoningMenuRow,
     REASONING_MENU_ITEM_ID,
@@ -64,8 +67,8 @@ export type GenAIChatAgentDropdownProps = {
     isDisabled?: boolean;
     isLoading?: boolean;
     onSelectAgent: (agentId: string | undefined, options?: { showChangeEvent?: boolean }) => void;
-    reasoningEnabled?: boolean;
     selectedEffort?: GenAIChatEffort;
+    effectiveSelectedAgentId?: string;
     onSelectEffort?: (effort: GenAIChatEffort) => void;
 };
 
@@ -77,16 +80,20 @@ export function GenAIChatAgentDropdown({
     isDisabled,
     isLoading,
     onSelectAgent,
-    reasoningEnabled = false,
-    selectedEffort = DEFAULT_EFFORT,
     onSelectEffort,
+    selectedEffort = DEFAULT_EFFORT,
+    effectiveSelectedAgentId: effectiveSelectedAgentIdFromProps,
 }: GenAIChatAgentDropdownProps) {
+    const reasoningEnabled = useSelector((state: RootState) => reasoningEffortEnabledSelector(state));
+
     const intl = useIntl();
-    const effectiveSelectedAgentId = getEffectiveSelectedAgentId({
-        agents,
-        conversationAgentId,
-        selectedAgentId,
-    });
+    const effectiveSelectedAgentId =
+        effectiveSelectedAgentIdFromProps ??
+        getEffectiveSelectedAgentId({
+            agents,
+            conversationAgentId,
+            selectedAgentId,
+        });
     const selectedAgent = agents.find((agent) => agent.id === effectiveSelectedAgentId);
     const agentLabel = intl.formatMessage(msgs.agent);
     const loadingLabel = `${intl.formatMessage(msgs.loading)}…`;

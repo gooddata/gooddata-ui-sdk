@@ -1,13 +1,13 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { IPackage } from "../types.js";
+import { IPackage, Rules } from "../types.js";
 
 export const playwrightPlugin: IPackage = {
     name: "eslint-plugin-playwright",
     version: "2.10.1",
 };
 
-export const playwrightRules = {
+export const playwrightRules: Rules = {
     "no-empty-pattern": "off",
     "playwright/consistent-spacing-between-blocks": "warn",
     "playwright/expect-expect": "warn",

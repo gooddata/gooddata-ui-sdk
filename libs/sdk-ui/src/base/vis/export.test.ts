@@ -31,4 +31,35 @@ describe("createExportFunction", () => {
             { executionResult: layerResult, title: "layertitlewithchars" },
         ]);
     });
+
+    it("forwards conditionalFormatting to the export request when provided", async () => {
+        const captured: IExportConfig[] = [];
+        const result = {
+            export: (config: IExportConfig) => {
+                captured.push(config);
+                return Promise.resolve({ uri: "", objectUrl: "" });
+            },
+        } as unknown as IExecutionResult;
+
+        await createExportFunction(result)({
+            format: "xlsx",
+            conditionalFormatting: { enabled: true, rules: [] },
+        } as IExtendedExportConfig);
+
+        expect(captured[0].conditionalFormatting).toEqual({ enabled: true, rules: [] });
+    });
+
+    it("omits conditionalFormatting from the export request when not provided", async () => {
+        const captured: IExportConfig[] = [];
+        const result = {
+            export: (config: IExportConfig) => {
+                captured.push(config);
+                return Promise.resolve({ uri: "", objectUrl: "" });
+            },
+        } as unknown as IExecutionResult;
+
+        await createExportFunction(result)({ format: "xlsx" } as IExtendedExportConfig);
+
+        expect(captured[0]).not.toHaveProperty("conditionalFormatting");
+    });
 });

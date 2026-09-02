@@ -11,7 +11,6 @@ import { noBarrelFiles } from "./configurations/no-barrel-files.js";
 import { noOnlyTests } from "./configurations/no-only-tests.js";
 import { oxc } from "./configurations/oxc.js";
 import { playwright } from "./configurations/playwright.js";
-import { security } from "./configurations/security.js";
 import { sonarjs } from "./configurations/sonarjs.js";
 import { storybook } from "./configurations/storybook.js";
 import { testingLibraryDom, testingLibraryReact } from "./configurations/testing-library.js";
@@ -28,7 +27,6 @@ export const common: IConfiguration[] = [
     noBarrelFiles,
     importX,
     sonarjs,
-    security,
 ];
 
 // please note, if you modify keys in the following array, please run `npm run update-package` in addition to `npm run build`

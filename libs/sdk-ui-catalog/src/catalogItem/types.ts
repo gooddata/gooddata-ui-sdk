@@ -5,6 +5,7 @@ import type {
     IAnalyticalBackend,
 } from "@gooddata/sdk-backend-spi";
 import type {
+    AccessGranularPermission,
     CertificationStatus,
     IDataSetMetadataObject,
     IParameterDefinition,
@@ -117,6 +118,8 @@ export interface ICatalogItemMeasure extends ICatalogItemBase {
     isHiddenFromKda?: boolean;
     format?: string | null;
     metricType?: MetricType;
+    /** Object-level permissions, only when the query asked for them. Undefined otherwise. */
+    permissions?: AccessGranularPermission[];
 }
 
 /**
@@ -202,6 +205,8 @@ export interface ICatalogItemQueryOptions {
     isHidden?: boolean;
     certification?: boolean;
     pageSize?: number;
+    /** Ask for each metric's object-level permissions, kept on ICatalogItemMeasure.permissions. */
+    loadPermissions?: boolean;
 }
 
 export interface ICatalogItemSemanticSearchOptions {

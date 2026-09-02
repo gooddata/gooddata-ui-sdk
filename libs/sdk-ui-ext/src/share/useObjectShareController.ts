@@ -58,7 +58,14 @@ export function useObjectShareController(
     target: IObjectPermissionsObject | undefined,
     options?: IUseObjectShareOptions,
 ): IObjectShareController {
-    const { labels = NO_LABELS, labelsError = false, labelsLoading = false } = options ?? {};
+    const {
+        labels = NO_LABELS,
+        labelsError = false,
+        labelsLoading = false,
+        draft = false,
+        initialDraft,
+        initialDraftGeneralAccess,
+    } = options ?? {};
     const toast = useToastMessage();
 
     // UI-local buffers — never backend data.
@@ -94,7 +101,8 @@ export function useObjectShareController(
         applyRuleEdit,
         settleRuleEdit,
         failRuleEdit,
-    } = useAccessList(target);
+        draft: draftValue,
+    } = useAccessList(target, { draft, initialDraft, initialDraftGeneralAccess });
 
     // Grantee ids the label-scope probe resolves against — a removing row is excluded
     // so its scope is dropped, not re-seeded.
@@ -109,6 +117,13 @@ export function useObjectShareController(
     }, [grantees]);
 
     // Per-label scope resolution + the single label-write path live in their own hook.
+    // Label grants are written as they change, which a draft cannot allow. Reporting none
+    // switches that path off; labels never resolve without a target and would lock the UI.
+    const draftLabels = draft ? NO_LABELS : labels;
+    // The flags go with the labels: either left true would disable every control forever.
+    const draftLabelsError = draft ? false : labelsError;
+    const draftLabelsLoading = draft ? false : labelsLoading;
+
     const {
         effectiveLabels,
         labelsResolved,
@@ -122,7 +137,14 @@ export function useObjectShareController(
         reconcileLabelScope,
         reconcileLabelScopes,
         regradeLabelScope,
-    } = useLabelScope(target, labels, hasList, committedGranteeIds, labelsError, labelsLoading);
+    } = useLabelScope(
+        target,
+        draftLabels,
+        hasList,
+        committedGranteeIds,
+        draftLabelsError,
+        draftLabelsLoading,
+    );
 
     // The labels THIS workspace granted — the only ones a write may touch. Read straight
     // from the tracked direct set rather than subtracting "inherited" from the scope: the
@@ -798,12 +820,14 @@ export function useObjectShareController(
         // adding a grantee hides it and removing the last one brings it back.
         // A share-capable rule also passes the gate, judged from the SEED. A group
         // grant is another way in this cannot see: the heuristic's accepted blind spot.
+        //
+        // A draft has no list to infer from, so it asks the workspace permission instead.
+        // `=== true` so an unread permission is not reported as Admin.
+        const explainsAccessWithoutAGrant = draft
+            ? isWorkspaceManager === true
+            : status === "success" && seededWithoutSelfGrant && !seededRuleShareCapable;
         const adminSelfRow =
-            status === "success" &&
-            seededWithoutSelfGrant &&
-            grantees.length === 0 &&
-            !seededRuleShareCapable &&
-            selfIdentity
+            explainsAccessWithoutAGrant && grantees.length === 0 && selfIdentity
                 ? userDisplayPair(selfIdentity, selfIdentity.id)
                 : undefined;
         return {
@@ -843,6 +867,7 @@ export function useObjectShareController(
         selfIdentity,
         selfIdentityResolved,
         isWorkspaceManager,
+        draft,
         seededWithoutSelfGrant,
         seededRuleShareCapable,
         grantees,
@@ -860,5 +885,8 @@ export function useObjectShareController(
         pendingGrantees,
     ]);
 
-    return useMemo(() => ({ state, actions }), [state, actions]);
+    // Undefined outside draft mode, so an empty draft is not mistaken for a real one.
+    const reportedDraft = draft ? draftValue : undefined;
+
+    return useMemo(() => ({ state, actions, draft: reportedDraft }), [state, actions, reportedDraft]);
 }

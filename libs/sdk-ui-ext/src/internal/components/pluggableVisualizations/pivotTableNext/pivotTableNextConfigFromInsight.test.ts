@@ -46,7 +46,7 @@ function newContext(settingOverrides: Partial<IUserWorkspaceSettings> = {}): IEm
 describe("pivotTableNextConfigFromInsight", () => {
     it("includes conditionalFormatting from insight properties when the setting is enabled", () => {
         const insight = newTableInsight({ conditionalFormatting });
-        const ctx = newContext({ enableConditionalFormatting: true });
+        const ctx = newContext({ enableConditionalFormatting: true, enableNewPivotTable: true });
 
         const config = pivotTableNextConfigFromInsight(insight, ctx);
 

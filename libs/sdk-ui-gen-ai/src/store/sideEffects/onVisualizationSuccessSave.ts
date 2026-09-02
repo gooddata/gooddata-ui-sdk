@@ -55,6 +55,7 @@ export function* onVisualizationSuccessSave({
                         useHostedAnalyticalDesigner,
                     ),
                     visualizationStatus,
+                    action: "open",
                 });
             }
         }
@@ -86,6 +87,7 @@ export function* onVisualizationSuccessSave({
                         useHostedAnalyticalDesigner,
                     ),
                     visualizationStatus,
+                    action: "open",
                 });
             }
         }

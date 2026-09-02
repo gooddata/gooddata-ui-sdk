@@ -1,6 +1,14 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type ChangeEvent, type FocusEvent, memo, useEffect, useRef, useState } from "react";
+import {
+    type ChangeEvent,
+    type FocusEvent,
+    type NamedExoticComponent,
+    memo,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 
 import { memoize } from "lodash-es";
 
@@ -94,74 +102,76 @@ const toNumberValue = (value: string | number | null | undefined): number | null
 /**
  * @internal
  */
-export const InputWithNumberFormat = memo(function InputWithNumberFormat({
-    separators = DEFAULT_SEPARATORS,
-    value: propValue,
-    onChange,
-    onFocus,
-    onBlur,
-    ...restProps
-}: IInputWithNumberFormatProps) {
-    const inputRef = useRef<IInputPureHandle | null>(null);
-    const [value, setValue] = useState(() =>
-        formatNumberWithSeparators(toNumberValue(propValue), separators),
-    );
-    const [isFocused, setIsFocused] = useState(false);
+export const InputWithNumberFormat: NamedExoticComponent<IInputWithNumberFormatProps> = memo(
+    function InputWithNumberFormat({
+        separators = DEFAULT_SEPARATORS,
+        value: propValue,
+        onChange,
+        onFocus,
+        onBlur,
+        ...restProps
+    }: IInputWithNumberFormatProps) {
+        const inputRef = useRef<IInputPureHandle | null>(null);
+        const [value, setValue] = useState(() =>
+            formatNumberWithSeparators(toNumberValue(propValue), separators),
+        );
+        const [isFocused, setIsFocused] = useState(false);
 
-    useEffect(() => {
-        if (!isFocused) {
-            setValue(formatNumberWithSeparators(toNumberValue(propValue), separators));
-        }
-    }, [propValue, isFocused, separators]);
+        useEffect(() => {
+            if (!isFocused) {
+                setValue(formatNumberWithSeparators(toNumberValue(propValue), separators));
+            }
+        }, [propValue, isFocused, separators]);
 
-    const handleCaretShift = (e: ChangeEvent<HTMLInputElement>) => {
-        const caretPosition = (e.target.selectionStart ?? 1) - 1;
+        const handleCaretShift = (e: ChangeEvent<HTMLInputElement>) => {
+            const caretPosition = (e.target.selectionStart ?? 1) - 1;
 
-        // Use setTimeout to ensure the DOM has updated before setting selection
-        setTimeout(() => {
-            inputRef.current?.inputNodeRef?.setSelectionRange(caretPosition, caretPosition);
-        }, 0);
-    };
+            // Use setTimeout to ensure the DOM has updated before setting selection
+            setTimeout(() => {
+                inputRef.current?.inputNodeRef?.setSelectionRange(caretPosition, caretPosition);
+            }, 0);
+        };
 
-    const handleChange = (newValue: any, e: ChangeEvent<HTMLInputElement>): void => {
-        if (value === newValue) {
-            return;
-        }
+        const handleChange = (newValue: any, e: ChangeEvent<HTMLInputElement>): void => {
+            if (value === newValue) {
+                return;
+            }
 
-        if (!isValid(newValue, separators)) {
-            handleCaretShift(e);
-            return;
-        }
+            if (!isValid(newValue, separators)) {
+                handleCaretShift(e);
+                return;
+            }
 
-        setValue(newValue);
-        const parsedValue = parse(newValue, separators);
-        onChange?.(parsedValue);
-    };
+            setValue(newValue);
+            const parsedValue = parse(newValue, separators);
+            onChange?.(parsedValue);
+        };
 
-    const handleFocus = (e: FocusEvent<HTMLInputElement>): void => {
-        // Strip thousand separators on focus so the user edits plain digits instead of having to
-        // navigate/delete through baked-in separators. They are re-applied on blur.
-        setValue(removeThousandSeparators(value, separators));
-        setIsFocused(true);
-        onFocus?.(e);
-    };
+        const handleFocus = (e: FocusEvent<HTMLInputElement>): void => {
+            // Strip thousand separators on focus so the user edits plain digits instead of having to
+            // navigate/delete through baked-in separators. They are re-applied on blur.
+            setValue(removeThousandSeparators(value, separators));
+            setIsFocused(true);
+            onFocus?.(e);
+        };
 
-    const handleBlur = (e: FocusEvent<HTMLInputElement>): void => {
-        setValue(formatNumberWithSeparators(parse(value, separators), separators));
-        setIsFocused(false);
-        onBlur?.(e);
-    };
+        const handleBlur = (e: FocusEvent<HTMLInputElement>): void => {
+            setValue(formatNumberWithSeparators(parse(value, separators), separators));
+            setIsFocused(false);
+            onBlur?.(e);
+        };
 
-    return (
-        <InputPure
-            {...restProps}
-            ref={(ref) => {
-                inputRef.current = ref;
-            }}
-            onFocus={handleFocus}
-            onChange={handleChange as IInputPureProps["onChange"]}
-            onBlur={handleBlur}
-            value={value}
-        />
-    );
-});
+        return (
+            <InputPure
+                {...restProps}
+                ref={(ref) => {
+                    inputRef.current = ref;
+                }}
+                onFocus={handleFocus}
+                onChange={handleChange as IInputPureProps["onChange"]}
+                onBlur={handleBlur}
+                value={value}
+            />
+        );
+    },
+);

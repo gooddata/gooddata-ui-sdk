@@ -21,6 +21,7 @@ const messages = defineMessages({
     previewLabel: { id: "parameter_filter.dropdown.preview_label" },
     apply: { id: "parameter_filter.dropdown.apply" },
     cancel: { id: "cancel" },
+    close: { id: "close" },
     increment: { id: "parameter_filter.input.increment" },
     decrement: { id: "parameter_filter.input.decrement" },
 });
@@ -40,8 +41,11 @@ export interface IParameterControlDropdownProps {
     errorMessage?: ReactNode;
     previewValue?: ParameterValue;
     onReset?: () => void;
-    onApply: () => void;
-    onCancel: () => void;
+    /**
+     * Commits the draft. Without this callback, the footer shows only Close.
+     */
+    onApply?: () => void;
+    onClose: () => void;
 }
 
 /**
@@ -63,7 +67,7 @@ export function ParameterControlDropdown({
     previewValue,
     onReset,
     onApply,
-    onCancel,
+    onClose,
 }: IParameterControlDropdownProps) {
     const intl = useIntl();
     const generatedInputId = useId();
@@ -136,23 +140,36 @@ export function ParameterControlDropdown({
                 </>
             )}
             <div className={e("dropdown-footer")}>
-                <UiButton
-                    type="button"
-                    variant="secondary"
-                    size="small"
-                    label={intl.formatMessage(messages.cancel)}
-                    dataTestId="parameter-control-dropdown-cancel"
-                    onClick={onCancel}
-                />
-                <UiButton
-                    type="button"
-                    variant="primary"
-                    size="small"
-                    label={intl.formatMessage(messages.apply)}
-                    dataTestId="parameter-control-dropdown-apply"
-                    onClick={onApply}
-                    isDisabled={!!errorMessage}
-                />
+                {onApply ? (
+                    <>
+                        <UiButton
+                            type="button"
+                            variant="secondary"
+                            size="small"
+                            label={intl.formatMessage(messages.cancel)}
+                            dataTestId="parameter-control-dropdown-cancel"
+                            onClick={onClose}
+                        />
+                        <UiButton
+                            type="button"
+                            variant="primary"
+                            size="small"
+                            label={intl.formatMessage(messages.apply)}
+                            dataTestId="parameter-control-dropdown-apply"
+                            onClick={onApply}
+                            isDisabled={!!errorMessage}
+                        />
+                    </>
+                ) : (
+                    <UiButton
+                        type="button"
+                        variant="secondary"
+                        size="small"
+                        label={intl.formatMessage(messages.close)}
+                        dataTestId="parameter-control-dropdown-close"
+                        onClick={onClose}
+                    />
+                )}
             </div>
         </div>
     );

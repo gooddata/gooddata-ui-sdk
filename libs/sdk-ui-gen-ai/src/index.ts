@@ -112,6 +112,7 @@ export {
     setAmbientUserContextAction,
 } from "./store/chatWindow/chatWindowSlice.js";
 export { type LinkHandlerEvent, type GenAIAssistantMode } from "./components/ConfigContext.js";
+export { type IChatMessagesGroup } from "./components/utils/groupUtility.js";
 export { useGenAiChatAvailability } from "./hooks/useGenAiChatAvailability.js";
 export { useGenAiDispatcher } from "./hooks/useGenAiDispatcher.js";
 
@@ -147,4 +148,25 @@ export {
     type IGenAIAssistantLandingScreenProps,
     type IGenAIAssistantDisclaimerProps,
     type IGenAIAssistantAgentItemProps,
+    type IGenAIAssistantUserMessageProps,
+    type IGenAIAssistantAssistantMessageProps,
+    type IGenAIAssistantMessageTextContentProps,
+    type IGenAIAssistantMessageErrorContentProps,
+    type IGenAIAssistantMessageReasoningContentProps,
+    type IGenAIAssistantMessageMultipartContentProps,
+    type IGenAIAssistantFollowUpButtonsProps,
+    type IGenAIAssistantFollowUpQuestionProps,
+    type IGenAIAssistantFeedbackProps,
+    type IGenAIAssistantAgentChooserProps,
 } from "./components/customized/types.js";
+
+export { DefaultAssistantMessage } from "./components/customized/AssistantMessage.js";
+export { DefaultMessageErrorContent } from "./components/customized/MessageErrorContent.js";
+export { DefaultMessageMultipartContent } from "./components/customized/MessageMultipartContent.js";
+export { DefaultMessageReasoningContent } from "./components/customized/MessageReasoningContent.js";
+export { DefaultMessageTextContent } from "./components/customized/MessageTextContent.js";
+export { DefaultUserMessage } from "./components/customized/UserMessage.js";
+export { DefaultFollowUpButtons } from "./components/customized/FollowUpButtons.js";
+export { DefaultFollowUpQuestion } from "./components/customized/FollowUpQuestion.js";
+export { DefaultFeedback } from "./components/customized/Feedback.js";
+export { DefaultAgentChooser } from "./components/customized/AgentChooser.js";

@@ -7,7 +7,9 @@ import { Typography } from "@gooddata/sdk-ui-kit";
 import { type IGenAIAssistantDisclaimerProps } from "./types.js";
 
 /**
- * @beta
+ * Default implementation of the Disclaimer slot.
+ *
+ * @alpha
  */
 export function DefaultDisclaimer(_props: IGenAIAssistantDisclaimerProps) {
     return (

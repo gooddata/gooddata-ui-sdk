@@ -9,6 +9,7 @@ import { type IStringParameterConstraints, isValidStringParameterValue } from "@
 import { type IDropdownBodyRenderProps } from "../Dropdown/Dropdown.js";
 
 import { ParameterControlDropdown } from "./ParameterControlDropdown.js";
+import { type ParameterSubmitModeProps } from "./submitMode.js";
 
 const messages = defineMessages({
     errorTooShort: { id: "parameter_filter.dropdown.error.tooShort" },
@@ -18,49 +19,46 @@ const messages = defineMessages({
 /**
  * @internal
  */
-export interface IStringParameterControlDropdownProps {
+export type IStringParameterControlDropdownProps = {
     name: string;
     value: string;
     /**
-     * Workspace-default snapshot used by the Reset link. Reset is hidden when this is
-     * `undefined` or equals the current (valid) draft value. Reset writes this value into the
-     * draft input only; the user must click Apply to commit.
+     * The workspace default value for the Reset link. The control hides Reset when this value is
+     * `undefined`, or when it is equal to the current valid draft.
      */
     resetValue?: string;
     constraints?: IStringParameterConstraints;
     inputId?: string;
     ariaAttributes?: IDropdownBodyRenderProps["ariaAttributes"];
-    onApply: (value: string) => void;
-    onCancel: () => void;
-}
+    onClose: () => void;
+} & ParameterSubmitModeProps<string>;
 
 /**
- * Dropdown panel for editing a string parameter value as free text. Owns the draft, inline
- * length validation, and (mode-aware) Reset via `resetValue`.
+ * Dropdown panel to edit a string parameter value as free text. It keeps the draft, does the
+ * inline length validation, and shows the Reset link.
  *
  * @internal
  */
-export function StringParameterControlDropdown({
-    name,
-    value,
-    resetValue,
-    constraints,
-    inputId,
-    ariaAttributes,
-    onApply,
-    onCancel,
-}: IStringParameterControlDropdownProps) {
+export function StringParameterControlDropdown(props: IStringParameterControlDropdownProps) {
+    const { name, value, resetValue, constraints, inputId, ariaAttributes, onClose } = props;
     const [draft, setDraft] = useState<string>(value);
 
     const error = getStringDraftValidationError(draft, constraints);
     const effectiveValue = error ? value : draft;
     const showReset = resetValue !== undefined && effectiveValue !== resetValue;
 
+    function updateDraft(next: string) {
+        setDraft(next);
+        if (props.mode === "staged" && !getStringDraftValidationError(next, constraints)) {
+            props.onStage(next);
+        }
+    }
+
     return (
         <ParameterControlDropdown
             name={name}
             draft={draft}
-            onDraftChange={setDraft}
+            onDraftChange={updateDraft}
             inputType="text"
             inputId={inputId}
             ariaAttributes={ariaAttributes}
@@ -72,9 +70,9 @@ export function StringParameterControlDropdown({
                     />
                 ) : undefined
             }
-            onReset={showReset ? () => setDraft(resetValue) : undefined}
-            onApply={() => onApply(draft)}
-            onCancel={onCancel}
+            onReset={showReset ? () => updateDraft(resetValue) : undefined}
+            onApply={props.mode === "commit" ? () => props.onCommit(draft) : undefined}
+            onClose={onClose}
         />
     );
 }

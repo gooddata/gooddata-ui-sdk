@@ -437,6 +437,27 @@ export function App() {
 }
 ```
 
+### Customization slots
+
+The `GenAIAssistant` component can be customized using the `slots` prop.
+The following slots are available:
+
+| Slot name                 | Description                                                |
+| ------------------------- | ---------------------------------------------------------- |
+| `LandingScreen`           | Custom screen rendered before any messages are sent.       |
+| `Disclaimer`              | Custom content rendered below the chat input.              |
+| `AgentItem`               | Custom rendering for each agent in the agent chooser.      |
+| `UserMessage`             | Custom wrapper for user messages.                          |
+| `AssistantMessage`        | Custom wrapper for assistant messages.                     |
+| `MessageTextContent`      | Custom rendering for text message content.                 |
+| `MessageErrorContent`     | Custom rendering for error message content.                |
+| `MessageReasoningContent` | Custom rendering for assistant reasoning content.          |
+| `MessageMultipartContent` | Custom rendering for complex messages with multiple parts. |
+| `FollowUpButtons`         | Custom wrapper for the list of follow-up buttons.          |
+| `Feedback`                | Custom rendering for message feedback buttons.             |
+| `FollowUpQuestion`        | Custom rendering for an individual follow-up question.     |
+| `AgentChooser`            | Custom rendering for the whole agent chooser component.    |
+
 ## Initial Assistant Experience
 
 The initial assistant experience defines what users see before they send their first message to the AI Assistant. It is used to introduce the assistant, provide guidance, and offer suggested questions to help users get started. Once a user submits a question the assistant switches to the standard chat interface. By default, the AI Assistant displays a built-in initial experience with a title and quick questions, which you can fully replace or customize to match your application’s branding and guidance needs.
@@ -475,6 +496,14 @@ Available components:
 - `DefaultLandingScreen`
 - `DefaultLandingTitle` and `DefaultLandingTitleAscent`
 - `DefaultLandingQuestion`
+
+**LandingScreen props**
+
+| Prop name       | Type      | Description                                             |
+| --------------- | --------- | ------------------------------------------------------- |
+| `isFullscreen`  | `boolean` | Whether the assistant is in fullscreen mode.            |
+| `isBigScreen`   | `boolean` | Whether the chat is rendered on a large screen (>= md). |
+| `isSmallScreen` | `boolean` | Whether the chat is rendered on a small screen (< md).  |
 
 To extend the default experience (for example, to customize the suggested questions), wrap
 the `Default` component provided in the slot props in your own component and provide custom children:
@@ -546,6 +575,10 @@ while still benefiting from the automated assistant interactions.
 
 You can also customize or hide the disclaimer rendered below the chat input using `slots.Disclaimer`.
 
+Available components:
+
+- `DefaultDisclaimer`
+
 ```tsx
 import { GenAIAssistant } from "@gooddata/sdk-ui-gen-ai";
 
@@ -578,7 +611,71 @@ export const App = () => (
 
 ### Customizing the agent chooser
 
-You can customize how individual agents are rendered in the agent chooser dropdown using `slots.AgentItem`.
+You can customize the whole agent chooser component using `slots.AgentChooser`. This allows you to replace the default agent dropdown with your own UI.
+
+Available components:
+
+- `DefaultAgentChooser`
+
+**AgentChooser props**
+
+| Prop name                  | Type                                                                      | Description                                                                                 |
+| -------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `agents`                   | `GenAIAgent[]`                                                            | The available agents to choose from.                                                        |
+| `conversations`            | `IChatConversationLocal[]`                                                | (Optional) The conversations in the chat history.                                           |
+| `conversationAgentId`      | `string`                                                                  | (Optional) The agent id associated with the current conversation.                           |
+| `selectedAgentId`          | `string`                                                                  | (Optional) The currently selected agent id.                                                 |
+| `effectiveSelectedAgentId` | `string`                                                                  | (Optional) The effective selected agent id, taking into account current conversation state. |
+| `isDisabled`               | `boolean`                                                                 | Whether the agent chooser is disabled.                                                      |
+| `isLoading`                | `boolean`                                                                 | Whether the agent chooser is loading.                                                       |
+| `onSelectAgent`            | `(agentId: string \| undefined, options?: { showChangeEvent?: boolean })` | Callback when an agent is selected.                                                         |
+| `selectedEffort`           | `GenAIChatEffort`                                                         | The currently selected reasoning effort.                                                    |
+| `onSelectEffort`           | `(effort: GenAIChatEffort) => void`                                       | Callback when a reasoning effort is selected.                                               |
+
+```tsx
+import { GenAIAssistant, IGenAIAssistantAgentChooserProps } from "@gooddata/sdk-ui-gen-ai";
+import { ISlotProps } from "@gooddata/sdk-ui-kit";
+
+const CustomAgentChooser = ({ Default, defaultProps }: ISlotProps<IGenAIAssistantAgentChooserProps>) => {
+    const { agents, onSelectAgent, effectiveSelectedAgentId } = defaultProps;
+    return (
+        <div style={{ border: "1px solid #ccc", padding: 4 }}>
+            <select value={effectiveSelectedAgentId} onChange={(e) => onSelectAgent(e.target.value)}>
+                {agents.map((agent) => (
+                    <option key={agent.id} value={agent.id}>
+                        {agent.title}
+                    </option>
+                ))}
+            </select>
+        </div>
+    );
+};
+
+export const App = () => (
+    <GenAIAssistant
+        slots={{
+            AgentChooser: CustomAgentChooser,
+        }}
+    />
+);
+```
+
+### Customizing the agent item
+
+You can customize how individual agents are rendered in the default agent chooser dropdown using `slots.AgentItem`.
+
+Available components:
+
+- `DefaultAgentItem`
+
+**AgentItem props**
+
+| Prop name       | Type                                 | Description                                                      |
+| --------------- | ------------------------------------ | ---------------------------------------------------------------- |
+| `agent`         | `GenAIAgent`                         | The agent object to be rendered.                                 |
+| `isSelected`    | `boolean`                            | Whether the agent is currently selected.                         |
+| `menuItemProps` | `IUiMenuInteractiveItemWrapperProps` | (Optional) Props for the underlying menu item wrapper.           |
+| `Content`       | `ComponentType`                      | (Optional) Component to render as the content of the agent item. |
 
 ```tsx
 import { GenAIAssistant, IGenAIAssistantAgentItemProps } from "@gooddata/sdk-ui-gen-ai";
@@ -627,6 +724,283 @@ const CustomAgentItem = ({ Default, defaultProps }: ISlotProps<IGenAIAssistantAg
         />
     );
 };
+```
+
+### Customizing user and assistant messages
+
+You can customize the wrapper and layout for user and assistant messages using `slots.UserMessage` and `slots.AssistantMessage`.
+
+Available components:
+
+- `DefaultUserMessage`
+- `DefaultAssistantMessage`
+
+#### Message slots props
+
+Both `UserMessage` and `AssistantMessage` receive the same set of props:
+
+| Prop name | Type                    | Description                                         |
+| --------- | ----------------------- | --------------------------------------------------- |
+| `message` | `IChatConversationItem` | The message object to be rendered.                  |
+| `groups`  | `IChatMessagesGroup[]`  | All message groups in the current conversation.     |
+| `isLast`  | `boolean`               | Whether this message is the last one in the thread. |
+
+```tsx
+import {
+    GenAIAssistant,
+    IGenAIAssistantUserMessageProps,
+    IGenAIAssistantAssistantMessageProps,
+} from "@gooddata/sdk-ui-gen-ai";
+import { ISlotProps } from "@gooddata/sdk-ui-kit";
+
+const CustomUserMessage = ({ Default, defaultProps }: ISlotProps<IGenAIAssistantUserMessageProps>) => (
+    <div style={{ border: "1px solid blue", borderRadius: 8, margin: "4px 0" }}>
+        <Default {...defaultProps} />
+    </div>
+);
+
+const CustomAssistantMessage = ({
+    Default,
+    defaultProps,
+}: ISlotProps<IGenAIAssistantAssistantMessageProps>) => (
+    <div style={{ border: "1px solid green", borderRadius: 8, margin: "4px 0" }}>
+        <Default {...defaultProps} />
+    </div>
+);
+
+export const App = () => (
+    <GenAIAssistant
+        slots={{
+            UserMessage: CustomUserMessage,
+            AssistantMessage: CustomAssistantMessage,
+        }}
+    />
+);
+```
+
+### Customizing message content
+
+For granular control over message rendering, you can customize specific content types:
+
+- `MessageTextContent`: Customizes the rendering of text and linked metadata objects.
+- `MessageErrorContent`: Customizes how errors are displayed within the chat.
+- `MessageReasoningContent`: Customizes the rendering of the assistant's reasoning or thought process.
+- `MessageMultipartContent`: Customizes the rendering of complex messages containing multiple parts.
+
+Available components:
+
+- `DefaultMessageTextContent`
+- `DefaultMessageErrorContent`
+- `DefaultMessageReasoningContent`
+- `DefaultMessageMultipartContent`
+
+#### Message content slots props
+
+Each content slot receives props specific to the content type:
+
+**MessageTextContent**
+
+| Prop name   | Type                  | Description                                            |
+| ----------- | --------------------- | ------------------------------------------------------ |
+| `text`      | `string`              | The text content of the message.                       |
+| `objects`   | `TextContentObject[]` | Metadata objects to be rendered as links in the text.  |
+| `isLoading` | `boolean`             | Whether the content is still being streamed or loaded. |
+
+**MessageErrorContent**
+
+| Prop name   | Type      | Description                                            |
+| ----------- | --------- | ------------------------------------------------------ |
+| `error`     | `string`  | The error message or code.                             |
+| `message`   | `string`  | Detailed error message.                                |
+| `isLoading` | `boolean` | Whether the content is still being streamed or loaded. |
+
+**MessageReasoningContent**
+
+| Prop name   | Type                  | Description                                            |
+| ----------- | --------------------- | ------------------------------------------------------ |
+| `summary`   | `string`              | The reasoning summary or thought process.              |
+| `objects`   | `TextContentObject[]` | Metadata objects referenced in the reasoning.          |
+| `isLoading` | `boolean`             | Whether the content is still being streamed or loaded. |
+
+**MessageMultipartContent**
+
+| Prop name    | Type                                    | Description                                             |
+| ------------ | --------------------------------------- | ------------------------------------------------------- |
+| `message`    | `IChatConversationItem`                 | The original message containing the multipart content.  |
+| `parts`      | `IChatConversationMultipartLocalPart[]` | The individual parts (text, images, etc.) to be render. |
+| `references` | `TextContentObject[]`                   | Shared metadata object references for all parts.        |
+
+```tsx
+import {
+    GenAIAssistant,
+    IGenAIAssistantMessageTextContentProps,
+    IGenAIAssistantMessageErrorContentProps,
+    IGenAIAssistantMessageReasoningContentProps,
+    IGenAIAssistantMessageMultipartContentProps,
+} from "@gooddata/sdk-ui-gen-ai";
+import { ISlotProps } from "@gooddata/sdk-ui-kit";
+
+const CustomTextContent = ({ Default, defaultProps }: ISlotProps<IGenAIAssistantMessageTextContentProps>) => (
+    <div style={{ fontStyle: "italic", color: "#333" }}>
+        <Default {...defaultProps} />
+    </div>
+);
+
+const CustomErrorContent = ({
+    Default,
+    defaultProps,
+}: ISlotProps<IGenAIAssistantMessageErrorContentProps>) => (
+    <div style={{ backgroundColor: "#fff0f0", border: "1px solid red", padding: 8 }}>
+        <strong>Error:</strong> <Default {...defaultProps} />
+    </div>
+);
+
+const CustomReasoningContent = ({
+    Default,
+    defaultProps,
+}: ISlotProps<IGenAIAssistantMessageReasoningContentProps>) => (
+    <div style={{ borderLeft: "2px solid #ccc", paddingLeft: 8, opacity: 0.8 }}>
+        <Default {...defaultProps} />
+    </div>
+);
+
+const CustomMultipartContent = ({
+    Default,
+    defaultProps,
+}: ISlotProps<IGenAIAssistantMessageMultipartContentProps>) => (
+    <div className="custom-multipart">
+        <Default {...defaultProps} />
+    </div>
+);
+
+export const App = () => (
+    <GenAIAssistant
+        slots={{
+            MessageTextContent: CustomTextContent,
+            MessageErrorContent: CustomErrorContent,
+            MessageReasoningContent: CustomReasoningContent,
+            MessageMultipartContent: CustomMultipartContent,
+        }}
+    />
+);
+```
+
+### Customizing follow-up questions and feedback
+
+You can customize the interactive elements that appear after assistant messages, such as follow-up question buttons and feedback options.
+
+#### Follow-up buttons
+
+Use `slots.FollowUpButtons` to customize the list of suggested follow-up questions.
+
+Available components:
+
+- `DefaultFollowUpButtons`
+
+**Follow-up buttons props**
+
+| Prop name     | Type                    | Description                                         |
+| ------------- | ----------------------- | --------------------------------------------------- |
+| `message`     | `IChatConversationItem` | The assistant message these buttons are for.        |
+| `suggestions` | `IChatSuggestion[]`     | The list of suggested questions from the assistant. |
+
+```tsx
+import { GenAIAssistant, IGenAIAssistantFollowUpButtonsProps } from "@gooddata/sdk-ui-gen-ai";
+import { ISlotProps } from "@gooddata/sdk-ui-kit";
+
+const CustomFollowUpButtons = ({
+    Default,
+    defaultProps,
+}: ISlotProps<IGenAIAssistantFollowUpButtonsProps>) => (
+    <div style={{ border: "1px dashed gray", padding: 8 }}>
+        <p>Suggestions:</p>
+        <Default {...defaultProps} />
+    </div>
+);
+
+export const App = () => (
+    <GenAIAssistant
+        slots={{
+            FollowUpButtons: CustomFollowUpButtons,
+        }}
+    />
+);
+```
+
+#### Feedback
+
+Use `slots.Feedback` to customize the thumbs up/down feedback buttons.
+
+Available components:
+
+- `DefaultFeedback`
+
+**Feedback props**
+
+| Prop name    | Type                    | Description                                                  |
+| ------------ | ----------------------- | ------------------------------------------------------------ |
+| `message`    | `IChatConversationItem` | The assistant message this feedback is for.                  |
+| `group`      | `IChatMessagesGroup`    | The message group containing the message.                    |
+| `isLast`     | `boolean`               | Whether the related message is the last one in the thread.   |
+| `isHidden`   | `boolean`               | Whether the feedback UI should be hidden.                    |
+| `isComplete` | `boolean`               | Whether the related message is fully generated and complete. |
+
+```tsx
+import { GenAIAssistant, IGenAIAssistantFeedbackProps } from "@gooddata/sdk-ui-gen-ai";
+import { ISlotProps } from "@gooddata/sdk-ui-kit";
+
+const CustomFeedback = ({ Default, defaultProps }: ISlotProps<IGenAIAssistantFeedbackProps>) => (
+    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+        <span>Was this helpful?</span>
+        <Default {...defaultProps} />
+    </div>
+);
+
+export const App = () => (
+    <GenAIAssistant
+        slots={{
+            Feedback: CustomFeedback,
+        }}
+    />
+);
+```
+
+#### Follow-up question
+
+Use `slots.FollowUpQuestion` to customize the rendering of an individual follow-up question.
+
+Available components:
+
+- `DefaultFollowUpQuestion`
+
+**Follow-up question props**
+
+| Prop name    | Type                    | Description                                            |
+| ------------ | ----------------------- | ------------------------------------------------------ |
+| `message`    | `IChatConversationItem` | The assistant message this question is related to.     |
+| `question`   | `string`                | The question text.                                     |
+| `references` | `TextContentObject[]`   | Metadata objects referenced in the follow-up question. |
+
+```tsx
+import { GenAIAssistant, IGenAIAssistantFollowUpQuestionProps } from "@gooddata/sdk-ui-gen-ai";
+import { ISlotProps } from "@gooddata/sdk-ui-kit";
+
+const CustomFollowUpQuestion = ({
+    Default,
+    defaultProps,
+}: ISlotProps<IGenAIAssistantFollowUpQuestionProps>) => (
+    <div style={{ color: "blue", textDecoration: "underline" }}>
+        <Default {...defaultProps} />
+    </div>
+);
+
+export const App = () => (
+    <GenAIAssistant
+        slots={{
+            FollowUpQuestion: CustomFollowUpQuestion,
+        }}
+    />
+);
 ```
 
 ## Resetting the chat thread

@@ -30,13 +30,14 @@ export interface IAllowedValuesParameterControlDropdownProps {
     defaultValue: string;
     allowedValues: IParameterAllowedValue[];
     ariaAttributes?: IDropdownBodyRenderProps["ariaAttributes"];
-    onApply: (value: string) => void;
-    onCancel: () => void;
+    onSelect: (value: string) => void;
+    onClose: () => void;
 }
 
 /**
- * Dropdown panel for picking a string parameter value out of its allowed values. Renders effective
- * titles only and applies on click — there is no draft, hence no Apply/Cancel.
+ * Dropdown panel to select a string parameter value from its allowed values. It shows the
+ * effective titles only, and sends the value through `onSelect` on click. There is no draft, and
+ * therefore no footer. The caller decides if a selection commits or stages the value.
  *
  * @internal
  */
@@ -46,8 +47,8 @@ export function AllowedValuesParameterControlDropdown({
     defaultValue,
     allowedValues,
     ariaAttributes,
-    onApply,
-    onCancel,
+    onSelect,
+    onClose,
 }: IAllowedValuesParameterControlDropdownProps) {
     const intl = useIntl();
     const [search, setSearch] = useState("");
@@ -68,15 +69,15 @@ export function AllowedValuesParameterControlDropdown({
                 searchPlaceholder={intl.formatMessage(messages.searchPlaceholder)}
                 searchLabel={intl.formatMessage(messages.searchLabel)}
                 onSearch={setSearch}
-                closeDropdown={onCancel}
+                closeDropdown={onClose}
                 accessibilityConfig={{ role: "listbox", ariaLabel: name }}
                 getIsItemSelected={isCurrentValue}
-                onKeyDownSelect={(item) => onApply(item.value)}
+                onKeyDownSelect={(item) => onSelect(item.value)}
                 renderItem={({ item, isSelected }) => (
                     <SingleSelectListItem
                         title={getParameterAllowedValueTitle(item)}
                         isSelected={isSelected}
-                        onClick={() => onApply(item.value)}
+                        onClick={() => onSelect(item.value)}
                         suffix={
                             item.value === defaultValue
                                 ? intl.formatMessage(messages.defaultSuffix)

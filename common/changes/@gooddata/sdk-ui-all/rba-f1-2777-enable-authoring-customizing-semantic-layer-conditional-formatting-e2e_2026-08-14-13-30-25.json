@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Adds authoring, per-target on/off control, and AaC YAML round-trip support for semantic-layer conditional formatting on pivot tables.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "rodrigo.balsells@gooddata.com"
+}
