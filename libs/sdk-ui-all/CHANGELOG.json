@@ -2,6 +2,156 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.55.0",
+            "tag": "@gooddata/sdk-ui-all_v11.55.0",
+            "date": "Thu, 03 Sep 2026 06:58:27 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-code-convertors: Route the AAC ranking filter's attribute to the AFM rankingFilter dimensionality instead of appending it to measures in buildAfmExecution, so a ranked dimension is ranked at its own granularity rather than at full result granularity."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Hide AI title and description generation for unsupported object types"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Send all owning-tab parameters in the widget export request (`selectExportEffectiveParameters`)"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: `ParameterControlButton` takes `definition` and derives the allowed value title"
+                    },
+                    {
+                        "comment": "sdk-backend-tiger, sdk-ui-dashboard: Enable string parameters by default; `enableStringParameters` now defaults to `true`"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: `ParameterControl` now takes an explicit submit mode: `mode: \"commit\"` with `onCommit`, or `mode: \"staged\"` with `onStage`, plus one `onClose`. In commit mode, the Apply button commits and the control closes itself; in staged mode, every valid draft is staged immediately, allowed-value picks stage and close, and the footer shows one Close button. The control also closes itself after an allowed-value pick in commit mode."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: In apply-all-at-once mode, all parameter types stage their value as the working value. Apply All then commits the value. No parameter dropdown shows an Apply button. If you type a value, the dropdown stages it as soon as the value is valid, and the dropdown stays open."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Added UiColorPicker."
+                    },
+                    {
+                        "comment": "sdk-embedding: Add the AdCommandData, AdCommand and AdCommandBody unions of the Analytical Designer commands"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Added @alpha Level 2 customization of the alerting and scheduled-export dialogs: per region a props hook (useAlertingDialogFiltersProps and siblings), the default render component (DefaultAlertingDialogFilters and siblings) and a connected block (AlertingDialogFilters and siblings) that a custom dialog component can place in its own markup, plus the dialogs' state hooks (useAlertDraft, useScheduledExportDraft and siblings)."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Added @alpha Level 2 field blocks for the alerting dialog: per condition field a props hook (useAlertingDialogMeasureProps and siblings), the default control (DefaultAlertingDialogMeasure and siblings) and a connected block (AlertingDialogMeasure, AlertingDialogComparisonOperator, AlertingDialogThreshold and siblings) that a custom dialog component can place in its own markup, plus the AutomationDialogFormField row the blocks render through."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Added @alpha Level 2 dialog shells for the automation dialogs: AlertingDialogShell and ScheduledEmailDialogShell render the default dialogs' chrome (overlay, frame, header, action bar, tabs, messages, confirmation steps, loading state) around blocks a custom dialog component places in its own order, taking the caller's submit; plus AlertingDialogFormFieldGroup (the \"When\"/\"Do\" grouping) and useScheduledEmailSubmitOnEnter (the Enter-to-submit guard). The default dialogs are built from the shells."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Added @alpha context-decorator slots for the two automation management dialogs (AlertingManagementDialogContextDecoratorComponent and ScheduledEmailManagementDialogContextDecoratorComponent Dashboard props), mirroring the create/edit dialogs' seam: a decorator reads the management dialog context, adjusts members such as the automations list, and re-provides it via the newly exported AlertingManagementDialogContextProvider / ScheduledEmailManagementDialogContextProvider."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Added an @alpha context-decorator slot for the automation dialogs' shared automations context (AutomationsContextDecoratorComponent Dashboard prop): a decorator reads useAutomationsContext(), adjusts members such as dateFilterConfig, and re-provides via the newly exported AutomationsContextProvider; it decorates both dialog trees (alerting and scheduled email)."
+                    },
+                    {
+                        "comment": "sdk-model: Add the @alpha canCreateMetric helper resolving the effective metric-create capability from the workspace permissions and the enableMetricPermissions feature flag."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Gate the Create metric option in the analytics catalog by the CREATE_METRIC workspace permission behind the enableMetricPermissions feature flag, falling back to the manage-workspace check when the flag is off."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Add a draft mode to the object share dialog, so access can be prepared for an object that does not exist yet and applied once it is created."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Load a metric's object-level EDIT/SHARE/VIEW permissions into IMeasureMetadataObject.permissions when the new loadPermissions catalog option is set."
+                    },
+                    {
+                        "comment": "sdk-model: Add canEditMetric and canShareMetric, the object-level metric permission rules shared by the metric editor and the analytics catalog."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Let a metric's own EDIT and SHARE permissions decide who can edit and share it in the catalog detail, gated by the enableMetricPermissions feature flag."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Ask for a metric's object-level permissions through the metrics query's new withMetaInclude method and the new loadPermissions option on getMeasure."
+                    },
+                    {
+                        "comment": "sdk-backend-spi: Make the target optional on getAvailableAssignees, so grantee candidates can be listed for an object that does not exist yet."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: In apply-all-at-once mode, filters waited for `Apply All` but parameters applied at once. Now parameters also wait. Apply on a parameter control sets a working value. `Apply All` applies the working filters and parameters together. Reset discards the working values. Adds `workingOverride` to `IDashboardParameterEntry`, `selectIsWorkingParametersChanged`, `selectParameterDisplayValueByRef` and `selectIsWorkingSelectionChanged`."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Added the dashboard reference availability signal (IDashboardReferences.unavailable, selectUnavailableObjects, selectUnavailableObjectsMapByType) behind enableDashboardPartialRendering; no rendering change."
+                    },
+                    {
+                        "comment": "Pinned the postcss-value-parser dependency to the exact version 4.2.0 instead of the '^4.2.0' range in @gooddata/sdk-ui-theme-provider."
+                    },
+                    {
+                        "comment": "Pinned the stylelint dependency to the exact version 16.26.1 instead of the '^16.26.1' range."
+                    },
+                    {
+                        "comment": "Pinned the stylelint-config-standard dependency to the exact version 38.0.0 instead of the '^38.0.0' range in @gooddata/stylelint-config."
+                    },
+                    {
+                        "comment": "stylelint-config: Pinned the stylelint-scss dependency to the exact version 6.14.0 instead of the '^6.12.0' range."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Renamed 'Parameters' to 'Placeholders' in the Drill to URL custom URL dialog (panel label, tooltip, URL field placeholder and invalid-placeholder warning) to avoid a terminology clash with the dashboard Parameters feature."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard, sdk-backend-tiger: Fixed Edit Alert treating a parameter as an unavailable filter when its stored value looked like a different type (e.g. a STRING parameter saved with an empty or numeric-looking value). Alert parameter wire values are no longer type-guessed on load; they pass through as strings and are decoded against the workspace parameter definition, so such values round-trip losslessly and the parameter stays visible instead of triggering the stale-filters warning and being dropped."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: let the Mekko chart declare the Stack to 100% checkbox visibility so it is not hidden for a Height-only metric"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Improve handling of CA in Catalog"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: the delete dashboard dialog no longer claims that drilling will be deleted, and now states in a single sentence which objects are deleted along with the dashboard."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Reports SPI now reads and writes the reportPageLayout, reportTemplate and report entities and the REPORTS_BRAND_KIT workspace setting instead of localStorage."
+                    },
+                    {
+                        "comment": "sdk-model: Added @alpha padding to IReportBoxStyle - an inset of a report box's own content in percent of the page width, validated alongside borderRadius; gdc-reports renders it and offers it in the element toolbar next to the radius."
+                    },
+                    {
+                        "comment": "sdk-model, sdk-backend-spi: Added @alpha workspace brand kit for reports (IReportsBrandKit: colors, typography incl. hosted font faces, externally hosted assets) with sanitizeReportsBrandKit for its free-form stored content, brand-kit read/write on IWorkspaceReportsService (getBrandKit/setBrandKit/deleteBrandKit; tiger persists to localStorage until the reportsBrandKit setting is available), and the logoInverse built-in report variable plus reserved image_ variables resolving brand kit images."
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-application: Added @alpha createHostNavigationTakeover and inAppPath - a router-agnostic onHostNavigationRequested handler that drives host chrome navigations landing inside a pluggable application through the application's own router (the host router the chrome navigates with is not observed by the application's), fixing the application header item changing the URL without rendering; adopted by gdc-reports and gdc-catalog."
+                    },
+                    {
+                        "comment": "sdk-ui-kit, sdk-ui-filters: turn the attribute filter selection summary and the filter button's is-not subtitle into single translatable phrases, so locales can reorder them (fixes the Japanese \"は すべて\" / \"次と一致しない …\" word order); English rendering is unchanged"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Fixed the AI chat announcing raw message ids to screen readers."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Fixed the keyboard-active option of a UiPagedVirtualList listbox not being announced to screen readers."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Keep the AI Assistant \"Add context\" popup at a fixed 271px height."
+                    },
+                    {
+                        "comment": "Adds authoring, per-target on/off control, and AaC YAML round-trip support for semantic-layer conditional formatting on pivot tables."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Add `AgentItem` slot for customizable agent chooser experience."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Add support for actionable chips in `UiChip`."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Enhance context selection and update ambient context logic."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Add `Feedback`, `FollowUpButtons`, `FollowUpQuestion` and messages slots."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: insight saves now dual-write conditional formatting into the typed visualizationObject attribute; the free-form content stays authoritative."
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.54.0",
             "tag": "@gooddata/sdk-ui-all_v11.54.0",
             "date": "Thu, 27 Aug 2026 07:57:31 GMT",
