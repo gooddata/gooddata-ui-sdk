@@ -1,6 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { type ReactElement, useCallback } from "react";
+import { type ReactElement, type ReactNode, useCallback } from "react";
 
 import { compact } from "lodash-es";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
@@ -32,9 +32,6 @@ const deleteMessages = defineMessages({
     },
     schedules: {
         id: "deleteDashboardDialog.schedules",
-    },
-    drills: {
-        id: "deleteDashboardDialog.drills",
     },
 });
 
@@ -89,10 +86,10 @@ export function DefaultDeleteDialog({
         return null;
     }
 
-    const messages = compact([
-        showAlertsMessage && deleteMessages.alerts,
-        showSchedulesMessage && deleteMessages.schedules,
-        deleteMessages.drills,
+    // Names of the object types deleted along with the dashboard, woven into one sentence.
+    const objectTypes = compact([
+        showAlertsMessage && intl.formatMessage(deleteMessages.alerts),
+        showSchedulesMessage && intl.formatMessage(deleteMessages.schedules),
     ]);
 
     return (
@@ -105,19 +102,23 @@ export function DefaultDeleteDialog({
             cancelButtonText={intl.formatMessage({ id: "cancel" })}
             submitButtonText={intl.formatMessage({ id: "deleteDashboardDialog.submitButtonText" })}
         >
-            {messages.length > 0 ? (
-                <div>
-                    <FormattedMessage id={deleteMessages.objects.id} values={{ title: dashboardTitle }} />
-                    <ul className="gd-delete-dialog-objects-list">
-                        {messages.map((message) => (
-                            <li key={message.id}>
-                                <FormattedMessage {...message} />
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+            {objectTypes.length > 0 ? (
+                <FormattedMessage
+                    id={deleteMessages.objects.id}
+                    values={{
+                        title: dashboardTitle,
+                        objects: intl.formatList(objectTypes, { type: "unit" }),
+                        strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
+                    }}
+                />
             ) : (
-                <FormattedMessage id={deleteMessages.default.id} values={{ title: dashboardTitle }} />
+                <FormattedMessage
+                    id={deleteMessages.default.id}
+                    values={{
+                        title: dashboardTitle,
+                        strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
+                    }}
+                />
             )}
         </ConfirmDialog>
     );

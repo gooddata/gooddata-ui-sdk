@@ -17,6 +17,7 @@ import {
 import { AsCodeCreateDialog } from "../asCode/AsCodeCreateDialog.js";
 import { getAsCodeDescriptor, useCreatableObjectTypes } from "../asCodeRegistry.js";
 import { useCatalogFeedActions } from "../catalogItem/CatalogFeedContext.js";
+import { useCanCreateMetric } from "../metric/gate.js";
 import { ObjectTypes } from "../objectType/constants.js";
 import { getObjectTypeLabel } from "../objectType/labels.js";
 import type { CatalogCreateObjectType } from "../objectType/types.js";
@@ -44,6 +45,7 @@ export function CreateObjectButton({ onCreateObject }: Props) {
 
     // Widened to the full create-menu vocabulary so redirect-only types can be membership-tested.
     const inCatalogTypes: ReadonlySet<CatalogCreateObjectType> = useCreatableObjectTypes();
+    const canCreateMetric = useCanCreateMetric();
 
     const items = useMemo<IUiMenuItem<CreateItemData>[]>(() => {
         const externalLinkIcon = <MenuItemIcon type="externalLink" />;
@@ -65,11 +67,13 @@ export function CreateObjectButton({ onCreateObject }: Props) {
             ...(inCatalogTypes.has(ObjectTypes.VISUALIZATION)
                 ? []
                 : [interactiveItem(ObjectTypes.VISUALIZATION, true)]),
-            ...(inCatalogTypes.has(ObjectTypes.METRIC) ? [] : [interactiveItem(ObjectTypes.METRIC, true)]),
+            ...(!inCatalogTypes.has(ObjectTypes.METRIC) && canCreateMetric
+                ? [interactiveItem(ObjectTypes.METRIC, true)]
+                : []),
             { type: "separator" },
             ...[...inCatalogTypes].map((type) => interactiveItem(type, false)),
         ];
-    }, [intl, inCatalogTypes]);
+    }, [intl, inCatalogTypes, canCreateMetric]);
 
     const handleSelect = useCallback(
         (item: IUiMenuInteractiveItem<CreateItemData>, _event: MouseEvent | KeyboardEvent) => {

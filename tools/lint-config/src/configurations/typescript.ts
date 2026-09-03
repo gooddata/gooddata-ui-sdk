@@ -120,19 +120,19 @@ const typescriptRulesCommon: Rules = {
             fixStyle: "inline-type-imports",
         },
     ],
-};
-
-export const typescriptRulesNativeSupported: Rules = {
-    ...typescriptRulesCommon,
-};
-
-// todo: https://github.com/oxc-project/oxc/issues/2180
-export const typescriptRulesNativeNotSupported: Rules<"@typescript-eslint"> = {
     "@typescript-eslint/prefer-optional-chain": "error",
     "@typescript-eslint/consistent-type-exports": [
         "error",
         { fixMixedExportsWithInlineTypeSpecifier: false },
     ],
+};
+
+export const typescriptRulesNativeSupported: Rules<"@typescript-eslint"> = {
+    ...typescriptRulesCommon,
+};
+
+// todo: https://github.com/oxc-project/oxc/issues/2180
+export const typescriptRulesNativeNotSupported: Rules<"@typescript-eslint"> = {
     "@typescript-eslint/naming-convention": [
         "error",
         {

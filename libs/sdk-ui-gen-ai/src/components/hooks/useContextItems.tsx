@@ -126,7 +126,7 @@ export function useAmbientContextItems(ambientContext: IGenAIUserContext | undef
                 if (item.type === "dashboard") {
                     return {
                         ...item,
-                        title: thisDashboardLabel,
+                        alternativeTitle: thisDashboardLabel,
                     };
                 }
                 return item;
@@ -177,17 +177,15 @@ function toContextObjects(
     type: ContextObjectKind,
     emptyReferenceLabel: string,
 ): IGenAIContextObject[] {
-    return items.map(
-        (item): IGenAIContextObject => ({
-            id: item.id,
-            ref: item.ref,
-            type,
-            where: "referencedObjects",
-            title: item.title || emptyReferenceLabel || item.id,
-            nesting: 1,
-            ...(item.visualizationUrl ? { visualizationUrl: item.visualizationUrl } : {}),
-        }),
-    );
+    return items.map((item): IGenAIContextObject => ({
+        id: item.id,
+        ref: item.ref,
+        type,
+        where: "referencedObjects",
+        title: item.title || emptyReferenceLabel || item.id,
+        nesting: 1,
+        ...(item.visualizationUrl ? { visualizationUrl: item.visualizationUrl } : {}),
+    }));
 }
 
 function isSameObject(a: IGenAIContextObject, b: IGenAIContextObject): boolean {

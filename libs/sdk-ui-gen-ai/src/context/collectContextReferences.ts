@@ -38,7 +38,7 @@ export function collectContextReferences(
 
     // references
     userContext?.referencedObjects?.forEach((obj) => {
-        if (areObjRefsEqual(obj.context?.ref, selectedContext?.dashboard?.ref)) {
+        if (obj.context && areObjRefsEqual(obj.context?.ref, selectedContext?.dashboard?.ref)) {
             return;
         }
         obj.objects.forEach((item) => {

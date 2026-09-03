@@ -40,10 +40,9 @@ type UnsupportedTigerGranularity = (typeof UNSUPPORTED_TIGER_GRANULARITIES)[numb
 // backend adds a granularity, this map stops compiling until it is either mapped below or added to
 // UNSUPPORTED_TIGER_GRANULARITIES, forcing a conscious build-time decision.
 type TigerToSdk = {
-    [key in Exclude<
-        JsonApiAttributeOutAttributesGranularityEnum,
-        UnsupportedTigerGranularity
-    >]: DateAttributeGranularity;
+    [
+        key in Exclude<JsonApiAttributeOutAttributesGranularityEnum, UnsupportedTigerGranularity>
+    ]: DateAttributeGranularity;
 };
 
 type SdkToTiger = {

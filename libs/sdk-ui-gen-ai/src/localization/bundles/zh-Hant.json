@@ -30,6 +30,7 @@
     "gd.gen-ai.input-label.mac": "提出你的問題。使用 control+space 或 cmd+I 取得建議。",
     "gd.gen-ai.input-label.win": "提出你的問題。使用 Control+Space 或 Control+I 取得建議。",
     "gd.gen-ai.context.add_context": "新增內容",
+    "gd.gen-ai.context.focus_on": "聚焦於",
     "gd.gen-ai.context.close": "關閉新增上下文",
     "gd.gen-ai.context.group.ariaLabel": "助理上下文",
     "gd.gen-ai.context.type.dashboard": "儀表板",
@@ -40,6 +41,7 @@
     "gd.gen-ai.context.announcement.empty": "助理上下文現在為空白。",
     "gd.gen-ai.context.remove_context": "從上下文移除 {title}",
     "gd.gen-ai.context.untitled": "無標題",
+    "gd.gen-ai.context.this": "整個儀表板",
     "gd.gen-ai.context.list.ariaLabel": "可用的上下文項目",
     "gd.gen-ai.context.search.placeholder": "搜尋...",
     "gd.gen-ai.context.search.ariaLabel": "搜尋上下文項目",
@@ -273,5 +275,8 @@
     "drill.kda.drop": "降低 {where} {title}",
     "drill.kda.increase": "增加 {where} {title}",
     "drill.kda.no_change": "無變化 {where} {title}",
-    "drill.kda.year_to_year": "同比變化"
+    "drill.kda.year_to_year": "同比變化",
+    "search.results.none": "沒有結果匹配。",
+    "search.results.few": "{count, plural, one {# 結果} other {# 結果}}： {values}",
+    "search.results.many": "{count} 結果"
 }

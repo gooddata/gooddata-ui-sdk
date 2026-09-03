@@ -30,6 +30,7 @@
     "gd.gen-ai.input-label.mac": "Esitä kysymyksesi. Käytä ehdotuksiin ohjausta+tilaa tai cmd+I: tä.",
     "gd.gen-ai.input-label.win": "Esitä kysymyksesi. Käytä ehdotuksiin ohjausta+tilaa tai ohjausta+I.",
     "gd.gen-ai.context.add_context": "Lisää konteksti",
+    "gd.gen-ai.context.focus_on": "Keskity kohteeseen",
     "gd.gen-ai.context.close": "Sulje kontekstin lisääminen",
     "gd.gen-ai.context.group.ariaLabel": "Avustajan konteksti",
     "gd.gen-ai.context.type.dashboard": "Kojelauta",
@@ -40,6 +41,7 @@
     "gd.gen-ai.context.announcement.empty": "Avustajan konteksti on nyt tyhjä.",
     "gd.gen-ai.context.remove_context": "Poista {title} kontekstista",
     "gd.gen-ai.context.untitled": "Nimeämätön",
+    "gd.gen-ai.context.this": "Koko koontinäyttö",
     "gd.gen-ai.context.list.ariaLabel": "Saatavilla olevat kontekstikohteet",
     "gd.gen-ai.context.search.placeholder": "Etsi...",
     "gd.gen-ai.context.search.ariaLabel": "Hae kontekstikohteita",
@@ -273,5 +275,8 @@
     "drill.kda.drop": "Lasku {where} {title}",
     "drill.kda.increase": "Lisäys {where} {title}",
     "drill.kda.no_change": "Ei muutosta {where} {title}",
-    "drill.kda.year_to_year": "Vuosi vuodelta muutos"
+    "drill.kda.year_to_year": "Vuosi vuodelta muutos",
+    "search.results.none": "Ei vastaavia tuloksia.",
+    "search.results.few": "{count, plural, one {# tulos} other {# tulosta}}: {values}",
+    "search.results.many": "{count} tulokset"
 }

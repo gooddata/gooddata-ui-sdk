@@ -306,6 +306,10 @@ export interface IAiAssistantContextChangedEvent extends IPluggableAppEvent {
          * Omitted/undefined clears the context (e.g. the user left the dashboard).
          */
         readonly userContext?: IGenAIUserContext;
+        /**
+         * Whether user context is loading.
+         */
+        readonly userContextLoading?: boolean;
     };
 }
 
@@ -321,6 +325,7 @@ export function aiAssistantContextChanged(payload?: {
     embedded?: boolean;
     disabled?: boolean;
     userContext?: IGenAIUserContext;
+    userContextLoading?: boolean;
 }): IAiAssistantContextChangedEvent {
     return { type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED", payload: payload ?? {} };
 }

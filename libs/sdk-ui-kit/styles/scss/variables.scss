@@ -79,10 +79,7 @@ $gd-palette-success-dimmed: var(
 
 // warning colors
 $gd-palette-warning-base: var(--gd-palette-warning-base, $gd-color-warning);
-$gd-palette-warning-base-text: var(
-    --gd-palette-warning-base-from-theme,
-    $gd-color-warning-text
-); //FIXME: Remove once nowhere used
+$gd-palette-warning-base-text: var(--gd-palette-warning-base-from-theme, $gd-color-warning-text); //FIXME: Remove once nowhere used
 $gd-palette-warning-dimmed: var(
     --gd-palette-warning-dimmed,
     color.mix($gd-color-warning, $default-gd-color-text-light, 20%)

@@ -528,12 +528,12 @@
         "crowdinContext": "Label for the confirmation button in the delete dashboard dialog"
     },
     "deleteDashboardDialog.defaultMessage": {
-        "text": "Are you sure you want to delete dashboard {title}?",
-        "crowdinContext": "Confirmation dialog for deleting a dashboard. The {title} placeholder shows the specific dashboard name."
+        "text": "The dashboard <strong>{title}</strong> will be permanently deleted.",
+        "crowdinContext": "Confirmation shown in the delete dashboard dialog when the dashboard has no associated objects to list. Keep the <strong> tags and the {title} placeholder untranslated; {title} is the dashboard name."
     },
     "deleteDashboardDialog.objectsMessage": {
-        "text": "Following objects associated with the dashboard {title} will be permanently deleted:",
-        "crowdinContext": "Warning message listing objects to be deleted with the dashboard. The {title} placeholder shows the specific dashboard name."
+        "text": "The dashboard <strong>{title}</strong> and {objects} associated with it will be permanently deleted.",
+        "crowdinContext": "Confirmation shown in the delete dashboard dialog when other objects are deleted with the dashboard. Keep the <strong> tags and the {title}/{objects} placeholders untranslated; {title} is the dashboard name and {objects} is a list of object type names."
     },
     "deleteDashboardDialog.alerts": {
         "text": "alerts",
@@ -542,10 +542,6 @@
     "deleteDashboardDialog.schedules": {
         "text": "scheduled exports",
         "crowdinContext": "Label for scheduled exports that will be deleted with the dashboard"
-    },
-    "deleteDashboardDialog.drills": {
-        "text": "drilling",
-        "crowdinContext": "Label for drill configurations that will be removed with the dashboard"
     },
     "deleteWidgetDialog.headline": {
         "text": "Remove widget?",

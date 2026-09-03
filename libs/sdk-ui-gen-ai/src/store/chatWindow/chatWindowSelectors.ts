@@ -155,6 +155,11 @@ export const selectedContextSelector: (state: RootState) => SelectedContext | un
     (state) => state.context.ambientSelected,
 );
 
+export const ambientContextLoadingSelector: (state: RootState) => boolean | undefined = createSelector(
+    chatWindowSliceSelector,
+    (state) => state.context.ambientLoading,
+);
+
 export const hasPinnedContextSelector: (state: RootState) => boolean = createSelector(
     userContextSelector,
     ambientContextSelector,

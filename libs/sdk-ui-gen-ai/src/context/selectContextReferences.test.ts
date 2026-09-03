@@ -294,7 +294,43 @@ describe("updateAmbientContext", () => {
         const result = updateAmbientContext(context, ambient);
 
         expect(result.active?.view?.dashboard?.ref).toEqual(dashRef);
+        expect(result.active?.referencedObjects?.[0]?.objects).toHaveLength(1);
         expect(result.active?.referencedObjects?.[0]?.objects?.[0]?.ref).toEqual(visRef);
+    });
+
+    it("should update dashboard title in active context when ambient title changes", () => {
+        const dashRef = idRef("dash");
+        const context: StoreContext = {
+            loaded: true,
+            ambient: {
+                view: {
+                    dashboard: { ref: dashRef, title: "Old Title" },
+                },
+            } as any,
+            active: {
+                view: {
+                    dashboard: { ref: dashRef, title: "Old Title" },
+                },
+            } as any,
+            ambientSelected: {
+                dashboard: { id: "dash", ref: dashRef, title: "Old Title", where: "view.dashboard" } as any,
+                activated: true,
+            },
+        };
+
+        const ambient = {
+            view: {
+                dashboard: {
+                    ref: dashRef,
+                    title: "New Title",
+                },
+            },
+        } as any;
+
+        const result = updateAmbientContext(context, ambient);
+
+        expect(result.active?.view?.dashboard?.title).toBe("New Title");
+        expect(result.ambientSelected?.dashboard?.title).toBe("New Title");
     });
 });
 
@@ -393,6 +429,7 @@ describe("selectContextReferences", () => {
             ref: visRef,
             type: "visualization",
             where: "referencedObjects",
+            context: dashboard,
         } as any;
 
         // Setup state with references added
@@ -415,5 +452,40 @@ describe("selectContextReferences", () => {
 
         expect(result.active?.view?.dashboard).toBeUndefined();
         expect(result.active?.referencedObjects).toBeUndefined();
+    });
+
+    it("should not duplicate visualization when selection changes and already activated", () => {
+        const dashRef = idRef("d1");
+        const visRef = idRef("v1");
+        const dashboard = { id: "d1", ref: dashRef, type: "dashboard", where: "view.dashboard" } as any;
+        const visualization = {
+            id: "v1",
+            ref: visRef,
+            type: "visualization",
+            where: "referencedObjects",
+            context: dashboard,
+        } as any;
+
+        // Setup state with references added
+        let context: StoreContext = {
+            ambient: {
+                view: {
+                    dashboard: { ref: dashRef, title: "D1" },
+                },
+            } as any,
+            ambientSelected: {
+                dashboard,
+                visualization,
+                activated: true,
+            },
+        };
+        context = addContextReference(context, dashboard);
+        context = addContextReference(context, visualization);
+
+        // Change visualization to the same one (or another one)
+        const result = selectContextReferences(context, { visualization });
+
+        expect(result.active?.referencedObjects?.[0]?.objects).toHaveLength(1);
+        expect(result.active?.referencedObjects?.[0]?.objects?.[0]?.ref).toEqual(visRef);
     });
 });

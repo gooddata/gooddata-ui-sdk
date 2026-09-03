@@ -408,12 +408,10 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const { config = {}, customVisualizationConfig = {}, a11yTitle, a11yDescription } = options;
         const colorMapping: IColorMappingItem[] = supportedControls?.["colorMapping"];
 
-        const validColorMapping = compact(colorMapping).map(
-            (mapItem): IColorMapping => ({
-                predicate: ColorUtils.getColorMappingPredicate(mapItem.id),
-                color: mapItem.color,
-            }),
-        );
+        const validColorMapping = compact(colorMapping).map((mapItem): IColorMapping => ({
+            predicate: ColorUtils.getColorMappingPredicate(mapItem.id),
+            color: mapItem.color,
+        }));
 
         return {
             separators: config.separators,

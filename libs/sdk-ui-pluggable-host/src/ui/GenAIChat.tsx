@@ -79,6 +79,10 @@ export interface IGenAIChatProps {
      */
     ambientUserContext?: IGenAIUserContext;
     /**
+     * Whether the ambient user context is currently loading.
+     */
+    ambientUserContextLoading?: boolean;
+    /**
      * Tag identifiers the assistant's object search/autocomplete should be restricted to,
      * reflecting the active hosted application's current view.
      */
@@ -119,6 +123,7 @@ export function GenAIChat({
     userContext,
     replaceUserContext,
     ambientUserContext,
+    ambientUserContextLoading,
     includeTags,
     excludeTags,
     canManageProject,
@@ -226,6 +231,7 @@ export function GenAIChat({
             agentId={agentId}
             replaceUserContext={replaceUserContext}
             ambientUserContext={ambientUserContext}
+            ambientUserContextLoading={ambientUserContextLoading}
             includeTags={includeTags}
             excludeTags={excludeTags}
             canManage={canManageProject}

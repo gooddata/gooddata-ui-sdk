@@ -53,6 +53,7 @@ export interface IHostChatContext {
      * live filter state), attached by the chat to every message without a one-shot context.
      */
     userContext?: IGenAIUserContext;
+    userContextLoading?: boolean;
 }
 
 export interface IHostChatProps {
@@ -126,6 +127,7 @@ export function HostChat({
         toggle: chatToggle,
         setTags: chatSetTags,
         setAmbientUserContext: chatSetAmbientUserContext,
+        setAmbientUserContextLoading: chatSetAmbientUserContextLoading,
         isOpen: chatIsOpen,
         showChatItem,
     } = chat;
@@ -152,12 +154,14 @@ export function HostChat({
     useEffect(() => {
         chatSetTags(undefined, undefined);
         chatSetAmbientUserContext(undefined);
-    }, [activeAppId, chatSetTags, chatSetAmbientUserContext]);
+        chatSetAmbientUserContextLoading(false);
+    }, [activeAppId, chatSetTags, chatSetAmbientUserContext, chatSetAmbientUserContextLoading]);
 
     useEffect(() => {
         chatSetTags(context?.includeTags, context?.excludeTags);
         chatSetAmbientUserContext(context?.userContext);
-    }, [context, chatSetTags, chatSetAmbientUserContext]);
+        chatSetAmbientUserContextLoading(context?.userContextLoading ?? false);
+    }, [context, chatSetTags, chatSetAmbientUserContext, chatSetAmbientUserContextLoading]);
 
     const visibilitySeq = visibility?.seq;
     useEffect(() => {

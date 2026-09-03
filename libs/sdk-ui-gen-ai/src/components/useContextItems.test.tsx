@@ -411,7 +411,7 @@ describe("useAmbientContextItems", () => {
         });
 
         expect(result.current.items.map((item) => [item.type, item.title])).toEqual([
-            ["dashboard", "This dashboard"],
+            ["dashboard", "Revenue"],
             ["widget", "Sales by Region"],
         ]);
     });

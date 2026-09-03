@@ -764,6 +764,7 @@ export type SemanticSearchContents = {
 // @public (undocumented)
 export const setAmbientUserContextAction: ActionCreatorWithPayload<    {
 userContext?: IGenAIUserContext | undefined;
+loading?: boolean | undefined;
 }, "chatWindow/setAmbientUserContextAction">;
 
 // @public (undocumented)
@@ -808,6 +809,15 @@ export type TextContents = {
 
 // @internal (undocumented)
 export function useGenAiChatAvailability(backend: IAnalyticalBackend, workspaceId?: string, enabled?: boolean, canManage?: boolean): boolean;
+
+// @alpha
+export function useGenAiConversations(): IChatConversationLocal[] | undefined;
+
+// @alpha
+export function useGenAiConversationsLoaded(): boolean;
+
+// @alpha
+export function useGenAiCurrentConversation(): IChatConversationLocal | undefined;
 
 // @public
 export function useGenAiDispatcher(): EnhancedStore["dispatch"];

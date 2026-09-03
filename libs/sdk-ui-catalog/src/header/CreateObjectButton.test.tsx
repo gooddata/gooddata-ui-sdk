@@ -56,7 +56,14 @@ function wrapper({
     children,
     createParameter,
     parameterEnabled,
-}: PropsWithChildren<{ createParameter?: Mock; parameterEnabled?: boolean }>) {
+    permissions = { canManageProject: true } as IWorkspacePermissions,
+    settings,
+}: PropsWithChildren<{
+    createParameter?: Mock;
+    parameterEnabled?: boolean;
+    permissions?: IWorkspacePermissions;
+    settings?: Partial<IUserWorkspaceSettings>;
+}>) {
     const backend = createBackend(createParameter);
 
     return (
@@ -66,10 +73,11 @@ function wrapper({
                     <TestPermissionsProvider
                         result={{
                             ...defaultPermissionsResult,
-                            permissions: { canManageProject: true } as IWorkspacePermissions,
-                            settings: (parameterEnabled
-                                ? { enableParameters: true }
-                                : {}) as IUserWorkspaceSettings,
+                            permissions,
+                            settings: {
+                                ...(parameterEnabled ? { enableParameters: true } : {}),
+                                ...settings,
+                            } as IUserWorkspaceSettings,
                         }}
                     >
                         <CatalogFeedProvider backend={backend} workspace="test-workspace">
@@ -193,5 +201,54 @@ describe("CreateObjectButton", () => {
 
         expect(await screen.findByText("Identifier already exists")).toBeInTheDocument();
         expect(screen.getByText("Create parameter")).toBeInTheDocument();
+    });
+
+    describe("create metric permission", () => {
+        // The flag-and-permission rule is tested in sdk-model's canCreateMetric; these two cover
+        // the wiring of both menu paths.
+        const metricWrapper =
+            (permissions: Partial<IWorkspacePermissions>, settings: Partial<IUserWorkspaceSettings>) =>
+            ({ children }: PropsWithChildren) =>
+                wrapper({ children, permissions: permissions as IWorkspacePermissions, settings });
+
+        it("hides the Metric item when the user may not create metrics", () => {
+            render(<CreateObjectButton onCreateObject={vi.fn()} />, {
+                wrapper: metricWrapper(
+                    { canCreateMetric: false, canManageProject: true },
+                    { enableMetricPermissions: true },
+                ),
+            });
+
+            fireEvent.click(screen.getByText("Create"));
+
+            expect(screen.queryByText("Metric")).not.toBeInTheDocument();
+        });
+
+        it("hides the Metric redirect for a non-admin when the flag is off", () => {
+            render(<CreateObjectButton onCreateObject={vi.fn()} />, {
+                wrapper: metricWrapper({ canCreateMetric: true, canManageProject: false }, {}),
+            });
+
+            fireEvent.click(screen.getByText("Create"));
+
+            expect(screen.queryByText("Metric")).not.toBeInTheDocument();
+        });
+
+        it("opens the as-code dialog for a non-admin who may create metrics", async () => {
+            const onCreateObject = vi.fn();
+
+            render(<CreateObjectButton onCreateObject={onCreateObject} />, {
+                wrapper: metricWrapper(
+                    { canCreateMetric: true, canManageProject: false },
+                    { enableMetricPermissions: true, enableAnalyticalCatalogMetricEditor: true },
+                ),
+            });
+
+            fireEvent.click(screen.getByText("Create"));
+            fireEvent.click(screen.getByText("Metric"));
+
+            expect(await screen.findByText("Create metric")).toBeInTheDocument();
+            expect(onCreateObject).not.toHaveBeenCalled();
+        });
     });
 });

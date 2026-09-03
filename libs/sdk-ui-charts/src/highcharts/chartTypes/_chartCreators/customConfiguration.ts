@@ -254,18 +254,17 @@ function hideOverlappedLabels(
         const { xAxes = [], isViewByTwoAttributes } = chartOptions;
 
         return {
-            xAxis: xAxes.map(
-                (axis: any): XAxisOptions =>
-                    axis
-                        ? {
-                              labels: {
-                                  useHTML: true,
-                                  formatter: isViewByTwoAttributes
-                                      ? formatOverlappingForParentAttribute
-                                      : formatOverlapping,
-                              },
-                          }
-                        : {},
+            xAxis: xAxes.map((axis: any): XAxisOptions =>
+                axis
+                    ? {
+                          labels: {
+                              useHTML: true,
+                              formatter: isViewByTwoAttributes
+                                  ? formatOverlappingForParentAttribute
+                                  : formatOverlapping,
+                          },
+                      }
+                    : {},
             ),
         };
     }
@@ -1805,13 +1804,12 @@ function getReversedStacking(chartOptions: IChartOptions, _config: any, chartCon
     const reversedStacks = isHorizontalBar ? !shouldReverseStacking : true;
 
     return {
-        yAxis: yAxes.map(
-            (axis: IAxis): YAxisOptions =>
-                axis
-                    ? {
-                          reversedStacks,
-                      }
-                    : {},
+        yAxis: yAxes.map((axis: IAxis): YAxisOptions =>
+            axis
+                ? {
+                      reversedStacks,
+                  }
+                : {},
         ),
     };
 }

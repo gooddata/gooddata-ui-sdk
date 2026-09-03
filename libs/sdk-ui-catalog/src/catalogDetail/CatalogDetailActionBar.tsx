@@ -47,15 +47,13 @@ export function CatalogDetailActionBar({
     const actionsMenuItems = useMemo(
         () =>
             actionGroups.flatMap((group, groupIndex): IUiMenuItem<DetailActionMenuItemData>[] => {
-                const items = group.map(
-                    (action): IUiMenuItem<DetailActionMenuItemData> => ({
-                        type: "interactive",
-                        id: action.id,
-                        stringTitle: action.label,
-                        data: { id: action.id, dataTestId: action.dataTestId },
-                        isDestructive: action.isDestructive,
-                    }),
-                );
+                const items = group.map((action): IUiMenuItem<DetailActionMenuItemData> => ({
+                    type: "interactive",
+                    id: action.id,
+                    stringTitle: action.label,
+                    data: { id: action.id, dataTestId: action.dataTestId },
+                    isDestructive: action.isDestructive,
+                }));
                 return groupIndex > 0 ? [{ type: "separator" }, ...items] : items;
             }),
         [actionGroups],

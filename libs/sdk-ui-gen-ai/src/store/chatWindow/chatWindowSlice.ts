@@ -309,7 +309,9 @@ const chatWindowSlice = createSlice({
         },
         setAmbientUserContextAction: (
             state,
-            { payload: { userContext } }: PayloadAction<{ userContext?: IGenAIUserContext }>,
+            {
+                payload: { userContext, loading },
+            }: PayloadAction<{ userContext?: IGenAIUserContext; loading?: boolean }>,
         ) => {
             if (!state.settings?.enableAiContextSetup) {
                 if (!userContext) {
@@ -317,7 +319,7 @@ const chatWindowSlice = createSlice({
                 }
                 return;
             }
-            state.context = updateAmbientContext(state.context, userContext);
+            state.context = updateAmbientContext(state.context, userContext, loading);
         },
         addContextReferenceAction: (
             state,

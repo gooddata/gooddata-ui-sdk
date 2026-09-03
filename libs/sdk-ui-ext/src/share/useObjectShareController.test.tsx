@@ -116,12 +116,10 @@ const CURRENT_USER_REF = idRef("self");
 // `login` — the controller must resolve the current user from `login`, or nothing
 // self-related matches. A spy so tests can anchor on the profile having actually
 // resolved (an unmarked row is also just its unresolved default).
-const getUserMock = vi.fn(
-    async (): Promise<Pick<IUser, "ref" | "login" | "fullName" | "email">> => ({
-        ref: uriRef("/api/v1/profile"),
-        login: "self",
-    }),
-);
+const getUserMock = vi.fn(async (): Promise<Pick<IUser, "ref" | "login" | "fullName" | "email">> => ({
+    ref: uriRef("/api/v1/profile"),
+    login: "self",
+}));
 
 // Only `canManageProject` is read; the interface has ~20 required members, so this is
 // a genuine partial mock.

@@ -5,6 +5,7 @@ import { type ReactNode, forwardRef, useRef } from "react";
 import { simplifyText } from "@gooddata/util";
 
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
+import { type SizeLarge, type SizeMedium } from "../@types/size.js";
 import { bem } from "../@utils/bem.js";
 import { makeKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
@@ -27,6 +28,10 @@ export interface IUiBreadcrumbProps {
     id?: string;
     label: string;
     items: IUiBreadcrumbItem[];
+    /**
+     * Type scale of the trail. "large" pairs with a page's own heading, "medium" sits inside a dialog.
+     */
+    size?: SizeMedium | SizeLarge;
     onSelect?: (item: IUiBreadcrumbItem) => void;
     dataId?: string;
     dataTestId?: string;
@@ -46,7 +51,18 @@ const getGeneratedTestId = (label: string, ariaLabel: string) => {
  */
 export const UiBreadcrumb = forwardRef<HTMLDivElement, IUiBreadcrumbProps>(
     (
-        { id, label, tabIndex = 0, dataId, dataTestId, accessibilityConfig, maxWidth, items, onSelect },
+        {
+            id,
+            label,
+            tabIndex = 0,
+            dataId,
+            dataTestId,
+            accessibilityConfig,
+            maxWidth,
+            items,
+            size = "medium",
+            onSelect,
+        },
         ref,
     ) => {
         const refs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -64,7 +80,7 @@ export const UiBreadcrumb = forwardRef<HTMLDivElement, IUiBreadcrumbProps>(
             <nav
                 id={id}
                 ref={ref}
-                className={b()}
+                className={b({ size })}
                 onKeyDown={onKeyDown}
                 tabIndex={tabIndex}
                 data-id={dataId}

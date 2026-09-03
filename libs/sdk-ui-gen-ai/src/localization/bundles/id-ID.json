@@ -30,6 +30,7 @@
     "gd.gen-ai.input-label.mac": "Ajukan pertanyaan Anda. Gunakan Control+Space atau Cmd+I untuk saran.",
     "gd.gen-ai.input-label.win": "Ajukan pertanyaan Anda. Gunakan Control+Space atau Control+I untuk saran.",
     "gd.gen-ai.context.add_context": "Tambahkan konteks",
+    "gd.gen-ai.context.focus_on": "Fokus pada",
     "gd.gen-ai.context.close": "Tutup penambahan konteks",
     "gd.gen-ai.context.group.ariaLabel": "Konteks asisten",
     "gd.gen-ai.context.type.dashboard": "Dasbor",
@@ -40,6 +41,7 @@
     "gd.gen-ai.context.announcement.empty": "Konteks asisten sekarang kosong.",
     "gd.gen-ai.context.remove_context": "Hapus {title} dari konteks",
     "gd.gen-ai.context.untitled": "Tanpa judul",
+    "gd.gen-ai.context.this": "Seluruh dasbor",
     "gd.gen-ai.context.list.ariaLabel": "Item konteks tersedia",
     "gd.gen-ai.context.search.placeholder": "Cari...",
     "gd.gen-ai.context.search.ariaLabel": "Cari item konteks",
@@ -273,5 +275,8 @@
     "drill.kda.drop": "Penurunan {where} {title}",
     "drill.kda.increase": "Peningkatan {where} {title}",
     "drill.kda.no_change": "Stagnan {where} {title}",
-    "drill.kda.year_to_year": "Perubahan dari tahun ke tahun"
+    "drill.kda.year_to_year": "Perubahan dari tahun ke tahun",
+    "search.results.none": "Tidak ada hasil yang cocok.",
+    "search.results.few": "{count, plural, other {# hasil}}: {values}",
+    "search.results.many": "{count} hasil"
 }

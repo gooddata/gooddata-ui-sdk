@@ -1152,7 +1152,7 @@ export type {
 } from "./theme/index.js";
 
 export type { IWorkspacePermissions, WorkspacePermission } from "./permissions/index.js";
-export { canEditMetric, canShareMetric } from "./permissions/metric.js";
+export { canCreateMetric, canEditMetric, canShareMetric } from "./permissions/metric.js";
 
 export {
     type DataValue,

@@ -326,9 +326,7 @@ $dashboard-group-height: 45px;
     height: 100%;
 
     &.grouped-mobile-navigation-dropdown--has-subgroups {
-        height: calc(
-            100% - #{$dashboard-group-height} - -1px
-        ); // 1px is for item bottom border to not double the border
+        height: calc(100% - #{$dashboard-group-height} - -1px); // 1px is for item bottom border to not double the border
     }
 
     .gd-list-item {

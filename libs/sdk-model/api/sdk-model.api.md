@@ -370,6 +370,9 @@ export type CalendarContext = {
 export type CalendarType = "STANDARD" | "FISCAL";
 
 // @alpha
+export function canCreateMetric(workspacePermissions: IWorkspacePermissions, areMetricPermissionsEnabled: boolean): boolean;
+
+// @alpha
 export function canEditMetric(metricPermissions: AccessGranularPermission[] | undefined, workspacePermissions: IWorkspacePermissions, areMetricPermissionsEnabled: boolean): boolean;
 
 // @alpha

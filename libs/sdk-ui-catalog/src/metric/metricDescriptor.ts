@@ -15,7 +15,7 @@ import {
 import type { ICatalogItemMeasure } from "../catalogItem/types.js";
 import { ObjectTypes } from "../objectType/constants.js";
 
-import { METRIC_EDITOR_FEATURE_FLAG } from "./gate.js";
+import { METRIC_EDITOR_FEATURE_FLAG, useCanCreateMetric } from "./gate.js";
 import { metricCompletions } from "./metricCompletions.js";
 import {
     definitionToMetricYaml,
@@ -99,6 +99,7 @@ export const metricDescriptor = defineAsCodeDescriptor<IMeasureMetadataObjectDef
         featureFlag: METRIC_EDITOR_FEATURE_FLAG,
         messages,
         useEditing: useMetricEditing,
+        useCreateGate: useCanCreateMetric,
         createMutationPort: createMetricMutationAdapter,
         emptyDefinition: (defaultTitle) =>
             metricYamlToDefinition({ type: "metric", title: defaultTitle, maql: "SELECT 1" }),

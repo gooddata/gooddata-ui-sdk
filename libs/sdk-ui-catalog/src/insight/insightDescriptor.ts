@@ -7,6 +7,7 @@ import type { IInsightDefinition } from "@gooddata/sdk-model";
 import { type IAsCodeMessages, defineAsCodeDescriptor } from "../asCode/descriptor.js";
 import type { ICatalogItemInsight } from "../catalogItem/types.js";
 import { ObjectTypes } from "../objectType/constants.js";
+import { useWorkspacePermission } from "../permission/PermissionsContext.js";
 
 import { VISUALIZATION_EDITOR_FEATURE_FLAG } from "./gate.js";
 import {
@@ -52,6 +53,14 @@ function useIsInsightItemEditable(item: ICatalogItemInsight): boolean {
     return useIsVisualizationTypeEditable()(item.visualizationType);
 }
 
+function useCanCreateVisualization(): boolean {
+    const canManageProject = useWorkspacePermission("canManageProject");
+    // Without a host-injected codec the editor can never resolve, so creation falls back to Analytical Designer.
+    const hasCodecHost = useHasInsightCodecHost();
+
+    return canManageProject && hasCodecHost;
+}
+
 /**
  * @internal
  */
@@ -63,8 +72,7 @@ export const visualizationDescriptor = defineAsCodeDescriptor<IInsightDefinition
     useEditing: useInsightCodec,
     useRequestEditing: useRequestInsightCodec,
     useIsItemEditable: useIsInsightItemEditable,
-    // Without a host-injected codec the editor can never resolve, so creation falls back to Analytical Designer.
-    useCreateGate: useHasInsightCodecHost,
+    useCreateGate: useCanCreateVisualization,
     createMutationPort: createInsightMutationAdapter,
     emptyDefinition: (defaultTitle) => ({
         insight: {

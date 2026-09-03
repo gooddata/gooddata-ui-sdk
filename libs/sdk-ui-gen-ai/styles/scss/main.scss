@@ -19,7 +19,18 @@
     flex-direction: column;
     gap: 10px;
     width: 245px;
+    height: 271px;
+    box-sizing: border-box;
     padding-bottom: 10px;
+
+    .gd-ui-kit-paged-virtual-list {
+        flex: 0 0 auto;
+        height: 196px;
+    }
+
+    &:has(.gd-list-searchfield) .gd-ui-kit-paged-virtual-list {
+        height: 168px;
+    }
 
     .gd-list-searchfield {
         margin: 0 10px;
@@ -86,6 +97,10 @@
         font-size: 12px;
         line-height: normal;
         color: kit-variables.$gd-color-state-blank;
+
+        .gd-ui-kit-skeleton--inline {
+            display: inline;
+        }
     }
 
     &__global_error {

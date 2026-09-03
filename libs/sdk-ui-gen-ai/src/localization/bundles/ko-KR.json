@@ -30,6 +30,7 @@
     "gd.gen-ai.input-label.mac": "질문을 입력하세요. 제안 사항을 보려면 control+space 또는 cmd+I를 사용하세요.",
     "gd.gen-ai.input-label.win": "질문을 입력하세요. 제안 사항을 보려면 control+space 또는 control+I를 사용하세요.",
     "gd.gen-ai.context.add_context": "컨텍스트 추가",
+    "gd.gen-ai.context.focus_on": "집중할 대상",
     "gd.gen-ai.context.close": "컨텍스트 추가 닫기",
     "gd.gen-ai.context.group.ariaLabel": "어시스턴트 컨텍스트",
     "gd.gen-ai.context.type.dashboard": "대시보드",
@@ -40,6 +41,7 @@
     "gd.gen-ai.context.announcement.empty": "어시스턴트 컨텍스트가 이제 비어 있습니다.",
     "gd.gen-ai.context.remove_context": "컨텍스트에서 {title} 제거",
     "gd.gen-ai.context.untitled": "제목 없음",
+    "gd.gen-ai.context.this": "전체 대시보드",
     "gd.gen-ai.context.list.ariaLabel": "사용 가능한 컨텍스트 항목",
     "gd.gen-ai.context.search.placeholder": "검색...",
     "gd.gen-ai.context.search.ariaLabel": "컨텍스트 항목 검색",
@@ -273,5 +275,8 @@
     "drill.kda.drop": "하락 {where} {title}",
     "drill.kda.increase": "증가 {where} {title}",
     "drill.kda.no_change": "변화 없음 {where} {title}",
-    "drill.kda.year_to_year": "전년 대비 변화"
+    "drill.kda.year_to_year": "전년 대비 변화",
+    "search.results.none": "일치하는 결과가 없습니다.",
+    "search.results.few": "{count, plural, one {# 결과} other {# 결과}}: {values}",
+    "search.results.many": "{count} 결과"
 }

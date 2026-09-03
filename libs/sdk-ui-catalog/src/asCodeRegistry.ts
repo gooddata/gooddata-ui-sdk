@@ -41,8 +41,8 @@ export function useIsAsCodeTypeEditable(descriptor: IAsCodeDescriptor | undefine
 function useIsAsCodeTypeCreatable(descriptor: IAsCodeDescriptor): boolean {
     const isTypeEditable = useIsAsCodeTypeEditable(descriptor);
     const canManageProject = useWorkspacePermission("canManageProject");
-    const createGate = descriptor.useCreateGate?.() ?? true;
-    return isTypeEditable && canManageProject && createGate;
+    const createGate = descriptor.useCreateGate?.() ?? canManageProject;
+    return isTypeEditable && createGate;
 }
 
 /** @internal */

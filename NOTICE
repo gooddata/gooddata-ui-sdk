@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-9-1
+Date generated: 2026-9-2
 
-Revision ID: 3404f1a0d36039369213be192418b30d4f1226a6
+Revision ID: 7ef670e03f3a80048528932c1c99673143d7d03b
 
 ================================================================================
 ================================================================================
@@ -508,6 +508,7 @@ No first party licenses found in gooddata-ui-sdk
 - ms (2.1.3) [MIT]
 - murmurhash-js (1.0.0) [MIT]
 - mute-stream (1.0.0) [ISC]
+- nanoid (3.3.18) [MIT]
 - nanoid (3.3.16) [MIT]
 - node-emoji (2.2.0) [MIT]
 - normalize-path (3.0.0) [MIT]
@@ -518,7 +519,7 @@ No first party licenses found in gooddata-ui-sdk
 - open (7.4.2) [MIT]
 - ora (5.4.1) [MIT]
 - oxc-transform (0.147.0) [MIT]
-- oxfmt (0.58.0) [MIT, 0BSD]
+- oxfmt (0.66.0) [MIT, 0BSD]
 - p-map (3.0.0) [MIT]
 - package-json-from-dist (1.0.1) [blueoak-1.0.0]
 - parent-module (1.0.1) [MIT]
@@ -536,6 +537,7 @@ No first party licenses found in gooddata-ui-sdk
 - playwright (1.62.1) [Apache-2.0, MIT, BSD-3-Clause, blueoak-1.0.0, ISC, CC-BY-4.0]
 - playwright-core (1.62.1) [Apache-2.0, MIT, ISC, BSD-2-Clause, BSD-3-Clause, blueoak-1.0.0, NCSA]
 - polished (3.7.2) [MIT, OFL-1.1]
+- postcss (8.5.26) [MIT]
 - postcss (8.5.10) [MIT]
 - postcss-media-query-parser (0.2.3) [MIT]
 - postcss-resolve-nested-selector (0.1.6) [MIT]
@@ -10463,9 +10465,9 @@ Dependency Path: oxc-transform
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: oxfmt (0.58.0)
+Package Title: oxfmt (0.66.0)
 
-Package Locator: npm+oxfmt$0.58.0
+Package Locator: npm+oxfmt$0.66.0
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -10535,7 +10537,7 @@ SOFTWARE.
 0BSD
 --------------------------------------------------------------------------------
 File matches:
-- dist/plugin-B4cguZ1l.js
+- dist/plugin-Cg3MUYFL.js
   - Copyright (c)  Microsoft Corporation.
 --------------------------------------------------------------------------------
 
@@ -10560,7 +10562,7 @@ MIT
 Authors: boshenc@gmail.com
 Package Manager: NPM
 Project URL: https://oxc.rs/docs/guide/usage/formatter
-Package Download URL: https://registry.npmjs.org/oxfmt/-/oxfmt-0.58.0.tgz
+Package Download URL: https://registry.npmjs.org/oxfmt/-/oxfmt-0.66.0.tgz
 Dependency Path: oxfmt
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
@@ -10907,9 +10909,9 @@ Dependency Path: polished
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: postcss (8.5.10)
+Package Title: postcss (8.5.26)
 
-Package Locator: npm+postcss$8.5.10
+Package Locator: npm+postcss$8.5.26
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -10979,8 +10981,8 @@ MIT
 Authors: andrey@sitnik.es
 Package Manager: NPM
 Project URL: https://postcss.org/
-Package Download URL: https://registry.npmjs.org/postcss/-/postcss-8.5.10.tgz
-Dependency Path: postcss > postcss-scss > postcss > stylelint > postcss > stylelint > postcss-safe-parser > postcss > stylelint-config-standard > stylelint > postcss > stylelint-config-standard > stylelint-config-recommended > stylelint > postcss > stylelint-order > postcss > stylelint-order > postcss-sorting > postcss > stylelint-order > stylelint > postcss > stylelint-plugin-defensive-css > stylelint > postcss
+Package Download URL: https://registry.npmjs.org/postcss/-/postcss-8.5.26.tgz
+Dependency Path: postcss > postcss-scss > postcss > stylelint-order > postcss > stylelint-order > postcss-sorting > postcss
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -11251,7 +11253,7 @@ MIT
 
 Authors: opensource+npm@fb.com, react-core@meta.com
 Package Manager: NPM
-Project URL: https://react.dev/
+Project URL: https://www.npmjs.com/package/react
 Package Download URL: https://registry.npmjs.org/react/-/react-19.1.1.tgz
 Dependency Path: @aaronhayes/react-use-hubspot-form > react > @evil-internetmann/react-dnd > react > @floating-ui/react > @floating-ui/react-dom > react > @floating-ui/react > react > @floating-ui/react-dom > react > @rc-component/picker > @rc-component/overflow > react > @rc-component/picker > @rc-component/trigger > @rc-component/motion > react > react > react-select > @emotion/react > @emotion/use-insertion-effect-with-fallbacks > react > react-select > @emotion/react > react
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -11643,7 +11645,7 @@ MIT
 
 Authors: opensource+npm@fb.com, react-core@meta.com
 Package Manager: NPM
-Project URL: https://react.dev/
+Project URL: https://www.npmjs.com/package/react-dom
 Package Download URL: https://registry.npmjs.org/react-dom/-/react-dom-19.1.1.tgz
 Dependency Path: @aaronhayes/react-use-hubspot-form > react-dom > @floating-ui/react > @floating-ui/react-dom > react-dom > @floating-ui/react > react-dom > @floating-ui/react-dom > react-dom > @rc-component/picker > @rc-component/overflow > @rc-component/resize-observer > react-dom > @rc-component/picker > @rc-component/overflow > react-dom > @rc-component/picker > @rc-component/trigger > @rc-component/motion > react-dom > @rc-component/picker > @rc-component/trigger > @rc-component/portal > react-dom > @rc-component/picker > react-dom > react-dom
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -30317,9 +30319,9 @@ Dependency Path: inquirer > mute-stream
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: nanoid (3.3.16)
+Package Title: nanoid (3.3.18)
 
-Package Locator: npm+nanoid$3.3.16
+Package Locator: npm+nanoid$3.3.18
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -30389,8 +30391,8 @@ MIT
 Authors: andrey@sitnik.es
 Package Manager: NPM
 Project URL: https://github.com/ai/nanoid#readme
-Package Download URL: https://registry.npmjs.org/nanoid/-/nanoid-3.3.16.tgz
-Dependency Path: postcss > nanoid > postcss-scss > postcss > nanoid > stylelint > postcss > nanoid > stylelint > postcss-safe-parser > postcss > nanoid > stylelint-config-standard > stylelint > postcss > nanoid > stylelint-config-standard > stylelint-config-recommended > stylelint > postcss > nanoid > stylelint-order > postcss > nanoid > stylelint-order > postcss-sorting > postcss > nanoid > stylelint-order > stylelint > postcss > nanoid > stylelint-plugin-defensive-css > stylelint > postcss > nanoid
+Package Download URL: https://registry.npmjs.org/nanoid/-/nanoid-3.3.18.tgz
+Dependency Path: postcss > nanoid > postcss-scss > postcss > nanoid > stylelint-order > postcss > nanoid > stylelint-order > postcss-sorting > postcss > nanoid
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -32347,6 +32349,83 @@ This project incorporates components from the projects listed below. The origina
 
 
 --------------------------------------------------------------------------------
+Package Title: postcss (8.5.10)
+
+Package Locator: npm+postcss$8.5.10
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+Tool for transforming styles with JS plugins
+
+* Declared Licenses *
+MIT
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE
+  - Copyright (c) 2013 Andrey Sitnik <andrey@sitnik.es>
+- package.json
+--------------------------------------------------------------------------------
+
+The MIT License (MIT)
+
+Copyright 2013 Andrey Sitnik <andrey@sitnik.es>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* License Header *
+The MIT License (MIT)
+
+Copyright 2013 Andrey Sitnik <andrey@sitnik.es>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* Copyrights *
+MIT
+- Copyright (c) 2013 Andrey Sitnik <andrey@sitnik.es>
+
+* Package Info *
+
+Authors: andrey@sitnik.es
+Package Manager: NPM
+Project URL: https://postcss.org/
+Package Download URL: https://registry.npmjs.org/postcss/-/postcss-8.5.10.tgz
+Dependency Path: stylelint > postcss > stylelint > postcss-safe-parser > postcss > stylelint-config-standard > stylelint > postcss > stylelint-config-standard > stylelint > postcss-safe-parser > postcss > stylelint-config-standard > stylelint-config-recommended > stylelint > postcss > stylelint-config-standard > stylelint-config-recommended > stylelint > postcss-safe-parser > postcss > stylelint-order > stylelint > postcss > stylelint-order > stylelint > postcss-safe-parser > postcss > stylelint-plugin-defensive-css > stylelint > postcss > stylelint-scss > stylelint > postcss
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
 Package Title: postcss-media-query-parser (0.2.3)
 
 Package Locator: npm+postcss-media-query-parser$0.2.3
@@ -32951,7 +33030,7 @@ MIT
 
 Authors: briandavidvaughn@gmail.com, dan.abramov@gmail.com, ljharb@gmail.com, npm@andrewclark.io, npm@sophiebits.com, opensource+npm@fb.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/prop-types
+Project URL: https://facebook.github.io/react/
 Package Download URL: https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz
 Dependency Path: ag-grid-react > prop-types > downshift > prop-types > react-measure > prop-types > react-portal > prop-types > react-responsive > prop-types > react-select > prop-types > react-select > react-transition-group > prop-types > react-select-async-paginate > react-select > prop-types > react-select-async-paginate > react-select > react-transition-group > prop-types
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -48699,6 +48778,83 @@ Dependency Path: axios > https-proxy-agent > agent-base > debug > ms > axios > h
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
+Package Title: nanoid (3.3.16)
+
+Package Locator: npm+nanoid$3.3.16
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+A tiny (118 bytes), secure URL-friendly unique string ID generator
+
+* Declared Licenses *
+MIT
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE
+  - Copyright (c) 2017 Andrey Sitnik <andrey@sitnik.ru>
+- package.json
+--------------------------------------------------------------------------------
+
+The MIT License (MIT)
+
+Copyright 2017 Andrey Sitnik <andrey@sitnik.ru>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* License Header *
+The MIT License (MIT)
+
+Copyright 2017 Andrey Sitnik <andrey@sitnik.ru>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* Copyrights *
+MIT
+- Copyright (c) 2017 Andrey Sitnik <andrey@sitnik.ru>
+
+* Package Info *
+
+Authors: andrey@sitnik.es
+Package Manager: NPM
+Project URL: https://github.com/ai/nanoid#readme
+Package Download URL: https://registry.npmjs.org/nanoid/-/nanoid-3.3.16.tgz
+Dependency Path: stylelint > postcss > nanoid > stylelint > postcss-safe-parser > postcss > nanoid > stylelint-config-standard > stylelint > postcss > nanoid > stylelint-config-standard > stylelint > postcss-safe-parser > postcss > nanoid > stylelint-config-standard > stylelint-config-recommended > stylelint > postcss > nanoid > stylelint-config-standard > stylelint-config-recommended > stylelint > postcss-safe-parser > postcss > nanoid > stylelint-order > stylelint > postcss > nanoid > stylelint-order > stylelint > postcss-safe-parser > postcss > nanoid > stylelint-plugin-defensive-css > stylelint > postcss > nanoid > stylelint-scss > stylelint > postcss > nanoid
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
 Package Title: object-assign (4.1.1)
 
 Package Locator: npm+object-assign$4.1.1
@@ -64321,4 +64477,4 @@ File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-9-1
+Report Generated by FOSSA on 2026-9-2

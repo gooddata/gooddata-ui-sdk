@@ -30,6 +30,7 @@
     "gd.gen-ai.input-label.mac": "Postavite svoje vprašanje. Uporabite control+space ali cmd+I za predloge.",
     "gd.gen-ai.input-label.win": "Postavite svoje vprašanje. Uporabite control+space ali control+I za predloge.",
     "gd.gen-ai.context.add_context": "Dodaj kontekst",
+    "gd.gen-ai.context.focus_on": "Osredotočeno na",
     "gd.gen-ai.context.close": "Zapri dodajanje konteksta",
     "gd.gen-ai.context.group.ariaLabel": "Kontekst pomočnika",
     "gd.gen-ai.context.type.dashboard": "Nadzorna plošča",
@@ -40,6 +41,7 @@
     "gd.gen-ai.context.announcement.empty": "Kontekst pomočnika je zdaj prazen.",
     "gd.gen-ai.context.remove_context": "Odstrani {title} iz konteksta",
     "gd.gen-ai.context.untitled": "Brez naslova",
+    "gd.gen-ai.context.this": "Celotna nadzorna plošča",
     "gd.gen-ai.context.list.ariaLabel": "Razpoložljivi elementi konteksta",
     "gd.gen-ai.context.search.placeholder": "Iskanje...",
     "gd.gen-ai.context.search.ariaLabel": "Išči elemente konteksta",
@@ -273,5 +275,8 @@
     "drill.kda.drop": "Spusti {where} {title}",
     "drill.kda.increase": "Povečaj {where} {title}",
     "drill.kda.no_change": "Stagnacija {where} {title}",
-    "drill.kda.year_to_year": "Medletna sprememba"
+    "drill.kda.year_to_year": "Medletna sprememba",
+    "search.results.none": "Ni zadetkov.",
+    "search.results.few": "{count, plural, one {# rezultat} two {# rezultata} few {# rezultati} other {# rezultatov}}: {values}",
+    "search.results.many": "{count} rezultatov"
 }

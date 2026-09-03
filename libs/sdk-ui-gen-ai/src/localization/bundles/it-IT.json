@@ -30,6 +30,7 @@
     "gd.gen-ai.input-label.mac": "Poni la tua domanda. Utilizzare control+spazio o cmd+I per ottenere suggerimenti.",
     "gd.gen-ai.input-label.win": "Poni la tua domanda. Per i suggerimenti, utilizzare control+spazio o control+I.",
     "gd.gen-ai.context.add_context": "Aggiungi contesto",
+    "gd.gen-ai.context.focus_on": "Concentrati su",
     "gd.gen-ai.context.close": "Chiudi aggiunta di contesto",
     "gd.gen-ai.context.group.ariaLabel": "Contesto dell'assistente",
     "gd.gen-ai.context.type.dashboard": "Cruscotto",
@@ -40,6 +41,7 @@
     "gd.gen-ai.context.announcement.empty": "Il contesto dell'assistente è ora vuoto.",
     "gd.gen-ai.context.remove_context": "Rimuovi {title} dal contesto",
     "gd.gen-ai.context.untitled": "Senza titolo",
+    "gd.gen-ai.context.this": "Intero cruscotto",
     "gd.gen-ai.context.list.ariaLabel": "Elementi di contesto disponibili",
     "gd.gen-ai.context.search.placeholder": "Cerca...",
     "gd.gen-ai.context.search.ariaLabel": "Cerca elementi di contesto",
@@ -273,5 +275,8 @@
     "drill.kda.drop": "Calo {where} {title}",
     "drill.kda.increase": "Aumento {where} {title}",
     "drill.kda.no_change": "Invariato {where} {title}",
-    "drill.kda.year_to_year": "Variazione anno su anno"
+    "drill.kda.year_to_year": "Variazione anno su anno",
+    "search.results.none": "Nessun risultato corrispondente.",
+    "search.results.few": "{count, plural, one {# risultato} other {# risultati}}: {values}",
+    "search.results.many": "{count} risultati"
 }

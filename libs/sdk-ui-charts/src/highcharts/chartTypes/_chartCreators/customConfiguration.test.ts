@@ -715,7 +715,7 @@ describe("getCustomizedConfiguration", () => {
                 const bubbleFormatter = (
                     (result?.plotOptions?.bubble?.dataLabels as PlotBubbleDataLabelsOptions)?.formatter ??
                     (() => {})
-                ).bind(result);
+                ).bind(result as any);
 
                 expect((bubbleFormatter as any)()).toEqual("5");
             });
@@ -739,7 +739,7 @@ describe("getCustomizedConfiguration", () => {
                 const bubbleFormatter = (
                     (result?.plotOptions?.bubble?.dataLabels as PlotBubbleDataLabelsOptions)?.formatter ??
                     (() => {})
-                ).bind(result);
+                ).bind(result as any);
 
                 expect((bubbleFormatter as any)()).toEqual(null);
             });
@@ -762,7 +762,7 @@ describe("getCustomizedConfiguration", () => {
                 const bubbleFormatter = (
                     (result?.plotOptions?.bubble?.dataLabels as PlotBubbleDataLabelsOptions)?.formatter ??
                     (() => {})
-                ).bind(result);
+                ).bind(result as any);
 
                 expect((bubbleFormatter as any)()).toEqual("5");
             });

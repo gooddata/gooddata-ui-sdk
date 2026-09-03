@@ -416,12 +416,10 @@ class TigerWorkspaceFilterElementsQuery implements IFilterElementsQuery {
             ? selectedElements.uris
             : selectedElements.values;
 
-        const elements = values.map(
-            (element): IAttributeElement => ({
-                title: element,
-                uri: element,
-            }),
-        );
+        const elements = values.map((element): IAttributeElement => ({
+            title: element,
+            uri: element,
+        }));
 
         return Promise.resolve(new InMemoryPaging<IAttributeElement>(elements, this.limit, this.offset));
     }

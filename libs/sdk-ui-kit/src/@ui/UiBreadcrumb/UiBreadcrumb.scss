@@ -60,4 +60,21 @@
         align-items: center;
         justify-content: center;
     }
+
+    // Paired with a page heading rather than a dialog title, so the trail carries the page's own
+    // type scale and the roomier hit area that goes with it.
+    &--size-large {
+        #{$root}__item {
+            padding: 5px;
+            font-size: 17px;
+
+            &:hover {
+                background: var(--gd-palette-complementary-3);
+            }
+        }
+
+        #{$root}__separator {
+            margin: 0 5px;
+        }
+    }
 }

@@ -1106,5 +1106,17 @@
     "drill.kda.year_to_year": {
         "text": "Year over year change",
         "crowdinContext": "Key driver analysis  drill year to year label"
+    },
+    "search.results.none": {
+        "text": "No results match.",
+        "crowdinContext": "Accessibility label for the empty state of the search results. Used by screen readers."
+    },
+    "search.results.few": {
+        "text": "{count, plural, one {# result} other {# results}}: {values}",
+        "crowdinContext": "Accessibility label for the search results. Used by screen readers."
+    },
+    "search.results.many": {
+        "text": "{count} results",
+        "crowdinContext": "Accessibility label for the search results. Used by screen readers."
     }
 }

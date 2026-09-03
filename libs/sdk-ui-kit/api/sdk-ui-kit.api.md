@@ -6154,6 +6154,7 @@ export interface IUiBreadcrumbProps {
     maxWidth?: number;
     // (undocumented)
     onSelect?: (item: IUiBreadcrumbItem) => void;
+    size?: SizeMedium | SizeLarge;
     // (undocumented)
     tabIndex?: number;
 }

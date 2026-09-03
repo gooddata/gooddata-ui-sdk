@@ -3,11 +3,11 @@
     "version": "9.0.0",
     "description": "Documentation for GD.UI project",
     "homepage": "https://www.gooddata.ai/docs/gooddata-ui/",
+    "author": "Mara3l",
     "repository": {
         "type": "git",
         "url": "git+ssh://git@github.com/gooddata/gooddata-ui-sdk.git"
     },
-    "author": "Mara3l",
     "scripts": {
         "build": "hugo",
         "production": "../scripts/generate.sh upstream master && hugo server -e public",
@@ -17,7 +17,7 @@
     },
     "dependencies": {
         "autoprefixer": "^10.2.4",
-        "postcss": "^8.2.5",
+        "postcss": "8.5.26",
         "postcss-cli": "^8.3.1"
     },
     "devDependencies": {

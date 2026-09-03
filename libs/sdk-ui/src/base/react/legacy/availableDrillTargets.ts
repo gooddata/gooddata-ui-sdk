@@ -71,12 +71,10 @@ export function getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTar
         measures: meta
             .measureDescriptors()
             .filter((measure: IMeasureDescriptor) => !meta.isVirtualMeasure(measure))
-            .map(
-                (measure: IMeasureDescriptor): IAvailableDrillTargetMeasure => ({
-                    measure,
-                    attributes,
-                }),
-            ),
+            .map((measure: IMeasureDescriptor): IAvailableDrillTargetMeasure => ({
+                measure,
+                attributes,
+            })),
         attributes: getAvailableDrillAttributes(dv),
     };
 }

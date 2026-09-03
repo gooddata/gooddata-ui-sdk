@@ -950,9 +950,7 @@ $dataset_color: #952f8e;
             content: "";
             position: absolute;
             left: 50%;
-            transform: translateX(
-                -(3px + 12px)
-            ); // Move to the center of the line (half the size of the bullet + gap)
+            transform: translateX(-(3px + 12px)); // Move to the center of the line (half the size of the bullet + gap)
             width: 6px;
             height: 6px;
             border-radius: 50%;
