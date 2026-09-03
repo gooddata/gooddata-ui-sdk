@@ -12,8 +12,6 @@ import { type ISeparators, withIntlForTest } from "@gooddata/sdk-ui";
 
 import { type IMeasureNumberFormatOwnProps, MeasureNumberFormat } from "./MeasureNumberFormat.js";
 import { type IFormatTemplate, type IToggleButtonProps } from "./typings.js";
-// oxlint-disable-next-line import/no-unassigned-import
-import "vitest-dom/extend-expect";
 
 // CodeMirror window method requirements
 (window as any).document.body.createTextRange = vi.fn(() => {

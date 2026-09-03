@@ -1360,28 +1360,26 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
                 dateFilterConfig,
                 ...(tabs
                     ? {
-                          tabs: tabs.map(
-                              (tab): IDashboardTab<IDashboardWidget> => ({
-                                  localIdentifier: tab.localIdentifier,
-                                  title: tab.title ?? "",
-                                  layout: tab.layout?.layout
-                                      ? filterOutCustomWidgets(tab.layout.layout)
-                                      : undefined,
-                                  filterContext: tab.filterContext?.filterContextDefinition
-                                      ? ({
-                                            ...(tab.filterContext.filterContextIdentity ?? {}),
-                                            ...tab.filterContext.filterContextDefinition,
-                                        } as IFilterContext)
-                                      : undefined,
-                                  dateFilterConfig: tab.dateFilterConfig?.dateFilterConfig,
-                                  dateFilterConfigs: tab.dateFilterConfigs?.dateFilterConfigs,
-                                  attributeFilterConfigs: tab.attributeFilterConfigs?.attributeFilterConfigs,
-                                  measureValueFilterConfigs:
-                                      tab.measureValueFilterConfigs?.measureValueFilterConfigs,
-                                  filterGroupsConfig: tab.filterGroupsConfig,
-                                  parameters: parametersByTab[tab.localIdentifier] ?? [],
-                              }),
-                          ),
+                          tabs: tabs.map((tab): IDashboardTab<IDashboardWidget> => ({
+                              localIdentifier: tab.localIdentifier,
+                              title: tab.title ?? "",
+                              layout: tab.layout?.layout
+                                  ? filterOutCustomWidgets(tab.layout.layout)
+                                  : undefined,
+                              filterContext: tab.filterContext?.filterContextDefinition
+                                  ? ({
+                                        ...(tab.filterContext.filterContextIdentity ?? {}),
+                                        ...tab.filterContext.filterContextDefinition,
+                                    } as IFilterContext)
+                                  : undefined,
+                              dateFilterConfig: tab.dateFilterConfig?.dateFilterConfig,
+                              dateFilterConfigs: tab.dateFilterConfigs?.dateFilterConfigs,
+                              attributeFilterConfigs: tab.attributeFilterConfigs?.attributeFilterConfigs,
+                              measureValueFilterConfigs:
+                                  tab.measureValueFilterConfigs?.measureValueFilterConfigs,
+                              filterGroupsConfig: tab.filterGroupsConfig,
+                              parameters: parametersByTab[tab.localIdentifier] ?? [],
+                          })),
                       }
                     : {}),
                 ...pluginsProp,

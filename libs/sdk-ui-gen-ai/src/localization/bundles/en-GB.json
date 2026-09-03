@@ -30,6 +30,7 @@
     "gd.gen-ai.input-label.mac": "Ask your question. Use control+space or cmd+I for suggestions.",
     "gd.gen-ai.input-label.win": "Ask your question. Use Ctrl+Space or Ctrl+I for suggestions.",
     "gd.gen-ai.context.add_context": "Add context",
+    "gd.gen-ai.context.focus_on": "Focus on",
     "gd.gen-ai.context.close": "Close add context",
     "gd.gen-ai.context.group.ariaLabel": "Assistant context",
     "gd.gen-ai.context.type.dashboard": "Dashboard",
@@ -40,6 +41,7 @@
     "gd.gen-ai.context.announcement.empty": "The assistant context is now empty.",
     "gd.gen-ai.context.remove_context": "Remove {title} from context",
     "gd.gen-ai.context.untitled": "Untitled",
+    "gd.gen-ai.context.this": "Whole dashboard",
     "gd.gen-ai.context.list.ariaLabel": "Available context items",
     "gd.gen-ai.context.search.placeholder": "Search...",
     "gd.gen-ai.context.search.ariaLabel": "Search context items",
@@ -273,5 +275,8 @@
     "drill.kda.drop": "Drop {where} {title}",
     "drill.kda.increase": "Increase {where} {title}",
     "drill.kda.no_change": "Stale {where} {title}",
-    "drill.kda.year_to_year": "Year over year change"
+    "drill.kda.year_to_year": "Year over year change",
+    "search.results.none": "No results match.",
+    "search.results.few": "{count, plural, one {# result} other {# results}}: {values}",
+    "search.results.many": "{count} results"
 }

@@ -30,6 +30,7 @@
     "gd.gen-ai.input-label.mac": "Поставте своє запитання. Використовуйте control+space або cmd+I для підказок.",
     "gd.gen-ai.input-label.win": "Поставте своє запитання. Використовуйте control+space або control+I для підказок.",
     "gd.gen-ai.context.add_context": "Додати контекст",
+    "gd.gen-ai.context.focus_on": "Фокус",
     "gd.gen-ai.context.close": "Закрити додавання контексту",
     "gd.gen-ai.context.group.ariaLabel": "Контекст помічника",
     "gd.gen-ai.context.type.dashboard": "Дашборд",
@@ -40,6 +41,7 @@
     "gd.gen-ai.context.announcement.empty": "Контекст помічника тепер порожній.",
     "gd.gen-ai.context.remove_context": "Вилучити {title} з контексту",
     "gd.gen-ai.context.untitled": "Без назви",
+    "gd.gen-ai.context.this": "Уся інформаційна панель",
     "gd.gen-ai.context.list.ariaLabel": "Доступні елементи контексту",
     "gd.gen-ai.context.search.placeholder": "Пошук...",
     "gd.gen-ai.context.search.ariaLabel": "Пошук елементів контексту",
@@ -273,5 +275,8 @@
     "drill.kda.drop": "Падіння {where} {title}",
     "drill.kda.increase": "Зростання {where} {title}",
     "drill.kda.no_change": "Без змін {where} {title}",
-    "drill.kda.year_to_year": "Зміна рік до року"
+    "drill.kda.year_to_year": "Зміна рік до року",
+    "search.results.none": "Немає відповідних результатів.",
+    "search.results.few": "{count, plural, one {# результат} few {# результати} many {# результатів} other {# результату}}: {values}",
+    "search.results.many": "{count} результатів"
 }

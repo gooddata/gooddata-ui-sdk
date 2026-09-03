@@ -936,8 +936,8 @@ function* getAttributeFiltersUpdateActions(
         if (unhandledFilters.length > 0) {
             updateActions.push(
                 tabsActions.clearAttributeFiltersSelection({
-                    filterLocalIds: unhandledFilters.map(
-                        (filter) => dashboardAttributeFilterItemLocalIdentifier(filter)!,
+                    filterLocalIds: unhandledFilters.map((filter) =>
+                        dashboardAttributeFilterItemLocalIdentifier(filter)!,
                     ),
                     tabLocalIdentifier,
                 }),

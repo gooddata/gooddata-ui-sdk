@@ -114,6 +114,10 @@ export interface IGenAIChatDialogConnectedProps {
      */
     ambientUserContext?: IGenAIUserContext;
     /**
+     * Whether the ambient user context is currently loading.
+     */
+    ambientUserContextLoading?: boolean;
+    /**
      * Agent ID to use for the seeded question. If not provided, the default agent will be used.
      */
     agentId?: string;
@@ -171,6 +175,7 @@ export function GenAIChatDialogConnected({
     askSeq,
     userContext,
     ambientUserContext,
+    ambientUserContextLoading,
     appendToChat,
     replaceUserContext,
     includeTags,
@@ -272,8 +277,13 @@ export function GenAIChatDialogConnected({
         if (!chatDispatcher) {
             return;
         }
-        chatDispatcher(setAmbientUserContextAction({ userContext: ambientUserContext }));
-    }, [chatDispatcher, ambientUserContext]);
+        chatDispatcher(
+            setAmbientUserContextAction({
+                userContext: ambientUserContext,
+                loading: ambientUserContextLoading,
+            }),
+        );
+    }, [chatDispatcher, ambientUserContext, ambientUserContextLoading]);
 
     // The token of the last seed we applied. Each ask is identified by `askSeq` (bumped on every ask,
     // so even a repeated identical question re-seeds); we seed once per token. Without this guard the

@@ -61,14 +61,17 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
     };
 });
 
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../localization/translations.js";
 import { type IGenAIContextObject } from "../types.js";
 
 import { GenAiChatContextChooserBody } from "./GenAiChatContextChooserBody.js";
 
 const SEARCH_FIELD_VISIBILITY_THRESHOLD = 7;
 const SEARCH_DEBOUNCE_MS = 300;
+const ANNOUNCEMENT_DEBOUNCE_MS = 1000;
 
 const messages = {
+    ...DEFAULT_MESSAGES[DEFAULT_LANGUAGE],
     "gd.gen-ai.context.add_context": "Add context",
     "gd.gen-ai.context.close": "Close add context",
     "gd.gen-ai.context.list.ariaLabel": "Available context items",
@@ -76,7 +79,6 @@ const messages = {
     "gd.gen-ai.context.search.ariaLabel": "Search context items",
     "gd.gen-ai.context.noMatchingData": "No matching items",
     "gd.gen-ai.context.noDataAvailable": "No items available",
-    "search.results.few": "{count} results",
 };
 
 function createItem(
@@ -275,7 +277,23 @@ describe("GenAiChatContextChooserBody", () => {
             "data-has-next-page",
             "true",
         );
-        expect(screen.getByTestId("context-chooser-paged-list")).toHaveAttribute("data-skeleton-count", "3");
+        expect(screen.getByTestId("context-chooser-paged-list")).toHaveAttribute("data-skeleton-count", "7");
+    });
+
+    it("announces the search outcome as a sentence, not as a message id", () => {
+        vi.useFakeTimers();
+
+        try {
+            renderBody([], vi.fn(), { search: "qqqq-nonexistent" });
+
+            act(() => {
+                vi.advanceTimersByTime(ANNOUNCEMENT_DEBOUNCE_MS);
+            });
+
+            expect(screen.getByRole("status")).toHaveTextContent("No results match.");
+        } finally {
+            vi.useRealTimers();
+        }
     });
 
     it("shows no-data when there are no items and no further pages", () => {

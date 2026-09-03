@@ -5,10 +5,11 @@ import { type ReactNode, useCallback, useMemo } from "react";
 import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Dropdown, UiChip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { Dropdown, UiChip, UiSkeleton, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { collectContextReferences } from "../context/collectContextReferences.js";
 import {
+    ambientContextLoadingSelector,
     ambientContextSelector,
     contextSetupEnabledSelector,
     selectedContextSelector,
@@ -59,6 +60,7 @@ export function GenAIChatContextIndicator({ onUpdate }: GenAIChatContextIndicato
 
     const isContextSetupEnabled = useSelector(contextSetupEnabledSelector);
     const ambientContext = useSelector(ambientContextSelector);
+    const ambientLoading = useSelector(ambientContextLoadingSelector);
     const userContext = useSelector(userContextSelector);
     const selectedContext = useSelector(selectedContextSelector);
     const { items, search, setSearch, selectedIds } = useAmbientContextItems(ambientContext);
@@ -112,7 +114,7 @@ export function GenAIChatContextIndicator({ onUpdate }: GenAIChatContextIndicato
     return (
         <>
             <ContextWrapper groupLabel={msgs.groupLabel} groupLabelId={groupLabelId}>
-                {selectedContext?.dashboard ? (
+                {selectedContext?.dashboard || ambientLoading ? (
                     <Dropdown
                         alignPoints={[{ align: "tl bl", offset: { x: 0, y: 0 } }]}
                         closeOnEscape
@@ -121,10 +123,23 @@ export function GenAIChatContextIndicator({ onUpdate }: GenAIChatContextIndicato
                         accessibilityConfig={{ popupRole: "dialog" }}
                         onOpenStateChanged={onOpenStateChanged}
                         renderButton={({ isOpen, toggleDropdown, accessibilityConfig }) => {
-                            const item = selectedContext.visualization ?? selectedContext.dashboard;
-                            if (!item) {
+                            if (ambientLoading) {
+                                return (
+                                    <UiSkeleton
+                                        inline
+                                        itemWidth={150}
+                                        itemPadding={0}
+                                        itemHeight={27}
+                                        itemBorderRadius={50}
+                                    />
+                                );
+                            }
+
+                            const item = selectedContext?.visualization ?? selectedContext?.dashboard;
+                            if (!item || !selectedContext) {
                                 return null;
                             }
+
                             return (
                                 <UiChip
                                     isActionable

@@ -29,7 +29,7 @@ import { getIconByObject } from "./utils/icons.js";
 const SEARCH_FIELD_VISIBILITY_THRESHOLD = 7;
 const SEARCH_DEBOUNCE_MS = 300;
 const MAX_VISIBLE_ITEMS = 7;
-const LOADING_SKELETON_ITEMS_COUNT = 3;
+const LOADING_SKELETON_ITEMS_COUNT = MAX_VISIBLE_ITEMS;
 
 const msgs = defineMessages({
     close: {
@@ -50,10 +50,19 @@ const msgs = defineMessages({
     noDataAvailable: {
         id: "gd.gen-ai.context.noDataAvailable",
     },
+    searchResultsNone: {
+        id: "search.results.none",
+    },
+    searchResultsFew: {
+        id: "search.results.few",
+    },
+    searchResultsMany: {
+        id: "search.results.many",
+    },
 });
 
 type GenAiChatContextChooserBodyProps = {
-    inputItems: IGenAIContextObject[];
+    inputItems: (IGenAIContextObject & { alternativeTitle?: string })[];
     title: string;
     titleId: string;
     search: string;
@@ -130,8 +139,7 @@ export function GenAiChatContextChooserBody({
     const skeletonItemsCount =
         isLoading || (hasNextPage && inputItems.length === 0) ? LOADING_SKELETON_ITEMS_COUNT : 0;
 
-    const visibleRowsCount = inputItems.length + skeletonItemsCount;
-    const listMaxHeight = Math.min(Math.max(visibleRowsCount, 1), MAX_VISIBLE_ITEMS) * DEFAULT_ITEM_HEIGHT;
+    const listMaxHeight = MAX_VISIBLE_ITEMS * DEFAULT_ITEM_HEIGHT;
 
     return (
         <div
@@ -228,7 +236,7 @@ function ContextChooserItem({
     selected,
     onSelect,
 }: {
-    item: IGenAIContextObject;
+    item: IGenAIContextObject & { alternativeTitle?: string };
     selected?: boolean;
     onSelect: () => void;
 }) {
@@ -243,7 +251,7 @@ function ContextChooserItem({
             aria-selected={selected}
         >
             {icon.iconBefore ? <UiIcon size={16} type={icon.iconBefore} color={icon.iconColor} /> : null}
-            <ShortenedText ellipsisPosition="end">{item.title}</ShortenedText>
+            <ShortenedText ellipsisPosition="end">{item.alternativeTitle ?? item.title}</ShortenedText>
         </div>
     );
 }

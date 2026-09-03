@@ -30,6 +30,7 @@
     "gd.gen-ai.input-label.mac": "Задайте свой вопрос. Используйте control+space или cmd+I для предложений.",
     "gd.gen-ai.input-label.win": "Задайте ваш вопрос. Используйте control+space или control+I для предложений.",
     "gd.gen-ai.context.add_context": "Добавить контекст",
+    "gd.gen-ai.context.focus_on": "В фокусе",
     "gd.gen-ai.context.close": "Закрыть добавление контекста",
     "gd.gen-ai.context.group.ariaLabel": "Контекст ассистента",
     "gd.gen-ai.context.type.dashboard": "Панель управления",
@@ -40,6 +41,7 @@
     "gd.gen-ai.context.announcement.empty": "Контекст ассистента теперь пуст.",
     "gd.gen-ai.context.remove_context": "Удалить {title} из контекста",
     "gd.gen-ai.context.untitled": "Без названия",
+    "gd.gen-ai.context.this": "Весь дашборд",
     "gd.gen-ai.context.list.ariaLabel": "Доступные элементы контекста",
     "gd.gen-ai.context.search.placeholder": "Поиск...",
     "gd.gen-ai.context.search.ariaLabel": "Поиск элементов контекста",
@@ -273,5 +275,8 @@
     "drill.kda.drop": "Снижение {where} {title}",
     "drill.kda.increase": "Увеличить {where} {title}",
     "drill.kda.no_change": "Стабильный {where} {title}",
-    "drill.kda.year_to_year": "Изменение по сравнению с прошлым годом"
+    "drill.kda.year_to_year": "Изменение по сравнению с прошлым годом",
+    "search.results.none": "Ничего не найдено.",
+    "search.results.few": "{count, plural, one {# результат} other {# результатов}}: {values}",
+    "search.results.many": "{count} результатов"
 }

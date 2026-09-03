@@ -1,10 +1,14 @@
 {
-    "extends": "./tsconfig.build.json",
-    "exclude": ["node_modules", "../../common/temp"],
+    "extends": "../tsconfig.base.json",
     "include": ["src/**/*", "*.{ts,tsx}"],
     "compilerOptions": {
         "rootDir": "./",
         "noEmit": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "useUnknownInCatchVariables": false,
+        "strictNullChecks": false,
+        "noImplicitAny": false
     }
 }

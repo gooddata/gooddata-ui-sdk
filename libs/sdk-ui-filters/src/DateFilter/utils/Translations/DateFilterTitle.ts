@@ -235,8 +235,10 @@ const getAllTimeFilterRepresentation = (translator: IMessageTranslator): string 
 const getEmptyValuesFilterRepresentation = (translator: IMessageTranslator): string =>
     translator.formatMessage({ id: "filters.emptyValues.title" });
 
-const getAbsoluteFormFilterRepresentation = (filter: IUiAbsoluteDateFilterForm, dateFormat: string): string =>
-    filter.from && filter.to ? formatAbsoluteDateRange(filter.from, filter.to, dateFormat) : "";
+const getAbsoluteFormFilterRepresentation = (
+    filter: IUiAbsoluteDateFilterForm,
+    dateFormat: string,
+): string => (filter.from && filter.to ? formatAbsoluteDateRange(filter.from, filter.to, dateFormat) : "");
 
 const getAbsolutePresetFilterRepresentation = (
     filter: IAbsoluteDateFilterPreset,

@@ -98,7 +98,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: 6.0.2
-        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -133,8 +133,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -151,8 +151,8 @@ importers:
         specifier: 1.0.3
         version: 1.0.3
       sass:
-        specifier: 1.70.0
-        version: 1.70.0
+        specifier: 1.77.1
+        version: 1.77.1
       ts-invariant:
         specifier: 0.10.3
         version: 0.10.3
@@ -164,7 +164,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../examples/sdk-interactive-examples:
     devDependencies:
@@ -249,7 +249,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: 6.0.2
-        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -278,8 +278,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -297,10 +297,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
   ../../examples/sdk-interactive-examples/examples/example-attributefilter:
     dependencies:
@@ -379,7 +379,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: 6.0.2
-        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -408,8 +408,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -427,10 +427,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
   ../../examples/sdk-interactive-examples/examples/example-chartconfig:
     dependencies:
@@ -509,7 +509,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: 6.0.2
-        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -538,8 +538,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -557,10 +557,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
   ../../examples/sdk-interactive-examples/examples/example-columnchart:
     dependencies:
@@ -639,7 +639,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: 6.0.2
-        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -668,8 +668,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -687,10 +687,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
   ../../examples/sdk-interactive-examples/examples/example-combochart:
     dependencies:
@@ -769,7 +769,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: 6.0.2
-        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -798,8 +798,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -817,10 +817,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
   ../../examples/sdk-interactive-examples/examples/example-dashboard:
     dependencies:
@@ -899,7 +899,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: 6.0.2
-        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -928,8 +928,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -947,10 +947,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
   ../../examples/sdk-interactive-examples/examples/example-datefilter:
     dependencies:
@@ -1029,7 +1029,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: 6.0.2
-        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -1058,8 +1058,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -1077,10 +1077,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
   ../../examples/sdk-interactive-examples/examples/example-dependentfilters:
     dependencies:
@@ -1159,7 +1159,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: 6.0.2
-        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -1188,8 +1188,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -1207,10 +1207,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
   ../../examples/sdk-interactive-examples/examples/example-execute:
     dependencies:
@@ -1298,7 +1298,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: 6.0.2
-        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -1327,8 +1327,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -1346,10 +1346,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
   ../../examples/sdk-interactive-examples/examples/example-granularity:
     dependencies:
@@ -1428,7 +1428,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: 6.0.2
-        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -1457,8 +1457,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -1476,10 +1476,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
   ../../examples/sdk-interactive-examples/examples/example-headline:
     dependencies:
@@ -1558,7 +1558,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: 6.0.2
-        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -1587,8 +1587,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -1606,10 +1606,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
   ../../examples/sdk-interactive-examples/examples/example-pivottable:
     dependencies:
@@ -1688,7 +1688,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: 6.0.2
-        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -1717,8 +1717,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -1736,10 +1736,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
   ../../examples/sdk-interactive-examples/examples/example-relativedatefilter:
     dependencies:
@@ -1818,7 +1818,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: 6.0.2
-        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -1847,8 +1847,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -1866,10 +1866,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
   ../../examples/sdk-interactive-examples/examples/example-repeater:
     dependencies:
@@ -1948,7 +1948,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: 6.0.2
-        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -1977,8 +1977,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -1996,10 +1996,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
   ../../libs/api-client-tiger:
     dependencies:
@@ -2083,8 +2083,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2096,7 +2096,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../libs/sdk-backend-base:
     dependencies:
@@ -2189,8 +2189,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2202,7 +2202,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../libs/sdk-backend-mockingbird:
     dependencies:
@@ -2283,8 +2283,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2296,7 +2296,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../libs/sdk-backend-spi:
     dependencies:
@@ -2362,8 +2362,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2375,7 +2375,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../libs/sdk-backend-tiger:
     dependencies:
@@ -2501,8 +2501,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2514,7 +2514,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../libs/sdk-code-convertors:
     dependencies:
@@ -2577,8 +2577,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2590,7 +2590,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../libs/sdk-code-schemas:
     devDependencies:
@@ -2643,8 +2643,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2659,7 +2659,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../libs/sdk-e2e-utils:
     dependencies:
@@ -2731,8 +2731,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2807,8 +2807,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2820,7 +2820,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../libs/sdk-model:
     dependencies:
@@ -2901,8 +2901,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -2914,7 +2914,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../libs/sdk-pluggable-application-model:
     dependencies:
@@ -2977,8 +2977,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -3128,14 +3128,14 @@ importers:
         specifier: 1.6.0
         version: 1.6.0
       happy-dom:
-        specifier: 20.9.0
-        version: 20.9.0
+        specifier: 20.12.0
+        version: 20.12.0
       npm-run-all:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -3162,7 +3162,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
@@ -3246,8 +3246,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -3361,8 +3361,8 @@ importers:
         specifier: 0.2.14
         version: 0.2.14
       happy-dom:
-        specifier: 20.9.0
-        version: 20.9.0
+        specifier: 20.12.0
+        version: 20.12.0
       jiti:
         specifier: 2.6.1
         version: 2.6.1
@@ -3370,8 +3370,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -3398,10 +3398,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
@@ -3545,14 +3545,14 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       happy-dom:
-        specifier: 20.9.0
-        version: 20.9.0
+        specifier: 20.12.0
+        version: 20.12.0
       npm-run-all:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -3569,8 +3569,8 @@ importers:
         specifier: 19.1.1
         version: 19.1.1(react@19.1.1)
       sass:
-        specifier: 1.70.0
-        version: 1.70.0
+        specifier: 1.77.1
+        version: 1.77.1
       stylelint:
         specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
@@ -3579,7 +3579,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
@@ -3759,14 +3759,14 @@ importers:
         specifier: 1.6.0
         version: 1.6.0
       happy-dom:
-        specifier: 20.9.0
-        version: 20.9.0
+        specifier: 20.12.0
+        version: 20.12.0
       npm-run-all:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -3783,8 +3783,8 @@ importers:
         specifier: 19.1.1
         version: 19.1.1(react@19.1.1)
       sass:
-        specifier: 1.70.0
-        version: 1.70.0
+        specifier: 1.77.1
+        version: 1.77.1
       stylelint:
         specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
@@ -3793,7 +3793,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
@@ -4018,14 +4018,14 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       happy-dom:
-        specifier: 20.9.0
-        version: 20.9.0
+        specifier: 20.12.0
+        version: 20.12.0
       npm-run-all:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -4042,8 +4042,8 @@ importers:
         specifier: 19.1.1
         version: 19.1.1(react@19.1.1)
       sass:
-        specifier: 1.70.0
-        version: 1.70.0
+        specifier: 1.77.1
+        version: 1.77.1
       stylelint:
         specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
@@ -4055,7 +4055,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
@@ -4289,14 +4289,14 @@ importers:
         specifier: 1.6.0
         version: 1.6.0
       happy-dom:
-        specifier: 20.9.0
-        version: 20.9.0
+        specifier: 20.12.0
+        version: 20.12.0
       npm-run-all:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -4313,8 +4313,8 @@ importers:
         specifier: 19.1.1
         version: 19.1.1(react@19.1.1)
       sass:
-        specifier: 1.70.0
-        version: 1.70.0
+        specifier: 1.77.1
+        version: 1.77.1
       stylelint:
         specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
@@ -4326,7 +4326,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
@@ -4485,14 +4485,14 @@ importers:
         specifier: 1.6.0
         version: 1.6.0
       happy-dom:
-        specifier: 20.9.0
-        version: 20.9.0
+        specifier: 20.12.0
+        version: 20.12.0
       npm-run-all:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -4509,8 +4509,8 @@ importers:
         specifier: 19.1.1
         version: 19.1.1(react@19.1.1)
       sass:
-        specifier: 1.70.0
-        version: 1.70.0
+        specifier: 1.77.1
+        version: 1.77.1
       stylelint:
         specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
@@ -4519,7 +4519,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
@@ -4720,14 +4720,14 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       happy-dom:
-        specifier: 20.9.0
-        version: 20.9.0
+        specifier: 20.12.0
+        version: 20.12.0
       npm-run-all:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -4744,8 +4744,8 @@ importers:
         specifier: 19.1.1
         version: 19.1.1(react@19.1.1)
       sass:
-        specifier: 1.70.0
-        version: 1.70.0
+        specifier: 1.77.1
+        version: 1.77.1
       stylelint:
         specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
@@ -4757,7 +4757,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
@@ -4907,8 +4907,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -4925,8 +4925,8 @@ importers:
         specifier: 19.1.1
         version: 19.1.1(react@19.1.1)
       sass:
-        specifier: 1.70.0
-        version: 1.70.0
+        specifier: 1.77.1
+        version: 1.77.1
       stylelint:
         specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
@@ -4935,7 +4935,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
@@ -5187,8 +5187,8 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       happy-dom:
-        specifier: 20.9.0
-        version: 20.9.0
+        specifier: 20.12.0
+        version: 20.12.0
       kefir:
         specifier: 3.8.8
         version: 3.8.8
@@ -5196,8 +5196,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -5214,8 +5214,8 @@ importers:
         specifier: 19.1.1
         version: 19.1.1(react@19.1.1)
       sass:
-        specifier: 1.70.0
-        version: 1.70.0
+        specifier: 1.77.1
+        version: 1.77.1
       stylelint:
         specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
@@ -5227,7 +5227,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
@@ -5338,8 +5338,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -5498,14 +5498,14 @@ importers:
         specifier: 1.6.0
         version: 1.6.0
       happy-dom:
-        specifier: 20.9.0
-        version: 20.9.0
+        specifier: 20.12.0
+        version: 20.12.0
       npm-run-all:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -5522,8 +5522,8 @@ importers:
         specifier: 19.1.1
         version: 19.1.1(react@19.1.1)
       sass:
-        specifier: 1.70.0
-        version: 1.70.0
+        specifier: 1.77.1
+        version: 1.77.1
       stylelint:
         specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
@@ -5532,7 +5532,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
@@ -5628,14 +5628,14 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       happy-dom:
-        specifier: 20.9.0
-        version: 20.9.0
+        specifier: 20.12.0
+        version: 20.12.0
       npm-run-all:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -5653,7 +5653,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../libs/sdk-ui-pluggable-host:
     dependencies:
@@ -5773,8 +5773,8 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       happy-dom:
-        specifier: 20.9.0
-        version: 20.9.0
+        specifier: 20.12.0
+        version: 20.12.0
       jiti:
         specifier: 2.6.1
         version: 2.6.1
@@ -5782,8 +5782,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -5806,8 +5806,8 @@ importers:
         specifier: 1.0.3
         version: 1.0.3
       sass:
-        specifier: 1.70.0
-        version: 1.70.0
+        specifier: 1.77.1
+        version: 1.77.1
       tslib:
         specifier: 2.8.1
         version: 2.8.1
@@ -5816,10 +5816,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
@@ -5936,14 +5936,14 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       happy-dom:
-        specifier: 20.9.0
-        version: 20.9.0
+        specifier: 20.12.0
+        version: 20.12.0
       npm-run-all:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -5960,8 +5960,8 @@ importers:
         specifier: 19.1.1
         version: 19.1.1(react@19.1.1)
       sass:
-        specifier: 1.70.0
-        version: 1.70.0
+        specifier: 1.77.1
+        version: 1.77.1
       stylelint:
         specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
@@ -5970,7 +5970,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
@@ -6042,7 +6042,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: 6.0.2
-        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       core-js:
         specifier: 3.45.1
         version: 3.45.1
@@ -6080,8 +6080,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -6098,14 +6098,14 @@ importers:
         specifier: 1.0.3
         version: 1.0.3
       sass:
-        specifier: 1.70.0
-        version: 1.70.0
+        specifier: 1.77.1
+        version: 1.77.1
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../libs/sdk-ui-tests-e2e:
     devDependencies:
@@ -6185,8 +6185,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -6248,8 +6248,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -6365,8 +6365,8 @@ importers:
         specifier: 3.3.3
         version: 3.3.3
       happy-dom:
-        specifier: 20.9.0
-        version: 20.9.0
+        specifier: 20.12.0
+        version: 20.12.0
       json-stable-stringify:
         specifier: 1.3.0
         version: 1.3.0
@@ -6383,8 +6383,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -6408,7 +6408,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../libs/sdk-ui-tests-storybook:
     devDependencies:
@@ -6486,13 +6486,13 @@ importers:
         version: 10.5.6(storybook@10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1))
       '@storybook/builder-vite':
         specifier: 10.5.6
-        version: 10.5.6(esbuild@0.28.1)(rollup@4.62.3)(storybook@10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1))(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))(webpack@5.107.2(esbuild@0.28.1))
+        version: 10.5.6(esbuild@0.28.1)(rollup@4.62.3)(storybook@10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1))(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))(webpack@5.107.2(esbuild@0.28.1))
       '@storybook/cli':
         specifier: 10.5.6
         version: 10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1)
       '@storybook/react-vite':
         specifier: 10.5.6
-        version: 10.5.6(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(esbuild@0.28.1)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(rollup@4.62.3)(storybook@10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1))(typescript@5.9.3)(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))(webpack@5.107.2(esbuild@0.28.1))
+        version: 10.5.6(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(esbuild@0.28.1)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(rollup@4.62.3)(storybook@10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1))(typescript@5.9.3)(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))(webpack@5.107.2(esbuild@0.28.1))
       '@types/lodash-es':
         specifier: 4.17.12
         version: 4.17.12
@@ -6551,8 +6551,8 @@ importers:
         specifier: 3.3.3
         version: 3.3.3
       happy-dom:
-        specifier: 20.9.0
-        version: 20.9.0
+        specifier: 20.12.0
+        version: 20.12.0
       json-stable-stringify:
         specifier: 1.3.0
         version: 1.3.0
@@ -6569,8 +6569,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -6612,10 +6612,10 @@ importers:
         version: 11.1.1
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vite-plugin-static-copy:
         specifier: 4.1.0
-        version: 4.1.0(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 4.1.0(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
   ../../libs/sdk-ui-theme-provider:
     dependencies:
@@ -6644,8 +6644,8 @@ importers:
         specifier: ^3.6.7
         version: 3.7.2
       postcss:
-        specifier: 8.5.10
-        version: 8.5.10
+        specifier: 8.5.26
+        version: 8.5.26
       postcss-value-parser:
         specifier: 4.2.0
         version: 4.2.0
@@ -6735,14 +6735,14 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       happy-dom:
-        specifier: 20.9.0
-        version: 20.9.0
+        specifier: 20.12.0
+        version: 20.12.0
       npm-run-all:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -6763,7 +6763,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../libs/sdk-ui-vis-commons:
     dependencies:
@@ -6886,14 +6886,14 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       happy-dom:
-        specifier: 20.9.0
-        version: 20.9.0
+        specifier: 20.12.0
+        version: 20.12.0
       npm-run-all:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -6910,8 +6910,8 @@ importers:
         specifier: 19.1.1
         version: 19.1.1(react@19.1.1)
       sass:
-        specifier: 1.70.0
-        version: 1.70.0
+        specifier: 1.77.1
+        version: 1.77.1
       stylelint:
         specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
@@ -6920,7 +6920,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
@@ -7055,8 +7055,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -7083,13 +7083,13 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vite-plugin-css-injected-by-js:
         specifier: 3.1.1
-        version: 3.1.1(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 3.1.1(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../libs/util:
     dependencies:
@@ -7152,8 +7152,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -7165,7 +7165,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../templates/pluggable-module/harness:
     dependencies:
@@ -7220,7 +7220,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: 6.0.2
-        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -7249,8 +7249,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -7261,14 +7261,14 @@ importers:
         specifier: 1.0.3
         version: 1.0.3
       sass:
-        specifier: 1.70.0
-        version: 1.70.0
+        specifier: 1.77.1
+        version: 1.77.1
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../templates/pluggable-module/module:
     dependencies:
@@ -7302,7 +7302,7 @@ importers:
         version: link:../../../tools/oxlint-config
       '@module-federation/vite':
         specifier: 1.16.11
-        version: 1.16.11(node-fetch@2.7.0)(typescript@5.9.3)(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 1.16.11(node-fetch@2.7.0)(typescript@5.9.3)(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       '@testing-library/dom':
         specifier: 10.4.1
         version: 10.4.1
@@ -7332,7 +7332,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: 6.0.2
-        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+        version: 6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -7358,8 +7358,8 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       happy-dom:
-        specifier: 20.9.0
-        version: 20.9.0
+        specifier: 20.12.0
+        version: 20.12.0
       jiti:
         specifier: 2.6.1
         version: 2.6.1
@@ -7367,8 +7367,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -7385,17 +7385,17 @@ importers:
         specifier: 1.0.3
         version: 1.0.3
       sass:
-        specifier: 1.70.0
-        version: 1.70.0
+        specifier: 1.77.1
+        version: 1.77.1
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../tools/app-toolkit:
     dependencies:
@@ -7479,8 +7479,8 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -7492,7 +7492,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../tools/catalog-export:
     dependencies:
@@ -7527,8 +7527,8 @@ importers:
         specifier: 0.147.0
         version: 0.147.0
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       strip-ansi:
         specifier: 6.0.1
         version: 6.0.1
@@ -7585,8 +7585,8 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       happy-dom:
-        specifier: 20.9.0
-        version: 20.9.0
+        specifier: 20.12.0
+        version: 20.12.0
       npm-run-all:
         specifier: 4.1.5
         version: 4.1.5
@@ -7601,7 +7601,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../tools/create-pluggable-module:
     devDependencies:
@@ -7651,8 +7651,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -7667,10 +7667,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.16
-        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../tools/dashboard-plugin-template:
     dependencies:
@@ -7790,8 +7790,8 @@ importers:
         specifier: 5.6.4
         version: 5.6.4(webpack@5.107.2)
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -7821,7 +7821,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       webpack:
         specifier: 5.107.2
         version: 5.107.2(esbuild@0.28.1)(webpack-cli@7.0.3)
@@ -7913,8 +7913,8 @@ importers:
         specifier: 2.6.1
         version: 2.6.1
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       react:
         specifier: 19.1.1
         version: 19.1.1
@@ -7929,7 +7929,7 @@ importers:
         version: 5.9.3
       vite-node:
         specifier: 5.3.0
-        version: 5.3.0(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.33.0)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 5.3.0(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.33.0)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../tools/i18n-toolkit:
     dependencies:
@@ -8016,8 +8016,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -8029,7 +8029,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../tools/lint-config:
     devDependencies:
@@ -8040,8 +8040,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -8134,8 +8134,8 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -8147,7 +8147,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../tools/oxlint-config:
     devDependencies:
@@ -8215,8 +8215,8 @@ importers:
         specifier: 2.6.1
         version: 2.6.1
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -8237,7 +8237,7 @@ importers:
         version: 5.9.3
       vite-node:
         specifier: 5.3.0
-        version: 5.3.0(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.33.0)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 5.3.0(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.33.0)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../tools/plugin-toolkit:
     dependencies:
@@ -8345,8 +8345,8 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -8358,7 +8358,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../tools/react-app-template:
     dependencies:
@@ -8481,8 +8481,8 @@ importers:
         specifier: 5.6.4
         version: 5.6.4(webpack@5.107.2)
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -8566,8 +8566,8 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -8639,8 +8639,8 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.5(jiti@2.6.1))
       oxfmt:
-        specifier: 0.58.0
-        version: 0.58.0
+        specifier: 0.66.0
+        version: 0.66.0
       oxlint:
         specifier: 1.57.0
         version: 1.57.0(oxlint-tsgolint@0.15.0)
@@ -8652,16 +8652,16 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+        version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   ../../tools/stylelint-config:
     dependencies:
       postcss:
-        specifier: 8.5.10
-        version: 8.5.10
+        specifier: 8.5.26
+        version: 8.5.26
       postcss-scss:
         specifier: 4.0.9
-        version: 4.0.9(postcss@8.5.10)
+        version: 4.0.9(postcss@8.5.26)
       stylelint:
         specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
@@ -10278,124 +10278,124 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@oxfmt/binding-android-arm-eabi@0.58.0':
-    resolution: {integrity: sha512-Uz62sHduGGPftXtILGyxdSW4PX82rUg+rfdNqhsgxe881g4rIoXlIqmZQ6HVKcF4f+F8qMhdD03Bx5u7gmeTdg==}
+  '@oxfmt/binding-android-arm-eabi@0.66.0':
+    resolution: {integrity: sha512-2Me9eoptv6ERdEuI2P8AOlYdHHraXebJaM6SC0kc2Dfb+mLrep2db+fedBPKaYn673h/vBgvP4tkOdAbaudX6w==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm]
     os: [android]
 
-  '@oxfmt/binding-android-arm64@0.58.0':
-    resolution: {integrity: sha512-rD0lRaJp1b+9vw6X4A2dJWKukd6X8yxiicN4JxXcXayolmUypRZxk+lKR+fVOu5q/iYc0fh5fR4bgmfOfVlbaA==}
+  '@oxfmt/binding-android-arm64@0.66.0':
+    resolution: {integrity: sha512-u7O+bSSF0HGsDKkQQxBqvLGVepu93RA+JKu+ONqvfh4sCnCEbj31wZj4iG5gk3XfRwrmYj0/8catkO2LcblQKQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [android]
 
-  '@oxfmt/binding-darwin-arm64@0.58.0':
-    resolution: {integrity: sha512-uzbPPk7O6M+w2K65vcQ1woga3wgP8zghjL1KOG5b6qJ8dvYHZJ1VShaslg2KOK6yQIwCQtcMCXqLBM6sqXUNTg==}
+  '@oxfmt/binding-darwin-arm64@0.66.0':
+    resolution: {integrity: sha512-/ikyMIVjX/sdo7KtjxoEsSUosfPzveVhT9RWMx9yGqFDKFJ89JAEKuEeLBmurDjrkb4w8tOnAdSO3SBaplY3bw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [darwin]
 
-  '@oxfmt/binding-darwin-x64@0.58.0':
-    resolution: {integrity: sha512-L0nKYDxU32oxeQqJj21W9SlIMnf81VZEhyah6iDvFhf5q0oynq498Fopth7blErUJVBpVtxQ98RMCfMPqpJX6w==}
+  '@oxfmt/binding-darwin-x64@0.66.0':
+    resolution: {integrity: sha512-q5xUsKeFqawa9NXa6ZGXWimFV19m8MogKPdTaSVDAAk2EQKBmBZRDeluwcl1p8ty/OFc9s9888OKEh3xfPVH0g==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [darwin]
 
-  '@oxfmt/binding-freebsd-x64@0.58.0':
-    resolution: {integrity: sha512-woNwfD58dC5PGS9LSLSD5JYfo/EFK5iG9vhDWkcCg3q78ag7KC8bpDqgvPHrMoXpx83OLXxoSOhu6z8FsVTHlg==}
+  '@oxfmt/binding-freebsd-x64@0.66.0':
+    resolution: {integrity: sha512-CR+x4VzMY0pRXLK/xFQ/RzsSFkP5t2Z2mef0QY6OP/rTRcMUoMLCOM62/3Fp/t0K+UDoBKxvMyeb6D0zPMjleA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [freebsd]
 
-  '@oxfmt/binding-linux-arm-gnueabihf@0.58.0':
-    resolution: {integrity: sha512-Sqs8nMLxuQpY21NKJ1u4stPDmO5hskBCNNh2E3AdCfI1QqWtf4m+Qn4mGEIUO4KGmuq3SWc/SZ80uy5IiwTCDw==}
+  '@oxfmt/binding-linux-arm-gnueabihf@0.66.0':
+    resolution: {integrity: sha512-ZEYmO/LbH9tTQCADILHGZE4GeOXOAj2VzedHkASNwjmwlwtutJCLpCJbIs37wRGTFgWRoEcD72jpMX+IBJUGjQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm]
     os: [linux]
 
-  '@oxfmt/binding-linux-arm-musleabihf@0.58.0':
-    resolution: {integrity: sha512-Vd4exzBI5B5hB9m22JiTQzIL23WvHo/Pe+sNXPNeBLXSP9swCBPKCEBRwKpmpQzYhlgYaCgfPcGXPKAJBRIiZQ==}
+  '@oxfmt/binding-linux-arm-musleabihf@0.66.0':
+    resolution: {integrity: sha512-hNtR9/oU0CeTkq7JnRkmBQwqe17v2ZaAMLC4VcN7IIOWeRyWDk0knSPWS9iiLmtbZ2RRBBtsG01jQgkZmKCJeQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm]
     os: [linux]
 
-  '@oxfmt/binding-linux-arm64-gnu@0.58.0':
-    resolution: {integrity: sha512-bUWi5mHV+4Vi56RLHE1h6q/HHfwAIT3XoB9vJAVeRzfu5NriXM8y6eeJu0vlKa0C9kq2rq1sOWRClhdLHPocrg==}
+  '@oxfmt/binding-linux-arm64-gnu@0.66.0':
+    resolution: {integrity: sha512-uwOVQ8i6I1LT/+eDzfsgrrcZp8Fn6NPVUPn8fF5gdFGekFf0PddF+LEuwsD0/pbNUcKZhDj2rQ5UpITh9gF4iQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@oxfmt/binding-linux-arm64-musl@0.58.0':
-    resolution: {integrity: sha512-2ZHxemzgHcjtktAuVUwSoyXmGo/t+aF5tS1ciPpPei4rhSyrz3JOqDosXXrmhN/yLUSzJjtuW7ToTWqfQpCj2w==}
+  '@oxfmt/binding-linux-arm64-musl@0.66.0':
+    resolution: {integrity: sha512-tTkF2Dmx4nGAjmBlZb+UtTGqR/EK4ZrW9qBfzte07a9XWqzoGGKzpFFlyNDhQe+Uwql94+ReCTeNbhOXscw1Dg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [linux]
     libc: [musl]
 
-  '@oxfmt/binding-linux-ppc64-gnu@0.58.0':
-    resolution: {integrity: sha512-AwKkVwjVmFQ3bcO7j0McGYAqCKH2a326fswfofng/E8VewCT/raeeGQr4huVhY704deK8AWASSTlxzMj0eZc6Q==}
+  '@oxfmt/binding-linux-ppc64-gnu@0.66.0':
+    resolution: {integrity: sha512-F3cKHUav4yXOHn6GFnwpBhSYsJOYKKf9eqO/9jlEuqPxNw9zb98E9ZFct79gcg8pibUGkbveEu9WDlmXJpDzKw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [ppc64]
     os: [linux]
     libc: [glibc]
 
-  '@oxfmt/binding-linux-riscv64-gnu@0.58.0':
-    resolution: {integrity: sha512-xsRpTxfUnJF8D3AUKko/qyWdjw4GZVHlCVFuGlzSCTeewLmykKINW8em1+wx+axsDVtJJcMtvsiaXggXxrlHgw==}
+  '@oxfmt/binding-linux-riscv64-gnu@0.66.0':
+    resolution: {integrity: sha512-K5fDaNZfDyQMYA/3qL21bqyN0X9T15LLwwbFPt2aHc94+ZG7bh0vZEsy2y7NlRnjjHFSwN+Hzg6ldJtbOriH4Q==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [riscv64]
     os: [linux]
     libc: [glibc]
 
-  '@oxfmt/binding-linux-riscv64-musl@0.58.0':
-    resolution: {integrity: sha512-Z4AYOTcy7nYEIiXwD62PlerimyYRcfJOgUbQAEBjXz098kxKuERBlRntofGy69HHhe9E0TLVNMl1yspVNu+efw==}
+  '@oxfmt/binding-linux-riscv64-musl@0.66.0':
+    resolution: {integrity: sha512-44Yc+I+qOmTElRcEhm5hUKIUJEQIOugymz4ua4tB0Wox7tGAfIbjzmXz/HDAtw1Ij6gmBwZlzh4hc9679RhWeA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [riscv64]
     os: [linux]
     libc: [musl]
 
-  '@oxfmt/binding-linux-s390x-gnu@0.58.0':
-    resolution: {integrity: sha512-A3nhhtZPC/TKVWOPj9q/H3p2znJDCcHWYlJBhWL8hGq/bFmBaNBHC8Np6E581yVq1w9Mi3rMDNzDalWvtUfJtQ==}
+  '@oxfmt/binding-linux-s390x-gnu@0.66.0':
+    resolution: {integrity: sha512-1e29Eg9hEj2kRBB19M0seIehPbbXHCk35GvImjDvb79rjjYjXCRmtbUNHJcgoktZAMIzXrTbxDBKmTc1V4bg3A==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [s390x]
     os: [linux]
     libc: [glibc]
 
-  '@oxfmt/binding-linux-x64-gnu@0.58.0':
-    resolution: {integrity: sha512-2g+tVkgwqphw8R4hgo+kF4oz8+P5RwVOtr9+irsC7uwEp0e9j7Crw8kDGKL20uYlLPD7g02DqA61mC/UNYx98A==}
+  '@oxfmt/binding-linux-x64-gnu@0.66.0':
+    resolution: {integrity: sha512-vODY1UQo10gngn0+D4xHKU84F1Twm1LqrzV4SqPXvmQKSd87paehvZ6jqA5wKs6XQrlWul9clYMDVHcoW9CPMA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@oxfmt/binding-linux-x64-musl@0.58.0':
-    resolution: {integrity: sha512-rc15P6AbyyB7426aN8AakLd02Trb3a6ML/mmfAQeVHJEfVofWLcWIrBdy6zDEY+DIaL/s8E4GGPboVw+oP3+EA==}
+  '@oxfmt/binding-linux-x64-musl@0.66.0':
+    resolution: {integrity: sha512-YDzXx2JsT4+HL4MdkVrYjO55NS5lUKNm8rLC4ZPou8+seu0v0jhecSh+ufoO6+xEa8gccEezMlI2WHJi4ApUgw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [linux]
     libc: [musl]
 
-  '@oxfmt/binding-openharmony-arm64@0.58.0':
-    resolution: {integrity: sha512-ZWoTM27/HYPOh9iq86DAbhPu9nXb8qKvvGU/h8OfliyVUFAMMNTLDkGsWDKKnDqIkqvZ9+dXlgUOsH1LYO3O7g==}
+  '@oxfmt/binding-openharmony-arm64@0.66.0':
+    resolution: {integrity: sha512-mJjUYd8lj0+j4JkYyEM+5qKBf1Rnrpgjn/SVYKJhicVDqLz566ooa7Fs8zflPqt+dnZDV7X054rVIQX6ZcQNlQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [openharmony]
 
-  '@oxfmt/binding-win32-arm64-msvc@0.58.0':
-    resolution: {integrity: sha512-LHZnqFXe2dEfkRI4XdZS/57nEOT/I4UCRX5IyM9v4GYW9XwQCjGe1IUK59SuKw3POwvcgWQ4pme2cYXmNqTNPg==}
+  '@oxfmt/binding-win32-arm64-msvc@0.66.0':
+    resolution: {integrity: sha512-soV+0vESv7e5ntCHWC61x4gg8OSak6IHHnWsZmHrJFlvMj2AK+kmldErCNkVkrvc1Ts2/++rJXn+IuAb2WMXhw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [win32]
 
-  '@oxfmt/binding-win32-ia32-msvc@0.58.0':
-    resolution: {integrity: sha512-mZKpg20TpheCJym1rarcZCUJeW1sSruw8zAAaCYWvuVfwIUDN1CXdrPU/JgCWReXTCTrEfCB8Wyo3hh9jSZ2EA==}
+  '@oxfmt/binding-win32-ia32-msvc@0.66.0':
+    resolution: {integrity: sha512-YCPi23uRIEYuIKTZohAkKbPFpujQ5QBuUM5iDv+UqbCmTPAkaFsxjsSuB8xlBpRT0G7eP/4HMF+cPDSqHtOD9A==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [ia32]
     os: [win32]
 
-  '@oxfmt/binding-win32-x64-msvc@0.58.0':
-    resolution: {integrity: sha512-N/wUU4N5PZ2orBtI+Ko7MnMfYLfE7K91UrGMY/c/pYyHR3lA9kwst1XugkZx+92YcRh/Eo+iv2eTESSWXfiZPA==}
+  '@oxfmt/binding-win32-x64-msvc@0.66.0':
+    resolution: {integrity: sha512-bwTQcv/JVRPkOqQtMF0X7vpvpncDQiBcXHxZ9S2hR12Hlo8bvBdUR5x5XnxzDZ3kM0qoZw1rv7KaD66Ly+pFWA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [win32]
@@ -12198,6 +12198,10 @@ packages:
   buffer-from@1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
 
+  buffer-image-size@0.6.4:
+    resolution: {integrity: sha512-nEh+kZOPY1w+gcCMobZ6ETUp9WfibndnosbpwB1iJk/8Gt5ZF2bhS6+B6bPYz424KtwsR6Rflc3tCz1/ghX2dQ==}
+    engines: {node: '>=4.0'}
+
   buffer@5.7.1:
     resolution: {integrity: sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==}
 
@@ -13622,8 +13626,8 @@ packages:
   handle-thing@2.0.1:
     resolution: {integrity: sha512-9Qn4yBxelxoh2Ow62nP+Ka/kMnOXRi8BXnRaUwezLNhqelnN49xKz4F/dPP8OYLxLxq6JDtZb2i9XznUQbNPTg==}
 
-  happy-dom@20.9.0:
-    resolution: {integrity: sha512-GZZ9mKe8r646NUAf/zemnGbjYh4Bt8/MqASJY+pSm5ZDtc3YQox+4gsLI7yi1hba6o+eCsGxpHn5+iEVn31/FQ==}
+  happy-dom@20.12.0:
+    resolution: {integrity: sha512-7uMYJu2SEwwL8vVcKp0C0lnt6d2LSGGe+T+oY79PiCJNNSgFpbxW8n5KuzpDQvrU4mt+fYiK1+Jy7Z2v39YR6g==}
     engines: {node: '>=20.0.0'}
 
   hard-rejection@2.1.0:
@@ -14851,8 +14855,8 @@ packages:
   mz@2.7.0:
     resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}
 
-  nanoid@3.3.16:
-    resolution: {integrity: sha512-bzlKTyNJ7+LdGIIwy8ijFpIqEQIvafahV7eYykJ8Cvh42EdJeODoJ6gUJXpQJvej1BddH8OqTXZNE/KfbWAu8Q==}
+  nanoid@3.3.18:
+    resolution: {integrity: sha512-DTg4MJbGMWkfi6VZFdNt2/caMbQy4Ou+Op/hJQvGEWcnVfoA1QA+xzRKAzw9jD6+GVOOeYr/mIcuDSdug6F6+w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
@@ -15034,8 +15038,8 @@ packages:
     resolution: {integrity: sha512-FkGVLTM83USPtu7Oa8iWKuLygto+gQRz7Kvb2SZsoVjFrJ0VJFQvIOHWW02GBN/8MzwT5G5hC9HM8HsWY72ufg==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
-  oxfmt@0.58.0:
-    resolution: {integrity: sha512-8feG/7NVEHDVwc1OUpP6Pks+TnaDFUw2jLLFIMi5bcmmwxAX2wBQvjSzj62RRTYBf2Op1Wt8xbkmagmPTR5ETg==}
+  oxfmt@0.66.0:
+    resolution: {integrity: sha512-FfvqR8RFtV6JJpRrpkfqyVCQ7HDvZ/VriWFx7veftCgL1B5ZO9qNr+1rvPieycMQnNfVG0PWyJQiy7p0hq1I5w==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -15329,12 +15333,8 @@ packages:
   postcss-value-parser@4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
 
-  postcss@8.5.10:
-    resolution: {integrity: sha512-pMMHxBOZKFU6HgAZ4eyGnwXF/EvPGGqUr0MnZ5+99485wwW41kW91A4LOGxSHhgugZmSChL5AlElNdwlNgcnLQ==}
-    engines: {node: ^10 || ^12 || >=14}
-
-  postcss@8.5.23:
-    resolution: {integrity: sha512-g50586zr4bZmwFiTlflMu8E0bDTb5I5gertgwAKmsdUlTQIhZtunzUlD1WSzwcVWPoAVpsrA6vlfCD7oXvRwgg==}
+  postcss@8.5.26:
+    resolution: {integrity: sha512-u82N74LFzG8ca+dD8puPnplTXoGH4fTPpVGuIbt36G3qvNlkvfD0lEAZSxaly3KX8TS/L1A1gsCEmvKmBcVbkQ==}
     engines: {node: ^10 || ^12 || >=14}
 
   potpack@2.1.0:
@@ -15854,8 +15854,8 @@ packages:
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  sass@1.70.0:
-    resolution: {integrity: sha512-uUxNQ3zAHeAx5nRFskBnrWzDUJrrvpCPD5FNAoRvTi0WwremlheES3tg+56PaVtCs5QDRX5CBLxxKMDJMEa1WQ==}
+  sass@1.77.1:
+    resolution: {integrity: sha512-OMEyfirt9XEfyvocduUIOlUSkWOXS/LAt6oblR/ISXCTukyavjex+zQNm51pPCOiFKY1QpWvEH1EeCkgyV3I6w==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -18062,11 +18062,11 @@ snapshots:
       '@dagrejs/graphlib': 2.2.4
       '@joint/core': 4.3.0
 
-  '@joshwooding/vite-plugin-react-docgen-typescript@0.7.0(typescript@5.9.3)(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))':
+  '@joshwooding/vite-plugin-react-docgen-typescript@0.7.0(typescript@5.9.3)(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))':
     dependencies:
       glob: 13.0.2
       react-docgen-typescript: 2.4.0(typescript@5.9.3)
-      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
     optionalDependencies:
       typescript: 5.9.3
 
@@ -18398,12 +18398,12 @@ snapshots:
       find-pkg: 2.0.0
       resolve: 1.22.8
 
-  '@module-federation/vite@1.16.11(node-fetch@2.7.0)(typescript@5.9.3)(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))':
+  '@module-federation/vite@1.16.11(node-fetch@2.7.0)(typescript@5.9.3)(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))':
     dependencies:
       '@module-federation/dts-plugin': 2.6.0(node-fetch@2.7.0)(typescript@5.9.3)
       '@module-federation/runtime': 2.6.0(node-fetch@2.7.0)
       '@module-federation/sdk': 2.6.0(node-fetch@2.7.0)
-      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
     transitivePeerDependencies:
       - bufferutil
       - node-fetch
@@ -18783,61 +18783,61 @@ snapshots:
   '@oxc-transform/binding-win32-x64-msvc@0.147.0':
     optional: true
 
-  '@oxfmt/binding-android-arm-eabi@0.58.0':
+  '@oxfmt/binding-android-arm-eabi@0.66.0':
     optional: true
 
-  '@oxfmt/binding-android-arm64@0.58.0':
+  '@oxfmt/binding-android-arm64@0.66.0':
     optional: true
 
-  '@oxfmt/binding-darwin-arm64@0.58.0':
+  '@oxfmt/binding-darwin-arm64@0.66.0':
     optional: true
 
-  '@oxfmt/binding-darwin-x64@0.58.0':
+  '@oxfmt/binding-darwin-x64@0.66.0':
     optional: true
 
-  '@oxfmt/binding-freebsd-x64@0.58.0':
+  '@oxfmt/binding-freebsd-x64@0.66.0':
     optional: true
 
-  '@oxfmt/binding-linux-arm-gnueabihf@0.58.0':
+  '@oxfmt/binding-linux-arm-gnueabihf@0.66.0':
     optional: true
 
-  '@oxfmt/binding-linux-arm-musleabihf@0.58.0':
+  '@oxfmt/binding-linux-arm-musleabihf@0.66.0':
     optional: true
 
-  '@oxfmt/binding-linux-arm64-gnu@0.58.0':
+  '@oxfmt/binding-linux-arm64-gnu@0.66.0':
     optional: true
 
-  '@oxfmt/binding-linux-arm64-musl@0.58.0':
+  '@oxfmt/binding-linux-arm64-musl@0.66.0':
     optional: true
 
-  '@oxfmt/binding-linux-ppc64-gnu@0.58.0':
+  '@oxfmt/binding-linux-ppc64-gnu@0.66.0':
     optional: true
 
-  '@oxfmt/binding-linux-riscv64-gnu@0.58.0':
+  '@oxfmt/binding-linux-riscv64-gnu@0.66.0':
     optional: true
 
-  '@oxfmt/binding-linux-riscv64-musl@0.58.0':
+  '@oxfmt/binding-linux-riscv64-musl@0.66.0':
     optional: true
 
-  '@oxfmt/binding-linux-s390x-gnu@0.58.0':
+  '@oxfmt/binding-linux-s390x-gnu@0.66.0':
     optional: true
 
-  '@oxfmt/binding-linux-x64-gnu@0.58.0':
+  '@oxfmt/binding-linux-x64-gnu@0.66.0':
     optional: true
 
-  '@oxfmt/binding-linux-x64-musl@0.58.0':
+  '@oxfmt/binding-linux-x64-musl@0.66.0':
     optional: true
 
-  '@oxfmt/binding-openharmony-arm64@0.58.0':
+  '@oxfmt/binding-openharmony-arm64@0.66.0':
     optional: true
 
-  '@oxfmt/binding-win32-arm64-msvc@0.58.0':
+  '@oxfmt/binding-win32-arm64-msvc@0.66.0':
     optional: true
 
-  '@oxfmt/binding-win32-ia32-msvc@0.58.0':
+  '@oxfmt/binding-win32-ia32-msvc@0.66.0':
     optional: true
 
-  '@oxfmt/binding-win32-x64-msvc@0.58.0':
+  '@oxfmt/binding-win32-x64-msvc@0.66.0':
     optional: true
 
   '@oxlint-tsgolint/darwin-arm64@0.15.0':
@@ -19334,12 +19334,12 @@ snapshots:
       axe-core: 4.12.1
       storybook: 10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1)
 
-  '@storybook/builder-vite@10.5.6(esbuild@0.28.1)(rollup@4.62.3)(storybook@10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1))(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))(webpack@5.107.2(esbuild@0.28.1))':
+  '@storybook/builder-vite@10.5.6(esbuild@0.28.1)(rollup@4.62.3)(storybook@10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1))(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))(webpack@5.107.2(esbuild@0.28.1))':
     dependencies:
-      '@storybook/csf-plugin': 10.5.6(esbuild@0.28.1)(rollup@4.62.3)(storybook@10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1))(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))(webpack@5.107.2(esbuild@0.28.1))
+      '@storybook/csf-plugin': 10.5.6(esbuild@0.28.1)(rollup@4.62.3)(storybook@10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1))(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))(webpack@5.107.2(esbuild@0.28.1))
       storybook: 10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1)
       ts-dedent: 2.3.0
-      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
     transitivePeerDependencies:
       - esbuild
       - rollup
@@ -19383,14 +19383,14 @@ snapshots:
       - utf-8-validate
       - vite-plus
 
-  '@storybook/csf-plugin@10.5.6(esbuild@0.28.1)(rollup@4.62.3)(storybook@10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1))(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))(webpack@5.107.2(esbuild@0.28.1))':
+  '@storybook/csf-plugin@10.5.6(esbuild@0.28.1)(rollup@4.62.3)(storybook@10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1))(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))(webpack@5.107.2(esbuild@0.28.1))':
     dependencies:
       storybook: 10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1)
       unplugin: 2.3.11
     optionalDependencies:
       esbuild: 0.28.1
       rollup: 4.62.3
-      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       webpack: 5.107.2(esbuild@0.28.1)
 
   '@storybook/global@5.0.0': {}
@@ -19408,11 +19408,11 @@ snapshots:
       '@types/react': 19.1.11
       '@types/react-dom': 19.1.7(@types/react@19.1.11)
 
-  '@storybook/react-vite@10.5.6(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(esbuild@0.28.1)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(rollup@4.62.3)(storybook@10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1))(typescript@5.9.3)(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))(webpack@5.107.2(esbuild@0.28.1))':
+  '@storybook/react-vite@10.5.6(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(esbuild@0.28.1)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(rollup@4.62.3)(storybook@10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1))(typescript@5.9.3)(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))(webpack@5.107.2(esbuild@0.28.1))':
     dependencies:
-      '@joshwooding/vite-plugin-react-docgen-typescript': 0.7.0(typescript@5.9.3)(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+      '@joshwooding/vite-plugin-react-docgen-typescript': 0.7.0(typescript@5.9.3)(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       '@rollup/pluginutils': 5.4.0(rollup@4.62.3)
-      '@storybook/builder-vite': 10.5.6(esbuild@0.28.1)(rollup@4.62.3)(storybook@10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1))(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))(webpack@5.107.2(esbuild@0.28.1))
+      '@storybook/builder-vite': 10.5.6(esbuild@0.28.1)(rollup@4.62.3)(storybook@10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1))(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))(webpack@5.107.2(esbuild@0.28.1))
       '@storybook/react': 10.5.6(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(storybook@10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1))(typescript@5.9.3)
       empathic: 2.0.1
       magic-string: 0.30.21
@@ -19422,7 +19422,7 @@ snapshots:
       resolve: 1.22.12
       storybook: 10.5.6(@types/react@19.1.11)(prettier@3.9.6)(react@19.1.1)
       tsconfig-paths: 4.2.0
-      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
     optionalDependencies:
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -20057,10 +20057,10 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.12.2':
     optional: true
 
-  '@vitejs/plugin-react@6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))':
+  '@vitejs/plugin-react@6.0.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))':
     dependencies:
       '@rolldown/pluginutils': 1.0.1
-      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   '@vitest/coverage-v8@4.1.8(vitest@4.1.8)':
     dependencies:
@@ -20074,7 +20074,7 @@ snapshots:
       obug: 2.1.4
       std-env: 4.2.0
       tinyrainbow: 3.1.0
-      vitest: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+      vitest: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   '@vitest/eslint-plugin@1.6.19(@typescript-eslint/eslint-plugin@8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)(vitest@4.1.8)':
     dependencies:
@@ -20084,7 +20084,7 @@ snapshots:
     optionalDependencies:
       '@typescript-eslint/eslint-plugin': 8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)
       typescript: 5.9.3
-      vitest: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+      vitest: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -20105,13 +20105,13 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.1.0
 
-  '@vitest/mocker@4.1.8(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))':
+  '@vitest/mocker@4.1.8(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))':
     dependencies:
       '@vitest/spy': 4.1.8
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   '@vitest/pretty-format@3.2.4':
     dependencies:
@@ -20669,6 +20669,10 @@ snapshots:
 
   buffer-from@1.1.2: {}
 
+  buffer-image-size@0.6.4:
+    dependencies:
+      '@types/node': 24.12.0
+
   buffer@5.7.1:
     dependencies:
       base64-js: 1.5.1
@@ -21012,12 +21016,12 @@ snapshots:
 
   css-loader@6.11.0(webpack@5.107.2):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.5.10)
-      postcss: 8.5.10
-      postcss-modules-extract-imports: 3.1.0(postcss@8.5.10)
-      postcss-modules-local-by-default: 4.2.0(postcss@8.5.10)
-      postcss-modules-scope: 3.2.1(postcss@8.5.10)
-      postcss-modules-values: 4.0.0(postcss@8.5.10)
+      icss-utils: 5.1.0(postcss@8.5.26)
+      postcss: 8.5.26
+      postcss-modules-extract-imports: 3.1.0(postcss@8.5.26)
+      postcss-modules-local-by-default: 4.2.0(postcss@8.5.26)
+      postcss-modules-scope: 3.2.1(postcss@8.5.26)
+      postcss-modules-values: 4.0.0(postcss@8.5.26)
       postcss-value-parser: 4.2.0
       semver: 7.7.4
     optionalDependencies:
@@ -22286,11 +22290,12 @@ snapshots:
 
   handle-thing@2.0.1: {}
 
-  happy-dom@20.9.0:
+  happy-dom@20.12.0:
     dependencies:
       '@types/node': 24.12.0
       '@types/whatwg-mimetype': 3.0.2
       '@types/ws': 8.18.1
+      buffer-image-size: 0.6.4
       entities: 7.0.1
       whatwg-mimetype: 3.0.0
       ws: 8.21.1
@@ -22416,7 +22421,7 @@ snapshots:
       semver: 7.7.4
     optionalDependencies:
       jest-diff: 29.7.0
-      vitest: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+      vitest: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
   html-webpack-plugin@5.6.4(webpack@5.107.2):
     dependencies:
@@ -22520,9 +22525,9 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
-  icss-utils@5.1.0(postcss@8.5.10):
+  icss-utils@5.1.0(postcss@8.5.26):
     dependencies:
-      postcss: 8.5.10
+      postcss: 8.5.26
 
   ieee754@1.2.1: {}
 
@@ -23731,7 +23736,7 @@ snapshots:
       object-assign: 4.1.1
       thenify-all: 1.6.0
 
-  nanoid@3.3.16: {}
+  nanoid@3.3.18: {}
 
   napi-postinstall@0.3.4: {}
 
@@ -23994,29 +23999,29 @@ snapshots:
       '@oxc-transform/binding-win32-ia32-msvc': 0.147.0
       '@oxc-transform/binding-win32-x64-msvc': 0.147.0
 
-  oxfmt@0.58.0:
+  oxfmt@0.66.0:
     dependencies:
       tinypool: 2.1.0
     optionalDependencies:
-      '@oxfmt/binding-android-arm-eabi': 0.58.0
-      '@oxfmt/binding-android-arm64': 0.58.0
-      '@oxfmt/binding-darwin-arm64': 0.58.0
-      '@oxfmt/binding-darwin-x64': 0.58.0
-      '@oxfmt/binding-freebsd-x64': 0.58.0
-      '@oxfmt/binding-linux-arm-gnueabihf': 0.58.0
-      '@oxfmt/binding-linux-arm-musleabihf': 0.58.0
-      '@oxfmt/binding-linux-arm64-gnu': 0.58.0
-      '@oxfmt/binding-linux-arm64-musl': 0.58.0
-      '@oxfmt/binding-linux-ppc64-gnu': 0.58.0
-      '@oxfmt/binding-linux-riscv64-gnu': 0.58.0
-      '@oxfmt/binding-linux-riscv64-musl': 0.58.0
-      '@oxfmt/binding-linux-s390x-gnu': 0.58.0
-      '@oxfmt/binding-linux-x64-gnu': 0.58.0
-      '@oxfmt/binding-linux-x64-musl': 0.58.0
-      '@oxfmt/binding-openharmony-arm64': 0.58.0
-      '@oxfmt/binding-win32-arm64-msvc': 0.58.0
-      '@oxfmt/binding-win32-ia32-msvc': 0.58.0
-      '@oxfmt/binding-win32-x64-msvc': 0.58.0
+      '@oxfmt/binding-android-arm-eabi': 0.66.0
+      '@oxfmt/binding-android-arm64': 0.66.0
+      '@oxfmt/binding-darwin-arm64': 0.66.0
+      '@oxfmt/binding-darwin-x64': 0.66.0
+      '@oxfmt/binding-freebsd-x64': 0.66.0
+      '@oxfmt/binding-linux-arm-gnueabihf': 0.66.0
+      '@oxfmt/binding-linux-arm-musleabihf': 0.66.0
+      '@oxfmt/binding-linux-arm64-gnu': 0.66.0
+      '@oxfmt/binding-linux-arm64-musl': 0.66.0
+      '@oxfmt/binding-linux-ppc64-gnu': 0.66.0
+      '@oxfmt/binding-linux-riscv64-gnu': 0.66.0
+      '@oxfmt/binding-linux-riscv64-musl': 0.66.0
+      '@oxfmt/binding-linux-s390x-gnu': 0.66.0
+      '@oxfmt/binding-linux-x64-gnu': 0.66.0
+      '@oxfmt/binding-linux-x64-musl': 0.66.0
+      '@oxfmt/binding-openharmony-arm64': 0.66.0
+      '@oxfmt/binding-win32-arm64-msvc': 0.66.0
+      '@oxfmt/binding-win32-ia32-msvc': 0.66.0
+      '@oxfmt/binding-win32-x64-msvc': 0.66.0
 
   oxlint-tsgolint@0.15.0:
     optionalDependencies:
@@ -24249,57 +24254,51 @@ snapshots:
 
   postcss-media-query-parser@0.2.3: {}
 
-  postcss-modules-extract-imports@3.1.0(postcss@8.5.10):
+  postcss-modules-extract-imports@3.1.0(postcss@8.5.26):
     dependencies:
-      postcss: 8.5.10
+      postcss: 8.5.26
 
-  postcss-modules-local-by-default@4.2.0(postcss@8.5.10):
+  postcss-modules-local-by-default@4.2.0(postcss@8.5.26):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.5.10)
-      postcss: 8.5.10
+      icss-utils: 5.1.0(postcss@8.5.26)
+      postcss: 8.5.26
       postcss-selector-parser: 7.1.4
       postcss-value-parser: 4.2.0
 
-  postcss-modules-scope@3.2.1(postcss@8.5.10):
+  postcss-modules-scope@3.2.1(postcss@8.5.26):
     dependencies:
-      postcss: 8.5.10
+      postcss: 8.5.26
       postcss-selector-parser: 7.1.4
 
-  postcss-modules-values@4.0.0(postcss@8.5.10):
+  postcss-modules-values@4.0.0(postcss@8.5.26):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.5.10)
-      postcss: 8.5.10
+      icss-utils: 5.1.0(postcss@8.5.26)
+      postcss: 8.5.26
 
   postcss-resolve-nested-selector@0.1.6: {}
 
-  postcss-safe-parser@7.0.1(postcss@8.5.10):
+  postcss-safe-parser@7.0.1(postcss@8.5.26):
     dependencies:
-      postcss: 8.5.10
+      postcss: 8.5.26
 
-  postcss-scss@4.0.9(postcss@8.5.10):
+  postcss-scss@4.0.9(postcss@8.5.26):
     dependencies:
-      postcss: 8.5.10
+      postcss: 8.5.26
 
   postcss-selector-parser@7.1.4:
     dependencies:
       cssesc: 3.0.0
       util-deprecate: 1.0.2
 
-  postcss-sorting@8.0.2(postcss@8.5.10):
+  postcss-sorting@8.0.2(postcss@8.5.26):
     dependencies:
-      postcss: 8.5.10
+      postcss: 8.5.26
 
   postcss-value-parser@4.2.0: {}
 
-  postcss@8.5.10:
+  postcss@8.5.26:
     dependencies:
-      nanoid: 3.3.16
-      picocolors: 1.1.1
-      source-map-js: 1.2.1
-
-  postcss@8.5.23:
-    dependencies:
-      nanoid: 3.3.16
+      nanoid: 3.3.18
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
@@ -24961,7 +24960,7 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sass@1.70.0:
+  sass@1.77.1:
     dependencies:
       chokidar: 3.6.0
       immutable: 4.3.9
@@ -25402,8 +25401,8 @@ snapshots:
 
   stylelint-order@6.0.4(stylelint@16.26.1(typescript@5.9.3)):
     dependencies:
-      postcss: 8.5.10
-      postcss-sorting: 8.0.2(postcss@8.5.10)
+      postcss: 8.5.26
+      postcss-sorting: 8.0.2(postcss@8.5.26)
       stylelint: 16.26.1(typescript@5.9.3)
 
   stylelint-plugin-defensive-css@2.9.4(stylelint@16.26.1(typescript@5.9.3)):
@@ -25452,9 +25451,9 @@ snapshots:
       micromatch: 4.0.8
       normalize-path: 3.0.0
       picocolors: 1.1.1
-      postcss: 8.5.10
+      postcss: 8.5.26
       postcss-resolve-nested-selector: 0.1.6
-      postcss-safe-parser: 7.0.1(postcss@8.5.10)
+      postcss-safe-parser: 7.0.1(postcss@8.5.26)
       postcss-selector-parser: 7.1.4
       postcss-value-parser: 4.2.0
       resolve-from: 5.0.0
@@ -25946,13 +25945,13 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite-node@5.3.0(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.33.0)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3):
+  vite-node@5.3.0(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.33.0)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3):
     dependencies:
       cac: 6.7.14
       es-module-lexer: 2.3.1
       obug: 2.1.4
       pathe: 2.0.3
-      vite: 7.3.6(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.33.0)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+      vite: 7.3.6(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.33.0)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -25966,11 +25965,11 @@ snapshots:
       - tsx
       - yaml
 
-  vite-plugin-css-injected-by-js@3.1.1(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)):
+  vite-plugin-css-injected-by-js@3.1.1(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)):
     dependencies:
-      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  vite-plugin-html@3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)):
+  vite-plugin-html@3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)):
     dependencies:
       '@rollup/pluginutils': 4.2.1
       colorette: 2.0.20
@@ -25984,22 +25983,22 @@ snapshots:
       html-minifier-terser: 6.1.0
       node-html-parser: 5.4.2
       pathe: 0.2.0
-      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  vite-plugin-static-copy@4.1.0(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)):
+  vite-plugin-static-copy@4.1.0(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)):
     dependencies:
       chokidar: 3.6.0
       p-map: 7.0.6
       picocolors: 1.1.1
       tinyglobby: 0.2.17
-      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  vite@7.3.6(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.33.0)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3):
+  vite@7.3.6(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.33.0)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3):
     dependencies:
       esbuild: 0.28.1
       fdir: 6.5.0(picomatch@4.0.5)
       picomatch: 4.0.5
-      postcss: 8.5.10
+      postcss: 8.5.26
       rollup: 4.62.3
       tinyglobby: 0.2.17
     optionalDependencies:
@@ -26007,15 +26006,15 @@ snapshots:
       fsevents: 2.3.3
       jiti: 2.6.1
       lightningcss: 1.33.0
-      sass: 1.70.0
+      sass: 1.77.1
       terser: 5.49.0
       yaml: 2.8.3
 
-  vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3):
+  vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3):
     dependencies:
       lightningcss: 1.33.0
       picomatch: 4.0.5
-      postcss: 8.5.23
+      postcss: 8.5.26
       rolldown: 1.0.3
       tinyglobby: 0.2.17
     optionalDependencies:
@@ -26023,7 +26022,7 @@ snapshots:
       esbuild: 0.28.1
       fsevents: 2.3.3
       jiti: 2.6.1
-      sass: 1.70.0
+      sass: 1.77.1
       terser: 5.49.0
       yaml: 2.8.3
 
@@ -26035,12 +26034,12 @@ snapshots:
       dom-accessibility-api: 0.6.3
       lodash-es: 4.18.1
       redent: 4.0.0
-      vitest: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+      vitest: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  vitest@4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.9.0)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3):
+  vitest@4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3):
     dependencies:
       '@vitest/expect': 4.1.8
-      '@vitest/mocker': 4.1.8(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3))
+      '@vitest/mocker': 4.1.8(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
       '@vitest/pretty-format': 4.1.8
       '@vitest/runner': 4.1.8
       '@vitest/snapshot': 4.1.8
@@ -26057,12 +26056,12 @@ snapshots:
       tinyexec: 1.2.4
       tinyglobby: 0.2.17
       tinyrainbow: 3.1.0
-      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.70.0)(terser@5.49.0)(yaml@2.8.3)
+      vite: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 24.12.0
       '@vitest/coverage-v8': 4.1.8(vitest@4.1.8)
-      happy-dom: 20.9.0
+      happy-dom: 20.12.0
     transitivePeerDependencies:
       - '@vitejs/devtools'
       - esbuild

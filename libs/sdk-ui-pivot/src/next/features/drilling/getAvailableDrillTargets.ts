@@ -1,4 +1,5 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
+
 import { type IMeasureDescriptor, attributeLocalId, isComputedAttribute } from "@gooddata/sdk-model";
 import {
     type DataViewFacade,
@@ -27,12 +28,10 @@ export function getAvailableDrillTargets(
     const measureDescriptors = dv
         .meta()
         .measureDescriptors()
-        .map(
-            (measure: IMeasureDescriptor): IAvailableDrillTargetMeasure => ({
-                measure,
-                attributes: dv.meta().attributeDescriptors(),
-            }),
-        );
+        .map((measure: IMeasureDescriptor): IAvailableDrillTargetMeasure => ({
+            measure,
+            attributes: dv.meta().attributeDescriptors(),
+        }));
 
     const computedAttributeLocalIds = new Set(
         dv.def().attributes().filter(isComputedAttribute).map(attributeLocalId),

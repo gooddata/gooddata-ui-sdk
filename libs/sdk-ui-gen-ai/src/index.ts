@@ -115,6 +115,11 @@ export { type LinkHandlerEvent, type GenAIAssistantMode } from "./components/Con
 export { type IChatMessagesGroup } from "./components/utils/groupUtility.js";
 export { useGenAiChatAvailability } from "./hooks/useGenAiChatAvailability.js";
 export { useGenAiDispatcher } from "./hooks/useGenAiDispatcher.js";
+export {
+    useGenAiConversations,
+    useGenAiCurrentConversation,
+    useGenAiConversationsLoaded,
+} from "./hooks/useGenAiSelectors.js";
 
 //interaction intelligence
 

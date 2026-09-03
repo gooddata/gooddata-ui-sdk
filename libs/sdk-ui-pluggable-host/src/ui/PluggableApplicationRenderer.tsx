@@ -76,6 +76,7 @@ export interface IPluggableApplicationRendererProps {
         embedded?: boolean;
         disabled?: boolean;
         userContext?: IGenAIUserContext;
+        userContextLoading?: boolean;
     }) => void;
     /**
      * Ref the renderer populates with a handler that delegates a host-chat link click to the active
@@ -173,6 +174,7 @@ export function PluggableApplicationRenderer({
                     embedded: event.payload.embedded,
                     disabled: event.payload.disabled,
                     userContext: event.payload.userContext,
+                    userContextLoading: event.payload.userContextLoading,
                 });
                 return;
             }

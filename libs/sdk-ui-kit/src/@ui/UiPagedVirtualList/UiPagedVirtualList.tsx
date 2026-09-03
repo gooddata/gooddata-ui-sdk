@@ -14,14 +14,14 @@ import {
     useState,
 } from "react";
 
-import { useVirtualizer } from "@tanstack/react-virtual";
+import { type VirtualItem, useVirtualizer } from "@tanstack/react-virtual";
 
 import { forwardRefWithGenerics } from "@gooddata/sdk-ui";
 
 import { bem } from "../@utils/bem.js";
 import { makeLinearKeyboardNavigationWithConfirm } from "../@utils/keyboardNavigation.js";
 import { SELECT_ITEM_ACTION } from "../hooks/useListWithActionsKeyboardNavigation.js";
-import { ScopedIdStore } from "../hooks/useScopedId.js";
+import { type IScopedIdStoreValue, ScopedIdStore } from "../hooks/useScopedId.js";
 import { useVirtualizerRectObserver } from "../hooks/useVirtualizerRectObserver.js";
 import { UiSkeleton } from "../UiSkeleton/UiSkeleton.js";
 const { b, e } = bem("gd-ui-kit-paged-virtual-list");
@@ -163,6 +163,16 @@ function UiPagedVirtualListNotWrapped<T>(
     const focusedItemIndex = focusedItem ? items?.indexOf(focusedItem) : 0;
     const finalFocusedIndex = focusedItem ? focusedItemIndex : focusedIndex;
 
+    const activeDescendantId = getActiveDescendantId({
+        representAs,
+        tabIndex,
+        customKeyboardNavigationHandler,
+        focusedIndex: finalFocusedIndex,
+        items,
+        virtualItems,
+        makeId,
+    });
+
     // Scroll to focused item when it changes via keyboard navigation
     // and trigger pagination if the focused item is near the end of loaded items
     // Only scroll if the focus change was caused by keyboard navigation, not by items loading
@@ -221,6 +231,7 @@ function UiPagedVirtualListNotWrapped<T>(
                                 ? "list"
                                 : undefined
                     }
+                    aria-activedescendant={activeDescendantId}
                     {...listboxProps}
                 >
                     {virtualItems.map((virtualRow) => {
@@ -588,6 +599,44 @@ function useVirtualListKeyboardNavigation<T>(
         onKeyboardNavigation: virtualListKeyboardNavigationHandler,
         isKeyboardNavigationRef,
     };
+}
+
+/**
+ * Id of the option to name in `aria-activedescendant`, so screen readers can tell which row the
+ * keyboard is on. Returns `undefined` when there is nothing to name: the list is not a listbox,
+ * the keyboard navigation belongs to the consumer, or the active row is not rendered right now.
+ */
+function getActiveDescendantId<T>({
+    representAs,
+    tabIndex,
+    customKeyboardNavigationHandler,
+    focusedIndex,
+    items,
+    virtualItems,
+    makeId,
+}: {
+    representAs: IUiPagedVirtualListProps<T>["representAs"];
+    tabIndex: number;
+    customKeyboardNavigationHandler: IUiPagedVirtualListProps<T>["customKeyboardNavigationHandler"];
+    focusedIndex: number | undefined;
+    items: T[] | undefined;
+    virtualItems: VirtualItem[];
+    makeId: IScopedIdStoreValue["makeId"] | undefined;
+}): string | undefined {
+    const ownsKeyboardNavigation = tabIndex >= 0 && !customKeyboardNavigationHandler;
+
+    if (representAs !== "listbox" || !ownsKeyboardNavigation || focusedIndex === undefined) {
+        return undefined;
+    }
+
+    const activeItem = items?.[focusedIndex];
+    const isActiveRowRendered = virtualItems.some((row) => row.index === focusedIndex);
+
+    if (!activeItem || !isActiveRowRendered) {
+        return undefined;
+    }
+
+    return makeId?.({ item: activeItem, specifier: SELECT_ITEM_ACTION });
 }
 
 function checkIsSameScrollTarget<T>(

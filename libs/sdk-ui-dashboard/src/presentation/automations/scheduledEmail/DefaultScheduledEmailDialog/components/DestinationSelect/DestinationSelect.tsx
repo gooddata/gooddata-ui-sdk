@@ -45,12 +45,10 @@ export function DestinationSelect({
     const intl = useIntl();
     const items = useMemo(() => {
         return (
-            notificationChannels?.map(
-                (wh): IDestinationItem => ({
-                    id: wh.id,
-                    title: wh?.title ?? wh.id,
-                }),
-            ) ?? []
+            notificationChannels?.map((wh): IDestinationItem => ({
+                id: wh.id,
+                title: wh?.title ?? wh.id,
+            })) ?? []
         );
     }, [notificationChannels]);
 

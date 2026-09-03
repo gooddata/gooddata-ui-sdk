@@ -20,23 +20,28 @@ export function selectContextReferences(
         },
     };
 
+    newContext = removeContextReference(newContext, context.ambientSelected?.dashboard);
+    newContext = removeContextReference(newContext, context.ambientSelected?.visualization);
+
     if (newContext.ambientSelected?.activated) {
         newContext = addContextReference(newContext, newContext.ambientSelected?.dashboard);
         newContext = addContextReference(newContext, newContext.ambientSelected?.visualization);
-    } else {
-        newContext = removeContextReference(newContext, context.ambientSelected?.dashboard);
-        newContext = removeContextReference(newContext, context.ambientSelected?.visualization);
     }
 
     return newContext;
 }
 
-export function updateAmbientContext(context: StoreContext, ambient?: IGenAIUserContext): StoreContext {
+export function updateAmbientContext(
+    context: StoreContext,
+    ambient?: IGenAIUserContext,
+    loading?: boolean,
+): StoreContext {
     const referenceChanged = isReferenceChanged(context.ambient, ambient);
     const activated = !context.loaded;
 
     let newContext = { ...context };
     newContext.ambient = ambient;
+    newContext.ambientLoading = loading;
     newContext = removeContextReference(newContext, context.ambientSelected?.dashboard);
     newContext = removeContextReference(newContext, context.ambientSelected?.visualization);
     newContext = updateContextReference(newContext, ambient, referenceChanged, activated);

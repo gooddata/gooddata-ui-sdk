@@ -236,20 +236,18 @@ export function useObjectShareController(
         // option's ref (exact backend ref) and display name/email straight through —
         // there is no post-write refetch, so the row shows what the picker showed.
         const addedIds = pendingGrantees.map((g) => g.id);
-        const addedRows = pendingGrantees.map(
-            (g): IObjectShareGrantee => ({
-                id: g.id,
-                kind: g.kind,
-                granteeRef: g.ref,
-                name: g.name,
-                email: g.email,
-                level: g.permissionLevel,
-                // The add writes a grant in THIS workspace, so the new row holds a
-                // direct grant at the picked level — without it the row would read as
-                // inherited-only and its Remove would be (correctly) refused.
-                directLevel: g.permissionLevel,
-            }),
-        );
+        const addedRows = pendingGrantees.map((g): IObjectShareGrantee => ({
+            id: g.id,
+            kind: g.kind,
+            granteeRef: g.ref,
+            name: g.name,
+            email: g.email,
+            level: g.permissionLevel,
+            // The add writes a grant in THIS workspace, so the new row holds a
+            // direct grant at the picked level — without it the row would read as
+            // inherited-only and its Remove would be (correctly) refused.
+            directLevel: g.permissionLevel,
+        }));
         const mutations = pendingGrantees.map((g) => toGranularGrantee(g.kind, g.ref, g.permissionLevel));
         // Each grantee is granted the label scope picked in the add dialog; an
         // untouched picker leaves it undefined, which means ALL labels (the picker's

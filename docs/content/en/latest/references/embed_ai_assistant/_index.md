@@ -1054,6 +1054,49 @@ const MyComponent = () => {
 };
 ```
 
+### Custom Conversation Component
+
+By using `GenAiStore` and the exported hooks, you can build your own conversation list or management UI without directly dealing with the Redux state.
+
+Available hooks:
+
+- `useGenAiConversations()`: Returns all conversations in the current store.
+- `useGenAiConversationsLoaded()`: Returns whether conversations are currently loaded.
+- `useGenAiCurrentConversation()`: Returns the active conversation.
+
+```tsx
+import {
+    GenAiStore,
+    useConversations,
+    setCurrentConversationAction,
+    useGenAiDispatcher,
+} from "@gooddata/sdk-ui-gen-ai";
+
+const MyConversations = () => {
+    const dispatch = useGenAiDispatcher();
+    const conversations = useGenAiConversations();
+
+    return (
+        <ul>
+            {conversations?.map((conv) => (
+                <li
+                    key={conv.localId}
+                    onClick={() => dispatch(setCurrentConversationAction({ conversation: conv }))}
+                >
+                    {conv.title}
+                </li>
+            ))}
+        </ul>
+    );
+};
+
+const App = () => (
+    <GenAiStore>
+        <MyConversations />
+    </GenAiStore>
+);
+```
+
 ### Example usage:
 
 ```tsx

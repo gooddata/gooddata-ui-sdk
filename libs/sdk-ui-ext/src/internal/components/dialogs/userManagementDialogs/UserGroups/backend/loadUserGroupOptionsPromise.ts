@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type IntlShape } from "react-intl";
 
@@ -35,12 +35,10 @@ export const loadUserGroupOptionsPromise =
                 )
                 .then((userGroups) =>
                     userGroups
-                        .map(
-                            (userGroup): IGrantedUserGroup => ({
-                                id: userGroup.id,
-                                title: extractUserGroupName(userGroup) ?? "",
-                            }),
-                        )
+                        .map((userGroup): IGrantedUserGroup => ({
+                            id: userGroup.id,
+                            title: extractUserGroupName(userGroup) ?? "",
+                        }))
                         .sort(sortByName),
                 )
                 .then((matchingUserGroups) =>

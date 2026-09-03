@@ -60,6 +60,10 @@ export interface IHostChromeChat {
      * dashboard and its live filter state). Persists across messages; pass undefined to clear.
      */
     setAmbientUserContext: (userContext?: IGenAIUserContext) => void;
+    /**
+     * Set the ambient user context loading state reported by the active hosted application.
+     */
+    setAmbientUserContextLoading: (loading: boolean) => void;
 }
 
 export interface IUseHostChromeChatArgs {
@@ -108,6 +112,7 @@ export function useHostChromeChat({
     const [askSeq, setAskSeq] = useState(0);
     const [userContext, setUserContext] = useState<IGenAIUserContext | undefined>(undefined);
     const [ambientUserContext, setAmbientUserContext] = useState<IGenAIUserContext | undefined>(undefined);
+    const [ambientUserContextLoading, setAmbientUserContextLoading] = useState<boolean>(false);
     const [includeTags, setIncludeTags] = useState<string[] | undefined>(undefined);
     const [excludeTags, setExcludeTags] = useState<string[] | undefined>(undefined);
 
@@ -193,6 +198,7 @@ export function useHostChromeChat({
                 askSeq={askSeq}
                 userContext={userContext}
                 ambientUserContext={ambientUserContext}
+                ambientUserContextLoading={ambientUserContextLoading}
                 includeTags={includeTags}
                 excludeTags={excludeTags}
                 canManageProject={features.canManageProject}
@@ -217,5 +223,6 @@ export function useHostChromeChat({
         openAiAssistant,
         setTags,
         setAmbientUserContext,
+        setAmbientUserContextLoading,
     };
 }

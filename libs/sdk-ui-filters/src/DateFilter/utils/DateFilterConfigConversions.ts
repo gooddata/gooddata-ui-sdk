@@ -112,12 +112,11 @@ function convertRelativeForm(
 function convertAbsolutePresets(
     filters: IAbsoluteDateFilterPreset[] | undefined,
 ): IAbsoluteDateFilterPreset[] | undefined {
-    return filters?.map(
-        (preset): IAbsoluteDateFilterPreset =>
-            sanitizeDateFilterOption({
-                ...preset,
-                type: "absolutePreset",
-            }),
+    return filters?.map((preset): IAbsoluteDateFilterPreset =>
+        sanitizeDateFilterOption({
+            ...preset,
+            type: "absolutePreset",
+        }),
     );
 }
 
@@ -127,12 +126,11 @@ function convertRelativePresets(
     return (
         filters &&
         groupBy(
-            filters.map(
-                (preset): IRelativeDateFilterPreset =>
-                    sanitizeDateFilterOption({
-                        ...preset,
-                        type: "relativePreset",
-                    }),
+            filters.map((preset): IRelativeDateFilterPreset =>
+                sanitizeDateFilterOption({
+                    ...preset,
+                    type: "relativePreset",
+                }),
             ),
             (preset) => preset.granularity,
         )

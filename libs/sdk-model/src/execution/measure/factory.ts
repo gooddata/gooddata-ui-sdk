@@ -744,12 +744,10 @@ export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPe
     }
 
     private convertDd = (dd: IPreviousPeriodDateDataSetSimple[]): IPreviousPeriodDateDataSet[] => {
-        return dd.map(
-            (d): IPreviousPeriodDateDataSet => ({
-                ...d,
-                dataSet: typeof d.dataSet === "string" ? idRef(d.dataSet) : d.dataSet,
-            }),
-        );
+        return dd.map((d): IPreviousPeriodDateDataSet => ({
+            ...d,
+            dataSet: typeof d.dataSet === "string" ? idRef(d.dataSet) : d.dataSet,
+        }));
     };
 }
 

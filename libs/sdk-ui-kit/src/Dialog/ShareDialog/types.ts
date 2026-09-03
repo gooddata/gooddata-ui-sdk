@@ -18,12 +18,14 @@ import { type GoodDataSdkError } from "@gooddata/sdk-ui";
  * @internal
  */
 export type CurrentUserPermissions = {
-    [permission in
-        | "canEditLockedAffectedObject"
-        | "canEditAffectedObject"
-        | "canShareLockedAffectedObject"
-        | "canShareAffectedObject"
-        | "canViewAffectedObject"]: boolean;
+    [
+        permission in
+            | "canEditLockedAffectedObject"
+            | "canEditAffectedObject"
+            | "canShareLockedAffectedObject"
+            | "canShareAffectedObject"
+            | "canViewAffectedObject"
+    ]: boolean;
 };
 
 /**

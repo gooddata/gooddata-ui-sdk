@@ -30,6 +30,7 @@
     "gd.gen-ai.input-label.mac": "Stellen Sie Ihre Frage. Verwenden Sie Strg+Leerzeichen oder cmd+I für Vorschläge.",
     "gd.gen-ai.input-label.win": "Stellen Sie Ihre Frage. Verwenden Sie Strg+Leerzeichen oder Strg+I für Vorschläge.",
     "gd.gen-ai.context.add_context": "Kontext hinzufügen",
+    "gd.gen-ai.context.focus_on": "Fokus auf",
     "gd.gen-ai.context.close": "Kontext hinzufügen schließen",
     "gd.gen-ai.context.group.ariaLabel": "Assistentenkontext",
     "gd.gen-ai.context.type.dashboard": "Dashboard",
@@ -40,6 +41,7 @@
     "gd.gen-ai.context.announcement.empty": "Der Assistentenkontext ist jetzt leer.",
     "gd.gen-ai.context.remove_context": "{title} aus dem Kontext entfernen",
     "gd.gen-ai.context.untitled": "Unbenannt",
+    "gd.gen-ai.context.this": "Gesamtes Dashboard",
     "gd.gen-ai.context.list.ariaLabel": "Verfügbare Kontextelemente",
     "gd.gen-ai.context.search.placeholder": "Suchen...",
     "gd.gen-ai.context.search.ariaLabel": "Kontextelemente suchen",
@@ -273,5 +275,8 @@
     "drill.kda.drop": "Rückgang {where} {title}",
     "drill.kda.increase": "Erhöhen {where} {title}",
     "drill.kda.no_change": "Unverändert {where} {title}",
-    "drill.kda.year_to_year": "Veränderung von Jahr zu Jahr"
+    "drill.kda.year_to_year": "Veränderung von Jahr zu Jahr",
+    "search.results.none": "Keine passenden Ergebnisse.",
+    "search.results.few": "{count, plural, one {# Ergebnis} other {# Ergebnisse}}: {values}",
+    "search.results.many": "{count} Ergebnisse"
 }

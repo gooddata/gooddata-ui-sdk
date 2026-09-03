@@ -970,12 +970,14 @@ export function isDashboardTab(obj: unknown): obj is IDashboardTab {
  * @alpha
  */
 export type IDashboardPermissions = {
-    [permission in
-        | "canEditDashboard"
-        | "canEditLockedDashboard"
-        | "canShareLockedDashboard"
-        | "canShareDashboard"
-        | "canViewDashboard"]: boolean;
+    [
+        permission in
+            | "canEditDashboard"
+            | "canEditLockedDashboard"
+            | "canShareLockedDashboard"
+            | "canShareDashboard"
+            | "canViewDashboard"
+    ]: boolean;
 };
 
 /**

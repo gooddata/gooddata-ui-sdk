@@ -30,6 +30,7 @@
     "gd.gen-ai.input-label.mac": "Sorunuzu sorun. Öneriler için control+space veya cmd+I kullanın.",
     "gd.gen-ai.input-label.win": "Sorunuzu sorun. Öneriler için kontrol+boşluk veya kontrol+I kullanın.",
     "gd.gen-ai.context.add_context": "Bağlam ekle",
+    "gd.gen-ai.context.focus_on": "Odak",
     "gd.gen-ai.context.close": "Bağlam eklemeyi kapat",
     "gd.gen-ai.context.group.ariaLabel": "Asistan bağlamı",
     "gd.gen-ai.context.type.dashboard": "Gösterge Tablosu",
@@ -40,6 +41,7 @@
     "gd.gen-ai.context.announcement.empty": "Asistan bağlamı artık boş.",
     "gd.gen-ai.context.remove_context": "{title} öğesini bağlamdan kaldır",
     "gd.gen-ai.context.untitled": "Başlıksız",
+    "gd.gen-ai.context.this": "Tüm gösterge tablosu",
     "gd.gen-ai.context.list.ariaLabel": "Kullanılabilir bağlam öğeleri",
     "gd.gen-ai.context.search.placeholder": "Ara...",
     "gd.gen-ai.context.search.ariaLabel": "Bağlam öğelerini ara",
@@ -273,5 +275,8 @@
     "drill.kda.drop": "Düşüş {where} {title}",
     "drill.kda.increase": "Artır {where} {title}",
     "drill.kda.no_change": "Değişim yok {where} {title}",
-    "drill.kda.year_to_year": "Yıldan yıla değişim"
+    "drill.kda.year_to_year": "Yıldan yıla değişim",
+    "search.results.none": "Eşleşen sonuç yok",
+    "search.results.few": "{count, plural, one {# sonuç} other {# sonuç}}: {values}",
+    "search.results.many": "{count} sonuç"
 }

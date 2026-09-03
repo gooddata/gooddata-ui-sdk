@@ -5,6 +5,27 @@ import { type AccessGranularPermission } from "../accessControl/index.js";
 import { type IWorkspacePermissions } from "./index.js";
 
 /**
+ * Effective CREATE capability for metrics in a workspace.
+ *
+ * @remarks
+ * Behind enableMetricPermissions the granular CREATE_METRIC permission decides, otherwise the
+ * original canManageProject check applies. Drop the branch when the flag is removed.
+ *
+ * @param workspacePermissions - the user's workspace permissions
+ * @param areMetricPermissionsEnabled - the enableMetricPermissions feature flag
+ *
+ * @alpha
+ */
+export function canCreateMetric(
+    workspacePermissions: IWorkspacePermissions,
+    areMetricPermissionsEnabled: boolean,
+): boolean {
+    return areMetricPermissionsEnabled
+        ? workspacePermissions.canCreateMetric
+        : workspacePermissions.canManageProject;
+}
+
+/**
  * Effective EDIT capability for a single metric.
  *
  * @remarks

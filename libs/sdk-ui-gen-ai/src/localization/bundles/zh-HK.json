@@ -30,6 +30,7 @@
     "gd.gen-ai.input-label.mac": "提出您的問題。 使用control+space或cmd+I獲取建議。",
     "gd.gen-ai.input-label.win": "提出您的問題。 使用control+space或control+I獲取建議。",
     "gd.gen-ai.context.add_context": "新增上下文",
+    "gd.gen-ai.context.focus_on": "聚焦於",
     "gd.gen-ai.context.close": "關閉新增背景資訊",
     "gd.gen-ai.context.group.ariaLabel": "助理背景資料",
     "gd.gen-ai.context.type.dashboard": "儀表板",
@@ -40,6 +41,7 @@
     "gd.gen-ai.context.announcement.empty": "助理背景資料現已清空。",
     "gd.gen-ai.context.remove_context": "從背景資料中移除 {title}",
     "gd.gen-ai.context.untitled": "《無題》",
+    "gd.gen-ai.context.this": "整個儀表板",
     "gd.gen-ai.context.list.ariaLabel": "可用的背景資訊項目",
     "gd.gen-ai.context.search.placeholder": "搜尋...",
     "gd.gen-ai.context.search.ariaLabel": "搜尋背景資訊項目",
@@ -273,5 +275,8 @@
     "drill.kda.drop": "下降 {where} {title}",
     "drill.kda.increase": "增加 {where} {title}",
     "drill.kda.no_change": "無變化 {where} {title}",
-    "drill.kda.year_to_year": "逐年變化"
+    "drill.kda.year_to_year": "逐年變化",
+    "search.results.none": "沒有匹配的結果。",
+    "search.results.few": "{count, plural, one {#結果} other {#結果}}： {values}",
+    "search.results.many": "{count} 結果"
 }

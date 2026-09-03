@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { type AccessGranularPermission } from "../accessControl/index.js";
 
 import { type IWorkspacePermissions } from "./index.js";
-import { canEditMetric, canShareMetric } from "./metric.js";
+import { canCreateMetric, canEditMetric, canShareMetric } from "./metric.js";
 
 const admin = { canManageProject: true } as IWorkspacePermissions;
 const nonAdmin = { canManageProject: false } as IWorkspacePermissions;
@@ -18,6 +18,24 @@ const ALL: (AccessGranularPermission[] | undefined)[] = [
     ["EDIT"],
     ["VIEW", "SHARE", "EDIT"],
 ];
+
+const workspace = (hasCreateMetric: boolean, hasManageProject: boolean) =>
+    ({
+        canCreateMetric: hasCreateMetric,
+        canManageProject: hasManageProject,
+    }) as IWorkspacePermissions;
+
+describe("canCreateMetric", () => {
+    it("with the flag off only canManageProject decides", () => {
+        expect(canCreateMetric(workspace(false, true), false)).toBe(true);
+        expect(canCreateMetric(workspace(true, false), false)).toBe(false);
+    });
+
+    it("with the flag on only CREATE_METRIC decides", () => {
+        expect(canCreateMetric(workspace(true, false), true)).toBe(true);
+        expect(canCreateMetric(workspace(false, true), true)).toBe(false);
+    });
+});
 
 describe("canEditMetric", () => {
     it.each(ALL.map((p) => [p]))(

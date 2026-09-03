@@ -292,12 +292,10 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
     }
 
     private buildColorMapping(colorMapping?: IColorMappingItem[]): IColorMapping[] | undefined {
-        const validColorMapping = compact(colorMapping).map(
-            (mapItem): IColorMapping => ({
-                predicate: ColorUtils.getColorMappingPredicate(mapItem.id),
-                color: mapItem.color,
-            }),
-        );
+        const validColorMapping = compact(colorMapping).map((mapItem): IColorMapping => ({
+            predicate: ColorUtils.getColorMappingPredicate(mapItem.id),
+            color: mapItem.color,
+        }));
 
         return validColorMapping?.length > 0 ? validColorMapping : undefined;
     }

@@ -30,6 +30,7 @@
     "gd.gen-ai.input-label.mac": "Hãy đặt câu hỏi của bạn. Sử dụng control+space hoặc cmd+I để xem gợi ý.",
     "gd.gen-ai.input-label.win": "Hãy đặt câu hỏi của bạn. Sử dụng control+space hoặc control+I để xem gợi ý.",
     "gd.gen-ai.context.add_context": "Thêm ngữ cảnh",
+    "gd.gen-ai.context.focus_on": "Tập trung vào",
     "gd.gen-ai.context.close": "Đóng phần thêm ngữ cảnh",
     "gd.gen-ai.context.group.ariaLabel": "Ngữ cảnh của trợ lý",
     "gd.gen-ai.context.type.dashboard": "Bảng điều khiển",
@@ -40,6 +41,7 @@
     "gd.gen-ai.context.announcement.empty": "Ngữ cảnh của trợ lý hiện trống.",
     "gd.gen-ai.context.remove_context": "Xóa {title} khỏi ngữ cảnh",
     "gd.gen-ai.context.untitled": "Không có tiêu đề",
+    "gd.gen-ai.context.this": "Toàn bộ bảng điều khiển",
     "gd.gen-ai.context.list.ariaLabel": "Các mục ngữ cảnh có sẵn",
     "gd.gen-ai.context.search.placeholder": "Tìm kiếm...",
     "gd.gen-ai.context.search.ariaLabel": "Tìm kiếm mục ngữ cảnh",
@@ -273,5 +275,8 @@
     "drill.kda.drop": "Giảm {where} {title}",
     "drill.kda.increase": "Tăng {where} {title}",
     "drill.kda.no_change": "Không thay đổi {where} {title}",
-    "drill.kda.year_to_year": "Thay đổi so với cùng kỳ năm trước"
+    "drill.kda.year_to_year": "Thay đổi so với cùng kỳ năm trước",
+    "search.results.none": "Không có kết quả nào khớp.",
+    "search.results.few": "{count, plural, other {# kết quả}}: {values}",
+    "search.results.many": "{count} kết quả"
 }

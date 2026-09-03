@@ -131,7 +131,10 @@ export type StoreContext = {
      * Selected objects from ambient context.
      */
     ambientSelected?: SelectedContext;
-
+    /**
+     * Flag indicating whether the ambient context is currently being loaded.
+     */
+    ambientLoading?: boolean;
     /**
      * Active context
      */

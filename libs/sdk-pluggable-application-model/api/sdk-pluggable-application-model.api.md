@@ -26,6 +26,7 @@ export function aiAssistantContextChanged(payload?: {
     embedded?: boolean;
     disabled?: boolean;
     userContext?: IGenAIUserContext;
+    userContextLoading?: boolean;
 }): IAiAssistantContextChangedEvent;
 
 // @alpha
@@ -60,6 +61,7 @@ export interface IAiAssistantContextChangedEvent extends IPluggableAppEvent {
         readonly embedded?: boolean;
         readonly disabled?: boolean;
         readonly userContext?: IGenAIUserContext;
+        readonly userContextLoading?: boolean;
     };
     // (undocumented)
     readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED";

@@ -96,12 +96,10 @@ export function newReportContentPageFromLayout(
         localIdentifier,
         ...(body.style === undefined ? {} : { style: prefixBackgroundSlotId(body.style, localIdentifier) }),
         layout: prefixLayoutSlotIds(body.layout, localIdentifier),
-        slots: body.slots.map(
-            (slot): ReportSlot => ({
-                ...slot,
-                localIdentifier: `${localIdentifier}_${slot.localIdentifier}`,
-            }),
-        ),
+        slots: body.slots.map((slot): ReportSlot => ({
+            ...slot,
+            localIdentifier: `${localIdentifier}_${slot.localIdentifier}`,
+        })),
     };
 }
 

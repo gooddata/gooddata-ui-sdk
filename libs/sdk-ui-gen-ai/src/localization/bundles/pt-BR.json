@@ -30,6 +30,7 @@
     "gd.gen-ai.input-label.mac": "Faça sua pergunta. Use control + espaço ou cmd + I para sugestões.",
     "gd.gen-ai.input-label.win": "Faça sua pergunta. Use control + espaço ou control + I para sugestões.",
     "gd.gen-ai.context.add_context": "Adicionar contexto",
+    "gd.gen-ai.context.focus_on": "Focar em",
     "gd.gen-ai.context.close": "Fechar adição de contexto",
     "gd.gen-ai.context.group.ariaLabel": "Contexto do assistente",
     "gd.gen-ai.context.type.dashboard": "Painel",
@@ -40,6 +41,7 @@
     "gd.gen-ai.context.announcement.empty": "O contexto do assistente agora está vazio.",
     "gd.gen-ai.context.remove_context": "Remover {title} do contexto",
     "gd.gen-ai.context.untitled": "Sem título",
+    "gd.gen-ai.context.this": "Painel inteiro",
     "gd.gen-ai.context.list.ariaLabel": "Itens de contexto disponíveis",
     "gd.gen-ai.context.search.placeholder": "Pesquisar...",
     "gd.gen-ai.context.search.ariaLabel": "Pesquisar itens de contexto",
@@ -273,5 +275,8 @@
     "drill.kda.drop": "Queda {where} {title}",
     "drill.kda.increase": "Aumento {where} {title}",
     "drill.kda.no_change": "Sem alteração {where} {title}",
-    "drill.kda.year_to_year": "Mudança ano a ano"
+    "drill.kda.year_to_year": "Mudança ano a ano",
+    "search.results.none": "Nenhum resultado correspondente.",
+    "search.results.few": "{count, plural, one {# resultado} other {# resultados}}: {values}",
+    "search.results.many": "{count} resultados"
 }

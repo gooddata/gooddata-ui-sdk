@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -48,13 +48,11 @@ export function HistorySearchTreeView({ id, searchHistory, onSelect, onFocus }: 
 }
 
 function buildItems(searchHistory: string[]): UiStaticTreeView<string>[] {
-    return searchHistory.map(
-        (value, idx): UiStaticTreeView<string> => ({
-            item: {
-                id: String(idx),
-                stringTitle: value,
-                data: value,
-            },
-        }),
-    );
+    return searchHistory.map((value, idx): UiStaticTreeView<string> => ({
+        item: {
+            id: String(idx),
+            stringTitle: value,
+            data: value,
+        },
+    }));
 }
