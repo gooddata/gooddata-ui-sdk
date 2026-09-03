@@ -4,13 +4,16 @@ settings:
   autoInstallPeers: false
   excludeLinksFromLockfile: false
 
+overrides:
+  minimatch@>=10.0.0 <10.2.3: 10.2.5
+
 pnpmfileChecksum: sha256-E1T7OJ3DLTjpDqf4RdJzK9VDtAxgm4gDEQCLYdHD8nI=
 
 importers:
 
   .: {}
 
-  ../../examples/playground:
+  ../../../sdk/examples/playground:
     devDependencies:
       '@codemirror/state':
         specifier: 6.5.3
@@ -166,13 +169,13 @@ importers:
         specifier: 8.0.16
         version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../examples/sdk-interactive-examples:
+  ../../../sdk/examples/sdk-interactive-examples:
     devDependencies:
       validate-npm-package-name:
         specifier: 5.0.1
         version: 5.0.1
 
-  ../../examples/sdk-interactive-examples/examples-template:
+  ../../../sdk/examples/sdk-interactive-examples/examples-template:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -302,7 +305,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-attributefilter:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-attributefilter:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -432,7 +435,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-chartconfig:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-chartconfig:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -562,7 +565,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-columnchart:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-columnchart:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -692,7 +695,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-combochart:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-combochart:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -822,7 +825,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-dashboard:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-dashboard:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -952,7 +955,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-datefilter:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-datefilter:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1082,7 +1085,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-dependentfilters:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-dependentfilters:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1212,7 +1215,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-execute:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-execute:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1351,7 +1354,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-granularity:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-granularity:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1481,7 +1484,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-headline:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-headline:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1611,7 +1614,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-pivottable:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-pivottable:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1741,7 +1744,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-relativedatefilter:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-relativedatefilter:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1871,7 +1874,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../examples/sdk-interactive-examples/examples/example-repeater:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-repeater:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -2001,7 +2004,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../libs/api-client-tiger:
+  ../../../sdk/libs/api-client-tiger:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -2098,7 +2101,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-backend-base:
+  ../../../sdk/libs/sdk-backend-base:
     dependencies:
       '@braintree/sanitize-url':
         specifier: ^6.0.0
@@ -2204,7 +2207,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-backend-mockingbird:
+  ../../../sdk/libs/sdk-backend-mockingbird:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -2298,7 +2301,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-backend-spi:
+  ../../../sdk/libs/sdk-backend-spi:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -2377,7 +2380,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-backend-tiger:
+  ../../../sdk/libs/sdk-backend-tiger:
     dependencies:
       '@gooddata/api-client-tiger':
         specifier: workspace:*
@@ -2516,7 +2519,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-code-convertors:
+  ../../../sdk/libs/sdk-code-convertors:
     dependencies:
       '@gooddata/api-client-tiger':
         specifier: workspace:*
@@ -2592,7 +2595,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-code-schemas:
+  ../../../sdk/libs/sdk-code-schemas:
     devDependencies:
       '@gooddata/eslint-config':
         specifier: workspace:*
@@ -2661,7 +2664,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-e2e-utils:
+  ../../../sdk/libs/sdk-e2e-utils:
     dependencies:
       '@playwright/test':
         specifier: 1.62.1
@@ -2743,7 +2746,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  ../../libs/sdk-embedding:
+  ../../../sdk/libs/sdk-embedding:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -2822,7 +2825,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-model:
+  ../../../sdk/libs/sdk-model:
     dependencies:
       '@types/geojson':
         specifier: ^7946.0.16
@@ -2916,7 +2919,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-pluggable-application-model:
+  ../../../sdk/libs/sdk-pluggable-application-model:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -2989,7 +2992,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  ../../libs/sdk-ui:
+  ../../../sdk/libs/sdk-ui:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -3167,7 +3170,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-all:
+  ../../../sdk/libs/sdk-ui-all:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -3258,7 +3261,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  ../../libs/sdk-ui-application-header:
+  ../../../sdk/libs/sdk-ui-application-header:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -3406,7 +3409,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-catalog:
+  ../../../sdk/libs/sdk-ui-catalog:
     dependencies:
       '@codemirror/autocomplete':
         specifier: 6.20.0
@@ -3584,7 +3587,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-charts:
+  ../../../sdk/libs/sdk-ui-charts:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -3798,7 +3801,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-dashboard:
+  ../../../sdk/libs/sdk-ui-dashboard:
     dependencies:
       '@codemirror/language':
         specifier: 6.12.1
@@ -4060,7 +4063,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-ext:
+  ../../../sdk/libs/sdk-ui-ext:
     dependencies:
       '@codemirror/commands':
         specifier: 6.10.1
@@ -4331,7 +4334,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-filters:
+  ../../../sdk/libs/sdk-ui-filters:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -4524,7 +4527,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-gen-ai:
+  ../../../sdk/libs/sdk-ui-gen-ai:
     dependencies:
       '@codemirror/autocomplete':
         specifier: 6.20.0
@@ -4762,7 +4765,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-geo:
+  ../../../sdk/libs/sdk-ui-geo:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -4940,7 +4943,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-kit:
+  ../../../sdk/libs/sdk-ui-kit:
     dependencies:
       '@aaronhayes/react-use-hubspot-form':
         specifier: 2.1.2
@@ -5232,7 +5235,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-loaders:
+  ../../../sdk/libs/sdk-ui-loaders:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -5359,7 +5362,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  ../../libs/sdk-ui-pivot:
+  ../../../sdk/libs/sdk-ui-pivot:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -5537,7 +5540,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-pluggable-application:
+  ../../../sdk/libs/sdk-ui-pluggable-application:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -5655,7 +5658,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-ui-pluggable-host:
+  ../../../sdk/libs/sdk-ui-pluggable-host:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -5824,7 +5827,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-semantic-search:
+  ../../../sdk/libs/sdk-ui-semantic-search:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -5975,7 +5978,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-tests-app:
+  ../../../sdk/libs/sdk-ui-tests-app:
     devDependencies:
       '@gooddata/eslint-config':
         specifier: workspace:*
@@ -6107,7 +6110,7 @@ importers:
         specifier: 8.0.16
         version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-ui-tests-e2e:
+  ../../../sdk/libs/sdk-ui-tests-e2e:
     devDependencies:
       '@gooddata/eslint-config':
         specifier: workspace:*
@@ -6200,7 +6203,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  ../../libs/sdk-ui-tests-reference-workspace:
+  ../../../sdk/libs/sdk-ui-tests-reference-workspace:
     devDependencies:
       '@gooddata/catalog-export':
         specifier: workspace:*
@@ -6260,7 +6263,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  ../../libs/sdk-ui-tests-scenarios:
+  ../../../sdk/libs/sdk-ui-tests-scenarios:
     devDependencies:
       '@gooddata/eslint-config':
         specifier: workspace:*
@@ -6410,7 +6413,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-ui-tests-storybook:
+  ../../../sdk/libs/sdk-ui-tests-storybook:
     devDependencies:
       '@gooddata/eslint-config':
         specifier: workspace:*
@@ -6617,7 +6620,7 @@ importers:
         specifier: 4.1.0
         version: 4.1.0(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3))
 
-  ../../libs/sdk-ui-theme-provider:
+  ../../../sdk/libs/sdk-ui-theme-provider:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -6765,7 +6768,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/sdk-ui-vis-commons:
+  ../../../sdk/libs/sdk-ui-vis-commons:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -6925,7 +6928,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.1.8)
 
-  ../../libs/sdk-ui-web-components:
+  ../../../sdk/libs/sdk-ui-web-components:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -7091,7 +7094,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../libs/util:
+  ../../../sdk/libs/util:
     dependencies:
       lodash-es:
         specifier: ^4.17.23
@@ -7167,7 +7170,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../templates/pluggable-module/harness:
+  ../../../sdk/templates/pluggable-module/harness:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -7270,7 +7273,7 @@ importers:
         specifier: 8.0.16
         version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../templates/pluggable-module/module:
+  ../../../sdk/templates/pluggable-module/module:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -7397,7 +7400,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/app-toolkit:
+  ../../../sdk/tools/app-toolkit:
     dependencies:
       chalk:
         specifier: 5.3.0
@@ -7494,7 +7497,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/catalog-export:
+  ../../../sdk/tools/catalog-export:
     dependencies:
       '@gooddata/api-client-tiger':
         specifier: workspace:*
@@ -7603,7 +7606,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/create-pluggable-module:
+  ../../../sdk/tools/create-pluggable-module:
     devDependencies:
       '@gooddata/eslint-config':
         specifier: workspace:*
@@ -7672,7 +7675,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/dashboard-plugin-template:
+  ../../../sdk/tools/dashboard-plugin-template:
     dependencies:
       tslib:
         specifier: 2.8.1
@@ -7835,7 +7838,7 @@ importers:
         specifier: 5.2.4
         version: 5.2.4(tslib@2.8.1)(webpack-cli@7.0.3)(webpack@5.107.2)
 
-  ../../tools/eslint-config:
+  ../../../sdk/tools/eslint-config:
     devDependencies:
       '@eslint/js':
         specifier: 9.28.0
@@ -7931,7 +7934,7 @@ importers:
         specifier: 5.3.0
         version: 5.3.0(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.33.0)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/i18n-toolkit:
+  ../../../sdk/tools/i18n-toolkit:
     dependencies:
       '@formatjs/cli-lib':
         specifier: ^6.1.1
@@ -8031,7 +8034,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/lint-config:
+  ../../../sdk/tools/lint-config:
     devDependencies:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260202.1
@@ -8046,7 +8049,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  ../../tools/mock-handling:
+  ../../../sdk/tools/mock-handling:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -8149,7 +8152,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/oxlint-config:
+  ../../../sdk/tools/oxlint-config:
     devDependencies:
       '@eslint/js':
         specifier: 9.28.0
@@ -8239,7 +8242,7 @@ importers:
         specifier: 5.3.0
         version: 5.3.0(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.33.0)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/plugin-toolkit:
+  ../../../sdk/tools/plugin-toolkit:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -8360,7 +8363,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/react-app-template:
+  ../../../sdk/tools/react-app-template:
     dependencies:
       '@codemirror/state':
         specifier: 6.5.3
@@ -8508,7 +8511,7 @@ importers:
         specifier: 5.2.4
         version: 5.2.4(tslib@2.8.1)(webpack-cli@7.0.3)(webpack@5.107.2)
 
-  ../../tools/reference-workspace:
+  ../../../sdk/tools/reference-workspace:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -8578,7 +8581,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  ../../tools/reference-workspace-mgmt:
+  ../../../sdk/tools/reference-workspace-mgmt:
     dependencies:
       '@gooddata/catalog-export':
         specifier: workspace:*
@@ -8654,7 +8657,7 @@ importers:
         specifier: 4.1.8
         version: 4.1.8(@types/node@24.12.0)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.1)(happy-dom@20.12.0)(jiti@2.6.1)(sass@1.77.1)(terser@5.49.0)(yaml@2.8.3)
 
-  ../../tools/stylelint-config:
+  ../../../sdk/tools/stylelint-config:
     dependencies:
       postcss:
         specifier: 8.5.26
@@ -9452,14 +9455,6 @@ packages:
 
   '@internationalized/string@3.2.9':
     resolution: {integrity: sha512-kzP/M/mbQxODlmOt4bIQZ2SBVUWUSqMLXooXixnX7noche8WHaQcA+nwFN1K2KCF/cp+LDUhcJsCicwkvhD1pg==}
-
-  '@isaacs/balanced-match@4.0.1':
-    resolution: {integrity: sha512-yzMTt9lEb8Gv7zRioUilSglI0c0smZ9k5D65677DLWLtWJaXIS3CqcGyUFByYKlnUj6TkjLVs54fBl6+TiGQDQ==}
-    engines: {node: 20 || >=22}
-
-  '@isaacs/brace-expansion@5.0.1':
-    resolution: {integrity: sha512-WMz71T1JS624nWj2n2fnYAuPovhv7EUhk69R6i9dsVyzxt5eM3bjwvgk9L+APE1TRscGysAVMANkB0jh0LQZrQ==}
-    engines: {node: 20 || >=22}
 
   '@isaacs/cliui@9.0.0':
     resolution: {integrity: sha512-AokJm4tuBHillT+FpMtxQ60n8ObyXBatq7jD2/JA9dxbDDokKQm8KMht5ibGzLVU9IJDIKK4TPKgMHEYMn3lMg==}
@@ -13158,7 +13153,6 @@ packages:
   eslint@9.39.5:
     resolution: {integrity: sha512-DgZS62aPLXKlnxILS/AYCoRvHaZeXceIzlXPkkGGzJWSow1aEk0lbTlxUSlyjC8jcaKxAdOnTDz+o1JFSBsyjw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -14781,10 +14775,6 @@ packages:
   minimalistic-assert@1.0.1:
     resolution: {integrity: sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==}
 
-  minimatch@10.1.1:
-    resolution: {integrity: sha512-enIvLvRAFZYXJzkCYG5RKmPfrFArdLv+R+lbQ53BmIMLIry74bjKzX6iHAm8WYamJkhSSEabrWN5D97XnKObjQ==}
-    engines: {node: 20 || >=22}
-
   minimatch@10.2.3:
     resolution: {integrity: sha512-Rwi3pnapEqirPSbWbrZaa6N3nmqq4Xer/2XooiOKyV3q12ML06f7MOuc5DVH8ONZIFhwIYQ3yzPH4nt7iWHaTg==}
     engines: {node: 18 || 20 || >=22}
@@ -14854,6 +14844,11 @@ packages:
 
   mz@2.7.0:
     resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}
+
+  nanoid@3.3.16:
+    resolution: {integrity: sha512-bzlKTyNJ7+LdGIIwy8ijFpIqEQIvafahV7eYykJ8Cvh42EdJeODoJ6gUJXpQJvej1BddH8OqTXZNE/KfbWAu8Q==}
+    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
 
   nanoid@3.3.18:
     resolution: {integrity: sha512-DTg4MJbGMWkfi6VZFdNt2/caMbQy4Ou+Op/hJQvGEWcnVfoA1QA+xzRKAzw9jD6+GVOOeYr/mIcuDSdug6F6+w==}
@@ -15332,6 +15327,14 @@ packages:
 
   postcss-value-parser@4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
+
+  postcss@8.5.10:
+    resolution: {integrity: sha512-pMMHxBOZKFU6HgAZ4eyGnwXF/EvPGGqUr0MnZ5+99485wwW41kW91A4LOGxSHhgugZmSChL5AlElNdwlNgcnLQ==}
+    engines: {node: ^10 || ^12 || >=14}
+
+  postcss@8.5.23:
+    resolution: {integrity: sha512-g50586zr4bZmwFiTlflMu8E0bDTb5I5gertgwAKmsdUlTQIhZtunzUlD1WSzwcVWPoAVpsrA6vlfCD7oXvRwgg==}
+    engines: {node: ^10 || ^12 || >=14}
 
   postcss@8.5.26:
     resolution: {integrity: sha512-u82N74LFzG8ca+dD8puPnplTXoGH4fTPpVGuIbt36G3qvNlkvfD0lEAZSxaly3KX8TS/L1A1gsCEmvKmBcVbkQ==}
@@ -18038,12 +18041,6 @@ snapshots:
     dependencies:
       '@swc/helpers': 0.5.23
 
-  '@isaacs/balanced-match@4.0.1': {}
-
-  '@isaacs/brace-expansion@5.0.1':
-    dependencies:
-      '@isaacs/balanced-match': 4.0.1
-
   '@isaacs/cliui@9.0.0': {}
 
   '@isaacs/fs-minipass@4.0.1':
@@ -19842,8 +19839,8 @@ snapshots:
 
   '@typescript-eslint/project-service@8.58.0(typescript@5.9.3)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.65.0(typescript@5.9.3)
-      '@typescript-eslint/types': 8.65.0
+      '@typescript-eslint/tsconfig-utils': 8.58.0(typescript@5.9.3)
+      '@typescript-eslint/types': 8.58.0
       debug: 4.4.3
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -20258,11 +20255,11 @@ snapshots:
 
   acorn-loose@8.5.2:
     dependencies:
-      acorn: 8.17.0
+      acorn: 8.16.0
 
   acorn-walk@8.3.5:
     dependencies:
-      acorn: 8.17.0
+      acorn: 8.16.0
 
   acorn@8.16.0: {}
 
@@ -21708,7 +21705,7 @@ snapshots:
       functional-red-black-tree: 1.0.1
       jsx-ast-utils-x: 0.1.0
       lodash.merge: 4.6.2
-      minimatch: 10.1.1
+      minimatch: 10.2.5
       scslre: 0.3.0
       semver: 7.7.3
       typescript: 5.9.3
@@ -23671,10 +23668,6 @@ snapshots:
 
   minimalistic-assert@1.0.1: {}
 
-  minimatch@10.1.1:
-    dependencies:
-      '@isaacs/brace-expansion': 5.0.1
-
   minimatch@10.2.3:
     dependencies:
       brace-expansion: 5.0.8
@@ -23735,6 +23728,8 @@ snapshots:
       any-promise: 1.3.0
       object-assign: 4.1.1
       thenify-all: 1.6.0
+
+  nanoid@3.3.16: {}
 
   nanoid@3.3.18: {}
 
@@ -24277,9 +24272,9 @@ snapshots:
 
   postcss-resolve-nested-selector@0.1.6: {}
 
-  postcss-safe-parser@7.0.1(postcss@8.5.26):
+  postcss-safe-parser@7.0.1(postcss@8.5.10):
     dependencies:
-      postcss: 8.5.26
+      postcss: 8.5.10
 
   postcss-scss@4.0.9(postcss@8.5.26):
     dependencies:
@@ -24295,6 +24290,18 @@ snapshots:
       postcss: 8.5.26
 
   postcss-value-parser@4.2.0: {}
+
+  postcss@8.5.10:
+    dependencies:
+      nanoid: 3.3.16
+      picocolors: 1.1.1
+      source-map-js: 1.2.1
+
+  postcss@8.5.23:
+    dependencies:
+      nanoid: 3.3.16
+      picocolors: 1.1.1
+      source-map-js: 1.2.1
 
   postcss@8.5.26:
     dependencies:
@@ -25451,9 +25458,9 @@ snapshots:
       micromatch: 4.0.8
       normalize-path: 3.0.0
       picocolors: 1.1.1
-      postcss: 8.5.26
+      postcss: 8.5.10
       postcss-resolve-nested-selector: 0.1.6
-      postcss-safe-parser: 7.0.1(postcss@8.5.26)
+      postcss-safe-parser: 7.0.1(postcss@8.5.10)
       postcss-selector-parser: 7.1.4
       postcss-value-parser: 4.2.0
       resolve-from: 5.0.0
@@ -25705,7 +25712,7 @@ snapshots:
   tsconfig-paths-webpack-plugin@4.2.0:
     dependencies:
       chalk: 4.1.2
-      enhanced-resolve: 5.24.3
+      enhanced-resolve: 5.20.1
       tapable: 2.3.3
       tsconfig-paths: 4.2.0
 
@@ -26014,7 +26021,7 @@ snapshots:
     dependencies:
       lightningcss: 1.33.0
       picomatch: 4.0.5
-      postcss: 8.5.26
+      postcss: 8.5.23
       rolldown: 1.0.3
       tinyglobby: 0.2.17
     optionalDependencies:

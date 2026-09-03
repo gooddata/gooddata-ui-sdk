@@ -1,6 +1,60 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 27 Aug 2026 07:57:31 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Sep 2026 06:58:27 GMT and should not be manually modified.
+
+## 11.55.0
+
+Thu, 03 Sep 2026 06:58:27 GMT
+
+### Updates
+
+- sdk-code-convertors: Route the AAC ranking filter's attribute to the AFM rankingFilter dimensionality instead of appending it to measures in buildAfmExecution, so a ranked dimension is ranked at its own granularity rather than at full result granularity.
+- sdk-ui-catalog: Hide AI title and description generation for unsupported object types
+- sdk-ui-dashboard: Send all owning-tab parameters in the widget export request (`selectExportEffectiveParameters`)
+- sdk-ui-kit: `ParameterControlButton` takes `definition` and derives the allowed value title
+- sdk-backend-tiger, sdk-ui-dashboard: Enable string parameters by default; `enableStringParameters` now defaults to `true`
+- sdk-ui-kit: `ParameterControl` now takes an explicit submit mode: `mode: "commit"` with `onCommit`, or `mode: "staged"` with `onStage`, plus one `onClose`. In commit mode, the Apply button commits and the control closes itself; in staged mode, every valid draft is staged immediately, allowed-value picks stage and close, and the footer shows one Close button. The control also closes itself after an allowed-value pick in commit mode.
+- sdk-ui-dashboard: In apply-all-at-once mode, all parameter types stage their value as the working value. Apply All then commits the value. No parameter dropdown shows an Apply button. If you type a value, the dropdown stages it as soon as the value is valid, and the dropdown stays open.
+- sdk-ui-kit: Added UiColorPicker.
+- sdk-embedding: Add the AdCommandData, AdCommand and AdCommandBody unions of the Analytical Designer commands
+- sdk-ui-dashboard: Added @alpha Level 2 customization of the alerting and scheduled-export dialogs: per region a props hook (useAlertingDialogFiltersProps and siblings), the default render component (DefaultAlertingDialogFilters and siblings) and a connected block (AlertingDialogFilters and siblings) that a custom dialog component can place in its own markup, plus the dialogs' state hooks (useAlertDraft, useScheduledExportDraft and siblings).
+- sdk-ui-dashboard: Added @alpha Level 2 field blocks for the alerting dialog: per condition field a props hook (useAlertingDialogMeasureProps and siblings), the default control (DefaultAlertingDialogMeasure and siblings) and a connected block (AlertingDialogMeasure, AlertingDialogComparisonOperator, AlertingDialogThreshold and siblings) that a custom dialog component can place in its own markup, plus the AutomationDialogFormField row the blocks render through.
+- sdk-ui-dashboard: Added @alpha Level 2 dialog shells for the automation dialogs: AlertingDialogShell and ScheduledEmailDialogShell render the default dialogs' chrome (overlay, frame, header, action bar, tabs, messages, confirmation steps, loading state) around blocks a custom dialog component places in its own order, taking the caller's submit; plus AlertingDialogFormFieldGroup (the "When"/"Do" grouping) and useScheduledEmailSubmitOnEnter (the Enter-to-submit guard). The default dialogs are built from the shells.
+- sdk-ui-dashboard: Added @alpha context-decorator slots for the two automation management dialogs (AlertingManagementDialogContextDecoratorComponent and ScheduledEmailManagementDialogContextDecoratorComponent Dashboard props), mirroring the create/edit dialogs' seam: a decorator reads the management dialog context, adjusts members such as the automations list, and re-provides it via the newly exported AlertingManagementDialogContextProvider / ScheduledEmailManagementDialogContextProvider.
+- sdk-ui-dashboard: Added an @alpha context-decorator slot for the automation dialogs' shared automations context (AutomationsContextDecoratorComponent Dashboard prop): a decorator reads useAutomationsContext(), adjusts members such as dateFilterConfig, and re-provides via the newly exported AutomationsContextProvider; it decorates both dialog trees (alerting and scheduled email).
+- sdk-model: Add the @alpha canCreateMetric helper resolving the effective metric-create capability from the workspace permissions and the enableMetricPermissions feature flag.
+- sdk-ui-catalog: Gate the Create metric option in the analytics catalog by the CREATE_METRIC workspace permission behind the enableMetricPermissions feature flag, falling back to the manage-workspace check when the flag is off.
+- sdk-ui-ext: Add a draft mode to the object share dialog, so access can be prepared for an object that does not exist yet and applied once it is created.
+- sdk-backend-tiger: Load a metric's object-level EDIT/SHARE/VIEW permissions into IMeasureMetadataObject.permissions when the new loadPermissions catalog option is set.
+- sdk-model: Add canEditMetric and canShareMetric, the object-level metric permission rules shared by the metric editor and the analytics catalog.
+- sdk-ui-catalog: Let a metric's own EDIT and SHARE permissions decide who can edit and share it in the catalog detail, gated by the enableMetricPermissions feature flag.
+- sdk-backend-tiger: Ask for a metric's object-level permissions through the metrics query's new withMetaInclude method and the new loadPermissions option on getMeasure.
+- sdk-backend-spi: Make the target optional on getAvailableAssignees, so grantee candidates can be listed for an object that does not exist yet.
+- sdk-ui-dashboard: In apply-all-at-once mode, filters waited for `Apply All` but parameters applied at once. Now parameters also wait. Apply on a parameter control sets a working value. `Apply All` applies the working filters and parameters together. Reset discards the working values. Adds `workingOverride` to `IDashboardParameterEntry`, `selectIsWorkingParametersChanged`, `selectParameterDisplayValueByRef` and `selectIsWorkingSelectionChanged`.
+- sdk-ui-dashboard: Added the dashboard reference availability signal (IDashboardReferences.unavailable, selectUnavailableObjects, selectUnavailableObjectsMapByType) behind enableDashboardPartialRendering; no rendering change.
+- Pinned the postcss-value-parser dependency to the exact version 4.2.0 instead of the '^4.2.0' range in @gooddata/sdk-ui-theme-provider.
+- Pinned the stylelint dependency to the exact version 16.26.1 instead of the '^16.26.1' range.
+- Pinned the stylelint-config-standard dependency to the exact version 38.0.0 instead of the '^38.0.0' range in @gooddata/stylelint-config.
+- stylelint-config: Pinned the stylelint-scss dependency to the exact version 6.14.0 instead of the '^6.12.0' range.
+- sdk-ui-dashboard: Renamed 'Parameters' to 'Placeholders' in the Drill to URL custom URL dialog (panel label, tooltip, URL field placeholder and invalid-placeholder warning) to avoid a terminology clash with the dashboard Parameters feature.
+- sdk-ui-dashboard, sdk-backend-tiger: Fixed Edit Alert treating a parameter as an unavailable filter when its stored value looked like a different type (e.g. a STRING parameter saved with an empty or numeric-looking value). Alert parameter wire values are no longer type-guessed on load; they pass through as strings and are decoded against the workspace parameter definition, so such values round-trip losslessly and the parameter stays visible instead of triggering the stale-filters warning and being dropped.
+- sdk-ui-ext: let the Mekko chart declare the Stack to 100% checkbox visibility so it is not hidden for a Height-only metric
+- sdk-ui-all: Improve handling of CA in Catalog
+- sdk-ui-dashboard: the delete dashboard dialog no longer claims that drilling will be deleted, and now states in a single sentence which objects are deleted along with the dashboard.
+- sdk-backend-tiger: Reports SPI now reads and writes the reportPageLayout, reportTemplate and report entities and the REPORTS_BRAND_KIT workspace setting instead of localStorage.
+- sdk-model: Added @alpha padding to IReportBoxStyle - an inset of a report box's own content in percent of the page width, validated alongside borderRadius; gdc-reports renders it and offers it in the element toolbar next to the radius.
+- sdk-model, sdk-backend-spi: Added @alpha workspace brand kit for reports (IReportsBrandKit: colors, typography incl. hosted font faces, externally hosted assets) with sanitizeReportsBrandKit for its free-form stored content, brand-kit read/write on IWorkspaceReportsService (getBrandKit/setBrandKit/deleteBrandKit; tiger persists to localStorage until the reportsBrandKit setting is available), and the logoInverse built-in report variable plus reserved image_ variables resolving brand kit images.
+- sdk-ui-pluggable-application: Added @alpha createHostNavigationTakeover and inAppPath - a router-agnostic onHostNavigationRequested handler that drives host chrome navigations landing inside a pluggable application through the application's own router (the host router the chrome navigates with is not observed by the application's), fixing the application header item changing the URL without rendering; adopted by gdc-reports and gdc-catalog.
+- sdk-ui-kit, sdk-ui-filters: turn the attribute filter selection summary and the filter button's is-not subtitle into single translatable phrases, so locales can reorder them (fixes the Japanese "は すべて" / "次と一致しない …" word order); English rendering is unchanged
+- sdk-ui-gen-ai: Fixed the AI chat announcing raw message ids to screen readers.
+- sdk-ui-kit: Fixed the keyboard-active option of a UiPagedVirtualList listbox not being announced to screen readers.
+- sdk-ui-gen-ai: Keep the AI Assistant "Add context" popup at a fixed 271px height.
+- Adds authoring, per-target on/off control, and AaC YAML round-trip support for semantic-layer conditional formatting on pivot tables.
+- sdk-ui-gen-ai: Add `AgentItem` slot for customizable agent chooser experience.
+- sdk-ui-kit: Add support for actionable chips in `UiChip`.
+- sdk-ui-gen-ai: Enhance context selection and update ambient context logic.
+- sdk-ui-gen-ai: Add `Feedback`, `FollowUpButtons`, `FollowUpQuestion` and messages slots.
+- sdk-backend-tiger: insight saves now dual-write conditional formatting into the typed visualizationObject attribute; the free-form content stays authoritative.
 
 ## 11.54.0
 
@@ -27,7 +81,7 @@ Thu, 27 Aug 2026 07:57:31 GMT
 - analytics-as-code: Support computed attributes as code - new computed_attribute YAML type with its JSON schema, TS and Python types, YAML/declarative converters both ways, deploy and clone wiring, MAQL reference resolution, snippet and init rules
 - sdk-ui-catalog: computed attributes can be created, edited and deleted from the Analytics Catalog via the YAML editor, behind the enableComputedAttributes feature flag.
 - sdk-ui-dashboard: Restore the timezone baked into an alert or scheduled export when the dashboard is opened from its notification link.
-- sdk-code-convertors: the generated Python models no longer truncate schema unions. A union member that carried only the `type` discriminator validated any payload with a matching type and dropped every other key on model_dump(); QueryFilter, QuerySort, Metadata, Fields, DashboardFilters, DashboardFiltersNoGroups and Interaction now resolve to the real per-type models in both pydantic_models.py and \_types.py.
+- sdk-code-convertors: the generated Python models no longer truncate schema unions. A union member that carried only the `type` discriminator validated any payload with a matching type and dropped every other key on model_dump(); QueryFilter, QuerySort, Metadata, Fields, DashboardFilters, DashboardFiltersNoGroups and Interaction now resolve to the real per-type models in both pydantic_models.py and _types.py.
 - sdk-ui-kit: ConfirmDialogBase accepts a footerRenderer prop replacing the whole footer; the default footer is extracted into ConfirmDialogFooter (internal)
 - sdk-ui-dashboard: Added an ActionBar slot and topContent/bottomContent props to the default alerting and scheduled email dialogs (alpha)
 - sdk-ui-dashboard: Add alpha Destination and Recipients slots to DefaultAlertingDialog and DefaultScheduledEmailDialog for wrap-or-replace customization of the notification-channel and recipients regions
@@ -143,7 +197,7 @@ Thu, 13 Aug 2026 06:46:34 GMT
 - sdk-ui-ext: per-label grants in the object share dialog now carry the permission level held on the object instead of always landing on VIEW, and changing a grantee's level re-grades the labels in their scope so the two no longer drift apart.
 - sdk-ui-catalog: the catalog detail Share button now waits for the object's access list instead of appearing and then disappearing again for a user who may only view the object.
 - sdk-ui-ext: the object share dialog now shows a grantee's effective permission level, so a level inherited from a group or a parent workspace is no longer understated as "Can view"; Remove access is offered disabled, with an explanation, for a grantee who holds no grant in the current workspace.
-- sdk-ui-kit: Split UiButton's shared badge margin override into separate **badge-number and **badge-text modifiers so text badges (e.g. the reasoning effort badge in the AI assistant agent dropdown) can be spaced 10px from the label instead of inheriting the 2.5px pull-in tuned for parenthesised numeric badges. They previously sat 2.5px apart, which was hard to distinguish, especially with high-contrast theming where the color difference between them is replaced by a single system color.
+- sdk-ui-kit: Split UiButton's shared badge margin override into separate __badge-number and __badge-text modifiers so text badges (e.g. the reasoning effort badge in the AI assistant agent dropdown) can be spaced 10px from the label instead of inheriting the 2.5px pull-in tuned for parenthesised numeric badges. They previously sat 2.5px apart, which was hard to distinguish, especially with high-contrast theming where the color difference between them is replaced by a single system color.
 - sdk-ui-ext / sdk-ui-web-components: Fix stale insight caching so edits made in the /analyze iframe are reflected when navigating back in-app to a gallery of `<gd-insight-embed>` elements, instead of the pre-edit version persisting until a full page reload. `gd-insight-embed.refresh()` now evicts the element's cached insight definition for its resolved workspace and insight ref before remounting the visualization, instead of only replacing the React tree (which re-read the same cached, un-evicted promise and so could never clear a stale insight). The sdk-ui-web-components bundle now also exports `clearCaches()`, since it inlines its own copy of the GoodData.UI runtime and a host application calling `clearInsightViewCaches()` from its own `@gooddata/sdk-ui-ext` dependency cleared a different cache instance and had no effect. Finally, sdk-ui-ext gains a new `clearInsightViewCacheForInsight(workspace, ref)` public API to evict a single insight's cached definition, where previously only the all-or-nothing `clearInsightViewCaches()` existed.
 - sdk-ui-all: Include conditional formatting in the generated React embed code for the new pivot table
 - sdk-ui-all: Show an inline "Value cannot be empty" error in the conditional formatting rule dialog.
@@ -210,7 +264,7 @@ Fri, 07 Aug 2026 07:40:30 GMT
 - sdk-ui-filters: Make single select attribute filter option tooltips keyboard-operable by revealing them on keyboard focus (:focus-visible) with a proper aria-describedby announcement, fix the invalid role and leaked icon aria-label, and support dismissing with Escape without closing the dropdown.
 - sdk-ui-dashboard: Replace the legacy `DropdownButton` behind the filter bar "My views" trigger with a tertiary `UiButton`, dropping the CSS hacks that were emulating its look. The button stays vertically centered and is now offset 10px from the right edge so it lines up with the dashboard header options button.
 - sdk-ui-ext: the object share dialog's permission menu now offers a selectable "Can edit & share" level for grantees and the all-workspace-members rule, with label access and remove access consolidated into the same menu.
-- sdk-backend-mockingbird: Remove the deprecated internal legacyRecordedBackend module and its exports (legacyRecordedDataView and the Legacy\* recording types); all in-repo consumers were migrated to local test utilities.
+- sdk-backend-mockingbird: Remove the deprecated internal legacyRecordedBackend module and its exports (legacyRecordedDataView and the Legacy* recording types); all in-repo consumers were migrated to local test utilities.
 - sdk-backend-mockingbird: Remove the deprecated internal legacyRecordedBackend function (no callers); legacyRecordedDataView and legacy recording types are unchanged.
 - sdk-ui-dashboard: filter bar exposes role=toolbar so NVDA switches to focus mode automatically
 - sdk-ui-charts: fixed Mekko chart drill intersections to carry both Width and Height measure headers instead of an alternating or Width-only measure
@@ -219,7 +273,7 @@ Fri, 07 Aug 2026 07:40:30 GMT
 - Add ad-hoc timezone in Analytical Designer.
 - Turn on Enable Oidc Auth by default.
 - sdk-ui-kit, sdk-ui-ext: Make the header AI icon, notification icon and help link follow the themed header foreground colour instead of a hardcoded white, so they stay visible on a light themed header
-- sdk-ui-kit: Fix secondary buttons losing their border in apps whose stylesheet entry point pulls several SDK packages in through legacy @import. The %btn placeholder moved from styles/scss/Button/\_mixins.scss to the new styles/scss/Button/\_placeholders.scss so that stylesheets needing only the button gradient mixin no longer re-emit the button base rules; if you @extend %btn in your own SCSS, load @gooddata/sdk-ui-kit/styles/scss/Button/placeholders instead of Button/mixins.
+- sdk-ui-kit: Fix secondary buttons losing their border in apps whose stylesheet entry point pulls several SDK packages in through legacy @import. The %btn placeholder moved from styles/scss/Button/_mixins.scss to the new styles/scss/Button/_placeholders.scss so that stylesheets needing only the button gradient mixin no longer re-emit the button base rules; if you @extend %btn in your own SCSS, load @gooddata/sdk-ui-kit/styles/scss/Button/placeholders instead of Button/mixins.
 - sdk-ui-dashboard: Fix slide export of dashboards with containers, where the insights inside a container rendered with zero height and only their titles were visible, by giving export section grid rows a definite size. A section header no longer splits the slide height evenly with the widget below it either, so a slide with a section title now uses the whole slide for its content.
 - sdk-ui-pluggable-host: Remember the last visited workspace and land in it when the URL carries no workspace; stop reporting a previous workspace's permissions while a workspace switch is in flight.
 - sdk-ui-gen-ai: Add mode and onModeChange properties to GenAIAssistant to control the docked and fullscreen layout, and expose setFullscreenAction publicly.
@@ -542,8 +596,8 @@ Thu, 25 Jun 2026 06:50:37 GMT
 - sdk-ui-filters: Fixed excessive height of the date filter dropdown that left a large empty gap below the preset list when only a few presets were configured
 - Add shared automation infra: AutomationsContext, connectors, shared filters/utils layer (ExtendedDashboardWidget signatures, no users in context)
 - Move widget-owned alert hooks (useCreateAlert, useUpdateAlert, useSaveAlertToBackend) into InsightAlertConfig/hooks
-- Migrate alerting create/edit dialog out of \_staging into alerting/DefaultAlertingDialog; add AlertingConnector (create/edit only); arm create/edit clean-tree dep-cruiser rule
-- Migrate alerting management dialog out of \_staging into alerting/DefaultAlertingManagementDialog; extend AlertingConnector to management; arm management clean-tree dep-cruiser rule
+- Migrate alerting create/edit dialog out of _staging into alerting/DefaultAlertingDialog; add AlertingConnector (create/edit only); arm create/edit clean-tree dep-cruiser rule
+- Migrate alerting management dialog out of _staging into alerting/DefaultAlertingManagementDialog; extend AlertingConnector to management; arm management clean-tree dep-cruiser rule
 - sdk-ui-charts: Fix duplicit labels in bullet chart in integer cases.
 - sdk-ui-dashboard: Use true filterLocalIdentifier in filterElementsByDate object as a part of dependent filters feature.
 - sdk-ui-all: Remove enableCompositeGrain feature flag, composite (compound) primary keys are now always enabled.
@@ -599,7 +653,7 @@ Thu, 18 Jun 2026 07:03:40 GMT
 - sdk-ui-all: Introduce strict flag on ranking filter.
 - When an execution reaches a result limit: disable formatted exports (XLSX, formatted CSV, formatted PDF) with an explanatory tooltip in the widget and drill dialog menus, and show a partial-results warning next to the dashboard XLSX export.
 - Add Partial results (enablePartialDataResults) setting management at workspace and organization level, including the setEnablePartialDataResults backend service method.
-- Collocate alerting dialogs into \_staging folder (pure move, preparatory step for separation)
+- Collocate alerting dialogs into _staging folder (pure move, preparatory step for separation)
 - sdk-backend-tiger: Turn on sidebar resize feature flag by default.
 - Add UiAutocomplete, an async paged sectioned combobox primitive
 - Refactor UiCombobox internals to compose on kit primitives + add UiFloatingPanel; no public API change
@@ -864,7 +918,7 @@ Thu, 16 Apr 2026 06:23:45 GMT
 ### Updates
 
 - sdk-ui-dashboard: Add template selection for slides exports.
-- sdk-backend-\*: Replace `updateParameterMeta` with `updateParameter` method in the workspace parameters service.
+- sdk-backend-*: Replace `updateParameterMeta` with `updateParameter` method in the workspace parameters service.
 - sdk-ui-catalog: Introduce edit flow for parameter object type in the catalog.
 - sdk-ui-catalog: Introduce `deleteParameter` method in the workspace parameters service.
 - sdk-ui-catalog: Introduce delete and duplicate flows for parameter object type in the catalog.
@@ -887,7 +941,7 @@ Fri, 10 Apr 2026 11:31:09 GMT
 ### Updates
 
 - sdk-backend-tiger: Fix custom fiscal prefix lost when format locale is unsupported. Add Vietnamese, Indonesian, and Thai locale support for date formatting.
-- sdk-backend-\*,sdk-model: Introduce `parameter` metadata object support.
+- sdk-backend-*,sdk-model: Introduce `parameter` metadata object support.
 - sdk-ui-catalog: Introduce loading and creation flow for parameter object type in the catalog.
 - sdk-ui-gen-ai: enhance bucket mapping for pivot table support
 - sdk-ui-gen-ai: add and check support for anomaly detection in new chatbot
