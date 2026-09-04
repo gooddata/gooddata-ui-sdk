@@ -14,12 +14,17 @@ import {
 
 import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultFilterContext.js";
 import { DEFAULT_FISCAL_DATE_FILTER_PRESET } from "../../../_staging/dateFilterConfig/defaultConfig.js";
+import { deriveAbsoluteFormGranularitiesFromRelativeForm } from "../../../_staging/dateFilterConfig/merge.js";
 import { configHasFiscalPresets } from "../../../_staging/dateFilterConfig/validation.js";
 import { type ICreateDashboardTab, switchDashboardTab } from "../../commands/tabs.js";
 import { type IDashboardTabSwitched, dashboardTabCreated } from "../../events/tabs.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { InitialUndoState } from "../../store/_infra/undoEnhancer.js";
-import { selectActiveCalendars, selectDateFilterConfig } from "../../store/config/configSelectors.js";
+import {
+    selectActiveCalendars,
+    selectDateFilterConfig,
+    selectSettings,
+} from "../../store/config/configSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
@@ -92,7 +97,13 @@ export function* createDashboardTabHandler(ctx: DashboardContext, cmd: ICreateDa
     const activeTabLocalIdentifier: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
         selectActiveTabLocalIdentifier,
     );
-    const dateFilterConfig: ReturnType<typeof selectDateFilterConfig> = yield select(selectDateFilterConfig);
+    const rawDateFilterConfig: ReturnType<typeof selectDateFilterConfig> =
+        yield select(selectDateFilterConfig);
+    const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
+    const dateFilterConfig = deriveAbsoluteFormGranularitiesFromRelativeForm(
+        rawDateFilterConfig,
+        !!settings.enableAbsoluteDateFilterGranularity,
+    );
     const activeCalendars: ReturnType<typeof selectActiveCalendars> = yield select(selectActiveCalendars);
 
     const screen: ScreenSize = yield select(selectScreen);

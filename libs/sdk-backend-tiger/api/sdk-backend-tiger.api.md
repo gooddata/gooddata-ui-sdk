@@ -419,40 +419,7 @@ export interface IVisualizationObjectMetadata {
 export type JwtIsAboutToExpireHandler = (setJwt: SetJwtCallback) => void;
 
 // @alpha (undocumented)
-export const objectTypeToTigerIdType: {
-    analyticalDashboard: TigerObjectType;
-    attribute: TigerObjectType;
-    attributeHierarchy: TigerObjectType;
-    automation: TigerObjectType;
-    colorPalette: TigerObjectType;
-    computedAttribute: TigerObjectType;
-    dashboardPlugin: TigerObjectType;
-    dataSet: TigerObjectType;
-    dateAttributeHierarchy: TigerObjectType;
-    dateHierarchyTemplate: TigerObjectType;
-    displayForm: TigerObjectType;
-    exportDefinition: TigerObjectType;
-    fact: TigerObjectType;
-    filterContext: TigerObjectType;
-    filterView: TigerObjectType;
-    insight: TigerObjectType;
-    measure: TigerObjectType;
-    memoryItem: TigerObjectType;
-    notificationChannel: TigerObjectType;
-    parameter: TigerObjectType;
-    report: TigerObjectType;
-    reportPageLayout: TigerObjectType;
-    reportTemplate: TigerObjectType;
-    theme: TigerObjectType;
-    user: TigerObjectType;
-    userDataFilter: TigerObjectType;
-    userGroup: TigerObjectType;
-    variable: TigerObjectType;
-    workspaceColorPalette: TigerObjectType;
-    workspaceDataFilter: TigerObjectType;
-    workspaceDataFilterSetting: TigerObjectType;
-    workspaceTheme: TigerObjectType;
-};
+export const objectTypeToTigerIdType: { [objectType in TigerCompatibleObjectType]: TigerObjectType; };
 
 // @internal (undocumented)
 export type OrganizationPermission = JsonApiOrganizationOutMetaPermissionsEnum;

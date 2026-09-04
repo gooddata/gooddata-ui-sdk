@@ -21,7 +21,12 @@ import { type ChatEventHandler } from "../store/events.js";
 import { messagesSliceName } from "../store/messages/messagesSlice.js";
 import { type GenAiStore as GenAiStoreType } from "../store/store.js";
 
-import { ConfigProvider, type GenAIAssistantMode, type LinkHandlerEvent } from "./ConfigContext.js";
+import {
+    ConfigProvider,
+    type GenAIAssistantDisplayMode,
+    type GenAIAssistantMode,
+    type LinkHandlerEvent,
+} from "./ConfigContext.js";
 
 /**
  * Props for the GenAiStore component.
@@ -88,11 +93,15 @@ export type GenAiStoreProps = {
      */
     colorPalette?: IColorPalette;
     /**
-     * Display mode of the assistant. Adapts the internal layout to a narrow or to a wide container;
+     * Mode of the assistant. Adapts the internal layout to a narrow or to a wide container;
      * the assistant always fills its parent element, so this does not resize it.
      * On small screens the fullscreen layout is always used.
      */
     mode?: GenAIAssistantMode;
+    /**
+     * Display mode of the Gen AI assistant.
+     */
+    displayMode?: GenAIAssistantDisplayMode;
     /**
      * When provided, the function will be called with the store dispatch function
      * after the store has been initialized.

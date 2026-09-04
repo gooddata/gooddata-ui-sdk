@@ -88,6 +88,8 @@
 .gd-dialog-header {
     @include mixins.text-overflow();
 
+    margin: 0 30px 20px 0;
+
     h1,
     h2,
     h3,
@@ -97,8 +99,6 @@
         margin: 0;
         padding: 0;
     }
-
-    margin: 0 30px 20px 0;
 
     h2,
     h3,
@@ -143,13 +143,12 @@
 
 .gd-dialog-section-separated {
     margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid variables.$gd-border-color;
 
     & + .gd-dialog-footer {
         margin-top: 30px;
     }
-
-    padding-bottom: 20px;
-    border-bottom: 1px solid variables.$gd-border-color;
 
     & + & {
         margin-top: 20px;

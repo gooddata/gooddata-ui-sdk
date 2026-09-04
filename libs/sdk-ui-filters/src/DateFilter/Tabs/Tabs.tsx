@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -6,8 +6,6 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { type IAccessibilityConfigBase } from "@gooddata/sdk-ui-kit";
-
-import { DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID } from "../accessibility/elementId.js";
 
 interface ITabsWrapperProps {
     className?: string;
@@ -35,6 +33,11 @@ interface ITabProps {
     accessibilityConfig?: IAccessibilityConfigBase;
     children: ReactNode;
     onClick?: () => void;
+    /**
+     * DOM id applied to this tab's button when `selected` is true, so a panel elsewhere on the page can
+     * point `aria-labelledby` back at it.
+     */
+    selectedTabId: string;
 }
 
 export function Tab({
@@ -43,11 +46,12 @@ export function Tab({
     accessibilityConfig,
     onClick,
     children,
+    selectedTabId,
     ...restProps
 }: ITabProps) {
     return (
         <button
-            id={selected ? DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID : undefined}
+            id={selected ? selectedTabId : undefined}
             onClick={onClick}
             role="tab"
             aria-selected={selected}

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/create-pluggable-module",
-    "version": "11.56.0-alpha.0",
+    "version": "11.56.0-alpha.1",
     "description": "Scaffolder for GoodData pluggable applications. Invoked via `npm init @gooddata/pluggable-module`.",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -54,7 +54,7 @@
         "@types/node": "24.12.0",
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",
-        "@typescript/native-preview": "7.0.0-dev.20260202.1",
+        "@typescript/native-preview": "7.0.0-dev.20260501.1",
         "eslint": "^9.39.2",
         "eslint-plugin-headers": "1.3.3",
         "eslint-plugin-import-esm": "1.2.1",

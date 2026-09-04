@@ -69,6 +69,17 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
      * @defaultValue false
      */
     isSecondsForAbsoluteRangeEnabled?: boolean;
+
+    /**
+     * Enables Day/Week/Month/Quarter/Year granularity switching for the absolute (static) date filter.
+     *
+     * @remarks
+     * Defaults to `false` to keep backward compatibility. Dashboard apps should control this
+     * via a feature flag and explicitly opt-in.
+     *
+     * @alpha
+     */
+    isAbsoluteDateFilterGranularityEnabled?: boolean;
     showDropDownHeaderMessage?: boolean;
     weekStart?: WeekStart;
     /**
@@ -334,6 +345,7 @@ export const DateFilter: NamedExoticComponent<IDateFilterProps> = memo(function 
         locale = "en-US",
         isTimeForAbsoluteRangeEnabled = false,
         isSecondsForAbsoluteRangeEnabled = false,
+        isAbsoluteDateFilterGranularityEnabled = false,
         weekStart = "Sunday",
         customIcon,
         showDropDownHeaderMessage,
@@ -551,6 +563,7 @@ export const DateFilter: NamedExoticComponent<IDateFilterProps> = memo(function 
             hideDisabledExclude={hideDisabledExclude}
             isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled ?? false}
             isSecondsForAbsoluteRangeEnabled={isSecondsForAbsoluteRangeEnabled ?? false}
+            isAbsoluteDateFilterGranularityEnabled={isAbsoluteDateFilterGranularityEnabled ?? false}
             isEditMode={isEditMode ?? false}
             filterOptions={filterOptions}
             selectedFilterOption={selectedFilterOption}

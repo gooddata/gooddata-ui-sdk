@@ -33,6 +33,7 @@ import {
     type IGetAutomationOptions,
     type IGetAutomationsOptions,
     type IGetAutomationsQueryOptions,
+    type IGetComputedAttributeOptions,
     type IGetInsightOptions,
     type IMeasureExpressionToken,
     type IMeasureReferencing,
@@ -48,6 +49,7 @@ import {
     type IWorkspaceCatalog,
     type IWorkspaceCatalogFactory,
     type IWorkspaceCatalogFactoryOptions,
+    type IWorkspaceComputedAttributesService,
     type IWorkspaceDatasetsService,
     type IWorkspaceExportTemplatesService,
     type IWorkspaceFactsService,
@@ -68,6 +70,8 @@ import {
     type IAttributeMetadataObject,
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
+    type IComputedAttributeMetadataObject,
+    type IComputedAttributeMetadataObjectDefinition,
     type IDataSetMetadataObject,
     type IDefaultExportTemplate,
     type IExecutionDefinition,
@@ -95,6 +99,7 @@ import {
     isIdentifierRef,
     isUriRef,
     objRefToString,
+    serializeObjRef,
     uriRef,
 } from "@gooddata/sdk-model";
 
@@ -104,6 +109,7 @@ import {
     DecoratedWorkspaceAutomationsService,
 } from "../decoratedBackend/automations.js";
 import { DecoratedWorkspaceCatalogFactory } from "../decoratedBackend/catalog.js";
+import { DecoratedWorkspaceComputedAttributesService } from "../decoratedBackend/computedAttributes.js";
 import { DecoratedWorkspaceDatasetsService } from "../decoratedBackend/datasets.js";
 import { DecoratedElementsQuery, DecoratedElementsQueryFactory } from "../decoratedBackend/elements.js";
 import {
@@ -123,6 +129,7 @@ import {
     type AttributesDecoratorFactory,
     type AutomationsDecoratorFactory,
     type CatalogDecoratorFactory,
+    type ComputedAttributesDecoratorFactory,
     type DatasetsDecoratorFactory,
     type ExecutionDecoratorFactory,
     type FactsDecoratorFactory,
@@ -166,6 +173,9 @@ type AttributeCacheEntry = {
     // keyed by display-form identifier; holds in-flight/settled getAttributesWithReferences results so
     // concurrent callers for the same display form share a single underlying bulk request (in-flight dedupe)
     attributesWithReferences: LRUCache<string, Promise<IAttributeWithReferences | undefined>>;
+    // keyed by the SERIALIZED ref, so a computed attribute can never collide with a label or an
+    // attribute that happens to share its identifier - unlike the identifier-keyed maps above
+    computedAttributes: LRUCache<string, Promise<IComputedAttributeMetadataObject>>;
 };
 
 type AutomationCacheEntry = {
@@ -1123,6 +1133,9 @@ function getOrCreateAttributeCache(ctx: CachingContext, workspace: string): Attr
                 max: (ctx.config.maxConnectedAttributesPerWorkspace ?? ctx.config.maxAttributesPerWorkspace)!,
             }),
             attributesWithReferences: new LRUCache<string, Promise<IAttributeWithReferences | undefined>>({
+                max: ctx.config.maxAttributesPerWorkspace!,
+            }),
+            computedAttributes: new LRUCache<string, Promise<IComputedAttributeMetadataObject>>({
                 max: ctx.config.maxAttributesPerWorkspace!,
             }),
             attributeElementResults: cachingEnabled(ctx.config.maxAttributeElementResultsPerWorkspace)
@@ -2765,6 +2778,81 @@ function cachedAttributes(ctx: CachingContext): AttributesDecoratorFactory {
     return (original, workspace) => new WithAttributesCaching(original, ctx, workspace);
 }
 
+class WithComputedAttributesCaching extends DecoratedWorkspaceComputedAttributesService {
+    constructor(
+        decorated: IWorkspaceComputedAttributesService,
+        private readonly ctx: CachingContext,
+        private readonly workspace: string,
+    ) {
+        super(decorated);
+    }
+
+    // Writes invalidate wholesale rather than per-key: the cache key carries option variants
+    // (loadUserData), and computed-attribute writes are rare management actions, so one refetch
+    // beats chasing every key shape. Same stance as the automations caching above.
+    private invalidateComputedAttributes = (): void => {
+        getOrCreateAttributeCache(this.ctx, this.workspace).computedAttributes.clear();
+    };
+
+    public override createComputedAttribute = async (
+        computedAttribute: IComputedAttributeMetadataObjectDefinition,
+    ): Promise<IComputedAttributeMetadataObject> => {
+        const result = await super.createComputedAttribute(computedAttribute);
+        this.invalidateComputedAttributes();
+        return result;
+    };
+
+    public override updateComputedAttribute = async (
+        computedAttribute: IComputedAttributeMetadataObject,
+    ): Promise<IComputedAttributeMetadataObject> => {
+        const result = await super.updateComputedAttribute(computedAttribute);
+        this.invalidateComputedAttributes();
+        return result;
+    };
+
+    public override updateComputedAttributeMeta = async (
+        computedAttribute: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    ): Promise<IComputedAttributeMetadataObject> => {
+        const result = await super.updateComputedAttributeMeta(computedAttribute);
+        this.invalidateComputedAttributes();
+        return result;
+    };
+
+    public override deleteComputedAttribute = async (ref: ObjRef): Promise<void> => {
+        await super.deleteComputedAttribute(ref);
+        this.invalidateComputedAttributes();
+    };
+
+    public override getComputedAttribute = async (
+        ref: ObjRef,
+        options: IGetComputedAttributeOptions = {},
+    ): Promise<IComputedAttributeMetadataObject> => {
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).computedAttributes;
+
+        // The ref is serialized rather than reduced to its identifier: a computed attribute and a
+        // label may share an id, and this cache must not conflate them. `loadUserData` changes the
+        // shape of the result, so it is part of the key too.
+        const cacheKey = `${serializeObjRef(ref)}${options.loadUserData ? ":userData" : ""}`;
+
+        let cacheItem = cache.get(cacheKey);
+
+        if (!cacheItem) {
+            cacheItem = super.getComputedAttribute(ref, options).catch((e) => {
+                cache.delete(cacheKey);
+                throw e;
+            });
+
+            cache.set(cacheKey, cacheItem);
+        }
+
+        return cacheItem;
+    };
+}
+
+function cachedComputedAttributes(ctx: CachingContext): ComputedAttributesDecoratorFactory {
+    return (original, workspace) => new WithComputedAttributesCaching(original, ctx, workspace);
+}
+
 function cachedAutomations(ctx: CachingContext): AutomationsDecoratorFactory {
     return (original, workspace) => new WithAutomationsCaching(original, ctx, workspace);
 }
@@ -3546,6 +3634,8 @@ export function withCaching(
     const catalog = catalogCaching ? cachedCatalog(ctx) : (v: any) => v;
     const securitySettings = securitySettingsCaching ? cachedSecuritySettings(ctx) : (v: any) => v;
     const attributes = attributeCaching ? cachedAttributes(ctx) : (v: any) => v;
+    // computed attributes ride the same workspaceAttributes cache root, so they follow attributeCaching
+    const computedAttributes = attributeCaching ? cachedComputedAttributes(ctx) : (v: any) => v;
     const automations = automationsCaching ? cachedAutomations(ctx) : (v: any) => v;
     const insights = insightsCaching ? cachedInsights(ctx) : (v: any) => v;
     const facts = factsCaching ? cachedFacts(ctx) : (v: any) => v;
@@ -3569,6 +3659,7 @@ export function withCaching(
         catalog,
         securitySettings,
         attributes,
+        computedAttributes,
         workspaceSettings,
         automations,
         insights,

@@ -2,32 +2,6 @@
 
 import { forwardRef, useState } from "react";
 
-import { type Locale } from "date-fns";
-import {
-    de,
-    enAU,
-    enGB,
-    enUS,
-    es,
-    fi,
-    fr,
-    frCA,
-    id,
-    it,
-    ja,
-    ko,
-    nl,
-    pl,
-    pt,
-    ptBR,
-    ru,
-    sl,
-    th,
-    tr,
-    uk,
-    vi,
-    zhCN,
-} from "date-fns/locale";
 import {
     DayPicker as DayPickerComponent,
     type DayPickerProps,
@@ -39,42 +13,12 @@ import { type WeekStart } from "@gooddata/sdk-model";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
 import { type DateRangePosition } from "../interfaces/index.js";
+import { convertLocale } from "../utils/dateFnsLocale.js";
 
 import { type IDateRange } from "./types.js";
 import { mergeDayPickerProps } from "./utils.js";
 
-const convertedLocales: Record<string, Locale> = {
-    "en-US": enUS,
-    "de-DE": de,
-    "es-ES": es,
-    "fr-FR": fr,
-    "ja-JP": ja,
-    "nl-NL": nl,
-    "pt-BR": ptBR,
-    "pt-PT": pt,
-    "zh-Hans": zhCN,
-    "ru-RU": ru,
-    "it-IT": it,
-    "es-419": es,
-    "en-GB": enGB,
-    "fr-CA": frCA,
-    "zh-Hant": zhCN,
-    "en-AU": enAU,
-    "fi-FI": fi,
-    "zh-HK": zhCN,
-    "tr-TR": tr,
-    "pl-PL": pl,
-    "ko-KR": ko,
-    "sl-SI": sl,
-    "id-ID": id,
-    "th-TH": th,
-    "uk-UA": uk,
-    "vi-VN": vi,
-};
-
 const ALIGN_POINTS = [{ align: "bl tl", offset: { x: 0, y: 1 } }];
-
-const convertLocale = (locale: string): Locale => convertedLocales[locale];
 
 function convertWeekStart(weekStart: WeekStart): DayPickerProps["weekStartsOn"] {
     switch (weekStart) {

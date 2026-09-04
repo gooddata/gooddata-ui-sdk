@@ -76,9 +76,9 @@ import { ITotal } from '@gooddata/sdk-model';
 import { ITotalDescriptor } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
 import { LOCALES } from '@gooddata/sdk-model';
+import { MemoExoticComponent } from 'react';
 import { MessageDescriptor } from 'react-intl';
 import { MutableRefObject } from 'react';
-import { NamedExoticComponent } from 'react';
 import { ObjRef } from '@gooddata/sdk-model';
 import { PropsWithoutRef } from 'react';
 import { ReactElement } from 'react';
@@ -89,8 +89,6 @@ import { RefObject } from 'react';
 import { SetStateAction } from 'react';
 import { TotalType } from '@gooddata/sdk-model';
 import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
-import { WithIntlProps } from 'react-intl';
-import { WrappedComponentProps } from 'react-intl';
 
 // @internal
 export function anomaliesTitleFromIntl(intl: IntlShape): string;
@@ -1385,9 +1383,7 @@ function Intl_2(input: {
 export { Intl_2 as Intl }
 
 // @internal (undocumented)
-export const IntlTranslationsProvider: FC<WithIntlProps<ITranslationsProviderProps>> & {
-    WrappedComponent: ComponentType<ITranslationsProviderProps>;
-};
+export const IntlTranslationsProvider: MemoExoticComponent<(props: ITranslationsProviderProps) => any>;
 
 // @internal (undocumented)
 export function IntlWrapper(input: IIntlWrapperProps): JSX.Element | null;
@@ -2063,7 +2059,7 @@ export interface ITranslationsProviderOwnProps {
 }
 
 // @internal (undocumented)
-export type ITranslationsProviderProps = ITranslationsProviderOwnProps & WrappedComponentProps;
+export type ITranslationsProviderProps = ITranslationsProviderOwnProps;
 
 // @internal
 export type IUnionPaths<T extends IInvalidNode> = T["children"] extends never ? never : {
@@ -2235,7 +2231,7 @@ export type MeasuresOrPlaceholders = ValuesOrPlaceholders<AnyMeasure>;
 export const messages: Record<string, MessageDescriptor>;
 
 // @internal (undocumented)
-export const navigate: (url?: string | undefined) => void;
+export const navigate: (url?: string) => void;
 
 // @public
 export class NegativeValuesSdkError extends GoodDataSdkError {
@@ -2397,9 +2393,6 @@ export function totalColumnTitleFromIntl(intl: IntlShape): string;
 // @public
 export type TotalsOrPlaceholders = ValuesOrPlaceholders<ITotal>;
 
-// @internal (undocumented)
-export const TranslationsProvider: NamedExoticComponent<ITranslationsProviderProps>;
-
 // @public
 export class UnauthorizedSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);
@@ -2422,13 +2415,13 @@ export function uriMatch(uri: string): IHeaderPredicate;
 export const useAutoupdateRef: <T>(value: T) => RefObject<T>;
 
 // @public
-export const useBackend: (backend?: IAnalyticalBackend | undefined) => IAnalyticalBackend | undefined;
+export const useBackend: (backend?: IAnalyticalBackend) => IAnalyticalBackend | undefined;
 
 // @public
-export const useBackendStrict: (backend?: IAnalyticalBackend | undefined, context?: string) => IAnalyticalBackend;
+export const useBackendStrict: (backend?: IAnalyticalBackend, context?: string) => IAnalyticalBackend;
 
 // @public
-export const useBackendWithCorrelation: (backend?: IAnalyticalBackend | undefined, correlationMetadata?: IRequestCorrelationMetadata | undefined) => IAnalyticalBackend | undefined;
+export const useBackendWithCorrelation: (backend?: IAnalyticalBackend, correlationMetadata?: IRequestCorrelationMetadata) => IAnalyticalBackend | undefined;
 
 // @public
 export function useCancelablePromise<TResult, TError = any>(options: UseCancelablePromiseOptions<TResult, TError>, deps?: DependencyList): UseCancelablePromiseState<TResult, TError>;
@@ -2495,7 +2488,7 @@ export const useClientWorkspaceInitialized: () => boolean;
 export const useClientWorkspaceStatus: () => UseCancelablePromiseStatus;
 
 // @internal (undocumented)
-export const useCombineRefs: <T>(...refs: (false | MutableRefObject<T> | ((instance: T) => void) | null | undefined)[]) => (instance: T) => void;
+export const useCombineRefs: <T>(...refs: Array<MutableRefObject<T> | ((instance: T) => void) | undefined | null | false>) => (instance: T) => void;
 
 // @public
 export function useComposedPlaceholder<TContext, TPlaceholder extends IComposedPlaceholder<any, any, TContext>>(placeholder: TPlaceholder, resolutionContext?: TContext): PlaceholderResolvedValue<TPlaceholder>;
@@ -2593,10 +2586,10 @@ export function useResolveValueWithPlaceholders<T, C>(value: T, resolutionContex
 export const useValidationContextValue: <T extends IInvalidNode>(initialValue: T) => IValidationContextValue<T>;
 
 // @public
-export const useWorkspace: (workspace?: string | undefined) => string | undefined;
+export const useWorkspace: (workspace?: string) => string | undefined;
 
 // @public
-export const useWorkspaceStrict: (workspace?: string | undefined, context?: string) => string;
+export const useWorkspaceStrict: (workspace?: string, context?: string) => string;
 
 // @internal (undocumented)
 export const ValidationContextStore: IContextStore<IValidationContextValue<any>>;
@@ -2705,7 +2698,7 @@ export function withWorkspace<T extends {
 export function WorkspaceProvider(input: IWorkspaceProviderProps): JSX.Element;
 
 // @internal
-export const wrapDisplayName: (hocName: string, BaseComponent?: ComponentType<any> | undefined) => <T>(Component: ComponentType<T>) => ComponentType<T>;
+export const wrapDisplayName: (hocName: string, BaseComponent?: ComponentType<any>) => (<T>(Component: ComponentType<T>) => ComponentType<T>);
 
 // @public (undocumented)
 export type XirrType = "xirr";

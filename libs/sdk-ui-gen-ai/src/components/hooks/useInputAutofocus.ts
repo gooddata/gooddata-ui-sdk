@@ -16,6 +16,10 @@ export function useInputAutofocus(
 ) {
     // Force focus when autofocus is enables on the first mount, right after the initial state is loaded
     const forceFocusOnce = useRef<boolean>(autofocus);
+    useEffect(() => {
+        forceFocusOnce.current = autofocus;
+    }, [autofocus]);
+
     const conversationLocalId = useSelector(conversationSelector)?.localId;
     const focusedConversationLocalId = useRef(conversationLocalId);
 
@@ -25,14 +29,16 @@ export function useInputAutofocus(
         return ref;
     }, [editorApi]);
 
+    const active =
+        autofocus &&
+        !opts.isBusy &&
+        (forceFocusOnce.current ||
+            document.activeElement === document.body ||
+            focusedConversationLocalId.current !== conversationLocalId);
+
     const ref = useUiAutofocusConnectors<HTMLDivElement>({
         initialFocus,
-        active:
-            autofocus &&
-            !opts.isBusy &&
-            (forceFocusOnce.current ||
-                document.activeElement === document.body ||
-                focusedConversationLocalId.current !== conversationLocalId),
+        active: active,
         refocusKey: `${opts.isBusy}-${conversationLocalId ?? ""}`,
     });
 

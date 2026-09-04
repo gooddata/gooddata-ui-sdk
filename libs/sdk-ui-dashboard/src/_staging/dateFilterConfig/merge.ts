@@ -1,9 +1,10 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import stringify from "json-stable-stringify";
 import { uniqBy } from "lodash-es";
 
 import {
+    DEFAULT_ABSOLUTE_DATE_FILTER_GRANULARITIES,
     type IAbsoluteDateFilterPreset,
     type IDashboardDateFilterConfig,
     type IDateFilterConfig,
@@ -159,6 +160,64 @@ const hideRelativeFormGranularities: DashboardConfigMerger = (dashboardConfig) =
         : projectConfigWithoutRelativeForm;
 };
 
+const hideAbsoluteFormGranularities: DashboardConfigMerger = (dashboardConfig) => (projectConfig) => {
+    if (
+        !projectConfig.absoluteForm?.visible ||
+        !projectConfig.absoluteForm.availableGranularities?.length ||
+        !dashboardConfig.hideGranularities
+    ) {
+        return projectConfig;
+    }
+
+    const granularities = projectConfig.absoluteForm.availableGranularities.filter(
+        (granularity) => !(dashboardConfig.hideGranularities?.includes(granularity) ?? false),
+    );
+
+    const { absoluteForm, ...projectConfigWithoutAbsoluteForm } = projectConfig;
+
+    return granularities.length > 0
+        ? {
+              ...projectConfig,
+              absoluteForm: {
+                  ...absoluteForm,
+                  availableGranularities: granularities,
+              },
+          }
+        : projectConfigWithoutAbsoluteForm;
+};
+
+/**
+ * Establishes the absolute form's granularity baseline from the feature flag, before any dashboard-level
+ * merging happens.
+ *
+ * TODO: Backend doesn't support absolute form granularities yet. Therefore, we are using the granularities
+ * from the relative form as a temporary solution. This should be replaced in the future.
+ *
+ * @param config - date filter config
+ * @param isAbsoluteDateFilterGranularityEnabled - whether the absolute date filter granularity feature is enabled
+ */
+export function deriveAbsoluteFormGranularitiesFromRelativeForm(
+    config: IDateFilterConfig,
+    isAbsoluteDateFilterGranularityEnabled: boolean,
+): IDateFilterConfig {
+    if (!isAbsoluteDateFilterGranularityEnabled || !config.absoluteForm) {
+        return config;
+    }
+
+    const relativeGranularities = config.relativeForm?.availableGranularities ?? [];
+    const availableGranularities = DEFAULT_ABSOLUTE_DATE_FILTER_GRANULARITIES.filter((granularity) =>
+        relativeGranularities.includes(granularity),
+    );
+
+    return {
+        ...config,
+        absoluteForm: {
+            ...config.absoluteForm,
+            availableGranularities,
+        },
+    };
+}
+
 /**
  * Merges the date filter config with the dashboard-level overrides. The overrides may hide some presets
  * or add custom presets. This function addresses all that and returns the final merged Date Filter Config.
@@ -175,6 +234,7 @@ export function mergeDateFilterConfigs(
         hideAllTime(dashboardOverrides),
         hideEmptyValues(dashboardOverrides),
         hideAbsoluteForm(dashboardOverrides),
+        hideAbsoluteFormGranularities(dashboardOverrides),
         hideRelativeForm(dashboardOverrides),
         hideRelativeFormGranularities(dashboardOverrides),
         hideAbsolutePresets(dashboardOverrides),

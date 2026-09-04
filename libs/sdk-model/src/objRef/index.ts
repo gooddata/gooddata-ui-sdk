@@ -167,6 +167,23 @@ export function isIdentifierRef(obj: unknown): obj is IdentifierRef {
 }
 
 /**
+ * Type guard checking whether the object is an Identifier Reference pointing at a computed attribute.
+ *
+ * @remarks
+ * A computed attribute has no labels on the backend; exactly one display form is fabricated for it
+ * client-side and that display form's ref IS the computed attribute's own ref, carrying the
+ * `computedAttribute` object type. So a ref typed this way is the signal that an
+ * attribute-shaped reference actually points at a computed attribute - whether it sits on a bucket
+ * item, a filter or anywhere else a display form ref is expected.
+ *
+ * @param obj - object to test
+ * @public
+ */
+export function isComputedAttributeRef(obj: unknown): boolean {
+    return isIdentifierRef(obj) && obj.type === "computedAttribute";
+}
+
+/**
  * Type guard checking whether object is an Identifier Reference or an URI reference.
  *
  * @public

@@ -95,10 +95,6 @@ $gd-message-padding-vertical: 4px;
     box-sizing: border-box;
     display: inline-block;
     padding: $gd-message-padding-vertical 8px $gd-message-padding-vertical 10px;
-    // min-height: auto instead of the mixin default 1px - 1px overrides the flex automatic
-    // minimum size, letting any flex parent squeeze the message below its content.
-    @include mixins.clearfix(auto);
-
     line-height: 1.4em;
     pointer-events: all;
     max-width: 100%;
@@ -107,6 +103,18 @@ $gd-message-padding-vertical: 4px;
     text-align: left;
 
     --shadow-when-enabled: 0 4px 4px 0 var(--gd-shadow-color);
+
+    color: var(--local_textColor);
+    background: var(--local_backgroundColor);
+    border-style: solid;
+    border-color: var(--local_borderColor);
+    border-width: var(--local_borderWidth);
+    border-radius: var(--local_borderRadius);
+    box-shadow: var(--local_dropShadow, var(--shadow-when-enabled));
+
+    // min-height: auto instead of the mixin default 1px - 1px overrides the flex automatic
+    // minimum size, letting any flex parent squeeze the message below its content.
+    @include mixins.clearfix(auto);
 
     a:not(.gd-message-dismiss),
     .gd-message-text-showmorelink {
@@ -117,14 +125,6 @@ $gd-message-padding-vertical: 4px;
     .gd-message-dismiss::before {
         color: var(--local_closeButtonColor);
     }
-
-    color: var(--local_textColor);
-    background: var(--local_backgroundColor);
-    border-style: solid;
-    border-color: var(--local_borderColor);
-    border-width: var(--local_borderWidth);
-    border-radius: var(--local_borderRadius);
-    box-shadow: var(--local_dropShadow, var(--shadow-when-enabled));
 
     &.contrast {
         &::before {

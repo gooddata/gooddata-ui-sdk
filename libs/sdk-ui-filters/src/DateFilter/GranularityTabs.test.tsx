@@ -25,6 +25,8 @@ const createTabs = (props?: Partial<IGranularityTabsProps>) => {
         availableGranularities,
         onSelectedGranularityChange: () => {},
         selectedGranularity: "GDC.time.date",
+        className: "gd-relative-filter-form-granularity-tabs s-relative-filter-form-granularity-tabs",
+        selectedTabId: "date-filter-relative-granularity-tab-id",
     };
     const Wrapped = withIntlForTest(GranularityTabs);
     return render(<Wrapped {...defaultProps} {...props} />);

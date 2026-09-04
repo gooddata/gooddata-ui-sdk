@@ -24,6 +24,23 @@ const fixedAbsoluteDateForm: IUiAbsoluteDateFilterForm = {
     visible: true,
 };
 
+const fixedAbsoluteDateFormWithGranularity: IUiAbsoluteDateFilterForm = {
+    localIdentifier: "ABSOLUTE_FORM",
+    type: "absoluteForm",
+    from: "2026-02-01",
+    to: "2026-04-30",
+    granularity: "GDC.time.month",
+    availableGranularities: [
+        "GDC.time.date",
+        "GDC.time.week_us",
+        "GDC.time.month",
+        "GDC.time.quarter",
+        "GDC.time.year",
+    ],
+    name: "",
+    visible: true,
+};
+
 const requiredProps = {
     availableGranularities: ["GDC.time.date", "GDC.time.month", "GDC.time.quarter", "GDC.time.year"],
     dateFilterMode: "active",
@@ -53,6 +70,11 @@ export function FullFeatured() {
                     "GDC.time.quarter",
                     "GDC.time.year",
                 ]}
+                filterOptions={{
+                    ...defaultDateFilterOptions,
+                    absoluteForm: fixedAbsoluteDateFormWithGranularity,
+                }}
+                isAbsoluteDateFilterGranularityEnabled
             />
         </div>
     );
@@ -259,6 +281,45 @@ DateformatWithTime.parameters = {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-absolute-form-button" }],
             postInteractionWait: { delay: 200 },
+        },
+    },
+} satisfies IStoryParameters;
+
+export function GranularitySwitching() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <DateFilter
+                {...requiredProps}
+                filterOptions={{
+                    ...defaultDateFilterOptions,
+                    absoluteForm: fixedAbsoluteDateFormWithGranularity,
+                }}
+                isAbsoluteDateFilterGranularityEnabled
+            />
+        </div>
+    );
+}
+GranularitySwitching.parameters = {
+    kind: "granularity switching",
+    screenshots: {
+        closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+        "absolute-form-month": {
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
+            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-absolute-form-button" }],
+            delay: {
+                postOperation: 200,
+            },
+        },
+        "absolute-form-quarter": {
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
+            clickSelectors: [
+                { selector: ".s-date-filter-button" },
+                { selector: ".s-absolute-form-button" },
+                { selector: ".s-granularity-quarter" },
+            ],
+            delay: {
+                postOperation: 200,
+            },
         },
     },
 } satisfies IStoryParameters;

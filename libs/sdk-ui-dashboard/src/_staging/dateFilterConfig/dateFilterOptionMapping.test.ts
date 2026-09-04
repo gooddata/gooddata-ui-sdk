@@ -83,6 +83,7 @@ describe("matchDateFilterToDateFilterOption", () => {
             {
                 from: "2019-01-01",
                 to: "2019-01-02",
+                granularity: "GDC.time.date",
                 type: "absoluteForm",
                 localIdentifier: "ABSOLUTE_FORM",
                 name: "",

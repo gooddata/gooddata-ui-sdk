@@ -3,7 +3,7 @@
 import { type ComponentClass, type ComponentType, useCallback, useEffect, useRef, useState } from "react";
 
 import { isEqual, omit } from "lodash-es";
-import { type IntlShape, injectIntl } from "react-intl";
+import { type IntlShape, useIntl } from "react-intl";
 
 import {
     type IClusteringConfig,
@@ -124,12 +124,12 @@ export interface ILoadingInjectedProps {
 export function withEntireDataView<T extends IDataVisualizationProps>(
     InnerComponent: ComponentType<T & ILoadingInjectedProps>,
 ): ComponentType<T> {
-    const innerDefaultProps = ((InnerComponent as unknown as ComponentClass).defaultProps || {}) as Partial<
-        T & ILoadingInjectedProps
-    >;
+    const innerDefaultProps = ((InnerComponent as unknown as ComponentClass).defaultProps ||
+        {}) as Partial<T>;
 
-    function LoadingHOCWrapped(receivedProps: T & ILoadingInjectedProps) {
+    function LoadingHOCWrapped(receivedProps: T) {
         const props = applyDefaultProps(receivedProps, innerDefaultProps);
+        const intl = useIntl();
 
         const [state, setState] = useState<IDataViewLoadState>({
             isLoading: false,
@@ -541,12 +541,11 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             }
         });
 
-        const stripWorkspace = (allProps: T & ILoadingInjectedProps): T & ILoadingInjectedProps => {
+        const stripWorkspace = (allProps: T): T => {
             return omit(allProps, ["workspace"]) as any;
         };
 
         const { isLoading, error, dataView, seType } = state;
-        const { intl } = props;
 
         // lower-level components do not need workspace
         const innerProps = stripWorkspace(props);
@@ -565,12 +564,10 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         );
     }
 
-    const IntlLoadingHOC = injectIntl<"intl", T & ILoadingInjectedProps>(LoadingHOCWrapped);
-
     function LoadingHOC(props: T) {
         return (
             <IntlWrapper locale={props.locale}>
-                <IntlLoadingHOC {...(props as any)} />
+                <LoadingHOCWrapped {...props} />
             </IntlWrapper>
         );
     }

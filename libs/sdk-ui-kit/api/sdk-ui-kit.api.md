@@ -431,10 +431,8 @@ export function DefaultUiTabsAllTabs<TTabProps extends Record<any, any> = EmptyO
 export const DefaultUiTabsAllTabsButton: <TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(props: Omit<{
     isOpen: boolean;
     onClick: () => void;
-    ref?: RefObject<HTMLElement> | undefined;
-    ariaAttributes?: ({
-        role: AriaRole;
-    } & Pick<AriaAttributes, "aria-controls" | "aria-expanded" | "aria-haspopup">) | undefined;
+    ref?: RefObject<HTMLElement>;
+    ariaAttributes?: IDropdownButtonRenderProps["ariaAttributes"];
 }, "ref"> & RefAttributes<HTMLElement>) => ReactNode;
 
 // @internal (undocumented)
@@ -674,8 +672,8 @@ export function generateSupportUrl(projectId?: string, sessionId?: string, userE
 export const getClosestFocusableSibling: <T extends IUiMenuItemData = object>(args: {
     items: IUiMenuItem<T>[];
     isItemFocusable: (item: IUiMenuItem<T>) => boolean;
-    itemId?: string | undefined;
-    direction: "backward" | "forward";
+    itemId?: string;
+    direction: "forward" | "backward";
 }) => IUiMenuItem<T> | undefined;
 
 // @internal
@@ -694,14 +692,14 @@ export function getDateTimeConfig(date: string, options?: IDateTimeConfigOptions
 export const getDefaultEmbedTypeOptions: (embedType: EmbedType) => EmbedOptionsType;
 
 // @internal
-export const getFocusableElements: (element?: HTMLElement | null | undefined, includeHidden?: boolean) => {
+export const getFocusableElements: (element?: HTMLElement | null, includeHidden?: boolean) => {
     focusableElements: HTMLElement[];
     firstElement: HTMLElement;
     lastElement: HTMLElement;
 };
 
 // @internal (undocumented)
-export const getGranteeItemTestId: (grantee: GranteeItem, prefix?: "option" | undefined) => string;
+export const getGranteeItemTestId: (grantee: GranteeItem, prefix?: "option") => string;
 
 // @internal (undocumented)
 export const getHeightWithUnitsForEmbedCode: (codeOption: EmbedOptionsType) => string | number;
@@ -716,7 +714,7 @@ export const getItem: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>
 export const getItemInteractiveParent: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], itemId: string) => IUiMenuInteractiveItem<T> | undefined;
 
 // @internal
-export const getItemsByInteractiveParent: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], parentId?: string | undefined) => IUiMenuItem<T>[] | undefined;
+export const getItemsByInteractiveParent: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], parentId?: string) => IUiMenuItem<T>[] | undefined;
 
 // @internal (undocumented)
 export const getNextFocusableElement: (initialElement: HTMLElement | undefined, focusableElements: HTMLElement[], direction: NavigationDirection) => HTMLElement | undefined;
@@ -1914,7 +1912,7 @@ export function IconTrash(input: IIconProps): JSX.Element;
 export function IconTreeMap(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "building" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "alignLeft" | "alignCenter" | "alignRight" | "alignTop" | "alignMiddle" | "alignBottom" | "imageContain" | "imageCover" | "imageFill" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart" | "timezone";
+export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "building" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "alignLeft" | "alignCenter" | "alignRight" | "alignTop" | "alignMiddle" | "alignBottom" | "bold" | "italic" | "imageContain" | "imageCover" | "imageFill" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart" | "timezone";
 
 // @internal (undocumented)
 export function IconUndo(input: IIconProps): JSX.Element;
@@ -4934,13 +4932,13 @@ export interface IRowsIconProps extends IIconProps {
 }
 
 // @internal
-export const isActionKey: (event: KeyboardEvent_2<Element>) => boolean;
+export const isActionKey: (event: KeyboardEvent_2) => boolean;
 
 // @internal
-export const isArrowDownKey: (event: KeyboardEvent_2<Element>) => boolean;
+export const isArrowDownKey: (event: KeyboardEvent_2) => boolean;
 
 // @internal
-export const isArrowKey: (event: KeyboardEvent_2<Element>) => boolean;
+export const isArrowKey: (event: KeyboardEvent_2) => boolean;
 
 // @internal (undocumented)
 export interface IScopedIdStoreValue {
@@ -4954,7 +4952,7 @@ export interface IScopedIdStoreValue {
 }
 
 // @internal
-export const isCopyKey: (event: KeyboardEvent_2<Element>) => boolean;
+export const isCopyKey: (event: KeyboardEvent_2) => boolean;
 
 // @internal (undocumented)
 export interface IScrollableItemProps {
@@ -5012,13 +5010,13 @@ export interface ISearchResultsAnnouncementProps {
 }
 
 // @internal (undocumented)
-export const isElementFocusable: (element?: HTMLElement | null | undefined, includeHidden?: boolean) => boolean | undefined;
+export const isElementFocusable: (element?: HTMLElement | null, includeHidden?: boolean) => boolean | undefined;
 
 // @internal (undocumented)
 export type isElementInvisibleType = (element: HTMLElement, container: HTMLElement) => boolean;
 
 // @internal
-export const isEnterKey: (event: KeyboardEvent_2<Element>) => boolean;
+export const isEnterKey: (event: KeyboardEvent_2) => boolean;
 
 // @internal (undocumented)
 export interface ISeparatorLineProps {
@@ -5036,7 +5034,7 @@ export interface ISeparatorLineProps {
 }
 
 // @internal
-export const isEscapeKey: (event: KeyboardEvent_2<Element>) => boolean;
+export const isEscapeKey: (event: KeyboardEvent_2) => boolean;
 
 // @internal (undocumented)
 export interface ISettingItem {
@@ -5399,7 +5397,7 @@ export interface ISingleSelectListItemProps {
 }
 
 // @internal
-export const isLabelsChecklistItemChecked: (item: IUiLabelsChecklistItem, selectedIds: readonly string[]) => boolean;
+export const isLabelsChecklistItemChecked: (item: IUiLabelsChecklistItem, selectedIds: ReadonlyArray<string>) => boolean;
 
 // @alpha
 export interface ISlotProps<TProps> {
@@ -5439,10 +5437,10 @@ export interface ISpinnerProps {
 }
 
 // @internal
-export const isSpaceKey: (event: KeyboardEvent_2<Element>) => boolean;
+export const isSpaceKey: (event: KeyboardEvent_2) => boolean;
 
 // @internal
-export const isTabKey: (event: KeyboardEvent_2<Element>) => boolean;
+export const isTabKey: (event: KeyboardEvent_2) => boolean;
 
 // @internal
 export interface IStandardPresetDefinition {
@@ -5559,7 +5557,7 @@ export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> 
 }
 
 // @internal
-export const isTypingKey: (event: KeyboardEvent_2<Element>) => boolean;
+export const isTypingKey: (event: KeyboardEvent_2) => boolean;
 
 // @internal (undocumented)
 export interface ISubMenuProps extends IMenuStateConfig, Partial<IMenuPositionConfig> {
@@ -8593,7 +8591,7 @@ export function LoadingSpinner(input: ILoadingSpinner): JSX.Element;
 export function LocaleSetting(input: ILocaleSettingProps): JSX.Element;
 
 // @internal (undocumented)
-export const makeHorizontalKeyboardNavigation: <T extends KeyboardEvent_2<Element> = KeyboardEvent_2<Element>>(handlers: {
+export const makeHorizontalKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
     onFocusFirst?: ((event: T) => void) | undefined;
     onFocusLast?: ((event: T) => void) | undefined;
     onFocusNext?: ((event: T) => void) | undefined;
@@ -8603,14 +8601,14 @@ export const makeHorizontalKeyboardNavigation: <T extends KeyboardEvent_2<Elemen
 
 // @internal (undocumented)
 export const makeKeyboardNavigation: <ActionKeysMap extends {
-    [action: string]: {
+    [action: string]: Array<{
         code: string | string[];
-        modifiers?: IModifier[] | undefined;
-    }[];
-}>(actionKeysMap: ActionKeysMap) => <T extends KeyboardEvent_2<Element> = KeyboardEvent_2<Element>>(handlers: { [action in "onUnhandledKeyDown" | keyof ActionKeysMap]?: ((event: T) => void) | undefined; }, options?: IHandleActionOptions) => (event: T) => void;
+        modifiers?: IModifier[];
+    }>;
+}>(actionKeysMap: ActionKeysMap) => <T extends KeyboardEvent_2 = KeyboardEvent_2>(handlers: { [action in keyof ActionKeysMap | "onUnhandledKeyDown"]?: (event: T) => void; }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
-export const makeLinearKeyboardNavigation: <T extends KeyboardEvent_2<Element> = KeyboardEvent_2<Element>>(handlers: {
+export const makeLinearKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
     onClose?: ((event: T) => void) | undefined;
     onFocusFirst?: ((event: T) => void) | undefined;
     onFocusLast?: ((event: T) => void) | undefined;
@@ -8621,7 +8619,7 @@ export const makeLinearKeyboardNavigation: <T extends KeyboardEvent_2<Element> =
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
-export const makeMenuKeyboardNavigation: <T extends KeyboardEvent_2<Element> = KeyboardEvent_2<Element>>(handlers: {
+export const makeMenuKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
     onClose?: ((event: T) => void) | undefined;
     onEnterLevel?: ((event: T) => void) | undefined;
     onFocusFirst?: ((event: T) => void) | undefined;
@@ -8634,7 +8632,7 @@ export const makeMenuKeyboardNavigation: <T extends KeyboardEvent_2<Element> = K
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
-export const makeTabsKeyboardNavigation: <T extends KeyboardEvent_2<Element> = KeyboardEvent_2<Element>>(handlers: {
+export const makeTabsKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
     onFocusFirst?: ((event: T) => void) | undefined;
     onFocusLast?: ((event: T) => void) | undefined;
     onFocusNext?: ((event: T) => void) | undefined;
@@ -8823,7 +8821,7 @@ export enum PresetType {
 export const programaticFocusManagement: (element: HTMLElement) => void;
 
 // @internal (undocumented)
-export function propCombinationsFor<TProps extends object>(baseProps: TProps): <TProp extends keyof TProps>(prop: TProp, values: TProps[TProp][], additionalProps?: Partial<TProps> | undefined) => IPropCombination<TProps, TProp>;
+export function propCombinationsFor<TProps extends object>(baseProps: TProps): <TProp extends keyof TProps>(prop: TProp, values: TProps[TProp][], additionalProps?: Partial<TProps>) => IPropCombination<TProps, TProp>;
 
 // @internal (undocumented)
 export const recommendedHeader: IDateDatasetHeader;
@@ -8863,7 +8861,7 @@ export const relatedHeader: IDateDatasetHeader;
 export function resolveAnchor(anchor: IFloatingAnchor): HTMLElement | VirtualElement | null;
 
 // @internal (undocumented)
-export const resolveRef: (ref: string | RefObject<HTMLElement | null> | (() => HTMLElement | null) | null | undefined) => HTMLElement | null;
+export const resolveRef: (ref: string | RefObject<HTMLElement | null> | (() => HTMLElement | null) | undefined | null) => HTMLElement | null;
 
 // @internal (undocumented)
 export const ResponsiveContextProvider: Provider<IResponsiveConfig>;
@@ -8900,7 +8898,7 @@ export type ScrollCallback = (visibleRowsStartIndex: number, visibleRowsEndIndex
 
 // @internal (undocumented)
 export const scrollContextDefault: {
-    scrollIntoView: (_element: HTMLElement, _bottomMargin?: number | undefined, _isElementInvisibleCheck?: isElementInvisibleType | undefined) => void;
+    scrollIntoView: (_element: HTMLElement, _bottomMargin?: number, _isElementInvisibleCheck?: isElementInvisibleType) => void;
 };
 
 // @internal (undocumented)
@@ -8962,7 +8960,7 @@ export function shortenNumber(value: number | null | undefined, separators?: ISe
 export function shouldHidePPExperience(_featureFlags: ISettings): boolean;
 
 // @internal
-export const simpleRecurrenceTypeMappingFn: (_date?: Date | null | undefined, cronExpression?: string | undefined, allowHourlyRecurrence?: boolean | undefined, _showInheritValue?: boolean | undefined, weekStart?: WeekStart | undefined) => string;
+export const simpleRecurrenceTypeMappingFn: (_date?: Date | null, cronExpression?: string, allowHourlyRecurrence?: boolean, _showInheritValue?: boolean, weekStart?: WeekStart) => RecurrenceType;
 
 // @internal
 export function SimpleSettingWidget(input: ISimpleSettingWidgetProps): JSX.Element;
@@ -9116,7 +9114,7 @@ export type TooltipArrowPlacement = "top" | "top-start" | "top-end" | "bottom" |
 export function transform2Dropdown<T extends IDateDataset>(dateDatasets: T[]): Array<T | IDateDatasetHeader>;
 
 // @internal
-export const transformCronExpressionToRecurrenceType: (date: Date | null, cronExpression: string | undefined, allowHourlyRecurrence: boolean, allowInheritValue: boolean, weekStart: WeekStart) => string;
+export const transformCronExpressionToRecurrenceType: (date: Date | null, cronExpression: string | undefined, allowHourlyRecurrence: boolean, allowInheritValue: boolean, weekStart: WeekStart) => RecurrenceType;
 
 // @internal (undocumented)
 export type TStylingEditorDialogFooterProps = {
@@ -9643,7 +9641,7 @@ export const useHeaderSearch: () => HeaderSearchContext;
 export const useId: () => string;
 
 // @internal
-export const useIdPrefixed: (prefix?: string | undefined) => string;
+export const useIdPrefixed: (prefix?: string) => string;
 
 // @internal (undocumented)
 export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInverted: boolean, getItemTitle: (item: T) => string): {
@@ -9727,14 +9725,14 @@ export function useScopedIdOptional<T>(item?: T, specifier?: string): string | u
 export const useScopedIdStoreValue: <T>(getIdFromItem: (item: T) => string) => {
     makeId: (input: {
         item: T;
-        specifier?: string | undefined;
+        specifier?: string;
     }) => string;
     containerId: string;
 };
 
 // @internal (undocumented)
 export const useScrollContext: () => {
-    scrollIntoView: (_element: HTMLElement, _bottomMargin?: number | undefined, _isElementInvisibleCheck?: isElementInvisibleType | undefined) => void;
+    scrollIntoView: (_element: HTMLElement, _bottomMargin?: number, _isElementInvisibleCheck?: isElementInvisibleType) => void;
 };
 
 // @internal
@@ -9746,7 +9744,7 @@ export function useStandardPresets(formatMessage: (descriptor: {
 export const useToastMessage: () => IUseToastMessageType;
 
 // @internal (undocumented)
-export const useToastsCenterValue: (onDismissMessage?: ((id: string) => void) | undefined) => IToastsCenterContext;
+export const useToastsCenterValue: (onDismissMessage?: (id: IMessage["id"]) => void) => IToastsCenterContext;
 
 // @internal
 export const useUiAutofocusConnectors: <T extends HTMLElement = HTMLElement>(input?: IUiAutofocusOptions) => IUiFocusHelperConnectors<T>;
@@ -9761,7 +9759,7 @@ export const useUiFocusTrapConnectors: <T extends HTMLElement = HTMLElement>(foc
 export const useUiReturnFocusOnUnmountConnectors: <T extends HTMLElement = HTMLElement>(input?: IUiReturnFocusOnUnmountOptions) => IUiFocusHelperConnectors<T>;
 
 // @internal (undocumented)
-export const useUiTabOutHandlerConnectors: <T extends HTMLElement = HTMLElement>(handler?: ((event: KeyboardEvent_2<Element>) => void) | undefined) => IUiFocusHelperConnectors<T>;
+export const useUiTabOutHandlerConnectors: <T extends HTMLElement = HTMLElement>(handler?: (event: KeyboardEvent_2) => void) => IUiFocusHelperConnectors<T>;
 
 // @internal (undocumented)
 export function useUiTabsContextStoreValue<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(input: IUiTabsProps<TTabProps, TTabActionProps>): IUiTabContext<TTabProps, TTabActionProps>;

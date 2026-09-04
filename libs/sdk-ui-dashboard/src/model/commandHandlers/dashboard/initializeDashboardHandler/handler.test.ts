@@ -7,7 +7,12 @@ import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { type IDashboard, idRef } from "@gooddata/sdk-model";
 
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
+import {
+    absoluteForm,
+    relativeForm,
+} from "../../../../_staging/dateFilterConfig/dateFilterConfig.test.helpers.js";
 import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
+import { deriveAbsoluteFormGranularitiesFromRelativeForm } from "../../../../_staging/dateFilterConfig/merge.js";
 import {
     EmptyDashboardIdentifier,
     EmptyDashboardWithReferences,
@@ -20,6 +25,7 @@ import { type DashboardInitialized } from "../../../events/dashboard.js";
 import { selectConfig } from "../../../store/config/configSelectors.js";
 import { selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
 import { selectPermissions } from "../../../store/permissions/permissionsSelectors.js";
+import { selectEffectiveDateFilterConfig } from "../../../store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 import {
     selectAttributeFilterDisplayForms,
     selectFilterContextDefinition,
@@ -253,6 +259,57 @@ describe("initialize dashboard handler", () => {
 
             const config = selectConfig(Tester!.state());
             expect(config.isWhiteLabeled).toBe(false);
+        });
+    });
+
+    describe("absolute date filter granularity derivation for a new dashboard", () => {
+        const dateFilterConfig = {
+            ref: idRef("newDashboardDateFilterConfig"),
+            absoluteForm,
+            relativeForm,
+            selectedOption: absoluteForm.localIdentifier,
+        };
+
+        it("should derive absoluteForm.availableGranularities from relativeForm when the feature is enabled", async () => {
+            let Tester: DashboardTester;
+            await preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                undefined,
+                {
+                    initCommand: initializeDashboard({ dateFilterConfig }),
+                    backendConfig: {
+                        globalSettings: { enableAbsoluteDateFilterGranularity: true },
+                    },
+                },
+            );
+
+            const effectiveDateFilterConfig = selectEffectiveDateFilterConfig(Tester!.state());
+
+            expect(effectiveDateFilterConfig.absoluteForm).toEqual(
+                deriveAbsoluteFormGranularitiesFromRelativeForm(dateFilterConfig, true).absoluteForm,
+            );
+        });
+
+        it("should leave absoluteForm.availableGranularities untouched when the feature is disabled", async () => {
+            let Tester: DashboardTester;
+            await preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                undefined,
+                {
+                    initCommand: initializeDashboard({ dateFilterConfig }),
+                    backendConfig: {
+                        globalSettings: { enableAbsoluteDateFilterGranularity: false },
+                    },
+                },
+            );
+
+            const effectiveDateFilterConfig = selectEffectiveDateFilterConfig(Tester!.state());
+
+            expect(effectiveDateFilterConfig.absoluteForm).toEqual(absoluteForm);
         });
     });
 });

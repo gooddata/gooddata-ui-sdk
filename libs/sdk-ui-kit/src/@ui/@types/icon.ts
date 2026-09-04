@@ -124,6 +124,8 @@ export type IconType =
     | "alignTop"
     | "alignMiddle"
     | "alignBottom"
+    | "bold"
+    | "italic"
     | "imageContain"
     | "imageCover"
     | "imageFill"

@@ -1534,7 +1534,7 @@ export interface DeclarativeAgent {
     'userGroups'?: Array<DeclarativeUserGroupIdentifier>;
 }
 
-export type DeclarativeAgentCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge';
+export type DeclarativeAgentCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor';
 export type DeclarativeAgentSkillsModeEnum = 'all' | 'custom';
 
 /**
@@ -4226,6 +4226,17 @@ export interface IntroSlideTemplate {
     'titleField'?: string | null;
 }
 
+export interface Invitation {
+    'email': string;
+    'firstName'?: string;
+    /**
+     * Force resend invitation email even if a pending invitation exists. Maximum 3 emails can be sent per invitation (1 initial + 2 resends)
+     */
+    'forceSend'?: boolean;
+    'lastName'?: string;
+    'userId': string;
+}
+
 /**
  * Target delta for IP allowlist policy actions.
  */
@@ -4267,7 +4278,7 @@ export interface JsonApiAgentInAttributes {
     'skillsMode'?: JsonApiAgentInAttributesSkillsModeEnum;
 }
 
-export type JsonApiAgentInAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge';
+export type JsonApiAgentInAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor';
 export type JsonApiAgentInAttributesSkillsModeEnum = 'all' | 'custom';
 
 /**
@@ -4345,7 +4356,7 @@ export interface JsonApiAgentOutAttributes {
     'skillsMode'?: JsonApiAgentOutAttributesSkillsModeEnum;
 }
 
-export type JsonApiAgentOutAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge';
+export type JsonApiAgentOutAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor';
 export type JsonApiAgentOutAttributesSkillsModeEnum = 'all' | 'custom';
 
 /**
@@ -4474,7 +4485,7 @@ export interface JsonApiAgentPatchAttributes {
     'skillsMode'?: JsonApiAgentPatchAttributesSkillsModeEnum;
 }
 
-export type JsonApiAgentPatchAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge';
+export type JsonApiAgentPatchAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor';
 export type JsonApiAgentPatchAttributesSkillsModeEnum = 'all' | 'custom';
 
 /**
@@ -12467,6 +12478,7 @@ export interface JsonApiReportOut {
      */
     'id': string;
     'meta'?: JsonApiReportOutMeta;
+    'relationships'?: JsonApiReportOutRelationships;
     /**
      * Object type
      */
@@ -12481,7 +12493,15 @@ export interface JsonApiReportOutAttributes {
      * Free-form report definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
      */
     'content': object;
+    /**
+     * Time of the entity creation.
+     */
+    'createdAt'?: string | null;
     'description'?: string;
+    /**
+     * Time of the last entity modification.
+     */
+    'modifiedAt'?: string | null;
     /**
      * Last day of the reported period, inclusive.
      */
@@ -12500,6 +12520,10 @@ export interface JsonApiReportOutAttributes {
 
 export interface JsonApiReportOutDocument {
     'data': JsonApiReportOut;
+    /**
+     * Included resources
+     */
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     'links'?: ObjectLinks;
 }
 
@@ -12508,6 +12532,10 @@ export interface JsonApiReportOutDocument {
  */
 export interface JsonApiReportOutList {
     'data': Array<JsonApiReportOutWithLinks>;
+    /**
+     * Included resources
+     */
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     'links'?: ListLinks;
     'meta'?: JsonApiReportOutListMeta;
 }
@@ -12533,6 +12561,19 @@ export interface JsonApiReportOutMetaOrigin {
 
 export type JsonApiReportOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
 
+export interface JsonApiReportOutRelationships {
+    'createdBy'?: JsonApiReportOutRelationshipsCreatedBy;
+    'modifiedBy'?: JsonApiReportOutRelationshipsModifiedBy;
+}
+
+export interface JsonApiReportOutRelationshipsCreatedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiReportOutRelationshipsModifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
 export interface JsonApiReportOutWithLinks {
     'attributes': JsonApiReportOutAttributes;
     /**
@@ -12540,6 +12581,7 @@ export interface JsonApiReportOutWithLinks {
      */
     'id': string;
     'meta'?: JsonApiReportOutMeta;
+    'relationships'?: JsonApiReportOutRelationships;
     /**
      * Object type
      */
@@ -12591,6 +12633,7 @@ export interface JsonApiReportPageLayoutOut {
      */
     'id': string;
     'meta'?: JsonApiReportPageLayoutOutMeta;
+    'relationships'?: JsonApiReportPageLayoutOutRelationships;
     /**
      * Object type
      */
@@ -12605,13 +12648,25 @@ export interface JsonApiReportPageLayoutOutAttributes {
      * Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
      */
     'content': object;
+    /**
+     * Time of the entity creation.
+     */
+    'createdAt'?: string | null;
     'description'?: string;
+    /**
+     * Time of the last entity modification.
+     */
+    'modifiedAt'?: string | null;
     'tags'?: Array<string>;
     'title': string;
 }
 
 export interface JsonApiReportPageLayoutOutDocument {
     'data': JsonApiReportPageLayoutOut;
+    /**
+     * Included resources
+     */
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     'links'?: ObjectLinks;
 }
 
@@ -12620,6 +12675,10 @@ export interface JsonApiReportPageLayoutOutDocument {
  */
 export interface JsonApiReportPageLayoutOutList {
     'data': Array<JsonApiReportPageLayoutOutWithLinks>;
+    /**
+     * Included resources
+     */
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     'links'?: ListLinks;
     'meta'?: JsonApiReportPageLayoutOutListMeta;
 }
@@ -12645,6 +12704,19 @@ export interface JsonApiReportPageLayoutOutMetaOrigin {
 
 export type JsonApiReportPageLayoutOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
 
+export interface JsonApiReportPageLayoutOutRelationships {
+    'createdBy'?: JsonApiReportPageLayoutOutRelationshipsCreatedBy;
+    'modifiedBy'?: JsonApiReportPageLayoutOutRelationshipsModifiedBy;
+}
+
+export interface JsonApiReportPageLayoutOutRelationshipsCreatedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiReportPageLayoutOutRelationshipsModifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
 export interface JsonApiReportPageLayoutOutWithLinks {
     'attributes': JsonApiReportPageLayoutOutAttributes;
     /**
@@ -12652,6 +12724,7 @@ export interface JsonApiReportPageLayoutOutWithLinks {
      */
     'id': string;
     'meta'?: JsonApiReportPageLayoutOutMeta;
+    'relationships'?: JsonApiReportPageLayoutOutRelationships;
     /**
      * Object type
      */
@@ -12855,6 +12928,7 @@ export interface JsonApiReportTemplateOut {
      */
     'id': string;
     'meta'?: JsonApiReportTemplateOutMeta;
+    'relationships'?: JsonApiReportTemplateOutRelationships;
     /**
      * Object type
      */
@@ -12869,13 +12943,25 @@ export interface JsonApiReportTemplateOutAttributes {
      * Free-form deck definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
      */
     'content': object;
+    /**
+     * Time of the entity creation.
+     */
+    'createdAt'?: string | null;
     'description'?: string;
+    /**
+     * Time of the last entity modification.
+     */
+    'modifiedAt'?: string | null;
     'tags'?: Array<string>;
     'title': string;
 }
 
 export interface JsonApiReportTemplateOutDocument {
     'data': JsonApiReportTemplateOut;
+    /**
+     * Included resources
+     */
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     'links'?: ObjectLinks;
 }
 
@@ -12884,6 +12970,10 @@ export interface JsonApiReportTemplateOutDocument {
  */
 export interface JsonApiReportTemplateOutList {
     'data': Array<JsonApiReportTemplateOutWithLinks>;
+    /**
+     * Included resources
+     */
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     'links'?: ListLinks;
     'meta'?: JsonApiReportTemplateOutListMeta;
 }
@@ -12909,6 +12999,19 @@ export interface JsonApiReportTemplateOutMetaOrigin {
 
 export type JsonApiReportTemplateOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
 
+export interface JsonApiReportTemplateOutRelationships {
+    'createdBy'?: JsonApiReportTemplateOutRelationshipsCreatedBy;
+    'modifiedBy'?: JsonApiReportTemplateOutRelationshipsModifiedBy;
+}
+
+export interface JsonApiReportTemplateOutRelationshipsCreatedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiReportTemplateOutRelationshipsModifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
 export interface JsonApiReportTemplateOutWithLinks {
     'attributes': JsonApiReportTemplateOutAttributes;
     /**
@@ -12916,6 +13019,7 @@ export interface JsonApiReportTemplateOutWithLinks {
      */
     'id': string;
     'meta'?: JsonApiReportTemplateOutMeta;
+    'relationships'?: JsonApiReportTemplateOutRelationships;
     /**
      * Object type
      */
@@ -20203,6 +20307,64 @@ export async function ActionsApiAxiosParamCreator_PauseWorkspaceAutomations(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
+ * @summary Invite User
+ * @param {Invitation} invitation 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ProcessInvitation(
+    invitation: Invitation, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'invitation' is not null or undefined
+    assertParamExists('processInvitation', 'invitation', invitation)
+    const localVarPath = `/api/v1/actions/invite`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof invitation !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(invitation !== undefined ? invitation : {})
+        : invitation || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * Notification sets up all reports to be computed again with new data.
  * @summary Register an upload notification
  * @param {string} dataSourceId 
@@ -22334,6 +22496,32 @@ export async function ActionsApi_PauseWorkspaceAutomations(
 
 // ActionsApi Api FP
 /**
+ * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
+ * @summary Invite User
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiProcessInvitationRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ProcessInvitation(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiProcessInvitationRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ProcessInvitation(
+        requestParameters.invitation, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Notification sets up all reports to be computed again with new data.
  * @summary Register an upload notification
  * @param {AxiosInstance} axios Axios instance.
@@ -23280,6 +23468,16 @@ export interface ActionsApiInterface {
     pauseWorkspaceAutomations(requestParameters: ActionsApiPauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
+     * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
+     * @summary Invite User
+     * @param {ActionsApiProcessInvitationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    processInvitation(requestParameters: ActionsApiProcessInvitationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
      * Notification sets up all reports to be computed again with new data.
      * @summary Register an upload notification
      * @param {ActionsApiRegisterUploadNotificationRequest} requestParameters Request parameters.
@@ -24222,6 +24420,20 @@ export interface ActionsApiPauseWorkspaceAutomationsRequest {
 }
 
 /**
+ * Request parameters for processInvitation operation in ActionsApi.
+ * @export
+ * @interface ActionsApiProcessInvitationRequest
+ */
+export interface ActionsApiProcessInvitationRequest {
+    /**
+     * 
+     * @type {Invitation}
+     * @memberof ActionsApiProcessInvitation
+     */
+    readonly invitation: Invitation
+}
+
+/**
  * Request parameters for registerUploadNotification operation in ActionsApi.
  * @export
  * @interface ActionsApiRegisterUploadNotificationRequest
@@ -24986,6 +25198,18 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public pauseWorkspaceAutomations(requestParameters: ActionsApiPauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig) {
         return ActionsApi_PauseWorkspaceAutomations(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
+     * @summary Invite User
+     * @param {ActionsApiProcessInvitationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public processInvitation(requestParameters: ActionsApiProcessInvitationRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_ProcessInvitation(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -62139,13 +62363,14 @@ export async function EntitiesApiAxiosParamCreator_CreateEntityParameters(
  * @summary Post Report Page Layout
  * @param {string} workspaceId 
  * @param {JsonApiReportPageLayoutPostOptionalIdDocument} jsonApiReportPageLayoutPostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_CreateEntityReportPageLayouts(
-    workspaceId: string, jsonApiReportPageLayoutPostOptionalIdDocument: JsonApiReportPageLayoutPostOptionalIdDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiReportPageLayoutPostOptionalIdDocument: JsonApiReportPageLayoutPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -62164,6 +62389,10 @@ export async function EntitiesApiAxiosParamCreator_CreateEntityReportPageLayouts
     const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
 
     if (metaInclude) {
         localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
@@ -62207,13 +62436,14 @@ export async function EntitiesApiAxiosParamCreator_CreateEntityReportPageLayouts
  * @summary Post Report Template
  * @param {string} workspaceId 
  * @param {JsonApiReportTemplatePostOptionalIdDocument} jsonApiReportTemplatePostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_CreateEntityReportTemplates(
-    workspaceId: string, jsonApiReportTemplatePostOptionalIdDocument: JsonApiReportTemplatePostOptionalIdDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiReportTemplatePostOptionalIdDocument: JsonApiReportTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -62232,6 +62462,10 @@ export async function EntitiesApiAxiosParamCreator_CreateEntityReportTemplates(
     const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
 
     if (metaInclude) {
         localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
@@ -62275,13 +62509,14 @@ export async function EntitiesApiAxiosParamCreator_CreateEntityReportTemplates(
  * @summary Post Report
  * @param {string} workspaceId 
  * @param {JsonApiReportPostOptionalIdDocument} jsonApiReportPostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_CreateEntityReports(
-    workspaceId: string, jsonApiReportPostOptionalIdDocument: JsonApiReportPostOptionalIdDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiReportPostOptionalIdDocument: JsonApiReportPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -62300,6 +62535,10 @@ export async function EntitiesApiAxiosParamCreator_CreateEntityReports(
     const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
 
     if (metaInclude) {
         localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
@@ -68288,6 +68527,7 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesParameters(
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -68298,7 +68538,7 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesParameters(
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_GetAllEntitiesReportPageLayouts(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -68322,6 +68562,10 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesReportPageLayou
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
     if (page !== undefined) {
@@ -68368,6 +68612,7 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesReportPageLayou
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -68378,7 +68623,7 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesReportPageLayou
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_GetAllEntitiesReportTemplates(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -68402,6 +68647,10 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesReportTemplates
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
     if (page !== undefined) {
@@ -68448,6 +68697,7 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesReportTemplates
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -68458,7 +68708,7 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesReportTemplates
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_GetAllEntitiesReports(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -68482,6 +68732,10 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesReports(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
     if (page !== undefined) {
@@ -72064,6 +72318,7 @@ export async function EntitiesApiAxiosParamCreator_GetEntityParameters(
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -72071,7 +72326,7 @@ export async function EntitiesApiAxiosParamCreator_GetEntityParameters(
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_GetEntityReportPageLayouts(
-    workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -72094,6 +72349,10 @@ export async function EntitiesApiAxiosParamCreator_GetEntityReportPageLayouts(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
     if (metaInclude) {
@@ -72128,6 +72387,7 @@ export async function EntitiesApiAxiosParamCreator_GetEntityReportPageLayouts(
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -72135,7 +72395,7 @@ export async function EntitiesApiAxiosParamCreator_GetEntityReportPageLayouts(
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_GetEntityReportTemplates(
-    workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -72158,6 +72418,10 @@ export async function EntitiesApiAxiosParamCreator_GetEntityReportTemplates(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
     if (metaInclude) {
@@ -72192,6 +72456,7 @@ export async function EntitiesApiAxiosParamCreator_GetEntityReportTemplates(
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -72199,7 +72464,7 @@ export async function EntitiesApiAxiosParamCreator_GetEntityReportTemplates(
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_GetEntityReports(
-    workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -72222,6 +72487,10 @@ export async function EntitiesApiAxiosParamCreator_GetEntityReports(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
     if (metaInclude) {
@@ -75475,12 +75744,13 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityParameters(
  * @param {string} objectId 
  * @param {JsonApiReportPageLayoutPatchDocument} jsonApiReportPageLayoutPatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_PatchEntityReportPageLayouts(
-    workspaceId: string, objectId: string, jsonApiReportPageLayoutPatchDocument: JsonApiReportPageLayoutPatchDocument, filter?: string, 
+    workspaceId: string, objectId: string, jsonApiReportPageLayoutPatchDocument: JsonApiReportPageLayoutPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -75505,6 +75775,10 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityReportPageLayouts(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
 
@@ -75547,12 +75821,13 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityReportPageLayouts(
  * @param {string} objectId 
  * @param {JsonApiReportTemplatePatchDocument} jsonApiReportTemplatePatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_PatchEntityReportTemplates(
-    workspaceId: string, objectId: string, jsonApiReportTemplatePatchDocument: JsonApiReportTemplatePatchDocument, filter?: string, 
+    workspaceId: string, objectId: string, jsonApiReportTemplatePatchDocument: JsonApiReportTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -75577,6 +75852,10 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityReportTemplates(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
 
@@ -75619,12 +75898,13 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityReportTemplates(
  * @param {string} objectId 
  * @param {JsonApiReportPatchDocument} jsonApiReportPatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_PatchEntityReports(
-    workspaceId: string, objectId: string, jsonApiReportPatchDocument: JsonApiReportPatchDocument, filter?: string, 
+    workspaceId: string, objectId: string, jsonApiReportPatchDocument: JsonApiReportPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -75649,6 +75929,10 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityReports(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
 
@@ -80455,12 +80739,13 @@ export async function EntitiesApiAxiosParamCreator_UpdateEntityParameters(
  * @param {string} objectId 
  * @param {JsonApiReportPageLayoutInDocument} jsonApiReportPageLayoutInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_UpdateEntityReportPageLayouts(
-    workspaceId: string, objectId: string, jsonApiReportPageLayoutInDocument: JsonApiReportPageLayoutInDocument, filter?: string, 
+    workspaceId: string, objectId: string, jsonApiReportPageLayoutInDocument: JsonApiReportPageLayoutInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -80485,6 +80770,10 @@ export async function EntitiesApiAxiosParamCreator_UpdateEntityReportPageLayouts
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
 
@@ -80527,12 +80816,13 @@ export async function EntitiesApiAxiosParamCreator_UpdateEntityReportPageLayouts
  * @param {string} objectId 
  * @param {JsonApiReportTemplateInDocument} jsonApiReportTemplateInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_UpdateEntityReportTemplates(
-    workspaceId: string, objectId: string, jsonApiReportTemplateInDocument: JsonApiReportTemplateInDocument, filter?: string, 
+    workspaceId: string, objectId: string, jsonApiReportTemplateInDocument: JsonApiReportTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -80557,6 +80847,10 @@ export async function EntitiesApiAxiosParamCreator_UpdateEntityReportTemplates(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
 
@@ -80599,12 +80893,13 @@ export async function EntitiesApiAxiosParamCreator_UpdateEntityReportTemplates(
  * @param {string} objectId 
  * @param {JsonApiReportInDocument} jsonApiReportInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_UpdateEntityReports(
-    workspaceId: string, objectId: string, jsonApiReportInDocument: JsonApiReportInDocument, filter?: string, 
+    workspaceId: string, objectId: string, jsonApiReportInDocument: JsonApiReportInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -80629,6 +80924,10 @@ export async function EntitiesApiAxiosParamCreator_UpdateEntityReports(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
 
@@ -82390,7 +82689,7 @@ export async function EntitiesApi_CreateEntityReportPageLayouts(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_CreateEntityReportPageLayouts(
-        requestParameters.workspaceId, requestParameters.jsonApiReportPageLayoutPostOptionalIdDocument, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.jsonApiReportPageLayoutPostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -82416,7 +82715,7 @@ export async function EntitiesApi_CreateEntityReportTemplates(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportTemplateOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_CreateEntityReportTemplates(
-        requestParameters.workspaceId, requestParameters.jsonApiReportTemplatePostOptionalIdDocument, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.jsonApiReportTemplatePostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -82442,7 +82741,7 @@ export async function EntitiesApi_CreateEntityReports(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_CreateEntityReports(
-        requestParameters.workspaceId, requestParameters.jsonApiReportPostOptionalIdDocument, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.jsonApiReportPostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -84989,7 +85288,7 @@ export async function EntitiesApi_GetAllEntitiesReportPageLayouts(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportPageLayoutOutList> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetAllEntitiesReportPageLayouts(
-        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -85015,7 +85314,7 @@ export async function EntitiesApi_GetAllEntitiesReportTemplates(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportTemplateOutList> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetAllEntitiesReportTemplates(
-        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -85041,7 +85340,7 @@ export async function EntitiesApi_GetAllEntitiesReports(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportOutList> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetAllEntitiesReports(
-        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -86521,7 +86820,7 @@ export async function EntitiesApi_GetEntityReportPageLayouts(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetEntityReportPageLayouts(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -86547,7 +86846,7 @@ export async function EntitiesApi_GetEntityReportTemplates(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportTemplateOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetEntityReportTemplates(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -86573,7 +86872,7 @@ export async function EntitiesApi_GetEntityReports(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetEntityReports(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -87821,7 +88120,7 @@ export async function EntitiesApi_PatchEntityReportPageLayouts(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_PatchEntityReportPageLayouts(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPageLayoutPatchDocument, requestParameters.filter, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPageLayoutPatchDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -87847,7 +88146,7 @@ export async function EntitiesApi_PatchEntityReportTemplates(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportTemplateOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_PatchEntityReportTemplates(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportTemplatePatchDocument, requestParameters.filter, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportTemplatePatchDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -87873,7 +88172,7 @@ export async function EntitiesApi_PatchEntityReports(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_PatchEntityReports(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPatchDocument, requestParameters.filter, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPatchDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -89615,7 +89914,7 @@ export async function EntitiesApi_UpdateEntityReportPageLayouts(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_UpdateEntityReportPageLayouts(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPageLayoutInDocument, requestParameters.filter, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPageLayoutInDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -89641,7 +89940,7 @@ export async function EntitiesApi_UpdateEntityReportTemplates(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportTemplateOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_UpdateEntityReportTemplates(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportTemplateInDocument, requestParameters.filter, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportTemplateInDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -89667,7 +89966,7 @@ export async function EntitiesApi_UpdateEntityReports(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_UpdateEntityReports(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportInDocument, requestParameters.filter, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportInDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -93967,6 +94266,13 @@ export interface EntitiesApiCreateEntityReportPageLayoutsRequest {
     readonly jsonApiReportPageLayoutPostOptionalIdDocument: JsonApiReportPageLayoutPostOptionalIdDocument
 
     /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiCreateEntityReportPageLayouts
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
      * Include Meta objects.
      * @type {Array<'origin' | 'all' | 'ALL'>}
      * @memberof EntitiesApiCreateEntityReportPageLayouts
@@ -93995,6 +94301,13 @@ export interface EntitiesApiCreateEntityReportTemplatesRequest {
     readonly jsonApiReportTemplatePostOptionalIdDocument: JsonApiReportTemplatePostOptionalIdDocument
 
     /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiCreateEntityReportTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
      * Include Meta objects.
      * @type {Array<'origin' | 'all' | 'ALL'>}
      * @memberof EntitiesApiCreateEntityReportTemplates
@@ -94021,6 +94334,13 @@ export interface EntitiesApiCreateEntityReportsRequest {
      * @memberof EntitiesApiCreateEntityReports
      */
     readonly jsonApiReportPostOptionalIdDocument: JsonApiReportPostOptionalIdDocument
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiCreateEntityReports
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * Include Meta objects.
@@ -97390,6 +97710,13 @@ export interface EntitiesApiGetAllEntitiesReportPageLayoutsRequest {
     readonly filter?: string
 
     /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesReportPageLayouts
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
      * Zero-based page index (0..N)
      * @type {number}
      * @memberof EntitiesApiGetAllEntitiesReportPageLayouts
@@ -97453,6 +97780,13 @@ export interface EntitiesApiGetAllEntitiesReportTemplatesRequest {
     readonly filter?: string
 
     /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesReportTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
      * Zero-based page index (0..N)
      * @type {number}
      * @memberof EntitiesApiGetAllEntitiesReportTemplates
@@ -97514,6 +97848,13 @@ export interface EntitiesApiGetAllEntitiesReportsRequest {
      * @memberof EntitiesApiGetAllEntitiesReports
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesReports
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -99791,6 +100132,13 @@ export interface EntitiesApiGetEntityReportPageLayoutsRequest {
     readonly filter?: string
 
     /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityReportPageLayouts
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
      * 
      * @type {boolean}
      * @memberof EntitiesApiGetEntityReportPageLayouts
@@ -99833,6 +100181,13 @@ export interface EntitiesApiGetEntityReportTemplatesRequest {
     readonly filter?: string
 
     /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityReportTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
      * 
      * @type {boolean}
      * @memberof EntitiesApiGetEntityReportTemplates
@@ -99873,6 +100228,13 @@ export interface EntitiesApiGetEntityReportsRequest {
      * @memberof EntitiesApiGetEntityReports
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityReports
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * 
@@ -101595,6 +101957,13 @@ export interface EntitiesApiPatchEntityReportPageLayoutsRequest {
      * @memberof EntitiesApiPatchEntityReportPageLayouts
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiPatchEntityReportPageLayouts
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -101630,6 +101999,13 @@ export interface EntitiesApiPatchEntityReportTemplatesRequest {
      * @memberof EntitiesApiPatchEntityReportTemplates
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiPatchEntityReportTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -101665,6 +102041,13 @@ export interface EntitiesApiPatchEntityReportsRequest {
      * @memberof EntitiesApiPatchEntityReports
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiPatchEntityReports
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -104017,6 +104400,13 @@ export interface EntitiesApiUpdateEntityReportPageLayoutsRequest {
      * @memberof EntitiesApiUpdateEntityReportPageLayouts
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiUpdateEntityReportPageLayouts
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -104052,6 +104442,13 @@ export interface EntitiesApiUpdateEntityReportTemplatesRequest {
      * @memberof EntitiesApiUpdateEntityReportTemplates
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiUpdateEntityReportTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -104087,6 +104484,13 @@ export interface EntitiesApiUpdateEntityReportsRequest {
      * @memberof EntitiesApiUpdateEntityReports
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiUpdateEntityReports
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -159583,13 +159987,14 @@ export class PluginsApi extends BaseAPI implements PluginsApiInterface {
  * @summary Post Report
  * @param {string} workspaceId 
  * @param {JsonApiReportPostOptionalIdDocument} jsonApiReportPostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ReportControllerApiAxiosParamCreator_CreateEntityReports(
-    workspaceId: string, jsonApiReportPostOptionalIdDocument: JsonApiReportPostOptionalIdDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiReportPostOptionalIdDocument: JsonApiReportPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -159608,6 +160013,10 @@ export async function ReportControllerApiAxiosParamCreator_CreateEntityReports(
     const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
 
     if (metaInclude) {
         localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
@@ -159701,6 +160110,7 @@ export async function ReportControllerApiAxiosParamCreator_DeleteEntityReports(
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -159711,7 +160121,7 @@ export async function ReportControllerApiAxiosParamCreator_DeleteEntityReports(
  * @throws {RequiredError}
  */
 export async function ReportControllerApiAxiosParamCreator_GetAllEntitiesReports(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -159735,6 +160145,10 @@ export async function ReportControllerApiAxiosParamCreator_GetAllEntitiesReports
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
     if (page !== undefined) {
@@ -159781,6 +160195,7 @@ export async function ReportControllerApiAxiosParamCreator_GetAllEntitiesReports
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -159788,7 +160203,7 @@ export async function ReportControllerApiAxiosParamCreator_GetAllEntitiesReports
  * @throws {RequiredError}
  */
 export async function ReportControllerApiAxiosParamCreator_GetEntityReports(
-    workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -159811,6 +160226,10 @@ export async function ReportControllerApiAxiosParamCreator_GetEntityReports(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
     if (metaInclude) {
@@ -159846,12 +160265,13 @@ export async function ReportControllerApiAxiosParamCreator_GetEntityReports(
  * @param {string} objectId 
  * @param {JsonApiReportPatchDocument} jsonApiReportPatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ReportControllerApiAxiosParamCreator_PatchEntityReports(
-    workspaceId: string, objectId: string, jsonApiReportPatchDocument: JsonApiReportPatchDocument, filter?: string, 
+    workspaceId: string, objectId: string, jsonApiReportPatchDocument: JsonApiReportPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -159876,6 +160296,10 @@ export async function ReportControllerApiAxiosParamCreator_PatchEntityReports(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
 
@@ -159918,12 +160342,13 @@ export async function ReportControllerApiAxiosParamCreator_PatchEntityReports(
  * @param {string} objectId 
  * @param {JsonApiReportInDocument} jsonApiReportInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ReportControllerApiAxiosParamCreator_UpdateEntityReports(
-    workspaceId: string, objectId: string, jsonApiReportInDocument: JsonApiReportInDocument, filter?: string, 
+    workspaceId: string, objectId: string, jsonApiReportInDocument: JsonApiReportInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -159948,6 +160373,10 @@ export async function ReportControllerApiAxiosParamCreator_UpdateEntityReports(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
 
@@ -160001,7 +160430,7 @@ export async function ReportControllerApi_CreateEntityReports(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportOutDocument> {
     const localVarAxiosArgs = await ReportControllerApiAxiosParamCreator_CreateEntityReports(
-        requestParameters.workspaceId, requestParameters.jsonApiReportPostOptionalIdDocument, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.jsonApiReportPostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -160053,7 +160482,7 @@ export async function ReportControllerApi_GetAllEntitiesReports(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportOutList> {
     const localVarAxiosArgs = await ReportControllerApiAxiosParamCreator_GetAllEntitiesReports(
-        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -160079,7 +160508,7 @@ export async function ReportControllerApi_GetEntityReports(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportOutDocument> {
     const localVarAxiosArgs = await ReportControllerApiAxiosParamCreator_GetEntityReports(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -160105,7 +160534,7 @@ export async function ReportControllerApi_PatchEntityReports(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportOutDocument> {
     const localVarAxiosArgs = await ReportControllerApiAxiosParamCreator_PatchEntityReports(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPatchDocument, requestParameters.filter, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPatchDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -160131,7 +160560,7 @@ export async function ReportControllerApi_UpdateEntityReports(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportOutDocument> {
     const localVarAxiosArgs = await ReportControllerApiAxiosParamCreator_UpdateEntityReports(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportInDocument, requestParameters.filter, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportInDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -160228,6 +160657,13 @@ export interface ReportControllerApiCreateEntityReportsRequest {
     readonly jsonApiReportPostOptionalIdDocument: JsonApiReportPostOptionalIdDocument
 
     /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportControllerApiCreateEntityReports
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
      * Include Meta objects.
      * @type {Array<'origin' | 'all' | 'ALL'>}
      * @memberof ReportControllerApiCreateEntityReports
@@ -160282,6 +160718,13 @@ export interface ReportControllerApiGetAllEntitiesReportsRequest {
      * @memberof ReportControllerApiGetAllEntitiesReports
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportControllerApiGetAllEntitiesReports
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -160347,6 +160790,13 @@ export interface ReportControllerApiGetEntityReportsRequest {
     readonly filter?: string
 
     /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportControllerApiGetEntityReports
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
      * 
      * @type {boolean}
      * @memberof ReportControllerApiGetEntityReports
@@ -160394,6 +160844,13 @@ export interface ReportControllerApiPatchEntityReportsRequest {
      * @memberof ReportControllerApiPatchEntityReports
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportControllerApiPatchEntityReports
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -160429,6 +160886,13 @@ export interface ReportControllerApiUpdateEntityReportsRequest {
      * @memberof ReportControllerApiUpdateEntityReports
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportControllerApiUpdateEntityReports
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -160518,13 +160982,14 @@ export class ReportControllerApi extends BaseAPI implements ReportControllerApiI
  * @summary Post Report Page Layout
  * @param {string} workspaceId 
  * @param {JsonApiReportPageLayoutPostOptionalIdDocument} jsonApiReportPageLayoutPostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ReportPageLayoutControllerApiAxiosParamCreator_CreateEntityReportPageLayouts(
-    workspaceId: string, jsonApiReportPageLayoutPostOptionalIdDocument: JsonApiReportPageLayoutPostOptionalIdDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiReportPageLayoutPostOptionalIdDocument: JsonApiReportPageLayoutPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -160543,6 +161008,10 @@ export async function ReportPageLayoutControllerApiAxiosParamCreator_CreateEntit
     const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
 
     if (metaInclude) {
         localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
@@ -160636,6 +161105,7 @@ export async function ReportPageLayoutControllerApiAxiosParamCreator_DeleteEntit
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -160646,7 +161116,7 @@ export async function ReportPageLayoutControllerApiAxiosParamCreator_DeleteEntit
  * @throws {RequiredError}
  */
 export async function ReportPageLayoutControllerApiAxiosParamCreator_GetAllEntitiesReportPageLayouts(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -160670,6 +161140,10 @@ export async function ReportPageLayoutControllerApiAxiosParamCreator_GetAllEntit
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
     if (page !== undefined) {
@@ -160716,6 +161190,7 @@ export async function ReportPageLayoutControllerApiAxiosParamCreator_GetAllEntit
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -160723,7 +161198,7 @@ export async function ReportPageLayoutControllerApiAxiosParamCreator_GetAllEntit
  * @throws {RequiredError}
  */
 export async function ReportPageLayoutControllerApiAxiosParamCreator_GetEntityReportPageLayouts(
-    workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -160746,6 +161221,10 @@ export async function ReportPageLayoutControllerApiAxiosParamCreator_GetEntityRe
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
     if (metaInclude) {
@@ -160781,12 +161260,13 @@ export async function ReportPageLayoutControllerApiAxiosParamCreator_GetEntityRe
  * @param {string} objectId 
  * @param {JsonApiReportPageLayoutPatchDocument} jsonApiReportPageLayoutPatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ReportPageLayoutControllerApiAxiosParamCreator_PatchEntityReportPageLayouts(
-    workspaceId: string, objectId: string, jsonApiReportPageLayoutPatchDocument: JsonApiReportPageLayoutPatchDocument, filter?: string, 
+    workspaceId: string, objectId: string, jsonApiReportPageLayoutPatchDocument: JsonApiReportPageLayoutPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -160811,6 +161291,10 @@ export async function ReportPageLayoutControllerApiAxiosParamCreator_PatchEntity
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
 
@@ -160853,12 +161337,13 @@ export async function ReportPageLayoutControllerApiAxiosParamCreator_PatchEntity
  * @param {string} objectId 
  * @param {JsonApiReportPageLayoutInDocument} jsonApiReportPageLayoutInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ReportPageLayoutControllerApiAxiosParamCreator_UpdateEntityReportPageLayouts(
-    workspaceId: string, objectId: string, jsonApiReportPageLayoutInDocument: JsonApiReportPageLayoutInDocument, filter?: string, 
+    workspaceId: string, objectId: string, jsonApiReportPageLayoutInDocument: JsonApiReportPageLayoutInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -160883,6 +161368,10 @@ export async function ReportPageLayoutControllerApiAxiosParamCreator_UpdateEntit
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
 
@@ -160936,7 +161425,7 @@ export async function ReportPageLayoutControllerApi_CreateEntityReportPageLayout
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
     const localVarAxiosArgs = await ReportPageLayoutControllerApiAxiosParamCreator_CreateEntityReportPageLayouts(
-        requestParameters.workspaceId, requestParameters.jsonApiReportPageLayoutPostOptionalIdDocument, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.jsonApiReportPageLayoutPostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -160988,7 +161477,7 @@ export async function ReportPageLayoutControllerApi_GetAllEntitiesReportPageLayo
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportPageLayoutOutList> {
     const localVarAxiosArgs = await ReportPageLayoutControllerApiAxiosParamCreator_GetAllEntitiesReportPageLayouts(
-        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -161014,7 +161503,7 @@ export async function ReportPageLayoutControllerApi_GetEntityReportPageLayouts(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
     const localVarAxiosArgs = await ReportPageLayoutControllerApiAxiosParamCreator_GetEntityReportPageLayouts(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -161040,7 +161529,7 @@ export async function ReportPageLayoutControllerApi_PatchEntityReportPageLayouts
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
     const localVarAxiosArgs = await ReportPageLayoutControllerApiAxiosParamCreator_PatchEntityReportPageLayouts(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPageLayoutPatchDocument, requestParameters.filter, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPageLayoutPatchDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -161066,7 +161555,7 @@ export async function ReportPageLayoutControllerApi_UpdateEntityReportPageLayout
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
     const localVarAxiosArgs = await ReportPageLayoutControllerApiAxiosParamCreator_UpdateEntityReportPageLayouts(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPageLayoutInDocument, requestParameters.filter, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPageLayoutInDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -161163,6 +161652,13 @@ export interface ReportPageLayoutControllerApiCreateEntityReportPageLayoutsReque
     readonly jsonApiReportPageLayoutPostOptionalIdDocument: JsonApiReportPageLayoutPostOptionalIdDocument
 
     /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportPageLayoutControllerApiCreateEntityReportPageLayouts
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
      * Include Meta objects.
      * @type {Array<'origin' | 'all' | 'ALL'>}
      * @memberof ReportPageLayoutControllerApiCreateEntityReportPageLayouts
@@ -161217,6 +161713,13 @@ export interface ReportPageLayoutControllerApiGetAllEntitiesReportPageLayoutsReq
      * @memberof ReportPageLayoutControllerApiGetAllEntitiesReportPageLayouts
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportPageLayoutControllerApiGetAllEntitiesReportPageLayouts
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -161282,6 +161785,13 @@ export interface ReportPageLayoutControllerApiGetEntityReportPageLayoutsRequest 
     readonly filter?: string
 
     /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportPageLayoutControllerApiGetEntityReportPageLayouts
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
      * 
      * @type {boolean}
      * @memberof ReportPageLayoutControllerApiGetEntityReportPageLayouts
@@ -161329,6 +161839,13 @@ export interface ReportPageLayoutControllerApiPatchEntityReportPageLayoutsReques
      * @memberof ReportPageLayoutControllerApiPatchEntityReportPageLayouts
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportPageLayoutControllerApiPatchEntityReportPageLayouts
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -161364,6 +161881,13 @@ export interface ReportPageLayoutControllerApiUpdateEntityReportPageLayoutsReque
      * @memberof ReportPageLayoutControllerApiUpdateEntityReportPageLayouts
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportPageLayoutControllerApiUpdateEntityReportPageLayouts
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -161453,13 +161977,14 @@ export class ReportPageLayoutControllerApi extends BaseAPI implements ReportPage
  * @summary Post Report Template
  * @param {string} workspaceId 
  * @param {JsonApiReportTemplatePostOptionalIdDocument} jsonApiReportTemplatePostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ReportTemplateControllerApiAxiosParamCreator_CreateEntityReportTemplates(
-    workspaceId: string, jsonApiReportTemplatePostOptionalIdDocument: JsonApiReportTemplatePostOptionalIdDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiReportTemplatePostOptionalIdDocument: JsonApiReportTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -161478,6 +162003,10 @@ export async function ReportTemplateControllerApiAxiosParamCreator_CreateEntityR
     const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
 
     if (metaInclude) {
         localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
@@ -161571,6 +162100,7 @@ export async function ReportTemplateControllerApiAxiosParamCreator_DeleteEntityR
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -161581,7 +162111,7 @@ export async function ReportTemplateControllerApiAxiosParamCreator_DeleteEntityR
  * @throws {RequiredError}
  */
 export async function ReportTemplateControllerApiAxiosParamCreator_GetAllEntitiesReportTemplates(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -161605,6 +162135,10 @@ export async function ReportTemplateControllerApiAxiosParamCreator_GetAllEntitie
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
     if (page !== undefined) {
@@ -161651,6 +162185,7 @@ export async function ReportTemplateControllerApiAxiosParamCreator_GetAllEntitie
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -161658,7 +162193,7 @@ export async function ReportTemplateControllerApiAxiosParamCreator_GetAllEntitie
  * @throws {RequiredError}
  */
 export async function ReportTemplateControllerApiAxiosParamCreator_GetEntityReportTemplates(
-    workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -161681,6 +162216,10 @@ export async function ReportTemplateControllerApiAxiosParamCreator_GetEntityRepo
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
     if (metaInclude) {
@@ -161716,12 +162255,13 @@ export async function ReportTemplateControllerApiAxiosParamCreator_GetEntityRepo
  * @param {string} objectId 
  * @param {JsonApiReportTemplatePatchDocument} jsonApiReportTemplatePatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ReportTemplateControllerApiAxiosParamCreator_PatchEntityReportTemplates(
-    workspaceId: string, objectId: string, jsonApiReportTemplatePatchDocument: JsonApiReportTemplatePatchDocument, filter?: string, 
+    workspaceId: string, objectId: string, jsonApiReportTemplatePatchDocument: JsonApiReportTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -161746,6 +162286,10 @@ export async function ReportTemplateControllerApiAxiosParamCreator_PatchEntityRe
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
 
@@ -161788,12 +162332,13 @@ export async function ReportTemplateControllerApiAxiosParamCreator_PatchEntityRe
  * @param {string} objectId 
  * @param {JsonApiReportTemplateInDocument} jsonApiReportTemplateInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ReportTemplateControllerApiAxiosParamCreator_UpdateEntityReportTemplates(
-    workspaceId: string, objectId: string, jsonApiReportTemplateInDocument: JsonApiReportTemplateInDocument, filter?: string, 
+    workspaceId: string, objectId: string, jsonApiReportTemplateInDocument: JsonApiReportTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -161818,6 +162363,10 @@ export async function ReportTemplateControllerApiAxiosParamCreator_UpdateEntityR
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
 
@@ -161871,7 +162420,7 @@ export async function ReportTemplateControllerApi_CreateEntityReportTemplates(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportTemplateOutDocument> {
     const localVarAxiosArgs = await ReportTemplateControllerApiAxiosParamCreator_CreateEntityReportTemplates(
-        requestParameters.workspaceId, requestParameters.jsonApiReportTemplatePostOptionalIdDocument, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.jsonApiReportTemplatePostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -161923,7 +162472,7 @@ export async function ReportTemplateControllerApi_GetAllEntitiesReportTemplates(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportTemplateOutList> {
     const localVarAxiosArgs = await ReportTemplateControllerApiAxiosParamCreator_GetAllEntitiesReportTemplates(
-        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -161949,7 +162498,7 @@ export async function ReportTemplateControllerApi_GetEntityReportTemplates(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportTemplateOutDocument> {
     const localVarAxiosArgs = await ReportTemplateControllerApiAxiosParamCreator_GetEntityReportTemplates(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -161975,7 +162524,7 @@ export async function ReportTemplateControllerApi_PatchEntityReportTemplates(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportTemplateOutDocument> {
     const localVarAxiosArgs = await ReportTemplateControllerApiAxiosParamCreator_PatchEntityReportTemplates(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportTemplatePatchDocument, requestParameters.filter, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportTemplatePatchDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -162001,7 +162550,7 @@ export async function ReportTemplateControllerApi_UpdateEntityReportTemplates(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportTemplateOutDocument> {
     const localVarAxiosArgs = await ReportTemplateControllerApiAxiosParamCreator_UpdateEntityReportTemplates(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportTemplateInDocument, requestParameters.filter, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportTemplateInDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -162098,6 +162647,13 @@ export interface ReportTemplateControllerApiCreateEntityReportTemplatesRequest {
     readonly jsonApiReportTemplatePostOptionalIdDocument: JsonApiReportTemplatePostOptionalIdDocument
 
     /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportTemplateControllerApiCreateEntityReportTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
      * Include Meta objects.
      * @type {Array<'origin' | 'all' | 'ALL'>}
      * @memberof ReportTemplateControllerApiCreateEntityReportTemplates
@@ -162152,6 +162708,13 @@ export interface ReportTemplateControllerApiGetAllEntitiesReportTemplatesRequest
      * @memberof ReportTemplateControllerApiGetAllEntitiesReportTemplates
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportTemplateControllerApiGetAllEntitiesReportTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -162217,6 +162780,13 @@ export interface ReportTemplateControllerApiGetEntityReportTemplatesRequest {
     readonly filter?: string
 
     /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportTemplateControllerApiGetEntityReportTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
      * 
      * @type {boolean}
      * @memberof ReportTemplateControllerApiGetEntityReportTemplates
@@ -162264,6 +162834,13 @@ export interface ReportTemplateControllerApiPatchEntityReportTemplatesRequest {
      * @memberof ReportTemplateControllerApiPatchEntityReportTemplates
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportTemplateControllerApiPatchEntityReportTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -162299,6 +162876,13 @@ export interface ReportTemplateControllerApiUpdateEntityReportTemplatesRequest {
      * @memberof ReportTemplateControllerApiUpdateEntityReportTemplates
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportTemplateControllerApiUpdateEntityReportTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -162646,13 +163230,14 @@ export class ReportingSettingsApi extends BaseAPI implements ReportingSettingsAp
  * @summary Post Report Page Layout
  * @param {string} workspaceId 
  * @param {JsonApiReportPageLayoutPostOptionalIdDocument} jsonApiReportPageLayoutPostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ReportsApiAxiosParamCreator_CreateEntityReportPageLayouts(
-    workspaceId: string, jsonApiReportPageLayoutPostOptionalIdDocument: JsonApiReportPageLayoutPostOptionalIdDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiReportPageLayoutPostOptionalIdDocument: JsonApiReportPageLayoutPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -162671,6 +163256,10 @@ export async function ReportsApiAxiosParamCreator_CreateEntityReportPageLayouts(
     const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
 
     if (metaInclude) {
         localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
@@ -162714,13 +163303,14 @@ export async function ReportsApiAxiosParamCreator_CreateEntityReportPageLayouts(
  * @summary Post Report Template
  * @param {string} workspaceId 
  * @param {JsonApiReportTemplatePostOptionalIdDocument} jsonApiReportTemplatePostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ReportsApiAxiosParamCreator_CreateEntityReportTemplates(
-    workspaceId: string, jsonApiReportTemplatePostOptionalIdDocument: JsonApiReportTemplatePostOptionalIdDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiReportTemplatePostOptionalIdDocument: JsonApiReportTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -162739,6 +163329,10 @@ export async function ReportsApiAxiosParamCreator_CreateEntityReportTemplates(
     const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
 
     if (metaInclude) {
         localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
@@ -162782,13 +163376,14 @@ export async function ReportsApiAxiosParamCreator_CreateEntityReportTemplates(
  * @summary Post Report
  * @param {string} workspaceId 
  * @param {JsonApiReportPostOptionalIdDocument} jsonApiReportPostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ReportsApiAxiosParamCreator_CreateEntityReports(
-    workspaceId: string, jsonApiReportPostOptionalIdDocument: JsonApiReportPostOptionalIdDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiReportPostOptionalIdDocument: JsonApiReportPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -162807,6 +163402,10 @@ export async function ReportsApiAxiosParamCreator_CreateEntityReports(
     const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
 
     if (metaInclude) {
         localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
@@ -162998,6 +163597,7 @@ export async function ReportsApiAxiosParamCreator_DeleteEntityReports(
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -163008,7 +163608,7 @@ export async function ReportsApiAxiosParamCreator_DeleteEntityReports(
  * @throws {RequiredError}
  */
 export async function ReportsApiAxiosParamCreator_GetAllEntitiesReportPageLayouts(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -163032,6 +163632,10 @@ export async function ReportsApiAxiosParamCreator_GetAllEntitiesReportPageLayout
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
     if (page !== undefined) {
@@ -163078,6 +163682,7 @@ export async function ReportsApiAxiosParamCreator_GetAllEntitiesReportPageLayout
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -163088,7 +163693,7 @@ export async function ReportsApiAxiosParamCreator_GetAllEntitiesReportPageLayout
  * @throws {RequiredError}
  */
 export async function ReportsApiAxiosParamCreator_GetAllEntitiesReportTemplates(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -163112,6 +163717,10 @@ export async function ReportsApiAxiosParamCreator_GetAllEntitiesReportTemplates(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
     if (page !== undefined) {
@@ -163158,6 +163767,7 @@ export async function ReportsApiAxiosParamCreator_GetAllEntitiesReportTemplates(
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -163168,7 +163778,7 @@ export async function ReportsApiAxiosParamCreator_GetAllEntitiesReportTemplates(
  * @throws {RequiredError}
  */
 export async function ReportsApiAxiosParamCreator_GetAllEntitiesReports(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -163192,6 +163802,10 @@ export async function ReportsApiAxiosParamCreator_GetAllEntitiesReports(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
     if (page !== undefined) {
@@ -163238,6 +163852,7 @@ export async function ReportsApiAxiosParamCreator_GetAllEntitiesReports(
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -163245,7 +163860,7 @@ export async function ReportsApiAxiosParamCreator_GetAllEntitiesReports(
  * @throws {RequiredError}
  */
 export async function ReportsApiAxiosParamCreator_GetEntityReportPageLayouts(
-    workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -163268,6 +163883,10 @@ export async function ReportsApiAxiosParamCreator_GetEntityReportPageLayouts(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
     if (metaInclude) {
@@ -163302,6 +163921,7 @@ export async function ReportsApiAxiosParamCreator_GetEntityReportPageLayouts(
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -163309,7 +163929,7 @@ export async function ReportsApiAxiosParamCreator_GetEntityReportPageLayouts(
  * @throws {RequiredError}
  */
 export async function ReportsApiAxiosParamCreator_GetEntityReportTemplates(
-    workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -163332,6 +163952,10 @@ export async function ReportsApiAxiosParamCreator_GetEntityReportTemplates(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
     if (metaInclude) {
@@ -163366,6 +163990,7 @@ export async function ReportsApiAxiosParamCreator_GetEntityReportTemplates(
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -163373,7 +163998,7 @@ export async function ReportsApiAxiosParamCreator_GetEntityReportTemplates(
  * @throws {RequiredError}
  */
 export async function ReportsApiAxiosParamCreator_GetEntityReports(
-    workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -163396,6 +164021,10 @@ export async function ReportsApiAxiosParamCreator_GetEntityReports(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
     if (metaInclude) {
@@ -163431,12 +164060,13 @@ export async function ReportsApiAxiosParamCreator_GetEntityReports(
  * @param {string} objectId 
  * @param {JsonApiReportPageLayoutPatchDocument} jsonApiReportPageLayoutPatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ReportsApiAxiosParamCreator_PatchEntityReportPageLayouts(
-    workspaceId: string, objectId: string, jsonApiReportPageLayoutPatchDocument: JsonApiReportPageLayoutPatchDocument, filter?: string, 
+    workspaceId: string, objectId: string, jsonApiReportPageLayoutPatchDocument: JsonApiReportPageLayoutPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -163461,6 +164091,10 @@ export async function ReportsApiAxiosParamCreator_PatchEntityReportPageLayouts(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
 
@@ -163503,12 +164137,13 @@ export async function ReportsApiAxiosParamCreator_PatchEntityReportPageLayouts(
  * @param {string} objectId 
  * @param {JsonApiReportTemplatePatchDocument} jsonApiReportTemplatePatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ReportsApiAxiosParamCreator_PatchEntityReportTemplates(
-    workspaceId: string, objectId: string, jsonApiReportTemplatePatchDocument: JsonApiReportTemplatePatchDocument, filter?: string, 
+    workspaceId: string, objectId: string, jsonApiReportTemplatePatchDocument: JsonApiReportTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -163533,6 +164168,10 @@ export async function ReportsApiAxiosParamCreator_PatchEntityReportTemplates(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
 
@@ -163575,12 +164214,13 @@ export async function ReportsApiAxiosParamCreator_PatchEntityReportTemplates(
  * @param {string} objectId 
  * @param {JsonApiReportPatchDocument} jsonApiReportPatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ReportsApiAxiosParamCreator_PatchEntityReports(
-    workspaceId: string, objectId: string, jsonApiReportPatchDocument: JsonApiReportPatchDocument, filter?: string, 
+    workspaceId: string, objectId: string, jsonApiReportPatchDocument: JsonApiReportPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -163605,6 +164245,10 @@ export async function ReportsApiAxiosParamCreator_PatchEntityReports(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
 
@@ -163647,12 +164291,13 @@ export async function ReportsApiAxiosParamCreator_PatchEntityReports(
  * @param {string} objectId 
  * @param {JsonApiReportPageLayoutInDocument} jsonApiReportPageLayoutInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ReportsApiAxiosParamCreator_UpdateEntityReportPageLayouts(
-    workspaceId: string, objectId: string, jsonApiReportPageLayoutInDocument: JsonApiReportPageLayoutInDocument, filter?: string, 
+    workspaceId: string, objectId: string, jsonApiReportPageLayoutInDocument: JsonApiReportPageLayoutInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -163677,6 +164322,10 @@ export async function ReportsApiAxiosParamCreator_UpdateEntityReportPageLayouts(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
 
@@ -163719,12 +164368,13 @@ export async function ReportsApiAxiosParamCreator_UpdateEntityReportPageLayouts(
  * @param {string} objectId 
  * @param {JsonApiReportTemplateInDocument} jsonApiReportTemplateInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ReportsApiAxiosParamCreator_UpdateEntityReportTemplates(
-    workspaceId: string, objectId: string, jsonApiReportTemplateInDocument: JsonApiReportTemplateInDocument, filter?: string, 
+    workspaceId: string, objectId: string, jsonApiReportTemplateInDocument: JsonApiReportTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -163749,6 +164399,10 @@ export async function ReportsApiAxiosParamCreator_UpdateEntityReportTemplates(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
 
@@ -163791,12 +164445,13 @@ export async function ReportsApiAxiosParamCreator_UpdateEntityReportTemplates(
  * @param {string} objectId 
  * @param {JsonApiReportInDocument} jsonApiReportInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ReportsApiAxiosParamCreator_UpdateEntityReports(
-    workspaceId: string, objectId: string, jsonApiReportInDocument: JsonApiReportInDocument, filter?: string, 
+    workspaceId: string, objectId: string, jsonApiReportInDocument: JsonApiReportInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -163821,6 +164476,10 @@ export async function ReportsApiAxiosParamCreator_UpdateEntityReports(
 
     if (filter !== undefined) {
         localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
     }
 
 
@@ -163874,7 +164533,7 @@ export async function ReportsApi_CreateEntityReportPageLayouts(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
     const localVarAxiosArgs = await ReportsApiAxiosParamCreator_CreateEntityReportPageLayouts(
-        requestParameters.workspaceId, requestParameters.jsonApiReportPageLayoutPostOptionalIdDocument, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.jsonApiReportPageLayoutPostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -163900,7 +164559,7 @@ export async function ReportsApi_CreateEntityReportTemplates(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportTemplateOutDocument> {
     const localVarAxiosArgs = await ReportsApiAxiosParamCreator_CreateEntityReportTemplates(
-        requestParameters.workspaceId, requestParameters.jsonApiReportTemplatePostOptionalIdDocument, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.jsonApiReportTemplatePostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -163926,7 +164585,7 @@ export async function ReportsApi_CreateEntityReports(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportOutDocument> {
     const localVarAxiosArgs = await ReportsApiAxiosParamCreator_CreateEntityReports(
-        requestParameters.workspaceId, requestParameters.jsonApiReportPostOptionalIdDocument, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.jsonApiReportPostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -164030,7 +164689,7 @@ export async function ReportsApi_GetAllEntitiesReportPageLayouts(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportPageLayoutOutList> {
     const localVarAxiosArgs = await ReportsApiAxiosParamCreator_GetAllEntitiesReportPageLayouts(
-        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -164056,7 +164715,7 @@ export async function ReportsApi_GetAllEntitiesReportTemplates(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportTemplateOutList> {
     const localVarAxiosArgs = await ReportsApiAxiosParamCreator_GetAllEntitiesReportTemplates(
-        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -164082,7 +164741,7 @@ export async function ReportsApi_GetAllEntitiesReports(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportOutList> {
     const localVarAxiosArgs = await ReportsApiAxiosParamCreator_GetAllEntitiesReports(
-        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -164108,7 +164767,7 @@ export async function ReportsApi_GetEntityReportPageLayouts(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
     const localVarAxiosArgs = await ReportsApiAxiosParamCreator_GetEntityReportPageLayouts(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -164134,7 +164793,7 @@ export async function ReportsApi_GetEntityReportTemplates(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportTemplateOutDocument> {
     const localVarAxiosArgs = await ReportsApiAxiosParamCreator_GetEntityReportTemplates(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -164160,7 +164819,7 @@ export async function ReportsApi_GetEntityReports(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportOutDocument> {
     const localVarAxiosArgs = await ReportsApiAxiosParamCreator_GetEntityReports(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -164186,7 +164845,7 @@ export async function ReportsApi_PatchEntityReportPageLayouts(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
     const localVarAxiosArgs = await ReportsApiAxiosParamCreator_PatchEntityReportPageLayouts(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPageLayoutPatchDocument, requestParameters.filter, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPageLayoutPatchDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -164212,7 +164871,7 @@ export async function ReportsApi_PatchEntityReportTemplates(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportTemplateOutDocument> {
     const localVarAxiosArgs = await ReportsApiAxiosParamCreator_PatchEntityReportTemplates(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportTemplatePatchDocument, requestParameters.filter, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportTemplatePatchDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -164238,7 +164897,7 @@ export async function ReportsApi_PatchEntityReports(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportOutDocument> {
     const localVarAxiosArgs = await ReportsApiAxiosParamCreator_PatchEntityReports(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPatchDocument, requestParameters.filter, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPatchDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -164264,7 +164923,7 @@ export async function ReportsApi_UpdateEntityReportPageLayouts(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportPageLayoutOutDocument> {
     const localVarAxiosArgs = await ReportsApiAxiosParamCreator_UpdateEntityReportPageLayouts(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPageLayoutInDocument, requestParameters.filter, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportPageLayoutInDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -164290,7 +164949,7 @@ export async function ReportsApi_UpdateEntityReportTemplates(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportTemplateOutDocument> {
     const localVarAxiosArgs = await ReportsApiAxiosParamCreator_UpdateEntityReportTemplates(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportTemplateInDocument, requestParameters.filter, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportTemplateInDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -164316,7 +164975,7 @@ export async function ReportsApi_UpdateEntityReports(
     configuration?: Configuration,
 ): AxiosPromise<JsonApiReportOutDocument> {
     const localVarAxiosArgs = await ReportsApiAxiosParamCreator_UpdateEntityReports(
-        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportInDocument, requestParameters.filter, 
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiReportInDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -164533,6 +165192,13 @@ export interface ReportsApiCreateEntityReportPageLayoutsRequest {
     readonly jsonApiReportPageLayoutPostOptionalIdDocument: JsonApiReportPageLayoutPostOptionalIdDocument
 
     /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportsApiCreateEntityReportPageLayouts
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
      * Include Meta objects.
      * @type {Array<'origin' | 'all' | 'ALL'>}
      * @memberof ReportsApiCreateEntityReportPageLayouts
@@ -164561,6 +165227,13 @@ export interface ReportsApiCreateEntityReportTemplatesRequest {
     readonly jsonApiReportTemplatePostOptionalIdDocument: JsonApiReportTemplatePostOptionalIdDocument
 
     /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportsApiCreateEntityReportTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
      * Include Meta objects.
      * @type {Array<'origin' | 'all' | 'ALL'>}
      * @memberof ReportsApiCreateEntityReportTemplates
@@ -164587,6 +165260,13 @@ export interface ReportsApiCreateEntityReportsRequest {
      * @memberof ReportsApiCreateEntityReports
      */
     readonly jsonApiReportPostOptionalIdDocument: JsonApiReportPostOptionalIdDocument
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportsApiCreateEntityReports
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * Include Meta objects.
@@ -164687,6 +165367,13 @@ export interface ReportsApiGetAllEntitiesReportPageLayoutsRequest {
     readonly filter?: string
 
     /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportsApiGetAllEntitiesReportPageLayouts
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
      * Zero-based page index (0..N)
      * @type {number}
      * @memberof ReportsApiGetAllEntitiesReportPageLayouts
@@ -164748,6 +165435,13 @@ export interface ReportsApiGetAllEntitiesReportTemplatesRequest {
      * @memberof ReportsApiGetAllEntitiesReportTemplates
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportsApiGetAllEntitiesReportTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -164813,6 +165507,13 @@ export interface ReportsApiGetAllEntitiesReportsRequest {
     readonly filter?: string
 
     /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportsApiGetAllEntitiesReports
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
      * Zero-based page index (0..N)
      * @type {number}
      * @memberof ReportsApiGetAllEntitiesReports
@@ -164876,6 +165577,13 @@ export interface ReportsApiGetEntityReportPageLayoutsRequest {
     readonly filter?: string
 
     /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportsApiGetEntityReportPageLayouts
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
      * 
      * @type {boolean}
      * @memberof ReportsApiGetEntityReportPageLayouts
@@ -164918,6 +165626,13 @@ export interface ReportsApiGetEntityReportTemplatesRequest {
     readonly filter?: string
 
     /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportsApiGetEntityReportTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
      * 
      * @type {boolean}
      * @memberof ReportsApiGetEntityReportTemplates
@@ -164958,6 +165673,13 @@ export interface ReportsApiGetEntityReportsRequest {
      * @memberof ReportsApiGetEntityReports
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportsApiGetEntityReports
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * 
@@ -165007,6 +165729,13 @@ export interface ReportsApiPatchEntityReportPageLayoutsRequest {
      * @memberof ReportsApiPatchEntityReportPageLayouts
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportsApiPatchEntityReportPageLayouts
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -165042,6 +165771,13 @@ export interface ReportsApiPatchEntityReportTemplatesRequest {
      * @memberof ReportsApiPatchEntityReportTemplates
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportsApiPatchEntityReportTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -165077,6 +165813,13 @@ export interface ReportsApiPatchEntityReportsRequest {
      * @memberof ReportsApiPatchEntityReports
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportsApiPatchEntityReports
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -165112,6 +165855,13 @@ export interface ReportsApiUpdateEntityReportPageLayoutsRequest {
      * @memberof ReportsApiUpdateEntityReportPageLayouts
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportsApiUpdateEntityReportPageLayouts
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -165147,6 +165897,13 @@ export interface ReportsApiUpdateEntityReportTemplatesRequest {
      * @memberof ReportsApiUpdateEntityReportTemplates
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportsApiUpdateEntityReportTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -165182,6 +165939,13 @@ export interface ReportsApiUpdateEntityReportsRequest {
      * @memberof ReportsApiUpdateEntityReports
      */
     readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof ReportsApiUpdateEntityReports
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -167233,6 +167997,64 @@ export async function UserAuthorizationApiAxiosParamCreator_GetProfile(
 }
 
 
+// UserAuthorizationApi FP - UserAuthorizationApiAxiosParamCreator
+/**
+ * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
+ * @summary Invite User
+ * @param {Invitation} invitation 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function UserAuthorizationApiAxiosParamCreator_ProcessInvitation(
+    invitation: Invitation, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'invitation' is not null or undefined
+    assertParamExists('processInvitation', 'invitation', invitation)
+    const localVarPath = `/api/v1/actions/invite`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof invitation !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(invitation !== undefined ? invitation : {})
+        : invitation || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
 
 // UserAuthorizationApi Api FP
 /**
@@ -167259,6 +168081,32 @@ export async function UserAuthorizationApi_GetProfile(
 }
 
 
+// UserAuthorizationApi Api FP
+/**
+ * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
+ * @summary Invite User
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {UserAuthorizationApiProcessInvitationRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function UserAuthorizationApi_ProcessInvitation(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: UserAuthorizationApiProcessInvitationRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await UserAuthorizationApiAxiosParamCreator_ProcessInvitation(
+        requestParameters.invitation, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
 /**
  * UserAuthorizationApi - interface
  * @export
@@ -167274,6 +168122,30 @@ export interface UserAuthorizationApiInterface {
      */
     getProfile(options?: AxiosRequestConfig): AxiosPromise<Profile>;
 
+    /**
+     * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
+     * @summary Invite User
+     * @param {UserAuthorizationApiProcessInvitationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApiInterface
+     */
+    processInvitation(requestParameters: UserAuthorizationApiProcessInvitationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+}
+
+/**
+ * Request parameters for processInvitation operation in UserAuthorizationApi.
+ * @export
+ * @interface UserAuthorizationApiProcessInvitationRequest
+ */
+export interface UserAuthorizationApiProcessInvitationRequest {
+    /**
+     * 
+     * @type {Invitation}
+     * @memberof UserAuthorizationApiProcessInvitation
+     */
+    readonly invitation: Invitation
 }
 
 /**
@@ -167292,6 +168164,18 @@ export class UserAuthorizationApi extends BaseAPI implements UserAuthorizationAp
      */
     public getProfile(options?: AxiosRequestConfig) {
         return UserAuthorizationApi_GetProfile(this.axios, this.basePath, options, this.configuration);
+    }
+
+    /**
+     * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
+     * @summary Invite User
+     * @param {UserAuthorizationApiProcessInvitationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApi
+     */
+    public processInvitation(requestParameters: UserAuthorizationApiProcessInvitationRequest, options?: AxiosRequestConfig) {
+        return UserAuthorizationApi_ProcessInvitation(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

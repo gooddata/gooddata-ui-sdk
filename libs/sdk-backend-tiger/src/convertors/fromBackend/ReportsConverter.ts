@@ -7,6 +7,7 @@ import {
     type JsonApiReportPageLayoutOutWithLinks,
     type JsonApiReportTemplateOut,
     type JsonApiReportTemplateOutWithLinks,
+    type JsonApiUserIdentifierOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import {
     type IReport,
@@ -18,6 +19,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { isInheritedObject } from "./ObjectInheritance.js";
+import { convertUserIdentifier } from "./UsersConverter.js";
 
 // Content is stored verbatim as free-form JSON, so the wire type carries no structure and the
 // model type is restored by assertion. Callers that must not trust it use the content type-guards.
@@ -27,6 +29,7 @@ function asContent<T>(content: object): T {
 
 export function convertReportPageLayout(
     entity: JsonApiReportPageLayoutOut | JsonApiReportPageLayoutOutWithLinks,
+    included: JsonApiUserIdentifierOutWithLinks[] = [],
 ): IReportPageLayout {
     return {
         type: "reportPageLayout",
@@ -36,11 +39,16 @@ export function convertReportPageLayout(
         tags: entity.attributes.tags,
         content: asContent<IReportPageLayoutContent>(entity.attributes.content),
         isLocked: isInheritedObject(entity),
+        created: entity.attributes.createdAt ?? undefined,
+        updated: entity.attributes.modifiedAt ?? undefined,
+        createdBy: convertUserIdentifier(entity.relationships?.createdBy, included),
+        updatedBy: convertUserIdentifier(entity.relationships?.modifiedBy, included),
     };
 }
 
 export function convertReportTemplate(
     entity: JsonApiReportTemplateOut | JsonApiReportTemplateOutWithLinks,
+    included: JsonApiUserIdentifierOutWithLinks[] = [],
 ): IReportTemplate {
     return {
         type: "reportTemplate",
@@ -50,10 +58,17 @@ export function convertReportTemplate(
         tags: entity.attributes.tags,
         content: asContent<IReportContent>(entity.attributes.content),
         isLocked: isInheritedObject(entity),
+        created: entity.attributes.createdAt ?? undefined,
+        updated: entity.attributes.modifiedAt ?? undefined,
+        createdBy: convertUserIdentifier(entity.relationships?.createdBy, included),
+        updatedBy: convertUserIdentifier(entity.relationships?.modifiedBy, included),
     };
 }
 
-export function convertReport(entity: JsonApiReportOut | JsonApiReportOutWithLinks): IReport {
+export function convertReport(
+    entity: JsonApiReportOut | JsonApiReportOutWithLinks,
+    included: JsonApiUserIdentifierOutWithLinks[] = [],
+): IReport {
     return {
         type: "report",
         ref: idRef(entity.id, "report"),
@@ -65,5 +80,9 @@ export function convertReport(entity: JsonApiReportOut | JsonApiReportOutWithLin
         content: asContent<IReportContent>(entity.attributes.content),
         variableValues: entity.attributes.variableValues ?? undefined,
         isLocked: isInheritedObject(entity),
+        created: entity.attributes.createdAt ?? undefined,
+        updated: entity.attributes.modifiedAt ?? undefined,
+        createdBy: convertUserIdentifier(entity.relationships?.createdBy, included),
+        updatedBy: convertUserIdentifier(entity.relationships?.modifiedBy, included),
     };
 }

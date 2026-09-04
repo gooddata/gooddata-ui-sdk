@@ -17,6 +17,7 @@ import {
     type IMeasureReferencing,
     type IPreparedExecution,
     type IWorkspaceAttributesService,
+    type IWorkspaceComputedAttributesService,
     type IWorkspaceDatasetsService,
     type IWorkspaceExportTemplatesService,
     type IWorkspaceFactsService,
@@ -28,6 +29,7 @@ import {
     type IAttributeMetadataObject,
     type IAttributeOrMeasure,
     type IBucket,
+    type IComputedAttributeMetadataObject,
     type IDataSetMetadataObject,
     type IExportTemplate,
     type IExportTemplateDefinition,
@@ -2437,3 +2439,148 @@ class GeoDataView extends DecoratedDataView {
         return Promise.resolve(this.provider(config));
     }
 }
+
+describe("withCaching computed attributes", () => {
+    function makeComputedAttribute(ref: ObjRef): IComputedAttributeMetadataObject {
+        return {
+            type: "computedAttribute",
+            ref,
+            id: "shared_id",
+            uri: "shared_id",
+            title: "Computed",
+            description: "",
+            production: true,
+            deprecated: false,
+            unlisted: false,
+            expression: "SELECT 1",
+            displayForms: [],
+        } as unknown as IComputedAttributeMetadataObject;
+    }
+
+    // dummyBackend throws NotSupported on computedAttributes() ACCESS, so the service is substituted
+    // on the workspace itself rather than through a decorator factory
+    function backendWithComputedAttributes(service: IWorkspaceComputedAttributesService): IAnalyticalBackend {
+        const dummy = dummyBackendEmptyData();
+
+        return {
+            ...dummy,
+            workspace: (id: string) => ({
+                ...dummy.workspace(id),
+                computedAttributes: () => service,
+            }),
+        } as unknown as IAnalyticalBackend;
+    }
+
+    function countingService(counts: { getComputedAttribute: number }) {
+        return {
+            getComputedAttribute(ref: ObjRef): Promise<IComputedAttributeMetadataObject> {
+                counts.getComputedAttribute++;
+                return Promise.resolve(makeComputedAttribute(ref));
+            },
+        } as unknown as IWorkspaceComputedAttributesService;
+    }
+
+    function makeBackend(counts: { getComputedAttribute: number }) {
+        return withCaching(backendWithComputedAttributes(countingService(counts)), {
+            maxAttributeDisplayFormsPerWorkspace: 4,
+            maxAttributesPerWorkspace: 4,
+            maxAttributeElementResultsPerWorkspace: 1,
+            maxAttributeWorkspaces: 1,
+        });
+    }
+
+    it("should serve a repeated getComputedAttribute from the cache", async () => {
+        const counts = { getComputedAttribute: 0 };
+        const service = makeBackend(counts).workspace("ws").computedAttributes();
+        const ref = idRef("shared_id", "computedAttribute");
+
+        await service.getComputedAttribute(ref);
+        await service.getComputedAttribute(ref);
+
+        expect(counts.getComputedAttribute).toEqual(1);
+    });
+
+    it("should not conflate a computed attribute with a label sharing its identifier", async () => {
+        const counts = { getComputedAttribute: 0 };
+        const service = makeBackend(counts).workspace("ws").computedAttributes();
+
+        // the identifier is the same; only the ref TYPE differs, so an identifier-keyed cache would
+        // have served the first result for the second call
+        const first = await service.getComputedAttribute(idRef("shared_id", "computedAttribute"));
+        const second = await service.getComputedAttribute(idRef("shared_id", "displayForm"));
+
+        expect(counts.getComputedAttribute).toEqual(2);
+        expect(first.ref).toEqual(idRef("shared_id", "computedAttribute"));
+        expect(second.ref).toEqual(idRef("shared_id", "displayForm"));
+    });
+
+    it("should serve fresh metadata after an update", async () => {
+        const counts = { getComputedAttribute: 0 };
+        let title = "Before";
+        const service = {
+            getComputedAttribute(ref: ObjRef): Promise<IComputedAttributeMetadataObject> {
+                counts.getComputedAttribute++;
+                return Promise.resolve({ ...makeComputedAttribute(ref), title });
+            },
+            updateComputedAttribute(
+                computedAttribute: IComputedAttributeMetadataObject,
+            ): Promise<IComputedAttributeMetadataObject> {
+                title = computedAttribute.title;
+                return Promise.resolve(computedAttribute);
+            },
+            deleteComputedAttribute(): Promise<void> {
+                return Promise.resolve();
+            },
+        } as unknown as IWorkspaceComputedAttributesService;
+
+        const cached = withCaching(backendWithComputedAttributes(service), {
+            maxAttributeDisplayFormsPerWorkspace: 4,
+            maxAttributesPerWorkspace: 4,
+            maxAttributeElementResultsPerWorkspace: 1,
+            maxAttributeWorkspaces: 1,
+        })
+            .workspace("ws")
+            .computedAttributes();
+        const ref = idRef("shared_id", "computedAttribute");
+
+        const before = await cached.getComputedAttribute(ref);
+        await cached.updateComputedAttribute({ ...before, title: "After" });
+        const after = await cached.getComputedAttribute(ref);
+
+        // the write must evict - without it the second get is served the stale pre-write entry
+        expect(before.title).toEqual("Before");
+        expect(after.title).toEqual("After");
+        expect(counts.getComputedAttribute).toEqual(2);
+
+        // delete invalidates the same way, so a re-get goes back to the backend
+        await cached.deleteComputedAttribute(ref);
+        await cached.getComputedAttribute(ref);
+        expect(counts.getComputedAttribute).toEqual(3);
+    });
+
+    it("should not cache a rejected getComputedAttribute", async () => {
+        const counts = { getComputedAttribute: 0 };
+
+        const failing = {
+            getComputedAttribute(): Promise<IComputedAttributeMetadataObject> {
+                counts.getComputedAttribute++;
+                return Promise.reject(new Error("boom"));
+            },
+        } as unknown as IWorkspaceComputedAttributesService;
+
+        const service = withCaching(backendWithComputedAttributes(failing), {
+            maxAttributeDisplayFormsPerWorkspace: 4,
+            maxAttributesPerWorkspace: 4,
+            maxAttributeElementResultsPerWorkspace: 1,
+            maxAttributeWorkspaces: 1,
+        })
+            .workspace("ws")
+            .computedAttributes();
+
+        const ref = idRef("shared_id", "computedAttribute");
+        await expect(service.getComputedAttribute(ref)).rejects.toThrow("boom");
+        await expect(service.getComputedAttribute(ref)).rejects.toThrow("boom");
+
+        expect(counts.getComputedAttribute).toEqual(2);
+    });
+});

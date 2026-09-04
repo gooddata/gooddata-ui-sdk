@@ -2,6 +2,7 @@
 
 import {
     type DateFilterGranularity,
+    type DateString,
     type IActiveCalendars,
     belongsToCalendar,
     getDateFilterGranularities,
@@ -342,5 +343,48 @@ export function ensureCompatibleGranularity<T extends IUiRelativeDateFilterFormL
         granularity: newGranularity,
         from: isEquivalentMapping ? filterOption.from : undefined,
         to: isEquivalentMapping ? filterOption.to : undefined,
+    };
+}
+
+/**
+ * @internal
+ */
+export interface IUiAbsoluteDateFilterFormLike {
+    granularity?: DateFilterGranularity;
+    from?: DateString;
+    to?: DateString;
+}
+
+/**
+ * Ensures the granularity in an absolute filter option is compatible with the available granularities.
+ * Simpler than {@link ensureCompatibleGranularity} - the absolute form has no fiscal variants, so there is no
+ * equivalent-mapping attempt: if the current (or, when absent, the implied "GDC.time.date") granularity isn't
+ * available, it resets to the first available one, clearing from/to since a half-selected range from a
+ * different granularity is not a valid state.
+ * @param filterOption - The filter option to check/correct
+ * @param availableGranularities - List of available granularities
+ * @returns The filter option with a compatible granularity
+ * @internal
+ */
+export function ensureCompatibleAbsoluteGranularity<T extends IUiAbsoluteDateFilterFormLike>(
+    filterOption: T,
+    availableGranularities: DateFilterGranularity[],
+): T {
+    // Empty availableGranularities means granularity switching isn't active at all - nothing to correct
+    // against, so this must stay a no-op rather than clearing from/to.
+    if (availableGranularities.length === 0) {
+        return filterOption;
+    }
+
+    const effectiveGranularity = filterOption.granularity ?? "GDC.time.date";
+    if (availableGranularities.includes(effectiveGranularity)) {
+        return filterOption;
+    }
+
+    return {
+        ...filterOption,
+        granularity: availableGranularities[0],
+        from: undefined,
+        to: undefined,
     };
 }

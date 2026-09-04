@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-backend-tiger: Populate created, updated, createdBy and updatedBy on the reports, report templates and report page layouts returned by IWorkspaceReportsService, requesting the createdBy and modifiedBy relationships on every read and write.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

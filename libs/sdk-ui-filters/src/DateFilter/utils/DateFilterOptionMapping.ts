@@ -225,6 +225,7 @@ function reconstructFormForStoredFilter(
             from: dateFilter.dateFilter.from!.toString(),
             to: dateFilter.dateFilter.to!.toString(),
             type: "absoluteForm",
+            granularity: dateFilter.dateFilter.granularity,
             ...(dateFilter.dateFilter.emptyValueHandling
                 ? { emptyValueHandling: dateFilter.dateFilter.emptyValueHandling }
                 : {}),

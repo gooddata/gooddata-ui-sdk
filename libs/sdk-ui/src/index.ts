@@ -260,7 +260,6 @@ export {
     type ITranslationsComponentProps,
     type ITranslationsProviderOwnProps,
     type ITranslationsProviderProps,
-    TranslationsProvider,
     IntlTranslationsProvider,
 } from "./base/localization/TranslationsProvider.js";
 export {

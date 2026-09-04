@@ -4,6 +4,7 @@
     "options": {
         "typeAware": true
     },
+    "ignorePatterns": ["typings.d.ts"],
     "rules": {
         "no-undef": "warn",
         "import/no-unassigned-import": "warn"

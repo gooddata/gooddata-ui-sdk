@@ -87,7 +87,6 @@ import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
 import { Pair } from 'yaml';
 import type { Parameter } from '@gooddata/sdk-code-schemas/v1';
-import { Permission } from '@gooddata/sdk-code-schemas/v1';
 import type { Plugin as Plugin_2 } from '@gooddata/sdk-code-schemas/v1';
 import type { PoPMetricField } from '@gooddata/sdk-code-schemas/v1';
 import type { PreviousPeriodMetricField } from '@gooddata/sdk-code-schemas/v1';
@@ -1722,7 +1721,7 @@ export type FilterContextItem = {
 };
 
 // @public (undocumented)
-export const fromDeclarativePermissions: (permissions?: GenericPermission[] | undefined, hierarchyPermissions?: GenericPermission[] | undefined) => Permissions_2 | undefined;
+export const fromDeclarativePermissions: (permissions?: GenericPermission[], hierarchyPermissions?: GenericPermission[]) => Permissions_2 | undefined;
 
 // @public (undocumented)
 export type FromEntities = Array<{
@@ -3837,12 +3836,12 @@ export function tableSave(fields: Visualisation["query"]["fields"] | undefined, 
     textWrapping: {
         wrapText: boolean;
         wrapHeaderText: boolean;
-        columnOverrides: {
+        columnOverrides: Array<{
             locators: ColumnLocator[];
             wrapText: boolean;
             wrapHeaderText: boolean;
             matchType: "column" | "pivotGroup";
-        }[];
+        }>;
     } | undefined;
     enableAccessibility: boolean | undefined;
     pagination: {
@@ -3851,7 +3850,7 @@ export function tableSave(fields: Visualisation["query"]["fields"] | undefined, 
     pageSize: number | undefined;
     grandTotalsPosition: "bottom" | "pinnedBottom" | "pinnedTop" | "top" | undefined;
     conditionalFormatting: {
-        version?: string | undefined;
+        version?: string;
         enabled: boolean;
         rules: readonly {
             id: string;
@@ -3885,8 +3884,8 @@ export function tableSave(fields: Visualisation["query"]["fields"] | undefined, 
                     to: number;
                 };
                 format: {
-                    color?: string | undefined;
-                    backgroundColor?: string | undefined;
+                    color?: string;
+                    backgroundColor?: string;
                     scope: "cell" | "row";
                 };
             }[];
@@ -3897,16 +3896,12 @@ export function tableSave(fields: Visualisation["query"]["fields"] | undefined, 
         } | {
             kind: "attribute";
             attributeIdentifier: string;
-        })[] | undefined;
+        })[];
     } | undefined;
 } | undefined;
 
 // @public (undocumented)
-export const toDeclarativePermissions: (permissions?: {
-    VIEW?: Permission | undefined;
-    EDIT?: Permission | undefined;
-    SHARE?: Permission | undefined;
-} | undefined) => [GenericPermission[], GenericPermission[]];
+export const toDeclarativePermissions: (permissions?: Dashboard["permissions"]) => [GenericPermission[], GenericPermission[]];
 
 // @public (undocumented)
 export type ToExecutionResults = {

@@ -6,6 +6,7 @@ import type {
     JsonApiReportOutWithLinks,
     JsonApiReportPageLayoutOutWithLinks,
     JsonApiReportTemplateOutWithLinks,
+    JsonApiUserIdentifierOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import { idRef } from "@gooddata/sdk-model";
 
@@ -13,6 +14,39 @@ import { convertReport, convertReportPageLayout, convertReportTemplate } from ".
 
 const pageContent = { version: "1", layout: { type: "slot", slotId: "s1" }, slots: [] };
 const reportContent = { version: "1", pages: [] };
+
+const auditAttributes = { createdAt: "2026-01-02 03:04:05", modifiedAt: "2026-02-03 04:05:06" };
+const auditRelationships = {
+    createdBy: { data: { id: "author", type: "userIdentifier" } },
+    modifiedBy: { data: { id: "editor", type: "userIdentifier" } },
+};
+const auditIncluded = [
+    {
+        id: "author",
+        type: "userIdentifier",
+        attributes: { firstname: "Ada", lastname: "Lovelace", email: "ada@example.com" },
+    },
+    {
+        id: "editor",
+        type: "userIdentifier",
+        attributes: { firstname: "Grace", lastname: "Hopper", email: "grace@example.com" },
+    },
+] as unknown as JsonApiUserIdentifierOutWithLinks[];
+
+const expectedCreatedBy = {
+    ref: idRef("author"),
+    login: "author",
+    firstName: "Ada",
+    lastName: "Lovelace",
+    email: "ada@example.com",
+};
+const expectedUpdatedBy = {
+    ref: idRef("editor"),
+    login: "editor",
+    firstName: "Grace",
+    lastName: "Hopper",
+    email: "grace@example.com",
+};
 
 describe("convertReportPageLayout", () => {
     it("converts a native layout", () => {
@@ -112,5 +146,77 @@ describe("convertReport", () => {
         } as unknown as JsonApiReportOutWithLinks;
 
         expect(convertReport(entity).variableValues).toBeUndefined();
+    });
+});
+
+describe("report audit fields", () => {
+    const layout = {
+        id: "layout1",
+        type: "reportPageLayout",
+        attributes: { title: "Cover", content: pageContent, ...auditAttributes },
+        relationships: auditRelationships,
+    } as unknown as JsonApiReportPageLayoutOutWithLinks;
+
+    const template = {
+        id: "template1",
+        type: "reportTemplate",
+        attributes: { title: "Quarterly", content: reportContent, ...auditAttributes },
+        relationships: auditRelationships,
+    } as unknown as JsonApiReportTemplateOutWithLinks;
+
+    const report = {
+        id: "report1",
+        type: "report",
+        attributes: {
+            title: "Q1",
+            periodStart: "2026-01-01",
+            periodEnd: "2026-03-31",
+            content: reportContent,
+            ...auditAttributes,
+        },
+        relationships: auditRelationships,
+    } as unknown as JsonApiReportOutWithLinks;
+
+    it.each([
+        ["page layout", () => convertReportPageLayout(layout, auditIncluded)],
+        ["template", () => convertReportTemplate(template, auditIncluded)],
+        ["report", () => convertReport(report, auditIncluded)],
+    ])("resolves the audit dates and users of a %s", (_name, convert) => {
+        expect(convert()).toMatchObject({
+            created: "2026-01-02 03:04:05",
+            updated: "2026-02-03 04:05:06",
+            createdBy: expectedCreatedBy,
+            updatedBy: expectedUpdatedBy,
+        });
+    });
+
+    it.each([
+        ["page layout", () => convertReportPageLayout(layout)],
+        ["template", () => convertReportTemplate(template)],
+        ["report", () => convertReport(report)],
+    ])("leaves the users of a %s undefined when the include was omitted", (_name, convert) => {
+        const converted = convert();
+        expect(converted.createdBy).toBeUndefined();
+        expect(converted.updatedBy).toBeUndefined();
+        expect(converted.created).toBe("2026-01-02 03:04:05");
+    });
+
+    it("drops null audit dates so the model keeps the fields optional", () => {
+        const entity = {
+            id: "report1",
+            type: "report",
+            attributes: {
+                title: "Q1",
+                periodStart: "2026-01-01",
+                periodEnd: "2026-03-31",
+                content: reportContent,
+                createdAt: null,
+                modifiedAt: null,
+            },
+        } as unknown as JsonApiReportOutWithLinks;
+
+        const converted = convertReport(entity);
+        expect(converted.created).toBeUndefined();
+        expect(converted.updated).toBeUndefined();
     });
 });

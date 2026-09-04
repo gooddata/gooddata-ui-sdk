@@ -200,6 +200,61 @@ describe("validateFilterOption", () => {
         });
     });
 
+    describe("absoluteForm validation with a period granularity selected", () => {
+        it("should validate a semantically correct month-period selection", () => {
+            const filter: IUiAbsoluteDateFilterForm = {
+                from: "2026-03-01",
+                to: "2026-03-31",
+                granularity: "GDC.time.month",
+                localIdentifier: "ABSOLUTE_FORM",
+                type: "absoluteForm",
+                name: "",
+                visible: true,
+            };
+            const expected: IExtendedDateFilterErrors = {};
+            const actual = validateFilterOption(filter);
+            expect(actual).toEqual(expected);
+        });
+
+        it("should not validate a partially-selected period range (only the start period picked)", () => {
+            const filter: IUiAbsoluteDateFilterForm = {
+                from: "2026-03-01",
+                to: undefined,
+                granularity: "GDC.time.quarter",
+                localIdentifier: "ABSOLUTE_FORM",
+                type: "absoluteForm",
+                name: "",
+                visible: true,
+            };
+            const expected: IExtendedDateFilterErrors = {
+                absoluteForm: {
+                    invalidEndDate: true,
+                },
+            };
+            const actual = validateFilterOption(filter);
+            expect(actual).toEqual(expected);
+        });
+
+        it("should not validate a start period after the end period", () => {
+            const filter: IUiAbsoluteDateFilterForm = {
+                from: "2026-06-01",
+                to: "2026-01-31",
+                granularity: "GDC.time.quarter",
+                localIdentifier: "ABSOLUTE_FORM",
+                type: "absoluteForm",
+                name: "",
+                visible: true,
+            };
+            const expected: IExtendedDateFilterErrors = {
+                absoluteForm: {
+                    startDateAfterEndDate: true,
+                },
+            };
+            const actual = validateFilterOption(filter);
+            expect(actual).toEqual(expected);
+        });
+    });
+
     describe("relativeForm validation", () => {
         it("should validate semantically correct form", () => {
             const filter: IUiRelativeDateFilterForm = {

@@ -109,7 +109,6 @@ exports[`PluggableWaterfallChart > should return reference point after switching
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -247,7 +246,6 @@ exports[`PluggableWaterfallChart > should return reference point with multi meas
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -357,7 +355,6 @@ exports[`PluggableWaterfallChart > should return reference point with one measur
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,

@@ -7,6 +7,7 @@ import {
     type ReactNode,
     forwardRef,
     useEffect,
+    useMemo,
     useRef,
     useState,
 } from "react";
@@ -31,12 +32,15 @@ import {
     type DateFilterOption,
     type IDateFilterOptionsByType,
     type IExtendedDateFilterErrors,
+    type IUiAbsoluteDateFilterForm,
     type IUiRelativeDateFilterForm,
 } from "../interfaces/index.js";
 import { getDateFilterOptionGranularity } from "../utils/OptionUtils.js";
 import {
     type CalendarTabType,
+    ensureCompatibleAbsoluteGranularity,
     ensureCompatibleGranularity,
+    filterStandardGranularities,
     getDefaultCalendarTab,
     getFilteredGranularities,
     getFilteredPresets,
@@ -70,6 +74,8 @@ export interface IDateFilterBodyProps {
     onExcludeCurrentPeriodChange: (isExcluded: boolean) => void;
     isTimeForAbsoluteRangeEnabled: boolean;
     isSecondsForAbsoluteRangeEnabled?: boolean;
+
+    isAbsoluteDateFilterGranularityEnabled: boolean;
 
     availableGranularities: DateFilterGranularity[];
 
@@ -143,6 +149,18 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
         fiscalTabsConfig,
         selectedTab,
     );
+    // Absolute form granularities are standard-calendar-only, so they're filtered independently of
+    // the fiscal/standard tab state.
+    const filteredAbsoluteAvailableGranularities = useMemo(
+        () =>
+            props.isAbsoluteDateFilterGranularityEnabled
+                ? filterStandardGranularities(props.filterOptions.absoluteForm?.availableGranularities ?? [])
+                : [],
+        [
+            props.isAbsoluteDateFilterGranularityEnabled,
+            props.filterOptions.absoluteForm?.availableGranularities,
+        ],
+    );
 
     const changeRoute = (newRoute: DateFilterRoute = null): void => {
         setRoute(newRoute);
@@ -152,12 +170,22 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
         const newForm = route === "absoluteForm" ? null : "absoluteForm";
         setRoute(newForm);
 
-        if (
-            newForm === "absoluteForm" &&
-            filterOptions.absoluteForm &&
-            selectedFilterOption.localIdentifier !== filterOptions.absoluteForm.localIdentifier
-        ) {
-            onSelectedFilterOptionChange(filterOptions.absoluteForm);
+        if (newForm === "absoluteForm" && filterOptions.absoluteForm) {
+            const baseOption =
+                selectedFilterOption.localIdentifier === filterOptions.absoluteForm.localIdentifier
+                    ? (selectedFilterOption as IUiAbsoluteDateFilterForm)
+                    : filterOptions.absoluteForm;
+
+            const correctedOption = ensureCompatibleAbsoluteGranularity(
+                baseOption,
+                filteredAbsoluteAvailableGranularities,
+            );
+
+            if (correctedOption !== baseOption) {
+                onSelectedFilterOptionChange(correctedOption);
+            } else if (selectedFilterOption.localIdentifier !== filterOptions.absoluteForm.localIdentifier) {
+                onSelectedFilterOptionChange(filterOptions.absoluteForm);
+            }
         }
     };
 
@@ -204,22 +232,6 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
             }
         }, 0);
     };
-
-    useEffect(() => {
-        // Sync route from selected option only once after mount on mobile.
-        // Without this guard, later option updates (e.g. checkbox toggles that keep the same form type)
-        // would unexpectedly reopen the form after the user navigated back to the list.
-        if (!props.isMobile || didSyncInitialMobileRoute.current) {
-            return;
-        }
-
-        didSyncInitialMobileRoute.current = true;
-        if (isAbsoluteDateFilterForm(props.selectedFilterOption)) {
-            changeRoute("absoluteForm");
-        } else if (isRelativeDateFilterForm(props.selectedFilterOption)) {
-            changeRoute("relativeForm");
-        }
-    }, [props.isMobile, props.selectedFilterOption]);
 
     const calculateHeight = (
         showExcludeCurrent: boolean,
@@ -268,6 +280,37 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
         ariaLabel,
         id,
     } = props;
+
+    useEffect(() => {
+        // Sync route from selected option only once after mount on mobile.
+        // Without this guard, later option updates (e.g. checkbox toggles that keep the same form type)
+        // would unexpectedly reopen the form after the user navigated back to the list.
+        if (!isMobile || didSyncInitialMobileRoute.current) {
+            return;
+        }
+
+        didSyncInitialMobileRoute.current = true;
+        if (isAbsoluteDateFilterForm(selectedFilterOption)) {
+            changeRoute("absoluteForm");
+
+            // Correct a stale/incompatible granularity before the absolute form renders with it.
+            const correctedOption = ensureCompatibleAbsoluteGranularity(
+                selectedFilterOption,
+                filteredAbsoluteAvailableGranularities,
+            );
+            if (correctedOption !== selectedFilterOption) {
+                onSelectedFilterOptionChange(correctedOption);
+            }
+        } else if (isRelativeDateFilterForm(selectedFilterOption)) {
+            changeRoute("relativeForm");
+        }
+    }, [
+        isMobile,
+        selectedFilterOption,
+        onSelectedFilterOptionChange,
+        filteredAbsoluteAvailableGranularities,
+    ]);
+
     // Keep the same behavior as `DateFilterBody`:
     // - hide disabled exclude toggle on mobile by default
     // - allow callers to hide it on desktop via `hideDisabledExclude`
@@ -371,7 +414,9 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
                         weekStart={weekStart}
                         isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
                         isSecondsForAbsoluteRangeEnabled={isSecondsForAbsoluteRangeEnabled}
+                        isAbsoluteDateFilterGranularityEnabled={props.isAbsoluteDateFilterGranularityEnabled}
                         availableGranularities={filteredAvailableGranularities}
+                        absoluteAvailableGranularities={filteredAbsoluteAvailableGranularities}
                         isMobile={isMobile}
                         withoutApply={withoutApply}
                         enableEmptyDateValues={props.enableEmptyDateValues}

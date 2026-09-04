@@ -103,7 +103,6 @@ exports[`PluggableGeoPushpinChart > getExtendedReferencePoint > should return a 
     "segment": {
       "accepts": [
         "attribute",
-        "computedAttribute",
       ],
       "allowsReordering": false,
       "allowsSwapping": true,

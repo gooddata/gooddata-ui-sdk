@@ -92,6 +92,31 @@ describe("TigerWorkspaceReportsService page layouts", () => {
         expect(deletePageLayout).not.toHaveBeenCalled();
     });
 
+    it("requests the audit users and resolves them from the included resources", async () => {
+        getAllPageLayouts.mockResolvedValueOnce({
+            data: {
+                data: [
+                    {
+                        id: "layout1",
+                        type: "reportPageLayout",
+                        attributes: { title: "Mine", content: { version: "1" } },
+                        relationships: { createdBy: { data: { id: "ada", type: "userIdentifier" } } },
+                    },
+                ],
+                included: [{ id: "ada", type: "userIdentifier", attributes: { firstname: "Ada" } }],
+            },
+        });
+
+        const layouts = await newService().getReportPageLayouts();
+
+        expect(getAllPageLayouts).toHaveBeenCalledWith(
+            expect.anything(),
+            expect.anything(),
+            expect.objectContaining({ include: ["createdBy", "modifiedBy"] }),
+        );
+        expect(layouts.at(-1)!.createdBy).toMatchObject({ login: "ada", firstName: "Ada" });
+    });
+
     it("deletes a workspace layout by its identifier", async () => {
         deletePageLayout.mockResolvedValue({});
 

@@ -12,6 +12,8 @@ export type AgentCustomSkill =
     | "alert"
     | "anomaly_detection"
     | "clustering"
+    | "dashboard_builder"
+    | "dashboard_editor"
     | "dashboard_summary"
     | "forecasting"
     | "key_driver_analysis"

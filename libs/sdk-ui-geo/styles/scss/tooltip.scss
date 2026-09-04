@@ -207,11 +207,11 @@
 
 // hide default highcharts svg tooltip when using html-based one
 .highcharts-tooltip-container {
+    z-index: 3005;
+
     g.highcharts-tooltip {
         visibility: hidden;
     }
-
-    z-index: 3005;
 }
 
 .gd-viz-tooltip-interaction {

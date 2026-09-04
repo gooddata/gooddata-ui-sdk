@@ -243,6 +243,23 @@ describe("tiger filter converter from model to AFM", () => {
             uris: ["value"],
         });
 
+        it("should preserve the computed attribute type in attribute filters", () => {
+            const ref = idRef("rep_performance", "computedAttribute");
+
+            expect(convertFilter(newPositiveAttributeFilter(ref, ["high"]))).toEqual({
+                positiveAttributeFilter: {
+                    label: { identifier: { id: "rep_performance", type: "computedAttribute" } },
+                    in: { values: ["high"] },
+                },
+            });
+            expect(convertFilter(newNegativeAttributeFilter(ref, ["low"]))).toEqual({
+                negativeAttributeFilter: {
+                    label: { identifier: { id: "rep_performance", type: "computedAttribute" } },
+                    notIn: { values: ["low"] },
+                },
+            });
+        });
+
         const Scenarios: Array<[string, unknown]> = [
             ["positive attribute filter", positiveAttributeFilter],
             ["positive attribute filter with uri attribute elements", positiveAttributeFilterWithUris],

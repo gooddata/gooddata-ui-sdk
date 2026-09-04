@@ -1,0 +1,20 @@
+{
+    "changes": [
+        {
+            "comment": "api-client-tiger: Regenerate the client from the latest metadata and gen-ai OpenAPI specs. The report, reportTemplate and reportPageLayout entities gain createdAt and modifiedAt attributes, createdBy and modifiedBy relationships and an include parameter on their CRUD endpoints.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        },
+        {
+            "comment": "sdk-model: Add the dashboard_builder and dashboard_editor values to AgentCustomSkill, keeping it in sync with the backend skill enum.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        },
+        {
+            "comment": "sdk-backend-tiger: Drop the new clarifyingQuestions chat part instead of failing the chat item, as it has no model representation yet.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

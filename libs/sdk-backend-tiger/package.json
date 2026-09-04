@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-tiger",
-    "version": "11.56.0-alpha.0",
+    "version": "11.56.0-alpha.1",
     "description": "GoodData Backend SPI implementation for GoodData Cloud and GoodData.CN",
     "license": "MIT",
     "author": "GoodData",
@@ -83,7 +83,7 @@
         "@types/spark-md5": "3.0.5",
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",
-        "@typescript/native-preview": "7.0.0-dev.20260202.1",
+        "@typescript/native-preview": "7.0.0-dev.20260501.1",
         "dependency-cruiser": "17.3.10",
         "dotenv": "16.4.5",
         "eslint": "^9.39.2",

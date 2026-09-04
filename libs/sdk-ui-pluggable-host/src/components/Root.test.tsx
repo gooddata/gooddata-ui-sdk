@@ -6,6 +6,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
 
+import { useContractExpiredTier } from "../platformContext/contractExpired.js";
 import { useLoadPlatformContext } from "../platformContext/useLoadPlatformContext.js";
 
 import { Root } from "./Root.js";
@@ -13,6 +14,10 @@ import { type RedirectTargetState, useRedirectTarget } from "./useRedirectTarget
 
 vi.mock("../platformContext/useLoadPlatformContext.js", () => ({
     useLoadPlatformContext: vi.fn(),
+}));
+
+vi.mock("../platformContext/contractExpired.js", () => ({
+    useContractExpiredTier: vi.fn().mockReturnValue(undefined),
 }));
 
 vi.mock("./useRedirectTarget.js", () => ({
@@ -59,6 +64,7 @@ function setupReadyContext(): void {
 describe("Root", () => {
     beforeEach(() => {
         vi.clearAllMocks();
+        vi.mocked(useContractExpiredTier).mockReturnValue(undefined);
         setupReadyContext();
     });
 
@@ -104,6 +110,51 @@ describe("Root", () => {
 
         expect(screen.getByRole("heading")).toBeInTheDocument();
         expect(screen.getByText("Something went wrong")).toBeInTheDocument();
+    });
+
+    it("shows the contract-expired lock instead of the failure text when the bootstrap was denied", () => {
+        vi.mocked(useLoadPlatformContext).mockReturnValue({ state: "error", error: "unspecified" });
+        vi.mocked(useContractExpiredTier).mockReturnValue("unspecified");
+
+        render(
+            <MemoryRouter>
+                <Root />
+            </MemoryRouter>,
+        );
+
+        expect(screen.getByText("Your access is locked.")).toBeInTheDocument();
+        expect(screen.queryByText("Failed to load")).toBeNull();
+        expect(screen.queryByText("unspecified")).toBeNull();
+        expect(screen.queryByText("Contact us")).toBeNull();
+    });
+
+    it("overlays the contract-expired lock on the host UI when a later request is denied", () => {
+        vi.mocked(useRedirectTarget).mockReturnValue({ state: "render" });
+        vi.mocked(useContractExpiredTier).mockReturnValue("Professional");
+
+        render(
+            <MemoryRouter>
+                <Root />
+            </MemoryRouter>,
+        );
+
+        expect(screen.getByText("Your access is locked.")).toBeInTheDocument();
+        expect(screen.getByTestId("host-ui-container")).toBeInTheDocument();
+    });
+
+    it("offers the contact button only when the expired tier is a trial", () => {
+        vi.mocked(useRedirectTarget).mockReturnValue({ state: "render" });
+        vi.mocked(useContractExpiredTier).mockReturnValue("Trial");
+
+        render(
+            <MemoryRouter>
+                <Root />
+            </MemoryRouter>,
+        );
+
+        expect(screen.getByText("Your trial has ended.")).toBeInTheDocument();
+        // The overlay is positioned by layout, which jsdom lacks, so the button is not in the a11y tree.
+        expect(screen.getByText("Contact us")).toBeInTheDocument();
     });
 
     it("shows loading indicator while redirect target is being resolved", () => {

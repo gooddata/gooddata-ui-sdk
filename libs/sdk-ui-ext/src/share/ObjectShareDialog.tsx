@@ -277,9 +277,8 @@ function ObjectShareDialogSession({
         };
     };
 
-    // Synthesized empty-state row: the controller reports it only while the list
-    // holds no grantees (adding one replaces it, removing the last one restores
-    // it — see `adminSelfRow`). The controller decides; this only renders it.
+    // Synthesized by the controller, not granted. The tag explains a FETCHED list the
+    // caller reached without a grant of their own; a draft needs no explaining.
     const rows: IUiObjectShareDialogGrantee[] = [
         ...(state.adminSelfRow
             ? [
@@ -290,7 +289,7 @@ function ObjectShareDialogSession({
                           name: state.adminSelfRow.name,
                       }),
                       email: state.adminSelfRow.email,
-                      controls: <AdminSelfTag />,
+                      controls: draft ? undefined : <AdminSelfTag />,
                   },
               ]
             : []),

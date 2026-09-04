@@ -18,7 +18,7 @@ export type AccessGranteeDetail = IUserAccess | IUserGroupAccess | IGranularUser
 export type AccessGranularPermission = "VIEW" | "EDIT" | "SHARE";
 
 // @alpha
-export type AgentCustomSkill = "alert" | "anomaly_detection" | "clustering" | "dashboard_summary" | "forecasting" | "key_driver_analysis" | "metric" | "schedule_export" | "visualization" | "visualization_summary" | "what_if_analysis" | "knowledge";
+export type AgentCustomSkill = "alert" | "anomaly_detection" | "clustering" | "dashboard_builder" | "dashboard_editor" | "dashboard_summary" | "forecasting" | "key_driver_analysis" | "metric" | "schedule_export" | "visualization" | "visualization_summary" | "what_if_analysis" | "knowledge";
 
 // @alpha
 export type AgentInstructionStrategy = "ALWAYS" | "AUTO";
@@ -125,13 +125,13 @@ export function attributeAlias(attribute: IAttribute): string | undefined;
 export class AttributeBuilder {
     // @internal
     constructor(input: AttributeBuilderInput);
-    alias: (alias?: string | undefined) => this;
+    alias: (alias?: string) => this;
     build: () => IAttribute;
     defaultLocalId: () => this;
     displayForm: (ref: ObjRef) => this;
-    localId: (localId?: string | undefined) => this;
+    localId: (localId?: Identifier) => this;
     noAlias: () => this;
-    showAllValues: (showAllValues?: boolean | undefined) => this;
+    showAllValues: (showAllValues?: boolean) => this;
 }
 
 // @public
@@ -237,7 +237,7 @@ export type AutomationEvaluationMode = "SHARED" | "PER_RECIPIENT";
 export type AutomationNotificationType = "automation-task.completed" | "automation-task.limit-exceeded";
 
 // @alpha
-export const belongsToCalendar: (g: string | undefined, calendar: "fiscal" | "standard") => boolean;
+export const belongsToCalendar: (g: string | undefined, calendar: Exclude<CalendarAffinity, "shared">) => boolean;
 
 // @alpha
 export const BROWSER_DETECTED = "$browserDetected";
@@ -470,7 +470,7 @@ export const CSV_DELIMITER_PRESETS: {
     };
     readonly tab: {
         readonly delimiter: "\t";
-        readonly previewSymbol: "⇥";
+        readonly previewSymbol: "\u21E5";
     };
 };
 
@@ -809,7 +809,7 @@ export type ExportTemplateType = "workspaceExportTemplate" | "exportTemplate";
 export type ExternalPluggableApplicationRegistryItem = IExternalPluggableApplicationRegistryItemV1;
 
 // @public
-export const factoryNotationFor: (data: any, additionalConversion?: ((data: any) => string | undefined) | undefined) => string;
+export const factoryNotationFor: (data: any, additionalConversion?: (data: any) => string | undefined) => string;
 
 // @public
 export function filterAttributeElements(filter: IAttributeFilterWithSelection): IAttributeElements;
@@ -2998,8 +2998,6 @@ export interface IFeatureFlags {
     enableAiAgenticSuggestions?: boolean;
     enableAiContextSetup?: boolean;
     enableAIDataSetting?: boolean;
-    enableAiHub?: boolean;
-    enableAIKnowledge?: boolean;
     enableAiLlmAnthropicProvider?: boolean;
     enableAiOnData?: boolean;
     enableAlertOncePerInterval?: boolean;
@@ -5461,6 +5459,9 @@ export function isComputedAttributeMetadataObject(obj: unknown): obj is ICompute
 // @public
 export function isComputedAttributeMetadataObjectDefinition(obj: unknown): obj is IComputedAttributeMetadataObjectDefinition;
 
+// @public
+export function isComputedAttributeRef(obj: unknown): boolean;
+
 // @alpha
 export function isCrossFiltering(obj: unknown): obj is ICrossFiltering;
 
@@ -7134,7 +7135,7 @@ export function measureArithmeticOperator(measure: IMeasure): ArithmeticMeasureO
 export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     // @internal
     constructor(measureOrRef: IMeasure<IMeasureDefinition> | ObjRef);
-    aggregation: (aggregation?: MeasureAggregation | undefined) => this;
+    aggregation: (aggregation?: MeasureAggregation) => this;
     // (undocumented)
     protected buildDefinition(): IMeasureDefinition;
     defaultAggregation: () => this;
@@ -7151,7 +7152,7 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
 export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
     // @internal
     protected constructor();
-    alias: (alias?: string | undefined) => this;
+    alias: (alias?: string) => this;
     // (undocumented)
     build: () => IMeasure<T>;
     protected abstract buildDefinition(): T;
@@ -7159,13 +7160,13 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
     protected customLocalId: boolean;
     defaultFormat: () => this;
     defaultLocalId: () => this;
-    format: (format?: string | undefined) => this;
+    format: (format?: string) => this;
     protected abstract generateLocalId(): string;
     protected initializeFromExisting(measure: MeasureEnvelope): void;
-    localId: (localId?: string | undefined) => this;
+    localId: (localId?: Identifier) => this;
     noAlias: () => this;
     noTitle: () => this;
-    title: (title?: string | undefined) => this;
+    title: (title?: string) => this;
 }
 
 // @public
@@ -7575,7 +7576,7 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
     // (undocumented)
     protected generateLocalId(): string;
     masterMeasure: (measureOrLocalId: MeasureOrLocalId) => this;
-    popAttribute: (popAttrIdOrRef: string | ObjRef) => this;
+    popAttribute: (popAttrIdOrRef: ObjRef | Identifier) => this;
 }
 
 // @public

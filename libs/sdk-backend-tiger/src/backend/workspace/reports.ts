@@ -51,6 +51,8 @@ import { objRefToIdentifier } from "../../utils/api.js";
 
 import { TigerWorkspaceSettings } from "./settings/index.js";
 
+const auditInclude = ["createdBy" as const, "modifiedBy" as const];
+
 function findBuiltInPageLayout(ref: ObjRef): IReportPageLayout | undefined {
     return BuiltInReportPageLayouts.find((layout) => areObjRefsEqual(layout.ref, ref));
 }
@@ -67,9 +69,14 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
                 EntitiesApi_GetAllEntitiesReportPageLayouts(client.axios, client.basePath, {
                     workspaceId: this.workspace,
                     metaInclude: ["origin"],
+                    include: auditInclude,
                     page,
                     size,
-                }).then((response) => response.data.data.map(convertReportPageLayout)),
+                }).then((response) =>
+                    response.data.data.map((layout) =>
+                        convertReportPageLayout(layout, response.data.included),
+                    ),
+                ),
             ),
         );
         return [...BuiltInReportPageLayouts, ...layouts];
@@ -86,8 +93,9 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
                 workspaceId: this.workspace,
                 objectId,
                 metaInclude: ["origin"],
+                include: auditInclude,
             });
-            return convertReportPageLayout(response.data.data);
+            return convertReportPageLayout(response.data.data, response.data.included);
         });
     };
 
@@ -98,6 +106,7 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
         return this.authCall(async (client) => {
             const response = await EntitiesApi_CreateEntityReportPageLayouts(client.axios, client.basePath, {
                 workspaceId: this.workspace,
+                include: auditInclude,
                 jsonApiReportPageLayoutPostOptionalIdDocument: {
                     data: {
                         type: "reportPageLayout",
@@ -106,7 +115,7 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
                     },
                 },
             });
-            return convertReportPageLayout(response.data.data);
+            return convertReportPageLayout(response.data.data, response.data.included);
         });
     };
 
@@ -116,6 +125,7 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
             const response = await EntitiesApi_UpdateEntityReportPageLayouts(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 objectId,
+                include: auditInclude,
                 jsonApiReportPageLayoutInDocument: {
                     data: {
                         type: "reportPageLayout",
@@ -124,7 +134,7 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
                     },
                 },
             });
-            return convertReportPageLayout(response.data.data);
+            return convertReportPageLayout(response.data.data, response.data.included);
         });
     };
 
@@ -144,9 +154,14 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
                 EntitiesApi_GetAllEntitiesReportTemplates(client.axios, client.basePath, {
                     workspaceId: this.workspace,
                     metaInclude: ["origin"],
+                    include: auditInclude,
                     page,
                     size,
-                }).then((response) => response.data.data.map(convertReportTemplate)),
+                }).then((response) =>
+                    response.data.data.map((template) =>
+                        convertReportTemplate(template, response.data.included),
+                    ),
+                ),
             ),
         );
     };
@@ -158,8 +173,9 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
                 workspaceId: this.workspace,
                 objectId,
                 metaInclude: ["origin"],
+                include: auditInclude,
             });
-            return convertReportTemplate(response.data.data);
+            return convertReportTemplate(response.data.data, response.data.included);
         });
     };
 
@@ -168,6 +184,7 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
         return this.authCall(async (client) => {
             const response = await EntitiesApi_CreateEntityReportTemplates(client.axios, client.basePath, {
                 workspaceId: this.workspace,
+                include: auditInclude,
                 jsonApiReportTemplatePostOptionalIdDocument: {
                     data: {
                         type: "reportTemplate",
@@ -176,7 +193,7 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
                     },
                 },
             });
-            return convertReportTemplate(response.data.data);
+            return convertReportTemplate(response.data.data, response.data.included);
         });
     };
 
@@ -186,6 +203,7 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
             const response = await EntitiesApi_UpdateEntityReportTemplates(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 objectId,
+                include: auditInclude,
                 jsonApiReportTemplateInDocument: {
                     data: {
                         type: "reportTemplate",
@@ -194,7 +212,7 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
                     },
                 },
             });
-            return convertReportTemplate(response.data.data);
+            return convertReportTemplate(response.data.data, response.data.included);
         });
     };
 
@@ -214,9 +232,12 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
                 EntitiesApi_GetAllEntitiesReports(client.axios, client.basePath, {
                     workspaceId: this.workspace,
                     metaInclude: ["origin"],
+                    include: auditInclude,
                     page,
                     size,
-                }).then((response) => response.data.data.map(convertReport)),
+                }).then((response) =>
+                    response.data.data.map((report) => convertReport(report, response.data.included)),
+                ),
             ),
         );
     };
@@ -228,8 +249,9 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
                 workspaceId: this.workspace,
                 objectId,
                 metaInclude: ["origin"],
+                include: auditInclude,
             });
-            return convertReport(response.data.data);
+            return convertReport(response.data.data, response.data.included);
         });
     };
 
@@ -238,6 +260,7 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
         return this.authCall(async (client) => {
             const response = await EntitiesApi_CreateEntityReports(client.axios, client.basePath, {
                 workspaceId: this.workspace,
+                include: auditInclude,
                 jsonApiReportPostOptionalIdDocument: {
                     data: {
                         type: "report",
@@ -246,7 +269,7 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
                     },
                 },
             });
-            return convertReport(response.data.data);
+            return convertReport(response.data.data, response.data.included);
         });
     };
 
@@ -256,6 +279,7 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
             const response = await EntitiesApi_UpdateEntityReports(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 objectId,
+                include: auditInclude,
                 jsonApiReportInDocument: {
                     data: {
                         type: "report",
@@ -264,7 +288,7 @@ export class TigerWorkspaceReportsService implements IWorkspaceReportsService {
                     },
                 },
             });
-            return convertReport(response.data.data);
+            return convertReport(response.data.data, response.data.included);
         });
     };
 

@@ -270,6 +270,25 @@ export function HostChrome({
 
     const hideChrome = ctx.embeddingMode === "iframe" || ctx.isExportMode === true;
 
+    const enableGenAiRightPanel = features.settings["enableGenAiRightPanel"];
+    const Wrapper = useCallback(
+        ({ children, chatIsOpen }: { children: ReactNode; chatIsOpen: boolean }) => {
+            if (enableGenAiRightPanel && ctx.embeddingMode === "none") {
+                return (
+                    <main
+                        className={e("content", {
+                            chatIsOpen,
+                        })}
+                    >
+                        {children}
+                    </main>
+                );
+            }
+            return <main className={e("content")}>{children}</main>;
+        },
+        [ctx.embeddingMode, enableGenAiRightPanel],
+    );
+
     return (
         <HostIntlProvider locale={locale} additionalMessages={appMessages}>
             <BackendProvider backend={getBackend()}>
@@ -324,7 +343,7 @@ export function HostChrome({
                                 />
                             </div>
                         )}
-                        <main className={e("content")}>{children}</main>
+                        <Wrapper chatIsOpen={chatIsOpen}>{children}</Wrapper>
                         {pricing.element}
                         <HostNotificationDispatcher notification={notification} />
                     </div>

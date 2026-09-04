@@ -2238,6 +2238,71 @@
                     }
                 }
             }
+        },
+        "/api/v1/ai/workspaces/{workspace_id}/summary/visualizations": {
+            "post": {
+                "tags": [
+                    "Dashboard Summary"
+                ],
+                "summary": "(EXPERIMENTAL) Summarize a set of visualizations",
+                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. Generates a natural-language summary of an explicit set of visualizations, which need not belong to any one dashboard. The filter context is required: with no dashboard there is no saved filter context to fall back on.",
+                "operationId": "summarizeVisualizations",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SummarizeVisualizationsRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SummarizeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Nothing to summarize, the call context is missing organization or user, or no LLM provider is configured. LLM-endpoint failures also carry a `code` field naming the error class."
+                    },
+                    "403": {
+                        "description": "Sharing data with the LLM is disabled for this organization."
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "AI query limit exceeded."
+                    },
+                    "502": {
+                        "description": "The upstream LLM provider failed. The body carries a `code` field naming the error class."
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -2490,14 +2555,6 @@
                     "MIN",
                     "MAX",
                     "MEDIAN",
-                    "RUNSUM",
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
                     "RUNSUM"
                 ],
                 "title": "Aggregation"
@@ -2505,14 +2562,6 @@
             "Aggregation1": {
                 "type": "string",
                 "enum": [
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM",
                     "SUM",
                     "COUNT",
                     "APPROXIMATE_COUNT",
@@ -2542,14 +2591,6 @@
                     "MIN",
                     "MAX",
                     "MEDIAN",
-                    "RUNSUM",
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
                     "RUNSUM"
                 ],
                 "title": "Aggregation10"
@@ -2557,14 +2598,6 @@
             "Aggregation11": {
                 "type": "string",
                 "enum": [
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM",
                     "SUM",
                     "COUNT",
                     "APPROXIMATE_COUNT",
@@ -2594,14 +2627,6 @@
                     "MIN",
                     "MAX",
                     "MEDIAN",
-                    "RUNSUM",
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
                     "RUNSUM"
                 ],
                 "title": "Aggregation12"
@@ -2609,14 +2634,6 @@
             "Aggregation13": {
                 "type": "string",
                 "enum": [
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM",
                     "SUM",
                     "COUNT",
                     "APPROXIMATE_COUNT",
@@ -2653,14 +2670,6 @@
                     "MIN",
                     "MAX",
                     "MEDIAN",
-                    "RUNSUM",
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
                     "RUNSUM"
                 ],
                 "title": "Aggregation2"
@@ -2668,14 +2677,6 @@
             "Aggregation3": {
                 "type": "string",
                 "enum": [
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM",
                     "SUM",
                     "COUNT",
                     "APPROXIMATE_COUNT",
@@ -2705,14 +2706,6 @@
                     "MIN",
                     "MAX",
                     "MEDIAN",
-                    "RUNSUM",
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
                     "RUNSUM"
                 ],
                 "title": "Aggregation6"
@@ -2720,14 +2713,6 @@
             "Aggregation7": {
                 "type": "string",
                 "enum": [
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM",
                     "SUM",
                     "COUNT",
                     "APPROXIMATE_COUNT",
@@ -2757,14 +2742,6 @@
                     "MIN",
                     "MAX",
                     "MEDIAN",
-                    "RUNSUM",
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
                     "RUNSUM"
                 ],
                 "title": "Aggregation8"
@@ -2772,14 +2749,6 @@
             "Aggregation9": {
                 "type": "string",
                 "enum": [
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM",
                     "SUM",
                     "COUNT",
                     "APPROXIMATE_COUNT",
@@ -3891,7 +3860,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type83"
+                                "$ref": "#/components/schemas/Type53"
                             },
                             {
                                 "type": "null"
@@ -3901,6 +3870,80 @@
                 },
                 "type": "object",
                 "title": "ChartFill"
+            },
+            "ClarifyingChoiceOption": {
+                "properties": {
+                    "label": {
+                        "type": "string",
+                        "title": "Label",
+                        "description": "Option caption to render and to submit as the answer, e.g. `Net Sales`."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "label"
+                ],
+                "title": "ClarifyingChoiceOption"
+            },
+            "ClarifyingQuestion": {
+                "properties": {
+                    "control": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/SingleChoiceControl"
+                            }
+                        ],
+                        "title": "Control",
+                        "description": "How the user answers this question.",
+                        "discriminator": {
+                            "propertyName": "type",
+                            "mapping": {
+                                "singleChoice": "#/components/schemas/SingleChoiceControl"
+                            }
+                        }
+                    },
+                    "text": {
+                        "type": "string",
+                        "title": "Text",
+                        "description": "The question as the user reads it, including any examples."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "text",
+                    "control"
+                ],
+                "title": "ClarifyingQuestion",
+                "description": "One question, with the control to answer it.\n\n``text`` sits outside ``control`` so a client that does not know a control type can still\nrender the question and let the user answer in the composer."
+            },
+            "ClarifyingQuestionsPart": {
+                "properties": {
+                    "questions": {
+                        "items": {
+                            "$ref": "#/components/schemas/ClarifyingQuestion"
+                        },
+                        "type": "array",
+                        "minItems": 1,
+                        "title": "Questions",
+                        "description": "One to four questions, in the order to ask them."
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "clarifyingQuestions",
+                        "title": "Type",
+                        "description": "Type of multipart part.",
+                        "default": "clarifyingQuestions"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "questions"
+                ],
+                "title": "ClarifyingQuestionsPart",
+                "description": "Questions the assistant needs answered before it can continue.\n\nRides a turn whose ``status`` is ``input_required``. Answers go back as an ordinary text\nmessage -- each question's ``text``, then the answer on the next line, questions separated\nby a blank line -- so a client that renders none of the controls stays functional. Echoing\nthe question is what attributes an answer, which is why an option carries no submit text of\nits own."
             },
             "ColorDefinition": {
                 "properties": {
@@ -4341,7 +4384,81 @@
                 ],
                 "title": "CompoundMeasureValueFilterBody"
             },
-            "Condition13": {
+            "Condition2": {
+                "type": "string",
+                "enum": [
+                    "GREATER_THAN",
+                    "GREATER_THAN_OR_EQUAL_TO",
+                    "LESS_THAN",
+                    "LESS_THAN_OR_EQUAL_TO",
+                    "EQUAL_TO",
+                    "NOT_EQUAL_TO",
+                    "BETWEEN",
+                    "NOT_BETWEEN"
+                ],
+                "title": "Condition2"
+            },
+            "Condition3": {
+                "type": "string",
+                "enum": [
+                    "GREATER_THAN",
+                    "GREATER_THAN_OR_EQUAL_TO",
+                    "LESS_THAN",
+                    "LESS_THAN_OR_EQUAL_TO",
+                    "EQUAL_TO",
+                    "NOT_EQUAL_TO"
+                ],
+                "title": "Condition3"
+            },
+            "Condition4": {
+                "type": "string",
+                "enum": [
+                    "BETWEEN",
+                    "NOT_BETWEEN"
+                ],
+                "title": "Condition4"
+            },
+            "Condition5": {
+                "type": "string",
+                "enum": [
+                    "is",
+                    "isNot"
+                ],
+                "title": "Condition5"
+            },
+            "Condition6": {
+                "type": "string",
+                "enum": [
+                    "contains",
+                    "doesNotContain",
+                    "startsWith",
+                    "doesNotStartWith",
+                    "endsWith",
+                    "doesNotEndWith"
+                ],
+                "title": "Condition6"
+            },
+            "Condition7": {
+                "type": "string",
+                "enum": [
+                    "GREATER_THAN",
+                    "GREATER_THAN_OR_EQUAL_TO",
+                    "LESS_THAN",
+                    "LESS_THAN_OR_EQUAL_TO",
+                    "EQUAL_TO",
+                    "NOT_EQUAL_TO"
+                ],
+                "title": "Condition7"
+            },
+            "Condition8": {
+                "type": "string",
+                "enum": [
+                    "BETWEEN",
+                    "NOT_BETWEEN"
+                ],
+                "title": "Condition8"
+            },
+            "Condition9": {
                 "properties": {
                     "format": {
                         "$ref": "#/components/schemas/Format"
@@ -4385,7 +4502,7 @@
                     "operator",
                     "format"
                 ],
-                "title": "Condition13"
+                "title": "Condition9"
             },
             "ConditionalFormatting": {
                 "properties": {
@@ -4415,6 +4532,28 @@
                         ],
                         "title": "Rules",
                         "description": "Ordered list of rules; the first matching rule wins."
+                    },
+                    "suppressed_targets": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SuppressedTargets"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/SuppressedTargets1"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Suppressed Targets",
+                        "description": "Targets whose semantic-layer formatting is explicitly suppressed — an entry here with no matching rule means formatting is turned off for that target (Custom-with-zero-rules)."
                     },
                     "version": {
                         "anyOf": [
@@ -6871,6 +7010,24 @@
             },
             "DashboardReferences": {
                 "properties": {
+                    "datasets": {
+                        "items": {
+                            "additionalProperties": true,
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Datasets",
+                        "description": "Full AAC body of every dataset the chart uses."
+                    },
+                    "datedatasets": {
+                        "items": {
+                            "additionalProperties": true,
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Datedatasets",
+                        "description": "Full AAC body of every date dataset the chart uses."
+                    },
                     "visualizations": {
                         "items": {
                             "additionalProperties": true,
@@ -6887,7 +7044,7 @@
                     "visualizations"
                 ],
                 "title": "DashboardReferences",
-                "description": "AAC bodies of every widget-referenced visualization in a dashboard draft.\n\nEach entry is opaque AAC pass-through (dict), not modeled as a schema — same\ntreatment the codebase gives elsewhere to full AAC visualization bodies."
+                "description": "AAC bodies of every widget-referenced visualization in a dashboard draft, and its datasets.\n\nEach entry is opaque AAC pass-through (dict), not modeled as a schema — same\ntreatment the codebase gives elsewhere to full AAC visualization bodies."
             },
             "DashboardRelativeDateFilter": {
                 "properties": {
@@ -7413,6 +7570,15 @@
                 ],
                 "title": "EmptyValueHandling"
             },
+            "EmptyValues": {
+                "type": "string",
+                "enum": [
+                    "only",
+                    "include",
+                    "exclude"
+                ],
+                "title": "EmptyValues"
+            },
             "ErrorInfo": {
                 "properties": {
                     "reason": {
@@ -7598,7 +7764,36 @@
                 ],
                 "title": "GrandTotalsPosition"
             },
-            "Granularity3": {
+            "Granularity": {
+                "type": "string",
+                "enum": [
+                    "SECOND",
+                    "MINUTE",
+                    "HOUR",
+                    "DAY",
+                    "WEEK",
+                    "WEEK_US",
+                    "MONTH",
+                    "QUARTER",
+                    "YEAR",
+                    "SECOND_OF_MINUTE",
+                    "SECOND_OF_DAY",
+                    "MINUTE_OF_HOUR",
+                    "MINUTE_OF_DAY",
+                    "HOUR_OF_DAY",
+                    "DAY_OF_WEEK",
+                    "DAY_OF_MONTH",
+                    "DAY_OF_YEAR",
+                    "WEEK_OF_YEAR",
+                    "MONTH_OF_YEAR",
+                    "QUARTER_OF_YEAR",
+                    "FISCAL_YEAR",
+                    "FISCAL_QUARTER",
+                    "FISCAL_MONTH"
+                ],
+                "title": "Granularity"
+            },
+            "Granularity2": {
                 "type": "string",
                 "enum": [
                     "minute",
@@ -7609,7 +7804,7 @@
                     "quarter",
                     "year"
                 ],
-                "title": "Granularity3"
+                "title": "Granularity2"
             },
             "GridLineShape": {
                 "type": "string",
@@ -8102,7 +8297,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type81"
+                                "$ref": "#/components/schemas/Type50"
                             },
                             {
                                 "type": "null"
@@ -8679,12 +8874,16 @@
                                 },
                                 {
                                     "$ref": "#/components/schemas/AlertProposalPart"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/ClarifyingQuestionsPart"
                                 }
                             ],
                             "discriminator": {
                                 "propertyName": "type",
                                 "mapping": {
                                     "alertProposal": "#/components/schemas/AlertProposalPart",
+                                    "clarifyingQuestions": "#/components/schemas/ClarifyingQuestionsPart",
                                     "dashboard": "#/components/schemas/DashboardPart",
                                     "dashboardPatch": "#/components/schemas/DashboardPatchPart",
                                     "kda": "#/components/schemas/KeyDriverAnalysisPart",
@@ -8724,6 +8923,82 @@
                     "parts"
                 ],
                 "title": "MultipartContent"
+            },
+            "MvfCondition": {
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/MvfCondition1"
+                    },
+                    {
+                        "$ref": "#/components/schemas/MvfCondition2"
+                    },
+                    {
+                        "$ref": "#/components/schemas/MvfCondition3"
+                    }
+                ],
+                "title": "Metric Value Filter Condition"
+            },
+            "MvfCondition1": {
+                "properties": {
+                    "condition": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Condition2"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Condition to use for this filter. If omitted, the condition represents ALL (no filtering)."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "title": "MvfCondition1"
+            },
+            "MvfCondition2": {
+                "properties": {
+                    "condition": {
+                        "$ref": "#/components/schemas/Condition3"
+                    },
+                    "value": {
+                        "type": "number",
+                        "title": "Value",
+                        "description": "Value to use in condition for this filter."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "condition",
+                    "value"
+                ],
+                "title": "MvfCondition2"
+            },
+            "MvfCondition3": {
+                "properties": {
+                    "condition": {
+                        "$ref": "#/components/schemas/Condition4"
+                    },
+                    "from": {
+                        "type": "number",
+                        "title": "From",
+                        "description": "From value to use in condition for this filter."
+                    },
+                    "to": {
+                        "type": "number",
+                        "title": "To",
+                        "description": "To value to use in condition for this filter."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "condition",
+                    "from",
+                    "to"
+                ],
+                "title": "MvfCondition3"
             },
             "NegativeAttributeFilter": {
                 "properties": {
@@ -8875,11 +9150,6 @@
                     "DIFFERENCE",
                     "MULTIPLICATION",
                     "RATIO",
-                    "CHANGE",
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
                     "CHANGE"
                 ],
                 "title": "Operator"
@@ -8887,11 +9157,6 @@
             "Operator1": {
                 "type": "string",
                 "enum": [
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE",
                     "SUM",
                     "DIFFERENCE",
                     "MULTIPLICATION",
@@ -8912,11 +9177,6 @@
                     "DIFFERENCE",
                     "MULTIPLICATION",
                     "RATIO",
-                    "CHANGE",
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
                     "CHANGE"
                 ],
                 "title": "Operator10"
@@ -8924,11 +9184,6 @@
             "Operator11": {
                 "type": "string",
                 "enum": [
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE",
                     "SUM",
                     "DIFFERENCE",
                     "MULTIPLICATION",
@@ -8949,11 +9204,6 @@
                     "DIFFERENCE",
                     "MULTIPLICATION",
                     "RATIO",
-                    "CHANGE",
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
                     "CHANGE"
                 ],
                 "title": "Operator12"
@@ -8961,11 +9211,6 @@
             "Operator13": {
                 "type": "string",
                 "enum": [
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE",
                     "SUM",
                     "DIFFERENCE",
                     "MULTIPLICATION",
@@ -9009,11 +9254,6 @@
                     "DIFFERENCE",
                     "MULTIPLICATION",
                     "RATIO",
-                    "CHANGE",
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
                     "CHANGE"
                 ],
                 "title": "Operator2"
@@ -9021,11 +9261,6 @@
             "Operator3": {
                 "type": "string",
                 "enum": [
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE",
                     "SUM",
                     "DIFFERENCE",
                     "MULTIPLICATION",
@@ -9046,11 +9281,6 @@
                     "DIFFERENCE",
                     "MULTIPLICATION",
                     "RATIO",
-                    "CHANGE",
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
                     "CHANGE"
                 ],
                 "title": "Operator4"
@@ -9058,11 +9288,6 @@
             "Operator5": {
                 "type": "string",
                 "enum": [
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE",
                     "SUM",
                     "DIFFERENCE",
                     "MULTIPLICATION",
@@ -9083,11 +9308,6 @@
                     "DIFFERENCE",
                     "MULTIPLICATION",
                     "RATIO",
-                    "CHANGE",
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
                     "CHANGE"
                 ],
                 "title": "Operator6"
@@ -9095,11 +9315,6 @@
             "Operator7": {
                 "type": "string",
                 "enum": [
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE",
                     "SUM",
                     "DIFFERENCE",
                     "MULTIPLICATION",
@@ -9313,6 +9528,261 @@
                 ],
                 "title": "Query"
             },
+            "QueryAttributeFilter": {
+                "properties": {
+                    "display_as": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "pattern": "^label/(?!\\.)[.A-Za-z0-9_-]{1,255}$"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Display As Label Identifier",
+                        "description": "Configures the label used for representing attribute filter elements in UI."
+                    },
+                    "state": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/State"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "State"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/Type11"
+                    },
+                    "using": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AttributeIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/LabelIdentifier"
+                            }
+                        ],
+                        "title": "Using",
+                        "description": "Attribute or label to use in this filter."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using"
+                ],
+                "title": "QueryAttributeFilter"
+            },
+            "QueryAttributeSort": {
+                "properties": {
+                    "aggregation": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Aggregation14"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Aggregation function to use for this sort."
+                    },
+                    "by": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "$ref": "#/components/schemas/AttributeIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/LabelIdentifier"
+                            }
+                        ],
+                        "title": "By",
+                        "description": "Local attribute or label to use in this sort."
+                    },
+                    "direction": {
+                        "$ref": "#/components/schemas/Direction",
+                        "description": "Sort direction."
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/Type47"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "by",
+                    "direction"
+                ],
+                "title": "QueryAttributeSort"
+            },
+            "QueryDateFilter": {
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/QueryDateFilter1"
+                    },
+                    {
+                        "$ref": "#/components/schemas/QueryDateFilter2"
+                    }
+                ],
+                "title": "Date Filter"
+            },
+            "QueryDateFilter1": {
+                "properties": {
+                    "empty_values": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/EmptyValues"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Controls how empty values are handled in the filter."
+                    },
+                    "from": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "From",
+                        "description": "A relative granularity from which the filter will be applied."
+                    },
+                    "granularity": {
+                        "$ref": "#/components/schemas/Granularity",
+                        "description": "A granularity to use in relative date filter"
+                    },
+                    "to": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "To",
+                        "description": "A relative granularity to which the filter will be applied."
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/Type9"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using",
+                        "description": "Date dataset identifier to use for this field."
+                    },
+                    "with": {
+                        "anyOf": [
+                            {
+                                "patternProperties": {
+                                    "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                                        "$ref": "#/components/schemas/QueryAttributeFilter"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "With",
+                        "description": "Attribute filters to apply together with this date filter."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "granularity"
+                ],
+                "title": "QueryDateFilter1"
+            },
+            "QueryDateFilter2": {
+                "properties": {
+                    "empty_values": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/EmptyValues"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Controls how empty values are handled in the filter."
+                    },
+                    "from": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "pattern": "^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "From",
+                        "description": "A date from which the filter will be applied. YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities."
+                    },
+                    "to": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "pattern": "^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "To",
+                        "description": "A date to which the filter will be applied. YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities."
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/Type9"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using",
+                        "description": "Date dataset identifier to use for this field."
+                    },
+                    "with": {
+                        "anyOf": [
+                            {
+                                "patternProperties": {
+                                    "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                                        "$ref": "#/components/schemas/QueryAttributeFilter"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "With",
+                        "description": "Attribute filters to apply together with this date filter."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using"
+                ],
+                "title": "QueryDateFilter2"
+            },
             "QueryField": {
                 "anyOf": [
                     {
@@ -9446,7 +9916,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type61"
+                                "$ref": "#/components/schemas/Type33"
                             },
                             {
                                 "type": "null"
@@ -9540,7 +10010,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type70"
+                                "$ref": "#/components/schemas/Type42"
                             },
                             {
                                 "type": "null"
@@ -9622,7 +10092,7 @@
                         "description": "A field title."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type71",
+                        "$ref": "#/components/schemas/Type43",
                         "description": "Type of relative period metric related to another metric in list."
                     },
                     "using": {
@@ -9701,7 +10171,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type72"
+                                "$ref": "#/components/schemas/Type44"
                             },
                             {
                                 "type": "null"
@@ -9796,7 +10266,7 @@
                         "description": "A field title."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type73",
+                        "$ref": "#/components/schemas/Type45",
                         "description": "Type of relative period metric related to another metric in list."
                     },
                     "using": {
@@ -9875,7 +10345,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type74"
+                                "$ref": "#/components/schemas/Type46"
                             },
                             {
                                 "type": "null"
@@ -9955,7 +10425,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type62"
+                                "$ref": "#/components/schemas/Type34"
                             },
                             {
                                 "type": "null"
@@ -10069,7 +10539,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type63"
+                                "$ref": "#/components/schemas/Type35"
                             },
                             {
                                 "type": "null"
@@ -10084,12 +10554,6 @@
                             },
                             {
                                 "$ref": "#/components/schemas/Using2"
-                            },
-                            {
-                                "$ref": "#/components/schemas/Using3"
-                            },
-                            {
-                                "$ref": "#/components/schemas/Using4"
                             }
                         ],
                         "title": "Metric Identifier",
@@ -10154,7 +10618,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type64"
+                                "$ref": "#/components/schemas/Type36"
                             },
                             {
                                 "type": "null"
@@ -10261,7 +10725,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type65"
+                                "$ref": "#/components/schemas/Type37"
                             },
                             {
                                 "type": "null"
@@ -10356,7 +10820,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type66"
+                                "$ref": "#/components/schemas/Type38"
                             },
                             {
                                 "type": "null"
@@ -10440,7 +10904,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type67"
+                                "$ref": "#/components/schemas/Type39"
                             },
                             {
                                 "type": "null"
@@ -10524,7 +10988,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type68"
+                                "$ref": "#/components/schemas/Type40"
                             },
                             {
                                 "type": "null"
@@ -10608,7 +11072,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type69"
+                                "$ref": "#/components/schemas/Type41"
                             },
                             {
                                 "type": "null"
@@ -10646,135 +11110,22 @@
             "QueryFilter": {
                 "anyOf": [
                     {
-                        "$ref": "#/components/schemas/QueryFilter1"
+                        "$ref": "#/components/schemas/QueryDateFilter"
                     },
                     {
-                        "$ref": "#/components/schemas/QueryFilter2"
+                        "$ref": "#/components/schemas/QueryAttributeFilter"
                     },
                     {
-                        "$ref": "#/components/schemas/QueryFilter3"
+                        "$ref": "#/components/schemas/QueryTextFilter"
                     },
                     {
-                        "$ref": "#/components/schemas/QueryFilter4"
+                        "$ref": "#/components/schemas/QueryMetricValueFilter"
                     },
                     {
-                        "$ref": "#/components/schemas/QueryFilter5"
-                    },
-                    {
-                        "$ref": "#/components/schemas/QueryFilter6"
+                        "$ref": "#/components/schemas/QueryRankingFilter"
                     }
                 ],
                 "title": "Filter"
-            },
-            "QueryFilter1": {
-                "properties": {
-                    "type": {
-                        "$ref": "#/components/schemas/Type30"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "type"
-                ],
-                "title": "QueryFilter1"
-            },
-            "QueryFilter2": {
-                "properties": {
-                    "display_as": {
-                        "anyOf": [
-                            {
-                                "type": "string",
-                                "pattern": "^label/(?!\\.)[.A-Za-z0-9_-]{1,255}$"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Display As Label Identifier",
-                        "description": "Configures the label used for representing attribute filter elements in UI."
-                    },
-                    "state": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/State"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "State"
-                    },
-                    "type": {
-                        "$ref": "#/components/schemas/Type30"
-                    },
-                    "using": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/AttributeIdentifier"
-                            },
-                            {
-                                "$ref": "#/components/schemas/LabelIdentifier"
-                            }
-                        ],
-                        "title": "Using",
-                        "description": "Attribute or label to use in this filter."
-                    }
-                },
-                "additionalProperties": false,
-                "type": "object",
-                "required": [
-                    "type",
-                    "using"
-                ],
-                "title": "QueryFilter2"
-            },
-            "QueryFilter3": {
-                "properties": {
-                    "type": {
-                        "$ref": "#/components/schemas/Type30"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "type"
-                ],
-                "title": "QueryFilter3"
-            },
-            "QueryFilter4": {
-                "properties": {
-                    "type": {
-                        "$ref": "#/components/schemas/Type30"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "type"
-                ],
-                "title": "QueryFilter4"
-            },
-            "QueryFilter5": {
-                "properties": {
-                    "type": {
-                        "$ref": "#/components/schemas/Type30"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "type"
-                ],
-                "title": "QueryFilter5"
-            },
-            "QueryFilter6": {
-                "properties": {
-                    "type": {
-                        "$ref": "#/components/schemas/Type30"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "type"
-                ],
-                "title": "QueryFilter6"
             },
             "QueryFilters": {
                 "patternProperties": {
@@ -10785,66 +11136,7 @@
                 "type": "object",
                 "title": "Query Filters"
             },
-            "QuerySort": {
-                "anyOf": [
-                    {
-                        "$ref": "#/components/schemas/QuerySort1"
-                    },
-                    {
-                        "$ref": "#/components/schemas/QuerySort2"
-                    },
-                    {
-                        "$ref": "#/components/schemas/QuerySort3"
-                    }
-                ],
-                "title": "Sort"
-            },
-            "QuerySort1": {
-                "properties": {
-                    "aggregation": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Aggregation14"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Aggregation function to use for this sort."
-                    },
-                    "by": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "$ref": "#/components/schemas/AttributeIdentifier"
-                            },
-                            {
-                                "$ref": "#/components/schemas/LabelIdentifier"
-                            }
-                        ],
-                        "title": "By",
-                        "description": "Local attribute or label to use in this sort."
-                    },
-                    "direction": {
-                        "$ref": "#/components/schemas/Direction",
-                        "description": "Sort direction."
-                    },
-                    "type": {
-                        "$ref": "#/components/schemas/Type75"
-                    }
-                },
-                "additionalProperties": false,
-                "type": "object",
-                "required": [
-                    "type",
-                    "by",
-                    "direction"
-                ],
-                "title": "QuerySort1"
-            },
-            "QuerySort2": {
+            "QueryMetricSort": {
                 "properties": {
                     "direction": {
                         "$ref": "#/components/schemas/Direction",
@@ -10866,7 +11158,7 @@
                         "title": "Metrics"
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type75"
+                        "$ref": "#/components/schemas/Type48"
                     }
                 },
                 "additionalProperties": false,
@@ -10876,19 +11168,468 @@
                     "direction",
                     "metrics"
                 ],
-                "title": "QuerySort2"
+                "title": "QueryMetricSort"
             },
-            "QuerySort3": {
+            "QueryMetricValueFilter": {
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/QueryMetricValueFilter1"
+                    },
+                    {
+                        "$ref": "#/components/schemas/QueryMetricValueFilter2"
+                    },
+                    {
+                        "$ref": "#/components/schemas/QueryMetricValueFilter3"
+                    },
+                    {
+                        "$ref": "#/components/schemas/QueryMetricValueFilter4"
+                    }
+                ],
+                "title": "Metric Value Filter"
+            },
+            "QueryMetricValueFilter1": {
                 "properties": {
+                    "conditions": {
+                        "items": {
+                            "$ref": "#/components/schemas/MvfCondition"
+                        },
+                        "type": "array",
+                        "minItems": 1,
+                        "title": "Conditions"
+                    },
+                    "dimensionality": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/LabelIdentifier"
+                                        },
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Dimensionality",
+                        "description": "Optional array of attribute or label references or local identifiers to apply dimensionality to the filter."
+                    },
+                    "null_values_as_zero": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Null Values As Zero",
+                        "description": "Null values will be treated as zero."
+                    },
                     "type": {
-                        "$ref": "#/components/schemas/Type75"
+                        "$ref": "#/components/schemas/Type14"
+                    },
+                    "using": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/MetricIdentifier"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ],
+                        "title": "Using",
+                        "description": "Metric or local metric to use in this filter."
                     }
                 },
+                "additionalProperties": false,
                 "type": "object",
                 "required": [
-                    "type"
+                    "type",
+                    "using",
+                    "conditions"
                 ],
-                "title": "QuerySort3"
+                "title": "QueryMetricValueFilter1"
+            },
+            "QueryMetricValueFilter2": {
+                "properties": {
+                    "condition": {
+                        "$ref": "#/components/schemas/Condition7",
+                        "description": "Condition to use for this filter."
+                    },
+                    "dimensionality": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/LabelIdentifier"
+                                        },
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Dimensionality",
+                        "description": "Optional array of attribute or label references or local identifiers to apply dimensionality to the filter."
+                    },
+                    "null_values_as_zero": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Null Values As Zero",
+                        "description": "Null values will be treated as zero."
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/Type14"
+                    },
+                    "using": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/MetricIdentifier"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ],
+                        "title": "Using",
+                        "description": "Metric or local metric to use in this filter."
+                    },
+                    "value": {
+                        "type": "number",
+                        "title": "Value",
+                        "description": "Value to use in condition for this filter."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "condition",
+                    "value"
+                ],
+                "title": "QueryMetricValueFilter2"
+            },
+            "QueryMetricValueFilter3": {
+                "properties": {
+                    "condition": {
+                        "$ref": "#/components/schemas/Condition8",
+                        "description": "Condition to use for this filter."
+                    },
+                    "dimensionality": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/LabelIdentifier"
+                                        },
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Dimensionality",
+                        "description": "Optional array of attribute or label references or local identifiers to apply dimensionality to the filter."
+                    },
+                    "from": {
+                        "type": "number",
+                        "title": "From",
+                        "description": "From value to use in condition for this filter."
+                    },
+                    "null_values_as_zero": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Null Values As Zero",
+                        "description": "Null values will be treated as zero."
+                    },
+                    "to": {
+                        "type": "number",
+                        "title": "To",
+                        "description": "To value to use in condition for this filter."
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/Type14"
+                    },
+                    "using": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/MetricIdentifier"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ],
+                        "title": "Using",
+                        "description": "Metric or local metric to use in this filter."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "condition",
+                    "from",
+                    "to"
+                ],
+                "title": "QueryMetricValueFilter3"
+            },
+            "QueryMetricValueFilter4": {
+                "properties": {
+                    "conditions": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/MvfCondition"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Conditions",
+                        "description": "Optional list of conditions for this filter. Conditions are applied as AND during execution."
+                    },
+                    "dimensionality": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/LabelIdentifier"
+                                        },
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Dimensionality",
+                        "description": "Optional array of attribute or label references or local identifiers to apply dimensionality to the filter."
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/Type14"
+                    },
+                    "using": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/MetricIdentifier"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ],
+                        "title": "Using",
+                        "description": "Metric or local metric to use in this filter."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using"
+                ],
+                "title": "QueryMetricValueFilter4"
+            },
+            "QueryRankingFilter": {
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/QueryRankingFilter1"
+                    },
+                    {
+                        "$ref": "#/components/schemas/QueryRankingFilter2"
+                    }
+                ],
+                "title": "Ranking Filter"
+            },
+            "QueryRankingFilter1": {
+                "properties": {
+                    "attribute": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/LabelIdentifier"
+                            },
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Attribute",
+                        "description": "Label reference or local identifier to use for this filter."
+                    },
+                    "bottom": {
+                        "type": "number",
+                        "title": "Bottom",
+                        "description": "Number of bottom N values to use in this filter."
+                    },
+                    "strict_limit_of_rows": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Strict Limit Of Rows",
+                        "description": "When true, the filter returns exactly N rows, excluding additional rows that share the same value (ties). Default is false."
+                    },
+                    "top": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Top",
+                        "description": "Number of top N values to use in this filter."
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/Type18"
+                    },
+                    "using": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/MetricIdentifier"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ],
+                        "title": "Using",
+                        "description": "Metric identifier to use for this filter."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "bottom"
+                ],
+                "title": "QueryRankingFilter1"
+            },
+            "QueryRankingFilter2": {
+                "properties": {
+                    "attribute": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/LabelIdentifier"
+                            },
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Attribute",
+                        "description": "Label reference or local identifier to use for this filter."
+                    },
+                    "bottom": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bottom",
+                        "description": "Number of bottom N values to use in this filter."
+                    },
+                    "strict_limit_of_rows": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Strict Limit Of Rows",
+                        "description": "When true, the filter returns exactly N rows, excluding additional rows that share the same value (ties). Default is false."
+                    },
+                    "top": {
+                        "type": "number",
+                        "title": "Top",
+                        "description": "Number of top N values to use in this filter."
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/Type18"
+                    },
+                    "using": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/MetricIdentifier"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ],
+                        "title": "Using",
+                        "description": "Metric identifier to use for this filter."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "top"
+                ],
+                "title": "QueryRankingFilter2"
+            },
+            "QuerySort": {
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/QueryAttributeSort"
+                    },
+                    {
+                        "$ref": "#/components/schemas/QueryMetricSort"
+                    }
+                ],
+                "title": "Sort"
             },
             "QuerySorts": {
                 "items": {
@@ -10896,6 +11637,143 @@
                 },
                 "type": "array",
                 "title": "Sorts"
+            },
+            "QueryTextFilter": {
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/QueryTextFilter1"
+                    },
+                    {
+                        "$ref": "#/components/schemas/QueryTextFilter2"
+                    }
+                ],
+                "title": "Text Filter"
+            },
+            "QueryTextFilter1": {
+                "properties": {
+                    "case_sensitive": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Case Sensitive"
+                    },
+                    "condition": {
+                        "$ref": "#/components/schemas/Condition5"
+                    },
+                    "display_as": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "pattern": "^label/(?!\\.)[.A-Za-z0-9_-]{1,255}$"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Display As Label Identifier",
+                        "description": "Configures the label used for representing attribute filter elements in UI."
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/Type12"
+                    },
+                    "using": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AttributeIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/LabelIdentifier"
+                            }
+                        ],
+                        "title": "Using",
+                        "description": "Attribute or label to use in this filter."
+                    },
+                    "values": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Values"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "condition",
+                    "values"
+                ],
+                "title": "QueryTextFilter1"
+            },
+            "QueryTextFilter2": {
+                "properties": {
+                    "case_sensitive": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Case Sensitive"
+                    },
+                    "condition": {
+                        "$ref": "#/components/schemas/Condition6"
+                    },
+                    "display_as": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "pattern": "^label/(?!\\.)[.A-Za-z0-9_-]{1,255}$"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Display As Label Identifier",
+                        "description": "Configures the label used for representing attribute filter elements in UI."
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/Type12"
+                    },
+                    "using": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AttributeIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/LabelIdentifier"
+                            }
+                        ],
+                        "title": "Using",
+                        "description": "Attribute or label to use in this filter."
+                    },
+                    "value": {
+                        "type": "string",
+                        "title": "Value"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "condition",
+                    "value"
+                ],
+                "title": "QueryTextFilter2"
             },
             "Range": {
                 "properties": {
@@ -11185,7 +12063,7 @@
                         "title": "From"
                     },
                     "granularity": {
-                        "$ref": "#/components/schemas/Granularity3"
+                        "$ref": "#/components/schemas/Granularity2"
                     },
                     "to": {
                         "type": "integer",
@@ -11436,7 +12314,7 @@
                 "properties": {
                     "conditions": {
                         "items": {
-                            "$ref": "#/components/schemas/Condition13"
+                            "$ref": "#/components/schemas/Condition9"
                         },
                         "type": "array",
                         "title": "Conditions",
@@ -12572,6 +13450,33 @@
                 ],
                 "title": "Color"
             },
+            "SingleChoiceControl": {
+                "properties": {
+                    "options": {
+                        "items": {
+                            "$ref": "#/components/schemas/ClarifyingChoiceOption"
+                        },
+                        "type": "array",
+                        "minItems": 1,
+                        "title": "Options",
+                        "description": "Options to choose from."
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "singleChoice",
+                        "title": "Type",
+                        "description": "Type of answer control.",
+                        "default": "singleChoice"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "options"
+                ],
+                "title": "SingleChoiceControl",
+                "description": "Pick exactly one option — radio buttons, or rows that submit on click.\n\nThe only control there is for now; a later one (multiple choice, a date range, a catalog\nobject picker) becomes another member of ``ClarifyingQuestionControl`` without changing any\npayload a client has already seen."
+            },
             "SkillResponse": {
                 "properties": {
                     "description": {
@@ -12987,6 +13892,110 @@
                 ],
                 "title": "SummarizeResponse"
             },
+            "SummarizeVisualizationsRequest": {
+                "properties": {
+                    "filterContext": {
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/components/schemas/PositiveAttributeFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/NegativeAttributeFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/MatchAttributeFilter-Input"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/AbsoluteDateFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/RelativeDateFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/AllTimeDateFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/RankingFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/ComparisonMeasureValueFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/RangeMeasureValueFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/CompoundMeasureValueFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/InlineFilterDefinition"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Filtercontext",
+                        "description": "AFM filters in the same shape consumed by the AFM execute endpoint, merged on top of each visualization's stored filters using the type-aware merge rules. Send `[]` to apply no request filters."
+                    },
+                    "formatHint": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Formathint"
+                    },
+                    "visualizations": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "minItems": 1,
+                        "title": "Visualizations",
+                        "description": "Visualizations to summarize. They need not belong to any one dashboard."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "visualizations",
+                    "filterContext"
+                ],
+                "title": "SummarizeVisualizationsRequest",
+                "description": "Visualizations to summarize without a dashboard.\n\nNo layout to read a tab from and no saved filters to fall back on, so both fields are required."
+            },
+            "SuppressedTargets": {
+                "properties": {
+                    "measure": {
+                        "type": "string",
+                        "title": "Measure",
+                        "description": "Local identifier of the targeted measure."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "measure"
+                ],
+                "title": "SuppressedTargets"
+            },
+            "SuppressedTargets1": {
+                "properties": {
+                    "attribute": {
+                        "type": "string",
+                        "title": "Attribute",
+                        "description": "Local identifier of the targeted attribute."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "attribute"
+                ],
+                "title": "SuppressedTargets1"
+            },
             "SwitchAgentRequest": {
                 "properties": {
                     "agentId": {
@@ -13146,7 +14155,7 @@
                         "description": "A total title."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type80"
+                        "$ref": "#/components/schemas/Type49"
                     },
                     "using": {
                         "type": "string",
@@ -13162,1189 +14171,45 @@
                 ],
                 "title": "TotalItem"
             },
-            "Type100": {
+            "Type11": {
                 "type": "string",
                 "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "bar_chart"
+                    "attribute_filter"
                 ],
-                "title": "Type100"
+                "title": "Type11"
             },
-            "Type101": {
+            "Type12": {
                 "type": "string",
                 "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "column_chart"
-                ],
-                "title": "Type101"
-            },
-            "Type102": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "line_chart"
-                ],
-                "title": "Type102"
-            },
-            "Type103": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "area_chart"
-                ],
-                "title": "Type103"
-            },
-            "Type104": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "scatter_chart"
-                ],
-                "title": "Type104"
-            },
-            "Type105": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "bubble_chart"
-                ],
-                "title": "Type105"
-            },
-            "Type106": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "pie_chart"
-                ],
-                "title": "Type106"
-            },
-            "Type107": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "donut_chart"
-                ],
-                "title": "Type107"
-            },
-            "Type108": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "treemap_chart"
-                ],
-                "title": "Type108"
-            },
-            "Type109": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "pyramid_chart"
-                ],
-                "title": "Type109"
-            },
-            "Type110": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "funnel_chart"
-                ],
-                "title": "Type110"
-            },
-            "Type111": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "heatmap_chart"
-                ],
-                "title": "Type111"
-            },
-            "Type112": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "bullet_chart"
-                ],
-                "title": "Type112"
-            },
-            "Type113": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "waterfall_chart"
-                ],
-                "title": "Type113"
-            },
-            "Type114": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "dependency_wheel_chart"
-                ],
-                "title": "Type114"
-            },
-            "Type115": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "sankey_chart"
-                ],
-                "title": "Type115"
-            },
-            "Type116": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "headline_chart"
-                ],
-                "title": "Type116"
-            },
-            "Type117": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "combo_chart"
-                ],
-                "title": "Type117"
-            },
-            "Type118": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "geo_chart"
-                ],
-                "title": "Type118"
-            },
-            "Type119": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "geo_area_chart"
-                ],
-                "title": "Type119"
-            },
-            "Type120": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "repeater_chart"
-                ],
-                "title": "Type120"
-            },
-            "Type121": {
-                "type": "string",
-                "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "radar_chart"
-                ],
-                "title": "Type121"
-            },
-            "Type30": {
-                "type": "string",
-                "enum": [
-                    "date_filter",
-                    "attribute_filter",
                     "text_filter",
-                    "metric_value_filter",
+                    "text_filter"
+                ],
+                "title": "Type12"
+            },
+            "Type14": {
+                "type": "string",
+                "enum": [
+                    "metric_value_filter"
+                ],
+                "title": "Type14"
+            },
+            "Type18": {
+                "type": "string",
+                "enum": [
                     "ranking_filter",
-                    "date_filter",
-                    "attribute_filter",
-                    "text_filter",
-                    "metric_value_filter",
                     "ranking_filter"
                 ],
-                "title": "Type30"
+                "title": "Type18"
             },
-            "Type61": {
+            "Type33": {
+                "type": "string",
+                "enum": [
+                    "PREVIOUS_YEAR",
+                    "PREVIOUS_PERIOD"
+                ],
+                "title": "Type33"
+            },
+            "Type34": {
                 "type": "string",
                 "enum": [
                     "PREVIOUS_YEAR",
@@ -14352,21 +14217,17 @@
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
-                "title": "Type61"
+                "title": "Type34"
             },
-            "Type62": {
+            "Type35": {
                 "type": "string",
                 "enum": [
                     "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
-                "title": "Type62"
+                "title": "Type35"
             },
-            "Type63": {
+            "Type36": {
                 "type": "string",
                 "enum": [
                     "PREVIOUS_YEAR",
@@ -14374,21 +14235,17 @@
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
-                "title": "Type63"
+                "title": "Type36"
             },
-            "Type64": {
+            "Type37": {
                 "type": "string",
                 "enum": [
                     "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
-                "title": "Type64"
+                "title": "Type37"
             },
-            "Type65": {
+            "Type38": {
                 "type": "string",
                 "enum": [
                     "PREVIOUS_YEAR",
@@ -14396,21 +14253,17 @@
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
-                "title": "Type65"
+                "title": "Type38"
             },
-            "Type66": {
+            "Type39": {
                 "type": "string",
                 "enum": [
                     "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
-                "title": "Type66"
+                "title": "Type39"
             },
-            "Type67": {
+            "Type40": {
                 "type": "string",
                 "enum": [
                     "PREVIOUS_YEAR",
@@ -14418,21 +14271,17 @@
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
-                "title": "Type67"
+                "title": "Type40"
             },
-            "Type68": {
+            "Type41": {
                 "type": "string",
                 "enum": [
                     "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
-                "title": "Type68"
+                "title": "Type41"
             },
-            "Type69": {
+            "Type42": {
                 "type": "string",
                 "enum": [
                     "PREVIOUS_YEAR",
@@ -14440,77 +14289,61 @@
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
-                "title": "Type69"
+                "title": "Type42"
             },
-            "Type70": {
+            "Type43": {
                 "type": "string",
                 "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD"
-                ],
-                "title": "Type70"
-            },
-            "Type71": {
-                "type": "string",
-                "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD",
                     "PREVIOUS_YEAR"
                 ],
-                "title": "Type71"
+                "title": "Type43"
             },
-            "Type72": {
+            "Type44": {
                 "type": "string",
                 "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD",
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
-                "title": "Type72"
+                "title": "Type44"
             },
-            "Type73": {
+            "Type45": {
                 "type": "string",
                 "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD",
                     "PREVIOUS_PERIOD"
                 ],
-                "title": "Type73"
+                "title": "Type45"
             },
-            "Type74": {
+            "Type46": {
                 "type": "string",
                 "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD",
                     "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
-                "title": "Type74"
+                "title": "Type46"
             },
-            "Type75": {
+            "Type47": {
                 "type": "string",
                 "enum": [
-                    "attribute_sort",
-                    "metric_sort",
-                    "attribute_sort",
+                    "attribute_sort"
+                ],
+                "title": "Type47"
+            },
+            "Type48": {
+                "type": "string",
+                "enum": [
                     "metric_sort"
                 ],
-                "title": "Type75"
+                "title": "Type48"
             },
-            "Type80": {
+            "Type49": {
                 "type": "string",
                 "enum": [
                     "SUM",
@@ -14520,77 +14353,192 @@
                     "MED",
                     "NAT"
                 ],
-                "title": "Type80"
+                "title": "Type49"
             },
-            "Type81": {
+            "Type50": {
                 "type": "string",
                 "enum": [
                     "pushpin",
                     "area"
                 ],
-                "title": "Type81"
+                "title": "Type50"
             },
-            "Type83": {
+            "Type53": {
                 "type": "string",
                 "enum": [
                     "solid",
                     "pattern",
                     "outline"
                 ],
-                "title": "Type83"
+                "title": "Type53"
             },
-            "Type99": {
+            "Type62": {
                 "type": "string",
                 "enum": [
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
-                    "table",
-                    "bar_chart",
-                    "column_chart",
-                    "line_chart",
-                    "area_chart",
-                    "scatter_chart",
-                    "bubble_chart",
-                    "pie_chart",
-                    "donut_chart",
-                    "treemap_chart",
-                    "pyramid_chart",
-                    "funnel_chart",
-                    "heatmap_chart",
-                    "bullet_chart",
-                    "waterfall_chart",
-                    "dependency_wheel_chart",
-                    "sankey_chart",
-                    "headline_chart",
-                    "combo_chart",
-                    "geo_chart",
-                    "geo_area_chart",
-                    "repeater_chart",
-                    "radar_chart",
                     "table"
                 ],
-                "title": "Type99"
+                "title": "Type62"
+            },
+            "Type63": {
+                "type": "string",
+                "enum": [
+                    "bar_chart"
+                ],
+                "title": "Type63"
+            },
+            "Type64": {
+                "type": "string",
+                "enum": [
+                    "column_chart"
+                ],
+                "title": "Type64"
+            },
+            "Type65": {
+                "type": "string",
+                "enum": [
+                    "line_chart"
+                ],
+                "title": "Type65"
+            },
+            "Type66": {
+                "type": "string",
+                "enum": [
+                    "area_chart"
+                ],
+                "title": "Type66"
+            },
+            "Type67": {
+                "type": "string",
+                "enum": [
+                    "scatter_chart"
+                ],
+                "title": "Type67"
+            },
+            "Type68": {
+                "type": "string",
+                "enum": [
+                    "bubble_chart"
+                ],
+                "title": "Type68"
+            },
+            "Type69": {
+                "type": "string",
+                "enum": [
+                    "pie_chart"
+                ],
+                "title": "Type69"
+            },
+            "Type70": {
+                "type": "string",
+                "enum": [
+                    "donut_chart"
+                ],
+                "title": "Type70"
+            },
+            "Type71": {
+                "type": "string",
+                "enum": [
+                    "treemap_chart"
+                ],
+                "title": "Type71"
+            },
+            "Type72": {
+                "type": "string",
+                "enum": [
+                    "pyramid_chart"
+                ],
+                "title": "Type72"
+            },
+            "Type73": {
+                "type": "string",
+                "enum": [
+                    "funnel_chart"
+                ],
+                "title": "Type73"
+            },
+            "Type74": {
+                "type": "string",
+                "enum": [
+                    "heatmap_chart"
+                ],
+                "title": "Type74"
+            },
+            "Type75": {
+                "type": "string",
+                "enum": [
+                    "bullet_chart"
+                ],
+                "title": "Type75"
+            },
+            "Type76": {
+                "type": "string",
+                "enum": [
+                    "waterfall_chart"
+                ],
+                "title": "Type76"
+            },
+            "Type77": {
+                "type": "string",
+                "enum": [
+                    "dependency_wheel_chart"
+                ],
+                "title": "Type77"
+            },
+            "Type78": {
+                "type": "string",
+                "enum": [
+                    "sankey_chart"
+                ],
+                "title": "Type78"
+            },
+            "Type79": {
+                "type": "string",
+                "enum": [
+                    "headline_chart"
+                ],
+                "title": "Type79"
+            },
+            "Type80": {
+                "type": "string",
+                "enum": [
+                    "combo_chart"
+                ],
+                "title": "Type80"
+            },
+            "Type81": {
+                "type": "string",
+                "enum": [
+                    "geo_chart"
+                ],
+                "title": "Type81"
+            },
+            "Type82": {
+                "type": "string",
+                "enum": [
+                    "geo_area_chart"
+                ],
+                "title": "Type82"
+            },
+            "Type83": {
+                "type": "string",
+                "enum": [
+                    "repeater_chart"
+                ],
+                "title": "Type83"
+            },
+            "Type84": {
+                "type": "string",
+                "enum": [
+                    "radar_chart"
+                ],
+                "title": "Type84"
+            },
+            "Type9": {
+                "type": "string",
+                "enum": [
+                    "date_filter"
+                ],
+                "title": "Type9"
             },
             "UploadDocumentResponse": {
                 "properties": {
@@ -15125,20 +15073,6 @@
                 "title": "Metric Identifier",
                 "description": "List of identifiers to use for this field."
             },
-            "Using3": {
-                "type": "string",
-                "pattern": "^metric/(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                "title": "Metric Identifier",
-                "description": "Identifier to use for this field."
-            },
-            "Using4": {
-                "items": {
-                    "type": "string"
-                },
-                "type": "array",
-                "title": "Metric Identifier",
-                "description": "List of identifiers to use for this field."
-            },
             "ValidationError": {
                 "properties": {
                     "ctx": {
@@ -15482,7 +15416,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type99",
+                        "$ref": "#/components/schemas/Type62",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -15620,7 +15554,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type108",
+                        "$ref": "#/components/schemas/Type71",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -15756,7 +15690,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type109",
+                        "$ref": "#/components/schemas/Type72",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -15892,7 +15826,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type110",
+                        "$ref": "#/components/schemas/Type73",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -16060,7 +15994,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type111",
+                        "$ref": "#/components/schemas/Type74",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -16203,7 +16137,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type112",
+                        "$ref": "#/components/schemas/Type75",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -16339,7 +16273,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type113",
+                        "$ref": "#/components/schemas/Type76",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -16497,7 +16431,7 @@
                         "description": "A to attribute in this visualisation."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type114",
+                        "$ref": "#/components/schemas/Type77",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -16662,7 +16596,7 @@
                         "description": "A to attribute in this visualisation."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type115",
+                        "$ref": "#/components/schemas/Type78",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -16805,7 +16739,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type116",
+                        "$ref": "#/components/schemas/Type79",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -16939,7 +16873,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type117",
+                        "$ref": "#/components/schemas/Type80",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -17092,7 +17026,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type100",
+                        "$ref": "#/components/schemas/Type63",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -17252,7 +17186,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type118",
+                        "$ref": "#/components/schemas/Type81",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -17405,7 +17339,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type119",
+                        "$ref": "#/components/schemas/Type82",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -17573,7 +17507,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type120",
+                        "$ref": "#/components/schemas/Type83",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -17711,7 +17645,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type121",
+                        "$ref": "#/components/schemas/Type84",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -17864,7 +17798,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type101",
+                        "$ref": "#/components/schemas/Type64",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18017,7 +17951,7 @@
                         "description": "A list of trend by attributes in this visualisation."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type102",
+                        "$ref": "#/components/schemas/Type65",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18170,7 +18104,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type103",
+                        "$ref": "#/components/schemas/Type66",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18330,7 +18264,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type104",
+                        "$ref": "#/components/schemas/Type67",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18490,7 +18424,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type105",
+                        "$ref": "#/components/schemas/Type68",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18626,7 +18560,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type106",
+                        "$ref": "#/components/schemas/Type69",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18762,7 +18696,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type107",
+                        "$ref": "#/components/schemas/Type70",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19110,6 +19044,17 @@
             },
             "VisualizationPart": {
                 "properties": {
+                    "references": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/VisualizationReferences"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "AAC bodies of the datasets the visualization is built on, when available."
+                    },
                     "type": {
                         "type": "string",
                         "const": "visualization",
@@ -19144,6 +19089,32 @@
                 "additionalProperties": false,
                 "type": "object",
                 "title": "VisualizationPart"
+            },
+            "VisualizationReferences": {
+                "properties": {
+                    "datasets": {
+                        "items": {
+                            "additionalProperties": true,
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Datasets",
+                        "description": "Full AAC body of every dataset the chart uses."
+                    },
+                    "datedatasets": {
+                        "items": {
+                            "additionalProperties": true,
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Datedatasets",
+                        "description": "Full AAC body of every date dataset the chart uses."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "title": "VisualizationReferences",
+                "description": "AAC bodies of the datasets a chart stands on.\n\nThe client needs them to resolve what the chart body only names: a geo chart's\nlatitude/longitude labels, and the granularities a date filter's values are read against.\nOpaque AAC pass-through (dict), like every other AAC body here."
             },
             "VisualizationRelativeDateFilter": {
                 "properties": {

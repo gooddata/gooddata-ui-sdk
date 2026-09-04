@@ -2083,6 +2083,9 @@ export {
     type JsonApiReportPageLayoutIn,
     type JsonApiReportPageLayoutOutAttributes,
     type JsonApiReportPageLayoutOutMeta,
+    type JsonApiReportPageLayoutOutRelationships,
+    type JsonApiReportPageLayoutOutRelationshipsCreatedBy,
+    type JsonApiReportPageLayoutOutRelationshipsModifiedBy,
     type JsonApiReportPageLayoutOutTypeEnum,
     type JsonApiReportPageLayoutOutWithLinksTypeEnum,
     type JsonApiReportPageLayoutPatch,
@@ -6219,6 +6222,9 @@ export {
     type JsonApiReportOutMeta,
     type JsonApiReportOutMetaOrigin,
     type JsonApiReportOutMetaOriginOriginTypeEnum,
+    type JsonApiReportOutRelationships,
+    type JsonApiReportOutRelationshipsCreatedBy,
+    type JsonApiReportOutRelationshipsModifiedBy,
     type JsonApiReportOutTypeEnum,
     type JsonApiReportOutWithLinks,
     type JsonApiReportOutWithLinksTypeEnum,
@@ -6242,6 +6248,9 @@ export {
     type JsonApiReportTemplateOutMeta,
     type JsonApiReportTemplateOutMetaOrigin,
     type JsonApiReportTemplateOutMetaOriginOriginTypeEnum,
+    type JsonApiReportTemplateOutRelationships,
+    type JsonApiReportTemplateOutRelationshipsCreatedBy,
+    type JsonApiReportTemplateOutRelationshipsModifiedBy,
     type JsonApiReportTemplateOutTypeEnum,
     type JsonApiReportTemplateOutWithLinks,
     type JsonApiReportTemplateOutWithLinksTypeEnum,
@@ -6256,6 +6265,8 @@ export {
     type ManageComputedAttributePermissionsRequestInner,
     type PermissionsApiComputedAttributePermissionsRequest,
     type PermissionsApiManageComputedAttributePermissionsRequest,
+    type ActionsApiProcessInvitationRequest as MetadataActionsApiProcessInvitationRequest,
+    type Invitation as MetadataInvitation,
 } from "./generated/metadata-json-api/api.js";
 
 export type {

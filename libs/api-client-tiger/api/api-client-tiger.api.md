@@ -119,6 +119,7 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     particularPlatformUsage(requestParameters: ActionsApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): AxiosPromise<PlatformUsage[]>;
     pauseOrganizationAutomations(requestParameters: ActionsApiPauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     pauseWorkspaceAutomations(requestParameters: ActionsApiPauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    processInvitation(requestParameters: MetadataActionsApiProcessInvitationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     registerUploadNotification(requestParameters: ActionsApiRegisterUploadNotificationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     registerWorkspaceUploadNotification(requestParameters: ActionsApiRegisterWorkspaceUploadNotificationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     reloadObservabilityLayout(options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -777,6 +778,7 @@ export interface ActionsApiInterface {
     particularPlatformUsage(requestParameters: ActionsApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): AxiosPromise<Array<PlatformUsage>>;
     pauseOrganizationAutomations(requestParameters: ActionsApiPauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     pauseWorkspaceAutomations(requestParameters: ActionsApiPauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    processInvitation(requestParameters: MetadataActionsApiProcessInvitationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     registerUploadNotification(requestParameters: ActionsApiRegisterUploadNotificationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     registerWorkspaceUploadNotification(requestParameters: ActionsApiRegisterWorkspaceUploadNotificationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     reloadObservabilityLayout(options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -2965,335 +2967,239 @@ export { AiAgentListResponse as GenAiApiAgentListResponse }
 
 // @public (undocumented)
 export const AiAggregation: {
-    readonly SUM: "SUM";
-    readonly COUNT: "COUNT";
-    readonly APPROXIMATE_COUNT: "APPROXIMATE_COUNT";
-    readonly AVG: "AVG";
-    readonly MIN: "MIN";
-    readonly MAX: "MAX";
-    readonly MEDIAN: "MEDIAN";
-    readonly RUNSUM: "RUNSUM";
-    readonly SUM2: "SUM";
-    readonly COUNT2: "COUNT";
-    readonly APPROXIMATE_COUNT2: "APPROXIMATE_COUNT";
-    readonly AVG2: "AVG";
-    readonly MIN2: "MIN";
-    readonly MAX2: "MAX";
-    readonly MEDIAN2: "MEDIAN";
-    readonly RUNSUM2: "RUNSUM";
+    readonly SUM: 'SUM';
+    readonly COUNT: 'COUNT';
+    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
+    readonly AVG: 'AVG';
+    readonly MIN: 'MIN';
+    readonly MAX: 'MAX';
+    readonly MEDIAN: 'MEDIAN';
+    readonly RUNSUM: 'RUNSUM';
 };
 
 // @public (undocumented)
-export type AiAggregation = typeof AiAggregation[keyof typeof AiAggregation];
+export type AiAggregation = (typeof AiAggregation)[keyof typeof AiAggregation];
 
 // @public (undocumented)
 export const AiAggregation1: {
-    readonly SUM: "SUM";
-    readonly COUNT: "COUNT";
-    readonly APPROXIMATE_COUNT: "APPROXIMATE_COUNT";
-    readonly AVG: "AVG";
-    readonly MIN: "MIN";
-    readonly MAX: "MAX";
-    readonly MEDIAN: "MEDIAN";
-    readonly RUNSUM: "RUNSUM";
-    readonly SUM2: "SUM";
-    readonly COUNT2: "COUNT";
-    readonly APPROXIMATE_COUNT2: "APPROXIMATE_COUNT";
-    readonly AVG2: "AVG";
-    readonly MIN2: "MIN";
-    readonly MAX2: "MAX";
-    readonly MEDIAN2: "MEDIAN";
-    readonly RUNSUM2: "RUNSUM";
-    readonly SUM3: "SUM";
-    readonly COUNT3: "COUNT";
-    readonly APPROXIMATE_COUNT3: "APPROXIMATE_COUNT";
-    readonly AVG3: "AVG";
-    readonly MIN3: "MIN";
-    readonly MAX3: "MAX";
-    readonly MEDIAN3: "MEDIAN";
-    readonly RUNSUM3: "RUNSUM";
+    readonly SUM: 'SUM';
+    readonly COUNT: 'COUNT';
+    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
+    readonly AVG: 'AVG';
+    readonly MIN: 'MIN';
+    readonly MAX: 'MAX';
+    readonly MEDIAN: 'MEDIAN';
+    readonly RUNSUM: 'RUNSUM';
+    readonly SUM2: 'SUM';
+    readonly COUNT2: 'COUNT';
+    readonly APPROXIMATE_COUNT2: 'APPROXIMATE_COUNT';
+    readonly AVG2: 'AVG';
+    readonly MIN2: 'MIN';
+    readonly MAX2: 'MAX';
+    readonly MEDIAN2: 'MEDIAN';
+    readonly RUNSUM2: 'RUNSUM';
 };
 
 // @public (undocumented)
-export type AiAggregation1 = typeof AiAggregation1[keyof typeof AiAggregation1];
+export type AiAggregation1 = (typeof AiAggregation1)[keyof typeof AiAggregation1];
 
 // @public (undocumented)
 export const AiAggregation10: {
-    readonly SUM: "SUM";
-    readonly COUNT: "COUNT";
-    readonly APPROXIMATE_COUNT: "APPROXIMATE_COUNT";
-    readonly AVG: "AVG";
-    readonly MIN: "MIN";
-    readonly MAX: "MAX";
-    readonly MEDIAN: "MEDIAN";
-    readonly RUNSUM: "RUNSUM";
-    readonly SUM2: "SUM";
-    readonly COUNT2: "COUNT";
-    readonly APPROXIMATE_COUNT2: "APPROXIMATE_COUNT";
-    readonly AVG2: "AVG";
-    readonly MIN2: "MIN";
-    readonly MAX2: "MAX";
-    readonly MEDIAN2: "MEDIAN";
-    readonly RUNSUM2: "RUNSUM";
+    readonly SUM: 'SUM';
+    readonly COUNT: 'COUNT';
+    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
+    readonly AVG: 'AVG';
+    readonly MIN: 'MIN';
+    readonly MAX: 'MAX';
+    readonly MEDIAN: 'MEDIAN';
+    readonly RUNSUM: 'RUNSUM';
 };
 
 // @public (undocumented)
-export type AiAggregation10 = typeof AiAggregation10[keyof typeof AiAggregation10];
+export type AiAggregation10 = (typeof AiAggregation10)[keyof typeof AiAggregation10];
 
 // @public (undocumented)
 export const AiAggregation11: {
-    readonly SUM: "SUM";
-    readonly COUNT: "COUNT";
-    readonly APPROXIMATE_COUNT: "APPROXIMATE_COUNT";
-    readonly AVG: "AVG";
-    readonly MIN: "MIN";
-    readonly MAX: "MAX";
-    readonly MEDIAN: "MEDIAN";
-    readonly RUNSUM: "RUNSUM";
-    readonly SUM2: "SUM";
-    readonly COUNT2: "COUNT";
-    readonly APPROXIMATE_COUNT2: "APPROXIMATE_COUNT";
-    readonly AVG2: "AVG";
-    readonly MIN2: "MIN";
-    readonly MAX2: "MAX";
-    readonly MEDIAN2: "MEDIAN";
-    readonly RUNSUM2: "RUNSUM";
-    readonly SUM3: "SUM";
-    readonly COUNT3: "COUNT";
-    readonly APPROXIMATE_COUNT3: "APPROXIMATE_COUNT";
-    readonly AVG3: "AVG";
-    readonly MIN3: "MIN";
-    readonly MAX3: "MAX";
-    readonly MEDIAN3: "MEDIAN";
-    readonly RUNSUM3: "RUNSUM";
+    readonly SUM: 'SUM';
+    readonly COUNT: 'COUNT';
+    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
+    readonly AVG: 'AVG';
+    readonly MIN: 'MIN';
+    readonly MAX: 'MAX';
+    readonly MEDIAN: 'MEDIAN';
+    readonly RUNSUM: 'RUNSUM';
+    readonly SUM2: 'SUM';
+    readonly COUNT2: 'COUNT';
+    readonly APPROXIMATE_COUNT2: 'APPROXIMATE_COUNT';
+    readonly AVG2: 'AVG';
+    readonly MIN2: 'MIN';
+    readonly MAX2: 'MAX';
+    readonly MEDIAN2: 'MEDIAN';
+    readonly RUNSUM2: 'RUNSUM';
 };
 
 // @public (undocumented)
-export type AiAggregation11 = typeof AiAggregation11[keyof typeof AiAggregation11];
+export type AiAggregation11 = (typeof AiAggregation11)[keyof typeof AiAggregation11];
 
 // @public (undocumented)
 export const AiAggregation12: {
-    readonly SUM: "SUM";
-    readonly COUNT: "COUNT";
-    readonly APPROXIMATE_COUNT: "APPROXIMATE_COUNT";
-    readonly AVG: "AVG";
-    readonly MIN: "MIN";
-    readonly MAX: "MAX";
-    readonly MEDIAN: "MEDIAN";
-    readonly RUNSUM: "RUNSUM";
-    readonly SUM2: "SUM";
-    readonly COUNT2: "COUNT";
-    readonly APPROXIMATE_COUNT2: "APPROXIMATE_COUNT";
-    readonly AVG2: "AVG";
-    readonly MIN2: "MIN";
-    readonly MAX2: "MAX";
-    readonly MEDIAN2: "MEDIAN";
-    readonly RUNSUM2: "RUNSUM";
+    readonly SUM: 'SUM';
+    readonly COUNT: 'COUNT';
+    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
+    readonly AVG: 'AVG';
+    readonly MIN: 'MIN';
+    readonly MAX: 'MAX';
+    readonly MEDIAN: 'MEDIAN';
+    readonly RUNSUM: 'RUNSUM';
 };
 
 // @public (undocumented)
-export type AiAggregation12 = typeof AiAggregation12[keyof typeof AiAggregation12];
+export type AiAggregation12 = (typeof AiAggregation12)[keyof typeof AiAggregation12];
 
 // @public (undocumented)
 export const AiAggregation13: {
-    readonly SUM: "SUM";
-    readonly COUNT: "COUNT";
-    readonly APPROXIMATE_COUNT: "APPROXIMATE_COUNT";
-    readonly AVG: "AVG";
-    readonly MIN: "MIN";
-    readonly MAX: "MAX";
-    readonly MEDIAN: "MEDIAN";
-    readonly RUNSUM: "RUNSUM";
-    readonly SUM2: "SUM";
-    readonly COUNT2: "COUNT";
-    readonly APPROXIMATE_COUNT2: "APPROXIMATE_COUNT";
-    readonly AVG2: "AVG";
-    readonly MIN2: "MIN";
-    readonly MAX2: "MAX";
-    readonly MEDIAN2: "MEDIAN";
-    readonly RUNSUM2: "RUNSUM";
-    readonly SUM3: "SUM";
-    readonly COUNT3: "COUNT";
-    readonly APPROXIMATE_COUNT3: "APPROXIMATE_COUNT";
-    readonly AVG3: "AVG";
-    readonly MIN3: "MIN";
-    readonly MAX3: "MAX";
-    readonly MEDIAN3: "MEDIAN";
-    readonly RUNSUM3: "RUNSUM";
+    readonly SUM: 'SUM';
+    readonly COUNT: 'COUNT';
+    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
+    readonly AVG: 'AVG';
+    readonly MIN: 'MIN';
+    readonly MAX: 'MAX';
+    readonly MEDIAN: 'MEDIAN';
+    readonly RUNSUM: 'RUNSUM';
+    readonly SUM2: 'SUM';
+    readonly COUNT2: 'COUNT';
+    readonly APPROXIMATE_COUNT2: 'APPROXIMATE_COUNT';
+    readonly AVG2: 'AVG';
+    readonly MIN2: 'MIN';
+    readonly MAX2: 'MAX';
+    readonly MEDIAN2: 'MEDIAN';
+    readonly RUNSUM2: 'RUNSUM';
 };
 
 // @public (undocumented)
-export type AiAggregation13 = typeof AiAggregation13[keyof typeof AiAggregation13];
+export type AiAggregation13 = (typeof AiAggregation13)[keyof typeof AiAggregation13];
 
 // @public (undocumented)
 export const AiAggregation14: {
-    readonly SUM: "SUM";
+    readonly SUM: 'SUM';
 };
 
 // @public (undocumented)
-export type AiAggregation14 = typeof AiAggregation14[keyof typeof AiAggregation14];
+export type AiAggregation14 = (typeof AiAggregation14)[keyof typeof AiAggregation14];
 
 // @public (undocumented)
 export const AiAggregation2: {
-    readonly SUM: "SUM";
-    readonly COUNT: "COUNT";
-    readonly APPROXIMATE_COUNT: "APPROXIMATE_COUNT";
-    readonly AVG: "AVG";
-    readonly MIN: "MIN";
-    readonly MAX: "MAX";
-    readonly MEDIAN: "MEDIAN";
-    readonly RUNSUM: "RUNSUM";
-    readonly SUM2: "SUM";
-    readonly COUNT2: "COUNT";
-    readonly APPROXIMATE_COUNT2: "APPROXIMATE_COUNT";
-    readonly AVG2: "AVG";
-    readonly MIN2: "MIN";
-    readonly MAX2: "MAX";
-    readonly MEDIAN2: "MEDIAN";
-    readonly RUNSUM2: "RUNSUM";
+    readonly SUM: 'SUM';
+    readonly COUNT: 'COUNT';
+    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
+    readonly AVG: 'AVG';
+    readonly MIN: 'MIN';
+    readonly MAX: 'MAX';
+    readonly MEDIAN: 'MEDIAN';
+    readonly RUNSUM: 'RUNSUM';
 };
 
 // @public (undocumented)
-export type AiAggregation2 = typeof AiAggregation2[keyof typeof AiAggregation2];
+export type AiAggregation2 = (typeof AiAggregation2)[keyof typeof AiAggregation2];
 
 // @public (undocumented)
 export const AiAggregation3: {
-    readonly SUM: "SUM";
-    readonly COUNT: "COUNT";
-    readonly APPROXIMATE_COUNT: "APPROXIMATE_COUNT";
-    readonly AVG: "AVG";
-    readonly MIN: "MIN";
-    readonly MAX: "MAX";
-    readonly MEDIAN: "MEDIAN";
-    readonly RUNSUM: "RUNSUM";
-    readonly SUM2: "SUM";
-    readonly COUNT2: "COUNT";
-    readonly APPROXIMATE_COUNT2: "APPROXIMATE_COUNT";
-    readonly AVG2: "AVG";
-    readonly MIN2: "MIN";
-    readonly MAX2: "MAX";
-    readonly MEDIAN2: "MEDIAN";
-    readonly RUNSUM2: "RUNSUM";
-    readonly SUM3: "SUM";
-    readonly COUNT3: "COUNT";
-    readonly APPROXIMATE_COUNT3: "APPROXIMATE_COUNT";
-    readonly AVG3: "AVG";
-    readonly MIN3: "MIN";
-    readonly MAX3: "MAX";
-    readonly MEDIAN3: "MEDIAN";
-    readonly RUNSUM3: "RUNSUM";
+    readonly SUM: 'SUM';
+    readonly COUNT: 'COUNT';
+    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
+    readonly AVG: 'AVG';
+    readonly MIN: 'MIN';
+    readonly MAX: 'MAX';
+    readonly MEDIAN: 'MEDIAN';
+    readonly RUNSUM: 'RUNSUM';
+    readonly SUM2: 'SUM';
+    readonly COUNT2: 'COUNT';
+    readonly APPROXIMATE_COUNT2: 'APPROXIMATE_COUNT';
+    readonly AVG2: 'AVG';
+    readonly MIN2: 'MIN';
+    readonly MAX2: 'MAX';
+    readonly MEDIAN2: 'MEDIAN';
+    readonly RUNSUM2: 'RUNSUM';
 };
 
 // @public (undocumented)
-export type AiAggregation3 = typeof AiAggregation3[keyof typeof AiAggregation3];
+export type AiAggregation3 = (typeof AiAggregation3)[keyof typeof AiAggregation3];
 
 // @public (undocumented)
 export const AiAggregation6: {
-    readonly SUM: "SUM";
-    readonly COUNT: "COUNT";
-    readonly APPROXIMATE_COUNT: "APPROXIMATE_COUNT";
-    readonly AVG: "AVG";
-    readonly MIN: "MIN";
-    readonly MAX: "MAX";
-    readonly MEDIAN: "MEDIAN";
-    readonly RUNSUM: "RUNSUM";
-    readonly SUM2: "SUM";
-    readonly COUNT2: "COUNT";
-    readonly APPROXIMATE_COUNT2: "APPROXIMATE_COUNT";
-    readonly AVG2: "AVG";
-    readonly MIN2: "MIN";
-    readonly MAX2: "MAX";
-    readonly MEDIAN2: "MEDIAN";
-    readonly RUNSUM2: "RUNSUM";
+    readonly SUM: 'SUM';
+    readonly COUNT: 'COUNT';
+    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
+    readonly AVG: 'AVG';
+    readonly MIN: 'MIN';
+    readonly MAX: 'MAX';
+    readonly MEDIAN: 'MEDIAN';
+    readonly RUNSUM: 'RUNSUM';
 };
 
 // @public (undocumented)
-export type AiAggregation6 = typeof AiAggregation6[keyof typeof AiAggregation6];
+export type AiAggregation6 = (typeof AiAggregation6)[keyof typeof AiAggregation6];
 
 // @public (undocumented)
 export const AiAggregation7: {
-    readonly SUM: "SUM";
-    readonly COUNT: "COUNT";
-    readonly APPROXIMATE_COUNT: "APPROXIMATE_COUNT";
-    readonly AVG: "AVG";
-    readonly MIN: "MIN";
-    readonly MAX: "MAX";
-    readonly MEDIAN: "MEDIAN";
-    readonly RUNSUM: "RUNSUM";
-    readonly SUM2: "SUM";
-    readonly COUNT2: "COUNT";
-    readonly APPROXIMATE_COUNT2: "APPROXIMATE_COUNT";
-    readonly AVG2: "AVG";
-    readonly MIN2: "MIN";
-    readonly MAX2: "MAX";
-    readonly MEDIAN2: "MEDIAN";
-    readonly RUNSUM2: "RUNSUM";
-    readonly SUM3: "SUM";
-    readonly COUNT3: "COUNT";
-    readonly APPROXIMATE_COUNT3: "APPROXIMATE_COUNT";
-    readonly AVG3: "AVG";
-    readonly MIN3: "MIN";
-    readonly MAX3: "MAX";
-    readonly MEDIAN3: "MEDIAN";
-    readonly RUNSUM3: "RUNSUM";
+    readonly SUM: 'SUM';
+    readonly COUNT: 'COUNT';
+    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
+    readonly AVG: 'AVG';
+    readonly MIN: 'MIN';
+    readonly MAX: 'MAX';
+    readonly MEDIAN: 'MEDIAN';
+    readonly RUNSUM: 'RUNSUM';
+    readonly SUM2: 'SUM';
+    readonly COUNT2: 'COUNT';
+    readonly APPROXIMATE_COUNT2: 'APPROXIMATE_COUNT';
+    readonly AVG2: 'AVG';
+    readonly MIN2: 'MIN';
+    readonly MAX2: 'MAX';
+    readonly MEDIAN2: 'MEDIAN';
+    readonly RUNSUM2: 'RUNSUM';
 };
 
 // @public (undocumented)
-export type AiAggregation7 = typeof AiAggregation7[keyof typeof AiAggregation7];
+export type AiAggregation7 = (typeof AiAggregation7)[keyof typeof AiAggregation7];
 
 // @public (undocumented)
 export const AiAggregation8: {
-    readonly SUM: "SUM";
-    readonly COUNT: "COUNT";
-    readonly APPROXIMATE_COUNT: "APPROXIMATE_COUNT";
-    readonly AVG: "AVG";
-    readonly MIN: "MIN";
-    readonly MAX: "MAX";
-    readonly MEDIAN: "MEDIAN";
-    readonly RUNSUM: "RUNSUM";
-    readonly SUM2: "SUM";
-    readonly COUNT2: "COUNT";
-    readonly APPROXIMATE_COUNT2: "APPROXIMATE_COUNT";
-    readonly AVG2: "AVG";
-    readonly MIN2: "MIN";
-    readonly MAX2: "MAX";
-    readonly MEDIAN2: "MEDIAN";
-    readonly RUNSUM2: "RUNSUM";
+    readonly SUM: 'SUM';
+    readonly COUNT: 'COUNT';
+    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
+    readonly AVG: 'AVG';
+    readonly MIN: 'MIN';
+    readonly MAX: 'MAX';
+    readonly MEDIAN: 'MEDIAN';
+    readonly RUNSUM: 'RUNSUM';
 };
 
 // @public (undocumented)
-export type AiAggregation8 = typeof AiAggregation8[keyof typeof AiAggregation8];
+export type AiAggregation8 = (typeof AiAggregation8)[keyof typeof AiAggregation8];
 
 // @public (undocumented)
 export const AiAggregation9: {
-    readonly SUM: "SUM";
-    readonly COUNT: "COUNT";
-    readonly APPROXIMATE_COUNT: "APPROXIMATE_COUNT";
-    readonly AVG: "AVG";
-    readonly MIN: "MIN";
-    readonly MAX: "MAX";
-    readonly MEDIAN: "MEDIAN";
-    readonly RUNSUM: "RUNSUM";
-    readonly SUM2: "SUM";
-    readonly COUNT2: "COUNT";
-    readonly APPROXIMATE_COUNT2: "APPROXIMATE_COUNT";
-    readonly AVG2: "AVG";
-    readonly MIN2: "MIN";
-    readonly MAX2: "MAX";
-    readonly MEDIAN2: "MEDIAN";
-    readonly RUNSUM2: "RUNSUM";
-    readonly SUM3: "SUM";
-    readonly COUNT3: "COUNT";
-    readonly APPROXIMATE_COUNT3: "APPROXIMATE_COUNT";
-    readonly AVG3: "AVG";
-    readonly MIN3: "MIN";
-    readonly MAX3: "MAX";
-    readonly MEDIAN3: "MEDIAN";
-    readonly RUNSUM3: "RUNSUM";
+    readonly SUM: 'SUM';
+    readonly COUNT: 'COUNT';
+    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
+    readonly AVG: 'AVG';
+    readonly MIN: 'MIN';
+    readonly MAX: 'MAX';
+    readonly MEDIAN: 'MEDIAN';
+    readonly RUNSUM: 'RUNSUM';
+    readonly SUM2: 'SUM';
+    readonly COUNT2: 'COUNT';
+    readonly APPROXIMATE_COUNT2: 'APPROXIMATE_COUNT';
+    readonly AVG2: 'AVG';
+    readonly MIN2: 'MIN';
+    readonly MAX2: 'MAX';
+    readonly MEDIAN2: 'MEDIAN';
+    readonly RUNSUM2: 'RUNSUM';
 };
 
 // @public (undocumented)
-export type AiAggregation9 = typeof AiAggregation9[keyof typeof AiAggregation9];
+export type AiAggregation9 = (typeof AiAggregation9)[keyof typeof AiAggregation9];
 
 // @public (undocumented)
 export interface AiAlertDatasetIdentifier {
@@ -3380,13 +3286,13 @@ export interface AiAlertSchedule {
 
 // @public
 export const AiAlertTrigger: {
-    readonly ALWAYS: "ALWAYS";
-    readonly ONCE: "ONCE";
-    readonly ONCE_PER_INTERVAL: "ONCE_PER_INTERVAL";
+    readonly ALWAYS: 'ALWAYS';
+    readonly ONCE: 'ONCE';
+    readonly ONCE_PER_INTERVAL: 'ONCE_PER_INTERVAL';
 };
 
 // @public (undocumented)
-export type AiAlertTrigger = typeof AiAlertTrigger[keyof typeof AiAlertTrigger];
+export type AiAlertTrigger = (typeof AiAlertTrigger)[keyof typeof AiAlertTrigger];
 
 // @public (undocumented)
 export interface AiAllowedRelationshipType {
@@ -3434,46 +3340,46 @@ export interface AiAnomalyDetection {
 
 // @public
 export const AiAnomalyDetectionGranularity: {
-    readonly HOUR: "HOUR";
-    readonly DAY: "DAY";
-    readonly WEEK: "WEEK";
-    readonly MONTH: "MONTH";
-    readonly QUARTER: "QUARTER";
-    readonly YEAR: "YEAR";
+    readonly HOUR: 'HOUR';
+    readonly DAY: 'DAY';
+    readonly WEEK: 'WEEK';
+    readonly MONTH: 'MONTH';
+    readonly QUARTER: 'QUARTER';
+    readonly YEAR: 'YEAR';
 };
 
 // @public (undocumented)
-export type AiAnomalyDetectionGranularity = typeof AiAnomalyDetectionGranularity[keyof typeof AiAnomalyDetectionGranularity];
+export type AiAnomalyDetectionGranularity = (typeof AiAnomalyDetectionGranularity)[keyof typeof AiAnomalyDetectionGranularity];
 
 // @public (undocumented)
 export const AiAnomalyDetectionSensitivity: {
-    readonly LOW: "low";
-    readonly MEDIUM: "medium";
-    readonly HIGH: "high";
+    readonly LOW: 'low';
+    readonly MEDIUM: 'medium';
+    readonly HIGH: 'high';
 };
 
 // @public (undocumented)
-export type AiAnomalyDetectionSensitivity = typeof AiAnomalyDetectionSensitivity[keyof typeof AiAnomalyDetectionSensitivity];
+export type AiAnomalyDetectionSensitivity = (typeof AiAnomalyDetectionSensitivity)[keyof typeof AiAnomalyDetectionSensitivity];
 
 // @public (undocumented)
 export const AiAnomalyDetectionSize: {
-    readonly SMALL: "small";
-    readonly MEDIUM: "medium";
-    readonly BIG: "big";
+    readonly SMALL: 'small';
+    readonly MEDIUM: 'medium';
+    readonly BIG: 'big';
 };
 
 // @public (undocumented)
-export type AiAnomalyDetectionSize = typeof AiAnomalyDetectionSize[keyof typeof AiAnomalyDetectionSize];
+export type AiAnomalyDetectionSize = (typeof AiAnomalyDetectionSize)[keyof typeof AiAnomalyDetectionSize];
 
 // @public (undocumented)
 export const AiAppApplicationDtosAfmFilterDefinitionMatchType: {
-    readonly STARTS_WITH: "STARTS_WITH";
-    readonly ENDS_WITH: "ENDS_WITH";
-    readonly CONTAINS: "CONTAINS";
+    readonly STARTS_WITH: 'STARTS_WITH';
+    readonly ENDS_WITH: 'ENDS_WITH';
+    readonly CONTAINS: 'CONTAINS';
 };
 
 // @public (undocumented)
-export type AiAppApplicationDtosAfmFilterDefinitionMatchType = typeof AiAppApplicationDtosAfmFilterDefinitionMatchType[keyof typeof AiAppApplicationDtosAfmFilterDefinitionMatchType];
+export type AiAppApplicationDtosAfmFilterDefinitionMatchType = (typeof AiAppApplicationDtosAfmFilterDefinitionMatchType)[keyof typeof AiAppApplicationDtosAfmFilterDefinitionMatchType];
 
 // @public
 export interface AiAppliedMemoryItem {
@@ -3506,12 +3412,20 @@ export interface AiArithmeticMeasure {
 
 // @public
 export const AiArithmeticOperator: {
-    readonly DIFFERENCE: "DIFFERENCE";
-    readonly CHANGE: "CHANGE";
+    readonly DIFFERENCE: 'DIFFERENCE';
+    readonly CHANGE: 'CHANGE';
 };
 
 // @public (undocumented)
-export type AiArithmeticOperator = typeof AiArithmeticOperator[keyof typeof AiArithmeticOperator];
+export type AiArithmeticOperator = (typeof AiArithmeticOperator)[keyof typeof AiArithmeticOperator];
+
+// @public
+export interface AiAttribute {
+}
+
+// @public
+export interface AiAttribute1 {
+}
 
 // @public (undocumented)
 export interface AiAttributeFilterElements {
@@ -3521,12 +3435,12 @@ export interface AiAttributeFilterElements {
 
 // @public (undocumented)
 export const AiAxis: {
-    readonly PRIMARY: "primary";
-    readonly SECONDARY: "secondary";
+    readonly PRIMARY: 'primary';
+    readonly SECONDARY: 'secondary';
 };
 
 // @public (undocumented)
-export type AiAxis = typeof AiAxis[keyof typeof AiAxis];
+export type AiAxis = (typeof AiAxis)[keyof typeof AiAxis];
 
 // @public (undocumented)
 export class AiBaseAPI {
@@ -3606,31 +3520,31 @@ export interface AiCatalogSearchMatch {
 
 // @public (undocumented)
 export const AiCellImageSizing: {
-    readonly FIT: "fit";
-    readonly FILL: "fill";
+    readonly FIT: 'fit';
+    readonly FILL: 'fill';
 };
 
 // @public (undocumented)
-export type AiCellImageSizing = typeof AiCellImageSizing[keyof typeof AiCellImageSizing];
+export type AiCellImageSizing = (typeof AiCellImageSizing)[keyof typeof AiCellImageSizing];
 
 // @public (undocumented)
 export const AiCellTextWrapping: {
-    readonly CLIP: "clip";
-    readonly WRAP: "wrap";
+    readonly CLIP: 'clip';
+    readonly WRAP: 'wrap';
 };
 
 // @public (undocumented)
-export type AiCellTextWrapping = typeof AiCellTextWrapping[keyof typeof AiCellTextWrapping];
+export type AiCellTextWrapping = (typeof AiCellTextWrapping)[keyof typeof AiCellTextWrapping];
 
 // @public (undocumented)
 export const AiCellVerticalAlign: {
-    readonly TOP: "top";
-    readonly MIDDLE: "middle";
-    readonly BOTTOM: "bottom";
+    readonly TOP: 'top';
+    readonly MIDDLE: 'middle';
+    readonly BOTTOM: 'bottom';
 };
 
 // @public (undocumented)
-export type AiCellVerticalAlign = typeof AiCellVerticalAlign[keyof typeof AiCellVerticalAlign];
+export type AiCellVerticalAlign = (typeof AiCellVerticalAlign)[keyof typeof AiCellVerticalAlign];
 
 // @public
 export interface AiCertificationInfo {
@@ -3646,8 +3560,29 @@ export interface AiChartFill {
         [key: string]: AiPatternNameMapping;
     } | null;
     // (undocumented)
-    'type'?: AiType83 | null;
+    'type'?: AiType53 | null;
 }
+
+// @public (undocumented)
+export interface AiClarifyingChoiceOption {
+    'label': string;
+}
+
+// @public
+export interface AiClarifyingQuestion {
+    // (undocumented)
+    'control': AiSingleChoiceControl;
+    'text': string;
+}
+
+// @public
+export interface AiClarifyingQuestionsPart {
+    'questions': Array<AiClarifyingQuestion>;
+    'type'?: AiClarifyingQuestionsPartTypeEnum;
+}
+
+// @public (undocumented)
+export type AiClarifyingQuestionsPartTypeEnum = 'clarifyingQuestions';
 
 // @public (undocumented)
 export interface AiColorDefinition {
@@ -3686,16 +3621,16 @@ export interface AiComparisonCondition {
 
 // @public
 export const AiComparisonConditionOperator: {
-    readonly GREATER_THAN: "GREATER_THAN";
-    readonly GREATER_THAN_OR_EQUAL_TO: "GREATER_THAN_OR_EQUAL_TO";
-    readonly LESS_THAN: "LESS_THAN";
-    readonly LESS_THAN_OR_EQUAL_TO: "LESS_THAN_OR_EQUAL_TO";
-    readonly EQUAL_TO: "EQUAL_TO";
-    readonly NOT_EQUAL_TO: "NOT_EQUAL_TO";
+    readonly GREATER_THAN: 'GREATER_THAN';
+    readonly GREATER_THAN_OR_EQUAL_TO: 'GREATER_THAN_OR_EQUAL_TO';
+    readonly LESS_THAN: 'LESS_THAN';
+    readonly LESS_THAN_OR_EQUAL_TO: 'LESS_THAN_OR_EQUAL_TO';
+    readonly EQUAL_TO: 'EQUAL_TO';
+    readonly NOT_EQUAL_TO: 'NOT_EQUAL_TO';
 };
 
 // @public (undocumented)
-export type AiComparisonConditionOperator = typeof AiComparisonConditionOperator[keyof typeof AiComparisonConditionOperator];
+export type AiComparisonConditionOperator = (typeof AiComparisonConditionOperator)[keyof typeof AiComparisonConditionOperator];
 
 // @public (undocumented)
 export interface AiComparisonMeasureValueFilter {
@@ -3731,16 +3666,16 @@ export interface AiComparisonMeasureValueFilterBodyDimensionalityInner {
 
 // @public (undocumented)
 export const AiComparisonMeasureValueOperator: {
-    readonly GREATER_THAN: "GREATER_THAN";
-    readonly GREATER_THAN_OR_EQUAL_TO: "GREATER_THAN_OR_EQUAL_TO";
-    readonly LESS_THAN: "LESS_THAN";
-    readonly LESS_THAN_OR_EQUAL_TO: "LESS_THAN_OR_EQUAL_TO";
-    readonly EQUAL_TO: "EQUAL_TO";
-    readonly NOT_EQUAL_TO: "NOT_EQUAL_TO";
+    readonly GREATER_THAN: 'GREATER_THAN';
+    readonly GREATER_THAN_OR_EQUAL_TO: 'GREATER_THAN_OR_EQUAL_TO';
+    readonly LESS_THAN: 'LESS_THAN';
+    readonly LESS_THAN_OR_EQUAL_TO: 'LESS_THAN_OR_EQUAL_TO';
+    readonly EQUAL_TO: 'EQUAL_TO';
+    readonly NOT_EQUAL_TO: 'NOT_EQUAL_TO';
 };
 
 // @public (undocumented)
-export type AiComparisonMeasureValueOperator = typeof AiComparisonMeasureValueOperator[keyof typeof AiComparisonMeasureValueOperator];
+export type AiComparisonMeasureValueOperator = (typeof AiComparisonMeasureValueOperator)[keyof typeof AiComparisonMeasureValueOperator];
 
 // @public (undocumented)
 export interface AiComplexColorItem {
@@ -3805,7 +3740,88 @@ export interface AiCompoundMeasureValueFilterBodyDimensionalityInner {
 export type AiCondition = AiAnomalyCondition | AiComparisonCondition | AiRangeCondition | AiRelativeCondition;
 
 // @public (undocumented)
-export interface AiCondition13 {
+export const AiCondition2: {
+    readonly GREATER_THAN: 'GREATER_THAN';
+    readonly GREATER_THAN_OR_EQUAL_TO: 'GREATER_THAN_OR_EQUAL_TO';
+    readonly LESS_THAN: 'LESS_THAN';
+    readonly LESS_THAN_OR_EQUAL_TO: 'LESS_THAN_OR_EQUAL_TO';
+    readonly EQUAL_TO: 'EQUAL_TO';
+    readonly NOT_EQUAL_TO: 'NOT_EQUAL_TO';
+    readonly BETWEEN: 'BETWEEN';
+    readonly NOT_BETWEEN: 'NOT_BETWEEN';
+};
+
+// @public (undocumented)
+export type AiCondition2 = (typeof AiCondition2)[keyof typeof AiCondition2];
+
+// @public (undocumented)
+export const AiCondition3: {
+    readonly GREATER_THAN: 'GREATER_THAN';
+    readonly GREATER_THAN_OR_EQUAL_TO: 'GREATER_THAN_OR_EQUAL_TO';
+    readonly LESS_THAN: 'LESS_THAN';
+    readonly LESS_THAN_OR_EQUAL_TO: 'LESS_THAN_OR_EQUAL_TO';
+    readonly EQUAL_TO: 'EQUAL_TO';
+    readonly NOT_EQUAL_TO: 'NOT_EQUAL_TO';
+};
+
+// @public (undocumented)
+export type AiCondition3 = (typeof AiCondition3)[keyof typeof AiCondition3];
+
+// @public (undocumented)
+export const AiCondition4: {
+    readonly BETWEEN: 'BETWEEN';
+    readonly NOT_BETWEEN: 'NOT_BETWEEN';
+};
+
+// @public (undocumented)
+export type AiCondition4 = (typeof AiCondition4)[keyof typeof AiCondition4];
+
+// @public (undocumented)
+export const AiCondition5: {
+    readonly IS: 'is';
+    readonly IS_NOT: 'isNot';
+};
+
+// @public (undocumented)
+export type AiCondition5 = (typeof AiCondition5)[keyof typeof AiCondition5];
+
+// @public (undocumented)
+export const AiCondition6: {
+    readonly CONTAINS: 'contains';
+    readonly DOES_NOT_CONTAIN: 'doesNotContain';
+    readonly STARTS_WITH: 'startsWith';
+    readonly DOES_NOT_START_WITH: 'doesNotStartWith';
+    readonly ENDS_WITH: 'endsWith';
+    readonly DOES_NOT_END_WITH: 'doesNotEndWith';
+};
+
+// @public (undocumented)
+export type AiCondition6 = (typeof AiCondition6)[keyof typeof AiCondition6];
+
+// @public (undocumented)
+export const AiCondition7: {
+    readonly GREATER_THAN: 'GREATER_THAN';
+    readonly GREATER_THAN_OR_EQUAL_TO: 'GREATER_THAN_OR_EQUAL_TO';
+    readonly LESS_THAN: 'LESS_THAN';
+    readonly LESS_THAN_OR_EQUAL_TO: 'LESS_THAN_OR_EQUAL_TO';
+    readonly EQUAL_TO: 'EQUAL_TO';
+    readonly NOT_EQUAL_TO: 'NOT_EQUAL_TO';
+};
+
+// @public (undocumented)
+export type AiCondition7 = (typeof AiCondition7)[keyof typeof AiCondition7];
+
+// @public (undocumented)
+export const AiCondition8: {
+    readonly BETWEEN: 'BETWEEN';
+    readonly NOT_BETWEEN: 'NOT_BETWEEN';
+};
+
+// @public (undocumented)
+export type AiCondition8 = (typeof AiCondition8)[keyof typeof AiCondition8];
+
+// @public (undocumented)
+export interface AiCondition9 {
     // (undocumented)
     'format': AiFormat;
     // (undocumented)
@@ -3823,7 +3839,15 @@ export interface AiConditionalFormatting {
     // (undocumented)
     'rules'?: Array<AiRule> | null;
     // (undocumented)
+    'suppressed_targets'?: Array<AiConditionalFormattingSuppressedTargetsInner> | null;
+    // (undocumented)
     'version'?: string | null;
+}
+
+// @public (undocumented)
+export interface AiConditionalFormattingSuppressedTargetsInner {
+    'attribute': string;
+    'measure': string;
 }
 
 // @public (undocumented)
@@ -4229,13 +4253,13 @@ export interface AiConversationListResponse {
 
 // @public
 export const AiConversationMode: {
-    readonly USER: "USER";
-    readonly PREVIEW: "PREVIEW";
-    readonly MCP: "MCP";
+    readonly USER: 'USER';
+    readonly PREVIEW: 'PREVIEW';
+    readonly MCP: 'MCP';
 };
 
 // @public (undocumented)
-export type AiConversationMode = typeof AiConversationMode[keyof typeof AiConversationMode];
+export type AiConversationMode = (typeof AiConversationMode)[keyof typeof AiConversationMode];
 
 // @public
 export interface AiConversationResponse {
@@ -4463,6 +4487,8 @@ export type AiDashboardPatchPartTypeEnum = 'dashboardPatch';
 
 // @public
 export interface AiDashboardPatchReferences {
+    'datasets'?: Array<object>;
+    'datedatasets'?: Array<object>;
     'visualizations': Array<object>;
 }
 
@@ -4477,6 +4503,8 @@ export interface AiDashboardRef {
 export interface AiDashboardReferences {
     // (undocumented)
     [key: string]: any;
+    'datasets'?: Array<object | null>;
+    'datedatasets'?: Array<object | null>;
     'visualizations': Array<object | null>;
 }
 
@@ -4617,12 +4645,12 @@ export interface AiDataLabels {
 
 // @public (undocumented)
 export const AiDataLabelsStyle: {
-    readonly AUTO: "auto";
-    readonly BACKPLATE: "backplate";
+    readonly AUTO: 'auto';
+    readonly BACKPLATE: 'backplate';
 };
 
 // @public (undocumented)
-export type AiDataLabelsStyle = typeof AiDataLabelsStyle[keyof typeof AiDataLabelsStyle];
+export type AiDataLabelsStyle = (typeof AiDataLabelsStyle)[keyof typeof AiDataLabelsStyle];
 
 // @public (undocumented)
 export interface AiDataPoints {
@@ -4634,97 +4662,97 @@ export interface AiDataTotals {
 
 // @public (undocumented)
 export const AiDateFilterGranularity: {
-    readonly SECOND: "SECOND";
-    readonly SECOND_OF_MINUTE: "SECOND_OF_MINUTE";
-    readonly SECOND_OF_DAY: "SECOND_OF_DAY";
-    readonly MINUTE: "MINUTE";
-    readonly MINUTE_OF_DAY: "MINUTE_OF_DAY";
-    readonly HOUR: "HOUR";
-    readonly DAY: "DAY";
-    readonly WEEK_US: "WEEK_US";
-    readonly MONTH: "MONTH";
-    readonly QUARTER: "QUARTER";
-    readonly YEAR: "YEAR";
-    readonly MINUTE_OF_HOUR: "MINUTE_OF_HOUR";
-    readonly HOUR_OF_DAY: "HOUR_OF_DAY";
-    readonly DAY_OF_WEEK: "DAY_OF_WEEK";
-    readonly DAY_OF_MONTH: "DAY_OF_MONTH";
-    readonly DAY_OF_QUARTER: "DAY_OF_QUARTER";
-    readonly DAY_OF_YEAR: "DAY_OF_YEAR";
-    readonly WEEK_OF_YEAR: "WEEK_OF_YEAR";
-    readonly MONTH_OF_YEAR: "MONTH_OF_YEAR";
-    readonly QUARTER_OF_YEAR: "QUARTER_OF_YEAR";
-    readonly FISCAL_DAY_OF_FISCAL_WEEK: "FISCAL_DAY_OF_FISCAL_WEEK";
-    readonly FISCAL_DAY_OF_FISCAL_MONTH: "FISCAL_DAY_OF_FISCAL_MONTH";
-    readonly FISCAL_DAY_OF_FISCAL_QUARTER: "FISCAL_DAY_OF_FISCAL_QUARTER";
-    readonly FISCAL_DAY_OF_FISCAL_SEMESTER: "FISCAL_DAY_OF_FISCAL_SEMESTER";
-    readonly FISCAL_DAY_OF_FISCAL_YEAR: "FISCAL_DAY_OF_FISCAL_YEAR";
-    readonly FISCAL_WEEK: "FISCAL_WEEK";
-    readonly FISCAL_WEEK_OF_FISCAL_MONTH: "FISCAL_WEEK_OF_FISCAL_MONTH";
-    readonly FISCAL_WEEK_OF_FISCAL_QUARTER: "FISCAL_WEEK_OF_FISCAL_QUARTER";
-    readonly FISCAL_WEEK_OF_FISCAL_SEMESTER: "FISCAL_WEEK_OF_FISCAL_SEMESTER";
-    readonly FISCAL_WEEK_OF_FISCAL_YEAR: "FISCAL_WEEK_OF_FISCAL_YEAR";
-    readonly FISCAL_MONTH: "FISCAL_MONTH";
-    readonly FISCAL_MONTH_OF_FISCAL_QUARTER: "FISCAL_MONTH_OF_FISCAL_QUARTER";
-    readonly FISCAL_MONTH_OF_FISCAL_SEMESTER: "FISCAL_MONTH_OF_FISCAL_SEMESTER";
-    readonly FISCAL_MONTH_OF_FISCAL_YEAR: "FISCAL_MONTH_OF_FISCAL_YEAR";
-    readonly FISCAL_QUARTER: "FISCAL_QUARTER";
-    readonly FISCAL_QUARTER_OF_FISCAL_SEMESTER: "FISCAL_QUARTER_OF_FISCAL_SEMESTER";
-    readonly FISCAL_QUARTER_OF_FISCAL_YEAR: "FISCAL_QUARTER_OF_FISCAL_YEAR";
-    readonly FISCAL_SEMESTER: "FISCAL_SEMESTER";
-    readonly FISCAL_SEMESTER_OF_FISCAL_YEAR: "FISCAL_SEMESTER_OF_FISCAL_YEAR";
-    readonly FISCAL_YEAR: "FISCAL_YEAR";
+    readonly SECOND: 'SECOND';
+    readonly SECOND_OF_MINUTE: 'SECOND_OF_MINUTE';
+    readonly SECOND_OF_DAY: 'SECOND_OF_DAY';
+    readonly MINUTE: 'MINUTE';
+    readonly MINUTE_OF_DAY: 'MINUTE_OF_DAY';
+    readonly HOUR: 'HOUR';
+    readonly DAY: 'DAY';
+    readonly WEEK_US: 'WEEK_US';
+    readonly MONTH: 'MONTH';
+    readonly QUARTER: 'QUARTER';
+    readonly YEAR: 'YEAR';
+    readonly MINUTE_OF_HOUR: 'MINUTE_OF_HOUR';
+    readonly HOUR_OF_DAY: 'HOUR_OF_DAY';
+    readonly DAY_OF_WEEK: 'DAY_OF_WEEK';
+    readonly DAY_OF_MONTH: 'DAY_OF_MONTH';
+    readonly DAY_OF_QUARTER: 'DAY_OF_QUARTER';
+    readonly DAY_OF_YEAR: 'DAY_OF_YEAR';
+    readonly WEEK_OF_YEAR: 'WEEK_OF_YEAR';
+    readonly MONTH_OF_YEAR: 'MONTH_OF_YEAR';
+    readonly QUARTER_OF_YEAR: 'QUARTER_OF_YEAR';
+    readonly FISCAL_DAY_OF_FISCAL_WEEK: 'FISCAL_DAY_OF_FISCAL_WEEK';
+    readonly FISCAL_DAY_OF_FISCAL_MONTH: 'FISCAL_DAY_OF_FISCAL_MONTH';
+    readonly FISCAL_DAY_OF_FISCAL_QUARTER: 'FISCAL_DAY_OF_FISCAL_QUARTER';
+    readonly FISCAL_DAY_OF_FISCAL_SEMESTER: 'FISCAL_DAY_OF_FISCAL_SEMESTER';
+    readonly FISCAL_DAY_OF_FISCAL_YEAR: 'FISCAL_DAY_OF_FISCAL_YEAR';
+    readonly FISCAL_WEEK: 'FISCAL_WEEK';
+    readonly FISCAL_WEEK_OF_FISCAL_MONTH: 'FISCAL_WEEK_OF_FISCAL_MONTH';
+    readonly FISCAL_WEEK_OF_FISCAL_QUARTER: 'FISCAL_WEEK_OF_FISCAL_QUARTER';
+    readonly FISCAL_WEEK_OF_FISCAL_SEMESTER: 'FISCAL_WEEK_OF_FISCAL_SEMESTER';
+    readonly FISCAL_WEEK_OF_FISCAL_YEAR: 'FISCAL_WEEK_OF_FISCAL_YEAR';
+    readonly FISCAL_MONTH: 'FISCAL_MONTH';
+    readonly FISCAL_MONTH_OF_FISCAL_QUARTER: 'FISCAL_MONTH_OF_FISCAL_QUARTER';
+    readonly FISCAL_MONTH_OF_FISCAL_SEMESTER: 'FISCAL_MONTH_OF_FISCAL_SEMESTER';
+    readonly FISCAL_MONTH_OF_FISCAL_YEAR: 'FISCAL_MONTH_OF_FISCAL_YEAR';
+    readonly FISCAL_QUARTER: 'FISCAL_QUARTER';
+    readonly FISCAL_QUARTER_OF_FISCAL_SEMESTER: 'FISCAL_QUARTER_OF_FISCAL_SEMESTER';
+    readonly FISCAL_QUARTER_OF_FISCAL_YEAR: 'FISCAL_QUARTER_OF_FISCAL_YEAR';
+    readonly FISCAL_SEMESTER: 'FISCAL_SEMESTER';
+    readonly FISCAL_SEMESTER_OF_FISCAL_YEAR: 'FISCAL_SEMESTER_OF_FISCAL_YEAR';
+    readonly FISCAL_YEAR: 'FISCAL_YEAR';
 };
 
 // @public (undocumented)
-export type AiDateFilterGranularity = typeof AiDateFilterGranularity[keyof typeof AiDateFilterGranularity];
+export type AiDateFilterGranularity = (typeof AiDateFilterGranularity)[keyof typeof AiDateFilterGranularity];
 
 // @public (undocumented)
 export const AiDateGranularity: {
-    readonly SECOND: "SECOND";
-    readonly SECOND_OF_MINUTE: "SECOND_OF_MINUTE";
-    readonly SECOND_OF_DAY: "SECOND_OF_DAY";
-    readonly MINUTE: "MINUTE";
-    readonly MINUTE_OF_DAY: "MINUTE_OF_DAY";
-    readonly HOUR: "HOUR";
-    readonly DAY: "DAY";
-    readonly WEEK: "WEEK";
-    readonly MONTH: "MONTH";
-    readonly QUARTER: "QUARTER";
-    readonly YEAR: "YEAR";
-    readonly MINUTE_OF_HOUR: "MINUTE_OF_HOUR";
-    readonly HOUR_OF_DAY: "HOUR_OF_DAY";
-    readonly DAY_OF_WEEK: "DAY_OF_WEEK";
-    readonly DAY_OF_MONTH: "DAY_OF_MONTH";
-    readonly DAY_OF_QUARTER: "DAY_OF_QUARTER";
-    readonly DAY_OF_YEAR: "DAY_OF_YEAR";
-    readonly WEEK_OF_YEAR: "WEEK_OF_YEAR";
-    readonly MONTH_OF_YEAR: "MONTH_OF_YEAR";
-    readonly QUARTER_OF_YEAR: "QUARTER_OF_YEAR";
-    readonly FISCAL_DAY_OF_FISCAL_WEEK: "FISCAL_DAY_OF_FISCAL_WEEK";
-    readonly FISCAL_DAY_OF_FISCAL_MONTH: "FISCAL_DAY_OF_FISCAL_MONTH";
-    readonly FISCAL_DAY_OF_FISCAL_QUARTER: "FISCAL_DAY_OF_FISCAL_QUARTER";
-    readonly FISCAL_DAY_OF_FISCAL_SEMESTER: "FISCAL_DAY_OF_FISCAL_SEMESTER";
-    readonly FISCAL_DAY_OF_FISCAL_YEAR: "FISCAL_DAY_OF_FISCAL_YEAR";
-    readonly FISCAL_WEEK: "FISCAL_WEEK";
-    readonly FISCAL_WEEK_OF_FISCAL_MONTH: "FISCAL_WEEK_OF_FISCAL_MONTH";
-    readonly FISCAL_WEEK_OF_FISCAL_QUARTER: "FISCAL_WEEK_OF_FISCAL_QUARTER";
-    readonly FISCAL_WEEK_OF_FISCAL_SEMESTER: "FISCAL_WEEK_OF_FISCAL_SEMESTER";
-    readonly FISCAL_WEEK_OF_FISCAL_YEAR: "FISCAL_WEEK_OF_FISCAL_YEAR";
-    readonly FISCAL_MONTH: "FISCAL_MONTH";
-    readonly FISCAL_MONTH_OF_FISCAL_QUARTER: "FISCAL_MONTH_OF_FISCAL_QUARTER";
-    readonly FISCAL_MONTH_OF_FISCAL_SEMESTER: "FISCAL_MONTH_OF_FISCAL_SEMESTER";
-    readonly FISCAL_MONTH_OF_FISCAL_YEAR: "FISCAL_MONTH_OF_FISCAL_YEAR";
-    readonly FISCAL_QUARTER: "FISCAL_QUARTER";
-    readonly FISCAL_QUARTER_OF_FISCAL_SEMESTER: "FISCAL_QUARTER_OF_FISCAL_SEMESTER";
-    readonly FISCAL_QUARTER_OF_FISCAL_YEAR: "FISCAL_QUARTER_OF_FISCAL_YEAR";
-    readonly FISCAL_SEMESTER: "FISCAL_SEMESTER";
-    readonly FISCAL_SEMESTER_OF_FISCAL_YEAR: "FISCAL_SEMESTER_OF_FISCAL_YEAR";
-    readonly FISCAL_YEAR: "FISCAL_YEAR";
+    readonly SECOND: 'SECOND';
+    readonly SECOND_OF_MINUTE: 'SECOND_OF_MINUTE';
+    readonly SECOND_OF_DAY: 'SECOND_OF_DAY';
+    readonly MINUTE: 'MINUTE';
+    readonly MINUTE_OF_DAY: 'MINUTE_OF_DAY';
+    readonly HOUR: 'HOUR';
+    readonly DAY: 'DAY';
+    readonly WEEK: 'WEEK';
+    readonly MONTH: 'MONTH';
+    readonly QUARTER: 'QUARTER';
+    readonly YEAR: 'YEAR';
+    readonly MINUTE_OF_HOUR: 'MINUTE_OF_HOUR';
+    readonly HOUR_OF_DAY: 'HOUR_OF_DAY';
+    readonly DAY_OF_WEEK: 'DAY_OF_WEEK';
+    readonly DAY_OF_MONTH: 'DAY_OF_MONTH';
+    readonly DAY_OF_QUARTER: 'DAY_OF_QUARTER';
+    readonly DAY_OF_YEAR: 'DAY_OF_YEAR';
+    readonly WEEK_OF_YEAR: 'WEEK_OF_YEAR';
+    readonly MONTH_OF_YEAR: 'MONTH_OF_YEAR';
+    readonly QUARTER_OF_YEAR: 'QUARTER_OF_YEAR';
+    readonly FISCAL_DAY_OF_FISCAL_WEEK: 'FISCAL_DAY_OF_FISCAL_WEEK';
+    readonly FISCAL_DAY_OF_FISCAL_MONTH: 'FISCAL_DAY_OF_FISCAL_MONTH';
+    readonly FISCAL_DAY_OF_FISCAL_QUARTER: 'FISCAL_DAY_OF_FISCAL_QUARTER';
+    readonly FISCAL_DAY_OF_FISCAL_SEMESTER: 'FISCAL_DAY_OF_FISCAL_SEMESTER';
+    readonly FISCAL_DAY_OF_FISCAL_YEAR: 'FISCAL_DAY_OF_FISCAL_YEAR';
+    readonly FISCAL_WEEK: 'FISCAL_WEEK';
+    readonly FISCAL_WEEK_OF_FISCAL_MONTH: 'FISCAL_WEEK_OF_FISCAL_MONTH';
+    readonly FISCAL_WEEK_OF_FISCAL_QUARTER: 'FISCAL_WEEK_OF_FISCAL_QUARTER';
+    readonly FISCAL_WEEK_OF_FISCAL_SEMESTER: 'FISCAL_WEEK_OF_FISCAL_SEMESTER';
+    readonly FISCAL_WEEK_OF_FISCAL_YEAR: 'FISCAL_WEEK_OF_FISCAL_YEAR';
+    readonly FISCAL_MONTH: 'FISCAL_MONTH';
+    readonly FISCAL_MONTH_OF_FISCAL_QUARTER: 'FISCAL_MONTH_OF_FISCAL_QUARTER';
+    readonly FISCAL_MONTH_OF_FISCAL_SEMESTER: 'FISCAL_MONTH_OF_FISCAL_SEMESTER';
+    readonly FISCAL_MONTH_OF_FISCAL_YEAR: 'FISCAL_MONTH_OF_FISCAL_YEAR';
+    readonly FISCAL_QUARTER: 'FISCAL_QUARTER';
+    readonly FISCAL_QUARTER_OF_FISCAL_SEMESTER: 'FISCAL_QUARTER_OF_FISCAL_SEMESTER';
+    readonly FISCAL_QUARTER_OF_FISCAL_YEAR: 'FISCAL_QUARTER_OF_FISCAL_YEAR';
+    readonly FISCAL_SEMESTER: 'FISCAL_SEMESTER';
+    readonly FISCAL_SEMESTER_OF_FISCAL_YEAR: 'FISCAL_SEMESTER_OF_FISCAL_YEAR';
+    readonly FISCAL_YEAR: 'FISCAL_YEAR';
 };
 
 // @public (undocumented)
-export type AiDateGranularity = typeof AiDateGranularity[keyof typeof AiDateGranularity];
+export type AiDateGranularity = (typeof AiDateGranularity)[keyof typeof AiDateGranularity];
 
 // @public
 export interface AiDeleteDocumentResponse {
@@ -4736,22 +4764,22 @@ export interface AiDeleteDocumentResponse {
 
 // @public (undocumented)
 export const AiDirection: {
-    readonly ASC: "ASC";
-    readonly DESC: "DESC";
+    readonly ASC: 'ASC';
+    readonly DESC: 'DESC';
 };
 
 // @public (undocumented)
-export type AiDirection = typeof AiDirection[keyof typeof AiDirection];
+export type AiDirection = (typeof AiDirection)[keyof typeof AiDirection];
 
 // @public (undocumented)
 export const AiDisplayAs: {
-    readonly LINE: "line";
-    readonly COLUMN: "column";
-    readonly METRIC: "metric";
+    readonly LINE: 'line';
+    readonly COLUMN: 'column';
+    readonly METRIC: 'metric';
 };
 
 // @public (undocumented)
-export type AiDisplayAs = typeof AiDisplayAs[keyof typeof AiDisplayAs];
+export type AiDisplayAs = (typeof AiDisplayAs)[keyof typeof AiDisplayAs];
 
 // @public (undocumented)
 export interface AiDistinctPointShapes {
@@ -4791,13 +4819,23 @@ export interface AiDocumentMetadataResponse {
 
 // @public (undocumented)
 export const AiEmptyValueHandling: {
-    readonly INCLUDE: "INCLUDE";
-    readonly EXCLUDE: "EXCLUDE";
-    readonly ONLY: "ONLY";
+    readonly INCLUDE: 'INCLUDE';
+    readonly EXCLUDE: 'EXCLUDE';
+    readonly ONLY: 'ONLY';
 };
 
 // @public (undocumented)
-export type AiEmptyValueHandling = typeof AiEmptyValueHandling[keyof typeof AiEmptyValueHandling];
+export type AiEmptyValueHandling = (typeof AiEmptyValueHandling)[keyof typeof AiEmptyValueHandling];
+
+// @public (undocumented)
+export const AiEmptyValues: {
+    readonly ONLY: 'only';
+    readonly INCLUDE: 'include';
+    readonly EXCLUDE: 'exclude';
+};
+
+// @public (undocumented)
+export type AiEmptyValues = (typeof AiEmptyValues)[keyof typeof AiEmptyValues];
 
 // @public (undocumented)
 export interface AiErrorInfo {
@@ -4992,16 +5030,16 @@ export interface AiFrom {
 
 // @public (undocumented)
 export const AiFunction: {
-    readonly SUM: "SUM";
-    readonly AVG: "AVG";
-    readonly MIN: "MIN";
-    readonly MAX: "MAX";
-    readonly MED: "MED";
-    readonly NAT: "NAT";
+    readonly SUM: 'SUM';
+    readonly AVG: 'AVG';
+    readonly MIN: 'MIN';
+    readonly MAX: 'MAX';
+    readonly MED: 'MED';
+    readonly NAT: 'NAT';
 };
 
 // @public (undocumented)
-export type AiFunction = typeof AiFunction[keyof typeof AiFunction];
+export type AiFunction = (typeof AiFunction)[keyof typeof AiFunction];
 
 // @public (undocumented)
 export interface AiFunctionCallContent {
@@ -5026,46 +5064,76 @@ export type AiFunctionResultContentTypeEnum = 'toolResult';
 
 // @public (undocumented)
 export const AiGooddataCodeConvertorsPydanticModelsMatchType: {
-    readonly COLUMN: "column";
-    readonly PIVOT_GROUP: "pivotGroup";
+    readonly COLUMN: 'column';
+    readonly PIVOT_GROUP: 'pivotGroup';
 };
 
 // @public (undocumented)
-export type AiGooddataCodeConvertorsPydanticModelsMatchType = typeof AiGooddataCodeConvertorsPydanticModelsMatchType[keyof typeof AiGooddataCodeConvertorsPydanticModelsMatchType];
+export type AiGooddataCodeConvertorsPydanticModelsMatchType = (typeof AiGooddataCodeConvertorsPydanticModelsMatchType)[keyof typeof AiGooddataCodeConvertorsPydanticModelsMatchType];
 
 // @public (undocumented)
 export const AiGrandTotalsPosition: {
-    readonly PINNED_BOTTOM: "pinnedBottom";
-    readonly PINNED_TOP: "pinnedTop";
-    readonly BOTTOM: "bottom";
-    readonly TOP: "top";
+    readonly PINNED_BOTTOM: 'pinnedBottom';
+    readonly PINNED_TOP: 'pinnedTop';
+    readonly BOTTOM: 'bottom';
+    readonly TOP: 'top';
 };
 
 // @public (undocumented)
-export type AiGrandTotalsPosition = typeof AiGrandTotalsPosition[keyof typeof AiGrandTotalsPosition];
+export type AiGrandTotalsPosition = (typeof AiGrandTotalsPosition)[keyof typeof AiGrandTotalsPosition];
 
 // @public (undocumented)
-export const AiGranularity3: {
-    readonly MINUTE: "minute";
-    readonly HOUR: "hour";
-    readonly DAY: "day";
-    readonly WEEK: "week";
-    readonly MONTH: "month";
-    readonly QUARTER: "quarter";
-    readonly YEAR: "year";
+export const AiGranularity: {
+    readonly SECOND: 'SECOND';
+    readonly MINUTE: 'MINUTE';
+    readonly HOUR: 'HOUR';
+    readonly DAY: 'DAY';
+    readonly WEEK: 'WEEK';
+    readonly WEEK_US: 'WEEK_US';
+    readonly MONTH: 'MONTH';
+    readonly QUARTER: 'QUARTER';
+    readonly YEAR: 'YEAR';
+    readonly SECOND_OF_MINUTE: 'SECOND_OF_MINUTE';
+    readonly SECOND_OF_DAY: 'SECOND_OF_DAY';
+    readonly MINUTE_OF_HOUR: 'MINUTE_OF_HOUR';
+    readonly MINUTE_OF_DAY: 'MINUTE_OF_DAY';
+    readonly HOUR_OF_DAY: 'HOUR_OF_DAY';
+    readonly DAY_OF_WEEK: 'DAY_OF_WEEK';
+    readonly DAY_OF_MONTH: 'DAY_OF_MONTH';
+    readonly DAY_OF_YEAR: 'DAY_OF_YEAR';
+    readonly WEEK_OF_YEAR: 'WEEK_OF_YEAR';
+    readonly MONTH_OF_YEAR: 'MONTH_OF_YEAR';
+    readonly QUARTER_OF_YEAR: 'QUARTER_OF_YEAR';
+    readonly FISCAL_YEAR: 'FISCAL_YEAR';
+    readonly FISCAL_QUARTER: 'FISCAL_QUARTER';
+    readonly FISCAL_MONTH: 'FISCAL_MONTH';
 };
 
 // @public (undocumented)
-export type AiGranularity3 = typeof AiGranularity3[keyof typeof AiGranularity3];
+export type AiGranularity = (typeof AiGranularity)[keyof typeof AiGranularity];
+
+// @public (undocumented)
+export const AiGranularity2: {
+    readonly MINUTE: 'minute';
+    readonly HOUR: 'hour';
+    readonly DAY: 'day';
+    readonly WEEK: 'week';
+    readonly MONTH: 'month';
+    readonly QUARTER: 'quarter';
+    readonly YEAR: 'year';
+};
+
+// @public (undocumented)
+export type AiGranularity2 = (typeof AiGranularity2)[keyof typeof AiGranularity2];
 
 // @public (undocumented)
 export const AiGridLineShape: {
-    readonly POLYGON: "polygon";
-    readonly CIRCLE: "circle";
+    readonly POLYGON: 'polygon';
+    readonly CIRCLE: 'circle';
 };
 
 // @public (undocumented)
-export type AiGridLineShape = typeof AiGridLineShape[keyof typeof AiGridLineShape];
+export type AiGridLineShape = (typeof AiGridLineShape)[keyof typeof AiGridLineShape];
 
 // @public (undocumented)
 export interface AiHTTPValidationError {
@@ -5107,15 +5175,15 @@ export interface AiInteractionStepResponse {
 
 // @public
 export const AiIntervalGranularity: {
-    readonly DAY: "DAY";
-    readonly WEEK: "WEEK";
-    readonly MONTH: "MONTH";
-    readonly QUARTER: "QUARTER";
-    readonly YEAR: "YEAR";
+    readonly DAY: 'DAY';
+    readonly WEEK: 'WEEK';
+    readonly MONTH: 'MONTH';
+    readonly QUARTER: 'QUARTER';
+    readonly YEAR: 'YEAR';
 };
 
 // @public (undocumented)
-export type AiIntervalGranularity = typeof AiIntervalGranularity[keyof typeof AiIntervalGranularity];
+export type AiIntervalGranularity = (typeof AiIntervalGranularity)[keyof typeof AiIntervalGranularity];
 
 // @public (undocumented)
 export interface AiKeyDriverAnalysis {
@@ -5217,7 +5285,7 @@ export interface AiLayerItem {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiType81;
+    'type': AiType50;
     // (undocumented)
     'view_by'?: Array<string>;
 }
@@ -5257,7 +5325,7 @@ export interface AiLayerItemBase {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type'?: AiType81 | null;
+    'type'?: AiType50 | null;
     // (undocumented)
     'view_by'?: Array<string> | null;
 }
@@ -5330,26 +5398,26 @@ export interface AiMatchAttributeFilterOutput {
 
 // @public (undocumented)
 export const AiMatchTypeInput: {
-    readonly STARTS_WITH: "STARTS_WITH";
-    readonly ENDS_WITH: "ENDS_WITH";
-    readonly CONTAINS: "CONTAINS";
+    readonly STARTS_WITH: 'STARTS_WITH';
+    readonly ENDS_WITH: 'ENDS_WITH';
+    readonly CONTAINS: 'CONTAINS';
 };
 
 // @public (undocumented)
-export type AiMatchTypeInput = typeof AiMatchTypeInput[keyof typeof AiMatchTypeInput];
+export type AiMatchTypeInput = (typeof AiMatchTypeInput)[keyof typeof AiMatchTypeInput];
 
 // @public (undocumented)
 export const AiMaxSize: {
-    readonly _0_5X: "0.5x";
-    readonly _0_75X: "0.75x";
-    readonly NORMAL: "normal";
-    readonly _1_25X: "1.25x";
-    readonly _1_5X: "1.5x";
-    readonly DEFAULT: "default";
+    readonly _0_5X: '0.5x';
+    readonly _0_75X: '0.75x';
+    readonly NORMAL: 'normal';
+    readonly _1_25X: '1.25x';
+    readonly _1_5X: '1.5x';
+    readonly DEFAULT: 'default';
 };
 
 // @public (undocumented)
-export type AiMaxSize = typeof AiMaxSize[keyof typeof AiMaxSize];
+export type AiMaxSize = (typeof AiMaxSize)[keyof typeof AiMaxSize];
 
 // @public (undocumented)
 export interface AiMeasure {
@@ -5463,38 +5531,38 @@ export { AiMetricUsageResponse as GenAiApiMetricUsageResponse }
 
 // @public (undocumented)
 export const AiMetricValueFilterConditionComparison: {
-    readonly GREATER_THAN: "GREATER_THAN";
-    readonly GREATER_THAN_OR_EQUAL_TO: "GREATER_THAN_OR_EQUAL_TO";
-    readonly LESS_THAN: "LESS_THAN";
-    readonly LESS_THAN_OR_EQUAL_TO: "LESS_THAN_OR_EQUAL_TO";
-    readonly EQUAL_TO: "EQUAL_TO";
-    readonly NOT_EQUAL_TO: "NOT_EQUAL_TO";
+    readonly GREATER_THAN: 'GREATER_THAN';
+    readonly GREATER_THAN_OR_EQUAL_TO: 'GREATER_THAN_OR_EQUAL_TO';
+    readonly LESS_THAN: 'LESS_THAN';
+    readonly LESS_THAN_OR_EQUAL_TO: 'LESS_THAN_OR_EQUAL_TO';
+    readonly EQUAL_TO: 'EQUAL_TO';
+    readonly NOT_EQUAL_TO: 'NOT_EQUAL_TO';
 };
 
 // @public (undocumented)
-export type AiMetricValueFilterConditionComparison = typeof AiMetricValueFilterConditionComparison[keyof typeof AiMetricValueFilterConditionComparison];
+export type AiMetricValueFilterConditionComparison = (typeof AiMetricValueFilterConditionComparison)[keyof typeof AiMetricValueFilterConditionComparison];
 
 // @public (undocumented)
 export const AiMetricValueFilterConditionRange: {
-    readonly BETWEEN: "BETWEEN";
-    readonly NOT_BETWEEN: "NOT_BETWEEN";
+    readonly BETWEEN: 'BETWEEN';
+    readonly NOT_BETWEEN: 'NOT_BETWEEN';
 };
 
 // @public (undocumented)
-export type AiMetricValueFilterConditionRange = typeof AiMetricValueFilterConditionRange[keyof typeof AiMetricValueFilterConditionRange];
+export type AiMetricValueFilterConditionRange = (typeof AiMetricValueFilterConditionRange)[keyof typeof AiMetricValueFilterConditionRange];
 
 // @public (undocumented)
 export const AiMinSize: {
-    readonly _0_5X: "0.5x";
-    readonly _0_75X: "0.75x";
-    readonly NORMAL: "normal";
-    readonly _1_25X: "1.25x";
-    readonly _1_5X: "1.5x";
-    readonly DEFAULT: "default";
+    readonly _0_5X: '0.5x';
+    readonly _0_75X: '0.75x';
+    readonly NORMAL: 'normal';
+    readonly _1_25X: '1.25x';
+    readonly _1_5X: '1.5x';
+    readonly DEFAULT: 'default';
 };
 
 // @public (undocumented)
-export type AiMinSize = typeof AiMinSize[keyof typeof AiMinSize];
+export type AiMinSize = (typeof AiMinSize)[keyof typeof AiMinSize];
 
 // @public (undocumented)
 export interface AiMultipartContent {
@@ -5508,6 +5576,8 @@ export interface AiMultipartContent {
 export type AiMultipartContentPartsInner = ({
     type: 'alertProposal';
 } & AiAlertProposalPart) | ({
+    type: 'clarifyingQuestions';
+} & AiClarifyingQuestionsPart) | ({
     type: 'dashboard';
 } & AiDashboardPart) | ({
     type: 'dashboardPatch';
@@ -5525,6 +5595,36 @@ export type AiMultipartContentPartsInner = ({
 
 // @public (undocumented)
 export type AiMultipartContentTypeEnum = 'multipart';
+
+// @public (undocumented)
+export interface AiMvfCondition {
+    // (undocumented)
+    'condition': AiCondition4;
+    'from': number;
+    'to': number;
+    'value': number;
+}
+
+// @public (undocumented)
+export interface AiMvfCondition1 {
+    // (undocumented)
+    'condition'?: AiCondition2 | null;
+}
+
+// @public (undocumented)
+export interface AiMvfCondition2 {
+    // (undocumented)
+    'condition': AiCondition3;
+    'value': number;
+}
+
+// @public (undocumented)
+export interface AiMvfCondition3 {
+    // (undocumented)
+    'condition': AiCondition4;
+    'from': number;
+    'to': number;
+}
 
 // @public (undocumented)
 export interface AiNegativeAttributeFilter {
@@ -5555,33 +5655,33 @@ export interface AiNotificationChannelRef {
 
 // @public (undocumented)
 export const AiObjectType: {
-    readonly UNIDENTIFIED: "unidentified";
-    readonly WORKSPACE: "workspace";
-    readonly DATASET: "dataset";
-    readonly DATE: "date";
-    readonly FACT: "fact";
-    readonly METRIC: "metric";
-    readonly ATTRIBUTE: "attribute";
-    readonly DATE_ATTRIBUTE: "date_attribute";
-    readonly LABEL: "label";
-    readonly VISUALIZATION: "visualization";
-    readonly DASHBOARD: "dashboard";
-    readonly FILTER_CONTEXT: "filter_context";
-    readonly PARAMETER: "parameter";
+    readonly UNIDENTIFIED: 'unidentified';
+    readonly WORKSPACE: 'workspace';
+    readonly DATASET: 'dataset';
+    readonly DATE: 'date';
+    readonly FACT: 'fact';
+    readonly METRIC: 'metric';
+    readonly ATTRIBUTE: 'attribute';
+    readonly DATE_ATTRIBUTE: 'date_attribute';
+    readonly LABEL: 'label';
+    readonly VISUALIZATION: 'visualization';
+    readonly DASHBOARD: 'dashboard';
+    readonly FILTER_CONTEXT: 'filter_context';
+    readonly PARAMETER: 'parameter';
 };
 
 // @public (undocumented)
-export type AiObjectType = typeof AiObjectType[keyof typeof AiObjectType];
+export type AiObjectType = (typeof AiObjectType)[keyof typeof AiObjectType];
 
 // @public
 const AiObservabilityMetricType: {
-    readonly AI_QUERIES: "AI_QUERIES";
-    readonly AI_WORKSPACES: "AI_WORKSPACES";
-    readonly AI_USERS: "AI_USERS";
+    readonly AI_QUERIES: 'AI_QUERIES';
+    readonly AI_WORKSPACES: 'AI_WORKSPACES';
+    readonly AI_USERS: 'AI_USERS';
 };
 
 // @public (undocumented)
-type AiObservabilityMetricType = typeof AiObservabilityMetricType[keyof typeof AiObservabilityMetricType];
+type AiObservabilityMetricType = (typeof AiObservabilityMetricType)[keyof typeof AiObservabilityMetricType];
 export { AiObservabilityMetricType }
 export { AiObservabilityMetricType as GenAiApiObservabilityMetricType }
 
@@ -5595,261 +5695,201 @@ export { AiObservabilityOverviewResponse as GenAiApiObservabilityOverviewRespons
 
 // @public (undocumented)
 export const AiOperator: {
-    readonly SUM: "SUM";
-    readonly DIFFERENCE: "DIFFERENCE";
-    readonly MULTIPLICATION: "MULTIPLICATION";
-    readonly RATIO: "RATIO";
-    readonly CHANGE: "CHANGE";
-    readonly SUM2: "SUM";
-    readonly DIFFERENCE2: "DIFFERENCE";
-    readonly MULTIPLICATION2: "MULTIPLICATION";
-    readonly RATIO2: "RATIO";
-    readonly CHANGE2: "CHANGE";
+    readonly SUM: 'SUM';
+    readonly DIFFERENCE: 'DIFFERENCE';
+    readonly MULTIPLICATION: 'MULTIPLICATION';
+    readonly RATIO: 'RATIO';
+    readonly CHANGE: 'CHANGE';
 };
 
 // @public (undocumented)
-export type AiOperator = typeof AiOperator[keyof typeof AiOperator];
+export type AiOperator = (typeof AiOperator)[keyof typeof AiOperator];
 
 // @public (undocumented)
 export const AiOperator1: {
-    readonly SUM: "SUM";
-    readonly DIFFERENCE: "DIFFERENCE";
-    readonly MULTIPLICATION: "MULTIPLICATION";
-    readonly RATIO: "RATIO";
-    readonly CHANGE: "CHANGE";
-    readonly SUM2: "SUM";
-    readonly DIFFERENCE2: "DIFFERENCE";
-    readonly MULTIPLICATION2: "MULTIPLICATION";
-    readonly RATIO2: "RATIO";
-    readonly CHANGE2: "CHANGE";
-    readonly SUM3: "SUM";
-    readonly DIFFERENCE3: "DIFFERENCE";
-    readonly MULTIPLICATION3: "MULTIPLICATION";
-    readonly RATIO3: "RATIO";
-    readonly CHANGE3: "CHANGE";
+    readonly SUM: 'SUM';
+    readonly DIFFERENCE: 'DIFFERENCE';
+    readonly MULTIPLICATION: 'MULTIPLICATION';
+    readonly RATIO: 'RATIO';
+    readonly CHANGE: 'CHANGE';
+    readonly SUM2: 'SUM';
+    readonly DIFFERENCE2: 'DIFFERENCE';
+    readonly MULTIPLICATION2: 'MULTIPLICATION';
+    readonly RATIO2: 'RATIO';
+    readonly CHANGE2: 'CHANGE';
 };
 
 // @public (undocumented)
-export type AiOperator1 = typeof AiOperator1[keyof typeof AiOperator1];
+export type AiOperator1 = (typeof AiOperator1)[keyof typeof AiOperator1];
 
 // @public (undocumented)
 export const AiOperator10: {
-    readonly SUM: "SUM";
-    readonly DIFFERENCE: "DIFFERENCE";
-    readonly MULTIPLICATION: "MULTIPLICATION";
-    readonly RATIO: "RATIO";
-    readonly CHANGE: "CHANGE";
-    readonly SUM2: "SUM";
-    readonly DIFFERENCE2: "DIFFERENCE";
-    readonly MULTIPLICATION2: "MULTIPLICATION";
-    readonly RATIO2: "RATIO";
-    readonly CHANGE2: "CHANGE";
+    readonly SUM: 'SUM';
+    readonly DIFFERENCE: 'DIFFERENCE';
+    readonly MULTIPLICATION: 'MULTIPLICATION';
+    readonly RATIO: 'RATIO';
+    readonly CHANGE: 'CHANGE';
 };
 
 // @public (undocumented)
-export type AiOperator10 = typeof AiOperator10[keyof typeof AiOperator10];
+export type AiOperator10 = (typeof AiOperator10)[keyof typeof AiOperator10];
 
 // @public (undocumented)
 export const AiOperator11: {
-    readonly SUM: "SUM";
-    readonly DIFFERENCE: "DIFFERENCE";
-    readonly MULTIPLICATION: "MULTIPLICATION";
-    readonly RATIO: "RATIO";
-    readonly CHANGE: "CHANGE";
-    readonly SUM2: "SUM";
-    readonly DIFFERENCE2: "DIFFERENCE";
-    readonly MULTIPLICATION2: "MULTIPLICATION";
-    readonly RATIO2: "RATIO";
-    readonly CHANGE2: "CHANGE";
-    readonly SUM3: "SUM";
-    readonly DIFFERENCE3: "DIFFERENCE";
-    readonly MULTIPLICATION3: "MULTIPLICATION";
-    readonly RATIO3: "RATIO";
-    readonly CHANGE3: "CHANGE";
+    readonly SUM: 'SUM';
+    readonly DIFFERENCE: 'DIFFERENCE';
+    readonly MULTIPLICATION: 'MULTIPLICATION';
+    readonly RATIO: 'RATIO';
+    readonly CHANGE: 'CHANGE';
+    readonly SUM2: 'SUM';
+    readonly DIFFERENCE2: 'DIFFERENCE';
+    readonly MULTIPLICATION2: 'MULTIPLICATION';
+    readonly RATIO2: 'RATIO';
+    readonly CHANGE2: 'CHANGE';
 };
 
 // @public (undocumented)
-export type AiOperator11 = typeof AiOperator11[keyof typeof AiOperator11];
+export type AiOperator11 = (typeof AiOperator11)[keyof typeof AiOperator11];
 
 // @public (undocumented)
 export const AiOperator12: {
-    readonly SUM: "SUM";
-    readonly DIFFERENCE: "DIFFERENCE";
-    readonly MULTIPLICATION: "MULTIPLICATION";
-    readonly RATIO: "RATIO";
-    readonly CHANGE: "CHANGE";
-    readonly SUM2: "SUM";
-    readonly DIFFERENCE2: "DIFFERENCE";
-    readonly MULTIPLICATION2: "MULTIPLICATION";
-    readonly RATIO2: "RATIO";
-    readonly CHANGE2: "CHANGE";
+    readonly SUM: 'SUM';
+    readonly DIFFERENCE: 'DIFFERENCE';
+    readonly MULTIPLICATION: 'MULTIPLICATION';
+    readonly RATIO: 'RATIO';
+    readonly CHANGE: 'CHANGE';
 };
 
 // @public (undocumented)
-export type AiOperator12 = typeof AiOperator12[keyof typeof AiOperator12];
+export type AiOperator12 = (typeof AiOperator12)[keyof typeof AiOperator12];
 
 // @public (undocumented)
 export const AiOperator13: {
-    readonly SUM: "SUM";
-    readonly DIFFERENCE: "DIFFERENCE";
-    readonly MULTIPLICATION: "MULTIPLICATION";
-    readonly RATIO: "RATIO";
-    readonly CHANGE: "CHANGE";
-    readonly SUM2: "SUM";
-    readonly DIFFERENCE2: "DIFFERENCE";
-    readonly MULTIPLICATION2: "MULTIPLICATION";
-    readonly RATIO2: "RATIO";
-    readonly CHANGE2: "CHANGE";
-    readonly SUM3: "SUM";
-    readonly DIFFERENCE3: "DIFFERENCE";
-    readonly MULTIPLICATION3: "MULTIPLICATION";
-    readonly RATIO3: "RATIO";
-    readonly CHANGE3: "CHANGE";
+    readonly SUM: 'SUM';
+    readonly DIFFERENCE: 'DIFFERENCE';
+    readonly MULTIPLICATION: 'MULTIPLICATION';
+    readonly RATIO: 'RATIO';
+    readonly CHANGE: 'CHANGE';
+    readonly SUM2: 'SUM';
+    readonly DIFFERENCE2: 'DIFFERENCE';
+    readonly MULTIPLICATION2: 'MULTIPLICATION';
+    readonly RATIO2: 'RATIO';
+    readonly CHANGE2: 'CHANGE';
 };
 
 // @public (undocumented)
-export type AiOperator13 = typeof AiOperator13[keyof typeof AiOperator13];
+export type AiOperator13 = (typeof AiOperator13)[keyof typeof AiOperator13];
 
 // @public (undocumented)
 export const AiOperator14: {
-    readonly ALL: "all";
-    readonly EQUAL_TO: "equal_to";
-    readonly NOT_EQUAL_TO: "not_equal_to";
-    readonly LESS_THAN: "less_than";
-    readonly LESS_THAN_OR_EQUAL_TO: "less_than_or_equal_to";
-    readonly GREATER_THAN: "greater_than";
-    readonly GREATER_THAN_OR_EQUAL_TO: "greater_than_or_equal_to";
-    readonly BETWEEN: "between";
-    readonly NOT_BETWEEN: "not_between";
-    readonly CONTAINS: "contains";
-    readonly NOT_CONTAINS: "not_contains";
-    readonly STARTS_WITH: "starts_with";
-    readonly NOT_STARTS_WITH: "not_starts_with";
-    readonly ENDS_WITH: "ends_with";
-    readonly NOT_ENDS_WITH: "not_ends_with";
-    readonly IS_EMPTY: "is_empty";
-    readonly IS_NOT_EMPTY: "is_not_empty";
+    readonly ALL: 'all';
+    readonly EQUAL_TO: 'equal_to';
+    readonly NOT_EQUAL_TO: 'not_equal_to';
+    readonly LESS_THAN: 'less_than';
+    readonly LESS_THAN_OR_EQUAL_TO: 'less_than_or_equal_to';
+    readonly GREATER_THAN: 'greater_than';
+    readonly GREATER_THAN_OR_EQUAL_TO: 'greater_than_or_equal_to';
+    readonly BETWEEN: 'between';
+    readonly NOT_BETWEEN: 'not_between';
+    readonly CONTAINS: 'contains';
+    readonly NOT_CONTAINS: 'not_contains';
+    readonly STARTS_WITH: 'starts_with';
+    readonly NOT_STARTS_WITH: 'not_starts_with';
+    readonly ENDS_WITH: 'ends_with';
+    readonly NOT_ENDS_WITH: 'not_ends_with';
+    readonly IS_EMPTY: 'is_empty';
+    readonly IS_NOT_EMPTY: 'is_not_empty';
 };
 
 // @public (undocumented)
-export type AiOperator14 = typeof AiOperator14[keyof typeof AiOperator14];
+export type AiOperator14 = (typeof AiOperator14)[keyof typeof AiOperator14];
 
 // @public (undocumented)
 export const AiOperator2: {
-    readonly SUM: "SUM";
-    readonly DIFFERENCE: "DIFFERENCE";
-    readonly MULTIPLICATION: "MULTIPLICATION";
-    readonly RATIO: "RATIO";
-    readonly CHANGE: "CHANGE";
-    readonly SUM2: "SUM";
-    readonly DIFFERENCE2: "DIFFERENCE";
-    readonly MULTIPLICATION2: "MULTIPLICATION";
-    readonly RATIO2: "RATIO";
-    readonly CHANGE2: "CHANGE";
+    readonly SUM: 'SUM';
+    readonly DIFFERENCE: 'DIFFERENCE';
+    readonly MULTIPLICATION: 'MULTIPLICATION';
+    readonly RATIO: 'RATIO';
+    readonly CHANGE: 'CHANGE';
 };
 
 // @public (undocumented)
-export type AiOperator2 = typeof AiOperator2[keyof typeof AiOperator2];
+export type AiOperator2 = (typeof AiOperator2)[keyof typeof AiOperator2];
 
 // @public (undocumented)
 export const AiOperator3: {
-    readonly SUM: "SUM";
-    readonly DIFFERENCE: "DIFFERENCE";
-    readonly MULTIPLICATION: "MULTIPLICATION";
-    readonly RATIO: "RATIO";
-    readonly CHANGE: "CHANGE";
-    readonly SUM2: "SUM";
-    readonly DIFFERENCE2: "DIFFERENCE";
-    readonly MULTIPLICATION2: "MULTIPLICATION";
-    readonly RATIO2: "RATIO";
-    readonly CHANGE2: "CHANGE";
-    readonly SUM3: "SUM";
-    readonly DIFFERENCE3: "DIFFERENCE";
-    readonly MULTIPLICATION3: "MULTIPLICATION";
-    readonly RATIO3: "RATIO";
-    readonly CHANGE3: "CHANGE";
+    readonly SUM: 'SUM';
+    readonly DIFFERENCE: 'DIFFERENCE';
+    readonly MULTIPLICATION: 'MULTIPLICATION';
+    readonly RATIO: 'RATIO';
+    readonly CHANGE: 'CHANGE';
+    readonly SUM2: 'SUM';
+    readonly DIFFERENCE2: 'DIFFERENCE';
+    readonly MULTIPLICATION2: 'MULTIPLICATION';
+    readonly RATIO2: 'RATIO';
+    readonly CHANGE2: 'CHANGE';
 };
 
 // @public (undocumented)
-export type AiOperator3 = typeof AiOperator3[keyof typeof AiOperator3];
+export type AiOperator3 = (typeof AiOperator3)[keyof typeof AiOperator3];
 
 // @public (undocumented)
 export const AiOperator4: {
-    readonly SUM: "SUM";
-    readonly DIFFERENCE: "DIFFERENCE";
-    readonly MULTIPLICATION: "MULTIPLICATION";
-    readonly RATIO: "RATIO";
-    readonly CHANGE: "CHANGE";
-    readonly SUM2: "SUM";
-    readonly DIFFERENCE2: "DIFFERENCE";
-    readonly MULTIPLICATION2: "MULTIPLICATION";
-    readonly RATIO2: "RATIO";
-    readonly CHANGE2: "CHANGE";
+    readonly SUM: 'SUM';
+    readonly DIFFERENCE: 'DIFFERENCE';
+    readonly MULTIPLICATION: 'MULTIPLICATION';
+    readonly RATIO: 'RATIO';
+    readonly CHANGE: 'CHANGE';
 };
 
 // @public (undocumented)
-export type AiOperator4 = typeof AiOperator4[keyof typeof AiOperator4];
+export type AiOperator4 = (typeof AiOperator4)[keyof typeof AiOperator4];
 
 // @public (undocumented)
 export const AiOperator5: {
-    readonly SUM: "SUM";
-    readonly DIFFERENCE: "DIFFERENCE";
-    readonly MULTIPLICATION: "MULTIPLICATION";
-    readonly RATIO: "RATIO";
-    readonly CHANGE: "CHANGE";
-    readonly SUM2: "SUM";
-    readonly DIFFERENCE2: "DIFFERENCE";
-    readonly MULTIPLICATION2: "MULTIPLICATION";
-    readonly RATIO2: "RATIO";
-    readonly CHANGE2: "CHANGE";
-    readonly SUM3: "SUM";
-    readonly DIFFERENCE3: "DIFFERENCE";
-    readonly MULTIPLICATION3: "MULTIPLICATION";
-    readonly RATIO3: "RATIO";
-    readonly CHANGE3: "CHANGE";
+    readonly SUM: 'SUM';
+    readonly DIFFERENCE: 'DIFFERENCE';
+    readonly MULTIPLICATION: 'MULTIPLICATION';
+    readonly RATIO: 'RATIO';
+    readonly CHANGE: 'CHANGE';
+    readonly SUM2: 'SUM';
+    readonly DIFFERENCE2: 'DIFFERENCE';
+    readonly MULTIPLICATION2: 'MULTIPLICATION';
+    readonly RATIO2: 'RATIO';
+    readonly CHANGE2: 'CHANGE';
 };
 
 // @public (undocumented)
-export type AiOperator5 = typeof AiOperator5[keyof typeof AiOperator5];
+export type AiOperator5 = (typeof AiOperator5)[keyof typeof AiOperator5];
 
 // @public (undocumented)
 export const AiOperator6: {
-    readonly SUM: "SUM";
-    readonly DIFFERENCE: "DIFFERENCE";
-    readonly MULTIPLICATION: "MULTIPLICATION";
-    readonly RATIO: "RATIO";
-    readonly CHANGE: "CHANGE";
-    readonly SUM2: "SUM";
-    readonly DIFFERENCE2: "DIFFERENCE";
-    readonly MULTIPLICATION2: "MULTIPLICATION";
-    readonly RATIO2: "RATIO";
-    readonly CHANGE2: "CHANGE";
+    readonly SUM: 'SUM';
+    readonly DIFFERENCE: 'DIFFERENCE';
+    readonly MULTIPLICATION: 'MULTIPLICATION';
+    readonly RATIO: 'RATIO';
+    readonly CHANGE: 'CHANGE';
 };
 
 // @public (undocumented)
-export type AiOperator6 = typeof AiOperator6[keyof typeof AiOperator6];
+export type AiOperator6 = (typeof AiOperator6)[keyof typeof AiOperator6];
 
 // @public (undocumented)
 export const AiOperator7: {
-    readonly SUM: "SUM";
-    readonly DIFFERENCE: "DIFFERENCE";
-    readonly MULTIPLICATION: "MULTIPLICATION";
-    readonly RATIO: "RATIO";
-    readonly CHANGE: "CHANGE";
-    readonly SUM2: "SUM";
-    readonly DIFFERENCE2: "DIFFERENCE";
-    readonly MULTIPLICATION2: "MULTIPLICATION";
-    readonly RATIO2: "RATIO";
-    readonly CHANGE2: "CHANGE";
-    readonly SUM3: "SUM";
-    readonly DIFFERENCE3: "DIFFERENCE";
-    readonly MULTIPLICATION3: "MULTIPLICATION";
-    readonly RATIO3: "RATIO";
-    readonly CHANGE3: "CHANGE";
+    readonly SUM: 'SUM';
+    readonly DIFFERENCE: 'DIFFERENCE';
+    readonly MULTIPLICATION: 'MULTIPLICATION';
+    readonly RATIO: 'RATIO';
+    readonly CHANGE: 'CHANGE';
+    readonly SUM2: 'SUM';
+    readonly DIFFERENCE2: 'DIFFERENCE';
+    readonly MULTIPLICATION2: 'MULTIPLICATION';
+    readonly RATIO2: 'RATIO';
+    readonly CHANGE2: 'CHANGE';
 };
 
 // @public (undocumented)
-export type AiOperator7 = typeof AiOperator7[keyof typeof AiOperator7];
+export type AiOperator7 = (typeof AiOperator7)[keyof typeof AiOperator7];
 
 // @public
 interface AiPatchDocumentRequest {
@@ -5865,56 +5905,56 @@ export { AiPatchDocumentRequest as GenAiApiPatchDocumentRequestBody }
 
 // @public (undocumented)
 export const AiPatternNameMapping: {
-    readonly DIAGONAL_GRID_SMALL: "diagonal_grid_small";
-    readonly VERTICAL_LINES_SMALL: "vertical_lines_small";
-    readonly GRID_SMALL: "grid_small";
-    readonly HORIZONTAL_LINES_SMALL: "horizontal_lines_small";
-    readonly CIRCLE_SMALL: "circle_small";
-    readonly FLAG_SMALL: "flag_small";
-    readonly WAFFLE_SMALL: "waffle_small";
-    readonly DOT_SMALL: "dot_small";
-    readonly PYRAMID_SMALL: "pyramid_small";
-    readonly NEEDLE_SMALL: "needle_small";
-    readonly DIAMOND_SMALL: "diamond_small";
-    readonly PIZZA_SMALL: "pizza_small";
-    readonly DIAGONAL_GRID_MEDIUM: "diagonal_grid_medium";
-    readonly VERTICAL_LINES_MEDIUM: "vertical_lines_medium";
-    readonly GRID_LARGE: "grid_large";
-    readonly HORIZONTAL_LINES_MEDIUM: "horizontal_lines_medium";
-    readonly CIRCLE_MEDIUM: "circle_medium";
-    readonly FLAG_MEDIUM: "flag_medium";
-    readonly WAFFLE_MEDIUM: "waffle_medium";
-    readonly DOT_MEDIUM: "dot_medium";
-    readonly PYRAMID_MEDIUM: "pyramid_medium";
-    readonly NEEDLE_MEDIUM: "needle_medium";
-    readonly DIAMOND_MEDIUM: "diamond_medium";
-    readonly PIZZA_MEDIUM: "pizza_medium";
+    readonly DIAGONAL_GRID_SMALL: 'diagonal_grid_small';
+    readonly VERTICAL_LINES_SMALL: 'vertical_lines_small';
+    readonly GRID_SMALL: 'grid_small';
+    readonly HORIZONTAL_LINES_SMALL: 'horizontal_lines_small';
+    readonly CIRCLE_SMALL: 'circle_small';
+    readonly FLAG_SMALL: 'flag_small';
+    readonly WAFFLE_SMALL: 'waffle_small';
+    readonly DOT_SMALL: 'dot_small';
+    readonly PYRAMID_SMALL: 'pyramid_small';
+    readonly NEEDLE_SMALL: 'needle_small';
+    readonly DIAMOND_SMALL: 'diamond_small';
+    readonly PIZZA_SMALL: 'pizza_small';
+    readonly DIAGONAL_GRID_MEDIUM: 'diagonal_grid_medium';
+    readonly VERTICAL_LINES_MEDIUM: 'vertical_lines_medium';
+    readonly GRID_LARGE: 'grid_large';
+    readonly HORIZONTAL_LINES_MEDIUM: 'horizontal_lines_medium';
+    readonly CIRCLE_MEDIUM: 'circle_medium';
+    readonly FLAG_MEDIUM: 'flag_medium';
+    readonly WAFFLE_MEDIUM: 'waffle_medium';
+    readonly DOT_MEDIUM: 'dot_medium';
+    readonly PYRAMID_MEDIUM: 'pyramid_medium';
+    readonly NEEDLE_MEDIUM: 'needle_medium';
+    readonly DIAMOND_MEDIUM: 'diamond_medium';
+    readonly PIZZA_MEDIUM: 'pizza_medium';
 };
 
 // @public (undocumented)
-export type AiPatternNameMapping = typeof AiPatternNameMapping[keyof typeof AiPatternNameMapping];
+export type AiPatternNameMapping = (typeof AiPatternNameMapping)[keyof typeof AiPatternNameMapping];
 
 // @public (undocumented)
 export const AiPlacement: {
-    readonly ABOVE: "above";
-    readonly BELOW: "below";
-    readonly REPLACE: "replace";
+    readonly ABOVE: 'above';
+    readonly BELOW: 'below';
+    readonly REPLACE: 'replace';
 };
 
 // @public (undocumented)
-export type AiPlacement = typeof AiPlacement[keyof typeof AiPlacement];
+export type AiPlacement = (typeof AiPlacement)[keyof typeof AiPlacement];
 
 // @public (undocumented)
 export const AiPointShapeMapping: {
-    readonly CIRCLE: "circle";
-    readonly SQUARE: "square";
-    readonly DIAMOND: "diamond";
-    readonly TRIANGLE: "triangle";
-    readonly TRIANGLE_DOWN: "triangle-down";
+    readonly CIRCLE: 'circle';
+    readonly SQUARE: 'square';
+    readonly DIAMOND: 'diamond';
+    readonly TRIANGLE: 'triangle';
+    readonly TRIANGLE_DOWN: 'triangle-down';
 };
 
 // @public (undocumented)
-export type AiPointShapeMapping = typeof AiPointShapeMapping[keyof typeof AiPointShapeMapping];
+export type AiPointShapeMapping = (typeof AiPointShapeMapping)[keyof typeof AiPointShapeMapping];
 
 // @public (undocumented)
 export interface AiPositiveAttributeFilter {
@@ -5947,6 +5987,76 @@ export interface AiQuery {
 }
 
 // @public (undocumented)
+export interface AiQueryAttributeFilter {
+    // (undocumented)
+    'display_as'?: string | null;
+    // (undocumented)
+    'state'?: AiState | null;
+    // (undocumented)
+    'type': AiType11;
+    // (undocumented)
+    'using': AiUsing1;
+}
+
+// @public (undocumented)
+export interface AiQueryAttributeSort {
+    // (undocumented)
+    'aggregation'?: AiAggregation14 | null;
+    // (undocumented)
+    'by': AiBy1;
+    'direction': AiDirection;
+    // (undocumented)
+    'type': AiType47;
+}
+
+// @public (undocumented)
+export interface AiQueryDateFilter {
+    // (undocumented)
+    'empty_values'?: AiEmptyValues;
+    // (undocumented)
+    'from'?: string;
+    'granularity': AiGranularity;
+    // (undocumented)
+    'to'?: string;
+    // (undocumented)
+    'type': AiType9;
+    'using': string;
+    // (undocumented)
+    'with'?: object;
+}
+
+// @public (undocumented)
+export interface AiQueryDateFilter1 {
+    // (undocumented)
+    'empty_values'?: AiEmptyValues | null;
+    // (undocumented)
+    'from'?: number | null;
+    'granularity': AiGranularity;
+    // (undocumented)
+    'to'?: number | null;
+    // (undocumented)
+    'type': AiType9;
+    'using': string;
+    // (undocumented)
+    'with'?: object | null;
+}
+
+// @public (undocumented)
+export interface AiQueryDateFilter2 {
+    // (undocumented)
+    'empty_values'?: AiEmptyValues | null;
+    // (undocumented)
+    'from'?: string | null;
+    // (undocumented)
+    'to'?: string | null;
+    // (undocumented)
+    'type': AiType9;
+    'using': string;
+    // (undocumented)
+    'with'?: object | null;
+}
+
+// @public (undocumented)
 export interface AiQueryField {
     // (undocumented)
     'aggregation': AiAggregation13;
@@ -5967,9 +6077,9 @@ export interface AiQueryField {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiType74;
+    'type': AiType46;
     // (undocumented)
-    'using': AiUsing6 | null;
+    'using': AiUsing7 | null;
 }
 
 // @public (undocumented)
@@ -5987,9 +6097,9 @@ export interface AiQueryField1 {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type'?: AiType61 | null;
+    'type'?: AiType33 | null;
     // (undocumented)
-    'using': AiUsing1;
+    'using': AiUsing2;
 }
 
 // @public (undocumented)
@@ -6003,9 +6113,9 @@ export interface AiQueryField10 {
     // (undocumented)
     'operator'?: AiOperator7 | null;
     // (undocumented)
-    'type'?: AiType70 | null;
+    'type'?: AiType42 | null;
     // (undocumented)
-    'using'?: AiUsing2 | null;
+    'using'?: AiUsing3 | null;
 }
 
 // @public (undocumented)
@@ -6019,9 +6129,9 @@ export interface AiQueryField11 {
     'operator'?: AiOperator10 | null;
     // (undocumented)
     'title'?: string;
-    'type': AiType71;
+    'type': AiType43;
     // (undocumented)
-    'using': AiUsing3;
+    'using': AiUsing4;
 }
 
 // @public (undocumented)
@@ -6035,9 +6145,9 @@ export interface AiQueryField12 {
     // (undocumented)
     'operator'?: AiOperator11 | null;
     // (undocumented)
-    'type'?: AiType72 | null;
+    'type'?: AiType44 | null;
     // (undocumented)
-    'using'?: AiUsing4 | null;
+    'using'?: AiUsing5 | null;
 }
 
 // @public (undocumented)
@@ -6053,9 +6163,9 @@ export interface AiQueryField13 {
     'period'?: number | null;
     // (undocumented)
     'title'?: string;
-    'type': AiType73;
+    'type': AiType45;
     // (undocumented)
-    'using': AiUsing5;
+    'using': AiUsing6;
 }
 
 // @public (undocumented)
@@ -6069,9 +6179,9 @@ export interface AiQueryField14 {
     // (undocumented)
     'operator'?: AiOperator13 | null;
     // (undocumented)
-    'type'?: AiType74 | null;
+    'type'?: AiType46 | null;
     // (undocumented)
-    'using'?: AiUsing6 | null;
+    'using'?: AiUsing7 | null;
 }
 
 // @public (undocumented)
@@ -6085,9 +6195,9 @@ export interface AiQueryField2 {
     // (undocumented)
     'operator'?: AiOperator1 | null;
     // (undocumented)
-    'type'?: AiType62 | null;
+    'type'?: AiType34 | null;
     // (undocumented)
-    'using'?: AiUsing7 | null;
+    'using'?: AiUsing8 | null;
 }
 
 // @public (undocumented)
@@ -6107,7 +6217,7 @@ export interface AiQueryField3 {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type'?: AiType63 | null;
+    'type'?: AiType35 | null;
     // (undocumented)
     'using': AiMetricIdentifier;
 }
@@ -6123,9 +6233,9 @@ export interface AiQueryField4 {
     // (undocumented)
     'operator'?: AiOperator3 | null;
     // (undocumented)
-    'type'?: AiType64 | null;
+    'type'?: AiType36 | null;
     // (undocumented)
-    'using'?: AiUsing8 | null;
+    'using'?: AiUsing9 | null;
 }
 
 // @public (undocumented)
@@ -6144,9 +6254,9 @@ export interface AiQueryField5 {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type'?: AiType65 | null;
+    'type'?: AiType37 | null;
     // (undocumented)
-    'using': AiUsing9;
+    'using': AiUsing10;
 }
 
 // @public (undocumented)
@@ -6160,9 +6270,9 @@ export interface AiQueryField6 {
     // (undocumented)
     'operator'?: AiOperator5 | null;
     // (undocumented)
-    'type'?: AiType66 | null;
+    'type'?: AiType38 | null;
     // (undocumented)
-    'using'?: AiUsing10 | null;
+    'using'?: AiUsing11 | null;
 }
 
 // @public (undocumented)
@@ -6177,9 +6287,9 @@ export interface AiQueryField7 {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type'?: AiType67 | null;
+    'type'?: AiType39 | null;
     // (undocumented)
-    'using'?: AiUsing11 | null;
+    'using'?: AiUsing12 | null;
 }
 
 // @public (undocumented)
@@ -6193,9 +6303,9 @@ export interface AiQueryField8 {
     // (undocumented)
     'operator'?: AiOperator7 | null;
     // (undocumented)
-    'type'?: AiType68 | null;
+    'type'?: AiType40 | null;
     // (undocumented)
-    'using'?: AiUsing12 | null;
+    'using'?: AiUsing13 | null;
 }
 
 // @public (undocumented)
@@ -6210,7 +6320,7 @@ export interface AiQueryField9 {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type'?: AiType69 | null;
+    'type'?: AiType41 | null;
     // (undocumented)
     'using': Array<string>;
 }
@@ -6218,55 +6328,192 @@ export interface AiQueryField9 {
 // @public (undocumented)
 export interface AiQueryFilter {
     // (undocumented)
+    'attribute'?: AiAttribute1 | null;
+    // (undocumented)
+    'bottom': number;
+    // (undocumented)
+    'case_sensitive'?: boolean;
+    'condition': AiCondition8;
+    // (undocumented)
+    'conditions': Array<AiMvfCondition>;
+    // (undocumented)
+    'dimensionality'?: Array<AiQueryMetricValueFilter4DimensionalityInner>;
+    // (undocumented)
     'display_as'?: string;
+    // (undocumented)
+    'empty_values'?: AiEmptyValues;
+    'from': number;
+    'granularity': AiGranularity;
+    // (undocumented)
+    'null_values_as_zero'?: boolean;
     // (undocumented)
     'state'?: AiState;
     // (undocumented)
-    'type': AiType30;
+    'strict_limit_of_rows'?: boolean;
+    'to': number;
+    'top': number;
     // (undocumented)
-    'using': AiUsing13;
+    'type': AiType18;
+    // (undocumented)
+    'using': AiUsing19;
+    'value': number;
+    // (undocumented)
+    'values': Array<string>;
+    // (undocumented)
+    'with'?: object;
 }
 
 // @public (undocumented)
-export interface AiQueryFilter1 {
+export interface AiQueryMetricSort {
+    'direction': AiDirection;
     // (undocumented)
-    'type': AiType30;
+    'metrics': Array<AiQueryMetricSortMetricsInner>;
+    // (undocumented)
+    'type': AiType48;
 }
 
 // @public (undocumented)
-export interface AiQueryFilter2 {
+export interface AiQueryMetricSortMetricsInner {
     // (undocumented)
-    'display_as'?: string | null;
+    'by': AiBy;
     // (undocumented)
-    'state'?: AiState | null;
+    'element'?: string;
     // (undocumented)
-    'type': AiType30;
-    // (undocumented)
-    'using': AiUsing13;
+    'function'?: AiFunction;
 }
 
 // @public (undocumented)
-export interface AiQueryFilter3 {
+export interface AiQueryMetricValueFilter {
+    'condition': AiCondition8;
     // (undocumented)
-    'type': AiType30;
+    'conditions': Array<AiMvfCondition>;
+    // (undocumented)
+    'dimensionality'?: Array<AiQueryMetricValueFilter4DimensionalityInner>;
+    'from': number;
+    // (undocumented)
+    'null_values_as_zero'?: boolean;
+    'to': number;
+    // (undocumented)
+    'type': AiType14;
+    // (undocumented)
+    'using': AiUsing17;
+    'value': number;
 }
 
 // @public (undocumented)
-export interface AiQueryFilter4 {
+export interface AiQueryMetricValueFilter1 {
     // (undocumented)
-    'type': AiType30;
+    'conditions': Array<AiMvfCondition>;
+    // (undocumented)
+    'dimensionality'?: Array<AiQueryMetricValueFilter1DimensionalityInner> | null;
+    // (undocumented)
+    'null_values_as_zero'?: boolean | null;
+    // (undocumented)
+    'type': AiType14;
+    // (undocumented)
+    'using': AiUsing14;
 }
 
 // @public (undocumented)
-export interface AiQueryFilter5 {
-    // (undocumented)
-    'type': AiType30;
+export interface AiQueryMetricValueFilter1DimensionalityInner {
 }
 
 // @public (undocumented)
-export interface AiQueryFilter6 {
+export interface AiQueryMetricValueFilter2 {
+    'condition': AiCondition7;
     // (undocumented)
-    'type': AiType30;
+    'dimensionality'?: Array<AiQueryMetricValueFilter2DimensionalityInner> | null;
+    // (undocumented)
+    'null_values_as_zero'?: boolean | null;
+    // (undocumented)
+    'type': AiType14;
+    // (undocumented)
+    'using': AiUsing15;
+    'value': number;
+}
+
+// @public (undocumented)
+export interface AiQueryMetricValueFilter2DimensionalityInner {
+}
+
+// @public (undocumented)
+export interface AiQueryMetricValueFilter3 {
+    'condition': AiCondition8;
+    // (undocumented)
+    'dimensionality'?: Array<AiQueryMetricValueFilter3DimensionalityInner> | null;
+    'from': number;
+    // (undocumented)
+    'null_values_as_zero'?: boolean | null;
+    'to': number;
+    // (undocumented)
+    'type': AiType14;
+    // (undocumented)
+    'using': AiUsing16;
+}
+
+// @public (undocumented)
+export interface AiQueryMetricValueFilter3DimensionalityInner {
+}
+
+// @public (undocumented)
+export interface AiQueryMetricValueFilter4 {
+    // (undocumented)
+    'conditions'?: Array<AiMvfCondition> | null;
+    // (undocumented)
+    'dimensionality'?: Array<AiQueryMetricValueFilter4DimensionalityInner> | null;
+    // (undocumented)
+    'type': AiType14;
+    // (undocumented)
+    'using': AiUsing17;
+}
+
+// @public (undocumented)
+export interface AiQueryMetricValueFilter4DimensionalityInner {
+}
+
+// @public (undocumented)
+export interface AiQueryRankingFilter {
+    // (undocumented)
+    'attribute'?: AiAttribute1 | null;
+    // (undocumented)
+    'bottom': number;
+    // (undocumented)
+    'strict_limit_of_rows'?: boolean;
+    'top': number;
+    // (undocumented)
+    'type': AiType18;
+    // (undocumented)
+    'using': AiUsing19;
+}
+
+// @public (undocumented)
+export interface AiQueryRankingFilter1 {
+    // (undocumented)
+    'attribute'?: AiAttribute | null;
+    'bottom': number;
+    // (undocumented)
+    'strict_limit_of_rows'?: boolean | null;
+    // (undocumented)
+    'top'?: number | null;
+    // (undocumented)
+    'type': AiType18;
+    // (undocumented)
+    'using': AiUsing18;
+}
+
+// @public (undocumented)
+export interface AiQueryRankingFilter2 {
+    // (undocumented)
+    'attribute'?: AiAttribute1 | null;
+    // (undocumented)
+    'bottom'?: number | null;
+    // (undocumented)
+    'strict_limit_of_rows'?: boolean | null;
+    'top': number;
+    // (undocumented)
+    'type': AiType18;
+    // (undocumented)
+    'using': AiUsing19;
 }
 
 // @public (undocumented)
@@ -6277,45 +6524,59 @@ export interface AiQuerySort {
     'by': AiBy1;
     'direction': AiDirection;
     // (undocumented)
-    'metrics': Array<AiQuerySort2MetricsInner>;
+    'metrics': Array<AiQueryMetricSortMetricsInner>;
     // (undocumented)
-    'type': AiType75;
+    'type': AiType48;
 }
 
 // @public (undocumented)
-export interface AiQuerySort1 {
+export interface AiQueryTextFilter {
     // (undocumented)
-    'aggregation'?: AiAggregation14 | null;
+    'case_sensitive'?: boolean;
     // (undocumented)
-    'by': AiBy1;
-    'direction': AiDirection;
+    'condition': AiCondition6;
     // (undocumented)
-    'type': AiType75;
+    'display_as'?: string;
+    // (undocumented)
+    'type': AiType12;
+    // (undocumented)
+    'using': AiUsing21;
+    // (undocumented)
+    'value': string;
+    // (undocumented)
+    'values': Array<string>;
 }
 
 // @public (undocumented)
-export interface AiQuerySort2 {
-    'direction': AiDirection;
+export interface AiQueryTextFilter1 {
     // (undocumented)
-    'metrics': Array<AiQuerySort2MetricsInner>;
+    'case_sensitive'?: boolean | null;
     // (undocumented)
-    'type': AiType75;
+    'condition': AiCondition5;
+    // (undocumented)
+    'display_as'?: string | null;
+    // (undocumented)
+    'type': AiType12;
+    // (undocumented)
+    'using': AiUsing20;
+    // (undocumented)
+    'values': Array<string | null>;
 }
 
 // @public (undocumented)
-export interface AiQuerySort2MetricsInner {
+export interface AiQueryTextFilter2 {
     // (undocumented)
-    'by': AiBy;
+    'case_sensitive'?: boolean | null;
     // (undocumented)
-    'element'?: string;
+    'condition': AiCondition6;
     // (undocumented)
-    'function'?: AiFunction;
-}
-
-// @public (undocumented)
-export interface AiQuerySort3 {
+    'display_as'?: string | null;
     // (undocumented)
-    'type': AiType75;
+    'type': AiType12;
+    // (undocumented)
+    'using': AiUsing21;
+    // (undocumented)
+    'value': string;
 }
 
 // @public (undocumented)
@@ -6333,12 +6594,12 @@ export interface AiRangeCondition {
 
 // @public
 export const AiRangeConditionOperator: {
-    readonly BETWEEN: "BETWEEN";
-    readonly NOT_BETWEEN: "NOT_BETWEEN";
+    readonly BETWEEN: 'BETWEEN';
+    readonly NOT_BETWEEN: 'NOT_BETWEEN';
 };
 
 // @public (undocumented)
-export type AiRangeConditionOperator = typeof AiRangeConditionOperator[keyof typeof AiRangeConditionOperator];
+export type AiRangeConditionOperator = (typeof AiRangeConditionOperator)[keyof typeof AiRangeConditionOperator];
 
 // @public (undocumented)
 export interface AiRangeMeasureValueFilter {
@@ -6376,12 +6637,12 @@ export interface AiRangeMeasureValueFilterBodyDimensionalityInner {
 
 // @public (undocumented)
 export const AiRangeMeasureValueOperator: {
-    readonly BETWEEN: "BETWEEN";
-    readonly NOT_BETWEEN: "NOT_BETWEEN";
+    readonly BETWEEN: 'BETWEEN';
+    readonly NOT_BETWEEN: 'NOT_BETWEEN';
 };
 
 // @public (undocumented)
-export type AiRangeMeasureValueOperator = typeof AiRangeMeasureValueOperator[keyof typeof AiRangeMeasureValueOperator];
+export type AiRangeMeasureValueOperator = (typeof AiRangeMeasureValueOperator)[keyof typeof AiRangeMeasureValueOperator];
 
 // @public (undocumented)
 export interface AiRankingFilter {
@@ -6423,12 +6684,12 @@ export interface AiRankingFilterBodyMeasuresInner {
 
 // @public (undocumented)
 export const AiRankingOperator: {
-    readonly TOP: "TOP";
-    readonly BOTTOM: "BOTTOM";
+    readonly TOP: 'TOP';
+    readonly BOTTOM: 'BOTTOM';
 };
 
 // @public (undocumented)
-export type AiRankingOperator = typeof AiRankingOperator[keyof typeof AiRankingOperator];
+export type AiRankingOperator = (typeof AiRankingOperator)[keyof typeof AiRankingOperator];
 
 // @public (undocumented)
 export interface AiReasoningContent {
@@ -6444,7 +6705,7 @@ export interface AiRelative {
     // (undocumented)
     'from': number;
     // (undocumented)
-    'granularity': AiGranularity3;
+    'granularity': AiGranularity2;
     // (undocumented)
     'to': number;
 }
@@ -6463,13 +6724,13 @@ export interface AiRelativeCondition {
 
 // @public
 export const AiRelativeConditionOperator: {
-    readonly INCREASES_BY: "INCREASES_BY";
-    readonly DECREASES_BY: "DECREASES_BY";
-    readonly CHANGES_BY: "CHANGES_BY";
+    readonly INCREASES_BY: 'INCREASES_BY';
+    readonly DECREASES_BY: 'DECREASES_BY';
+    readonly CHANGES_BY: 'CHANGES_BY';
 };
 
 // @public (undocumented)
-export type AiRelativeConditionOperator = typeof AiRelativeConditionOperator[keyof typeof AiRelativeConditionOperator];
+export type AiRelativeConditionOperator = (typeof AiRelativeConditionOperator)[keyof typeof AiRelativeConditionOperator];
 
 // @public (undocumented)
 export interface AiRelativeDateFilter {
@@ -6499,12 +6760,12 @@ export interface AiRelativeDateFilterBody {
 
 // @public (undocumented)
 export const AiRenderAs: {
-    readonly FILLED: "filled";
-    readonly OUTLINE: "outline";
+    readonly FILLED: 'filled';
+    readonly OUTLINE: 'outline';
 };
 
 // @public (undocumented)
-export type AiRenderAs = typeof AiRenderAs[keyof typeof AiRenderAs];
+export type AiRenderAs = (typeof AiRenderAs)[keyof typeof AiRenderAs];
 
 // @public (undocumented)
 export interface AiRequestArgs {
@@ -6516,13 +6777,13 @@ export interface AiRequestArgs {
 
 // @public (undocumented)
 export const AiRequestedReasoningEffort: {
-    readonly LOW: "LOW";
-    readonly MEDIUM: "MEDIUM";
-    readonly HIGH: "HIGH";
+    readonly LOW: 'LOW';
+    readonly MEDIUM: 'MEDIUM';
+    readonly HIGH: 'HIGH';
 };
 
 // @public (undocumented)
-export type AiRequestedReasoningEffort = typeof AiRequestedReasoningEffort[keyof typeof AiRequestedReasoningEffort];
+export type AiRequestedReasoningEffort = (typeof AiRequestedReasoningEffort)[keyof typeof AiRequestedReasoningEffort];
 
 // @public (undocumented)
 export interface AiResponseFeedback {
@@ -6558,17 +6819,17 @@ export type AiRight = AiMetricOperand | AiValueOperand;
 
 // @public (undocumented)
 export const AiRowHeight: {
-    readonly SMALL: "small";
-    readonly MEDIUM: "medium";
-    readonly LARGE: "large";
+    readonly SMALL: 'small';
+    readonly MEDIUM: 'medium';
+    readonly LARGE: 'large';
 };
 
 // @public (undocumented)
-export type AiRowHeight = typeof AiRowHeight[keyof typeof AiRowHeight];
+export type AiRowHeight = (typeof AiRowHeight)[keyof typeof AiRowHeight];
 
 // @public (undocumented)
 export interface AiRule {
-    'conditions': Array<AiCondition13>;
+    'conditions': Array<AiCondition9>;
     'id': string;
     // (undocumented)
     'target': AiTarget1;
@@ -6576,12 +6837,12 @@ export interface AiRule {
 
 // @public (undocumented)
 export const AiScope: {
-    readonly CELL: "cell";
-    readonly ROW: "row";
+    readonly CELL: 'cell';
+    readonly ROW: 'row';
 };
 
 // @public (undocumented)
-export type AiScope = typeof AiScope[keyof typeof AiScope];
+export type AiScope = (typeof AiScope)[keyof typeof AiScope];
 
 // @public (undocumented)
 export interface AiSearchAllowedRelationshipType {
@@ -6835,27 +7096,36 @@ export interface AiSendMessageSearchOptions {
 
 // @public
 export const AiSensitivity: {
-    readonly LOW: "LOW";
-    readonly MEDIUM: "MEDIUM";
-    readonly HIGH: "HIGH";
+    readonly LOW: 'LOW';
+    readonly MEDIUM: 'MEDIUM';
+    readonly HIGH: 'HIGH';
 };
 
 // @public (undocumented)
-export type AiSensitivity = typeof AiSensitivity[keyof typeof AiSensitivity];
+export type AiSensitivity = (typeof AiSensitivity)[keyof typeof AiSensitivity];
 
 // @public (undocumented)
 export const AiShapeType: {
-    readonly CIRCLE: "circle";
-    readonly ICON_BY_VALUE: "iconByValue";
-    readonly ONE_ICON: "oneIcon";
+    readonly CIRCLE: 'circle';
+    readonly ICON_BY_VALUE: 'iconByValue';
+    readonly ONE_ICON: 'oneIcon';
 };
 
 // @public (undocumented)
-export type AiShapeType = typeof AiShapeType[keyof typeof AiShapeType];
+export type AiShapeType = (typeof AiShapeType)[keyof typeof AiShapeType];
 
 // @public (undocumented)
 export interface AiSimpleColorItem {
 }
+
+// @public
+export interface AiSingleChoiceControl {
+    'options': Array<AiClarifyingChoiceOption>;
+    'type'?: AiSingleChoiceControlTypeEnum;
+}
+
+// @public (undocumented)
+export type AiSingleChoiceControlTypeEnum = 'singleChoice';
 
 // @public
 export interface AiSkillResponse {
@@ -6909,13 +7179,13 @@ export interface AiStepTokens {
 
 // @public (undocumented)
 export const AiStyle: {
-    readonly SOLID: "solid";
-    readonly DASHED: "dashed";
-    readonly DOTTED: "dotted";
+    readonly SOLID: 'solid';
+    readonly DASHED: 'dashed';
+    readonly DOTTED: 'dotted';
 };
 
 // @public (undocumented)
-export type AiStyle = typeof AiStyle[keyof typeof AiStyle];
+export type AiStyle = (typeof AiStyle)[keyof typeof AiStyle];
 
 // @public
 export interface AiSuggestedAction {
@@ -6968,6 +7238,27 @@ export { AiSummarizeResponse as GenAiApiSummarizeResponse }
 
 // @public
 export type AiSummarizeResponseFilterContextInner = AiAbsoluteDateFilter | AiAllTimeDateFilter | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilterOutput | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilter | AiRelativeDateFilter;
+
+// @public
+export interface AiSummarizeVisualizationsRequest {
+    'filterContext': Array<AiSummarizeVisualizationsRequestFilterContextInner>;
+    // (undocumented)
+    'formatHint'?: string | null;
+    'visualizations': Array<string>;
+}
+
+// @public
+export type AiSummarizeVisualizationsRequestFilterContextInner = AiAbsoluteDateFilter | AiAllTimeDateFilter | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilterInput | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilter | AiRelativeDateFilter;
+
+// @public (undocumented)
+export interface AiSuppressedTargets {
+    'measure': string;
+}
+
+// @public (undocumented)
+export interface AiSuppressedTargets1 {
+    'attribute': string;
+}
 
 // @public
 export interface AiSwitchAgentRequest {
@@ -7023,1481 +7314,425 @@ export interface AiTotalItem {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiType80;
+    'type': AiType49;
     'using': string;
 }
 
 // @public (undocumented)
-export const AiType100: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly BAR_CHART3: "bar_chart";
+export const AiType11: {
+    readonly ATTRIBUTE_FILTER: 'attribute_filter';
 };
 
 // @public (undocumented)
-export type AiType100 = typeof AiType100[keyof typeof AiType100];
+export type AiType11 = (typeof AiType11)[keyof typeof AiType11];
 
 // @public (undocumented)
-export const AiType101: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly COLUMN_CHART3: "column_chart";
+export const AiType12: {
+    readonly TEXT_FILTER: 'text_filter';
+    readonly TEXT_FILTER2: 'text_filter';
 };
 
 // @public (undocumented)
-export type AiType101 = typeof AiType101[keyof typeof AiType101];
+export type AiType12 = (typeof AiType12)[keyof typeof AiType12];
 
 // @public (undocumented)
-export const AiType102: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly LINE_CHART3: "line_chart";
+export const AiType14: {
+    readonly METRIC_VALUE_FILTER: 'metric_value_filter';
 };
 
 // @public (undocumented)
-export type AiType102 = typeof AiType102[keyof typeof AiType102];
+export type AiType14 = (typeof AiType14)[keyof typeof AiType14];
 
 // @public (undocumented)
-export const AiType103: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly AREA_CHART3: "area_chart";
+export const AiType18: {
+    readonly RANKING_FILTER: 'ranking_filter';
+    readonly RANKING_FILTER2: 'ranking_filter';
 };
 
 // @public (undocumented)
-export type AiType103 = typeof AiType103[keyof typeof AiType103];
+export type AiType18 = (typeof AiType18)[keyof typeof AiType18];
 
 // @public (undocumented)
-export const AiType104: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly SCATTER_CHART3: "scatter_chart";
+export const AiType33: {
+    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
-export type AiType104 = typeof AiType104[keyof typeof AiType104];
+export type AiType33 = (typeof AiType33)[keyof typeof AiType33];
 
 // @public (undocumented)
-export const AiType105: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly BUBBLE_CHART3: "bubble_chart";
+export const AiType34: {
+    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
+    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
-export type AiType105 = typeof AiType105[keyof typeof AiType105];
+export type AiType34 = (typeof AiType34)[keyof typeof AiType34];
 
 // @public (undocumented)
-export const AiType106: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly PIE_CHART3: "pie_chart";
+export const AiType35: {
+    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
-export type AiType106 = typeof AiType106[keyof typeof AiType106];
+export type AiType35 = (typeof AiType35)[keyof typeof AiType35];
 
 // @public (undocumented)
-export const AiType107: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly DONUT_CHART3: "donut_chart";
+export const AiType36: {
+    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
+    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
-export type AiType107 = typeof AiType107[keyof typeof AiType107];
+export type AiType36 = (typeof AiType36)[keyof typeof AiType36];
 
 // @public (undocumented)
-export const AiType108: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly TREEMAP_CHART3: "treemap_chart";
+export const AiType37: {
+    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
-export type AiType108 = typeof AiType108[keyof typeof AiType108];
+export type AiType37 = (typeof AiType37)[keyof typeof AiType37];
 
 // @public (undocumented)
-export const AiType109: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly PYRAMID_CHART3: "pyramid_chart";
+export const AiType38: {
+    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
+    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
-export type AiType109 = typeof AiType109[keyof typeof AiType109];
+export type AiType38 = (typeof AiType38)[keyof typeof AiType38];
 
 // @public (undocumented)
-export const AiType110: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly FUNNEL_CHART3: "funnel_chart";
+export const AiType39: {
+    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
-export type AiType110 = typeof AiType110[keyof typeof AiType110];
+export type AiType39 = (typeof AiType39)[keyof typeof AiType39];
 
 // @public (undocumented)
-export const AiType111: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly HEATMAP_CHART3: "heatmap_chart";
+export const AiType40: {
+    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
+    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
-export type AiType111 = typeof AiType111[keyof typeof AiType111];
+export type AiType40 = (typeof AiType40)[keyof typeof AiType40];
 
 // @public (undocumented)
-export const AiType112: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly BULLET_CHART3: "bullet_chart";
+export const AiType41: {
+    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
-export type AiType112 = typeof AiType112[keyof typeof AiType112];
+export type AiType41 = (typeof AiType41)[keyof typeof AiType41];
 
 // @public (undocumented)
-export const AiType113: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly WATERFALL_CHART3: "waterfall_chart";
+export const AiType42: {
+    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
+    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
-export type AiType113 = typeof AiType113[keyof typeof AiType113];
+export type AiType42 = (typeof AiType42)[keyof typeof AiType42];
 
 // @public (undocumented)
-export const AiType114: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly DEPENDENCY_WHEEL_CHART3: "dependency_wheel_chart";
+export const AiType43: {
+    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
+    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
 };
 
 // @public (undocumented)
-export type AiType114 = typeof AiType114[keyof typeof AiType114];
+export type AiType43 = (typeof AiType43)[keyof typeof AiType43];
 
 // @public (undocumented)
-export const AiType115: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly SANKEY_CHART3: "sankey_chart";
+export const AiType44: {
+    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
+    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
-export type AiType115 = typeof AiType115[keyof typeof AiType115];
+export type AiType44 = (typeof AiType44)[keyof typeof AiType44];
 
 // @public (undocumented)
-export const AiType116: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly HEADLINE_CHART3: "headline_chart";
+export const AiType45: {
+    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
+    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
-export type AiType116 = typeof AiType116[keyof typeof AiType116];
+export type AiType45 = (typeof AiType45)[keyof typeof AiType45];
 
 // @public (undocumented)
-export const AiType117: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly COMBO_CHART3: "combo_chart";
+export const AiType46: {
+    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
+    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
+    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
-export type AiType117 = typeof AiType117[keyof typeof AiType117];
+export type AiType46 = (typeof AiType46)[keyof typeof AiType46];
 
 // @public (undocumented)
-export const AiType118: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly GEO_CHART3: "geo_chart";
+export const AiType47: {
+    readonly ATTRIBUTE_SORT: 'attribute_sort';
 };
 
 // @public (undocumented)
-export type AiType118 = typeof AiType118[keyof typeof AiType118];
+export type AiType47 = (typeof AiType47)[keyof typeof AiType47];
 
 // @public (undocumented)
-export const AiType119: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly GEO_AREA_CHART3: "geo_area_chart";
+export const AiType48: {
+    readonly METRIC_SORT: 'metric_sort';
 };
 
 // @public (undocumented)
-export type AiType119 = typeof AiType119[keyof typeof AiType119];
+export type AiType48 = (typeof AiType48)[keyof typeof AiType48];
 
 // @public (undocumented)
-export const AiType120: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly REPEATER_CHART3: "repeater_chart";
+export const AiType49: {
+    readonly SUM: 'SUM';
+    readonly AVG: 'AVG';
+    readonly MAX: 'MAX';
+    readonly MIN: 'MIN';
+    readonly MED: 'MED';
+    readonly NAT: 'NAT';
 };
 
 // @public (undocumented)
-export type AiType120 = typeof AiType120[keyof typeof AiType120];
+export type AiType49 = (typeof AiType49)[keyof typeof AiType49];
 
 // @public (undocumented)
-export const AiType121: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly RADAR_CHART3: "radar_chart";
+export const AiType50: {
+    readonly PUSHPIN: 'pushpin';
+    readonly AREA: 'area';
 };
 
 // @public (undocumented)
-export type AiType121 = typeof AiType121[keyof typeof AiType121];
+export type AiType50 = (typeof AiType50)[keyof typeof AiType50];
 
 // @public (undocumented)
-export const AiType30: {
-    readonly DATE_FILTER: "date_filter";
-    readonly ATTRIBUTE_FILTER: "attribute_filter";
-    readonly TEXT_FILTER: "text_filter";
-    readonly METRIC_VALUE_FILTER: "metric_value_filter";
-    readonly RANKING_FILTER: "ranking_filter";
-    readonly DATE_FILTER2: "date_filter";
-    readonly ATTRIBUTE_FILTER2: "attribute_filter";
-    readonly TEXT_FILTER2: "text_filter";
-    readonly METRIC_VALUE_FILTER2: "metric_value_filter";
-    readonly RANKING_FILTER2: "ranking_filter";
+export const AiType53: {
+    readonly SOLID: 'solid';
+    readonly PATTERN: 'pattern';
+    readonly OUTLINE: 'outline';
 };
 
 // @public (undocumented)
-export type AiType30 = typeof AiType30[keyof typeof AiType30];
-
-// @public (undocumented)
-export const AiType61: {
-    readonly PREVIOUS_YEAR: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR2: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD2: "PREVIOUS_PERIOD";
-};
-
-// @public (undocumented)
-export type AiType61 = typeof AiType61[keyof typeof AiType61];
+export type AiType53 = (typeof AiType53)[keyof typeof AiType53];
 
 // @public (undocumented)
 export const AiType62: {
-    readonly PREVIOUS_YEAR: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR2: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD2: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR3: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD3: "PREVIOUS_PERIOD";
+    readonly TABLE: 'table';
 };
 
 // @public (undocumented)
-export type AiType62 = typeof AiType62[keyof typeof AiType62];
+export type AiType62 = (typeof AiType62)[keyof typeof AiType62];
 
 // @public (undocumented)
 export const AiType63: {
-    readonly PREVIOUS_YEAR: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR2: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD2: "PREVIOUS_PERIOD";
+    readonly BAR_CHART: 'bar_chart';
 };
 
 // @public (undocumented)
-export type AiType63 = typeof AiType63[keyof typeof AiType63];
+export type AiType63 = (typeof AiType63)[keyof typeof AiType63];
 
 // @public (undocumented)
 export const AiType64: {
-    readonly PREVIOUS_YEAR: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR2: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD2: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR3: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD3: "PREVIOUS_PERIOD";
+    readonly COLUMN_CHART: 'column_chart';
 };
 
 // @public (undocumented)
-export type AiType64 = typeof AiType64[keyof typeof AiType64];
+export type AiType64 = (typeof AiType64)[keyof typeof AiType64];
 
 // @public (undocumented)
 export const AiType65: {
-    readonly PREVIOUS_YEAR: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR2: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD2: "PREVIOUS_PERIOD";
+    readonly LINE_CHART: 'line_chart';
 };
 
 // @public (undocumented)
-export type AiType65 = typeof AiType65[keyof typeof AiType65];
+export type AiType65 = (typeof AiType65)[keyof typeof AiType65];
 
 // @public (undocumented)
 export const AiType66: {
-    readonly PREVIOUS_YEAR: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR2: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD2: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR3: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD3: "PREVIOUS_PERIOD";
+    readonly AREA_CHART: 'area_chart';
 };
 
 // @public (undocumented)
-export type AiType66 = typeof AiType66[keyof typeof AiType66];
+export type AiType66 = (typeof AiType66)[keyof typeof AiType66];
 
 // @public (undocumented)
 export const AiType67: {
-    readonly PREVIOUS_YEAR: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR2: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD2: "PREVIOUS_PERIOD";
+    readonly SCATTER_CHART: 'scatter_chart';
 };
 
 // @public (undocumented)
-export type AiType67 = typeof AiType67[keyof typeof AiType67];
+export type AiType67 = (typeof AiType67)[keyof typeof AiType67];
 
 // @public (undocumented)
 export const AiType68: {
-    readonly PREVIOUS_YEAR: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR2: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD2: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR3: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD3: "PREVIOUS_PERIOD";
+    readonly BUBBLE_CHART: 'bubble_chart';
 };
 
 // @public (undocumented)
-export type AiType68 = typeof AiType68[keyof typeof AiType68];
+export type AiType68 = (typeof AiType68)[keyof typeof AiType68];
 
 // @public (undocumented)
 export const AiType69: {
-    readonly PREVIOUS_YEAR: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR2: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD2: "PREVIOUS_PERIOD";
+    readonly PIE_CHART: 'pie_chart';
 };
 
 // @public (undocumented)
-export type AiType69 = typeof AiType69[keyof typeof AiType69];
+export type AiType69 = (typeof AiType69)[keyof typeof AiType69];
 
 // @public (undocumented)
 export const AiType70: {
-    readonly PREVIOUS_YEAR: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR2: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD2: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR3: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD3: "PREVIOUS_PERIOD";
+    readonly DONUT_CHART: 'donut_chart';
 };
 
 // @public (undocumented)
-export type AiType70 = typeof AiType70[keyof typeof AiType70];
+export type AiType70 = (typeof AiType70)[keyof typeof AiType70];
 
 // @public (undocumented)
 export const AiType71: {
-    readonly PREVIOUS_YEAR: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR2: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD2: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR3: "PREVIOUS_YEAR";
+    readonly TREEMAP_CHART: 'treemap_chart';
 };
 
 // @public (undocumented)
-export type AiType71 = typeof AiType71[keyof typeof AiType71];
+export type AiType71 = (typeof AiType71)[keyof typeof AiType71];
 
 // @public (undocumented)
 export const AiType72: {
-    readonly PREVIOUS_YEAR: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR2: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD2: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR3: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD3: "PREVIOUS_PERIOD";
+    readonly PYRAMID_CHART: 'pyramid_chart';
 };
 
 // @public (undocumented)
-export type AiType72 = typeof AiType72[keyof typeof AiType72];
+export type AiType72 = (typeof AiType72)[keyof typeof AiType72];
 
 // @public (undocumented)
 export const AiType73: {
-    readonly PREVIOUS_YEAR: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR2: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD2: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_PERIOD3: "PREVIOUS_PERIOD";
+    readonly FUNNEL_CHART: 'funnel_chart';
 };
 
 // @public (undocumented)
-export type AiType73 = typeof AiType73[keyof typeof AiType73];
+export type AiType73 = (typeof AiType73)[keyof typeof AiType73];
 
 // @public (undocumented)
 export const AiType74: {
-    readonly PREVIOUS_YEAR: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR2: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD2: "PREVIOUS_PERIOD";
-    readonly PREVIOUS_YEAR3: "PREVIOUS_YEAR";
-    readonly PREVIOUS_PERIOD3: "PREVIOUS_PERIOD";
+    readonly HEATMAP_CHART: 'heatmap_chart';
 };
 
 // @public (undocumented)
-export type AiType74 = typeof AiType74[keyof typeof AiType74];
+export type AiType74 = (typeof AiType74)[keyof typeof AiType74];
 
 // @public (undocumented)
 export const AiType75: {
-    readonly ATTRIBUTE_SORT: "attribute_sort";
-    readonly METRIC_SORT: "metric_sort";
-    readonly ATTRIBUTE_SORT2: "attribute_sort";
-    readonly METRIC_SORT2: "metric_sort";
+    readonly BULLET_CHART: 'bullet_chart';
 };
 
 // @public (undocumented)
-export type AiType75 = typeof AiType75[keyof typeof AiType75];
+export type AiType75 = (typeof AiType75)[keyof typeof AiType75];
+
+// @public (undocumented)
+export const AiType76: {
+    readonly WATERFALL_CHART: 'waterfall_chart';
+};
+
+// @public (undocumented)
+export type AiType76 = (typeof AiType76)[keyof typeof AiType76];
+
+// @public (undocumented)
+export const AiType77: {
+    readonly DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart';
+};
+
+// @public (undocumented)
+export type AiType77 = (typeof AiType77)[keyof typeof AiType77];
+
+// @public (undocumented)
+export const AiType78: {
+    readonly SANKEY_CHART: 'sankey_chart';
+};
+
+// @public (undocumented)
+export type AiType78 = (typeof AiType78)[keyof typeof AiType78];
+
+// @public (undocumented)
+export const AiType79: {
+    readonly HEADLINE_CHART: 'headline_chart';
+};
+
+// @public (undocumented)
+export type AiType79 = (typeof AiType79)[keyof typeof AiType79];
 
 // @public (undocumented)
 export const AiType80: {
-    readonly SUM: "SUM";
-    readonly AVG: "AVG";
-    readonly MAX: "MAX";
-    readonly MIN: "MIN";
-    readonly MED: "MED";
-    readonly NAT: "NAT";
+    readonly COMBO_CHART: 'combo_chart';
 };
 
 // @public (undocumented)
-export type AiType80 = typeof AiType80[keyof typeof AiType80];
+export type AiType80 = (typeof AiType80)[keyof typeof AiType80];
 
 // @public (undocumented)
 export const AiType81: {
-    readonly PUSHPIN: "pushpin";
-    readonly AREA: "area";
+    readonly GEO_CHART: 'geo_chart';
 };
 
 // @public (undocumented)
-export type AiType81 = typeof AiType81[keyof typeof AiType81];
+export type AiType81 = (typeof AiType81)[keyof typeof AiType81];
+
+// @public (undocumented)
+export const AiType82: {
+    readonly GEO_AREA_CHART: 'geo_area_chart';
+};
+
+// @public (undocumented)
+export type AiType82 = (typeof AiType82)[keyof typeof AiType82];
 
 // @public (undocumented)
 export const AiType83: {
-    readonly SOLID: "solid";
-    readonly PATTERN: "pattern";
-    readonly OUTLINE: "outline";
+    readonly REPEATER_CHART: 'repeater_chart';
 };
 
 // @public (undocumented)
-export type AiType83 = typeof AiType83[keyof typeof AiType83];
+export type AiType83 = (typeof AiType83)[keyof typeof AiType83];
 
 // @public (undocumented)
-export const AiType99: {
-    readonly TABLE: "table";
-    readonly BAR_CHART: "bar_chart";
-    readonly COLUMN_CHART: "column_chart";
-    readonly LINE_CHART: "line_chart";
-    readonly AREA_CHART: "area_chart";
-    readonly SCATTER_CHART: "scatter_chart";
-    readonly BUBBLE_CHART: "bubble_chart";
-    readonly PIE_CHART: "pie_chart";
-    readonly DONUT_CHART: "donut_chart";
-    readonly TREEMAP_CHART: "treemap_chart";
-    readonly PYRAMID_CHART: "pyramid_chart";
-    readonly FUNNEL_CHART: "funnel_chart";
-    readonly HEATMAP_CHART: "heatmap_chart";
-    readonly BULLET_CHART: "bullet_chart";
-    readonly WATERFALL_CHART: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART: "dependency_wheel_chart";
-    readonly SANKEY_CHART: "sankey_chart";
-    readonly HEADLINE_CHART: "headline_chart";
-    readonly COMBO_CHART: "combo_chart";
-    readonly GEO_CHART: "geo_chart";
-    readonly GEO_AREA_CHART: "geo_area_chart";
-    readonly REPEATER_CHART: "repeater_chart";
-    readonly RADAR_CHART: "radar_chart";
-    readonly TABLE2: "table";
-    readonly BAR_CHART2: "bar_chart";
-    readonly COLUMN_CHART2: "column_chart";
-    readonly LINE_CHART2: "line_chart";
-    readonly AREA_CHART2: "area_chart";
-    readonly SCATTER_CHART2: "scatter_chart";
-    readonly BUBBLE_CHART2: "bubble_chart";
-    readonly PIE_CHART2: "pie_chart";
-    readonly DONUT_CHART2: "donut_chart";
-    readonly TREEMAP_CHART2: "treemap_chart";
-    readonly PYRAMID_CHART2: "pyramid_chart";
-    readonly FUNNEL_CHART2: "funnel_chart";
-    readonly HEATMAP_CHART2: "heatmap_chart";
-    readonly BULLET_CHART2: "bullet_chart";
-    readonly WATERFALL_CHART2: "waterfall_chart";
-    readonly DEPENDENCY_WHEEL_CHART2: "dependency_wheel_chart";
-    readonly SANKEY_CHART2: "sankey_chart";
-    readonly HEADLINE_CHART2: "headline_chart";
-    readonly COMBO_CHART2: "combo_chart";
-    readonly GEO_CHART2: "geo_chart";
-    readonly GEO_AREA_CHART2: "geo_area_chart";
-    readonly REPEATER_CHART2: "repeater_chart";
-    readonly RADAR_CHART2: "radar_chart";
-    readonly TABLE3: "table";
+export const AiType84: {
+    readonly RADAR_CHART: 'radar_chart';
 };
 
 // @public (undocumented)
-export type AiType99 = typeof AiType99[keyof typeof AiType99];
+export type AiType84 = (typeof AiType84)[keyof typeof AiType84];
+
+// @public (undocumented)
+export const AiType9: {
+    readonly DATE_FILTER: 'date_filter';
+};
+
+// @public (undocumented)
+export type AiType9 = (typeof AiType9)[keyof typeof AiType9];
 
 // @public
 export interface AiUploadDocumentResponse {
@@ -8685,7 +7920,7 @@ export interface AiUsing {
 export interface AiUsing1 {
 }
 
-// @public (undocumented)
+// @public
 export interface AiUsing10 {
 }
 
@@ -8697,27 +7932,59 @@ export interface AiUsing11 {
 export interface AiUsing12 {
 }
 
-// @public
+// @public (undocumented)
 export interface AiUsing13 {
 }
 
-// @public (undocumented)
+// @public
+export interface AiUsing14 {
+}
+
+// @public
+export interface AiUsing15 {
+}
+
+// @public
+export interface AiUsing16 {
+}
+
+// @public
+export interface AiUsing17 {
+}
+
+// @public
+export interface AiUsing18 {
+}
+
+// @public
+export interface AiUsing19 {
+}
+
+// @public
 export interface AiUsing2 {
 }
 
 // @public
-export interface AiUsing3 {
-}
-
-// @public (undocumented)
-export interface AiUsing4 {
+export interface AiUsing20 {
 }
 
 // @public
-export interface AiUsing5 {
+export interface AiUsing21 {
 }
 
 // @public (undocumented)
+export interface AiUsing3 {
+}
+
+// @public
+export interface AiUsing4 {
+}
+
+// @public (undocumented)
+export interface AiUsing5 {
+}
+
+// @public
 export interface AiUsing6 {
 }
 
@@ -8729,7 +7996,7 @@ export interface AiUsing7 {
 export interface AiUsing8 {
 }
 
-// @public
+// @public (undocumented)
 export interface AiUsing9 {
 }
 
@@ -8785,19 +8052,19 @@ export interface AiValueOperand {
 
 // @public (undocumented)
 export const AiViewport: {
-    readonly AUTO: "auto";
-    readonly CONTINENT_AF: "continent_af";
-    readonly CONTINENT_AS: "continent_as";
-    readonly CONTINENT_AU: "continent_au";
-    readonly CONTINENT_EU: "continent_eu";
-    readonly CONTINENT_NA: "continent_na";
-    readonly CONTINENT_SA: "continent_sa";
-    readonly WORLD: "world";
-    readonly CUSTOM: "custom";
+    readonly AUTO: 'auto';
+    readonly CONTINENT_AF: 'continent_af';
+    readonly CONTINENT_AS: 'continent_as';
+    readonly CONTINENT_AU: 'continent_au';
+    readonly CONTINENT_EU: 'continent_eu';
+    readonly CONTINENT_NA: 'continent_na';
+    readonly CONTINENT_SA: 'continent_sa';
+    readonly WORLD: 'world';
+    readonly CUSTOM: 'custom';
 };
 
 // @public (undocumented)
-export type AiViewport = typeof AiViewport[keyof typeof AiViewport];
+export type AiViewport = (typeof AiViewport)[keyof typeof AiViewport];
 
 // @public
 export interface AiVisualisation {
@@ -8838,7 +8105,7 @@ export interface AiVisualisation {
     'to'?: AiBucketItem;
     // (undocumented)
     'trend_by'?: Array<AiBucketItem>;
-    'type': AiType121;
+    'type': AiType84;
     // (undocumented)
     'view_by'?: Array<AiBucketItem>;
 }
@@ -8868,7 +8135,7 @@ export interface AiVisualisation1 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType99;
+    'type': AiType62;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8894,7 +8161,7 @@ export interface AiVisualisation10 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType108;
+    'type': AiType71;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8920,7 +8187,7 @@ export interface AiVisualisation11 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType109;
+    'type': AiType72;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8946,7 +8213,7 @@ export interface AiVisualisation12 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType110;
+    'type': AiType73;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8976,7 +8243,7 @@ export interface AiVisualisation13 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType111;
+    'type': AiType74;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9002,7 +8269,7 @@ export interface AiVisualisation14 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType112;
+    'type': AiType75;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9028,7 +8295,7 @@ export interface AiVisualisation15 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType113;
+    'type': AiType76;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9058,7 +8325,7 @@ export interface AiVisualisation16 {
     'title'?: string;
     // (undocumented)
     'to'?: AiBucketItem | null;
-    'type': AiType114;
+    'type': AiType77;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9088,7 +8355,7 @@ export interface AiVisualisation17 {
     'title'?: string;
     // (undocumented)
     'to'?: AiBucketItem | null;
-    'type': AiType115;
+    'type': AiType78;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9114,7 +8381,7 @@ export interface AiVisualisation18 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType116;
+    'type': AiType79;
     // (undocumented)
     'view_by'?: Array<any> | null;
 }
@@ -9140,7 +8407,7 @@ export interface AiVisualisation19 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType117;
+    'type': AiType80;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9168,7 +8435,7 @@ export interface AiVisualisation2 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType100;
+    'type': AiType63;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9196,7 +8463,7 @@ export interface AiVisualisation20 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType118;
+    'type': AiType81;
     // (undocumented)
     'view_by'?: Array<string> | null;
 }
@@ -9224,7 +8491,7 @@ export interface AiVisualisation21 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType119;
+    'type': AiType82;
     // (undocumented)
     'view_by'?: Array<string> | null;
 }
@@ -9254,7 +8521,7 @@ export interface AiVisualisation22 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType120;
+    'type': AiType83;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9280,7 +8547,7 @@ export interface AiVisualisation23 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType121;
+    'type': AiType84;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9308,7 +8575,7 @@ export interface AiVisualisation3 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType101;
+    'type': AiType64;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9336,7 +8603,7 @@ export interface AiVisualisation4 {
     'title'?: string;
     // (undocumented)
     'trend_by'?: Array<AiBucketItem> | null;
-    'type': AiType102;
+    'type': AiType65;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9364,7 +8631,7 @@ export interface AiVisualisation5 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType103;
+    'type': AiType66;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9392,7 +8659,7 @@ export interface AiVisualisation6 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType104;
+    'type': AiType67;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9420,7 +8687,7 @@ export interface AiVisualisation7 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType105;
+    'type': AiType68;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9446,7 +8713,7 @@ export interface AiVisualisation8 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType106;
+    'type': AiType69;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9472,7 +8739,7 @@ export interface AiVisualisation9 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType107;
+    'type': AiType70;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9593,6 +8860,8 @@ export type AiVisualizationMetricValueRangeFilterTypeEnum = 'metric_value_filter
 
 // @public (undocumented)
 export interface AiVisualizationPart {
+    // (undocumented)
+    'references'?: AiVisualizationReferences | null;
     'type'?: AiVisualizationPartTypeEnum;
     // (undocumented)
     'unsupportedChartType'?: string | null;
@@ -9602,6 +8871,14 @@ export interface AiVisualizationPart {
 
 // @public (undocumented)
 export type AiVisualizationPartTypeEnum = 'visualization';
+
+// @public
+export interface AiVisualizationReferences {
+    // (undocumented)
+    [key: string]: any;
+    'datasets'?: Array<object>;
+    'datedatasets'?: Array<object>;
+}
 
 // @public (undocumented)
 export interface AiVisualizationRelativeDateFilter {
@@ -9686,7 +8963,7 @@ export const AiWidth: {
 };
 
 // @public (undocumented)
-export type AiWidth = typeof AiWidth[keyof typeof AiWidth];
+export type AiWidth = (typeof AiWidth)[keyof typeof AiWidth];
 
 // @public (undocumented)
 export interface AiWidthItem {
@@ -9720,23 +8997,23 @@ export interface AiWidthValueOrAuto {
 
 // @public (undocumented)
 export const AiYaxisPrimaryType: {
-    readonly COLUMN: "column";
-    readonly AREA: "area";
-    readonly LINE: "line";
+    readonly COLUMN: 'column';
+    readonly AREA: 'area';
+    readonly LINE: 'line';
 };
 
 // @public (undocumented)
-export type AiYaxisPrimaryType = typeof AiYaxisPrimaryType[keyof typeof AiYaxisPrimaryType];
+export type AiYaxisPrimaryType = (typeof AiYaxisPrimaryType)[keyof typeof AiYaxisPrimaryType];
 
 // @public (undocumented)
 export const AiYaxisSecondaryType: {
-    readonly COLUMN: "column";
-    readonly AREA: "area";
-    readonly LINE: "line";
+    readonly COLUMN: 'column';
+    readonly AREA: 'area';
+    readonly LINE: 'line';
 };
 
 // @public (undocumented)
-export type AiYaxisSecondaryType = typeof AiYaxisSecondaryType[keyof typeof AiYaxisSecondaryType];
+export type AiYaxisSecondaryType = (typeof AiYaxisSecondaryType)[keyof typeof AiYaxisSecondaryType];
 
 // @public (undocumented)
 export interface AlertAfm {
@@ -15830,6 +15107,7 @@ export type DashboardSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
 // @public
 export class DashboardSummaryAi extends AiBaseAPI implements DashboardSummaryAiInterface {
     summarizeDashboard(requestParameters: DashboardSummaryAiSummarizeDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<AiSummarizeResponse>;
+    summarizeVisualizations(requestParameters: DashboardSummaryAiSummarizeVisualizationsRequest, options?: AxiosRequestConfig): AxiosPromise<AiSummarizeResponse>;
 }
 
 // @public
@@ -15838,11 +15116,18 @@ export { DashboardSummaryAi_SummarizeDashboard }
 export { DashboardSummaryAi_SummarizeDashboard as GenAiApi_SummarizeDashboard }
 
 // @public
+export function DashboardSummaryAi_SummarizeVisualizations(axios: AxiosInstance, basePath: string, requestParameters: DashboardSummaryAiSummarizeVisualizationsRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiSummarizeResponse>;
+
+// @public
 export function DashboardSummaryAiAxiosParamCreator_SummarizeDashboard(workspaceId: string, aiSummarizeRequest: AiSummarizeRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
+export function DashboardSummaryAiAxiosParamCreator_SummarizeVisualizations(workspaceId: string, aiSummarizeVisualizationsRequest: AiSummarizeVisualizationsRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
 export interface DashboardSummaryAiInterface {
     summarizeDashboard(requestParameters: DashboardSummaryAiSummarizeDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<AiSummarizeResponse>;
+    summarizeVisualizations(requestParameters: DashboardSummaryAiSummarizeVisualizationsRequest, options?: AxiosRequestConfig): AxiosPromise<AiSummarizeResponse>;
 }
 
 // @public
@@ -15852,6 +15137,12 @@ interface DashboardSummaryAiSummarizeDashboardRequest {
 }
 export { DashboardSummaryAiSummarizeDashboardRequest }
 export { DashboardSummaryAiSummarizeDashboardRequest as GenAiApiSummarizeDashboardRequest }
+
+// @public
+export interface DashboardSummaryAiSummarizeVisualizationsRequest {
+    readonly aiSummarizeVisualizationsRequest: AiSummarizeVisualizationsRequest;
+    readonly workspaceId: string;
+}
 
 // @public (undocumented)
 export interface DashboardSummaryRequestDto {
@@ -16946,7 +16237,7 @@ export interface DeclarativeAgent {
 }
 
 // @public (undocumented)
-export type DeclarativeAgentCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge';
+export type DeclarativeAgentCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor';
 
 // @public
 export interface DeclarativeAgents {
@@ -20474,6 +19765,7 @@ export interface EntitiesApiCreateEntityParametersRequest {
 
 // @public
 export interface EntitiesApiCreateEntityReportPageLayoutsRequest {
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiReportPageLayoutPostOptionalIdDocument: JsonApiReportPageLayoutPostOptionalIdDocument;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
     readonly workspaceId: string;
@@ -20481,6 +19773,7 @@ export interface EntitiesApiCreateEntityReportPageLayoutsRequest {
 
 // @public
 export interface EntitiesApiCreateEntityReportsRequest {
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiReportPostOptionalIdDocument: JsonApiReportPostOptionalIdDocument;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
     readonly workspaceId: string;
@@ -20488,6 +19781,7 @@ export interface EntitiesApiCreateEntityReportsRequest {
 
 // @public
 export interface EntitiesApiCreateEntityReportTemplatesRequest {
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiReportTemplatePostOptionalIdDocument: JsonApiReportTemplatePostOptionalIdDocument;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
     readonly workspaceId: string;
@@ -21260,6 +20554,7 @@ export interface EntitiesApiGetAllEntitiesParametersRequest {
 // @public
 export interface EntitiesApiGetAllEntitiesReportPageLayoutsRequest {
     readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
     readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
     readonly page?: number;
@@ -21272,6 +20567,7 @@ export interface EntitiesApiGetAllEntitiesReportPageLayoutsRequest {
 // @public
 export interface EntitiesApiGetAllEntitiesReportsRequest {
     readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
     readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
     readonly page?: number;
@@ -21284,6 +20580,7 @@ export interface EntitiesApiGetAllEntitiesReportsRequest {
 // @public
 export interface EntitiesApiGetAllEntitiesReportTemplatesRequest {
     readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
     readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
     readonly page?: number;
@@ -21769,6 +21066,7 @@ export interface EntitiesApiGetEntityParametersRequest {
 // @public
 export interface EntitiesApiGetEntityReportPageLayoutsRequest {
     readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -21778,6 +21076,7 @@ export interface EntitiesApiGetEntityReportPageLayoutsRequest {
 // @public
 export interface EntitiesApiGetEntityReportsRequest {
     readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -21787,6 +21086,7 @@ export interface EntitiesApiGetEntityReportsRequest {
 // @public
 export interface EntitiesApiGetEntityReportTemplatesRequest {
     readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -22511,6 +21811,7 @@ export interface EntitiesApiPatchEntityParametersRequest {
 // @public
 export interface EntitiesApiPatchEntityReportPageLayoutsRequest {
     readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiReportPageLayoutPatchDocument: JsonApiReportPageLayoutPatchDocument;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -22519,6 +21820,7 @@ export interface EntitiesApiPatchEntityReportPageLayoutsRequest {
 // @public
 export interface EntitiesApiPatchEntityReportsRequest {
     readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiReportPatchDocument: JsonApiReportPatchDocument;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -22527,6 +21829,7 @@ export interface EntitiesApiPatchEntityReportsRequest {
 // @public
 export interface EntitiesApiPatchEntityReportTemplatesRequest {
     readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiReportTemplatePatchDocument: JsonApiReportTemplatePatchDocument;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -23064,6 +22367,7 @@ export interface EntitiesApiUpdateEntityParametersRequest {
 // @public
 export interface EntitiesApiUpdateEntityReportPageLayoutsRequest {
     readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiReportPageLayoutInDocument: JsonApiReportPageLayoutInDocument;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -23072,6 +22376,7 @@ export interface EntitiesApiUpdateEntityReportPageLayoutsRequest {
 // @public
 export interface EntitiesApiUpdateEntityReportsRequest {
     readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiReportInDocument: JsonApiReportInDocument;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -23080,6 +22385,7 @@ export interface EntitiesApiUpdateEntityReportsRequest {
 // @public
 export interface EntitiesApiUpdateEntityReportTemplatesRequest {
     readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiReportTemplateInDocument: JsonApiReportTemplateInDocument;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -28132,7 +27438,7 @@ export interface JsonApiAgentInAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiAgentInAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge';
+export type JsonApiAgentInAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor';
 
 // @public
 export interface JsonApiAgentInAttributesInstructionsInner {
@@ -28206,7 +27512,7 @@ export interface JsonApiAgentOutAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiAgentOutAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge';
+export type JsonApiAgentOutAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor';
 
 // @public
 export interface JsonApiAgentOutAttributesInstructionsInner {
@@ -28330,7 +27636,7 @@ export interface JsonApiAgentPatchAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiAgentPatchAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge';
+export type JsonApiAgentPatchAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge' | 'dashboard_builder' | 'dashboard_editor';
 
 // @public
 export interface JsonApiAgentPatchAttributesInstructionsInner {
@@ -35670,6 +34976,8 @@ export interface JsonApiReportOut {
     'id': string;
     // (undocumented)
     'meta'?: JsonApiReportOutMeta;
+    // (undocumented)
+    'relationships'?: JsonApiReportOutRelationships;
     'type': JsonApiReportOutTypeEnum;
 }
 
@@ -35678,8 +34986,10 @@ export interface JsonApiReportOutAttributes {
     // (undocumented)
     'areRelationsValid'?: boolean;
     'content': object;
+    'createdAt'?: string | null;
     // (undocumented)
     'description'?: string;
+    'modifiedAt'?: string | null;
     'periodEnd': string;
     'periodStart': string;
     // (undocumented)
@@ -35693,6 +35003,7 @@ export interface JsonApiReportOutAttributes {
 export interface JsonApiReportOutDocument {
     // (undocumented)
     'data': JsonApiReportOut;
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     // (undocumented)
     'links'?: ObjectLinks;
 }
@@ -35701,6 +35012,7 @@ export interface JsonApiReportOutDocument {
 export interface JsonApiReportOutList {
     // (undocumented)
     'data': Array<JsonApiReportOutWithLinks>;
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
@@ -35729,6 +35041,26 @@ export interface JsonApiReportOutMetaOrigin {
 export type JsonApiReportOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
 
 // @public (undocumented)
+export interface JsonApiReportOutRelationships {
+    // (undocumented)
+    'createdBy'?: JsonApiReportOutRelationshipsCreatedBy;
+    // (undocumented)
+    'modifiedBy'?: JsonApiReportOutRelationshipsModifiedBy;
+}
+
+// @public (undocumented)
+export interface JsonApiReportOutRelationshipsCreatedBy {
+    // (undocumented)
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+// @public (undocumented)
+export interface JsonApiReportOutRelationshipsModifiedBy {
+    // (undocumented)
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+// @public (undocumented)
 export type JsonApiReportOutTypeEnum = 'report';
 
 // @public (undocumented)
@@ -35740,6 +35072,8 @@ export interface JsonApiReportOutWithLinks {
     'links'?: ObjectLinks;
     // (undocumented)
     'meta'?: JsonApiReportOutMeta;
+    // (undocumented)
+    'relationships'?: JsonApiReportOutRelationships;
     'type': JsonApiReportOutWithLinksTypeEnum;
 }
 
@@ -35783,6 +35117,8 @@ export interface JsonApiReportPageLayoutOut {
     'id': string;
     // (undocumented)
     'meta'?: JsonApiReportPageLayoutOutMeta;
+    // (undocumented)
+    'relationships'?: JsonApiReportPageLayoutOutRelationships;
     'type': JsonApiReportPageLayoutOutTypeEnum;
 }
 
@@ -35791,8 +35127,10 @@ export interface JsonApiReportPageLayoutOutAttributes {
     // (undocumented)
     'areRelationsValid'?: boolean;
     'content': object;
+    'createdAt'?: string | null;
     // (undocumented)
     'description'?: string;
+    'modifiedAt'?: string | null;
     // (undocumented)
     'tags'?: Array<string>;
     // (undocumented)
@@ -35803,6 +35141,7 @@ export interface JsonApiReportPageLayoutOutAttributes {
 export interface JsonApiReportPageLayoutOutDocument {
     // (undocumented)
     'data': JsonApiReportPageLayoutOut;
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     // (undocumented)
     'links'?: ObjectLinks;
 }
@@ -35811,6 +35150,7 @@ export interface JsonApiReportPageLayoutOutDocument {
 export interface JsonApiReportPageLayoutOutList {
     // (undocumented)
     'data': Array<JsonApiReportPageLayoutOutWithLinks>;
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
@@ -35839,6 +35179,26 @@ export interface JsonApiReportPageLayoutOutMetaOrigin {
 export type JsonApiReportPageLayoutOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
 
 // @public (undocumented)
+export interface JsonApiReportPageLayoutOutRelationships {
+    // (undocumented)
+    'createdBy'?: JsonApiReportPageLayoutOutRelationshipsCreatedBy;
+    // (undocumented)
+    'modifiedBy'?: JsonApiReportPageLayoutOutRelationshipsModifiedBy;
+}
+
+// @public (undocumented)
+export interface JsonApiReportPageLayoutOutRelationshipsCreatedBy {
+    // (undocumented)
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+// @public (undocumented)
+export interface JsonApiReportPageLayoutOutRelationshipsModifiedBy {
+    // (undocumented)
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+// @public (undocumented)
 export type JsonApiReportPageLayoutOutTypeEnum = 'reportPageLayout';
 
 // @public (undocumented)
@@ -35850,6 +35210,8 @@ export interface JsonApiReportPageLayoutOutWithLinks {
     'links'?: ObjectLinks;
     // (undocumented)
     'meta'?: JsonApiReportPageLayoutOutMeta;
+    // (undocumented)
+    'relationships'?: JsonApiReportPageLayoutOutRelationships;
     'type': JsonApiReportPageLayoutOutWithLinksTypeEnum;
 }
 
@@ -36019,6 +35381,8 @@ export interface JsonApiReportTemplateOut {
     'id': string;
     // (undocumented)
     'meta'?: JsonApiReportTemplateOutMeta;
+    // (undocumented)
+    'relationships'?: JsonApiReportTemplateOutRelationships;
     'type': JsonApiReportTemplateOutTypeEnum;
 }
 
@@ -36027,8 +35391,10 @@ export interface JsonApiReportTemplateOutAttributes {
     // (undocumented)
     'areRelationsValid'?: boolean;
     'content': object;
+    'createdAt'?: string | null;
     // (undocumented)
     'description'?: string;
+    'modifiedAt'?: string | null;
     // (undocumented)
     'tags'?: Array<string>;
     // (undocumented)
@@ -36039,6 +35405,7 @@ export interface JsonApiReportTemplateOutAttributes {
 export interface JsonApiReportTemplateOutDocument {
     // (undocumented)
     'data': JsonApiReportTemplateOut;
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     // (undocumented)
     'links'?: ObjectLinks;
 }
@@ -36047,6 +35414,7 @@ export interface JsonApiReportTemplateOutDocument {
 export interface JsonApiReportTemplateOutList {
     // (undocumented)
     'data': Array<JsonApiReportTemplateOutWithLinks>;
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
@@ -36075,6 +35443,26 @@ export interface JsonApiReportTemplateOutMetaOrigin {
 export type JsonApiReportTemplateOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
 
 // @public (undocumented)
+export interface JsonApiReportTemplateOutRelationships {
+    // (undocumented)
+    'createdBy'?: JsonApiReportTemplateOutRelationshipsCreatedBy;
+    // (undocumented)
+    'modifiedBy'?: JsonApiReportTemplateOutRelationshipsModifiedBy;
+}
+
+// @public (undocumented)
+export interface JsonApiReportTemplateOutRelationshipsCreatedBy {
+    // (undocumented)
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+// @public (undocumented)
+export interface JsonApiReportTemplateOutRelationshipsModifiedBy {
+    // (undocumented)
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+// @public (undocumented)
 export type JsonApiReportTemplateOutTypeEnum = 'reportTemplate';
 
 // @public (undocumented)
@@ -36086,6 +35474,8 @@ export interface JsonApiReportTemplateOutWithLinks {
     'links'?: ObjectLinks;
     // (undocumented)
     'meta'?: JsonApiReportTemplateOutMeta;
+    // (undocumented)
+    'relationships'?: JsonApiReportTemplateOutRelationships;
     'type': JsonApiReportTemplateOutWithLinksTypeEnum;
 }
 
@@ -41047,6 +40437,11 @@ export interface MemoryItemControllerApiUpdateEntityMemoryItemsRequest {
     readonly workspaceId: string;
 }
 
+// @public
+export interface MetadataActionsApiProcessInvitationRequest {
+    readonly invitation: MetadataInvitation;
+}
+
 // @public (undocumented)
 export class MetadataBaseApi {
     constructor(configuration?: MetadataConfiguration, basePath?: string, axios?: AxiosInstance);
@@ -41138,6 +40533,19 @@ export type MetadataGetEntitiesWorkspaceParams = {
     workspaceId: string;
     filter?: string;
 };
+
+// @public (undocumented)
+export interface MetadataInvitation {
+    // (undocumented)
+    'email': string;
+    // (undocumented)
+    'firstName'?: string;
+    'forceSend'?: boolean;
+    // (undocumented)
+    'lastName'?: string;
+    // (undocumented)
+    'userId': string;
+}
 
 // @public (undocumented)
 export interface MetadataRequestArgs {
@@ -42562,7 +41970,7 @@ export interface OrganizationSettingControllerApiUpdateEntityOrganizationSetting
 // @internal
 export class OrganizationUtilities {
     // (undocumented)
-    static getAllPagesOf: <T extends OrganizationGetEntitiesResult, P extends OrganizationGetEntitiesParams>(client: ITigerClientBase, entitiesGet: OrganizationGetEntitiesFnNew<T, P>, params: P, options?: AxiosRequestConfig<any>) => Promise<T[]>;
+    static getAllPagesOf: <T extends OrganizationGetEntitiesResult, P extends OrganizationGetEntitiesParams>(client: ITigerClientBase, entitiesGet: OrganizationGetEntitiesFnNew<T, P>, params: P, options?: AxiosRequestConfig) => Promise<T[]>;
     static mergeEntitiesResults<T extends OrganizationGetEntitiesResult>(pages: T[]): T;
 }
 
@@ -44816,10 +44224,10 @@ export const tigerClientFactory: (axios: AxiosInstance) => ITigerClient;
 export const tigerEntitiesObjectsClientFactory: (axios: AxiosInstance) => EntitiesApiInterface;
 
 // @public
-export const tigerExecutionClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "changeAnalysis" | "computeReport">;
+export const tigerExecutionClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeReport" | "changeAnalysis">;
 
 // @public
-export const tigerExecutionResultClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "changeAnalysisResult" | "retrieveResult">;
+export const tigerExecutionResultClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "retrieveResult" | "changeAnalysisResult">;
 
 // @public (undocumented)
 export const tigerExportClientFactory: (axios: AxiosInstance) => ActionsExportInterface;
@@ -44852,7 +44260,7 @@ export const tigerResultClientFactory: (axios: AxiosInstance) => ResultActionsAp
 export const tigerScanModelClientFactory: (axios: AxiosInstance) => ScanModelActionsApiInterface;
 
 // @beta
-export const tigerSmartFunctionsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "anomalyDetection" | "anomalyDetectionResult" | "clustering" | "clusteringResult" | "forecast" | "forecastResult" | "keyDriverAnalysis" | "keyDriverAnalysisResult">;
+export const tigerSmartFunctionsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "forecast" | "forecastResult" | "keyDriverAnalysis" | "keyDriverAnalysisResult" | "anomalyDetection" | "anomalyDetectionResult" | "clustering" | "clusteringResult">;
 
 // @public (undocumented)
 export const tigerUserManagementClientFactory: (axios: AxiosInstance) => UserManagementApiInterface;

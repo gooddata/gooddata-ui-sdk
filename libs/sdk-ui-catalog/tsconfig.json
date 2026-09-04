@@ -3,6 +3,10 @@
     "compilerOptions": {
         "tsBuildInfoFile": "./tsconfig.check.tsbuildinfo",
         "noEmit": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "paths": {
+            "react": ["./node_modules/@types/react"],
+            "react/jsx-runtime": ["./node_modules/@types/react/jsx-runtime"]
+        }
     }
 }

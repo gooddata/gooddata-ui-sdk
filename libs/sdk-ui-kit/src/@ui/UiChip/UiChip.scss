@@ -221,11 +221,11 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-com
             &:hover,
             &:focus,
             &:active {
+                color: var(--gd-palette-complementary-8);
+
                 svg {
                     color: var(--gd-palette-primary-base);
                 }
-
-                color: var(--gd-palette-complementary-8);
             }
         }
 
@@ -244,11 +244,11 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-com
             &:hover,
             &:focus,
             &:active {
+                color: var(--gd-palette-complementary-8);
+
                 svg {
                     color: var(--gd-palette-error-base);
                 }
-
-                color: var(--gd-palette-complementary-8);
             }
         }
     }
@@ -262,11 +262,11 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-com
             &:hover,
             &:focus,
             &:active {
+                color: var(--gd-palette-complementary-8);
+
                 svg {
                     color: var(--gd-palette-complementary-2);
                 }
-
-                color: var(--gd-palette-complementary-8);
             }
         }
     }

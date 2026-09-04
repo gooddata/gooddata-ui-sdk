@@ -43,7 +43,9 @@ export interface IDateFilterFormContentProps {
     weekStart: WeekStart;
     isTimeForAbsoluteRangeEnabled: boolean;
     isSecondsForAbsoluteRangeEnabled?: boolean;
+    isAbsoluteDateFilterGranularityEnabled: boolean;
     availableGranularities: DateFilterGranularity[];
+    absoluteAvailableGranularities: DateFilterGranularity[];
 
     isMobile: boolean;
     withoutApply?: boolean;
@@ -72,7 +74,9 @@ export function DateFilterFormContent({
     weekStart,
     isTimeForAbsoluteRangeEnabled,
     isSecondsForAbsoluteRangeEnabled,
+    isAbsoluteDateFilterGranularityEnabled,
     availableGranularities,
+    absoluteAvailableGranularities,
     isMobile,
     withoutApply,
     enableEmptyDateValues,
@@ -101,6 +105,7 @@ export function DateFilterFormContent({
     const relativeDateFilterRef = useRef<HTMLDivElement>(null);
     const tabGranularityRef = useRef<HTMLDivElement>(null);
     const relativeDateFilterId = useId();
+    const absoluteDateFilterId = useId();
 
     const shouldRenderEmptyValuesHandling =
         !!enableEmptyDateValues &&
@@ -143,6 +148,9 @@ export function DateFilterFormContent({
                             isMobile={isMobile}
                             isTimeEnabled={isTimeForAbsoluteRangeEnabled}
                             isSecondsEnabled={isSecondsForAbsoluteRangeEnabled}
+                            isGranularityEnabled={isAbsoluteDateFilterGranularityEnabled}
+                            availableGranularities={absoluteAvailableGranularities}
+                            accessibilityConfig={{ id: absoluteDateFilterId }}
                             weekStart={weekStart}
                             submitForm={submitForm}
                             withoutApply={withoutApply}

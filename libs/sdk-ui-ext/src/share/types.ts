@@ -39,6 +39,8 @@ export interface IObjectShareLabel {
  *   rule permits, `VIEW` by default.
  * - `granteeCount` — number of named grantees (users + groups). Excludes the
  *   workspace-wide rule grant itself.
+ * - `selfIsGrantee` — whether the signed-in user is one of them. The creator is granted
+ *   access when the object is made, so their own grant says nothing about who else can.
  *
  * @internal
  */
@@ -46,4 +48,5 @@ export interface IObjectAccessSummary {
     generalAccess: GeneralAccessValue;
     workspaceLevel: AccessGranularPermission;
     granteeCount: number;
+    selfIsGrantee: boolean;
 }

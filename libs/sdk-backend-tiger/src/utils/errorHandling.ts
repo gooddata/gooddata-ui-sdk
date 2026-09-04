@@ -111,14 +111,29 @@ function createPermissionEscalationRefusedError(error: Error): PermissionEscalat
     );
 }
 
+/**
+ * Reasons the gateway's license/contract gate can deny a request with, carried in the 403 body's
+ * `reason` field (`components/gateway/gateway-api-gw/.../LicenseGatekeeper.kt` `DenyReason.code` in
+ * gdc-nas). Only the reasons a user can act on (or that block login entirely) are treated as a
+ * contract-expired condition here; the remaining reasons stay unexpected errors.
+ */
+const CONTRACT_EXPIRED_REASONS = ["contract_expired", "license_expired"];
+
 function createContractExpiredError(error: Error): ContractExpired | undefined {
     const axiosErrorResponse = (error as AxiosError<any>).response;
 
-    if (
-        axiosErrorResponse?.status !== 403 ||
-        (!axiosErrorResponse.data?.detail?.includes("Contract expired") &&
-            !axiosErrorResponse.data?.detail?.includes("Reason: EXPIRED"))
-    ) {
+    if (axiosErrorResponse?.status !== 403) {
+        return;
+    }
+
+    // Older gateways do not send `reason` and only ever deny profile/invite this way, so the legacy
+    // detail-text match stays as a fallback rather than being replaced by the new field.
+    const matchesReason = CONTRACT_EXPIRED_REASONS.includes(axiosErrorResponse.data?.reason);
+    const matchesLegacyDetail =
+        axiosErrorResponse.data?.detail?.includes("Contract expired") ||
+        axiosErrorResponse.data?.detail?.includes("Reason: EXPIRED");
+
+    if (!matchesReason && !matchesLegacyDetail) {
         return;
     }
 

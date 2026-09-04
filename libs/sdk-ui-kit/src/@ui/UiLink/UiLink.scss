@@ -3,6 +3,11 @@
 @use "../../../styles/scss/variables";
 
 .gd-ui-kit-link {
+    cursor: pointer;
+    transition: text-decoration-color 0.1s ease-in-out;
+    text-decoration: underline;
+    text-decoration-color: currentColor;
+
     &--variant-primary {
         &,
         &:focus,
@@ -38,12 +43,6 @@
             color: variables.$gd-color-text-light;
         }
     }
-
-    cursor: pointer;
-    transition: text-decoration-color 0.1s ease-in-out;
-    text-decoration: underline;
-
-    text-decoration-color: currentColor;
 
     &:hover {
         text-decoration-color: transparent;

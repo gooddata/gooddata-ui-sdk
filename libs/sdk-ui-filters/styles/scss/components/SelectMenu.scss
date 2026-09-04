@@ -3,10 +3,6 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
 
 .gd-select-menu {
-    & * {
-        box-sizing: border-box;
-    }
-
     position: absolute;
     z-index: 5000;
     padding: 6px 0;
@@ -17,6 +13,10 @@
     min-width: 100%;
 
     @include mixins.box-shadow(0 1px 20px var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.2)));
+
+    & * {
+        box-sizing: border-box;
+    }
 
     &-wrapper {
         position: relative;

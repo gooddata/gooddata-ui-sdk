@@ -292,7 +292,9 @@ export function useAccessList(
 
     // Keyed on plain values so the summary's identity changes exactly when its
     // content does — consumers (the dialog's onSummaryChange) rely on that.
-    const granteeCount = grantees.filter((g) => g.pending !== "removing").length;
+    const live = grantees.filter((g) => g.pending !== "removing");
+    const granteeCount = live.length;
+    const selfIsGrantee = live.some((g) => g.isSelf);
     const summary = useMemo<IObjectAccessSummary | undefined>(() => {
         if (!hasList) {
             return undefined;
@@ -301,8 +303,9 @@ export function useAccessList(
         return {
             ...composeEffectiveWorkspaceAccess(generalAccess, workspaceLevel, workspaceInheritedLevel),
             granteeCount,
+            selfIsGrantee,
         };
-    }, [hasList, generalAccess, workspaceLevel, workspaceInheritedLevel, granteeCount]);
+    }, [hasList, generalAccess, workspaceLevel, workspaceInheritedLevel, granteeCount, selfIsGrantee]);
 
     // "success" waits for `hasList` so consumers never see success with nothing to show.
     const deriveStatus = (): IObjectShareControllerState["status"] => {

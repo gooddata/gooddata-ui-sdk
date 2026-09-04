@@ -5,10 +5,9 @@ import { type KeyboardEvent, forwardRef } from "react";
 import { type DateFilterGranularity } from "@gooddata/sdk-model";
 
 import { DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID } from "../accessibility/elementId.js";
+import { GranularityTabs } from "../GranularityTabs.js";
 import { type DateFilterOption, type IUiRelativeDateFilterForm } from "../interfaces/index.js";
 import { RelativeRangePicker } from "../RelativeRangePicker/RelativeRangePicker.js";
-
-import { GranularityTabs } from "./GranularityTabs.js";
 
 /**
  * @internal
@@ -56,6 +55,8 @@ export const RelativeDateFilterForm = forwardRef<HTMLDivElement, IRelativeDateFi
                         accessibilityConfig={{
                             ariaControls: relativeDateFilterId,
                         }}
+                        className="gd-relative-filter-form-granularity-tabs s-relative-filter-form-granularity-tabs"
+                        selectedTabId={DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID}
                     />
                 </div>
                 <div onKeyDown={onKeyDown}>

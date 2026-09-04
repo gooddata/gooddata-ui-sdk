@@ -243,6 +243,8 @@ $subtotal-odd-background-color: var(
 
         .ag-header-cell,
         .ag-header-group-cell {
+            overflow: visible;
+
             &::after {
                 display: none;
             }
@@ -251,8 +253,6 @@ $subtotal-odd-background-color: var(
             .ag-react-container {
                 width: 100%;
             }
-
-            overflow: visible;
 
             &:focus-visible {
                 outline: revert;

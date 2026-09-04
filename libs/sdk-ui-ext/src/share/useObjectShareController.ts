@@ -819,13 +819,13 @@ export function useObjectShareController(
         // A share-capable rule also passes the gate, judged from the SEED. A group
         // grant is another way in this cannot see: the heuristic's accepted blind spot.
         //
-        // A draft has no list to infer from, so it asks the workspace permission instead.
-        // `=== true` so an unread permission is not reported as Admin.
-        const explainsAccessWithoutAGrant = draft
-            ? isWorkspaceManager === true
-            : status === "success" && seededWithoutSelfGrant && !seededRuleShareCapable;
+        // The heuristic infers how the caller reached a FETCHED list; a draft has none.
+        const explainsAccessWithoutAGrant =
+            !draft && status === "success" && seededWithoutSelfGrant && !seededRuleShareCapable;
+        // A draft always shows the row — whoever drafts an object will own it — and unlike
+        // the empty-state case it holds as grantees are added.
         const adminSelfRow =
-            explainsAccessWithoutAGrant && grantees.length === 0 && selfIdentity
+            (draft || (explainsAccessWithoutAGrant && grantees.length === 0)) && selfIdentity
                 ? userDisplayPair(selfIdentity, selfIdentity.id)
                 : undefined;
         return {

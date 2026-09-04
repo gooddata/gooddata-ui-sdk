@@ -28,6 +28,7 @@ import {
     createDisplayFormMap,
     createDisplayFormMapFromCatalog,
 } from "../../../../_staging/catalog/displayFormMap.js";
+import { deriveAbsoluteFormGranularitiesFromRelativeForm } from "../../../../_staging/dateFilterConfig/merge.js";
 import { type InitializeDashboard } from "../../../commands/dashboard.js";
 import { changeDashboardTimezoneOverride } from "../../../commands/timezone.js";
 import { type DashboardInitialized, dashboardInitialized } from "../../../events/dashboard.js";
@@ -245,12 +246,16 @@ function* getTabsFilterConfigs(
     };
     // include default tab for case of old dashboard or turned off FeatureFlag for DashboardTabs
     const tabs = dashboard.tabs ? [...dashboard.tabs, defaultTab] : [defaultTab];
+    const dateFilterConfig = deriveAbsoluteFormGranularitiesFromRelativeForm(
+        config.dateFilterConfig,
+        !!config.settings.enableAbsoluteDateFilterGranularity,
+    );
     for (const tab of tabs) {
         const effectiveDateFilterConfig: IDateFilterMergeResult = yield call(
             mergeDateFilterConfigWithOverrides,
             ctx,
             cmd,
-            config.dateFilterConfig,
+            dateFilterConfig,
             tab.dateFilterConfig,
         );
         tabsDateFilterConfig[tab.localIdentifier] = effectiveDateFilterConfig.config;
@@ -457,12 +462,17 @@ function* initializeNewDashboard(
     );
     const workspaceParametersList = Array.isArray(workspaceParameters) ? workspaceParameters : [];
 
+    const dateFilterConfig = deriveAbsoluteFormGranularitiesFromRelativeForm(
+        config.dateFilterConfig,
+        !!config.settings.enableAbsoluteDateFilterGranularity,
+    );
+
     const { initActions, dashboard, insights }: SagaReturnType<typeof actionsToInitializeNewDashboard> =
         yield call(
             actionsToInitializeNewDashboard,
             ctx,
             config.settings,
-            config.dateFilterConfig,
+            dateFilterConfig,
             catalog ? createDisplayFormMapFromCatalog(catalog) : createDisplayFormMap([], []),
             cmd.payload.initialTabId,
             workspaceParametersList,
@@ -499,7 +509,7 @@ function* initializeNewDashboard(
             ...initActions,
             tabsActions.setDateFilterConfig({
                 dateFilterConfig: undefined,
-                effectiveDateFilterConfig: config.dateFilterConfig,
+                effectiveDateFilterConfig: dateFilterConfig,
                 isUsingDashboardOverrides: false,
             }),
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),

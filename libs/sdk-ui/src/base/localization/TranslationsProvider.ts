@@ -2,7 +2,7 @@
 
 import { memo } from "react";
 
-import { type IntlShape, type WrappedComponentProps, injectIntl } from "react-intl";
+import { type IntlShape, useIntl } from "react-intl";
 
 import { messages } from "../../locales.js";
 
@@ -33,21 +33,19 @@ const getNumericSymbols = (intl: IntlShape): string[] => {
 /**
  * @internal
  */
-export type ITranslationsProviderProps = ITranslationsProviderOwnProps & WrappedComponentProps;
+export type ITranslationsProviderProps = ITranslationsProviderOwnProps;
 
 /**
  * @internal
  */
-export const TranslationsProvider = memo(function TranslationsProvider(props: ITranslationsProviderProps) {
+export const IntlTranslationsProvider = memo(function TranslationsProvider(
+    props: ITranslationsProviderProps,
+) {
+    const intl = useIntl();
     const translationProps: ITranslationsComponentProps = {
-        numericSymbols: getNumericSymbols(props.intl),
-        emptyHeaderString: emptyHeaderTitleFromIntl(props.intl),
-        intl: props.intl,
+        numericSymbols: getNumericSymbols(intl),
+        emptyHeaderString: emptyHeaderTitleFromIntl(intl),
+        intl,
     };
     return props.children(translationProps);
 });
-
-/**
- * @internal
- */
-export const IntlTranslationsProvider = injectIntl<"intl", ITranslationsProviderProps>(TranslationsProvider);

@@ -138,7 +138,6 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
       "segment": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -157,7 +156,6 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -283,7 +281,6 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
       "segment": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -302,7 +299,6 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -472,7 +468,6 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
       "segment": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -491,7 +486,6 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -613,7 +607,6 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 0 Sb for n 
       "segment": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -632,7 +625,6 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 0 Sb for n 
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -771,7 +763,6 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 1 Sb for n 
       "segment": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -790,7 +781,6 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 1 Sb for n 
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -889,7 +879,6 @@ exports[`PluggableTreemap > should return reference point with 1 M, 0 Vb, 0 Sb f
       "segment": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -908,7 +897,6 @@ exports[`PluggableTreemap > should return reference point with 1 M, 0 Vb, 0 Sb f
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,

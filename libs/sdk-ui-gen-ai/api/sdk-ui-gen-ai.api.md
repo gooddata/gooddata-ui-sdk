@@ -322,6 +322,9 @@ export type GenAIAgent = {
 export function GenAIAssistant(props: GenAIAssistantProps): JSX.Element;
 
 // @public
+export type GenAIAssistantDisplayMode = "inline" | "modal";
+
+// @public
 export type GenAIAssistantMode = "docked" | "fullscreen";
 
 // @public
@@ -379,6 +382,7 @@ export type GenAiStoreProps = {
     excludeTags?: string[];
     colorPalette?: IColorPalette;
     mode?: GenAIAssistantMode;
+    displayMode?: GenAIAssistantDisplayMode;
     onDispatcher?: (dispatch: EnhancedStore["dispatch"]) => void;
     children: ReactNode | ((genAIStore: EnhancedStore) => ReactNode);
     isPreview?: boolean;
@@ -705,13 +709,13 @@ export type LinkHandlerEvent = {
 };
 
 // @internal
-export const makeAssistantItem: (content?: IChatConversationLocalContent | undefined, id?: string | undefined, complete?: boolean | undefined) => IChatConversationLocalItem;
+export const makeAssistantItem: (content?: IChatConversationLocalContent, id?: string, complete?: boolean) => IChatConversationLocalItem;
 
 // @public (undocumented)
 export const makeTextContents: (text: string, objects: TextContentObject[]) => TextContents;
 
 // @internal
-export const makeUserItem: (content?: IChatConversationLocalContent | undefined, id?: string | undefined) => IChatConversationLocalItem;
+export const makeUserItem: (content?: IChatConversationLocalContent, id?: string) => IChatConversationLocalItem;
 
 // @public (undocumented)
 export const makeUserMessage: (content: Contents[]) => UserMessage;
@@ -763,8 +767,8 @@ export type SemanticSearchContents = {
 
 // @public (undocumented)
 export const setAmbientUserContextAction: ActionCreatorWithPayload<    {
-userContext?: IGenAIUserContext | undefined;
-loading?: boolean | undefined;
+userContext?: IGenAIUserContext;
+loading?: boolean;
 }, "chatWindow/setAmbientUserContextAction">;
 
 // @public (undocumented)
@@ -781,13 +785,13 @@ isFullscreen: boolean;
 export const setSelectedAgentAction: ActionCreatorWithPayload<    {
 agentId: string | undefined;
 previousAgentId?: string | undefined;
-showChangeEvent?: boolean | undefined;
+showChangeEvent?: boolean;
 }, "messages/setSelectedAgentAction">;
 
 // @public (undocumented)
 export const setUserContextAction: ActionCreatorWithPayload<    {
-userContext?: IGenAIUserContext | undefined;
-replaceUserContext?: boolean | undefined;
+userContext?: IGenAIUserContext;
+replaceUserContext?: boolean;
 }, "chatWindow/setUserContextAction">;
 
 // @public (undocumented)

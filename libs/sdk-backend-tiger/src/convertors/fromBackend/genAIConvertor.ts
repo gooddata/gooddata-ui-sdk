@@ -285,6 +285,9 @@ function convertChatConversationContentFromBackend(
                                     searchResults: convertSearchResults(part.objects),
                                     relationships: convertSearchRelationships(part.relationships),
                                 };
+                            // Carries no model representation, so it drops like an unknown part.
+                            case "clarifyingQuestions":
+                                return undefined;
                             default:
                                 // Unknown part type (e.g. sent by a newer backend): log and drop
                                 // it, do not fail the whole item.

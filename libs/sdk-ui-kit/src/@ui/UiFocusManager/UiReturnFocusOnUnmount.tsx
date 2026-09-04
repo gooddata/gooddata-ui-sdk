@@ -79,7 +79,15 @@ export const useUiReturnFocusOnUnmountConnectors = <T extends HTMLElement = HTML
                     return;
                 }
 
-                // @ts-expect-error focusVisible property is defined in FocusOptions in higher TypeScript versions
+                // TODO: @martinnaj, cleanup ignores after bumping `typescript` dep to next major.
+                //  We cannot replace @ts-ignore with @ts-expect-error. Why: we cannot upgrade
+                //  `typescript` to later major than 5. This is because the 4-major-behind version
+                //  of `react-intl` that we have declares a peerDependency for `typescript@5`. The
+                //  next version of `react-intl` drops support for `react@18`, and the bad
+                //  peerDependency is removed in a minor, 2 majors after the drop of `react@18`.
+                //  This is waiting on SDK major v12, which will drop support for `react@18`.
+                // oxlint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore focusVisible property is defined in FocusOptions in higher TypeScript versions
                 focusableElement.focus({ focusVisible: focusVisibleRef.current });
             });
         },

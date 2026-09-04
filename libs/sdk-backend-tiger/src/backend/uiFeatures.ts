@@ -87,7 +87,6 @@ export enum TigerFeaturesNames {
     EnableGeoSatelliteBasemapOption = "enableGeoSatelliteBasemapOption",
     EnableGenAIMemory = "enableGenAIMemory",
     EnableOrgLevelAIMemory = "enableOrgLevelAIMemory",
-    EnableAIKnowledge = "enableAIKnowledge",
     EnableAiAgenticSuggestions = "enableAiAgenticSuggestions",
     EnableGenAIReasoningVisibility = "enableGenAIReasoningVisibility",
     EnableAiAgenticConversations = "enableAiAgenticConversations",
@@ -97,7 +96,6 @@ export enum TigerFeaturesNames {
     EnableGenAiInteractionIntelligence = "enableGenAiInteractionIntelligence",
     EnableGenAiInteractionIntelligenceTimeline = "enableGenAiInteractionIntelligence_timeline",
     EnableGenAiAgenticDataShareOptOut = "enableGenAiAgenticDataShareOptOut",
-    EnableGenAiVisualizationSummarySkill = "enableGenAiVisualizationSummarySkill",
     EnableGenAiDashboardSummarySkill = "enableGenAiDashboardSummarySkill",
     AIChatSearchLimit = "aiChatSearchLimit",
     EnableRichTextWidgetFilterConfiguration = "enableRichTextWidgetFilterConfiguration",
@@ -118,7 +116,6 @@ export enum TigerFeaturesNames {
     EnableLogicalModelExtensionsFromParentsCall = "enableLogicalModelExtensionsFromParentsCall",
     EnableDashboardDensitySetting = "enableDashboardDensitySetting",
     EnableDashboardsSearch = "enableDashboardsSearch",
-    EnableAiHub = "enableAiHub",
     EnableAgentInstructions = "enableAgentInstructions",
     EnableAutomationTrigger = "enableAutomationTrigger",
     EnableUserDataFiltersUi = "enableUserDataFiltersUi",
@@ -136,6 +133,7 @@ export enum TigerFeaturesNames {
     EnableAiContextSetup = "enableAiContextSetup",
     EnableDashboardPersistentFiltersAcrossTabs = "enableDashboardPersistentFiltersAcrossTabs",
     EnableGenAiDashboardBuilderSkill = "enableGenAiDashboardBuilderSkill",
+    EnableGenAiRightPanel = "enableGenAiRightPanel",
     EnableAbsoluteDateFilterGranularity = "enableAbsoluteDateFilterGranularity",
     EnableComputedAttributes = "enableComputedAttributes",
     EnableBusinessBriefingReportsApp = "enableBusinessBriefingReportsApp",
@@ -225,7 +223,6 @@ export type ITigerFeatureFlags = {
     enableGeoSatelliteBasemapOption: (typeof FeatureFlagsValues)["enableGeoSatelliteBasemapOption"][number];
     enableGenAIMemory: (typeof FeatureFlagsValues)["enableGenAIMemory"][number];
     enableOrgLevelAIMemory: (typeof FeatureFlagsValues)["enableOrgLevelAIMemory"][number];
-    enableAIKnowledge: (typeof FeatureFlagsValues)["enableAIKnowledge"][number];
     enableAiAgenticSuggestions: (typeof FeatureFlagsValues)["enableAiAgenticSuggestions"][number];
     enableAiAssistantEmbedding: (typeof FeatureFlagsValues)["enableAiAssistantEmbedding"][number];
     enableAiAgenticMultiConversations: (typeof FeatureFlagsValues)["enableAiAgenticMultiConversations"][number];
@@ -254,13 +251,12 @@ export type ITigerFeatureFlags = {
     enableLogicalModelExtensionsFromParentsCall: (typeof FeatureFlagsValues)["enableLogicalModelExtensionsFromParentsCall"][number];
     enableDashboardDensitySetting: (typeof FeatureFlagsValues)["enableDashboardDensitySetting"][number];
     enableDashboardsSearch: (typeof FeatureFlagsValues)["enableDashboardsSearch"][number];
-    enableAiHub: (typeof FeatureFlagsValues)["enableAiHub"][number];
     enableAgentInstructions: (typeof FeatureFlagsValues)["enableAgentInstructions"][number];
     enableAiAgenticConversations: (typeof FeatureFlagsValues)["enableAiAgenticConversations"][number];
     enableAiContextSetup: (typeof FeatureFlagsValues)["enableAiContextSetup"][number];
     enableGenAiDashboardBuilderSkill: (typeof FeatureFlagsValues)["enableGenAiDashboardBuilderSkill"][number];
+    enableGenAiRightPanel: (typeof FeatureFlagsValues)["enableGenAiRightPanel"][number];
     enableGenAiAgenticDataShareOptOut: (typeof FeatureFlagsValues)["enableGenAiAgenticDataShareOptOut"][number];
-    enableGenAiVisualizationSummarySkill: (typeof FeatureFlagsValues)["enableGenAiVisualizationSummarySkill"][number];
     enableGenAiDashboardSummarySkill: (typeof FeatureFlagsValues)["enableGenAiDashboardSummarySkill"][number];
     enableAutomationTrigger: (typeof FeatureFlagsValues)["enableAutomationTrigger"][number];
     enableUserDataFiltersUi: (typeof FeatureFlagsValues)["enableUserDataFiltersUi"][number];
@@ -359,7 +355,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGeoSatelliteBasemapOption: false,
     enableGenAIMemory: false,
     enableOrgLevelAIMemory: false,
-    enableAIKnowledge: false,
     enableAiAgenticSuggestions: false,
     enableAiAssistantEmbedding: false,
     enableAiAgenticMultiConversations: false,
@@ -388,13 +383,12 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableLogicalModelExtensionsFromParentsCall: false,
     enableDashboardDensitySetting: false,
     enableDashboardsSearch: false,
-    enableAiHub: false,
     enableAgentInstructions: false,
     enableAiAgenticConversations: false,
     enableAiContextSetup: false,
     enableGenAiDashboardBuilderSkill: false,
+    enableGenAiRightPanel: false,
     enableGenAiAgenticDataShareOptOut: false,
-    enableGenAiVisualizationSummarySkill: false,
     enableGenAiDashboardSummarySkill: false,
     enableAutomationTrigger: false,
     enableUserDataFiltersUi: false,
@@ -493,7 +487,6 @@ export const FeatureFlagsValues = {
     enableGeoSatelliteBasemapOption: [true, false] as const,
     enableGenAIMemory: [false, true] as const,
     enableOrgLevelAIMemory: [false, true] as const,
-    enableAIKnowledge: [false, true] as const,
     enableAiAgenticSuggestions: [true, false] as const,
     enableAiAssistantEmbedding: [true, false] as const,
     enableAiAgenticMultiConversations: [true, false] as const,
@@ -522,13 +515,12 @@ export const FeatureFlagsValues = {
     enableLogicalModelExtensionsFromParentsCall: [true, false] as const,
     enableDashboardDensitySetting: [true, false] as const,
     enableDashboardsSearch: [false, true] as const,
-    enableAiHub: [true, false] as const,
     enableAgentInstructions: [true, false] as const,
     enableAiAgenticConversations: [true, false] as const,
     enableAiContextSetup: [true, false] as const,
     enableGenAiDashboardBuilderSkill: [true, false] as const,
+    enableGenAiRightPanel: [true, false] as const,
     enableGenAiAgenticDataShareOptOut: [true, false] as const,
-    enableGenAiVisualizationSummarySkill: [false, true] as const,
     enableGenAiDashboardSummarySkill: [false, true] as const,
     enableAutomationTrigger: [true, false] as const,
     enableUserDataFiltersUi: [true, false] as const,

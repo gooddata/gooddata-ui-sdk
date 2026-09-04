@@ -1,6 +1,6 @@
 {
     "name": "gdc-app-template-name-module",
-    "version": "11.56.0-alpha.0",
+    "version": "11.56.0-alpha.1",
     "private": true,
     "description": "{applicationTemplateTitle} pluggable application module",
     "license": "UNLICENSED",
@@ -63,7 +63,7 @@
         "@types/react-dom": "19.1.7",
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",
-        "@typescript/native-preview": "7.0.0-dev.20260202.1",
+        "@typescript/native-preview": "7.0.0-dev.20260501.1",
         "@vitejs/plugin-react": "6.0.2",
         "eslint": "^9.39.2",
         "eslint-plugin-headers": "1.3.3",
@@ -82,7 +82,7 @@
         "react": "19.1.1",
         "react-dom": "19.1.1",
         "rolldown": "1.0.3",
-        "sass": "1.77.1",
+        "sass": "1.78.0",
         "typescript": "5.9.3",
         "vite": "8.0.16",
         "vitest": "4.1.8"
