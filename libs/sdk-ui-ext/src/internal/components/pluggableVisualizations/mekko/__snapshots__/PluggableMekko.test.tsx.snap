@@ -117,7 +117,6 @@ exports[`PluggableMekko > getExtendedReferencePoint - bucket transforms > should
       "stack": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -131,7 +130,6 @@ exports[`PluggableMekko > getExtendedReferencePoint - bucket transforms > should
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -265,7 +263,6 @@ exports[`PluggableMekko > getExtendedReferencePoint - bucket transforms > should
       "stack": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -279,7 +276,6 @@ exports[`PluggableMekko > getExtendedReferencePoint - bucket transforms > should
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -403,7 +399,6 @@ exports[`PluggableMekko > getExtendedReferencePoint - bucket transforms > should
       "stack": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -417,7 +412,6 @@ exports[`PluggableMekko > getExtendedReferencePoint - bucket transforms > should
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -570,7 +564,6 @@ exports[`PluggableMekko > getExtendedReferencePoint - bucket transforms > should
       "stack": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -584,7 +577,6 @@ exports[`PluggableMekko > getExtendedReferencePoint - bucket transforms > should
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,

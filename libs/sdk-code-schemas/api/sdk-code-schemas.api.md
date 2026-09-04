@@ -2139,26 +2139,26 @@ export const metadata_v1: {
             properties?: undefined;
             required?: undefined;
             not: {
-                properties: {
-                    type: {
-                        type: string;
+                "properties": {
+                    "type": {
+                        "type": string;
                     };
                 };
-                required: string[];
+                "required": string[];
             };
         };
         then: {
             $ref?: undefined;
             $semantic: {
-                type: string;
-                snippets: string[];
+                "type": string;
+                "snippets": string[];
             };
         };
     })[];
     properties: {
-        type: {
-            type: string;
-            enum: string[];
+        "type": {
+            "type": string;
+            "enum": string[];
         };
     };
     required: string[];
@@ -2183,36 +2183,36 @@ export const metadata_v1: {
                         })[];
                     };
                     type: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     title: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     description: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     tags: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     table_path: {
-                        type: string;
-                        description: string;
-                        pattern: string;
-                        $semantic: {
-                            type: string;
-                            source: string;
-                            code: string;
+                        "type": string;
+                        "description": string;
+                        "pattern": string;
+                        "$semantic": {
+                            "type": string;
+                            "source": string;
+                            "code": string;
                         };
                     };
                     sql: {
-                        type: string;
-                        description: string;
-                        $semantic: {
-                            type: string;
+                        "type": string;
+                        "description": string;
+                        "$semantic": {
+                            "type": string;
                         };
                     };
                     primary_key: {
@@ -2222,9 +2222,9 @@ export const metadata_v1: {
                             $ref: string;
                             description: string;
                             $semantic: {
-                                type: string;
-                                source: string;
-                                code: string;
+                                "type": string;
+                                "source": string;
+                                "code": string;
                             };
                             items?: undefined;
                             uniqueItems?: undefined;
@@ -2234,11 +2234,11 @@ export const metadata_v1: {
                             title: string;
                             type: string;
                             items: {
-                                $ref: string;
-                                $semantic: {
-                                    type: string;
-                                    source: string;
-                                    code: string;
+                                "$ref": string;
+                                "$semantic": {
+                                    "type": string;
+                                    "source": string;
+                                    "code": string;
                                 };
                             };
                             uniqueItems: boolean;
@@ -2246,40 +2246,40 @@ export const metadata_v1: {
                         })[];
                     };
                     fields: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     references: {
-                        type: string;
-                        items: {
-                            $ref: string;
+                        "type": string;
+                        "items": {
+                            "$ref": string;
                         };
-                        description: string;
+                        "description": string;
                     };
                     workspace_data_filters: {
-                        type: string;
-                        items: {
-                            $ref: string;
+                        "type": string;
+                        "items": {
+                            "$ref": string;
                         };
-                        description: string;
+                        "description": string;
                     };
                     data_source: {
-                        type: string;
-                        $semantic: {
-                            type: string;
-                            source: string;
-                            code: string;
+                        "type": string;
+                        "$semantic": {
+                            "type": string;
+                            "source": string;
+                            "code": string;
                         };
-                        description: string;
+                        "description": string;
                     };
                     precedence: {
-                        type: string;
-                        description: string;
+                        "type": string;
+                        "description": string;
                     };
                     dataset_type: {
-                        type: string;
-                        enum: string[];
-                        description: string;
+                        "type": string;
+                        "enum": string[];
+                        "description": string;
                     };
                 };
                 $semantic: ({
@@ -2299,13 +2299,13 @@ export const metadata_v1: {
                     title: string;
                     description: string;
                     properties: {
-                        dataset_type: {
-                            const: string;
+                        "dataset_type": {
+                            "const": string;
                         };
-                        table_path: boolean;
-                        sql: boolean;
-                        precedence: boolean;
-                        workspace_data_filters: boolean;
+                        "table_path": boolean;
+                        "sql": boolean;
+                        "precedence": boolean;
+                        "workspace_data_filters": boolean;
                     };
                     required: string[];
                 })[];
@@ -2329,52 +2329,52 @@ export const metadata_v1: {
                         })[];
                     };
                     type: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     title: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     description: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     tags: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     title_base: {
-                        type: string;
-                        description: string;
-                        maxLength: number;
+                        "type": string;
+                        "description": string;
+                        "maxLength": number;
                     };
                     title_pattern: {
-                        type: string;
-                        description: string;
-                        maxLength: number;
+                        "type": string;
+                        "description": string;
+                        "maxLength": number;
                     };
                     granularities: {
-                        type: string;
-                        uniqueItems: boolean;
-                        items: {
-                            type: string;
-                            enum: string[];
-                            $semantic: {
-                                type: string;
-                                sources: string[];
-                                mode: string;
+                        "type": string;
+                        "uniqueItems": boolean;
+                        "items": {
+                            "type": string;
+                            "enum": string[];
+                            "$semantic": {
+                                "type": string;
+                                "sources": string[];
+                                "mode": string;
                             };
                         };
-                        $semantic: {
-                            type: string;
-                            required: string[];
+                        "$semantic": {
+                            "type": string;
+                            "required": string[];
                         };
                     };
                 };
                 $semantic: {
-                    type: string;
-                    snippets: string[];
+                    "type": string;
+                    "snippets": string[];
                 };
                 required: string[];
             };
@@ -2397,45 +2397,45 @@ export const metadata_v1: {
                         })[];
                     };
                     type: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     title: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     description: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     tags: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     maql: {
-                        type: string;
-                        description: string;
-                        $semantic: {
-                            type: string;
+                        "type": string;
+                        "description": string;
+                        "$semantic": {
+                            "type": string;
                         };
                     };
                     format: {
-                        type: string;
-                        description: string;
+                        "type": string;
+                        "description": string;
                     };
                     show_in_ai_results: {
-                        type: string;
-                        description: string;
+                        "type": string;
+                        "description": string;
                     };
                     is_hidden: {
-                        type: string;
-                        description: string;
-                        deprecated: boolean;
+                        "type": string;
+                        "description": string;
+                        "deprecated": boolean;
                     };
                 };
                 $semantic: {
-                    type: string;
-                    snippets: string[];
+                    "type": string;
+                    "snippets": string[];
                 };
                 required: string[];
             };
@@ -2458,36 +2458,36 @@ export const metadata_v1: {
                         })[];
                     };
                     type: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     title: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     description: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     tags: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     maql: {
-                        type: string;
-                        description: string;
-                        $semantic: {
-                            type: string;
+                        "type": string;
+                        "description": string;
+                        "$semantic": {
+                            "type": string;
                         };
                     };
                     locale: {
-                        type: string;
-                        description: string;
+                        "type": string;
+                        "description": string;
                     };
                 };
                 $semantic: {
-                    type: string;
-                    snippets: string[];
+                    "type": string;
+                    "snippets": string[];
                 };
                 required: string[];
             };
@@ -2510,59 +2510,59 @@ export const metadata_v1: {
                         })[];
                     };
                     type: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     version: {
-                        type: string;
-                        enum: string[];
-                        description: string;
+                        "type": string;
+                        "enum": string[];
+                        "description": string;
                     };
                     title: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     description: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     tags: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     cross_filtering: {
-                        type: string;
-                        description: string;
+                        "type": string;
+                        "description": string;
                     };
                     user_filters_reset: {
-                        type: string;
-                        description: string;
+                        "type": string;
+                        "description": string;
                     };
                     user_filters_save: {
-                        type: string;
-                        description: string;
+                        "type": string;
+                        "description": string;
                     };
                     filter_views: {
-                        type: string;
-                        description: string;
+                        "type": string;
+                        "description": string;
                     };
                     persistent_filters_across_tabs: {
-                        type: string;
-                        description: string;
+                        "type": string;
+                        "description": string;
                     };
                     timezone_config: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     enable_section_headers: {
-                        type: string;
-                        description: string;
+                        "type": string;
+                        "description": string;
                     };
                     sections: {
-                        type: string;
-                        description: string;
-                        items: {
-                            $ref: string;
+                        "type": string;
+                        "description": string;
+                        "items": {
+                            "$ref": string;
                         };
                     };
                     filters: {
@@ -2581,16 +2581,16 @@ export const metadata_v1: {
                                 description?: undefined;
                                 type: string;
                                 properties: {
-                                    id: {
-                                        $ref: string;
-                                        description: string;
-                                        $semantic: {
-                                            type: string;
-                                            source: string;
+                                    "id": {
+                                        "$ref": string;
+                                        "description": string;
+                                        "$semantic": {
+                                            "type": string;
+                                            "source": string;
                                         };
                                     };
-                                    parameters: {
-                                        description: string;
+                                    "parameters": {
+                                        "description": string;
                                     };
                                 };
                                 required: string[];
@@ -2603,35 +2603,35 @@ export const metadata_v1: {
                                 $ref: string;
                                 description: string;
                                 $semantic: {
-                                    type: string;
-                                    source: string;
+                                    "type": string;
+                                    "source": string;
                                 };
                             })[];
                         };
                     };
                     tabs: {
-                        type: string;
-                        description: string;
-                        items: {
-                            $ref: string;
+                        "type": string;
+                        "description": string;
+                        "items": {
+                            "$ref": string;
                         };
-                        $semantic: {
-                            type: string;
+                        "$semantic": {
+                            "type": string;
                         };
                     };
                     permissions: {
-                        type: string;
-                        description: string;
-                        additionalProperties: boolean;
-                        properties: {
-                            VIEW: {
-                                $ref: string;
+                        "type": string;
+                        "description": string;
+                        "additionalProperties": boolean;
+                        "properties": {
+                            "VIEW": {
+                                "$ref": string;
                             };
-                            EDIT: {
-                                $ref: string;
+                            "EDIT": {
+                                "$ref": string;
                             };
-                            SHARE: {
-                                $ref: string;
+                            "SHARE": {
+                                "$ref": string;
                             };
                         };
                     };
@@ -2657,25 +2657,25 @@ export const metadata_v1: {
                         })[];
                     };
                     type: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     title: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     description: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     tags: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     url: {
-                        type: string;
-                        description: string;
-                        pattern: string;
+                        "type": string;
+                        "description": string;
+                        "pattern": string;
                     };
                 };
                 required: string[];
@@ -2699,28 +2699,28 @@ export const metadata_v1: {
                         })[];
                     };
                     type: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     title: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     description: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     tags: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     attributes: {
-                        type: string;
-                        description: string;
-                        items: {
-                            $ref: string;
+                        "type": string;
+                        "description": string;
+                        "items": {
+                            "$ref": string;
                         };
-                        minItems: number;
+                        "minItems": number;
                     };
                 };
                 required: string[];
@@ -2744,29 +2744,29 @@ export const metadata_v1: {
                         })[];
                     };
                     type: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     title: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     description: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     tags: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     definition: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                 };
                 $semantic: {
-                    type: string;
-                    snippets: string[];
+                    "type": string;
+                    "snippets": string[];
                 };
                 required: string[];
             };
@@ -2775,30 +2775,30 @@ export const metadata_v1: {
                 title: string;
                 description: string;
                 properties: {
-                    type: {
-                        description: string;
-                        type: string;
-                        enum: string[];
+                    "type": {
+                        "description": string;
+                        "type": string;
+                        "enum": string[];
                     };
                 };
                 allOf: ({
                     if: {
-                        properties: {
-                            type: {
-                                type: string;
-                                enum: string[];
+                        "properties": {
+                            "type": {
+                                "type": string;
+                                "enum": string[];
                             };
                         };
-                        required: string[];
+                        "required": string[];
                     };
                     then: {
                         title: string;
                         additionalProperties: boolean;
                         properties: {
                             type: {
-                                description: string;
-                                type: string;
-                                enum: string[];
+                                "description": string;
+                                "type": string;
+                                "enum": string[];
                             };
                             id: {
                                 $ref: string;
@@ -2814,33 +2814,33 @@ export const metadata_v1: {
                                 })[];
                             };
                             title: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             description: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             tags: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             show_in_ai_results: {
-                                type: string;
-                                description: string;
+                                "type": string;
+                                "description": string;
                             };
                             is_hidden: {
-                                type: string;
-                                description: string;
-                                deprecated: boolean;
+                                "type": string;
+                                "description": string;
+                                "deprecated": boolean;
                             };
                             query: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             config: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             metrics: {
                                 type: string;
@@ -2859,24 +2859,24 @@ export const metadata_v1: {
                                 };
                             };
                             segment_by: {
-                                type: string;
-                                description: string;
-                                items: {
-                                    $ref: string;
+                                "type": string;
+                                "description": string;
+                                "items": {
+                                    "$ref": string;
                                 };
                             };
                             rows: {
-                                type: string;
-                                description: string;
-                                items: {
-                                    $ref: string;
+                                "type": string;
+                                "description": string;
+                                "items": {
+                                    "$ref": string;
                                 };
                             };
                             columns: {
-                                type: string;
-                                description: string;
-                                items: {
-                                    $ref: string;
+                                "type": string;
+                                "description": string;
+                                "items": {
+                                    "$ref": string;
                                 };
                             };
                             stack_by?: undefined;
@@ -2891,13 +2891,13 @@ export const metadata_v1: {
                     };
                 } | {
                     if: {
-                        properties: {
-                            type: {
-                                type: string;
-                                enum: string[];
+                        "properties": {
+                            "type": {
+                                "type": string;
+                                "enum": string[];
                             };
                         };
-                        required: string[];
+                        "required": string[];
                     };
                     then: {
                         title: string;
@@ -2906,9 +2906,9 @@ export const metadata_v1: {
                             rows?: undefined;
                             columns?: undefined;
                             type: {
-                                description: string;
-                                type: string;
-                                enum: string[];
+                                "description": string;
+                                "type": string;
+                                "enum": string[];
                             };
                             id: {
                                 $ref: string;
@@ -2924,33 +2924,33 @@ export const metadata_v1: {
                                 })[];
                             };
                             title: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             description: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             tags: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             show_in_ai_results: {
-                                type: string;
-                                description: string;
+                                "type": string;
+                                "description": string;
                             };
                             is_hidden: {
-                                type: string;
-                                description: string;
-                                deprecated: boolean;
+                                "type": string;
+                                "description": string;
+                                "deprecated": boolean;
                             };
                             query: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             config: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             metrics: {
                                 type: string;
@@ -2969,17 +2969,17 @@ export const metadata_v1: {
                                 };
                             };
                             segment_by: {
-                                type: string;
-                                description: string;
-                                items: {
-                                    $ref: string;
+                                "type": string;
+                                "description": string;
+                                "items": {
+                                    "$ref": string;
                                 };
                             };
                             stack_by: {
-                                type: string;
-                                description: string;
-                                items: {
-                                    $ref: string;
+                                "type": string;
+                                "description": string;
+                                "items": {
+                                    "$ref": string;
                                 };
                             };
                             trend_by?: undefined;
@@ -2993,13 +2993,13 @@ export const metadata_v1: {
                     };
                 } | {
                     if: {
-                        properties: {
-                            type: {
-                                type: string;
-                                enum: string[];
+                        "properties": {
+                            "type": {
+                                "type": string;
+                                "enum": string[];
                             };
                         };
-                        required: string[];
+                        "required": string[];
                     };
                     then: {
                         title: string;
@@ -3009,9 +3009,9 @@ export const metadata_v1: {
                             columns?: undefined;
                             stack_by?: undefined;
                             type: {
-                                description: string;
-                                type: string;
-                                enum: string[];
+                                "description": string;
+                                "type": string;
+                                "enum": string[];
                             };
                             id: {
                                 $ref: string;
@@ -3027,33 +3027,33 @@ export const metadata_v1: {
                                 })[];
                             };
                             title: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             description: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             tags: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             show_in_ai_results: {
-                                type: string;
-                                description: string;
+                                "type": string;
+                                "description": string;
                             };
                             is_hidden: {
-                                type: string;
-                                description: string;
-                                deprecated: boolean;
+                                "type": string;
+                                "description": string;
+                                "deprecated": boolean;
                             };
                             query: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             config: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             metrics: {
                                 type: string;
@@ -3072,17 +3072,17 @@ export const metadata_v1: {
                                 };
                             };
                             trend_by: {
-                                type: string;
-                                description: string;
-                                items: {
-                                    $ref: string;
+                                "type": string;
+                                "description": string;
+                                "items": {
+                                    "$ref": string;
                                 };
                             };
                             segment_by: {
-                                type: string;
-                                description: string;
-                                items: {
-                                    $ref: string;
+                                "type": string;
+                                "description": string;
+                                "items": {
+                                    "$ref": string;
                                 };
                             };
                             attributes?: undefined;
@@ -3095,13 +3095,13 @@ export const metadata_v1: {
                     };
                 } | {
                     if: {
-                        properties: {
-                            type: {
-                                type: string;
-                                enum: string[];
+                        "properties": {
+                            "type": {
+                                "type": string;
+                                "enum": string[];
                             };
                         };
-                        required: string[];
+                        "required": string[];
                     };
                     then: {
                         title: string;
@@ -3112,9 +3112,9 @@ export const metadata_v1: {
                             stack_by?: undefined;
                             trend_by?: undefined;
                             type: {
-                                description: string;
-                                type: string;
-                                enum: string[];
+                                "description": string;
+                                "type": string;
+                                "enum": string[];
                             };
                             id: {
                                 $ref: string;
@@ -3130,33 +3130,33 @@ export const metadata_v1: {
                                 })[];
                             };
                             title: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             description: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             tags: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             show_in_ai_results: {
-                                type: string;
-                                description: string;
+                                "type": string;
+                                "description": string;
                             };
                             is_hidden: {
-                                type: string;
-                                description: string;
-                                deprecated: boolean;
+                                "type": string;
+                                "description": string;
+                                "deprecated": boolean;
                             };
                             query: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             config: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             metrics: {
                                 type: string;
@@ -3177,17 +3177,17 @@ export const metadata_v1: {
                                 };
                             };
                             attributes: {
-                                type: string;
-                                description: string;
-                                items: {
-                                    $ref: string;
+                                "type": string;
+                                "description": string;
+                                "items": {
+                                    "$ref": string;
                                 };
                             };
                             segment_by: {
-                                type: string;
-                                description: string;
-                                items: {
-                                    $ref: string;
+                                "type": string;
+                                "description": string;
+                                "items": {
+                                    "$ref": string;
                                 };
                             };
                             size_by?: undefined;
@@ -3199,13 +3199,13 @@ export const metadata_v1: {
                     };
                 } | {
                     if: {
-                        properties: {
-                            type: {
-                                type: string;
-                                enum: string[];
+                        "properties": {
+                            "type": {
+                                "type": string;
+                                "enum": string[];
                             };
                         };
-                        required: string[];
+                        "required": string[];
                     };
                     then: {
                         title: string;
@@ -3217,9 +3217,9 @@ export const metadata_v1: {
                             trend_by?: undefined;
                             attributes?: undefined;
                             type: {
-                                description: string;
-                                type: string;
-                                enum: string[];
+                                "description": string;
+                                "type": string;
+                                "enum": string[];
                             };
                             id: {
                                 $ref: string;
@@ -3235,33 +3235,33 @@ export const metadata_v1: {
                                 })[];
                             };
                             title: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             description: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             tags: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             show_in_ai_results: {
-                                type: string;
-                                description: string;
+                                "type": string;
+                                "description": string;
                             };
                             is_hidden: {
-                                type: string;
-                                description: string;
-                                deprecated: boolean;
+                                "type": string;
+                                "description": string;
+                                "deprecated": boolean;
                             };
                             query: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             config: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             metrics: {
                                 type: string;
@@ -3282,17 +3282,17 @@ export const metadata_v1: {
                                 };
                             };
                             segment_by: {
-                                type: string;
-                                description: string;
-                                items: {
-                                    $ref: string;
+                                "type": string;
+                                "description": string;
+                                "items": {
+                                    "$ref": string;
                                 };
                             };
                             size_by: {
-                                type: string;
-                                description: string;
-                                items: {
-                                    $ref: string;
+                                "type": string;
+                                "description": string;
+                                "items": {
+                                    "$ref": string;
                                 };
                             };
                             from?: undefined;
@@ -3303,13 +3303,13 @@ export const metadata_v1: {
                     };
                 } | {
                     if: {
-                        properties: {
-                            type: {
-                                type: string;
-                                enum: string[];
+                        "properties": {
+                            "type": {
+                                "type": string;
+                                "enum": string[];
                             };
                         };
-                        required: string[];
+                        "required": string[];
                     };
                     then: {
                         title: string;
@@ -3322,9 +3322,9 @@ export const metadata_v1: {
                             attributes?: undefined;
                             size_by?: undefined;
                             type: {
-                                description: string;
-                                type: string;
-                                enum: string[];
+                                "description": string;
+                                "type": string;
+                                "enum": string[];
                             };
                             id: {
                                 $ref: string;
@@ -3340,33 +3340,33 @@ export const metadata_v1: {
                                 })[];
                             };
                             title: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             description: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             tags: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             show_in_ai_results: {
-                                type: string;
-                                description: string;
+                                "type": string;
+                                "description": string;
                             };
                             is_hidden: {
-                                type: string;
-                                description: string;
-                                deprecated: boolean;
+                                "type": string;
+                                "description": string;
+                                "deprecated": boolean;
                             };
                             query: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             config: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             metrics: {
                                 type: string;
@@ -3397,13 +3397,13 @@ export const metadata_v1: {
                     };
                 } | {
                     if: {
-                        properties: {
-                            type: {
-                                type: string;
-                                enum: string[];
+                        "properties": {
+                            "type": {
+                                "type": string;
+                                "enum": string[];
                             };
                         };
-                        required: string[];
+                        "required": string[];
                     };
                     then: {
                         title: string;
@@ -3416,9 +3416,9 @@ export const metadata_v1: {
                             attributes?: undefined;
                             size_by?: undefined;
                             type: {
-                                description: string;
-                                type: string;
-                                enum: string[];
+                                "description": string;
+                                "type": string;
+                                "enum": string[];
                             };
                             id: {
                                 $ref: string;
@@ -3434,33 +3434,33 @@ export const metadata_v1: {
                                 })[];
                             };
                             title: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             description: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             tags: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             show_in_ai_results: {
-                                type: string;
-                                description: string;
+                                "type": string;
+                                "description": string;
                             };
                             is_hidden: {
-                                type: string;
-                                description: string;
-                                deprecated: boolean;
+                                "type": string;
+                                "description": string;
+                                "deprecated": boolean;
                             };
                             query: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             config: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             metrics: {
                                 type: string;
@@ -3479,10 +3479,10 @@ export const metadata_v1: {
                                 };
                             };
                             segment_by: {
-                                type: string;
-                                description: string;
-                                items: {
-                                    $ref: string;
+                                "type": string;
+                                "description": string;
+                                "items": {
+                                    "$ref": string;
                                 };
                             };
                             from?: undefined;
@@ -3493,13 +3493,13 @@ export const metadata_v1: {
                     };
                 } | {
                     if: {
-                        properties: {
-                            type: {
-                                type: string;
-                                enum: string[];
+                        "properties": {
+                            "type": {
+                                "type": string;
+                                "enum": string[];
                             };
                         };
-                        required: string[];
+                        "required": string[];
                     };
                     then: {
                         title: string;
@@ -3512,9 +3512,9 @@ export const metadata_v1: {
                             attributes?: undefined;
                             size_by?: undefined;
                             type: {
-                                description: string;
-                                type: string;
-                                enum: string[];
+                                "description": string;
+                                "type": string;
+                                "enum": string[];
                             };
                             id: {
                                 $ref: string;
@@ -3530,33 +3530,33 @@ export const metadata_v1: {
                                 })[];
                             };
                             title: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             description: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             tags: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             show_in_ai_results: {
-                                type: string;
-                                description: string;
+                                "type": string;
+                                "description": string;
                             };
                             is_hidden: {
-                                type: string;
-                                description: string;
-                                deprecated: boolean;
+                                "type": string;
+                                "description": string;
+                                "deprecated": boolean;
                             };
                             query: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             config: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             metrics: {
                                 type: string;
@@ -3589,13 +3589,13 @@ export const metadata_v1: {
                     };
                 } | {
                     if: {
-                        properties: {
-                            type: {
-                                type: string;
-                                enum: string[];
+                        "properties": {
+                            "type": {
+                                "type": string;
+                                "enum": string[];
                             };
                         };
-                        required: string[];
+                        "required": string[];
                     };
                     then: {
                         title: string;
@@ -3608,9 +3608,9 @@ export const metadata_v1: {
                             attributes?: undefined;
                             size_by?: undefined;
                             type: {
-                                description: string;
-                                type: string;
-                                enum: string[];
+                                "description": string;
+                                "type": string;
+                                "enum": string[];
                             };
                             id: {
                                 $ref: string;
@@ -3626,33 +3626,33 @@ export const metadata_v1: {
                                 })[];
                             };
                             title: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             description: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             tags: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             show_in_ai_results: {
-                                type: string;
-                                description: string;
+                                "type": string;
+                                "description": string;
                             };
                             is_hidden: {
-                                type: string;
-                                description: string;
-                                deprecated: boolean;
+                                "type": string;
+                                "description": string;
+                                "deprecated": boolean;
                             };
                             query: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             config: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             metrics: {
                                 type: string;
@@ -3673,12 +3673,12 @@ export const metadata_v1: {
                                 };
                             };
                             from: {
-                                description: string;
-                                $ref: string;
+                                "description": string;
+                                "$ref": string;
                             };
                             to: {
-                                description: string;
-                                $ref: string;
+                                "description": string;
+                                "$ref": string;
                             };
                             segment_by: {
                                 items?: undefined;
@@ -3691,13 +3691,13 @@ export const metadata_v1: {
                     };
                 } | {
                     if: {
-                        properties: {
-                            type: {
-                                type: string;
-                                enum: string[];
+                        "properties": {
+                            "type": {
+                                "type": string;
+                                "enum": string[];
                             };
                         };
-                        required: string[];
+                        "required": string[];
                     };
                     then: {
                         title: string;
@@ -3712,9 +3712,9 @@ export const metadata_v1: {
                             from?: undefined;
                             to?: undefined;
                             type: {
-                                description: string;
-                                type: string;
-                                enum: string[];
+                                "description": string;
+                                "type": string;
+                                "enum": string[];
                             };
                             id: {
                                 $ref: string;
@@ -3730,33 +3730,33 @@ export const metadata_v1: {
                                 })[];
                             };
                             title: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             description: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             tags: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             show_in_ai_results: {
-                                type: string;
-                                description: string;
+                                "type": string;
+                                "description": string;
                             };
                             is_hidden: {
-                                type: string;
-                                description: string;
-                                deprecated: boolean;
+                                "type": string;
+                                "description": string;
+                                "deprecated": boolean;
                             };
                             query: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             config: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             metrics: {
                                 type: string;
@@ -3782,13 +3782,13 @@ export const metadata_v1: {
                     };
                 } | {
                     if: {
-                        properties: {
-                            type: {
-                                type: string;
-                                enum: string[];
+                        "properties": {
+                            "type": {
+                                "type": string;
+                                "enum": string[];
                             };
                         };
-                        required: string[];
+                        "required": string[];
                     };
                     then: {
                         title: string;
@@ -3803,9 +3803,9 @@ export const metadata_v1: {
                             from?: undefined;
                             to?: undefined;
                             type: {
-                                description: string;
-                                type: string;
-                                enum: string[];
+                                "description": string;
+                                "type": string;
+                                "enum": string[];
                             };
                             id: {
                                 $ref: string;
@@ -3821,33 +3821,33 @@ export const metadata_v1: {
                                 })[];
                             };
                             title: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             description: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             tags: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             show_in_ai_results: {
-                                type: string;
-                                description: string;
+                                "type": string;
+                                "description": string;
                             };
                             is_hidden: {
-                                type: string;
-                                description: string;
-                                deprecated: boolean;
+                                "type": string;
+                                "description": string;
+                                "deprecated": boolean;
                             };
                             query: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             config: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             metrics: {
                                 type: string;
@@ -3868,17 +3868,17 @@ export const metadata_v1: {
                                 };
                             };
                             segment_by: {
-                                type: string;
-                                description: string;
-                                items: {
-                                    $ref: string;
+                                "type": string;
+                                "description": string;
+                                "items": {
+                                    "$ref": string;
                                 };
                             };
                             layers: {
-                                type: string;
-                                description: string;
-                                items: {
-                                    $ref: string;
+                                "type": string;
+                                "description": string;
+                                "items": {
+                                    "$ref": string;
                                 };
                             };
                         };
@@ -3886,13 +3886,13 @@ export const metadata_v1: {
                     };
                 } | {
                     if: {
-                        properties: {
-                            type: {
-                                type: string;
-                                enum: string[];
+                        "properties": {
+                            "type": {
+                                "type": string;
+                                "enum": string[];
                             };
                         };
-                        required: string[];
+                        "required": string[];
                     };
                     then: {
                         title: string;
@@ -3907,9 +3907,9 @@ export const metadata_v1: {
                             from?: undefined;
                             to?: undefined;
                             type: {
-                                description: string;
-                                type: string;
-                                enum: string[];
+                                "description": string;
+                                "type": string;
+                                "enum": string[];
                             };
                             id: {
                                 $ref: string;
@@ -3925,33 +3925,33 @@ export const metadata_v1: {
                                 })[];
                             };
                             title: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             description: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             tags: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             show_in_ai_results: {
-                                type: string;
-                                description: string;
+                                "type": string;
+                                "description": string;
                             };
                             is_hidden: {
-                                type: string;
-                                description: string;
-                                deprecated: boolean;
+                                "type": string;
+                                "description": string;
+                                "deprecated": boolean;
                             };
                             query: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             config: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             metrics: {
                                 type: string;
@@ -3970,17 +3970,17 @@ export const metadata_v1: {
                                 };
                             };
                             segment_by: {
-                                type: string;
-                                description: string;
-                                items: {
-                                    $ref: string;
+                                "type": string;
+                                "description": string;
+                                "items": {
+                                    "$ref": string;
                                 };
                             };
                             layers: {
-                                type: string;
-                                description: string;
-                                items: {
-                                    $ref: string;
+                                "type": string;
+                                "description": string;
+                                "items": {
+                                    "$ref": string;
                                 };
                             };
                         };
@@ -3991,34 +3991,34 @@ export const metadata_v1: {
                 $defs: {};
             };
             identifier: {
-                title: string;
-                type: string;
-                pattern: string;
+                "title": string;
+                "type": string;
+                "pattern": string;
             };
             title: {
-                type: string;
-                maxLength: number;
+                "type": string;
+                "maxLength": number;
             };
             description: {
-                type: string;
-                maxLength: number;
+                "type": string;
+                "maxLength": number;
             };
             tags: {
-                type: string;
-                uniqueItems: boolean;
-                items: {
-                    type: string;
+                "type": string;
+                "uniqueItems": boolean;
+                "items": {
+                    "type": string;
                 };
             };
             attributeIdentifier: {
-                title: string;
-                description: string;
-                type: string;
-                pattern: string;
-                $semantic: {
-                    type: string;
-                    source: string;
-                    typePrefix: boolean;
+                "title": string;
+                "description": string;
+                "type": string;
+                "pattern": string;
+                "$semantic": {
+                    "type": string;
+                    "source": string;
+                    "typePrefix": boolean;
                 };
             };
             dashboardFilters: {
@@ -4028,9 +4028,9 @@ export const metadata_v1: {
                 patternProperties: {
                     "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
                         properties: {
-                            type: {
-                                type: string;
-                                enum: string[];
+                            "type": {
+                                "type": string;
+                                "enum": string[];
                             };
                         };
                         required: string[];
@@ -4041,40 +4041,40 @@ export const metadata_v1: {
                                 allOf: ({
                                     not?: undefined;
                                     properties: {
-                                        type: {
-                                            const: string;
+                                        "type": {
+                                            "const": string;
                                         };
                                     };
                                 } | {
                                     properties?: undefined;
                                     not: {
-                                        properties: {
-                                            from: {
-                                                type: string;
+                                        "properties": {
+                                            "from": {
+                                                "type": string;
                                             };
                                         };
-                                        required: string[];
+                                        "required": string[];
                                     };
                                 })[];
                             };
                             then: {
-                                $ref: string;
+                                "$ref": string;
                             };
                         } | {
                             if: {
                                 allOf?: undefined;
                                 properties: {
-                                    type: {
-                                        const: string;
+                                    "type": {
+                                        "const": string;
                                     };
-                                    from: {
-                                        type: string;
+                                    "from": {
+                                        "type": string;
                                     };
                                 };
                                 required: string[];
                             };
                             then: {
-                                $ref: string;
+                                "$ref": string;
                             };
                         } | {
                             if: {
@@ -4083,103 +4083,103 @@ export const metadata_v1: {
                                 properties: {
                                     from?: undefined;
                                     type: {
-                                        const: string;
+                                        "const": string;
                                     };
                                 };
                             };
                             then: {
-                                $ref: string;
+                                "$ref": string;
                             };
                         })[];
                     };
                 };
             };
             permission: {
-                title: string;
-                description: string;
-                type: string;
-                properties: {
-                    all: {
-                        type: string;
+                "title": string;
+                "description": string;
+                "type": string;
+                "properties": {
+                    "all": {
+                        "type": string;
                     };
-                    users: {
-                        type: string;
-                        items: {
-                            type: string;
+                    "users": {
+                        "type": string;
+                        "items": {
+                            "type": string;
                         };
                     };
-                    user_groups: {
-                        type: string;
-                        items: {
-                            type: string;
+                    "user_groups": {
+                        "type": string;
+                        "items": {
+                            "type": string;
                         };
                     };
                 };
             };
             labelIdentifier: {
-                title: string;
-                description: string;
-                type: string;
-                pattern: string;
-                $semantic: {
-                    type: string;
-                    source: string;
-                    typePrefix: boolean;
+                "title": string;
+                "description": string;
+                "type": string;
+                "pattern": string;
+                "$semantic": {
+                    "type": string;
+                    "source": string;
+                    "typePrefix": boolean;
                 };
             };
             queryFilters: {
-                title: string;
-                type: string;
-                additionalProperties: boolean;
-                patternProperties: {
+                "title": string;
+                "type": string;
+                "additionalProperties": boolean;
+                "patternProperties": {
                     "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
-                        $ref: string;
+                        "$ref": string;
                     };
                 };
             };
             metricIdentifier: {
-                title: string;
-                description: string;
-                type: string;
-                pattern: string;
-                $semantic: {
-                    type: string;
-                    source: string;
-                    typePrefix: boolean;
+                "title": string;
+                "description": string;
+                "type": string;
+                "pattern": string;
+                "$semantic": {
+                    "type": string;
+                    "source": string;
+                    "typePrefix": boolean;
                 };
             };
             factIdentifier: {
-                title: string;
-                description: string;
-                type: string;
-                pattern: string;
-                $semantic: {
-                    type: string;
-                    source: string;
-                    typePrefix: boolean;
+                "title": string;
+                "description": string;
+                "type": string;
+                "pattern": string;
+                "$semantic": {
+                    "type": string;
+                    "source": string;
+                    "typePrefix": boolean;
                 };
             };
             query: {
-                $schema: string;
-                title: string;
-                type: string;
-                additionalProperties: boolean;
-                properties: {
-                    fields: {
-                        $ref: string;
-                        description: string;
+                "$schema": string;
+                "title": string;
+                "type": string;
+                "additionalProperties": boolean;
+                "properties": {
+                    "fields": {
+                        "$ref": string;
+                        "description": string;
                     };
-                    filter_by: {
-                        $ref: string;
-                        description: string;
+                    "filter_by": {
+                        "$ref": string;
+                        "description": string;
                     };
-                    sort_by: {
-                        $ref: string;
-                        description: string;
+                    "sort_by": {
+                        "$ref": string;
+                        "description": string;
                     };
                 };
-                required: string[];
-                $defs: {};
+                "required": string[];
+                "$defs": {};
             };
             config: {
                 $schema: string;
@@ -4187,25 +4187,25 @@ export const metadata_v1: {
                 type: string;
                 properties: {
                     widths: {
-                        type: string;
-                        items: {
-                            $ref: string;
+                        "type": string;
+                        "items": {
+                            "$ref": string;
                         };
-                        description: string;
+                        "description": string;
                     };
                     colors: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     color: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     column_header: {
-                        type: string;
+                        "type": string;
                     };
                     metrics_in: {
-                        type: string;
+                        "type": string;
                     };
                     data_labels: {
                         oneOf: ({
@@ -4217,21 +4217,21 @@ export const metadata_v1: {
                         })[];
                     };
                     data_labels_style: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     chart_fill: {
-                        type: string;
-                        properties: {
-                            type: {
-                                type: string;
-                                enum: string[];
+                        "type": string;
+                        "properties": {
+                            "type": {
+                                "type": string;
+                                "enum": string[];
                             };
-                            pattern_name_mapping: {
-                                type: string;
-                                additionalProperties: {
-                                    type: string;
-                                    enum: string[];
+                            "pattern_name_mapping": {
+                                "type": string;
+                                "additionalProperties": {
+                                    "type": string;
+                                    "enum": string[];
                                 };
                             };
                         };
@@ -4255,375 +4255,375 @@ export const metadata_v1: {
                         })[];
                     };
                     orientation: {
-                        type: string;
+                        "type": string;
                     };
                     legend_enabled: {
-                        type: string;
+                        "type": string;
                     };
                     legend_position: {
-                        type: string;
+                        "type": string;
                     };
                     xaxis_format: {
-                        type: string;
+                        "type": string;
                     };
                     xaxis_max: {
-                        type: string;
+                        "type": string;
                     };
                     xaxis_min: {
-                        type: string;
+                        "type": string;
                     };
                     xaxis_name_position: {
-                        type: string;
+                        "type": string;
                     };
                     xaxis_name_visible: {
-                        type: string;
+                        "type": string;
                     };
                     xaxis_rotation: {
-                        type: string;
+                        "type": string;
                     };
                     xaxis_visible: {
-                        type: string;
+                        "type": string;
                     };
                     xaxis_labels: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_name_position: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_name_visible: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_rotation: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_visible: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_labels: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_format: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_max: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_min: {
-                        type: string;
+                        "type": string;
                     };
                     grid_enabled: {
-                        type: string;
+                        "type": string;
                     };
                     stack_measures_to_100: {
-                        type: string;
+                        "type": string;
                     };
                     stack_measures: {
-                        type: string;
+                        "type": string;
                     };
                     continuous_line: {
-                        type: string;
+                        "type": string;
                     };
                     render_as: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     grid_line_shape: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     distinct_point_shapes: {
-                        type: string;
-                        properties: {
-                            enabled: {
-                                type: string;
+                        "type": string;
+                        "properties": {
+                            "enabled": {
+                                "type": string;
                             };
-                            point_shape_mapping: {
-                                type: string;
-                                additionalProperties: {
-                                    type: string;
-                                    enum: string[];
+                            "point_shape_mapping": {
+                                "type": string;
+                                "additionalProperties": {
+                                    "type": string;
+                                    "enum": string[];
                                 };
                             };
                         };
                     };
                     total_enabled: {
-                        type: string;
+                        "type": string;
                     };
                     total_name: {
-                        type: string;
+                        "type": string;
                     };
                     comparison_enabled: {
-                        type: string;
+                        "type": string;
                     };
                     comparison_type: {
-                        type: string;
+                        "type": string;
                     };
                     format: {
-                        type: string;
+                        "type": string;
                     };
                     position: {
-                        type: string;
+                        "type": string;
                     };
                     indicator_arrow: {
-                        type: string;
+                        "type": string;
                     };
                     indicator_colors: {
-                        type: string;
+                        "type": string;
                     };
                     indicator_color_equals: {
-                        $ref: string;
+                        "$ref": string;
                     };
                     indicator_color_negative: {
-                        $ref: string;
+                        "$ref": string;
                     };
                     indicator_color_positive: {
-                        $ref: string;
+                        "$ref": string;
                     };
                     label_default: {
-                        type: string;
+                        "type": string;
                     };
                     label_conditional: {
-                        type: string;
+                        "type": string;
                     };
                     label_equals: {
-                        type: string;
+                        "type": string;
                     };
                     label_negative: {
-                        type: string;
+                        "type": string;
                     };
                     label_positive: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_primary_type: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     yaxis_primary_format: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_primary_max: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_primary_min: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_primary_name_position: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_primary_name_visible: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_primary_rotation: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_primary_visible: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_primary_labels: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_secondary_type: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     yaxis_secondary_format: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_secondary_max: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_secondary_min: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_secondary_name_position: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_secondary_name_visible: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_secondary_rotation: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_secondary_visible: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_secondary_labels: {
-                        type: string;
+                        "type": string;
                     };
                     yaxis_secondary_show_on_right: {
-                        type: string;
+                        "type": string;
                     };
                     tooltip_text: {
-                        type: string;
+                        "type": string;
                     };
                     viewport: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     basemap: {
-                        type: string;
+                        "type": string;
                     };
                     viewport_pan: {
-                        type: string;
+                        "type": string;
                     };
                     viewport_zoom: {
-                        type: string;
+                        "type": string;
                     };
                     center_lat: {
-                        type: string;
+                        "type": string;
                     };
                     center_lng: {
-                        type: string;
+                        "type": string;
                     };
                     zoom_level: {
-                        type: string;
+                        "type": string;
                     };
                     group_nearby_points: {
-                        type: string;
+                        "type": string;
                     };
                     min_size: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     max_size: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     shape_type: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     icon: {
-                        type: string;
+                        "type": string;
                     };
                     viewport_bounds_ne_lat: {
-                        type: string;
+                        "type": string;
                     };
                     viewport_bounds_ne_lng: {
-                        type: string;
+                        "type": string;
                     };
                     viewport_bounds_sw_lat: {
-                        type: string;
+                        "type": string;
                     };
                     viewport_bounds_sw_lng: {
-                        type: string;
+                        "type": string;
                     };
                     row_height: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     cell_vertical_align: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     cell_text_wrapping: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     cell_image_sizing: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     forecast_enabled: {
-                        type: string;
+                        "type": string;
                     };
                     forecast_confidence: {
-                        type: string;
-                        minimum: number;
-                        maximum: number;
+                        "type": string;
+                        "minimum": number;
+                        "maximum": number;
                     };
                     forecast_period: {
-                        type: string;
+                        "type": string;
                     };
                     forecast_seasonal: {
-                        type: string;
+                        "type": string;
                     };
                     anomaly_detection_enabled: {
-                        type: string;
+                        "type": string;
                     };
                     anomaly_detection_sensitivity: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     anomaly_detection_size: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     anomaly_detection_color: {
-                        $ref: string;
+                        "$ref": string;
                     };
                     clustering_enabled: {
-                        type: string;
+                        "type": string;
                     };
                     clustering_amount: {
-                        type: string;
+                        "type": string;
                     };
                     clustering_threshold: {
-                        type: string;
-                        exclusiveMinimum: number;
-                        exclusiveMaximum: number;
+                        "type": string;
+                        "exclusiveMinimum": number;
+                        "exclusiveMaximum": number;
                     };
                     disable_drill_down: {
-                        type: string;
+                        "type": string;
                     };
                     disable_drill_into_url: {
-                        type: string;
+                        "type": string;
                     };
                     disable_alerts: {
-                        type: string;
+                        "type": string;
                     };
                     disable_scheduled_exports: {
-                        type: string;
+                        "type": string;
                     };
                     disable_key_drive_analysis: {
-                        type: string;
-                        $semantic: {
-                            type: string;
-                            source: string;
-                            mode: string;
+                        "type": string;
+                        "$semantic": {
+                            "type": string;
+                            "source": string;
+                            "mode": string;
                         };
-                        additionalProperties: {
-                            type: string;
-                            $semantic: {
-                                type: string;
-                                source: string;
-                                mode: string;
+                        "additionalProperties": {
+                            "type": string;
+                            "$semantic": {
+                                "type": string;
+                                "source": string;
+                                "mode": string;
                             };
                         };
                     };
                     text_wrapping: {
-                        type: string;
-                        description: string;
-                        properties: {
-                            wrap_text: {
-                                type: string;
-                                description: string;
+                        "type": string;
+                        "description": string;
+                        "properties": {
+                            "wrap_text": {
+                                "type": string;
+                                "description": string;
                             };
-                            wrap_header_text: {
-                                type: string;
-                                description: string;
+                            "wrap_header_text": {
+                                "type": string;
+                                "description": string;
                             };
-                            column_overrides: {
-                                type: string;
-                                description: string;
-                                items: {
-                                    type: string;
-                                    properties: {
-                                        locators: {
-                                            type: string;
-                                            items: {
-                                                type: string;
+                            "column_overrides": {
+                                "type": string;
+                                "description": string;
+                                "items": {
+                                    "type": string;
+                                    "properties": {
+                                        "locators": {
+                                            "type": string;
+                                            "items": {
+                                                "type": string;
                                             };
                                         };
-                                        wrap_text: {
-                                            type: string;
+                                        "wrap_text": {
+                                            "type": string;
                                         };
-                                        wrap_header_text: {
-                                            type: string;
+                                        "wrap_header_text": {
+                                            "type": string;
                                         };
-                                        match_type: {
-                                            type: string;
-                                            enum: string[];
+                                        "match_type": {
+                                            "type": string;
+                                            "enum": string[];
                                         };
                                     };
                                 };
@@ -4631,57 +4631,57 @@ export const metadata_v1: {
                         };
                     };
                     pagination: {
-                        type: string;
-                        description: string;
+                        "type": string;
+                        "description": string;
                     };
                     page_size: {
-                        type: string;
-                        description: string;
+                        "type": string;
+                        "description": string;
                     };
                     grand_totals_position: {
-                        type: string;
-                        enum: string[];
-                        description: string;
+                        "type": string;
+                        "enum": string[];
+                        "description": string;
                     };
                     enable_accessibility: {
-                        type: string;
-                        description: string;
+                        "type": string;
+                        "description": string;
                     };
                     line_style_control_metrics: {
-                        type: string;
-                        items: {
-                            type: string;
+                        "type": string;
+                        "items": {
+                            "type": string;
                         };
                     };
                     line_style_excluded_metrics: {
-                        type: string;
-                        items: {
-                            type: string;
+                        "type": string;
+                        "items": {
+                            "type": string;
                         };
                     };
                     custom_tooltip: {
-                        type: string;
-                        description: string;
-                        additionalProperties: boolean;
-                        properties: {
-                            enabled: {
-                                type: string;
-                                description: string;
+                        "type": string;
+                        "description": string;
+                        "additionalProperties": boolean;
+                        "properties": {
+                            "enabled": {
+                                "type": string;
+                                "description": string;
                             };
-                            content: {
-                                type: string;
-                                description: string;
+                            "content": {
+                                "type": string;
+                                "description": string;
                             };
-                            placement: {
-                                type: string;
-                                enum: string[];
-                                description: string;
+                            "placement": {
+                                "type": string;
+                                "enum": string[];
+                                "description": string;
                             };
                         };
                     };
                     line_style_mapping: {
-                        $ref: string;
-                        description: string;
+                        "$ref": string;
+                        "description": string;
                     };
                     conditional_formatting: {
                         type: string;
@@ -4689,12 +4689,12 @@ export const metadata_v1: {
                         additionalProperties: boolean;
                         properties: {
                             version: {
-                                type: string;
-                                description: string;
+                                "type": string;
+                                "description": string;
                             };
                             enabled: {
-                                type: string;
-                                description: string;
+                                "type": string;
+                                "description": string;
                             };
                             rules: {
                                 type: string;
@@ -4705,8 +4705,8 @@ export const metadata_v1: {
                                     required: string[];
                                     properties: {
                                         id: {
-                                            type: string;
-                                            description: string;
+                                            "type": string;
+                                            "description": string;
                                         };
                                         target: {
                                             type: string;
@@ -4717,8 +4717,8 @@ export const metadata_v1: {
                                                 required: string[];
                                                 properties: {
                                                     measure: {
-                                                        type: string;
-                                                        description: string;
+                                                        "type": string;
+                                                        "description": string;
                                                     };
                                                     attribute?: undefined;
                                                 };
@@ -4729,8 +4729,8 @@ export const metadata_v1: {
                                                 properties: {
                                                     measure?: undefined;
                                                     attribute: {
-                                                        type: string;
-                                                        description: string;
+                                                        "type": string;
+                                                        "description": string;
                                                     };
                                                 };
                                             })[];
@@ -4744,11 +4744,11 @@ export const metadata_v1: {
                                                 required: string[];
                                                 properties: {
                                                     id: {
-                                                        type: string;
+                                                        "type": string;
                                                     };
                                                     operator: {
-                                                        type: string;
-                                                        enum: string[];
+                                                        "type": string;
+                                                        "enum": string[];
                                                     };
                                                     value: {
                                                         description: string;
@@ -4763,10 +4763,10 @@ export const metadata_v1: {
                                                             required: string[];
                                                             properties: {
                                                                 from: {
-                                                                    type: string;
+                                                                    "type": string;
                                                                 };
                                                                 to: {
-                                                                    type: string;
+                                                                    "type": string;
                                                                 };
                                                                 absolute?: undefined;
                                                                 relative?: undefined;
@@ -4779,16 +4779,16 @@ export const metadata_v1: {
                                                                 from?: undefined;
                                                                 to?: undefined;
                                                                 absolute: {
-                                                                    type: string;
-                                                                    description: string;
-                                                                    additionalProperties: boolean;
-                                                                    required: string[];
-                                                                    properties: {
-                                                                        from: {
-                                                                            type: string;
+                                                                    "type": string;
+                                                                    "description": string;
+                                                                    "additionalProperties": boolean;
+                                                                    "required": string[];
+                                                                    "properties": {
+                                                                        "from": {
+                                                                            "type": string;
                                                                         };
-                                                                        to: {
-                                                                            type: string;
+                                                                        "to": {
+                                                                            "type": string;
                                                                         };
                                                                     };
                                                                 };
@@ -4803,20 +4803,20 @@ export const metadata_v1: {
                                                                 to?: undefined;
                                                                 absolute?: undefined;
                                                                 relative: {
-                                                                    type: string;
-                                                                    description: string;
-                                                                    additionalProperties: boolean;
-                                                                    required: string[];
-                                                                    properties: {
-                                                                        granularity: {
-                                                                            type: string;
-                                                                            enum: string[];
+                                                                    "type": string;
+                                                                    "description": string;
+                                                                    "additionalProperties": boolean;
+                                                                    "required": string[];
+                                                                    "properties": {
+                                                                        "granularity": {
+                                                                            "type": string;
+                                                                            "enum": string[];
                                                                         };
-                                                                        from: {
-                                                                            type: string;
+                                                                        "from": {
+                                                                            "type": string;
                                                                         };
-                                                                        to: {
-                                                                            type: string;
+                                                                        "to": {
+                                                                            "type": string;
                                                                         };
                                                                     };
                                                                 };
@@ -4824,21 +4824,21 @@ export const metadata_v1: {
                                                         })[];
                                                     };
                                                     format: {
-                                                        type: string;
-                                                        additionalProperties: boolean;
-                                                        required: string[];
-                                                        properties: {
-                                                            text: {
-                                                                type: string;
-                                                                description: string;
+                                                        "type": string;
+                                                        "additionalProperties": boolean;
+                                                        "required": string[];
+                                                        "properties": {
+                                                            "text": {
+                                                                "type": string;
+                                                                "description": string;
                                                             };
-                                                            fill: {
-                                                                type: string;
-                                                                description: string;
+                                                            "fill": {
+                                                                "type": string;
+                                                                "description": string;
                                                             };
-                                                            scope: {
-                                                                type: string;
-                                                                enum: string[];
+                                                            "scope": {
+                                                                "type": string;
+                                                                "enum": string[];
                                                             };
                                                         };
                                                     };
@@ -4861,8 +4861,8 @@ export const metadata_v1: {
                                         properties: {
                                             attribute?: undefined;
                                             measure: {
-                                                type: string;
-                                                description: string;
+                                                "type": string;
+                                                "description": string;
                                             };
                                         };
                                     } | {
@@ -4872,8 +4872,8 @@ export const metadata_v1: {
                                         properties: {
                                             measure?: undefined;
                                             attribute: {
-                                                type: string;
-                                                description: string;
+                                                "type": string;
+                                                "description": string;
                                             };
                                         };
                                     })[];
@@ -4906,125 +4906,125 @@ export const metadata_v1: {
                     })[];
                 };
                 type: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 title: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 description: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 tags: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 attributes: {
-                    type: string;
-                    description: string;
-                    items: {
-                        $ref: string;
+                    "type": string;
+                    "description": string;
+                    "items": {
+                        "$ref": string;
                     };
-                    minItems: number;
+                    "minItems": number;
                 };
             };
             required: string[];
         };
         identifier: {
-            title: string;
-            type: string;
-            pattern: string;
+            "title": string;
+            "type": string;
+            "pattern": string;
         };
         title: {
-            type: string;
-            maxLength: number;
+            "type": string;
+            "maxLength": number;
         };
         description: {
-            type: string;
-            maxLength: number;
+            "type": string;
+            "maxLength": number;
         };
         tags: {
-            type: string;
-            uniqueItems: boolean;
-            items: {
-                type: string;
+            "type": string;
+            "uniqueItems": boolean;
+            "items": {
+                "type": string;
             };
         };
         attributeIdentifier: {
-            title: string;
-            description: string;
-            type: string;
-            pattern: string;
-            $semantic: {
-                type: string;
-                source: string;
-                typePrefix: boolean;
+            "title": string;
+            "description": string;
+            "type": string;
+            "pattern": string;
+            "$semantic": {
+                "type": string;
+                "source": string;
+                "typePrefix": boolean;
             };
         };
         labelIdentifier: {
-            title: string;
-            description: string;
-            type: string;
-            pattern: string;
-            $semantic: {
-                type: string;
-                source: string;
-                typePrefix: boolean;
+            "title": string;
+            "description": string;
+            "type": string;
+            "pattern": string;
+            "$semantic": {
+                "type": string;
+                "source": string;
+                "typePrefix": boolean;
             };
         };
         displayAsLabelIdentifier: {
-            title: string;
-            description: string;
-            type: string;
-            pattern: string;
-            $semantic: {
-                type: string;
-                source: string;
-                typePrefix: boolean;
+            "title": string;
+            "description": string;
+            "type": string;
+            "pattern": string;
+            "$semantic": {
+                "type": string;
+                "source": string;
+                "typePrefix": boolean;
             };
         };
         factIdentifier: {
-            title: string;
-            description: string;
-            type: string;
-            pattern: string;
-            $semantic: {
-                type: string;
-                source: string;
-                typePrefix: boolean;
+            "title": string;
+            "description": string;
+            "type": string;
+            "pattern": string;
+            "$semantic": {
+                "type": string;
+                "source": string;
+                "typePrefix": boolean;
             };
         };
         metricIdentifier: {
-            title: string;
-            description: string;
-            type: string;
-            pattern: string;
-            $semantic: {
-                type: string;
-                source: string;
-                typePrefix: boolean;
+            "title": string;
+            "description": string;
+            "type": string;
+            "pattern": string;
+            "$semantic": {
+                "type": string;
+                "source": string;
+                "typePrefix": boolean;
             };
         };
         permission: {
-            title: string;
-            description: string;
-            type: string;
-            properties: {
-                all: {
-                    type: string;
+            "title": string;
+            "description": string;
+            "type": string;
+            "properties": {
+                "all": {
+                    "type": string;
                 };
-                users: {
-                    type: string;
-                    items: {
-                        type: string;
+                "users": {
+                    "type": string;
+                    "items": {
+                        "type": string;
                     };
                 };
-                user_groups: {
-                    type: string;
-                    items: {
-                        type: string;
+                "user_groups": {
+                    "type": string;
+                    "items": {
+                        "type": string;
                     };
                 };
             };
@@ -5036,9 +5036,9 @@ export const metadata_v1: {
             patternProperties: {
                 "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
                     properties: {
-                        type: {
-                            type: string;
-                            enum: string[];
+                        "type": {
+                            "type": string;
+                            "enum": string[];
                         };
                     };
                     required: string[];
@@ -5049,40 +5049,40 @@ export const metadata_v1: {
                             allOf: ({
                                 not?: undefined;
                                 properties: {
-                                    type: {
-                                        const: string;
+                                    "type": {
+                                        "const": string;
                                     };
                                 };
                             } | {
                                 properties?: undefined;
                                 not: {
-                                    properties: {
-                                        from: {
-                                            type: string;
+                                    "properties": {
+                                        "from": {
+                                            "type": string;
                                         };
                                     };
-                                    required: string[];
+                                    "required": string[];
                                 };
                             })[];
                         };
                         then: {
-                            $ref: string;
+                            "$ref": string;
                         };
                     } | {
                         if: {
                             allOf?: undefined;
                             properties: {
-                                type: {
-                                    const: string;
+                                "type": {
+                                    "const": string;
                                 };
-                                from: {
-                                    type: string;
+                                "from": {
+                                    "type": string;
                                 };
                             };
                             required: string[];
                         };
                         then: {
-                            $ref: string;
+                            "$ref": string;
                         };
                     } | {
                         if: {
@@ -5091,12 +5091,12 @@ export const metadata_v1: {
                             properties: {
                                 from?: undefined;
                                 type: {
-                                    const: string;
+                                    "const": string;
                                 };
                             };
                         };
                         then: {
-                            $ref: string;
+                            "$ref": string;
                         };
                     })[];
                 };
@@ -5108,35 +5108,35 @@ export const metadata_v1: {
             description: string;
             properties: {
                 title: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 type: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 granularity: {
-                    $ref: string;
+                    "$ref": string;
                 };
                 from: {
-                    type: string;
-                    pattern: string;
-                    description: string;
+                    "type": string;
+                    "pattern": string;
+                    "description": string;
                 };
                 to: {
-                    type: string;
-                    pattern: string;
-                    description: string;
+                    "type": string;
+                    "pattern": string;
+                    "description": string;
                 };
                 mode: {
-                    type: string;
-                    enum: string[];
-                    description: string;
+                    "type": string;
+                    "enum": string[];
+                    "description": string;
                 };
                 empty_values: {
-                    type: string;
-                    enum: string[];
-                    description: string;
+                    "type": string;
+                    "enum": string[];
+                    "description": string;
                 };
                 date: {
                     $ref: string;
@@ -5158,33 +5158,33 @@ export const metadata_v1: {
             description: string;
             properties: {
                 title: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 type: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 granularity: {
-                    $ref: string;
+                    "$ref": string;
                 };
                 from: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 to: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 mode: {
-                    type: string;
-                    enum: string[];
-                    description: string;
+                    "type": string;
+                    "enum": string[];
+                    "description": string;
                 };
                 empty_values: {
-                    type: string;
-                    enum: string[];
-                    description: string;
+                    "type": string;
+                    "enum": string[];
+                    "description": string;
                 };
                 date: {
                     $ref: string;
@@ -5206,12 +5206,12 @@ export const metadata_v1: {
             description: string;
             properties: {
                 title: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 type: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 using: {
                     description: string;
@@ -5219,27 +5219,27 @@ export const metadata_v1: {
                         $ref: string;
                     }[];
                     $semantic: {
-                        type: string;
+                        "type": string;
                     };
                 };
                 multiselect: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 mode: {
-                    type: string;
-                    enum: string[];
-                    description: string;
+                    "type": string;
+                    "enum": string[];
+                    "description": string;
                 };
                 display_as: {
-                    type: string;
-                    description: string;
-                    $ref: string;
+                    "type": string;
+                    "description": string;
+                    "$ref": string;
                 };
                 selection_type: {
-                    type: string;
-                    enum: string[];
-                    description: string;
+                    "type": string;
+                    "enum": string[];
+                    "description": string;
                 };
                 parents: {
                     type: string;
@@ -5257,20 +5257,20 @@ export const metadata_v1: {
                             type: string;
                             title: string;
                             properties: {
-                                using: {
-                                    type: string;
-                                    description: string;
+                                "using": {
+                                    "type": string;
+                                    "description": string;
                                 };
-                                common: {
-                                    type: string;
-                                    description: string;
+                                "common": {
+                                    "type": string;
+                                    "description": string;
                                 };
-                                date: {
-                                    type: string;
-                                    description: string;
-                                    $semantic: {
-                                        type: string;
-                                        source: string;
+                                "date": {
+                                    "type": string;
+                                    "description": string;
+                                    "$semantic": {
+                                        "type": string;
+                                        "source": string;
                                     };
                                 };
                             };
@@ -5279,33 +5279,33 @@ export const metadata_v1: {
                     };
                 };
                 metric_filters: {
-                    type: string;
-                    description: string;
-                    uniqueItems: boolean;
-                    items: {
-                        type: string;
+                    "type": string;
+                    "description": string;
+                    "uniqueItems": boolean;
+                    "items": {
+                        "type": string;
                     };
                 };
             };
             oneOf: {
                 if: {
-                    properties: {
-                        multiselect: {
-                            type: string;
-                            enum: boolean[];
+                    "properties": {
+                        "multiselect": {
+                            "type": string;
+                            "enum": boolean[];
                         };
                     };
-                    required: string[];
+                    "required": string[];
                 };
                 then: {
                     properties: {
                         title: {
-                            type: string;
-                            description: string;
+                            "type": string;
+                            "description": string;
                         };
                         type: {
-                            type: string;
-                            enum: string[];
+                            "type": string;
+                            "enum": string[];
                         };
                         using: {
                             description: string;
@@ -5314,26 +5314,26 @@ export const metadata_v1: {
                             }[];
                         };
                         multiselect: {
-                            type: string;
-                            description: string;
+                            "type": string;
+                            "description": string;
                         };
                         mode: {
-                            type: string;
-                            enum: string[];
-                            description: string;
+                            "type": string;
+                            "enum": string[];
+                            "description": string;
                         };
                         display_as: {
-                            type: string;
-                            description: string;
-                            $ref: string;
+                            "type": string;
+                            "description": string;
+                            "$ref": string;
                         };
                         selection_type: {
-                            type: string;
-                            enum: string[];
-                            description: string;
+                            "type": string;
+                            "enum": string[];
+                            "description": string;
                         };
                         state: {
-                            ref: string;
+                            "ref": string;
                         };
                         parents: {
                             type: string;
@@ -5347,8 +5347,8 @@ export const metadata_v1: {
                                     title: string;
                                     description: string;
                                     $semantic: {
-                                        type: string;
-                                        sources: string[];
+                                        "type": string;
+                                        "sources": string[];
                                     };
                                 } | {
                                     $semantic?: undefined;
@@ -5356,24 +5356,24 @@ export const metadata_v1: {
                                     type: string;
                                     title: string;
                                     properties: {
-                                        using: {
-                                            type: string;
-                                            description: string;
-                                            $semantic: {
-                                                type: string;
-                                                source: string;
+                                        "using": {
+                                            "type": string;
+                                            "description": string;
+                                            "$semantic": {
+                                                "type": string;
+                                                "source": string;
                                             };
                                         };
-                                        common: {
-                                            type: string;
-                                            description: string;
+                                        "common": {
+                                            "type": string;
+                                            "description": string;
                                         };
-                                        date: {
-                                            type: string;
-                                            description: string;
-                                            $semantic: {
-                                                type: string;
-                                                source: string;
+                                        "date": {
+                                            "type": string;
+                                            "description": string;
+                                            "$semantic": {
+                                                "type": string;
+                                                "source": string;
                                             };
                                         };
                                     };
@@ -5382,15 +5382,15 @@ export const metadata_v1: {
                             };
                         };
                         metric_filters: {
-                            type: string;
-                            description: string;
-                            uniqueItems: boolean;
-                            items: {
-                                type: string;
-                                $semantic: {
-                                    type: string;
-                                    sources: string[];
-                                    typePrefix: boolean;
+                            "type": string;
+                            "description": string;
+                            "uniqueItems": boolean;
+                            "items": {
+                                "type": string;
+                                "$semantic": {
+                                    "type": string;
+                                    "sources": string[];
+                                    "typePrefix": boolean;
                                 };
                             };
                         };
@@ -5399,12 +5399,12 @@ export const metadata_v1: {
                 else: {
                     properties: {
                         title: {
-                            type: string;
-                            description: string;
+                            "type": string;
+                            "description": string;
                         };
                         type: {
-                            type: string;
-                            enum: string[];
+                            "type": string;
+                            "enum": string[];
                         };
                         using: {
                             description: string;
@@ -5413,26 +5413,26 @@ export const metadata_v1: {
                             }[];
                         };
                         multiselect: {
-                            type: string;
-                            description: string;
+                            "type": string;
+                            "description": string;
                         };
                         mode: {
-                            type: string;
-                            enum: string[];
-                            description: string;
+                            "type": string;
+                            "enum": string[];
+                            "description": string;
                         };
                         display_as: {
-                            type: string;
-                            description: string;
-                            $ref: string;
+                            "type": string;
+                            "description": string;
+                            "$ref": string;
                         };
                         selection_type: {
-                            type: string;
-                            enum: string[];
-                            description: string;
+                            "type": string;
+                            "enum": string[];
+                            "description": string;
                         };
                         state: {
-                            ref: string;
+                            "ref": string;
                         };
                         parents: {
                             type: string;
@@ -5446,8 +5446,8 @@ export const metadata_v1: {
                                     title: string;
                                     description: string;
                                     $semantic: {
-                                        type: string;
-                                        sources: string[];
+                                        "type": string;
+                                        "sources": string[];
                                     };
                                 } | {
                                     $semantic?: undefined;
@@ -5455,24 +5455,24 @@ export const metadata_v1: {
                                     type: string;
                                     title: string;
                                     properties: {
-                                        using: {
-                                            type: string;
-                                            description: string;
-                                            $semantic: {
-                                                type: string;
-                                                source: string;
+                                        "using": {
+                                            "type": string;
+                                            "description": string;
+                                            "$semantic": {
+                                                "type": string;
+                                                "source": string;
                                             };
                                         };
-                                        common: {
-                                            type: string;
-                                            description: string;
+                                        "common": {
+                                            "type": string;
+                                            "description": string;
                                         };
-                                        date: {
-                                            type: string;
-                                            description: string;
-                                            $semantic: {
-                                                type: string;
-                                                source: string;
+                                        "date": {
+                                            "type": string;
+                                            "description": string;
+                                            "$semantic": {
+                                                "type": string;
+                                                "source": string;
                                             };
                                         };
                                     };
@@ -5481,15 +5481,15 @@ export const metadata_v1: {
                             };
                         };
                         metric_filters: {
-                            type: string;
-                            description: string;
-                            uniqueItems: boolean;
-                            items: {
-                                type: string;
-                                $semantic: {
-                                    type: string;
-                                    sources: string[];
-                                    typePrefix: boolean;
+                            "type": string;
+                            "description": string;
+                            "uniqueItems": boolean;
+                            "items": {
+                                "type": string;
+                                "$semantic": {
+                                    "type": string;
+                                    "sources": string[];
+                                    "typePrefix": boolean;
                                 };
                             };
                         };
@@ -5498,9 +5498,9 @@ export const metadata_v1: {
             }[];
             required: string[];
             $semantic: {
-                type: string;
-                source: string;
-                mode: string;
+                "type": string;
+                "source": string;
+                "mode": string;
             };
         };
         dashboardTextFilter: {
@@ -5509,8 +5509,8 @@ export const metadata_v1: {
             description: string;
             properties: {
                 title: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 using: {
                     description: string;
@@ -5518,26 +5518,26 @@ export const metadata_v1: {
                         $ref: string;
                     }[];
                     $semantic: {
-                        type: string;
+                        "type": string;
                     };
                 };
                 case_sensitive: {
-                    type: string;
+                    "type": string;
                 };
                 display_as: {
-                    type: string;
-                    description: string;
-                    $ref: string;
+                    "type": string;
+                    "description": string;
+                    "$ref": string;
                 };
                 mode: {
-                    type: string;
-                    enum: string[];
-                    description: string;
+                    "type": string;
+                    "enum": string[];
+                    "description": string;
                 };
                 selection_type: {
-                    type: string;
-                    enum: string[];
-                    description: string;
+                    "type": string;
+                    "enum": string[];
+                    "description": string;
                 };
                 parents: {
                     type: string;
@@ -5551,8 +5551,8 @@ export const metadata_v1: {
                             title: string;
                             description: string;
                             $semantic: {
-                                type: string;
-                                sources: string[];
+                                "type": string;
+                                "sources": string[];
                             };
                         } | {
                             $semantic?: undefined;
@@ -5560,24 +5560,24 @@ export const metadata_v1: {
                             type: string;
                             title: string;
                             properties: {
-                                using: {
-                                    type: string;
-                                    description: string;
-                                    $semantic: {
-                                        type: string;
-                                        source: string;
+                                "using": {
+                                    "type": string;
+                                    "description": string;
+                                    "$semantic": {
+                                        "type": string;
+                                        "source": string;
                                     };
                                 };
-                                common: {
-                                    type: string;
-                                    description: string;
+                                "common": {
+                                    "type": string;
+                                    "description": string;
                                 };
-                                date: {
-                                    type: string;
-                                    description: string;
-                                    $semantic: {
-                                        type: string;
-                                        source: string;
+                                "date": {
+                                    "type": string;
+                                    "description": string;
+                                    "$semantic": {
+                                        "type": string;
+                                        "source": string;
                                     };
                                 };
                             };
@@ -5586,15 +5586,15 @@ export const metadata_v1: {
                     };
                 };
                 metric_filters: {
-                    type: string;
-                    description: string;
-                    uniqueItems: boolean;
-                    items: {
-                        type: string;
-                        $semantic: {
-                            type: string;
-                            sources: string[];
-                            typePrefix: boolean;
+                    "type": string;
+                    "description": string;
+                    "uniqueItems": boolean;
+                    "items": {
+                        "type": string;
+                        "$semantic": {
+                            "type": string;
+                            "sources": string[];
+                            "typePrefix": boolean;
                         };
                     };
                 };
@@ -5602,12 +5602,12 @@ export const metadata_v1: {
             oneOf: ({
                 properties: {
                     title: {
-                        type: string;
-                        description: string;
+                        "type": string;
+                        "description": string;
                     };
                     type: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     using: {
                         description: string;
@@ -5615,35 +5615,35 @@ export const metadata_v1: {
                             $ref: string;
                         }[];
                         $semantic: {
-                            type: string;
+                            "type": string;
                         };
                     };
                     condition: {
-                        enum: string[];
+                        "enum": string[];
                     };
                     values: {
-                        type: string;
-                        items: {
-                            type: string[];
+                        "type": string;
+                        "items": {
+                            "type": string[];
                         };
                     };
                     case_sensitive: {
-                        type: string;
+                        "type": string;
                     };
                     display_as: {
-                        type: string;
-                        description: string;
-                        $ref: string;
+                        "type": string;
+                        "description": string;
+                        "$ref": string;
                     };
                     mode: {
-                        type: string;
-                        enum: string[];
-                        description: string;
+                        "type": string;
+                        "enum": string[];
+                        "description": string;
                     };
                     selection_type: {
-                        type: string;
-                        enum: string[];
-                        description: string;
+                        "type": string;
+                        "enum": string[];
+                        "description": string;
                     };
                     parents: {
                         type: string;
@@ -5657,8 +5657,8 @@ export const metadata_v1: {
                                 title: string;
                                 description: string;
                                 $semantic: {
-                                    type: string;
-                                    sources: string[];
+                                    "type": string;
+                                    "sources": string[];
                                 };
                             } | {
                                 $semantic?: undefined;
@@ -5666,24 +5666,24 @@ export const metadata_v1: {
                                 type: string;
                                 title: string;
                                 properties: {
-                                    using: {
-                                        type: string;
-                                        description: string;
-                                        $semantic: {
-                                            type: string;
-                                            source: string;
+                                    "using": {
+                                        "type": string;
+                                        "description": string;
+                                        "$semantic": {
+                                            "type": string;
+                                            "source": string;
                                         };
                                     };
-                                    common: {
-                                        type: string;
-                                        description: string;
+                                    "common": {
+                                        "type": string;
+                                        "description": string;
                                     };
-                                    date: {
-                                        type: string;
-                                        description: string;
-                                        $semantic: {
-                                            type: string;
-                                            source: string;
+                                    "date": {
+                                        "type": string;
+                                        "description": string;
+                                        "$semantic": {
+                                            "type": string;
+                                            "source": string;
                                         };
                                     };
                                 };
@@ -5692,15 +5692,15 @@ export const metadata_v1: {
                         };
                     };
                     metric_filters: {
-                        type: string;
-                        description: string;
-                        uniqueItems: boolean;
-                        items: {
-                            type: string;
-                            $semantic: {
-                                type: string;
-                                sources: string[];
-                                typePrefix: boolean;
+                        "type": string;
+                        "description": string;
+                        "uniqueItems": boolean;
+                        "items": {
+                            "type": string;
+                            "$semantic": {
+                                "type": string;
+                                "sources": string[];
+                                "typePrefix": boolean;
                             };
                         };
                     };
@@ -5713,12 +5713,12 @@ export const metadata_v1: {
                     parents?: undefined;
                     metric_filters?: undefined;
                     title: {
-                        type: string;
-                        description: string;
+                        "type": string;
+                        "description": string;
                     };
                     type: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     using: {
                         description: string;
@@ -5726,89 +5726,89 @@ export const metadata_v1: {
                             $ref: string;
                         }[];
                         $semantic: {
-                            type: string;
+                            "type": string;
                         };
                     };
                     condition: {
-                        enum: string[];
+                        "enum": string[];
                     };
                     value: {
-                        type: string;
+                        "type": string;
                     };
                     case_sensitive: {
-                        type: string;
+                        "type": string;
                     };
                     display_as: {
-                        type: string;
-                        description: string;
-                        $ref: string;
+                        "type": string;
+                        "description": string;
+                        "$ref": string;
                     };
                     mode: {
-                        type: string;
-                        enum: string[];
-                        description: string;
+                        "type": string;
+                        "enum": string[];
+                        "description": string;
                     };
                     selection_type: {
-                        type: string;
-                        enum: string[];
-                        description: string;
+                        "type": string;
+                        "enum": string[];
+                        "description": string;
                     };
                 };
                 required: string[];
             })[];
             required: string[];
             $semantic: {
-                type: string;
-                source: string;
-                mode: string;
+                "type": string;
+                "source": string;
+                "mode": string;
             };
         };
         dashboardMetricValueFilter: {
-            type: string;
-            title: string;
-            description: string;
-            properties: {
-                type: {
-                    type: string;
-                    enum: string[];
+            "type": string;
+            "title": string;
+            "description": string;
+            "properties": {
+                "type": {
+                    "type": string;
+                    "enum": string[];
                 };
-                title: {
-                    type: string;
-                    description: string;
+                "title": {
+                    "type": string;
+                    "description": string;
                 };
-                using: {
-                    $ref: string;
-                    description: string;
+                "using": {
+                    "$ref": string;
+                    "description": string;
                 };
-                conditions: {
-                    type: string;
-                    description: string;
-                    items: {
-                        $ref: string;
+                "conditions": {
+                    "type": string;
+                    "description": string;
+                    "items": {
+                        "$ref": string;
                     };
                 };
-                dimensionality: {
-                    type: string;
-                    description: string;
-                    items: {
-                        $ref: string;
+                "dimensionality": {
+                    "type": string;
+                    "description": string;
+                    "items": {
+                        "$ref": string;
                     };
                 };
-                null_values_as_zero: {
-                    type: string;
-                    description: string;
+                "null_values_as_zero": {
+                    "type": string;
+                    "description": string;
                 };
-                mode: {
-                    type: string;
-                    enum: string[];
-                    description: string;
+                "mode": {
+                    "type": string;
+                    "enum": string[];
+                    "description": string;
                 };
             };
-            required: string[];
-            $semantic: {
-                type: string;
-                source: string;
-                mode: string;
+            "required": string[];
+            "$semantic": {
+                "type": string;
+                "source": string;
+                "mode": string;
             };
         };
         dashboardFilterGroup: {
@@ -5818,12 +5818,12 @@ export const metadata_v1: {
             additionalProperties: boolean;
             properties: {
                 type: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 title: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 filters: {
                     $ref: string;
@@ -5843,9 +5843,9 @@ export const metadata_v1: {
             patternProperties: {
                 "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
                     properties: {
-                        type: {
-                            type: string;
-                            enum: string[];
+                        "type": {
+                            "type": string;
+                            "enum": string[];
                         };
                     };
                     required: string[];
@@ -5856,40 +5856,40 @@ export const metadata_v1: {
                             allOf: ({
                                 not?: undefined;
                                 properties: {
-                                    type: {
-                                        const: string;
+                                    "type": {
+                                        "const": string;
                                     };
                                 };
                             } | {
                                 properties?: undefined;
                                 not: {
-                                    properties: {
-                                        from: {
-                                            type: string;
+                                    "properties": {
+                                        "from": {
+                                            "type": string;
                                         };
                                     };
-                                    required: string[];
+                                    "required": string[];
                                 };
                             })[];
                         };
                         then: {
-                            $ref: string;
+                            "$ref": string;
                         };
                     } | {
                         if: {
                             allOf?: undefined;
                             properties: {
-                                type: {
-                                    const: string;
+                                "type": {
+                                    "const": string;
                                 };
-                                from: {
-                                    type: string;
+                                "from": {
+                                    "type": string;
                                 };
                             };
                             required: string[];
                         };
                         then: {
-                            $ref: string;
+                            "$ref": string;
                         };
                     } | {
                         if: {
@@ -5898,29 +5898,29 @@ export const metadata_v1: {
                             properties: {
                                 from?: undefined;
                                 type: {
-                                    const: string;
+                                    "const": string;
                                 };
                             };
                         };
                         then: {
-                            $ref: string;
+                            "$ref": string;
                         };
                     })[];
                 };
             };
         };
         dateFilterGranularity: {
-            type: string;
-            enum: string[];
+            "type": string;
+            "enum": string[];
         };
         mvfCondition: {
             title: string;
             type: string;
             properties: {
-                condition: {
-                    type: string;
-                    enum: string[];
-                    description: string;
+                "condition": {
+                    "type": string;
+                    "enum": string[];
+                    "description": string;
                 };
             };
             allOf: ({
@@ -5929,7 +5929,7 @@ export const metadata_v1: {
                     properties?: undefined;
                     required?: undefined;
                     not: {
-                        required: string[];
+                        "required": string[];
                     };
                 };
                 then: {
@@ -5947,8 +5947,8 @@ export const metadata_v1: {
                 if: {
                     not?: undefined;
                     properties: {
-                        condition: {
-                            enum: string[];
+                        "condition": {
+                            "enum": string[];
                         };
                     };
                     required: string[];
@@ -5959,12 +5959,12 @@ export const metadata_v1: {
                         from?: undefined;
                         to?: undefined;
                         condition: {
-                            type: string;
-                            enum: string[];
+                            "type": string;
+                            "enum": string[];
                         };
                         value: {
-                            type: string;
-                            description: string;
+                            "type": string;
+                            "description": string;
                         };
                     };
                     required: string[];
@@ -5974,8 +5974,8 @@ export const metadata_v1: {
                 if: {
                     not?: undefined;
                     properties: {
-                        condition: {
-                            enum: string[];
+                        "condition": {
+                            "enum": string[];
                         };
                     };
                     required: string[];
@@ -5985,16 +5985,16 @@ export const metadata_v1: {
                     properties: {
                         value?: undefined;
                         condition: {
-                            type: string;
-                            enum: string[];
+                            "type": string;
+                            "enum": string[];
                         };
                         from: {
-                            type: string;
-                            description: string;
+                            "type": string;
+                            "description": string;
                         };
                         to: {
-                            type: string;
-                            description: string;
+                            "type": string;
+                            "description": string;
                         };
                     };
                     required: string[];
@@ -6007,8 +6007,8 @@ export const metadata_v1: {
                 if: {
                     not?: undefined;
                     properties: {
-                        type: {
-                            enum: string[];
+                        "type": {
+                            "enum": string[];
                         };
                     };
                     required: string[];
@@ -6022,26 +6022,26 @@ export const metadata_v1: {
                     properties?: undefined;
                     required?: undefined;
                     not: {
-                        properties: {
-                            type: {
-                                type: string;
+                        "properties": {
+                            "type": {
+                                "type": string;
                             };
                         };
-                        required: string[];
+                        "required": string[];
                     };
                 };
                 then: {
                     $ref?: undefined;
                     $semantic: {
-                        type: string;
-                        snippets: never[];
+                        "type": string;
+                        "snippets": never[];
                     };
                 };
             })[];
             properties: {
-                type: {
-                    type: string;
-                    enum: string[];
+                "type": {
+                    "type": string;
+                    "enum": string[];
                 };
             };
             required: string[];
@@ -6051,51 +6051,51 @@ export const metadata_v1: {
             type: string;
             additionalProperties: boolean;
             properties: {
-                type: {
-                    type: string;
-                    enum: string[];
+                "type": {
+                    "type": string;
+                    "enum": string[];
                 };
-                using: {
-                    type: string;
-                    description: string;
-                    $semantic: {
-                        type: string;
-                        source: string;
+                "using": {
+                    "type": string;
+                    "description": string;
+                    "$semantic": {
+                        "type": string;
+                        "source": string;
                     };
                 };
-                granularity: {
-                    type: string;
-                    enum: string[];
-                    description: string;
+                "granularity": {
+                    "type": string;
+                    "enum": string[];
+                    "description": string;
                 };
-                from: {
-                    type: string[];
+                "from": {
+                    "type": string[];
                 };
-                to: {
-                    type: string[];
+                "to": {
+                    "type": string[];
                 };
-                with: {
-                    type: string;
-                    description: string;
-                    additionalProperties: boolean;
-                    patternProperties: {
+                "with": {
+                    "type": string;
+                    "description": string;
+                    "additionalProperties": boolean;
+                    "patternProperties": {
                         "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
-                            $ref: string;
+                            "$ref": string;
                         };
                     };
                 };
-                empty_values: {
-                    type: string;
-                    enum: string[];
-                    description: string;
+                "empty_values": {
+                    "type": string;
+                    "enum": string[];
+                    "description": string;
                 };
             };
             allOf: ({
                 if: {
                     not?: undefined;
                     properties: {
-                        granularity: {
-                            type: string;
+                        "granularity": {
+                            "type": string;
                         };
                     };
                     required: string[];
@@ -6103,21 +6103,21 @@ export const metadata_v1: {
                 then: {
                     properties: {
                         type: {
-                            type: string;
-                            enum: string[];
+                            "type": string;
+                            "enum": string[];
                         };
                         using: {
-                            type: string;
-                            description: string;
-                            $semantic: {
-                                type: string;
-                                source: string;
+                            "type": string;
+                            "description": string;
+                            "$semantic": {
+                                "type": string;
+                                "source": string;
                             };
                         };
                         granularity: {
-                            type: string;
-                            enum: string[];
-                            description: string;
+                            "type": string;
+                            "enum": string[];
+                            "description": string;
                         };
                         from: {
                             type: string;
@@ -6130,19 +6130,19 @@ export const metadata_v1: {
                             pattern?: undefined;
                         };
                         with: {
-                            type: string;
-                            description: string;
-                            additionalProperties: boolean;
-                            patternProperties: {
+                            "type": string;
+                            "description": string;
+                            "additionalProperties": boolean;
+                            "patternProperties": {
                                 "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
-                                    $ref: string;
+                                    "$ref": string;
                                 };
                             };
                         };
                         empty_values: {
-                            type: string;
-                            enum: string[];
-                            description: string;
+                            "type": string;
+                            "enum": string[];
+                            "description": string;
                         };
                     };
                     required: string[];
@@ -6152,53 +6152,53 @@ export const metadata_v1: {
                     properties?: undefined;
                     required?: undefined;
                     not: {
-                        properties: {
-                            granularity: {
-                                type: string;
+                        "properties": {
+                            "granularity": {
+                                "type": string;
                             };
                         };
-                        required: string[];
+                        "required": string[];
                     };
                 };
                 then: {
                     properties: {
                         granularity?: undefined;
                         type: {
-                            type: string;
-                            enum: string[];
+                            "type": string;
+                            "enum": string[];
                         };
                         using: {
-                            type: string;
-                            description: string;
-                            $semantic: {
-                                type: string;
-                                source: string;
+                            "type": string;
+                            "description": string;
+                            "$semantic": {
+                                "type": string;
+                                "source": string;
                             };
                         };
                         from: {
-                            type: string;
-                            pattern: string;
-                            description: string;
+                            "type": string;
+                            "pattern": string;
+                            "description": string;
                         };
                         to: {
-                            type: string;
-                            pattern: string;
-                            description: string;
+                            "type": string;
+                            "pattern": string;
+                            "description": string;
                         };
                         with: {
-                            type: string;
-                            description: string;
-                            additionalProperties: boolean;
-                            patternProperties: {
+                            "type": string;
+                            "description": string;
+                            "additionalProperties": boolean;
+                            "patternProperties": {
                                 "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
-                                    $ref: string;
+                                    "$ref": string;
                                 };
                             };
                         };
                         empty_values: {
-                            type: string;
-                            enum: string[];
-                            description: string;
+                            "type": string;
+                            "enum": string[];
+                            "description": string;
                         };
                     };
                     required: string[];
@@ -6223,8 +6223,8 @@ export const metadata_v1: {
             additionalProperties: boolean;
             properties: {
                 type: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 using: {
                     description: string;
@@ -6233,32 +6233,32 @@ export const metadata_v1: {
                     }[];
                 };
                 display_as: {
-                    type: string;
-                    description: string;
-                    $ref: string;
+                    "type": string;
+                    "description": string;
+                    "$ref": string;
                 };
                 state: {
-                    title: string;
-                    type: string;
-                    additionalProperties: boolean;
-                    properties: {
-                        include: {
-                            type: string;
-                            items: {
-                                type: string[];
-                                $semantic: {
-                                    type: string;
-                                    from: string;
+                    "title": string;
+                    "type": string;
+                    "additionalProperties": boolean;
+                    "properties": {
+                        "include": {
+                            "type": string;
+                            "items": {
+                                "type": string[];
+                                "$semantic": {
+                                    "type": string;
+                                    "from": string;
                                 };
                             };
                         };
-                        exclude: {
-                            type: string;
-                            items: {
-                                type: string[];
-                                $semantic: {
-                                    type: string;
-                                    from: string;
+                        "exclude": {
+                            "type": string;
+                            "items": {
+                                "type": string[];
+                                "$semantic": {
+                                    "type": string;
+                                    "from": string;
                                 };
                             };
                         };
@@ -6277,8 +6277,8 @@ export const metadata_v1: {
             type: string;
             properties: {
                 type: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 using: {
                     description: string;
@@ -6287,20 +6287,20 @@ export const metadata_v1: {
                     }[];
                 };
                 case_sensitive: {
-                    type: string;
+                    "type": string;
                 };
                 display_as: {
-                    type: string;
-                    description: string;
-                    $ref: string;
+                    "type": string;
+                    "description": string;
+                    "$ref": string;
                 };
             };
             oneOf: ({
                 properties: {
                     value?: undefined;
                     type: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     using: {
                         description: string;
@@ -6309,21 +6309,21 @@ export const metadata_v1: {
                         }[];
                     };
                     condition: {
-                        enum: string[];
+                        "enum": string[];
                     };
                     values: {
-                        type: string;
-                        items: {
-                            type: string[];
+                        "type": string;
+                        "items": {
+                            "type": string[];
                         };
                     };
                     case_sensitive: {
-                        type: string;
+                        "type": string;
                     };
                     display_as: {
-                        type: string;
-                        description: string;
-                        $ref: string;
+                        "type": string;
+                        "description": string;
+                        "$ref": string;
                     };
                 };
                 required: string[];
@@ -6331,8 +6331,8 @@ export const metadata_v1: {
                 properties: {
                     values?: undefined;
                     type: {
-                        type: string;
-                        enum: string[];
+                        "type": string;
+                        "enum": string[];
                     };
                     using: {
                         description: string;
@@ -6341,18 +6341,18 @@ export const metadata_v1: {
                         }[];
                     };
                     condition: {
-                        enum: string[];
+                        "enum": string[];
                     };
                     value: {
-                        type: string;
+                        "type": string;
                     };
                     case_sensitive: {
-                        type: string;
+                        "type": string;
                     };
                     display_as: {
-                        type: string;
-                        description: string;
-                        $ref: string;
+                        "type": string;
+                        "description": string;
+                        "$ref": string;
                     };
                 };
                 required: string[];
@@ -6368,21 +6368,21 @@ export const metadata_v1: {
             title: string;
             type: string;
             properties: {
-                type: {
-                    type: string;
-                    enum: string[];
+                "type": {
+                    "type": string;
+                    "enum": string[];
                 };
-                conditions: {
-                    type: string;
-                    description: string;
-                    items: {
-                        $ref: string;
+                "conditions": {
+                    "type": string;
+                    "description": string;
+                    "items": {
+                        "$ref": string;
                     };
                 };
-                condition: {
-                    type: string;
-                    enum: string[];
-                    description: string;
+                "condition": {
+                    "type": string;
+                    "enum": string[];
+                    "description": string;
                 };
             };
             allOf: ({
@@ -6393,7 +6393,7 @@ export const metadata_v1: {
                     properties: {
                         condition?: undefined;
                         conditions: {
-                            type: string;
+                            "type": string;
                         };
                     };
                     required: string[];
@@ -6406,8 +6406,8 @@ export const metadata_v1: {
                         value?: undefined;
                         condition?: undefined;
                         type: {
-                            type: string;
-                            enum: string[];
+                            "type": string;
+                            "enum": string[];
                         };
                         using: {
                             description: string;
@@ -6419,8 +6419,8 @@ export const metadata_v1: {
                                 $ref?: undefined;
                                 type: string;
                                 $semantic: {
-                                    type: string;
-                                    source: string;
+                                    "type": string;
+                                    "source": string;
                                 };
                             })[];
                         };
@@ -6429,12 +6429,12 @@ export const metadata_v1: {
                             type: string;
                             minItems: number;
                             items: {
-                                $ref: string;
+                                "$ref": string;
                             };
                         };
                         null_values_as_zero: {
-                            type: string;
-                            description: string;
+                            "type": string;
+                            "description": string;
                         };
                         dimensionality: {
                             type: string;
@@ -6448,8 +6448,8 @@ export const metadata_v1: {
                                     $ref?: undefined;
                                     type: string;
                                     $semantic: {
-                                        type: string;
-                                        sources: string[];
+                                        "type": string;
+                                        "sources": string[];
                                     };
                                 })[];
                             };
@@ -6465,7 +6465,7 @@ export const metadata_v1: {
                     properties: {
                         conditions?: undefined;
                         condition: {
-                            enum: string[];
+                            "enum": string[];
                         };
                     };
                     required: string[];
@@ -6477,8 +6477,8 @@ export const metadata_v1: {
                         to?: undefined;
                         conditions?: undefined;
                         type: {
-                            type: string;
-                            enum: string[];
+                            "type": string;
+                            "enum": string[];
                         };
                         using: {
                             description: string;
@@ -6490,23 +6490,23 @@ export const metadata_v1: {
                                 $ref?: undefined;
                                 type: string;
                                 $semantic: {
-                                    type: string;
-                                    source: string;
+                                    "type": string;
+                                    "source": string;
                                 };
                             })[];
                         };
                         condition: {
-                            type: string;
-                            enum: string[];
-                            description: string;
+                            "type": string;
+                            "enum": string[];
+                            "description": string;
                         };
                         value: {
-                            type: string;
-                            description: string;
+                            "type": string;
+                            "description": string;
                         };
                         null_values_as_zero: {
-                            type: string;
-                            description: string;
+                            "type": string;
+                            "description": string;
                         };
                         dimensionality: {
                             type: string;
@@ -6520,8 +6520,8 @@ export const metadata_v1: {
                                     $ref?: undefined;
                                     type: string;
                                     $semantic: {
-                                        type: string;
-                                        sources: string[];
+                                        "type": string;
+                                        "sources": string[];
                                     };
                                 })[];
                             };
@@ -6537,7 +6537,7 @@ export const metadata_v1: {
                     properties: {
                         conditions?: undefined;
                         condition: {
-                            enum: string[];
+                            "enum": string[];
                         };
                     };
                     required: string[];
@@ -6548,8 +6548,8 @@ export const metadata_v1: {
                         value?: undefined;
                         conditions?: undefined;
                         type: {
-                            type: string;
-                            enum: string[];
+                            "type": string;
+                            "enum": string[];
                         };
                         using: {
                             description: string;
@@ -6561,27 +6561,27 @@ export const metadata_v1: {
                                 $ref?: undefined;
                                 type: string;
                                 $semantic: {
-                                    type: string;
-                                    source: string;
+                                    "type": string;
+                                    "source": string;
                                 };
                             })[];
                         };
                         condition: {
-                            type: string;
-                            enum: string[];
-                            description: string;
+                            "type": string;
+                            "enum": string[];
+                            "description": string;
                         };
                         from: {
-                            type: string;
-                            description: string;
+                            "type": string;
+                            "description": string;
                         };
                         to: {
-                            type: string;
-                            description: string;
+                            "type": string;
+                            "description": string;
                         };
                         null_values_as_zero: {
-                            type: string;
-                            description: string;
+                            "type": string;
+                            "description": string;
                         };
                         dimensionality: {
                             type: string;
@@ -6595,8 +6595,8 @@ export const metadata_v1: {
                                     $ref?: undefined;
                                     type: string;
                                     $semantic: {
-                                        type: string;
-                                        sources: string[];
+                                        "type": string;
+                                        "sources": string[];
                                     };
                                 })[];
                             };
@@ -6625,8 +6625,8 @@ export const metadata_v1: {
                         condition?: undefined;
                         null_values_as_zero?: undefined;
                         type: {
-                            type: string;
-                            enum: string[];
+                            "type": string;
+                            "enum": string[];
                         };
                         using: {
                             description: string;
@@ -6638,8 +6638,8 @@ export const metadata_v1: {
                                 $ref?: undefined;
                                 type: string;
                                 $semantic: {
-                                    type: string;
-                                    source: string;
+                                    "type": string;
+                                    "source": string;
                                 };
                             })[];
                         };
@@ -6648,7 +6648,7 @@ export const metadata_v1: {
                             type: string;
                             description: string;
                             items: {
-                                $ref: string;
+                                "$ref": string;
                             };
                         };
                         dimensionality: {
@@ -6663,8 +6663,8 @@ export const metadata_v1: {
                                     $ref?: undefined;
                                     type: string;
                                     $semantic: {
-                                        type: string;
-                                        sources: string[];
+                                        "type": string;
+                                        "sources": string[];
                                     };
                                 })[];
                             };
@@ -6675,9 +6675,9 @@ export const metadata_v1: {
             })[];
             required: string[];
             $semantic: {
-                type: string;
-                source: string;
-                mode: string;
+                "type": string;
+                "source": string;
+                "mode": string;
             };
         };
         queryRankingFilter: {
@@ -6686,8 +6686,8 @@ export const metadata_v1: {
             additionalProperties: boolean;
             properties: {
                 type: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 using: {
                     description: string;
@@ -6699,8 +6699,8 @@ export const metadata_v1: {
                         $ref?: undefined;
                         type: string;
                         $semantic: {
-                            type: string;
-                            source: string;
+                            "type": string;
+                            "source": string;
                         };
                     })[];
                 };
@@ -6714,22 +6714,22 @@ export const metadata_v1: {
                         $ref?: undefined;
                         type: string;
                         $semantic: {
-                            type: string;
-                            source: string;
+                            "type": string;
+                            "source": string;
                         };
                     })[];
                 };
                 bottom: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 top: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 strict_limit_of_rows: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
             };
             oneOf: {
@@ -6738,9 +6738,9 @@ export const metadata_v1: {
             }[];
             required: string[];
             $semantic: {
-                type: string;
-                source: string;
-                mode: string;
+                "type": string;
+                "source": string;
+                "mode": string;
             };
         };
         computed_attribute: {
@@ -6762,36 +6762,36 @@ export const metadata_v1: {
                     })[];
                 };
                 type: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 title: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 description: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 tags: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 maql: {
-                    type: string;
-                    description: string;
-                    $semantic: {
-                        type: string;
+                    "type": string;
+                    "description": string;
+                    "$semantic": {
+                        "type": string;
                     };
                 };
                 locale: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
             };
             $semantic: {
-                type: string;
-                snippets: string[];
+                "type": string;
+                "snippets": string[];
             };
             required: string[];
         };
@@ -6811,14 +6811,14 @@ export const metadata_v1: {
                     })[];
                 };
                 allowGrowToFit: {
-                    title: string;
-                    type: string;
+                    "title": string;
+                    "type": string;
                 };
                 using: {
                     type: string;
                     $semantic: {
-                        type: string;
-                        sources: string[];
+                        "type": string;
+                        "sources": string[];
                     };
                     items: {
                         oneOf: ({
@@ -6840,12 +6840,12 @@ export const metadata_v1: {
                             minProperties: number;
                             maxProperties: number;
                             additionalProperties: {
-                                type: string;
+                                "type": string;
                             };
                             $semantic: {
-                                type: string;
-                                sources: string[];
-                                mode: string;
+                                "type": string;
+                                "sources": string[];
+                                "mode": string;
                             };
                         } | {
                             $semantic?: undefined;
@@ -6855,46 +6855,46 @@ export const metadata_v1: {
                             minProperties: number;
                             maxProperties: number;
                             properties: {
-                                SUM: {
-                                    type: string;
-                                    $semantic: {
-                                        type: string;
-                                        sources: string[];
+                                "SUM": {
+                                    "type": string;
+                                    "$semantic": {
+                                        "type": string;
+                                        "sources": string[];
                                     };
                                 };
-                                AVG: {
-                                    type: string;
-                                    $semantic: {
-                                        type: string;
-                                        sources: string[];
+                                "AVG": {
+                                    "type": string;
+                                    "$semantic": {
+                                        "type": string;
+                                        "sources": string[];
                                     };
                                 };
-                                MAX: {
-                                    type: string;
-                                    $semantic: {
-                                        type: string;
-                                        sources: string[];
+                                "MAX": {
+                                    "type": string;
+                                    "$semantic": {
+                                        "type": string;
+                                        "sources": string[];
                                     };
                                 };
-                                MIN: {
-                                    type: string;
-                                    $semantic: {
-                                        type: string;
-                                        sources: string[];
+                                "MIN": {
+                                    "type": string;
+                                    "$semantic": {
+                                        "type": string;
+                                        "sources": string[];
                                     };
                                 };
-                                MED: {
-                                    type: string;
-                                    $semantic: {
-                                        type: string;
-                                        sources: string[];
+                                "MED": {
+                                    "type": string;
+                                    "$semantic": {
+                                        "type": string;
+                                        "sources": string[];
                                     };
                                 };
-                                NAT: {
-                                    type: string;
-                                    $semantic: {
-                                        type: string;
-                                        sources: string[];
+                                "NAT": {
+                                    "type": string;
+                                    "$semantic": {
+                                        "type": string;
+                                        "sources": string[];
                                     };
                                 };
                             };
@@ -6904,24 +6904,24 @@ export const metadata_v1: {
             };
         };
         colorItems: {
-            title: string;
-            type: string;
-            additionalProperties: {
-                $ref: string;
+            "title": string;
+            "type": string;
+            "additionalProperties": {
+                "$ref": string;
             };
         };
         colorDefinition: {
-            title: string;
-            type: string;
-            properties: {
-                total: {
-                    $ref: string;
+            "title": string;
+            "type": string;
+            "properties": {
+                "total": {
+                    "$ref": string;
                 };
-                negative: {
-                    $ref: string;
+                "negative": {
+                    "$ref": string;
                 };
-                positive: {
-                    $ref: string;
+                "positive": {
+                    "$ref": string;
                 };
             };
         };
@@ -6947,27 +6947,27 @@ export const metadata_v1: {
             })[];
         };
         lineStyleMapping: {
-            title: string;
-            type: string;
-            $semantic: {
-                type: string;
-                source: string;
-                mode: string;
+            "title": string;
+            "type": string;
+            "$semantic": {
+                "type": string;
+                "source": string;
+                "mode": string;
             };
-            additionalProperties: {
-                type: string;
-                additionalProperties: boolean;
-                minProperties: number;
-                properties: {
-                    style: {
-                        type: string;
-                        enum: string[];
-                        description: string;
+            "additionalProperties": {
+                "type": string;
+                "additionalProperties": boolean;
+                "minProperties": number;
+                "properties": {
+                    "style": {
+                        "type": string;
+                        "enum": string[];
+                        "description": string;
                     };
-                    width: {
-                        type: string;
-                        enum: number[];
-                        description: string;
+                    "width": {
+                        "type": string;
+                        "enum": number[];
+                        "description": string;
                     };
                 };
             };
@@ -7012,59 +7012,59 @@ export const metadata_v1: {
                     })[];
                 };
                 type: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 version: {
-                    type: string;
-                    enum: string[];
-                    description: string;
+                    "type": string;
+                    "enum": string[];
+                    "description": string;
                 };
                 title: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 description: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 tags: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 cross_filtering: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 user_filters_reset: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 user_filters_save: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 filter_views: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 persistent_filters_across_tabs: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 timezone_config: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 enable_section_headers: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 sections: {
-                    type: string;
-                    description: string;
-                    items: {
-                        $ref: string;
+                    "type": string;
+                    "description": string;
+                    "items": {
+                        "$ref": string;
                     };
                 };
                 filters: {
@@ -7083,16 +7083,16 @@ export const metadata_v1: {
                             description?: undefined;
                             type: string;
                             properties: {
-                                id: {
-                                    $ref: string;
-                                    description: string;
-                                    $semantic: {
-                                        type: string;
-                                        source: string;
+                                "id": {
+                                    "$ref": string;
+                                    "description": string;
+                                    "$semantic": {
+                                        "type": string;
+                                        "source": string;
                                     };
                                 };
-                                parameters: {
-                                    description: string;
+                                "parameters": {
+                                    "description": string;
                                 };
                             };
                             required: string[];
@@ -7105,35 +7105,35 @@ export const metadata_v1: {
                             $ref: string;
                             description: string;
                             $semantic: {
-                                type: string;
-                                source: string;
+                                "type": string;
+                                "source": string;
                             };
                         })[];
                     };
                 };
                 tabs: {
-                    type: string;
-                    description: string;
-                    items: {
-                        $ref: string;
+                    "type": string;
+                    "description": string;
+                    "items": {
+                        "$ref": string;
                     };
-                    $semantic: {
-                        type: string;
+                    "$semantic": {
+                        "type": string;
                     };
                 };
                 permissions: {
-                    type: string;
-                    description: string;
-                    additionalProperties: boolean;
-                    properties: {
-                        VIEW: {
-                            $ref: string;
+                    "type": string;
+                    "description": string;
+                    "additionalProperties": boolean;
+                    "properties": {
+                        "VIEW": {
+                            "$ref": string;
                         };
-                        EDIT: {
-                            $ref: string;
+                        "EDIT": {
+                            "$ref": string;
                         };
-                        SHARE: {
-                            $ref: string;
+                        "SHARE": {
+                            "$ref": string;
                         };
                     };
                 };
@@ -7141,44 +7141,44 @@ export const metadata_v1: {
             required: string[];
         };
         timezoneConfig: {
-            type: string;
-            additionalProperties: boolean;
-            properties: {
-                timezone_id: {
-                    $ref: string;
-                    description: string;
+            "type": string;
+            "additionalProperties": boolean;
+            "properties": {
+                "timezone_id": {
+                    "$ref": string;
+                    "description": string;
                 };
-                show_timezone_info: {
-                    type: string;
-                    description: string;
+                "show_timezone_info": {
+                    "type": string;
+                    "description": string;
                 };
-                allow_user_override_in_view_mode: {
-                    type: string;
-                    description: string;
+                "allow_user_override_in_view_mode": {
+                    "type": string;
+                    "description": string;
                 };
             };
         };
         section: {
-            type: string;
-            additionalProperties: boolean;
-            properties: {
-                title: {
-                    type: string;
-                    description: string;
+            "type": string;
+            "additionalProperties": boolean;
+            "properties": {
+                "title": {
+                    "type": string;
+                    "description": string;
                 };
-                description: {
-                    type: string;
-                    description: string;
+                "description": {
+                    "type": string;
+                    "description": string;
                 };
-                widgets: {
-                    type: string;
-                    description: string;
-                    items: {
-                        $ref: string;
+                "widgets": {
+                    "type": string;
+                    "description": string;
+                    "items": {
+                        "$ref": string;
                     };
                 };
             };
-            required: string[];
+            "required": string[];
         };
         tab: {
             type: string;
@@ -7193,21 +7193,21 @@ export const metadata_v1: {
                     }[];
                 };
                 title: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 filters: {
-                    $ref: string;
-                    description: string;
-                    $semantic: {
-                        type: string;
+                    "$ref": string;
+                    "description": string;
+                    "$semantic": {
+                        "type": string;
                     };
                 };
                 sections: {
-                    type: string;
-                    description: string;
-                    items: {
-                        $ref: string;
+                    "type": string;
+                    "description": string;
+                    "items": {
+                        "$ref": string;
                     };
                 };
             };
@@ -7225,7 +7225,7 @@ export const metadata_v1: {
                 pattern: string;
             })[];
             $semantic: {
-                type: string;
+                "type": string;
             };
         };
         widget: {
@@ -7235,7 +7235,7 @@ export const metadata_v1: {
                 if: {
                     properties: {
                         visualization: {
-                            type: string[];
+                            "type": string[];
                         };
                         content?: undefined;
                         visualizations?: undefined;
@@ -7256,7 +7256,7 @@ export const metadata_v1: {
                     properties: {
                         visualization?: undefined;
                         content: {
-                            type: string[];
+                            "type": string[];
                         };
                         visualizations?: undefined;
                         sections?: undefined;
@@ -7283,17 +7283,17 @@ export const metadata_v1: {
                             })[];
                         };
                         content: {
-                            type: string;
-                            description: string;
+                            "type": string;
+                            "description": string;
                         };
                         columns: {
-                            type: string;
-                            enum: number[];
-                            description: string;
+                            "type": string;
+                            "enum": number[];
+                            "description": string;
                         };
                         rows: {
-                            type: string;
-                            description: string;
+                            "type": string;
+                            "description": string;
                         };
                         visualizations?: undefined;
                         sections?: undefined;
@@ -7309,7 +7309,7 @@ export const metadata_v1: {
                         visualization?: undefined;
                         content?: undefined;
                         visualizations: {
-                            type: string;
+                            "type": string;
                         };
                         sections?: undefined;
                     };
@@ -7336,19 +7336,19 @@ export const metadata_v1: {
                             })[];
                         };
                         columns: {
-                            type: string;
-                            enum: number[];
-                            description: string;
+                            "type": string;
+                            "enum": number[];
+                            "description": string;
                         };
                         rows: {
-                            type: string;
-                            description: string;
+                            "type": string;
+                            "description": string;
                         };
                         visualizations: {
-                            type: string;
-                            description: string;
-                            items: {
-                                $ref: string;
+                            "type": string;
+                            "description": string;
+                            "items": {
+                                "$ref": string;
                             };
                         };
                         sections?: undefined;
@@ -7365,7 +7365,7 @@ export const metadata_v1: {
                         content?: undefined;
                         visualizations?: undefined;
                         sections: {
-                            type: string;
+                            "type": string;
                         };
                     };
                     required: string[];
@@ -7393,47 +7393,47 @@ export const metadata_v1: {
                             })[];
                         };
                         columns: {
-                            type: string;
-                            enum: number[];
-                            description: string;
+                            "type": string;
+                            "enum": number[];
+                            "description": string;
                         };
                         rows: {
-                            type: string;
-                            description: string;
+                            "type": string;
+                            "description": string;
                         };
                         layout_direction: {
-                            type: string;
-                            enum: string[];
-                            description: string;
+                            "type": string;
+                            "enum": string[];
+                            "description": string;
                         };
                         enable_section_headers: {
-                            type: string;
-                            description: string;
+                            "type": string;
+                            "description": string;
                         };
                         sections: {
-                            type: string;
-                            description: string;
-                            items: {
-                                type: string;
-                                additionalProperties: boolean;
-                                properties: {
-                                    title: {
-                                        type: string;
-                                        description: string;
+                            "type": string;
+                            "description": string;
+                            "items": {
+                                "type": string;
+                                "additionalProperties": boolean;
+                                "properties": {
+                                    "title": {
+                                        "type": string;
+                                        "description": string;
                                     };
-                                    description: {
-                                        type: string;
-                                        description: string;
+                                    "description": {
+                                        "type": string;
+                                        "description": string;
                                     };
-                                    widgets: {
-                                        type: string;
-                                        description: string;
-                                        items: {
-                                            $ref: string;
+                                    "widgets": {
+                                        "type": string;
+                                        "description": string;
+                                        "items": {
+                                            "$ref": string;
                                         };
                                     };
                                 };
-                                required: string[];
+                                "required": string[];
                             };
                         };
                     };
@@ -7448,7 +7448,7 @@ export const metadata_v1: {
                 if: {
                     properties: {
                         open_url: {
-                            type: string;
+                            "type": string;
                         };
                         open_dashboard?: undefined;
                         open_visualization?: undefined;
@@ -7456,27 +7456,27 @@ export const metadata_v1: {
                     required: string[];
                 };
                 then: {
-                    $ref: string;
+                    "$ref": string;
                 };
                 else: {
-                    not: {};
+                    "not": {};
                 };
             } | {
                 if: {
                     properties: {
                         open_url?: undefined;
                         open_dashboard: {
-                            type: string;
+                            "type": string;
                         };
                         open_visualization?: undefined;
                     };
                     required: string[];
                 };
                 then: {
-                    $ref: string;
+                    "$ref": string;
                 };
                 else: {
-                    not: {};
+                    "not": {};
                 };
             } | {
                 if: {
@@ -7484,16 +7484,16 @@ export const metadata_v1: {
                         open_url?: undefined;
                         open_dashboard?: undefined;
                         open_visualization: {
-                            type: string;
+                            "type": string;
                         };
                     };
                     required: string[];
                 };
                 then: {
-                    $ref: string;
+                    "$ref": string;
                 };
                 else: {
-                    not: {};
+                    "not": {};
                 };
             })[];
         };
@@ -7504,7 +7504,7 @@ export const metadata_v1: {
                 if: {
                     properties: {
                         hierarchy: {
-                            type: string[];
+                            "type": string[];
                         };
                         template?: undefined;
                     };
@@ -7514,19 +7514,19 @@ export const metadata_v1: {
                     type: string;
                     properties: {
                         hierarchy: {
-                            type: string;
-                            description: string;
-                            $semantic: {
-                                type: string;
-                                source: string;
+                            "type": string;
+                            "description": string;
+                            "$semantic": {
+                                "type": string;
+                                "source": string;
                             };
                         };
                         on: {
-                            type: string;
-                            description: string;
-                            $semantic: {
-                                type: string;
-                                source: string;
+                            "type": string;
+                            "description": string;
+                            "$semantic": {
+                                "type": string;
+                                "source": string;
                             };
                         };
                         template?: undefined;
@@ -7538,7 +7538,7 @@ export const metadata_v1: {
                     properties: {
                         hierarchy?: undefined;
                         template: {
-                            type: string[];
+                            "type": string[];
                         };
                     };
                     required: string[];
@@ -7548,16 +7548,16 @@ export const metadata_v1: {
                     properties: {
                         hierarchy?: undefined;
                         template: {
-                            type: string;
-                            description: string;
-                            enum: string[];
+                            "type": string;
+                            "description": string;
+                            "enum": string[];
                         };
                         on: {
-                            type: string;
-                            description: string;
-                            $semantic: {
-                                type: string;
-                                source: string;
+                            "type": string;
+                            "description": string;
+                            "$semantic": {
+                                "type": string;
+                                "source": string;
                             };
                         };
                     };
@@ -7566,27 +7566,27 @@ export const metadata_v1: {
             })[];
         };
         ignored_drill_downs_intersection: {
-            title: string;
-            description: string;
-            type: string;
-            properties: {
-                attributes: {
-                    type: string;
-                    description: string;
-                    items: {
-                        type: string;
-                        $semantic: {
-                            type: string;
-                            sources: string[];
+            "title": string;
+            "description": string;
+            "type": string;
+            "properties": {
+                "attributes": {
+                    "type": string;
+                    "description": string;
+                    "items": {
+                        "type": string;
+                        "$semantic": {
+                            "type": string;
+                            "sources": string[];
                         };
                     };
                 };
-                hierarchy: {
-                    description: string;
-                    $ref: string;
+                "hierarchy": {
+                    "description": string;
+                    "$ref": string;
                 };
             };
-            required: string[];
+            "required": string[];
         };
         visualizationWidget: {
             title: string;
@@ -7607,11 +7607,11 @@ export const metadata_v1: {
                     })[];
                 };
                 visualization: {
-                    type: string;
-                    description: string;
-                    $semantic: {
-                        type: string;
-                        source: string;
+                    "type": string;
+                    "description": string;
+                    "$semantic": {
+                        "type": string;
+                        "source": string;
                     };
                 };
                 title: {
@@ -7641,90 +7641,90 @@ export const metadata_v1: {
                     })[];
                 };
                 columns: {
-                    type: string;
-                    enum: number[];
-                    description: string;
+                    "type": string;
+                    "enum": number[];
+                    "description": string;
                 };
                 rows: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 date: {
-                    $ref: string;
-                    description: string;
-                    $semantic: {
-                        type: string;
-                        source: string;
+                    "$ref": string;
+                    "description": string;
+                    "$semantic": {
+                        "type": string;
+                        "source": string;
                     };
                 };
                 ignored_filters: {
-                    type: string;
-                    description: string;
-                    items: {
-                        type: string;
-                        description: string;
-                        $semantic: {
-                            type: string;
-                            sources: string[];
-                            typePrefix: boolean;
+                    "type": string;
+                    "description": string;
+                    "items": {
+                        "type": string;
+                        "description": string;
+                        "$semantic": {
+                            "type": string;
+                            "sources": string[];
+                            "typePrefix": boolean;
                         };
                     };
                 };
                 zoom_data: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 interactions: {
-                    type: string;
-                    items: {
-                        $ref: string;
+                    "type": string;
+                    "items": {
+                        "$ref": string;
                     };
                 };
                 ignored_drill_downs: {
-                    type: string;
-                    description: string;
-                    items: {
-                        $ref: string;
+                    "type": string;
+                    "description": string;
+                    "items": {
+                        "$ref": string;
                     };
                 };
                 ignored_drill_downs_intersections: {
-                    type: string;
-                    description: string;
-                    items: {
-                        $ref: string;
+                    "type": string;
+                    "description": string;
+                    "items": {
+                        "$ref": string;
                     };
                 };
                 ignored_cross_filtering: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
             };
             required: string[];
         };
         interactionOpenPlainUrl: {
-            type: string;
-            properties: {
-                click_on: {
-                    $ref: string;
+            "type": string;
+            "properties": {
+                "click_on": {
+                    "$ref": string;
                 };
-                open_url: {
-                    type: string;
-                    description: string;
-                    $semantic: {
-                        type: string;
+                "open_url": {
+                    "type": string;
+                    "description": string;
+                    "$semantic": {
+                        "type": string;
                     };
                 };
-                ignored_intersection_attributes: {
-                    $ref: string;
+                "ignored_intersection_attributes": {
+                    "$ref": string;
                 };
             };
-            required: string[];
+            "required": string[];
         };
         interactionOpenParamUrl: {
             type: string;
             properties: {
                 click_on: {
-                    $ref: string;
+                    "$ref": string;
                 };
                 open_url: {
                     type: string;
@@ -7744,142 +7744,142 @@ export const metadata_v1: {
                     };
                 };
                 ignored_intersection_attributes: {
-                    $ref: string;
+                    "$ref": string;
                 };
             };
             required: string[];
         };
         interactionOpenDashboard: {
-            type: string;
-            properties: {
-                click_on: {
-                    $ref: string;
+            "type": string;
+            "properties": {
+                "click_on": {
+                    "$ref": string;
                 };
-                open_dashboard: {
-                    type: string;
-                    description: string;
-                    $semantic: {
-                        type: string;
-                        source: string;
+                "open_dashboard": {
+                    "type": string;
+                    "description": string;
+                    "$semantic": {
+                        "type": string;
+                        "source": string;
                     };
                 };
-                open_dashboard_tab: {
-                    type: string;
-                    description: string;
-                    $semantic: {
-                        type: string;
-                        source: string;
+                "open_dashboard_tab": {
+                    "type": string;
+                    "description": string;
+                    "$semantic": {
+                        "type": string;
+                        "source": string;
                     };
                 };
-                filters: {
-                    $ref: string;
+                "filters": {
+                    "$ref": string;
                 };
             };
-            required: string[];
+            "required": string[];
         };
         interactionOpenVisualization: {
-            type: string;
-            properties: {
-                click_on: {
-                    $ref: string;
+            "type": string;
+            "properties": {
+                "click_on": {
+                    "$ref": string;
                 };
-                open_visualization: {
-                    type: string;
-                    description: string;
-                    $semantic: {
-                        type: string;
-                        source: string;
+                "open_visualization": {
+                    "type": string;
+                    "description": string;
+                    "$semantic": {
+                        "type": string;
+                        "source": string;
                     };
                 };
-                filters: {
-                    $ref: string;
+                "filters": {
+                    "$ref": string;
                 };
             };
-            required: string[];
+            "required": string[];
         };
         interactionIgnoredIntersectionAttributes: {
-            type: string;
-            description: string;
-            items: {
-                type: string;
-                $semantic: {
-                    type: string;
-                    sources: string[];
+            "type": string;
+            "description": string;
+            "items": {
+                "type": string;
+                "$semantic": {
+                    "type": string;
+                    "sources": string[];
                 };
             };
         };
         interactionIgnoredDashboardFilters: {
-            type: string;
-            description: string;
-            items: {
-                type: string;
-                $semantic: {
-                    type: string;
-                    sources: string[];
+            "type": string;
+            "description": string;
+            "items": {
+                "type": string;
+                "$semantic": {
+                    "type": string;
+                    "sources": string[];
                 };
             };
         };
         interactionIncludedSourceInsightFilters: {
-            type: string;
-            description: string;
-            items: {
-                type: string;
-                $semantic: {
-                    type: string;
-                    source: string;
+            "type": string;
+            "description": string;
+            "items": {
+                "type": string;
+                "$semantic": {
+                    "type": string;
+                    "source": string;
                 };
             };
         };
         interactionIncludedSourceMeasureFilters: {
-            type: string;
-            description: string;
-            items: {
-                type: string;
-                $semantic: {
-                    type: string;
-                    source: string;
+            "type": string;
+            "description": string;
+            "items": {
+                "type": string;
+                "$semantic": {
+                    "type": string;
+                    "source": string;
                 };
             };
         };
         interactionFiltersExclude: {
-            type: string;
-            properties: {
-                drilled_datapoint: {
-                    $ref: string;
+            "type": string;
+            "properties": {
+                "drilled_datapoint": {
+                    "$ref": string;
                 };
-                dashboard_filters: {
-                    $ref: string;
+                "dashboard_filters": {
+                    "$ref": string;
                 };
             };
         };
         interactionFiltersInclude: {
-            type: string;
-            properties: {
-                visualization_filters: {
-                    $ref: string;
+            "type": string;
+            "properties": {
+                "visualization_filters": {
+                    "$ref": string;
                 };
-                metric_filters: {
-                    $ref: string;
+                "metric_filters": {
+                    "$ref": string;
                 };
             };
         };
         interactionClickOn: {
-            type: string;
-            description: string;
-            $semantic: {
-                type: string;
-                source: string;
-                code: string;
+            "type": string;
+            "description": string;
+            "$semantic": {
+                "type": string;
+                "source": string;
+                "code": string;
             };
         };
         interactionFilters: {
-            type: string;
-            properties: {
-                exclude: {
-                    $ref: string;
+            "type": string;
+            "properties": {
+                "exclude": {
+                    "$ref": string;
                 };
-                include: {
-                    $ref: string;
+                "include": {
+                    "$ref": string;
                 };
             };
         };
@@ -7902,36 +7902,36 @@ export const metadata_v1: {
                     })[];
                 };
                 type: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 title: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 description: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 tags: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 table_path: {
-                    type: string;
-                    description: string;
-                    pattern: string;
-                    $semantic: {
-                        type: string;
-                        source: string;
-                        code: string;
+                    "type": string;
+                    "description": string;
+                    "pattern": string;
+                    "$semantic": {
+                        "type": string;
+                        "source": string;
+                        "code": string;
                     };
                 };
                 sql: {
-                    type: string;
-                    description: string;
-                    $semantic: {
-                        type: string;
+                    "type": string;
+                    "description": string;
+                    "$semantic": {
+                        "type": string;
                     };
                 };
                 primary_key: {
@@ -7943,9 +7943,9 @@ export const metadata_v1: {
                         $ref: string;
                         description: string;
                         $semantic: {
-                            type: string;
-                            source: string;
-                            code: string;
+                            "type": string;
+                            "source": string;
+                            "code": string;
                         };
                     } | {
                         $ref?: undefined;
@@ -7953,11 +7953,11 @@ export const metadata_v1: {
                         title: string;
                         type: string;
                         items: {
-                            $ref: string;
-                            $semantic: {
-                                type: string;
-                                source: string;
-                                code: string;
+                            "$ref": string;
+                            "$semantic": {
+                                "type": string;
+                                "source": string;
+                                "code": string;
                             };
                         };
                         uniqueItems: boolean;
@@ -7965,40 +7965,40 @@ export const metadata_v1: {
                     })[];
                 };
                 fields: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 references: {
-                    type: string;
-                    items: {
-                        $ref: string;
+                    "type": string;
+                    "items": {
+                        "$ref": string;
                     };
-                    description: string;
+                    "description": string;
                 };
                 workspace_data_filters: {
-                    type: string;
-                    items: {
-                        $ref: string;
+                    "type": string;
+                    "items": {
+                        "$ref": string;
                     };
-                    description: string;
+                    "description": string;
                 };
                 data_source: {
-                    type: string;
-                    $semantic: {
-                        type: string;
-                        source: string;
-                        code: string;
+                    "type": string;
+                    "$semantic": {
+                        "type": string;
+                        "source": string;
+                        "code": string;
                     };
-                    description: string;
+                    "description": string;
                 };
                 precedence: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 dataset_type: {
-                    type: string;
-                    enum: string[];
-                    description: string;
+                    "type": string;
+                    "enum": string[];
+                    "description": string;
                 };
             };
             $semantic: ({
@@ -8018,13 +8018,13 @@ export const metadata_v1: {
                 title: string;
                 description: string;
                 properties: {
-                    dataset_type: {
-                        const: string;
+                    "dataset_type": {
+                        "const": string;
                     };
-                    table_path: boolean;
-                    sql: boolean;
-                    precedence: boolean;
-                    workspace_data_filters: boolean;
+                    "table_path": boolean;
+                    "sql": boolean;
+                    "precedence": boolean;
+                    "workspace_data_filters": boolean;
                 };
                 required: string[];
             })[];
@@ -8048,52 +8048,52 @@ export const metadata_v1: {
                     })[];
                 };
                 type: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 title: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 description: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 tags: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 title_base: {
-                    type: string;
-                    description: string;
-                    maxLength: number;
+                    "type": string;
+                    "description": string;
+                    "maxLength": number;
                 };
                 title_pattern: {
-                    type: string;
-                    description: string;
-                    maxLength: number;
+                    "type": string;
+                    "description": string;
+                    "maxLength": number;
                 };
                 granularities: {
-                    type: string;
-                    uniqueItems: boolean;
-                    items: {
-                        type: string;
-                        enum: string[];
-                        $semantic: {
-                            type: string;
-                            sources: string[];
-                            mode: string;
+                    "type": string;
+                    "uniqueItems": boolean;
+                    "items": {
+                        "type": string;
+                        "enum": string[];
+                        "$semantic": {
+                            "type": string;
+                            "sources": string[];
+                            "mode": string;
                         };
                     };
-                    $semantic: {
-                        type: string;
-                        required: string[];
+                    "$semantic": {
+                        "type": string;
+                        "required": string[];
                     };
                 };
             };
             $semantic: {
-                type: string;
-                snippets: string[];
+                "type": string;
+                "snippets": string[];
             };
             required: string[];
         };
@@ -8107,8 +8107,8 @@ export const metadata_v1: {
                         if: {
                             not?: undefined;
                             properties: {
-                                type: {
-                                    const: string;
+                                "type": {
+                                    "const": string;
                                 };
                             };
                             required: string[];
@@ -8122,26 +8122,26 @@ export const metadata_v1: {
                             properties?: undefined;
                             required?: undefined;
                             not: {
-                                properties: {
-                                    type: {
-                                        type: string;
+                                "properties": {
+                                    "type": {
+                                        "type": string;
                                     };
                                 };
-                                required: string[];
+                                "required": string[];
                             };
                         };
                         then: {
                             $ref?: undefined;
                             $semantic: {
-                                type: string;
-                                snippets: string[];
+                                "type": string;
+                                "snippets": string[];
                             };
                         };
                     })[];
                     properties: {
-                        type: {
-                            type: string;
-                            enum: string[];
+                        "type": {
+                            "type": string;
+                            "enum": string[];
                         };
                     };
                     required: string[];
@@ -8162,50 +8162,50 @@ export const metadata_v1: {
             })[];
         };
         reference: {
-            type: string;
-            additionalProperties: boolean;
-            properties: {
-                dataset: {
-                    type: string;
-                    pattern: string;
-                    $semantic: {
-                        type: string;
-                        source: string;
-                        code: string;
+            "type": string;
+            "additionalProperties": boolean;
+            "properties": {
+                "dataset": {
+                    "type": string;
+                    "pattern": string;
+                    "$semantic": {
+                        "type": string;
+                        "source": string;
+                        "code": string;
                     };
-                    description: string;
+                    "description": string;
                 };
-                sources: {
-                    type: string;
-                    items: {
-                        $ref: string;
+                "sources": {
+                    "type": string;
+                    "items": {
+                        "$ref": string;
                     };
-                    description: string;
+                    "description": string;
                 };
-                multi_directional: {
-                    type: string;
-                    description: string;
+                "multi_directional": {
+                    "type": string;
+                    "description": string;
                 };
             };
-            required: string[];
+            "required": string[];
         };
         workspace_data_filter: {
-            type: string;
-            additionalProperties: boolean;
-            properties: {
-                filter_id: {
-                    type: string;
-                    description: string;
+            "type": string;
+            "additionalProperties": boolean;
+            "properties": {
+                "filter_id": {
+                    "type": string;
+                    "description": string;
                 };
-                source_column: {
-                    $ref: string;
+                "source_column": {
+                    "$ref": string;
                 };
-                data_type: {
-                    $ref: string;
-                    description: string;
+                "data_type": {
+                    "$ref": string;
+                    "description": string;
                 };
             };
-            required: string[];
+            "required": string[];
         };
         attribute: {
             title: string;
@@ -8213,78 +8213,78 @@ export const metadata_v1: {
             additionalProperties: boolean;
             properties: {
                 type: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 title: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 description: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 tags: {
-                    $ref: string;
-                    tags: string;
+                    "$ref": string;
+                    "tags": string;
                 };
                 source_column: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 data_type: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 default_view: {
-                    type: string;
-                    description: string;
-                    $semantic: {
-                        type: string;
-                        source: string;
-                        code: string;
+                    "type": string;
+                    "description": string;
+                    "$semantic": {
+                        "type": string;
+                        "source": string;
+                        "code": string;
                     };
                 };
                 sort_column: {
-                    type: string;
-                    description: string;
-                    $semantic: {
-                        type: string;
-                        source: string;
-                        code: string;
+                    "type": string;
+                    "description": string;
+                    "$semantic": {
+                        "type": string;
+                        "source": string;
+                        "code": string;
                     };
                 };
                 sort_direction: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 show_in_ai_results: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 is_hidden: {
-                    type: string;
-                    description: string;
-                    deprecated: boolean;
+                    "type": string;
+                    "description": string;
+                    "deprecated": boolean;
                 };
                 locale: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 is_nullable: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 null_value_join_replacement: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 labels: {
                     type: string;
                     additionalProperties: boolean;
                     patternProperties: {
                         "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
-                            $ref: string;
+                            "$ref": string;
                         };
                     };
                     $semantic: {
@@ -8314,46 +8314,46 @@ export const metadata_v1: {
             type: string;
             additionalProperties: boolean;
             properties: {
-                type: {
-                    type: string;
-                    enum: string[];
+                "type": {
+                    "type": string;
+                    "enum": string[];
                 };
-                title: {
-                    $ref: string;
-                    description: string;
+                "title": {
+                    "$ref": string;
+                    "description": string;
                 };
-                description: {
-                    $ref: string;
-                    description: string;
+                "description": {
+                    "$ref": string;
+                    "description": string;
                 };
-                tags: {
-                    $ref: string;
-                    tags: string;
+                "tags": {
+                    "$ref": string;
+                    "tags": string;
                 };
-                source_column: {
-                    $ref: string;
-                    description: string;
+                "source_column": {
+                    "$ref": string;
+                    "description": string;
                 };
-                data_type: {
-                    $ref: string;
-                    description: string;
+                "data_type": {
+                    "$ref": string;
+                    "description": string;
                 };
-                show_in_ai_results: {
-                    type: string;
-                    description: string;
+                "show_in_ai_results": {
+                    "type": string;
+                    "description": string;
                 };
-                is_hidden: {
-                    type: string;
-                    description: string;
-                    deprecated: boolean;
+                "is_hidden": {
+                    "type": string;
+                    "description": string;
+                    "deprecated": boolean;
                 };
-                is_nullable: {
-                    type: string;
-                    description: string;
+                "is_nullable": {
+                    "type": string;
+                    "description": string;
                 };
-                null_value_join_replacement: {
-                    type: string;
-                    description: string;
+                "null_value_join_replacement": {
+                    "type": string;
+                    "description": string;
                 };
             };
             required: string[];
@@ -8374,42 +8374,42 @@ export const metadata_v1: {
             type: string;
             additionalProperties: boolean;
             properties: {
-                type: {
-                    type: string;
-                    enum: string[];
+                "type": {
+                    "type": string;
+                    "enum": string[];
                 };
-                description: {
-                    $ref: string;
-                    description: string;
+                "description": {
+                    "$ref": string;
+                    "description": string;
                 };
-                tags: {
-                    $ref: string;
-                    tags: string;
+                "tags": {
+                    "$ref": string;
+                    "tags": string;
                 };
-                source_column: {
-                    $ref: string;
-                    description: string;
+                "source_column": {
+                    "$ref": string;
+                    "description": string;
                 };
-                data_type: {
-                    $ref: string;
-                    description: string;
+                "data_type": {
+                    "$ref": string;
+                    "description": string;
                 };
-                aggregated_as: {
-                    type: string;
-                    enum: string[];
-                    description: string;
+                "aggregated_as": {
+                    "type": string;
+                    "enum": string[];
+                    "description": string;
                 };
-                assigned_to: {
-                    type: string;
-                    description: string;
+                "assigned_to": {
+                    "type": string;
+                    "description": string;
                 };
-                is_nullable: {
-                    type: string;
-                    description: string;
+                "is_nullable": {
+                    "type": string;
+                    "description": string;
                 };
-                null_value_join_replacement: {
-                    type: string;
-                    description: string;
+                "null_value_join_replacement": {
+                    "type": string;
+                    "description": string;
                 };
             };
             required: string[];
@@ -8426,27 +8426,27 @@ export const metadata_v1: {
             })[];
         };
         sourceColumn: {
-            type: string;
-            maxLength: number;
-            $semantic: {
-                type: string;
-                source: string;
-                code: string;
+            "type": string;
+            "maxLength": number;
+            "$semantic": {
+                "type": string;
+                "source": string;
+                "code": string;
             };
         };
         dataType: {
-            type: string;
-            enum: string[];
-            $semantic: {
-                type: string;
-                source: string;
-                code: string;
+            "type": string;
+            "enum": string[];
+            "$semantic": {
+                "type": string;
+                "source": string;
+                "code": string;
             };
         };
         locale: {
-            type: string;
-            pattern: string;
-            description: string;
+            "type": string;
+            "pattern": string;
+            "description": string;
         };
         label: {
             title: string;
@@ -8454,61 +8454,61 @@ export const metadata_v1: {
             required: never[];
             additionalProperties: boolean;
             properties: {
-                source_column: {
-                    $ref: string;
-                    description: string;
+                "source_column": {
+                    "$ref": string;
+                    "description": string;
                 };
-                data_type: {
-                    $ref: string;
-                    description: string;
+                "data_type": {
+                    "$ref": string;
+                    "description": string;
                 };
-                title: {
-                    $ref: string;
-                    description: string;
+                "title": {
+                    "$ref": string;
+                    "description": string;
                 };
-                description: {
-                    $ref: string;
-                    description: string;
+                "description": {
+                    "$ref": string;
+                    "description": string;
                 };
-                tags: {
-                    $ref: string;
-                    description: string;
+                "tags": {
+                    "$ref": string;
+                    "description": string;
                 };
-                value_type: {
-                    type: string;
-                    enum: string[];
+                "value_type": {
+                    "type": string;
+                    "enum": string[];
                 };
-                geo_area_config: {
-                    $ref: string;
-                    description: string;
+                "geo_area_config": {
+                    "$ref": string;
+                    "description": string;
                 };
-                show_in_ai_results: {
-                    type: string;
-                    description: string;
+                "show_in_ai_results": {
+                    "type": string;
+                    "description": string;
                 };
-                is_hidden: {
-                    type: string;
-                    description: string;
-                    deprecated: boolean;
+                "is_hidden": {
+                    "type": string;
+                    "description": string;
+                    "deprecated": boolean;
                 };
-                locale: {
-                    $ref: string;
-                    description: string;
+                "locale": {
+                    "$ref": string;
+                    "description": string;
                 };
-                translations: {
-                    type: string;
-                    description: string;
-                    items: {
-                        $ref: string;
+                "translations": {
+                    "type": string;
+                    "description": string;
+                    "items": {
+                        "$ref": string;
                     };
                 };
-                is_nullable: {
-                    type: string;
-                    description: string;
+                "is_nullable": {
+                    "type": string;
+                    "description": string;
                 };
-                null_value_join_replacement: {
-                    type: string;
-                    description: string;
+                "null_value_join_replacement": {
+                    "type": string;
+                    "description": string;
                 };
             };
             $semantic: {
@@ -8518,49 +8518,49 @@ export const metadata_v1: {
             }[];
         };
         geoAreaConfig: {
-            type: string;
-            additionalProperties: boolean;
-            properties: {
-                collection: {
-                    type: string;
-                    additionalProperties: boolean;
-                    properties: {
-                        id: {
-                            type: string;
-                            description: string;
+            "type": string;
+            "additionalProperties": boolean;
+            "properties": {
+                "collection": {
+                    "type": string;
+                    "additionalProperties": boolean;
+                    "properties": {
+                        "id": {
+                            "type": string;
+                            "description": string;
                         };
                     };
-                    required: string[];
+                    "required": string[];
                 };
             };
-            required: string[];
+            "required": string[];
         };
         labelTranslation: {
-            title: string;
-            type: string;
-            additionalProperties: boolean;
-            properties: {
-                source_column: {
-                    $ref: string;
-                    description: string;
+            "title": string;
+            "type": string;
+            "additionalProperties": boolean;
+            "properties": {
+                "source_column": {
+                    "$ref": string;
+                    "description": string;
                 };
-                locale: {
-                    $ref: string;
-                    description: string;
+                "locale": {
+                    "$ref": string;
+                    "description": string;
                 };
             };
-            required: string[];
+            "required": string[];
         };
         source: {
             type: string;
             additionalProperties: boolean;
             properties: {
                 source_column: {
-                    $ref: string;
+                    "$ref": string;
                 };
                 data_type: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 target: {
                     type: string;
@@ -8578,12 +8578,12 @@ export const metadata_v1: {
                     })[];
                 };
                 is_nullable: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 null_value_join_replacement: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
             };
             required: string[];
@@ -8607,45 +8607,45 @@ export const metadata_v1: {
                     })[];
                 };
                 type: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 title: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 description: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 tags: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 maql: {
-                    type: string;
-                    description: string;
-                    $semantic: {
-                        type: string;
+                    "type": string;
+                    "description": string;
+                    "$semantic": {
+                        "type": string;
                     };
                 };
                 format: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 show_in_ai_results: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 is_hidden: {
-                    type: string;
-                    description: string;
-                    deprecated: boolean;
+                    "type": string;
+                    "description": string;
+                    "deprecated": boolean;
                 };
             };
             $semantic: {
-                type: string;
-                snippets: string[];
+                "type": string;
+                "snippets": string[];
             };
             required: string[];
         };
@@ -8668,29 +8668,29 @@ export const metadata_v1: {
                     })[];
                 };
                 type: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 title: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 description: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 tags: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 definition: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
             };
             $semantic: {
-                type: string;
-                snippets: string[];
+                "type": string;
+                "snippets": string[];
             };
             required: string[];
         };
@@ -8699,21 +8699,21 @@ export const metadata_v1: {
             description: string;
             allOf: {
                 if: {
-                    properties: {
-                        type: {
-                            const: string;
+                    "properties": {
+                        "type": {
+                            "const": string;
                         };
                     };
-                    required: string[];
+                    "required": string[];
                 };
                 then: {
-                    $ref: string;
+                    "$ref": string;
                 };
             }[];
             properties: {
-                type: {
-                    type: string;
-                    enum: string[];
+                "type": {
+                    "type": string;
+                    "enum": string[];
                 };
             };
             required: string[];
@@ -8725,12 +8725,12 @@ export const metadata_v1: {
             additionalProperties: boolean;
             properties: {
                 type: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 defaultValue: {
-                    type: string;
-                    description: string;
+                    "type": string;
+                    "description": string;
                 };
                 constraints: {
                     title: string;
@@ -8738,22 +8738,22 @@ export const metadata_v1: {
                     additionalProperties: boolean;
                     description: string;
                     properties: {
-                        minLength: {
-                            type: string;
-                            minimum: number;
-                            description: string;
+                        "minLength": {
+                            "type": string;
+                            "minimum": number;
+                            "description": string;
                         };
-                        maxLength: {
-                            type: string;
-                            minimum: number;
-                            description: string;
+                        "maxLength": {
+                            "type": string;
+                            "minimum": number;
+                            "description": string;
                         };
-                        allowedValues: {
-                            type: string;
-                            minItems: number;
-                            description: string;
-                            items: {
-                                $ref: string;
+                        "allowedValues": {
+                            "type": string;
+                            "minItems": number;
+                            "description": string;
+                            "items": {
+                                "$ref": string;
                             };
                         };
                     };
@@ -8766,25 +8766,25 @@ export const metadata_v1: {
             };
             required: string[];
             $semantic: {
-                type: string;
+                "type": string;
             };
         };
         parameterAllowedValue: {
-            title: string;
-            type: string;
-            additionalProperties: boolean;
-            properties: {
-                value: {
-                    type: string;
-                    minLength: number;
-                    description: string;
+            "title": string;
+            "type": string;
+            "additionalProperties": boolean;
+            "properties": {
+                "value": {
+                    "type": string;
+                    "minLength": number;
+                    "description": string;
                 };
-                title: {
-                    type: string;
-                    description: string;
+                "title": {
+                    "type": string;
+                    "description": string;
                 };
             };
-            required: string[];
+            "required": string[];
         };
         plugin: {
             title: string;
@@ -8805,44 +8805,44 @@ export const metadata_v1: {
                     })[];
                 };
                 type: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 title: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 description: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 tags: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 url: {
-                    type: string;
-                    description: string;
-                    pattern: string;
+                    "type": string;
+                    "description": string;
+                    "pattern": string;
                 };
             };
             required: string[];
         };
         queryFields: {
-            title: string;
-            type: string;
-            additionalProperties: boolean;
-            patternProperties: {
+            "title": string;
+            "type": string;
+            "additionalProperties": boolean;
+            "patternProperties": {
                 "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
-                    $ref: string;
+                    "$ref": string;
                 };
             };
         };
         querySorts: {
-            title: string;
-            type: string;
-            items: {
-                $ref: string;
+            "title": string;
+            "type": string;
+            "items": {
+                "$ref": string;
             };
         };
         queryField: {
@@ -8859,9 +8859,9 @@ export const metadata_v1: {
                 type: string;
                 properties: {
                     aggregation: {
-                        type: string;
-                        description: string;
-                        enum: string[];
+                        "type": string;
+                        "description": string;
+                        "enum": string[];
                     };
                     using: {
                         oneOf: ({
@@ -8872,30 +8872,30 @@ export const metadata_v1: {
                             type: string;
                             description: string;
                             items: {
-                                type: string;
+                                "type": string;
                             };
                         })[];
                     };
                     maql: {
-                        type: string;
-                        description: string;
+                        "type": string;
+                        "description": string;
                     };
                     operator: {
-                        type: string;
-                        enum: string[];
-                        description: string;
+                        "type": string;
+                        "enum": string[];
+                        "description": string;
                     };
                     type: {
-                        type: string;
-                        enum: string[];
-                        description: string;
+                        "type": string;
+                        "enum": string[];
+                        "description": string;
                     };
                     date_filter: {
-                        type: string;
-                        description: string;
-                        $semantic: {
-                            type: string;
-                            sources: string[];
+                        "type": string;
+                        "description": string;
+                        "$semantic": {
+                            "type": string;
+                            "sources": string[];
                         };
                     };
                 };
@@ -8907,8 +8907,8 @@ export const metadata_v1: {
                         allOf: ({
                             not?: undefined;
                             properties: {
-                                using: {
-                                    type: string[];
+                                "using": {
+                                    "type": string[];
                                 };
                             };
                             required: string[];
@@ -8918,7 +8918,7 @@ export const metadata_v1: {
                             not: {
                                 type?: undefined;
                                 aggregation: {
-                                    type: string;
+                                    "type": string;
                                 };
                                 required: string[];
                                 operator?: undefined;
@@ -8930,7 +8930,7 @@ export const metadata_v1: {
                                 type?: undefined;
                                 aggregation?: undefined;
                                 operator: {
-                                    type: string;
+                                    "type": string;
                                 };
                                 required: string[];
                             };
@@ -8941,7 +8941,7 @@ export const metadata_v1: {
                                 aggregation?: undefined;
                                 operator?: undefined;
                                 type: {
-                                    type: string;
+                                    "type": string;
                                 };
                                 required: string[];
                             };
@@ -8956,12 +8956,12 @@ export const metadata_v1: {
                             aggregation?: undefined;
                             operator?: undefined;
                             title: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             show_all_values: {
-                                description: string;
-                                type: string;
+                                "description": string;
+                                "type": string;
                             };
                             using: {
                                 $ref?: undefined;
@@ -8984,7 +8984,7 @@ export const metadata_v1: {
                         required: string[];
                     };
                     else: {
-                        not: {};
+                        "not": {};
                     };
                 } | {
                     title: string;
@@ -8994,8 +8994,8 @@ export const metadata_v1: {
                         allOf: ({
                             not?: undefined;
                             properties: {
-                                using: {
-                                    type: string[];
+                                "using": {
+                                    "type": string[];
                                 };
                             };
                             required: string[];
@@ -9005,7 +9005,7 @@ export const metadata_v1: {
                             not: {
                                 type?: undefined;
                                 operator: {
-                                    type: string;
+                                    "type": string;
                                 };
                                 required: string[];
                             };
@@ -9015,7 +9015,7 @@ export const metadata_v1: {
                             not: {
                                 operator?: undefined;
                                 type: {
-                                    type: string;
+                                    "type": string;
                                 };
                                 required: string[];
                             };
@@ -9031,16 +9031,16 @@ export const metadata_v1: {
                             operator?: undefined;
                             show_all_values?: undefined;
                             title: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             compute_ratio: {
-                                type: string;
-                                description: string;
+                                "type": string;
+                                "description": string;
                             };
                             filter_by: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             using: {
                                 $semantic?: undefined;
@@ -9059,7 +9059,7 @@ export const metadata_v1: {
                         required: string[];
                     };
                     else: {
-                        not: {};
+                        "not": {};
                     };
                 } | {
                     title: string;
@@ -9069,10 +9069,10 @@ export const metadata_v1: {
                             type?: undefined;
                             operator?: undefined;
                             using: {
-                                type: string[];
+                                "type": string[];
                             };
                             aggregation: {
-                                type: string;
+                                "type": string;
                             };
                             maql?: undefined;
                             date_filter?: undefined;
@@ -9088,21 +9088,21 @@ export const metadata_v1: {
                             operator?: undefined;
                             show_all_values?: undefined;
                             title: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             compute_ratio: {
-                                type: string;
-                                description: string;
+                                "type": string;
+                                "description": string;
                             };
                             filter_by: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             aggregation: {
-                                type: string;
-                                enum: string[];
-                                description: string;
+                                "type": string;
+                                "enum": string[];
+                                "description": string;
                             };
                             using: {
                                 $ref?: undefined;
@@ -9123,7 +9123,7 @@ export const metadata_v1: {
                         required: string[];
                     };
                     else: {
-                        not: {};
+                        "not": {};
                     };
                 } | {
                     title: string;
@@ -9134,7 +9134,7 @@ export const metadata_v1: {
                             aggregation?: undefined;
                             operator?: undefined;
                             maql: {
-                                type: string[];
+                                "type": string[];
                             };
                             using?: undefined;
                             date_filter?: undefined;
@@ -9153,14 +9153,14 @@ export const metadata_v1: {
                             compute_ratio?: undefined;
                             filter_by?: undefined;
                             title: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             maql: {
-                                type: string;
-                                description: string;
-                                $semantic: {
-                                    type: string;
+                                "type": string;
+                                "description": string;
+                                "$semantic": {
+                                    "type": string;
                                 };
                             };
                             using?: undefined;
@@ -9170,7 +9170,7 @@ export const metadata_v1: {
                         required: string[];
                     };
                     else: {
-                        not: {};
+                        "not": {};
                     };
                 } | {
                     title: string;
@@ -9181,10 +9181,10 @@ export const metadata_v1: {
                             aggregation?: undefined;
                             maql?: undefined;
                             using: {
-                                type: string;
+                                "type": string;
                             };
                             operator: {
-                                type: string;
+                                "type": string;
                             };
                             date_filter?: undefined;
                         };
@@ -9202,13 +9202,13 @@ export const metadata_v1: {
                             filter_by?: undefined;
                             maql?: undefined;
                             title: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             operator: {
-                                type: string;
-                                enum: string[];
-                                description: string;
+                                "type": string;
+                                "enum": string[];
+                                "description": string;
                             };
                             using: {
                                 $ref?: undefined;
@@ -9217,11 +9217,11 @@ export const metadata_v1: {
                                 oneOf?: undefined;
                                 type: string;
                                 items: {
-                                    type: string;
-                                    description: string;
-                                    $semantic: {
-                                        type: string;
-                                        source: string;
+                                    "type": string;
+                                    "description": string;
+                                    "$semantic": {
+                                        "type": string;
+                                        "source": string;
                                     };
                                 };
                                 minItems: number;
@@ -9233,7 +9233,7 @@ export const metadata_v1: {
                         required: string[];
                     };
                     else: {
-                        not: {};
+                        "not": {};
                     };
                 } | {
                     title: string;
@@ -9244,14 +9244,14 @@ export const metadata_v1: {
                             operator?: undefined;
                             maql?: undefined;
                             using: {
-                                type: string[];
+                                "type": string[];
                             };
                             type: {
-                                type: string;
-                                enum: string[];
+                                "type": string;
+                                "enum": string[];
                             };
                             date_filter: {
-                                type: string;
+                                "type": string;
                             };
                         };
                         required: string[];
@@ -9268,13 +9268,13 @@ export const metadata_v1: {
                             filter_by?: undefined;
                             maql?: undefined;
                             title: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             type: {
-                                type: string;
-                                enum: string[];
-                                description: string;
+                                "type": string;
+                                "enum": string[];
+                                "description": string;
                             };
                             using: {
                                 $ref?: undefined;
@@ -9285,16 +9285,16 @@ export const metadata_v1: {
                                 type: string;
                                 description: string;
                                 $semantic: {
-                                    type: string;
-                                    source: string;
+                                    "type": string;
+                                    "source": string;
                                 };
                             };
                             date_filter: {
-                                type: string;
-                                description: string;
-                                $semantic: {
-                                    type: string;
-                                    sources: string[];
+                                "type": string;
+                                "description": string;
+                                "$semantic": {
+                                    "type": string;
+                                    "sources": string[];
                                 };
                             };
                             period?: undefined;
@@ -9302,7 +9302,7 @@ export const metadata_v1: {
                         required: string[];
                     };
                     else: {
-                        not: {};
+                        "not": {};
                     };
                 } | {
                     title: string;
@@ -9313,14 +9313,14 @@ export const metadata_v1: {
                             operator?: undefined;
                             maql?: undefined;
                             using: {
-                                type: string[];
+                                "type": string[];
                             };
                             type: {
-                                type: string;
-                                enum: string[];
+                                "type": string;
+                                "enum": string[];
                             };
                             date_filter: {
-                                type: string;
+                                "type": string;
                             };
                         };
                         required: string[];
@@ -9337,13 +9337,13 @@ export const metadata_v1: {
                             filter_by?: undefined;
                             maql?: undefined;
                             title: {
-                                $ref: string;
-                                description: string;
+                                "$ref": string;
+                                "description": string;
                             };
                             type: {
-                                type: string;
-                                enum: string[];
-                                description: string;
+                                "type": string;
+                                "enum": string[];
+                                "description": string;
                             };
                             using: {
                                 $ref?: undefined;
@@ -9354,28 +9354,28 @@ export const metadata_v1: {
                                 type: string;
                                 description: string;
                                 $semantic: {
-                                    type: string;
-                                    source: string;
+                                    "type": string;
+                                    "source": string;
                                 };
                             };
                             date_filter: {
-                                type: string;
-                                description: string;
-                                $semantic: {
-                                    type: string;
-                                    sources: string[];
+                                "type": string;
+                                "description": string;
+                                "$semantic": {
+                                    "type": string;
+                                    "sources": string[];
                                 };
                             };
                             period: {
-                                type: string;
-                                description: string;
-                                minimum: number;
+                                "type": string;
+                                "description": string;
+                                "minimum": number;
                             };
                         };
                         required: string[];
                     };
                     else: {
-                        not: {};
+                        "not": {};
                     };
                 })[];
             })[];
@@ -9391,8 +9391,8 @@ export const metadata_v1: {
                 if: {
                     not?: undefined;
                     properties: {
-                        type: {
-                            enum: string[];
+                        "type": {
+                            "enum": string[];
                         };
                     };
                     required: string[];
@@ -9406,26 +9406,26 @@ export const metadata_v1: {
                     properties?: undefined;
                     required?: undefined;
                     not: {
-                        properties: {
-                            type: {
-                                type: string;
+                        "properties": {
+                            "type": {
+                                "type": string;
                             };
                         };
-                        required: string[];
+                        "required": string[];
                     };
                 };
                 then: {
                     $ref?: undefined;
                     $semantic: {
-                        type: string;
-                        snippets: never[];
+                        "type": string;
+                        "snippets": never[];
                     };
                 };
             })[];
             properties: {
-                type: {
-                    type: string;
-                    enum: string[];
+                "type": {
+                    "type": string;
+                    "enum": string[];
                 };
             };
             required: string[];
@@ -9436,8 +9436,8 @@ export const metadata_v1: {
             additionalProperties: boolean;
             properties: {
                 type: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 by: {
                     description: string;
@@ -9445,8 +9445,8 @@ export const metadata_v1: {
                         $ref?: undefined;
                         type: string;
                         $semantic: {
-                            type: string;
-                            source: string;
+                            "type": string;
+                            "source": string;
                         };
                     } | {
                         $semantic?: undefined;
@@ -9455,14 +9455,14 @@ export const metadata_v1: {
                     })[];
                 };
                 direction: {
-                    type: string;
-                    enum: string[];
-                    description: string;
+                    "type": string;
+                    "enum": string[];
+                    "description": string;
                 };
                 aggregation: {
-                    type: string;
-                    enum: string[];
-                    description: string;
+                    "type": string;
+                    "enum": string[];
+                    "description": string;
                 };
             };
             required: string[];
@@ -9473,13 +9473,13 @@ export const metadata_v1: {
             additionalProperties: boolean;
             properties: {
                 type: {
-                    type: string;
-                    enum: string[];
+                    "type": string;
+                    "enum": string[];
                 };
                 direction: {
-                    type: string;
-                    enum: string[];
-                    description: string;
+                    "type": string;
+                    "enum": string[];
+                    "description": string;
                 };
                 metrics: {
                     type: string;
@@ -9491,8 +9491,8 @@ export const metadata_v1: {
                             additionalProperties?: undefined;
                             type: string;
                             $semantic: {
-                                type: string;
-                                source: string;
+                                "type": string;
+                                "source": string;
                             };
                         } | {
                             $semantic?: undefined;
@@ -9505,8 +9505,8 @@ export const metadata_v1: {
                                         $ref?: undefined;
                                         type: string;
                                         $semantic: {
-                                            type: string;
-                                            source: string;
+                                            "type": string;
+                                            "source": string;
                                         };
                                     } | {
                                         $semantic?: undefined;
@@ -9515,17 +9515,17 @@ export const metadata_v1: {
                                     })[];
                                 };
                                 element: {
-                                    type: string;
-                                    description: string;
-                                    $semantic: {
-                                        type: string;
-                                        from: string;
+                                    "type": string;
+                                    "description": string;
+                                    "$semantic": {
+                                        "type": string;
+                                        "from": string;
                                     };
                                 };
                                 function: {
-                                    type: string;
-                                    description: string;
-                                    enum: string[];
+                                    "type": string;
+                                    "description": string;
+                                    "enum": string[];
                                 };
                             };
                             required: string[];
@@ -9539,8 +9539,8 @@ export const metadata_v1: {
         bucketItem: {
             title: string;
             $semantic: {
-                type: string;
-                sources: string[];
+                "type": string;
+                "sources": string[];
             };
             oneOf: ({
                 properties?: undefined;
@@ -9548,8 +9548,8 @@ export const metadata_v1: {
                 title: string;
                 type: string;
                 $semantic: {
-                    type: string;
-                    sources: string[];
+                    "type": string;
+                    "sources": string[];
                 };
             } | {
                 $semantic?: undefined;
@@ -9557,48 +9557,48 @@ export const metadata_v1: {
                 type: string;
                 additionalProperties: boolean;
                 properties: {
-                    field: {
-                        type: string;
-                        description: string;
-                        $semantic: {
-                            type: string;
-                            sources: string[];
+                    "field": {
+                        "type": string;
+                        "description": string;
+                        "$semantic": {
+                            "type": string;
+                            "sources": string[];
                         };
                     };
-                    format: {
-                        type: string;
-                        description: string;
+                    "format": {
+                        "type": string;
+                        "description": string;
                     };
-                    axis: {
-                        type: string;
-                        description: string;
-                        enum: string[];
+                    "axis": {
+                        "type": string;
+                        "description": string;
+                        "enum": string[];
                     };
-                    display_as: {
-                        type: string;
-                        description: string;
-                        enum: string[];
+                    "display_as": {
+                        "type": string;
+                        "description": string;
+                        "enum": string[];
                     };
-                    totals: {
-                        type: string;
-                        description: string;
-                        items: {
-                            $ref: string;
+                    "totals": {
+                        "type": string;
+                        "description": string;
+                        "items": {
+                            "$ref": string;
                         };
                     };
                 };
             })[];
         };
         bucketEmptyItem: {
-            title: string;
-            type: string;
+            "title": string;
+            "type": string;
         };
         bucketPushpinLocationItem: {
-            title: string;
-            type: string;
-            $semantic: {
-                type: string;
-                sources: string[];
+            "title": string;
+            "type": string;
+            "$semantic": {
+                "type": string;
+                "sources": string[];
             };
         };
         layerItem: {
@@ -9609,14 +9609,14 @@ export const metadata_v1: {
                 $ref?: undefined;
                 anyOf: {
                     properties: {
-                        type: {
-                            const: string;
+                        "type": {
+                            "const": string;
                         };
-                        view_by: {
-                            type: string;
-                            description: string;
-                            items: {
-                                $ref: string;
+                        "view_by": {
+                            "type": string;
+                            "description": string;
+                            "items": {
+                                "$ref": string;
                             };
                         };
                     };
@@ -9625,43 +9625,43 @@ export const metadata_v1: {
             })[];
         };
         bucketGeoAreaItem: {
-            title: string;
-            type: string;
-            $semantic: {
-                type: string;
-                sources: string[];
+            "title": string;
+            "type": string;
+            "$semantic": {
+                "type": string;
+                "sources": string[];
             };
         };
         totalItem: {
-            title: string;
-            type: string;
-            additionalProperties: boolean;
-            properties: {
-                type: {
-                    type: string;
-                    enum: string[];
+            "title": string;
+            "type": string;
+            "additionalProperties": boolean;
+            "properties": {
+                "type": {
+                    "type": string;
+                    "enum": string[];
                 };
-                title: {
-                    $ref: string;
-                    description: string;
+                "title": {
+                    "$ref": string;
+                    "description": string;
                 };
-                using: {
-                    type: string;
-                    description: string;
-                    $semantic: {
-                        type: string;
-                        source: string;
+                "using": {
+                    "type": string;
+                    "description": string;
+                    "$semantic": {
+                        "type": string;
+                        "source": string;
                     };
                 };
             };
-            required: string[];
+            "required": string[];
         };
         bucketLocationItem: {
-            title: string;
-            type: string;
-            $semantic: {
-                type: string;
-                sources: string[];
+            "title": string;
+            "type": string;
+            "$semantic": {
+                "type": string;
+                "sources": string[];
             };
         };
         layerItemBase: {
@@ -9670,21 +9670,21 @@ export const metadata_v1: {
             additionalProperties: boolean;
             properties: {
                 id: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 title: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 type: {
-                    type: string;
-                    description: string;
-                    enum: string[];
+                    "type": string;
+                    "description": string;
+                    "enum": string[];
                 };
                 config: {
-                    $ref: string;
-                    description: string;
+                    "$ref": string;
+                    "description": string;
                 };
                 metrics: {
                     type: string;
@@ -9696,17 +9696,17 @@ export const metadata_v1: {
                     };
                 };
                 view_by: {
-                    type: string;
-                    description: string;
-                    items: {
-                        $ref: string;
+                    "type": string;
+                    "description": string;
+                    "items": {
+                        "$ref": string;
                     };
                 };
                 segment_by: {
-                    type: string;
-                    description: string;
-                    items: {
-                        $ref: string;
+                    "type": string;
+                    "description": string;
+                    "items": {
+                        "$ref": string;
                     };
                 };
             };

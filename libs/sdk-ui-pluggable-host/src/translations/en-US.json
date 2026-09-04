@@ -59,6 +59,26 @@
         "text": "Application failed to load",
         "crowdinContext": "Heading displayed when a pluggable application module fails to mount or load."
     },
+    "gs.host.contractExpired.trial.title": {
+        "text": "Your trial has ended.",
+        "crowdinContext": "Title of the full-screen lock shown when a trial organization's contract has expired."
+    },
+    "gs.host.contractExpired.trial.description": {
+        "text": "Contact us if you would like to continue using GoodData Cloud.",
+        "crowdinContext": "Description under the title of the full-screen lock shown when a trial organization's contract has expired."
+    },
+    "gs.host.contractExpired.nonTrial.title": {
+        "text": "Your access is locked.",
+        "crowdinContext": "Title of the full-screen lock shown when the organization's contract or the deployment license has expired."
+    },
+    "gs.host.contractExpired.nonTrial.description": {
+        "text": "Contact the account administrator to regain access.",
+        "crowdinContext": "Description under the title of the full-screen lock shown when the organization's contract or the deployment license has expired."
+    },
+    "gs.host.contractExpired.buttonTitle": {
+        "text": "Contact us",
+        "crowdinContext": "Label of the button on the expired-trial lock screen that leads to the GoodData contact form."
+    },
     "gs.host.error.failedToLoad": {
         "text": "Failed to load",
         "crowdinContext": "Heading displayed when the application platform context fails to load during startup."

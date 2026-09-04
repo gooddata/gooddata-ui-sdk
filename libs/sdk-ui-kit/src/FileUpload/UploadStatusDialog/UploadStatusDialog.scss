@@ -42,6 +42,7 @@
         right: 0;
         bottom: 0;
         transform: translate(30%, 30%);
+        transform-origin: center center;
 
         @keyframes gd-upload-status-spin {
             from {
@@ -51,8 +52,6 @@
                 transform: translate(30%, 30%) rotate(180deg);
             }
         }
-
-        transform-origin: center center;
 
         &--spinning {
             animation: gd-upload-status-spin 0.7s ease-in-out infinite;

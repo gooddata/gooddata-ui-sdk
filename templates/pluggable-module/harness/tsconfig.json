@@ -33,6 +33,6 @@
             "react": ["./node_modules/@types/react"]
         }
     },
-    "include": ["src", "./*", "typings.d.ts"],
+    "include": ["src", "./*"],
     "exclude": ["**/node_modules", "**/esm", "**/temp", "**/dist"]
 }

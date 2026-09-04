@@ -148,6 +148,7 @@ export {
     type ObjRefInScope,
     isUriRef,
     isIdentifierRef,
+    isComputedAttributeRef,
     objRefToString,
     isLocalIdRef,
     areObjRefsEqual,

@@ -7,6 +7,7 @@ import {
     type IAbsoluteDateFilterPreset,
     type IDateFilterOption,
     type IRelativeDateFilterPreset,
+    isAbsoluteDateFilterForm,
     isRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
 
@@ -20,9 +21,14 @@ import {
 export function getDateFilterOptionGranularity(
     dateFilterOption: DateFilterOption,
 ): DateFilterGranularity | undefined {
-    return isUiRelativeDateFilterForm(dateFilterOption) || isRelativeDateFilterPreset(dateFilterOption)
-        ? dateFilterOption.granularity
-        : undefined;
+    if (
+        isUiRelativeDateFilterForm(dateFilterOption) ||
+        isRelativeDateFilterPreset(dateFilterOption) ||
+        isAbsoluteDateFilterForm(dateFilterOption)
+    ) {
+        return dateFilterOption.granularity;
+    }
+    return undefined;
 }
 
 function isDateFilterOptionVisible(option: IDateFilterOption) {

@@ -73,6 +73,8 @@ export interface IDateFilterCoreProps {
     isTimeForAbsoluteRangeEnabled: boolean;
     isSecondsForAbsoluteRangeEnabled?: boolean;
 
+    isAbsoluteDateFilterGranularityEnabled: boolean;
+
     availableGranularities: DateFilterGranularity[];
 
     isEditMode: boolean;

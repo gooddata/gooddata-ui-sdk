@@ -12,6 +12,7 @@ import {
 } from "@gooddata/sdk-backend-tiger";
 import { type IAuthCredentials } from "@gooddata/sdk-pluggable-application-model";
 
+import { notifyContractExpired } from "./contractExpired.js";
 import { createNotAuthenticatedHandler } from "./tigerNotAuthenticatedHandler.js";
 
 export interface ICreateBackendOptions {
@@ -90,6 +91,7 @@ export function createBackendFactory(options: ICreateBackendOptions = {}): IBack
     const baseBackend = tigerFactory(undefined, {
         packageName: options.packageName ?? "@gooddata/sdk-ui-pluggable-host",
         packageVersion,
+        onContractExpired: notifyContractExpired,
     });
 
     const externalProviderId =

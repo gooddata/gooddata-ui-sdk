@@ -12,3 +12,8 @@ export const DATE_FILTER_ACTIVE_CALENDAR_TAB_ID = "date-filter-active-calendar-t
  * @internal
  */
 export const DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID = "date-filter-relative-granularity-tab-id";
+
+/**
+ * @internal
+ */
+export const DATE_FILTER_ABSOLUTE_GRANULARITY_TAB_ID = "date-filter-absolute-granularity-tab-id";

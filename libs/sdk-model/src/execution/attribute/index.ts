@@ -2,7 +2,13 @@
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { type Identifier, type ObjRef, isIdentifierRef, isUriRef } from "../../objRef/index.js";
+import {
+    type Identifier,
+    type ObjRef,
+    isComputedAttributeRef,
+    isIdentifierRef,
+    isUriRef,
+} from "../../objRef/index.js";
 
 /**
  * Attribute is our nomenclature for 'dimension' as typically used in multi-dimensional BI modeling.
@@ -227,6 +233,5 @@ export function attributesFind(
  * @public
  */
 export function isComputedAttribute(attribute: IAttribute): boolean {
-    const displayForm = attributeDisplayFormRef(attribute);
-    return isIdentifierRef(displayForm) && displayForm.type === "computedAttribute";
+    return isComputedAttributeRef(attributeDisplayFormRef(attribute));
 }

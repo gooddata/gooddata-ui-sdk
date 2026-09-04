@@ -97,7 +97,7 @@ export const useIsScopeThemed: () => boolean | undefined;
 export const useReferenceTheme: () => ITheme | undefined;
 
 // @public
-export const useTheme: (theme?: ITheme | undefined) => ITheme | undefined;
+export const useTheme: (theme?: ITheme) => ITheme | undefined;
 
 // @public
 export const useThemeIsLoading: () => boolean | undefined;

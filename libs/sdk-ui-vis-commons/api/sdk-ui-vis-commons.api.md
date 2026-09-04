@@ -144,7 +144,7 @@ export function getColorPaletteFromColors(colors: string[]): IColorPalette;
 export function getContrastRatio(colorA: string, colorB: string): number;
 
 // @internal
-export const getHeadlineResponsiveClassName: (width: number | undefined, isShortened?: boolean | undefined) => string;
+export const getHeadlineResponsiveClassName: (width: number | undefined, isShortened?: boolean) => string;
 
 // @internal (undocumented)
 export function getLegendDetails(legendPosition: PositionType, responsive: boolean | "autoPositionWithPopup", options: ILegendDetailOptions, respectLegendPosition?: boolean): ILegendDetails | null;

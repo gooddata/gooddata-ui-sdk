@@ -80,7 +80,7 @@ const useDateInput = ({
     errorMessageTexts,
     withoutApply = false,
 }: DateInputHookProps) => {
-    const [inputValue, setInputValue] = useState<string>(formatDate(value!, dateFormat)!);
+    const [inputValue, setInputValue] = useState<string>(formatDate(value!, dateFormat) ?? "");
 
     const validationContextValue = useValidationContextValue(createInvalidNode({ id: "DateInput" }));
     const { isValid, setInvalidDatapoints } = validationContextValue;

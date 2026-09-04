@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "sdk-backend-tiger: Recognized a deployment-wide license expiry (`license_expired`) as a contract-expired error alongside `contract_expired`, instead of surfacing it as an unexpected error on login.",
+      "type": "none",
+      "packageName": "@gooddata/sdk-ui-all"
+    }
+  ],
+  "packageName": "@gooddata/sdk-ui-all",
+  "email": "peter.plochan@gooddata.com"
+}

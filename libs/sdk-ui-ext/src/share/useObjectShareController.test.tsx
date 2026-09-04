@@ -3659,8 +3659,8 @@ describe("useObjectShareController draft mode", () => {
         permissionLevel: "VIEW" as const,
     };
 
-    async function renderDraft(svc = makeService(), options = {}) {
-        const rendered = renderController(svc, undefined, { ...DRAFT_OPTS, ...options });
+    async function renderDraft(svc = makeService(), options = {}, manage: ManagePermission = false) {
+        const rendered = renderController(svc, undefined, { ...DRAFT_OPTS, ...options }, manage);
         await waitFor(() => expect(rendered.result.current.state.status).toBe("success"));
         return rendered;
     }
@@ -3763,5 +3763,25 @@ describe("useObjectShareController draft mode", () => {
         });
 
         expect(svc.getAvailableAssignees).toHaveBeenCalled();
+    });
+
+    it("shows the drafting caller as the creator, and keeps the row as grantees are added", async () => {
+        const { result } = await renderDraft();
+
+        expect(result.current.state.adminSelfRow).toEqual({ name: "self" });
+
+        act(() => result.current.actions.setPendingGrantees([PICKED]));
+        await act(async () => {
+            await result.current.actions.confirmAddGrantees();
+        });
+
+        expect(result.current.state.grantees.map((g) => g.id)).toContain("user:u9");
+        expect(result.current.state.adminSelfRow).toEqual({ name: "self" });
+    });
+
+    it("shows the row for a workspace manager too — drafting makes them the creator", async () => {
+        const { result } = await renderDraft(makeService(), {}, { canManageProject: true });
+
+        expect(result.current.state.adminSelfRow).toEqual({ name: "self" });
     });
 });

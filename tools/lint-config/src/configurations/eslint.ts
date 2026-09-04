@@ -162,7 +162,6 @@ const eslintRulesCommon: Rules = {
 
     "no-unneeded-ternary": ["error", { defaultAssignment: false }],
     "no-extra-boolean-cast": "error",
-    "no-unexpected-multiline": "off",
     "no-restricted-exports": [
         2,
         {

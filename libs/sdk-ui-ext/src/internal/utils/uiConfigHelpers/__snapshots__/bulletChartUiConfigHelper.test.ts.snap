@@ -137,7 +137,6 @@ exports[`bulletChartUiConfigHelper > getBulletChartUiConfig > should return bull
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": true,

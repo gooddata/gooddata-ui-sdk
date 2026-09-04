@@ -42,8 +42,13 @@ import {
     type IUiRelativeDateFilterForm,
 } from "../../interfaces/index.js";
 import { convertPlatformDateStringToDate } from "../DateConversions.js";
+import { convertLocale } from "../dateFnsLocale.js";
 
-import { type IDateAndMessageTranslator, type IMessageTranslator } from "./Translators.js";
+import {
+    type IDateAndMessageTranslator,
+    type IDateTranslator,
+    type IMessageTranslator,
+} from "./Translators.js";
 
 export const getTimeRange = (
     dateFrom: Date,
@@ -114,6 +119,44 @@ export const formatAbsoluteDateRange = (
     const toTitle = toDate ? format(toDate, displayDateFormat) : "";
 
     return `${fromTitle} ${splitter} ${toTitle}`;
+};
+
+// Intl.DateTimeFormat options for Month/Year period labels; Quarter is handled separately below.
+const MONTH_AND_YEAR_INTL_OPTIONS: Partial<Record<DateFilterGranularity, Intl.DateTimeFormatOptions>> = {
+    "GDC.time.month": { month: "long", year: "numeric" },
+    "GDC.time.year": { year: "numeric" },
+};
+
+// Intl.DateTimeFormat has no "quarter" field, so format it with date-fns instead, localized.
+const formatQuarterLabel = (date: Date, locale?: string): string =>
+    format(date, "QQQ y", { locale: convertLocale(locale) });
+
+const STATIC_PERIOD_LABEL_GRANULARITIES = new Set<DateFilterGranularity>([
+    "GDC.time.month",
+    "GDC.time.quarter",
+    "GDC.time.year",
+]);
+
+// Formats a static from/to range.
+const formatStaticPeriodDateRange = (
+    from: string,
+    to: string,
+    granularity: DateFilterGranularity,
+    translator: IDateTranslator,
+): string => {
+    const fromDate = convertPlatformDateStringToDate(from) ?? undefined;
+    const toDate = convertPlatformDateStringToDate(to) ?? undefined;
+    if (!fromDate || !toDate) {
+        return "";
+    }
+
+    const intlOptions = MONTH_AND_YEAR_INTL_OPTIONS[granularity];
+    const formatPeriodBoundaryLabel = (date: Date) =>
+        intlOptions ? translator.formatDate(date, intlOptions) : formatQuarterLabel(date, translator.locale);
+
+    const fromLabel = formatPeriodBoundaryLabel(fromDate);
+    const toLabel = formatPeriodBoundaryLabel(toDate);
+    return fromLabel === toLabel ? fromLabel : `${fromLabel} \u2013 ${toLabel}`;
 };
 
 const relativeDateRangeFormatters: Array<{
@@ -237,8 +280,17 @@ const getEmptyValuesFilterRepresentation = (translator: IMessageTranslator): str
 
 const getAbsoluteFormFilterRepresentation = (
     filter: IUiAbsoluteDateFilterForm,
+    translator: IDateAndMessageTranslator,
     dateFormat: string,
-): string => (filter.from && filter.to ? formatAbsoluteDateRange(filter.from, filter.to, dateFormat) : "");
+): string => {
+    if (!filter.from || !filter.to) {
+        return "";
+    }
+    if (filter.granularity && STATIC_PERIOD_LABEL_GRANULARITIES.has(filter.granularity)) {
+        return formatStaticPeriodDateRange(filter.from, filter.to, filter.granularity, translator);
+    }
+    return formatAbsoluteDateRange(filter.from, filter.to, dateFormat);
+};
 
 const getAbsolutePresetFilterRepresentation = (
     filter: IAbsoluteDateFilterPreset,
@@ -358,7 +410,7 @@ const getDateFilterRepresentationUsingTranslator = (
     labelMode: DateFilterLabelMode,
 ): string => {
     if (isAbsoluteDateFilterForm(filter)) {
-        return getAbsoluteFormFilterRepresentation(filter, dateFormat);
+        return getAbsoluteFormFilterRepresentation(filter, translator, dateFormat);
     } else if (isAbsoluteDateFilterPreset(filter)) {
         return getAbsolutePresetFilterRepresentation(filter, dateFormat);
     } else if (isAllTimeDateFilterOption(filter)) {

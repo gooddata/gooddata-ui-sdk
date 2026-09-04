@@ -8,6 +8,7 @@ import {
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
     type IWorkspaceCatalogFactory,
+    type IWorkspaceComputedAttributesService,
     type IWorkspaceDashboardsService,
     type IWorkspaceDatasetsService,
     type IWorkspaceExportTemplatesService,
@@ -42,6 +43,14 @@ export type WorkspaceSettingsDecoratorFactory = (
     settings: IWorkspaceSettingsService,
     workspace: string,
 ) => IWorkspaceSettingsService;
+
+/**
+ * @alpha
+ */
+export type ComputedAttributesDecoratorFactory = (
+    computedAttributes: IWorkspaceComputedAttributesService,
+    workspace: string,
+) => IWorkspaceComputedAttributesService;
 
 /**
  * @alpha
@@ -141,6 +150,7 @@ export type DecoratorFactories = {
     securitySettings?: SecuritySettingsDecoratorFactory;
     workspaceSettings?: WorkspaceSettingsDecoratorFactory;
     attributes?: AttributesDecoratorFactory;
+    computedAttributes?: ComputedAttributesDecoratorFactory;
     automations?: AutomationsDecoratorFactory;
     insights?: InsightsDecoratorFactory;
     measures?: MeasuresDecoratorFactory;

@@ -6,6 +6,7 @@ import {
     type ObjRef,
     absoluteDateFilterValues,
     idRef,
+    isAbsoluteDateFilterForm,
     isEmptyValuesDateFilterOption,
     isRelativeDateFilter,
     relativeDateFilterValues,
@@ -67,7 +68,9 @@ export function dateFilterOptionToDashboardDateFilter(
         return {
             dateFilter: {
                 type: "absolute",
-                granularity: "GDC.time.date",
+                granularity: isAbsoluteDateFilterForm(dateFilterOption)
+                    ? (dateFilterOption.granularity ?? "GDC.time.date")
+                    : "GDC.time.date",
                 from,
                 to,
                 dataSet,

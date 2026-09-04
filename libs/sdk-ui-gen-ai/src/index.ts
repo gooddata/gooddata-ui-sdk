@@ -111,7 +111,11 @@ export {
     setUserContextAction,
     setAmbientUserContextAction,
 } from "./store/chatWindow/chatWindowSlice.js";
-export { type LinkHandlerEvent, type GenAIAssistantMode } from "./components/ConfigContext.js";
+export {
+    type LinkHandlerEvent,
+    type GenAIAssistantMode,
+    type GenAIAssistantDisplayMode,
+} from "./components/ConfigContext.js";
 export { type IChatMessagesGroup } from "./components/utils/groupUtility.js";
 export { useGenAiChatAvailability } from "./hooks/useGenAiChatAvailability.js";
 export { useGenAiDispatcher } from "./hooks/useGenAiDispatcher.js";

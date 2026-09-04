@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { InvalidInputTestCases } from "../../__mocks__/typeGuards.js";
 
-import { isIdentifierRef, isLocalIdRef, isObjRef, isUriRef } from "./index.js";
+import { isComputedAttributeRef, isIdentifierRef, isLocalIdRef, isObjRef, isUriRef } from "./index.js";
 
 describe("objRef type guard", () => {
     describe("isUriRef", () => {
@@ -30,6 +30,23 @@ describe("objRef type guard", () => {
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
             expect(isIdentifierRef(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isComputedAttributeRef", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "computed attribute ref", { identifier: "ca", type: "computedAttribute" }],
+            [false, "label ref", { identifier: "ca", type: "displayForm" }],
+            [false, "attribute ref", { identifier: "ca", type: "attribute" }],
+            [false, "untyped identifier ref", { identifier: "ca" }],
+            // a uri ref can never carry an object type, so it is never a computed attribute ref
+            [false, "uri ref", { uri: "/gdc/md/obj/1" }],
+            [false, "localId ref", { localIdentifier: "localId" }],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isComputedAttributeRef(input)).toBe(expectedResult);
         });
     });
 

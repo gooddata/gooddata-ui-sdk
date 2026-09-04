@@ -301,6 +301,20 @@ createRoot(rootElement).render(
     </BrowserRouter>,
 );
 ",
+  "harness/src/typings.d.ts": "// (C) 2026 GoodData Corporation
+
+declare const PRODUCTION: boolean;
+declare const TIGER_API_TOKEN: string | undefined;
+
+/**
+ * URL of this module's Module Federation remote entry. Injected at build time in dev;
+ * in production the harness loads the remote from a relative path on the same origin.
+ */
+declare const SNAP_TEST_REMOTE_URL: string | undefined;
+
+declare module "*.css";
+declare module "*.scss";
+",
   "harness/tsconfig.json": "{
     "compilerOptions": {
         "strict": true,
@@ -336,21 +350,8 @@ createRoot(rootElement).render(
             "react": ["./node_modules/@types/react"]
         }
     },
-    "include": ["src", "./*", "typings.d.ts"],
+    "include": ["src", "./*"],
     "exclude": ["**/node_modules", "**/esm", "**/temp", "**/dist"]
-}
-",
-  "harness/typings.d.ts": "// (C) 2026 GoodData Corporation
-
-export declare global {
-    export const PRODUCTION: boolean;
-    export const TIGER_API_TOKEN: string | undefined;
-
-    /**
-     * URL of this module's Module Federation remote entry. Injected at build time in dev;
-     * in production the harness loads the remote from a relative path on the same origin.
-     */
-    export const SNAP_TEST_REMOTE_URL: string | undefined;
 }
 ",
   "harness/vite.config.ts": "// (C) 2026 GoodData Corporation

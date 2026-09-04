@@ -356,7 +356,6 @@ exports[`PluggableAreaChart > optional stacking > should return reference point 
       "stack": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -376,7 +375,6 @@ exports[`PluggableAreaChart > optional stacking > should return reference point 
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -544,7 +542,6 @@ exports[`PluggableAreaChart > optional stacking > should reuse all measures, onl
       "stack": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -564,7 +561,6 @@ exports[`PluggableAreaChart > optional stacking > should reuse all measures, onl
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -726,7 +722,6 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, only
       "stack": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -745,7 +740,6 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, only
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -913,7 +907,6 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, two 
       "stack": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -933,7 +926,6 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, two 
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -1055,7 +1047,6 @@ exports[`PluggableAreaChart > should cut out measures tail when getting nM 0Vb 1
       "stack": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -1074,7 +1065,6 @@ exports[`PluggableAreaChart > should cut out measures tail when getting nM 0Vb 1
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -1187,7 +1177,6 @@ exports[`PluggableAreaChart > should return reference point when no categories a
       "stack": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -1206,7 +1195,6 @@ exports[`PluggableAreaChart > should return reference point when no categories a
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,

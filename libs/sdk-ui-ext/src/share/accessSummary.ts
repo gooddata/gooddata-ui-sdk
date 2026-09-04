@@ -1,10 +1,20 @@
 // (C) 2026 GoodData Corporation
 
-import type { AccessGranteeDetail, IGranularRulesAccess, IObjectAccessList } from "@gooddata/sdk-model";
+import type {
+    AccessGranteeDetail,
+    IGranularRulesAccess,
+    IObjectAccessList,
+    ObjRef,
+} from "@gooddata/sdk-model";
 import type { GeneralAccessValue } from "@gooddata/sdk-ui-kit";
 
-import { directLevel, granteesFromAccessList, strongestLevel } from "./objectShareController.helpers.js";
-import type { ObjectSharePermissionLevel } from "./objectShareController.types.js";
+import {
+    directLevel,
+    granteeId,
+    granteesFromAccessList,
+    strongestLevel,
+} from "./objectShareController.helpers.js";
+import type { IObjectShareDraft, ObjectSharePermissionLevel } from "./objectShareController.types.js";
 import type { IObjectAccessSummary } from "./types.js";
 
 /**
@@ -78,14 +88,65 @@ export function composeEffectiveWorkspaceAccess(
  *
  * @internal
  */
-export function accessListToSummary(list: IObjectAccessList): IObjectAccessSummary {
+export function accessListToSummary(list: IObjectAccessList, self?: ObjRef): IObjectAccessSummary {
     const inheritedLevel = deriveInheritedWorkspaceLevel(list.grants);
+    const grantees = granteesFromAccessList(list);
+    const selfId = self ? granteeId("user", self) : undefined;
     return {
         ...composeEffectiveWorkspaceAccess(
             deriveGeneralAccess(list.grants),
             deriveWorkspacePermissionLevel(list.grants),
             inheritedLevel,
         ),
-        granteeCount: granteesFromAccessList(list).length,
+        granteeCount: grantees.length,
+        selfIsGrantee: selfId !== undefined && grantees.some((g) => g.id === selfId),
+    };
+}
+
+/**
+ * How an object's access reads: nobody, named grantees, or the whole workspace.
+ *
+ * @internal
+ */
+export type ObjectShareLevel = "PRIVATE" | "SHARED" | "WORKSPACE";
+
+/**
+ * The access level to display for a summary.
+ *
+ * @remarks
+ * The caller's own grant does not count: the creator is granted access when the object is
+ * made, so counting it would read an object only they can see as SHARED. The summary must
+ * therefore come from `accessListToSummary` WITH a caller ref, or a sole own grant reads
+ * SHARED.
+ *
+ * @internal
+ */
+export function summaryToShareLevel(summary: IObjectAccessSummary): ObjectShareLevel {
+    if (summary.generalAccess === "WORKSPACE") {
+        return "WORKSPACE";
+    }
+    const others = summary.granteeCount - (summary.selfIsGrantee ? 1 : 0);
+    return others > 0 ? "SHARED" : "PRIVATE";
+}
+
+/**
+ * The same summary for a draft, so it reads like a fetched list. Untouched general access
+ * falls back to `initialGeneralAccess`.
+ *
+ * @internal
+ */
+export function draftToSummary(
+    draft: IObjectShareDraft,
+    initialGeneralAccess: GeneralAccessValue,
+): IObjectAccessSummary {
+    const { ruleEdit } = draft;
+    const generalAccess = ruleEdit?.generalAccess ?? initialGeneralAccess;
+    const granteeCount = Object.values(draft.granteeEdits).filter((edit) => edit.kind === "added").length;
+    return {
+        generalAccess,
+        workspaceLevel: ruleEdit?.level ?? "VIEW",
+        granteeCount,
+        // The caller's own grant is made on save, so no draft edit can hold it.
+        selfIsGrantee: false,
     };
 }

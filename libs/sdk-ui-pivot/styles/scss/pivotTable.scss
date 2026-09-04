@@ -152,6 +152,8 @@ $subtotal-odd-background-color: var(
 
         .ag-header-cell,
         .ag-header-group-cell {
+            overflow: visible;
+
             &::after {
                 display: none;
             }
@@ -160,8 +162,6 @@ $subtotal-odd-background-color: var(
             .ag-react-container {
                 width: 100%;
             }
-
-            overflow: visible;
 
             // add keyboard focus effect to pivot header cells to override internal ag-grid "outline: 0" style
             &:focus-visible {

@@ -38,7 +38,7 @@ import {
     setSelectedAgentAction,
 } from "../store/messages/messagesSlice.js";
 
-import { type LinkHandlerEvent } from "./ConfigContext.js";
+import { type GenAIAssistantDisplayMode, type LinkHandlerEvent } from "./ConfigContext.js";
 import { GenAIChatDialog, type GenAIChatDialogProps } from "./GenAIChatDialog.js";
 
 /**
@@ -96,6 +96,14 @@ export interface IGenAIChatDialogConnectedProps {
     isDisabled?: boolean;
     onOpen: () => void;
     onClose: () => void;
+
+    /**
+     * Display mode of the Gen AI chat.
+     *
+     * @remarks
+     * Defaults to "modal". The "inline" mode is used when the chat is embedded within another component.
+     */
+    displayMode?: GenAIAssistantDisplayMode;
 
     /** A question to seed into the chat when it opens. */
     askedQuestion?: string | null;
@@ -169,6 +177,7 @@ export function GenAIChatDialogConnected({
     agentId,
     isOpen,
     isDisabled = true,
+    displayMode,
     onOpen,
     onClose,
     askedQuestion,
@@ -340,6 +349,7 @@ export function GenAIChatDialogConnected({
             disabled={isDisabled}
             locale={locale}
             backend={backend}
+            displayMode={displayMode}
             workspace={workspace}
             canManage={canManage}
             canAnalyze={canAnalyze}

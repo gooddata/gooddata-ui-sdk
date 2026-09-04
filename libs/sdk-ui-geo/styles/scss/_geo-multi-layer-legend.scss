@@ -239,6 +239,10 @@ $legend-chevron-color: var(--gd-palette-complementary-6);
         overflow-y: hidden; // enabled after expand animation (see --scroll-enabled modifier)
         scrollbar-gutter: stable;
 
+        // Firefox scrollbar
+        scrollbar-width: thin;
+        scrollbar-color: var(--gd-palette-complementary-4, #ccd8e2) transparent;
+
         // Hide content when collapsed (prevents visible flicker)
         .gd-geo-multi-layer-legend__section--collapsed & {
             opacity: 0;
@@ -277,10 +281,6 @@ $legend-chevron-color: var(--gd-palette-complementary-6);
             border-radius: 48px;
             background-clip: padding-box;
         }
-
-        // Firefox scrollbar
-        scrollbar-width: thin;
-        scrollbar-color: var(--gd-palette-complementary-4, #ccd8e2) transparent;
     }
 
     // ==========================================================================

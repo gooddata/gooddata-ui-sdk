@@ -885,11 +885,6 @@ export interface IFeatureFlags {
     enableOrgLevelAIMemory?: boolean;
 
     /**
-     * Enable AI Knowledge feature
-     */
-    enableAIKnowledge?: boolean;
-
-    /**
      * Enable the admin toggle that controls whether organization/workspace data can be sent to LLMs.
      */
     enableAIDataSetting?: boolean;
@@ -1053,11 +1048,6 @@ export interface IFeatureFlags {
      * Enable Analytical Catalog application.
      */
     enableAnalyticalCatalog?: boolean;
-
-    /**
-     * Enable AI Hub.
-     */
-    enableAiHub?: boolean;
 
     /**
      * Enable agent-level instructions in the AI Hub agent builder.

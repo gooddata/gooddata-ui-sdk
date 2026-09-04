@@ -92,15 +92,7 @@ export const AiAggregation = {
     MIN: 'MIN',
     MAX: 'MAX',
     MEDIAN: 'MEDIAN',
-    RUNSUM: 'RUNSUM',
-    SUM2: 'SUM',
-    COUNT2: 'COUNT',
-    APPROXIMATE_COUNT2: 'APPROXIMATE_COUNT',
-    AVG2: 'AVG',
-    MIN2: 'MIN',
-    MAX2: 'MAX',
-    MEDIAN2: 'MEDIAN',
-    RUNSUM2: 'RUNSUM'
+    RUNSUM: 'RUNSUM'
 } as const;
 
 export type AiAggregation = typeof AiAggregation[keyof typeof AiAggregation];
@@ -123,15 +115,7 @@ export const AiAggregation1 = {
     MIN2: 'MIN',
     MAX2: 'MAX',
     MEDIAN2: 'MEDIAN',
-    RUNSUM2: 'RUNSUM',
-    SUM3: 'SUM',
-    COUNT3: 'COUNT',
-    APPROXIMATE_COUNT3: 'APPROXIMATE_COUNT',
-    AVG3: 'AVG',
-    MIN3: 'MIN',
-    MAX3: 'MAX',
-    MEDIAN3: 'MEDIAN',
-    RUNSUM3: 'RUNSUM'
+    RUNSUM2: 'RUNSUM'
 } as const;
 
 export type AiAggregation1 = typeof AiAggregation1[keyof typeof AiAggregation1];
@@ -146,15 +130,7 @@ export const AiAggregation10 = {
     MIN: 'MIN',
     MAX: 'MAX',
     MEDIAN: 'MEDIAN',
-    RUNSUM: 'RUNSUM',
-    SUM2: 'SUM',
-    COUNT2: 'COUNT',
-    APPROXIMATE_COUNT2: 'APPROXIMATE_COUNT',
-    AVG2: 'AVG',
-    MIN2: 'MIN',
-    MAX2: 'MAX',
-    MEDIAN2: 'MEDIAN',
-    RUNSUM2: 'RUNSUM'
+    RUNSUM: 'RUNSUM'
 } as const;
 
 export type AiAggregation10 = typeof AiAggregation10[keyof typeof AiAggregation10];
@@ -177,15 +153,7 @@ export const AiAggregation11 = {
     MIN2: 'MIN',
     MAX2: 'MAX',
     MEDIAN2: 'MEDIAN',
-    RUNSUM2: 'RUNSUM',
-    SUM3: 'SUM',
-    COUNT3: 'COUNT',
-    APPROXIMATE_COUNT3: 'APPROXIMATE_COUNT',
-    AVG3: 'AVG',
-    MIN3: 'MIN',
-    MAX3: 'MAX',
-    MEDIAN3: 'MEDIAN',
-    RUNSUM3: 'RUNSUM'
+    RUNSUM2: 'RUNSUM'
 } as const;
 
 export type AiAggregation11 = typeof AiAggregation11[keyof typeof AiAggregation11];
@@ -200,15 +168,7 @@ export const AiAggregation12 = {
     MIN: 'MIN',
     MAX: 'MAX',
     MEDIAN: 'MEDIAN',
-    RUNSUM: 'RUNSUM',
-    SUM2: 'SUM',
-    COUNT2: 'COUNT',
-    APPROXIMATE_COUNT2: 'APPROXIMATE_COUNT',
-    AVG2: 'AVG',
-    MIN2: 'MIN',
-    MAX2: 'MAX',
-    MEDIAN2: 'MEDIAN',
-    RUNSUM2: 'RUNSUM'
+    RUNSUM: 'RUNSUM'
 } as const;
 
 export type AiAggregation12 = typeof AiAggregation12[keyof typeof AiAggregation12];
@@ -231,15 +191,7 @@ export const AiAggregation13 = {
     MIN2: 'MIN',
     MAX2: 'MAX',
     MEDIAN2: 'MEDIAN',
-    RUNSUM2: 'RUNSUM',
-    SUM3: 'SUM',
-    COUNT3: 'COUNT',
-    APPROXIMATE_COUNT3: 'APPROXIMATE_COUNT',
-    AVG3: 'AVG',
-    MIN3: 'MIN',
-    MAX3: 'MAX',
-    MEDIAN3: 'MEDIAN',
-    RUNSUM3: 'RUNSUM'
+    RUNSUM2: 'RUNSUM'
 } as const;
 
 export type AiAggregation13 = typeof AiAggregation13[keyof typeof AiAggregation13];
@@ -262,15 +214,7 @@ export const AiAggregation2 = {
     MIN: 'MIN',
     MAX: 'MAX',
     MEDIAN: 'MEDIAN',
-    RUNSUM: 'RUNSUM',
-    SUM2: 'SUM',
-    COUNT2: 'COUNT',
-    APPROXIMATE_COUNT2: 'APPROXIMATE_COUNT',
-    AVG2: 'AVG',
-    MIN2: 'MIN',
-    MAX2: 'MAX',
-    MEDIAN2: 'MEDIAN',
-    RUNSUM2: 'RUNSUM'
+    RUNSUM: 'RUNSUM'
 } as const;
 
 export type AiAggregation2 = typeof AiAggregation2[keyof typeof AiAggregation2];
@@ -293,15 +237,7 @@ export const AiAggregation3 = {
     MIN2: 'MIN',
     MAX2: 'MAX',
     MEDIAN2: 'MEDIAN',
-    RUNSUM2: 'RUNSUM',
-    SUM3: 'SUM',
-    COUNT3: 'COUNT',
-    APPROXIMATE_COUNT3: 'APPROXIMATE_COUNT',
-    AVG3: 'AVG',
-    MIN3: 'MIN',
-    MAX3: 'MAX',
-    MEDIAN3: 'MEDIAN',
-    RUNSUM3: 'RUNSUM'
+    RUNSUM2: 'RUNSUM'
 } as const;
 
 export type AiAggregation3 = typeof AiAggregation3[keyof typeof AiAggregation3];
@@ -316,15 +252,7 @@ export const AiAggregation6 = {
     MIN: 'MIN',
     MAX: 'MAX',
     MEDIAN: 'MEDIAN',
-    RUNSUM: 'RUNSUM',
-    SUM2: 'SUM',
-    COUNT2: 'COUNT',
-    APPROXIMATE_COUNT2: 'APPROXIMATE_COUNT',
-    AVG2: 'AVG',
-    MIN2: 'MIN',
-    MAX2: 'MAX',
-    MEDIAN2: 'MEDIAN',
-    RUNSUM2: 'RUNSUM'
+    RUNSUM: 'RUNSUM'
 } as const;
 
 export type AiAggregation6 = typeof AiAggregation6[keyof typeof AiAggregation6];
@@ -347,15 +275,7 @@ export const AiAggregation7 = {
     MIN2: 'MIN',
     MAX2: 'MAX',
     MEDIAN2: 'MEDIAN',
-    RUNSUM2: 'RUNSUM',
-    SUM3: 'SUM',
-    COUNT3: 'COUNT',
-    APPROXIMATE_COUNT3: 'APPROXIMATE_COUNT',
-    AVG3: 'AVG',
-    MIN3: 'MIN',
-    MAX3: 'MAX',
-    MEDIAN3: 'MEDIAN',
-    RUNSUM3: 'RUNSUM'
+    RUNSUM2: 'RUNSUM'
 } as const;
 
 export type AiAggregation7 = typeof AiAggregation7[keyof typeof AiAggregation7];
@@ -370,15 +290,7 @@ export const AiAggregation8 = {
     MIN: 'MIN',
     MAX: 'MAX',
     MEDIAN: 'MEDIAN',
-    RUNSUM: 'RUNSUM',
-    SUM2: 'SUM',
-    COUNT2: 'COUNT',
-    APPROXIMATE_COUNT2: 'APPROXIMATE_COUNT',
-    AVG2: 'AVG',
-    MIN2: 'MIN',
-    MAX2: 'MAX',
-    MEDIAN2: 'MEDIAN',
-    RUNSUM2: 'RUNSUM'
+    RUNSUM: 'RUNSUM'
 } as const;
 
 export type AiAggregation8 = typeof AiAggregation8[keyof typeof AiAggregation8];
@@ -401,15 +313,7 @@ export const AiAggregation9 = {
     MIN2: 'MIN',
     MAX2: 'MAX',
     MEDIAN2: 'MEDIAN',
-    RUNSUM2: 'RUNSUM',
-    SUM3: 'SUM',
-    COUNT3: 'COUNT',
-    APPROXIMATE_COUNT3: 'APPROXIMATE_COUNT',
-    AVG3: 'AVG',
-    MIN3: 'MIN',
-    MAX3: 'MAX',
-    MEDIAN3: 'MEDIAN',
-    RUNSUM3: 'RUNSUM'
+    RUNSUM2: 'RUNSUM'
 } as const;
 
 export type AiAggregation9 = typeof AiAggregation9[keyof typeof AiAggregation9];
@@ -693,6 +597,18 @@ export const AiArithmeticOperator = {
 export type AiArithmeticOperator = typeof AiArithmeticOperator[keyof typeof AiArithmeticOperator];
 
 
+/**
+ * Label reference or local identifier to use for this filter.
+ */
+export interface AiAttribute {
+}
+
+/**
+ * Label reference or local identifier to use for this filter.
+ */
+export interface AiAttribute1 {
+}
+
 export interface AiAttributeFilterElements {
     'values': Array<string | null>;
 }
@@ -830,9 +746,43 @@ export interface AiCertificationInfo {
 
 export interface AiChartFill {
     'pattern_name_mapping'?: { [key: string]: AiPatternNameMapping; } | null;
-    'type'?: AiType83 | null;
+    'type'?: AiType53 | null;
 }
 
+
+export interface AiClarifyingChoiceOption {
+    /**
+     * Option caption to render and to submit as the answer, e.g. `Net Sales`.
+     */
+    'label': string;
+}
+
+/**
+ * One question, with the control to answer it.  ``text`` sits outside ``control`` so a client that does not know a control type can still render the question and let the user answer in the composer.
+ */
+export interface AiClarifyingQuestion {
+    'control': AiSingleChoiceControl;
+    /**
+     * The question as the user reads it, including any examples.
+     */
+    'text': string;
+}
+
+/**
+ * Questions the assistant needs answered before it can continue.  Rides a turn whose ``status`` is ``input_required``. Answers go back as an ordinary text message -- each question\'s ``text``, then the answer on the next line, questions separated by a blank line -- so a client that renders none of the controls stays functional. Echoing the question is what attributes an answer, which is why an option carries no submit text of its own.
+ */
+export interface AiClarifyingQuestionsPart {
+    /**
+     * One to four questions, in the order to ask them.
+     */
+    'questions': Array<AiClarifyingQuestion>;
+    /**
+     * Type of multipart part.
+     */
+    'type'?: AiClarifyingQuestionsPartTypeEnum;
+}
+
+export type AiClarifyingQuestionsPartTypeEnum = 'clarifyingQuestions';
 
 export interface AiColorDefinition {
     'negative'?: AiSimpleColorItem | null;
@@ -965,7 +915,88 @@ export interface AiCompoundMeasureValueFilterBodyDimensionalityInner {
  */
 export type AiCondition = AiAnomalyCondition | AiComparisonCondition | AiRangeCondition | AiRelativeCondition;
 
-export interface AiCondition13 {
+
+export const AiCondition2 = {
+    GREATER_THAN: 'GREATER_THAN',
+    GREATER_THAN_OR_EQUAL_TO: 'GREATER_THAN_OR_EQUAL_TO',
+    LESS_THAN: 'LESS_THAN',
+    LESS_THAN_OR_EQUAL_TO: 'LESS_THAN_OR_EQUAL_TO',
+    EQUAL_TO: 'EQUAL_TO',
+    NOT_EQUAL_TO: 'NOT_EQUAL_TO',
+    BETWEEN: 'BETWEEN',
+    NOT_BETWEEN: 'NOT_BETWEEN'
+} as const;
+
+export type AiCondition2 = typeof AiCondition2[keyof typeof AiCondition2];
+
+
+
+export const AiCondition3 = {
+    GREATER_THAN: 'GREATER_THAN',
+    GREATER_THAN_OR_EQUAL_TO: 'GREATER_THAN_OR_EQUAL_TO',
+    LESS_THAN: 'LESS_THAN',
+    LESS_THAN_OR_EQUAL_TO: 'LESS_THAN_OR_EQUAL_TO',
+    EQUAL_TO: 'EQUAL_TO',
+    NOT_EQUAL_TO: 'NOT_EQUAL_TO'
+} as const;
+
+export type AiCondition3 = typeof AiCondition3[keyof typeof AiCondition3];
+
+
+
+export const AiCondition4 = {
+    BETWEEN: 'BETWEEN',
+    NOT_BETWEEN: 'NOT_BETWEEN'
+} as const;
+
+export type AiCondition4 = typeof AiCondition4[keyof typeof AiCondition4];
+
+
+
+export const AiCondition5 = {
+    IS: 'is',
+    IS_NOT: 'isNot'
+} as const;
+
+export type AiCondition5 = typeof AiCondition5[keyof typeof AiCondition5];
+
+
+
+export const AiCondition6 = {
+    CONTAINS: 'contains',
+    DOES_NOT_CONTAIN: 'doesNotContain',
+    STARTS_WITH: 'startsWith',
+    DOES_NOT_START_WITH: 'doesNotStartWith',
+    ENDS_WITH: 'endsWith',
+    DOES_NOT_END_WITH: 'doesNotEndWith'
+} as const;
+
+export type AiCondition6 = typeof AiCondition6[keyof typeof AiCondition6];
+
+
+
+export const AiCondition7 = {
+    GREATER_THAN: 'GREATER_THAN',
+    GREATER_THAN_OR_EQUAL_TO: 'GREATER_THAN_OR_EQUAL_TO',
+    LESS_THAN: 'LESS_THAN',
+    LESS_THAN_OR_EQUAL_TO: 'LESS_THAN_OR_EQUAL_TO',
+    EQUAL_TO: 'EQUAL_TO',
+    NOT_EQUAL_TO: 'NOT_EQUAL_TO'
+} as const;
+
+export type AiCondition7 = typeof AiCondition7[keyof typeof AiCondition7];
+
+
+
+export const AiCondition8 = {
+    BETWEEN: 'BETWEEN',
+    NOT_BETWEEN: 'NOT_BETWEEN'
+} as const;
+
+export type AiCondition8 = typeof AiCondition8[keyof typeof AiCondition8];
+
+
+export interface AiCondition9 {
     'format': AiFormat;
     'id': string;
     'operator': AiOperator14;
@@ -976,7 +1007,19 @@ export interface AiCondition13 {
 export interface AiConditionalFormatting {
     'enabled'?: boolean | null;
     'rules'?: Array<AiRule> | null;
+    'suppressed_targets'?: Array<AiConditionalFormattingSuppressedTargetsInner> | null;
     'version'?: string | null;
+}
+
+export interface AiConditionalFormattingSuppressedTargetsInner {
+    /**
+     * Local identifier of the targeted measure.
+     */
+    'measure': string;
+    /**
+     * Local identifier of the targeted attribute.
+     */
+    'attribute': string;
 }
 
 export interface AiConfig {
@@ -1451,6 +1494,14 @@ export type AiDashboardPatchPartTypeEnum = 'dashboardPatch';
  */
 export interface AiDashboardPatchReferences {
     /**
+     * Full AAC body of every dataset the chart uses.
+     */
+    'datasets'?: Array<object>;
+    /**
+     * Full AAC body of every date dataset the chart uses.
+     */
+    'datedatasets'?: Array<object>;
+    /**
      * Full AAC body of every widget-referenced visualization that has one available.
      */
     'visualizations': Array<object>;
@@ -1465,11 +1516,19 @@ export interface AiDashboardRef {
 }
 
 /**
- * AAC bodies of every widget-referenced visualization in a dashboard draft.  Each entry is opaque AAC pass-through (dict), not modeled as a schema — same treatment the codebase gives elsewhere to full AAC visualization bodies.
+ * AAC bodies of every widget-referenced visualization in a dashboard draft, and its datasets.  Each entry is opaque AAC pass-through (dict), not modeled as a schema — same treatment the codebase gives elsewhere to full AAC visualization bodies.
  */
 export interface AiDashboardReferences {
     [key: string]: any;
 
+    /**
+     * Full AAC body of every dataset the chart uses.
+     */
+    'datasets'?: Array<object | null>;
+    /**
+     * Full AAC body of every date dataset the chart uses.
+     */
+    'datedatasets'?: Array<object | null>;
     /**
      * Full AAC body of every widget-referenced visualization that has one available.
      */
@@ -1729,6 +1788,16 @@ export const AiEmptyValueHandling = {
 export type AiEmptyValueHandling = typeof AiEmptyValueHandling[keyof typeof AiEmptyValueHandling];
 
 
+
+export const AiEmptyValues = {
+    ONLY: 'only',
+    INCLUDE: 'include',
+    EXCLUDE: 'exclude'
+} as const;
+
+export type AiEmptyValues = typeof AiEmptyValues[keyof typeof AiEmptyValues];
+
+
 export interface AiErrorInfo {
     /**
      * Stable machine-readable error code. Switch on this for localized client messages.
@@ -1919,7 +1988,37 @@ export type AiGrandTotalsPosition = typeof AiGrandTotalsPosition[keyof typeof Ai
 
 
 
-export const AiGranularity3 = {
+export const AiGranularity = {
+    SECOND: 'SECOND',
+    MINUTE: 'MINUTE',
+    HOUR: 'HOUR',
+    DAY: 'DAY',
+    WEEK: 'WEEK',
+    WEEK_US: 'WEEK_US',
+    MONTH: 'MONTH',
+    QUARTER: 'QUARTER',
+    YEAR: 'YEAR',
+    SECOND_OF_MINUTE: 'SECOND_OF_MINUTE',
+    SECOND_OF_DAY: 'SECOND_OF_DAY',
+    MINUTE_OF_HOUR: 'MINUTE_OF_HOUR',
+    MINUTE_OF_DAY: 'MINUTE_OF_DAY',
+    HOUR_OF_DAY: 'HOUR_OF_DAY',
+    DAY_OF_WEEK: 'DAY_OF_WEEK',
+    DAY_OF_MONTH: 'DAY_OF_MONTH',
+    DAY_OF_YEAR: 'DAY_OF_YEAR',
+    WEEK_OF_YEAR: 'WEEK_OF_YEAR',
+    MONTH_OF_YEAR: 'MONTH_OF_YEAR',
+    QUARTER_OF_YEAR: 'QUARTER_OF_YEAR',
+    FISCAL_YEAR: 'FISCAL_YEAR',
+    FISCAL_QUARTER: 'FISCAL_QUARTER',
+    FISCAL_MONTH: 'FISCAL_MONTH'
+} as const;
+
+export type AiGranularity = typeof AiGranularity[keyof typeof AiGranularity];
+
+
+
+export const AiGranularity2 = {
     MINUTE: 'minute',
     HOUR: 'hour',
     DAY: 'day',
@@ -1929,7 +2028,7 @@ export const AiGranularity3 = {
     YEAR: 'year'
 } as const;
 
-export type AiGranularity3 = typeof AiGranularity3[keyof typeof AiGranularity3];
+export type AiGranularity2 = typeof AiGranularity2[keyof typeof AiGranularity2];
 
 
 
@@ -2119,7 +2218,7 @@ export interface AiLayerItem {
     'metrics'?: Array<AiBucketItem>;
     'segment_by'?: Array<AiBucketItem>;
     'title'?: string;
-    'type': AiType81;
+    'type': AiType50;
     'view_by'?: Array<string>;
 }
 
@@ -2144,7 +2243,7 @@ export interface AiLayerItemBase {
     'metrics'?: Array<AiBucketItem> | null;
     'segment_by'?: Array<AiBucketItem> | null;
     'title'?: string;
-    'type'?: AiType81 | null;
+    'type'?: AiType50 | null;
     'view_by'?: Array<string> | null;
 }
 
@@ -2372,7 +2471,51 @@ export type AiMultipartContentTypeEnum = 'multipart';
 /**
  * @type AiMultipartContentPartsInner
  */
-export type AiMultipartContentPartsInner = { type: 'alertProposal' } & AiAlertProposalPart | { type: 'dashboard' } & AiDashboardPart | { type: 'dashboardPatch' } & AiDashboardPatchPart | { type: 'kda' } & AiKeyDriverAnalysisPart | { type: 'searchResults' } & AiSearchResults | { type: 'text' } & AiTextPart | { type: 'visualization' } & AiVisualizationPart | { type: 'whatIf' } & AiWhatIfAnalysisPart;
+export type AiMultipartContentPartsInner = { type: 'alertProposal' } & AiAlertProposalPart | { type: 'clarifyingQuestions' } & AiClarifyingQuestionsPart | { type: 'dashboard' } & AiDashboardPart | { type: 'dashboardPatch' } & AiDashboardPatchPart | { type: 'kda' } & AiKeyDriverAnalysisPart | { type: 'searchResults' } & AiSearchResults | { type: 'text' } & AiTextPart | { type: 'visualization' } & AiVisualizationPart | { type: 'whatIf' } & AiWhatIfAnalysisPart;
+
+export interface AiMvfCondition {
+    'condition': AiCondition4;
+    /**
+     * Value to use in condition for this filter.
+     */
+    'value': number;
+    /**
+     * From value to use in condition for this filter.
+     */
+    'from': number;
+    /**
+     * To value to use in condition for this filter.
+     */
+    'to': number;
+}
+
+
+export interface AiMvfCondition1 {
+    'condition'?: AiCondition2 | null;
+}
+
+
+export interface AiMvfCondition2 {
+    'condition': AiCondition3;
+    /**
+     * Value to use in condition for this filter.
+     */
+    'value': number;
+}
+
+
+export interface AiMvfCondition3 {
+    'condition': AiCondition4;
+    /**
+     * From value to use in condition for this filter.
+     */
+    'from': number;
+    /**
+     * To value to use in condition for this filter.
+     */
+    'to': number;
+}
+
 
 export interface AiNegativeAttributeFilter {
     'negativeAttributeFilter': AiNegativeAttributeFilterBody;
@@ -2437,12 +2580,7 @@ export const AiOperator = {
     DIFFERENCE: 'DIFFERENCE',
     MULTIPLICATION: 'MULTIPLICATION',
     RATIO: 'RATIO',
-    CHANGE: 'CHANGE',
-    SUM2: 'SUM',
-    DIFFERENCE2: 'DIFFERENCE',
-    MULTIPLICATION2: 'MULTIPLICATION',
-    RATIO2: 'RATIO',
-    CHANGE2: 'CHANGE'
+    CHANGE: 'CHANGE'
 } as const;
 
 export type AiOperator = typeof AiOperator[keyof typeof AiOperator];
@@ -2459,12 +2597,7 @@ export const AiOperator1 = {
     DIFFERENCE2: 'DIFFERENCE',
     MULTIPLICATION2: 'MULTIPLICATION',
     RATIO2: 'RATIO',
-    CHANGE2: 'CHANGE',
-    SUM3: 'SUM',
-    DIFFERENCE3: 'DIFFERENCE',
-    MULTIPLICATION3: 'MULTIPLICATION',
-    RATIO3: 'RATIO',
-    CHANGE3: 'CHANGE'
+    CHANGE2: 'CHANGE'
 } as const;
 
 export type AiOperator1 = typeof AiOperator1[keyof typeof AiOperator1];
@@ -2476,12 +2609,7 @@ export const AiOperator10 = {
     DIFFERENCE: 'DIFFERENCE',
     MULTIPLICATION: 'MULTIPLICATION',
     RATIO: 'RATIO',
-    CHANGE: 'CHANGE',
-    SUM2: 'SUM',
-    DIFFERENCE2: 'DIFFERENCE',
-    MULTIPLICATION2: 'MULTIPLICATION',
-    RATIO2: 'RATIO',
-    CHANGE2: 'CHANGE'
+    CHANGE: 'CHANGE'
 } as const;
 
 export type AiOperator10 = typeof AiOperator10[keyof typeof AiOperator10];
@@ -2498,12 +2626,7 @@ export const AiOperator11 = {
     DIFFERENCE2: 'DIFFERENCE',
     MULTIPLICATION2: 'MULTIPLICATION',
     RATIO2: 'RATIO',
-    CHANGE2: 'CHANGE',
-    SUM3: 'SUM',
-    DIFFERENCE3: 'DIFFERENCE',
-    MULTIPLICATION3: 'MULTIPLICATION',
-    RATIO3: 'RATIO',
-    CHANGE3: 'CHANGE'
+    CHANGE2: 'CHANGE'
 } as const;
 
 export type AiOperator11 = typeof AiOperator11[keyof typeof AiOperator11];
@@ -2515,12 +2638,7 @@ export const AiOperator12 = {
     DIFFERENCE: 'DIFFERENCE',
     MULTIPLICATION: 'MULTIPLICATION',
     RATIO: 'RATIO',
-    CHANGE: 'CHANGE',
-    SUM2: 'SUM',
-    DIFFERENCE2: 'DIFFERENCE',
-    MULTIPLICATION2: 'MULTIPLICATION',
-    RATIO2: 'RATIO',
-    CHANGE2: 'CHANGE'
+    CHANGE: 'CHANGE'
 } as const;
 
 export type AiOperator12 = typeof AiOperator12[keyof typeof AiOperator12];
@@ -2537,12 +2655,7 @@ export const AiOperator13 = {
     DIFFERENCE2: 'DIFFERENCE',
     MULTIPLICATION2: 'MULTIPLICATION',
     RATIO2: 'RATIO',
-    CHANGE2: 'CHANGE',
-    SUM3: 'SUM',
-    DIFFERENCE3: 'DIFFERENCE',
-    MULTIPLICATION3: 'MULTIPLICATION',
-    RATIO3: 'RATIO',
-    CHANGE3: 'CHANGE'
+    CHANGE2: 'CHANGE'
 } as const;
 
 export type AiOperator13 = typeof AiOperator13[keyof typeof AiOperator13];
@@ -2578,12 +2691,7 @@ export const AiOperator2 = {
     DIFFERENCE: 'DIFFERENCE',
     MULTIPLICATION: 'MULTIPLICATION',
     RATIO: 'RATIO',
-    CHANGE: 'CHANGE',
-    SUM2: 'SUM',
-    DIFFERENCE2: 'DIFFERENCE',
-    MULTIPLICATION2: 'MULTIPLICATION',
-    RATIO2: 'RATIO',
-    CHANGE2: 'CHANGE'
+    CHANGE: 'CHANGE'
 } as const;
 
 export type AiOperator2 = typeof AiOperator2[keyof typeof AiOperator2];
@@ -2600,12 +2708,7 @@ export const AiOperator3 = {
     DIFFERENCE2: 'DIFFERENCE',
     MULTIPLICATION2: 'MULTIPLICATION',
     RATIO2: 'RATIO',
-    CHANGE2: 'CHANGE',
-    SUM3: 'SUM',
-    DIFFERENCE3: 'DIFFERENCE',
-    MULTIPLICATION3: 'MULTIPLICATION',
-    RATIO3: 'RATIO',
-    CHANGE3: 'CHANGE'
+    CHANGE2: 'CHANGE'
 } as const;
 
 export type AiOperator3 = typeof AiOperator3[keyof typeof AiOperator3];
@@ -2617,12 +2720,7 @@ export const AiOperator4 = {
     DIFFERENCE: 'DIFFERENCE',
     MULTIPLICATION: 'MULTIPLICATION',
     RATIO: 'RATIO',
-    CHANGE: 'CHANGE',
-    SUM2: 'SUM',
-    DIFFERENCE2: 'DIFFERENCE',
-    MULTIPLICATION2: 'MULTIPLICATION',
-    RATIO2: 'RATIO',
-    CHANGE2: 'CHANGE'
+    CHANGE: 'CHANGE'
 } as const;
 
 export type AiOperator4 = typeof AiOperator4[keyof typeof AiOperator4];
@@ -2639,12 +2737,7 @@ export const AiOperator5 = {
     DIFFERENCE2: 'DIFFERENCE',
     MULTIPLICATION2: 'MULTIPLICATION',
     RATIO2: 'RATIO',
-    CHANGE2: 'CHANGE',
-    SUM3: 'SUM',
-    DIFFERENCE3: 'DIFFERENCE',
-    MULTIPLICATION3: 'MULTIPLICATION',
-    RATIO3: 'RATIO',
-    CHANGE3: 'CHANGE'
+    CHANGE2: 'CHANGE'
 } as const;
 
 export type AiOperator5 = typeof AiOperator5[keyof typeof AiOperator5];
@@ -2656,12 +2749,7 @@ export const AiOperator6 = {
     DIFFERENCE: 'DIFFERENCE',
     MULTIPLICATION: 'MULTIPLICATION',
     RATIO: 'RATIO',
-    CHANGE: 'CHANGE',
-    SUM2: 'SUM',
-    DIFFERENCE2: 'DIFFERENCE',
-    MULTIPLICATION2: 'MULTIPLICATION',
-    RATIO2: 'RATIO',
-    CHANGE2: 'CHANGE'
+    CHANGE: 'CHANGE'
 } as const;
 
 export type AiOperator6 = typeof AiOperator6[keyof typeof AiOperator6];
@@ -2678,12 +2766,7 @@ export const AiOperator7 = {
     DIFFERENCE2: 'DIFFERENCE',
     MULTIPLICATION2: 'MULTIPLICATION',
     RATIO2: 'RATIO',
-    CHANGE2: 'CHANGE',
-    SUM3: 'SUM',
-    DIFFERENCE3: 'DIFFERENCE',
-    MULTIPLICATION3: 'MULTIPLICATION',
-    RATIO3: 'RATIO',
-    CHANGE3: 'CHANGE'
+    CHANGE2: 'CHANGE'
 } as const;
 
 export type AiOperator7 = typeof AiOperator7[keyof typeof AiOperator7];
@@ -2769,6 +2852,72 @@ export interface AiQuery {
     'sort_by'?: Array<AiQuerySort>;
 }
 
+export interface AiQueryAttributeFilter {
+    'display_as'?: string | null;
+    'state'?: AiState | null;
+    'type': AiType11;
+    'using': AiUsing1;
+}
+
+
+export interface AiQueryAttributeSort {
+    'aggregation'?: AiAggregation14 | null;
+    'by': AiBy1;
+    /**
+     * Sort direction.
+     */
+    'direction': AiDirection;
+    'type': AiType47;
+}
+
+
+export interface AiQueryDateFilter {
+    'empty_values'?: AiEmptyValues;
+    'from'?: string;
+    /**
+     * A granularity to use in relative date filter
+     */
+    'granularity': AiGranularity;
+    'to'?: string;
+    'type': AiType9;
+    /**
+     * Date dataset identifier to use for this field.
+     */
+    'using': string;
+    'with'?: object;
+}
+
+
+export interface AiQueryDateFilter1 {
+    'empty_values'?: AiEmptyValues | null;
+    'from'?: number | null;
+    /**
+     * A granularity to use in relative date filter
+     */
+    'granularity': AiGranularity;
+    'to'?: number | null;
+    'type': AiType9;
+    /**
+     * Date dataset identifier to use for this field.
+     */
+    'using': string;
+    'with'?: object | null;
+}
+
+
+export interface AiQueryDateFilter2 {
+    'empty_values'?: AiEmptyValues | null;
+    'from'?: string | null;
+    'to'?: string | null;
+    'type': AiType9;
+    /**
+     * Date dataset identifier to use for this field.
+     */
+    'using': string;
+    'with'?: object | null;
+}
+
+
 export interface AiQueryField {
     'aggregation': AiAggregation13;
     'date_filter': string;
@@ -2776,8 +2925,8 @@ export interface AiQueryField {
     'operator': AiOperator13;
     'show_all_values'?: boolean;
     'title'?: string;
-    'type': AiType74;
-    'using': AiUsing6 | null;
+    'type': AiType46;
+    'using': AiUsing7 | null;
     'compute_ratio'?: boolean;
     'filter_by'?: object;
     'period'?: number;
@@ -2791,8 +2940,8 @@ export interface AiQueryField1 {
     'operator'?: AiOperator | null;
     'show_all_values'?: boolean | null;
     'title'?: string;
-    'type'?: AiType61 | null;
-    'using': AiUsing1;
+    'type'?: AiType33 | null;
+    'using': AiUsing2;
 }
 
 
@@ -2801,8 +2950,8 @@ export interface AiQueryField10 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator7 | null;
-    'type'?: AiType70 | null;
-    'using'?: AiUsing2 | null;
+    'type'?: AiType42 | null;
+    'using'?: AiUsing3 | null;
 }
 
 
@@ -2818,8 +2967,8 @@ export interface AiQueryField11 {
     /**
      * Type of relative period metric related to another metric in list.
      */
-    'type': AiType71;
-    'using': AiUsing3;
+    'type': AiType43;
+    'using': AiUsing4;
 }
 
 
@@ -2828,8 +2977,8 @@ export interface AiQueryField12 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator11 | null;
-    'type'?: AiType72 | null;
-    'using'?: AiUsing4 | null;
+    'type'?: AiType44 | null;
+    'using'?: AiUsing5 | null;
 }
 
 
@@ -2846,8 +2995,8 @@ export interface AiQueryField13 {
     /**
      * Type of relative period metric related to another metric in list.
      */
-    'type': AiType73;
-    'using': AiUsing5;
+    'type': AiType45;
+    'using': AiUsing6;
 }
 
 
@@ -2856,8 +3005,8 @@ export interface AiQueryField14 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator13 | null;
-    'type'?: AiType74 | null;
-    'using'?: AiUsing6 | null;
+    'type'?: AiType46 | null;
+    'using'?: AiUsing7 | null;
 }
 
 
@@ -2866,8 +3015,8 @@ export interface AiQueryField2 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator1 | null;
-    'type'?: AiType62 | null;
-    'using'?: AiUsing7 | null;
+    'type'?: AiType34 | null;
+    'using'?: AiUsing8 | null;
 }
 
 
@@ -2879,7 +3028,7 @@ export interface AiQueryField3 {
     'maql'?: string | null;
     'operator'?: AiOperator2 | null;
     'title'?: string;
-    'type'?: AiType63 | null;
+    'type'?: AiType35 | null;
     'using': AiMetricIdentifier;
 }
 
@@ -2889,8 +3038,8 @@ export interface AiQueryField4 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator3 | null;
-    'type'?: AiType64 | null;
-    'using'?: AiUsing8 | null;
+    'type'?: AiType36 | null;
+    'using'?: AiUsing9 | null;
 }
 
 
@@ -2905,8 +3054,8 @@ export interface AiQueryField5 {
     'maql'?: string | null;
     'operator'?: AiOperator4 | null;
     'title'?: string;
-    'type'?: AiType65 | null;
-    'using': AiUsing9;
+    'type'?: AiType37 | null;
+    'using': AiUsing10;
 }
 
 
@@ -2915,8 +3064,8 @@ export interface AiQueryField6 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator5 | null;
-    'type'?: AiType66 | null;
-    'using'?: AiUsing10 | null;
+    'type'?: AiType38 | null;
+    'using'?: AiUsing11 | null;
 }
 
 
@@ -2929,8 +3078,8 @@ export interface AiQueryField7 {
     'maql': string;
     'operator'?: AiOperator6 | null;
     'title'?: string;
-    'type'?: AiType67 | null;
-    'using'?: AiUsing11 | null;
+    'type'?: AiType39 | null;
+    'using'?: AiUsing12 | null;
 }
 
 
@@ -2939,8 +3088,8 @@ export interface AiQueryField8 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator7 | null;
-    'type'?: AiType68 | null;
-    'using'?: AiUsing12 | null;
+    'type'?: AiType40 | null;
+    'using'?: AiUsing13 | null;
 }
 
 
@@ -2953,49 +3102,196 @@ export interface AiQueryField9 {
      */
     'operator': AiOperator7;
     'title'?: string;
-    'type'?: AiType69 | null;
+    'type'?: AiType41 | null;
     'using': Array<string>;
 }
 
 
 export interface AiQueryFilter {
-    'type': AiType30;
+    'empty_values'?: AiEmptyValues;
+    /**
+     * From value to use in condition for this filter.
+     */
+    'from': number;
+    /**
+     * A granularity to use in relative date filter
+     */
+    'granularity': AiGranularity;
+    /**
+     * To value to use in condition for this filter.
+     */
+    'to': number;
+    'type': AiType18;
+    'using': AiUsing19;
+    'with'?: object;
     'display_as'?: string;
     'state'?: AiState;
-    'using': AiUsing13;
+    'case_sensitive'?: boolean;
+    /**
+     * Condition to use for this filter.
+     */
+    'condition': AiCondition8;
+    'values': Array<string>;
+    /**
+     * Value to use in condition for this filter.
+     */
+    'value': number;
+    'conditions': Array<AiMvfCondition>;
+    'dimensionality'?: Array<AiQueryMetricValueFilter4DimensionalityInner>;
+    'null_values_as_zero'?: boolean;
+    'attribute'?: AiAttribute1 | null;
+    'bottom': number;
+    'strict_limit_of_rows'?: boolean;
+    /**
+     * Number of top N values to use in this filter.
+     */
+    'top': number;
 }
 
 
-export interface AiQueryFilter1 {
-    'type': AiType30;
+export interface AiQueryMetricSort {
+    /**
+     * Sort direction.
+     */
+    'direction': AiDirection;
+    'metrics': Array<AiQueryMetricSortMetricsInner>;
+    'type': AiType48;
 }
 
 
-export interface AiQueryFilter2 {
-    'display_as'?: string | null;
-    'state'?: AiState | null;
-    'type': AiType30;
-    'using': AiUsing13;
+export interface AiQueryMetricSortMetricsInner {
+    'by': AiBy;
+    'element'?: string;
+    'function'?: AiFunction;
 }
 
 
-export interface AiQueryFilter3 {
-    'type': AiType30;
+export interface AiQueryMetricValueFilter {
+    'conditions': Array<AiMvfCondition>;
+    'dimensionality'?: Array<AiQueryMetricValueFilter4DimensionalityInner>;
+    'null_values_as_zero'?: boolean;
+    'type': AiType14;
+    'using': AiUsing17;
+    /**
+     * Condition to use for this filter.
+     */
+    'condition': AiCondition8;
+    /**
+     * Value to use in condition for this filter.
+     */
+    'value': number;
+    /**
+     * From value to use in condition for this filter.
+     */
+    'from': number;
+    /**
+     * To value to use in condition for this filter.
+     */
+    'to': number;
 }
 
 
-export interface AiQueryFilter4 {
-    'type': AiType30;
+export interface AiQueryMetricValueFilter1 {
+    'conditions': Array<AiMvfCondition>;
+    'dimensionality'?: Array<AiQueryMetricValueFilter1DimensionalityInner> | null;
+    'null_values_as_zero'?: boolean | null;
+    'type': AiType14;
+    'using': AiUsing14;
 }
 
 
-export interface AiQueryFilter5 {
-    'type': AiType30;
+export interface AiQueryMetricValueFilter1DimensionalityInner {
+}
+
+export interface AiQueryMetricValueFilter2 {
+    /**
+     * Condition to use for this filter.
+     */
+    'condition': AiCondition7;
+    'dimensionality'?: Array<AiQueryMetricValueFilter2DimensionalityInner> | null;
+    'null_values_as_zero'?: boolean | null;
+    'type': AiType14;
+    'using': AiUsing15;
+    /**
+     * Value to use in condition for this filter.
+     */
+    'value': number;
 }
 
 
-export interface AiQueryFilter6 {
-    'type': AiType30;
+export interface AiQueryMetricValueFilter2DimensionalityInner {
+}
+
+export interface AiQueryMetricValueFilter3 {
+    /**
+     * Condition to use for this filter.
+     */
+    'condition': AiCondition8;
+    'dimensionality'?: Array<AiQueryMetricValueFilter3DimensionalityInner> | null;
+    /**
+     * From value to use in condition for this filter.
+     */
+    'from': number;
+    'null_values_as_zero'?: boolean | null;
+    /**
+     * To value to use in condition for this filter.
+     */
+    'to': number;
+    'type': AiType14;
+    'using': AiUsing16;
+}
+
+
+export interface AiQueryMetricValueFilter3DimensionalityInner {
+}
+
+export interface AiQueryMetricValueFilter4 {
+    'conditions'?: Array<AiMvfCondition> | null;
+    'dimensionality'?: Array<AiQueryMetricValueFilter4DimensionalityInner> | null;
+    'type': AiType14;
+    'using': AiUsing17;
+}
+
+
+export interface AiQueryMetricValueFilter4DimensionalityInner {
+}
+
+export interface AiQueryRankingFilter {
+    'attribute'?: AiAttribute1 | null;
+    'bottom': number;
+    'strict_limit_of_rows'?: boolean;
+    /**
+     * Number of top N values to use in this filter.
+     */
+    'top': number;
+    'type': AiType18;
+    'using': AiUsing19;
+}
+
+
+export interface AiQueryRankingFilter1 {
+    'attribute'?: AiAttribute | null;
+    /**
+     * Number of bottom N values to use in this filter.
+     */
+    'bottom': number;
+    'strict_limit_of_rows'?: boolean | null;
+    'top'?: number | null;
+    'type': AiType18;
+    'using': AiUsing18;
+}
+
+
+export interface AiQueryRankingFilter2 {
+    'attribute'?: AiAttribute1 | null;
+    'bottom'?: number | null;
+    'strict_limit_of_rows'?: boolean | null;
+    /**
+     * Number of top N values to use in this filter.
+     */
+    'top': number;
+    'type': AiType18;
+    'using': AiUsing19;
 }
 
 
@@ -3006,41 +3302,39 @@ export interface AiQuerySort {
      * Sort direction.
      */
     'direction': AiDirection;
-    'type': AiType75;
-    'metrics': Array<AiQuerySort2MetricsInner>;
+    'type': AiType48;
+    'metrics': Array<AiQueryMetricSortMetricsInner>;
 }
 
 
-export interface AiQuerySort1 {
-    'aggregation'?: AiAggregation14 | null;
-    'by': AiBy1;
-    /**
-     * Sort direction.
-     */
-    'direction': AiDirection;
-    'type': AiType75;
+export interface AiQueryTextFilter {
+    'case_sensitive'?: boolean;
+    'condition': AiCondition6;
+    'display_as'?: string;
+    'type': AiType12;
+    'using': AiUsing21;
+    'values': Array<string>;
+    'value': string;
 }
 
 
-export interface AiQuerySort2 {
-    /**
-     * Sort direction.
-     */
-    'direction': AiDirection;
-    'metrics': Array<AiQuerySort2MetricsInner>;
-    'type': AiType75;
+export interface AiQueryTextFilter1 {
+    'case_sensitive'?: boolean | null;
+    'condition': AiCondition5;
+    'display_as'?: string | null;
+    'type': AiType12;
+    'using': AiUsing20;
+    'values': Array<string | null>;
 }
 
 
-export interface AiQuerySort2MetricsInner {
-    'by': AiBy;
-    'element'?: string;
-    'function'?: AiFunction;
-}
-
-
-export interface AiQuerySort3 {
-    'type': AiType75;
+export interface AiQueryTextFilter2 {
+    'case_sensitive'?: boolean | null;
+    'condition': AiCondition6;
+    'display_as'?: string | null;
+    'type': AiType12;
+    'using': AiUsing21;
+    'value': string;
 }
 
 
@@ -3161,7 +3455,7 @@ export type AiReasoningContentTypeEnum = 'reasoning';
 
 export interface AiRelative {
     'from': number;
-    'granularity': AiGranularity3;
+    'granularity': AiGranularity2;
     'to': number;
 }
 
@@ -3278,7 +3572,7 @@ export interface AiRule {
     /**
      * Stacked conditions; the first matching condition wins.
      */
-    'conditions': Array<AiCondition13>;
+    'conditions': Array<AiCondition9>;
     /**
      * Stable, table-unique rule id.
      */
@@ -3638,6 +3932,22 @@ export interface AiSimpleColorItem {
 }
 
 /**
+ * Pick exactly one option — radio buttons, or rows that submit on click.  The only control there is for now; a later one (multiple choice, a date range, a catalog object picker) becomes another member of ``ClarifyingQuestionControl`` without changing any payload a client has already seen.
+ */
+export interface AiSingleChoiceControl {
+    /**
+     * Options to choose from.
+     */
+    'options': Array<AiClarifyingChoiceOption>;
+    /**
+     * Type of answer control.
+     */
+    'type'?: AiSingleChoiceControlTypeEnum;
+}
+
+export type AiSingleChoiceControlTypeEnum = 'singleChoice';
+
+/**
  * A single skill available to the organization.
  */
 export interface AiSkillResponse {
@@ -3754,6 +4064,40 @@ export interface AiSummarizeResponse {
 export type AiSummarizeResponseFilterContextInner = AiAbsoluteDateFilter | AiAllTimeDateFilter | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilterOutput | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilter | AiRelativeDateFilter;
 
 /**
+ * Visualizations to summarize without a dashboard.  No layout to read a tab from and no saved filters to fall back on, so both fields are required.
+ */
+export interface AiSummarizeVisualizationsRequest {
+    /**
+     * AFM filters in the same shape consumed by the AFM execute endpoint, merged on top of each visualization\'s stored filters using the type-aware merge rules. Send `[]` to apply no request filters.
+     */
+    'filterContext': Array<AiSummarizeVisualizationsRequestFilterContextInner>;
+    'formatHint'?: string | null;
+    /**
+     * Visualizations to summarize. They need not belong to any one dashboard.
+     */
+    'visualizations': Array<string>;
+}
+
+/**
+ * @type AiSummarizeVisualizationsRequestFilterContextInner
+ */
+export type AiSummarizeVisualizationsRequestFilterContextInner = AiAbsoluteDateFilter | AiAllTimeDateFilter | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilterInput | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilter | AiRelativeDateFilter;
+
+export interface AiSuppressedTargets {
+    /**
+     * Local identifier of the targeted measure.
+     */
+    'measure': string;
+}
+
+export interface AiSuppressedTargets1 {
+    /**
+     * Local identifier of the targeted attribute.
+     */
+    'attribute': string;
+}
+
+/**
  * POST /conversations/{conversationId}/switchAgent body.
  */
 export interface AiSwitchAgentRequest {
@@ -3818,7 +4162,7 @@ export interface AiTo {
 
 export interface AiTotalItem {
     'title'?: string;
-    'type': AiType80;
+    'type': AiType49;
     /**
      * Local metric identifier to use for this total.
      */
@@ -3827,1393 +4171,199 @@ export interface AiTotalItem {
 
 
 
-export const AiType100 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    BAR_CHART3: 'bar_chart'
+export const AiType11 = {
+    ATTRIBUTE_FILTER: 'attribute_filter'
 } as const;
 
-export type AiType100 = typeof AiType100[keyof typeof AiType100];
+export type AiType11 = typeof AiType11[keyof typeof AiType11];
 
 
 
-export const AiType101 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    COLUMN_CHART3: 'column_chart'
-} as const;
-
-export type AiType101 = typeof AiType101[keyof typeof AiType101];
-
-
-
-export const AiType102 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    LINE_CHART3: 'line_chart'
-} as const;
-
-export type AiType102 = typeof AiType102[keyof typeof AiType102];
-
-
-
-export const AiType103 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    AREA_CHART3: 'area_chart'
-} as const;
-
-export type AiType103 = typeof AiType103[keyof typeof AiType103];
-
-
-
-export const AiType104 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    SCATTER_CHART3: 'scatter_chart'
-} as const;
-
-export type AiType104 = typeof AiType104[keyof typeof AiType104];
-
-
-
-export const AiType105 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    BUBBLE_CHART3: 'bubble_chart'
-} as const;
-
-export type AiType105 = typeof AiType105[keyof typeof AiType105];
-
-
-
-export const AiType106 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    PIE_CHART3: 'pie_chart'
-} as const;
-
-export type AiType106 = typeof AiType106[keyof typeof AiType106];
-
-
-
-export const AiType107 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    DONUT_CHART3: 'donut_chart'
-} as const;
-
-export type AiType107 = typeof AiType107[keyof typeof AiType107];
-
-
-
-export const AiType108 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    TREEMAP_CHART3: 'treemap_chart'
-} as const;
-
-export type AiType108 = typeof AiType108[keyof typeof AiType108];
-
-
-
-export const AiType109 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    PYRAMID_CHART3: 'pyramid_chart'
-} as const;
-
-export type AiType109 = typeof AiType109[keyof typeof AiType109];
-
-
-
-export const AiType110 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    FUNNEL_CHART3: 'funnel_chart'
-} as const;
-
-export type AiType110 = typeof AiType110[keyof typeof AiType110];
-
-
-
-export const AiType111 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    HEATMAP_CHART3: 'heatmap_chart'
-} as const;
-
-export type AiType111 = typeof AiType111[keyof typeof AiType111];
-
-
-
-export const AiType112 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    BULLET_CHART3: 'bullet_chart'
-} as const;
-
-export type AiType112 = typeof AiType112[keyof typeof AiType112];
-
-
-
-export const AiType113 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    WATERFALL_CHART3: 'waterfall_chart'
-} as const;
-
-export type AiType113 = typeof AiType113[keyof typeof AiType113];
-
-
-
-export const AiType114 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    DEPENDENCY_WHEEL_CHART3: 'dependency_wheel_chart'
-} as const;
-
-export type AiType114 = typeof AiType114[keyof typeof AiType114];
-
-
-
-export const AiType115 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    SANKEY_CHART3: 'sankey_chart'
-} as const;
-
-export type AiType115 = typeof AiType115[keyof typeof AiType115];
-
-
-
-export const AiType116 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    HEADLINE_CHART3: 'headline_chart'
-} as const;
-
-export type AiType116 = typeof AiType116[keyof typeof AiType116];
-
-
-
-export const AiType117 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    COMBO_CHART3: 'combo_chart'
-} as const;
-
-export type AiType117 = typeof AiType117[keyof typeof AiType117];
-
-
-
-export const AiType118 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    GEO_CHART3: 'geo_chart'
-} as const;
-
-export type AiType118 = typeof AiType118[keyof typeof AiType118];
-
-
-
-export const AiType119 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    GEO_AREA_CHART3: 'geo_area_chart'
-} as const;
-
-export type AiType119 = typeof AiType119[keyof typeof AiType119];
-
-
-
-export const AiType120 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    REPEATER_CHART3: 'repeater_chart'
-} as const;
-
-export type AiType120 = typeof AiType120[keyof typeof AiType120];
-
-
-
-export const AiType121 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    RADAR_CHART3: 'radar_chart'
-} as const;
-
-export type AiType121 = typeof AiType121[keyof typeof AiType121];
-
-
-
-export const AiType30 = {
-    DATE_FILTER: 'date_filter',
-    ATTRIBUTE_FILTER: 'attribute_filter',
+export const AiType12 = {
     TEXT_FILTER: 'text_filter',
-    METRIC_VALUE_FILTER: 'metric_value_filter',
+    TEXT_FILTER2: 'text_filter'
+} as const;
+
+export type AiType12 = typeof AiType12[keyof typeof AiType12];
+
+
+
+export const AiType14 = {
+    METRIC_VALUE_FILTER: 'metric_value_filter'
+} as const;
+
+export type AiType14 = typeof AiType14[keyof typeof AiType14];
+
+
+
+export const AiType18 = {
     RANKING_FILTER: 'ranking_filter',
-    DATE_FILTER2: 'date_filter',
-    ATTRIBUTE_FILTER2: 'attribute_filter',
-    TEXT_FILTER2: 'text_filter',
-    METRIC_VALUE_FILTER2: 'metric_value_filter',
     RANKING_FILTER2: 'ranking_filter'
 } as const;
 
-export type AiType30 = typeof AiType30[keyof typeof AiType30];
+export type AiType18 = typeof AiType18[keyof typeof AiType18];
 
 
 
-export const AiType61 = {
+export const AiType33 = {
+    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
+} as const;
+
+export type AiType33 = typeof AiType33[keyof typeof AiType33];
+
+
+
+export const AiType34 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
     PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
     PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
     PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
 } as const;
 
-export type AiType61 = typeof AiType61[keyof typeof AiType61];
+export type AiType34 = typeof AiType34[keyof typeof AiType34];
 
 
 
-export const AiType62 = {
+export const AiType35 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR3: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD3: 'PREVIOUS_PERIOD'
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
 } as const;
 
-export type AiType62 = typeof AiType62[keyof typeof AiType62];
+export type AiType35 = typeof AiType35[keyof typeof AiType35];
 
 
 
-export const AiType63 = {
+export const AiType36 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
     PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
     PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
     PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
 } as const;
 
-export type AiType63 = typeof AiType63[keyof typeof AiType63];
+export type AiType36 = typeof AiType36[keyof typeof AiType36];
 
 
 
-export const AiType64 = {
+export const AiType37 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR3: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD3: 'PREVIOUS_PERIOD'
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
 } as const;
 
-export type AiType64 = typeof AiType64[keyof typeof AiType64];
+export type AiType37 = typeof AiType37[keyof typeof AiType37];
 
 
 
-export const AiType65 = {
+export const AiType38 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
     PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
     PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
     PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
 } as const;
 
-export type AiType65 = typeof AiType65[keyof typeof AiType65];
+export type AiType38 = typeof AiType38[keyof typeof AiType38];
 
 
 
-export const AiType66 = {
+export const AiType39 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR3: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD3: 'PREVIOUS_PERIOD'
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
 } as const;
 
-export type AiType66 = typeof AiType66[keyof typeof AiType66];
+export type AiType39 = typeof AiType39[keyof typeof AiType39];
 
 
 
-export const AiType67 = {
+export const AiType40 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
     PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
     PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
     PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
 } as const;
 
-export type AiType67 = typeof AiType67[keyof typeof AiType67];
+export type AiType40 = typeof AiType40[keyof typeof AiType40];
 
 
 
-export const AiType68 = {
+export const AiType41 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR3: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD3: 'PREVIOUS_PERIOD'
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
 } as const;
 
-export type AiType68 = typeof AiType68[keyof typeof AiType68];
+export type AiType41 = typeof AiType41[keyof typeof AiType41];
 
 
 
-export const AiType69 = {
+export const AiType42 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
     PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
     PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
     PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
 } as const;
 
-export type AiType69 = typeof AiType69[keyof typeof AiType69];
+export type AiType42 = typeof AiType42[keyof typeof AiType42];
 
 
 
-export const AiType70 = {
+export const AiType43 = {
+    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
+    PREVIOUS_YEAR2: 'PREVIOUS_YEAR'
+} as const;
+
+export type AiType43 = typeof AiType43[keyof typeof AiType43];
+
+
+
+export const AiType44 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
     PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
     PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR3: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD3: 'PREVIOUS_PERIOD'
+    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
 } as const;
 
-export type AiType70 = typeof AiType70[keyof typeof AiType70];
+export type AiType44 = typeof AiType44[keyof typeof AiType44];
 
 
 
-export const AiType71 = {
+export const AiType45 = {
+    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
+    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
+} as const;
+
+export type AiType45 = typeof AiType45[keyof typeof AiType45];
+
+
+
+export const AiType46 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
     PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
     PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR3: 'PREVIOUS_YEAR'
+    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
 } as const;
 
-export type AiType71 = typeof AiType71[keyof typeof AiType71];
+export type AiType46 = typeof AiType46[keyof typeof AiType46];
 
 
 
-export const AiType72 = {
-    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR3: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD3: 'PREVIOUS_PERIOD'
+export const AiType47 = {
+    ATTRIBUTE_SORT: 'attribute_sort'
 } as const;
 
-export type AiType72 = typeof AiType72[keyof typeof AiType72];
+export type AiType47 = typeof AiType47[keyof typeof AiType47];
 
 
 
-export const AiType73 = {
-    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD',
-    PREVIOUS_PERIOD3: 'PREVIOUS_PERIOD'
+export const AiType48 = {
+    METRIC_SORT: 'metric_sort'
 } as const;
 
-export type AiType73 = typeof AiType73[keyof typeof AiType73];
+export type AiType48 = typeof AiType48[keyof typeof AiType48];
 
 
 
-export const AiType74 = {
-    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR3: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD3: 'PREVIOUS_PERIOD'
-} as const;
-
-export type AiType74 = typeof AiType74[keyof typeof AiType74];
-
-
-
-export const AiType75 = {
-    ATTRIBUTE_SORT: 'attribute_sort',
-    METRIC_SORT: 'metric_sort',
-    ATTRIBUTE_SORT2: 'attribute_sort',
-    METRIC_SORT2: 'metric_sort'
-} as const;
-
-export type AiType75 = typeof AiType75[keyof typeof AiType75];
-
-
-
-export const AiType80 = {
+export const AiType49 = {
     SUM: 'SUM',
     AVG: 'AVG',
     MAX: 'MAX',
@@ -5222,80 +4372,218 @@ export const AiType80 = {
     NAT: 'NAT'
 } as const;
 
+export type AiType49 = typeof AiType49[keyof typeof AiType49];
+
+
+
+export const AiType50 = {
+    PUSHPIN: 'pushpin',
+    AREA: 'area'
+} as const;
+
+export type AiType50 = typeof AiType50[keyof typeof AiType50];
+
+
+
+export const AiType53 = {
+    SOLID: 'solid',
+    PATTERN: 'pattern',
+    OUTLINE: 'outline'
+} as const;
+
+export type AiType53 = typeof AiType53[keyof typeof AiType53];
+
+
+
+export const AiType62 = {
+    TABLE: 'table'
+} as const;
+
+export type AiType62 = typeof AiType62[keyof typeof AiType62];
+
+
+
+export const AiType63 = {
+    BAR_CHART: 'bar_chart'
+} as const;
+
+export type AiType63 = typeof AiType63[keyof typeof AiType63];
+
+
+
+export const AiType64 = {
+    COLUMN_CHART: 'column_chart'
+} as const;
+
+export type AiType64 = typeof AiType64[keyof typeof AiType64];
+
+
+
+export const AiType65 = {
+    LINE_CHART: 'line_chart'
+} as const;
+
+export type AiType65 = typeof AiType65[keyof typeof AiType65];
+
+
+
+export const AiType66 = {
+    AREA_CHART: 'area_chart'
+} as const;
+
+export type AiType66 = typeof AiType66[keyof typeof AiType66];
+
+
+
+export const AiType67 = {
+    SCATTER_CHART: 'scatter_chart'
+} as const;
+
+export type AiType67 = typeof AiType67[keyof typeof AiType67];
+
+
+
+export const AiType68 = {
+    BUBBLE_CHART: 'bubble_chart'
+} as const;
+
+export type AiType68 = typeof AiType68[keyof typeof AiType68];
+
+
+
+export const AiType69 = {
+    PIE_CHART: 'pie_chart'
+} as const;
+
+export type AiType69 = typeof AiType69[keyof typeof AiType69];
+
+
+
+export const AiType70 = {
+    DONUT_CHART: 'donut_chart'
+} as const;
+
+export type AiType70 = typeof AiType70[keyof typeof AiType70];
+
+
+
+export const AiType71 = {
+    TREEMAP_CHART: 'treemap_chart'
+} as const;
+
+export type AiType71 = typeof AiType71[keyof typeof AiType71];
+
+
+
+export const AiType72 = {
+    PYRAMID_CHART: 'pyramid_chart'
+} as const;
+
+export type AiType72 = typeof AiType72[keyof typeof AiType72];
+
+
+
+export const AiType73 = {
+    FUNNEL_CHART: 'funnel_chart'
+} as const;
+
+export type AiType73 = typeof AiType73[keyof typeof AiType73];
+
+
+
+export const AiType74 = {
+    HEATMAP_CHART: 'heatmap_chart'
+} as const;
+
+export type AiType74 = typeof AiType74[keyof typeof AiType74];
+
+
+
+export const AiType75 = {
+    BULLET_CHART: 'bullet_chart'
+} as const;
+
+export type AiType75 = typeof AiType75[keyof typeof AiType75];
+
+
+
+export const AiType76 = {
+    WATERFALL_CHART: 'waterfall_chart'
+} as const;
+
+export type AiType76 = typeof AiType76[keyof typeof AiType76];
+
+
+
+export const AiType77 = {
+    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart'
+} as const;
+
+export type AiType77 = typeof AiType77[keyof typeof AiType77];
+
+
+
+export const AiType78 = {
+    SANKEY_CHART: 'sankey_chart'
+} as const;
+
+export type AiType78 = typeof AiType78[keyof typeof AiType78];
+
+
+
+export const AiType79 = {
+    HEADLINE_CHART: 'headline_chart'
+} as const;
+
+export type AiType79 = typeof AiType79[keyof typeof AiType79];
+
+
+
+export const AiType80 = {
+    COMBO_CHART: 'combo_chart'
+} as const;
+
 export type AiType80 = typeof AiType80[keyof typeof AiType80];
 
 
 
 export const AiType81 = {
-    PUSHPIN: 'pushpin',
-    AREA: 'area'
+    GEO_CHART: 'geo_chart'
 } as const;
 
 export type AiType81 = typeof AiType81[keyof typeof AiType81];
 
 
 
+export const AiType82 = {
+    GEO_AREA_CHART: 'geo_area_chart'
+} as const;
+
+export type AiType82 = typeof AiType82[keyof typeof AiType82];
+
+
+
 export const AiType83 = {
-    SOLID: 'solid',
-    PATTERN: 'pattern',
-    OUTLINE: 'outline'
+    REPEATER_CHART: 'repeater_chart'
 } as const;
 
 export type AiType83 = typeof AiType83[keyof typeof AiType83];
 
 
 
-export const AiType99 = {
-    TABLE: 'table',
-    BAR_CHART: 'bar_chart',
-    COLUMN_CHART: 'column_chart',
-    LINE_CHART: 'line_chart',
-    AREA_CHART: 'area_chart',
-    SCATTER_CHART: 'scatter_chart',
-    BUBBLE_CHART: 'bubble_chart',
-    PIE_CHART: 'pie_chart',
-    DONUT_CHART: 'donut_chart',
-    TREEMAP_CHART: 'treemap_chart',
-    PYRAMID_CHART: 'pyramid_chart',
-    FUNNEL_CHART: 'funnel_chart',
-    HEATMAP_CHART: 'heatmap_chart',
-    BULLET_CHART: 'bullet_chart',
-    WATERFALL_CHART: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart',
-    SANKEY_CHART: 'sankey_chart',
-    HEADLINE_CHART: 'headline_chart',
-    COMBO_CHART: 'combo_chart',
-    GEO_CHART: 'geo_chart',
-    GEO_AREA_CHART: 'geo_area_chart',
-    REPEATER_CHART: 'repeater_chart',
-    RADAR_CHART: 'radar_chart',
-    TABLE2: 'table',
-    BAR_CHART2: 'bar_chart',
-    COLUMN_CHART2: 'column_chart',
-    LINE_CHART2: 'line_chart',
-    AREA_CHART2: 'area_chart',
-    SCATTER_CHART2: 'scatter_chart',
-    BUBBLE_CHART2: 'bubble_chart',
-    PIE_CHART2: 'pie_chart',
-    DONUT_CHART2: 'donut_chart',
-    TREEMAP_CHART2: 'treemap_chart',
-    PYRAMID_CHART2: 'pyramid_chart',
-    FUNNEL_CHART2: 'funnel_chart',
-    HEATMAP_CHART2: 'heatmap_chart',
-    BULLET_CHART2: 'bullet_chart',
-    WATERFALL_CHART2: 'waterfall_chart',
-    DEPENDENCY_WHEEL_CHART2: 'dependency_wheel_chart',
-    SANKEY_CHART2: 'sankey_chart',
-    HEADLINE_CHART2: 'headline_chart',
-    COMBO_CHART2: 'combo_chart',
-    GEO_CHART2: 'geo_chart',
-    GEO_AREA_CHART2: 'geo_area_chart',
-    REPEATER_CHART2: 'repeater_chart',
-    RADAR_CHART2: 'radar_chart',
-    TABLE3: 'table'
+export const AiType84 = {
+    RADAR_CHART: 'radar_chart'
 } as const;
 
-export type AiType99 = typeof AiType99[keyof typeof AiType99];
+export type AiType84 = typeof AiType84[keyof typeof AiType84];
+
+
+
+export const AiType9 = {
+    DATE_FILTER: 'date_filter'
+} as const;
+
+export type AiType9 = typeof AiType9[keyof typeof AiType9];
 
 
 /**
@@ -5418,11 +4706,14 @@ export interface AiUsing {
 }
 
 /**
- * Attribute or label identifier to use for this field.
+ * Attribute or label to use in this filter.
  */
 export interface AiUsing1 {
 }
 
+/**
+ * Attribute identifier to use for this field.
+ */
 export interface AiUsing10 {
 }
 
@@ -5432,30 +4723,78 @@ export interface AiUsing11 {
 export interface AiUsing12 {
 }
 
-/**
- * Attribute or label to use in this filter.
- */
 export interface AiUsing13 {
 }
 
+/**
+ * Metric or local metric to use in this filter.
+ */
+export interface AiUsing14 {
+}
+
+/**
+ * Metric or local metric to use in this filter.
+ */
+export interface AiUsing15 {
+}
+
+/**
+ * Metric or local metric to use in this filter.
+ */
+export interface AiUsing16 {
+}
+
+/**
+ * Metric or local metric to use in this filter.
+ */
+export interface AiUsing17 {
+}
+
+/**
+ * Metric identifier to use for this filter.
+ */
+export interface AiUsing18 {
+}
+
+/**
+ * Metric identifier to use for this filter.
+ */
+export interface AiUsing19 {
+}
+
+/**
+ * Attribute or label identifier to use for this field.
+ */
 export interface AiUsing2 {
 }
 
 /**
- * Identifier to use for this field.
+ * Attribute or label to use in this filter.
  */
-export interface AiUsing3 {
+export interface AiUsing20 {
 }
 
-export interface AiUsing4 {
+/**
+ * Attribute or label to use in this filter.
+ */
+export interface AiUsing21 {
+}
+
+export interface AiUsing3 {
 }
 
 /**
  * Identifier to use for this field.
  */
+export interface AiUsing4 {
+}
+
 export interface AiUsing5 {
 }
 
+/**
+ * Identifier to use for this field.
+ */
 export interface AiUsing6 {
 }
 
@@ -5465,9 +4804,6 @@ export interface AiUsing7 {
 export interface AiUsing8 {
 }
 
-/**
- * Attribute identifier to use for this field.
- */
 export interface AiUsing9 {
 }
 
@@ -5557,7 +4893,7 @@ export interface AiVisualisation {
     /**
      * Type of visualisation.
      */
-    'type': AiType121;
+    'type': AiType84;
     'view_by'?: Array<AiBucketItem>;
     'stack_by'?: Array<AiBucketItem>;
     'trend_by'?: Array<AiBucketItem>;
@@ -5588,7 +4924,7 @@ export interface AiVisualisation1 {
     /**
      * Type of visualisation.
      */
-    'type': AiType99;
+    'type': AiType62;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5610,7 +4946,7 @@ export interface AiVisualisation10 {
     /**
      * Type of visualisation.
      */
-    'type': AiType108;
+    'type': AiType71;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5632,7 +4968,7 @@ export interface AiVisualisation11 {
     /**
      * Type of visualisation.
      */
-    'type': AiType109;
+    'type': AiType72;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5654,7 +4990,7 @@ export interface AiVisualisation12 {
     /**
      * Type of visualisation.
      */
-    'type': AiType110;
+    'type': AiType73;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5678,7 +5014,7 @@ export interface AiVisualisation13 {
     /**
      * Type of visualisation.
      */
-    'type': AiType111;
+    'type': AiType74;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5700,7 +5036,7 @@ export interface AiVisualisation14 {
     /**
      * Type of visualisation.
      */
-    'type': AiType112;
+    'type': AiType75;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5722,7 +5058,7 @@ export interface AiVisualisation15 {
     /**
      * Type of visualisation.
      */
-    'type': AiType113;
+    'type': AiType76;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5746,7 +5082,7 @@ export interface AiVisualisation16 {
     /**
      * Type of visualisation.
      */
-    'type': AiType114;
+    'type': AiType77;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5770,7 +5106,7 @@ export interface AiVisualisation17 {
     /**
      * Type of visualisation.
      */
-    'type': AiType115;
+    'type': AiType78;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5792,7 +5128,7 @@ export interface AiVisualisation18 {
     /**
      * Type of visualisation.
      */
-    'type': AiType116;
+    'type': AiType79;
     'view_by'?: Array<any> | null;
 }
 
@@ -5814,7 +5150,7 @@ export interface AiVisualisation19 {
     /**
      * Type of visualisation.
      */
-    'type': AiType117;
+    'type': AiType80;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5837,7 +5173,7 @@ export interface AiVisualisation2 {
     /**
      * Type of visualisation.
      */
-    'type': AiType100;
+    'type': AiType63;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5860,7 +5196,7 @@ export interface AiVisualisation20 {
     /**
      * Type of visualisation.
      */
-    'type': AiType118;
+    'type': AiType81;
     'view_by'?: Array<string> | null;
 }
 
@@ -5883,7 +5219,7 @@ export interface AiVisualisation21 {
     /**
      * Type of visualisation.
      */
-    'type': AiType119;
+    'type': AiType82;
     'view_by'?: Array<string> | null;
 }
 
@@ -5907,7 +5243,7 @@ export interface AiVisualisation22 {
     /**
      * Type of visualisation.
      */
-    'type': AiType120;
+    'type': AiType83;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5929,7 +5265,7 @@ export interface AiVisualisation23 {
     /**
      * Type of visualisation.
      */
-    'type': AiType121;
+    'type': AiType84;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5952,7 +5288,7 @@ export interface AiVisualisation3 {
     /**
      * Type of visualisation.
      */
-    'type': AiType101;
+    'type': AiType64;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5975,7 +5311,7 @@ export interface AiVisualisation4 {
     /**
      * Type of visualisation.
      */
-    'type': AiType102;
+    'type': AiType65;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5998,7 +5334,7 @@ export interface AiVisualisation5 {
     /**
      * Type of visualisation.
      */
-    'type': AiType103;
+    'type': AiType66;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -6021,7 +5357,7 @@ export interface AiVisualisation6 {
     /**
      * Type of visualisation.
      */
-    'type': AiType104;
+    'type': AiType67;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -6044,7 +5380,7 @@ export interface AiVisualisation7 {
     /**
      * Type of visualisation.
      */
-    'type': AiType105;
+    'type': AiType68;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -6066,7 +5402,7 @@ export interface AiVisualisation8 {
     /**
      * Type of visualisation.
      */
-    'type': AiType106;
+    'type': AiType69;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -6088,7 +5424,7 @@ export interface AiVisualisation9 {
     /**
      * Type of visualisation.
      */
-    'type': AiType107;
+    'type': AiType70;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -6169,6 +5505,7 @@ export interface AiVisualizationMetricValueRangeFilter {
 export type AiVisualizationMetricValueRangeFilterTypeEnum = 'metric_value_filter';
 
 export interface AiVisualizationPart {
+    'references'?: AiVisualizationReferences | null;
     /**
      * Type of multipart part.
      */
@@ -6178,6 +5515,22 @@ export interface AiVisualizationPart {
 }
 
 export type AiVisualizationPartTypeEnum = 'visualization';
+
+/**
+ * AAC bodies of the datasets a chart stands on.  The client needs them to resolve what the chart body only names: a geo chart\'s latitude/longitude labels, and the granularities a date filter\'s values are read against. Opaque AAC pass-through (dict), like every other AAC body here.
+ */
+export interface AiVisualizationReferences {
+    [key: string]: any;
+
+    /**
+     * Full AAC body of every dataset the chart uses.
+     */
+    'datasets'?: Array<object>;
+    /**
+     * Full AAC body of every date dataset the chart uses.
+     */
+    'datedatasets'?: Array<object>;
+}
 
 export interface AiVisualizationRelativeDateFilter {
     'from': number;
@@ -8632,6 +7985,68 @@ export async function DashboardSummaryAiAxiosParamCreator_SummarizeDashboard(
 }
 
 
+// DashboardSummaryAi FP - DashboardSummaryAiAxiosParamCreator
+/**
+ * Note: This API is an experimental and is going to change. Please, use it accordingly. Generates a natural-language summary of an explicit set of visualizations, which need not belong to any one dashboard. The filter context is required: with no dashboard there is no saved filter context to fall back on.
+ * @summary (EXPERIMENTAL) Summarize a set of visualizations
+ * @param {string} workspaceId 
+ * @param {AiSummarizeVisualizationsRequest} aiSummarizeVisualizationsRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DashboardSummaryAiAxiosParamCreator_SummarizeVisualizations(
+    workspaceId: string, aiSummarizeVisualizationsRequest: AiSummarizeVisualizationsRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('summarizeVisualizations', 'workspaceId', workspaceId)
+    // verify required parameter 'aiSummarizeVisualizationsRequest' is not null or undefined
+    assertParamExists('summarizeVisualizations', 'aiSummarizeVisualizationsRequest', aiSummarizeVisualizationsRequest)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/summary/visualizations`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof aiSummarizeVisualizationsRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(aiSummarizeVisualizationsRequest !== undefined ? aiSummarizeVisualizationsRequest : {})
+        : aiSummarizeVisualizationsRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
 
 // DashboardSummaryAi Api FP
 /**
@@ -8659,6 +8074,32 @@ export async function DashboardSummaryAi_SummarizeDashboard(
 }
 
 
+// DashboardSummaryAi Api FP
+/**
+ * Note: This API is an experimental and is going to change. Please, use it accordingly. Generates a natural-language summary of an explicit set of visualizations, which need not belong to any one dashboard. The filter context is required: with no dashboard there is no saved filter context to fall back on.
+ * @summary (EXPERIMENTAL) Summarize a set of visualizations
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DashboardSummaryAiSummarizeVisualizationsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DashboardSummaryAi_SummarizeVisualizations(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: DashboardSummaryAiSummarizeVisualizationsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiSummarizeResponse> {
+    const localVarAxiosArgs = await DashboardSummaryAiAxiosParamCreator_SummarizeVisualizations(
+        requestParameters.workspaceId, requestParameters.aiSummarizeVisualizationsRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
 /**
  * DashboardSummaryAi - interface
  * @export
@@ -8674,6 +8115,16 @@ export interface DashboardSummaryAiInterface {
      * @memberof DashboardSummaryAiInterface
      */
     summarizeDashboard(requestParameters: DashboardSummaryAiSummarizeDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<AiSummarizeResponse>;
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. Generates a natural-language summary of an explicit set of visualizations, which need not belong to any one dashboard. The filter context is required: with no dashboard there is no saved filter context to fall back on.
+     * @summary (EXPERIMENTAL) Summarize a set of visualizations
+     * @param {DashboardSummaryAiSummarizeVisualizationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardSummaryAiInterface
+     */
+    summarizeVisualizations(requestParameters: DashboardSummaryAiSummarizeVisualizationsRequest, options?: AxiosRequestConfig): AxiosPromise<AiSummarizeResponse>;
 
 }
 
@@ -8699,6 +8150,27 @@ export interface DashboardSummaryAiSummarizeDashboardRequest {
 }
 
 /**
+ * Request parameters for summarizeVisualizations operation in DashboardSummaryAi.
+ * @export
+ * @interface DashboardSummaryAiSummarizeVisualizationsRequest
+ */
+export interface DashboardSummaryAiSummarizeVisualizationsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardSummaryAiSummarizeVisualizations
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {AiSummarizeVisualizationsRequest}
+     * @memberof DashboardSummaryAiSummarizeVisualizations
+     */
+    readonly aiSummarizeVisualizationsRequest: AiSummarizeVisualizationsRequest
+}
+
+/**
  * DashboardSummaryAi - object-oriented interface
  * @export
  * @class DashboardSummaryAi
@@ -8715,6 +8187,18 @@ export class DashboardSummaryAi extends BaseAPI implements DashboardSummaryAiInt
      */
     public summarizeDashboard(requestParameters: DashboardSummaryAiSummarizeDashboardRequest, options?: AxiosRequestConfig) {
         return DashboardSummaryAi_SummarizeDashboard(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. Generates a natural-language summary of an explicit set of visualizations, which need not belong to any one dashboard. The filter context is required: with no dashboard there is no saved filter context to fall back on.
+     * @summary (EXPERIMENTAL) Summarize a set of visualizations
+     * @param {DashboardSummaryAiSummarizeVisualizationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardSummaryAi
+     */
+    public summarizeVisualizations(requestParameters: DashboardSummaryAiSummarizeVisualizationsRequest, options?: AxiosRequestConfig) {
+        return DashboardSummaryAi_SummarizeVisualizations(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

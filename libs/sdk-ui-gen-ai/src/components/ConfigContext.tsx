@@ -33,10 +33,16 @@ export type LinkHandlerEvent = {
 };
 
 /**
- * Display mode of the Gen AI assistant.
+ * Mode of the Gen AI assistant.
  * @public
  */
 export type GenAIAssistantMode = "docked" | "fullscreen";
+
+/**
+ * Display mode of the Gen AI assistant.
+ * @public
+ */
+export type GenAIAssistantDisplayMode = "inline" | "modal";
 
 const configContext = createContext<ConfigContext>({});
 

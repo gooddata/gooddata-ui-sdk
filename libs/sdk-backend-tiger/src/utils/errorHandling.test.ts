@@ -2,9 +2,24 @@
 
 import { describe, expect, it } from "vitest";
 
-import { UnexpectedResponseError, isPermissionEscalationRefused } from "@gooddata/sdk-backend-spi";
+import {
+    ContractExpired,
+    UnexpectedResponseError,
+    isPermissionEscalationRefused,
+} from "@gooddata/sdk-backend-spi";
 
 import { convertApiError } from "./errorHandling.js";
+
+function forbiddenError(data: Record<string, unknown>) {
+    return {
+        message: "Forbidden",
+        name: "API Error",
+        response: {
+            status: 403,
+            data,
+        },
+    };
+}
 
 describe("errorHandling", () => {
     describe("convertApiError", () => {
@@ -79,6 +94,51 @@ describe("errorHandling", () => {
             expect(unexpectedResponseError.httpStatus).toBe(500);
             expect(unexpectedResponseError.traceId).toEqual(traceId);
             expect(unexpectedResponseError.responseBody).toEqual(data);
+        });
+
+        it("converts a legacy contract-expired detail to ContractExpired without a reason field", () => {
+            const apiError = forbiddenError({ detail: "Contract expired.", tier: "growth" });
+
+            const error = convertApiError(apiError);
+
+            expect(error instanceof ContractExpired).toBeTruthy();
+            expect(error.message).toBe("growth");
+        });
+
+        it("converts reason=contract_expired to ContractExpired even with a non-matching detail", () => {
+            const apiError = forbiddenError({
+                detail: "The deployment contract cannot be used.",
+                reason: "contract_expired",
+                tier: "growth",
+            });
+
+            const error = convertApiError(apiError);
+
+            expect(error instanceof ContractExpired).toBeTruthy();
+            expect(error.message).toBe("growth");
+        });
+
+        it("converts reason=license_expired to ContractExpired even without a matching detail", () => {
+            const apiError = forbiddenError({
+                detail: "The license for this deployment has expired.",
+                reason: "license_expired",
+            });
+
+            const error = convertApiError(apiError);
+
+            expect(error instanceof ContractExpired).toBeTruthy();
+            expect(error.message).toBe("unspecified");
+        });
+
+        it("leaves an unrecognized deny reason as UnexpectedResponseError", () => {
+            const apiError = forbiddenError({
+                detail: "No valid contract was found for this organization.",
+                reason: "contract_missing",
+            });
+
+            const error = convertApiError(apiError);
+
+            expect(error instanceof UnexpectedResponseError).toBeTruthy();
         });
     });
 });

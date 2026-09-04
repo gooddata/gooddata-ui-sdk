@@ -79,7 +79,6 @@ exports[`PluggableSankeyChart > sankey should allow date attribute in attribute 
       "attribute_from": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -98,7 +97,6 @@ exports[`PluggableSankeyChart > sankey should allow date attribute in attribute 
       "attribute_to": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -217,7 +215,6 @@ exports[`PluggableSankeyChart > should return reference point with one metric, a
       "attribute_from": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -236,7 +233,6 @@ exports[`PluggableSankeyChart > should return reference point with one metric, a
       "attribute_to": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -407,7 +403,6 @@ exports[`PluggableSankeyChart > should reuse one measure and order attribute typ
       "attribute_from": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -426,7 +421,6 @@ exports[`PluggableSankeyChart > should reuse one measure and order attribute typ
       "attribute_to": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,

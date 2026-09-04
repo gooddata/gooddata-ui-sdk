@@ -19,6 +19,12 @@
         // trap the embedded application's z-indexes in their own stacking
         // context so they cannot paint over the host header and its dropdowns
         isolation: isolate;
+        margin-right: 0;
+        transition: margin-right 0.2s ease-in-out;
+
+        &--chatIsOpen {
+            margin-right: 400px;
+        }
     }
 
     &__app-container {

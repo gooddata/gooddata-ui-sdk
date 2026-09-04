@@ -1,4 +1,5 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { type IntlShape } from "react-intl";
 
 /**
@@ -13,6 +14,7 @@ export interface IMessageTranslator {
  */
 export interface IDateTranslator {
     formatDate: IntlShape["formatDate"];
+    locale?: string;
 }
 
 /**

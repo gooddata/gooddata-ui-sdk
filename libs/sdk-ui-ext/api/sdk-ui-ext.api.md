@@ -43,7 +43,7 @@ import { ILocale } from '@gooddata/sdk-ui';
 import { INotification } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
 import type { IObjectAccessList } from '@gooddata/sdk-model';
-import type { IObjectPermissionsObject } from '@gooddata/sdk-backend-spi';
+import { IObjectPermissionsObject } from '@gooddata/sdk-backend-spi';
 import { IPivotTableConfig } from '@gooddata/sdk-ui-pivot';
 import { ISemanticConditionalFormatting } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
@@ -69,7 +69,7 @@ import { UseCancelablePromiseStatus } from '@gooddata/sdk-ui';
 import { WeekStart } from '@gooddata/sdk-model';
 
 // @internal
-export function accessListToSummary(list: IObjectAccessList): IObjectAccessSummary;
+export function accessListToSummary(list: IObjectAccessList, self?: ObjRef): IObjectAccessSummary;
 
 // @internal (undocumented)
 export const AddDataSourceToSubjects: {
@@ -251,6 +251,9 @@ export const DeleteUsersDialog: {
     (props: IDeleteUsersDialogProps): JSX.Element;
     displayName: string | undefined;
 };
+
+// @internal
+export function draftToSummary(draft: IObjectShareDraft, initialGeneralAccess: GeneralAccessValue): IObjectAccessSummary;
 
 // @internal (undocumented)
 export function EmbedInsightDialog(props: IEmbedInsightDialogProps): JSX.Element;
@@ -977,12 +980,24 @@ export function InsightRenderer(props: IInsightRendererProps): JSX.Element | nul
 // @public
 export function InsightView(props: IInsightViewProps): JSX.Element;
 
+// @internal (undocumented)
+export interface IObjectAccessLevel {
+    // (undocumented)
+    isLoading: boolean;
+    level: ObjectShareLevel | undefined;
+    onSummaryChange: (summary: IObjectAccessSummary) => void;
+    // (undocumented)
+    summary: IObjectAccessSummary | undefined;
+}
+
 // @internal
 export interface IObjectAccessSummary {
     // (undocumented)
     generalAccess: GeneralAccessValue;
     // (undocumented)
     granteeCount: number;
+    // (undocumented)
+    selfIsGrantee: boolean;
     // (undocumented)
     workspaceLevel: AccessGranularPermission;
 }
@@ -1053,19 +1068,19 @@ export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition
 export function isEmptyAfm(obj: unknown): obj is EmptyAfmSdkError;
 
 // @internal (undocumented)
-export const isInsightAlertingConfigurationEnabled: (insight: IInsightDefinition | IInsight | undefined) => boolean;
+export const isInsightAlertingConfigurationEnabled: (insight: IInsight | IInsightDefinition | undefined) => boolean;
 
 // @internal (undocumented)
-export const isInsightKeyDriverAnalysisEnabled: (insight: IInsightDefinition | IInsight | undefined) => boolean;
+export const isInsightKeyDriverAnalysisEnabled: (insight: IInsight | IInsightDefinition | undefined) => boolean;
 
 // @internal (undocumented)
-export const isInsightScheduledExportsConfigurationEnabled: (insight: IInsightDefinition | IInsight | undefined) => boolean;
+export const isInsightScheduledExportsConfigurationEnabled: (insight: IInsight | IInsightDefinition | undefined) => boolean;
 
 // @internal (undocumented)
-export const isInsightSupportedForAlerts: (insight: IInsightDefinition | IInsight | null | undefined) => boolean;
+export const isInsightSupportedForAlerts: (insight: IInsight | IInsightDefinition | null | undefined) => boolean;
 
 // @internal (undocumented)
-export const isInsightSupportedForScheduledExports: (insight: IInsightDefinition | IInsight | null | undefined) => boolean;
+export const isInsightSupportedForScheduledExports: (insight: IInsight | IInsightDefinition | null | undefined) => boolean;
 
 // @alpha
 export interface ISizeInfo {
@@ -1112,6 +1127,14 @@ export interface ITargetOption {
     // (undocumented)
     title: string;
     value: string;
+}
+
+// @internal (undocumented)
+export interface IUseObjectAccessLevelOptions {
+    draft?: IObjectShareDraft;
+    enabled?: boolean;
+    initialDraftGeneralAccess?: GeneralAccessValue;
+    target: IObjectPermissionsObject | undefined;
 }
 
 // @internal
@@ -1270,6 +1293,9 @@ export function NotificationsPanel(props: INotificationsPanelProps): JSX.Element
 export function ObjectShareDialog(props: IObjectShareDialogProps): JSX.Element | null;
 
 // @internal
+export type ObjectShareLevel = "PRIVATE" | "SHARED" | "WORKSPACE";
+
+// @internal
 export type ObjectSharePermissionLevel = AccessGranularPermission;
 
 // @alpha (undocumented)
@@ -1304,6 +1330,9 @@ export type ScheduleAutomationsColumnName = "nextRun" | "attachments";
 // @internal
 export function sortShareableLabels(labels: readonly IObjectShareLabel[]): IObjectShareLabel[];
 
+// @internal
+export function summaryToShareLevel(summary: IObjectAccessSummary): ObjectShareLevel;
+
 // @internal (undocumented)
 export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted" | "group-deleted" | "user-deleted" | "group-created" | "user-detail-updated" | "group-detail-updated" | "groups-added-to-single-user" | "groups-added-to-multiple-users" | "users-added-to-single-group" | "users-added-to-multiple-groups" | "permission-added-to-single-user" | "permission-added-to-single-group" | "permission-added-to-multiple-users" | "permission-added-to-multiple-groups" | "user-permission-changed-to-hierarchy" | "user-permission-changed-to-single-workspace" | "group-permission-changed-to-hierarchy" | "group-permission-changed-to-single-workspace" | "user-permission-changed-to-view" | "group-permission-changed-to-view" | "user-permission-changed-to-view-save-views" | "group-permission-changed-to-view-save-views" | "user-permission-changed-to-view-export" | "group-permission-changed-to-view-export" | "user-permission-changed-to-view-export-save-views" | "group-permission-changed-to-view-export-save-views" | "user-permission-changed-to-analyze" | "group-permission-changed-to-analyze" | "user-permission-changed-to-analyze-export" | "group-permission-changed-to-analyze-export" | "user-permission-changed-to-manage" | "group-permission-changed-to-manage" | "user-data-source-permission-changed-to-use" | "group-data-source-permission-changed-to-use" | "user-data-source-permission-changed-to-manage" | "group-data-source-permission-changed-to-manage" | "user-role-changed-to-admin" | "user-role-changed-to-member" | "user-marked-system-account" | "user-unmarked-system-account";
 
@@ -1332,6 +1361,9 @@ export function useInsightPickerState(author?: string): {
     tagFilter: string[];
     onTagFilterChange: Dispatch<SetStateAction<string[]>>;
 };
+
+// @internal
+export function useObjectAccessLevel(input: IUseObjectAccessLevelOptions): IObjectAccessLevel;
 
 // @internal (undocumented)
 export const UserEditDialog: {

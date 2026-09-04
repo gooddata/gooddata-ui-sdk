@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { type IAllTimeDateFilterOption } from "@gooddata/sdk-model";
@@ -11,6 +11,7 @@ import {
     DateFilterButtonLocalized,
     type IDateFilterButtonLocalizedProps,
 } from "../DateFilterButtonLocalized/DateFilterButtonLocalized.js";
+import { type IUiAbsoluteDateFilterForm } from "../interfaces/index.js";
 
 import { DateFilterBody, type IDateFilterBodyProps } from "./DateFilterBody.js";
 
@@ -103,6 +104,127 @@ describe("ExtendedDateFilterBody", () => {
     it("should not display edit mode message in normal mode", () => {
         renderDateFilterBody({ isEditMode: false });
         expect(screen.queryByText("Set default date filter for viewers:")).not.toBeInTheDocument();
+    });
+
+    describe("absolute form granularities", () => {
+        const absoluteForm: IUiAbsoluteDateFilterForm = {
+            localIdentifier: "ABSOLUTE_FORM",
+            type: "absoluteForm",
+            name: "",
+            visible: true,
+            availableGranularities: [
+                "GDC.time.date",
+                "GDC.time.week_us",
+                "GDC.time.month",
+                "GDC.time.quarter",
+                "GDC.time.year",
+            ],
+        };
+
+        it("should not render granularity tabs when isAbsoluteDateFilterGranularityEnabled is not set", () => {
+            renderDateFilterBody({
+                filterOptions: { absoluteForm },
+                selectedFilterOption: absoluteForm,
+            });
+
+            fireEvent.click(screen.getByRole("button", { name: /Static period/i }));
+
+            expect(document.querySelector(".s-absolute-filter-form-granularity-tabs")).toBeNull();
+        });
+
+        it("should not reset granularity or clear from/to when isAbsoluteDateFilterGranularityEnabled is not set, even if availableGranularities lacks the implied granularity", () => {
+            const formWithoutDateGranularity: IUiAbsoluteDateFilterForm = {
+                ...absoluteForm,
+                availableGranularities: ["GDC.time.month", "GDC.time.quarter"],
+                from: "2026-03-01",
+                to: "2026-03-31",
+            };
+            const onSelectedFilterOptionChange = vi.fn();
+
+            renderDateFilterBody({
+                filterOptions: { absoluteForm: formWithoutDateGranularity },
+                selectedFilterOption: formWithoutDateGranularity,
+                onSelectedFilterOptionChange,
+            });
+
+            fireEvent.click(screen.getByRole("button", { name: /Static period/i }));
+
+            expect(onSelectedFilterOptionChange).not.toHaveBeenCalledWith(
+                expect.objectContaining({
+                    from: undefined,
+                    to: undefined,
+                }),
+            );
+        });
+
+        it("should still offer Month/Quarter/Year even when the fiscal tab is the default (fiscal calendar active)", () => {
+            renderDateFilterBody({
+                filterOptions: {
+                    absoluteForm,
+                    relativePreset: {
+                        "GDC.time.fiscal_year": [
+                            {
+                                from: 0,
+                                to: 0,
+                                granularity: "GDC.time.fiscal_year",
+                                localIdentifier: "THIS_FISCAL_YEAR",
+                                type: "relativePreset",
+                                name: "",
+                                visible: true,
+                            },
+                        ],
+                        "GDC.time.year": [
+                            {
+                                from: 0,
+                                to: 0,
+                                granularity: "GDC.time.year",
+                                localIdentifier: "THIS_YEAR",
+                                type: "relativePreset",
+                                name: "",
+                                visible: true,
+                            },
+                        ],
+                    },
+                },
+                selectedFilterOption: absoluteForm,
+                isAbsoluteDateFilterGranularityEnabled: true,
+                activeCalendars: { standard: true, fiscal: true, default: "FISCAL" },
+            } as Partial<IDateFilterBodyProps>);
+
+            fireEvent.click(screen.getByRole("button", { name: /Static period/i }));
+
+            expect(document.querySelector(".s-granularity-month")).not.toBeNull();
+            expect(document.querySelector(".s-granularity-quarter")).not.toBeNull();
+            expect(document.querySelector(".s-granularity-year")).not.toBeNull();
+        });
+
+        it("should reset to the first available granularity and clear from/to when reopening after the selected granularity was hidden", () => {
+            const staleSelection: IUiAbsoluteDateFilterForm = {
+                ...absoluteForm,
+                availableGranularities: ["GDC.time.date", "GDC.time.week_us", "GDC.time.year"],
+                granularity: "GDC.time.month",
+                from: "2026-03-01",
+                to: "2026-03-31",
+            };
+            const onSelectedFilterOptionChange = vi.fn();
+
+            renderDateFilterBody({
+                filterOptions: { absoluteForm: staleSelection },
+                selectedFilterOption: staleSelection,
+                onSelectedFilterOptionChange,
+                isAbsoluteDateFilterGranularityEnabled: true,
+            } as Partial<IDateFilterBodyProps>);
+
+            fireEvent.click(screen.getByRole("button", { name: /Static period/i }));
+
+            expect(onSelectedFilterOptionChange).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    granularity: "GDC.time.date",
+                    from: undefined,
+                    to: undefined,
+                }),
+            );
+        });
     });
 
     describe("calculateHeight", () => {

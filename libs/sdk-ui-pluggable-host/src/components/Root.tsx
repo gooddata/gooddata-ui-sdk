@@ -9,10 +9,12 @@ import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model
 import { DEFAULT_LANGUAGE, resolveLocale } from "@gooddata/sdk-ui";
 import { bemFactory } from "@gooddata/sdk-ui-kit";
 
+import { useContractExpiredTier } from "../platformContext/contractExpired.js";
 import { useLoadPlatformContext } from "../platformContext/useLoadPlatformContext.js";
 import { usePluggableApplications } from "../registry/pluggableApplicationsRegistry.js";
 import { HostIntlProvider } from "../ui/HostIntlProvider.js";
 
+import { ContractExpiredDialog } from "./ContractExpiredDialog.js";
 import { FullScreenLoader } from "./FullScreenLoader.js";
 import { HostUiContainer } from "./HostUiContainer.js";
 import { useRedirectNavigation } from "./useRedirectNavigation.js";
@@ -36,25 +38,53 @@ export interface IRootCallbacks {
  */
 export function Root({ callbacks }: { callbacks?: IRootCallbacks }) {
     const platformContext = useLoadPlatformContext();
+    const contractExpiredTier = useContractExpiredTier();
+
+    // The lock is deployment-wide, so it overlays whatever state the host is in. When the bootstrap
+    // itself was denied, the lock is the whole story and replaces the generic failure text.
+    const contractExpiredDialog =
+        contractExpiredTier === undefined ? null : (
+            <HostIntlProvider
+                locale={
+                    platformContext.state === "ready"
+                        ? resolveLocale(platformContext.ctx.preferredLocale)
+                        : DEFAULT_LANGUAGE
+                }
+            >
+                <ContractExpiredDialog tier={contractExpiredTier} />
+            </HostIntlProvider>
+        );
 
     if (platformContext.state === "loading") {
-        return <FullScreenLoader />;
+        return (
+            <>
+                {contractExpiredDialog}
+                <FullScreenLoader />
+            </>
+        );
     }
 
     if (platformContext.state === "error") {
         return (
-            <HostIntlProvider locale={DEFAULT_LANGUAGE}>
-                <main className={e("error")}>
-                    <h1>
-                        <FormattedMessage id="gs.host.error.failedToLoad" />
-                    </h1>
-                    <p>{platformContext.error}</p>
-                </main>
-            </HostIntlProvider>
+            contractExpiredDialog ?? (
+                <HostIntlProvider locale={DEFAULT_LANGUAGE}>
+                    <main className={e("error")}>
+                        <h1>
+                            <FormattedMessage id="gs.host.error.failedToLoad" />
+                        </h1>
+                        <p>{platformContext.error}</p>
+                    </main>
+                </HostIntlProvider>
+            )
         );
     }
 
-    return <ReadyRoot ctx={platformContext.ctx} callbacks={callbacks} />;
+    return (
+        <>
+            {contractExpiredDialog}
+            <ReadyRoot ctx={platformContext.ctx} callbacks={callbacks} />
+        </>
+    );
 }
 
 function ReadyRoot({ ctx, callbacks }: { ctx: IPlatformContext; callbacks?: IRootCallbacks }) {

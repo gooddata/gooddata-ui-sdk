@@ -341,7 +341,6 @@ exports[`PluggableLineChart > should cut out measures tail when getting nM 0Vb 1
       "segment": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -360,7 +359,6 @@ exports[`PluggableLineChart > should cut out measures tail when getting nM 0Vb 1
       "trend": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -483,7 +481,6 @@ exports[`PluggableLineChart > should handle wrong order of buckets in reference 
       "segment": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -502,7 +499,6 @@ exports[`PluggableLineChart > should handle wrong order of buckets in reference 
       "trend": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -615,7 +611,6 @@ exports[`PluggableLineChart > should return reference point when no categories a
       "segment": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -634,7 +629,6 @@ exports[`PluggableLineChart > should return reference point when no categories a
       "trend": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -757,7 +751,6 @@ exports[`PluggableLineChart > should return reference point with Date in categor
       "segment": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -776,7 +769,6 @@ exports[`PluggableLineChart > should return reference point with Date in categor
       "trend": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -899,7 +891,6 @@ exports[`PluggableLineChart > should return reference point with one category an
       "segment": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -918,7 +909,6 @@ exports[`PluggableLineChart > should return reference point with one category an
       "trend": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -1095,7 +1085,6 @@ exports[`PluggableLineChart > should reuse all measures, only one category and n
       "segment": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -1115,7 +1104,6 @@ exports[`PluggableLineChart > should reuse all measures, only one category and n
       "trend": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -1283,7 +1271,6 @@ exports[`PluggableLineChart > should reuse one measure, only one category and on
       "segment": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,
@@ -1302,7 +1289,6 @@ exports[`PluggableLineChart > should reuse one measure, only one category and on
       "trend": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsDuplicateDates": true,

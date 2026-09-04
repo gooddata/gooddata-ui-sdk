@@ -705,12 +705,11 @@ a.gd-list-help-menu-item.gd-list-item {
     position: relative;
     box-sizing: border-box;
     max-width: 146px;
+    padding-right: 34px;
 
     &:hover {
         background: rgba(255, 255, 255, 0.3);
     }
-
-    padding-right: 34px;
 
     &::after {
         content: "\e612";

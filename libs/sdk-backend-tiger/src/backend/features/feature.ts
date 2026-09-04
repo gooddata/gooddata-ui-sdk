@@ -600,13 +600,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableAIKnowledge,
-            "enableAIKnowledge",
-            "BOOLEAN",
-            FeatureFlagsValues.enableAIKnowledge,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableAiAgenticSuggestions,
             "enableAiAgenticSuggestions",
             "BOOLEAN",
@@ -646,6 +639,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableGenAiDashboardBuilderSkill",
             "BOOLEAN",
             FeatureFlagsValues.enableGenAiDashboardBuilderSkill,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableGenAiRightPanel,
+            "enableGenAiRightPanel",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAiRightPanel,
         ),
         ...loadFeature(
             features,
@@ -695,13 +695,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableAiLlmAnthropicProvider",
             "BOOLEAN",
             FeatureFlagsValues.enableAiLlmAnthropicProvider,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableGenAiVisualizationSummarySkill,
-            "enableGenAiVisualizationSummarySkill",
-            "BOOLEAN",
-            FeatureFlagsValues.enableGenAiVisualizationSummarySkill,
         ),
         ...loadFeature(
             features,
@@ -849,13 +842,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableDashboardsSearch",
             "BOOLEAN",
             FeatureFlagsValues.enableDashboardsSearch,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableAiHub,
-            "enableAiHub",
-            "BOOLEAN",
-            FeatureFlagsValues.enableAiHub,
         ),
         ...loadFeature(
             features,

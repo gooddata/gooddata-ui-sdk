@@ -260,8 +260,8 @@ export const DateFilterHelpers: {
     defaultDateFilterOptions: IDateFilterOptionsByType;
     canExcludeCurrentPeriod: (dateFilterOption: DateFilterOption) => boolean;
     mapOptionToAfm: (value: DateFilterOption, dateDataSet: ObjRef, excludeCurrentPeriod: boolean) => IDateFilter | null;
-    formatAbsoluteDateRange: (from: string | Date, to: string | Date, dateFormat: string, splitter?: string) => string;
-    formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator, labelMode: DateFilterLabelMode, boundedFilter?: ILowerBoundedFilter | IUpperBoundedFilter | undefined) => string;
+    formatAbsoluteDateRange: (from: Date | string, to: Date | string, dateFormat: string, splitter?: string) => string;
+    formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator, labelMode: DateFilterLabelMode, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter) => string;
     filterVisibleDateFilterOptions: typeof filterVisibleDateFilterOptions;
 };
 
@@ -1023,6 +1023,8 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     filterOptions: IDateFilterOptionsByType;
     // @alpha
     hideDisabledExclude?: boolean;
+    // @alpha
+    isAbsoluteDateFilterGranularityEnabled?: boolean;
     // (undocumented)
     isEditMode?: boolean;
     isSecondsForAbsoluteRangeEnabled?: boolean;
@@ -1083,6 +1085,8 @@ export interface IDateFilterStatePropsIntersection {
 export interface IDateTranslator {
     // (undocumented)
     formatDate: IntlShape["formatDate"];
+    // (undocumented)
+    locale?: string;
 }
 
 // @beta

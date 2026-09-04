@@ -665,6 +665,26 @@ describe("ObjectShareDialog administrator empty state", () => {
     });
 });
 
+describe("ObjectShareDialog creator row", () => {
+    const DRAFTING = { target: undefined, draft: true, onDraftChange: () => {} };
+    const SELF = { name: "Marek Stránský", email: "marek@example.com" };
+
+    it("carries no tag while drafting — the caller is the creator, not an administrator", () => {
+        renderDialog(makeController({ grantees: [], adminSelfRow: SELF }), undefined, DRAFTING);
+
+        expect(captured.rows).toEqual([
+            { id: "self-admin", name: "Marek Stránský (you)", email: "marek@example.com" },
+        ]);
+        expect(screen.queryByText(MESSAGES["objectShare.adminTag.label"]!)).toBeNull();
+    });
+
+    it("keeps the row once grantees are added", () => {
+        renderDialog(makeController({ grantees: [OTHER_GRANTEE], adminSelfRow: SELF }), undefined, DRAFTING);
+
+        expect(captured.rows.map((r) => r.id)).toEqual(["self-admin", OTHER_GRANTEE.id]);
+    });
+});
+
 describe("ObjectShareDialog sole-row identity guard", () => {
     it("disables grantee-row controls while the controller reports them locked", () => {
         // An unidentified sole row may be the caller's own grant — mutating it
@@ -698,11 +718,13 @@ describe("ObjectShareDialog summary synchronization", () => {
             generalAccess: "RESTRICTED" as const,
             workspaceLevel: "VIEW" as const,
             granteeCount: 1,
+            selfIsGrantee: false,
         };
         const summaryB = {
             generalAccess: "RESTRICTED" as const,
             workspaceLevel: "VIEW" as const,
             granteeCount: 2,
+            selfIsGrantee: false,
         };
         const onSummaryChange = vi.fn();
         const controller = makeController({ summary: summaryA });

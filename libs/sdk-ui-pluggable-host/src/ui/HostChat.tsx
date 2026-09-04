@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { useEffect, useMemo } from "react";
+import { ReactNode, useCallback, useEffect, useMemo } from "react";
 
 import { type IGenAIUserContext, type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
 import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
@@ -11,9 +11,11 @@ import { getAppLifecycleCallbacks } from "../loader/pluggableApplicationsLoader.
 import { getBackend } from "../platformContext/backend.js";
 
 import { GenAIChatEvent } from "./GenAIChat.js";
+import { e } from "./hostChromeBem.js";
 import { HostIntlProvider } from "./HostIntlProvider.js";
 import { useHostChromeChat } from "./useHostChromeChat.js";
 import { useHostChromeWorkspaceFeatures } from "./useHostChromeWorkspaceFeatures.js";
+import "./HostChat.scss";
 import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
 
 /**
@@ -189,10 +191,31 @@ export function HostChat({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [visibilitySeq, chatAskAiAssistant, chatOpenAiAssistant, chatOpen, chatClose, chatToggle]);
 
+    const enableGenAiRightPanel = features.settings["enableGenAiRightPanel"];
+    const Wrapper = useCallback(
+        ({ chatIsOpen, children }: { chatIsOpen: boolean; children: ReactNode }) => {
+            if (enableGenAiRightPanel && !context?.embedded) {
+                return (
+                    <div
+                        className={e("ai-chat", {
+                            chatIsOpen,
+                        })}
+                    >
+                        {children}
+                    </div>
+                );
+            }
+            return children;
+        },
+        [context?.embedded, enableGenAiRightPanel],
+    );
+
     return (
         <HostIntlProvider locale={resolveLocale(ctx.preferredLocale)}>
             <BackendProvider backend={getBackend()}>
-                <ToastsCenterContextProvider>{chat.element}</ToastsCenterContextProvider>
+                <ToastsCenterContextProvider>
+                    <Wrapper chatIsOpen={chatIsOpen}>{chat.element}</Wrapper>
+                </ToastsCenterContextProvider>
             </BackendProvider>
         </HostIntlProvider>
     );

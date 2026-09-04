@@ -19,13 +19,29 @@ import {
     getDateFilterOptionGranularity,
     sanitizePresetIntervals,
 } from "./OptionUtils.js";
-import { absoluteFormFilter, relativePresetFilter } from "./Translations.test.helpers.js";
+import {
+    absoluteFormFilter,
+    absolutePresetFilter,
+    relativePresetFilter,
+} from "./Translations.test.helpers.js";
 
 describe("optionUtils", () => {
     describe("getDateFilterOptionGranularity", () => {
         it("should return date filter value", () => {
             expect(getDateFilterOptionGranularity(absoluteFormFilter)).toEqual(undefined);
             expect(getDateFilterOptionGranularity(relativePresetFilter)).toEqual("GDC.time.date");
+        });
+
+        it("should return the absolute form's selected granularity", () => {
+            const absoluteFormWithGranularity = {
+                ...absoluteFormFilter,
+                granularity: "GDC.time.quarter" as const,
+            };
+            expect(getDateFilterOptionGranularity(absoluteFormWithGranularity)).toEqual("GDC.time.quarter");
+        });
+
+        it("should return undefined for an absolute preset even if a granularity-like field is absent", () => {
+            expect(getDateFilterOptionGranularity(absolutePresetFilter)).toEqual(undefined);
         });
     });
 });

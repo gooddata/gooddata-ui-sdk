@@ -72,3 +72,15 @@
         flex: 1;
     }
 }
+
+.gd-gen-ai-chat__inline {
+    background: var(--gd-palette-complementary-0-from-theme, #fcfcfd);
+    display: flex;
+    flex-direction: column;
+
+    .gd-gen-ai-chat {
+        height: auto;
+        flex-grow: 1;
+        overflow: hidden;
+    }
+}

@@ -11,8 +11,6 @@ $gd-dashboards-section-title-lineColor: var(
 );
 
 .dash-header {
-    @include mixins.clearfix();
-
     position: relative;
     display: flex;
     align-items: center;
@@ -21,6 +19,8 @@ $gd-dashboards-section-title-lineColor: var(
     border-bottom: variables.$nav-border;
     border-bottom-color: var(--gd-dashboards-title-borderColor, kit-variables.$gd-border-color);
     background: variables.$gd-dashboards-title-backgroundColor;
+
+    @include mixins.clearfix();
 
     .dash-control-buttons {
         display: flex;

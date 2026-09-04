@@ -80,6 +80,12 @@
             &-mvf {
                 padding: 0 10px 10px;
             }
+
+            // The content of this variant sets no gap of its own, so the tabs bring the space that
+            // separates them from the search field, and the inset that lines them up with it.
+            &-addFilter {
+                padding: 10px 10px 0;
+            }
         }
     }
 
@@ -87,6 +93,12 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
+
+        // The wrapper is what colours the icon, through the currentColor the icon is drawn with. In
+        // the type tabs the icon sits in a button, whose own variant colour would win over it.
+        .gd-ui-kit-icon-button {
+            color: inherit;
+        }
 
         &--type {
             &-date {

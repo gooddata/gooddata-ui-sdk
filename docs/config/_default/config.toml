@@ -1,5 +1,9 @@
 theme = ["github.com/gooddata/gooddata-docs-theme"]
 contentDir = "content/en/"
+
+# The versioned site (master + every rel/* branch) can exceed Hugo's default
+# 30s per-page render limit under CI load; give heavy pages more headroom.
+timeout = "300s"
 defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
 

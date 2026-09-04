@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { type IBucketUiConfig } from "../interfaces/Visualization.js";
 
-import { ATTRIBUTE, COMPUTED_ATTRIBUTE, GEO_ATTRIBUTE, METRIC } from "./bucket.js";
+import { COMPUTED_ATTRIBUTE } from "./bucket.js";
 import * as uiConfigs from "./uiConfig.js";
 
 type BucketEntry = { config: string; bucket: string; accepts: string[] };
@@ -35,31 +35,13 @@ describe("uiConfig computed attributes", () => {
         expect(buckets.length).toBeGreaterThan(20);
     });
 
-    it("should accept a computed attribute in every bucket that groups by an attribute", () => {
-        // A computed attribute is offered wherever an attribute GROUPS the result. It is deliberately
-        // not offered where a bucket only takes an attribute to coerce it into a measure (those also
-        // accept METRIC - the backend rejects a computed attribute as a COUNT witness), in the
-        // filters bucket (filtering by one is not supported yet), and in the geo buckets that need
-        // geo display forms (those also accept GEO_ATTRIBUTE - a computed attribute has none).
-        const missing = buckets.filter(
-            ({ bucket, accepts }) =>
-                accepts.includes(ATTRIBUTE) &&
-                !accepts.includes(COMPUTED_ATTRIBUTE) &&
-                !accepts.includes(METRIC) &&
-                !accepts.includes(GEO_ATTRIBUTE) &&
-                bucket !== "filters",
-        );
+    it("should never name the computed attribute type - it is normalized to an attribute", () => {
+        // A computed attribute is an attribute for every drop rule (see AD models/bucket_rules.ts
+        // `normalizeDraggedItemType`), so a bucket that takes attributes takes computed ones too and
+        // no `accepts` list has to say so. The geo buckets stay closed to it because they demand a
+        // GEO_ATTRIBUTE, which a computed attribute has no display forms for.
+        const naming = buckets.filter(({ accepts }) => accepts.includes(COMPUTED_ATTRIBUTE));
 
-        expect(missing).toEqual([]);
-    });
-
-    it("should never accept a computed attribute in a measure, filter or geo bucket", () => {
-        const unexpected = buckets.filter(
-            ({ bucket, accepts }) =>
-                accepts.includes(COMPUTED_ATTRIBUTE) &&
-                (accepts.includes(METRIC) || accepts.includes(GEO_ATTRIBUTE) || bucket === "filters"),
-        );
-
-        expect(unexpected).toEqual([]);
+        expect(naming).toEqual([]);
     });
 });

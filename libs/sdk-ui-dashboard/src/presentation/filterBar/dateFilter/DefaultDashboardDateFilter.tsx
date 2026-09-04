@@ -85,6 +85,7 @@ export function DefaultDashboardDateFilter({
     // the date filter config marks the option as visible. Hiding it via the config does not strip an
     // already-set emptyValueHandling - that value is still applied to executions.
     const enableEmptyDateValues = config.dateFilterOptions.emptyValues?.visible ?? true;
+    const isAbsoluteDateFilterGranularityEnabled = !!settings.enableAbsoluteDateFilterGranularity;
 
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     let defaultDateFilterName: string;
@@ -244,6 +245,7 @@ export function DefaultDashboardDateFilter({
             locale={locale}
             isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
             isSecondsForAbsoluteRangeEnabled={isSecondsForAbsoluteRangeEnabled}
+            isAbsoluteDateFilterGranularityEnabled={isAbsoluteDateFilterGranularityEnabled}
             isEditMode={isInEditMode}
             openOnInit={autoOpen}
             weekStart={weekStart}

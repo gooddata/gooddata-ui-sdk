@@ -2,7 +2,7 @@
 
 import { type ReactElement, useEffect, useMemo } from "react";
 
-import { type WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { type IExecutionFactory, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { type IInsightDefinition } from "@gooddata/sdk-model";
@@ -19,11 +19,14 @@ import {
 
 import { AbstractPluggableVisualization } from "./AbstractPluggableVisualization.js";
 
-export type IIntlLocalizedUnknownVisualizationClass = WrappedComponentProps & { onAfterRender?: () => void };
-function LocalizedUnknownVisualizationClass({
-    intl,
+export interface ILocalizedUnknownVisualizationClassProps {
+    onAfterRender?: () => void;
+}
+
+export function LocalizedUnknownVisualizationClass({
     onAfterRender,
-}: IIntlLocalizedUnknownVisualizationClass): ReactElement {
+}: ILocalizedUnknownVisualizationClassProps): ReactElement {
+    const intl = useIntl();
     const errorDetails = useMemo(() => newErrorMapping(intl)[ErrorCodes.VISUALIZATION_CLASS_UNKNOWN], [intl]);
 
     useEffect(() => {
@@ -33,10 +36,6 @@ function LocalizedUnknownVisualizationClass({
     const { message, description } = errorDetails;
     return <ErrorComponent message={message} description={description} />;
 }
-export const IntlLocalizedUnknownVisualizationClass = injectIntl<
-    "intl",
-    IIntlLocalizedUnknownVisualizationClass
->(LocalizedUnknownVisualizationClass);
 
 export class PluggableUnknownChart extends AbstractPluggableVisualization {
     private renderFun: RenderFunction;
@@ -68,7 +67,7 @@ export class PluggableUnknownChart extends AbstractPluggableVisualization {
     ): void {
         this.renderFun(
             <IntlWrapper locale={options.locale}>
-                <IntlLocalizedUnknownVisualizationClass onAfterRender={this.afterRender} />
+                <LocalizedUnknownVisualizationClass onAfterRender={this.afterRender} />
             </IntlWrapper>,
             this.getElement(),
         );

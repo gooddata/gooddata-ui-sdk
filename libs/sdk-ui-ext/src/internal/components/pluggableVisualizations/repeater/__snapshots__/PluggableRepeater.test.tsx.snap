@@ -61,7 +61,6 @@ exports[`PluggableRepeater > repeater should not allow date attributes or differ
       "attribute": {
         "accepts": [
           "attribute",
-          "computedAttribute",
         ],
         "allowsReordering": false,
         "allowsSwapping": true,
@@ -119,7 +118,6 @@ exports[`PluggableRepeater > repeater should not allow date attributes or differ
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -213,7 +211,6 @@ exports[`PluggableRepeater > should return reference point with one attribute, c
       "attribute": {
         "accepts": [
           "attribute",
-          "computedAttribute",
         ],
         "allowsReordering": false,
         "allowsSwapping": true,
@@ -271,7 +268,6 @@ exports[`PluggableRepeater > should return reference point with one attribute, c
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -379,7 +375,6 @@ exports[`PluggableRepeater > should reuse one attribute and measures 1`] = `
       "attribute": {
         "accepts": [
           "attribute",
-          "computedAttribute",
         ],
         "allowsReordering": false,
         "allowsSwapping": true,
@@ -437,7 +432,6 @@ exports[`PluggableRepeater > should reuse one attribute and measures 1`] = `
       "view": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,

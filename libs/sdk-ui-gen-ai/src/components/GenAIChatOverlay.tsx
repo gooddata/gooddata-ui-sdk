@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type RefObject, useCallback, useEffect, useMemo } from "react";
+import { type ReactNode, type RefObject, useCallback, useEffect, useMemo } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -18,6 +18,7 @@ import { setCurrentConversationAction } from "../store/messages/messagesSlice.js
 import { type RootState } from "../store/types.js";
 
 import { isChatWindowCovered } from "./chatOverlayEscapeGuard.js";
+import { type GenAIAssistantDisplayMode } from "./ConfigContext.js";
 import { GenAIChatConversations } from "./GenAIChatConversations.js";
 import { GenAIChatHeader } from "./GenAIChatHeader.js";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
@@ -27,6 +28,7 @@ export type GenAIChatOverlayExternalProps = {
     returnFocusTo?: RefObject<HTMLElement | null> | string;
     className?: string;
     dialogPosition?: "left" | "right";
+    displayMode?: GenAIAssistantDisplayMode;
     /**
      * Host-side gate for Escape-to-close, on top of the built-in guard that already keeps the
      * chat open while it is visually covered by another overlay (see chatOverlayEscapeGuard).
@@ -42,6 +44,7 @@ export function GenAIChatOverlay({
     returnFocusTo,
     dialogPosition,
     className,
+    displayMode = "modal",
     closeOnEscape: closeOnEscapeProp = true,
 }: GenAIChatOverlayExternalProps) {
     const intl = useIntl();
@@ -101,27 +104,41 @@ export function GenAIChatOverlay({
         return () => window.removeEventListener("keydown", onKeyDown);
     }, [closeOnEscape, onClose]);
 
+    const Wrapper = useCallback(
+        ({ children }: { children: ReactNode }) => {
+            if (displayMode === "modal") {
+                return (
+                    <Dialog
+                        isModal={isFullscreen}
+                        returnFocusTo={returnFocusTo}
+                        returnFocusAfterClose={!!returnFocusTo}
+                        alignPoints={[{ align: position }]}
+                        closeOnEscape={false}
+                        submitOnEnterKey={false}
+                        closeOnParentScroll={false}
+                        closeOnMouseDrag={false}
+                        onClose={onClose}
+                        className={classNames}
+                        accessibilityConfig={{
+                            title: intl.formatMessage({ id: "gd.gen-ai.dialog.label" }),
+                            isModal: isFullscreen,
+                            dialogId: HEADER_CHAT_PANEL_ID,
+                        }}
+                    >
+                        {children}
+                    </Dialog>
+                );
+            }
+            return <div className="gd-gen-ai-chat__inline">{children}</div>;
+        },
+        [classNames, displayMode, intl, isFullscreen, onClose, position, returnFocusTo],
+    );
+
     return (
-        <Dialog
-            isModal={isFullscreen}
-            returnFocusTo={returnFocusTo}
-            returnFocusAfterClose={!!returnFocusTo}
-            alignPoints={[{ align: position }]}
-            closeOnEscape={false}
-            submitOnEnterKey={false}
-            closeOnParentScroll={false}
-            closeOnMouseDrag={false}
-            onClose={onClose}
-            className={classNames}
-            accessibilityConfig={{
-                title: intl.formatMessage({ id: "gd.gen-ai.dialog.label" }),
-                isModal: isFullscreen,
-                dialogId: HEADER_CHAT_PANEL_ID,
-            }}
-        >
+        <Wrapper>
             <GenAIChatHeader onClose={onClose} />
             <GenAIChatConversations onClose={onHistoryClose} onSelect={onSelectConversation} />
             <GenAIChatWrapper autofocus />
-        </Dialog>
+        </Wrapper>
     );
 }

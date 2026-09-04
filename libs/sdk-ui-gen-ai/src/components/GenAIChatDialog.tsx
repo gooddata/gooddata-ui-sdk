@@ -14,7 +14,7 @@ import { isOpenSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import { setOpenAction } from "../store/chatWindow/chatWindowSlice.js";
 import { getIsOpened } from "../store/localStorage.js";
 
-import { ConfigProvider, type LinkHandlerEvent } from "./ConfigContext.js";
+import { ConfigProvider, type GenAIAssistantDisplayMode, type LinkHandlerEvent } from "./ConfigContext.js";
 import { CustomizationProvider } from "./CustomizationProvider.js";
 import { type IGenAIAssistantSlots } from "./customized/types.js";
 import { GenAIChatOverlay } from "./GenAIChatOverlay.js";
@@ -79,6 +79,7 @@ export function GenAIChatDialog({
     onLinkClick,
     onDispatcher,
     mode,
+    displayMode,
     slots,
     closeOnEscape,
 }: GenAIChatDialogProps) {
@@ -122,6 +123,7 @@ export function GenAIChatDialog({
                         canAnalyze={canAnalyze}
                         canFullControl={canFullControl}
                         slots={slots}
+                        displayMode={displayMode}
                     />
                 )}
             </GenAiStore>
@@ -148,6 +150,7 @@ type GenAIChatDialogContentProps = {
     canFullControl: boolean;
     slots?: IGenAIAssistantSlots;
     closeOnEscape?: boolean;
+    displayMode?: GenAIAssistantDisplayMode;
 };
 
 function GenAIChatDialogContent({
@@ -168,6 +171,7 @@ function GenAIChatDialogContent({
     canAnalyze,
     canFullControl,
     slots,
+    displayMode,
     closeOnEscape,
 }: GenAIChatDialogContentProps) {
     const open = useRef(onOpen);
@@ -239,6 +243,7 @@ function GenAIChatDialogContent({
                                     dialogPosition={dialogPosition}
                                     returnFocusTo={returnFocusTo}
                                     closeOnEscape={closeOnEscape}
+                                    displayMode={displayMode}
                                     onClose={onCloseHandler}
                                 />
                             </CustomizationProvider>

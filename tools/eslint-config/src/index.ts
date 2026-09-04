@@ -5,7 +5,6 @@ import { chaiFriendly } from "./configurations/chai-friendly.js";
 import { env } from "./configurations/env.js";
 import { eslint } from "./configurations/eslint.js";
 import { esm } from "./configurations/esm.js";
-import { formatter } from "./configurations/formatter.js";
 import { header } from "./configurations/header.js";
 import { ignore } from "./configurations/ignore.js";
 import { importEsm } from "./configurations/import-esm.js";
@@ -35,7 +34,6 @@ export const commonConfigurations: IDualConfiguration[] = [
     sonarjs,
     // tsdoc,
     ignore,
-    formatter,
 ];
 
 // please note, if you modify keys in the following array, please run `npm run update-package` in addition to `npm run build`

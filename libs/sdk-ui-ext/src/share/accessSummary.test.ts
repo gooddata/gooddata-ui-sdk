@@ -2,14 +2,23 @@
 
 import { describe, expect, it } from "vitest";
 
-import type { AccessGranularPermission, IGranularRulesAccess } from "@gooddata/sdk-model";
+import {
+    type AccessGranteeDetail,
+    type AccessGranularPermission,
+    type IGranularRulesAccess,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import {
+    accessListToSummary,
     composeEffectiveWorkspaceAccess,
     deriveGeneralAccess,
     deriveInheritedWorkspaceLevel,
     deriveWorkspacePermissionLevel,
+    draftToSummary,
+    summaryToShareLevel,
 } from "./accessSummary.js";
+import type { IObjectAccessSummary } from "./types.js";
 
 const rule = (
     permissions: AccessGranularPermission[],
@@ -123,5 +132,96 @@ describe("composeEffectiveWorkspaceAccess", () => {
             generalAccess: "WORKSPACE",
             workspaceLevel: "EDIT",
         });
+    });
+});
+
+const summary = (granteeCount: number, selfIsGrantee = false): IObjectAccessSummary => ({
+    generalAccess: "RESTRICTED",
+    workspaceLevel: "VIEW",
+    granteeCount,
+    selfIsGrantee,
+});
+
+describe("summaryToShareLevel", () => {
+    it("is WORKSPACE whenever the workspace rule grants access", () => {
+        expect(summaryToShareLevel({ ...summary(0), generalAccess: "WORKSPACE" })).toBe("WORKSPACE");
+    });
+
+    it("is PRIVATE with no grantees", () => {
+        expect(summaryToShareLevel(summary(0))).toBe("PRIVATE");
+    });
+
+    it("is PRIVATE when the caller holds the only grant", () => {
+        expect(summaryToShareLevel(summary(1, true))).toBe("PRIVATE");
+    });
+
+    it("is SHARED once somebody else holds one too", () => {
+        expect(summaryToShareLevel(summary(2, true))).toBe("SHARED");
+    });
+
+    it("is SHARED for someone else's grant alone", () => {
+        expect(summaryToShareLevel(summary(1))).toBe("SHARED");
+    });
+});
+
+describe("accessListToSummary", () => {
+    const userGrant = (login: string): AccessGranteeDetail =>
+        ({
+            type: "granularUser",
+            user: { ref: idRef(login), login, uri: `/${login}` },
+            permissions: ["VIEW"],
+            inheritedPermissions: [],
+        }) as unknown as AccessGranteeDetail;
+
+    it("marks the caller's own grant", () => {
+        const s = accessListToSummary({ grants: [userGrant("jane"), userGrant("john")] }, idRef("jane"));
+        expect(s).toMatchObject({ granteeCount: 2, selfIsGrantee: true });
+        expect(summaryToShareLevel(s)).toBe("SHARED");
+    });
+
+    it("reports no self grant when the caller is unknown", () => {
+        expect(accessListToSummary({ grants: [userGrant("jane")] })).toMatchObject({
+            granteeCount: 1,
+            selfIsGrantee: false,
+        });
+    });
+});
+
+describe("draftToSummary", () => {
+    it("never counts the caller, who is not in their own draft", () => {
+        expect(draftToSummary({ granteeEdits: {}, ruleEdit: undefined }, "RESTRICTED")).toMatchObject({
+            granteeCount: 0,
+            selfIsGrantee: false,
+        });
+    });
+
+    it("is PRIVATE before anything is drafted — a new object starts restricted", () => {
+        const s = draftToSummary({ granteeEdits: {}, ruleEdit: undefined }, "RESTRICTED");
+
+        expect(summaryToShareLevel(s)).toBe("PRIVATE");
+    });
+
+    it("counts added grantees and falls back to the caller's starting access", () => {
+        const draft = {
+            granteeEdits: {
+                "user:jane": {
+                    kind: "added" as const,
+                    grantee: {} as never,
+                    pending: false,
+                },
+            },
+            ruleEdit: undefined,
+        };
+        const s = draftToSummary(draft, "RESTRICTED");
+        expect(s).toMatchObject({ granteeCount: 1, generalAccess: "RESTRICTED" });
+        expect(summaryToShareLevel(s)).toBe("SHARED");
+    });
+
+    it("takes general access from the rule edit once it is touched", () => {
+        const s = draftToSummary(
+            { granteeEdits: {}, ruleEdit: { generalAccess: "WORKSPACE", level: "VIEW", pending: false } },
+            "RESTRICTED",
+        );
+        expect(summaryToShareLevel(s)).toBe("WORKSPACE");
     });
 });

@@ -43,7 +43,6 @@ import { DrillDefinition } from '@gooddata/sdk-model';
 import { EmptyValues } from '@gooddata/sdk-model';
 import { EntityId } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
-import { ExecutionResultLimitType } from '@gooddata/sdk-model';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FilterContextItem } from '@gooddata/sdk-model';
 import { filterContextItemsToDashboardFiltersByDateDataSet } from '@gooddata/sdk-model';
@@ -1563,7 +1562,8 @@ export function DashboardWidget(props: IDashboardWidgetProps): ReactElement;
 export type DateFilterComponentProvider = (filter: IDashboardDateFilter) => CustomDashboardDateFilterComponent;
 
 // @internal
-export type DateFilterComponentSet = ICustomComponentBase<IDashboardDateFilterProps, Parameters<DateFilterComponentProvider>> & DraggableComponent & CreatablePlaceholderComponent<IDashboardAttributeFilterPlaceholderProps> & CreatableByDragComponent;
+export type DateFilterComponentSet = ICustomComponentBase<IDashboardDateFilterProps, Parameters<DateFilterComponentProvider>> & DraggableComponent & CreatablePlaceholderComponent<IDashboardAttributeFilterPlaceholderProps> & // placeholder is shared with AF
+CreatableByDragComponent;
 
 // @public
 export type DateFilterConfigValidationResult = "Valid" | "NoVisibleOptions" | "ConflictingIdentifiers" | "SelectedOptionInvalid";
@@ -10660,8 +10660,8 @@ export function MenuButton(props: IMenuButtonProps): ReactElement;
 // @internal (undocumented)
 export const metaActions: {
     setMeta: ActionCreatorWithPayload<    {
-    dashboard?: IDashboard<IDashboardWidget> | undefined;
-    initialContent?: boolean | undefined;
+    dashboard?: IDashboard;
+    initialContent?: boolean;
     }, "meta/setMeta">;
     setDashboardTitle: ActionCreatorWithPayload<string, "meta/setDashboardTitle">;
     setDashboardTimezoneConfig: ActionCreatorWithOptionalPayload<IDashboardTimezoneConfig | undefined, "meta/setDashboardTimezoneConfig">;
@@ -10843,7 +10843,7 @@ export class ObjRefMap<T> {
     // (undocumented)
     entries(): IterableIterator<[ObjRef, T]>;
     // (undocumented)
-    fromItems: (items: readonly T[]) => ObjRefMap<T>;
+    fromItems: (items: ReadonlyArray<T>) => ObjRefMap<T>;
     // (undocumented)
     get(key: ObjRef): T | undefined;
     // (undocumented)
@@ -12171,10 +12171,10 @@ export const selectEvaluationFrequency: DashboardSelector<string | undefined>;
 export const selectExecutionResult: (state: DashboardState, id: EntityId) => {
     id: string;
     isLoading: boolean;
-    executionResult?: IExecutionResult | undefined;
-    error?: GoodDataSdkError | undefined;
-    warnings?: IResultWarning[] | undefined;
-    limitBreaks?: IExecutionResultLimitBreak<ExecutionResultLimitType | (string & {})>[] | undefined;
+    executionResult?: IExecutionResult;
+    error?: GoodDataSdkError;
+    warnings?: IResultWarning[];
+    limitBreaks?: IExecutionResultLimitBreak[];
 };
 
 // @alpha (undocumented)
@@ -12615,10 +12615,10 @@ export const selectIsInViewMode: DashboardSelector<boolean>;
 export const selectIsKDDependentFiltersEnabled: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
-export const selectIsKpiAlertHighlightedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
+export const selectIsKpiAlertHighlightedByWidgetRef: (ref: ObjRef | undefined) => ((state: DashboardState) => boolean);
 
 // @alpha (undocumented)
-export const selectIsKpiAlertOpenedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
+export const selectIsKpiAlertOpenedByWidgetRef: (ref: ObjRef | undefined) => ((state: DashboardState) => boolean);
 
 // @internal
 export const selectIsKPIDashboardDependentFiltersEnabled: DashboardSelector<boolean>;
@@ -13255,22 +13255,22 @@ export const tabsActions: CaseReducerActions<    {
 readonly setFilterContext: (state: WritableDraft<ITabsState>, action: {
 payload: {
 filterContextDefinition: IFilterContextDefinition;
-originalFilterContextDefinition?: IFilterContextDefinition | undefined;
+originalFilterContextDefinition?: IFilterContextDefinition;
 attributeFilterDisplayForms: IAttributeDisplayFormMetadataObject[];
-filterContextIdentity?: IDashboardObjectIdentity | undefined;
+filterContextIdentity?: IDashboardObjectIdentity;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly updateFilterContextIdentity: (state: WritableDraft<ITabsState>, action: {
 payload: {
-filterContextIdentity?: IDashboardObjectIdentity | undefined;
+filterContextIdentity?: IDashboardObjectIdentity;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly updateFilterContextIdentityForTab: (state: WritableDraft<ITabsState>, action: {
 payload: {
 tabId: string;
-filterContextIdentity?: IDashboardObjectIdentity | undefined;
+filterContextIdentity?: IDashboardObjectIdentity;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
@@ -13385,14 +13385,14 @@ type: string;
 readonly setMeasureValueFilterDimensionality: (state: WritableDraft<ITabsState>, action: {
 payload: {
 readonly localIdentifier: string;
-readonly dimensionality?: ObjRef[] | undefined;
+readonly dimensionality?: ObjRef[];
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly changeMeasureValueFilterTitle: (state: WritableDraft<ITabsState>, action: {
 payload: {
 readonly filterLocalId: string;
-readonly title?: string | undefined;
+readonly title?: string;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
@@ -13418,8 +13418,8 @@ type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly setTabs: TabsReducer<    {
 payload: {
-tabs?: ITabState[] | undefined;
-activeTabLocalIdentifier?: string | undefined;
+tabs?: ITabState[];
+activeTabLocalIdentifier?: string;
 };
 type: string;
 }>;
@@ -13489,7 +13489,7 @@ type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly setDateFilterConfig: (state: WritableDraft<ITabsState>, action: {
 payload: {
-dateFilterConfig?: IDashboardDateFilterConfig_2 | undefined;
+dateFilterConfig?: IDashboardDateFilterConfig_2;
 effectiveDateFilterConfig: IDateFilterConfig;
 isUsingDashboardOverrides: boolean;
 };
@@ -13574,14 +13574,14 @@ readonly addSection: (state: WritableDraft<ITabsState>, action: {
 payload: IUndoPayload<IDashboardCommand> & {
 section: ExtendedDashboardLayoutSection;
 index: ILayoutSectionPath;
-usedStashes: string[];
+usedStashes: StashedDashboardItemsId[];
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly removeSection: (state: WritableDraft<ITabsState>, action: {
 payload: IUndoPayload<IDashboardCommand> & {
 index: ILayoutSectionPath;
-stashIdentifier?: string | undefined;
+stashIdentifier?: StashedDashboardItemsId;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
@@ -13603,7 +13603,7 @@ readonly addSectionItems: (state: WritableDraft<ITabsState>, action: {
 payload: IUndoPayload<IDashboardCommand> & {
 layoutPath: ILayoutItemPath;
 items: ExtendedDashboardItem[];
-usedStashes: string[];
+usedStashes: StashedDashboardItemsId[];
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
@@ -13617,7 +13617,7 @@ type: string;
 readonly removeSectionItem: (state: WritableDraft<ITabsState>, action: {
 payload: IUndoPayload<IDashboardCommand> & {
 itemIndex: ILayoutItemPath;
-stashIdentifier?: string | undefined;
+stashIdentifier?: StashedDashboardItemsId;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
@@ -13625,8 +13625,8 @@ readonly replaceSectionItem: (state: WritableDraft<ITabsState>, action: {
 payload: IUndoPayload<IDashboardCommand> & {
 layoutPath: ILayoutItemPath;
 newItems: ExtendedDashboardItem[];
-stashIdentifier?: string | undefined;
-usedStashes: string[];
+stashIdentifier?: StashedDashboardItemsId;
+usedStashes: StashedDashboardItemsId[];
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
@@ -13699,22 +13699,22 @@ ref: ObjRef;
 insightRef: ObjRef;
 properties: VisualizationProperties | undefined;
 header: IWidgetHeader | undefined;
-newSize?: IVisualizationSizeInfo | undefined;
+newSize?: IVisualizationSizeInfo;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly replaceWidgetFilterSettings: (state: WritableDraft<ITabsState>, action: {
 payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
-ignoreDashboardFilters?: IDashboardFilterReference[] | undefined;
-dateDataSet?: ObjRef | undefined;
+ignoreDashboardFilters?: IDashboardFilterReference[];
+dateDataSet?: ObjRef;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly replaceWidgetDateDataset: (state: WritableDraft<ITabsState>, action: {
 payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
-dateDataSet?: ObjRef | undefined;
+dateDataSet?: ObjRef;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
@@ -13729,7 +13729,7 @@ readonly replaceKpiWidgetComparison: (state: WritableDraft<ITabsState>, action: 
 payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
 comparisonType: IKpiComparisonTypeComparison;
-comparisonDirection?: IKpiComparisonDirection | undefined;
+comparisonDirection?: IKpiComparisonDirection;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
@@ -13765,7 +13765,7 @@ readonly addVisualizationSwitcherWidgetVisualization: (state: WritableDraft<ITab
 payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
 visualization: IInsightWidget;
-newSize?: IVisualizationSizeInfo | undefined;
+newSize?: IVisualizationSizeInfo;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
@@ -13776,7 +13776,7 @@ visualizations: IInsightWidget[];
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly undoLayout: <TState extends IUndoEnhancedState<IDashboardCommand>>(state: WritableDraft<ITabsState>, action: {
+readonly undoLayout: <TState extends IUndoEnhancedState>(state: WritableDraft<ITabsState>, action: {
 payload: {
 undoDownTo: number;
 };
@@ -13804,14 +13804,14 @@ type: string;
 readonly changeWidgetIgnoreCrossFiltering: (state: WritableDraft<ITabsState>, action: {
 payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
-ignoreCrossFiltering?: boolean | undefined;
+ignoreCrossFiltering?: boolean;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly resizeVisualizationSwitcherOnInsightChanged: (state: WritableDraft<ITabsState>, action: {
 payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
-newSize?: IVisualizationSizeInfo | undefined;
+newSize?: IVisualizationSizeInfo;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
@@ -13893,17 +13893,17 @@ export const uiActions: {
     closeDensityDialog: ActionCreatorWithoutPayload<"uiSlice/closeDensityDialog">;
     setDensity: ActionCreatorWithPayload<DashboardDensity, "uiSlice/setDensity">;
     openScheduleEmailDialog: ActionCreatorWithPayload<IScheduleEmailContext & {
-    openedFrom?: string | undefined;
+    openedFrom?: string;
     }, "uiSlice/openScheduleEmailDialog">;
     closeScheduleEmailDialog: ActionCreatorWithoutPayload<"uiSlice/closeScheduleEmailDialog">;
     setScheduleEmailDialogDefaultAttachment: ActionCreatorWithPayload<ObjRef, "uiSlice/setScheduleEmailDialogDefaultAttachment">;
     resetScheduleEmailDialogDefaultAttachment: ActionCreatorWithoutPayload<"uiSlice/resetScheduleEmailDialogDefaultAttachment">;
     openScheduleEmailManagementDialog: ActionCreatorWithPayload<IScheduleEmailContext & {
-    openedFrom?: string | undefined;
+    openedFrom?: string;
     }, "uiSlice/openScheduleEmailManagementDialog">;
     closeScheduleEmailManagementDialog: ActionCreatorWithoutPayload<"uiSlice/closeScheduleEmailManagementDialog">;
     openAlertingManagementDialog: ActionCreatorWithPayload<IAlertDialogContext & {
-    openedFrom?: string | undefined;
+    openedFrom?: string;
     }, "uiSlice/openAlertingManagementDialog">;
     closeAlertingManagementDialog: ActionCreatorWithoutPayload<"uiSlice/closeAlertingManagementDialog">;
     openAlertingDialog: ActionCreatorWithPayload<IAlertDialogContext, "uiSlice/openAlertingDialog">;
@@ -13962,8 +13962,8 @@ export const uiActions: {
     setWidgetsOverlay: ActionCreatorWithPayload<Record<string, IDashboardWidgetOverlay>, "uiSlice/setWidgetsOverlay">;
     hideAllWidgetsOverlay: ActionCreatorWithoutPayload<"uiSlice/hideAllWidgetsOverlay">;
     toggleFilterViewsDialog: ActionCreatorWithOptionalPayload<    {
-    open?: boolean | undefined;
-    mode?: FilterViewDialogMode | undefined;
+    open?: boolean;
+    mode?: FilterViewDialogMode;
     } | undefined, "uiSlice/toggleFilterViewsDialog">;
     openWidgetDeleteDialog: ActionCreatorWithPayload<ObjRef, "uiSlice/openWidgetDeleteDialog">;
     closeWidgetDeleteDialog: ActionCreatorWithoutPayload<"uiSlice/closeWidgetDeleteDialog">;
@@ -14114,8 +14114,8 @@ export const useDashboardAlerts: () => {
     automationsError: GoodDataSdkError | undefined;
     isAlertingVisible: boolean;
     isAlertDialogOpen: boolean;
-    defaultOnAlerting: (widget?: IWidget | undefined) => void;
-    onAlertingOpen: (widget?: IWidget | undefined, alert?: IAutomationMetadataObject | undefined) => void;
+    defaultOnAlerting: (widget?: IWidget) => void;
+    onAlertingOpen: (widget?: IWidget, alert?: IAutomationMetadataObject) => void;
     onAlertingCancel: () => void;
     onAlertingCreateError: () => void;
     onAlertingCreateSuccess: (alert: IAutomationMetadataObject) => void;
@@ -14123,13 +14123,13 @@ export const useDashboardAlerts: () => {
     onAlertingSaveSuccess: () => void;
     isAlertManagementVisible: boolean;
     isAlertManagementDialogOpen: boolean;
-    defaultOnAlertingManagement: (widget?: IWidget | undefined) => void;
-    onAlertingManagementOpen: (widget?: IWidget | undefined) => void;
+    defaultOnAlertingManagement: (widget?: IWidget) => void;
+    onAlertingManagementOpen: (widget?: IWidget) => void;
     onAlertingManagementClose: () => void;
-    onAlertingManagementAdd: (targetWidget?: IWidget | undefined) => void;
+    onAlertingManagementAdd: (targetWidget?: IWidget) => void;
     onAlertingManagementDeleteError: () => void;
     onAlertingManagementDeleteSuccess: () => void;
-    onAlertingManagementEdit: (alert: IAutomationMetadataObject, widget?: IWidget | undefined) => void;
+    onAlertingManagementEdit: (alert: IAutomationMetadataObject, widget?: IWidget) => void;
     onAlertingManagementLoadingError: () => void;
     onAlertingManagementPauseSuccess: (_alert: IAutomationMetadataObject, pause: boolean) => void;
     onAlertingManagementPauseError: (_error: GoodDataSdkError, pause: boolean) => void;
@@ -14156,521 +14156,37 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
     commandCreator: (...args: TCommandCreatorArgs) => TCommand;
     successEvent: TSuccessEventType;
     errorEvent: TErrorEventType;
-    onSuccess?: ((event: Extract<ICreateAttributeHierarchyRequested, {
+    onSuccess?: (event: Extract<DashboardEvents, {
         type: TSuccessEventType;
-    }> | Extract<ICreateInsightRequested, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardAlertCreated, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardAlertSaved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardAttributeFilterAdded, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardAttributeFilterMoved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardAttributeFilterParentChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardAttributeFilterRemoved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardAttributeSelectionModeChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardAttributeTitleChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardAutomationsRefreshed, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardCommandFailed<any>, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardCommandRejected, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardCommandStarted<any>, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardDrillDownRequested, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardDrillDownResolved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardDrillRequested, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardDrillResolved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardDrillToAttributeUrlRequested, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardDrillToAttributeUrlResolved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardDrillToCustomUrlRequested, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardDrillToCustomUrlResolved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardDrillToDashboardRequested, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardDrillToDashboardResolved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardDrillToInsightRequested, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardDrillToInsightResolved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardDrillToLegacyDashboardRequested, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardDrillToLegacyDashboardResolved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardDrillableItemsChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardExportToExcelRequested, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardExportToExcelResolved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardExportToImageRequested, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardExportToImageResolved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardExportToPdfPresentationRequested, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardExportToPdfPresentationResolved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardExportToPdfRequested, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardExportToPdfResolved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardExportToPptPresentationRequested, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardExportToPptPresentationResolved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardIgnoreExecutionTimestampChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardInsightWidgetChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardInsightWidgetDescriptionChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardInsightWidgetDrillsModified, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardInsightWidgetDrillsRemoved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardInsightWidgetExportRequested, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardInsightWidgetExportResolved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardInsightWidgetFilterSettingsChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardInsightWidgetHeaderChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardInsightWidgetInsightSwitched, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardInsightWidgetRefreshed, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardInsightWidgetVisConfigurationChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardInsightWidgetVisPropertiesChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardKeyDriverAnalysisRequested, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardKeyDriverAnalysisResolved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardKpiWidgetChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardKpiWidgetComparisonChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardKpiWidgetConfigurationChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardKpiWidgetDescriptionChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardKpiWidgetDrillRemoved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardKpiWidgetDrillSet, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardKpiWidgetFilterSettingsChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardKpiWidgetHeaderChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardKpiWidgetMeasureChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardLayoutChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardLayoutSectionAdded, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardLayoutSectionHeaderChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardLayoutSectionItemMoved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardLayoutSectionItemMovedToNewSection, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardLayoutSectionItemRemoved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardLayoutSectionItemReplaced, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardLayoutSectionItemsAdded, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardLayoutSectionMoved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardLayoutSectionRemoved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardMeasureValueFilterAdded, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardMeasureValueFilterConditionChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardMeasureValueFilterConfigModeChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardMeasureValueFilterDimensionalityChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardMeasureValueFilterMoved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardMeasureValueFilterRemoved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardMeasureValueFilterTitleChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardParametersSelectionReset, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardQueryCompleted<any, any>, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardQueryFailed, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardQueryRejected, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardQueryStarted, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardRenamed, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardRenderModeChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardRichTextWidgetContentChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardRichTextWidgetFilterSettingsChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardScheduledEmailCreated, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardScheduledEmailSaved, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardTabCreated, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardTabDeleted, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardTabRenamed, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardTabRenamingCanceled, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardTabRenamingStarted, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardTabSwitched, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardTimezoneOverrideChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardUserInteractionTriggered, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardVisualizationSwitcherWidgetActiveVisualizationChanged, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardVisualizationSwitcherWidgetVisualizationAdded, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardVisualizationSwitcherWidgetVisualizationsUpdated, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardWasReset, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardWidgetExecutionFailed, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardWidgetExecutionStarted, {
-        type: TSuccessEventType;
-    }> | Extract<IDashboardWidgetExecutionSucceeded, {
-        type: TSuccessEventType;
-    }> | Extract<IDeleteAttributeHierarchyRequested, {
-        type: TSuccessEventType;
-    }> | Extract<IShowWidgetAsTableSet, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardAsyncRenderRequested, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardAsyncRenderResolved, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardAttributeFilterItemSelectionReplaced, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardAttributeFilterSelectionChanged, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardCopySaved, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardDateFilterSelectionChanged, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardDeinitialized, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardFilterContextChanged, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardInitialized, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardRenderRequested, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardRenderResolved, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardSaved, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardSharingChanged, {
-        type: TSuccessEventType;
-    }> | Extract<DateFilterValidationFailed, {
-        type: TSuccessEventType;
-    }>) => void) | undefined;
-    onError?: ((event: Extract<ICreateAttributeHierarchyRequested, {
-        type: TErrorEventType;
-    }> | Extract<ICreateInsightRequested, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardAlertCreated, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardAlertSaved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardAttributeFilterAdded, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardAttributeFilterMoved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardAttributeFilterParentChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardAttributeFilterRemoved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardAttributeSelectionModeChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardAttributeTitleChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardAutomationsRefreshed, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardCommandFailed<any>, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardCommandRejected, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardCommandStarted<any>, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardDrillDownRequested, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardDrillDownResolved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardDrillRequested, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardDrillResolved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardDrillToAttributeUrlRequested, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardDrillToAttributeUrlResolved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardDrillToCustomUrlRequested, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardDrillToCustomUrlResolved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardDrillToDashboardRequested, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardDrillToDashboardResolved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardDrillToInsightRequested, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardDrillToInsightResolved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardDrillToLegacyDashboardRequested, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardDrillToLegacyDashboardResolved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardDrillableItemsChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardExportToExcelRequested, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardExportToExcelResolved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardExportToImageRequested, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardExportToImageResolved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardExportToPdfPresentationRequested, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardExportToPdfPresentationResolved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardExportToPdfRequested, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardExportToPdfResolved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardExportToPptPresentationRequested, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardExportToPptPresentationResolved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardIgnoreExecutionTimestampChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardInsightWidgetChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardInsightWidgetDescriptionChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardInsightWidgetDrillsModified, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardInsightWidgetDrillsRemoved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardInsightWidgetExportRequested, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardInsightWidgetExportResolved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardInsightWidgetFilterSettingsChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardInsightWidgetHeaderChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardInsightWidgetInsightSwitched, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardInsightWidgetRefreshed, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardInsightWidgetVisConfigurationChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardInsightWidgetVisPropertiesChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardKeyDriverAnalysisRequested, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardKeyDriverAnalysisResolved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardKpiWidgetChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardKpiWidgetComparisonChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardKpiWidgetConfigurationChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardKpiWidgetDescriptionChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardKpiWidgetDrillRemoved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardKpiWidgetDrillSet, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardKpiWidgetFilterSettingsChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardKpiWidgetHeaderChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardKpiWidgetMeasureChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardLayoutChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardLayoutSectionAdded, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardLayoutSectionHeaderChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardLayoutSectionItemMoved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardLayoutSectionItemMovedToNewSection, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardLayoutSectionItemRemoved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardLayoutSectionItemReplaced, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardLayoutSectionItemsAdded, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardLayoutSectionMoved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardLayoutSectionRemoved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardMeasureValueFilterAdded, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardMeasureValueFilterConditionChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardMeasureValueFilterConfigModeChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardMeasureValueFilterDimensionalityChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardMeasureValueFilterMoved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardMeasureValueFilterRemoved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardMeasureValueFilterTitleChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardParametersSelectionReset, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardQueryCompleted<any, any>, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardQueryFailed, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardQueryRejected, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardQueryStarted, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardRenamed, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardRenderModeChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardRichTextWidgetContentChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardRichTextWidgetFilterSettingsChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardScheduledEmailCreated, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardScheduledEmailSaved, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardTabCreated, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardTabDeleted, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardTabRenamed, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardTabRenamingCanceled, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardTabRenamingStarted, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardTabSwitched, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardTimezoneOverrideChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardUserInteractionTriggered, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardVisualizationSwitcherWidgetActiveVisualizationChanged, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardVisualizationSwitcherWidgetVisualizationAdded, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardVisualizationSwitcherWidgetVisualizationsUpdated, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardWasReset, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardWidgetExecutionFailed, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardWidgetExecutionStarted, {
-        type: TErrorEventType;
-    }> | Extract<IDashboardWidgetExecutionSucceeded, {
-        type: TErrorEventType;
-    }> | Extract<IDeleteAttributeHierarchyRequested, {
-        type: TErrorEventType;
-    }> | Extract<IShowWidgetAsTableSet, {
-        type: TErrorEventType;
-    }> | Extract<DashboardAsyncRenderRequested, {
-        type: TErrorEventType;
-    }> | Extract<DashboardAsyncRenderResolved, {
-        type: TErrorEventType;
-    }> | Extract<DashboardAttributeFilterItemSelectionReplaced, {
-        type: TErrorEventType;
-    }> | Extract<DashboardAttributeFilterSelectionChanged, {
-        type: TErrorEventType;
-    }> | Extract<DashboardCopySaved, {
-        type: TErrorEventType;
-    }> | Extract<DashboardDateFilterSelectionChanged, {
-        type: TErrorEventType;
-    }> | Extract<DashboardDeinitialized, {
-        type: TErrorEventType;
-    }> | Extract<DashboardFilterContextChanged, {
-        type: TErrorEventType;
-    }> | Extract<DashboardInitialized, {
-        type: TErrorEventType;
-    }> | Extract<DashboardRenderRequested, {
-        type: TErrorEventType;
-    }> | Extract<DashboardRenderResolved, {
-        type: TErrorEventType;
-    }> | Extract<DashboardSaved, {
-        type: TErrorEventType;
-    }> | Extract<DashboardSharingChanged, {
-        type: TErrorEventType;
-    }> | Extract<DateFilterValidationFailed, {
+    }>) => void;
+    onError?: (event: Extract<DashboardEvents, {
         type: TErrorEventType;
-    }>) => void) | undefined;
-    onBeforeRun?: ((command: TCommand) => void) | undefined;
+    }>) => void;
+    onBeforeRun?: (command: TCommand) => void;
 }) => {
     run: (...args: TCommandCreatorArgs) => void;
-    status?: CommandProcessingStatus | undefined;
+    status?: CommandProcessingStatus;
 };
 
 // @alpha (undocumented)
 export const useDashboardDispatch: () => Dispatch<Action>;
 
 // @alpha
-export const useDashboardEventDispatch: () => (eventBody: DashboardEventBody<ICustomDashboardEvent<any> | DashboardEvents>) => void;
+export const useDashboardEventDispatch: () => ((eventBody: DashboardEventBody<DashboardEvents | ICustomDashboardEvent>) => void);
 
 // @alpha (undocumented)
 export const useDashboardEventsContext: () => IDashboardEventsContext;
 
 // @alpha (undocumented)
-export const useDashboardExportData: (renderMode: RenderMode | undefined, status: "empty" | "loaded" | "loading", type: "nested" | "root") => CommonExportDataAttributes | undefined;
+export const useDashboardExportData: (renderMode: RenderMode | undefined, status: "loading" | "loaded" | "empty", type: "nested" | "root") => CommonExportDataAttributes | undefined;
 
 // @internal (undocumented)
 export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQueryResult, TQueryCreatorArgs extends any[]>(input: {
     queryCreator: (...args: TQueryCreatorArgs) => TQuery;
-    onSuccess?: ((result: TQueryResult) => void) | undefined;
-    onError?: ((event: IDashboardQueryFailed) => void) | undefined;
-    onRejected?: ((event: IDashboardQueryRejected) => void) | undefined;
-    onBeforeRun?: ((query: TQuery) => void) | undefined;
+    onSuccess?: (result: TQueryResult) => void;
+    onError?: (event: IDashboardQueryFailed) => void;
+    onRejected?: (event: IDashboardQueryRejected) => void;
+    onBeforeRun?: (query: TQuery) => void;
 }) => UseDashboardQueryProcessingResult<TQueryCreatorArgs, TQueryResult>;
 
 // @internal (undocumented)
@@ -14692,20 +14208,20 @@ export const useDashboardScheduledEmails: () => {
     automationsError: GoodDataSdkError | undefined;
     isScheduledEmailingVisible: boolean;
     isScheduleEmailingDialogOpen: boolean;
-    defaultOnScheduleEmailing: (widget?: IWidget | undefined) => void;
-    onScheduleEmailingOpen: (widget?: IWidget | undefined) => void;
-    onScheduleEmailingCancel: (_widget?: IWidget | undefined) => void;
-    onScheduleEmailingBack: (_widget?: IWidget | undefined) => void;
+    defaultOnScheduleEmailing: (widget?: IWidget) => void;
+    onScheduleEmailingOpen: (widget?: IWidget) => void;
+    onScheduleEmailingCancel: (_widget?: IWidget) => void;
+    onScheduleEmailingBack: (_widget?: IWidget) => void;
     onScheduleEmailingCreateError: () => void;
     onScheduleEmailingCreateSuccess: (scheduledEmail: IAutomationMetadataObject) => void;
     onScheduleEmailingSaveError: () => void;
-    onScheduleEmailingSaveSuccess: (_widget?: IWidget | undefined) => void;
+    onScheduleEmailingSaveSuccess: (_widget?: IWidget) => void;
     isScheduledManagementEmailingVisible: boolean;
     isScheduleEmailingManagementDialogOpen: boolean;
-    defaultOnScheduleEmailingManagement: (widget?: IWidget | undefined) => void;
-    onScheduleEmailingManagementOpen: (widget?: IWidget | undefined) => void;
-    onScheduleEmailingManagementEdit: (schedule: IAutomationMetadataObject, widget?: IWidget | undefined) => void;
-    onScheduleEmailingManagementAdd: (targetWidget?: IWidget | undefined) => void;
+    defaultOnScheduleEmailingManagement: (widget?: IWidget) => void;
+    onScheduleEmailingManagementOpen: (widget?: IWidget) => void;
+    onScheduleEmailingManagementEdit: (schedule: IAutomationMetadataObject, widget?: IWidget) => void;
+    onScheduleEmailingManagementAdd: (targetWidget?: IWidget) => void;
     onScheduleEmailingManagementClose: () => void;
     onScheduleEmailingManagementLoadingError: () => void;
     onScheduleEmailingManagementDeleteSuccess: () => void;
@@ -14739,48 +14255,48 @@ export const useDashboardUserInteraction: () => {
 export function useDefaultMenuItems(): IMenuButtonItem[];
 
 // @public
-export const useDispatchDashboardCommand: <TCommand extends DashboardCommands, TArgs extends any[]>(commandCreator: (...args: TArgs) => TCommand) => (...args: TArgs) => void;
+export const useDispatchDashboardCommand: <TCommand extends DashboardCommands, TArgs extends any[]>(commandCreator: (...args: TArgs) => TCommand) => ((...args: TArgs) => void);
 
 // @internal (undocumented)
 export const useDrill: (input?: IUseDrillProps) => {
     run: (drillEvent: IDashboardDrillEvent, drillContext: IDashboardDrillContext, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus | undefined;
+    status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)
 export const useDrillDown: (input?: IUseDrillDownProps) => {
     run: (insight: IInsight, drillDefinition: IDrillDownDefinition, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus | undefined;
+    status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)
 export const useDrillToAttributeUrl: (input?: IUseDrillToAttributeUrlProps) => {
     run: (drillDefinition: IDrillToAttributeUrl_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus | undefined;
+    status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)
 export const useDrillToCustomUrl: (input?: IUseDrillToCustomUrlProps) => {
     run: (drillDefinition: IDrillToCustomUrl_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus | undefined;
+    status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)
 export const useDrillToDashboard: (input?: IUseDrillToDashboardProps) => {
     run: (drillDefinition: IDrillToDashboard_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus | undefined;
+    status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)
 export const useDrillToInsight: (input?: IUseDrillToInsightProps) => {
     run: (drillDefinition: IDrillToInsight_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus | undefined;
+    status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)
 export const useDrillToLegacyDashboard: (input?: IUseDrillToLegacyDashboardProps) => {
     run: (drillDefinition: IDrillToLegacyDashboard_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus | undefined;
+    status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)
@@ -14799,7 +14315,7 @@ export type UseInsightWidgetInsightDataViewCallbacks = UseCancelablePromiseCallb
 export const useMetaExportData: () => MetaExportData | undefined;
 
 // @alpha (undocumented)
-export const useMetaExportImageData: (type: ExportMetaType | undefined, loading: boolean, error: boolean) => MetaExportDataAttributes | undefined;
+export const useMetaExportImageData: (type: MetaExportDataAttributes["data-export-meta-type"], loading: boolean, error: boolean) => MetaExportDataAttributes | undefined;
 
 // @alpha (undocumented)
 export const useMetaPaletteData: () => {
@@ -14815,7 +14331,7 @@ export function useMinimalSizeValidation(minimalWidth?: number, minimalHeight?: 
 };
 
 // @public
-export const useParentFilters: (filter: DashboardAttributeFilterItem, tabId?: string | undefined) => UseParentFiltersResult;
+export const useParentFilters: (filter: DashboardAttributeFilterItem, tabId?: string) => UseParentFiltersResult;
 
 // @public
 export type UseParentFiltersResult = Pick<IAttributeFilterBaseProps, "parentFilters" | "parentFilterOverAttribute">;
@@ -14940,7 +14456,7 @@ export function useWidgetDragEndHandler(): () => void;
 export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
     onLoadingChanged: OnLoadingChanged;
     onError: OnError;
-    onSuccess: (executionResult: IExecutionResult, warnings: IResultWarning[] | undefined, limitBreaks?: IExecutionResultLimitBreak<ExecutionResultLimitType | (string & {})>[] | undefined) => void;
+    onSuccess: (executionResult: IExecutionResult, warnings: IResultWarning[] | undefined, limitBreaks?: IExecutionResultLimitBreak[]) => void;
     onPushData: (data: IPushData) => void;
 };
 

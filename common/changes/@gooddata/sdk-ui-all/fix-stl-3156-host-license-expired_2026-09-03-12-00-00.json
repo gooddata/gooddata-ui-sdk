@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "comment": "sdk-ui-pluggable-host: Showed the contract-expired lock screen when the backend denies requests because the organization's contract or the deployment license expired, instead of a generic \"Failed to load\" page naming the tier.",
+      "type": "none",
+      "packageName": "@gooddata/sdk-ui-all"
+    }
+  ],
+  "packageName": "@gooddata/sdk-ui-all"
+}

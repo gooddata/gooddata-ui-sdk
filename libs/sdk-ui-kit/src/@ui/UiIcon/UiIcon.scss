@@ -5,10 +5,11 @@
     fill: var(--gd-icon-fill-color);
 
     @media (forced-colors: active) {
+        fill: buttontext; // Force system colors in high contrast mode
+
         * {
             fill: buttontext; // Force system colors in high contrast mode
         }
-        fill: buttontext; // Force system colors in high contrast mode
     }
 
     &--layout {

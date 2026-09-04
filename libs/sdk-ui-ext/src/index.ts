@@ -350,6 +350,16 @@ export type {
     ObjectSharePermissionLevel,
 } from "./share/objectShareController.types.js";
 export { useApplyObjectPermissions } from "./share/useApplyObjectPermissions.js";
-export { accessListToSummary } from "./share/accessSummary.js";
+export {
+    accessListToSummary,
+    draftToSummary,
+    type ObjectShareLevel,
+    summaryToShareLevel,
+} from "./share/accessSummary.js";
 export { isPermissionsNotAvailable } from "./share/accessErrors.js";
+export {
+    type IObjectAccessLevel,
+    type IUseObjectAccessLevelOptions,
+    useObjectAccessLevel,
+} from "./share/useObjectAccessLevel.js";
 export type { IObjectAccessSummary, IObjectShareLabel } from "./share/types.js";

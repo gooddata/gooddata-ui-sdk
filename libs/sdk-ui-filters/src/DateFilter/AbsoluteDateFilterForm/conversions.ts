@@ -1,14 +1,19 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type EmptyValues } from "@gooddata/sdk-model";
+import { type DateString, type EmptyValues } from "@gooddata/sdk-model";
 
 import {
+    DAY_END_TIME,
+    DAY_END_TIME_WITH_SECONDS,
+    DAY_START_TIME,
+    DAY_START_TIME_WITH_SECONDS,
     platformDateFormat,
     platformDateTimeFormat,
     platformDateTimeFormatWithSeconds,
 } from "../constants/Platform.js";
 import { type IDateRange } from "../DateRangePicker/types.js";
 import { type IUiAbsoluteDateFilterForm } from "../interfaces/index.js";
+import { type IPeriodRange } from "../PeriodRangePicker/types.js";
 import {
     convertDateToPlatformDateString,
     convertPlatformDateStringToDate,
@@ -60,4 +65,46 @@ export const dateFilterValueToDateRange = (
         to.setSeconds(isSecondsForAbsoluteRangeEnabled ? 59 : 0);
     }
     return { from, to };
+};
+
+/**
+ * @internal
+ */
+export interface IPeriodRangeToDateFilterValueOptions {
+    range: IPeriodRange;
+    localIdentifier: string;
+    isTimeForAbsoluteRangeEnabled: boolean;
+    emptyValueHandling?: EmptyValues;
+    isSecondsForAbsoluteRangeEnabled?: boolean;
+}
+
+/**
+ * Converts a resolved period-picker range into an absolute date filter value, extending it to the
+ * start/end of day when time-of-day is enabled.
+ */
+export const periodRangeToDateFilterValue = ({
+    range,
+    localIdentifier,
+    isTimeForAbsoluteRangeEnabled,
+    emptyValueHandling,
+    isSecondsForAbsoluteRangeEnabled = false,
+}: IPeriodRangeToDateFilterValueOptions): IUiAbsoluteDateFilterForm => {
+    const withDayBoundaryTime = (date: DateString | undefined, time: string): DateString | undefined =>
+        isTimeForAbsoluteRangeEnabled && date ? `${date} ${time}` : date;
+
+    return {
+        from: withDayBoundaryTime(
+            range.from,
+            isSecondsForAbsoluteRangeEnabled ? DAY_START_TIME_WITH_SECONDS : DAY_START_TIME,
+        ),
+        to: withDayBoundaryTime(
+            range.to,
+            isSecondsForAbsoluteRangeEnabled ? DAY_END_TIME_WITH_SECONDS : DAY_END_TIME,
+        ),
+        localIdentifier,
+        type: "absoluteForm",
+        name: "",
+        visible: true,
+        ...(emptyValueHandling ? { emptyValueHandling } : {}),
+    };
 };

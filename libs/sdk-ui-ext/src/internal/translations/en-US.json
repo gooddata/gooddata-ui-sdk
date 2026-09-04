@@ -2536,15 +2536,15 @@
         "crowdinContext": "Tooltip of the Admin badge in the share dialog, explaining why the row has no permission controls."
     },
     "objectShare.toast.granteeAdded": {
-        "text": "Access added.",
+        "text": "Success! Access was granted.",
         "crowdinContext": "Toast shown after a new user or group is granted access via the share dialog."
     },
     "objectShare.toast.accessUpdated": {
-        "text": "Access updated.",
+        "text": "Success! Access was updated.",
         "crowdinContext": "Toast shown after a grantee's permission level was changed or the grantee was removed."
     },
     "objectShare.toast.generalAccessUpdated": {
-        "text": "General access updated.",
+        "text": "Success! General access was updated.",
         "crowdinContext": "Toast shown after toggling general access between restricted and all workspace members."
     },
     "objectShare.toast.error": {

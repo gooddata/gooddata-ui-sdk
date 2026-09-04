@@ -111,6 +111,7 @@ describe("CatalogItemShareProvider", () => {
                 generalAccess: "RESTRICTED",
                 workspaceLevel: "VIEW",
                 granteeCount: 1,
+                selfIsGrantee: false,
             }),
         );
     });
@@ -133,6 +134,7 @@ describe("CatalogItemShareProvider", () => {
             generalAccess: "WORKSPACE",
             workspaceLevel: "EDIT",
             granteeCount: 2,
+            selfIsGrantee: false,
         };
         act(() => onSummaryChange(updated));
 
@@ -235,6 +237,7 @@ describe("CatalogItemShareProvider", () => {
             generalAccess: "RESTRICTED",
             workspaceLevel: "VIEW",
             granteeCount: 3,
+            selfIsGrantee: false,
         };
         act(() => onSummaryChange(fromDialog));
         await act(async () => {

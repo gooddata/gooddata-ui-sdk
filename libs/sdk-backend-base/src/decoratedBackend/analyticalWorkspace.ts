@@ -109,6 +109,12 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
     }
 
     public computedAttributes(): IWorkspaceComputedAttributesService {
+        const { computedAttributes } = this.factories;
+
+        if (computedAttributes) {
+            return computedAttributes(this.decorated.computedAttributes(), this.workspace);
+        }
+
         return this.decorated.computedAttributes();
     }
 

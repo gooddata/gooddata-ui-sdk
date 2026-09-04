@@ -142,6 +142,9 @@ export interface IObjectShareControllerState {
      * through administrator/manager rights. Adding a grantee hides the row;
      * removing the last one brings it back. (Derived from the immutable seed:
      * removing your own grant empties the list but never synthesizes this row.)
+     *
+     * Also set for the whole of a draft, where the caller will own what they create — the
+     * list is theirs either way, so the row holds as grantees are added.
      */
     adminSelfRow: { name: string; email?: string } | undefined;
     generalAccess: GeneralAccessValue;

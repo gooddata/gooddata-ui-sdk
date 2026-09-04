@@ -32,6 +32,7 @@ export type {
     WorkspaceSettingsDecoratorFactory,
     AutomationsDecoratorFactory,
     AttributesDecoratorFactory,
+    ComputedAttributesDecoratorFactory,
     InsightsDecoratorFactory,
     MeasuresDecoratorFactory,
     DatasetsDecoratorFactory,

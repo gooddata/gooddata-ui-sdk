@@ -215,6 +215,8 @@ export function GenAIChat({
         [addError, addSuccess, intl, onEvent],
     );
 
+    const enableGenAiRightPanel = settings?.["enableGenAiRightPanel"];
+
     return (
         <GenAIChatDialogConnected
             backend={backend}
@@ -243,6 +245,7 @@ export function GenAIChat({
             allowNativeLinks={false}
             onLinkClick={onLinkClick}
             onEvent={handleEvent}
+            displayMode={embedded || !enableGenAiRightPanel ? "modal" : "inline"}
             returnFocusTo={embedded ? EMBEDDED_AI_TRIGGER_ID : HEADER_CHAT_BUTTON_ID}
         />
     );

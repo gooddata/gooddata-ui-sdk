@@ -1,0 +1,15 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-filters: Add isAbsoluteDateFilterGranularityEnabled prop to DateFilter for granularity switching (with localized quarter labels) in the static period form; corrects stale/unavailable granularities",
+            "type": "patch",
+            "packageName": "@gooddata/sdk-ui-all"
+        },
+        {
+            "comment": "sdk-ui-dashboard: Pass through absolute date filter granularity data, seed its baseline from the feature flag at dashboard initialization, and let dateFilterConfig.hideGranularities restrict the absolute (static) date filter",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

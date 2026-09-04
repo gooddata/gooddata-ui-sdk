@@ -7,10 +7,10 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
 
 .drag-layer {
-    @include kit-mixins.default-styles();
-
     box-sizing: border-box;
     flex-wrap: nowrap;
+
+    @include kit-mixins.default-styles();
 }
 
 .date-filter-button,
@@ -242,6 +242,7 @@
 .new-row-dropzone {
     width: 100%;
     height: 100%;
+    background-color: var(--gd-palette-complementary-0, #fff);
 
     .widget-dropzone-box {
         position: relative;
@@ -287,8 +288,6 @@
             margin-right: 10px;
         }
     }
-
-    background-color: var(--gd-palette-complementary-0, #fff);
 }
 
 .row-hotspot-container {

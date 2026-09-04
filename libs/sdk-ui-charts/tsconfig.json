@@ -3,6 +3,7 @@
     "compilerOptions": {
         "tsBuildInfoFile": "./tsconfig.check.tsbuildinfo",
         "noEmit": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "strictBindCallApply": false
     }
 }

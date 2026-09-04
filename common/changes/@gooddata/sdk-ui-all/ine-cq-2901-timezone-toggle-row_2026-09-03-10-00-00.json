@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "gdc-home-ui: Restricted the clickable area of the \"Allow users to change timezone\" toggle in the timezone settings dialog to the switch itself instead of the whole row, matching the standard toggle behavior across the app.",
+      "type": "none",
+      "packageName": "@gooddata/sdk-ui-all"
+    }
+  ],
+  "packageName": "@gooddata/sdk-ui-all",
+  "email": "ivan.nejezchleb@gooddata.com"
+}

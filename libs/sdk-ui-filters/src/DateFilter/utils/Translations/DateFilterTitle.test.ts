@@ -36,6 +36,7 @@ const DEFAULT_DATE_FORMAT_WITH_SECONDS = DEFAULT_DATE_FORMAT + TIME_FORMAT_WITH_
 const serializingTranslator: IDateAndMessageTranslator = {
     formatDate: (id, options) => `${id}__${JSON.stringify(options)}`,
     formatMessage: (id: any, values: any) => `${id.id}__${JSON.stringify(values)}` as any,
+    locale: "en-US",
 };
 
 describe("getDateFilterTitleUsingTranslator", () => {
@@ -306,6 +307,59 @@ describe("getDateFilterTitleUsingTranslator", () => {
             DEFAULT_DATE_FORMAT,
         );
         expect(actual).toEqual(expected);
+    });
+
+    describe("static period (absolute form) with a quarter granularity", () => {
+        const absoluteFormQuarterFilter = {
+            localIdentifier: "ABSOLUTE_FORM",
+            type: "absoluteForm" as const,
+            from: "2026-04-01",
+            to: "2026-04-01",
+            granularity: "GDC.time.quarter" as const,
+            name: "",
+            visible: true,
+        };
+
+        it("should render the quarter label in English by default", () => {
+            const actual = getDateFilterTitleUsingTranslator(
+                absoluteFormQuarterFilter,
+                serializingTranslator,
+                "short",
+                DEFAULT_DATE_FORMAT,
+            );
+            expect(actual).toEqual("Q2 2026");
+        });
+
+        it("should render a localized quarter label for a non-English locale", () => {
+            const actual = getDateFilterTitleUsingTranslator(
+                absoluteFormQuarterFilter,
+                { ...serializingTranslator, locale: "fr-FR" },
+                "short",
+                DEFAULT_DATE_FORMAT,
+            );
+            expect(actual).toEqual("2ème trim. 2026");
+        });
+
+        it("should fall back to the English quarter label for an unsupported locale", () => {
+            const actual = getDateFilterTitleUsingTranslator(
+                absoluteFormQuarterFilter,
+                { ...serializingTranslator, locale: "xx-XX" },
+                "short",
+                DEFAULT_DATE_FORMAT,
+            );
+            expect(actual).toEqual("Q2 2026");
+        });
+
+        it("should fall back to the English quarter label when the translator omits locale", () => {
+            const { locale: _locale, ...translatorWithoutLocale } = serializingTranslator;
+            const actual = getDateFilterTitleUsingTranslator(
+                absoluteFormQuarterFilter,
+                translatorWithoutLocale,
+                "short",
+                DEFAULT_DATE_FORMAT,
+            );
+            expect(actual).toEqual("Q2 2026");
+        });
     });
 });
 

@@ -61,7 +61,6 @@ exports[`PluggableScatterPlot > should return reference point after switching fr
       "attribute": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -129,7 +128,6 @@ exports[`PluggableScatterPlot > should return reference point after switching fr
       "segment": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -200,7 +198,6 @@ exports[`PluggableScatterPlot > should return reference point with one secondary
       "attribute": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -268,7 +265,6 @@ exports[`PluggableScatterPlot > should return reference point with one secondary
       "segment": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -348,7 +344,6 @@ exports[`PluggableScatterPlot > should return reference point with primary and s
       "attribute": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -416,7 +411,6 @@ exports[`PluggableScatterPlot > should return reference point with primary and s
       "segment": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -487,7 +481,6 @@ exports[`PluggableScatterPlot > should return reference point with primary measu
       "attribute": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -555,7 +548,6 @@ exports[`PluggableScatterPlot > should return reference point with primary measu
       "segment": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -635,7 +627,6 @@ exports[`PluggableScatterPlot > should return reference point with two measures 
       "attribute": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
@@ -703,7 +694,6 @@ exports[`PluggableScatterPlot > should return reference point with two measures 
       "segment": {
         "accepts": [
           "attribute",
-          "computedAttribute",
           "date",
         ],
         "allowsReordering": false,
