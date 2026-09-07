@@ -33,7 +33,7 @@ export function useCatalogItemOpen(
     }, [openCatalogItemRef, openedItem]);
 
     const onOpenDetail = useCallback(
-        (item: ICatalogItem) => {
+        (item: ICatalogItemRef) => {
             setOpen(true);
             setItemOpened(item);
             onCatalogDetailOpened?.({ identifier: item.identifier, type: item.type });

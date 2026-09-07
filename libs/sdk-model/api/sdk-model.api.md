@@ -470,7 +470,7 @@ export const CSV_DELIMITER_PRESETS: {
     };
     readonly tab: {
         readonly delimiter: "\t";
-        readonly previewSymbol: "\u21E5";
+        readonly previewSymbol: "⇥";
     };
 };
 
@@ -3957,6 +3957,8 @@ export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBas
 
 // @public (undocumented)
 export interface IMeasureMetadataObjectBase {
+    // @alpha
+    conditionalFormatting?: ISemanticConditionalFormatting;
     expression: string;
     format: string;
     isLocked?: boolean;
@@ -5585,6 +5587,7 @@ export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDas
 export interface ISemanticConditionalFormatting {
     // (undocumented)
     conditions: readonly IConditionalFormattingCondition[];
+    enabled?: boolean;
     version?: string;
 }
 
@@ -6094,6 +6097,9 @@ export function isRichTextWidgetDefinition(obj: unknown): obj is IRichTextWidget
 
 // @public
 export function isScheduleNotification(notification: unknown): notification is IScheduleNotification;
+
+// @alpha
+export function isSemanticConditionalFormattingEnabled(conditionalFormatting: ISemanticConditionalFormatting): boolean;
 
 // @beta
 export function isSemanticSearchRelationship(item: object): item is ISemanticSearchRelationship;

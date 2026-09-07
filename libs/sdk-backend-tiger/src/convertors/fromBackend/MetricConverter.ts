@@ -9,6 +9,7 @@ import { newMeasureMetadataObject } from "@gooddata/sdk-backend-base";
 import { type IMeasureMetadataObject, idRef } from "@gooddata/sdk-model";
 
 import { convertCertificationFromBackend } from "./CertificationConverter.js";
+import { fromTigerConditionalFormatting } from "./conditionalFormattingConversions.js";
 import { isInheritedObject } from "./ObjectInheritance.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
 
@@ -39,6 +40,11 @@ export function convertMetricFromBackend(
             .expression(attributes.content.maql)
             .format(attributes.content.format ?? "")
             .metricType(attributes.content.metricType)
+            .conditionalFormatting(
+                attributes.conditionalFormatting
+                    ? fromTigerConditionalFormatting(attributes.conditionalFormatting)
+                    : undefined,
+            )
             .created(createdAt ?? undefined)
             .createdBy(convertUserIdentifier(createdBy, included))
             .updated(modifiedAt ?? undefined)

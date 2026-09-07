@@ -312,6 +312,7 @@ export type {
     IMeasureKeyDrivers,
     IMeasuresQueryResult,
     IMeasuresQuery,
+    IUpdateMeasureMetaPayload,
 } from "./workspace/measures/index.js";
 
 export type { IWorkspaceFactsService, IFactsQuery, IFactsQueryResult } from "./workspace/facts/index.js";
@@ -370,15 +371,16 @@ export type {
     IDateFilterConfigsQueryResult,
 } from "./workspace/dateFilterConfigs/index.js";
 
-export type {
-    IWorkspaceCatalogFactory,
-    IWorkspaceCatalogAvailableItemsFactory,
-    IWorkspaceCatalog,
-    IWorkspaceCatalogFactoryOptions,
-    IWorkspaceCatalogWithAvailableItems,
-    IWorkspaceCatalogWithAvailableItemsFactoryOptions,
-    IWorkspaceCatalogFactoryMethods,
-    IWorkspaceCatalogMethods,
+export {
+    DefaultWorkspaceCatalogTypes,
+    type IWorkspaceCatalogFactory,
+    type IWorkspaceCatalogAvailableItemsFactory,
+    type IWorkspaceCatalog,
+    type IWorkspaceCatalogFactoryOptions,
+    type IWorkspaceCatalogWithAvailableItems,
+    type IWorkspaceCatalogWithAvailableItemsFactoryOptions,
+    type IWorkspaceCatalogFactoryMethods,
+    type IWorkspaceCatalogMethods,
 } from "./workspace/ldm/catalog.js";
 
 export type {

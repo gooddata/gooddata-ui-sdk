@@ -1,6 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { type IAttributeDescriptor, type IMeasureDescriptor } from "@gooddata/sdk-model";
+import {
+    type IAttributeDescriptor,
+    type IMeasureDescriptor,
+    isSemanticConditionalFormattingEnabled,
+} from "@gooddata/sdk-model";
 
 import {
     type ConditionalFormattingTarget,
@@ -20,7 +24,7 @@ function materializeSemanticRules(
 ): IConditionalFormattingRule[] {
     const attributeRules = attributeDescriptors.flatMap((descriptor): IConditionalFormattingRule[] => {
         const conditionalFormatting = descriptor.attributeHeader.conditionalFormatting;
-        if (!conditionalFormatting) {
+        if (!conditionalFormatting || !isSemanticConditionalFormattingEnabled(conditionalFormatting)) {
             return [];
         }
         return [
@@ -36,7 +40,7 @@ function materializeSemanticRules(
     });
     const measureRules = measureDescriptors.flatMap((descriptor): IConditionalFormattingRule[] => {
         const conditionalFormatting = descriptor.measureHeaderItem.conditionalFormatting;
-        if (!conditionalFormatting) {
+        if (!conditionalFormatting || !isSemanticConditionalFormattingEnabled(conditionalFormatting)) {
             return [];
         }
         return [

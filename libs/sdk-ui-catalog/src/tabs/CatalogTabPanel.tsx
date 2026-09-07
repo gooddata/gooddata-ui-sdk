@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import type { UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 
-import type { ICatalogItem } from "../catalogItem/types.js";
+import type { ICatalogItem, ICatalogItemRef } from "../catalogItem/types.js";
 import { QualityScoreCard } from "../quality/QualityScoreCard.js";
 
 import { CatalogItemCardGrid } from "./CatalogItemCardGrid.js";
@@ -14,7 +14,7 @@ import { useTrendingItems } from "./useTrendingItems.js";
 
 type Props = {
     selectedTabId: string;
-    onItemClick?: (item: ICatalogItem) => void;
+    onItemClick?: (item: ICatalogItemRef) => void;
 };
 
 export function CatalogTabPanel({ selectedTabId, onItemClick }: Props) {
@@ -38,7 +38,7 @@ export function CatalogTabPanel({ selectedTabId, onItemClick }: Props) {
 }
 
 type TabContentProps = {
-    onItemClick?: (item: ICatalogItem) => void;
+    onItemClick?: (item: ICatalogItemRef) => void;
 };
 
 function RecommendedTabContent({ onItemClick }: TabContentProps) {
@@ -54,7 +54,7 @@ function TrendingTabContent({ onItemClick }: TabContentProps) {
 type AsyncCardContentProps = {
     items: ICatalogItem[];
     status: UseCancelablePromiseStatus;
-    onItemClick?: (item: ICatalogItem) => void;
+    onItemClick?: (item: ICatalogItemRef) => void;
 };
 
 function AsyncCardContent({ items, status, onItemClick }: AsyncCardContentProps) {

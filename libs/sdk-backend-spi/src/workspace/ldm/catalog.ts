@@ -16,6 +16,20 @@ import {
 } from "@gooddata/sdk-model";
 
 /**
+ * The catalog item types loaded when the caller does not narrow them with `forTypes`.
+ * Spread this to request the default set plus an opt-in type (for example "computedAttribute").
+ *
+ * @public
+ */
+export const DefaultWorkspaceCatalogTypes: readonly CatalogItemType[] = [
+    "attribute",
+    "measure",
+    "fact",
+    "dateDataset",
+    "attributeHierarchy",
+];
+
+/**
  * Configuration options for querying catalog items
  *
  * @public
@@ -27,8 +41,9 @@ export interface IWorkspaceCatalogFactoryOptions {
     dataset?: ObjRef;
 
     /**
-     * Get catalog items of specific types (attribute, measure, fact, dateDataset or attributeHierarchy)
-     * Default: ["attribute", "measure", fact", "dateDataset", "attributeHierarchy"]
+     * Get catalog items of specific types (attribute, measure, fact, dateDataset,
+     * attributeHierarchy or computedAttribute)
+     * Default: {@link DefaultWorkspaceCatalogTypes}
      */
     types: CatalogItemType[];
 

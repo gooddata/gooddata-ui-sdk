@@ -64,6 +64,17 @@ const MATCH_OPERATOR_TO_TIGER: Record<MatchFilterOperator, "STARTS_WITH" | "ENDS
     contains: "CONTAINS",
 };
 
+/**
+ * The collectLabelElements API takes labels and computed attributes by bare id, so an id shared by
+ * both is ambiguous and resolves label-first. The optional `type` discriminator resolves the
+ * ambiguity; state it for a computed attribute (its fabricated display form ref carries the
+ * "computedAttribute" type) and leave it out otherwise — for a label the default resolution is
+ * already correct, and an explicit "label" would only invalidate every recorded request body.
+ */
+function toElementsLabelType(ref: ObjRef): "computedAttribute" | undefined {
+    return isIdentifierRef(ref) && ref.type === "computedAttribute" ? "computedAttribute" : undefined;
+}
+
 export class TigerWorkspaceElements implements IElementsQueryFactory {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
@@ -185,12 +196,15 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                 .map((filter) => {
                     const { attributeFilter } = filter;
                     const complementFilter = isNegativeAttributeFilter(attributeFilter);
-                    const label = objRefToString(filterObjRef(attributeFilter));
+                    const labelRef = filterObjRef(attributeFilter);
+                    const label = objRefToString(labelRef);
+                    const type = toElementsLabelType(labelRef);
                     const elements = filterAttributeElements(attributeFilter)!;
                     const values = isAttributeElementsByRef(elements) ? elements.uris : elements.values;
 
                     return {
                         label,
+                        ...(type && { type }),
                         values: values,
                         complementFilter,
                     };
@@ -211,9 +225,11 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                 .map((filter) => {
                     const { label, values, negativeSelection } =
                         filter.attributeFilter.arbitraryAttributeFilter;
+                    const type = toElementsLabelType(label);
 
                     return {
                         label: objRefToString(label),
+                        ...(type && { type }),
                         values,
                         complementFilter: negativeSelection ?? false,
                     };
@@ -263,8 +279,10 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
         labelIdentifier: string,
         cacheId: string | undefined,
     ): ElementsRequest {
+        const labelType = toElementsLabelType(this.ref);
         return {
             label: labelIdentifier,
+            ...(labelType && { type: labelType }),
             ...(options?.complement && { complementFilter: options.complement }),
             ...(options?.filter && { patternFilter: options.filter }),
             ...this.getExactFilterSpec(options ?? {}),

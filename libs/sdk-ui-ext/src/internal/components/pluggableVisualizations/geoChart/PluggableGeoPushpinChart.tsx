@@ -1,7 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep, isEmpty, set } from "lodash-es";
-import { type WrappedComponentProps } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
@@ -335,7 +335,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         const fullConfig = this.buildVisualizationConfig(options, supportedControls);
         const execution = this.getExecution(options, insight, executionFactory);
 
-        const geoPushpinProps: ICoreGeoChartProps & WrappedComponentProps & { theme: ITheme } = {
+        const geoPushpinProps: ICoreGeoChartProps & { intl: IntlShape; theme: ITheme } = {
             drillableItems,
             config: updateConfigWithSettings(fullConfig, this.featureFlags),
             height: resultingHeight,

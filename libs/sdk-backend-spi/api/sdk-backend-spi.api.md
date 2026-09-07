@@ -151,6 +151,7 @@ import { IResultHeader } from '@gooddata/sdk-model';
 import { IResultWarning } from '@gooddata/sdk-model';
 import type { IScheduledMail } from '@gooddata/sdk-model';
 import type { IScheduledMailDefinition } from '@gooddata/sdk-model';
+import type { ISemanticConditionalFormatting } from '@gooddata/sdk-model';
 import type { ISemanticQualityIssuesCalculation } from '@gooddata/sdk-model';
 import type { ISemanticQualityReport } from '@gooddata/sdk-model';
 import type { ISemanticSearchRelationship } from '@gooddata/sdk-model';
@@ -265,6 +266,9 @@ export class DataTooLargeError extends AnalyticalBackendError {
     // @alpha
     readonly responseBody: IDataTooLargeResponseBody | undefined;
 }
+
+// @public
+export const DefaultWorkspaceCatalogTypes: readonly CatalogItemType[];
 
 // @public
 export type ElementsQueryOptionsElementsSpecification = IElementsQueryOptionsElementsByValue | IElementsQueryOptionsElementsByPrimaryDisplayFormValue | IElementsQueryOptionsElementsByUri;
@@ -2769,6 +2773,11 @@ export interface IUnavailableDashboardReference {
     type: ObjectType;
 }
 
+// @public
+export type IUpdateMeasureMetaPayload = Partial<IMetadataObjectBase> & IMetadataObjectIdentity & {
+    conditionalFormatting?: ISemanticConditionalFormatting | null;
+};
+
 // @internal
 export interface IUpsertKnowledgeDocumentRequest {
     // (undocumented)
@@ -3129,7 +3138,7 @@ export interface IWorkspaceMeasuresService {
     getMeasuresQuery(): IMeasuresQuery;
     setCertification(ref: ObjRef, certification?: IObjectCertificationWrite): Promise<void>;
     updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject>;
-    updateMeasureMeta(measure: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IMeasureMetadataObject>;
+    updateMeasureMeta(measure: IUpdateMeasureMetaPayload): Promise<IMeasureMetadataObject>;
 }
 
 // @alpha

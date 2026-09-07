@@ -2303,6 +2303,93 @@
                     }
                 }
             }
+        },
+        "/api/v1/ai/workspaces/{workspace_id}/resolveLlmProviders": {
+            "get": {
+                "tags": [
+                    "Smart Functions"
+                ],
+                "summary": "Get active LLM configuration for this workspace",
+                "description": "Resolves the active LLM provider configuration for the given workspace.",
+                "operationId": "resolveLlmProvidersV2",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResolvedLlms"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspace_id}/ai/resolveLlmProviders": {
+            "get": {
+                "tags": [
+                    "Smart Functions"
+                ],
+                "summary": "Get active LLM configuration for this workspace",
+                "description": "Resolves the active LLM provider configuration for the given workspace.",
+                "operationId": "resolveLlmProviders",
+                "deprecated": true,
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResolvedLlms"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -8403,6 +8490,39 @@
                 "title": "ListDocumentsResponse",
                 "description": "Response for GET /documents."
             },
+            "LlmModel": {
+                "properties": {
+                    "family": {
+                        "$ref": "#/components/schemas/LlmModelFamily",
+                        "description": "Model family."
+                    },
+                    "id": {
+                        "type": "string",
+                        "title": "Id",
+                        "description": "Unique identifier of the model (e.g., gpt-5.6-luna)."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "family"
+                ],
+                "title": "LlmModel"
+            },
+            "LlmModelFamily": {
+                "type": "string",
+                "enum": [
+                    "OPENAI",
+                    "ANTHROPIC",
+                    "META",
+                    "MISTRAL",
+                    "AMAZON",
+                    "GOOGLE",
+                    "COHERE",
+                    "UNKNOWN"
+                ],
+                "title": "LlmModelFamily"
+            },
             "MatchAttributeFilter-Input": {
                 "properties": {
                     "matchAttributeFilter": {
@@ -12225,6 +12345,52 @@
                     "HIGH"
                 ],
                 "title": "RequestedReasoningEffort"
+            },
+            "ResolvedLlmProvider": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id",
+                        "description": "Provider Id"
+                    },
+                    "models": {
+                        "items": {
+                            "$ref": "#/components/schemas/LlmModel"
+                        },
+                        "type": "array",
+                        "title": "Models",
+                        "description": "Model available on the provider."
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title",
+                        "description": "Provider Title"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "title",
+                    "models"
+                ],
+                "title": "ResolvedLlmProvider"
+            },
+            "ResolvedLlms": {
+                "properties": {
+                    "data": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ResolvedLlmProvider"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "The resolved LLM configuration, or null if none is configured."
+                    }
+                },
+                "type": "object",
+                "title": "ResolvedLlms"
             },
             "ResponseFeedback": {
                 "properties": {

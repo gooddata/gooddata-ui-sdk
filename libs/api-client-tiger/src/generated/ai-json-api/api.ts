@@ -2263,6 +2263,33 @@ export interface AiListDocumentsResponse {
     'totalCount'?: number | null;
 }
 
+export interface AiLlmModel {
+    /**
+     * Model family.
+     */
+    'family': AiLlmModelFamily;
+    /**
+     * Unique identifier of the model (e.g., gpt-5.6-luna).
+     */
+    'id': string;
+}
+
+
+
+export const AiLlmModelFamily = {
+    OPENAI: 'OPENAI',
+    ANTHROPIC: 'ANTHROPIC',
+    META: 'META',
+    MISTRAL: 'MISTRAL',
+    AMAZON: 'AMAZON',
+    GOOGLE: 'GOOGLE',
+    COHERE: 'COHERE',
+    UNKNOWN: 'UNKNOWN'
+} as const;
+
+export type AiLlmModelFamily = typeof AiLlmModelFamily[keyof typeof AiLlmModelFamily];
+
+
 export interface AiMatchAttributeFilterBodyInput {
     'applyOnResult'?: boolean | null;
     'caseSensitive'?: boolean;
@@ -3530,6 +3557,25 @@ export const AiRequestedReasoningEffort = {
 
 export type AiRequestedReasoningEffort = typeof AiRequestedReasoningEffort[keyof typeof AiRequestedReasoningEffort];
 
+
+export interface AiResolvedLlmProvider {
+    /**
+     * Provider Id
+     */
+    'id': string;
+    /**
+     * Model available on the provider.
+     */
+    'models': Array<AiLlmModel>;
+    /**
+     * Provider Title
+     */
+    'title': string;
+}
+
+export interface AiResolvedLlms {
+    'data'?: AiResolvedLlmProvider | null;
+}
 
 export interface AiResponseFeedback {
     'text'?: string | null;
@@ -10561,6 +10607,96 @@ export async function SmartFunctionsAiAxiosParamCreator_AiSearch(
 
 // SmartFunctionsAi FP - SmartFunctionsAiAxiosParamCreator
 /**
+ * Resolves the active LLM provider configuration for the given workspace.
+ * @summary Get active LLM configuration for this workspace
+ * @param {string} workspaceId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsAiAxiosParamCreator_ResolveLlmProviders(
+    workspaceId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('resolveLlmProviders', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspace_id}/ai/resolveLlmProviders`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// SmartFunctionsAi FP - SmartFunctionsAiAxiosParamCreator
+/**
+ * Resolves the active LLM provider configuration for the given workspace.
+ * @summary Get active LLM configuration for this workspace
+ * @param {string} workspaceId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsAiAxiosParamCreator_ResolveLlmProvidersV2(
+    workspaceId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('resolveLlmProvidersV2', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/resolveLlmProviders`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// SmartFunctionsAi FP - SmartFunctionsAiAxiosParamCreator
+/**
  * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
  * @summary (BETA) Semantic Search in Metadata
  * @param {string} workspaceId 
@@ -10650,6 +10786,58 @@ export async function SmartFunctionsAi_AiSearch(
 
 // SmartFunctionsAi Api FP
 /**
+ * Resolves the active LLM provider configuration for the given workspace.
+ * @summary Get active LLM configuration for this workspace
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsAiResolveLlmProvidersRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsAi_ResolveLlmProviders(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: SmartFunctionsAiResolveLlmProvidersRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiResolvedLlms> {
+    const localVarAxiosArgs = await SmartFunctionsAiAxiosParamCreator_ResolveLlmProviders(
+        requestParameters.workspaceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// SmartFunctionsAi Api FP
+/**
+ * Resolves the active LLM provider configuration for the given workspace.
+ * @summary Get active LLM configuration for this workspace
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsAiResolveLlmProvidersV2Request} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsAi_ResolveLlmProvidersV2(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: SmartFunctionsAiResolveLlmProvidersV2Request, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiResolvedLlms> {
+    const localVarAxiosArgs = await SmartFunctionsAiAxiosParamCreator_ResolveLlmProvidersV2(
+        requestParameters.workspaceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// SmartFunctionsAi Api FP
+/**
  * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
  * @summary (BETA) Semantic Search in Metadata
  * @param {AxiosInstance} axios Axios instance.
@@ -10692,6 +10880,27 @@ export interface SmartFunctionsAiInterface {
     aiSearch(requestParameters: SmartFunctionsAiAiSearchRequest, options?: AxiosRequestConfig): AxiosPromise<AiSearchResult>;
 
     /**
+     * Resolves the active LLM provider configuration for the given workspace.
+     * @summary Get active LLM configuration for this workspace
+     * @param {SmartFunctionsAiResolveLlmProvidersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @deprecated
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsAiInterface
+     */
+    resolveLlmProviders(requestParameters: SmartFunctionsAiResolveLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<AiResolvedLlms>;
+
+    /**
+     * Resolves the active LLM provider configuration for the given workspace.
+     * @summary Get active LLM configuration for this workspace
+     * @param {SmartFunctionsAiResolveLlmProvidersV2Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsAiInterface
+     */
+    resolveLlmProvidersV2(requestParameters: SmartFunctionsAiResolveLlmProvidersV2Request, options?: AxiosRequestConfig): AxiosPromise<AiResolvedLlms>;
+
+    /**
      * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
      * @summary (BETA) Semantic Search in Metadata
      * @param {SmartFunctionsAiSemanticSearchRequest} requestParameters Request parameters.
@@ -10722,6 +10931,34 @@ export interface SmartFunctionsAiAiSearchRequest {
      * @memberof SmartFunctionsAiAiSearch
      */
     readonly aiSearchRequest: AiSearchRequest
+}
+
+/**
+ * Request parameters for resolveLlmProviders operation in SmartFunctionsAi.
+ * @export
+ * @interface SmartFunctionsAiResolveLlmProvidersRequest
+ */
+export interface SmartFunctionsAiResolveLlmProvidersRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SmartFunctionsAiResolveLlmProviders
+     */
+    readonly workspaceId: string
+}
+
+/**
+ * Request parameters for resolveLlmProvidersV2 operation in SmartFunctionsAi.
+ * @export
+ * @interface SmartFunctionsAiResolveLlmProvidersV2Request
+ */
+export interface SmartFunctionsAiResolveLlmProvidersV2Request {
+    /**
+     * 
+     * @type {string}
+     * @memberof SmartFunctionsAiResolveLlmProvidersV2
+     */
+    readonly workspaceId: string
 }
 
 /**
@@ -10763,6 +11000,31 @@ export class SmartFunctionsAi extends BaseAPI implements SmartFunctionsAiInterfa
      */
     public aiSearch(requestParameters: SmartFunctionsAiAiSearchRequest, options?: AxiosRequestConfig) {
         return SmartFunctionsAi_AiSearch(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Resolves the active LLM provider configuration for the given workspace.
+     * @summary Get active LLM configuration for this workspace
+     * @param {SmartFunctionsAiResolveLlmProvidersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @deprecated
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsAi
+     */
+    public resolveLlmProviders(requestParameters: SmartFunctionsAiResolveLlmProvidersRequest, options?: AxiosRequestConfig) {
+        return SmartFunctionsAi_ResolveLlmProviders(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Resolves the active LLM provider configuration for the given workspace.
+     * @summary Get active LLM configuration for this workspace
+     * @param {SmartFunctionsAiResolveLlmProvidersV2Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsAi
+     */
+    public resolveLlmProvidersV2(requestParameters: SmartFunctionsAiResolveLlmProvidersV2Request, options?: AxiosRequestConfig) {
+        return SmartFunctionsAi_ResolveLlmProvidersV2(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**

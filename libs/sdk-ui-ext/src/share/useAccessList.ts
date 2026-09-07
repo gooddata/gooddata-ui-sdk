@@ -7,7 +7,6 @@ import {
     type IGranularAccessGrantee,
     type IUser,
     type IWorkspacePermissions,
-    idRef,
     objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
@@ -34,6 +33,7 @@ import {
     granteeId,
     granteesFromAccessList,
     mergeGrantees,
+    selfGranteeRef,
     userDisplayPair,
     userIdentityFacts,
     withDirectLevel,
@@ -250,7 +250,7 @@ export function useAccessList(
     );
     const isWorkspaceManager = workspacePermissions?.canManageProject;
 
-    const selfId = currentUser ? granteeId("user", idRef(currentUser.login)) : undefined;
+    const selfId = currentUser ? granteeId("user", selfGranteeRef(currentUser)) : undefined;
 
     // Derived from the immutable SEED (see the interface doc): a caller whose own
     // grant was the way in must not read as grant-independent after removing it.
@@ -266,7 +266,11 @@ export function useAccessList(
         () =>
             currentUser
                 ? {
-                      ...userIdentityFacts(idRef(currentUser.login), currentUser.fullName, currentUser.email),
+                      ...userIdentityFacts(
+                          selfGranteeRef(currentUser),
+                          currentUser.fullName,
+                          currentUser.email,
+                      ),
                       id: currentUser.login,
                   }
                 : undefined,

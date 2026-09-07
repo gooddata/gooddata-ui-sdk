@@ -7,7 +7,7 @@ import { UiSkeleton } from "@gooddata/sdk-ui-kit";
 import { CatalogDetailContentRow } from "../CatalogDetailContentRow.js";
 
 import { CatalogDetailAccessRow } from "./CatalogDetailAccessRow.js";
-import { useCatalogItemShareActions, useCatalogItemShareState } from "./CatalogItemShareProvider.js";
+import { useCatalogItemShareState } from "./CatalogItemShareProvider.js";
 import { shareMessages } from "./messages.js";
 
 /**
@@ -22,17 +22,17 @@ import { shareMessages } from "./messages.js";
  */
 export function CatalogItemAccessRow() {
     const { active, summary, summaryError } = useCatalogItemShareState();
-    const { open } = useCatalogItemShareActions();
 
     if (!active) {
         return null;
     }
 
     if (summary) {
-        return <CatalogDetailAccessRow summary={summary} onOpen={open} />;
+        return <CatalogDetailAccessRow summary={summary} />;
     }
     return (
         <CatalogDetailContentRow
+            alignTop
             title={<FormattedMessage {...shareMessages.accessRowLabel} />}
             content={
                 summaryError ? (
@@ -42,7 +42,7 @@ export function CatalogItemAccessRow() {
                         <FormattedMessage {...shareMessages.accessRowError} />
                     </span>
                 ) : (
-                    <UiSkeleton itemWidth={200} itemHeight={20} />
+                    <UiSkeleton direction="row" itemWidth={200} itemHeight={20} />
                 )
             }
         />

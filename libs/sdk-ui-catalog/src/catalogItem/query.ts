@@ -378,6 +378,24 @@ function updateMeasureCatalogItemMeta(
         });
 }
 
+// updateMeasureMeta is a true partial patch, so this call touches conditionalFormatting and nothing
+// else, instead of resending a locally-cached copy of the whole measure that may be stale by the
+// time this write lands (see IWorkspaceMeasuresService.updateMeasureMeta's doc comment).
+export function persistMeasureConditionalFormatting(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    item: ICatalogItemMeasure,
+) {
+    return backend
+        .workspace(workspace)
+        .measures()
+        .updateMeasureMeta({
+            ...buildIdentity(item),
+            conditionalFormatting: item.conditionalFormatting ?? null,
+        })
+        .then(() => undefined);
+}
+
 function updateInsightCatalogItemMeta(
     backend: IAnalyticalBackend,
     workspace: string,

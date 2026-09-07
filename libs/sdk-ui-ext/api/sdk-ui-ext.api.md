@@ -50,6 +50,7 @@ import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ITab } from '@gooddata/sdk-ui-kit';
 import { ITheme } from '@gooddata/sdk-model';
+import type { IUser } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IWidgetUrlBuilder } from '@gooddata/sdk-ui';
@@ -69,7 +70,7 @@ import { UseCancelablePromiseStatus } from '@gooddata/sdk-ui';
 import { WeekStart } from '@gooddata/sdk-model';
 
 // @internal
-export function accessListToSummary(list: IObjectAccessList, self?: ObjRef): IObjectAccessSummary;
+export function accessListToSummary(list: IObjectAccessList, self?: IUser): IObjectAccessSummary;
 
 // @internal (undocumented)
 export const AddDataSourceToSubjects: {
@@ -185,6 +186,16 @@ export const COMPARISON_OPERATORS: {
 
 // @internal (undocumented)
 export function ConditionalFormattingDialog(input: IConditionalFormattingDialogProps): JSX.Element;
+
+// @internal
+export type ConditionalFormattingDialogSubmitIntent = {
+    mode: "inherited";
+    target: ConditionalFormattingTarget;
+    ruleId: string;
+} | {
+    mode: "custom";
+    rule: IConditionalFormattingRule;
+};
 
 // @internal (undocumented)
 export const CreateUserGroupDialog: {
@@ -503,9 +514,7 @@ export interface IConditionalFormattingDialogProps {
     // (undocumented)
     onClose: () => void;
     onDelete?: () => void;
-    onRevertToDefault?: (target: ConditionalFormattingTarget, ruleId: string) => void;
-    // (undocumented)
-    onSave: (rule: IConditionalFormattingRule) => void;
+    onSubmit: (intent: ConditionalFormattingDialogSubmitIntent) => void;
     // (undocumented)
     rule: IConditionalFormattingRule;
     semanticByTarget?: Record<string, ISemanticConditionalFormatting>;
@@ -1098,6 +1107,9 @@ export type ISizeInfoDefault = ISizeInfo & {
 };
 
 // @internal
+export const isPercentFormat: (format: string | undefined) => boolean;
+
+// @internal
 export function isPermissionsNotAvailable(error: unknown): boolean;
 
 // @alpha
@@ -1286,6 +1298,9 @@ export type LayoutType = "fluid";
 // @internal (undocumented)
 export const MIN_VISUALIZATION_WIDTH = 2;
 
+// @internal (undocumented)
+export const newRule: (option: ITargetOption) => IConditionalFormattingRule;
+
 // @public (undocumented)
 export function NotificationsPanel(props: INotificationsPanelProps): JSX.Element;
 
@@ -1328,7 +1343,13 @@ export const RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeIn
 export type ScheduleAutomationsColumnName = "nextRun" | "attachments";
 
 // @internal
+export const semanticRuleFor: (option: ITargetOption, semantic: ISemanticConditionalFormatting) => IConditionalFormattingRule;
+
+// @internal
 export function sortShareableLabels(labels: readonly IObjectShareLabel[]): IObjectShareLabel[];
+
+// @internal
+export function summaryOtherGranteeCount(summary: IObjectAccessSummary): number;
 
 // @internal
 export function summaryToShareLevel(summary: IObjectAccessSummary): ObjectShareLevel;

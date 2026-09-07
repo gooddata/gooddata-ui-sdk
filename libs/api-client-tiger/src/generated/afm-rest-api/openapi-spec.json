@@ -5874,6 +5874,14 @@
                                 "type": "string",
                                 "description": "Specifies on which label the filter depends on."
                             },
+                            "type": {
+                                "type": "string",
+                                "description": "Type of the object ```label``` refers to. A set type is taken at its word; an unset one means a label, with a computed attribute of the same id accepted as a fallback.",
+                                "enum": [
+                                    "label",
+                                    "computedAttribute"
+                                ]
+                            },
                             "values": {
                                 "type": "array",
                                 "description": "Specifies values of the label for element filtering.",
@@ -6104,6 +6112,14 @@
                         "type": "string",
                         "description": "Time zone (IANA id, e.g. \"Europe/Prague\") used to resolve relative date filters in ```dependsOn```. If set it takes precedence over the workspace/user time zone setting; if not set the setting is used.",
                         "example": "Europe/Prague"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Type of the object ```label``` refers to. A set type is taken at its word; an unset one means a label, with a computed attribute of the same id accepted as a fallback.",
+                        "enum": [
+                            "label",
+                            "computedAttribute"
+                        ]
                     },
                     "validateBy": {
                         "type": "array",

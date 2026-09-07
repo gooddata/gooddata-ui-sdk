@@ -10,7 +10,7 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { CatalogDetail } from "../catalogDetail/CatalogDetail.js";
 import type { OpenHandlerEvent } from "../catalogDetail/types.js";
 import { useCatalogFeedActions, useCatalogFeedState } from "../catalogItem/CatalogFeedContext.js";
-import { type ICatalogItem, type ICatalogItemRef } from "../catalogItem/types.js";
+import type { ICatalogItem, ICatalogItemRef } from "../catalogItem/types.js";
 import { FilterCertificationMemo } from "../filter/FilterCertification.js";
 import { useFilterActions } from "../filter/FilterContext.js";
 import { FilterCreatedByMemo } from "../filter/FilterCreatedBy.js";
@@ -30,7 +30,7 @@ type Props = {
     open: boolean;
     openedItem: ICatalogItemRef | ICatalogItem | null;
     setItemOpened: (item: ICatalogItemRef | ICatalogItem | null) => void;
-    onOpenDetail: (item: ICatalogItem) => void;
+    onOpenDetail: (item: ICatalogItemRef) => void;
     onCloseDetail: () => void;
     onOpenClick: (event: MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
     onCatalogItemNavigation?: (event: MouseEvent, ref: ICatalogItemRef) => void;

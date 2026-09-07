@@ -4,7 +4,7 @@ import cx from "classnames";
 import type { ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import type { ISeparators, MetricType } from "@gooddata/sdk-model";
+import type { ISemanticConditionalFormatting, ISeparators, MetricType } from "@gooddata/sdk-model";
 import { type IUiTagDef, UiDate, UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import {
@@ -15,7 +15,9 @@ import {
     isCatalogItemMeasure,
 } from "../catalogItem/guards.js";
 import { type ICatalogItem } from "../catalogItem/types.js";
+import { useFeatureFlag } from "../permission/PermissionsContext.js";
 
+import { CatalogDetailConditionalFormatting } from "./CatalogDetailConditionalFormatting.js";
 import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
 import { CatalogDetailGranularities } from "./CatalogDetailGranularities.js";
 import { CatalogDetailMetricSettings } from "./CatalogDetailMetricSettings.js";
@@ -31,12 +33,15 @@ type Props = {
     onIsHiddenFromKdaChange: (isHiddenFromKda: boolean) => void;
     onMetricTypeChange?: (metricType: MetricType | undefined) => void;
     onFormatChange?: (format: string | null) => void;
+    onConditionalFormattingChange?: (
+        conditionalFormatting: ISemanticConditionalFormatting | undefined,
+    ) => void;
     separators?: ISeparators;
     currencyFormatOverride?: string | null;
     enableMetricFormatOverrides?: boolean;
     /**
-     * Inline access row rendered at the top of the list. Self-contained (reads the
-     * share context); undefined / nothing rendered when sharing is unavailable.
+     * Inline access row, rendered last before Tags. Self-contained (reads the share
+     * context); undefined / nothing rendered when sharing is unavailable.
      */
     accessRow?: ReactNode;
     /**
@@ -56,12 +61,14 @@ export function CatalogDetailTabMetadata({
     onIsHiddenFromKdaChange,
     onMetricTypeChange,
     onFormatChange,
+    onConditionalFormattingChange,
     separators,
     currencyFormatOverride,
     enableMetricFormatOverrides,
     accessRow,
     showDatasetRow,
 }: Props) {
+    const enableSemanticConditionalFormatting = useFeatureFlag("enableSemanticConditionalFormatting");
     const intl = useIntl();
     const isMeasure = isCatalogItemMeasure(item);
     const isDataSet = isCatalogItemDataSet(item);
@@ -71,7 +78,6 @@ export function CatalogDetailTabMetadata({
 
     return (
         <dl className="gd-analytics-catalog-detail__tab-content">
-            {accessRow}
             {showDatasetRow && datasetTitle ? (
                 <CatalogDetailContentRow
                     title={<FormattedMessage id="analyticsCatalog.column.title.dataSet" />}
@@ -192,6 +198,18 @@ export function CatalogDetailTabMetadata({
                     enableMetricFormatOverrides={enableMetricFormatOverrides}
                 />
             ) : null}
+            {isMeasure && enableSemanticConditionalFormatting && onConditionalFormattingChange ? (
+                <CatalogDetailConditionalFormatting
+                    identifier={item.identifier}
+                    title={item.title}
+                    format={item.format}
+                    conditionalFormatting={item.conditionalFormatting}
+                    canEdit={canEdit}
+                    onConditionalFormattingChange={onConditionalFormattingChange}
+                    separators={separators}
+                />
+            ) : null}
+            {accessRow}
             <CatalogDetailContentRow
                 title={<FormattedMessage id="analyticsCatalog.column.title.tags" />}
                 content={

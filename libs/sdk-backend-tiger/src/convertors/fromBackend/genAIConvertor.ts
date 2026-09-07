@@ -11,6 +11,7 @@ import {
     type AiConversationResponse,
     type AiConversationResponseList,
     type AiConversationTurnResponse,
+    type AiDashboardPart,
     type AiDashboardPatchPart,
     type AiInteractionStepResponse,
     type AiKeyDriverAnalysis,
@@ -42,9 +43,14 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import {
     type AacDashboard,
+    type AacDataset,
+    type AacDateDataset,
     type AacFilter,
     type AacVisualisation,
+    type ExportEntities,
     yamlDashboardToDeclarative,
+    yamlDatasetToDeclarative,
+    yamlDateDatesetToDeclarative,
     yamlFiltersToDeclarative,
     yamlVisualisationToMetadataObject,
 } from "@gooddata/sdk-code-convertors";
@@ -217,40 +223,9 @@ function convertChatConversationContentFromBackend(
                                         : null,
                                 };
                             case "dashboard": {
-                                const data = part.dashboard
-                                    ? yamlDashboardToDeclarative([], part.dashboard as AacDashboard)
-                                    : null;
-
-                                const filters = data?.filterContext
-                                    ? convertFilterContextFromBackend(
-                                          buildFilterContextWrapper(data.filterContext),
-                                      )
-                                    : undefined;
-
-                                const insights =
-                                    part.references?.visualizations.map((vis) => {
-                                        return visualizationObjectsItemToInsight(
-                                            yamlVisualisationToMetadataObject([], vis as AacVisualisation),
-                                        );
-                                    }) ?? null;
-
-                                const dashboard = data
-                                    ? convertDashboard(
-                                          buildDashboardWrapper(
-                                              data.dashboard,
-                                              data.tabFilterContexts,
-                                              part.saved_dashboard_id,
-                                          ),
-                                          filters,
-                                      )
-                                    : null;
-
                                 return {
                                     type: "dashboard",
-                                    insights,
-                                    base: part.dashboard,
-                                    saved: part.saved_dashboard_id,
-                                    dashboard: convertToTemporaryFilterContexts(dashboard),
+                                    ...applyDashboardDefinition(part),
                                 };
                             }
                             case "dashboardPatch": {
@@ -285,8 +260,8 @@ function convertChatConversationContentFromBackend(
                                     searchResults: convertSearchResults(part.objects),
                                     relationships: convertSearchRelationships(part.relationships),
                                 };
-                            // Carries no model representation, so it drops like an unknown part.
                             case "clarifyingQuestions":
+                                //TODO: Not supported now
                                 return undefined;
                             default:
                                 // Unknown part type (e.g. sent by a newer backend): log and drop
@@ -720,23 +695,7 @@ function applyDashboardPatch(items: IChatConversationItem[], patch: AiDashboardP
         };
     }
 
-    const data = newDocument ? yamlDashboardToDeclarative([], newDocument) : null;
-
-    const filters = data?.filterContext
-        ? convertFilterContextFromBackend(buildFilterContextWrapper(data.filterContext))
-        : undefined;
-
-    const insights =
-        patch.references?.visualizations.map((vis) => {
-            return visualizationObjectsItemToInsight(
-                yamlVisualisationToMetadataObject([], vis as AacVisualisation),
-            );
-        }) ?? [];
-
-    const dashboard = data
-        ? convertDashboard(buildDashboardWrapper(data.dashboard, data.tabFilterContexts, saved), filters)
-        : null;
-
+    const { dashboard, insights } = buildDashboardReferences(newDocument, patch.references, saved);
     return {
         dashboard: convertToTemporaryFilterContexts(dashboard),
         insights: [...previousInsights, ...insights],
@@ -755,4 +714,76 @@ function collectRelatedItems(items: IChatConversationItem[], ref: ObjRef) {
         }
     });
     return related;
+}
+
+// Apply dashboard definition
+
+function applyDashboardDefinition(part: AiDashboardPart) {
+    const { dashboard, insights } = buildDashboardReferences(
+        part.dashboard as AacDashboard,
+        part.references,
+        part.saved_dashboard_id,
+    );
+
+    return {
+        insights,
+        base: part.dashboard,
+        saved: part.saved_dashboard_id,
+        dashboard: convertToTemporaryFilterContexts(dashboard),
+    };
+}
+
+function buildDashboardReferences(
+    aacDashboard: AacDashboard,
+    references: AiDashboardPart["references"],
+    savedDashboardId?: string | null,
+) {
+    const dateDatasets: ExportEntities =
+        references?.datedatasets?.map((ds) => {
+            const data = ds as AacDateDataset;
+            return {
+                data,
+                path: "",
+                type: "dataset",
+                id: data.id,
+                declarative: yamlDateDatesetToDeclarative(data),
+            };
+        }) ?? [];
+    const datasets: ExportEntities =
+        references?.datasets?.map((ds) => {
+            const data = ds as AacDataset;
+            return {
+                data,
+                path: "",
+                type: "dataset",
+                id: data.id,
+                declarative: yamlDatasetToDeclarative(dateDatasets, data),
+            };
+        }) ?? [];
+    const entities = [...dateDatasets, ...datasets];
+
+    const data = aacDashboard ? yamlDashboardToDeclarative(entities, aacDashboard as AacDashboard) : null;
+
+    const filters = data?.filterContext
+        ? convertFilterContextFromBackend(buildFilterContextWrapper(data.filterContext))
+        : undefined;
+
+    const insights =
+        references?.visualizations.map((vis) => {
+            return visualizationObjectsItemToInsight(
+                yamlVisualisationToMetadataObject(entities, vis as AacVisualisation),
+            );
+        }) ?? [];
+
+    const dashboard = data
+        ? convertDashboard(
+              buildDashboardWrapper(data.dashboard, data.tabFilterContexts, savedDashboardId),
+              filters,
+          )
+        : null;
+
+    return {
+        dashboard,
+        insights,
+    };
 }

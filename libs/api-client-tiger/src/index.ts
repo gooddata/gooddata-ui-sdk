@@ -467,6 +467,8 @@ export type {
     ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum as AfmComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum,
     FilterByLabelTypeEnum,
     ElementsRequestSortOrderEnum,
+    ElementsRequestTypeEnum,
+    DependsOnTypeEnum,
     DateRelativeFilterGranularityEnum,
     RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum as AfmRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum,
     RankingFilterRankingFilterOperatorEnum as AfmRankingFilterRankingFilterOperatorEnum,

@@ -1,7 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
 import type { ComponentClass, ComponentType } from "react";
-import { type WrappedComponentProps } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { withEntireDataView } from "@gooddata/sdk-ui";
 import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
@@ -18,7 +18,7 @@ const WrappedCoreGeoChart = withMapboxToken(
 /**
  * @internal
  */
-export function CoreGeoChart(props: ICoreGeoChartProps & WrappedComponentProps) {
+export function CoreGeoChart(props: ICoreGeoChartProps & { intl: IntlShape }) {
     return (
         <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
             <WrappedCoreGeoChart {...props} />

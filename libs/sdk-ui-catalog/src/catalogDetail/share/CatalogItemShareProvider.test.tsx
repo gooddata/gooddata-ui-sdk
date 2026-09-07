@@ -9,7 +9,7 @@ import {
     type IWorkspaceObjectPermissionsService,
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
-import { type AccessGranteeDetail, idRef } from "@gooddata/sdk-model";
+import { type AccessGranteeDetail, type IUser, idRef, uriRef } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import type { IObjectAccessSummary } from "@gooddata/sdk-ui-ext";
 import { createTightWaitFor } from "@gooddata/util";
@@ -35,10 +35,20 @@ const USER_GRANT: AccessGranteeDetail = {
 
 const notFound = () => new UnexpectedResponseError("Not Found", 404, {});
 
-function makeBackend(getAccessList: (t: unknown) => Promise<{ grants: AccessGranteeDetail[] }>) {
+// The profile ref is a URI while grants carry the user id, exactly as tiger returns them:
+// a self-grant must be matched on the login, never on this ref.
+function makeUser(login: string): IUser {
+    return { ref: uriRef(`/api/v1/entities/users/${login}`), login };
+}
+
+function makeBackend(
+    getAccessList: (t: unknown) => Promise<{ grants: AccessGranteeDetail[] }>,
+    currentUserLogin = "someone-else",
+) {
     const base = dummyBackendEmptyData();
     return {
         ...base,
+        currentUser: () => ({ getUser: async () => makeUser(currentUserLogin) }),
         workspace: (id: string) => ({
             ...base.workspace(id),
             objectPermissions: () => ({ getAccessList }) as unknown as IWorkspaceObjectPermissionsService,

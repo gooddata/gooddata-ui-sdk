@@ -55,34 +55,39 @@ export function mapLocationLabel(
         const fieldsId = Object.keys(dataset.fields || {});
         for (const fieldId of fieldsId) {
             const field = dataset.fields?.[fieldId];
-            if (isAttribute(field) && fieldId === displayForm?.identifier.id) {
+            if (isAttribute(field)) {
                 const labelIds = Object.keys(field.labels || {});
 
-                let latitude: string | undefined;
-                let longitude: string | undefined;
-                for (const labelId of labelIds) {
-                    const label = field.labels?.[labelId];
-                    //latitude
-                    if (label?.value_type === "GEO_LATITUDE") {
-                        latitude = labelId;
-                    }
-                    //longitude
-                    if (label?.value_type === "GEO_LONGITUDE") {
-                        longitude = labelId;
-                    }
-                }
+                const isAttributeItself = fieldId === displayForm?.identifier.id;
+                const isLabel = labelIds.includes(displayForm?.identifier.id || "");
 
-                if (latitude) {
-                    return {
-                        displayForm: {
-                            identifier: {
-                                id: latitude,
-                                type: "label",
+                if (isAttributeItself || isLabel) {
+                    let latitude: string | undefined;
+                    let longitude: string | undefined;
+                    for (const labelId of labelIds) {
+                        const label = field.labels?.[labelId];
+                        //latitude
+                        if (label?.value_type === "GEO_LATITUDE") {
+                            latitude = labelId;
+                        }
+                        //longitude
+                        if (label?.value_type === "GEO_LONGITUDE") {
+                            longitude = labelId;
+                        }
+                    }
+
+                    if (latitude) {
+                        return {
+                            displayForm: {
+                                identifier: {
+                                    id: latitude,
+                                    type: "label",
+                                },
                             },
-                        },
-                        latitude,
-                        longitude,
-                    };
+                            latitude,
+                            longitude,
+                        };
+                    }
                 }
             }
         }

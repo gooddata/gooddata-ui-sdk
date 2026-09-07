@@ -271,6 +271,22 @@
         "text": "Granularities",
         "crowdinContext": "Label for the granularities field in the catalog item details (metadata tab), listing the available date granularities for a date dataset."
     },
+    "analyticsCatalog.column.title.conditionalFormatting": {
+        "text": "Conditional formatting",
+        "crowdinContext": "Label for the conditional formatting field in the catalog item details (metadata tab)."
+    },
+    "analyticsCatalog.conditionalFormatting.add": {
+        "text": "Add rule",
+        "crowdinContext": "Button label that opens the conditional formatting rule dialog when the object has no rule yet."
+    },
+    "analyticsCatalog.conditionalFormatting.edit": {
+        "text": "Edit",
+        "crowdinContext": "Button label that opens the conditional formatting rule dialog when the object already has a rule."
+    },
+    "analyticsCatalog.conditionalFormatting.toggleAriaLabel": {
+        "text": "Turn formatting on/off for {title}",
+        "crowdinContext": "Accessible label for the toggle that turns an authored conditional-formatting rule on or off for one catalog object. {title} is the object's display name (a metric name), not translatable."
+    },
     "analyticsCatalog.column.isHidden.icon.tooltip": {
         "text": "Hidden from Smart Search and AI Assistant results for all users.",
         "crowdinContext": "Tooltip content displayed on the hidden icon that appears only when the catalog item's visibility is set to hidden (in table view)."
@@ -1095,25 +1111,25 @@
         "text": "Couldn't load access.",
         "crowdinContext": "Shown in the catalog detail Access row when loading the access summary failed; opening the Share dialog retries the load."
     },
-    "analyticsCatalog.share.access.row.restricted": {
-        "text": "Restricted",
-        "crowdinContext": "State chip text shown when the object's access is restricted to explicitly listed grantees only."
+    "analyticsCatalog.share.access.row.private": {
+        "text": "Private",
+        "crowdinContext": "Line in the catalog detail Access row shown when nobody but the current user can reach the object."
     },
     "analyticsCatalog.share.access.row.workspace.view": {
         "text": "All workspace users can view",
-        "crowdinContext": "State chip text shown when every workspace user has view access to the object."
+        "crowdinContext": "Line in the catalog detail Access row shown when every workspace user has view access to the object."
     },
     "analyticsCatalog.share.access.row.workspace.share": {
         "text": "All workspace users can share",
-        "crowdinContext": "State chip text shown when every workspace user has view+share access to the object."
+        "crowdinContext": "Line in the catalog detail Access row shown when every workspace user has view+share access to the object."
     },
     "analyticsCatalog.share.access.row.workspace.edit": {
         "text": "All workspace users can edit",
-        "crowdinContext": "State chip text shown when every workspace user has edit access to the object."
+        "crowdinContext": "Line in the catalog detail Access row shown when every workspace user has edit access to the object."
     },
     "analyticsCatalog.share.access.row.sharedWith": {
         "text": "Shared with {count, plural, one {# user/group} other {# users/groups}}",
-        "crowdinContext": "Clickable summary in the catalog detail Access row. Opens the share dialog. Placeholder is the count of named grantees (users and groups)."
+        "crowdinContext": "Line in the catalog detail Access row listing how many named grantees the object is shared with. Placeholder is the count of grantees (users and groups) other than the current user."
     },
     "analyticsCatalog.labels.more": {
         "text": "+{remaining} more",

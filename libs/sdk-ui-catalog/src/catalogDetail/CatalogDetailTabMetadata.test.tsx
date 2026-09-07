@@ -7,6 +7,7 @@ import { type IDataSetMetadataObject, idRef } from "@gooddata/sdk-model";
 
 import type { ICatalogItem } from "../catalogItem/types.js";
 import { TestIntlProvider } from "../localization/TestIntlProvider.js";
+import { TestPermissionsProvider } from "../permission/TestPermissionsProvider.js";
 
 import { CatalogDetailTabMetadata } from "./CatalogDetailTabMetadata.js";
 
@@ -54,20 +55,22 @@ const dataSetMetadata: IDataSetMetadataObject = {
 
 function renderComponent(enableMetricFormatOverrides = false) {
     return render(
-        <TestIntlProvider>
-            <CatalogDetailTabMetadata
-                item={baseItem}
-                canEdit
-                onTagClick={noop}
-                onTagAdd={noop}
-                onTagRemove={noop}
-                onIsHiddenChange={noop}
-                onIsHiddenFromKdaChange={noop}
-                onMetricTypeChange={noop}
-                onFormatChange={noop}
-                enableMetricFormatOverrides={enableMetricFormatOverrides}
-            />
-        </TestIntlProvider>,
+        <TestPermissionsProvider>
+            <TestIntlProvider>
+                <CatalogDetailTabMetadata
+                    item={baseItem}
+                    canEdit
+                    onTagClick={noop}
+                    onTagAdd={noop}
+                    onTagRemove={noop}
+                    onIsHiddenChange={noop}
+                    onIsHiddenFromKdaChange={noop}
+                    onMetricTypeChange={noop}
+                    onFormatChange={noop}
+                    enableMetricFormatOverrides={enableMetricFormatOverrides}
+                />
+            </TestIntlProvider>
+        </TestPermissionsProvider>,
     );
 }
 
@@ -88,25 +91,27 @@ describe("CatalogDetailTabMetadata", () => {
 
     it("keeps parameters limited to supported metadata controls", () => {
         render(
-            <TestIntlProvider>
-                <CatalogDetailTabMetadata
-                    item={{
-                        ...baseItem,
-                        type: "parameter",
-                        isEditable: true,
-                        definition: { type: "NUMBER", defaultValue: 0 },
-                    }}
-                    canEdit
-                    onTagClick={noop}
-                    onTagAdd={noop}
-                    onTagRemove={noop}
-                    onIsHiddenChange={noop}
-                    onIsHiddenFromKdaChange={noop}
-                    onMetricTypeChange={noop}
-                    onFormatChange={noop}
-                    enableMetricFormatOverrides
-                />
-            </TestIntlProvider>,
+            <TestPermissionsProvider>
+                <TestIntlProvider>
+                    <CatalogDetailTabMetadata
+                        item={{
+                            ...baseItem,
+                            type: "parameter",
+                            isEditable: true,
+                            definition: { type: "NUMBER", defaultValue: 0 },
+                        }}
+                        canEdit
+                        onTagClick={noop}
+                        onTagAdd={noop}
+                        onTagRemove={noop}
+                        onIsHiddenChange={noop}
+                        onIsHiddenFromKdaChange={noop}
+                        onMetricTypeChange={noop}
+                        onFormatChange={noop}
+                        enableMetricFormatOverrides
+                    />
+                </TestIntlProvider>
+            </TestPermissionsProvider>,
         );
 
         expect(screen.queryByText("Show in AI results")).not.toBeInTheDocument();
@@ -117,20 +122,22 @@ describe("CatalogDetailTabMetadata", () => {
 
     it("keeps datasets limited to supported metadata controls", () => {
         render(
-            <TestIntlProvider>
-                <CatalogDetailTabMetadata
-                    item={{ ...baseItem, type: "dataSet", dataSet: dataSetMetadata }}
-                    canEdit
-                    onTagClick={noop}
-                    onTagAdd={noop}
-                    onTagRemove={noop}
-                    onIsHiddenChange={noop}
-                    onIsHiddenFromKdaChange={noop}
-                    onMetricTypeChange={noop}
-                    onFormatChange={noop}
-                    enableMetricFormatOverrides
-                />
-            </TestIntlProvider>,
+            <TestPermissionsProvider>
+                <TestIntlProvider>
+                    <CatalogDetailTabMetadata
+                        item={{ ...baseItem, type: "dataSet", dataSet: dataSetMetadata }}
+                        canEdit
+                        onTagClick={noop}
+                        onTagAdd={noop}
+                        onTagRemove={noop}
+                        onIsHiddenChange={noop}
+                        onIsHiddenFromKdaChange={noop}
+                        onMetricTypeChange={noop}
+                        onFormatChange={noop}
+                        enableMetricFormatOverrides
+                    />
+                </TestIntlProvider>
+            </TestPermissionsProvider>,
         );
 
         expect(screen.queryByText("Show in AI results")).not.toBeInTheDocument();

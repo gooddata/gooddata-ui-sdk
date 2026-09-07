@@ -10,6 +10,11 @@ interface IAppProps {
     onEvent?: (e: IPluggableAppEvent) => void;
 }
 
+// In the un-scaffolded template the title message is the literal scaffolder token, which ICU parses
+// as a message argument - this constant satisfies it. `create-pluggable-module` rewrites the token
+// here and in the translations alike, so a generated app gets its real title and an unused value.
+const applicationTemplateTitle = "{applicationTemplateTitle}";
+
 export function App({ onEvent: _onEvent }: IAppProps) {
     const ctx = usePlatformContextStrict();
     const workspaceId = useWorkspace();
@@ -21,7 +26,7 @@ export function App({ onEvent: _onEvent }: IAppProps) {
     return (
         <div style={{ display: "flex", flexDirection: "column", padding: "4rem" }}>
             <h1>
-                <FormattedMessage id="gdc-app-template-name.title" />
+                <FormattedMessage id="gdc-app-template-name.title" values={{ applicationTemplateTitle }} />
             </h1>
             <p>Your pluggable application is running.</p>
             <ul>

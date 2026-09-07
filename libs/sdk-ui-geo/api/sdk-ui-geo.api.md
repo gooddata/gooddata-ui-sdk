@@ -28,6 +28,7 @@ import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { ILoadingInjectedProps } from '@gooddata/sdk-ui';
+import { IntlShape } from 'react-intl';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IPushpinCategoryLegendItem } from '@gooddata/sdk-ui-vis-commons';
 import { ISeparators } from '@gooddata/sdk-ui';
@@ -43,7 +44,6 @@ import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
 import type { StyleSpecification as StyleSpecification_2 } from 'maplibre-gl';
-import { WrappedComponentProps } from 'react-intl';
 
 // @public
 export type BoundsChangedCallback = (bounds: IGeoLngLatBounds) => void;
@@ -52,7 +52,9 @@ export type BoundsChangedCallback = (bounds: IGeoLngLatBounds) => void;
 export type CenterPositionChangedCallback = (center: IGeoLngLat) => void;
 
 // @internal (undocumented)
-export function CoreGeoChart(props: ICoreGeoChartProps & WrappedComponentProps): JSX.Element;
+export function CoreGeoChart(props: ICoreGeoChartProps & {
+    intl: IntlShape;
+}): JSX.Element;
 
 // @public
 export function createAreaLayer(layer: Omit<IGeoLayerArea, "type" | "id">, id?: string): IGeoLayerArea;
@@ -262,7 +264,9 @@ export interface IGeoChartInnerOptions {
 }
 
 // @internal (undocumented)
-export type IGeoChartInnerProps = ICoreGeoChartProps & ILoadingInjectedProps & WrappedComponentProps;
+export type IGeoChartInnerProps = ICoreGeoChartProps & ILoadingInjectedProps & {
+    intl: IntlShape;
+};
 
 // @public
 export interface IGeoChartLegendConfig {
@@ -326,7 +330,7 @@ export interface IGeoChartProps extends IGeoCommonExecutionProps {
 }
 
 // @internal (undocumented)
-export interface IGeoChartRendererProps extends WrappedComponentProps {
+export interface IGeoChartRendererProps {
     // (undocumented)
     afterRender(): void;
     // (undocumented)
@@ -341,6 +345,8 @@ export interface IGeoChartRendererProps extends WrappedComponentProps {
     drillConfig: IDrillConfig;
     // (undocumented)
     geoData: IGeoData;
+    // (undocumented)
+    intl: IntlShape;
     // (undocumented)
     onCenterPositionChanged(center: IGeoLngLat): void;
     // (undocumented)

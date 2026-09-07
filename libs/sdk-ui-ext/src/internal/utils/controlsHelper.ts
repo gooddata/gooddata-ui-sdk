@@ -1,7 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
 import { set } from "lodash-es";
-import { type WrappedComponentProps } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import {
     type IInsightDefinition,
@@ -17,6 +17,10 @@ import { type IMinMaxControlProps, type IMinMaxControlState } from "../interface
 
 import { getMeasureGroupDimensionFromProperties } from "./propertiesHelper.js";
 import { getTranslation } from "./translations.js";
+
+type WrappedComponentProps = {
+    intl: IntlShape;
+};
 
 function fixEmptyMaxValue(value: string): number {
     return value === "" ? Number.MAX_SAFE_INTEGER : Number(value);

@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "maql-language-server: Resolve the parameters a visualisation as code depends on — through inline MAQL and referenced metrics — to the default values it executes with, and show them in the visualisation preview",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "nikola.cech@gooddata.com"
+}

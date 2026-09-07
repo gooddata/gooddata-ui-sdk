@@ -13,10 +13,12 @@ import { getBackend } from "../platformContext/backend.js";
 import { GenAIChatEvent } from "./GenAIChat.js";
 import { e } from "./hostChromeBem.js";
 import { HostIntlProvider } from "./HostIntlProvider.js";
+import { useGenAiRightPanel } from "./useGenAiRightPanel.js";
 import { useHostChromeChat } from "./useHostChromeChat.js";
-import { useHostChromeWorkspaceFeatures } from "./useHostChromeWorkspaceFeatures.js";
 import "./HostChat.scss";
 import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
+
+import { useHostChromeWorkspaceFeatures } from "./useHostChromeWorkspaceFeatures.js";
 
 /**
  * AI-assistant open/close/toggle request. `seq` changes on every request so an identical repeat
@@ -191,30 +193,41 @@ export function HostChat({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [visibilitySeq, chatAskAiAssistant, chatOpenAiAssistant, chatOpen, chatClose, chatToggle]);
 
-    const enableGenAiRightPanel = features.settings["enableGenAiRightPanel"];
+    const enablePanel = useGenAiRightPanel(
+        features.settings["enableGenAiRightPanel"] as boolean,
+        context?.embedded,
+    );
     const Wrapper = useCallback(
-        ({ chatIsOpen, children }: { chatIsOpen: boolean; children: ReactNode }) => {
-            if (enableGenAiRightPanel && !context?.embedded) {
-                return (
-                    <div
-                        className={e("ai-chat", {
-                            chatIsOpen,
-                        })}
-                    >
-                        {children}
-                    </div>
-                );
-            }
-            return children;
+        ({
+            chatIsOpen,
+            children,
+            enablePanel,
+        }: {
+            chatIsOpen: boolean;
+            children: ReactNode;
+            enablePanel: boolean;
+        }) => {
+            return (
+                <div
+                    className={e("ai-chat", {
+                        chatIsOpen,
+                        enablePanel,
+                    })}
+                >
+                    {children}
+                </div>
+            );
         },
-        [context?.embedded, enableGenAiRightPanel],
+        [],
     );
 
     return (
         <HostIntlProvider locale={resolveLocale(ctx.preferredLocale)}>
             <BackendProvider backend={getBackend()}>
                 <ToastsCenterContextProvider>
-                    <Wrapper chatIsOpen={chatIsOpen}>{chat.element}</Wrapper>
+                    <Wrapper chatIsOpen={chatIsOpen} enablePanel={enablePanel}>
+                        {chat.element}
+                    </Wrapper>
                 </ToastsCenterContextProvider>
             </BackendProvider>
         </HostIntlProvider>

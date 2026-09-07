@@ -6,6 +6,7 @@ import { InvariantError } from "ts-invariant";
 import { type AfmValidObjectsQuery, type AfmValidObjectsQueryTypesEnum } from "@gooddata/api-client-tiger";
 import { ActionsApi_ComputeValidObjects } from "@gooddata/api-client-tiger/endpoints/validObjects";
 import {
+    DefaultWorkspaceCatalogTypes,
     type IWorkspaceCatalogAvailableItemsFactory,
     type IWorkspaceCatalogWithAvailableItemsFactoryOptions,
 } from "@gooddata/sdk-backend-spi";
@@ -100,7 +101,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         private readonly groups: ICatalogGroup[],
         private readonly items: CatalogItem[],
         private readonly options: IWorkspaceCatalogWithAvailableItemsFactoryOptions = {
-            types: ["attribute", "measure", "fact", "dateDataset", "attributeHierarchy"],
+            types: [...DefaultWorkspaceCatalogTypes],
             excludeTags: [],
             includeTags: [],
             loadGroups: true,

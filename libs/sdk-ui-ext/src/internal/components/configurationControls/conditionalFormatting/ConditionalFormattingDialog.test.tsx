@@ -54,7 +54,7 @@ const saveButton = () => screen.getByText("Save").closest("button");
 const isSaveDisabled = () => saveButton()?.getAttribute("aria-disabled") === "true";
 
 function renderDialog(props: Partial<IConditionalFormattingDialogProps> = {}) {
-    const onSave = vi.fn<IConditionalFormattingDialogProps["onSave"]>();
+    const onSubmit = vi.fn<IConditionalFormattingDialogProps["onSubmit"]>();
     render(
         <InternalIntlWrapper>
             <ConditionalFormattingDialog
@@ -62,13 +62,25 @@ function renderDialog(props: Partial<IConditionalFormattingDialogProps> = {}) {
                 isNew={false}
                 targetOptions={targetOptions}
                 alignTo="body"
-                onSave={onSave}
+                onSubmit={onSubmit}
                 onClose={() => {}}
                 {...props}
             />
         </InternalIntlWrapper>,
     );
-    return { onSave };
+    return { onSubmit };
+}
+
+// Unwraps the "custom" branch of a submit intent — fails loudly if Save actually took the
+// "inherited" (revert) branch instead, since a test using this expects a persisted rule.
+function submittedRule(
+    onSubmit: Mock<IConditionalFormattingDialogProps["onSubmit"]>,
+): IConditionalFormattingRule {
+    const intent = onSubmit.mock.calls[0][0];
+    if (intent.mode !== "custom") {
+        throw new Error(`expected a "custom" submit intent, got "${intent.mode}"`);
+    }
+    return intent.rule;
 }
 
 describe("ConditionalFormattingDialog — Save dirty gating", () => {
@@ -100,8 +112,8 @@ describe("ConditionalFormattingDialog — measure threshold input (F1-2738)", ()
         conditions: [{ ...completeRule.conditions[0], value: { kind: "literal", value: "" } }],
     };
 
-    const savedThreshold = (onSave: Mock<IConditionalFormattingDialogProps["onSave"]>) => {
-        const value = onSave.mock.calls[0][0].conditions[0].value;
+    const savedThreshold = (onSubmit: Mock<IConditionalFormattingDialogProps["onSubmit"]>) => {
+        const value = submittedRule(onSubmit).conditions[0].value;
         if (value.kind !== "literal") {
             throw new Error(`expected a literal condition value, got "${value.kind}"`);
         }
@@ -116,25 +128,25 @@ describe("ConditionalFormattingDialog — measure threshold input (F1-2738)", ()
         "accepts the scientific-notation threshold %s and saves it in raw numeric space",
         async (typed, expected) => {
             const user = setupUser();
-            const { onSave } = renderDialog({ rule: emptyRule, isNew: true });
+            const { onSubmit } = renderDialog({ rule: emptyRule, isNew: true });
             expect(isSaveDisabled()).toBe(true);
 
             await user.type(valueInput(), typed);
             expect(isSaveDisabled()).toBe(false);
 
             await user.click(screen.getByText("Save"));
-            expect(savedThreshold(onSave)).toBe(expected);
+            expect(savedThreshold(onSubmit)).toBe(expected);
         },
     );
 
     it("never saves a non-finite threshold when the exponent overflows", async () => {
         const user = setupUser();
-        const { onSave } = renderDialog({ rule: emptyRule, isNew: true });
+        const { onSubmit } = renderDialog({ rule: emptyRule, isNew: true });
 
         await user.type(valueInput(), "1e309");
         await user.click(screen.getByText("Save"));
 
-        expect(Number.isFinite(savedThreshold(onSave))).toBe(true);
+        expect(Number.isFinite(savedThreshold(onSubmit))).toBe(true);
     });
 });
 
@@ -191,9 +203,8 @@ describe("ConditionalFormattingDialog — Use default rule (semantic fallback)",
     };
 
     function renderInherited(props: Partial<IConditionalFormattingDialogProps> = {}) {
-        const onSave = vi.fn<IConditionalFormattingDialogProps["onSave"]>();
+        const onSubmit = vi.fn<IConditionalFormattingDialogProps["onSubmit"]>();
         const onDelete = vi.fn();
-        const onRevertToDefault = vi.fn();
         const onClose = vi.fn();
         render(
             <InternalIntlWrapper>
@@ -208,15 +219,14 @@ describe("ConditionalFormattingDialog — Use default rule (semantic fallback)",
                     targetOptions={targetOptions}
                     alignTo="body"
                     semanticByTarget={semanticByTarget}
-                    onSave={onSave}
+                    onSubmit={onSubmit}
                     onDelete={onDelete}
-                    onRevertToDefault={onRevertToDefault}
                     onClose={onClose}
                     {...props}
                 />
             </InternalIntlWrapper>,
         );
-        return { onSave, onDelete, onRevertToDefault, onClose };
+        return { onSubmit, onDelete, onClose };
     }
 
     const checkbox = () => screen.getByLabelText("Use default rule");
@@ -346,23 +356,25 @@ describe("ConditionalFormattingDialog — Use default rule (semantic fallback)",
         expect(document.querySelector(".gd-cf-dialog__editable")).toHaveProperty("disabled", false);
     });
 
-    it("Save while checked (nothing authored yet) just closes, without calling onSave or onRevertToDefault", async () => {
+    it("Save while checked (nothing authored yet) just closes, without calling onSubmit", async () => {
         const user = setupUser();
-        const { onSave, onRevertToDefault, onClose } = renderInherited();
+        const { onSubmit, onClose } = renderInherited();
 
         await user.click(screen.getByText("Save"));
-        expect(onSave).not.toHaveBeenCalled();
-        expect(onRevertToDefault).not.toHaveBeenCalled();
+        expect(onSubmit).not.toHaveBeenCalled();
         expect(onClose).toHaveBeenCalled();
     });
 
-    it("Save while unchecked persists the draft via onSave", async () => {
+    it('Save while unchecked persists the draft via a "custom" onSubmit intent', async () => {
         const user = setupUser();
-        const { onSave } = renderInherited();
+        const { onSubmit } = renderInherited();
 
         await user.click(checkbox());
         await user.click(screen.getByText("Save"));
-        expect(onSave).toHaveBeenCalledWith(expect.objectContaining({ target: semanticRule.target }));
+        expect(onSubmit).toHaveBeenCalledWith({
+            mode: "custom",
+            rule: expect.objectContaining({ target: semanticRule.target }),
+        });
     });
 
     it("defaults unchecked when editing an existing custom rule that also has a semantic fallback", () => {
@@ -370,18 +382,17 @@ describe("ConditionalFormattingDialog — Use default rule (semantic fallback)",
         expect(checkbox()).not.toBeChecked();
     });
 
-    it("re-checking an existing custom rule's box and saving reverts it via onRevertToDefault (not onDelete)", async () => {
+    it('re-checking an existing custom rule\'s box and saving reverts it via an "inherited" onSubmit intent (not onDelete)', async () => {
         const user = setupUser();
-        const { onSave, onDelete, onRevertToDefault, onClose } = renderInherited({
+        const { onSubmit, onDelete, onClose } = renderInherited({
             rule: completeRule,
             isNew: false,
         });
 
         await user.click(checkbox());
         await user.click(screen.getByText("Save"));
-        expect(onRevertToDefault).toHaveBeenCalled();
+        expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ mode: "inherited" }));
         expect(onDelete).not.toHaveBeenCalled();
-        expect(onSave).not.toHaveBeenCalled();
         expect(onClose).toHaveBeenCalled();
     });
 
@@ -390,19 +401,23 @@ describe("ConditionalFormattingDialog — Use default rule (semantic fallback)",
         expect(deleteButton()).toBeEnabled();
     });
 
-    it("calls onRevertToDefault with the current target and this rule's own id", async () => {
+    it('submits an "inherited" intent with the current target and this rule\'s own id', async () => {
         const user = setupUser();
-        const { onRevertToDefault } = renderInherited({ rule: completeRule, isNew: false });
+        const { onSubmit } = renderInherited({ rule: completeRule, isNew: false });
 
         await user.click(checkbox());
         await user.click(screen.getByText("Save"));
 
-        expect(onRevertToDefault).toHaveBeenCalledWith(semanticRule.target, completeRule.id);
+        expect(onSubmit).toHaveBeenCalledWith({
+            mode: "inherited",
+            target: semanticRule.target,
+            ruleId: completeRule.id,
+        });
     });
 
-    it("still calls onRevertToDefault when the caller omits onDelete — they are independent optional props", async () => {
+    it('still submits the "inherited" intent when the caller omits onDelete — they are independent optional props', async () => {
         const user = setupUser();
-        const { onRevertToDefault } = renderInherited({
+        const { onSubmit } = renderInherited({
             rule: completeRule,
             isNew: false,
             onDelete: undefined,
@@ -411,15 +426,18 @@ describe("ConditionalFormattingDialog — Use default rule (semantic fallback)",
         await user.click(checkbox());
         await user.click(screen.getByText("Save"));
 
-        expect(onRevertToDefault).toHaveBeenCalledWith(semanticRule.target, completeRule.id);
+        expect(onSubmit).toHaveBeenCalledWith({
+            mode: "inherited",
+            target: semanticRule.target,
+            ruleId: completeRule.id,
+        });
     });
 
     it("unlocks and falls back to the rule's own conditions if the semantic fallback disappears while checked", async () => {
         // A race (the catalog rule deleted elsewhere, a data-view blip) rather than a normal flow —
         // covers that the checkbox vanishing doesn't leave fields silently locked with no way out.
         const user = setupUser();
-        const onSave = vi.fn<IConditionalFormattingDialogProps["onSave"]>();
-        const onRevertToDefault = vi.fn();
+        const onSubmit = vi.fn<IConditionalFormattingDialogProps["onSubmit"]>();
         const onClose = vi.fn();
         const { rerender } = render(
             <InternalIntlWrapper>
@@ -430,8 +448,7 @@ describe("ConditionalFormattingDialog — Use default rule (semantic fallback)",
                     targetOptions={targetOptions}
                     alignTo="body"
                     semanticByTarget={semanticByTarget}
-                    onSave={onSave}
-                    onRevertToDefault={onRevertToDefault}
+                    onSubmit={onSubmit}
                     onClose={onClose}
                 />
             </InternalIntlWrapper>,
@@ -447,8 +464,7 @@ describe("ConditionalFormattingDialog — Use default rule (semantic fallback)",
                     targetOptions={targetOptions}
                     alignTo="body"
                     semanticByTarget={{}}
-                    onSave={onSave}
-                    onRevertToDefault={onRevertToDefault}
+                    onSubmit={onSubmit}
                     onClose={onClose}
                 />
             </InternalIntlWrapper>,
@@ -461,8 +477,7 @@ describe("ConditionalFormattingDialog — Use default rule (semantic fallback)",
 
     it("does not re-lock and discard an edit made while unlocked once the vanished semantic fallback reappears", async () => {
         const user = setupUser();
-        const onSave = vi.fn<IConditionalFormattingDialogProps["onSave"]>();
-        const onRevertToDefault = vi.fn();
+        const onSubmit = vi.fn<IConditionalFormattingDialogProps["onSubmit"]>();
         const onClose = vi.fn();
         const dialogProps = (semantic: Record<string, ISemanticConditionalFormatting>) => (
             <InternalIntlWrapper>
@@ -473,8 +488,7 @@ describe("ConditionalFormattingDialog — Use default rule (semantic fallback)",
                     targetOptions={targetOptions}
                     alignTo="body"
                     semanticByTarget={semantic}
-                    onSave={onSave}
-                    onRevertToDefault={onRevertToDefault}
+                    onSubmit={onSubmit}
                     onClose={onClose}
                 />
             </InternalIntlWrapper>
@@ -496,8 +510,10 @@ describe("ConditionalFormattingDialog — Use default rule (semantic fallback)",
         expect(screen.getByDisplayValue("42")).toBeInTheDocument();
 
         await user.click(screen.getByText("Save"));
-        expect(onSave).toHaveBeenCalledWith(expect.objectContaining({ id: completeRule.id }));
-        expect(onRevertToDefault).not.toHaveBeenCalled();
+        expect(onSubmit).toHaveBeenCalledWith({
+            mode: "custom",
+            rule: expect.objectContaining({ id: completeRule.id }),
+        });
     });
 
     it("has a keyboard-focusable info affordance next to the checkbox (a real button, not a bare span)", () => {

@@ -1,15 +1,17 @@
 // (C) 2026 GoodData Corporation
 
-import { FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
+import type { ReactNode } from "react";
+import { FormattedMessage, type MessageDescriptor } from "react-intl";
 
 import type { AccessGranularPermission } from "@gooddata/sdk-model";
-import type { IObjectAccessSummary } from "@gooddata/sdk-ui-ext";
-import { UiIcon } from "@gooddata/sdk-ui-kit";
+import { type IObjectAccessSummary, summaryOtherGranteeCount } from "@gooddata/sdk-ui-ext";
+import { type IconType, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import {
     catalogDetailAccessRow,
-    catalogDetailAccessRowSharedLink,
-    catalogDetailAccessRowState,
+    catalogDetailAccessRowPrivate,
+    catalogDetailAccessRowShared,
+    catalogDetailAccessRowWorkspace,
 } from "../../automation/testIds.js";
 import { CatalogDetailContentRow } from "../CatalogDetailContentRow.js";
 
@@ -20,68 +22,63 @@ import { shareMessages } from "./messages.js";
  */
 export interface ICatalogDetailAccessRowProps {
     summary: IObjectAccessSummary;
-    onOpen: () => void;
 }
 
-// Chip copy for each workspace-wide access level.
-const WORKSPACE_ACCESS_ROW_MESSAGE: Record<AccessGranularPermission, MessageDescriptor> = {
+const WORKSPACE_MESSAGE: Record<AccessGranularPermission, MessageDescriptor> = {
     EDIT: shareMessages.accessRowWorkspaceEdit,
     SHARE: shareMessages.accessRowWorkspaceShare,
     VIEW: shareMessages.accessRowWorkspaceView,
 };
 
+function AccessLine({ icon, testId, children }: { icon: IconType; testId: string; children: ReactNode }) {
+    return (
+        <li className="gd-analytics-catalog-detail__access-row__line" data-testid={testId}>
+            <span className="gd-analytics-catalog-detail__access-row__icon">
+                <UiIcon type={icon} size={14} color="complementary-7" />
+            </span>
+            <span>{children}</span>
+        </li>
+    );
+}
+
 /**
- * Inline metadata row showing the current access state. Composed of two chips:
+ * Static description of who can reach the object, for the metadata grid. Workspace-wide
+ * access and named grantees are independent, so both lines can show at once; neither one
+ * showing means nobody but the caller has access.
  *
- * - State chip: lock (restricted) or earth (workspace-wide), with text describing
- *   the permission level.
- * - Grantee count chip: users icon + "Shared with N" link that opens the dialog.
+ * Read-only by design — the header's Share button is the way in to editing access.
  *
  * @internal
  */
-export function CatalogDetailAccessRow({ summary, onOpen }: ICatalogDetailAccessRowProps) {
-    const intl = useIntl();
-    const { generalAccess, workspaceLevel, granteeCount } = summary;
-
-    const stateText = intl.formatMessage(
-        generalAccess === "RESTRICTED"
-            ? shareMessages.accessRowRestricted
-            : WORKSPACE_ACCESS_ROW_MESSAGE[workspaceLevel],
-    );
-
-    const stateIcon = generalAccess === "RESTRICTED" ? "lock" : "building";
+export function CatalogDetailAccessRow({ summary }: ICatalogDetailAccessRowProps) {
+    const isWorkspaceWide = summary.generalAccess === "WORKSPACE";
+    const otherGrantees = summaryOtherGranteeCount(summary);
 
     return (
         <CatalogDetailContentRow
+            alignTop
             title={<FormattedMessage {...shareMessages.accessRowLabel} />}
             content={
-                <div className="gd-analytics-catalog-detail__access-row" data-testid={catalogDetailAccessRow}>
-                    <span
-                        className="gd-analytics-catalog-detail__access-row__chip"
-                        data-testid={catalogDetailAccessRowState}
-                    >
-                        <span className="gd-analytics-catalog-detail__access-row__chip-icon">
-                            <UiIcon type={stateIcon} size={14} color="complementary-7" />
-                        </span>
-                        <span>{stateText}</span>
-                    </span>
-                    <button
-                        type="button"
-                        className="gd-analytics-catalog-detail__access-row__chip gd-analytics-catalog-detail__access-row__shared-link"
-                        onClick={onOpen}
-                        data-testid={catalogDetailAccessRowSharedLink}
-                    >
-                        <span className="gd-analytics-catalog-detail__access-row__chip-icon">
-                            <UiIcon type="users" size={14} color="complementary-7" />
-                        </span>
-                        <span>
+                <ul className="gd-analytics-catalog-detail__access-row" data-testid={catalogDetailAccessRow}>
+                    {isWorkspaceWide ? (
+                        <AccessLine icon="building" testId={catalogDetailAccessRowWorkspace}>
+                            <FormattedMessage {...WORKSPACE_MESSAGE[summary.workspaceLevel]} />
+                        </AccessLine>
+                    ) : null}
+                    {otherGrantees > 0 ? (
+                        <AccessLine icon="users" testId={catalogDetailAccessRowShared}>
                             <FormattedMessage
                                 {...shareMessages.accessRowSharedWith}
-                                values={{ count: granteeCount }}
+                                values={{ count: otherGrantees }}
                             />
-                        </span>
-                    </button>
-                </div>
+                        </AccessLine>
+                    ) : null}
+                    {!isWorkspaceWide && otherGrantees === 0 ? (
+                        <AccessLine icon="invisible" testId={catalogDetailAccessRowPrivate}>
+                            <FormattedMessage {...shareMessages.accessRowPrivate} />
+                        </AccessLine>
+                    ) : null}
+                </ul>
             }
         />
     );

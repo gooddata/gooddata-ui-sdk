@@ -36,10 +36,10 @@ import { b, e } from "./hostChromeBem.js";
 import { HostIntlProvider } from "./HostIntlProvider.js";
 import { HostNotificationDispatcher } from "./HostNotificationDispatcher.js";
 import { useAppPreloadOnHover } from "./useAppPreloadOnHover.js";
+import { useGenAiRightPanel } from "./useGenAiRightPanel.js";
 import { useHostChromePricing } from "./useHostChromePricing.js";
 import { useHostChromeSearch } from "./useHostChromeSearch.js";
 import { useHostChromeWorkspaceFeatures } from "./useHostChromeWorkspaceFeatures.js";
-import { AppHeaderWorkspacePicker } from "./WorkspacePicker.js";
 import "./HostChrome.scss";
 // SDK packages with side-effecting CSS (declared in their own `sideEffects`)
 // must be imported explicitly by consumers; tree-shakers won't grab them otherwise.
@@ -49,6 +49,8 @@ import "@gooddata/sdk-ui-ext/styles/css/main.css";
 import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
 import "@gooddata/sdk-ui-semantic-search/styles/css/main.css";
 import "@gooddata/sdk-ui-semantic-search/styles/css/internal.css";
+
+import { AppHeaderWorkspacePicker } from "./WorkspacePicker.js";
 
 const LOGOUT_MENU_ITEM_KEY = "gs.header.logout";
 
@@ -270,24 +272,21 @@ export function HostChrome({
 
     const hideChrome = ctx.embeddingMode === "iframe" || ctx.isExportMode === true;
 
-    const enableGenAiRightPanel = features.settings["enableGenAiRightPanel"];
-    const Wrapper = useCallback(
-        ({ children, chatIsOpen }: { children: ReactNode; chatIsOpen: boolean }) => {
-            if (enableGenAiRightPanel && ctx.embeddingMode === "none") {
-                return (
-                    <main
-                        className={e("content", {
-                            chatIsOpen,
-                        })}
-                    >
-                        {children}
-                    </main>
-                );
-            }
-            return <main className={e("content")}>{children}</main>;
-        },
-        [ctx.embeddingMode, enableGenAiRightPanel],
+    const enablePanel = useGenAiRightPanel(
+        features.settings["enableGenAiRightPanel"] as boolean,
+        ctx.embeddingMode !== "none",
     );
+    const Wrapper = useCallback(({ children, chatIsOpen }: { children: ReactNode; chatIsOpen: boolean }) => {
+        return (
+            <main
+                className={e("content", {
+                    chatIsOpen,
+                })}
+            >
+                {children}
+            </main>
+        );
+    }, []);
 
     return (
         <HostIntlProvider locale={locale} additionalMessages={appMessages}>
@@ -343,7 +342,7 @@ export function HostChrome({
                                 />
                             </div>
                         )}
-                        <Wrapper chatIsOpen={chatIsOpen}>{children}</Wrapper>
+                        <Wrapper chatIsOpen={Boolean(chatIsOpen && enablePanel)}>{children}</Wrapper>
                         {pricing.element}
                         <HostNotificationDispatcher notification={notification} />
                     </div>

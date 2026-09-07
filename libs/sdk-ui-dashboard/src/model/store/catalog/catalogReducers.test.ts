@@ -19,6 +19,19 @@ describe("catalogReducers", () => {
         measureParameters: { status: "uninitialized", byMetric: {} },
     });
 
+    describe("setCatalogItems", () => {
+        it("stores undefined measures as undefined", () => {
+            const state = prepareState();
+
+            const newState = produce(state, (draft) => {
+                const action = catalogActions.setCatalogItems({});
+                catalogReducers.setCatalogItems(draft, action);
+            });
+
+            expect(newState.measures).toBeUndefined();
+        });
+    });
+
     describe("setCatalogParameters", () => {
         const topN: IParameterMetadataObject = {
             type: "parameter",

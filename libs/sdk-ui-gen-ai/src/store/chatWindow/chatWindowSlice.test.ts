@@ -12,6 +12,7 @@ import {
     getInitialChatWindowState,
     selectedContextReferencesAction,
     setAmbientUserContextAction,
+    setCatalogItemsActions,
     setUserContextAction,
 } from "./chatWindowSlice.js";
 
@@ -55,6 +56,14 @@ const stateWith = (
 
 const contextSetupOn = { enableAiContextSetup: true };
 const contextSetupOff = { enableAiContextSetup: false };
+
+describe("setCatalogItemsActions", () => {
+    it("stores undefined catalog items as undefined", () => {
+        const state = stateWith({}, setCatalogItemsActions(undefined));
+
+        expect(state.catalogItems).toBeUndefined();
+    });
+});
 
 describe("setAmbientUserContextAction", () => {
     it("should clear summarize-seeded context when the host reports undefined with context setup disabled", () => {

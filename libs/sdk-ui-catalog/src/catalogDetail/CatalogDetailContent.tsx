@@ -116,6 +116,7 @@ export function CatalogDetailContent({
         updateItemIsHiddenFromKda,
         updateItemMetricType,
         updateItemFormat,
+        updateItemConditionalFormatting,
         updateItemCertification,
         applyItemUpdate,
         applyItemDelete,
@@ -274,6 +275,9 @@ export function CatalogDetailContent({
                                     }}
                                     onFormatChange={(format) => {
                                         updateItemFormat(format);
+                                    }}
+                                    onConditionalFormattingChange={(conditionalFormatting) => {
+                                        updateItemConditionalFormatting(conditionalFormatting);
                                     }}
                                     separators={separators}
                                     currencyFormatOverride={

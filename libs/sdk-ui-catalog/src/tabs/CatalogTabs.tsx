@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { type IUiTab, UiTabs } from "@gooddata/sdk-ui-kit";
 
-import type { ICatalogItem } from "../catalogItem/types.js";
+import type { ICatalogItemRef } from "../catalogItem/types.js";
 import { useIsCatalogQualityEnabled } from "../quality/gate.js";
 
 import { CatalogTabPanel } from "./CatalogTabPanel.js";
@@ -14,7 +14,7 @@ import { CatalogTabPanel } from "./CatalogTabPanel.js";
 const DEFAULT_TAB_ID = "recommended";
 
 type Props = {
-    onItemClick?: (item: ICatalogItem) => void;
+    onItemClick?: (item: ICatalogItemRef) => void;
 };
 
 export function CatalogTabs({ onItemClick }: Props) {

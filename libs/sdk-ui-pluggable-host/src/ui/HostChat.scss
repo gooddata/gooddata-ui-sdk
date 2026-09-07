@@ -1,15 +1,17 @@
 // (C) 2026 GoodData Corporation
 
 .gd-host-chrome__ai-chat {
-    position: fixed;
-    top: 0;
-    right: -400px;
-    bottom: 0;
-    width: 400px;
-    transition: right 0.2s ease-in-out;
-    margin-top: 44px;
-    display: flex;
-    flex-direction: row;
+    &--enablePanel {
+        position: fixed;
+        top: 0;
+        right: -400px;
+        bottom: 0;
+        width: 400px;
+        transition: right 0.2s ease-in-out;
+        margin-top: 44px;
+        display: flex;
+        flex-direction: row;
+    }
 
     &--chatIsOpen {
         right: 0;

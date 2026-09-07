@@ -3,6 +3,8 @@
 import { type JsonApiMetricInAttributes } from "@gooddata/api-client-tiger";
 import { type IMeasureMetadataObjectDefinition } from "@gooddata/sdk-model";
 
+import { toTigerConditionalFormatting } from "../fromBackend/conditionalFormattingConversions.js";
+
 export function convertMetricToBackend(measure: IMeasureMetadataObjectDefinition): JsonApiMetricInAttributes {
     return {
         title: measure.title,
@@ -15,5 +17,8 @@ export function convertMetricToBackend(measure: IMeasureMetadataObjectDefinition
         tags: measure.tags,
         isHidden: measure.isHidden,
         isHiddenFromKda: measure.isHiddenFromKda,
+        ...(measure.conditionalFormatting
+            ? { conditionalFormatting: toTigerConditionalFormatting(measure.conditionalFormatting) }
+            : {}),
     };
 }

@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 
-import { type IntlShape } from "react-intl/src/types.js";
+import { type IntlShape } from "react-intl";
 
 import { type DashboardDateFilterConfigMode, type ObjRef } from "@gooddata/sdk-model";
 import { type IFilterConfigurationProps } from "@gooddata/sdk-ui-filters";

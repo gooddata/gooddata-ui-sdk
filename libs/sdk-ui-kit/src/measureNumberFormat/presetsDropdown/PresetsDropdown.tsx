@@ -2,7 +2,7 @@
 
 import { memo, useCallback, useMemo } from "react";
 
-import { type WrappedComponentProps } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { type ISeparators } from "@gooddata/sdk-ui";
 
@@ -24,7 +24,9 @@ interface IMeasureNumberFormatDropdownOwnProps {
     positioning?: IPositioning[];
 }
 
-type IMeasureNumberFormatDropdownProps = IMeasureNumberFormatDropdownOwnProps & WrappedComponentProps;
+interface IMeasureNumberFormatDropdownProps extends IMeasureNumberFormatDropdownOwnProps {
+    intl: IntlShape;
+}
 
 export const PresetsDropdown = memo(function PresetsDropdown(props: IMeasureNumberFormatDropdownProps) {
     const {

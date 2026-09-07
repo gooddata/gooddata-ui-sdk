@@ -65,7 +65,7 @@ function renderDialog(rule: IConditionalFormattingRule) {
                 isNew
                 targetOptions={targetOptions}
                 alignTo="body"
-                onSave={() => {}}
+                onSubmit={() => {}}
                 onClose={() => {}}
             />
         </InternalIntlWrapper>,

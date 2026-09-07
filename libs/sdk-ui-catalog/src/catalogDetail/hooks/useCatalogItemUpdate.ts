@@ -5,12 +5,16 @@ import { useCallback, useEffect, useState } from "react";
 import { isEqual } from "lodash-es";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import type { IUser, MetricType } from "@gooddata/sdk-model";
+import { type IUser, type MetricType } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { getDisplayName } from "../../catalogItem/converter.js";
 import { isCatalogItemHidable, isCatalogItemLoaded, isCatalogItemMeasure } from "../../catalogItem/guards.js";
-import { updateCatalogItem, updateCatalogItemCertification } from "../../catalogItem/query.js";
+import {
+    persistMeasureConditionalFormatting,
+    updateCatalogItem,
+    updateCatalogItemCertification,
+} from "../../catalogItem/query.js";
 import {
     type ICatalogItem,
     type ICatalogItemMeasure,
@@ -276,6 +280,46 @@ export function useCatalogItemUpdate({
         },
         [backend, currentUser, item, onUpdate, persistMeasureChanges, revertItemUpdate, status, workspace],
     );
+    const persistMeasureConditionalFormattingChanges = useCallback(
+        (nextItem: ICatalogItemMeasure) => persistMeasureConditionalFormatting(backend, workspace, nextItem),
+        [backend, workspace],
+    );
+    const updateItemConditionalFormatting = useCallback(
+        (conditionalFormatting: ICatalogItemMeasure["conditionalFormatting"]) => {
+            if (!isCatalogItemMeasure(item)) {
+                return;
+            }
+
+            updateItem(
+                backend,
+                workspace,
+                currentUser,
+                item,
+                status !== "success",
+                () => ({
+                    conditionalFormatting,
+                }),
+                (newItem) => {
+                    setItem(newItem);
+                    onUpdate?.(newItem);
+                },
+                (err) => {
+                    revertItemUpdate(err, item);
+                },
+                persistMeasureConditionalFormattingChanges,
+            );
+        },
+        [
+            backend,
+            currentUser,
+            item,
+            onUpdate,
+            persistMeasureConditionalFormattingChanges,
+            revertItemUpdate,
+            status,
+            workspace,
+        ],
+    );
     const persistCertificationChanges = useCallback(
         (newItem: ICatalogItem) => updateCatalogItemCertification(backend, workspace, newItem),
         [backend, workspace],
@@ -334,6 +378,7 @@ export function useCatalogItemUpdate({
         updateItemIsHiddenFromKda,
         updateItemMetricType,
         updateItemFormat,
+        updateItemConditionalFormatting,
         updateItemCertification,
         applyItemUpdate,
         applyItemDelete,

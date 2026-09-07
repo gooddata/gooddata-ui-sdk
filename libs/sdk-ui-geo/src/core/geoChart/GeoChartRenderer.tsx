@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef } from "react";
 import cx from "classnames";
 import { isEqual } from "lodash-es";
 import mapboxgl from "mapbox-gl";
-import { type WrappedComponentProps } from "react-intl";
+import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
 import { type IDataView } from "@gooddata/sdk-backend-spi";
@@ -52,7 +52,8 @@ import { getViewportOptions } from "./helpers/geoChart/viewport.js";
 /**
  * @internal
  */
-export interface IGeoChartRendererProps extends WrappedComponentProps {
+export interface IGeoChartRendererProps {
+    intl: IntlShape;
     config: IGeoConfig;
     drillableItems: IHeaderPredicate[];
     drillConfig: IDrillConfig;

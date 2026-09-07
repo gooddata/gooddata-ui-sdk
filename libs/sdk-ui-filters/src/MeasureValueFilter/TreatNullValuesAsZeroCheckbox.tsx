@@ -2,7 +2,7 @@
 
 import { type ChangeEvent, type ReactElement } from "react";
 
-import { type WrappedComponentProps } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
@@ -11,6 +11,7 @@ interface ITreatNullValuesAsZeroCheckboxProps {
     onChange: (checked: boolean) => void;
     isMobile?: boolean;
     isViewMode?: boolean;
+    intl: IntlShape;
 }
 
 export function TreatNullValuesAsZeroCheckbox({
@@ -19,7 +20,7 @@ export function TreatNullValuesAsZeroCheckbox({
     isMobile = false,
     isViewMode = false,
     intl,
-}: ITreatNullValuesAsZeroCheckboxProps & WrappedComponentProps): ReactElement {
+}: ITreatNullValuesAsZeroCheckboxProps): ReactElement {
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => onChange(e.target.checked);
     const tooltipText = intl.formatMessage({ id: "mvf.treatNullValuesAsZeroTooltip" });
     const tooltipId = useIdPrefixed("mvf-treat-null-values-as-zero-tooltip");

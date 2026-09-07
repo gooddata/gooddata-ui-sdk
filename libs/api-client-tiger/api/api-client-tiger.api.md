@@ -2978,7 +2978,7 @@ export const AiAggregation: {
 };
 
 // @public (undocumented)
-export type AiAggregation = (typeof AiAggregation)[keyof typeof AiAggregation];
+export type AiAggregation = typeof AiAggregation[keyof typeof AiAggregation];
 
 // @public (undocumented)
 export const AiAggregation1: {
@@ -3001,7 +3001,7 @@ export const AiAggregation1: {
 };
 
 // @public (undocumented)
-export type AiAggregation1 = (typeof AiAggregation1)[keyof typeof AiAggregation1];
+export type AiAggregation1 = typeof AiAggregation1[keyof typeof AiAggregation1];
 
 // @public (undocumented)
 export const AiAggregation10: {
@@ -3016,7 +3016,7 @@ export const AiAggregation10: {
 };
 
 // @public (undocumented)
-export type AiAggregation10 = (typeof AiAggregation10)[keyof typeof AiAggregation10];
+export type AiAggregation10 = typeof AiAggregation10[keyof typeof AiAggregation10];
 
 // @public (undocumented)
 export const AiAggregation11: {
@@ -3039,7 +3039,7 @@ export const AiAggregation11: {
 };
 
 // @public (undocumented)
-export type AiAggregation11 = (typeof AiAggregation11)[keyof typeof AiAggregation11];
+export type AiAggregation11 = typeof AiAggregation11[keyof typeof AiAggregation11];
 
 // @public (undocumented)
 export const AiAggregation12: {
@@ -3054,7 +3054,7 @@ export const AiAggregation12: {
 };
 
 // @public (undocumented)
-export type AiAggregation12 = (typeof AiAggregation12)[keyof typeof AiAggregation12];
+export type AiAggregation12 = typeof AiAggregation12[keyof typeof AiAggregation12];
 
 // @public (undocumented)
 export const AiAggregation13: {
@@ -3077,7 +3077,7 @@ export const AiAggregation13: {
 };
 
 // @public (undocumented)
-export type AiAggregation13 = (typeof AiAggregation13)[keyof typeof AiAggregation13];
+export type AiAggregation13 = typeof AiAggregation13[keyof typeof AiAggregation13];
 
 // @public (undocumented)
 export const AiAggregation14: {
@@ -3085,7 +3085,7 @@ export const AiAggregation14: {
 };
 
 // @public (undocumented)
-export type AiAggregation14 = (typeof AiAggregation14)[keyof typeof AiAggregation14];
+export type AiAggregation14 = typeof AiAggregation14[keyof typeof AiAggregation14];
 
 // @public (undocumented)
 export const AiAggregation2: {
@@ -3100,7 +3100,7 @@ export const AiAggregation2: {
 };
 
 // @public (undocumented)
-export type AiAggregation2 = (typeof AiAggregation2)[keyof typeof AiAggregation2];
+export type AiAggregation2 = typeof AiAggregation2[keyof typeof AiAggregation2];
 
 // @public (undocumented)
 export const AiAggregation3: {
@@ -3123,7 +3123,7 @@ export const AiAggregation3: {
 };
 
 // @public (undocumented)
-export type AiAggregation3 = (typeof AiAggregation3)[keyof typeof AiAggregation3];
+export type AiAggregation3 = typeof AiAggregation3[keyof typeof AiAggregation3];
 
 // @public (undocumented)
 export const AiAggregation6: {
@@ -3138,7 +3138,7 @@ export const AiAggregation6: {
 };
 
 // @public (undocumented)
-export type AiAggregation6 = (typeof AiAggregation6)[keyof typeof AiAggregation6];
+export type AiAggregation6 = typeof AiAggregation6[keyof typeof AiAggregation6];
 
 // @public (undocumented)
 export const AiAggregation7: {
@@ -3161,7 +3161,7 @@ export const AiAggregation7: {
 };
 
 // @public (undocumented)
-export type AiAggregation7 = (typeof AiAggregation7)[keyof typeof AiAggregation7];
+export type AiAggregation7 = typeof AiAggregation7[keyof typeof AiAggregation7];
 
 // @public (undocumented)
 export const AiAggregation8: {
@@ -3176,7 +3176,7 @@ export const AiAggregation8: {
 };
 
 // @public (undocumented)
-export type AiAggregation8 = (typeof AiAggregation8)[keyof typeof AiAggregation8];
+export type AiAggregation8 = typeof AiAggregation8[keyof typeof AiAggregation8];
 
 // @public (undocumented)
 export const AiAggregation9: {
@@ -3199,7 +3199,7 @@ export const AiAggregation9: {
 };
 
 // @public (undocumented)
-export type AiAggregation9 = (typeof AiAggregation9)[keyof typeof AiAggregation9];
+export type AiAggregation9 = typeof AiAggregation9[keyof typeof AiAggregation9];
 
 // @public (undocumented)
 export interface AiAlertDatasetIdentifier {
@@ -3292,7 +3292,7 @@ export const AiAlertTrigger: {
 };
 
 // @public (undocumented)
-export type AiAlertTrigger = (typeof AiAlertTrigger)[keyof typeof AiAlertTrigger];
+export type AiAlertTrigger = typeof AiAlertTrigger[keyof typeof AiAlertTrigger];
 
 // @public (undocumented)
 export interface AiAllowedRelationshipType {
@@ -3349,7 +3349,7 @@ export const AiAnomalyDetectionGranularity: {
 };
 
 // @public (undocumented)
-export type AiAnomalyDetectionGranularity = (typeof AiAnomalyDetectionGranularity)[keyof typeof AiAnomalyDetectionGranularity];
+export type AiAnomalyDetectionGranularity = typeof AiAnomalyDetectionGranularity[keyof typeof AiAnomalyDetectionGranularity];
 
 // @public (undocumented)
 export const AiAnomalyDetectionSensitivity: {
@@ -3359,7 +3359,7 @@ export const AiAnomalyDetectionSensitivity: {
 };
 
 // @public (undocumented)
-export type AiAnomalyDetectionSensitivity = (typeof AiAnomalyDetectionSensitivity)[keyof typeof AiAnomalyDetectionSensitivity];
+export type AiAnomalyDetectionSensitivity = typeof AiAnomalyDetectionSensitivity[keyof typeof AiAnomalyDetectionSensitivity];
 
 // @public (undocumented)
 export const AiAnomalyDetectionSize: {
@@ -3369,7 +3369,7 @@ export const AiAnomalyDetectionSize: {
 };
 
 // @public (undocumented)
-export type AiAnomalyDetectionSize = (typeof AiAnomalyDetectionSize)[keyof typeof AiAnomalyDetectionSize];
+export type AiAnomalyDetectionSize = typeof AiAnomalyDetectionSize[keyof typeof AiAnomalyDetectionSize];
 
 // @public (undocumented)
 export const AiAppApplicationDtosAfmFilterDefinitionMatchType: {
@@ -3379,7 +3379,7 @@ export const AiAppApplicationDtosAfmFilterDefinitionMatchType: {
 };
 
 // @public (undocumented)
-export type AiAppApplicationDtosAfmFilterDefinitionMatchType = (typeof AiAppApplicationDtosAfmFilterDefinitionMatchType)[keyof typeof AiAppApplicationDtosAfmFilterDefinitionMatchType];
+export type AiAppApplicationDtosAfmFilterDefinitionMatchType = typeof AiAppApplicationDtosAfmFilterDefinitionMatchType[keyof typeof AiAppApplicationDtosAfmFilterDefinitionMatchType];
 
 // @public
 export interface AiAppliedMemoryItem {
@@ -3417,7 +3417,7 @@ export const AiArithmeticOperator: {
 };
 
 // @public (undocumented)
-export type AiArithmeticOperator = (typeof AiArithmeticOperator)[keyof typeof AiArithmeticOperator];
+export type AiArithmeticOperator = typeof AiArithmeticOperator[keyof typeof AiArithmeticOperator];
 
 // @public
 export interface AiAttribute {
@@ -3440,7 +3440,7 @@ export const AiAxis: {
 };
 
 // @public (undocumented)
-export type AiAxis = (typeof AiAxis)[keyof typeof AiAxis];
+export type AiAxis = typeof AiAxis[keyof typeof AiAxis];
 
 // @public (undocumented)
 export class AiBaseAPI {
@@ -3525,7 +3525,7 @@ export const AiCellImageSizing: {
 };
 
 // @public (undocumented)
-export type AiCellImageSizing = (typeof AiCellImageSizing)[keyof typeof AiCellImageSizing];
+export type AiCellImageSizing = typeof AiCellImageSizing[keyof typeof AiCellImageSizing];
 
 // @public (undocumented)
 export const AiCellTextWrapping: {
@@ -3534,7 +3534,7 @@ export const AiCellTextWrapping: {
 };
 
 // @public (undocumented)
-export type AiCellTextWrapping = (typeof AiCellTextWrapping)[keyof typeof AiCellTextWrapping];
+export type AiCellTextWrapping = typeof AiCellTextWrapping[keyof typeof AiCellTextWrapping];
 
 // @public (undocumented)
 export const AiCellVerticalAlign: {
@@ -3544,7 +3544,7 @@ export const AiCellVerticalAlign: {
 };
 
 // @public (undocumented)
-export type AiCellVerticalAlign = (typeof AiCellVerticalAlign)[keyof typeof AiCellVerticalAlign];
+export type AiCellVerticalAlign = typeof AiCellVerticalAlign[keyof typeof AiCellVerticalAlign];
 
 // @public
 export interface AiCertificationInfo {
@@ -3630,7 +3630,7 @@ export const AiComparisonConditionOperator: {
 };
 
 // @public (undocumented)
-export type AiComparisonConditionOperator = (typeof AiComparisonConditionOperator)[keyof typeof AiComparisonConditionOperator];
+export type AiComparisonConditionOperator = typeof AiComparisonConditionOperator[keyof typeof AiComparisonConditionOperator];
 
 // @public (undocumented)
 export interface AiComparisonMeasureValueFilter {
@@ -3675,7 +3675,7 @@ export const AiComparisonMeasureValueOperator: {
 };
 
 // @public (undocumented)
-export type AiComparisonMeasureValueOperator = (typeof AiComparisonMeasureValueOperator)[keyof typeof AiComparisonMeasureValueOperator];
+export type AiComparisonMeasureValueOperator = typeof AiComparisonMeasureValueOperator[keyof typeof AiComparisonMeasureValueOperator];
 
 // @public (undocumented)
 export interface AiComplexColorItem {
@@ -3752,7 +3752,7 @@ export const AiCondition2: {
 };
 
 // @public (undocumented)
-export type AiCondition2 = (typeof AiCondition2)[keyof typeof AiCondition2];
+export type AiCondition2 = typeof AiCondition2[keyof typeof AiCondition2];
 
 // @public (undocumented)
 export const AiCondition3: {
@@ -3765,7 +3765,7 @@ export const AiCondition3: {
 };
 
 // @public (undocumented)
-export type AiCondition3 = (typeof AiCondition3)[keyof typeof AiCondition3];
+export type AiCondition3 = typeof AiCondition3[keyof typeof AiCondition3];
 
 // @public (undocumented)
 export const AiCondition4: {
@@ -3774,7 +3774,7 @@ export const AiCondition4: {
 };
 
 // @public (undocumented)
-export type AiCondition4 = (typeof AiCondition4)[keyof typeof AiCondition4];
+export type AiCondition4 = typeof AiCondition4[keyof typeof AiCondition4];
 
 // @public (undocumented)
 export const AiCondition5: {
@@ -3783,7 +3783,7 @@ export const AiCondition5: {
 };
 
 // @public (undocumented)
-export type AiCondition5 = (typeof AiCondition5)[keyof typeof AiCondition5];
+export type AiCondition5 = typeof AiCondition5[keyof typeof AiCondition5];
 
 // @public (undocumented)
 export const AiCondition6: {
@@ -3796,7 +3796,7 @@ export const AiCondition6: {
 };
 
 // @public (undocumented)
-export type AiCondition6 = (typeof AiCondition6)[keyof typeof AiCondition6];
+export type AiCondition6 = typeof AiCondition6[keyof typeof AiCondition6];
 
 // @public (undocumented)
 export const AiCondition7: {
@@ -3809,7 +3809,7 @@ export const AiCondition7: {
 };
 
 // @public (undocumented)
-export type AiCondition7 = (typeof AiCondition7)[keyof typeof AiCondition7];
+export type AiCondition7 = typeof AiCondition7[keyof typeof AiCondition7];
 
 // @public (undocumented)
 export const AiCondition8: {
@@ -3818,7 +3818,7 @@ export const AiCondition8: {
 };
 
 // @public (undocumented)
-export type AiCondition8 = (typeof AiCondition8)[keyof typeof AiCondition8];
+export type AiCondition8 = typeof AiCondition8[keyof typeof AiCondition8];
 
 // @public (undocumented)
 export interface AiCondition9 {
@@ -4259,7 +4259,7 @@ export const AiConversationMode: {
 };
 
 // @public (undocumented)
-export type AiConversationMode = (typeof AiConversationMode)[keyof typeof AiConversationMode];
+export type AiConversationMode = typeof AiConversationMode[keyof typeof AiConversationMode];
 
 // @public
 export interface AiConversationResponse {
@@ -4650,7 +4650,7 @@ export const AiDataLabelsStyle: {
 };
 
 // @public (undocumented)
-export type AiDataLabelsStyle = (typeof AiDataLabelsStyle)[keyof typeof AiDataLabelsStyle];
+export type AiDataLabelsStyle = typeof AiDataLabelsStyle[keyof typeof AiDataLabelsStyle];
 
 // @public (undocumented)
 export interface AiDataPoints {
@@ -4705,7 +4705,7 @@ export const AiDateFilterGranularity: {
 };
 
 // @public (undocumented)
-export type AiDateFilterGranularity = (typeof AiDateFilterGranularity)[keyof typeof AiDateFilterGranularity];
+export type AiDateFilterGranularity = typeof AiDateFilterGranularity[keyof typeof AiDateFilterGranularity];
 
 // @public (undocumented)
 export const AiDateGranularity: {
@@ -4752,7 +4752,7 @@ export const AiDateGranularity: {
 };
 
 // @public (undocumented)
-export type AiDateGranularity = (typeof AiDateGranularity)[keyof typeof AiDateGranularity];
+export type AiDateGranularity = typeof AiDateGranularity[keyof typeof AiDateGranularity];
 
 // @public
 export interface AiDeleteDocumentResponse {
@@ -4769,7 +4769,7 @@ export const AiDirection: {
 };
 
 // @public (undocumented)
-export type AiDirection = (typeof AiDirection)[keyof typeof AiDirection];
+export type AiDirection = typeof AiDirection[keyof typeof AiDirection];
 
 // @public (undocumented)
 export const AiDisplayAs: {
@@ -4779,7 +4779,7 @@ export const AiDisplayAs: {
 };
 
 // @public (undocumented)
-export type AiDisplayAs = (typeof AiDisplayAs)[keyof typeof AiDisplayAs];
+export type AiDisplayAs = typeof AiDisplayAs[keyof typeof AiDisplayAs];
 
 // @public (undocumented)
 export interface AiDistinctPointShapes {
@@ -4825,7 +4825,7 @@ export const AiEmptyValueHandling: {
 };
 
 // @public (undocumented)
-export type AiEmptyValueHandling = (typeof AiEmptyValueHandling)[keyof typeof AiEmptyValueHandling];
+export type AiEmptyValueHandling = typeof AiEmptyValueHandling[keyof typeof AiEmptyValueHandling];
 
 // @public (undocumented)
 export const AiEmptyValues: {
@@ -4835,7 +4835,7 @@ export const AiEmptyValues: {
 };
 
 // @public (undocumented)
-export type AiEmptyValues = (typeof AiEmptyValues)[keyof typeof AiEmptyValues];
+export type AiEmptyValues = typeof AiEmptyValues[keyof typeof AiEmptyValues];
 
 // @public (undocumented)
 export interface AiErrorInfo {
@@ -5039,7 +5039,7 @@ export const AiFunction: {
 };
 
 // @public (undocumented)
-export type AiFunction = (typeof AiFunction)[keyof typeof AiFunction];
+export type AiFunction = typeof AiFunction[keyof typeof AiFunction];
 
 // @public (undocumented)
 export interface AiFunctionCallContent {
@@ -5069,7 +5069,7 @@ export const AiGooddataCodeConvertorsPydanticModelsMatchType: {
 };
 
 // @public (undocumented)
-export type AiGooddataCodeConvertorsPydanticModelsMatchType = (typeof AiGooddataCodeConvertorsPydanticModelsMatchType)[keyof typeof AiGooddataCodeConvertorsPydanticModelsMatchType];
+export type AiGooddataCodeConvertorsPydanticModelsMatchType = typeof AiGooddataCodeConvertorsPydanticModelsMatchType[keyof typeof AiGooddataCodeConvertorsPydanticModelsMatchType];
 
 // @public (undocumented)
 export const AiGrandTotalsPosition: {
@@ -5080,7 +5080,7 @@ export const AiGrandTotalsPosition: {
 };
 
 // @public (undocumented)
-export type AiGrandTotalsPosition = (typeof AiGrandTotalsPosition)[keyof typeof AiGrandTotalsPosition];
+export type AiGrandTotalsPosition = typeof AiGrandTotalsPosition[keyof typeof AiGrandTotalsPosition];
 
 // @public (undocumented)
 export const AiGranularity: {
@@ -5110,7 +5110,7 @@ export const AiGranularity: {
 };
 
 // @public (undocumented)
-export type AiGranularity = (typeof AiGranularity)[keyof typeof AiGranularity];
+export type AiGranularity = typeof AiGranularity[keyof typeof AiGranularity];
 
 // @public (undocumented)
 export const AiGranularity2: {
@@ -5124,7 +5124,7 @@ export const AiGranularity2: {
 };
 
 // @public (undocumented)
-export type AiGranularity2 = (typeof AiGranularity2)[keyof typeof AiGranularity2];
+export type AiGranularity2 = typeof AiGranularity2[keyof typeof AiGranularity2];
 
 // @public (undocumented)
 export const AiGridLineShape: {
@@ -5133,7 +5133,7 @@ export const AiGridLineShape: {
 };
 
 // @public (undocumented)
-export type AiGridLineShape = (typeof AiGridLineShape)[keyof typeof AiGridLineShape];
+export type AiGridLineShape = typeof AiGridLineShape[keyof typeof AiGridLineShape];
 
 // @public (undocumented)
 export interface AiHTTPValidationError {
@@ -5183,7 +5183,7 @@ export const AiIntervalGranularity: {
 };
 
 // @public (undocumented)
-export type AiIntervalGranularity = (typeof AiIntervalGranularity)[keyof typeof AiIntervalGranularity];
+export type AiIntervalGranularity = typeof AiIntervalGranularity[keyof typeof AiIntervalGranularity];
 
 // @public (undocumented)
 export interface AiKeyDriverAnalysis {
@@ -5349,6 +5349,27 @@ export interface AiListDocumentsResponse {
 }
 
 // @public (undocumented)
+export interface AiLlmModel {
+    'family': AiLlmModelFamily;
+    'id': string;
+}
+
+// @public (undocumented)
+export const AiLlmModelFamily: {
+    readonly OPENAI: 'OPENAI';
+    readonly ANTHROPIC: 'ANTHROPIC';
+    readonly META: 'META';
+    readonly MISTRAL: 'MISTRAL';
+    readonly AMAZON: 'AMAZON';
+    readonly GOOGLE: 'GOOGLE';
+    readonly COHERE: 'COHERE';
+    readonly UNKNOWN: 'UNKNOWN';
+};
+
+// @public (undocumented)
+export type AiLlmModelFamily = typeof AiLlmModelFamily[keyof typeof AiLlmModelFamily];
+
+// @public (undocumented)
 export interface AiMatchAttributeFilterBodyInput {
     // (undocumented)
     'applyOnResult'?: boolean | null;
@@ -5404,7 +5425,7 @@ export const AiMatchTypeInput: {
 };
 
 // @public (undocumented)
-export type AiMatchTypeInput = (typeof AiMatchTypeInput)[keyof typeof AiMatchTypeInput];
+export type AiMatchTypeInput = typeof AiMatchTypeInput[keyof typeof AiMatchTypeInput];
 
 // @public (undocumented)
 export const AiMaxSize: {
@@ -5417,7 +5438,7 @@ export const AiMaxSize: {
 };
 
 // @public (undocumented)
-export type AiMaxSize = (typeof AiMaxSize)[keyof typeof AiMaxSize];
+export type AiMaxSize = typeof AiMaxSize[keyof typeof AiMaxSize];
 
 // @public (undocumented)
 export interface AiMeasure {
@@ -5540,7 +5561,7 @@ export const AiMetricValueFilterConditionComparison: {
 };
 
 // @public (undocumented)
-export type AiMetricValueFilterConditionComparison = (typeof AiMetricValueFilterConditionComparison)[keyof typeof AiMetricValueFilterConditionComparison];
+export type AiMetricValueFilterConditionComparison = typeof AiMetricValueFilterConditionComparison[keyof typeof AiMetricValueFilterConditionComparison];
 
 // @public (undocumented)
 export const AiMetricValueFilterConditionRange: {
@@ -5549,7 +5570,7 @@ export const AiMetricValueFilterConditionRange: {
 };
 
 // @public (undocumented)
-export type AiMetricValueFilterConditionRange = (typeof AiMetricValueFilterConditionRange)[keyof typeof AiMetricValueFilterConditionRange];
+export type AiMetricValueFilterConditionRange = typeof AiMetricValueFilterConditionRange[keyof typeof AiMetricValueFilterConditionRange];
 
 // @public (undocumented)
 export const AiMinSize: {
@@ -5562,7 +5583,7 @@ export const AiMinSize: {
 };
 
 // @public (undocumented)
-export type AiMinSize = (typeof AiMinSize)[keyof typeof AiMinSize];
+export type AiMinSize = typeof AiMinSize[keyof typeof AiMinSize];
 
 // @public (undocumented)
 export interface AiMultipartContent {
@@ -5671,7 +5692,7 @@ export const AiObjectType: {
 };
 
 // @public (undocumented)
-export type AiObjectType = (typeof AiObjectType)[keyof typeof AiObjectType];
+export type AiObjectType = typeof AiObjectType[keyof typeof AiObjectType];
 
 // @public
 const AiObservabilityMetricType: {
@@ -5681,7 +5702,7 @@ const AiObservabilityMetricType: {
 };
 
 // @public (undocumented)
-type AiObservabilityMetricType = (typeof AiObservabilityMetricType)[keyof typeof AiObservabilityMetricType];
+type AiObservabilityMetricType = typeof AiObservabilityMetricType[keyof typeof AiObservabilityMetricType];
 export { AiObservabilityMetricType }
 export { AiObservabilityMetricType as GenAiApiObservabilityMetricType }
 
@@ -5703,7 +5724,7 @@ export const AiOperator: {
 };
 
 // @public (undocumented)
-export type AiOperator = (typeof AiOperator)[keyof typeof AiOperator];
+export type AiOperator = typeof AiOperator[keyof typeof AiOperator];
 
 // @public (undocumented)
 export const AiOperator1: {
@@ -5720,7 +5741,7 @@ export const AiOperator1: {
 };
 
 // @public (undocumented)
-export type AiOperator1 = (typeof AiOperator1)[keyof typeof AiOperator1];
+export type AiOperator1 = typeof AiOperator1[keyof typeof AiOperator1];
 
 // @public (undocumented)
 export const AiOperator10: {
@@ -5732,7 +5753,7 @@ export const AiOperator10: {
 };
 
 // @public (undocumented)
-export type AiOperator10 = (typeof AiOperator10)[keyof typeof AiOperator10];
+export type AiOperator10 = typeof AiOperator10[keyof typeof AiOperator10];
 
 // @public (undocumented)
 export const AiOperator11: {
@@ -5749,7 +5770,7 @@ export const AiOperator11: {
 };
 
 // @public (undocumented)
-export type AiOperator11 = (typeof AiOperator11)[keyof typeof AiOperator11];
+export type AiOperator11 = typeof AiOperator11[keyof typeof AiOperator11];
 
 // @public (undocumented)
 export const AiOperator12: {
@@ -5761,7 +5782,7 @@ export const AiOperator12: {
 };
 
 // @public (undocumented)
-export type AiOperator12 = (typeof AiOperator12)[keyof typeof AiOperator12];
+export type AiOperator12 = typeof AiOperator12[keyof typeof AiOperator12];
 
 // @public (undocumented)
 export const AiOperator13: {
@@ -5778,7 +5799,7 @@ export const AiOperator13: {
 };
 
 // @public (undocumented)
-export type AiOperator13 = (typeof AiOperator13)[keyof typeof AiOperator13];
+export type AiOperator13 = typeof AiOperator13[keyof typeof AiOperator13];
 
 // @public (undocumented)
 export const AiOperator14: {
@@ -5802,7 +5823,7 @@ export const AiOperator14: {
 };
 
 // @public (undocumented)
-export type AiOperator14 = (typeof AiOperator14)[keyof typeof AiOperator14];
+export type AiOperator14 = typeof AiOperator14[keyof typeof AiOperator14];
 
 // @public (undocumented)
 export const AiOperator2: {
@@ -5814,7 +5835,7 @@ export const AiOperator2: {
 };
 
 // @public (undocumented)
-export type AiOperator2 = (typeof AiOperator2)[keyof typeof AiOperator2];
+export type AiOperator2 = typeof AiOperator2[keyof typeof AiOperator2];
 
 // @public (undocumented)
 export const AiOperator3: {
@@ -5831,7 +5852,7 @@ export const AiOperator3: {
 };
 
 // @public (undocumented)
-export type AiOperator3 = (typeof AiOperator3)[keyof typeof AiOperator3];
+export type AiOperator3 = typeof AiOperator3[keyof typeof AiOperator3];
 
 // @public (undocumented)
 export const AiOperator4: {
@@ -5843,7 +5864,7 @@ export const AiOperator4: {
 };
 
 // @public (undocumented)
-export type AiOperator4 = (typeof AiOperator4)[keyof typeof AiOperator4];
+export type AiOperator4 = typeof AiOperator4[keyof typeof AiOperator4];
 
 // @public (undocumented)
 export const AiOperator5: {
@@ -5860,7 +5881,7 @@ export const AiOperator5: {
 };
 
 // @public (undocumented)
-export type AiOperator5 = (typeof AiOperator5)[keyof typeof AiOperator5];
+export type AiOperator5 = typeof AiOperator5[keyof typeof AiOperator5];
 
 // @public (undocumented)
 export const AiOperator6: {
@@ -5872,7 +5893,7 @@ export const AiOperator6: {
 };
 
 // @public (undocumented)
-export type AiOperator6 = (typeof AiOperator6)[keyof typeof AiOperator6];
+export type AiOperator6 = typeof AiOperator6[keyof typeof AiOperator6];
 
 // @public (undocumented)
 export const AiOperator7: {
@@ -5889,7 +5910,7 @@ export const AiOperator7: {
 };
 
 // @public (undocumented)
-export type AiOperator7 = (typeof AiOperator7)[keyof typeof AiOperator7];
+export type AiOperator7 = typeof AiOperator7[keyof typeof AiOperator7];
 
 // @public
 interface AiPatchDocumentRequest {
@@ -5932,7 +5953,7 @@ export const AiPatternNameMapping: {
 };
 
 // @public (undocumented)
-export type AiPatternNameMapping = (typeof AiPatternNameMapping)[keyof typeof AiPatternNameMapping];
+export type AiPatternNameMapping = typeof AiPatternNameMapping[keyof typeof AiPatternNameMapping];
 
 // @public (undocumented)
 export const AiPlacement: {
@@ -5942,7 +5963,7 @@ export const AiPlacement: {
 };
 
 // @public (undocumented)
-export type AiPlacement = (typeof AiPlacement)[keyof typeof AiPlacement];
+export type AiPlacement = typeof AiPlacement[keyof typeof AiPlacement];
 
 // @public (undocumented)
 export const AiPointShapeMapping: {
@@ -5954,7 +5975,7 @@ export const AiPointShapeMapping: {
 };
 
 // @public (undocumented)
-export type AiPointShapeMapping = (typeof AiPointShapeMapping)[keyof typeof AiPointShapeMapping];
+export type AiPointShapeMapping = typeof AiPointShapeMapping[keyof typeof AiPointShapeMapping];
 
 // @public (undocumented)
 export interface AiPositiveAttributeFilter {
@@ -6599,7 +6620,7 @@ export const AiRangeConditionOperator: {
 };
 
 // @public (undocumented)
-export type AiRangeConditionOperator = (typeof AiRangeConditionOperator)[keyof typeof AiRangeConditionOperator];
+export type AiRangeConditionOperator = typeof AiRangeConditionOperator[keyof typeof AiRangeConditionOperator];
 
 // @public (undocumented)
 export interface AiRangeMeasureValueFilter {
@@ -6642,7 +6663,7 @@ export const AiRangeMeasureValueOperator: {
 };
 
 // @public (undocumented)
-export type AiRangeMeasureValueOperator = (typeof AiRangeMeasureValueOperator)[keyof typeof AiRangeMeasureValueOperator];
+export type AiRangeMeasureValueOperator = typeof AiRangeMeasureValueOperator[keyof typeof AiRangeMeasureValueOperator];
 
 // @public (undocumented)
 export interface AiRankingFilter {
@@ -6689,7 +6710,7 @@ export const AiRankingOperator: {
 };
 
 // @public (undocumented)
-export type AiRankingOperator = (typeof AiRankingOperator)[keyof typeof AiRankingOperator];
+export type AiRankingOperator = typeof AiRankingOperator[keyof typeof AiRankingOperator];
 
 // @public (undocumented)
 export interface AiReasoningContent {
@@ -6730,7 +6751,7 @@ export const AiRelativeConditionOperator: {
 };
 
 // @public (undocumented)
-export type AiRelativeConditionOperator = (typeof AiRelativeConditionOperator)[keyof typeof AiRelativeConditionOperator];
+export type AiRelativeConditionOperator = typeof AiRelativeConditionOperator[keyof typeof AiRelativeConditionOperator];
 
 // @public (undocumented)
 export interface AiRelativeDateFilter {
@@ -6765,7 +6786,7 @@ export const AiRenderAs: {
 };
 
 // @public (undocumented)
-export type AiRenderAs = (typeof AiRenderAs)[keyof typeof AiRenderAs];
+export type AiRenderAs = typeof AiRenderAs[keyof typeof AiRenderAs];
 
 // @public (undocumented)
 export interface AiRequestArgs {
@@ -6783,7 +6804,20 @@ export const AiRequestedReasoningEffort: {
 };
 
 // @public (undocumented)
-export type AiRequestedReasoningEffort = (typeof AiRequestedReasoningEffort)[keyof typeof AiRequestedReasoningEffort];
+export type AiRequestedReasoningEffort = typeof AiRequestedReasoningEffort[keyof typeof AiRequestedReasoningEffort];
+
+// @public (undocumented)
+export interface AiResolvedLlmProvider {
+    'id': string;
+    'models': Array<AiLlmModel>;
+    'title': string;
+}
+
+// @public (undocumented)
+export interface AiResolvedLlms {
+    // (undocumented)
+    'data'?: AiResolvedLlmProvider | null;
+}
 
 // @public (undocumented)
 export interface AiResponseFeedback {
@@ -6825,7 +6859,7 @@ export const AiRowHeight: {
 };
 
 // @public (undocumented)
-export type AiRowHeight = (typeof AiRowHeight)[keyof typeof AiRowHeight];
+export type AiRowHeight = typeof AiRowHeight[keyof typeof AiRowHeight];
 
 // @public (undocumented)
 export interface AiRule {
@@ -6842,7 +6876,7 @@ export const AiScope: {
 };
 
 // @public (undocumented)
-export type AiScope = (typeof AiScope)[keyof typeof AiScope];
+export type AiScope = typeof AiScope[keyof typeof AiScope];
 
 // @public (undocumented)
 export interface AiSearchAllowedRelationshipType {
@@ -7102,7 +7136,7 @@ export const AiSensitivity: {
 };
 
 // @public (undocumented)
-export type AiSensitivity = (typeof AiSensitivity)[keyof typeof AiSensitivity];
+export type AiSensitivity = typeof AiSensitivity[keyof typeof AiSensitivity];
 
 // @public (undocumented)
 export const AiShapeType: {
@@ -7112,7 +7146,7 @@ export const AiShapeType: {
 };
 
 // @public (undocumented)
-export type AiShapeType = (typeof AiShapeType)[keyof typeof AiShapeType];
+export type AiShapeType = typeof AiShapeType[keyof typeof AiShapeType];
 
 // @public (undocumented)
 export interface AiSimpleColorItem {
@@ -7185,7 +7219,7 @@ export const AiStyle: {
 };
 
 // @public (undocumented)
-export type AiStyle = (typeof AiStyle)[keyof typeof AiStyle];
+export type AiStyle = typeof AiStyle[keyof typeof AiStyle];
 
 // @public
 export interface AiSuggestedAction {
@@ -7324,7 +7358,7 @@ export const AiType11: {
 };
 
 // @public (undocumented)
-export type AiType11 = (typeof AiType11)[keyof typeof AiType11];
+export type AiType11 = typeof AiType11[keyof typeof AiType11];
 
 // @public (undocumented)
 export const AiType12: {
@@ -7333,7 +7367,7 @@ export const AiType12: {
 };
 
 // @public (undocumented)
-export type AiType12 = (typeof AiType12)[keyof typeof AiType12];
+export type AiType12 = typeof AiType12[keyof typeof AiType12];
 
 // @public (undocumented)
 export const AiType14: {
@@ -7341,7 +7375,7 @@ export const AiType14: {
 };
 
 // @public (undocumented)
-export type AiType14 = (typeof AiType14)[keyof typeof AiType14];
+export type AiType14 = typeof AiType14[keyof typeof AiType14];
 
 // @public (undocumented)
 export const AiType18: {
@@ -7350,7 +7384,7 @@ export const AiType18: {
 };
 
 // @public (undocumented)
-export type AiType18 = (typeof AiType18)[keyof typeof AiType18];
+export type AiType18 = typeof AiType18[keyof typeof AiType18];
 
 // @public (undocumented)
 export const AiType33: {
@@ -7359,7 +7393,7 @@ export const AiType33: {
 };
 
 // @public (undocumented)
-export type AiType33 = (typeof AiType33)[keyof typeof AiType33];
+export type AiType33 = typeof AiType33[keyof typeof AiType33];
 
 // @public (undocumented)
 export const AiType34: {
@@ -7370,7 +7404,7 @@ export const AiType34: {
 };
 
 // @public (undocumented)
-export type AiType34 = (typeof AiType34)[keyof typeof AiType34];
+export type AiType34 = typeof AiType34[keyof typeof AiType34];
 
 // @public (undocumented)
 export const AiType35: {
@@ -7379,7 +7413,7 @@ export const AiType35: {
 };
 
 // @public (undocumented)
-export type AiType35 = (typeof AiType35)[keyof typeof AiType35];
+export type AiType35 = typeof AiType35[keyof typeof AiType35];
 
 // @public (undocumented)
 export const AiType36: {
@@ -7390,7 +7424,7 @@ export const AiType36: {
 };
 
 // @public (undocumented)
-export type AiType36 = (typeof AiType36)[keyof typeof AiType36];
+export type AiType36 = typeof AiType36[keyof typeof AiType36];
 
 // @public (undocumented)
 export const AiType37: {
@@ -7399,7 +7433,7 @@ export const AiType37: {
 };
 
 // @public (undocumented)
-export type AiType37 = (typeof AiType37)[keyof typeof AiType37];
+export type AiType37 = typeof AiType37[keyof typeof AiType37];
 
 // @public (undocumented)
 export const AiType38: {
@@ -7410,7 +7444,7 @@ export const AiType38: {
 };
 
 // @public (undocumented)
-export type AiType38 = (typeof AiType38)[keyof typeof AiType38];
+export type AiType38 = typeof AiType38[keyof typeof AiType38];
 
 // @public (undocumented)
 export const AiType39: {
@@ -7419,7 +7453,7 @@ export const AiType39: {
 };
 
 // @public (undocumented)
-export type AiType39 = (typeof AiType39)[keyof typeof AiType39];
+export type AiType39 = typeof AiType39[keyof typeof AiType39];
 
 // @public (undocumented)
 export const AiType40: {
@@ -7430,7 +7464,7 @@ export const AiType40: {
 };
 
 // @public (undocumented)
-export type AiType40 = (typeof AiType40)[keyof typeof AiType40];
+export type AiType40 = typeof AiType40[keyof typeof AiType40];
 
 // @public (undocumented)
 export const AiType41: {
@@ -7439,7 +7473,7 @@ export const AiType41: {
 };
 
 // @public (undocumented)
-export type AiType41 = (typeof AiType41)[keyof typeof AiType41];
+export type AiType41 = typeof AiType41[keyof typeof AiType41];
 
 // @public (undocumented)
 export const AiType42: {
@@ -7450,7 +7484,7 @@ export const AiType42: {
 };
 
 // @public (undocumented)
-export type AiType42 = (typeof AiType42)[keyof typeof AiType42];
+export type AiType42 = typeof AiType42[keyof typeof AiType42];
 
 // @public (undocumented)
 export const AiType43: {
@@ -7460,7 +7494,7 @@ export const AiType43: {
 };
 
 // @public (undocumented)
-export type AiType43 = (typeof AiType43)[keyof typeof AiType43];
+export type AiType43 = typeof AiType43[keyof typeof AiType43];
 
 // @public (undocumented)
 export const AiType44: {
@@ -7471,7 +7505,7 @@ export const AiType44: {
 };
 
 // @public (undocumented)
-export type AiType44 = (typeof AiType44)[keyof typeof AiType44];
+export type AiType44 = typeof AiType44[keyof typeof AiType44];
 
 // @public (undocumented)
 export const AiType45: {
@@ -7481,7 +7515,7 @@ export const AiType45: {
 };
 
 // @public (undocumented)
-export type AiType45 = (typeof AiType45)[keyof typeof AiType45];
+export type AiType45 = typeof AiType45[keyof typeof AiType45];
 
 // @public (undocumented)
 export const AiType46: {
@@ -7492,7 +7526,7 @@ export const AiType46: {
 };
 
 // @public (undocumented)
-export type AiType46 = (typeof AiType46)[keyof typeof AiType46];
+export type AiType46 = typeof AiType46[keyof typeof AiType46];
 
 // @public (undocumented)
 export const AiType47: {
@@ -7500,7 +7534,7 @@ export const AiType47: {
 };
 
 // @public (undocumented)
-export type AiType47 = (typeof AiType47)[keyof typeof AiType47];
+export type AiType47 = typeof AiType47[keyof typeof AiType47];
 
 // @public (undocumented)
 export const AiType48: {
@@ -7508,7 +7542,7 @@ export const AiType48: {
 };
 
 // @public (undocumented)
-export type AiType48 = (typeof AiType48)[keyof typeof AiType48];
+export type AiType48 = typeof AiType48[keyof typeof AiType48];
 
 // @public (undocumented)
 export const AiType49: {
@@ -7521,7 +7555,7 @@ export const AiType49: {
 };
 
 // @public (undocumented)
-export type AiType49 = (typeof AiType49)[keyof typeof AiType49];
+export type AiType49 = typeof AiType49[keyof typeof AiType49];
 
 // @public (undocumented)
 export const AiType50: {
@@ -7530,7 +7564,7 @@ export const AiType50: {
 };
 
 // @public (undocumented)
-export type AiType50 = (typeof AiType50)[keyof typeof AiType50];
+export type AiType50 = typeof AiType50[keyof typeof AiType50];
 
 // @public (undocumented)
 export const AiType53: {
@@ -7540,7 +7574,7 @@ export const AiType53: {
 };
 
 // @public (undocumented)
-export type AiType53 = (typeof AiType53)[keyof typeof AiType53];
+export type AiType53 = typeof AiType53[keyof typeof AiType53];
 
 // @public (undocumented)
 export const AiType62: {
@@ -7548,7 +7582,7 @@ export const AiType62: {
 };
 
 // @public (undocumented)
-export type AiType62 = (typeof AiType62)[keyof typeof AiType62];
+export type AiType62 = typeof AiType62[keyof typeof AiType62];
 
 // @public (undocumented)
 export const AiType63: {
@@ -7556,7 +7590,7 @@ export const AiType63: {
 };
 
 // @public (undocumented)
-export type AiType63 = (typeof AiType63)[keyof typeof AiType63];
+export type AiType63 = typeof AiType63[keyof typeof AiType63];
 
 // @public (undocumented)
 export const AiType64: {
@@ -7564,7 +7598,7 @@ export const AiType64: {
 };
 
 // @public (undocumented)
-export type AiType64 = (typeof AiType64)[keyof typeof AiType64];
+export type AiType64 = typeof AiType64[keyof typeof AiType64];
 
 // @public (undocumented)
 export const AiType65: {
@@ -7572,7 +7606,7 @@ export const AiType65: {
 };
 
 // @public (undocumented)
-export type AiType65 = (typeof AiType65)[keyof typeof AiType65];
+export type AiType65 = typeof AiType65[keyof typeof AiType65];
 
 // @public (undocumented)
 export const AiType66: {
@@ -7580,7 +7614,7 @@ export const AiType66: {
 };
 
 // @public (undocumented)
-export type AiType66 = (typeof AiType66)[keyof typeof AiType66];
+export type AiType66 = typeof AiType66[keyof typeof AiType66];
 
 // @public (undocumented)
 export const AiType67: {
@@ -7588,7 +7622,7 @@ export const AiType67: {
 };
 
 // @public (undocumented)
-export type AiType67 = (typeof AiType67)[keyof typeof AiType67];
+export type AiType67 = typeof AiType67[keyof typeof AiType67];
 
 // @public (undocumented)
 export const AiType68: {
@@ -7596,7 +7630,7 @@ export const AiType68: {
 };
 
 // @public (undocumented)
-export type AiType68 = (typeof AiType68)[keyof typeof AiType68];
+export type AiType68 = typeof AiType68[keyof typeof AiType68];
 
 // @public (undocumented)
 export const AiType69: {
@@ -7604,7 +7638,7 @@ export const AiType69: {
 };
 
 // @public (undocumented)
-export type AiType69 = (typeof AiType69)[keyof typeof AiType69];
+export type AiType69 = typeof AiType69[keyof typeof AiType69];
 
 // @public (undocumented)
 export const AiType70: {
@@ -7612,7 +7646,7 @@ export const AiType70: {
 };
 
 // @public (undocumented)
-export type AiType70 = (typeof AiType70)[keyof typeof AiType70];
+export type AiType70 = typeof AiType70[keyof typeof AiType70];
 
 // @public (undocumented)
 export const AiType71: {
@@ -7620,7 +7654,7 @@ export const AiType71: {
 };
 
 // @public (undocumented)
-export type AiType71 = (typeof AiType71)[keyof typeof AiType71];
+export type AiType71 = typeof AiType71[keyof typeof AiType71];
 
 // @public (undocumented)
 export const AiType72: {
@@ -7628,7 +7662,7 @@ export const AiType72: {
 };
 
 // @public (undocumented)
-export type AiType72 = (typeof AiType72)[keyof typeof AiType72];
+export type AiType72 = typeof AiType72[keyof typeof AiType72];
 
 // @public (undocumented)
 export const AiType73: {
@@ -7636,7 +7670,7 @@ export const AiType73: {
 };
 
 // @public (undocumented)
-export type AiType73 = (typeof AiType73)[keyof typeof AiType73];
+export type AiType73 = typeof AiType73[keyof typeof AiType73];
 
 // @public (undocumented)
 export const AiType74: {
@@ -7644,7 +7678,7 @@ export const AiType74: {
 };
 
 // @public (undocumented)
-export type AiType74 = (typeof AiType74)[keyof typeof AiType74];
+export type AiType74 = typeof AiType74[keyof typeof AiType74];
 
 // @public (undocumented)
 export const AiType75: {
@@ -7652,7 +7686,7 @@ export const AiType75: {
 };
 
 // @public (undocumented)
-export type AiType75 = (typeof AiType75)[keyof typeof AiType75];
+export type AiType75 = typeof AiType75[keyof typeof AiType75];
 
 // @public (undocumented)
 export const AiType76: {
@@ -7660,7 +7694,7 @@ export const AiType76: {
 };
 
 // @public (undocumented)
-export type AiType76 = (typeof AiType76)[keyof typeof AiType76];
+export type AiType76 = typeof AiType76[keyof typeof AiType76];
 
 // @public (undocumented)
 export const AiType77: {
@@ -7668,7 +7702,7 @@ export const AiType77: {
 };
 
 // @public (undocumented)
-export type AiType77 = (typeof AiType77)[keyof typeof AiType77];
+export type AiType77 = typeof AiType77[keyof typeof AiType77];
 
 // @public (undocumented)
 export const AiType78: {
@@ -7676,7 +7710,7 @@ export const AiType78: {
 };
 
 // @public (undocumented)
-export type AiType78 = (typeof AiType78)[keyof typeof AiType78];
+export type AiType78 = typeof AiType78[keyof typeof AiType78];
 
 // @public (undocumented)
 export const AiType79: {
@@ -7684,7 +7718,7 @@ export const AiType79: {
 };
 
 // @public (undocumented)
-export type AiType79 = (typeof AiType79)[keyof typeof AiType79];
+export type AiType79 = typeof AiType79[keyof typeof AiType79];
 
 // @public (undocumented)
 export const AiType80: {
@@ -7692,7 +7726,7 @@ export const AiType80: {
 };
 
 // @public (undocumented)
-export type AiType80 = (typeof AiType80)[keyof typeof AiType80];
+export type AiType80 = typeof AiType80[keyof typeof AiType80];
 
 // @public (undocumented)
 export const AiType81: {
@@ -7700,7 +7734,7 @@ export const AiType81: {
 };
 
 // @public (undocumented)
-export type AiType81 = (typeof AiType81)[keyof typeof AiType81];
+export type AiType81 = typeof AiType81[keyof typeof AiType81];
 
 // @public (undocumented)
 export const AiType82: {
@@ -7708,7 +7742,7 @@ export const AiType82: {
 };
 
 // @public (undocumented)
-export type AiType82 = (typeof AiType82)[keyof typeof AiType82];
+export type AiType82 = typeof AiType82[keyof typeof AiType82];
 
 // @public (undocumented)
 export const AiType83: {
@@ -7716,7 +7750,7 @@ export const AiType83: {
 };
 
 // @public (undocumented)
-export type AiType83 = (typeof AiType83)[keyof typeof AiType83];
+export type AiType83 = typeof AiType83[keyof typeof AiType83];
 
 // @public (undocumented)
 export const AiType84: {
@@ -7724,7 +7758,7 @@ export const AiType84: {
 };
 
 // @public (undocumented)
-export type AiType84 = (typeof AiType84)[keyof typeof AiType84];
+export type AiType84 = typeof AiType84[keyof typeof AiType84];
 
 // @public (undocumented)
 export const AiType9: {
@@ -7732,7 +7766,7 @@ export const AiType9: {
 };
 
 // @public (undocumented)
-export type AiType9 = (typeof AiType9)[keyof typeof AiType9];
+export type AiType9 = typeof AiType9[keyof typeof AiType9];
 
 // @public
 export interface AiUploadDocumentResponse {
@@ -8064,7 +8098,7 @@ export const AiViewport: {
 };
 
 // @public (undocumented)
-export type AiViewport = (typeof AiViewport)[keyof typeof AiViewport];
+export type AiViewport = typeof AiViewport[keyof typeof AiViewport];
 
 // @public
 export interface AiVisualisation {
@@ -8963,7 +8997,7 @@ export const AiWidth: {
 };
 
 // @public (undocumented)
-export type AiWidth = (typeof AiWidth)[keyof typeof AiWidth];
+export type AiWidth = typeof AiWidth[keyof typeof AiWidth];
 
 // @public (undocumented)
 export interface AiWidthItem {
@@ -9003,7 +9037,7 @@ export const AiYaxisPrimaryType: {
 };
 
 // @public (undocumented)
-export type AiYaxisPrimaryType = (typeof AiYaxisPrimaryType)[keyof typeof AiYaxisPrimaryType];
+export type AiYaxisPrimaryType = typeof AiYaxisPrimaryType[keyof typeof AiYaxisPrimaryType];
 
 // @public (undocumented)
 export const AiYaxisSecondaryType: {
@@ -9013,7 +9047,7 @@ export const AiYaxisSecondaryType: {
 };
 
 // @public (undocumented)
-export type AiYaxisSecondaryType = (typeof AiYaxisSecondaryType)[keyof typeof AiYaxisSecondaryType];
+export type AiYaxisSecondaryType = typeof AiYaxisSecondaryType[keyof typeof AiYaxisSecondaryType];
 
 // @public (undocumented)
 export interface AlertAfm {
@@ -17551,6 +17585,7 @@ export interface DependentEntitiesResponse {
 export interface DependsOn {
     'complementFilter'?: boolean;
     'label': string;
+    'type'?: DependsOnTypeEnum;
     'values': Array<string | null>;
 }
 
@@ -17565,6 +17600,9 @@ export interface DependsOnMatchFilter {
     // (undocumented)
     'matchFilter': AfmMatchAttributeFilter;
 }
+
+// @public (undocumented)
+export type DependsOnTypeEnum = 'label' | 'computedAttribute';
 
 // @public
 export interface DimAttribute {
@@ -17610,6 +17648,7 @@ export interface ElementsRequest {
     'patternFilter'?: string;
     'sortOrder'?: ElementsRequestSortOrderEnum;
     'timezone'?: string;
+    'type'?: ElementsRequestTypeEnum;
     'validateBy'?: Array<ValidateByItem>;
 }
 
@@ -17618,6 +17657,9 @@ export type ElementsRequestDependsOnInner = DependsOn | DependsOnDateFilter | De
 
 // @public (undocumented)
 export type ElementsRequestSortOrderEnum = 'ASC' | 'DESC';
+
+// @public (undocumented)
+export type ElementsRequestTypeEnum = 'label' | 'computedAttribute';
 
 // @public
 export interface ElementsResponse {
@@ -43712,6 +43754,9 @@ export interface SmartFunctionResponse {
 export class SmartFunctionsAi extends AiBaseAPI implements SmartFunctionsAiInterface {
     // @deprecated
     aiSearch(requestParameters: SmartFunctionsAiAiSearchRequest, options?: AxiosRequestConfig): AxiosPromise<AiSearchResult>;
+    // @deprecated
+    resolveLlmProviders(requestParameters: SmartFunctionsAiResolveLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<AiResolvedLlms>;
+    resolveLlmProvidersV2(requestParameters: SmartFunctionsAiResolveLlmProvidersV2Request, options?: AxiosRequestConfig): AxiosPromise<AiResolvedLlms>;
     semanticSearch(requestParameters: SmartFunctionsAiSemanticSearchRequest, options?: AxiosRequestConfig): AxiosPromise<AiSearchResult>;
 }
 
@@ -43719,6 +43764,12 @@ export class SmartFunctionsAi extends AiBaseAPI implements SmartFunctionsAiInter
 function SmartFunctionsAi_AiSearch(axios: AxiosInstance, basePath: string, requestParameters: SmartFunctionsAiAiSearchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiSearchResult>;
 export { SmartFunctionsAi_AiSearch as GenAiApi_AiSearch }
 export { SmartFunctionsAi_AiSearch }
+
+// @public
+export function SmartFunctionsAi_ResolveLlmProviders(axios: AxiosInstance, basePath: string, requestParameters: SmartFunctionsAiResolveLlmProvidersRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiResolvedLlms>;
+
+// @public
+export function SmartFunctionsAi_ResolveLlmProvidersV2(axios: AxiosInstance, basePath: string, requestParameters: SmartFunctionsAiResolveLlmProvidersV2Request, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiResolvedLlms>;
 
 // @public
 export function SmartFunctionsAi_SemanticSearch(axios: AxiosInstance, basePath: string, requestParameters: SmartFunctionsAiSemanticSearchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiSearchResult>;
@@ -43736,13 +43787,32 @@ export { SmartFunctionsAiAiSearchRequest }
 export function SmartFunctionsAiAxiosParamCreator_AiSearch(workspaceId: string, aiSearchRequest: AiSearchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
+export function SmartFunctionsAiAxiosParamCreator_ResolveLlmProviders(workspaceId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
+export function SmartFunctionsAiAxiosParamCreator_ResolveLlmProvidersV2(workspaceId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
 export function SmartFunctionsAiAxiosParamCreator_SemanticSearch(workspaceId: string, aiSearchRequest: AiSearchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
 export interface SmartFunctionsAiInterface {
     // @deprecated
     aiSearch(requestParameters: SmartFunctionsAiAiSearchRequest, options?: AxiosRequestConfig): AxiosPromise<AiSearchResult>;
+    // @deprecated
+    resolveLlmProviders(requestParameters: SmartFunctionsAiResolveLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<AiResolvedLlms>;
+    resolveLlmProvidersV2(requestParameters: SmartFunctionsAiResolveLlmProvidersV2Request, options?: AxiosRequestConfig): AxiosPromise<AiResolvedLlms>;
     semanticSearch(requestParameters: SmartFunctionsAiSemanticSearchRequest, options?: AxiosRequestConfig): AxiosPromise<AiSearchResult>;
+}
+
+// @public
+export interface SmartFunctionsAiResolveLlmProvidersRequest {
+    readonly workspaceId: string;
+}
+
+// @public
+export interface SmartFunctionsAiResolveLlmProvidersV2Request {
+    readonly workspaceId: string;
 }
 
 // @public
