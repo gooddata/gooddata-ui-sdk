@@ -2,6 +2,7 @@
 
 import { type AccessGranularPermission } from "../../../accessControl/index.js";
 import { type IAuditable, type IObjectCertification } from "../../../base/metadata.js";
+import { type ISemanticConditionalFormatting } from "../../../conditionalFormatting/index.js";
 import { type IMetadataObject, type IMetadataObjectDefinition, isMetadataObject } from "../types.js";
 
 /**
@@ -43,6 +44,13 @@ export interface IMeasureMetadataObjectBase {
      * Measure tags.
      */
     tags?: string[];
+
+    /**
+     * Semantic-layer conditional formatting authored on this metric.
+     *
+     * @alpha
+     */
+    conditionalFormatting?: ISemanticConditionalFormatting;
 }
 
 /**

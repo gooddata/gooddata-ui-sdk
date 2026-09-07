@@ -80,7 +80,7 @@
         "lodash-es": "^4.17.23",
         "prettier": "^3.6.2",
         "raf": "3.4.1",
-        "react-intl": "7.1.11",
+        "react-intl": "10.1.25",
         "source-map-loader": "^4.0.0",
         "style-loader": "3.3.4",
         "ts-loader": "^8.3.0",

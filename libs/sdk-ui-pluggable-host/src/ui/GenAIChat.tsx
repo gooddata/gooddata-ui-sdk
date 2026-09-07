@@ -20,6 +20,8 @@ import {
 import { GenAIChatDialogConnected, type GenAIChatConnectedEvent } from "@gooddata/sdk-ui-gen-ai/internal";
 import { HEADER_CHAT_BUTTON_ID, useToastMessage } from "@gooddata/sdk-ui-kit";
 
+import { useGenAiRightPanel } from "./useGenAiRightPanel.js";
+
 // DOM id of the embedded dashboard's AI trigger button (defined in gdc-dashboards-runtime as
 // EMBED_AI_TRIGGER_ID). Used as the chat's focus-return target when running embedded, where the host
 // header chat button does not exist. Kept as a literal to avoid a host→app package dependency.
@@ -215,7 +217,7 @@ export function GenAIChat({
         [addError, addSuccess, intl, onEvent],
     );
 
-    const enableGenAiRightPanel = settings?.["enableGenAiRightPanel"];
+    const enableRightPanel = useGenAiRightPanel(settings?.["enableGenAiRightPanel"] as boolean, embedded);
 
     return (
         <GenAIChatDialogConnected
@@ -245,7 +247,7 @@ export function GenAIChat({
             allowNativeLinks={false}
             onLinkClick={onLinkClick}
             onEvent={handleEvent}
-            displayMode={embedded || !enableGenAiRightPanel ? "modal" : "inline"}
+            displayMode={enableRightPanel ? "inline" : "modal"}
             returnFocusTo={embedded ? EMBEDDED_AI_TRIGGER_ID : HEADER_CHAT_BUTTON_ID}
         />
     );

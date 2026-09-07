@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import { UiDate } from "@gooddata/sdk-ui-kit";
 
 import { getVisualizationType } from "../catalogItem/guards.js";
-import { type ICatalogItem } from "../catalogItem/types.js";
+import { type ICatalogItem, type ICatalogItemRef } from "../catalogItem/types.js";
 import { ObjectTypeIcon } from "../objectType/ObjectTypeIcon.js";
 
 const DATE_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
@@ -15,14 +15,14 @@ const DATE_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
 
 type Props = {
     item: ICatalogItem;
-    onClick?: (item: ICatalogItem) => void;
+    onClick?: (item: ICatalogItemRef) => void;
 };
 
 export function CatalogItemCard({ item, onClick }: Props) {
     const intl = useIntl();
 
     const handleClick = () => {
-        onClick?.(item);
+        onClick?.({ identifier: item.identifier, type: item.type });
     };
 
     return (

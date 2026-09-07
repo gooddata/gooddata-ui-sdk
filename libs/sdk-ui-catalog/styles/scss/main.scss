@@ -3,6 +3,7 @@
 @use "sass:meta";
 @use "@gooddata/sdk-ui-kit/src/@ui/defaultTheme.scss";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-ext/styles/internal/scss/conditional_formatting";
 
 @use "./detail.scss";
 

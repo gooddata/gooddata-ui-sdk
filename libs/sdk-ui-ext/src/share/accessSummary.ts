@@ -4,14 +4,16 @@ import type {
     AccessGranteeDetail,
     IGranularRulesAccess,
     IObjectAccessList,
-    ObjRef,
+    IUser,
 } from "@gooddata/sdk-model";
 import type { GeneralAccessValue } from "@gooddata/sdk-ui-kit";
 
 import {
     directLevel,
+    grantHasAccess,
     granteeId,
     granteesFromAccessList,
+    selfGranteeRef,
     strongestLevel,
 } from "./objectShareController.helpers.js";
 import type { IObjectShareDraft, ObjectSharePermissionLevel } from "./objectShareController.types.js";
@@ -88,10 +90,12 @@ export function composeEffectiveWorkspaceAccess(
  *
  * @internal
  */
-export function accessListToSummary(list: IObjectAccessList, self?: ObjRef): IObjectAccessSummary {
+export function accessListToSummary(list: IObjectAccessList, self?: IUser): IObjectAccessSummary {
     const inheritedLevel = deriveInheritedWorkspaceLevel(list.grants);
-    const grantees = granteesFromAccessList(list);
-    const selfId = self ? granteeId("user", self) : undefined;
+    // A revoked-but-still-listed grant (see grantHasAccess) is not a grantee — for the
+    // count or for matching the caller's own grant, or the two could disagree about it.
+    const grantees = granteesFromAccessList({ grants: list.grants.filter(grantHasAccess) });
+    const selfId = self ? granteeId("user", selfGranteeRef(self)) : undefined;
     return {
         ...composeEffectiveWorkspaceAccess(
             deriveGeneralAccess(list.grants),
@@ -111,13 +115,24 @@ export function accessListToSummary(list: IObjectAccessList, self?: ObjRef): IOb
 export type ObjectShareLevel = "PRIVATE" | "SHARED" | "WORKSPACE";
 
 /**
- * The access level to display for a summary.
+ * Explicit grantees other than the caller.
  *
  * @remarks
  * The caller's own grant does not count: the creator is granted access when the object is
- * made, so counting it would read an object only they can see as SHARED. The summary must
- * therefore come from `accessListToSummary` WITH a caller ref, or a sole own grant reads
- * SHARED.
+ * made, so counting it would read an object only they can see as shared. The summary must
+ * therefore come from `accessListToSummary` WITH a caller ref, or a sole own grant counts.
+ *
+ * @internal
+ */
+export function summaryOtherGranteeCount(summary: IObjectAccessSummary): number {
+    return Math.max(0, summary.granteeCount - (summary.selfIsGrantee ? 1 : 0));
+}
+
+/**
+ * The access level to display for a summary.
+ *
+ * @remarks
+ * Built on {@link summaryOtherGranteeCount}, so it carries the same caller-ref requirement.
  *
  * @internal
  */
@@ -125,8 +140,7 @@ export function summaryToShareLevel(summary: IObjectAccessSummary): ObjectShareL
     if (summary.generalAccess === "WORKSPACE") {
         return "WORKSPACE";
     }
-    const others = summary.granteeCount - (summary.selfIsGrantee ? 1 : 0);
-    return others > 0 ? "SHARED" : "PRIVATE";
+    return summaryOtherGranteeCount(summary) > 0 ? "SHARED" : "PRIVATE";
 }
 
 /**

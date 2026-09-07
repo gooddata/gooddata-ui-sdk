@@ -150,6 +150,7 @@ import { IResultHeader } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
 import { ISecuritySettingsService } from '@gooddata/sdk-backend-spi';
+import { ISemanticConditionalFormatting } from '@gooddata/sdk-model';
 import { ISemanticSearchQuery } from '@gooddata/sdk-backend-spi';
 import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
@@ -1361,6 +1362,8 @@ export type LocalIdMap = {
 export class MeasureMetadataObjectBuilder<T extends IMeasureMetadataObject = IMeasureMetadataObject> extends MetadataObjectBuilder<T> {
     // (undocumented)
     certification(certification?: IMeasureMetadataObject["certification"]): this;
+    // (undocumented)
+    conditionalFormatting(conditionalFormatting?: ISemanticConditionalFormatting): this;
     // (undocumented)
     created(createdAt?: string): this;
     // (undocumented)

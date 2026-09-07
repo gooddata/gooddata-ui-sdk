@@ -231,6 +231,10 @@ $content-font-size: 14px;
         dd {
             margin-inline-start: 0;
         }
+
+        &__cell--align-top {
+            align-self: start;
+        }
     }
 
     // LABELS column value — primary title plus an underlined "+N more" link
@@ -255,38 +259,28 @@ $content-font-size: 14px;
 
     &__access-row {
         display: flex;
-        flex-wrap: wrap;
-        align-items: center;
+        flex-direction: column;
         gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
 
-        &__chip {
-            display: inline-flex;
+        &__line {
+            display: flex;
             align-items: center;
             gap: 7px;
-            padding: 0;
-            background: transparent;
-            border: none;
             color: var(--gd-palette-complementary-8);
-            font: inherit;
         }
 
-        &__chip-icon {
+        &__icon {
             display: inline-flex;
+            flex: 0 0 auto;
             align-items: center;
             justify-content: center;
             width: 26px;
             height: 26px;
             border-radius: 50%;
             background: var(--gd-palette-complementary-2);
-        }
-
-        &__shared-link {
-            cursor: pointer;
-            text-decoration: underline;
-
-            &:hover {
-                color: var(--gd-palette-primary-base);
-            }
         }
     }
 
@@ -323,6 +317,10 @@ $content-font-size: 14px;
     &__detail-cell {
         .input-checkbox-toggle .input-label-text {
             padding-right: 30px;
+        }
+
+        .s-cf-catalog-toggle-label {
+            margin-right: 4px;
         }
 
         .gd-ui-kit-tags__tags-container {

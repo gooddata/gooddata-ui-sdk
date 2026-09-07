@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 /**
  * Classification of the screen size according to its size with respect to the set breakpoints.
@@ -57,6 +57,11 @@ export interface IMediaQueries {
      * Is screen classified as 'lg' or larger?
      */
     ">=lg": string;
+
+    /**
+     * Is screen classified as 'lg' or smaller?
+     */
+    "<=lg": string;
 
     /**
      * Is screen classified as 'lg'?

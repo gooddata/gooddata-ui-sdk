@@ -1,12 +1,12 @@
 // (C) 2026 GoodData Corporation
 
-import type { ICatalogItem } from "../catalogItem/types.js";
+import type { ICatalogItem, ICatalogItemRef } from "../catalogItem/types.js";
 
 import { CatalogItemCard } from "./CatalogItemCard.js";
 
 type Props = {
     items: ICatalogItem[];
-    onItemClick?: (item: ICatalogItem) => void;
+    onItemClick?: (item: ICatalogItemRef) => void;
 };
 
 export function CatalogItemCardGrid({ items, onItemClick }: Props) {

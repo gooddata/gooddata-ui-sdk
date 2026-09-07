@@ -75,7 +75,7 @@ const notifyTokenError = (onError: OnError | undefined, hasTokenError: boolean):
 
 export function geoValidatorHOC<T>(InnerComponent: ComponentClass<T>): ComponentType<T & IGeoValidatorProps> {
     const ValidatorHOCWrapped = memo<T & IGeoValidatorProps>(
-        function ValidatorHOCWrapped(props) {
+        function ValidatorHOCWrapped(props: T & IGeoValidatorProps) {
             const [isMapboxTokenInvalid, setIsMapboxTokenInvalid] = useState(false);
             const errorMap = useRef<IErrorDescriptors>(newErrorMapping(props.intl));
             const prevMapboxTokenRef = useRef<string | undefined>(props.config?.mapboxToken);

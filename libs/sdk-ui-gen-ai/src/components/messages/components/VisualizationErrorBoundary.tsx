@@ -2,22 +2,28 @@
 
 import { Component, type ReactNode } from "react";
 
-import { type WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { ErrorComponent } from "@gooddata/sdk-ui";
 
 import { extractError } from "../../../store/sideEffects/utils.js";
 
-type ErrorBoundaryProps = WrappedComponentProps & {
+interface IErrorBoundaryProps {
     children: ReactNode;
-};
+}
 
 type ErrorBoundaryState = {
     error?: string;
 };
 
-class VisualizationErrorBoundaryComponent extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-    constructor(props: ErrorBoundaryProps) {
+function GlobalErrorMessage() {
+    const intl = useIntl();
+
+    return <ErrorComponent message={intl.formatMessage({ id: "gd.gen-ai.global-error" })} />;
+}
+
+export class VisualizationErrorBoundary extends Component<IErrorBoundaryProps, ErrorBoundaryState> {
+    constructor(props: IErrorBoundaryProps) {
         super(props);
         this.state = { error: "" };
     }
@@ -28,13 +34,9 @@ class VisualizationErrorBoundaryComponent extends Component<ErrorBoundaryProps, 
 
     override render() {
         if (this.state.error) {
-            return (
-                <ErrorComponent message={this.props.intl.formatMessage({ id: "gd.gen-ai.global-error" })} />
-            );
+            return <GlobalErrorMessage />;
         }
 
         return this.props.children;
     }
 }
-
-export const VisualizationErrorBoundary = injectIntl(VisualizationErrorBoundaryComponent);

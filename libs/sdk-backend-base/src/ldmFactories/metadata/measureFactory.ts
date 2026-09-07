@@ -3,6 +3,7 @@
 import {
     type AccessGranularPermission,
     type IMeasureMetadataObject,
+    type ISemanticConditionalFormatting,
     type IUser,
     type MetricType,
     type ObjRef,
@@ -38,6 +39,11 @@ export class MeasureMetadataObjectBuilder<
 
     public metricType(metricType?: MetricType): this {
         this.item.metricType = metricType;
+        return this;
+    }
+
+    public conditionalFormatting(conditionalFormatting?: ISemanticConditionalFormatting): this {
+        this.item.conditionalFormatting = conditionalFormatting;
         return this;
     }
 

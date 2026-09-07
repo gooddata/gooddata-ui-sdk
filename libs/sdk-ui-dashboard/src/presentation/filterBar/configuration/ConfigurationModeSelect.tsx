@@ -2,7 +2,7 @@
 
 import { type ChangeEvent, useCallback } from "react";
 
-import { type IntlShape } from "react-intl/src/types.js";
+import { type IntlShape } from "react-intl";
 
 import { messages } from "../../../locales.js";
 

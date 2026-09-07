@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { useMediaQuery as useReactResponsiveMediaQuery } from "react-responsive";
 import { invariant } from "ts-invariant";
 
@@ -79,6 +80,7 @@ export const useMediaQuery = (mediaQueryName: keyof IMediaQueries): boolean => {
         "<=md": getQueryMatchingOrSmaller(mediumRange),
         md: getQueryMatching(mediumRange),
         ">=lg": getQueryMatchingOrGreater(largeRange),
+        "<=lg": getQueryMatchingOrSmaller(largeRange),
         lg: getQueryMatching(largeRange),
         ">=xl": getQueryMatchingOrGreater(xlargeRange),
         xl: getQueryMatching(xlargeRange),

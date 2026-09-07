@@ -173,7 +173,7 @@ export interface IConditionalFormatting {
  * (`attributeHeader.conditionalFormatting` / `measureHeaderItem.conditionalFormatting`) so every
  * insight built on that object inherits them without re-authoring. Unlike {@link IConditionalFormatting},
  * there is no per-rule target — the target is implicit (the header the rules arrived on) and there
- * is no on/off toggle or rule grouping, only a flat, first-match-wins condition list.
+ * is no rule grouping, only a flat, first-match-wins condition list.
  *
  * @alpha
  */
@@ -183,4 +183,21 @@ export interface ISemanticConditionalFormatting {
      */
     version?: string;
     conditions: readonly IConditionalFormattingCondition[];
+    /**
+     * Whether the rules are applied when rendering. Absent is treated as `true` — this lets the
+     * object be turned off without deleting the authored conditions, distinct from having no rules
+     * at all.
+     */
+    enabled?: boolean;
+}
+
+/**
+ * Whether semantic-layer conditional formatting applies; an absent `enabled` means on.
+ *
+ * @alpha
+ */
+export function isSemanticConditionalFormattingEnabled(
+    conditionalFormatting: ISemanticConditionalFormatting,
+): boolean {
+    return conditionalFormatting.enabled !== false;
 }

@@ -255,11 +255,15 @@ function errorValidationResult(
 
 /**
  * Minified CSS can have 0. replaced with ., and missing white spaces, so we need to normalize the value.
- * Also normalizes color values to handle rgba/hex equivalence.
+ * Also normalizes color values to handle rgb/rgba/hex equivalence.
+ *
+ * @internal
  */
-function normalizeCssVariableValue(value: string) {
-    // First normalize whitespace and leading zeros
-    let normalized = value.replace("0.", ".").replace(/\s+/g, "");
+export function normalizeCssVariableValue(value: string) {
+    // First normalize whitespace and leading zeros (".5" -> "0.5").
+    // Only a dot that is not preceded by a digit or another dot is a stripped leading zero,
+    // so decimals inside numbers such as "250.4" are left untouched.
+    let normalized = value.replace(/\s+/g, "").replace(/(^|[^\d.])\.(\d)/g, "$10.$2");
 
     // Normalize all color values in the string (handles nested var() with colors)
     normalized = normalizeColorsInValue(normalized);
@@ -317,14 +321,20 @@ function normalizeColorsInValue(value: string): string {
         },
     );
 
-    // Normalize rgba() values to consistent format (no spaces, consistent decimal)
+    // Normalize rgb()/rgba() values to consistent rgba() format.
+    // Sass 1.79+ no longer rounds color channels, so derived colors are emitted with
+    // fractional channels (e.g. rgb(231.5, 247.3, 252.1)) - round them to integers so
+    // they compare equal to the hex/rgba values in the specification.
     result = result.replace(
-        /rgba\((\d+),(\d+),(\d+),([\d.]+)\)/g,
-        (_match, r: string, g: string, b: string, a: string) => {
-            const alpha = parseFloat(a);
+        /rgba?\(([\d.]+),([\d.]+),([\d.]+)(?:,([\d.]+))?\)/g,
+        (_match, r: string, g: string, b: string, a: string | undefined) => {
+            const red = Math.round(parseFloat(r));
+            const green = Math.round(parseFloat(g));
+            const blue = Math.round(parseFloat(b));
+            const alpha = a === undefined ? 1 : parseFloat(a);
             // Round alpha to 2 decimal places for consistent comparison
             const alphaRounded = Math.round(alpha * 100) / 100;
-            return `rgba(${r},${g},${b},${alphaRounded})`;
+            return `rgba(${red},${green},${blue},${alphaRounded})`;
         },
     );
 

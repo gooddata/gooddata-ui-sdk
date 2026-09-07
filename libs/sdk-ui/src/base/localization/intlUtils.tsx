@@ -10,8 +10,7 @@ import {
     useState,
 } from "react";
 
-import { IntlProvider, type IntlShape, createIntl } from "react-intl";
-import type { IntlConfig } from "react-intl/src/types.js";
+import { type IntlConfig, IntlProvider, type IntlShape, createIntl } from "react-intl";
 
 import { wrapDisplayName } from "../react/wrapDisplayName.js";
 

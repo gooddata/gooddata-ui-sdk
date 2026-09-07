@@ -809,8 +809,9 @@ export interface IFeatureFlags {
     enableConditionalFormatting?: boolean;
 
     /**
-     * Enable inheriting conditional formatting rules authored on a semantic-layer catalog object
-     * (label, metric, fact, or date dataset) — independent of
+     * Enables semantic-layer conditional formatting (S7/F1-2660): authoring rules on a catalog object
+     * (label, metric, fact, or date dataset) via the catalog item detail view's Conditional Formatting
+     * row, and inheriting/rendering those rules in a pivot table — independent of
      * {@link IFeatureFlags.enableConditionalFormatting}, which only gates an insight's own authored
      * rules.
      */

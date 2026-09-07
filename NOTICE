@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-9-3
+Date generated: 2026-9-4
 
-Revision ID: afa814c354459436e47d18bcacd7eced035b8b8e
+Revision ID: 11979473d4e05fd9ab852cf66a47a85923ae4b77
 
 ================================================================================
 ================================================================================
@@ -94,19 +94,18 @@ No first party licenses found in gooddata-ui-sdk
 - @floating-ui/react-dom (2.1.9) [MIT]
 - @floating-ui/utils (0.2.12) [MIT]
 - @formatjs/cli-lib (6.6.6) [MIT]
-- @formatjs/ecma402-abstract (2.3.4) [MIT]
 - @formatjs/ecma402-abstract (2.3.6) [MIT]
 - @formatjs/ecma402-abstract (2.2.4) [MIT]
 - @formatjs/fast-memoize (2.2.7) [MIT]
+- @formatjs/fast-memoize (3.1.7) [MIT]
 - @formatjs/fast-memoize (2.2.3) [MIT]
 - @formatjs/icu-messageformat-parser (2.11.4) [MIT]
-- @formatjs/icu-messageformat-parser (2.11.2) [MIT]
 - @formatjs/icu-messageformat-parser (2.9.4) [MIT]
+- @formatjs/icu-messageformat-parser (3.5.17) [MIT]
 - @formatjs/icu-skeleton-parser (1.8.16) [MIT]
 - @formatjs/icu-skeleton-parser (1.8.8) [MIT]
-- @formatjs/icu-skeleton-parser (1.8.14) [MIT]
-- @formatjs/intl (3.1.6) [MIT]
-- @formatjs/intl-localematcher (0.6.1) [MIT]
+- @formatjs/icu-skeleton-parser (2.1.11) [MIT]
+- @formatjs/intl (4.1.20) [MIT]
 - @formatjs/intl-localematcher (0.6.2) [MIT]
 - @formatjs/intl-localematcher (0.5.8) [MIT]
 - @formatjs/ts-transformer (3.13.23) [MIT]
@@ -187,7 +186,6 @@ No first party licenses found in gooddata-ui-sdk
 - @types/geojson (7946.0.16) [MIT]
 - @types/geojson-vt (3.2.5) [MIT]
 - @types/hast (3.0.5) [MIT]
-- @types/hoist-non-react-statics (3.3.7) [MIT]
 - @types/json-stable-stringify (1.2.0) [MIT]
 - @types/mapbox__point-geometry (0.1.4) [MIT]
 - @types/mapbox__vector-tile (1.3.4) [MIT]
@@ -389,7 +387,7 @@ No first party licenses found in gooddata-ui-sdk
 - ini (1.3.8) [ISC]
 - inline-style-parser (0.2.7) [MIT]
 - inquirer (9.3.8) [MIT]
-- intl-messageformat (10.7.16) [BSD-3-Clause]
+- intl-messageformat (11.2.14) [BSD-3-Clause]
 - is-alphabetical (2.0.1) [MIT]
 - is-alphanumerical (2.0.1) [MIT]
 - is-arrayish (0.2.1) [MIT]
@@ -564,7 +562,7 @@ No first party licenses found in gooddata-ui-sdk
 - react-dnd-html5-backend (14.1.0) [MIT]
 - react-dom (19.1.1) [MIT]
 - react-fast-compare (3.2.2) [MIT]
-- react-intl (7.1.11) [BSD-3-Clause]
+- react-intl (10.1.25) [BSD-3-Clause]
 - react-is (16.13.1) [MIT]
 - react-is (19.2.8) [MIT]
 - react-lines-ellipsis (0.16.1) [MIT]
@@ -5050,73 +5048,6 @@ Dependency Path: @types/geojson > maplibre-gl > @types/geojson > maplibre-gl > @
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: @types/hoist-non-react-statics (3.3.7)
-
-Package Locator: npm+@types/hoist-non-react-statics$3.3.7
-
-Package Depth: Direct
---------------------------------------------------------------------------------
-
-TypeScript definitions for hoist-non-react-statics
-
-* Declared Licenses *
-MIT
-
-This project is licensed under the MIT license.
-Copyrights are respective of each contributor listed at the beginning of each definition file.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-© 2021 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-
-
-* License Header *
-This project is licensed under the MIT license.
-Copyrights are respective of each contributor listed at the beginning of each definition file.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-© 2021 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-
-
-* Package Info *
-
-Authors: ts-npm-types@microsoft.com
-Package Manager: NPM
-Project URL: https://www.npmjs.com/package/@types/hoist-non-react-statics
-Package Download URL: https://registry.npmjs.org/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.7.tgz
-Dependency Path: @types/hoist-non-react-statics > react-intl > @types/hoist-non-react-statics
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
 Package Title: @types/mdast (4.0.4)
 
 Package Locator: npm+@types/mdast$4.0.4
@@ -5340,7 +5271,7 @@ Authors: ts-npm-types@microsoft.com
 Package Manager: NPM
 Project URL: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react
 Package Download URL: https://registry.npmjs.org/@types/react/-/react-19.1.11.tgz
-Dependency Path: @types/hoist-non-react-statics > @types/react > @types/react > react-intl > @types/hoist-non-react-statics > @types/react > react-intl > @types/react > react-markdown > @types/react > react-select > @types/react-transition-group > @types/react > react-select-async-paginate > react-select > @types/react-transition-group > @types/react
+Dependency Path: @types/react > react-intl > @types/react > react-markdown > @types/react > react-select > @types/react-transition-group > @types/react > react-select-async-paginate > react-select > @types/react-transition-group > @types/react
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -8546,7 +8477,7 @@ Authors: mcridgway@gmail.com
 Package Manager: NPM
 Project URL: https://github.com/mridgway/hoist-non-react-statics#readme
 Package Download URL: https://registry.npmjs.org/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz
-Dependency Path: @evil-internetmann/react-dnd > hoist-non-react-statics > @types/hoist-non-react-statics > hoist-non-react-statics > hoist-non-react-statics > react-intl > @types/hoist-non-react-statics > hoist-non-react-statics > react-intl > hoist-non-react-statics > react-select > @emotion/react > hoist-non-react-statics > react-select-async-paginate > react-select > @emotion/react > hoist-non-react-statics
+Dependency Path: @evil-internetmann/react-dnd > hoist-non-react-statics > hoist-non-react-statics > react-select > @emotion/react > hoist-non-react-statics > react-select-async-paginate > react-select > @emotion/react > hoist-non-react-statics
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -11734,9 +11665,9 @@ Dependency Path: react-fast-compare
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: react-intl (7.1.11)
+Package Title: react-intl (10.1.25)
 
-Package Locator: npm+react-intl$7.1.11
+Package Locator: npm+react-intl$10.1.25
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -11814,7 +11745,7 @@ BSD-3-Clause
 Authors: caridy@gmail.com, contact@clarle.com, dinglinjie+npm@gmail.com, eferraiuolo@gmail.com, holevietlong@gmail.com, juan@dopazo.me, okuryu@okuryu.com, seth@bertalotto.net
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/react-intl
-Package Download URL: https://registry.npmjs.org/react-intl/-/react-intl-7.1.11.tgz
+Package Download URL: https://registry.npmjs.org/react-intl/-/react-intl-10.1.25.tgz
 Dependency Path: react-intl
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
@@ -14124,7 +14055,7 @@ Authors: andrew@wheream.io, mineyalc@microsoft.com, ncsander@indiana.edu, orta.t
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/tslib
 Package Download URL: https://registry.npmjs.org/tslib/-/tslib-2.8.1.tgz
-Dependency Path: @formatjs/cli-lib > @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract > @formatjs/fast-memoize > tslib > @formatjs/cli-lib > @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract > tslib > @formatjs/cli-lib > @formatjs/icu-messageformat-parser > tslib > @formatjs/cli-lib > tslib > @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract > tslib > @formatjs/icu-messageformat-parser > tslib > react-intl > @formatjs/intl > @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract > @formatjs/fast-memoize > tslib > react-intl > @formatjs/intl > @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract > tslib > react-intl > @formatjs/intl > @formatjs/icu-messageformat-parser > tslib > tslib
+Dependency Path: @formatjs/cli-lib > @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract > @formatjs/fast-memoize > tslib > @formatjs/cli-lib > @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract > tslib > @formatjs/cli-lib > @formatjs/icu-messageformat-parser > tslib > @formatjs/cli-lib > @formatjs/icu-skeleton-parser > tslib > @formatjs/cli-lib > tslib > @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract > @formatjs/fast-memoize > tslib > @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract > tslib > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > tslib > @formatjs/icu-messageformat-parser > tslib > tslib
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -16714,61 +16645,6 @@ Dependency Path: @floating-ui/dom > @floating-ui/core > @floating-ui/utils > @fl
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: @formatjs/ecma402-abstract (2.3.4)
-
-Package Locator: npm+@formatjs/ecma402-abstract$2.3.4
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-A collection of implementation for ECMAScript abstract operations
-
-* Declared Licenses *
-MIT
---------------------------------------------------------------------------------
-File matches:
-- LICENSE.md
-  - Copyright (c) 2023 FormatJS
-- package.json
---------------------------------------------------------------------------------
-
-MIT License
-
-Copyright (c) 2023 FormatJS
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* License Header *
-MIT License
-
-Copyright (c) 2023 FormatJS
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2023 FormatJS
-
-* Package Info *
-
-Authors: dinglinjie+npm@gmail.com, holevietlong@gmail.com, seth@bertalotto.net
-Package Manager: NPM
-Project URL: https://github.com/formatjs/formatjs
-Package Download URL: https://registry.npmjs.org/@formatjs/ecma402-abstract/-/ecma402-abstract-2.3.4.tgz
-Dependency Path: react-intl > @formatjs/ecma402-abstract > react-intl > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > @formatjs/ecma402-abstract > react-intl > @formatjs/intl > @formatjs/ecma402-abstract > react-intl > @formatjs/intl > @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract > react-intl > @formatjs/intl > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > @formatjs/ecma402-abstract > react-intl > @formatjs/intl > intl-messageformat > @formatjs/ecma402-abstract > react-intl > @formatjs/intl > intl-messageformat > @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract > react-intl > @formatjs/intl > intl-messageformat > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > @formatjs/ecma402-abstract > react-intl > intl-messageformat > @formatjs/ecma402-abstract > react-intl > intl-messageformat > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > @formatjs/ecma402-abstract
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
 Package Title: @formatjs/ecma402-abstract (2.3.6)
 
 Package Locator: npm+@formatjs/ecma402-abstract$2.3.6
@@ -16824,61 +16700,6 @@ Dependency Path: @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: @formatjs/icu-messageformat-parser (2.11.2)
-
-Package Locator: npm+@formatjs/icu-messageformat-parser$2.11.2
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-Hand-written ICU MessageFormat parser with compatible output as [`intl-messageformat-parser`](https://www.npmjs.com/package/intl-messageformat-parser) but 6 - 10 times as fast.
-
-* Declared Licenses *
-MIT
---------------------------------------------------------------------------------
-File matches:
-- LICENSE.md
-  - Copyright (c) 2023 FormatJS
-- package.json
---------------------------------------------------------------------------------
-
-MIT License
-
-Copyright (c) 2023 FormatJS
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* License Header *
-MIT License
-
-Copyright (c) 2023 FormatJS
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2023 FormatJS
-
-* Package Info *
-
-Authors: dinglinjie+npm@gmail.com, holevietlong@gmail.com, seth@bertalotto.net
-Package Manager: NPM
-Project URL: https://github.com/formatjs/formatjs#readme
-Package Download URL: https://registry.npmjs.org/@formatjs/icu-messageformat-parser/-/icu-messageformat-parser-2.11.2.tgz
-Dependency Path: react-intl > @formatjs/icu-messageformat-parser > react-intl > @formatjs/intl > @formatjs/icu-messageformat-parser > react-intl > @formatjs/intl > intl-messageformat > @formatjs/icu-messageformat-parser > react-intl > intl-messageformat > @formatjs/icu-messageformat-parser
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
 Package Title: @formatjs/icu-messageformat-parser (2.9.4)
 
 Package Locator: npm+@formatjs/icu-messageformat-parser$2.9.4
@@ -16931,6 +16752,61 @@ Package Manager: NPM
 Project URL: https://github.com/formatjs/formatjs#readme
 Package Download URL: https://registry.npmjs.org/@formatjs/icu-messageformat-parser/-/icu-messageformat-parser-2.9.4.tgz
 Dependency Path: @formatjs/cli-lib > @formatjs/icu-messageformat-parser > @formatjs/cli-lib > @formatjs/ts-transformer > @formatjs/icu-messageformat-parser
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: @formatjs/icu-messageformat-parser (3.5.17)
+
+Package Locator: npm+@formatjs/icu-messageformat-parser$3.5.17
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+Hand-written ICU MessageFormat parser with compatible output as [`intl-messageformat-parser`](https://www.npmjs.com/package/intl-messageformat-parser) but 6 - 10 times as fast.
+
+* Declared Licenses *
+MIT
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE.md
+  - Copyright (c) 2023 FormatJS
+- package.json
+--------------------------------------------------------------------------------
+
+MIT License
+
+Copyright (c) 2023 FormatJS
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* License Header *
+MIT License
+
+Copyright (c) 2023 FormatJS
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* Copyrights *
+MIT
+- Copyright (c) 2023 FormatJS
+
+* Package Info *
+
+Authors: dinglinjie+npm@gmail.com, holevietlong@gmail.com, seth@bertalotto.net
+Package Manager: NPM
+Project URL: https://github.com/formatjs/formatjs#readme
+Package Download URL: https://registry.npmjs.org/@formatjs/icu-messageformat-parser/-/icu-messageformat-parser-3.5.17.tgz
+Dependency Path: react-intl > @formatjs/icu-messageformat-parser > react-intl > @formatjs/intl > @formatjs/icu-messageformat-parser > react-intl > @formatjs/intl > intl-messageformat > @formatjs/icu-messageformat-parser > react-intl > intl-messageformat > @formatjs/icu-messageformat-parser
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -17040,9 +16916,9 @@ Dependency Path: @formatjs/cli-lib > @formatjs/icu-messageformat-parser > @forma
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: @formatjs/intl (3.1.6)
+Package Title: @formatjs/intl (4.1.20)
 
-Package Locator: npm+@formatjs/intl$3.1.6
+Package Locator: npm+@formatjs/intl$4.1.20
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -17090,7 +16966,7 @@ MIT
 Authors: dinglinjie+npm@gmail.com, holevietlong@gmail.com, seth@bertalotto.net
 Package Manager: NPM
 Project URL: https://formatjs.github.io/
-Package Download URL: https://registry.npmjs.org/@formatjs/intl/-/intl-3.1.6.tgz
+Package Download URL: https://registry.npmjs.org/@formatjs/intl/-/intl-4.1.20.tgz
 Dependency Path: react-intl > @formatjs/intl
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
@@ -24647,7 +24523,7 @@ Authors: anders.ekdahl@gmail.com, fredrik.nicol@gmail.com
 Package Manager: NPM
 Project URL: https://github.com/frenic/csstype#readme
 Package Download URL: https://registry.npmjs.org/csstype/-/csstype-3.2.3.tgz
-Dependency Path: @types/hoist-non-react-statics > @types/react > csstype > @types/react > csstype > react-intl > @types/hoist-non-react-statics > @types/react > csstype > react-intl > @types/react > csstype > react-markdown > @types/react > csstype > react-select > @emotion/react > @emotion/babel-plugin > @emotion/serialize > csstype > react-select > @types/react-transition-group > @types/react > csstype > react-select > react-transition-group > dom-helpers > csstype > react-select-async-paginate > react-select > @types/react-transition-group > @types/react > csstype > react-select-async-paginate > react-select > react-transition-group > dom-helpers > csstype
+Dependency Path: @types/react > csstype > react-intl > @types/react > csstype > react-markdown > @types/react > csstype > react-select > @emotion/react > @emotion/babel-plugin > @emotion/serialize > csstype > react-select > @emotion/react > @emotion/serialize > csstype > react-select > @types/react-transition-group > @types/react > csstype > react-select > react-transition-group > dom-helpers > csstype > react-select-async-paginate > react-select > @emotion/react > @emotion/serialize > csstype > react-select-async-paginate > react-select > @types/react-transition-group > @types/react > csstype > react-select-async-paginate > react-select > react-transition-group > dom-helpers > csstype
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -27247,9 +27123,9 @@ Dependency Path: stylelint > imurmurhash > stylelint > write-file-atomic > imurm
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: intl-messageformat (10.7.16)
+Package Title: intl-messageformat (11.2.14)
 
-Package Locator: npm+intl-messageformat$10.7.16
+Package Locator: npm+intl-messageformat$11.2.14
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -27339,7 +27215,7 @@ BSD-3-Clause
 Authors: a.pipkin@yahoo.com, caridy@gmail.com, contact@clarle.com, davglass@gmail.com, dinglinjie+npm@gmail.com, drew@folta.net, eferraiuolo@gmail.com, holevietlong@gmail.com, imalberto@gmail.com, lzhan@yahoo-inc.com, okuryu@okuryu.com, seth@bertalotto.net
 Package Manager: NPM
 Project URL: https://www.npmjs.com/package/intl-messageformat
-Package Download URL: https://registry.npmjs.org/intl-messageformat/-/intl-messageformat-10.7.16.tgz
+Package Download URL: https://registry.npmjs.org/intl-messageformat/-/intl-messageformat-11.2.14.tgz
 Dependency Path: react-intl > @formatjs/intl > intl-messageformat > react-intl > intl-messageformat
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
@@ -39828,13 +39704,68 @@ Authors: dinglinjie+npm@gmail.com, holevietlong@gmail.com, seth@bertalotto.net
 Package Manager: NPM
 Project URL: https://github.com/formatjs/formatjs#readme
 Package Download URL: https://registry.npmjs.org/@formatjs/fast-memoize/-/fast-memoize-2.2.7.tgz
-Dependency Path: @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract > @formatjs/fast-memoize > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > @formatjs/ecma402-abstract > @formatjs/fast-memoize > react-intl > @formatjs/ecma402-abstract > @formatjs/fast-memoize > react-intl > @formatjs/intl > @formatjs/ecma402-abstract > @formatjs/fast-memoize > react-intl > @formatjs/intl > @formatjs/fast-memoize > react-intl > @formatjs/intl > @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract > @formatjs/fast-memoize > react-intl > @formatjs/intl > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > @formatjs/ecma402-abstract > @formatjs/fast-memoize > react-intl > @formatjs/intl > intl-messageformat > @formatjs/ecma402-abstract > @formatjs/fast-memoize > react-intl > @formatjs/intl > intl-messageformat > @formatjs/fast-memoize > react-intl > intl-messageformat > @formatjs/fast-memoize
+Dependency Path: @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract > @formatjs/fast-memoize > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > @formatjs/ecma402-abstract > @formatjs/fast-memoize
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: @formatjs/icu-skeleton-parser (1.8.14)
+Package Title: @formatjs/fast-memoize (3.1.7)
 
-Package Locator: npm+@formatjs/icu-skeleton-parser$1.8.14
+Package Locator: npm+@formatjs/fast-memoize$3.1.7
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+fork of fast-memoize and support esm
+
+* Declared Licenses *
+MIT
+--------------------------------------------------------------------------------
+File matches:
+- LICENSE.md
+  - Copyright (c) 2023 FormatJS
+- package.json
+--------------------------------------------------------------------------------
+
+MIT License
+
+Copyright (c) 2023 FormatJS
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* License Header *
+MIT License
+
+Copyright (c) 2023 FormatJS
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* Copyrights *
+MIT
+- Copyright (c) 2023 FormatJS
+
+* Package Info *
+
+Authors: dinglinjie+npm@gmail.com, holevietlong@gmail.com, seth@bertalotto.net
+Package Manager: NPM
+Project URL: https://github.com/formatjs/formatjs#readme
+Package Download URL: https://registry.npmjs.org/@formatjs/fast-memoize/-/fast-memoize-3.1.7.tgz
+Dependency Path: react-intl > @formatjs/intl > @formatjs/fast-memoize > react-intl > @formatjs/intl > intl-messageformat > @formatjs/fast-memoize > react-intl > intl-messageformat > @formatjs/fast-memoize
+File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
+
+--------------------------------------------------------------------------------
+Package Title: @formatjs/icu-skeleton-parser (2.1.11)
+
+Package Locator: npm+@formatjs/icu-skeleton-parser$2.1.11
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -39880,63 +39811,8 @@ MIT
 Authors: dinglinjie+npm@gmail.com, holevietlong@gmail.com, seth@bertalotto.net
 Package Manager: NPM
 Project URL: https://github.com/formatjs/formatjs#readme
-Package Download URL: https://registry.npmjs.org/@formatjs/icu-skeleton-parser/-/icu-skeleton-parser-1.8.14.tgz
+Package Download URL: https://registry.npmjs.org/@formatjs/icu-skeleton-parser/-/icu-skeleton-parser-2.1.11.tgz
 Dependency Path: react-intl > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > react-intl > @formatjs/intl > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > react-intl > @formatjs/intl > intl-messageformat > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > react-intl > intl-messageformat > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
-Package Title: @formatjs/intl-localematcher (0.6.1)
-
-Package Locator: npm+@formatjs/intl-localematcher$0.6.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-Intl.LocaleMatcher ponyfill
-
-* Declared Licenses *
-MIT
---------------------------------------------------------------------------------
-File matches:
-- LICENSE.md
-  - Copyright (c) 2023 FormatJS
-- package.json
---------------------------------------------------------------------------------
-
-MIT License
-
-Copyright (c) 2023 FormatJS
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* License Header *
-MIT License
-
-Copyright (c) 2023 FormatJS
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2023 FormatJS
-
-* Package Info *
-
-Authors: dinglinjie+npm@gmail.com, holevietlong@gmail.com, seth@bertalotto.net
-Package Manager: NPM
-Project URL: https://github.com/formatjs/formatjs#readme
-Package Download URL: https://registry.npmjs.org/@formatjs/intl-localematcher/-/intl-localematcher-0.6.1.tgz
-Dependency Path: react-intl > @formatjs/ecma402-abstract > @formatjs/intl-localematcher > react-intl > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > @formatjs/ecma402-abstract > @formatjs/intl-localematcher > react-intl > @formatjs/intl > @formatjs/ecma402-abstract > @formatjs/intl-localematcher > react-intl > @formatjs/intl > @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract > @formatjs/intl-localematcher > react-intl > @formatjs/intl > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > @formatjs/ecma402-abstract > @formatjs/intl-localematcher > react-intl > @formatjs/intl > intl-messageformat > @formatjs/ecma402-abstract > @formatjs/intl-localematcher > react-intl > @formatjs/intl > intl-messageformat > @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract > @formatjs/intl-localematcher > react-intl > @formatjs/intl > intl-messageformat > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > @formatjs/ecma402-abstract > @formatjs/intl-localematcher > react-intl > intl-messageformat > @formatjs/ecma402-abstract > @formatjs/intl-localematcher > react-intl > intl-messageformat > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > @formatjs/ecma402-abstract > @formatjs/intl-localematcher
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -43875,7 +43751,7 @@ Authors: M8ch88l@gmail.com
 Package Manager: NPM
 Project URL: https://github.com/MikeMcl/decimal.js#readme
 Package Download URL: https://registry.npmjs.org/decimal.js/-/decimal.js-10.6.0.tgz
-Dependency Path: @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract > decimal.js > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > @formatjs/ecma402-abstract > decimal.js > react-intl > @formatjs/ecma402-abstract > decimal.js > react-intl > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > @formatjs/ecma402-abstract > decimal.js > react-intl > @formatjs/intl > @formatjs/ecma402-abstract > decimal.js > react-intl > @formatjs/intl > @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract > decimal.js > react-intl > @formatjs/intl > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > @formatjs/ecma402-abstract > decimal.js > react-intl > @formatjs/intl > intl-messageformat > @formatjs/ecma402-abstract > decimal.js > react-intl > @formatjs/intl > intl-messageformat > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > @formatjs/ecma402-abstract > decimal.js > react-intl > intl-messageformat > @formatjs/ecma402-abstract > decimal.js
+Dependency Path: @formatjs/icu-messageformat-parser > @formatjs/ecma402-abstract > decimal.js > @formatjs/icu-messageformat-parser > @formatjs/icu-skeleton-parser > @formatjs/ecma402-abstract > decimal.js
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -64477,4 +64353,4 @@ File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-9-3
+Report Generated by FOSSA on 2026-9-4

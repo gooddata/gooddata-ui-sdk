@@ -69,12 +69,16 @@ export { useInsightPickerState } from "./insightPicker/useInsightPickerState.js"
 export {
     ConditionalFormattingDialog,
     type IConditionalFormattingDialogProps,
+    type ConditionalFormattingDialogSubmitIntent,
 } from "./internal/components/configurationControls/conditionalFormatting/ConditionalFormattingDialog.js";
 export { useCfDateFilterOptions } from "./internal/components/configurationControls/conditionalFormatting/useCfDateFilterOptions.js";
-export type {
-    ITargetOption,
-    ICfDateSettings,
-    ICfDateMeta,
+export {
+    semanticRuleFor,
+    newRule,
+    isPercentFormat,
+    type ITargetOption,
+    type ICfDateSettings,
+    type ICfDateMeta,
 } from "./internal/components/configurationControls/conditionalFormatting/conditionalFormattingModel.js";
 export type {
     IInsightPickerProps,
@@ -354,6 +358,7 @@ export {
     accessListToSummary,
     draftToSummary,
     type ObjectShareLevel,
+    summaryOtherGranteeCount,
     summaryToShareLevel,
 } from "./share/accessSummary.js";
 export { isPermissionsNotAvailable } from "./share/accessErrors.js";

@@ -1,6 +1,7 @@
 // (C) 2024-2026 GoodData Corporation
 
 import { type PayloadAction, type Reducer, createSlice } from "@reduxjs/toolkit";
+import { castDraft } from "immer";
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
@@ -215,7 +216,7 @@ const chatWindowSlice = createSlice({
             state.excludeTags = excludeTags;
         },
         setCatalogItemsActions: (state, { payload }: PayloadAction<CatalogItem[] | undefined>) => {
-            state.catalogItems = payload;
+            state.catalogItems = castDraft(payload);
         },
         initContextObjectsAction: (state) => state,
         loadContextObjectsNextPageAction: (state, _action: PayloadAction<{ kind: ContextObjectKind }>) =>

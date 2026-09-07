@@ -65,6 +65,16 @@ function InfoTooltip({ text }: { text: string }) {
 }
 
 /**
+ * What the dialog's Save button decided: revert this target to its semantic default, or persist an
+ * authored rule.
+ *
+ * @internal
+ */
+export type ConditionalFormattingDialogSubmitIntent =
+    | { mode: "inherited"; target: ConditionalFormattingTarget; ruleId: string }
+    | { mode: "custom"; rule: IConditionalFormattingRule };
+
+/**
  * @internal
  */
 export interface IConditionalFormattingDialogProps {
@@ -91,14 +101,13 @@ export interface IConditionalFormattingDialogProps {
     /** Deletes THIS specific authored rule (wired only when one exists) — the trash button. */
     onDelete?: () => void;
     /**
-     * Reverts to Inherited: clears every authored rule for `target` (a target can have several
-     * stacked custom rules, not just this one) AND this rule's own original id — needed together
-     * because a non-fixedTarget dialog lets the user retarget before saving, so the rule being
-     * edited may not (yet) be one of the rules actually stored against `target`. Distinct from
-     * `onDelete`: triggered only by Save while "Use default rule" is checked.
+     * Called when the user confirms Save — either `"inherited"` (revert to the semantic default:
+     * clears every authored rule for `target`, since a target can have several stacked custom rules,
+     * not just this one, plus this rule's own original id, since a non-fixedTarget dialog lets the
+     * user retarget before saving) or `"custom"` (persist the authored rule as-is). The dialog closes
+     * itself immediately after calling this — callers must not also close it.
      */
-    onRevertToDefault?: (target: ConditionalFormattingTarget, ruleId: string) => void;
-    onSave: (rule: IConditionalFormattingRule) => void;
+    onSubmit: (intent: ConditionalFormattingDialogSubmitIntent) => void;
     onClose: () => void;
 }
 
@@ -116,8 +125,7 @@ export function ConditionalFormattingDialog({
     fixedTarget = false,
     semanticByTarget,
     onDelete,
-    onRevertToDefault,
-    onSave,
+    onSubmit,
     onClose,
 }: IConditionalFormattingDialogProps) {
     const intl = useIntl();
@@ -397,12 +405,12 @@ export function ConditionalFormattingDialog({
                                 // together because a retarget-then-revert (no fixedTarget) means
                                 // the rule being edited may still sit under its OLD target in
                                 // `rules`, not yet the one now selected in this draft. Gated on
-                                // `isNew` alone, deliberately NOT on `deleteDisabled` — `onDelete` and
-                                // `onRevertToDefault` are independent optional props, and tying revert
+                                // `isNew` alone, deliberately NOT on `deleteDisabled` — the revert
+                                // intent and the delete button are independent, and tying revert
                                 // eligibility to whether a delete callback happens to be provided
                                 // would silently skip a valid revert for a caller that only wired one.
                                 if (!isNew) {
-                                    onRevertToDefault?.(rule.target, rule.id);
+                                    onSubmit({ mode: "inherited", target: rule.target, ruleId: rule.id });
                                 }
                                 onClose();
                                 return;
@@ -410,7 +418,8 @@ export function ConditionalFormattingDialog({
                             // A dialog opened straight from a semantic row (`semanticRuleFor`) still
                             // carries that display-only synthetic id — give it a real one the instant
                             // it's actually persisted, exactly like every other freshly authored rule.
-                            onSave(isNew ? { ...rule, id: uuid() } : rule);
+                            onSubmit({ mode: "custom", rule: isNew ? { ...rule, id: uuid() } : rule });
+                            onClose();
                         }}
                     />
                 </div>

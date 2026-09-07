@@ -1444,17 +1444,18 @@ export type {
     IGeoCollectionFileUploadResult,
 } from "./geoCollections/index.js";
 
-export type {
-    ConditionalFormattingTarget,
-    ConditionalFormattingTextOperator,
-    ConditionalFormattingEmptinessOperator,
-    ConditionalFormattingOperator,
-    ConditionalFormattingValue,
-    IConditionalFormattingFormat,
-    IConditionalFormattingCondition,
-    IConditionalFormattingRule,
-    IConditionalFormatting,
-    ISemanticConditionalFormatting,
+export {
+    type ConditionalFormattingTarget,
+    type ConditionalFormattingTextOperator,
+    type ConditionalFormattingEmptinessOperator,
+    type ConditionalFormattingOperator,
+    type ConditionalFormattingValue,
+    type IConditionalFormattingFormat,
+    type IConditionalFormattingCondition,
+    type IConditionalFormattingRule,
+    type IConditionalFormatting,
+    type ISemanticConditionalFormatting,
+    isSemanticConditionalFormattingEnabled,
 } from "./conditionalFormatting/index.js";
 
 export type {

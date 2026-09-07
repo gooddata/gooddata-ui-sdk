@@ -1,4 +1,5 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { type ThemeDerivedCssVariable } from "../types.js";
 
 export const derivedPaletteBaseThemeVariables: ThemeDerivedCssVariable[] = [
@@ -93,8 +94,9 @@ export const derivedPaletteBaseThemeVariables: ThemeDerivedCssVariable[] = [
     {
         type: "derived",
         variableName: "--gd-palette-primary-base-dimmed-darken03",
-        // Most used:
-        defaultValue: "#daf2fa",
+        // Most used (sass 1.79+ no longer rounds the intermediate color.mix() result
+        // before color.adjust(), so the generated value moved from #daf2fa to #daf3fa):
+        defaultValue: "#daf3fa",
         // Default generated (does not fit with most used):
         // defaultValue: "#d9f2fa",
     },

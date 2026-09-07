@@ -5,7 +5,7 @@ import { type ReactElement, Suspense, lazy, useEffect, useRef, useState } from "
 import cx from "classnames";
 import { defaultImport } from "default-import";
 import { throttle } from "lodash-es";
-import { type WrappedComponentProps } from "react-intl";
+import { type IntlShape } from "react-intl";
 import ReactMeasure, { type ContentRect, type MeasuredComponentProps } from "react-measure";
 import { invariant } from "ts-invariant";
 import { v4 } from "uuid";
@@ -91,7 +91,10 @@ export interface ICoreGeoChartProps extends IDataVisualizationProps {
 /**
  * @internal
  */
-export type IGeoChartInnerProps = ICoreGeoChartProps & ILoadingInjectedProps & WrappedComponentProps;
+export type IGeoChartInnerProps = ICoreGeoChartProps &
+    ILoadingInjectedProps & {
+        intl: IntlShape;
+    };
 
 export interface IGeoChartInnerState {
     enabledLegendItems: boolean[];

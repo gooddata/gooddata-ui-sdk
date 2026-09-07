@@ -9,6 +9,7 @@ import type {
     IMetadataObjectBase,
     IMetadataObjectIdentity,
     IObjectCertificationWrite,
+    ISemanticConditionalFormatting,
     ObjRef,
     ObjectOrigin,
 } from "@gooddata/sdk-model";
@@ -85,6 +86,17 @@ export interface IMeasureKeyDrivers {
 }
 
 /**
+ * Payload for {@link IWorkspaceMeasuresService.updateMeasureMeta}, a true partial patch: an omitted
+ * field is left untouched; `conditionalFormatting: null` clears it.
+ *
+ * @public
+ */
+export type IUpdateMeasureMetaPayload = Partial<IMetadataObjectBase> &
+    IMetadataObjectIdentity & {
+        conditionalFormatting?: ISemanticConditionalFormatting | null;
+    };
+
+/**
  * Service for create, update or delete measures and querying additional measures data.
  * If you want to query measures themselves, use catalog {@link IWorkspaceCatalogFactory}
  *
@@ -139,9 +151,7 @@ export interface IWorkspaceMeasuresService {
      * @param measure - metadata object to update
      * @returns promise of updated measure
      */
-    updateMeasureMeta(
-        measure: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
-    ): Promise<IMeasureMetadataObject>;
+    updateMeasureMeta(measure: IUpdateMeasureMetaPayload): Promise<IMeasureMetadataObject>;
 
     /**
      * Sets measure certification metadata.

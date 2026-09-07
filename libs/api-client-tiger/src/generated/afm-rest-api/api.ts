@@ -1211,10 +1211,16 @@ export interface DependsOn {
      */
     'label': string;
     /**
+     * Type of the object ```label``` refers to. A set type is taken at its word; an unset one means a label, with a computed attribute of the same id accepted as a fallback.
+     */
+    'type'?: DependsOnTypeEnum;
+    /**
      * Specifies values of the label for element filtering.
      */
     'values': Array<string | null>;
 }
+
+export type DependsOnTypeEnum = 'label' | 'computedAttribute';
 
 /**
  * Filter definition type for dates.
@@ -1336,12 +1342,17 @@ export interface ElementsRequest {
      */
     'timezone'?: string;
     /**
+     * Type of the object ```label``` refers to. A set type is taken at its word; an unset one means a label, with a computed attribute of the same id accepted as a fallback.
+     */
+    'type'?: ElementsRequestTypeEnum;
+    /**
      * Return only items that are computable on metric.
      */
     'validateBy'?: Array<ValidateByItem>;
 }
 
 export type ElementsRequestSortOrderEnum = 'ASC' | 'DESC';
+export type ElementsRequestTypeEnum = 'label' | 'computedAttribute';
 
 /**
  * @type ElementsRequestDependsOnInner

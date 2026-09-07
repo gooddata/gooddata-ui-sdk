@@ -11,6 +11,7 @@ import type { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import type { IdentifierRef } from '@gooddata/sdk-model';
 import type { IInsightDefinition } from '@gooddata/sdk-model';
 import type { IParameterDefinition } from '@gooddata/sdk-model';
+import type { ISemanticConditionalFormatting } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
 import type { MetricType } from '@gooddata/sdk-model';
 import { MouseEvent as MouseEvent_2 } from 'react';
@@ -224,6 +225,8 @@ export interface ICatalogItemInsight extends ICatalogItemBase {
 
 // @public
 export interface ICatalogItemMeasure extends ICatalogItemBase {
+    // @alpha
+    conditionalFormatting?: ISemanticConditionalFormatting;
     // (undocumented)
     format?: string | null;
     // (undocumented)

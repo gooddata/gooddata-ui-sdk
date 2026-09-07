@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { FormattedMessage, type WrappedComponentProps, useIntl } from "react-intl";
+import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 
 import {
     type ICatalogDateDataset,
@@ -160,7 +160,7 @@ function LimitValuesConfiguration({
     );
 }
 
-export type LocalizedLimitValuesConfigurationProps = ILimitValuesConfigurationProps & WrappedComponentProps;
+export type LocalizedLimitValuesConfigurationProps = ILimitValuesConfigurationProps & { intl: IntlShape };
 
 export function LocalizedLimitValuesConfiguration(props: LocalizedLimitValuesConfigurationProps) {
     const capabilities = useDashboardSelector(selectBackendCapabilities);

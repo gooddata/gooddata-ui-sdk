@@ -6,7 +6,9 @@ import {
     type AccessGranteeDetail,
     type AccessGranularPermission,
     type IGranularRulesAccess,
+    type IUser,
     idRef,
+    uriRef,
 } from "@gooddata/sdk-model";
 
 import {
@@ -165,6 +167,11 @@ describe("summaryToShareLevel", () => {
 });
 
 describe("accessListToSummary", () => {
+    // Tiger returns the profile with a uriRef while grants carry an idRef, so the two
+    // never compare equal — the caller has to be recognised by login as well.
+    const profile = (login: string): IUser =>
+        ({ ref: uriRef(`/api/v1/entities/users/${login}`), login }) as IUser;
+
     const userGrant = (login: string): AccessGranteeDetail =>
         ({
             type: "granularUser",
@@ -174,7 +181,7 @@ describe("accessListToSummary", () => {
         }) as unknown as AccessGranteeDetail;
 
     it("marks the caller's own grant", () => {
-        const s = accessListToSummary({ grants: [userGrant("jane"), userGrant("john")] }, idRef("jane"));
+        const s = accessListToSummary({ grants: [userGrant("jane"), userGrant("john")] }, profile("jane"));
         expect(s).toMatchObject({ granteeCount: 2, selfIsGrantee: true });
         expect(summaryToShareLevel(s)).toBe("SHARED");
     });
@@ -184,6 +191,30 @@ describe("accessListToSummary", () => {
             granteeCount: 1,
             selfIsGrantee: false,
         });
+    });
+
+    it("does not count a revoked-but-still-listed grant", () => {
+        const revoked: AccessGranteeDetail = {
+            type: "granularUser",
+            user: { ref: idRef("gone"), login: "gone", uri: "/gone" },
+            permissions: [],
+            inheritedPermissions: [],
+        } as unknown as AccessGranteeDetail;
+        expect(accessListToSummary({ grants: [revoked, userGrant("jane")] })).toMatchObject({
+            granteeCount: 1,
+        });
+    });
+
+    it("a revoked-but-still-listed grant for the caller does not hide a real other grantee", () => {
+        const revokedSelf: AccessGranteeDetail = {
+            type: "granularUser",
+            user: { ref: idRef("me"), login: "me", uri: "/me" },
+            permissions: [],
+            inheritedPermissions: [],
+        } as unknown as AccessGranteeDetail;
+        const s = accessListToSummary({ grants: [revokedSelf, userGrant("jane")] }, profile("me"));
+        expect(s).toMatchObject({ granteeCount: 1, selfIsGrantee: false });
+        expect(summaryToShareLevel(s)).toBe("SHARED");
     });
 });
 

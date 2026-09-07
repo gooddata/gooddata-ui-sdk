@@ -11,6 +11,7 @@ import {
     type IInsightDefinition,
     type ISemanticConditionalFormatting,
     type ISeparators,
+    isSemanticConditionalFormattingEnabled,
 } from "@gooddata/sdk-model";
 import { Button, UiIconButton } from "@gooddata/sdk-ui-kit";
 import { type IConditionalFormatting, type IConditionalFormattingRule } from "@gooddata/sdk-ui-pivot/next";
@@ -248,6 +249,13 @@ export function ConditionalFormattingSection({
     // Only date pickers consume the catalog — skip the backend query when no target is date-eligible.
     const dateFilterOptions = useCfDateFilterOptions(backend, workspace, targetOptions.some(isDateTarget));
     const semanticMap = targetData?.semantic ?? {};
+    // A catalog rule toggled off is not a live default (same as materializeSemanticRules in sdk-ui-pivot).
+    // The raw semanticMap stays in use for suppression pruning, where a disabled rule is not a deleted one.
+    const activeSemanticMap = Object.fromEntries(
+        Object.entries(semanticMap).filter(([, semantic]) =>
+            isSemanticConditionalFormattingEnabled(semantic),
+        ),
+    );
     // Targets with a semantic-layer rule, minus any that have their own authored rule (those render
     // as a RuleChip above instead). A `suppressedTargets`-suppressed target still renders here (tagged
     // `off`) — it needs a row to turn back on. NOT gated on the toggle above: the engine's `enabled`
@@ -262,7 +270,7 @@ export function ConditionalFormattingSection({
     const semanticRows =
         enableSemanticConditionalFormatting && targetData?.semanticFresh !== false
             ? targetOptions.flatMap((option) => {
-                  const rule = semanticMap[targetLocalId(option.target)];
+                  const rule = activeSemanticMap[targetLocalId(option.target)];
                   const value = targetToValue(option.target);
                   // When insight-level CF is off, the engine never sees `rules` at all (the renderer
                   // passes it `undefined`) — every target resolves as Inherited regardless of what's
@@ -278,7 +286,7 @@ export function ConditionalFormattingSection({
                   return [{ option, semantic: rule, off: isSuppressedTarget(config, option.target) }];
               })
             : [];
-    const activeDialog = resolveActiveDialog(dialog, semanticMap, config, targetOptions);
+    const activeDialog = resolveActiveDialog(dialog, activeSemanticMap, config, targetOptions);
     // `resolveActiveDialog` only hides an invalidated semantic dialog from render — without also
     // clearing the underlying state here, a later data view that happens to carry a rule for the same
     // (possibly stale) target would silently reopen it, with no new View click.
@@ -351,6 +359,8 @@ export function ConditionalFormattingSection({
     const setSuppressed = (target: IConditionalFormattingRule["target"], suppressed: boolean) =>
         setTargetMode(target, suppressed ? "off" : "inherited");
 
+    // Doesn't close the dialog itself — `ConditionalFormattingDialog` closes itself right after
+    // calling `onSubmit`, for every branch, so no caller needs to duplicate that.
     const saveRule = (rule: IConditionalFormattingRule, isNew: boolean) => {
         const rulesNext = isNew
             ? [...rules, rule]
@@ -358,7 +368,6 @@ export function ConditionalFormattingSection({
         // Enable on save for a freshly authored rule so it takes effect without a second click; when
         // editing an existing rule, preserve the current toggle (don't silently re-enable).
         commit(rulesNext, isNew ? true : enabled);
-        setDialog(null);
     };
 
     // Also strips the deleted rule's target from `suppressedTargets`, in case it's stale-listed there
@@ -513,15 +522,18 @@ export function ConditionalFormattingSection({
                     rule={activeDialog.rule}
                     isNew={dialogIsNew}
                     fixedTarget={activeDialog.kind === "semantic"}
-                    semanticByTarget={semanticMap}
+                    semanticByTarget={activeSemanticMap}
                     targetOptions={targetOptions}
                     separators={separators}
                     dateFilterOptions={dateFilterOptions}
                     dateSettings={dateSettings}
                     alignTo=".s-cf-popover-anchor"
                     onDelete={hasAuthoredRule ? () => deleteRule(activeDialog.rule.id) : undefined}
-                    onRevertToDefault={revertToInherited}
-                    onSave={(rule) => saveRule(rule, dialogIsNew)}
+                    onSubmit={(intent) =>
+                        intent.mode === "inherited"
+                            ? revertToInherited(intent.target, intent.ruleId)
+                            : saveRule(intent.rule, dialogIsNew)
+                    }
                     onClose={() => setDialog(null)}
                 />
             ) : null}

@@ -6,7 +6,7 @@ import { act, renderHook, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { idRef } from "@gooddata/sdk-model";
+import { type ISemanticConditionalFormatting, idRef } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
 import type { ICatalogItem, ICatalogItemMeasure, ICatalogItemRef } from "../catalogItem/types.js";
@@ -49,6 +49,7 @@ const measureWithPermissions: ICatalogItemMeasure = {
     updatedAt: null,
     isLocked: false,
     isEditable: true,
+    format: "",
     permissions: ["EDIT"],
 };
 
@@ -334,5 +335,160 @@ describe("useCatalogItemUpdate – a supplied metric that carries no permissions
 
         expect(getMeasure).not.toHaveBeenCalled();
         expect(result.current.item).toEqual(measureWithoutPermissions);
+    });
+});
+
+const measureEntity = {
+    type: "measure" as const,
+    ref: idRef("measure.id", "measure"),
+    id: "measure.id",
+    title: "Measure A",
+    description: "",
+    expression: "SELECT 1",
+    format: "#,##0",
+    tags: [],
+    isLocked: false,
+};
+
+function createMeasureWrapper(
+    getMeasure = vi.fn().mockResolvedValue(measureEntity),
+    updateMeasure = vi.fn().mockResolvedValue(measureEntity),
+    updateMeasureMeta = vi.fn().mockResolvedValue(measureEntity),
+) {
+    const backend = {
+        workspace: () => ({
+            measures: () => ({ getMeasure, updateMeasure, updateMeasureMeta }),
+        }),
+    } as unknown as IAnalyticalBackend;
+
+    // the load hook reads feature flags off the permissions context
+    const permissionsState = {
+        status: "success",
+        result: { settings: { enableMetricPermissions: false } },
+    } as PermissionsState;
+
+    function wrapper({ children }: PropsWithChildren) {
+        return createElement(
+            BackendProvider,
+            { backend },
+            createElement(
+                WorkspaceProvider,
+                { workspace: "test-workspace" },
+                createElement(PermissionsProvider, { permissionsState }, children),
+            ),
+        );
+    }
+
+    return { wrapper, getMeasure, updateMeasure, updateMeasureMeta };
+}
+
+describe("useCatalogItemUpdate – updateItemConditionalFormatting", () => {
+    const rule: ISemanticConditionalFormatting = {
+        conditions: [
+            {
+                id: "c1",
+                operator: "GREATER_THAN",
+                value: { kind: "literal", value: 100 },
+                format: { scope: "cell", color: "#ff0000" },
+            },
+        ],
+    };
+
+    it("applies the change optimistically, then persists it via a partial updateMeasureMeta patch (not the full updateMeasure round trip, which would clobber the backend's own enabled/disabled state)", async () => {
+        const { wrapper, updateMeasure, updateMeasureMeta } = createMeasureWrapper();
+
+        const { result } = renderHook(
+            () =>
+                useCatalogItemUpdate({
+                    currentUser: null,
+                    objectId: "measure.id",
+                    objectType: "measure",
+                }),
+            { wrapper },
+        );
+
+        await waitFor(() => {
+            expect(result.current.status).toBe("success");
+        });
+
+        act(() => {
+            result.current.updateItemConditionalFormatting(rule);
+        });
+
+        // Optimistic: local state reflects the change before the persist promise settles.
+        expect(result.current.item).toMatchObject({ conditionalFormatting: rule });
+
+        await waitFor(() => {
+            expect(updateMeasureMeta).toHaveBeenCalledWith(
+                expect.objectContaining({ conditionalFormatting: rule }),
+            );
+        });
+        expect(updateMeasure).not.toHaveBeenCalled();
+    });
+
+    it("clears the rule via an explicit null, not undefined (omitting the key would mean 'leave the backend value untouched')", async () => {
+        const { wrapper, updateMeasureMeta } = createMeasureWrapper();
+
+        const { result } = renderHook(
+            () =>
+                useCatalogItemUpdate({
+                    currentUser: null,
+                    objectId: "measure.id",
+                    objectType: "measure",
+                }),
+            { wrapper },
+        );
+
+        await waitFor(() => {
+            expect(result.current.status).toBe("success");
+        });
+
+        act(() => {
+            result.current.updateItemConditionalFormatting(rule);
+        });
+        await waitFor(() => {
+            expect(updateMeasureMeta).toHaveBeenCalledTimes(1);
+        });
+
+        act(() => {
+            result.current.updateItemConditionalFormatting(undefined);
+        });
+        await waitFor(() => {
+            expect(updateMeasureMeta).toHaveBeenLastCalledWith(
+                expect.objectContaining({ conditionalFormatting: null }),
+            );
+        });
+    });
+
+    it("reverts to the prior value and reports the error when persisting fails", async () => {
+        const updateMeasureMeta = vi.fn().mockRejectedValue(new Error("boom"));
+        const { wrapper } = createMeasureWrapper(undefined, undefined, updateMeasureMeta);
+        const onError = vi.fn();
+
+        const { result } = renderHook(
+            () =>
+                useCatalogItemUpdate({
+                    currentUser: null,
+                    objectId: "measure.id",
+                    objectType: "measure",
+                    onError,
+                }),
+            { wrapper },
+        );
+
+        await waitFor(() => {
+            expect(result.current.status).toBe("success");
+        });
+        const itemBeforeEdit = result.current.item;
+
+        act(() => {
+            result.current.updateItemConditionalFormatting(rule);
+        });
+        expect(result.current.item).toMatchObject({ conditionalFormatting: rule });
+
+        await waitFor(() => {
+            expect(onError).toHaveBeenCalled();
+        });
+        expect(result.current.item).toEqual(itemBeforeEdit);
     });
 });

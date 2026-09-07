@@ -3,7 +3,6 @@
 import { type ReactNode, createContext, useCallback, useContext, useMemo, useState } from "react";
 
 import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
-import type { IObjectAccessList } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import {
     type IObjectAccessSummary,
@@ -147,13 +146,21 @@ export function CatalogItemShareProvider({
     // reset above clears the summary, which re-arms the fetch. The `prev ??` seed
     // guard covers the resolve-vs-cancel race.
     const summaryUnknown = summary === undefined;
-    const { status, error } = useCancelablePromise<IObjectAccessList, Error>(
+    const { status, error } = useCancelablePromise<IObjectAccessSummary, Error>(
         {
             promise:
                 target && summaryUnknown
-                    ? () => backend.workspace(workspace).objectPermissions().getAccessList(target)
+                    ? async () => {
+                          // The profile tells the caller's own grant from everyone else's. Without
+                          // it no count can be trusted, so a failure here fails the whole read.
+                          const [list, self] = await Promise.all([
+                              backend.workspace(workspace).objectPermissions().getAccessList(target),
+                              backend.currentUser().getUser(),
+                          ]);
+                          return accessListToSummary(list, self);
+                      }
                     : undefined,
-            onSuccess: (list) => setSummary((prev) => prev ?? accessListToSummary(list)),
+            onSuccess: (next) => setSummary((prev) => prev ?? next),
             onError: () => {},
         },
         [backend, workspace, itemKey, summaryUnknown],

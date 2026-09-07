@@ -204,6 +204,34 @@ describe("ConditionalFormattingSection — semantic layer inheritance", () => {
         expect(screen.queryByText("From semantic layer")).not.toBeInTheDocument();
     });
 
+    it("excludes a target from the semantic block when the catalog object's own rule is disabled (enabled: false)", () => {
+        // A catalog-disabled rule offers nothing to inherit — same treatment
+        // materializeSemanticRules (sdk-ui-pivot) gives it for rendering, so the panel never offers
+        // a target something the table won't actually paint.
+        const targetData: ICfTargetData = { semantic: { m1: { ...SEMANTIC, enabled: false } } };
+        renderSemanticSection(targetData, { enabled: true, rules: [] });
+        expect(screen.queryByText("From semantic layer")).not.toBeInTheDocument();
+        expect(screen.queryByText("Edit rule")).not.toBeInTheDocument();
+    });
+
+    it("does not offer 'Use default rule' when editing a custom rule whose semantic default is disabled", async () => {
+        // A disabled default is nothing to fall back to — same treatment as the semantic block
+        // itself (see the exclusion test above). Editing the custom rule should not offer a
+        // checkbox that, if checked and saved, would delete the only active formatting for this
+        // target in favor of a default the table won't paint.
+        const user = userEvent.setup();
+        const targetData: ICfTargetData = { semantic: { m1: { ...SEMANTIC, enabled: false } }, dates: {} };
+        const config: IConditionalFormatting = {
+            enabled: true,
+            rules: [{ id: "r1", target: { kind: "measure", measureIdentifier: "m1" }, conditions: [] }],
+        };
+        renderSemanticSection(targetData, config);
+
+        await user.click(screen.getByTitle("Edit rule"));
+
+        expect(screen.queryByLabelText("Use default rule")).not.toBeInTheDocument();
+    });
+
     it("hides the semantic block when enableSemanticConditionalFormatting is off, even with live semantic data", () => {
         // Mirrors the engine's own flag (see PluggablePivotTableNext) — showing an inherited row the
         // table won't actually paint would desync the panel from what's on screen. Defaults to off,

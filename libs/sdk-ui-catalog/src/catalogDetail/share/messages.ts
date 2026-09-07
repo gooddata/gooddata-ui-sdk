@@ -11,7 +11,7 @@ export const shareMessages = defineMessages({
     shareButton: { id: "analyticsCatalog.share.button" },
     accessRowLabel: { id: "analyticsCatalog.share.access.row.label" },
     accessRowError: { id: "analyticsCatalog.share.access.row.error" },
-    accessRowRestricted: { id: "analyticsCatalog.share.access.row.restricted" },
+    accessRowPrivate: { id: "analyticsCatalog.share.access.row.private" },
     accessRowWorkspaceView: { id: "analyticsCatalog.share.access.row.workspace.view" },
     accessRowWorkspaceShare: { id: "analyticsCatalog.share.access.row.workspace.share" },
     accessRowWorkspaceEdit: { id: "analyticsCatalog.share.access.row.workspace.edit" },

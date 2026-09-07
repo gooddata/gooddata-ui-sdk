@@ -97,7 +97,12 @@ export function convertAttributeLabels(
     labelsMap: Record<string, JsonApiLabelOutWithLinks>,
 ): IAttributeDisplayFormMetadataObject[] {
     const labelsRefs = attribute.relationships?.labels?.data ?? [];
-    const defaultView = attribute.relationships?.defaultView?.data;
+    const defaultViewRef = attribute.relationships?.defaultView?.data;
+    // A label the user may not view is withheld from `included` but keeps its `relationships` linkage,
+    // so an unresolvable defaultView must read as absent - otherwise the comparison below matches
+    // nothing and no label is marked default. Primary is the safe fallback: it inherits the
+    // attribute's view and so can never itself be restricted.
+    const defaultView = defaultViewRef && labelsMap[defaultViewRef.id] ? defaultViewRef : undefined;
 
     return labelsRefs
         .map((ref) => {

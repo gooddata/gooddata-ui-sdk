@@ -78,22 +78,31 @@ vi.mock("@gooddata/sdk-ui-semantic-search", async () => {
 
 /**
  * The `@gooddata/sdk-ui-ext` barrel is imported for three small share helpers plus the share dialog
- * behind the `lazy()` boundary in `CatalogItemShareDialog.tsx`. All four come from their own modules
- * here; the helpers' imports (sdk-model, sdk-backend-spi) are type-only or already loaded.
+ * behind the `lazy()` boundary in `CatalogItemShareDialog.tsx`, and (for `CatalogDetailConditionalFormatting.tsx`)
+ * the Conditional Formatting dialog plus its small set of model helpers. All come from their own
+ * modules here; the helpers' imports (sdk-model, sdk-backend-spi) are type-only or already loaded.
  */
 vi.mock("@gooddata/sdk-ui-ext", async () => {
-    const [accessSummary, accessErrors, controllerHelpers, objectShareDialog] = await Promise.all([
-        import("./node_modules/@gooddata/sdk-ui-ext/esm/share/accessSummary.js"),
-        import("./node_modules/@gooddata/sdk-ui-ext/esm/share/accessErrors.js"),
-        import("./node_modules/@gooddata/sdk-ui-ext/esm/share/objectShareController.helpers.js"),
-        import("./node_modules/@gooddata/sdk-ui-ext/esm/share/ObjectShareDialog.js"),
-    ]);
+    const [accessSummary, accessErrors, controllerHelpers, objectShareDialog, cfDialog, cfModel] =
+        await Promise.all([
+            import("./node_modules/@gooddata/sdk-ui-ext/esm/share/accessSummary.js"),
+            import("./node_modules/@gooddata/sdk-ui-ext/esm/share/accessErrors.js"),
+            import("./node_modules/@gooddata/sdk-ui-ext/esm/share/objectShareController.helpers.js"),
+            import("./node_modules/@gooddata/sdk-ui-ext/esm/share/ObjectShareDialog.js"),
+            import("./node_modules/@gooddata/sdk-ui-ext/esm/internal/components/configurationControls/conditionalFormatting/ConditionalFormattingDialog.js"),
+            import("./node_modules/@gooddata/sdk-ui-ext/esm/internal/components/configurationControls/conditionalFormatting/conditionalFormattingModel.js"),
+        ]);
 
     return strictBarrel("@gooddata/sdk-ui-ext", {
         accessListToSummary: accessSummary.accessListToSummary,
+        summaryOtherGranteeCount: accessSummary.summaryOtherGranteeCount,
         isPermissionsNotAvailable: accessErrors.isPermissionsNotAvailable,
         sortShareableLabels: controllerHelpers.sortShareableLabels,
         ObjectShareDialog: objectShareDialog.ObjectShareDialog,
+        ConditionalFormattingDialog: cfDialog.ConditionalFormattingDialog,
+        isPercentFormat: cfModel.isPercentFormat,
+        newRule: cfModel.newRule,
+        semanticRuleFor: cfModel.semanticRuleFor,
     });
 });
 

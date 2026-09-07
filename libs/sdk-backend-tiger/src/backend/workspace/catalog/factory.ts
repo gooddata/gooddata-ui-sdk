@@ -9,6 +9,7 @@ import {
     EntitiesApi_GetAllEntitiesMetrics,
 } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import {
+    DefaultWorkspaceCatalogTypes,
     type IWorkspaceCatalog,
     type IWorkspaceCatalogFactory,
     type IWorkspaceCatalogFactoryOptions,
@@ -45,7 +46,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         private readonly authCall: TigerAuthenticatedCallGuard,
         public readonly workspace: string,
         public readonly options: IWorkspaceCatalogFactoryOptions = {
-            types: ["attribute", "measure", "fact", "dateDataset", "attributeHierarchy"],
+            types: [...DefaultWorkspaceCatalogTypes],
             excludeTags: [],
             includeTags: [],
             loadGroups: true,

@@ -223,6 +223,7 @@ export const findTargetOption = (
 /** Date-eligible target: the option carries execution-resolved date metadata. */
 export const isDateTarget = (option: ITargetOption | undefined): boolean => option?.date !== undefined;
 
+/** @internal */
 export const targetLocalId = (target: ConditionalFormattingTarget): string =>
     target.kind === "measure" ? target.measureIdentifier : target.attributeIdentifier;
 
@@ -289,6 +290,8 @@ export const withSuppressedTargets = (
  * a display-only id (mirroring the engine's own `semantic:<kind>:<localId>` convention in
  * semanticConditionalFormatting.ts, for consistency only) — the dialog swaps this for a real uuid()
  * the moment the user customizes and saves, so this synthetic id itself is never persisted.
+ *
+ * @internal
  */
 export const semanticRuleFor = (
     option: ITargetOption,
@@ -551,6 +554,7 @@ export const newCondition = (isDate = false): IConditionalFormattingCondition =>
     format: { color: CF_DEFAULT_COLOR, scope: "cell" },
 });
 
+/** @internal */
 export const newRule = (option: ITargetOption): IConditionalFormattingRule => ({
     id: uuid(),
     target: option.target,
@@ -614,6 +618,8 @@ export const ruleWithTarget = (
  * Percent = the format contains a `%` outside quoted/escaped literals (those render a % sign without
  * percent scaling). A heuristic by design: it only picks the authoring input's display units; the
  * contract compares the raw value either way. Scaled formats are out of scope.
+ *
+ * @internal
  */
 export const isPercentFormat = (format: string | undefined): boolean =>
     typeof format === "string" &&

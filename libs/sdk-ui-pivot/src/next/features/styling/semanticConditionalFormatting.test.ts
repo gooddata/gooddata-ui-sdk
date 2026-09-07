@@ -320,6 +320,74 @@ describe("resolvePerTargetConditionalFormatting", () => {
         ]);
     });
 
+    it("excludes an attribute's semantic rule when the catalog object's own toggle disabled it (enabled: false)", () => {
+        const semantic: ISemanticConditionalFormatting = {
+            enabled: false,
+            conditions: [
+                {
+                    id: "c1",
+                    operator: "ALL",
+                    value: { kind: "none" },
+                    format: { backgroundColor: RED, scope: "cell" },
+                },
+            ],
+        };
+
+        const result = resolvePerTargetConditionalFormatting(
+            undefined,
+            [buildAttributeDescriptor("status", semantic)],
+            [],
+        );
+        expect(result).toBeUndefined();
+    });
+
+    it("excludes a measure's semantic rule when the catalog object's own toggle disabled it (enabled: false)", () => {
+        const semantic: ISemanticConditionalFormatting = {
+            enabled: false,
+            conditions: [
+                {
+                    id: "c1",
+                    operator: "LESS_THAN",
+                    value: { kind: "literal", value: 0 },
+                    format: { backgroundColor: RED, scope: "cell" },
+                },
+            ],
+        };
+
+        const result = resolvePerTargetConditionalFormatting(
+            undefined,
+            [],
+            [buildMeasureDescriptor("variance", semantic)],
+        );
+        expect(result).toBeUndefined();
+    });
+
+    it("treats a semantic payload with `enabled` absent as active (defaults to on)", () => {
+        const semantic: ISemanticConditionalFormatting = {
+            conditions: [
+                {
+                    id: "c1",
+                    operator: "ALL",
+                    value: { kind: "none" },
+                    format: { backgroundColor: RED, scope: "cell" },
+                },
+            ],
+        };
+
+        const result = resolvePerTargetConditionalFormatting(
+            undefined,
+            [buildAttributeDescriptor("status", semantic)],
+            [],
+        );
+        expect(result?.rules).toEqual([
+            {
+                id: "semantic:attribute:status",
+                target: { kind: "attribute", attributeIdentifier: "status" },
+                conditions: semantic.conditions,
+            },
+        ]);
+    });
+
     it("replacement: a target with an insight-authored rule ignores its semantic payload entirely", () => {
         const semantic: ISemanticConditionalFormatting = {
             conditions: [

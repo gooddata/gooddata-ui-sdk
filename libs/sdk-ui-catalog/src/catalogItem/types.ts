@@ -9,6 +9,7 @@ import type {
     CertificationStatus,
     IDataSetMetadataObject,
     IParameterDefinition,
+    ISemanticConditionalFormatting,
     IdentifierRef,
     MetricType,
     ObjectOrigin,
@@ -120,6 +121,11 @@ export interface ICatalogItemMeasure extends ICatalogItemBase {
     metricType?: MetricType;
     /** Object-level permissions, only when the query asked for them. Undefined otherwise. */
     permissions?: AccessGranularPermission[];
+    /**
+     * Semantic-layer conditional formatting authored on this metric.
+     * @alpha
+     */
+    conditionalFormatting?: ISemanticConditionalFormatting;
 }
 
 /**

@@ -2,7 +2,7 @@
 
 import { memo, useCallback, useMemo, useState } from "react";
 
-import { type WrappedComponentProps } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { type ISeparators } from "@gooddata/sdk-ui";
 
@@ -28,7 +28,9 @@ interface ICustomFormatDialogOwnProps {
     templates?: ReadonlyArray<IFormatTemplate>;
 }
 
-type ICustomFormatDialogProps = ICustomFormatDialogOwnProps & WrappedComponentProps;
+interface ICustomFormatDialogProps extends ICustomFormatDialogOwnProps {
+    intl: IntlShape;
+}
 
 export const CustomFormatDialog = memo(function CustomFormatDialog({
     onApply,

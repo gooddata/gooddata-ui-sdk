@@ -143,6 +143,7 @@ export function convertMeasureToCatalogItem(measure: IMeasureMetadataObject): IC
         isHiddenFromKda: measure.isHiddenFromKda,
         format,
         metricType: measure.metricType,
+        conditionalFormatting: measure.conditionalFormatting,
     };
 }
 

@@ -1,10 +1,13 @@
 // (C) 2026 GoodData Corporation
 
 import {
+    type AccessGranteeDetail,
     type IAvailableAccessGrantee,
     type IGranularAccessGrantee,
     type IObjectAccessList,
+    type IUser,
     type ObjRef,
+    idRef,
     isGranularUserAccess,
     isGranularUserGroupAccess,
     objRefToString,
@@ -23,6 +26,16 @@ import type { IObjectShareLabel } from "./types.js";
 /** Stable row id shared by grantee rows and picker options: `user:<ref>` / `group:<ref>`. */
 export function granteeId(kind: "user" | "group", ref: ObjRef): string {
     return `${kind}:${objRefToString(ref)}`;
+}
+
+/**
+ * The caller's ref as an access list identifies them. A profile's own `ref` is a URI while
+ * grants carry the user id, so matching on the profile ref never hits.
+ *
+ * @internal
+ */
+export function selfGranteeRef(user: IUser): ObjRef {
+    return idRef(user.login);
 }
 
 /**
@@ -215,6 +228,19 @@ function granteeAccess(permissions: readonly string[], inheritedPermissions: rea
         effectivePermission: effectivePermissionAbove(direct, inheritedLevel),
         inheritedLevel,
     };
+}
+
+/**
+ * Whether a fetched grant reaches the object at all — false only for the
+ * revoked-but-still-listed placeholder {@link granteeAccess} normalizes to VIEW.
+ *
+ * @internal
+ */
+export function grantHasAccess(grant: AccessGranteeDetail): boolean {
+    if (isGranularUserAccess(grant) || isGranularUserGroupAccess(grant)) {
+        return grant.permissions.length > 0 || grant.inheritedPermissions.length > 0;
+    }
+    return false;
 }
 
 /**
