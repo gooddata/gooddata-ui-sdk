@@ -13,7 +13,7 @@ set -e
 
 PACKAGE_DIR="$(echo $(cd $(dirname $0)/.. && pwd -P))"
 DIST_DIR="${PACKAGE_DIR}/esm"
-TSGO_BIN="${PACKAGE_DIR}/node_modules/.bin/tsgo"
+TSC_BIN="${PACKAGE_DIR}/node_modules/.bin/tsc"
 OXFMT_BIN="${PACKAGE_DIR}/node_modules/.bin/oxfmt"
 PREPARE_PACKAGE_JSON="node ${PACKAGE_DIR}/scripts/preparePackageJson.mjs"
 
@@ -69,10 +69,10 @@ $PREPARE_PACKAGE_JSON remove-ts "${JS_BUILD_DIR}"
 [ -e "$JS_CONFIG_TEMPLATES" ] && find "$JS_CONFIG_TEMPLATES" -type f -name '*' -exec cp {} "${JS_BUILD_DIR}" ";"
 
 # transpile TypeScript template files to JavaScript (type-strip only; JSX and ESM preserved).
-# tsgo (jsx: preserve) emits .ts -> .js and .tsx -> .jsx directly. tsconfig.babel.json sets
+# tsc (jsx: preserve) emits .ts -> .js and .tsx -> .jsx directly. tsconfig.babel.json sets
 # "noCheck", so it only emits and does not type-check the template (whose deps are not installed
 # in the build dir).
-"${TSGO_BIN}" -p "${PACKAGE_DIR}/tsconfig.babel.json"
+"${TSC_BIN}" -p "${PACKAGE_DIR}/tsconfig.babel.json"
 
 # remove TypeScript source files (leaving the emitted .js / .jsx in place)
 find "${JS_BUILD_DIR}" -type f \( -iname \*.ts -o -iname \*.tsx \) -exec rm -rf {} \;

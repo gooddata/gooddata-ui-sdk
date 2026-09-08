@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/i18n-toolkit",
-    "version": "11.56.0-alpha.5",
+    "version": "11.56.0-alpha.6",
     "description": "Localization validator to validate localization complexity and intl and html format.",
     "license": "MIT",
     "author": "GoodData",
@@ -28,8 +28,8 @@
         "_phase:test": "npm run test-once",
         "_phase:validate": "npm run validate",
         "build": "npm-run-all -p build-check build-ts",
-        "build-check": "tsgo",
-        "build-ts": "tsgo -p tsconfig.build.json",
+        "build-check": "tsc",
+        "build-ts": "tsc -p tsconfig.build.json",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci esm coverage *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "format-check": "oxfmt --check .",
@@ -61,7 +61,6 @@
         "@types/node": "24.12.0",
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",
-        "@typescript/native-preview": "7.0.0-dev.20260707.2",
         "dependency-cruiser": "17.3.10",
         "dotenv": "16.4.5",
         "eslint": "^9.39.2",
@@ -75,7 +74,7 @@
         "oxfmt": "0.66.0",
         "oxlint": "1.57.0",
         "oxlint-tsgolint": "0.15.0",
-        "typescript": "6.0.3",
+        "typescript": "7.0.2",
         "vitest": "4.1.8"
     }
 }

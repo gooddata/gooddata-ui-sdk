@@ -3,7 +3,12 @@
 import type { ObjectType } from "../objectType/types.js";
 import { useFeatureFlag } from "../permission/PermissionsContext.js";
 
-const SUPPORTED_CERTIFICATION_TYPES: ObjectType[] = ["analyticalDashboard", "insight", "measure"];
+const SUPPORTED_CERTIFICATION_TYPES: ObjectType[] = [
+    "analyticalDashboard",
+    "insight",
+    "measure",
+    "computedAttribute",
+];
 
 /**
  * Catalog certification feature gate.

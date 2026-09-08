@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-client-tiger",
-    "version": "11.56.0-alpha.5",
+    "version": "11.56.0-alpha.6",
     "description": "API Client for GoodData Cloud and GoodData.CN",
     "license": "MIT",
     "author": "GoodData",
@@ -47,9 +47,9 @@
         "_phase:validate": "npm run build-dynamic-files && npm run validate",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "bash scripts/build.sh",
-        "build-check": "tsgo",
+        "build-check": "tsc",
         "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",
-        "build-ts": "tsgo -p tsconfig.build.json",
+        "build-ts": "tsc -p tsconfig.build.json",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage temp *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "format-check": "oxfmt --check .",
@@ -79,7 +79,6 @@
         "@types/lodash-es": "4.17.12",
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",
-        "@typescript/native-preview": "7.0.0-dev.20260707.2",
         "commander": "8.3.0",
         "dependency-cruiser": "17.3.10",
         "dotenv": "16.4.5",
@@ -95,7 +94,7 @@
         "oxfmt": "0.66.0",
         "oxlint": "1.57.0",
         "oxlint-tsgolint": "0.15.0",
-        "typescript": "6.0.3",
+        "typescript": "7.0.2",
         "vitest": "4.1.8"
     }
 }

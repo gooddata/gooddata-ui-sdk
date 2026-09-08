@@ -2967,6 +2967,7 @@ export interface IWorkspaceComputedAttributesService {
     getComputedAttributeExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
     getComputedAttributeReferencingObjects(ref: ObjRef): Promise<IComputedAttributeReferencing>;
     getComputedAttributesQuery(): IComputedAttributesQuery;
+    setCertification(ref: ObjRef, certification?: IObjectCertificationWrite): Promise<void>;
     updateComputedAttribute(computedAttribute: IComputedAttributeMetadataObject): Promise<IComputedAttributeMetadataObject>;
     updateComputedAttributeMeta(computedAttribute: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IComputedAttributeMetadataObject>;
 }

@@ -170,7 +170,7 @@ export { default } from "@gooddata/eslint-config/oxlint-react";
     },
     "scripts": {
         "build": "rm -rf dist && npm-run-all -p dist build-check",
-        "build-check": "tsgo",
+        "build-check": "tsc",
         "clean": "rm -rf dist *.tgz *.log tsconfig.tsbuildinfo",
         "dev": "vite --force",
         "dist": "vite build",
@@ -198,7 +198,6 @@ export { default } from "@gooddata/eslint-config/oxlint-react";
         "@types/react-dom": "<VERSION>",
         "@typescript-eslint/eslint-plugin": "<VERSION>",
         "@typescript-eslint/parser": "<VERSION>",
-        "@typescript/native-preview": "<VERSION>",
         "@vitejs/plugin-react": "<VERSION>",
         "eslint": "<VERSION>",
         "eslint-plugin-headers": "<VERSION>",
@@ -613,7 +612,7 @@ export { default } from "@gooddata/eslint-config/oxlint-react-vitest";
     },
     "scripts": {
         "build": "npm-run-all -p build-check dist",
-        "build-check": "tsgo",
+        "build-check": "tsc",
         "clean": "rm -rf esm dist *.tgz *.log tsconfig.tsbuildinfo",
         "dev": "vite build && npm-run-all --parallel dev:build dev:serve",
         "dev:build": "vite build --watch",
@@ -647,7 +646,6 @@ export { default } from "@gooddata/eslint-config/oxlint-react-vitest";
         "@types/react-dom": "<VERSION>",
         "@typescript-eslint/eslint-plugin": "<VERSION>",
         "@typescript-eslint/parser": "<VERSION>",
-        "@typescript/native-preview": "<VERSION>",
         "@vitejs/plugin-react": "<VERSION>",
         "eslint": "<VERSION>",
         "eslint-plugin-headers": "<VERSION>",

@@ -30,7 +30,7 @@
     "messages.genAi.visualisation.saved.success": "完了！ビジュアライゼーションを保存しました。",
     "messages.genAi.visualisation.saved.error": "ビジュアライゼーションを保存する際に問題が発生しました。",
     "messages.genAi.visualisation.saved.error.detail": "{errorType}: {errorMessage}",
-    "messages.genAi.visualisation.link.copied": "視覚化リンクがクリップボードにコピーされました。",
+    "messages.genAi.visualisation.link.copied": "ビジュアライゼーションリンクがクリップボードにコピーされました。",
     "messages.showMore": "もっと表示",
     "messages.showLess": "表示を減らす",
     "gen-ai.ask-assistant.search": "新しいビジュアライゼーションを構築する：{question}"
