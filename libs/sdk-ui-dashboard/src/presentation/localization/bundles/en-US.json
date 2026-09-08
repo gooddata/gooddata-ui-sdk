@@ -1191,22 +1191,6 @@
         "text": "Failed to delete alert. Try again later.",
         "crowdinContext": "Error message shown when alert deletion fails"
     },
-    "dialogs.alerting.management.pause.error": {
-        "text": "Failed to pause alert. Try again later.",
-        "crowdinContext": "Error message shown when pausing an alert fails"
-    },
-    "dialogs.alerting.management.pause.success": {
-        "text": "Your alert has been paused.",
-        "crowdinContext": "Success message after alert is paused"
-    },
-    "dialogs.alerting.management.activate.error": {
-        "text": "Failed to un-pause alert. Try again later.",
-        "crowdinContext": "Error message shown when reactivating a paused alert fails"
-    },
-    "dialogs.alerting.management.activate.success": {
-        "text": "Your alert has been un-paused.",
-        "crowdinContext": "Success message after alert is reactivated"
-    },
     "dialogs.alerting.management.create": {
         "text": "Create",
         "crowdinContext": "Button label to create a new alert"

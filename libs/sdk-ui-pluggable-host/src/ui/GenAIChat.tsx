@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import { defineMessage, useIntl } from "react-intl";
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import type { IGenAIUserContext } from "@gooddata/sdk-model";
+import type { IGenAIUserContext, PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import {
     type ChatDefinitionReceivedEvent,
@@ -85,6 +85,10 @@ export interface IGenAIChatProps {
      */
     ambientUserContextLoading?: boolean;
     /**
+     * Active application registry item.
+     */
+    activeApplication?: PluggableApplicationRegistryItem;
+    /**
      * Tag identifiers the assistant's object search/autocomplete should be restricted to,
      * reflecting the active hosted application's current view.
      */
@@ -133,6 +137,7 @@ export function GenAIChat({
     canFullControl,
     settings,
     dialogPosition,
+    activeApplication,
     embedded,
     onAppLinkClick,
     onEvent,
@@ -217,7 +222,11 @@ export function GenAIChat({
         [addError, addSuccess, intl, onEvent],
     );
 
-    const enableRightPanel = useGenAiRightPanel(settings?.["enableGenAiRightPanel"] as boolean, embedded);
+    const enableRightPanel = useGenAiRightPanel(
+        settings?.["enableGenAiRightPanel"] as boolean,
+        embedded,
+        activeApplication,
+    );
 
     return (
         <GenAIChatDialogConnected

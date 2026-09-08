@@ -110,6 +110,10 @@ type MessagesSliceState = {
      * this one is the actual id from server, useful for telemetry.
      */
     threadId?: string;
+    /**
+     * A refocus counter. Used to force re-render of the input field.
+     */
+    refocus: number;
 };
 
 export const LS_VERBOSE_KEY = "gd-gen-ai-verbose";
@@ -143,6 +147,7 @@ const initialState: MessagesSliceState = {
     selectedEffort: DEFAULT_EFFORT,
     agents: undefined,
     conversationsData: {},
+    refocus: 0,
 };
 
 const setNormalizedMessages = (state: MessagesSliceState, messages: Message[]) => {
@@ -506,6 +511,10 @@ const messagesSlice = createSlice({
 
                 const data = getConversationData(state.conversationsData, currentConversation.localId);
                 if (data) {
+                    // We need to mark all messages as filled
+                    Object.values(data.items).forEach((item) => {
+                        item.filled = true;
+                    });
                     data.items[message.localId] = message;
                     data.order.push(message.localId);
                 }
@@ -1039,6 +1048,28 @@ const messagesSlice = createSlice({
                 delete state.messageAsyncProcess;
             }
         },
+        filledFormAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                assistantMessageId: string;
+            }>,
+        ) => {
+            const conversationId = getConversationLocalId(state.currentConversation);
+            const assistantMessage = getAssistantMessageStrict(
+                state,
+                payload.assistantMessageId,
+                conversationId,
+            );
+
+            if (isChatConversationLocalItem(assistantMessage)) {
+                assistantMessage.filled = true;
+            }
+        },
+        refocusInput: (state) => {
+            state.refocus++;
+        },
         setUserFeedback: (
             state,
             {
@@ -1545,6 +1576,8 @@ export const {
     deleteConversationStartAction,
     deleteConversationSuccessAction,
     deleteConversationFailureAction,
+    filledFormAction,
+    refocusInput,
     /**
      * @public
      */

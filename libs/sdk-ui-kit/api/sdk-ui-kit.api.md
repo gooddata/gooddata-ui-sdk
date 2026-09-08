@@ -155,6 +155,9 @@ export function alignPointsToPlacement(alignPoints: ILegacyAlignPoint[]): Placem
 export function alignPointToPlacement(alignPoint: ILegacyAlignPoint): Placement;
 
 // @internal (undocumented)
+export const ALL_RICH_TEXT_FEATURES: readonly RichTextFeature[];
+
+// @internal (undocumented)
 export function AppHeader(input: IAppHeaderProps): JSX.Element;
 
 // @internal (undocumented)
@@ -4218,6 +4221,7 @@ export interface IMediaQueries {
     "!mobileDevice": string;
     "<=lg": string;
     "<=md": string;
+    "<=xl": string;
     "<desktop": string;
     "<sm": string;
     ">=lg": string;
@@ -4877,6 +4881,7 @@ export interface IResponsiveTextProps {
 
 // @internal (undocumented)
 export interface IRichTextProps {
+    allowedMarkdown?: readonly RichTextFeature[];
     autoResize?: boolean;
     // (undocumented)
     className?: string;
@@ -6824,6 +6829,8 @@ export interface IUiFloatingPanelProps extends Omit<IUiFloatingElementProps, "cl
 
 // @internal (undocumented)
 export interface IUiFocusHelperConnectors<T extends HTMLElement = HTMLElement> {
+    // (undocumented)
+    element?: T | null;
     // (undocumented)
     onKeyDown?: (e: KeyboardEvent_2) => void;
     // (undocumented)
@@ -8875,6 +8882,9 @@ export function ResponsiveText(input: IResponsiveTextProps): JSX.Element;
 
 // @internal (undocumented)
 export function RichText(props: IRichTextProps): JSX.Element;
+
+// @internal (undocumented)
+export type RichTextFeature = "emphasis" | "headings" | "lists" | "links" | "images" | "code" | "blockquotes" | "thematicBreaks" | "html" | "entities" | "backslashBreaks";
 
 // @internal (undocumented)
 export function RichTextWithTooltip(props: IRichTextWithTooltipProps): JSX.Element;

@@ -38826,6 +38826,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -38868,6 +38881,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -39216,6 +39237,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -39261,6 +39295,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -39677,6 +39719,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -39740,6 +39795,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -40302,6 +40365,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -40344,6 +40420,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -40710,6 +40794,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -40755,6 +40852,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -41615,6 +41720,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -41669,6 +41787,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -42121,6 +42247,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -42807,6 +42941,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -42867,6 +43014,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -44385,6 +44540,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -44417,6 +44585,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -45727,6 +45903,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -45778,6 +45967,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -46246,6 +46443,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -46294,6 +46504,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -47160,6 +47378,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -47192,6 +47423,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -47513,6 +47752,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -47558,6 +47810,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -47923,6 +48183,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -47965,6 +48238,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -48836,6 +49117,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -48878,6 +49172,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -49478,6 +49780,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -49520,6 +49835,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -50099,6 +50422,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -50131,6 +50467,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -50858,6 +51202,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -50890,6 +51247,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -51519,6 +51884,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -51551,6 +51929,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -52615,6 +53001,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -52647,6 +53046,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -52986,6 +53393,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -53698,6 +54118,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -53730,6 +54163,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -54150,6 +54591,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -54182,6 +54636,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -54407,6 +54869,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -54439,6 +54914,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -54950,6 +55433,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -54982,6 +55478,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -55618,6 +56122,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -55681,6 +56198,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -56024,6 +56549,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -56056,6 +56594,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -56449,6 +56995,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -56481,6 +57040,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -57238,6 +57805,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -57270,6 +57850,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -57904,6 +58492,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -58333,6 +58929,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -58365,6 +58974,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -58642,6 +59259,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -58674,6 +59304,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -59644,6 +60282,19 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -59676,6 +60327,14 @@
                         "properties": {
                             "page": {
                                 "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
                             }
                         }
                     }
@@ -62508,6 +63167,35 @@
                     }
                 },
                 "description": "Setting and its value."
+            },
+            "RestrictedObject": {
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Object identifier, unique within one workspace hierarchy."
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "JSON:API type of the restricted object. Matches the `type` of its entry in the resource's `relationships`.",
+                        "enum": [
+                            "attribute",
+                            "attributeHierarchy",
+                            "computedAttribute",
+                            "fact",
+                            "filterContext",
+                            "label",
+                            "metric",
+                            "userDataFilter",
+                            "visualizationObject"
+                        ]
+                    }
+                },
+                "description": "A reference the caller may not view."
             },
             "RsaSpecification": {
                 "required": [

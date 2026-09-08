@@ -19,7 +19,12 @@ type ConversationItemContentsProps = {
     isLast?: boolean;
 };
 
-export function ConversationItemContents({ message, references, isLoading }: ConversationItemContentsProps) {
+export function ConversationItemContents({
+    message,
+    references,
+    isLoading,
+    isLast,
+}: ConversationItemContentsProps) {
     const {
         MessageTextContentComponent,
         MessageErrorContentComponent,
@@ -58,6 +63,7 @@ export function ConversationItemContents({ message, references, isLoading }: Con
                 message={message}
                 parts={content.parts ?? []}
                 references={references}
+                isLast={isLast}
             />
         );
     }

@@ -42,8 +42,9 @@ import { DefaultAlertingDialogRecipients } from "./DefaultAlertingDialogRecipien
  * rendered within an `AutomationsContextProvider`, an `AlertingDialogContextProvider` (for the
  * create/edit flow), and an `AlertingDialogStateProvider`. Inside a `Dashboard`, the alerting
  * connector supplies the first two providers above the `AlertingDialogComponent` slot, and mounts
- * `AlertingDialogStateProvider` around the resolved slot component once
- * `useAlertingDialogContext().isLoading` is false — so the default component, and any wholesale
+ * `AlertingDialogStateProvider` around the resolved slot component — its state model establishes
+ * itself once `useAlertingDialogContext().isLoading` is first false and stays mounted from then
+ * on — so the default component, and any wholesale
  * slot replacement, inherit all three contexts automatically and require no extra wiring.
  *
  * The providers are intentionally hoisted above the slot rather than built inside this component:
@@ -90,10 +91,10 @@ function DefaultAlertingDialogBody({
     onCancel,
     onDeleteSuccess,
     onDeleteError,
-    onError,
-    onSuccess,
-    onSaveError,
-    onSaveSuccess,
+    onCreateError,
+    onCreateSuccess,
+    onUpdateError,
+    onUpdateSuccess,
     slots,
     topContent,
     bottomContent,
@@ -104,7 +105,12 @@ function DefaultAlertingDialogBody({
 
     const { notificationChannels } = useAlertingDialogContext();
 
-    const { isSaving, submit } = useAlertSubmit({ onSuccess, onError, onSaveSuccess, onSaveError });
+    const { isSaving, submit } = useAlertSubmit({
+        onCreateSuccess,
+        onCreateError,
+        onUpdateSuccess,
+        onUpdateError,
+    });
 
     const filtersDefaultProps = useAlertingDialogFiltersProps();
     const destinationDefaultProps = useAlertingDialogDestinationProps();

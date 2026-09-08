@@ -7,6 +7,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
     type FilterContextItem,
+    type INotificationChannelIdentifier,
     idRef,
     isExportDefinitionDashboardRequestPayload,
 } from "@gooddata/sdk-model";
@@ -106,6 +107,13 @@ const SEEDED_FILTER: FilterContextItem = {
     },
 };
 
+const OTHER_CHANNEL: INotificationChannelIdentifier = {
+    type: "notificationChannel",
+    destinationType: "smtp",
+    id: "channel-2",
+    allowedRecipients: "internal",
+};
+
 /**
  * Stands in for the resolved slot component. Reads the dialog state unconditionally, the way a
  * replacement that ignores the documented `isLoading` check would, so the accessors' throw is
@@ -197,11 +205,14 @@ class StateBoundary extends Component<{ children: ReactNode }, { failed: boolean
 let isLoading = false;
 let editedAutomationFilters: FilterContextItem[] = [];
 let resolvedSlotComponent: () => ReactNode = StubScheduledEmailDialogComponent;
+let notificationChannels: INotificationChannelIdentifier[] =
+    SCHEDULED_EMAIL_DIALOG_CONTEXT.notificationChannels;
 
 function mockContexts() {
     mockUseAutomationsContext.mockImplementation(() => AUTOMATIONS_CONTEXT);
     mockUseScheduledEmailDialogContext.mockImplementation(() => ({
         ...SCHEDULED_EMAIL_DIALOG_CONTEXT,
+        notificationChannels,
         isLoading,
     }));
     mockUseAutomationFiltersSelect.mockImplementation(() => ({
@@ -226,6 +237,7 @@ beforeEach(() => {
     isLoading = false;
     editedAutomationFilters = [];
     resolvedSlotComponent = StubScheduledEmailDialogComponent;
+    notificationChannels = SCHEDULED_EMAIL_DIALOG_CONTEXT.notificationChannels;
     mockContexts();
     mockUseValidateExistingAutomationFilters.mockReturnValue({ isValid: true, filtersAreStale: false });
     mockUseAutomationExportParameters.mockReturnValue({
@@ -324,5 +336,39 @@ describe("ScheduledEmailDialogStateProvider — the mounted state model", () => 
         );
 
         expect(getByTestId("draft-title")).toHaveTextContent("edited");
+    });
+
+    it("keeps the state model and the edited draft mounted across a mid-edit refresh", () => {
+        const { getByTestId, rerender } = renderDialog();
+
+        fireEvent.click(getByTestId("edit-title"));
+        expect(getByTestId("draft-title")).toHaveTextContent("edited");
+
+        // An automations refresh flips isLoading back under the mounted dialog.
+        isLoading = true;
+        rerender(
+            <IntlWrapper>
+                <StateBoundary>
+                    <ScheduledEmailDialog onCancel={vi.fn()} />
+                </StateBoundary>
+            </IntlWrapper>,
+        );
+
+        expect(getByTestId("draft-title")).toHaveTextContent("edited");
+        expect(getByTestId("accessors-ok")).toBeInTheDocument();
+
+        // The refresh completes with changed seed inputs; the seed must not re-run.
+        isLoading = false;
+        notificationChannels = [OTHER_CHANNEL, ...SCHEDULED_EMAIL_DIALOG_CONTEXT.notificationChannels];
+        rerender(
+            <IntlWrapper>
+                <StateBoundary>
+                    <ScheduledEmailDialog onCancel={vi.fn()} />
+                </StateBoundary>
+            </IntlWrapper>,
+        );
+
+        expect(getByTestId("draft-title")).toHaveTextContent("edited");
+        expect(getByTestId("draft-channel")).toHaveTextContent("channel-1");
     });
 });

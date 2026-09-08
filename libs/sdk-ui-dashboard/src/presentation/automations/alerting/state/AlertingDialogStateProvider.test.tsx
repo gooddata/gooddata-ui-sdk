@@ -114,6 +114,13 @@ const SENTINEL_CHANNEL: INotificationChannelIdentifier = {
     allowedRecipients: "internal",
 };
 
+const OTHER_CHANNEL: INotificationChannelIdentifier = {
+    type: "notificationChannel",
+    destinationType: "smtp",
+    id: "channel-2",
+    allowedRecipients: "internal",
+};
+
 // Only `ref`/`localIdentifier`/`type`/`ignoreDashboardFilters` are read by the code exercised
 // here (widget identity, the insight-widget type guard, and the ignored-filters check); the
 // remaining required IWidget fields are filler values.
@@ -375,5 +382,39 @@ describe("AlertingDialogStateProvider — the loading gate", () => {
         expect(screen.getByTestId("actions-probe")).toHaveTextContent("NO_PROVIDER");
         expect(screen.getByTestId("data-probe")).toHaveTextContent("NO_PROVIDER");
         expect(screen.getByTestId("filters-probe")).toHaveTextContent("NO_PROVIDER");
+    });
+
+    it("keeps the state model and the edited draft mounted across a mid-edit refresh", () => {
+        setAlertingDialogContext({ isLoading: false, notificationChannels: [SENTINEL_CHANNEL] });
+
+        const { rerender } = renderAlertingDialog();
+
+        fireEvent.click(screen.getByTestId("actions-ok"));
+        expect(screen.getByTestId("draft-title")).toHaveTextContent("Edited title");
+
+        // An automations refresh flips isLoading back under the mounted dialog.
+        setAlertingDialogContext({ isLoading: true, notificationChannels: [SENTINEL_CHANNEL] });
+        rerender(
+            <IntlWrapper>
+                <AlertingDialog onCancel={vi.fn()} />
+            </IntlWrapper>,
+        );
+
+        expect(screen.getByTestId("draft-title")).toHaveTextContent("Edited title");
+        expect(screen.getByTestId("draft-channel")).toHaveTextContent(SENTINEL_CHANNEL.id);
+
+        // The refresh completes with changed seed inputs; the seed must not re-run.
+        setAlertingDialogContext({
+            isLoading: false,
+            notificationChannels: [OTHER_CHANNEL, SENTINEL_CHANNEL],
+        });
+        rerender(
+            <IntlWrapper>
+                <AlertingDialog onCancel={vi.fn()} />
+            </IntlWrapper>,
+        );
+
+        expect(screen.getByTestId("draft-title")).toHaveTextContent("Edited title");
+        expect(screen.getByTestId("draft-channel")).toHaveTextContent(SENTINEL_CHANNEL.id);
     });
 });

@@ -7,6 +7,6 @@
  */
 export function missingAlertStateProvider(accessor: string): never {
     throw new Error(
-        `${accessor} must be used within AlertingDialogStateProvider. The provider mounts only once the dialog's data has loaded, so check useAlertingDialogContext().isLoading before reading alerting dialog state.`,
+        `${accessor} must be used within AlertingDialogStateProvider. The state model mounts once the dialog's data has first loaded, so check useAlertingDialogContext().isLoading before reading alerting dialog state.`,
     );
 }

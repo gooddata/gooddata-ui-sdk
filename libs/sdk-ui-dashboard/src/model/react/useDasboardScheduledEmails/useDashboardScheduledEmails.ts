@@ -45,8 +45,8 @@ export const useDashboardScheduledEmails = () => {
         onScheduleEmailingCreateError,
         onScheduleEmailingCreateSuccess,
         onScheduleEmailingOpen,
-        onScheduleEmailingSaveError,
-        onScheduleEmailingSaveSuccess,
+        onScheduleEmailingUpdateError,
+        onScheduleEmailingUpdateSuccess,
     } = useDashboardScheduledEmailsDialog();
 
     const {
@@ -82,8 +82,8 @@ export const useDashboardScheduledEmails = () => {
         onScheduleEmailingBack,
         onScheduleEmailingCreateError,
         onScheduleEmailingCreateSuccess,
-        onScheduleEmailingSaveError,
-        onScheduleEmailingSaveSuccess,
+        onScheduleEmailingUpdateError,
+        onScheduleEmailingUpdateSuccess,
         // List / Management Dialog
         isScheduledManagementEmailingVisible,
         isScheduleEmailingManagementDialogOpen,

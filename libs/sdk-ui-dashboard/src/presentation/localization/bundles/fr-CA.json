@@ -299,7 +299,7 @@
     "dialogs.alerting.management.delete.error": "Échec de la suppression de l’alerte. Réessayez plus tard.",
     "dialogs.alerting.management.pause.error": "Échec de la mise en pause de l’alerte. Réessayez plus tard.",
     "dialogs.alerting.management.pause.success": "Votre alerte a été mise en pause.",
-    "dialogs.alerting.management.activate.error": "Échec de la mise en pause de l’alerte. Réessayez plus tard.",
+    "dialogs.alerting.management.activate.error": "Échec de la réactivation de l’alerte. Réessayez plus tard.",
     "dialogs.alerting.management.activate.success": "Votre alerte a été réactivée.",
     "dialogs.alerting.management.create": "Créer",
     "dialogs.alerting.management.create.new": "Créer nouveau",

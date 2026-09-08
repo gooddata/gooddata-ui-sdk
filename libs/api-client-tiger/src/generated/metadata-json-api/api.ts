@@ -4390,6 +4390,14 @@ export interface JsonApiAgentOutDocument {
      */
     'included'?: Array<JsonApiAgentOutIncludes>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiAgentOutDocumentMeta;
+}
+
+export interface JsonApiAgentOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -4412,6 +4420,10 @@ export interface JsonApiAgentOutList {
 
 export interface JsonApiAgentOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiAgentOutRelationships {
@@ -4577,6 +4589,14 @@ export interface JsonApiAggregatedFactOutDocument {
      */
     'included'?: Array<JsonApiAggregatedFactOutIncludes>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiAggregatedFactOutDocumentMeta;
+}
+
+export interface JsonApiAggregatedFactOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -4599,6 +4619,10 @@ export interface JsonApiAggregatedFactOutList {
 
 export interface JsonApiAggregatedFactOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiAggregatedFactOutMeta {
@@ -4762,6 +4786,14 @@ export interface JsonApiAnalyticalDashboardOutDocument {
      */
     'included'?: Array<JsonApiAnalyticalDashboardOutIncludes>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiAnalyticalDashboardOutDocumentMeta;
+}
+
+export interface JsonApiAnalyticalDashboardOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -4784,6 +4816,10 @@ export interface JsonApiAnalyticalDashboardOutList {
 
 export interface JsonApiAnalyticalDashboardOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiAnalyticalDashboardOutMeta {
@@ -5152,6 +5188,14 @@ export interface JsonApiAttributeHierarchyOutDocument {
      */
     'included'?: Array<JsonApiAttributeHierarchyOutIncludes>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiAttributeHierarchyOutDocumentMeta;
+}
+
+export interface JsonApiAttributeHierarchyOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -5174,6 +5218,10 @@ export interface JsonApiAttributeHierarchyOutList {
 
 export interface JsonApiAttributeHierarchyOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiAttributeHierarchyOutMeta {
@@ -5334,6 +5382,14 @@ export interface JsonApiAttributeOutDocument {
      */
     'included'?: Array<JsonApiAttributeOutIncludes>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiAttributeOutDocumentMeta;
+}
+
+export interface JsonApiAttributeOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -5356,6 +5412,10 @@ export interface JsonApiAttributeOutList {
 
 export interface JsonApiAttributeOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiAttributeOutMeta {
@@ -5791,6 +5851,14 @@ export interface JsonApiAutomationOutDocument {
      */
     'included'?: Array<JsonApiAutomationOutIncludes>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiAutomationOutDocumentMeta;
+}
+
+export interface JsonApiAutomationOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -5813,6 +5881,10 @@ export interface JsonApiAutomationOutList {
 
 export interface JsonApiAutomationOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiAutomationOutMeta {
@@ -6117,6 +6189,10 @@ export interface JsonApiAutomationResultOutList {
 
 export interface JsonApiAutomationResultOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiAutomationResultOutRelationships {
@@ -6399,6 +6475,14 @@ export interface JsonApiComputedAttributeOutDocument {
      */
     'included'?: Array<JsonApiComputedAttributeOutIncludes>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiComputedAttributeOutDocumentMeta;
+}
+
+export interface JsonApiComputedAttributeOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -6421,6 +6505,10 @@ export interface JsonApiComputedAttributeOutList {
 
 export interface JsonApiComputedAttributeOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiComputedAttributeOutMeta {
@@ -7313,6 +7401,14 @@ export interface JsonApiDashboardPluginOutDocument {
      */
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiDashboardPluginOutDocumentMeta;
+}
+
+export interface JsonApiDashboardPluginOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -7330,6 +7426,10 @@ export interface JsonApiDashboardPluginOutList {
 
 export interface JsonApiDashboardPluginOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiDashboardPluginOutMeta {
@@ -7957,6 +8057,14 @@ export interface JsonApiDatasetOutDocument {
      */
     'included'?: Array<JsonApiDatasetOutIncludes>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiDatasetOutDocumentMeta;
+}
+
+export interface JsonApiDatasetOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -7979,6 +8087,10 @@ export interface JsonApiDatasetOutList {
 
 export interface JsonApiDatasetOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiDatasetOutMeta {
@@ -8247,6 +8359,14 @@ export interface JsonApiExportDefinitionOutDocument {
      */
     'included'?: Array<JsonApiExportDefinitionOutIncludes>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiExportDefinitionOutDocumentMeta;
+}
+
+export interface JsonApiExportDefinitionOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -8269,6 +8389,10 @@ export interface JsonApiExportDefinitionOutList {
 
 export interface JsonApiExportDefinitionOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiExportDefinitionOutMeta {
@@ -8746,6 +8870,14 @@ export interface JsonApiFactOutDocument {
      */
     'included'?: Array<JsonApiDatasetOutWithLinks>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiFactOutDocumentMeta;
+}
+
+export interface JsonApiFactOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -8763,6 +8895,10 @@ export interface JsonApiFactOutList {
 
 export interface JsonApiFactOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiFactOutMeta {
@@ -8913,6 +9049,14 @@ export interface JsonApiFilterContextOutDocument {
      */
     'included'?: Array<JsonApiFilterContextOutIncludes>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiFilterContextOutDocumentMeta;
+}
+
+export interface JsonApiFilterContextOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -8935,6 +9079,10 @@ export interface JsonApiFilterContextOutList {
 
 export interface JsonApiFilterContextOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiFilterContextOutMeta {
@@ -9152,6 +9300,14 @@ export interface JsonApiFilterViewOutDocument {
      */
     'included'?: Array<JsonApiFilterViewOutIncludes>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiFilterViewOutDocumentMeta;
+}
+
+export interface JsonApiFilterViewOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -9174,6 +9330,10 @@ export interface JsonApiFilterViewOutList {
 
 export interface JsonApiFilterViewOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiFilterViewOutRelationships {
@@ -9666,6 +9826,14 @@ export interface JsonApiIpAllowlistPolicyOutDocument {
      */
     'included'?: Array<JsonApiIpAllowlistPolicyOutIncludes>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiIpAllowlistPolicyOutDocumentMeta;
+}
+
+export interface JsonApiIpAllowlistPolicyOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -9688,6 +9856,10 @@ export interface JsonApiIpAllowlistPolicyOutList {
 
 export interface JsonApiIpAllowlistPolicyOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiIpAllowlistPolicyOutRelationships {
@@ -10027,6 +10199,14 @@ export interface JsonApiKnowledgeRecommendationOutDocument {
      */
     'included'?: Array<JsonApiKnowledgeRecommendationOutIncludes>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiKnowledgeRecommendationOutDocumentMeta;
+}
+
+export interface JsonApiKnowledgeRecommendationOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -10049,6 +10229,10 @@ export interface JsonApiKnowledgeRecommendationOutList {
 
 export interface JsonApiKnowledgeRecommendationOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiKnowledgeRecommendationOutMeta {
@@ -10387,6 +10571,14 @@ export interface JsonApiLabelOutDocument {
      */
     'included'?: Array<JsonApiAttributeOutWithLinks>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiLabelOutDocumentMeta;
+}
+
+export interface JsonApiLabelOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -10404,6 +10596,10 @@ export interface JsonApiLabelOutList {
 
 export interface JsonApiLabelOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiLabelOutMeta {
@@ -10804,6 +11000,14 @@ export interface JsonApiMemoryItemOutDocument {
      */
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiMemoryItemOutDocumentMeta;
+}
+
+export interface JsonApiMemoryItemOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -10821,6 +11025,10 @@ export interface JsonApiMemoryItemOutList {
 
 export interface JsonApiMemoryItemOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiMemoryItemOutMeta {
@@ -11119,6 +11327,14 @@ export interface JsonApiMetricOutDocument {
      */
     'included'?: Array<JsonApiComputedAttributeOutIncludes>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiMetricOutDocumentMeta;
+}
+
+export interface JsonApiMetricOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -11136,6 +11352,10 @@ export interface JsonApiMetricOutList {
 
 export interface JsonApiMetricOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiMetricOutMeta {
@@ -11804,6 +12024,14 @@ export interface JsonApiOrgMemoryItemOutDocument {
      */
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiOrgMemoryItemOutDocumentMeta;
+}
+
+export interface JsonApiOrgMemoryItemOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -11821,6 +12049,10 @@ export interface JsonApiOrgMemoryItemOutList {
 
 export interface JsonApiOrgMemoryItemOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiOrgMemoryItemOutRelationships {
@@ -11998,6 +12230,14 @@ export interface JsonApiOrganizationOutDocument {
      */
     'included'?: Array<JsonApiOrganizationOutIncludes>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiOrganizationOutDocumentMeta;
+}
+
+export interface JsonApiOrganizationOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -12290,6 +12530,14 @@ export interface JsonApiParameterOutDocument {
      */
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiParameterOutDocumentMeta;
+}
+
+export interface JsonApiParameterOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -12307,6 +12555,10 @@ export interface JsonApiParameterOutList {
 
 export interface JsonApiParameterOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiParameterOutMeta {
@@ -12525,6 +12777,14 @@ export interface JsonApiReportOutDocument {
      */
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiReportOutDocumentMeta;
+}
+
+export interface JsonApiReportOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -12542,6 +12802,10 @@ export interface JsonApiReportOutList {
 
 export interface JsonApiReportOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiReportOutMeta {
@@ -12668,6 +12932,14 @@ export interface JsonApiReportPageLayoutOutDocument {
      */
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiReportPageLayoutOutDocumentMeta;
+}
+
+export interface JsonApiReportPageLayoutOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -12685,6 +12957,10 @@ export interface JsonApiReportPageLayoutOutList {
 
 export interface JsonApiReportPageLayoutOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiReportPageLayoutOutMeta {
@@ -12963,6 +13239,14 @@ export interface JsonApiReportTemplateOutDocument {
      */
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiReportTemplateOutDocumentMeta;
+}
+
+export interface JsonApiReportTemplateOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -12980,6 +13264,10 @@ export interface JsonApiReportTemplateOutList {
 
 export interface JsonApiReportTemplateOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiReportTemplateOutMeta {
@@ -13286,6 +13574,14 @@ export interface JsonApiUserDataFilterOutDocument {
      */
     'included'?: Array<JsonApiUserDataFilterOutIncludes>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiUserDataFilterOutDocumentMeta;
+}
+
+export interface JsonApiUserDataFilterOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -13308,6 +13604,10 @@ export interface JsonApiUserDataFilterOutList {
 
 export interface JsonApiUserDataFilterOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiUserDataFilterOutMeta {
@@ -13575,6 +13875,14 @@ export interface JsonApiUserGroupOutDocument {
      */
     'included'?: Array<JsonApiUserGroupOutWithLinks>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiUserGroupOutDocumentMeta;
+}
+
+export interface JsonApiUserGroupOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -13592,6 +13900,10 @@ export interface JsonApiUserGroupOutList {
 
 export interface JsonApiUserGroupOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiUserGroupOutRelationships {
@@ -13814,6 +14126,14 @@ export interface JsonApiUserOutDocument {
      */
     'included'?: Array<JsonApiUserGroupOutWithLinks>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiUserOutDocumentMeta;
+}
+
+export interface JsonApiUserOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -13831,6 +14151,10 @@ export interface JsonApiUserOutList {
 
 export interface JsonApiUserOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiUserOutRelationships {
@@ -14128,6 +14452,14 @@ export interface JsonApiVisualizationObjectOutDocument {
      */
     'included'?: Array<JsonApiComputedAttributeOutIncludes>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiVisualizationObjectOutDocumentMeta;
+}
+
+export interface JsonApiVisualizationObjectOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -14145,6 +14477,10 @@ export interface JsonApiVisualizationObjectOutList {
 
 export interface JsonApiVisualizationObjectOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiVisualizationObjectOutMeta {
@@ -14503,6 +14839,10 @@ export interface JsonApiWorkspaceAutomationOutList {
 
 export interface JsonApiWorkspaceAutomationOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiWorkspaceAutomationOutRelationships {
@@ -14789,6 +15129,14 @@ export interface JsonApiWorkspaceDataFilterOutDocument {
      */
     'included'?: Array<JsonApiWorkspaceDataFilterSettingOutWithLinks>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiWorkspaceDataFilterOutDocumentMeta;
+}
+
+export interface JsonApiWorkspaceDataFilterOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -14806,6 +15154,10 @@ export interface JsonApiWorkspaceDataFilterOutList {
 
 export interface JsonApiWorkspaceDataFilterOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiWorkspaceDataFilterOutMeta {
@@ -14970,6 +15322,14 @@ export interface JsonApiWorkspaceDataFilterSettingOutDocument {
      */
     'included'?: Array<JsonApiWorkspaceDataFilterOutWithLinks>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiWorkspaceDataFilterSettingOutDocumentMeta;
+}
+
+export interface JsonApiWorkspaceDataFilterSettingOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -14987,6 +15347,10 @@ export interface JsonApiWorkspaceDataFilterSettingOutList {
 
 export interface JsonApiWorkspaceDataFilterSettingOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiWorkspaceDataFilterSettingOutMeta {
@@ -15489,6 +15853,14 @@ export interface JsonApiWorkspaceOutDocument {
      */
     'included'?: Array<JsonApiWorkspaceOutWithLinks>;
     'links'?: ObjectLinks;
+    'meta'?: JsonApiWorkspaceOutDocumentMeta;
+}
+
+export interface JsonApiWorkspaceOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 /**
@@ -15506,6 +15878,10 @@ export interface JsonApiWorkspaceOutList {
 
 export interface JsonApiWorkspaceOutListMeta {
     'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
 }
 
 export interface JsonApiWorkspaceOutMeta {
@@ -16907,6 +17283,22 @@ export interface ResolvedSetting {
 }
 
 export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'REPORTS_BRAND_KIT';
+
+/**
+ * A reference the caller may not view.
+ */
+export interface RestrictedObject {
+    /**
+     * Object identifier, unique within one workspace hierarchy.
+     */
+    'id': string;
+    /**
+     * JSON:API type of the restricted object. Matches the `type` of its entry in the resource\'s `relationships`.
+     */
+    'type': RestrictedObjectTypeEnum;
+}
+
+export type RestrictedObjectTypeEnum = 'attribute' | 'attributeHierarchy' | 'computedAttribute' | 'fact' | 'filterContext' | 'label' | 'metric' | 'userDataFilter' | 'visualizationObject';
 
 export interface RsaSpecification {
     'alg': RsaSpecificationAlgEnum;

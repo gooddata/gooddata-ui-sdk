@@ -142,10 +142,10 @@ import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
 import { getSettingsForCurrentUser } from "../settings/index.js";
 
 import { type TigerDashboardPermissionType, buildDashboardPermissions } from "./dashboardPermissions.js";
+import { dashboardSideloadIncludes } from "./dashboardSideloads.js";
 import { DashboardsQuery } from "./dashboardsQuery.js";
 import { getParametersMetadata, patchDashboardParametersFromExport } from "./parameters.js";
 import {
-    dashboardSideloadIncludes,
     fetchUnavailableFilterDisplayForms,
     resolveUnavailableDashboardReferences,
 } from "./referenceAvailability.js";

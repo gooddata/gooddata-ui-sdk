@@ -3232,6 +3232,17 @@ export interface IGenAIChatRouting {
     useCase: GenAIChatRoutingUseCase;
 }
 
+// @alpha
+export interface IGenAiClarifyingChoiceOption {
+    label: string;
+}
+
+// @alpha
+export interface IGenAiClarifyingQuestion {
+    control: IGenAiSingleChoiceControl;
+    text: string;
+}
+
 // @internal
 export interface IGenAIClusteringConfig {
     numberOfClusters: number;
@@ -3280,6 +3291,12 @@ export interface IGenAIObjectReference {
 export interface IGenAIObjectReferenceGroup {
     context?: IGenAIObjectReference;
     objects: IGenAIObjectReference[];
+}
+
+// @alpha
+export interface IGenAiSingleChoiceControl {
+    options: Array<IGenAiClarifyingChoiceOption>;
+    type?: "singleChoice";
 }
 
 // @internal

@@ -386,14 +386,14 @@ export interface IAlertDialogValidity {
 }
 
 /**
- * Lifecycle callbacks of {@link useAlertSubmit}: the dialog's own `onSuccess`/`onError` (create) and
- * `onSaveSuccess`/`onSaveError` (edit).
+ * Lifecycle callbacks of {@link useAlertSubmit}: the dialog's own `onCreateSuccess`/`onCreateError`
+ * (create) and `onUpdateSuccess`/`onUpdateError` (edit).
  *
  * @alpha
  */
 export type IUseAlertSubmitCallbacks = Pick<
     IAlertingDialogProps,
-    "onSuccess" | "onError" | "onSaveSuccess" | "onSaveError"
+    "onCreateSuccess" | "onCreateError" | "onUpdateSuccess" | "onUpdateError"
 >;
 
 /**

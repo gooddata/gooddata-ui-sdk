@@ -261,8 +261,10 @@ function convertChatConversationContentFromBackend(
                                     relationships: convertSearchRelationships(part.relationships),
                                 };
                             case "clarifyingQuestions":
-                                //TODO: Not supported now
-                                return undefined;
+                                return {
+                                    type: "clarifyingQuestions",
+                                    questions: part.questions,
+                                };
                             default:
                                 // Unknown part type (e.g. sent by a newer backend): log and drop
                                 // it, do not fail the whole item.

@@ -19,7 +19,11 @@ import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 import { addContextReference } from "../../context/addContextReference.js";
 import { mergeContexts } from "../../context/build.js";
 import { removeContextReference } from "../../context/removeContextReference.js";
-import { selectContextReferences, updateAmbientContext } from "../../context/selectContextReferences.js";
+import {
+    pickSelectedContextFromUserContext,
+    selectContextReferences,
+    updateAmbientContext,
+} from "../../context/selectContextReferences.js";
 import {
     type ContextObjectKind,
     type ContextObjectListState,
@@ -303,9 +307,12 @@ const chatWindowSlice = createSlice({
         ) => {
             if (replaceUserContext) {
                 state.context.active = userContext;
-                state.context = selectContextReferences(state.context, state.context.ambientSelected);
             } else {
                 state.context.active = mergeContexts(state.context.active, userContext);
+            }
+            const updatedContext = pickSelectedContextFromUserContext(state.context, userContext);
+            if (replaceUserContext || updatedContext !== state.context) {
+                state.context = selectContextReferences(updatedContext, updatedContext.ambientSelected);
             }
         },
         setAmbientUserContextAction: (

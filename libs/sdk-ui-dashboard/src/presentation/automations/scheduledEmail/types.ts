@@ -31,6 +31,10 @@ import {
     type IAutomationDialogHeaderProps,
     type IAutomationDialogRecipientsProps,
 } from "../shared/slots/types.js";
+import {
+    type IAutomationDialogCallbacks,
+    type IAutomationManagementDialogCallbacks,
+} from "../shared/types.js";
 
 ///
 /// Component props
@@ -39,7 +43,7 @@ import {
 /**
  * @alpha
  */
-export interface IScheduledEmailDialogProps {
+export interface IScheduledEmailDialogProps extends IAutomationDialogCallbacks {
     /**
      * In case, we are not creating new schedule, but editing existing one, this is the active schedule to be edited.
      *
@@ -126,56 +130,9 @@ export interface IScheduledEmailDialogProps {
     isLoading?: boolean;
 
     /**
-     * Callback to be called, when user submits the scheduled email dialog.
-     */
-    onSubmit?: (
-        scheduledEmailDefinition: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
-    ) => void;
-
-    /**
-     * Callback to be called, when user save the existing scheduled email.
-     */
-    onSave?: (scheduledEmailDefinition: IAutomationMetadataObject) => void;
-
-    /**
-     * Callback to be called, when user closes the scheduled email dialog.
-     */
-    onCancel?: () => void;
-
-    /**
      * Callback to be called, when user goes back to the scheduled email management dialog.
      */
     onBack?: () => void;
-
-    /**
-     * Callback to be called, when error occurs.
-     */
-    onError?: (error: GoodDataSdkError) => void;
-
-    /**
-     * Callback to be called, when scheduling finishes successfully.
-     */
-    onSuccess?: (scheduledEmailDefinition: IAutomationMetadataObject) => void;
-
-    /**
-     * Callback to be called, when error occurs.
-     */
-    onSaveError?: (error: GoodDataSdkError) => void;
-
-    /**
-     * Callback to be called, when scheduling finishes successfully.
-     */
-    onSaveSuccess?: () => void;
-
-    /**
-     * Callback to be called, when scheduled email is deleted.
-     */
-    onDeleteSuccess?: () => void;
-
-    /**
-     * Callback to be called, when schedule fails to delete.
-     */
-    onDeleteError?: (error: GoodDataSdkError) => void;
 }
 
 /**
@@ -753,10 +710,9 @@ export interface IScheduledEmailDialogShellProps extends Pick<
     /**
      * The dialog's single save — `handleSaveScheduledEmail` of the caller's
      * {@link useSaveScheduledEmailToBackend} instance. Drives the footer's submit button, the Enter key on
-     * it, and the header's Enter-to-submit. (Not the `onSubmit` observer of {@link IScheduledEmailDialogProps};
-     * that one goes to the save hook.) The shell does not own the save hook, so the caller's own Enter
+     * it, and the header's Enter-to-submit. The shell does not own the save hook, so the caller's own Enter
      * handlers — {@link useScheduledEmailSubmitOnEnter} — share the same instance. Create the hook instance
-     * only once the dialog context reports `isLoading: false`.
+     * only once the dialog's data has first loaded — the state hooks throw before then.
      */
     onSubmit: () => void;
 
@@ -813,7 +769,7 @@ export interface IScheduledEmailDialogShellProps extends Pick<
  *
  * @alpha
  */
-export interface IScheduledEmailManagementDialogProps {
+export interface IScheduledEmailManagementDialogProps extends IAutomationManagementDialogCallbacks {
     /**
      * Is loading schedule data?
      *
@@ -843,31 +799,6 @@ export interface IScheduledEmailManagementDialogProps {
      *     will be removed.
      */
     automations?: IAutomationMetadataObject[];
-
-    /**
-     * Callback to be called, when user adds new scheduled email item.
-     */
-    onAdd?: () => void;
-
-    /**
-     * Callback to be called, when user clicks scheduled email item for editing.
-     */
-    onEdit?: (scheduledMail: IAutomationMetadataObject) => void;
-
-    /**
-     * Callback to be called, when user closes the scheduled email management dialog.
-     */
-    onClose?: () => void;
-
-    /**
-     * Callback to be called, when scheduled email is deleted.
-     */
-    onDeleteSuccess?: () => void;
-
-    /**
-     * Callback to be called, when schedule fails to delete.
-     */
-    onDeleteError?: (error: GoodDataSdkError) => void;
 }
 
 ///

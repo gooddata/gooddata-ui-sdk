@@ -10,6 +10,7 @@ import {
 import { loadWhatIfScenarios } from "../../../whatIf/whatIfMapping.js";
 
 import { ConversationAlertProposalContent } from "./ConversationAlertProposalContent.js";
+import { ConversationClarifyingQuestionsContent } from "./ConversationClarifyingQuestionsContent.js";
 import { ConversationDashboardContent } from "./ConversationDashboardContent.js";
 import { ConversationKdaContent } from "./ConversationKdaContent.js";
 import { ConversationSearchContent } from "./ConversationSearchContent.js";
@@ -21,12 +22,14 @@ export type ConversationMultipartContentProps = {
     message: IChatConversationLocalItem;
     parts: IChatConversationMultipartLocalPart[];
     references: TextContentObject[];
+    isLast?: boolean;
 };
 
 export function ConversationMultipartContent({
     message,
     parts,
     references,
+    isLast,
 }: ConversationMultipartContentProps) {
     const intl = useIntl();
     const whatIf = loadWhatIfScenarios(parts);
@@ -52,6 +55,18 @@ export function ConversationMultipartContent({
                             part={part}
                             alertProposal={part.alertProposal}
                             objects={[...(part.objects ?? []), ...references]}
+                        />
+                    );
+                }
+                if (part.type === "clarifyingQuestions") {
+                    return (
+                        <ConversationClarifyingQuestionsContent
+                            useMarkdown
+                            message={message}
+                            key={index}
+                            questions={part.questions}
+                            objects={[...(part.objects ?? []), ...references]}
+                            isLast={isLast}
                         />
                     );
                 }

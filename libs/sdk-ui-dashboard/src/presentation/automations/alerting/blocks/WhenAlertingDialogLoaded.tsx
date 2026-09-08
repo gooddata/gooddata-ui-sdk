@@ -5,8 +5,9 @@ import { type ReactNode } from "react";
 import { useAlertingDialogContext } from "../../contexts/AlertingDialogContext.js";
 
 /**
- * Renders its children only once the alerting dialog's data has loaded — the state accessors throw
- * while `useAlertingDialogContext().isLoading` is true, because the state providers mount only then.
+ * Renders its children only while `useAlertingDialogContext().isLoading` is false. The state
+ * accessors throw until the dialog's data has first loaded; during a later refresh the state
+ * model stays mounted and keeps serving, but the blocks still hide behind the loading state.
  * Every connected alerting block goes through it.
  *
  * @internal

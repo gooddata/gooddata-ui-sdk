@@ -7,7 +7,11 @@ import { idRef, uriRef } from "@gooddata/sdk-model";
 import type { StoreContext } from "../types.js";
 
 import { addContextReference } from "./addContextReference.js";
-import { selectContextReferences, updateAmbientContext } from "./selectContextReferences.js";
+import {
+    pickSelectedContextFromUserContext,
+    selectContextReferences,
+    updateAmbientContext,
+} from "./selectContextReferences.js";
 
 describe("updateAmbientContext", () => {
     it("should handle undefined ambient context", () => {
@@ -331,6 +335,106 @@ describe("updateAmbientContext", () => {
 
         expect(result.active?.view?.dashboard?.title).toBe("New Title");
         expect(result.ambientSelected?.dashboard?.title).toBe("New Title");
+    });
+});
+
+describe("pickSelectedContextFromUserContext", () => {
+    it("should return same context if userContext is undefined", () => {
+        const context: StoreContext = { loaded: true };
+        const result = pickSelectedContextFromUserContext(context, undefined);
+        expect(result).toBe(context);
+    });
+
+    it("should return same context if no matching dashboard group is found", () => {
+        const context: StoreContext = {
+            ambientSelected: {
+                dashboard: { ref: idRef("d1") } as any,
+            },
+        };
+        const userContext: any = {
+            referencedObjects: [
+                {
+                    context: { ref: idRef("d2") },
+                    objects: [{ ref: idRef("v1"), title: "V1", type: "INSIGHT" }],
+                },
+            ],
+        };
+        const result = pickSelectedContextFromUserContext(context, userContext);
+        expect(result).toBe(context);
+    });
+
+    it("should pick first object from matching dashboard group", () => {
+        const dashRef = idRef("d1");
+        const visRef = idRef("v1");
+        const context: StoreContext = {
+            ambientSelected: {
+                dashboard: { ref: dashRef } as any,
+            },
+        };
+        const userContext: any = {
+            referencedObjects: [
+                {
+                    context: { ref: dashRef, title: "D1", type: "DASHBOARD" },
+                    objects: [
+                        { ref: visRef, title: "V1", type: "INSIGHT" },
+                        { ref: idRef("v2"), title: "V2", type: "INSIGHT" },
+                    ],
+                },
+            ],
+        };
+        const result = pickSelectedContextFromUserContext(context, userContext);
+
+        expect(result.ambientSelected?.visualization).toEqual({
+            id: "v1",
+            ref: visRef,
+            title: "V1",
+            nesting: 0,
+            context: userContext.referencedObjects[0].context,
+            type: "insight",
+            where: "referencedObjects",
+        });
+    });
+
+    it("should handle WIDGET type and map it to widget", () => {
+        const dashRef = idRef("d1");
+        const visRef = idRef("v1");
+        const context: StoreContext = {
+            ambientSelected: {
+                dashboard: { ref: dashRef } as any,
+            },
+        };
+        const userContext: any = {
+            referencedObjects: [
+                {
+                    context: { ref: dashRef, title: "D1", type: "DASHBOARD" },
+                    objects: [{ ref: visRef, title: "V1", type: "WIDGET" }],
+                },
+            ],
+        };
+        const result = pickSelectedContextFromUserContext(context, userContext);
+
+        expect(result.ambientSelected?.visualization?.type).toBe("widget");
+    });
+
+    it("should handle uriRef for visualization id", () => {
+        const dashRef = idRef("d1");
+        const visRef = uriRef("v1-uri");
+        const context: StoreContext = {
+            ambientSelected: {
+                dashboard: { ref: dashRef } as any,
+            },
+        };
+        const userContext: any = {
+            referencedObjects: [
+                {
+                    context: { ref: dashRef, title: "D1", type: "DASHBOARD" },
+                    objects: [{ ref: visRef, title: "V1", type: "INSIGHT" }],
+                },
+            ],
+        };
+        const result = pickSelectedContextFromUserContext(context, userContext);
+
+        expect(result.ambientSelected?.visualization?.id).toBe("v1-uri");
     });
 });
 

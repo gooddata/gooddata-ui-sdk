@@ -86,7 +86,7 @@ let resolvedDecorator: ComponentType<{ children?: ReactNode }>;
 function renderSeam() {
     return render(
         <AlertingManagementDialogContextProvider value={BASE_CONTEXT}>
-            <AlertingManagementDialog onPauseSuccess={() => {}} onPauseError={() => {}} />
+            <AlertingManagementDialog />
         </AlertingManagementDialogContextProvider>,
     );
 }

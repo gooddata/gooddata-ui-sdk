@@ -82,6 +82,7 @@ export const useMediaQuery = (mediaQueryName: keyof IMediaQueries): boolean => {
         ">=lg": getQueryMatchingOrGreater(largeRange),
         "<=lg": getQueryMatchingOrSmaller(largeRange),
         lg: getQueryMatching(largeRange),
+        "<=xl": getQueryMatchingOrSmaller(xlargeRange),
         ">=xl": getQueryMatchingOrGreater(xlargeRange),
         xl: getQueryMatching(xlargeRange),
         ">=xxl": getQueryMatchingOrGreater(xxlargeRange),

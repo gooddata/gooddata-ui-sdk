@@ -32,12 +32,10 @@ import { type IScheduledEmailSaveState, type IUseSaveScheduledEmailCallbacks } f
  * @alpha
  */
 export function useSaveScheduledEmailToBackend({
-    onSuccess,
-    onError,
-    onSubmit,
-    onSaveSuccess,
-    onSaveError,
-    onSave,
+    onCreateSuccess,
+    onCreateError,
+    onUpdateSuccess,
+    onUpdateError,
 }: IUseSaveScheduledEmailCallbacks): IScheduledEmailSaveState {
     const intl = useIntl();
     const [savingErrorMessage, setSavingErrorMessage] = useState<string | undefined>(undefined);
@@ -53,11 +51,10 @@ export function useSaveScheduledEmailToBackend({
                 intl,
             ) as IAutomationMetadataObjectDefinition;
             setSavingErrorMessage(undefined);
-            onSubmit?.(sanitizedAutomation);
             setIsSavingScheduledEmail(true);
             try {
                 const created = await createScheduledEmail(sanitizedAutomation);
-                onSuccess?.(created);
+                onCreateSuccess?.(created);
             } catch (error: any) {
                 /**
                  * Handle 400 error separately as it contains a detailed error message
@@ -66,24 +63,23 @@ export function useSaveScheduledEmailToBackend({
                 if (error?.cause?.response?.status === 400) {
                     setSavingErrorMessage(error.cause.response.data?.detail);
                 } else {
-                    onError?.(error as GoodDataSdkError);
+                    onCreateError?.(error as GoodDataSdkError);
                 }
             } finally {
                 setIsSavingScheduledEmail(false);
             }
         },
-        [createScheduledEmail, intl, onSubmit, onSuccess, onError],
+        [createScheduledEmail, intl, onCreateSuccess, onCreateError],
     );
 
     const handleUpdateScheduledEmail = useCallback(
         async (scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
             const sanitizedAutomation = sanitizeAutomation(scheduledEmail, intl) as IAutomationMetadataObject;
             setSavingErrorMessage(undefined);
-            onSave?.(sanitizedAutomation);
             setIsSavingScheduledEmail(true);
             try {
-                await saveScheduledEmail(sanitizedAutomation);
-                onSaveSuccess?.();
+                const saved = await saveScheduledEmail(sanitizedAutomation);
+                onUpdateSuccess?.(saved);
             } catch (error: any) {
                 /**
                  * Handle 400 error separately as it contains a detailed error message
@@ -92,13 +88,13 @@ export function useSaveScheduledEmailToBackend({
                 if (error?.cause?.response?.status === 400) {
                     setSavingErrorMessage(error.cause.response.data?.detail);
                 } else {
-                    onSaveError?.(error as GoodDataSdkError);
+                    onUpdateError?.(error as GoodDataSdkError);
                 }
             } finally {
                 setIsSavingScheduledEmail(false);
             }
         },
-        [saveScheduledEmail, intl, onSave, onSaveSuccess, onSaveError],
+        [saveScheduledEmail, intl, onUpdateSuccess, onUpdateError],
     );
 
     const handleSaveScheduledEmail = useCallback((): void => {

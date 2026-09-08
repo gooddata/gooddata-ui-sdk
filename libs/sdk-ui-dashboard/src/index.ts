@@ -2432,6 +2432,10 @@ export type {
     IAutomationDialogHeaderProps,
     IAutomationDialogRecipientsProps,
 } from "./presentation/automations/shared/slots/types.js";
+export type {
+    IAutomationDialogCallbacks,
+    IAutomationManagementDialogCallbacks,
+} from "./presentation/automations/shared/types.js";
 export type { ISlotProps } from "@gooddata/sdk-ui-kit";
 export type { IAutomationParameter } from "./presentation/automations/shared/automationFilters/automationParameters.js";
 export {

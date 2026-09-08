@@ -10,5 +10,5 @@ import { type IGenAIAssistantMessageReasoningContentProps } from "./types.js";
  * @alpha
  */
 export function DefaultMessageReasoningContent(props: IGenAIAssistantMessageReasoningContentProps) {
-    return <ConversationReasoningContent {...props} />;
+    return <ConversationReasoningContent {...props} useMarkdown />;
 }

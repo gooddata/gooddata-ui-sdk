@@ -69,6 +69,11 @@ export interface IMediaQueries {
     lg: string;
 
     /**
+     * Is screen classified as 'xl' or smaller?
+     */
+    "<=xl": string;
+
+    /**
      * Is screen classified as 'xl' or larger?
      */
     ">=xl": string;

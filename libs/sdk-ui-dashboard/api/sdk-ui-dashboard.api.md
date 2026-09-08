@@ -2739,7 +2739,7 @@ export interface IAlertingDialogMeasureProps {
 }
 
 // @alpha (undocumented)
-export interface IAlertingDialogProps {
+export interface IAlertingDialogProps extends IAutomationDialogCallbacks {
     // @deprecated
     alertToEdit?: IAutomationMetadataObject;
     // @deprecated
@@ -2748,13 +2748,6 @@ export interface IAlertingDialogProps {
     isLoading?: boolean;
     // @deprecated
     notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
-    onCancel?: () => void;
-    onDeleteError?: (error: GoodDataSdkError) => void;
-    onDeleteSuccess?: (alert: IAutomationMetadataObject) => void;
-    onError?: (error: GoodDataSdkError) => void;
-    onSaveError?: (error: GoodDataSdkError) => void;
-    onSaveSuccess?: (alert: IAutomationMetadataObject) => void;
-    onSuccess?: (alertDefinition: IAutomationMetadataObject) => void;
     // @deprecated
     widget?: IWidget;
 }
@@ -2853,7 +2846,7 @@ export interface IAlertingManagementDialogContextValue {
 }
 
 // @alpha (undocumented)
-export interface IAlertingManagementDialogProps {
+export interface IAlertingManagementDialogProps extends IAutomationManagementDialogCallbacks {
     // @deprecated
     alertDataError?: GoodDataSdkError;
     // @deprecated
@@ -2862,13 +2855,6 @@ export interface IAlertingManagementDialogProps {
     isLoadingAlertingData?: boolean;
     // @deprecated
     notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
-    onAdd?: () => void;
-    onClose?: () => void;
-    onDeleteError?: (error: GoodDataSdkError) => void;
-    onDeleteSuccess?: (alert: IAutomationMetadataObject) => void;
-    onEdit?: (alert: IAutomationMetadataObject) => void;
-    onPauseError: (error: GoodDataSdkError, pause: boolean) => void;
-    onPauseSuccess: (alert: IAutomationMetadataObject, pause: boolean) => void;
 }
 
 // @alpha
@@ -2965,6 +2951,17 @@ export interface IAutomationDialogActionBarProps {
 }
 
 // @alpha
+export interface IAutomationDialogCallbacks {
+    onCancel?: () => void;
+    onCreateError?: (error: GoodDataSdkError) => void;
+    onCreateSuccess?: (automation: IAutomationMetadataObject) => void;
+    onDeleteError?: (error: GoodDataSdkError) => void;
+    onDeleteSuccess?: (automation: IAutomationMetadataObject) => void;
+    onUpdateError?: (error: GoodDataSdkError) => void;
+    onUpdateSuccess?: (automation: IAutomationMetadataObject) => void;
+}
+
+// @alpha
 export interface IAutomationDialogDestinationProps {
     notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     onChange: (notificationChannelId: string) => void;
@@ -3023,6 +3020,13 @@ export interface IAutomationFiltersTab {
     lockedFilters: FilterContextItem[];
     tabId: string;
     tabTitle: string;
+}
+
+// @alpha
+export interface IAutomationManagementDialogCallbacks {
+    onAdd?: () => void;
+    onClose?: () => void;
+    onEdit?: (automation: IAutomationMetadataObject) => void;
 }
 
 // @alpha
@@ -8521,7 +8525,7 @@ export interface IScheduledEmailDialogMessageProps {
 }
 
 // @alpha (undocumented)
-export interface IScheduledEmailDialogProps {
+export interface IScheduledEmailDialogProps extends IAutomationDialogCallbacks {
     // @deprecated
     dashboardFilters?: FilterContextItem[];
     // @deprecated
@@ -8531,15 +8535,6 @@ export interface IScheduledEmailDialogProps {
     // @deprecated
     notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     onBack?: () => void;
-    onCancel?: () => void;
-    onDeleteError?: (error: GoodDataSdkError) => void;
-    onDeleteSuccess?: () => void;
-    onError?: (error: GoodDataSdkError) => void;
-    onSave?: (scheduledEmailDefinition: IAutomationMetadataObject) => void;
-    onSaveError?: (error: GoodDataSdkError) => void;
-    onSaveSuccess?: () => void;
-    onSubmit?: (scheduledEmailDefinition: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => void;
-    onSuccess?: (scheduledEmailDefinition: IAutomationMetadataObject) => void;
     // @deprecated
     scheduledExportToEdit?: IAutomationMetadataObject;
     // @deprecated
@@ -8646,18 +8641,13 @@ export interface IScheduledEmailManagementDialogContextValue {
 }
 
 // @alpha (undocumented)
-export interface IScheduledEmailManagementDialogProps {
+export interface IScheduledEmailManagementDialogProps extends IAutomationManagementDialogCallbacks {
     // @deprecated
     automations?: IAutomationMetadataObject[];
     // @deprecated
     isLoadingScheduleData?: boolean;
     // @deprecated
     notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
-    onAdd?: () => void;
-    onClose?: () => void;
-    onDeleteError?: (error: GoodDataSdkError) => void;
-    onDeleteSuccess?: () => void;
-    onEdit?: (scheduledMail: IAutomationMetadataObject) => void;
     // @deprecated
     scheduleDataError?: GoodDataSdkError;
 }
@@ -10193,7 +10183,7 @@ export interface IUseAlertingDialogHeaderPropsInput {
 }
 
 // @alpha
-export type IUseAlertSubmitCallbacks = Pick<IAlertingDialogProps, "onSuccess" | "onError" | "onSaveSuccess" | "onSaveError">;
+export type IUseAlertSubmitCallbacks = Pick<IAlertingDialogProps, "onCreateSuccess" | "onCreateError" | "onUpdateSuccess" | "onUpdateError">;
 
 // @internal (undocumented)
 export interface IUseAttributeElements {
@@ -10373,7 +10363,7 @@ export interface IUserInteractionPayloadWithDataBase<TType extends string, TData
 }
 
 // @alpha
-export type IUseSaveScheduledEmailCallbacks = Pick<IScheduledEmailDialogProps, "onSuccess" | "onError" | "onSubmit" | "onSaveSuccess" | "onSaveError" | "onSave">;
+export type IUseSaveScheduledEmailCallbacks = Pick<IScheduledEmailDialogProps, "onCreateSuccess" | "onCreateError" | "onUpdateSuccess" | "onUpdateError">;
 
 // @alpha
 export interface IUseScheduledEmailDialogActionBarPropsInput {
@@ -14119,8 +14109,8 @@ export const useDashboardAlerts: () => {
     onAlertingCancel: () => void;
     onAlertingCreateError: () => void;
     onAlertingCreateSuccess: (alert: IAutomationMetadataObject) => void;
-    onAlertingSaveError: () => void;
-    onAlertingSaveSuccess: () => void;
+    onAlertingUpdateError: () => void;
+    onAlertingUpdateSuccess: () => void;
     isAlertManagementVisible: boolean;
     isAlertManagementDialogOpen: boolean;
     defaultOnAlertingManagement: (widget?: IWidget) => void;
@@ -14131,8 +14121,6 @@ export const useDashboardAlerts: () => {
     onAlertingManagementDeleteSuccess: () => void;
     onAlertingManagementEdit: (alert: IAutomationMetadataObject, widget?: IWidget) => void;
     onAlertingManagementLoadingError: () => void;
-    onAlertingManagementPauseSuccess: (_alert: IAutomationMetadataObject, pause: boolean) => void;
-    onAlertingManagementPauseError: (_error: GoodDataSdkError, pause: boolean) => void;
 };
 
 // @public
@@ -14214,8 +14202,8 @@ export const useDashboardScheduledEmails: () => {
     onScheduleEmailingBack: (_widget?: IWidget) => void;
     onScheduleEmailingCreateError: () => void;
     onScheduleEmailingCreateSuccess: (scheduledEmail: IAutomationMetadataObject) => void;
-    onScheduleEmailingSaveError: () => void;
-    onScheduleEmailingSaveSuccess: (_widget?: IWidget) => void;
+    onScheduleEmailingUpdateError: () => void;
+    onScheduleEmailingUpdateSuccess: () => void;
     isScheduledManagementEmailingVisible: boolean;
     isScheduleEmailingManagementDialogOpen: boolean;
     defaultOnScheduleEmailingManagement: (widget?: IWidget) => void;
