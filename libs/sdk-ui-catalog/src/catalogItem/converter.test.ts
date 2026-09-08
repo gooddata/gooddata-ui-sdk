@@ -2,9 +2,18 @@
 
 import { describe, expect, it } from "vitest";
 
-import type { IMeasureMetadataObject, IParameterMetadataObject, MetricType } from "@gooddata/sdk-model";
+import type {
+    IComputedAttributeMetadataObject,
+    IMeasureMetadataObject,
+    IParameterMetadataObject,
+    MetricType,
+} from "@gooddata/sdk-model";
 
-import { convertMeasureToCatalogItem, convertParameterToCatalogItem } from "./converter.js";
+import {
+    convertComputedAttributeToCatalogItem,
+    convertMeasureToCatalogItem,
+    convertParameterToCatalogItem,
+} from "./converter.js";
 
 function createMeasure(overrides: Partial<IMeasureMetadataObject> = {}): IMeasureMetadataObject {
     const base: IMeasureMetadataObject = {
@@ -101,5 +110,37 @@ describe("convertParameterToCatalogItem", () => {
         expect(catalogItem.updatedBy).toBe("John Smith");
         expect(catalogItem.isEditable).toBe(true);
         expect(catalogItem.definition).toEqual(parameter.definition);
+    });
+});
+
+describe("convertComputedAttributeToCatalogItem", () => {
+    const computedAttribute: IComputedAttributeMetadataObject = {
+        id: "ca.id",
+        uri: "/gdc/md/ca.id",
+        ref: { identifier: "ca.id", type: "computedAttribute" },
+        type: "computedAttribute",
+        title: "Rep Performance",
+        description: "Sales rep performance band",
+        tags: ["sales"],
+        production: true,
+        deprecated: false,
+        unlisted: false,
+        expression: "SELECT 1",
+        displayForms: [],
+    };
+
+    it("should carry over an undefined certification", () => {
+        expect(convertComputedAttributeToCatalogItem(computedAttribute).certification).toBeUndefined();
+    });
+
+    it("should convert a certified computed attribute's certification metadata", () => {
+        const catalogItem = convertComputedAttributeToCatalogItem({
+            ...computedAttribute,
+            certification: { status: "CERTIFIED", message: "Trusted attribute" },
+        });
+
+        expect(catalogItem.certification).toEqual(
+            expect.objectContaining({ status: "CERTIFIED", message: "Trusted attribute" }),
+        );
     });
 });

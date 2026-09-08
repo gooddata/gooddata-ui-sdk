@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-e2e",
-    "version": "11.56.0-alpha.5",
+    "version": "11.56.0-alpha.6",
     "private": true,
     "description": "GoodData SDK e2e tests",
     "license": "LicenseRef-LICENSE",
@@ -21,7 +21,7 @@
         "_phase:publish-test-docker-images": "bash ../../../common/scripts/docker/publish-test-docker-image.sh",
         "_phase:validate": "npm run validate",
         "build": "npm-run-all -p build-check dist",
-        "build-check": "tsgo",
+        "build-check": "tsc",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci coverage *.log",
         "dist": "rm -rf dist && NODE_NO_WARNINGS=1 rolldown build --config rolldown.config.ts",
         "e2e:integrated": "./scripts/local/run.sh integrated",
@@ -47,7 +47,6 @@
         "@types/node": "24.12.0",
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",
-        "@typescript/native-preview": "7.0.0-dev.20260707.2",
         "axios": "1.18.1",
         "dotenv": "16.4.5",
         "eslint": "^9.39.2",
@@ -64,7 +63,7 @@
         "oxlint": "1.57.0",
         "oxlint-tsgolint": "0.15.0",
         "rolldown": "1.0.3",
-        "typescript": "6.0.3"
+        "typescript": "7.0.2"
     },
     "dependenciesInfo": "This is package is SDK tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation"
 }

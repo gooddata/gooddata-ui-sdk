@@ -194,6 +194,7 @@ export function convertComputedAttributeToCatalogItem(
         type: "computedAttribute",
         title: computedAttribute.title,
         description: computedAttribute.description,
+        certification: convertCertification(computedAttribute.certification),
         tags: computedAttribute.tags ?? [],
         createdBy: getDisplayName(computedAttribute.createdBy),
         createdAt: computedAttribute.created ? parseBackendDate(computedAttribute.created) : null,

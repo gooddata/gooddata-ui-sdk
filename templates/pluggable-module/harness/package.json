@@ -1,6 +1,6 @@
 {
     "name": "gdc-app-template-name-harness",
-    "version": "11.56.0-alpha.5",
+    "version": "11.56.0-alpha.6",
     "private": true,
     "description": "Standalone harness for gdc-app-template-name module",
     "license": "UNLICENSED",
@@ -21,7 +21,7 @@
         "_phase:build": "npm run build-check",
         "_phase:validate": "npm run validate",
         "build": "rm -rf dist && npm-run-all -p dist build-check",
-        "build-check": "tsgo",
+        "build-check": "tsc",
         "clean": "../../../../common/scripts/clean-command-state.sh && rm -rf dist *.tgz *.log tsconfig.tsbuildinfo",
         "dev": "vite --force",
         "dist": "vite build",
@@ -49,7 +49,6 @@
         "@types/react-dom": "19.1.7",
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",
-        "@typescript/native-preview": "7.0.0-dev.20260707.2",
         "@vitejs/plugin-react": "6.0.2",
         "eslint": "^9.39.2",
         "eslint-plugin-headers": "1.3.3",
@@ -65,7 +64,7 @@
         "oxlint-tsgolint": "0.15.0",
         "rolldown": "1.0.3",
         "sass": "1.80.0",
-        "typescript": "6.0.3",
+        "typescript": "7.0.2",
         "vite": "8.0.16"
     }
 }

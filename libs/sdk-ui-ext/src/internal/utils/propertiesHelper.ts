@@ -324,7 +324,7 @@ export function getConditionalFormattingFromProperties(
  * through this predicate so the enablement rule cannot drift between call sites.
  */
 export function isConditionalFormattingEnabled(settings: ISettings | undefined): boolean {
-    return settings?.enableConditionalFormatting ?? false;
+    return settings?.enableConditionalFormatting ?? true;
 }
 
 /**

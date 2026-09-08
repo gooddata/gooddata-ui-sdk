@@ -340,7 +340,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableSeamlessIdpSwitch: false,
     enablePreAggregationDatasets: false,
     enableNewPivotTable: true,
-    enableConditionalFormatting: false,
+    enableConditionalFormatting: true,
     enableSemanticConditionalFormatting: false,
     enableNewGeoPushpin: true,
     enableGeoArea: true,

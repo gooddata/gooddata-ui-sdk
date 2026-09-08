@@ -12,6 +12,7 @@ import {
     type IComputedAttributeMetadataObjectDefinition,
     type IMetadataObjectBase,
     type IMetadataObjectIdentity,
+    type IObjectCertificationWrite,
     type ObjRef,
 } from "@gooddata/sdk-model";
 
@@ -41,6 +42,10 @@ export abstract class DecoratedWorkspaceComputedAttributesService implements IWo
 
     public deleteComputedAttribute(ref: ObjRef): Promise<void> {
         return this.decorated.deleteComputedAttribute(ref);
+    }
+
+    public setCertification(ref: ObjRef, certification?: IObjectCertificationWrite): Promise<void> {
+        return this.decorated.setCertification(ref, certification);
     }
 
     public getComputedAttribute(

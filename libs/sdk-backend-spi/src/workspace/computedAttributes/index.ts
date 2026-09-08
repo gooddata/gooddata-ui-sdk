@@ -7,6 +7,7 @@ import type {
     IMetadataObject,
     IMetadataObjectBase,
     IMetadataObjectIdentity,
+    IObjectCertificationWrite,
     ObjRef,
     ObjectOrigin,
 } from "@gooddata/sdk-model";
@@ -100,6 +101,14 @@ export interface IWorkspaceComputedAttributesService {
      * @returns promise of undefined
      */
     deleteComputedAttribute(ref: ObjRef): Promise<void>;
+
+    /**
+     * Sets computed attribute certification metadata.
+     *
+     * @param ref - computed attribute reference
+     * @param certification - certification state; undefined clears certification
+     */
+    setCertification(ref: ObjRef, certification?: IObjectCertificationWrite): Promise<void>;
 
     /**
      * Get computed attribute by reference.

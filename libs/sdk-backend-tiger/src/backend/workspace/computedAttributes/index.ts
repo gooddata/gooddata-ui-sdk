@@ -3,6 +3,7 @@
 import { uniqBy } from "lodash-es";
 
 import { MetadataUtilities } from "@gooddata/api-client-tiger";
+import { ActionsApi_SetCertification } from "@gooddata/api-client-tiger/endpoints/actions";
 import {
     DashboardsApi_GetAllEntitiesAnalyticalDashboards,
     EntitiesApi_CreateEntityComputedAttributes,
@@ -24,6 +25,7 @@ import {
     type IComputedAttributeMetadataObjectDefinition,
     type IMetadataObjectBase,
     type IMetadataObjectIdentity,
+    type IObjectCertificationWrite,
     type ObjRef,
     insightId,
     isIdentifierRef,
@@ -131,6 +133,20 @@ export class TigerWorkspaceComputedAttributes implements IWorkspaceComputedAttri
         });
     }
 
+    async setCertification(ref: ObjRef, certification?: IObjectCertificationWrite): Promise<void> {
+        await this.authCall((client) =>
+            ActionsApi_SetCertification(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                setCertificationRequest: {
+                    type: "computedAttribute",
+                    id: objRefToIdentifier(ref, this.authCall),
+                    status: certification?.status ?? null,
+                    message: certification?.message ?? null,
+                },
+            }),
+        );
+    }
+
     public async getComputedAttribute(
         ref: ObjRef,
         options: IGetComputedAttributeOptions = {},
@@ -140,7 +156,7 @@ export class TigerWorkspaceComputedAttributes implements IWorkspaceComputedAttri
             EntitiesApi_GetEntityComputedAttributes(client.axios, client.basePath, {
                 objectId: id,
                 workspaceId: this.workspace,
-                include: options.loadUserData ? ["createdBy", "modifiedBy"] : [],
+                include: options.loadUserData ? ["createdBy", "modifiedBy", "certifiedBy"] : [],
             }),
         );
 

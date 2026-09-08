@@ -190,6 +190,7 @@ export function getComputedAttributesQuery({
     excludeCreatedBy,
     tags,
     excludeTags,
+    certification,
     pageSize = PAGE_SIZE,
 }: ICatalogItemQueryOptions) {
     return backend
@@ -198,7 +199,7 @@ export function getComputedAttributesQuery({
         .getComputedAttributesQuery()
         .withPage(0)
         .withSize(pageSize)
-        .withInclude(["createdBy", "modifiedBy"])
+        .withInclude(["createdBy", "modifiedBy", "certifiedBy"])
         .withSorting(["title,asc"])
         .withOrigin(origin)
         .withFilter({
@@ -209,6 +210,7 @@ export function getComputedAttributesQuery({
             excludeTags,
             createdBy,
             excludeCreatedBy,
+            certification,
         })
         .withMethod("POST");
 }
@@ -567,6 +569,11 @@ export function updateCatalogItemCertification(
             return backend.workspace(workspace).insights().setCertification(ref, item.certification);
         case "measure":
             return backend.workspace(workspace).measures().setCertification(ref, item.certification);
+        case "computedAttribute":
+            return backend
+                .workspace(workspace)
+                .computedAttributes()
+                .setCertification(ref, item.certification);
         default:
             throw new Error("Unsupported catalog item type for certification update.");
     }

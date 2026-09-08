@@ -8,6 +8,25 @@ const baselineBrowserMappingVersion = "2.11.21";
 // browserslist needs to be updated every 6 months
 const browserslistVersion = "4.28.9";
 
+// TS 7 moved the compiler API to typescript/unstable/*; require("typescript") now returns only
+// { version, versionMajorMinor }. Everything that consumes the API needs the classic package, so the
+// lint stack gets its own pinned TS 6 copy while the projects keep typescript 7.x for tsc.
+// This MUST stay one exact version: the parser hands ts.Type objects to the plugins, and pnpm only
+// shares a module instance between packages resolved to the identical version.
+const lintTypescriptVersion = "6.0.3";
+
+const lintTypescriptConsumers = [
+    "eslint-plugin-sonarjs",
+    "ts-api-utils",
+    "@typescript-eslint/eslint-plugin",
+    "@typescript-eslint/parser",
+    "@typescript-eslint/project-service",
+    "@typescript-eslint/tsconfig-utils",
+    "@typescript-eslint/type-utils",
+    "@typescript-eslint/typescript-estree",
+    "@typescript-eslint/utils",
+];
+
 /**
  * When using the PNPM package manager, you can use pnpmfile.js to workaround
  * dependencies that have mistakes in their package.json file.  (This feature is
@@ -34,7 +53,7 @@ module.exports = {
  * The `context` parameter provides a log() function.
  * The return value is the updated object.
  */
-function readPackage(packageJson, _context) {
+function readPackage(packageJson, context) {
     if (packageJson.dependencies && packageJson.dependencies["baseline-browser-mapping"]) {
         //context.log("Fixed up dependencies for baseline-browser-mapping");
         packageJson.dependencies["baseline-browser-mapping"] = baselineBrowserMappingVersion;
@@ -72,7 +91,29 @@ function readPackage(packageJson, _context) {
 
     // TypeScript peers
     if (packageJson.name === "@module-federation/dts-plugin" && packageJson.peerDependencies["typescript"]) {
-        packageJson.peerDependencies["typescript"] = "^6.0.0";
+        //context.log("Fixed up dependencies for " + packageJson.name);
+        packageJson.peerDependencies["typescript"] = "^7.0.0";
+    }
+
+    // linter-related TypeScript overrides
+    if (lintTypescriptConsumers.includes(packageJson.name)) {
+        // Pin the lint toolchain to the classic TypeScript API. typescript is a peer on every one of
+        // these except eslint-plugin-sonarjs, so it is converted into a real dependency — a widened peer
+        // range would still resolve to the consuming project's typescript 7.x. Peer resolution cascades,
+        // so children (ts-api-utils, typescript-estree, ...) re-key onto the same TS 6 instance.
+
+        // tsconfig-utils and ts-api-utils ship no dependencies field at all.
+        packageJson.dependencies = {
+            ...packageJson.dependencies,
+            typescript: lintTypescriptVersion,
+        };
+
+        if (packageJson.peerDependencies) {
+            delete packageJson.peerDependencies["typescript"];
+        }
+        if (packageJson.peerDependenciesMeta) {
+            delete packageJson.peerDependenciesMeta["typescript"];
+        }
     }
 
     return packageJson;

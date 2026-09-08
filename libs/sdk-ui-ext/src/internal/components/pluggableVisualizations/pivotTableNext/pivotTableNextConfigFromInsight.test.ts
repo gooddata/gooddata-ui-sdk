@@ -62,20 +62,20 @@ describe("pivotTableNextConfigFromInsight", () => {
         expect(config).not.toHaveProperty("conditionalFormatting");
     });
 
-    it("omits conditionalFormatting when the setting is absent", () => {
+    it("includes conditionalFormatting when the setting is absent (enabled by default)", () => {
         const insight = newTableInsight({ conditionalFormatting });
 
         const config = pivotTableNextConfigFromInsight(insight, newContext());
 
-        expect(config).not.toHaveProperty("conditionalFormatting");
+        expect(config.conditionalFormatting).toEqual(conditionalFormatting);
     });
 
-    it("omits conditionalFormatting when the context is undefined", () => {
+    it("includes conditionalFormatting when the context is undefined (enabled by default)", () => {
         const insight = newTableInsight({ conditionalFormatting });
 
         const config = pivotTableNextConfigFromInsight(insight, undefined);
 
-        expect(config).not.toHaveProperty("conditionalFormatting");
+        expect(config.conditionalFormatting).toEqual(conditionalFormatting);
     });
 
     it("omits conditionalFormatting when the insight has none", () => {
