@@ -69,6 +69,9 @@ import { WeekStart } from '@gooddata/sdk-model';
 // @public
 export type AbsoluteDateFilterOption = IUiAbsoluteDateFilterForm | IAbsoluteDateFilterPreset;
 
+// @beta
+export const applyExcludeCurrentPeriod: (dateFilterOption: DateFilterOption | undefined, excludeCurrentPeriod: boolean) => DateFilterOption | undefined;
+
 // @alpha
 export function ArbitraryValuesInput(props: IArbitraryValuesInputProps): JSX.Element;
 
@@ -196,6 +199,9 @@ export type CallbackPayloadWithCorrelation<T = {}> = T & {
 // @public (undocumented)
 export type CallbackRegistration<T> = (cb: Callback<T>) => Unsubscribe;
 
+// @beta (undocumented)
+export const canExcludeCurrentPeriod: (dateFilterOption: DateFilterOption) => boolean;
+
 // @public
 export type CommonFilterControllerCallbacks = {
     onApply: (applyRegardlessWithoutApplySetting?: boolean, applyToWorkingOnly?: boolean) => void;
@@ -240,9 +246,9 @@ export const DateFilter: NamedExoticComponent<IDateFilterProps>;
 
 // @beta (undocumented)
 export const DateFilterHelpers: {
-    validateFilterOption: (filterOption: DateFilterOption) => IExtendedDateFilterErrors;
-    getDateFilterTitleUsingTranslator: (filter: DateFilterOption, translator: IDateAndMessageTranslator, labelMode: DateFilterLabelMode, dateFormat?: string) => string;
-    getDateFilterRepresentation: (filter: DateFilterOption, locale: ILocale, messages: ITranslations, labelMode: DateFilterLabelMode, dateFormat?: string) => string;
+    validateFilterOption: typeof validateFilterOption;
+    getDateFilterTitleUsingTranslator: typeof getDateFilterTitleUsingTranslator;
+    getDateFilterRepresentation: typeof getDateFilterRepresentation;
     granularityIntlCodes: {
         "GDC.time.date": GranularityIntlKey;
         "GDC.time.fiscal_month": GranularityIntlKey;
@@ -256,12 +262,12 @@ export const DateFilterHelpers: {
         "GDC.time.week_us": GranularityIntlKey;
         "GDC.time.year": GranularityIntlKey;
     };
-    applyExcludeCurrentPeriod: (dateFilterOption: DateFilterOption | undefined, excludeCurrentPeriod: boolean) => DateFilterOption | undefined;
+    applyExcludeCurrentPeriod: typeof applyExcludeCurrentPeriod;
     defaultDateFilterOptions: IDateFilterOptionsByType;
-    canExcludeCurrentPeriod: (dateFilterOption: DateFilterOption) => boolean;
-    mapOptionToAfm: (value: DateFilterOption, dateDataSet: ObjRef, excludeCurrentPeriod: boolean) => IDateFilter | null;
-    formatAbsoluteDateRange: (from: Date | string, to: Date | string, dateFormat: string, splitter?: string) => string;
-    formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator, labelMode: DateFilterLabelMode, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter) => string;
+    canExcludeCurrentPeriod: typeof canExcludeCurrentPeriod;
+    mapOptionToAfm: typeof mapOptionToAfm;
+    formatAbsoluteDateRange: typeof formatAbsoluteDateRange;
+    formatRelativeDateRange: typeof formatRelativeDateRange;
     filterVisibleDateFilterOptions: typeof filterVisibleDateFilterOptions;
 };
 
@@ -381,6 +387,12 @@ export function findDateFilterOptionByValue(dateFilter: IDashboardDateFilter, da
 // @alpha
 export function flattenDateFilterOptions(dateFilterOptions: IDateFilterOptionsByType): DateFilterOption[];
 
+// @beta (undocumented)
+export const formatAbsoluteDateRange: (from: Date | string, to: Date | string, dateFormat: string, splitter?: string) => string;
+
+// @beta (undocumented)
+export const formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator, labelMode: DateFilterLabelMode, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter) => string;
+
 // @internal (undocumented)
 export function getAttributeFilterSubtitle(isCommittedSelectionInverted: boolean, committedSelectionElements: IAttributeElement[], intl: IntlShape): string;
 
@@ -389,6 +401,12 @@ export function getAvailableSelectionTypeFromFilter(filter: IAttributeFilter | u
 
 // @alpha
 export function getAvailableTextSelectionTypes(selectionTypes: AttributeFilterAvailableSelectionType[] | undefined): AttributeFilterTextSelectionType[];
+
+// @beta (undocumented)
+export const getDateFilterRepresentation: (filter: DateFilterOption, locale: ILocale, messages: ITranslations, labelMode: DateFilterLabelMode, dateFormat?: string) => string;
+
+// @beta
+export const getDateFilterTitleUsingTranslator: (filter: DateFilterOption, translator: IDateAndMessageTranslator, labelMode: DateFilterLabelMode, dateFormat?: string) => string;
 
 // @alpha
 export function getDefaultCalendarTab(activeCalendars?: IActiveCalendars, currentPreset?: DateFilterOption): CalendarTabType;
@@ -1680,6 +1698,9 @@ export type IWarningMessage = {
 // @alpha
 export function mapAvailableSelectionTypesToInternal(selectionTypes: AttributeFilterAvailableSelectionType[] | undefined): AttributeFilterSelectionType[];
 
+// @beta (undocumented)
+export const mapOptionToAfm: (value: DateFilterOption, dateDataSet: ObjRef, excludeCurrentPeriod: boolean) => IDateFilter | null;
+
 // @alpha
 export function matchDateFilterToDateFilterOption(dateFilter: IDashboardDateFilter | undefined, availableOptions: IDateFilterOptionsByType): IDateFilterOptionInfo;
 
@@ -1948,6 +1969,9 @@ export function useDeepEqualRefStablizer<T>(unstableState: T): T;
 
 // @internal
 export const useOnCloseAttributeFilterDropdownButton: (props: IAttributeFilterDropdownButtonProps, onClose: () => void) => void;
+
+// @beta (undocumented)
+export const validateFilterOption: (filterOption: DateFilterOption) => IExtendedDateFilterErrors;
 
 // @public
 export type VisibilityMode = "readonly" | "hidden" | "active";

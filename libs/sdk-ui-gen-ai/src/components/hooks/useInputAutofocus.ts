@@ -12,7 +12,7 @@ import { conversationSelector } from "../../store/messages/messagesSelectors.js"
 export function useInputAutofocus(
     editorApi: EditorView | null,
     autofocus: boolean,
-    opts: { isBusy: boolean },
+    opts: { isBusy: boolean; refocusKey: number },
 ) {
     // Force focus when autofocus is enables on the first mount, right after the initial state is loaded
     const forceFocusOnce = useRef<boolean>(autofocus);
@@ -22,6 +22,7 @@ export function useInputAutofocus(
 
     const conversationLocalId = useSelector(conversationSelector)?.localId;
     const focusedConversationLocalId = useRef(conversationLocalId);
+    const refocusKeyRef = useRef(opts.refocusKey);
 
     const initialFocus = useMemo(() => {
         const ref = createRef<HTMLDivElement>();
@@ -34,12 +35,13 @@ export function useInputAutofocus(
         !opts.isBusy &&
         (forceFocusOnce.current ||
             document.activeElement === document.body ||
-            focusedConversationLocalId.current !== conversationLocalId);
+            focusedConversationLocalId.current !== conversationLocalId ||
+            refocusKeyRef.current !== opts.refocusKey);
 
     const ref = useUiAutofocusConnectors<HTMLDivElement>({
         initialFocus,
         active: active,
-        refocusKey: `${opts.isBusy}-${conversationLocalId ?? ""}`,
+        refocusKey: `${opts.isBusy}-${opts.refocusKey}-${conversationLocalId ?? ""}`,
     });
 
     useEffect(() => {
@@ -51,6 +53,9 @@ export function useInputAutofocus(
     useEffect(() => {
         focusedConversationLocalId.current = conversationLocalId;
     }, [conversationLocalId]);
+    useEffect(() => {
+        refocusKeyRef.current = opts.refocusKey;
+    }, [opts.refocusKey]);
 
     useEffect(
         () => () => {

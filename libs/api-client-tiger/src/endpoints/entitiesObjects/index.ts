@@ -57,6 +57,7 @@ export {
     type FilterContextApiGetAllEntitiesFilterContextsRequest,
     type FilterContextApiGetEntityFilterContextsRequest,
     type FilterContextApiUpdateEntityFilterContextsRequest,
+    type RestrictedObject,
     // EntitiesApi - Workspaces
     EntitiesApi_GetEntityWorkspaces,
     EntitiesApi_GetAllEntitiesWorkspaces,

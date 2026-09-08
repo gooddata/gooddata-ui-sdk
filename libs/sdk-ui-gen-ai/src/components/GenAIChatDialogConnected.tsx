@@ -311,14 +311,15 @@ export function GenAIChatDialogConnected({
         }
         lastSeedTokenRef.current = seedToken;
 
+        // Agent id override. Must precede the clear so the new conversation is created with
+        // this agent - the clear saga reads the selection synchronously.
+        if (userContext || askedQuestion) {
+            chatDispatcher(setSelectedAgentAction({ agentId }));
+        }
         // Check clean
         const clear = (askedQuestion || userContext) && !appendToChat;
         if (clear) {
             chatDispatcher(clearThreadAction());
-        }
-        // Agent id override
-        if (userContext || askedQuestion) {
-            chatDispatcher(setSelectedAgentAction({ agentId }));
         }
         // Always set (and thereby clear when undefined) so a follow-up ask without context does not
         // inherit the previous ask's user context (LX-2544).

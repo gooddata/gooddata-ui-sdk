@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-all: Keep the computed attribute type of a catalog computed attribute used in the measure value filter dimensionality in Analytical Designer, so the backend no longer resolves it as a label.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

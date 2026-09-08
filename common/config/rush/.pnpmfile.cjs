@@ -3,10 +3,10 @@
 "use strict";
 
 // baseline-browser-mapping needs to be updated to the latest version every 14 days
-const baselineBrowserMappingVersion = "2.11.20";
+const baselineBrowserMappingVersion = "2.11.21";
 
 // browserslist needs to be updated every 6 months
-const browserslistVersion = "4.28.8";
+const browserslistVersion = "4.28.9";
 
 /**
  * When using the PNPM package manager, you can use pnpmfile.js to workaround
@@ -68,6 +68,11 @@ function readPackage(packageJson, _context) {
 
     if (packageJson.name === "@gooddata/fixtures") {
         delete packageJson.dependencies["@gooddata/api-client-bear"];
+    }
+
+    // TypeScript peers
+    if (packageJson.name === "@module-federation/dts-plugin" && packageJson.peerDependencies["typescript"]) {
+        packageJson.peerDependencies["typescript"] = "^6.0.0";
     }
 
     return packageJson;

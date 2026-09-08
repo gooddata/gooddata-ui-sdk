@@ -275,6 +275,7 @@ export function HostChrome({
     const enablePanel = useGenAiRightPanel(
         features.settings["enableGenAiRightPanel"] as boolean,
         ctx.embeddingMode !== "none",
+        activeApplication,
     );
     const Wrapper = useCallback(({ children, chatIsOpen }: { children: ReactNode; chatIsOpen: boolean }) => {
         return (

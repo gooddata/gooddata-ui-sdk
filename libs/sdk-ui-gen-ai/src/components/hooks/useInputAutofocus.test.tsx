@@ -30,7 +30,7 @@ function mountEditor() {
 }
 
 function TestInput({ editorApi }: { editorApi: EditorView }) {
-    const ref = useInputAutofocus(editorApi, true, { isBusy: false });
+    const ref = useInputAutofocus(editorApi, true, { isBusy: false, refocusKey: 0 });
 
     return <div {...ref} />;
 }

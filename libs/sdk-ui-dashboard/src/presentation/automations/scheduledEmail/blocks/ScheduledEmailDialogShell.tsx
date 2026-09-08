@@ -5,10 +5,7 @@ import { type ReactElement, useCallback, useMemo, useRef, useState } from "react
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import {
-    type IAutomationMetadataObject,
-    type IAutomationMetadataObjectDefinition,
-} from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { ValidationContextStore, createInvalidNode, useValidationContextValue } from "@gooddata/sdk-ui";
 import {
     ConfirmDialogBase,
@@ -65,9 +62,9 @@ const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z
  * shell itself. The shell does not own the save: call {@link useSaveScheduledEmailToBackend} and pass its
  * `handleSaveScheduledEmail`, `isSavingScheduledEmail` and `savingErrorMessage`; build Enter handlers for
  * the blocks you place with {@link useScheduledEmailSubmitOnEnter} over the same `handleSaveScheduledEmail`.
- * Call that hook only once `useScheduledEmailDialogContext().isLoading` is false — the state hooks throw
- * while the dialog loads — and render the shell alone (any `onSubmit`, `isSaving: false`) until then, as
- * the example does.
+ * Call that hook only once `useScheduledEmailDialogContext().isLoading` is first false — the state hooks
+ * throw until the dialog's data has first loaded (after that they stay available through a refresh) —
+ * and render the shell alone (any `onSubmit`, `isSaving: false`) until then, as the example does.
  *
  * Needs an ambient `IntlProvider`; inside a `Dashboard` the dashboard's provider covers it.
  *
@@ -75,7 +72,7 @@ const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z
  * ```tsx
  * function MyScheduledEmailDialog(props: IScheduledEmailDialogProps) {
  *     const { isLoading } = useScheduledEmailDialogContext();
- *     // the state hooks throw while the dialog loads; the shell renders the loading skeleton
+ *     // the state hooks throw until the dialog's data has first loaded; the shell shows the skeleton
  *     if (isLoading) {
  *         return <ScheduledEmailDialogShell {...props} onSubmit={() => {}} isSaving={false} />;
  *     }
@@ -141,21 +138,21 @@ function LoadedScheduledEmailDialogShell({
     const dialogTitleRef = useRef<HTMLInputElement | null>(null);
     const generalTabContentRef = useRef<HTMLDivElement | null>(null);
 
-    const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<
-        IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null
-    >(null);
+    const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<IAutomationMetadataObject | null>(
+        null,
+    );
 
     const [selectedTabId, setSelectedTabId] = useState<"general" | "filters">("general");
 
     const { tabIds } = useAutomationsContext();
-    const { widget } = useScheduledEmailDialogContext();
+    const { widget, scheduledExportToEdit } = useScheduledEmailDialogContext();
 
-    const handleScheduleDeleteSuccess = () => {
-        onDeleteSuccess?.();
+    const handleScheduleDeleteSuccess = (scheduledEmail: IAutomationMetadataObject) => {
+        onDeleteSuccess?.(scheduledEmail);
         setScheduledEmailToDelete(null);
     };
 
-    const { editedAutomation, scheduleTimezoneIsStale } = useScheduledExportDraft();
+    const { scheduleTimezoneIsStale } = useScheduledExportDraft();
     const { applyCurrentScheduleTimezone } = useScheduledExportActions();
     const {
         onApplyCurrentFilters,
@@ -191,7 +188,7 @@ function LoadedScheduledEmailDialogShell({
         onCancel,
         onSubmit,
         isSaving,
-        onDelete: () => setScheduledEmailToDelete(editedAutomation),
+        onDelete: () => setScheduledEmailToDelete(scheduledExportToEdit ?? null),
     });
     const headerDefaultProps = useScheduledEmailDialogHeaderProps({
         onBack,

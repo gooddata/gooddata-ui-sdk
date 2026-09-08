@@ -47,6 +47,9 @@ export const mapRelativeFilterToAfm = (
     };
 };
 
+/**
+ * @beta
+ */
 export const mapOptionToAfm = (
     value: DateFilterOption,
     dateDataSet: ObjRef,

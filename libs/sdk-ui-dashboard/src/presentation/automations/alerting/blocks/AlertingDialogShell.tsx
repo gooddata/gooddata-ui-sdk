@@ -53,8 +53,9 @@ const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z
  * `AlertingDialogComponent` that keeps this chrome and arranges the blocks differently renders the shell
  * itself. The shell does not own the submit: call {@link useAlertSubmit} and pass its `submit` and
  * `isSaving`, so the footer button and any Enter handler in the body share one instance. Call that hook
- * only once `useAlertingDialogContext().isLoading` is false — the state hooks throw while the dialog
- * loads — and render the shell alone (any `onSubmit`, `isSaving: false`) until then, as the example does.
+ * only once `useAlertingDialogContext().isLoading` is first false — the state hooks throw until the
+ * dialog's data has first loaded (after that they stay available through a refresh) — and render the
+ * shell alone (any `onSubmit`, `isSaving: false`) until then, as the example does.
  *
  * Needs an ambient `IntlProvider`; inside a `Dashboard` the dashboard's provider covers it.
  *
@@ -62,7 +63,7 @@ const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z
  * ```tsx
  * function MyAlertingDialog(props: IAlertingDialogProps) {
  *     const { isLoading } = useAlertingDialogContext();
- *     // the state hooks throw while the dialog loads; the shell renders the loading skeleton
+ *     // the state hooks throw until the dialog's data has first loaded; the shell shows the skeleton
  *     if (isLoading) {
  *         return <AlertingDialogShell {...props} onSubmit={() => {}} isSaving={false} />;
  *     }

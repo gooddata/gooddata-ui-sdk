@@ -161,3 +161,8 @@ export const conversationsLoadedSelector: (state: RootState) => boolean = create
     messagesSliceSelector,
     (state) => state.conversationsLoaded,
 );
+
+export const refocusSelector: (state: RootState) => number = createSelector(
+    messagesSliceSelector,
+    (state) => state.refocus,
+);

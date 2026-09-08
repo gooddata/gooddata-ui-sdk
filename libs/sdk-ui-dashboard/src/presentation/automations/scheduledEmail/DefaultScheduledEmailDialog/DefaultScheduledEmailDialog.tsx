@@ -37,7 +37,8 @@ import { DefaultScheduledEmailDialogTimezone } from "./components/DefaultSchedul
  * export draft's state from those contexts rather than from the dashboard store. It must therefore
  * be rendered within an `AutomationsContextProvider`, a `ScheduledEmailDialogContextProvider` (for
  * the create/edit flow), and a `ScheduledEmailDialogStateProvider`, whose state model establishes
- * itself once `useScheduledEmailDialogContext().isLoading` is false. Inside a `Dashboard`, the
+ * itself once `useScheduledEmailDialogContext().isLoading` is first false and stays mounted from
+ * then on. Inside a `Dashboard`, the
  * scheduled export connector supplies the first two providers above the
  * `ScheduledEmailDialogComponent` slot and mounts `ScheduledEmailDialogStateProvider` around the
  * resolved slot component — so the default component, and any wholesale slot replacement, inherit
@@ -91,12 +92,10 @@ function DefaultScheduledEmailDialogBody({
     onCancel,
     onDeleteSuccess,
     onDeleteError,
-    onError,
-    onSave,
-    onSaveError,
-    onSaveSuccess,
-    onSubmit,
-    onSuccess,
+    onCreateError,
+    onCreateSuccess,
+    onUpdateError,
+    onUpdateSuccess,
     slots,
     topContent,
     bottomContent,
@@ -108,7 +107,7 @@ function DefaultScheduledEmailDialogBody({
     const { canSelectScheduleTimezone } = useScheduledExportDraft();
 
     const { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage } =
-        useSaveScheduledEmailToBackend({ onSuccess, onError, onSubmit, onSaveSuccess, onSaveError, onSave });
+        useSaveScheduledEmailToBackend({ onCreateSuccess, onCreateError, onUpdateSuccess, onUpdateError });
 
     const handleSubmitForm = useScheduledEmailSubmitOnEnter({
         onSubmit: handleSaveScheduledEmail,

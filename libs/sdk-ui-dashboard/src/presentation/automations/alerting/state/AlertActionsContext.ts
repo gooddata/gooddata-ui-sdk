@@ -13,10 +13,11 @@ export const AlertActionsContextProvider = AlertActionsContext.Provider;
 /**
  * Reads the alerting dialog's mutators.
  *
- * Throws outside the alerting dialog's state providers, which mount only once
- * `useAlertingDialogContext().isLoading` is false — a replacement for `AlertingDialogComponent`
- * must check that flag before calling this. On the alerting side that state is reached only by an
- * automations refresh while the dialog is open, so it will not appear in manual testing.
+ * Throws outside the alerting dialog's state providers, which mount the state model on the first
+ * render where `useAlertingDialogContext().isLoading` is false and keep it mounted from then on —
+ * a replacement for `AlertingDialogComponent` must check that flag before reading state while the
+ * dialog first loads. An automations refresh flips `isLoading` back without unmounting the model,
+ * so the draft survives and this accessor keeps serving through it.
  *
  * @alpha
  */

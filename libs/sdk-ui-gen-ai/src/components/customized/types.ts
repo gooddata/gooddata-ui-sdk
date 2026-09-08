@@ -172,6 +172,10 @@ export type IGenAIAssistantMessageMultipartContentProps = {
      * The references to metadata objects.
      */
     references: TextContentObject[];
+    /**
+     * Whether the message is the last one in the conversation.
+     */
+    isLast?: boolean;
 };
 
 /**

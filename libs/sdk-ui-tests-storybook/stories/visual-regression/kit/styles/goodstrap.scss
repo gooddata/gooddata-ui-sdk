@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 
-@import "./library";
-@import "./theme";
+@use "./library";
+@use "./theme";
 
 .library-component-light {
     color: var(--gd-palette-complementary-8, #464e56);

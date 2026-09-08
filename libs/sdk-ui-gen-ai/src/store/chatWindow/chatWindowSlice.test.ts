@@ -153,3 +153,27 @@ describe("selectedContextReferencesAction", () => {
         );
     });
 });
+
+describe("setUserContextAction", () => {
+    it("should automatically select visualization from userContext if it matches ambient dashboard", () => {
+        const dashRef = idRef("ambient-dashboard", "analyticalDashboard");
+        const visRef = idRef("v1", "insight");
+        const userContext: IGenAIUserContext = {
+            referencedObjects: [
+                {
+                    context: { ref: dashRef, title: "2. Sales", type: "DASHBOARD" },
+                    objects: [{ ref: visRef, title: "V1", type: "WIDGET" }],
+                },
+            ],
+        };
+
+        const state = stateWith(
+            contextSetupOn,
+            setAmbientUserContextAction({ userContext: ambientContext }),
+            setUserContextAction({ userContext, replaceUserContext: true }),
+        );
+
+        expect(state.context.ambientSelected?.visualization?.id).toBe("v1");
+        expect(state.context.active?.referencedObjects?.[0]?.objects?.[0]?.ref).toEqual(visRef);
+    });
+});

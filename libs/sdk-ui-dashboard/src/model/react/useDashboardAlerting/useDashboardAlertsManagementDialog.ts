@@ -3,7 +3,6 @@
 import { useCallback } from "react";
 
 import { type IAutomationMetadataObject, type IWidget } from "@gooddata/sdk-model";
-import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../locales.js";
@@ -109,32 +108,6 @@ export const useDashboardAlertsManagementDialog = () => {
         addError(messages.alertingManagementDeleteError);
     }, [closeAlertDialog, addError]);
 
-    // Pause
-    const onAlertingManagementPauseSuccess = useCallback(
-        (_alert: IAutomationMetadataObject, pause: boolean) => {
-            closeAlertDialog();
-            if (pause) {
-                addSuccess(messages.alertingManagementPauseSuccess);
-            } else {
-                addSuccess(messages.alertingManagementActivateSuccess);
-            }
-            handleRefreshAutomations();
-        },
-        [closeAlertDialog, addSuccess, handleRefreshAutomations],
-    );
-
-    const onAlertingManagementPauseError = useCallback(
-        (_error: GoodDataSdkError, pause: boolean) => {
-            closeAlertDialog();
-            if (pause) {
-                addError(messages.alertingManagementPauseError);
-            } else {
-                addError(messages.alertingManagementActivateError);
-            }
-        },
-        [closeAlertDialog, addError],
-    );
-
     return {
         defaultOnAlertingManagement,
         onAlertingManagementOpen,
@@ -144,7 +117,5 @@ export const useDashboardAlertsManagementDialog = () => {
         onAlertingManagementEdit,
         onAlertingManagementDeleteSuccess,
         onAlertingManagementDeleteError,
-        onAlertingManagementPauseSuccess,
-        onAlertingManagementPauseError,
     };
 };

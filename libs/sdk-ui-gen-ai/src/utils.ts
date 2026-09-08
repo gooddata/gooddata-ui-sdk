@@ -10,7 +10,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { REFERENCE_REGEX } from "./components/completion/references.js";
-import { type IChatConversationLocal } from "./model.js";
+import { type IChatConversationLocal, type IChatConversationLocalItem } from "./model.js";
 import { type IGenAIContextListItem, type IGenAIContextObject } from "./types.js";
 
 export function toContextListItem(
@@ -203,4 +203,11 @@ export function convertGenAiTypeToReferenceType(type: IGenAIContextObject["type"
         default:
             return "DASHBOARD";
     }
+}
+
+export function isClarificationQuestionsItem(item: IChatConversationLocalItem | undefined) {
+    return (
+        item?.content?.type === "multipart" &&
+        item.content.parts[item.content.parts.length - 1]?.type === "clarifyingQuestions"
+    );
 }

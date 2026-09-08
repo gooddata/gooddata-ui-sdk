@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-dashboard: The automation dialog state providers now keep the dialog state model mounted once the dialog's data has first loaded, so an automations refresh under an open alerting or scheduled email dialog no longer discards the in-flight draft (in the default dialogs and in custom replacements).",
+            "type": "patch",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

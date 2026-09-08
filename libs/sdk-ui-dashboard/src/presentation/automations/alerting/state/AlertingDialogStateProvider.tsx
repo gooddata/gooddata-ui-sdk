@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type ReactNode, useMemo } from "react";
+import { type ReactNode, useMemo, useState } from "react";
 
 import { useAlertingDialogContext } from "../../contexts/AlertingDialogContext.js";
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
@@ -22,14 +22,16 @@ import { getAlertSelectedValues } from "./useAlertSelectedValues.js";
 import { useAlertSupportedMetrics } from "./useAlertSupportedMetrics.js";
 
 /**
- * Publishes the alerting create/edit dialog's state as the four alert state contexts once the
- * dialog's data has loaded.
+ * Publishes the alerting create/edit dialog's state as the four alert state contexts from the
+ * first render where the dialog's data has loaded.
  *
  * Mounts above the resolved `AlertingDialogComponent`, so the default dialog, a shell of blocks
- * and a wholesale replacement all read the same state with no extra wiring. Defers mounting the
- * state model itself until `useAlertingDialogContext().isLoading` is false, because the state
- * model seeds its draft from the dialog's loaded data in `useState` initializers that never
- * re-run — mounting earlier would freeze that seed against not-yet-loaded data.
+ * and a wholesale replacement all read the same state with no extra wiring. Mounts the state
+ * model on the first render where `useAlertingDialogContext().isLoading` is false and keeps it
+ * mounted for the rest of the dialog's life: the model seeds its draft from the dialog's loaded
+ * data in `useState` initializers that never re-run, so mounting earlier would freeze that seed
+ * against not-yet-loaded data — and unmounting on a later `isLoading` flip (an automations
+ * refresh) would discard the in-flight draft.
  *
  * Runs `useIntl`-calling hooks, so an `IntlProvider` must sit above it. Inside a `Dashboard` the
  * ambient wrapper in `DashboardInner` supplies one with the same locale; a mount site without one
@@ -40,7 +42,14 @@ import { useAlertSupportedMetrics } from "./useAlertSupportedMetrics.js";
 export function AlertingDialogStateProvider({ children }: { children: ReactNode }) {
     const { isLoading } = useAlertingDialogContext();
 
-    return isLoading ? <>{children}</> : <LoadedAlertingDialogState>{children}</LoadedAlertingDialogState>;
+    // Latches on the first non-loading render: the draft seed must not run against unloaded
+    // data, and once seeded it must survive isLoading flipping back (an automations refresh).
+    const [hasLoaded, setHasLoaded] = useState(!isLoading);
+    if (!isLoading && !hasLoaded) {
+        setHasLoaded(true);
+    }
+
+    return hasLoaded ? <LoadedAlertingDialogState>{children}</LoadedAlertingDialogState> : <>{children}</>;
 }
 
 function LoadedAlertingDialogState({ children }: { children: ReactNode }) {

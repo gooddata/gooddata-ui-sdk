@@ -809,6 +809,7 @@ export type { ITextAreaWithSubmitProps, ITextAreaWithSubmitState } from "./TextA
 export { TextAreaWithSubmit } from "./TextAreaWithSubmit/TextAreaWithSubmit.js";
 export { SeparatorLine, type ISeparatorLineProps } from "./SeparatorLine/SeparatorLine.js";
 export { RichText, type IRichTextProps } from "./RichText/RichText.js";
+export { ALL_RICH_TEXT_FEATURES, type RichTextFeature } from "./RichText/plugins/remark-markdown-features.js";
 export { RichTextWithTooltip, type IRichTextWithTooltipProps } from "./RichText/RichTextWithTooltip.js";
 export { REFERENCE_REGEX_MATCH, REFERENCE_REGEX_SPLIT } from "./RichText/plugins/types.js";
 export { RecurrenceForm, type IRecurrenceFormProps } from "./RecurrenceForm/RecurrenceForm.js";

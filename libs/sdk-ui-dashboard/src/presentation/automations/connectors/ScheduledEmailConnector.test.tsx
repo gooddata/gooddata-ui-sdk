@@ -18,6 +18,10 @@ const fixtures = vi.hoisted(() => {
     const buildAutomationUrl = vi.fn(() => "/target-url");
     const navigate = vi.fn();
     const onScheduleEmailingManagementEdit = vi.fn();
+    const onScheduleEmailingCreateSuccess = vi.fn();
+    const onScheduleEmailingCreateError = vi.fn();
+    const onScheduleEmailingUpdateSuccess = vi.fn();
+    const onScheduleEmailingUpdateError = vi.fn();
     let managementDialogProps: Record<string, unknown> | undefined;
     let dialogProps: Record<string, unknown> | undefined;
     let automationsError: Error | undefined;
@@ -30,6 +34,10 @@ const fixtures = vi.hoisted(() => {
         buildAutomationUrl,
         navigate,
         onScheduleEmailingManagementEdit,
+        onScheduleEmailingCreateSuccess,
+        onScheduleEmailingCreateError,
+        onScheduleEmailingUpdateSuccess,
+        onScheduleEmailingUpdateError,
         seState,
         get managementDialogProps() {
             return managementDialogProps;
@@ -82,10 +90,10 @@ vi.mock("../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEm
         notificationChannels: [],
         onScheduleEmailingCancel: vi.fn(),
         onScheduleEmailingBack: vi.fn(),
-        onScheduleEmailingCreateSuccess: vi.fn(),
-        onScheduleEmailingCreateError: vi.fn(),
-        onScheduleEmailingSaveSuccess: vi.fn(),
-        onScheduleEmailingSaveError: vi.fn(),
+        onScheduleEmailingCreateSuccess: fixtures.onScheduleEmailingCreateSuccess,
+        onScheduleEmailingCreateError: fixtures.onScheduleEmailingCreateError,
+        onScheduleEmailingUpdateSuccess: fixtures.onScheduleEmailingUpdateSuccess,
+        onScheduleEmailingUpdateError: fixtures.onScheduleEmailingUpdateError,
         onScheduleEmailingManagementClose: vi.fn(),
         onScheduleEmailingManagementAdd: vi.fn(),
         onScheduleEmailingManagementEdit: fixtures.onScheduleEmailingManagementEdit,
@@ -240,7 +248,7 @@ describe("ScheduledEmailConnector", () => {
         });
     });
 
-    it("does not supply the deprecated data props to the create/edit dialog", () => {
+    it("wires the lifecycle callbacks to the create/edit dialog without the deprecated data props", () => {
         fixtures.seState.isScheduleEmailingDialogOpen = true;
         fixtures.seState.isScheduleEmailingManagementDialogOpen = false;
 
@@ -260,6 +268,10 @@ describe("ScheduledEmailConnector", () => {
         ]) {
             expect(fixtures.dialogProps?.[prop]).toBeUndefined();
         }
+        expect(fixtures.dialogProps?.["onCreateSuccess"]).toBe(fixtures.onScheduleEmailingCreateSuccess);
+        expect(fixtures.dialogProps?.["onCreateError"]).toBe(fixtures.onScheduleEmailingCreateError);
+        expect(fixtures.dialogProps?.["onUpdateSuccess"]).toBe(fixtures.onScheduleEmailingUpdateSuccess);
+        expect(fixtures.dialogProps?.["onUpdateError"]).toBe(fixtures.onScheduleEmailingUpdateError);
     });
 
     it("does not supply the deprecated data props to the management dialog", () => {

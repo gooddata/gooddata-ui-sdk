@@ -242,6 +242,15 @@ export default defineConfig(({ mode }) => {
                 ...packagesWithStyles,
             ],
         },
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    // Third-party scss (ag-grid) trips Dart Sass deprecation warnings we cannot fix;
+                    // silence dependency-originated warnings only - workspace scss still warns.
+                    quietDeps: true,
+                },
+            },
+        },
         resolve: {
             alias: [
                 // Styles reference sdk-ui-kit sources explicitly (e.g. "@gooddata/sdk-ui-kit/src/@ui/defaultTheme.scss").

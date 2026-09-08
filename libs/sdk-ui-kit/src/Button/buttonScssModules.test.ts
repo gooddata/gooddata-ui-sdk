@@ -88,10 +88,24 @@ const SASS_COMPILE_TIMEOUT = 60_000;
 
 let secondaryButtonRules: IRule[];
 
+// The entry fixture uses legacy `@import` on purpose, so the compiler is expected to emit exactly
+// that deprecation. Routing warnings through a capturing logger keeps the test run's stderr clean
+// (Rush treats any stderr as a warned build) while the assertions below still verify that nothing
+// OTHER than the expected @import deprecations was reported.
+const compilerWarnings: { message: string; deprecationId: string | undefined }[] = [];
+
 beforeAll(() => {
     const css = sass.compileString(ENTRY_SCSS, {
         loadPaths: [SCSS_DIR, resolve(SCSS_DIR, "../../node_modules")],
         importers: [consumerImporter],
+        logger: {
+            warn: (message, options) => {
+                compilerWarnings.push({
+                    message,
+                    deprecationId: options.deprecation ? options.deprecationType.id : undefined,
+                });
+            },
+        },
     }).css;
 
     secondaryButtonRules = outerRules(css).filter((rule) => rule.selector.includes(".gd-button-secondary"));
@@ -104,6 +118,13 @@ beforeAll(() => {
 // border-color at equal specificity: the Modeler's secondary buttons lost their border (LX-2773).
 // Shared button rules belong in Button/_placeholders.scss, which only button.scss loads.
 describe("button.scss cascade under legacy @import", () => {
+    it("should warn about nothing except the entry fixture's own legacy @import rules", () => {
+        expect(compilerWarnings.length).toBeGreaterThan(0);
+        for (const warning of compilerWarnings) {
+            expect(warning.deprecationId).toBe("import");
+        }
+    });
+
     it("should emit the %btn base rule for .gd-button-secondary exactly once", () => {
         const bases = secondaryButtonRules.filter((rule) => rule.body.includes(BASE_BORDER));
 

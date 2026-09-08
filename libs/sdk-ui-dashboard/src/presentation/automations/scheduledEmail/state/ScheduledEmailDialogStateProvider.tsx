@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type ReactNode, useMemo } from "react";
+import { type ReactNode, useMemo, useState } from "react";
 
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
@@ -24,14 +24,16 @@ import { useScheduledEmailFormState } from "./useScheduledEmailFormState.js";
 
 /**
  * Publishes the scheduled-export create/edit dialog's state as the four scheduled-export state
- * contexts once the dialog's data has loaded.
+ * contexts from the first render where the dialog's data has loaded.
  *
  * Mounts above the resolved `ScheduledEmailDialogComponent`, so the default dialog, a shell of
- * blocks and a wholesale replacement all read the same state with no extra wiring. Defers mounting
- * the state model itself until `useScheduledEmailDialogContext().isLoading` is false, because the
- * state model seeds its draft from the dialog's loaded data in `useState` initializers that never
- * re-run — mounting earlier would freeze that seed against not-yet-loaded data. That is the
- * ordinary path here, not an edge case: a widget export's filters load after the dialog opens.
+ * blocks and a wholesale replacement all read the same state with no extra wiring. Mounts the
+ * state model on the first render where `useScheduledEmailDialogContext().isLoading` is false and
+ * keeps it mounted for the rest of the dialog's life: the model seeds its draft from the dialog's
+ * loaded data in `useState` initializers that never re-run, so mounting earlier would freeze that
+ * seed against not-yet-loaded data — that is the ordinary path here, not an edge case: a widget
+ * export's filters load after the dialog opens — and unmounting on a later `isLoading` flip (an
+ * automations refresh) would discard the in-flight draft.
  *
  * Runs `useIntl`-calling hooks, so an `IntlProvider` must sit above it. Inside a `Dashboard` the
  * ambient wrapper in `DashboardInner` supplies one with the same locale; a mount site without one
@@ -42,10 +44,17 @@ import { useScheduledEmailFormState } from "./useScheduledEmailFormState.js";
 export function ScheduledEmailDialogStateProvider({ children }: { children: ReactNode }) {
     const { isLoading } = useScheduledEmailDialogContext();
 
-    return isLoading ? (
-        <>{children}</>
-    ) : (
+    // Latches on the first non-loading render: the draft seed must not run against unloaded
+    // data, and once seeded it must survive isLoading flipping back (an automations refresh).
+    const [hasLoaded, setHasLoaded] = useState(!isLoading);
+    if (!isLoading && !hasLoaded) {
+        setHasLoaded(true);
+    }
+
+    return hasLoaded ? (
         <LoadedScheduledEmailDialogState>{children}</LoadedScheduledEmailDialogState>
+    ) : (
+        <>{children}</>
     );
 }
 

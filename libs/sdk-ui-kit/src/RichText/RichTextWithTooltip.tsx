@@ -54,6 +54,7 @@ function RichTextWithTooltipCore({
     tooltipMarkdown = descriptionMarkdown,
     autoResize,
     referencesEnabled,
+    allowedMarkdown,
     filters,
     separators,
     onLoadingChanged,
@@ -77,6 +78,7 @@ function RichTextWithTooltipCore({
                 className={className}
                 autoResize={autoResize}
                 referencesEnabled={referencesEnabled}
+                allowedMarkdown={allowedMarkdown}
                 filters={filters}
                 separators={separators}
                 LoadingComponent={LoadingComponent}
@@ -101,6 +103,7 @@ function RichTextWithTooltipCore({
         className,
         autoResize,
         referencesEnabled,
+        allowedMarkdown,
         filters,
         LoadingComponent,
         onLoadingChanged,

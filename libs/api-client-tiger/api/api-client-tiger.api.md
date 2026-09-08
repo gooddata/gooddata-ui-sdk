@@ -27577,6 +27577,13 @@ export interface JsonApiAgentOutDocument {
     'included'?: Array<JsonApiAgentOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiAgentOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiAgentOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -27597,6 +27604,7 @@ export interface JsonApiAgentOutList {
 export interface JsonApiAgentOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -27770,6 +27778,13 @@ export interface JsonApiAggregatedFactOutDocument {
     'included'?: Array<JsonApiAggregatedFactOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiAggregatedFactOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiAggregatedFactOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -27790,6 +27805,7 @@ export interface JsonApiAggregatedFactOutList {
 export interface JsonApiAggregatedFactOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -27938,6 +27954,13 @@ export interface JsonApiAnalyticalDashboardOutDocument {
     'included'?: Array<JsonApiAnalyticalDashboardOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiAnalyticalDashboardOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiAnalyticalDashboardOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -27958,6 +27981,7 @@ export interface JsonApiAnalyticalDashboardOutList {
 export interface JsonApiAnalyticalDashboardOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -28295,6 +28319,13 @@ export interface JsonApiAttributeHierarchyOutDocument {
     'included'?: Array<JsonApiAttributeHierarchyOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiAttributeHierarchyOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiAttributeHierarchyOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -28315,6 +28346,7 @@ export interface JsonApiAttributeHierarchyOutList {
 export interface JsonApiAttributeHierarchyOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -28486,6 +28518,13 @@ export interface JsonApiAttributeOutDocument {
     'included'?: Array<JsonApiAttributeOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiAttributeOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiAttributeOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -28506,6 +28545,7 @@ export interface JsonApiAttributeOutList {
 export interface JsonApiAttributeOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -28945,6 +28985,13 @@ export interface JsonApiAutomationOutDocument {
     'included'?: Array<JsonApiAutomationOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiAutomationOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiAutomationOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -28965,6 +29012,7 @@ export interface JsonApiAutomationOutList {
 export interface JsonApiAutomationOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -29278,6 +29326,7 @@ export interface JsonApiAutomationResultOutList {
 export interface JsonApiAutomationResultOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -29554,6 +29603,13 @@ export interface JsonApiComputedAttributeOutDocument {
     'included'?: Array<JsonApiComputedAttributeOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiComputedAttributeOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiComputedAttributeOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -29574,6 +29630,7 @@ export interface JsonApiComputedAttributeOutList {
 export interface JsonApiComputedAttributeOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -30415,6 +30472,13 @@ export interface JsonApiDashboardPluginOutDocument {
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiDashboardPluginOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiDashboardPluginOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -30432,6 +30496,7 @@ export interface JsonApiDashboardPluginOutList {
 export interface JsonApiDashboardPluginOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -30671,6 +30736,13 @@ export interface JsonApiDatasetOutDocument {
     'included'?: Array<JsonApiDatasetOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiDatasetOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiDatasetOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -30691,6 +30763,7 @@ export interface JsonApiDatasetOutList {
 export interface JsonApiDatasetOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -31262,6 +31335,13 @@ export interface JsonApiExportDefinitionOutDocument {
     'included'?: Array<JsonApiExportDefinitionOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiExportDefinitionOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiExportDefinitionOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -31282,6 +31362,7 @@ export interface JsonApiExportDefinitionOutList {
 export interface JsonApiExportDefinitionOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -31769,6 +31850,13 @@ export interface JsonApiFactOutDocument {
     'included'?: Array<JsonApiDatasetOutWithLinks>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiFactOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiFactOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -31786,6 +31874,7 @@ export interface JsonApiFactOutList {
 export interface JsonApiFactOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -31935,6 +32024,13 @@ export interface JsonApiFilterContextOutDocument {
     'included'?: Array<JsonApiFilterContextOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiFilterContextOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiFilterContextOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -31955,6 +32051,7 @@ export interface JsonApiFilterContextOutList {
 export interface JsonApiFilterContextOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -32161,6 +32258,13 @@ export interface JsonApiFilterViewOutDocument {
     'included'?: Array<JsonApiFilterViewOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiFilterViewOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiFilterViewOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -32181,6 +32285,7 @@ export interface JsonApiFilterViewOutList {
 export interface JsonApiFilterViewOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -32578,6 +32683,13 @@ export interface JsonApiIpAllowlistPolicyOutDocument {
     'included'?: Array<JsonApiIpAllowlistPolicyOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiIpAllowlistPolicyOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiIpAllowlistPolicyOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -32598,6 +32710,7 @@ export interface JsonApiIpAllowlistPolicyOutList {
 export interface JsonApiIpAllowlistPolicyOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -32854,6 +32967,13 @@ export interface JsonApiKnowledgeRecommendationOutDocument {
     'included'?: Array<JsonApiKnowledgeRecommendationOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiKnowledgeRecommendationOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiKnowledgeRecommendationOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -32874,6 +32994,7 @@ export interface JsonApiKnowledgeRecommendationOutList {
 export interface JsonApiKnowledgeRecommendationOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -33157,6 +33278,13 @@ export interface JsonApiLabelOutDocument {
     'included'?: Array<JsonApiAttributeOutWithLinks>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiLabelOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiLabelOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -33174,6 +33302,7 @@ export interface JsonApiLabelOutList {
 export interface JsonApiLabelOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -33485,6 +33614,13 @@ export interface JsonApiMemoryItemOutDocument {
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiMemoryItemOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiMemoryItemOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -33502,6 +33638,7 @@ export interface JsonApiMemoryItemOutList {
 export interface JsonApiMemoryItemOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -33760,6 +33897,13 @@ export interface JsonApiMetricOutDocument {
     'included'?: Array<JsonApiComputedAttributeOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiMetricOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiMetricOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -33777,6 +33921,7 @@ export interface JsonApiMetricOutList {
 export interface JsonApiMetricOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -34382,6 +34527,13 @@ export interface JsonApiOrganizationOutDocument {
     'included'?: Array<JsonApiOrganizationOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiOrganizationOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiOrganizationOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -34648,6 +34800,13 @@ export interface JsonApiOrgMemoryItemOutDocument {
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiOrgMemoryItemOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiOrgMemoryItemOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -34665,6 +34824,7 @@ export interface JsonApiOrgMemoryItemOutList {
 export interface JsonApiOrgMemoryItemOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -34828,6 +34988,13 @@ export interface JsonApiParameterOutDocument {
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiParameterOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiParameterOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -34845,6 +35012,7 @@ export interface JsonApiParameterOutList {
 export interface JsonApiParameterOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -35048,6 +35216,13 @@ export interface JsonApiReportOutDocument {
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiReportOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiReportOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -35065,6 +35240,7 @@ export interface JsonApiReportOutList {
 export interface JsonApiReportOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -35186,6 +35362,13 @@ export interface JsonApiReportPageLayoutOutDocument {
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiReportPageLayoutOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiReportPageLayoutOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -35203,6 +35386,7 @@ export interface JsonApiReportPageLayoutOutList {
 export interface JsonApiReportPageLayoutOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -35450,6 +35634,13 @@ export interface JsonApiReportTemplateOutDocument {
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiReportTemplateOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiReportTemplateOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -35467,6 +35658,7 @@ export interface JsonApiReportTemplateOutList {
 export interface JsonApiReportTemplateOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -35773,6 +35965,13 @@ export interface JsonApiUserDataFilterOutDocument {
     'included'?: Array<JsonApiUserDataFilterOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiUserDataFilterOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiUserDataFilterOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -35793,6 +35992,7 @@ export interface JsonApiUserDataFilterOutList {
 export interface JsonApiUserDataFilterOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -36075,6 +36275,13 @@ export interface JsonApiUserGroupOutDocument {
     'included'?: Array<JsonApiUserGroupOutWithLinks>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiUserGroupOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiUserGroupOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -36092,6 +36299,7 @@ export interface JsonApiUserGroupOutList {
 export interface JsonApiUserGroupOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -36312,6 +36520,13 @@ export interface JsonApiUserOutDocument {
     'included'?: Array<JsonApiUserGroupOutWithLinks>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiUserOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiUserOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -36329,6 +36544,7 @@ export interface JsonApiUserOutList {
 export interface JsonApiUserOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -36589,6 +36805,13 @@ export interface JsonApiVisualizationObjectOutDocument {
     'included'?: Array<JsonApiComputedAttributeOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiVisualizationObjectOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiVisualizationObjectOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -36606,6 +36829,7 @@ export interface JsonApiVisualizationObjectOutList {
 export interface JsonApiVisualizationObjectOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -36949,6 +37173,7 @@ export interface JsonApiWorkspaceAutomationOutList {
 export interface JsonApiWorkspaceAutomationOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -37236,6 +37461,13 @@ export interface JsonApiWorkspaceDataFilterOutDocument {
     'included'?: Array<JsonApiWorkspaceDataFilterSettingOutWithLinks>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiWorkspaceDataFilterOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiWorkspaceDataFilterOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -37253,6 +37485,7 @@ export interface JsonApiWorkspaceDataFilterOutList {
 export interface JsonApiWorkspaceDataFilterOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -37422,6 +37655,13 @@ export interface JsonApiWorkspaceDataFilterSettingOutDocument {
     'included'?: Array<JsonApiWorkspaceDataFilterOutWithLinks>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiWorkspaceDataFilterSettingOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiWorkspaceDataFilterSettingOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -37439,6 +37679,7 @@ export interface JsonApiWorkspaceDataFilterSettingOutList {
 export interface JsonApiWorkspaceDataFilterSettingOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -37893,6 +38134,13 @@ export interface JsonApiWorkspaceOutDocument {
     'included'?: Array<JsonApiWorkspaceOutWithLinks>;
     // (undocumented)
     'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiWorkspaceOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiWorkspaceOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public
@@ -37910,6 +38158,7 @@ export interface JsonApiWorkspaceOutList {
 export interface JsonApiWorkspaceOutListMeta {
     // (undocumented)
     'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
 }
 
 // @public (undocumented)
@@ -43276,6 +43525,15 @@ export interface RestApiIdentifier {
     // (undocumented)
     'type': string;
 }
+
+// @public
+export interface RestrictedObject {
+    'id': string;
+    'type': RestrictedObjectTypeEnum;
+}
+
+// @public (undocumented)
+export type RestrictedObjectTypeEnum = 'attribute' | 'attributeHierarchy' | 'computedAttribute' | 'fact' | 'filterContext' | 'label' | 'metric' | 'userDataFilter' | 'visualizationObject';
 
 // @public
 export interface ResultActionsApiInterface {

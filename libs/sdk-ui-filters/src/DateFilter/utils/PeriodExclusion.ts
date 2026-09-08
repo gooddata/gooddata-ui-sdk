@@ -13,6 +13,8 @@ import { type DateFilterOption } from "../interfaces/index.js";
 
 /**
  * Returns the date filter option with excludeCurrentPeriod applied if applicable.
+ *
+ * @beta
  */
 export const applyExcludeCurrentPeriod = (
     dateFilterOption: DateFilterOption | undefined,
@@ -48,6 +50,9 @@ export const applyExcludeCurrentPeriod = (
     }
 };
 
+/**
+ * @beta
+ */
 export const canExcludeCurrentPeriod = (dateFilterOption: DateFilterOption): boolean => {
     if (!dateFilterOption.visible) {
         return false;
