@@ -8,8 +8,8 @@ import {
     type IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
 
-import { settingsSelector } from "../chatWindow/chatWindowSelectors.js";
-import { threadIdSelector } from "../messages/messagesSelectors.js";
+import { agentSwitchingActiveSelector, settingsSelector } from "../chatWindow/chatWindowSelectors.js";
+import { selectedAgentIdSelector, threadIdSelector } from "../messages/messagesSelectors.js";
 import {
     cancelAsyncAction,
     clearConversationSuccessAction,
@@ -76,8 +76,21 @@ function* resetConversation() {
         .getChatConversations({ isPreview })
         .getConversationThread(conversationId);
 
+    // Pin the picked agent on the new conversation. Without it the backend resolves its own
+    // initial agent, which can differ from the one the picker shows.
+    const agentSwitchingActive: boolean = yield select(agentSwitchingActiveSelector);
+    const selectedAgentId: string | undefined = agentSwitchingActive
+        ? yield select(selectedAgentIdSelector)
+        : undefined;
+
     const [results, cancelAction]: [results: IChatConversation, ReturnType<typeof cancelAsyncAction>] =
-        yield race([call(chatThread.reset.bind(chatThread)), take(cancelAsyncAction.type)]);
+        yield race([
+            call(
+                chatThread.reset.bind(chatThread),
+                selectedAgentId ? { agentId: selectedAgentId } : undefined,
+            ),
+            take(cancelAsyncAction.type),
+        ]);
 
     if (cancelAction) {
         // Just skip, as the action was cancelled

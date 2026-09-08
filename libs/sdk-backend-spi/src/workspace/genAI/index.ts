@@ -21,6 +21,7 @@ import type {
     IGenAICreatedVisualizations,
     IGenAIFoundObjects,
     IGenAIUserContext,
+    IGenAiClarifyingQuestion,
     IInsight,
     IMeasure,
     IMemoryItemDefinition,
@@ -1241,6 +1242,7 @@ export type IChatConversationMultipartPart =
     | IChatConversationVisualisationContent
     | IChatConversationAlertProposalContent
     | IChatConversationKeyDriverAnalysisContent
+    | IChatConversationClarifyingQuestionsContent
     | IChatConversationWhatIfContent
     | IChatConversationSearchContent
     | IChatConversationDashboardContent;
@@ -1262,6 +1264,25 @@ export function isChatConversationTextContent(
     content: IChatConversationContent,
 ): content is IChatConversationTextContent {
     return content.type === "text";
+}
+
+/**
+ * GenAI Chat Conversation clarifying question content
+ * @internal
+ */
+export type IChatConversationClarifyingQuestionsContent = {
+    type: "clarifyingQuestions";
+    questions: IGenAiClarifyingQuestion[];
+};
+
+/**
+ * Is chat conversation clarifying questions content
+ * @internal
+ */
+export function isChatConversationClarifyingQuestionsContent(
+    content: IChatConversationMultipartPart,
+): content is IChatConversationClarifyingQuestionsContent {
+    return content.type === "clarifyingQuestions";
 }
 
 /**
@@ -1632,9 +1653,13 @@ export interface IChatConversationThread {
      */
     loadHistory(options?: { signal?: AbortSignal }): Promise<IChatConversationItem[]>;
     /**
-     * Reset the chat thread history.
+     * Reset the chat thread history. This creates a new conversation.
+     *
+     * @remarks
+     * Without an explicit `agentId` the backend resolves its own initial agent, which
+     * may differ from the one the agent picker displays.
      */
-    reset(): Promise<IChatConversation>;
+    reset(options?: IChatConversationCreateOptions): Promise<IChatConversation>;
     /**
      * Save user feedback for the interaction.
      */

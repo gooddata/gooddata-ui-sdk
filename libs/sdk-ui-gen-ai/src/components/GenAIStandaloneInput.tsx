@@ -98,7 +98,7 @@ function StandaloneInputContent({
     const extensions = useMemo(() => [highlightExtension], [highlightExtension]);
 
     // Force focus when autofocus is enables on the first mount, right after the initial state is loaded
-    const ref = useInputAutofocus(editorApi, autofocus, { isBusy: false });
+    const ref = useInputAutofocus(editorApi, autofocus, { isBusy: false, refocusKey: 0 });
 
     const handleSubmit = useCallback(() => {
         const trimmed = value.trim();

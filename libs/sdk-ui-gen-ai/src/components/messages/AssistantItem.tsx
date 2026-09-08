@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 
 import { type IChatConversationLocalItem } from "../../model.js";
 import { interactionIntelligenceEnabledSelector } from "../../store/chatWindow/chatWindowSelectors.js";
+import { isClarificationQuestionsItem } from "../../utils.js";
 import { useToolsReferences } from "../completion/useToolsReferences.js";
 import { useCustomization } from "../CustomizationContext.js";
 import { useInteractionIntelligenceTotals } from "../intelligence/data/useInteractionIntelligenceTotals.js";
@@ -60,6 +61,8 @@ export function AssistantItemComponent({ message, groups, isLast }: AssistantIte
     if (message.content.type === "reasoning" && !message.content.summary) {
         return null;
     }
+    //NOTE: For now remove feedback on clarification questions that are filled
+    const isFilledClarificationQuestion = isClarificationQuestionsItem(message) && message.filled;
 
     return (
         <div
@@ -85,7 +88,9 @@ export function AssistantItemComponent({ message, groups, isLast }: AssistantIte
                 references={references}
             />
             <div className="gd-gen-ai-chat__conversation__item__actions">
-                {group.type === "assistant" && message.content.type !== "reasoning" ? (
+                {group.type === "assistant" &&
+                message.content.type !== "reasoning" &&
+                !isFilledClarificationQuestion ? (
                     <FeedbackComponent
                         group={group}
                         message={message}

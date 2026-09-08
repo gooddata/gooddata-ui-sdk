@@ -395,6 +395,7 @@ export type IChatConversationLocalItem = Omit<IChatConversationItem, "content"> 
     cancelled?: boolean;
     complete?: boolean;
     streaming?: boolean;
+    filled?: boolean;
     //data
     localId: string;
     content: IChatConversationLocalContent | IChatConversationErrorContent | IChatConversationSystemContent;
@@ -464,6 +465,7 @@ export const makeConversationItem = (item: IChatConversationItem): IChatConversa
     ...item,
     localId: uuidv4(),
     complete: true,
+    filled: true,
 });
 
 /**

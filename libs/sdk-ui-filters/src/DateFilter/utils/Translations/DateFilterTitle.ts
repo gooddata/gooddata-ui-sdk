@@ -82,6 +82,9 @@ const adjustDatetime = (date: string | Date, isTimeEnabled: boolean, defaultTime
     return date;
 };
 
+/**
+ * @beta
+ */
 export const formatAbsoluteDateRange = (
     from: Date | string,
     to: Date | string,
@@ -252,6 +255,9 @@ const relativeDateRangeFormatters: Array<{
     },
 ];
 
+/**
+ * @beta
+ */
 export const formatRelativeDateRange = (
     from: number,
     to: number,
@@ -374,6 +380,7 @@ const getDateFilterRepresentationByFilterType = (
  * The dedicated "Empty values" preset is represented by its own title and is not further decorated.
  *
  * @returns Representation of the filter (e.g. "My preset", "From 2 weeks ago to 1 week ahead")
+ * @beta
  */
 export const getDateFilterTitleUsingTranslator = (
     filter: DateFilterOption,
@@ -426,6 +433,9 @@ const getDateFilterRepresentationUsingTranslator = (
     }
 };
 
+/**
+ * @beta
+ */
 export const getDateFilterRepresentation = (
     filter: DateFilterOption,
     locale: ILocale,

@@ -256,8 +256,8 @@ export class ConversationThread implements IChatConversationThread {
     /**
      * Resets the conversation. This creates a new conversation.
      */
-    async reset(): Promise<IChatConversation> {
-        const conv = await this.service.create();
+    async reset(options?: IChatConversationCreateOptions): Promise<IChatConversation> {
+        const conv = await this.service.create(options);
         this.conversationId = conv.id;
         return conv;
     }

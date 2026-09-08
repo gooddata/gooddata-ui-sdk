@@ -97,6 +97,7 @@ import type { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
 import type { IGenAIChatInteraction } from '@gooddata/sdk-model';
 import type { IGenAIChatReasoning } from '@gooddata/sdk-model';
 import type { IGenAIChatRouting } from '@gooddata/sdk-model';
+import type { IGenAiClarifyingQuestion } from '@gooddata/sdk-model';
 import type { IGenAICreatedVisualizations } from '@gooddata/sdk-model';
 import type { IGenAIFoundObjects } from '@gooddata/sdk-model';
 import type { IGenAIUserContext } from '@gooddata/sdk-model';
@@ -762,6 +763,12 @@ export type IChatConversationCatalogSearchMatch = {
 };
 
 // @internal
+export type IChatConversationClarifyingQuestionsContent = {
+    type: "clarifyingQuestions";
+    questions: IGenAiClarifyingQuestion[];
+};
+
+// @internal
 export type IChatConversationComposeAnswerDetail = {
     category: "composeAnswer";
     modelId?: string;
@@ -896,7 +903,7 @@ export type IChatConversationMultipartContent = {
 };
 
 // @internal
-export type IChatConversationMultipartPart = IChatConversationTextContent | IChatConversationVisualisationContent | IChatConversationAlertProposalContent | IChatConversationKeyDriverAnalysisContent | IChatConversationWhatIfContent | IChatConversationSearchContent | IChatConversationDashboardContent;
+export type IChatConversationMultipartPart = IChatConversationTextContent | IChatConversationVisualisationContent | IChatConversationAlertProposalContent | IChatConversationKeyDriverAnalysisContent | IChatConversationClarifyingQuestionsContent | IChatConversationWhatIfContent | IChatConversationSearchContent | IChatConversationDashboardContent;
 
 // @internal
 export type IChatConversationReasoningContent = {
@@ -950,7 +957,7 @@ export interface IChatConversationThread {
     }): Promise<IChatConversationItem[]>;
     query(userMessage: string): IChatConversationThreadQuery;
     resaveVisualisation(oldVisualizationId: string, newVisualizationId: string): Promise<void>;
-    reset(): Promise<IChatConversation>;
+    reset(options?: IChatConversationCreateOptions): Promise<IChatConversation>;
     saveFeedback(responseId: string, feedback: GenAIChatInteractionUserFeedback, userTextFeedback?: string): Promise<void>;
 }
 
@@ -2623,6 +2630,9 @@ export function isChatConversationAlertProposalContent(content: IChatConversatio
 
 // @internal
 export function isChatConversationCatalogSearchDetail(detail: unknown): detail is IChatConversationCatalogSearchDetail;
+
+// @internal
+export function isChatConversationClarifyingQuestionsContent(content: IChatConversationMultipartPart): content is IChatConversationClarifyingQuestionsContent;
 
 // @internal
 export function isChatConversationDashboardContent(content: IChatConversationMultipartPart): content is IChatConversationDashboardContent;

@@ -90,10 +90,10 @@ function DefaultAlertingDialogBody({
     onCancel,
     onDeleteSuccess,
     onDeleteError,
-    onError,
-    onSuccess,
-    onSaveError,
-    onSaveSuccess,
+    onCreateError,
+    onCreateSuccess,
+    onUpdateError,
+    onUpdateSuccess,
     slots,
     topContent,
     bottomContent,
@@ -104,7 +104,12 @@ function DefaultAlertingDialogBody({
 
     const { notificationChannels } = useAlertingDialogContext();
 
-    const { isSaving, submit } = useAlertSubmit({ onSuccess, onError, onSaveSuccess, onSaveError });
+    const { isSaving, submit } = useAlertSubmit({
+        onCreateSuccess,
+        onCreateError,
+        onUpdateSuccess,
+        onUpdateError,
+    });
 
     const filtersDefaultProps = useAlertingDialogFiltersProps();
     const destinationDefaultProps = useAlertingDialogDestinationProps();

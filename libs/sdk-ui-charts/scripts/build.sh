@@ -2,7 +2,7 @@
 set -e
 
 _build_styles() {
-    sass --load-path=node_modules styles/scss:styles/css
+    sass --quiet-deps --load-path=node_modules styles/scss:styles/css
 }
 
 _common-build() {

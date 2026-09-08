@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/react-app-template",
-    "version": "11.56.0-alpha.2",
+    "version": "11.56.0-alpha.4",
     "private": true,
     "description": "GoodData Template for React App",
     "license": "LicenseRef-LICENSE",
@@ -85,7 +85,7 @@
         "oxlint-tsgolint": "0.15.0",
         "source-map-loader": "4.0.2",
         "style-loader": "3.3.4",
-        "typescript": "5.9.3",
+        "typescript": "6.0.3",
         "webpack": "5.107.2",
         "webpack-cli": "7.0.3",
         "webpack-dev-server": "5.2.4"

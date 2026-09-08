@@ -4,5 +4,15 @@
 {
     "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
     "extends": "../../common/config/api-extractor/api-extractor.json",
-    "mainEntryPointFilePath": "<projectFolder>/esm/index.d.ts"
+    "mainEntryPointFilePath": "<projectFolder>/esm/index.d.ts",
+    "messages": {
+        "extractorMessageReporting": {
+            // @reduxjs/toolkit deliberately ships dist/uncheckedindexed.ts as a .ts file (not .d.ts);
+            // it is reached transitively through the re-exported sdk-ui-* packages. Same override
+            // as in sdk-ui-dashboard, sdk-ui-gen-ai, sdk-ui-filters and sdk-ui-ext.
+            "ae-wrong-input-file-type": {
+                "logLevel": "none"
+            }
+        }
+    }
 }

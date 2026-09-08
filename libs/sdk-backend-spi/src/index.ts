@@ -193,6 +193,7 @@ export {
     type IChatConversationMultipartPart,
     type IChatConversationToolCallContent,
     type IChatConversationTextContent,
+    type IChatConversationClarifyingQuestionsContent,
     type IChatConversationToolResultContent,
     type IChatConversationVisualisationContent,
     type IChatConversationAlertProposalContent,
@@ -220,6 +221,7 @@ export {
     isChatConversationSearchContent,
     isChatConversationAlertProposalContent,
     isChatConversationDashboardContent,
+    isChatConversationClarifyingQuestionsContent,
 } from "./workspace/genAI/index.js";
 
 export type {

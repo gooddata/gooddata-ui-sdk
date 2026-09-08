@@ -55,6 +55,20 @@ export type {
     IMessageTranslator,
 } from "./DateFilter/utils/Translations/Translators.js";
 export { filterVisibleDateFilterOptions } from "./DateFilter/utils/OptionUtils.js";
+export { validateFilterOption } from "./DateFilter/validation/OptionValidation.js";
+export { mapOptionToAfm } from "./DateFilter/utils/AFMConversions.js";
+export {
+    applyExcludeCurrentPeriod,
+    canExcludeCurrentPeriod,
+    excludeCurrentPeriodFromRange,
+    revertExcludedCurrentPeriodRange,
+} from "./DateFilter/utils/PeriodExclusion.js";
+export {
+    formatAbsoluteDateRange,
+    formatRelativeDateRange,
+    getDateFilterRepresentation,
+    getDateFilterTitleUsingTranslator,
+} from "./DateFilter/utils/Translations/DateFilterTitle.js";
 export { getLocalizedIcuDateFormatPattern } from "./DateFilter/utils/FormattingUtils.js";
 export { convertDateFilterConfigToDateFilterOptions } from "./DateFilter/utils/DateFilterConfigConversions.js";
 export {
@@ -62,10 +76,6 @@ export {
     DEFAULT_FISCAL_DATE_FILTER_PRESET,
     defaultDateFilterConfig,
 } from "./DateFilter/utils/DefaultDateFilterConfig.js";
-export {
-    excludeCurrentPeriodFromRange,
-    revertExcludedCurrentPeriodRange,
-} from "./DateFilter/utils/PeriodExclusion.js";
 export {
     type IDateFilterOptionInfo,
     findDateFilterOptionByValue,

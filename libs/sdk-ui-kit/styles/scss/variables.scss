@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 @use "sass:color";
+@use "sass:list";
 
 $include-html-classes: false;
 $include-html-global-classes: false;
@@ -152,17 +153,17 @@ $gd-outside-background-color: #eff1f3;
 
 // Media queries
 @function lower-bound($range) {
-    @if length($range) <= 0 {
+    @if list.length($range) <= 0 {
         @return 0;
     }
-    @return nth($range, 1);
+    @return list.nth($range, 1);
 }
 
 @function upper-bound($range) {
-    @if length($range) < 2 {
+    @if list.length($range) < 2 {
         @return 999999999999;
     }
-    @return nth($range, 2);
+    @return list.nth($range, 2);
 }
 
 $xsmall-breakpoint: 320px;

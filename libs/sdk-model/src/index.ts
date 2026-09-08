@@ -1437,6 +1437,11 @@ export type {
 } from "./genAI/chat.js";
 
 export type { GenAIObjectType } from "./genAI/common.js";
+export type {
+    IGenAiClarifyingChoiceOption,
+    IGenAiClarifyingQuestion,
+    IGenAiSingleChoiceControl,
+} from "./genAI/clarifyingQuestions.js";
 
 export type {
     IGeoCollection,

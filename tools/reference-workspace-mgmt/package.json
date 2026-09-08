@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/reference-workspace-mgmt",
-    "version": "11.56.0-alpha.2",
+    "version": "11.56.0-alpha.4",
     "description": "Command line tools for reference workspace management",
     "license": "MIT",
     "author": "GoodData",
@@ -49,7 +49,7 @@
         "@types/node": "24.12.0",
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",
-        "@typescript/native-preview": "7.0.0-dev.20260701.1",
+        "@typescript/native-preview": "7.0.0-dev.20260707.2",
         "dependency-cruiser": "17.3.10",
         "dotenv": "16.4.5",
         "eslint": "^9.39.2",
@@ -60,7 +60,7 @@
         "oxfmt": "0.66.0",
         "oxlint": "1.57.0",
         "oxlint-tsgolint": "0.15.0",
-        "typescript": "5.9.3",
+        "typescript": "6.0.3",
         "vitest": "4.1.8"
     }
 }

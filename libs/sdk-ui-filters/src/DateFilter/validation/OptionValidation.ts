@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { isAbsoluteDateFilterForm, isRelativeDateFilterForm } from "@gooddata/sdk-model";
 
 import {
@@ -72,6 +73,9 @@ const validateRelativeForm = (filterOption: IUiRelativeDateFilterForm): IExtende
     return errors.relativeForm ? errors : {};
 };
 
+/**
+ * @beta
+ */
 export const validateFilterOption = (filterOption: DateFilterOption): IExtendedDateFilterErrors => {
     if (isAbsoluteDateFilterForm(filterOption)) {
         return validateAbsoluteForm(filterOption);

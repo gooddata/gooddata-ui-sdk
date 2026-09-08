@@ -134,16 +134,13 @@ export const useDashboardScheduledEmailsDialog = () => {
     }, [closeScheduleEmailingDialog, addError]);
 
     // Edit
-    const onScheduleEmailingSaveSuccess = useCallback(
-        (_widget?: IWidget) => {
-            closeScheduleEmailingDialog();
-            addSuccess(messages.scheduleEmailSaveSuccess);
-            handleRefreshAutomations();
-        },
-        [closeScheduleEmailingDialog, addSuccess, handleRefreshAutomations],
-    );
+    const onScheduleEmailingUpdateSuccess = useCallback(() => {
+        closeScheduleEmailingDialog();
+        addSuccess(messages.scheduleEmailSaveSuccess);
+        handleRefreshAutomations();
+    }, [closeScheduleEmailingDialog, addSuccess, handleRefreshAutomations]);
 
-    const onScheduleEmailingSaveError = useCallback(() => {
+    const onScheduleEmailingUpdateError = useCallback(() => {
         closeScheduleEmailingDialog();
         addError(messages.scheduleEmailSaveError);
     }, [closeScheduleEmailingDialog, addError]);
@@ -155,7 +152,7 @@ export const useDashboardScheduledEmailsDialog = () => {
         onScheduleEmailingBack,
         onScheduleEmailingCreateError,
         onScheduleEmailingCreateSuccess,
-        onScheduleEmailingSaveError,
-        onScheduleEmailingSaveSuccess,
+        onScheduleEmailingUpdateError,
+        onScheduleEmailingUpdateSuccess,
     };
 };
