@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/dashboard-plugin-template",
-    "version": "11.56.0-alpha.2",
+    "version": "11.56.0-alpha.3",
     "private": true,
     "description": "GoodData Template for Dashboard Plugins",
     "license": "LicenseRef-LICENSE",
@@ -99,7 +99,7 @@
         "source-map-loader": "4.0.2",
         "style-loader": "3.3.4",
         "ts-loader": "8.4.0",
-        "typescript": "5.9.3",
+        "typescript": "6.0.3",
         "vitest": "4.1.8",
         "webpack": "5.107.2",
         "webpack-bundle-analyzer": "4.10.2",

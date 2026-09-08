@@ -3,11 +3,7 @@
 import { fireEvent, render, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import {
-    type IAutomationMetadataObject,
-    type IAutomationMetadataObjectDefinition,
-    idRef,
-} from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject, idRef } from "@gooddata/sdk-model";
 import { type ISlotProps } from "@gooddata/sdk-ui-kit";
 
 import { type IAutomationDialogActionBarProps } from "../../shared/slots/types.js";
@@ -54,15 +50,16 @@ vi.mock("../../../filterBar/attributeFilter/DefaultDashboardAttributeFilter.js",
 // mounting it and routing its callbacks.
 vi.mock("../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js", () => ({
     DeleteScheduleConfirmDialog: ({
+        scheduledEmail,
         onSuccess,
         onCancel,
     }: {
-        scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition;
-        onSuccess?: () => void;
+        scheduledEmail: IAutomationMetadataObject;
+        onSuccess?: (scheduledEmail: IAutomationMetadataObject) => void;
         onCancel: () => void;
     }) => (
         <div data-testid="delete-confirm">
-            <button data-testid="confirm-delete" onClick={() => onSuccess?.()} />
+            <button data-testid="confirm-delete" onClick={() => onSuccess?.(scheduledEmail)} />
             <button data-testid="cancel-delete" onClick={onCancel} />
         </div>
     ),
@@ -335,6 +332,7 @@ describe("ScheduledEmailDialogShell", () => {
         expect(getByTestId("delete-confirm")).toBeInTheDocument();
         fireEvent.click(getByTestId("confirm-delete"));
         expect(onDeleteSuccess).toHaveBeenCalledTimes(1);
+        expect(onDeleteSuccess).toHaveBeenCalledWith(expect.objectContaining({ id: SCHEDULE_TO_EDIT.id }));
         expect(queryByTestId("delete-confirm")).toBeNull();
     });
 

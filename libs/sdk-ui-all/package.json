@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-all",
-    "version": "11.56.0-alpha.2",
+    "version": "11.56.0-alpha.3",
     "description": "GoodData SDK - All-In-One",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData",
@@ -69,6 +69,6 @@
         "oxfmt": "0.66.0",
         "oxlint": "1.57.0",
         "oxlint-tsgolint": "0.15.0",
-        "typescript": "5.9.3"
+        "typescript": "6.0.3"
     }
 }

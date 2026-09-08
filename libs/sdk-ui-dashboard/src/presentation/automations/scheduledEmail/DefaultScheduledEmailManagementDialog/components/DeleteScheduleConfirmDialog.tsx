@@ -4,20 +4,17 @@ import { type ReactNode, type RefObject } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import {
-    type IAutomationMetadataObject,
-    type IAutomationMetadataObjectDefinition,
-} from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { type GoodDataSdkError, convertError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
 
 interface IDeleteScheduleConfirmDialogProps {
-    scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition;
+    scheduledEmail: IAutomationMetadataObject;
     returnFocusTo?: RefObject<HTMLElement> | string;
     onCancel: () => void;
-    onSuccess?: () => void;
+    onSuccess?: (scheduledEmail: IAutomationMetadataObject) => void;
     onError?: (error: GoodDataSdkError) => void;
 }
 
@@ -48,8 +45,8 @@ export function DeleteScheduleConfirmDialog({
                 : automationService.unsubscribeAutomation.bind(automationService);
 
         try {
-            await deleteMethod(scheduledEmail.id!);
-            onSuccess?.();
+            await deleteMethod(scheduledEmail.id);
+            onSuccess?.(scheduledEmail);
         } catch (err) {
             onError?.(convertError(err));
         }

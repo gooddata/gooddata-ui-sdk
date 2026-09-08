@@ -427,6 +427,14 @@
         "text": "Anomaly Detection",
         "crowdinContext": "Anomaly Detection for alert in alert proposal dialog."
     },
+    "gd.gen-ai.clarification-question.skip-button": {
+        "text": "Skip",
+        "crowdinContext": "Skip button label in the clarification question dialog"
+    },
+    "gd.gen-ai.clarification-question.of": {
+        "text": "{index} of {total}",
+        "crowdinContext": "Placeholder for the current question number in the clarification question dialog"
+    },
     "sdk.ui.genAi.alertProposal.operator.lessThan": {
         "text": "<",
         "crowdinContext": "Less than operator for alert in alert proposal dialog."

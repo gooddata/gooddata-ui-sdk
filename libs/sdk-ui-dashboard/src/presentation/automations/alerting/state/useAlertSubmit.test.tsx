@@ -135,9 +135,9 @@ function renderAlertSubmitHook(input: RenderInput = {}) {
 // ---------------------------------------------------------------------------
 
 describe("useAlertSubmit — create path", () => {
-    it("calls createAlert then onSuccess with the result; saveAlert and onSaveSuccess are untouched", async () => {
-        const onSuccess = vi.fn();
-        const onSaveSuccess = vi.fn();
+    it("calls createAlert then onCreateSuccess with the result; saveAlert and onUpdateSuccess are untouched", async () => {
+        const onCreateSuccess = vi.fn();
+        const onUpdateSuccess = vi.fn();
 
         let resolveCreate!: (value: IAutomationMetadataObject) => void;
         createAlertMock.mockReturnValue(
@@ -146,22 +146,22 @@ describe("useAlertSubmit — create path", () => {
             }),
         );
 
-        const { result } = renderAlertSubmitHook({ onSuccess, onSaveSuccess });
+        const { result } = renderAlertSubmitHook({ onCreateSuccess, onUpdateSuccess });
 
         act(() => {
             void result.current.submit();
         });
 
         expect(createAlertMock).toHaveBeenCalledTimes(1);
-        expect(onSuccess).not.toHaveBeenCalled();
+        expect(onCreateSuccess).not.toHaveBeenCalled();
         expect(saveAlertMock).not.toHaveBeenCalled();
 
         await act(async () => {
             resolveCreate(createdAlert);
         });
 
-        expect(onSuccess).toHaveBeenCalledWith(createdAlert);
-        expect(onSaveSuccess).not.toHaveBeenCalled();
+        expect(onCreateSuccess).toHaveBeenCalledWith(createdAlert);
+        expect(onUpdateSuccess).not.toHaveBeenCalled();
     });
 });
 
@@ -169,10 +169,10 @@ describe("useAlertSubmit — create path", () => {
 // Tests — save path
 // ---------------------------------------------------------------------------
 
-describe("useAlertSubmit — save path", () => {
-    it("calls saveAlert then onSaveSuccess with the result; createAlert and onSuccess are untouched", async () => {
-        const onSaveSuccess = vi.fn();
-        const onSuccess = vi.fn();
+describe("useAlertSubmit — update path", () => {
+    it("calls saveAlert then onUpdateSuccess with the result; createAlert and onCreateSuccess are untouched", async () => {
+        const onUpdateSuccess = vi.fn();
+        const onCreateSuccess = vi.fn();
 
         let resolveUpdate!: (value: IAutomationMetadataObject) => void;
         saveAlertMock.mockReturnValue(
@@ -181,22 +181,22 @@ describe("useAlertSubmit — save path", () => {
             }),
         );
 
-        const { result } = renderAlertSubmitHook({ alertToEdit, onSaveSuccess, onSuccess });
+        const { result } = renderAlertSubmitHook({ alertToEdit, onUpdateSuccess, onCreateSuccess });
 
         act(() => {
             void result.current.submit();
         });
 
         expect(saveAlertMock).toHaveBeenCalledTimes(1);
-        expect(onSaveSuccess).not.toHaveBeenCalled();
+        expect(onUpdateSuccess).not.toHaveBeenCalled();
         expect(createAlertMock).not.toHaveBeenCalled();
 
         await act(async () => {
             resolveUpdate(savedAlert);
         });
 
-        expect(onSaveSuccess).toHaveBeenCalledWith(savedAlert);
-        expect(onSuccess).not.toHaveBeenCalled();
+        expect(onUpdateSuccess).toHaveBeenCalledWith(savedAlert);
+        expect(onCreateSuccess).not.toHaveBeenCalled();
     });
 });
 
@@ -205,36 +205,36 @@ describe("useAlertSubmit — save path", () => {
 // ---------------------------------------------------------------------------
 
 describe("useAlertSubmit — error routing", () => {
-    it("createAlert rejects → calls onError with convertError result; onSaveError untouched", async () => {
-        const onError = vi.fn();
-        const onSaveError = vi.fn();
+    it("createAlert rejects → calls onCreateError with convertError result; onUpdateError untouched", async () => {
+        const onCreateError = vi.fn();
+        const onUpdateError = vi.fn();
         const rawError = new Error("Create failed");
         createAlertMock.mockRejectedValue(rawError);
 
-        const { result } = renderAlertSubmitHook({ onError, onSaveError });
+        const { result } = renderAlertSubmitHook({ onCreateError, onUpdateError });
 
         await act(async () => {
             await result.current.submit();
         });
 
-        expect(onError).toHaveBeenCalledWith(convertError(rawError));
-        expect(onSaveError).not.toHaveBeenCalled();
+        expect(onCreateError).toHaveBeenCalledWith(convertError(rawError));
+        expect(onUpdateError).not.toHaveBeenCalled();
     });
 
-    it("saveAlert rejects → calls onSaveError with convertError result; onError untouched", async () => {
-        const onError = vi.fn();
-        const onSaveError = vi.fn();
+    it("saveAlert rejects → calls onUpdateError with convertError result; onCreateError untouched", async () => {
+        const onCreateError = vi.fn();
+        const onUpdateError = vi.fn();
         const rawError = new Error("Save failed");
         saveAlertMock.mockRejectedValue(rawError);
 
-        const { result } = renderAlertSubmitHook({ alertToEdit, onError, onSaveError });
+        const { result } = renderAlertSubmitHook({ alertToEdit, onCreateError, onUpdateError });
 
         await act(async () => {
             await result.current.submit();
         });
 
-        expect(onSaveError).toHaveBeenCalledWith(convertError(rawError));
-        expect(onError).not.toHaveBeenCalled();
+        expect(onUpdateError).toHaveBeenCalledWith(convertError(rawError));
+        expect(onCreateError).not.toHaveBeenCalled();
     });
 });
 
@@ -279,13 +279,13 @@ describe("useAlertSubmit — title fallback", () => {
 
 describe("useAlertSubmit — undefined draft", () => {
     it("submit is a no-op when editedAutomation is undefined", async () => {
-        const onSuccess = vi.fn();
-        const onError = vi.fn();
+        const onCreateSuccess = vi.fn();
+        const onCreateError = vi.fn();
 
         const { result } = renderAlertSubmitHook({
             editedAutomation: undefined,
-            onSuccess,
-            onError,
+            onCreateSuccess,
+            onCreateError,
         });
 
         await act(async () => {
@@ -294,8 +294,8 @@ describe("useAlertSubmit — undefined draft", () => {
 
         expect(createAlertMock).not.toHaveBeenCalled();
         expect(saveAlertMock).not.toHaveBeenCalled();
-        expect(onSuccess).not.toHaveBeenCalled();
-        expect(onError).not.toHaveBeenCalled();
+        expect(onCreateSuccess).not.toHaveBeenCalled();
+        expect(onCreateError).not.toHaveBeenCalled();
     });
 });
 
@@ -340,8 +340,8 @@ describe("useAlertSubmit — re-entrancy guard", () => {
         });
         createAlertMock.mockReturnValue(pendingCreate);
 
-        const onSuccess = vi.fn();
-        const { result } = renderAlertSubmitHook({ onSuccess });
+        const onCreateSuccess = vi.fn();
+        const { result } = renderAlertSubmitHook({ onCreateSuccess });
 
         // Both calls from the same closure, before any state flush — this is
         // the real double-submit window the synchronous ref guard must block.
@@ -357,6 +357,6 @@ describe("useAlertSubmit — re-entrancy guard", () => {
             resolveCreate(createdAlert);
         });
 
-        expect(onSuccess).toHaveBeenCalledTimes(1);
+        expect(onCreateSuccess).toHaveBeenCalledTimes(1);
     });
 });

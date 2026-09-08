@@ -1551,6 +1551,104 @@ $dataset_color: #952f8e;
     }
 }
 
+.gd-gen-ai-chat-clarifying-questions {
+    $block: ".gd-gen-ai-chat-clarifying-questions";
+
+    border-radius: 8px;
+    border: 1px solid var(--gd-palette-complementary-3);
+    background: var(--gd-palette-complementary-0, #fff);
+    padding: 5px 10px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    &:focus-visible {
+        outline: none;
+
+        #{$block}__option--focused {
+            border-radius: 3px;
+            outline: 2px solid var(--gd-palette-primary-base);
+
+            #{$block}__option-select {
+                display: flex;
+            }
+        }
+    }
+
+    &__header {
+        color: var(--gd-palette-complementary-8);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 23px; /* 164.286% */
+        margin-bottom: 5px;
+    }
+
+    &__option {
+        display: flex;
+        position: relative;
+        border-radius: 3px;
+        padding: 10px 32px 10px 5px;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 3px;
+
+        &:hover {
+            cursor: pointer;
+            border-radius: 3px;
+            background: var(--gd-palette-complementary-2);
+
+            #{$block}__option-select {
+                display: flex;
+            }
+        }
+
+        &-index {
+            border-radius: 3px;
+            background: var(--gd-palette-complementary-2);
+            display: flex;
+            min-width: 17px;
+            padding: 1px var(--spacing-2px);
+            justify-content: center;
+            align-items: center;
+            gap: 2px;
+        }
+
+        &-content {
+            flex-grow: 1;
+        }
+
+        &-select {
+            align-items: center;
+            height: 100%;
+            position: absolute;
+            right: 10px;
+            top: 0;
+            bottom: 0;
+            display: none;
+        }
+
+        &--focused {
+            border-radius: 3px;
+            outline: 2px solid var(--gd-palette-primary-base);
+
+            #{$block}__option-select {
+                display: flex;
+            }
+        }
+    }
+
+    &__footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+        gap: 10px;
+        margin-top: 10px;
+    }
+}
+
 .gd-gen-ai-chat__conversation__item__feedback {
     display: flex;
     flex-direction: row;

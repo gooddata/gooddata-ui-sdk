@@ -5,13 +5,12 @@ import { describe, expect, it } from "vitest";
 import type {
     JsonApiAnalyticalDashboardOutDocument,
     JsonApiFilterContextOut,
-    JsonApiFilterContextOutIncludes,
 } from "@gooddata/api-client-tiger";
+import type { RestrictedObject } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { type IDashboard, type IFilterContext, idRef } from "@gooddata/sdk-model";
 
 import { buildExportOverrideFilterContext } from "./index.js";
 import {
-    dashboardSideloadIncludes,
     inspectableFilterContextIds,
     resolveUnavailableDashboardReferences,
     resolveUnavailableFilterContextReferences,
@@ -20,12 +19,12 @@ import {
 
 function dashboardDocument({
     relationships,
-    included,
     content,
+    restricted,
 }: {
     relationships?: Record<string, { data: { id: string; type: string }[] }>;
-    included?: { id: string; type: string }[];
     content?: unknown;
+    restricted?: RestrictedObject[];
 }): JsonApiAnalyticalDashboardOutDocument {
     return {
         data: {
@@ -34,8 +33,8 @@ function dashboardDocument({
             attributes: { content: content ?? {} },
             relationships,
         },
-        included,
         links: { self: "" },
+        ...(restricted ? { meta: { restricted } } : {}),
     } as unknown as JsonApiAnalyticalDashboardOutDocument;
 }
 
@@ -54,24 +53,22 @@ const insightWidgetContent = (ids: string[]) => ({
 describe("resolveUnavailableReferences", () => {
     it("reports nothing when the response has no relationships for inspected types", () => {
         const doc = dashboardDocument({
-            included: [{ id: "vis1", type: "visualizationObject" }],
-            content: insightWidgetContent(["vis1"]),
+            content: {},
         });
 
         expect(resolveUnavailableReferences(doc, ["insight"])).toEqual([]);
     });
 
-    it("returns empty array when every relationship ref is side-loaded", () => {
+    it("returns empty array when every content ref is present in relationships", () => {
         const doc = dashboardDocument({
             relationships: { visualizationObjects: { data: [{ id: "vis1", type: "visualizationObject" }] } },
-            included: [{ id: "vis1", type: "visualizationObject" }],
             content: insightWidgetContent(["vis1"]),
         });
 
         expect(resolveUnavailableReferences(doc, ["insight"])).toEqual([]);
     });
 
-    it("classifies a ref in relationships but not in included as forbidden", () => {
+    it("classifies a ref reported in meta.restricted as forbidden", () => {
         const doc = dashboardDocument({
             relationships: {
                 visualizationObjects: {
@@ -81,8 +78,8 @@ describe("resolveUnavailableReferences", () => {
                     ],
                 },
             },
-            included: [{ id: "vis1", type: "visualizationObject" }],
             content: insightWidgetContent(["vis1", "vis2"]),
+            restricted: [{ id: "vis2", type: "visualizationObject" }],
         });
 
         expect(resolveUnavailableReferences(doc, ["insight"])).toEqual([
@@ -90,10 +87,20 @@ describe("resolveUnavailableReferences", () => {
         ]);
     });
 
+    it("does not infer forbidden from a relationship/include mismatch without meta.restricted", () => {
+        const doc = dashboardDocument({
+            relationships: {
+                visualizationObjects: { data: [{ id: "vis1", type: "visualizationObject" }] },
+            },
+            content: insightWidgetContent(["vis1"]),
+        });
+
+        expect(resolveUnavailableReferences(doc, ["insight"])).toEqual([]);
+    });
+
     it("classifies a content ref absent from relationships as notFound", () => {
         const doc = dashboardDocument({
             relationships: { visualizationObjects: { data: [{ id: "vis1", type: "visualizationObject" }] } },
-            included: [{ id: "vis1", type: "visualizationObject" }],
             content: insightWidgetContent(["vis1", "visDeleted"]),
         });
 
@@ -105,7 +112,7 @@ describe("resolveUnavailableReferences", () => {
     it("classifies a missing filter context as forbidden even when not in requested types", () => {
         const doc = dashboardDocument({
             relationships: { filterContexts: { data: [{ id: "fc1", type: "filterContext" }] } },
-            included: [],
+            restricted: [{ id: "fc1", type: "filterContext" }],
         });
 
         expect(resolveUnavailableReferences(doc, [])).toEqual([
@@ -120,8 +127,8 @@ describe("resolveUnavailableReferences", () => {
     it("reports nothing for a type whose relationship key is absent and whose content has no refs of it", () => {
         const doc = dashboardDocument({
             relationships: { visualizationObjects: { data: [{ id: "vis2", type: "visualizationObject" }] } },
-            included: [],
             content: insightWidgetContent(["vis2"]),
+            restricted: [{ id: "vis2", type: "visualizationObject" }],
         });
 
         const result = resolveUnavailableReferences(doc, ["insight", "dataSet"]);
@@ -134,18 +141,16 @@ describe("resolveUnavailableReferences", () => {
     it("does not resolve labels from the dashboard document (they relate to filter contexts)", () => {
         const doc = dashboardDocument({
             relationships: { labels: { data: [{ id: "label2", type: "label" }] } },
-            included: [],
         });
 
         expect(resolveUnavailableReferences(doc, ["displayForm"])).toEqual([]);
     });
 
-    it("classifies drill-target dashboards: forbidden when omitted from included, notFound when absent from relationships", () => {
+    it("classifies a missing drill-target dashboard as notFound without inferring forbidden", () => {
         const doc = dashboardDocument({
             relationships: {
                 analyticalDashboards: { data: [{ id: "dashForbidden", type: "analyticalDashboard" }] },
             },
-            included: [],
             content: {
                 layout: {
                     sections: [
@@ -182,11 +187,6 @@ describe("resolveUnavailableReferences", () => {
 
         expect(resolveUnavailableReferences(doc, ["analyticalDashboard"])).toEqual([
             {
-                ref: { identifier: "dashForbidden", type: "analyticalDashboard" },
-                type: "analyticalDashboard",
-                reason: "forbidden",
-            },
-            {
                 ref: { identifier: "dashDeleted", type: "analyticalDashboard" },
                 type: "analyticalDashboard",
                 reason: "notFound",
@@ -194,7 +194,7 @@ describe("resolveUnavailableReferences", () => {
         ]);
     });
 
-    it("resolves labels from a filter context document: forbidden when omitted from included, notFound when absent from relationships", () => {
+    it("resolves labels from a filter context document: forbidden when restricted, notFound when absent from relationships", () => {
         const doc = {
             data: {
                 id: "fc1",
@@ -229,10 +229,14 @@ describe("resolveUnavailableReferences", () => {
                     },
                 },
             },
-            included: [{ id: "label1", type: "label" }],
-        } as unknown as { data: JsonApiFilterContextOut; included: JsonApiFilterContextOutIncludes[] };
+        } as unknown as { data: JsonApiFilterContextOut };
 
-        expect(resolveUnavailableFilterContextReferences(doc.data, doc.included)).toEqual([
+        expect(
+            resolveUnavailableFilterContextReferences(doc.data, [
+                { id: "label2", type: "label" },
+                { id: "labelFromAnotherContext", type: "label" },
+            ]),
+        ).toEqual([
             { ref: { identifier: "label2", type: "displayForm" }, type: "displayForm", reason: "forbidden" },
             {
                 ref: { identifier: "labelDeleted", type: "displayForm" },
@@ -248,7 +252,6 @@ describe("resolveUnavailableReferences", () => {
                 filterContexts: { data: [] },
                 datasets: { data: [{ id: "ds1", type: "dataset" }] },
             },
-            included: [],
         });
 
         expect(resolveUnavailableReferences(doc, [])).toEqual([]);
@@ -257,7 +260,6 @@ describe("resolveUnavailableReferences", () => {
     it("classifies content refs as notFound when Tiger omits the relationship key (all refs of the type deleted)", () => {
         const doc = dashboardDocument({
             relationships: { filterContexts: { data: [{ id: "fc1", type: "filterContext" }] } },
-            included: [{ id: "fc1", type: "filterContext" }],
             content: insightWidgetContent(["visDeleted"]),
         });
 
@@ -276,7 +278,6 @@ describe("resolveUnavailableReferences", () => {
                     ],
                 },
             },
-            included: [{ id: "other", type: "analyticalDashboard" }],
             content: {
                 drills: [
                     { target: { identifier: { id: "dash1", type: "analyticalDashboard" } } },
@@ -295,8 +296,11 @@ describe("resolveUnavailableDashboardReferences", () => {
             filterContexts: { data: [{ id: "fcStored", type: "filterContext" }] },
             visualizationObjects: { data: [{ id: "vis1", type: "visualizationObject" }] },
         },
-        included: [],
         content: { filterContextRef: { identifier: { id: "fcStored", type: "filterContext" } } },
+        restricted: [
+            { id: "fcStored", type: "filterContext" },
+            { id: "vis1", type: "visualizationObject" },
+        ],
     });
     const withContext = (ref: unknown): IDashboard => ({ filterContext: { ref } }) as unknown as IDashboard;
 
@@ -313,7 +317,6 @@ describe("resolveUnavailableDashboardReferences", () => {
     it("keeps a context re-created for a deleted stored one (its stored id is not an override)", () => {
         const deletedStoredContext = dashboardDocument({
             relationships: {},
-            included: [],
             content: {
                 tabs: [{ filterContextRef: { identifier: { id: "fcGone", type: "filterContext" } } }],
             },
@@ -351,7 +354,10 @@ describe("resolveUnavailableDashboardReferences", () => {
                     ],
                 },
             },
-            included: [],
+            restricted: [
+                { id: "fcKept", type: "filterContext" },
+                { id: "fcReplaced", type: "filterContext" },
+            ],
             content: {
                 tabs: [
                     { filterContextRef: { identifier: { id: "fcKept", type: "filterContext" } } },
@@ -385,7 +391,7 @@ describe("resolveUnavailableDashboardReferences", () => {
                     ],
                 },
             },
-            included: [{ id: "fcKept", type: "filterContext" }],
+            restricted: [{ id: "fcReplaced", type: "filterContext" }],
             content: {
                 tabs: [
                     { filterContextRef: { identifier: { id: "fcKept", type: "filterContext" } } },
@@ -412,26 +418,6 @@ describe("resolveUnavailableDashboardReferences", () => {
                 [],
             ),
         ).toEqual([]);
-    });
-});
-
-describe("dashboardSideloadIncludes", () => {
-    it("always side-loads filter contexts and adds one include per requested type in request order", () => {
-        expect(dashboardSideloadIncludes([])).toEqual(["filterContexts"]);
-        expect(dashboardSideloadIncludes(["dataSet", "insight"])).toEqual([
-            "filterContexts",
-            "visualizationObjects",
-            "datasets",
-        ]);
-        expect(dashboardSideloadIncludes(["dashboardPlugin", "analyticalDashboard"])).toEqual([
-            "filterContexts",
-            "dashboardPlugins",
-            "analyticalDashboards",
-        ]);
-    });
-
-    it("does not side-load labels for displayForm (they are resolved from the filter contexts)", () => {
-        expect(dashboardSideloadIncludes(["displayForm"])).toEqual(["filterContexts"]);
     });
 });
 

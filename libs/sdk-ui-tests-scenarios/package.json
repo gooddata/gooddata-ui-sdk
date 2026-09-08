@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-scenarios",
-    "version": "11.56.0-alpha.2",
+    "version": "11.56.0-alpha.3",
     "description": "GoodData React components scenarios project",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -91,7 +91,7 @@
         "react-dom": "19.1.1",
         "spark-md5": "^3.0.0",
         "ts-invariant": "0.10.3",
-        "typescript": "5.9.3",
+        "typescript": "6.0.3",
         "vitest": "4.1.8"
     },
     "peerDependencies": {

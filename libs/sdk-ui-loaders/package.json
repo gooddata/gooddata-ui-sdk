@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-loaders",
-    "version": "11.56.0-alpha.2",
+    "version": "11.56.0-alpha.3",
     "description": "GoodData SDK Runtime Component Loaders",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -85,7 +85,7 @@
         "raf": "3.4.1",
         "react": "19.1.1",
         "react-dom": "19.1.1",
-        "typescript": "5.9.3"
+        "typescript": "6.0.3"
     },
     "peerDependencies": {
         "react": "^18.0.0 || ^19.0.0",

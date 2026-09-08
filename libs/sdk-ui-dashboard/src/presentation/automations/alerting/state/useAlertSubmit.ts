@@ -26,10 +26,10 @@ import { type IAlertSubmitState, type IUseAlertSubmitCallbacks } from "./types.j
  * @alpha
  */
 export function useAlertSubmit({
-    onSuccess,
-    onError,
-    onSaveSuccess,
-    onSaveError,
+    onCreateSuccess,
+    onCreateError,
+    onUpdateSuccess,
+    onUpdateError,
 }: IUseAlertSubmitCallbacks): IAlertSubmitState {
     const intl = useIntl();
     const { separators } = useAutomationsContext();
@@ -59,16 +59,16 @@ export function useAlertSubmit({
                   };
             if (alertToEdit) {
                 const saved = await saveAlert(sanitizedAutomation as IAutomationMetadataObject);
-                onSaveSuccess?.(saved);
+                onUpdateSuccess?.(saved);
             } else {
                 const created = await createAlert(sanitizedAutomation);
-                onSuccess?.(created);
+                onCreateSuccess?.(created);
             }
         } catch (err) {
             if (alertToEdit) {
-                onSaveError?.(convertError(err));
+                onUpdateError?.(convertError(err));
             } else {
-                onError?.(convertError(err));
+                onCreateError?.(convertError(err));
             }
         } finally {
             submitInFlight.current = false;

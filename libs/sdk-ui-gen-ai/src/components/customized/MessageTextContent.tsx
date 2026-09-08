@@ -10,5 +10,5 @@ import { type IGenAIAssistantMessageTextContentProps } from "./types.js";
  * @alpha
  */
 export function DefaultMessageTextContent(props: IGenAIAssistantMessageTextContentProps) {
-    return <ConversationTextContent {...props} />;
+    return <ConversationTextContent {...props} useMarkdown />;
 }

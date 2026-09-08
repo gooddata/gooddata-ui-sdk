@@ -41,8 +41,8 @@ export const useDashboardAlerts = () => {
         onAlertingCancel,
         onAlertingCreateError,
         onAlertingCreateSuccess,
-        onAlertingSaveError,
-        onAlertingSaveSuccess,
+        onAlertingUpdateError,
+        onAlertingUpdateSuccess,
     } = useDashboardAlertsDialog();
 
     const {
@@ -54,8 +54,6 @@ export const useDashboardAlerts = () => {
         onAlertingManagementEdit,
         onAlertingManagementLoadingError,
         onAlertingManagementOpen,
-        onAlertingManagementPauseSuccess,
-        onAlertingManagementPauseError,
     } = useDashboardAlertsManagementDialog();
 
     return {
@@ -78,8 +76,8 @@ export const useDashboardAlerts = () => {
         onAlertingCancel,
         onAlertingCreateError,
         onAlertingCreateSuccess,
-        onAlertingSaveError,
-        onAlertingSaveSuccess,
+        onAlertingUpdateError,
+        onAlertingUpdateSuccess,
         // List / Management Dialog
         isAlertManagementVisible,
         isAlertManagementDialogOpen,
@@ -91,7 +89,5 @@ export const useDashboardAlerts = () => {
         onAlertingManagementDeleteSuccess,
         onAlertingManagementEdit,
         onAlertingManagementLoadingError,
-        onAlertingManagementPauseSuccess,
-        onAlertingManagementPauseError,
     };
 };

@@ -35,6 +35,10 @@ import {
     type IAutomationDialogHeaderProps,
     type IAutomationDialogRecipientsProps,
 } from "../shared/slots/types.js";
+import {
+    type IAutomationDialogCallbacks,
+    type IAutomationManagementDialogCallbacks,
+} from "../shared/types.js";
 
 import { type AttributeValue } from "./hooks/useAttributeValuesFromExecResults.js";
 
@@ -45,7 +49,7 @@ import { type AttributeValue } from "./hooks/useAttributeValuesFromExecResults.j
 /**
  * @alpha
  */
-export interface IAlertingDialogProps {
+export interface IAlertingDialogProps extends IAutomationDialogCallbacks {
     /**
      * In case, we are not creating new alert, but editing existing one, this is the active alert to be edited.
      *
@@ -97,41 +101,6 @@ export interface IAlertingDialogProps {
      *     `useAlertingDialogContext()`. Prop will be removed.
      */
     isLoading?: boolean;
-
-    /**
-     * Callback to be called, when user closes the alert dialog.
-     */
-    onCancel?: () => void;
-
-    /**
-     * Callback to be called, when error occurs.
-     */
-    onError?: (error: GoodDataSdkError) => void;
-
-    /**
-     * Callback to be called, when alerting finishes successfully.
-     */
-    onSuccess?: (alertDefinition: IAutomationMetadataObject) => void;
-
-    /**
-     * Callback to be called, when error occurs.
-     */
-    onSaveError?: (error: GoodDataSdkError) => void;
-
-    /**
-     * Callback to be called, when alerting finishes successfully.
-     */
-    onSaveSuccess?: (alert: IAutomationMetadataObject) => void;
-
-    /**
-     * Callback to be called, when alert is deleted.
-     */
-    onDeleteSuccess?: (alert: IAutomationMetadataObject) => void;
-
-    /**
-     * Callback to be called, when alert fails to delete.
-     */
-    onDeleteError?: (error: GoodDataSdkError) => void;
 }
 
 /**
@@ -655,7 +624,7 @@ export interface IAlertingDialogFormFieldGroupProps {
 /**
  * @alpha
  */
-export interface IAlertingManagementDialogProps {
+export interface IAlertingManagementDialogProps extends IAutomationManagementDialogCallbacks {
     /**
      * Is loading alert data?
      *
@@ -685,46 +654,6 @@ export interface IAlertingManagementDialogProps {
      *     automations directly. Prop will be removed.
      */
     automations?: IAutomationMetadataObject[];
-
-    /**
-     * Callback to be called, when user adds new alert item.
-     */
-    onAdd?: () => void;
-
-    /**
-     * Callback to be called, when user clicks alert item for editing.
-     */
-    onEdit?: (alert: IAutomationMetadataObject) => void;
-
-    /**
-     * Callback to be called, when user closes the alert management dialog.
-     */
-    onClose?: () => void;
-
-    /**
-     * Callback to be called, when alert is deleted.
-     * @param alert - alert that was deleted
-     */
-    onDeleteSuccess?: (alert: IAutomationMetadataObject) => void;
-
-    /**
-     * Callback to be called, when alert fails to delete.
-     */
-    onDeleteError?: (error: GoodDataSdkError) => void;
-
-    /**
-     * Callback to be called, when alert is paused.
-     * @param alert - alert that was paused
-     * @param pause - true if alert was paused, false if it was resumed
-     */
-    onPauseSuccess: (alert: IAutomationMetadataObject, pause: boolean) => void;
-
-    /**
-     * Callback to be called, when alert fails to pause.
-     * @param error - error that occurred
-     * @param pause - true if alert was paused, false if it was resumed
-     */
-    onPauseError: (error: GoodDataSdkError, pause: boolean) => void;
 }
 
 ///

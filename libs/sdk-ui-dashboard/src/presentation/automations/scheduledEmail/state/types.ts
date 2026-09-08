@@ -437,14 +437,14 @@ export interface IScheduledExportAttachments {
 }
 
 /**
- * Lifecycle callbacks of {@link useSaveScheduledEmailToBackend}: `onSubmit`/`onSuccess`/`onError`
- * (create) and `onSave`/`onSaveSuccess`/`onSaveError` (edit).
+ * Lifecycle callbacks of {@link useSaveScheduledEmailToBackend}: `onCreateSuccess`/`onCreateError`
+ * (create) and `onUpdateSuccess`/`onUpdateError` (edit).
  *
  * @alpha
  */
 export type IUseSaveScheduledEmailCallbacks = Pick<
     IScheduledEmailDialogProps,
-    "onSuccess" | "onError" | "onSubmit" | "onSaveSuccess" | "onSaveError" | "onSave"
+    "onCreateSuccess" | "onCreateError" | "onUpdateSuccess" | "onUpdateError"
 >;
 
 /**

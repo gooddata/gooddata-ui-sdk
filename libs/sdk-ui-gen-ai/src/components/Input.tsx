@@ -23,9 +23,11 @@ import {
     conversationSelector,
     conversationsLoadedSelector,
     messagesSelector,
+    refocusSelector,
 } from "../store/messages/messagesSelectors.js";
 import { newMessageAction } from "../store/messages/messagesSlice.js";
 import { type RootState } from "../store/types.js";
+import { isClarificationQuestionsItem } from "../utils.js";
 
 import { collectReferences } from "./completion/references.js";
 import { useCompletion } from "./completion/useCompletion.js";
@@ -71,6 +73,8 @@ function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }:
     const messages = useSelector((state: RootState) => messagesSelector(state));
     const loading = useSelector((state: RootState) => asyncProcessSelector(state));
     const agentSwitchingEnabled = useSelector((state: RootState) => agentSwitchingEnabledSelector(state));
+    const refocusKey = useSelector((state: RootState) => refocusSelector(state));
+
     const isBusy = !!loading;
     const isEvaluating = loading === "evaluating";
 
@@ -90,8 +94,12 @@ function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }:
     const beforeExtensions = useMemo(() => [atomicCursorExtension], [atomicCursorExtension]);
     const extensions = useMemo(() => [highlightExtension], [highlightExtension]);
 
+    const last = items?.[items.length - 1];
+    const allowed = !isClarificationQuestionsItem(last) || !!last.filled;
+
     // Force focus when autofocus is enables on the first mount, right after the initial state is loaded
-    const ref = useInputAutofocus(editorApi, autofocus, { isBusy });
+    // When last item is a multipart message with clarifying questions, do not autofocus
+    const ref = useInputAutofocus(editorApi, autofocus && allowed, { isBusy, refocusKey });
 
     const handleSubmit = () => {
         let item: IChatConversationLocalItem | UserMessage;

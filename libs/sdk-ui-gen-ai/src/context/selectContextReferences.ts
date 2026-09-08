@@ -1,12 +1,53 @@
 // (C) 2026 GoodData Corporation
 
-import { type IGenAIUserContext, isIdentifierRef } from "@gooddata/sdk-model";
+import {
+    type GenAIObjectType,
+    type IGenAIUserContext,
+    areObjRefsEqual,
+    isIdentifierRef,
+} from "@gooddata/sdk-model";
 
 import type { IGenAIContextObject, SelectedContext, StoreContext } from "../types.js";
 
 import { addContextReference } from "./addContextReference.js";
 import { isReferenceChanged } from "./isReferenceChanged.js";
 import { removeContextReference } from "./removeContextReference.js";
+
+export function pickSelectedContextFromUserContext(
+    context: StoreContext,
+    userContext?: IGenAIUserContext,
+): StoreContext {
+    if (!userContext) {
+        return context;
+    }
+
+    const dashboardGroup = userContext.referencedObjects?.find((g) =>
+        areObjRefsEqual(g.context?.ref, context.ambientSelected?.dashboard?.ref),
+    );
+    if (dashboardGroup && dashboardGroup.objects.length > 0) {
+        const first = dashboardGroup.objects[0];
+        const ref = first.ref;
+        const id = isIdentifierRef(ref) ? ref.identifier : ref.uri;
+
+        return {
+            ...context,
+            ambientSelected: {
+                ...context.ambientSelected,
+                visualization: {
+                    id,
+                    ref,
+                    title: first.title,
+                    nesting: 0,
+                    context: dashboardGroup.context,
+                    type: first.type === "WIDGET" ? "widget" : (first.type.toLowerCase() as GenAIObjectType),
+                    where: "referencedObjects",
+                },
+            },
+        };
+    }
+
+    return context;
+}
 
 export function selectContextReferences(
     context: StoreContext,

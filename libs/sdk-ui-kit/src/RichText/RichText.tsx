@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     type AnchorHTMLAttributes,
@@ -20,6 +20,7 @@ import { IntlWrapper, LoadingComponent, type OnError, type OnLoadingChanged } fr
 
 import { useEvaluatedReferences } from "./hooks/useEvaluatedReferences.js";
 import { rehypeReferences } from "./plugins/rehype-references.js";
+import { type RichTextFeature, remarkMarkdownFeatures } from "./plugins/remark-markdown-features.js";
 import { remarkReferences } from "./plugins/remark-references.js";
 
 // lineHeight from CSS, used to calculate max textarea height based on provided row count
@@ -52,6 +53,22 @@ export interface IRichTextProps {
     emptyElement?: ReactElement;
     className?: string;
     referencesEnabled?: boolean;
+
+    /**
+     * Which markdown features are recognised, narrowing what the text may contain. Syntax for a
+     * feature left out renders as the characters that were typed rather than as markup. Omit for
+     * full CommonMark; pass `[]` for no markup at all.
+     *
+     * Paragraphs, trailing-whitespace line breaks and backslash escapes are recognised whatever
+     * is asked for: escapes are the only way to write a marker literally, and text needs
+     * paragraphs to be text. `backslashBreaks` adds the backslash spelling of a line break on top.
+     *
+     * `html` only governs whether HTML syntax is *recognised*, which affects block structure.
+     * A tag is rendered as the characters that were typed either way — there is no `rehype-raw`.
+     *
+     * Applies to `renderMode="view"`; the editor takes whatever is typed either way.
+     */
+    allowedMarkdown?: readonly RichTextFeature[];
     /**
      * If provided, the textarea starts at just 1 row,
      * resizing dynamically up to editRows value.
@@ -100,6 +117,7 @@ function RichTextCore({
     execConfig,
     onChange,
     referencesEnabled,
+    allowedMarkdown,
     renderMode = "view",
     editPlaceholder,
     editRows,
@@ -140,6 +158,7 @@ function RichTextCore({
                     isFiltersLoading={isFiltersLoading}
                     separators={separators}
                     referencesEnabled={referencesEnabled}
+                    allowedMarkdown={allowedMarkdown}
                     LoadingComponent={LoadingComponent}
                     onLoadingChanged={onLoadingChanged}
                     onError={onError}
@@ -218,6 +237,7 @@ interface IRichTextViewProps {
     value: string;
     emptyElement?: ReactElement;
     referencesEnabled?: boolean;
+    allowedMarkdown?: readonly RichTextFeature[];
     filters?: IFilter[];
     isFiltersLoading?: boolean;
     separators?: ISeparators;
@@ -241,6 +261,7 @@ function AnchorComponent(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
 function RichTextView({
     value,
     referencesEnabled,
+    allowedMarkdown,
     emptyElement,
     filters,
     isFiltersLoading,
@@ -280,7 +301,10 @@ function RichTextView({
     return (
         <Markdown
             components={{ img: ImageComponent, a: AnchorComponent }}
-            remarkPlugins={referencesEnabled ? [remarkReferences()] : []}
+            remarkPlugins={[
+                ...(allowedMarkdown === undefined ? [] : [remarkMarkdownFeatures(allowedMarkdown)]),
+                ...(referencesEnabled ? [remarkReferences()] : []),
+            ]}
             rehypePlugins={referencesEnabled ? [rehypeReferences(intl, metrics, separators)] : []}
         >
             {value}

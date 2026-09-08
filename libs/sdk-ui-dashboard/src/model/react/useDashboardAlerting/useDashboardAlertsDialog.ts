@@ -112,32 +112,16 @@ export const useDashboardAlertsDialog = () => {
     }, [closeAlertDialog, addError]);
 
     // Edit
-    const onAlertingSaveSuccess = useCallback(() => {
+    const onAlertingUpdateSuccess = useCallback(() => {
         closeAlertDialog();
         addSuccess(messages.alertUpdateSuccess);
         handleRefreshAutomations();
     }, [closeAlertDialog, addSuccess, handleRefreshAutomations]);
 
-    const onAlertingSaveError = useCallback(() => {
+    const onAlertingUpdateError = useCallback(() => {
         closeAlertDialog();
         addError(messages.alertUpdateError);
     }, [closeAlertDialog, addError]);
-
-    const onAlertingPauseError = useCallback(() => {
-        addError(messages.alertingManagementPauseError);
-    }, [addError]);
-
-    const onAlertingPauseSuccess = useCallback(() => {
-        addSuccess(messages.alertingManagementPauseSuccess);
-    }, [addSuccess]);
-
-    const onAlertingResumeSuccess = useCallback(() => {
-        addSuccess(messages.alertingManagementActivateSuccess);
-    }, [addSuccess]);
-
-    const onAlertingResumeError = useCallback(() => {
-        addError(messages.alertingManagementActivateError);
-    }, [addError]);
 
     return {
         defaultOnAlerting,
@@ -145,11 +129,7 @@ export const useDashboardAlertsDialog = () => {
         onAlertingCancel,
         onAlertingCreateError,
         onAlertingCreateSuccess,
-        onAlertingSaveError,
-        onAlertingSaveSuccess,
-        onAlertingPauseError,
-        onAlertingPauseSuccess,
-        onAlertingResumeError,
-        onAlertingResumeSuccess,
+        onAlertingUpdateError,
+        onAlertingUpdateSuccess,
     };
 };

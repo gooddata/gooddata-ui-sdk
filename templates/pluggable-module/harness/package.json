@@ -1,6 +1,6 @@
 {
     "name": "gdc-app-template-name-harness",
-    "version": "11.56.0-alpha.2",
+    "version": "11.56.0-alpha.3",
     "private": true,
     "description": "Standalone harness for gdc-app-template-name module",
     "license": "UNLICENSED",
@@ -65,7 +65,7 @@
         "oxlint-tsgolint": "0.15.0",
         "rolldown": "1.0.3",
         "sass": "1.79.0",
-        "typescript": "5.9.3",
+        "typescript": "6.0.3",
         "vite": "8.0.16"
     }
 }

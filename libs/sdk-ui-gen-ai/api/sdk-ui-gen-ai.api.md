@@ -416,6 +416,7 @@ export type IChatConversationLocalItem = Omit<IChatConversationItem, "content"> 
     cancelled?: boolean;
     complete?: boolean;
     streaming?: boolean;
+    filled?: boolean;
     localId: string;
     content: IChatConversationLocalContent | IChatConversationErrorContent | IChatConversationSystemContent;
 };
@@ -521,6 +522,7 @@ export type IGenAIAssistantMessageMultipartContentProps = {
     message: IChatConversationLocalItem;
     parts: IChatConversationMultipartLocalPart[];
     references: TextContentObject[];
+    isLast?: boolean;
 };
 
 // @alpha

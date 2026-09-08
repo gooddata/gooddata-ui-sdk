@@ -139,7 +139,7 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
         return stop;
     }, [refocusKey, element, initialFocus, active]);
 
-    return useMemo(() => ({ ref }), [ref]);
+    return useMemo(() => ({ ref, element: element as T }), [ref, element]);
 };
 
 function getElementToFocus(

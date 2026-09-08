@@ -10,7 +10,6 @@ import {
     type IWidget,
     isWidget,
 } from "@gooddata/sdk-model";
-import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { useDashboardAlerts } from "../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
@@ -19,6 +18,7 @@ import { AlertingManagementDialog } from "../alerting/AlertingManagementDialog.j
 import { AlertingDialogContextProvider } from "../contexts/AlertingDialogContext.js";
 import { AlertingManagementDialogContextProvider } from "../contexts/AlertingManagementDialogContext.js";
 import { AutomationsContextProvider } from "../contexts/AutomationsContext.js";
+import { type IAutomationDialogCallbacks } from "../shared/types.js";
 
 import { useAutomationManagementEditRouting } from "./hooks/useAutomationManagementEditRouting.js";
 import { useBuildAlertingDialogContext } from "./hooks/useBuildAlertingDialogContext.js";
@@ -88,8 +88,8 @@ function AlertingConnectorWithData({ alerts }: { alerts: AlertsProps }): ReactEl
         onAlertingCancel,
         onAlertingCreateSuccess,
         onAlertingCreateError,
-        onAlertingSaveSuccess,
-        onAlertingSaveError,
+        onAlertingUpdateSuccess,
+        onAlertingUpdateError,
         // Management / List Dialog
         isAlertManagementDialogOpen,
         onAlertingManagementClose,
@@ -97,8 +97,6 @@ function AlertingConnectorWithData({ alerts }: { alerts: AlertsProps }): ReactEl
         onAlertingManagementEdit,
         onAlertingManagementDeleteSuccess,
         onAlertingManagementDeleteError,
-        onAlertingManagementPauseSuccess,
-        onAlertingManagementPauseError,
         widget,
         insight,
     } = alerts;
@@ -116,10 +114,6 @@ function AlertingConnectorWithData({ alerts }: { alerts: AlertsProps }): ReactEl
                     onAdd={onAlertingManagementAdd}
                     onEdit={handleManagementEdit}
                     onClose={onAlertingManagementClose}
-                    onDeleteSuccess={onAlertingManagementDeleteSuccess}
-                    onDeleteError={onAlertingManagementDeleteError}
-                    onPauseSuccess={onAlertingManagementPauseSuccess}
-                    onPauseError={onAlertingManagementPauseError}
                 />
             ) : null}
             {isAlertDialogOpen ? (
@@ -130,10 +124,10 @@ function AlertingConnectorWithData({ alerts }: { alerts: AlertsProps }): ReactEl
                     insight={insight}
                     automationsLoading={automationsLoading}
                     onCancel={onAlertingCancel}
-                    onError={onAlertingCreateError}
-                    onSuccess={onAlertingCreateSuccess}
-                    onSaveError={onAlertingSaveError}
-                    onSaveSuccess={onAlertingSaveSuccess}
+                    onCreateError={onAlertingCreateError}
+                    onCreateSuccess={onAlertingCreateSuccess}
+                    onUpdateError={onAlertingUpdateError}
+                    onUpdateSuccess={onAlertingUpdateSuccess}
                     onDeleteSuccess={onAlertingManagementDeleteSuccess}
                     onDeleteError={onAlertingManagementDeleteError}
                 />
@@ -148,19 +142,12 @@ function AlertingConnectorWithData({ alerts }: { alerts: AlertsProps }): ReactEl
  * now reads them from `AlertingDialogContext`), and the callbacks are forwarded to `AlertingDialog`
  * unchanged.
  */
-interface IAlertingCreateEditConnectorProps {
+interface IAlertingCreateEditConnectorProps extends IAutomationDialogCallbacks {
     alertToEdit?: IAutomationMetadataObject;
     notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     widget?: IWidget;
     insight?: IInsight;
     automationsLoading: boolean;
-    onCancel?: () => void;
-    onError?: (error: GoodDataSdkError) => void;
-    onSuccess?: (alertDefinition: IAutomationMetadataObject) => void;
-    onSaveError?: (error: GoodDataSdkError) => void;
-    onSaveSuccess?: (alert: IAutomationMetadataObject) => void;
-    onDeleteSuccess?: (alert: IAutomationMetadataObject) => void;
-    onDeleteError?: (error: GoodDataSdkError) => void;
 }
 
 /**
@@ -175,10 +162,10 @@ function AlertingCreateEditConnector(props: IAlertingCreateEditConnectorProps): 
         insight,
         automationsLoading,
         onCancel,
-        onError,
-        onSuccess,
-        onSaveError,
-        onSaveSuccess,
+        onCreateError,
+        onCreateSuccess,
+        onUpdateError,
+        onUpdateSuccess,
         onDeleteSuccess,
         onDeleteError,
     } = props;
@@ -196,10 +183,10 @@ function AlertingCreateEditConnector(props: IAlertingCreateEditConnectorProps): 
         <AlertingDialogContextProvider value={alertingCtx}>
             <AlertingDialog
                 onCancel={onCancel}
-                onError={onError}
-                onSuccess={onSuccess}
-                onSaveError={onSaveError}
-                onSaveSuccess={onSaveSuccess}
+                onCreateError={onCreateError}
+                onCreateSuccess={onCreateSuccess}
+                onUpdateError={onUpdateError}
+                onUpdateSuccess={onUpdateSuccess}
                 onDeleteSuccess={onDeleteSuccess}
                 onDeleteError={onDeleteError}
             />

@@ -5,7 +5,7 @@ import {
     FilterContextApi_GetAllEntitiesFilterContexts,
     type JsonApiAnalyticalDashboardOutDocument,
     type JsonApiFilterContextOut,
-    type JsonApiFilterContextOutIncludes,
+    type RestrictedObject,
     isAfmObjectIdentifier,
 } from "@gooddata/api-client-tiger";
 import type {
@@ -20,21 +20,21 @@ import { objectTypeToTigerIdType } from "../../../types/refTypeMapping.js";
 /**
  * The single replaceable availability mechanism for dashboard references.
  *
- * Contract: a ref present in `data.relationships[<type>]` but absent from `included` (for a type
- * that WAS requested via `include`) means the object exists but is not readable by the current
- * user ("forbidden"). A ref used by the entity's content but absent from `relationships` does not
- * exist ("notFound"). Tiger omits the relationship key altogether when the relation is empty, so
- * for an inspected type an absent key means "no related objects", not "unknown". The entity
- * itself (a dashboard drilling to itself) is never reported: JSON:API does not repeat the primary
- * resource in `included`.
+ * Contract: Tiger lists references withheld from `included` under document-level
+ * `meta.restricted`; those are "forbidden". A ref used by the entity's content but absent from
+ * `relationships` does not exist ("notFound"). Tiger omits the relationship key altogether when
+ * the relation is empty, so for an inspected type an absent key means "no related objects", not
+ * "unknown". Missing `meta.restricted` means no permission filtering applies (or the backend does
+ * not support the signal), and must not be inferred from a relationship/include mismatch. The
+ * entity itself (a dashboard drilling to itself) is never reported: JSON:API does not repeat the
+ * primary resource in `included`.
  *
  * Labels (filter display forms) relate to the filter-context entity, not the dashboard, so they
  * are resolved from each filter context's own document (verified on dev-latest). Display forms
  * referenced elsewhere in dashboard content (e.g. drill-to-URL) are not inspected.
  *
- * Nothing outside this module may read `relationships` for availability purposes;
- * replacing the mechanism (explicit 403s, tombstones, permission meta) must only
- * change this module.
+ * Nothing outside this module may interpret the raw availability metadata or relationships;
+ * replacing the mechanism must only change this module.
  */
 
 type InspectedType = SupportedDashboardReferenceTypes | "filterContext";
@@ -55,20 +55,6 @@ const RELATIONSHIP_KEYS = {
 
 type RelationshipKey = (typeof RELATIONSHIP_KEYS)[InspectedType];
 
-// in the order the dashboard GET has always requested them (recorded requests match on the URL)
-const SIDELOADED_TYPES = ["insight", "dataSet", "dashboardPlugin", "analyticalDashboard"] as const;
-
-/**
- * Side-loads for a dashboard GET that inspect exactly the requested types. Filter contexts are
- * always side-loaded (the dashboard needs them); labels never are (see file header).
- */
-export function dashboardSideloadIncludes(types: SupportedDashboardReferenceTypes[]): DashboardInclude[] {
-    return [
-        RELATIONSHIP_KEYS.filterContext,
-        ...SIDELOADED_TYPES.filter((type) => types.includes(type)).map((type) => RELATIONSHIP_KEYS[type]),
-    ];
-}
-
 interface ILinkage {
     id: string;
     type: string;
@@ -82,7 +68,9 @@ interface IJsonApiDocumentLike {
         relationships?: Partial<Record<RelationshipKey, { data?: unknown }>>;
         attributes?: { content?: unknown };
     };
-    included?: ILinkage[];
+    meta?: {
+        restricted?: RestrictedObject[];
+    };
 }
 
 function isLinkage(value: unknown): value is ILinkage {
@@ -97,12 +85,6 @@ function isLinkage(value: unknown): value is ILinkage {
 function relationshipIds(document: IJsonApiDocumentLike, key: RelationshipKey): Set<string> {
     const data: unknown = document.data.relationships?.[key]?.data;
     return new Set(Array.isArray(data) ? data.filter(isLinkage).map((linkage) => linkage.id) : []);
-}
-
-function includedIds(document: IJsonApiDocumentLike, tigerType: string): Set<string> {
-    return new Set(
-        (document.included ?? []).filter((item) => item.type === tigerType).map((item) => item.id),
-    );
 }
 
 /**
@@ -140,15 +122,15 @@ function diffInspectedTypes(
         const tigerType = objectTypeToTigerIdType[type];
         const selfId = document.data.type === tigerType ? document.data.id : undefined;
         const related = relationshipIds(document, RELATIONSHIP_KEYS[type]);
-        const included = includedIds(document, tigerType);
+        const restricted = document.meta?.restricted ?? [];
 
-        for (const id of related) {
-            if (id !== selfId && !included.has(id)) {
-                unavailable.push({ ref: idRef(id, type), type, reason: "forbidden" });
+        for (const linkage of restricted) {
+            if (linkage.type === tigerType && linkage.id !== selfId && related.has(linkage.id)) {
+                unavailable.push({ ref: idRef(linkage.id, type), type, reason: "forbidden" });
             }
         }
         for (const id of contentRefIds.get(tigerType) ?? []) {
-            if (id !== selfId && !related.has(id) && !included.has(id)) {
+            if (id !== selfId && !related.has(id)) {
                 unavailable.push({ ref: idRef(id, type), type, reason: "notFound" });
             }
         }
@@ -194,14 +176,16 @@ export function resolveUnavailableDashboardReferences(
 
 /**
  * Resolves which labels (filter display forms) referenced by a filter context are unavailable.
- * The filter context must have been requested with `include: ["labels"]`; `included` is the
- * response's side-loaded items.
+ * The filter context must have been requested with `include: ["labels"]` so the response contains
+ * both relationship linkages and document-level `meta.restricted`.
  */
 export function resolveUnavailableFilterContextReferences(
     context: JsonApiFilterContextOut,
-    included: JsonApiFilterContextOutIncludes[] | undefined,
+    restricted?: RestrictedObject[],
 ): IUnavailableDashboardReference[] {
-    return diffInspectedTypes({ data: context, included } as IJsonApiDocumentLike, ["displayForm"]);
+    return diffInspectedTypes({ data: context, meta: { restricted } } as IJsonApiDocumentLike, [
+        "displayForm",
+    ]);
 }
 
 /**
@@ -236,7 +220,7 @@ export async function fetchUnavailableFilterDisplayForms(
             }).then((result) => result.data),
         );
         return list.data.flatMap((context) =>
-            resolveUnavailableFilterContextReferences(context, list.included),
+            resolveUnavailableFilterContextReferences(context, list.meta?.restricted),
         );
     } catch (error) {
         console.warn(

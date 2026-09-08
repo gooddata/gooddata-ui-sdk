@@ -11,7 +11,6 @@ import {
     type IWidget,
     isWidget,
 } from "@gooddata/sdk-model";
-import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import {
     getAutomationDashboardFilters,
@@ -30,6 +29,7 @@ import { ScheduledEmailManagementDialogContextProvider } from "../contexts/Sched
 import { ScheduledEmailDialog } from "../scheduledEmail/ScheduledEmailDialog.js";
 import { ScheduledEmailManagementDialog } from "../scheduledEmail/ScheduledEmailManagementDialog.js";
 import { getAppliedDashboardFilters } from "../shared/filters/index.js";
+import { type IAutomationDialogCallbacks } from "../shared/types.js";
 
 import { useAutomationManagementEditRouting } from "./hooks/useAutomationManagementEditRouting.js";
 import { useBuildAutomationsContext } from "./hooks/useBuildAutomationsContext.js";
@@ -103,8 +103,8 @@ function ScheduledEmailConnectorWithData({ se }: { se: ScheduledEmailsProps }): 
         onScheduleEmailingBack,
         onScheduleEmailingCreateSuccess,
         onScheduleEmailingCreateError,
-        onScheduleEmailingSaveSuccess,
-        onScheduleEmailingSaveError,
+        onScheduleEmailingUpdateSuccess,
+        onScheduleEmailingUpdateError,
         // Management / List Dialog
         isScheduleEmailingManagementDialogOpen,
         onScheduleEmailingManagementClose,
@@ -148,8 +148,6 @@ function ScheduledEmailConnectorWithData({ se }: { se: ScheduledEmailsProps }): 
                     onAdd={onScheduleEmailingManagementAdd}
                     onEdit={handleManagementEdit}
                     onClose={onScheduleEmailingManagementClose}
-                    onDeleteSuccess={onScheduleEmailingManagementDeleteSuccess}
-                    onDeleteError={onScheduleEmailingManagementDeleteError}
                 />
             ) : null}
             {isScheduleEmailingDialogOpen ? (
@@ -162,10 +160,10 @@ function ScheduledEmailConnectorWithData({ se }: { se: ScheduledEmailsProps }): 
                     isLoading={isLoading}
                     onBack={onScheduleEmailingBack}
                     onCancel={onScheduleEmailingCancel}
-                    onError={onScheduleEmailingCreateError}
-                    onSuccess={onScheduleEmailingCreateSuccess}
-                    onSaveError={onScheduleEmailingSaveError}
-                    onSaveSuccess={onScheduleEmailingSaveSuccess}
+                    onCreateError={onScheduleEmailingCreateError}
+                    onCreateSuccess={onScheduleEmailingCreateSuccess}
+                    onUpdateError={onScheduleEmailingUpdateError}
+                    onUpdateSuccess={onScheduleEmailingUpdateSuccess}
                     onDeleteSuccess={onScheduleEmailingManagementDeleteSuccess}
                     onDeleteError={onScheduleEmailingManagementDeleteError}
                 />
@@ -180,7 +178,7 @@ function ScheduledEmailConnectorWithData({ se }: { se: ScheduledEmailsProps }): 
  * dialog itself now reads them from `ScheduledEmailDialogContext`), and the callbacks are forwarded to
  * `ScheduledEmailDialog` unchanged.
  */
-interface IScheduledEmailCreateEditConnectorProps {
+interface IScheduledEmailCreateEditConnectorProps extends IAutomationDialogCallbacks {
     scheduledExportToEdit?: IAutomationMetadataObject;
     notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     widget?: IWidget;
@@ -188,13 +186,6 @@ interface IScheduledEmailCreateEditConnectorProps {
     dashboardFilters?: FilterContextItem[];
     isLoading: boolean;
     onBack?: () => void;
-    onCancel?: () => void;
-    onError?: (error: GoodDataSdkError) => void;
-    onSuccess?: (scheduledEmailDefinition: IAutomationMetadataObject) => void;
-    onSaveError?: (error: GoodDataSdkError) => void;
-    onSaveSuccess?: () => void;
-    onDeleteSuccess?: () => void;
-    onDeleteError?: (error: GoodDataSdkError) => void;
 }
 
 /**
@@ -211,10 +202,10 @@ function ScheduledEmailCreateEditConnector(props: IScheduledEmailCreateEditConne
         isLoading,
         onBack,
         onCancel,
-        onError,
-        onSuccess,
-        onSaveError,
-        onSaveSuccess,
+        onCreateError,
+        onCreateSuccess,
+        onUpdateError,
+        onUpdateSuccess,
         onDeleteSuccess,
         onDeleteError,
     } = props;
@@ -233,10 +224,10 @@ function ScheduledEmailCreateEditConnector(props: IScheduledEmailCreateEditConne
             <ScheduledEmailDialog
                 onBack={onBack}
                 onCancel={onCancel}
-                onError={onError}
-                onSuccess={onSuccess}
-                onSaveError={onSaveError}
-                onSaveSuccess={onSaveSuccess}
+                onCreateError={onCreateError}
+                onCreateSuccess={onCreateSuccess}
+                onUpdateError={onUpdateError}
+                onUpdateSuccess={onUpdateSuccess}
                 onDeleteSuccess={onDeleteSuccess}
                 onDeleteError={onDeleteError}
             />

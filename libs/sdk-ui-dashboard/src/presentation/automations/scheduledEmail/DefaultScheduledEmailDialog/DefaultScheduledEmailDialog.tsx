@@ -91,12 +91,10 @@ function DefaultScheduledEmailDialogBody({
     onCancel,
     onDeleteSuccess,
     onDeleteError,
-    onError,
-    onSave,
-    onSaveError,
-    onSaveSuccess,
-    onSubmit,
-    onSuccess,
+    onCreateError,
+    onCreateSuccess,
+    onUpdateError,
+    onUpdateSuccess,
     slots,
     topContent,
     bottomContent,
@@ -108,7 +106,7 @@ function DefaultScheduledEmailDialogBody({
     const { canSelectScheduleTimezone } = useScheduledExportDraft();
 
     const { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage } =
-        useSaveScheduledEmailToBackend({ onSuccess, onError, onSubmit, onSaveSuccess, onSaveError, onSave });
+        useSaveScheduledEmailToBackend({ onCreateSuccess, onCreateError, onUpdateSuccess, onUpdateError });
 
     const handleSubmitForm = useScheduledEmailSubmitOnEnter({
         onSubmit: handleSaveScheduledEmail,
